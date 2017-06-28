@@ -1,0 +1,86 @@
+<table border="0" cellpadding="0" cellspacing="0"
+       class="table table-striped table-bordered table-condensed table-hover dataTable no-footer"
+       id="units" role="grid" aria-describedby="check_lists_info" style="width: 100%;">
+  <thead>
+  <tr role="row">
+    <th class="col-md-1 text-center"
+        [class.sorting_asc]="isSortedByUidAsc"
+        [class.sorting_desc]="isSortedByUidDsc"
+        [class.sorting]="!isSortedByUidDsc && !isSortedByUidAsc"
+        (click)="sortByUid()"
+        rowspan="1" colspan="1">
+      #
+    </th>
+    <th class="col-md-9 text-center"
+        [class.sorting_asc]="isSortedByNameAsc"
+        [class.sorting_desc]="isSortedByNameDsc"
+        [class.sorting]="!isSortedByNameDsc && !isSortedByNameAsc"
+        (click)="sortByName()"
+        rowspan="1" colspan="1">
+      Navn
+    </th>
+    <th class="col-md-2 text-center" rowspan="1" colspan="1">
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let advEntityGroup of advEntityGroupListModel.entityGroups">
+    <td class="text-center">
+      {{advEntityGroup.entityGroupMUId}}
+    </td>
+    <td class="text-center">
+      {{advEntityGroup.name}}
+    </td>
+    <td class="text-center">
+      <!--<eform-switch [status]="false" [isDisabledON]="true" [onText]="'ON'" [offText]="'OFF'" [onColor]="'green'" [offColor]="'red'" [size]="'small'"></eform-switch>-->
+      <a (click)="showEditAdvEntityGroupModal(advEntityGroup.entityGroupMUId)" tooltip="Edit searchable list"
+         class="needs_tooltip btn btn-ar btn-sm btn-default" placement="top" container="body"
+         type="button" data-original-title="Edit site">
+        <span class="fa fa-pencil"></span>
+      </a>
+      <button tooltip="Delete searchable item" placement="top" container="body"
+              (click)="showDeleteAdvEntityGroupModal(advEntityGroup)"
+              class="needs_tooltip btn btn-ar btn-danger btn-sm dangerous-action" type="button">
+        <span class="fa fa-trash-o"></span>
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<div class="row">
+  <div class="col-xs-6">
+    <div class="dataTables_info" id="searchable_groups_info" *ngIf="advEntityGroupListModel.numOfElements > 0">
+      Viser {{this.advEntityGroupListRequestModel.offset + 1}}
+      til {{getLastPageNumber()}} af {{advEntityGroupListModel.numOfElements}} linjer
+    </div>
+  </div>
+  <div class="col-xs-6"></div>
+</div>
+
+<modal #deleteAdvEntityGroupModal>
+  <modal-header [show-close]="true">
+    <h4 class="modal-title">Delete searchable_group?</h4>
+  </modal-header>
+  <modal-body>
+    <div class="container-fluid">
+      <div class='row'>
+        <div class='col-md-4'><label>#</label></div>
+        <div class='col-md-8'> {{selectedAdvEntityGroupModel.entityGroupMUId}}</div>
+      </div>
+      <div class='row'>
+        <div class='col-md-4'><label>Creation date</label></div>
+        <div class='col-md-8'> {{selectedAdvEntityGroupModel.updatedAt | date:'dd.MM.y HH:mm:ss'}}</div>
+      </div>
+      <div class='row'>
+        <div class='col-md-4'><label>Navn</label></div>
+        <div class='col-md-8'> {{selectedAdvEntityGroupModel.name}}</div>
+      </div>
+    </div>
+  </modal-body>
+  <modal-footer>
+    <button type="button" class="btn btn-danger" (click)="deleteSelectedAdvEntityGroup()">OK</button>
+    <button type="button" class="btn btn-default" data-dismiss="deleteWorkerModal"
+            (click)="deleteAdvEntityGroupModal.dismiss()">Cancel
+    </button>
+  </modal-footer>
+</modal>

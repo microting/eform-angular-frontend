@@ -1,0 +1,71 @@
+<header class="main-header main-header-title">
+  <div class="container-fluid">
+    <h1 class="page-title header-page-title">
+      <div class="container">
+        Database connection information missing!
+      </div>
+    </h1>
+    <div class="pull-right">
+    </div>
+  </div>
+</header>
+<div class="edit_case">
+  <div class="container-fluid">
+    <div class="bs-docs-container">
+      <div class="row">
+        <div class="col-md-9" role="main">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              Connection information to database
+            </div>
+            <table class="table">
+              <tbody>
+              <tr>
+                <td>
+                  <strong>Data Source</strong>
+                </td>
+                <td>
+                  <input class="form-control" [(ngModel)]="connectionStringModel.source"
+                         placeholder="COMPUTER_NAME\SQLEXPRESS" type="text" value="" name="source" id="source"/>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Initial Catalog</strong>
+                </td>
+                <td>
+                  <input class="form-control" [(ngModel)]="connectionStringModel.catalogue" placeholder="DATABASE_NAME"
+                         type="text" value="" name="catalogue" id="catalogue"/>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Authentication type</strong>
+                </td>
+                <td>
+                  <input class="form-control" [(ngModel)]="connectionStringModel.auth"
+                         placeholder="Integrated Security=True" type="text" value="" name="auth" id="auth"/>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Token</strong>
+                </td>
+                <td>
+                  <input class="form-control" [(ngModel)]="connectionStringModel.token"
+                         placeholder="12345678909876543210adfecdfefdae" type="text" value="" name="token" id="token"/>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="bs-docs-container hidden-print affix" id="mt-side-bar" role="complementary">
+            <button class="btn btn-ar btn-danger" (click)="updateConnectionString()">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

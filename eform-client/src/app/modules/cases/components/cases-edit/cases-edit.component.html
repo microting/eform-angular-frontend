@@ -1,0 +1,43 @@
+<header class="main-header main-header-title">
+  <div class="container-fluid">
+    <h1 class="page-title header-page-title">
+      <div class="container">
+        Cases
+      </div>
+    </h1>
+    <div class="pull-right">
+    </div>
+  </div>
+</header>
+
+<div class="container-fluid">
+  <div class="bs-docs-container">
+    <div class="row">
+      <div class="col-md-9" role="main">
+        <case-edit-element [element]="elem" *ngFor="let elem of replyElement.elementList"></case-edit-element>
+      </div>
+      <div class="col-md-3">
+        <div class="bs-docs-container hidden-print affix" id="mt-side-bar" role="complementary">
+          <ul class="nav bs-docs-sidebar">
+            <li class="active">
+              <a href="#inspection_v1_4">
+                <i class="icon-chevron-right">{{replyElement.label}}</i>
+              </a>
+              <ul class="nav">
+                <li *ngFor="let element of replyElement.elementList">
+                  <a href="#" [routerLink]="['/cases/edit', id]" fragment="section{{element.id}}">
+                    <i class="icon-chevron-right">{{element.label}}</i>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <br>
+            <li class="text-center">
+              <button class="btn btn-ar btn-danger" (click)="gem()" id="submit_form">Save</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

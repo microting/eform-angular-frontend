@@ -1,0 +1,89 @@
+import {Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {
+  CaseEditRequest,
+  CaseEditRequestField,
+  CaseEditRequestFieldValue,
+  CaseEditRequestGroupField,
+  CaseElement
+} from 'app/models';
+
+@Component({
+  selector: 'case-edit-element',
+  templateUrl: './case-edit-element.component.html'
+})
+
+export class CaseEditElementComponent implements OnInit {
+  @ViewChildren(CaseEditElementComponent) editElements: QueryList<CaseEditElementComponent>;
+  @Input() element: CaseElement = new CaseElement();
+
+  requestModel: CaseEditRequest = new CaseEditRequest();
+  requestModels: Array<CaseEditRequest> = new Array<CaseEditRequest>();
+
+  constructor() {
+  }
+
+  ngOnInit() {
+  }
+
+  clearRequestModel() {
+    this.requestModel.fields = [];
+    this.requestModel.groupFields = [];
+    this.requestModel.status = '';
+    this.requestModel.id = 0;
+    //
+    this.requestModels = [];
+  }
+
+  extractData() {
+    this.clearRequestModel();
+    this.requestModel.status = this.element.status;
+    this.requestModel.id = this.element.id;
+    // if it is single element
+    if (this.element.dataItemList) {
+      this.element.dataItemList.forEach(item => {
+        let elem = new CaseEditRequestField();
+        elem.fieldType = item.fieldType;
+        item.fieldValues.forEach(fieldValue => {
+          let val = new CaseEditRequestFieldValue();
+          val.fieldId = fieldValue.fieldId;
+          val.value = fieldValue.value;
+          elem.fieldValues.push(val);
+        });
+        this.requestModel.fields.push(elem);
+      });
+    }
+    else if (this.element.dataItemGroupList) {
+      this.element.dataItemGroupList.forEach(y => {
+        let group = new CaseEditRequestGroupField();
+        group.id = y.id;
+        group.label = y.label;
+        y.dataItemList.forEach(item => {
+          let elem = new CaseEditRequestField();
+          elem.fieldType = item.fieldType;
+          item.fieldValues.forEach(fieldValue => {
+            let val = new CaseEditRequestFieldValue();
+            val.fieldId = fieldValue.fieldId;
+            val.value = fieldValue.value;
+            elem.fieldValues.push(val);
+          });
+          group.fields.push(elem);
+        });
+        this.requestModel.groupFields.push(group);
+      });
+    }
+
+    this.editElements.forEach(x => {
+      x.extractData();
+      this.requestModels.push(x.requestModel);
+    });
+    this.requestModel.elementList = this.requestModels;
+  }
+
+  getStyleColorFromDataItem(dataItem: any) {
+    let style = '';
+    if (dataItem.Color) {
+      style = '#' + dataItem.Color + '';
+    }
+    return style;
+  }
+}

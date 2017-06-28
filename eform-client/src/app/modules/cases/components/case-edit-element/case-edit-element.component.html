@@ -1,0 +1,150 @@
+<section id="section{{element.id}}" *ngIf="element.dataItemList || element.dataItemGroupList">
+  <hr class="soften"/>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <p class="lead black-color">
+        {{element.label}}
+      </p>
+    </div>
+    <table class="table">
+      <tbody>
+      <tr>
+        <td>
+          <div *ngIf="element.approvalEnabled" class="radio">
+            <input [(ngModel)]="element.status" id="cl_v[@(dataE.Id)][approved]" name="cl_v[@(dataE.Id)]" type="radio"
+                   value="approved"
+            />
+            <label for="cl_v[@(dataE.Id)][approved]">Approved</label>
+          </div>
+          <div *ngIf="(element.reviewEnabled) && (element.approvalEnabled)" class="radio">
+            <input [(ngModel)]="element.status" id="cl_v[@(dataE.Id)][review]" name="cl_v[@(dataE.Id)]" type="radio"
+                   value="review"/>
+            <label for="cl_v[@(dataE.Id)][review]">Review</label>
+          </div>
+          <div *ngIf="element.approvalEnabled" class="radio">
+            <input [(ngModel)]="element.status" id="cl_v[@(dataE.Id)][not_approved]" name="cl_v[@(dataE.Id)]"
+                   type="radio" value="not_approved"
+            />
+            <label for="cl_v[@(dataE.Id)][not_approved]">Not approved</label>
+          </div>
+        </td>
+      </tr>
+      <ng-container *ngIf="element.dataItemList">
+        <ng-container *ngFor="let dataItem of element.dataItemList">
+          <tr [style.backgroundColor]="getStyleColorFromDataItem(dataItem)">
+            <td>
+              <strong>{{dataItem.label}}</strong>
+            </td>
+          </tr>
+          <tr [style.backgroundColor]="getStyleColorFromDataItem(dataItem)">
+            <td>
+
+              <div [ngSwitch]="dataItem.fieldType">
+                <div *ngSwitchCase="'Picture'">
+                  <element-picture [fieldValues]="dataItem.fieldValues"></element-picture>
+                </div>
+                <div *ngSwitchCase="'CheckBox'">
+                  <element-checkbox [(fieldValue)]="dataItem.fieldValues[0]"></element-checkbox>
+                </div>
+                <div *ngSwitchCase="'Number'">
+                  <element-number [(fieldValue)]="dataItem.fieldValues[0]"></element-number>
+                </div>
+                <div *ngSwitchCase="'Comment'">
+                  <element-comment (ngModelChange)="dsvsdv($event)"
+                                   [(fieldValue)]="dataItem.fieldValues[0]"></element-comment>
+                </div>
+                <div *ngSwitchCase="'Text'">
+                  <element-text [(fieldValue)]="dataItem.fieldValues[0]"></element-text>
+                </div>
+                <ng-container *ngSwitchCase="'Date'">
+                  <element-date [(ngModel)]="dataItem.fieldValues[0].value" [datepicker]="{format: 'mm-dd-yyyy' }"
+                                [timepicker]="false"></element-date>
+                </ng-container>
+                <div *ngSwitchCase="'SingleSelect'">
+                  <element-singleselect [(fieldValue)]="dataItem.fieldValues[0]"></element-singleselect>
+                </div>
+
+                <div *ngSwitchCase="'MultiSelect'">
+                  <element-multiselect [(fieldValue)]="dataItem.fieldValues[0]"></element-multiselect>
+                </div>
+                <div *ngSwitchDefault></div>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+      </ng-container>
+      <ng-container *ngIf="element.extraFieldsEnabled">
+        <tr>
+          <td>
+            ExtraFieldsEnabled
+          </td>
+        </tr>
+      </ng-container>
+      <ng-container *ngIf="element.dataItemGroupList">
+        <ng-container *ngFor="let dataItemGroup of element.dataItemGroupList">
+          <tr>
+            <td>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <p class="lead black-color">
+                    {{dataItemGroup.label}}
+                  </p>
+                </div>
+                <table class="table">
+                  <tbody>
+                  <ng-container *ngFor="let dataItem of dataItemGroup.dataItemList">
+                    <tr [style.backgroundColor]="getStyleColorFromDataItem(dataItem)">
+                      <td>
+                        <strong>{{dataItem.label}}</strong>
+                      </td>
+                    </tr>
+                    <tr [style.backgroundColor]="getStyleColorFromDataItem(dataItem)">
+                      <td>
+
+                        <div [ngSwitch]="dataItem.fieldType">
+                          <div *ngSwitchCase="'Picture'">
+                            <element-picture [fieldValues]="dataItem.fieldValues"></element-picture>
+                          </div>
+                          <div *ngSwitchCase="'CheckBox'">
+                            <element-checkbox [(fieldValue)]="dataItem.fieldValues[0]"></element-checkbox>
+                          </div>
+                          <div *ngSwitchCase="'Number'">
+                            <element-number [(fieldValue)]="dataItem.fieldValues[0]"></element-number>
+                          </div>
+                          <div *ngSwitchCase="'Comment'">
+                            <element-comment (ngModelChange)="dsvsdv($event)"
+                                             [(fieldValue)]="dataItem.fieldValues[0]"></element-comment>
+                          </div>
+                          <div *ngSwitchCase="'Text'">
+                            <element-text [(fieldValue)]="dataItem.fieldValues[0]"></element-text>
+                          </div>
+                          <ng-container *ngSwitchCase="'Date'">
+                            <element-date [(ngModel)]="dataItem.fieldValues[0].value"
+                                          [datepicker]="{format: 'mm-dd-yyyy' }" [timepicker]="false"></element-date>
+                          </ng-container>
+                          <div *ngSwitchCase="'SingleSelect'">
+                            <element-singleselect [(fieldValue)]="dataItem.fieldValues[0]"></element-singleselect>
+                          </div>
+
+                          <div *ngSwitchCase="'MultiSelect'">
+                            <element-multiselect [(fieldValue)]="dataItem.fieldValues[0]"></element-multiselect>
+                          </div>
+                          <div *ngSwitchDefault></div>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  </tbody>
+                </table>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+      </ng-container>
+      </tbody>
+    </table>
+  </div>
+</section>
+<ng-container *ngIf="element.elementList">
+  <case-edit-element [element]="elem" *ngFor="let elem of element.elementList"></case-edit-element>
+</ng-container>

@@ -1,0 +1,45 @@
+<header class="main-header main-header-title">
+  <div class="container-fluid">
+    <h1 class="page-title header-page-title">
+      <div class="container" style="width: 240px !important;">
+        Seacharble lists
+      </div>
+    </h1>
+    <div class="pull-right">
+      <button class="needs_tooltip btn btn-ar btn-success" tooltip='Create new searchable list'
+              (click)="showCreateAdvEntityGroupModal()" type="button">
+        Create new searchable list
+      </button>
+    </div>
+  </div>
+</header>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-8">
+      <div id="check_lists_filter" class="dataTables_filter form-inline">
+        <label>Søg:
+          <input type="search" class="form-control input-sm" (ngModelChange)="onSearchChanged($event)"
+                 [ngModel]="advEntityGroupListRequestModel.nameFilter"
+                 placeholder="">
+        </label>
+      </div>
+    </div>
+    <entity-search-pagination *ngIf="advEntityGroupListModel.numOfElements > advEntityGroupListRequestModel.pageSize"
+                              [limit]="advEntityGroupListRequestModel.pageSize"
+                              [size]="advEntityGroupListModel.numOfElements"
+                              [offset]="advEntityGroupListRequestModel.offset"
+                              (onPageChanged)="changePage($event)"></entity-search-pagination>
+  </div>
+  <eform-entity-search-grid [advEntityGroupListModel]="advEntityGroupListModel"
+                            [advEntityGroupListRequestModel]="advEntityGroupListRequestModel"
+                            (onEntityGroupListRequestChanged)="onEntityGroupListRequestChanged($event)"
+                            (onEntityGroupSelectedForEdit)="onEntityGroupSelectedForEdit($event)"
+                            (onEntityGroupChanged)="getEntityGroupList()"></eform-entity-search-grid>
+  <eform-spinner [middleActive]="spinnerStatus"></eform-spinner>
+</div>
+
+<edit-entity-group #editEntityGroupComponent
+                   [selectedId]="selectedId"
+                   (onLoading)="changeSpinnerStatus($event)"
+                   (onEntityGroupChanged)="getEntityGroupList()"></edit-entity-group>
+

@@ -1,0 +1,44 @@
+<header class="main-header main-header-title">
+  <div class="container-fluid">
+    <h1 class="page-title header-page-title">
+      <div class="container">
+        Edit:
+        {{siteDto.siteName}}
+      </div>
+    </h1>
+    <div class="pull-right">
+    </div>
+  </div>
+</header>
+<div class="edit_case">
+  <div class="container-fluid">
+    <div class="bs-docs-container">
+      <div class="row">
+        <div class="col-md-9" role="main">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+            </div>
+            <table class="table">
+              <tbody>
+              <tr>
+                <td>
+                  <strong>Name</strong>
+                </td>
+                <td>
+                  <input class="form-control" [(ngModel)]="siteModel.siteName" placeholder="{{siteDto.siteName}}"
+                         type="text" value="{{siteDto.siteName}}" name="siteName" id="siteName"/>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="bs-docs-container hidden-print affix" id="mt-side-bar" role="complementary">
+            <button class="btn btn-ar btn-danger" (click)="updateSingle()">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
