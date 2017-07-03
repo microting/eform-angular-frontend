@@ -2,27 +2,37 @@ const express = require('express');
 const compression = require('compression');
 const path = require('path');
 var httpProxy = require('http-proxy');
-
 const app = express();
+const defaultPort = 3000;
 
 // proxy
 var apiProxy = httpProxy.createProxyServer();
 var apiForwardingUrl = 'http://localhost:5000/';
+apiProxy.on('error', function(e) {
+  console.error('Error:');
+  console.info(e);
+  console.log('-------------------------------------');
+});
 
 // gzip
 app.use(compression());
-
 app.use(express.static(__dirname + '/dist'));
 
 // api handler
 app.all('/api/*', function (req, res) {
-  apiProxy.web(req, res, {target: apiForwardingUrl});
+  try {
+    apiProxy.web(req, res, {target: apiForwardingUrl});
+  } catch (ex) {
+    return next(ex)
+  }
 });
 
 // so that PathLocationStrategy can be used
-app.get('/*', function (req, res) {
+app.all('/*', function (req, res) {
   res.sendFile(path.join(__dirname + '/dist/index.html'));
 });
 
-// Start the app by listening on the default
-app.listen(process.env.PORT || 80);
+// Start the app by listening
+app.listen(defaultPort, function () {
+  console.log('Application started on port: ' + defaultPort);
+});
