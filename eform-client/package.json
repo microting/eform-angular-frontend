@@ -10,7 +10,9 @@
     "pree2e": "webdriver-manager update --standalone false --gecko false",
     "e2e": "protractor",
     "build": "ng build --aot -prod",
-    "server": "node server.js"
+    "server": "node server.js",
+    "winserver-install": "node svc.js install",
+    "winserver-uninstall": "node svc.js uninstall"
   },
   "private": true,
   "dependencies": {
@@ -35,7 +37,7 @@
     "ng2-dnd": "^4.2.0",
     "ngx-bootstrap": "^1.6.6",
     "pnotify": "^3.2.0",
-    "rxjs": "^5.1.0",
+    "rxjs": "^5.4.2",
     "trumbowyg": "^2.5.1",
     "ts-helpers": "^1.1.1",
     "wowjs": "^1.1.3",
