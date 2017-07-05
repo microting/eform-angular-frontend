@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/observable/range';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
   selector: 'entity-search-pagination',
