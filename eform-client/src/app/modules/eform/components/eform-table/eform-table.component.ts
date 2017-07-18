@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {EFormService, SitesService} from 'app/services';
 import {SiteNameDto, TemplateDto} from 'app/models';
 import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
-import {NotifyService} from '../../../helpers/services/notify.service';
+import {NotifyService} from '../../../../services/notify.service';
 import {EFormXmlModel} from '../../../../models/eFormTemplates/eform-xml.model';
 import {DeployModel} from '../../../../models/eFormTemplates/deploy.model';
 import {DeployCheckbox} from '../../../../models/eFormTemplates/deploy-checkbox.model';

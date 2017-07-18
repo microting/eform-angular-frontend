@@ -69,7 +69,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -84,12 +84,15 @@
   <ItemGroup>
     <Compile Include="API\OperationDataResult.cs" />
     <Compile Include="API\OperationResult.cs" />
+    <Compile Include="Models\Auth\AccountBindingModels.cs" />
+    <Compile Include="Models\Auth\ClaimBindingModel.cs" />
+    <Compile Include="Models\Auth\RoleBindingModels.cs" />
     <Compile Include="Models\Cases\Request\CaseEditRequest.cs" />
     <Compile Include="Models\Cases\Request\CaseEditRequestField.cs" />
     <Compile Include="Models\Cases\Request\CaseEditRequestFieldValue.cs" />
     <Compile Include="Models\Cases\Request\CaseEditRequestGroupField.cs" />
     <Compile Include="Models\Cases\Request\ReplyRequest.cs" />
-    <Compile Include="Models\ConnectionStringModel.cs" />
+    <Compile Include="Models\Settings\SettingsModel.cs" />
     <Compile Include="Models\DeployCheckbox.cs" />
     <Compile Include="Models\DeployModel.cs" />
     <Compile Include="Models\DeployToModel.cs" />
@@ -98,6 +101,8 @@
     <Compile Include="Models\SearchableList\AdvEntityGroupImportModel.cs" />
     <Compile Include="Models\SearchableList\AdvEntityItemModel.cs" />
     <Compile Include="Models\SearchableList\AdvEntityGroupListRequestModel.cs" />
+    <Compile Include="Models\Settings\ConnectionStringMainModel.cs" />
+    <Compile Include="Models\Settings\ConnectionStringSDKModel.cs" />
     <Compile Include="Models\SimpleSiteModel.cs" />
     <Compile Include="Models\SiteNameModel.cs" />
     <Compile Include="Models\WorkerModel.cs" />

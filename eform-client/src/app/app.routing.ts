@@ -2,6 +2,8 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 // Layouts
 import {FullLayoutComponent} from './layouts/fulllayout/fulllayout.component';
+import {SimpleLayoutComponent} from 'app/layouts/simple-layout/simple-layout.component';
+import {AuthComponent} from 'app/components/auth/auth.component';
 
 export const routes: Routes = [
   {
@@ -30,10 +32,26 @@ export const routes: Routes = [
       {
         path: 'settings',
         loadChildren: './modules/settings/settings.module#SettingsModule'
+      },
+      {
+        path: 'admin',
+        loadChildren: './modules/admin/admin.module#AdminModule'
       }
     ]
   },
-
+  {
+    path: 'login',
+    component: SimpleLayoutComponent,
+    data: {
+      title: 'Login'
+    },
+    children: [
+      {
+        path: '',
+        component: AuthComponent,
+      },
+    ]
+  },
   // otherwise redirect to home
   {path: '**', redirectTo: ''}
 ];

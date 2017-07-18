@@ -4,7 +4,8 @@ import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Observable';
 import {OperationDataResult, UnitsMethods} from '../modules/helpers/helpers.module';
 import {BaseService} from './base.service';
-import {UnitDto} from '../models/dto/unit.dto';
+import {Router} from '@angular/router';
+import {UnitDto} from 'app/models/dto';
 @Injectable()
 export class UnitsService extends BaseService {
 
@@ -12,8 +13,8 @@ export class UnitsService extends BaseService {
   private headers: Headers;
   private currentUser: any;
 
-  constructor(private _http: Http) {
-    super(_http);
+  constructor(private _http: Http, router: Router) {
+    super(_http, router);
     this.headers = new Headers();
     this.headers.append('Content-Type', 'application/json');
     this.headers.append('Accept', 'application/json');

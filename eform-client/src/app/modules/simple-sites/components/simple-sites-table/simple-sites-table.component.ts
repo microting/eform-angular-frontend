@@ -1,11 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {SiteDto} from '../../../../models/dto/site.dto';
-import {SimpleSitesService} from '../../../../services/simple-sites.service';
-import {NotifyService} from '../../../helpers/helpers.module';
 import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 import {Router} from '@angular/router';
-import {SimpleSiteModel} from '../../../../models/simpleSite/simple-site.model';
-import {UnitsService} from '../../../../services/units.service';
+import {SimpleSiteModel} from 'app/models/simpleSite';
+import {SiteDto} from 'app/models/dto';
+import {SimpleSitesService, NotifyService, UnitsService} from 'app/services';
 
 @Component({
   selector: 'app-simple-sites-table',
@@ -24,7 +22,11 @@ export class SimpleSitesTableComponent implements OnInit {
   spinnerStatus = true;
   sitesDto: Array<SiteDto>;
 
-  constructor(private simpleSitesService: SimpleSitesService, private notifyService: NotifyService, private router: Router, private unitsService: UnitsService) {
+  constructor(
+    private simpleSitesService: SimpleSitesService,
+    private notifyService: NotifyService,
+    private router: Router,
+    private unitsService: UnitsService) {
   }
 
   ngOnInit() {

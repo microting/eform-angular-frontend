@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {SiteNameDto} from '../../../../models/dto/site-name.dto';
-import {SitesService} from '../../../../services/sites.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {SiteNameModel} from '../../../../models/advanced/site-name.model';
-import {NotifyService} from '../../../helpers/helpers.module';
+import {NotifyService} from 'app/services/notify.service';
+import {SitesService} from 'app/services';
+import {SiteNameModel} from 'app/models/advanced';
+import {SiteNameDto} from 'app/models/dto';
 
 @Component({
   selector: 'app-site-edit',
@@ -30,7 +30,7 @@ export class SiteEditComponent implements OnInit {
     this.siteModel.id = this.id;
     this.sitesService.updateSingleSite(this.siteModel).subscribe(operation => {
       if (operation && operation.success) {
-        this.router.navigate(['/advanced/sites/']);
+        this.router.navigate(['/advanced/sites/']).then();
         this.notifyService.success({text: operation.message});
       } else {
         this.notifyService.error({text: operation.message || 'Error'});

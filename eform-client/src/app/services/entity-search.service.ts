@@ -1,19 +1,20 @@
 import {Injectable} from '@angular/core';
 import {Headers, Http} from '@angular/http';
+import {Router} from '@angular/router';
+import {AdvEntityGroupListModel} from 'app/models';
+import {AdvEntityGroupEditModel, AdvEntityGroupListRequestModel, AdvEntityGroupModel} from 'app/models/advanced';
+import {AdvSearchableEntityMethods} from 'app/modules/helpers/app.constants';
+import {OperationDataResult, OperationResult} from 'app/modules/helpers/operation.models';
+import {BaseService} from 'app/services/base.service';
 import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Observable';
-import {BaseService} from 'app/services/base.service';
-import {OperationDataResult, OperationResult} from 'app/modules/helpers/operation.models';
-import {AdvEntityGroupListModel} from 'app/models';
-import {AdvSearchableEntityMethods} from 'app/modules/helpers/app.constants';
-import {AdvEntityGroupEditModel, AdvEntityGroupListRequestModel, AdvEntityGroupModel} from 'app/models/advanced';
 
 @Injectable()
 export class EntitySearchService extends BaseService {
   private headers: Headers;
 
-  constructor(private _http: Http) {
-    super(_http);
+  constructor(private _http: Http, router: Router) {
+    super(_http, router);
     this.headers = new Headers();
     this.headers.append('Content-Type', 'application/json');
     this.headers.append('Accept', 'application/json');

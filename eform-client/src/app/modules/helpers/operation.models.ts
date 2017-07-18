@@ -8,9 +8,3 @@ export class OperationDataResult<T> extends OperationResult {
     super(success, message);
   }
 }
-
-export class RequestBaseModel {
-  toRequestJsonModel(): string {
-    return JSON.stringify(this);
-  }
-}

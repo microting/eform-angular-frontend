@@ -5,15 +5,15 @@ import {BaseService} from '../base.service';
 import {TemplateDto} from '../../models';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import {EFormXmlModel} from '../../models/eFormTemplates/eform-xml.model';
-import {DeployModel} from '../../models/eFormTemplates/deploy.model';
+import {Router} from '@angular/router';
+import {DeployModel, EFormXmlModel} from 'app/models/eFormTemplates';
 
 @Injectable()
 export class EFormService extends BaseService {
   private headers: Headers;
 
-  constructor(private _http: Http) {
-    super(_http);
+  constructor(private _http: Http, router: Router) {
+    super(_http, router);
     this.headers = new Headers();
     this.headers.append('Content-Type', 'application/json');
     this.headers.append('Accept', 'application/json');

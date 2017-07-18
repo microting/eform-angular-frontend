@@ -1,0 +1,33 @@
+<header class="main-header main-header-title">
+  <div class="container-fluid">
+    <h1 class="page-title header-page-title">
+      <div class="container" style="width: 300px !important;">
+        User management
+      </div>
+    </h1>
+    <div class="pull-right">
+      <button class="needs_tooltip btn btn-ar btn-success" tooltip='Create user'
+              (click)="showCreateUserModal()"
+              type="button">
+        Create new user
+      </button>
+    </div>
+  </div>
+</header>
+<div class="container-fluid">
+  <div class="row">
+    <user-pagination *ngIf="userModelList.totalUsers > paginationModel.pageSize"
+                     [limit]="paginationModel.pageSize"
+                     [size]="userModelList.totalUsers"
+                     [offset]="paginationModel.offset"
+                     (onPageChanged)="changePage($event)"></user-pagination>
+  </div>
+  <user-grid [userInfoModelList]="userInfoModelList"
+             (onUserSelectedForEdit)="onUserSelectedForEdit($event)"
+             (onUserListChanged)="getUserInfoList()"></user-grid>
+</div>
+
+<user-edit #userEditComponent
+           [selectedId]="selectedUserId"
+           (onUserListChanged)="getUserInfoList()"></user-edit>
+

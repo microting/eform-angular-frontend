@@ -88,7 +88,7 @@
  }
 
  .lb-nav a.lb-next {
-   background: url('images//next.png') right 48% no-repeat;
+   background: url('images/next.png') right 48% no-repeat;
  }
 
  .lb-data .lb-close {
@@ -440,7 +440,7 @@
  #footer {
    background-color: #333;
    color: #ccc;
-   padding: 17px 0;
+   padding: 13px 0;
    text-align: center;
    border-top: solid 1px #555;
  }

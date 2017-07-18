@@ -1,8 +1,3 @@
-import {Injectable} from '@angular/core';
-
-@Injectable()
-export class Configuration {
-}
 
 export let UnitsMethods = {
   GetAll: '/api/units/index',
@@ -56,4 +51,12 @@ export let AdvSearchableEntityMethods = {
   CreateSingle: '/api/searchable-groups/create',
   UpdateSingle: '/api/searchable-groups/update',
   ImportGroup: '/api/searchable-groups/import'
+};
+
+export let AdminMethods = {
+  GetUser: '/api/admin/get-users',
+  GetAllUsers: '/api/admin/get-users',
+  DeleteUser: '/api/admin/delete-user',
+  CreateUser: '/api/admin/create-user',
+  UpdateUser: '/api/admin/update-user'
 };

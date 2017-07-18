@@ -1,0 +1,13 @@
+.wrapper-top {
+  margin-top: 100px;
+}
+
+.img-wrapper {
+  max-height: 200px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.panel {
+  border: 0;
+}

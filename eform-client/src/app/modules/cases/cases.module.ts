@@ -1,5 +1,4 @@
 import {FormsModule} from '@angular/forms';
-import {CasesService} from '../../services/cases/cases.service';
 import {CasesRoutingModule} from './cases-routing.module';
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
@@ -39,8 +38,7 @@ import {
     ElementPictureComponent,
     ElementCheckboxComponent,
     ElementDateComponent
-  ],
-  providers: [CasesService]
+  ]
 })
 export class CasesModule {
 }

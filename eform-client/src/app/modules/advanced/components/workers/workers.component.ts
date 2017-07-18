@@ -1,9 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {WorkerDto} from '../../../../models/dto/worker.dto';
-import {WorkersService} from '../../../../services/workers.service';
 import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 import {Router} from '@angular/router';
-import {NotifyService, OperationDataResult} from '../../../helpers/helpers.module';
+import {WorkerDto} from 'app/models/dto';
+import {WorkersService, NotifyService} from 'app/services';
+import {OperationDataResult} from 'app/modules/helpers/operation.models';
 
 @Component({
   selector: 'app-workers',

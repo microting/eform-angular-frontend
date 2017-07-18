@@ -4,16 +4,17 @@ import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Observable';
 import {OperationDataResult, OperationResult, SitesMethods} from '../modules/helpers/helpers.module';
 import {BaseService} from './base.service';
-import {SiteNameDto} from '../models/dto/site-name.dto';
-import {SiteNameModel} from '../models/advanced/site-name.model';
+import {Router} from '@angular/router';
+import {SiteNameDto} from 'app/models/dto';
+import {SiteNameModel} from 'app/models/advanced';
+
+
 @Injectable()
 export class SitesService extends BaseService {
-
-
   private headers: Headers;
 
-  constructor(private _http: Http) {
-    super(_http);
+  constructor(private _http: Http, router: Router) {
+    super(_http, router);
     this.headers = new Headers();
     this.headers.append('Content-Type', 'application/json');
     this.headers.append('Accept', 'application/json');

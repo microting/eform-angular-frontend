@@ -1,4 +1,3 @@
-import {CasesMethods} from '../../modules/helpers/app.constants';
 import {BaseService} from '../base.service';
 import {Injectable} from '@angular/core';
 import {Headers, Http} from '@angular/http';
@@ -6,13 +5,15 @@ import {Observable} from 'rxjs/Observable';
 import {OperationDataResult, OperationResult} from '../../modules/helpers/helpers.module';
 import 'rxjs/add/operator/map';
 import {CaseModel, ReplyElement, ReplyRequest} from 'app/models';
+import {Router} from '@angular/router';
+import {CasesMethods} from 'app/modules/helpers/app.constants';
 
 @Injectable()
 export class CasesService extends BaseService {
   private headers: Headers;
 
-  constructor(private _http: Http) {
-    super(_http);
+  constructor(private _http: Http, router: Router) {
+    super(_http, router);
     this.headers = new Headers();
     this.headers.append('Content-Type', 'application/json');
     this.headers.append('Accept', 'application/json');

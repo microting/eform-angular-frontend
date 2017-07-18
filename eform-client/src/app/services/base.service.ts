@@ -1,47 +1,38 @@
-import {Headers, Http, RequestOptions, Response} from '@angular/http';
+import {Headers, Http, Response} from '@angular/http';
+import {Router} from '@angular/router';
+import {AuthResponseModel} from 'app/models/auth';
+import {NotifyService} from 'app/services/notify.service';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Observable';
 import {OperationDataResult, OperationResult} from '../modules/helpers/operation.models';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import {NotifyService} from 'app/modules/helpers/helpers.module';
 
 export class BaseService {
-  private baseHeaders: Headers;
-  private formOptions: RequestOptions;
-  private baseOptions: RequestOptions;
-
-  constructor(private http: Http) {
-    this.baseHeaders = new Headers();
-    this.baseHeaders.append('Content-Type', 'application/json');
-    this.baseHeaders.append('Accept', 'application/json');
-    const formHeaders = new Headers();
-    formHeaders.append('Content-Type', 'x-www-url-formencoded');
-    formHeaders.append('Accept', 'x-www-url-formencoded');
-    this.formOptions = new RequestOptions(formHeaders);
-    this.baseOptions = new RequestOptions({headers: this.baseHeaders});
-  }
-
-  addHeader(key: any, value: any) {
-    this.baseHeaders.append(key, value);
-    this.baseOptions = new RequestOptions(this.baseHeaders);
+  constructor(private http: Http, private router: Router) {
   }
 
   get<T>(method: string): Observable<T> {
-    return this.http.get(method, this.baseOptions)
+    return this.http.get(method, {headers: this.apiHeaders})
       .map(this.extractData)
       .catch(this.handleError);
   }
 
   post<T>(method: string, body: any): Observable<T> {
     const model = JSON.stringify(body);
-    return this.http.post(method, model, this.baseOptions)
+    return this.http.post(method, model, {headers: this.apiHeaders})
+      .map((response) => this.extractData<T>(response))
+      .catch(this.handleError);
+  }
+
+  postForm<T>(method: string, body: any): Observable<T> {
+    return this.http.post(method, body.toString(), {headers: this.formHeaders})
       .map((response) => this.extractData<T>(response))
       .catch(this.handleError);
   }
 
   postModel<TIn, TOut>(method: string, body: TIn): Observable<TOut> {
     //  var model = body.toRequestJsonModel();
-    return this.http.post(method, body, this.baseOptions)
+    return this.http.post(method, body, {headers: this.apiHeaders})
       .map((response) => this.extractData<TOut>(response))
       .catch(this.handleError);
   }
@@ -62,21 +53,57 @@ export class BaseService {
     return this.postModel<TIn, OperationDataResult<TOut>>(method, model);
   }
 
+  private get apiHeaders() {
+    const headers: Headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    const user: AuthResponseModel = JSON.parse(localStorage.getItem('currentAuth'));
+    // check user
+    if (user && user.access_token) {
+      headers.append('Authorization', 'Bearer ' + user.access_token);
+    }
+    return headers;
+  }
+
+  private get formHeaders() {
+    const headers: Headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    const user: AuthResponseModel = JSON.parse(localStorage.getItem('currentAuth'));
+    // check user
+    if (user && user.access_token) {
+      headers.append('Authorization', 'Bearer ' + user.access_token);
+    }
+    return headers;
+  }
+
   private extractData<T>(res: Response) {
     const body = res.json();
     return <T>body || {};
   }
 
+  private logOutWhenTokenFalse() {
+    localStorage.clear();
+    this.router.navigate(['/login']).then();
+  }
+
+
   handleError(error: Response | any) {
     let errMsg = '';
     const notify = new NotifyService();
 
-    // Handle 401 - Unauthorized
-    if (error.status === 401) {
-      errMsg = '401 - Invalid connection string';
+    // Handle 403 - Forbriden
+    if (error.status === 403) {
+      errMsg = '403 - Invalid connection string';
       notify.error({text: errMsg});
       console.error(errMsg);
       window.location.href = '/settings/connection-string';
+    }
+
+// Handle 403 - Unauthorized
+    if (error.status === 401) {
+      errMsg = '401 - Invalid auth';
+      notify.error({text: errMsg});
+      console.error(errMsg);
+      window.location.href = '/login';
     }
 
     try {

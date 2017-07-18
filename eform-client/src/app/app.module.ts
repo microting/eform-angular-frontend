@@ -1,9 +1,9 @@
-import {HelpersModule, NotifyService} from './modules/helpers/helpers.module';
+import {HelpersModule} from './modules/helpers/helpers.module';
 import {AppRoutingModule} from './app.routing';
 import {AdvancedModule} from 'app/modules/advanced/advanced.module';
-import {BrowserModule} from '@angular/platform-browser';
+import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {AppComponent} from './components/app.component';
 import {HeaderComponent} from './components/header/header.component';
@@ -13,27 +13,73 @@ import {FullLayoutComponent} from './layouts/fulllayout/fulllayout.component';
 import {SettingsModule} from './modules/settings/settings.module';
 import {DndModule} from 'ng2-dnd';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AdminModule} from 'app/modules/admin/admin.module';
+import {AuthComponent} from 'app/components/auth/auth.component';
+import {SimpleLayoutComponent} from 'app/layouts/simple-layout/simple-layout.component';
+import {SimpleSitesModule} from 'app/modules/simple-sites/simple-sites.module';
+import {EFormService} from 'app/services/eform/eform.service';
+import {
+  AdminService, EntitySearchService, SettingsService, SitesService, UnitsService,
+  WorkersService
+} from 'app/services';
+import {SimpleSitesService} from 'app/services/simple-sites.service';
+import {NotifyService} from 'app/services/notify.service';
+import {CasesService} from 'app/services/cases/cases.service';
+import {AuthService} from 'app/services/accounts/auth.service';
+
+// import {
+//   AdminService,
+//   AuthService,
+//   EntitySearchService,
+//   SettingsService,
+//   SitesService,
+//   UnitsService,
+//   EFormService,
+//   CasesService,
+//   SimpleSitesService,
+//   WorkersService
+// } from 'app/services';
+
 
 @NgModule({
   declarations: [
     AppComponent,
+    AuthComponent,
     HeaderComponent,
     FooterComponent,
     NavigationComponent,
-    FullLayoutComponent
+    FullLayoutComponent,
+    SimpleLayoutComponent
   ],
   imports: [
-    BrowserModule,
+    ReactiveFormsModule,
     FormsModule,
     AppRoutingModule,
+    SimpleSitesModule,
     AdvancedModule,
     HttpModule,
     SettingsModule,
     HelpersModule,
+    AdminModule,
     BrowserAnimationsModule,
+    CommonModule,
     DndModule.forRoot()
   ],
-  providers: [NotifyService],
+  providers: [NotifyService,
+    AuthService,
+    SitesService,
+    CasesService,
+    AdminService,
+    NotifyService,
+    UnitsService,
+    SitesService,
+    WorkersService,
+    UnitsService,
+    SimpleSitesService,
+    EntitySearchService,
+    SettingsService,
+    EFormService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

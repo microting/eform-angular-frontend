@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {WorkerDto} from '../../../../models/dto/worker.dto';
-import {WorkersService} from '../../../../services/workers.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {WorkerModel} from '../../../../models/advanced/worker.model';
-import {NotifyService} from '../../../helpers/helpers.module';
+import {WorkerDto} from 'app/models/dto';
+import {WorkerModel} from 'app/models/advanced';
+import {WorkersService, NotifyService} from 'app/services';
 
 @Component({
   selector: 'app-worker-edit',

@@ -1,8 +1,5 @@
-import {SitesService, UnitsService} from '../../../../services';
-
 import {HttpModule} from '@angular/http';
 import {RouterTestingModule} from '@angular/router/testing';
-import {HelpersModule, NotifyService} from '../../../helpers/helpers.module';
 import {TooltipModule} from 'ngx-bootstrap';
 import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
@@ -11,7 +8,9 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {WorkersComponent} from './workers.component';
 import {Ng2Bs3ModalModule} from 'ng2-bs3-modal/ng2-bs3-modal';
-import {WorkersService} from 'app/services';
+import {SitesService, UnitsService, WorkersService} from 'app/services';
+import {HelpersModule} from 'app/modules/helpers/helpers.module';
+import {NotifyService} from 'app/services/notify.service';
 
 describe('WorkersComponent', () => {
   let component: WorkersComponent;

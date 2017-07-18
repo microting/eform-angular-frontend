@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ConnectionStringModel} from '../../../../models/settings/connection-string.model';
+import {SettingsModel} from '../../../../models/settings/connection-string.model';
 import {SettingsService} from '../../../../services/settings.service';
 import {Router} from '@angular/router';
 
@@ -10,7 +10,7 @@ import {Router} from '@angular/router';
 })
 export class ConnectionStringComponent implements OnInit {
 
-  connectionStringModel: ConnectionStringModel = new ConnectionStringModel();
+  settingsModel: SettingsModel = new SettingsModel();
 
   constructor(private settingsService: SettingsService, private router: Router) {
   }
@@ -19,7 +19,7 @@ export class ConnectionStringComponent implements OnInit {
   }
 
   updateConnectionString() {
-    this.settingsService.updateConnectionString(this.connectionStringModel).subscribe(operation => {
+    this.settingsService.updateConnectionString(this.settingsModel).subscribe(operation => {
       if (operation && operation.success) {
         this.router.navigate(['']);
       }

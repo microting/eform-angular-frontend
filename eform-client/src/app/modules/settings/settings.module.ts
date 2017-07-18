@@ -4,7 +4,6 @@ import {ConnectionStringComponent} from './components/connection-string/connecti
 import {FormsModule} from '@angular/forms';
 import {SettingsRoutingModule} from './settings-routing.module';
 import {SettingsComponent} from './components/settings.component';
-import {SettingsService} from 'app/services';
 
 @NgModule({
   imports: [
@@ -12,8 +11,7 @@ import {SettingsService} from 'app/services';
     SettingsRoutingModule,
     FormsModule
   ],
-  declarations: [ConnectionStringComponent, SettingsComponent],
-  providers: [SettingsService]
+  declarations: [ConnectionStringComponent, SettingsComponent]
 })
 export class SettingsModule {
 }
