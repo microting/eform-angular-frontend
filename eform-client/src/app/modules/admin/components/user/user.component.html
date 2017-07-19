@@ -16,9 +16,9 @@
 </header>
 <div class="container-fluid">
   <div class="row">
-    <user-pagination *ngIf="userModelList.totalUsers > paginationModel.pageSize"
+    <user-pagination *ngIf="userInfoModelList.totalUsers > paginationModel.pageSize"
                      [limit]="paginationModel.pageSize"
-                     [size]="userModelList.totalUsers"
+                     [size]="userInfoModelList.totalUsers"
                      [offset]="paginationModel.offset"
                      (onPageChanged)="changePage($event)"></user-pagination>
   </div>

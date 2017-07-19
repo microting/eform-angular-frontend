@@ -259,9 +259,9 @@
     <Compile Include="Infrastructure\Identity\EformUserManager.cs" />
     <Compile Include="Infrastructure\Security\ApplicationOAuthProvider.cs" />
     <Compile Include="Infrastructure\Security\ChallengeResult.cs" />
-    <Compile Include="Migrations\201707161835437_InitialCreate.cs" />
-    <Compile Include="Migrations\201707161835437_InitialCreate.Designer.cs">
-      <DependentUpon>201707161835437_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201707190837078_InitialCreate.cs" />
+    <Compile Include="Migrations\201707190837078_InitialCreate.Designer.cs">
+      <DependentUpon>201707190837078_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -294,16 +294,15 @@
       <Name>eFromAPI.Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201707161835437_InitialCreate.resx">
-      <DependentUpon>201707161835437_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
   <ItemGroup>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201707190837078_InitialCreate.resx">
+      <DependentUpon>201707190837078_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

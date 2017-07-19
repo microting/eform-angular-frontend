@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Configuration;
-using System.Data;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Migrations;
-using System.Data.SqlClient;
 using System.IO;
 using System.Web.Configuration;
 using System.Web.Http;
-using eFormAPI.Web.Migrations;
 using eFormCore;
 using eFromAPI.Common.API;
 using eFromAPI.Common.Models.Settings;

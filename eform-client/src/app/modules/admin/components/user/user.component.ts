@@ -12,7 +12,7 @@ import {AdminService} from 'app/services';
 })
 export class UserComponent implements OnInit {
   @ViewChild('userEditComponent') userEditComponent: UserEditComponent;
-  userModelList: UserInfoModelList = new UserInfoModelList;
+  userInfoModelList: UserInfoModelList = new UserInfoModelList;
   userFullModel: UserRegisterModel = new UserRegisterModel;
   paginationModel: PaginationModel = new PaginationModel;
   spinnerStatus: boolean;
@@ -34,7 +34,7 @@ export class UserComponent implements OnInit {
   getUserInfoList() {
     this.adminService.getAllUsers(this.paginationModel).subscribe((data) => {
       if (data && data.model) {
-        this.userModelList = data.model;
+        this.userInfoModelList = data.model;
       }
     });
   }
