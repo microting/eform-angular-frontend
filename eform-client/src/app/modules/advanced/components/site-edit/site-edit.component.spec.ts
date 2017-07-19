@@ -1,7 +1,6 @@
 import {HttpModule} from '@angular/http';
 import {RouterTestingModule} from '@angular/router/testing';
 import {TooltipModule} from 'ngx-bootstrap';
-import {HelpersModule, NotifyService} from '../../../helpers/helpers.module';
 import {Ng2Bs3ModalModule} from 'ng2-bs3-modal/ng2-bs3-modal';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
@@ -23,10 +22,9 @@ describe('SiteEditComponent', () => {
         RouterTestingModule,
         HttpModule,
         TooltipModule.forRoot(),
-        Ng2Bs3ModalModule,
-        HelpersModule
+        Ng2Bs3ModalModule
       ],
-      providers: [UnitsService, WorkersService, SitesService, NotifyService],
+      providers: [UnitsService, WorkersService, SitesService],
       declarations: [SiteEditComponent]
     })
       .compileComponents();

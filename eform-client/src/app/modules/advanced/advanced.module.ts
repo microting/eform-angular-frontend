@@ -1,4 +1,4 @@
-import {HelpersModule, NotifyService} from '../helpers/helpers.module';
+import {HelpersModule} from '../helpers/helpers.module';
 import {FormsModule} from '@angular/forms';
 import {AdvancedRoutingModule} from './advanced-routing.module';
 import {NgModule} from '@angular/core';
@@ -8,9 +8,6 @@ import {AdvancedComponent} from './components/advanced.component';
 import {UnitsComponent} from './components/units/units.component';
 import {SitesComponent} from './components/sites/sites.component';
 import {WorkersComponent} from './components/workers/workers.component';
-
-import {UnitsService} from 'app/services/units.service';
-import {EntitySearchService, SitesService, WorkersService} from 'app/services';
 import {WorkerEditComponent} from './components/worker-edit/worker-edit.component';
 import {SiteEditComponent} from './components/site-edit/site-edit.component';
 import {TooltipModule} from 'ngx-bootstrap/tooltip';
@@ -40,7 +37,6 @@ import {EntitySearchPaginationComponent} from 'app/modules/advanced/components/e
     EntitySearchGridComponent,
     EntitySearchPaginationComponent
   ],
-  providers: [UnitsService, WorkersService, SitesService, NotifyService, EntitySearchService]
 })
 export class AdvancedModule {
 }

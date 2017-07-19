@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System.Diagnostics;
+using System.Web.Http;
 using System.Web.Mvc;
 
 namespace eFormAPI.Web
@@ -11,6 +12,12 @@ namespace eFormAPI.Web
             AutofacConfig.ConfigureContainer();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+
+            // Enable swagger
+            if (Debugger.IsAttached)
+            {
+                SwaggerConfig.Register(GlobalConfiguration.Configuration);
+            }
         }
     }
 }

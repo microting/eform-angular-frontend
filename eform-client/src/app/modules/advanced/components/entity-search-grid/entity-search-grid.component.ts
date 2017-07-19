@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {AdvEntityGroupListModel, AdvEntityGroupListRequestModel, AdvEntityGroupModel} from 'app/models/advanced';
 import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 import {EntitySearchService} from 'app/services';
-import {NotifyService} from 'app/modules/helpers/services/notify.service';
+import {NotifyService} from 'app/services/notify.service';
 
 @Component({
   selector: 'eform-entity-search-grid',

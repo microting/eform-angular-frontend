@@ -3,7 +3,7 @@ import {SiteDto} from '../../../../models/dto/site.dto';
 import {SimpleSiteModel} from '../../../../models/simpleSite/simple-site.model';
 import {SimpleSitesService} from '../../../../services/simple-sites.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {NotifyService} from '../../../helpers/services/notify.service';
+import {NotifyService} from '../../../../services/notify.service';
 
 @Component({
   selector: 'app-simple-site-edit',

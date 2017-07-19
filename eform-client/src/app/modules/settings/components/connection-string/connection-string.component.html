@@ -16,7 +16,7 @@
         <div class="col-md-9" role="main">
           <div class="panel panel-default">
             <div class="panel-heading">
-              Connection information to database
+              SDK database connection information
             </div>
             <table class="table">
               <tbody>
@@ -25,7 +25,7 @@
                   <strong>Data Source</strong>
                 </td>
                 <td>
-                  <input class="form-control" [(ngModel)]="connectionStringModel.source"
+                  <input class="form-control" [(ngModel)]="settingsModel.connectionStringSDK.source"
                          placeholder="COMPUTER_NAME\SQLEXPRESS" type="text" value="" name="source" id="source"/>
                 </td>
               </tr>
@@ -34,7 +34,7 @@
                   <strong>Initial Catalog</strong>
                 </td>
                 <td>
-                  <input class="form-control" [(ngModel)]="connectionStringModel.catalogue" placeholder="DATABASE_NAME"
+                  <input class="form-control" [(ngModel)]="settingsModel.connectionStringSDK.catalogue" placeholder="DATABASE_NAME"
                          type="text" value="" name="catalogue" id="catalogue"/>
                 </td>
               </tr>
@@ -43,7 +43,7 @@
                   <strong>Authentication type</strong>
                 </td>
                 <td>
-                  <input class="form-control" [(ngModel)]="connectionStringModel.auth"
+                  <input class="form-control" [(ngModel)]="settingsModel.connectionStringSDK.auth"
                          placeholder="Integrated Security=True" type="text" value="" name="auth" id="auth"/>
                 </td>
               </tr>
@@ -52,8 +52,48 @@
                   <strong>Token</strong>
                 </td>
                 <td>
-                  <input class="form-control" [(ngModel)]="connectionStringModel.token"
+                  <input class="form-control" [(ngModel)]="settingsModel.connectionStringSDK.token"
                          placeholder="12345678909876543210adfecdfefdae" type="text" value="" name="token" id="token"/>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-9" role="main">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              Main database connection information
+            </div>
+            <table class="table">
+              <tbody>
+              <tr>
+                <td>
+                  <strong>Data Source</strong>
+                </td>
+                <td>
+                  <input class="form-control" [(ngModel)]="settingsModel.connectionStringMain.source"
+                         placeholder="COMPUTER_NAME\SQLEXPRESS" type="text" value="" name="source" id="source"/>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Initial Catalog</strong>
+                </td>
+                <td>
+                  <input class="form-control" [(ngModel)]="settingsModel.connectionStringMain.catalogue" placeholder="DATABASE_NAME"
+                         type="text" value="" name="catalogue" id="catalogue"/>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Authentication type</strong>
+                </td>
+                <td>
+                  <input class="form-control" [(ngModel)]="settingsModel.connectionStringMain.auth"
+                         placeholder="Integrated Security=True" type="text" value="" name="auth" id="auth"/>
                 </td>
               </tr>
               </tbody>
@@ -62,8 +102,9 @@
         </div>
         <div class="col-md-3">
           <div class="bs-docs-container hidden-print affix" id="mt-side-bar" role="complementary">
-            <button class="btn btn-ar btn-danger" (click)="updateConnectionString()">Save</button>
+            <button class="btn btn-ar btn-danger" (click)="updateConnectionString()">Gem</button>
           </div>
+          <eform-spinner [middleActive]="spinnerStatus"></eform-spinner>
         </div>
       </div>
     </div>

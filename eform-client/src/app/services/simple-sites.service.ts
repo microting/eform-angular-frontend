@@ -4,18 +4,17 @@ import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Observable';
 import {OperationDataResult, OperationResult} from '../modules/helpers/helpers.module';
 import {BaseService} from './base.service';
-import {SiteDto} from '../models/dto/site.dto';
 import {SimpleSitesMethods} from '../modules/helpers/app.constants';
-import {SimpleSiteModel} from '../models/simpleSite/simple-site.model';
+import {Router} from '@angular/router';
+import {SiteDto} from 'app/models/dto';
+import {SimpleSiteModel} from 'app/models/simpleSite';
 
 @Injectable()
 export class SimpleSitesService extends BaseService {
-
-
   private headers: Headers;
 
-  constructor(private _http: Http) {
-    super(_http);
+  constructor(private _http: Http, router: Router) {
+    super(_http, router);
     this.headers = new Headers();
     this.headers.append('Content-Type', 'application/json');
     this.headers.append('Accept', 'application/json');
@@ -38,7 +37,7 @@ export class SimpleSitesService extends BaseService {
   }
 
   public createSingleSimpleSite = (model: SimpleSiteModel): Observable<OperationResult> => {
-    return this.postModelOperationResult<SimpleSiteModel>(SimpleSitesMethods.CreateSingle, model)
+    return this.postModelOperationResult<SimpleSiteModel>(SimpleSitesMethods.CreateSingle, model);
   }
 }
 

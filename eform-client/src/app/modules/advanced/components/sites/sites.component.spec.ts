@@ -1,7 +1,6 @@
 import {HttpModule} from '@angular/http';
 import {FormsModule} from '@angular/forms';
 import {TooltipModule} from 'ngx-bootstrap';
-import {HelpersModule, NotifyService} from '../../../helpers/helpers.module';
 
 import {CommonModule} from '@angular/common';
 import {Ng2Bs3ModalModule} from 'ng2-bs3-modal/ng2-bs3-modal';
@@ -11,6 +10,8 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {SitesComponent} from './sites.component';
 import {SitesService, UnitsService, WorkersService} from 'app/services';
+import {HelpersModule} from 'app/modules/helpers/helpers.module';
+import {NotifyService} from 'app/services/notify.service';
 
 describe('SitesComponent', () => {
   let component: SitesComponent;

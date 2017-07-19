@@ -4,15 +4,16 @@ import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Observable';
 import {OperationDataResult, OperationResult, WorkersMethods} from '../modules/helpers/helpers.module';
 import {BaseService} from './base.service';
-import {WorkerDto} from '../models/dto/worker.dto';
-import {WorkerModel} from '../models/advanced/worker.model';
+import {Router} from '@angular/router';
+import {WorkerDto} from 'app/models/dto';
+import {WorkerModel} from 'app/models/advanced';
 
 @Injectable()
 export class WorkersService extends BaseService {
   private headers: Headers;
 
-  constructor(private _http: Http) {
-    super(_http);
+  constructor(private _http: Http, router: Router) {
+    super(_http, router);
     this.headers = new Headers();
     this.headers.append('Content-Type', 'application/json');
     this.headers.append('Accept', 'application/json');

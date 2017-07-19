@@ -1,9 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {NotifyService} from '../../../helpers/helpers.module';
-import {SitesService} from '../../../../services/sites.service';
-import {SiteNameDto} from '../../../../models/dto/site-name.dto';
 import {Router} from '@angular/router';
 import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
+import {SiteNameDto} from 'app/models/dto';
+import {SitesService, NotifyService} from 'app/services';
 
 @Component({
   selector: 'app-sites',
@@ -18,7 +17,7 @@ export class SitesComponent implements OnInit {
   selectedSiteDto: SiteNameDto = new SiteNameDto();
 
   constructor(private sitesService: SitesService, private router: Router, private notifyService: NotifyService) {
-    this.sitesDto = new Array<SiteNameDto>();
+    this.sitesDto = [];
   }
 
   ngOnInit() {
@@ -43,13 +42,13 @@ export class SitesComponent implements OnInit {
       } else {
         this.notifyService.error({text: operation.message || 'Error'});
       }
-      this.deleteSiteModal.close();
+      this.deleteSiteModal.close().then();
     });
   }
 
   showDeleteSiteModal(siteNameDto: SiteNameDto) {
     this.selectedSiteDto = siteNameDto;
-    this.deleteSiteModal.open();
+    this.deleteSiteModal.open().then();
   }
 
   submitDeleteSiteModal(id: number) {

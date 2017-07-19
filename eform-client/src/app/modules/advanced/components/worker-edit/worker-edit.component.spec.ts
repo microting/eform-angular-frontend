@@ -1,5 +1,4 @@
 import {HttpModule} from '@angular/http';
-import {HelpersModule, NotifyService} from '../../../helpers/helpers.module';
 import {RouterTestingModule} from '@angular/router/testing';
 import {TooltipModule} from 'ngx-bootstrap';
 import {FormsModule} from '@angular/forms';
@@ -10,6 +9,8 @@ import {Ng2Bs3ModalModule} from 'ng2-bs3-modal/ng2-bs3-modal';
 
 import {WorkerEditComponent} from './worker-edit.component';
 import {SitesService, UnitsService, WorkersService} from 'app/services';
+import {HelpersModule} from 'app/modules/helpers/helpers.module';
+import {NotifyService} from 'app/services/notify.service';
 
 describe('WorkerEditComponent', () => {
   let component: WorkerEditComponent;

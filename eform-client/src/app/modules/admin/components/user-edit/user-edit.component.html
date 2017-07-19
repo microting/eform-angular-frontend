@@ -1,0 +1,119 @@
+<modal #createUserModal [size]="'lg'">
+  <modal-header [show-close]="true">
+    <h4 class="modal-title">Create user</h4>
+  </modal-header>
+  <modal-body>
+    <div class="container-fluid">
+      <div class="create_eform">
+        <div class="row">
+          <div class="form-group col-xs-12 col-md-6">
+            <label class="mt-validation-container">First name</label>
+            <input class="form-control" placeholder="John" type="text"
+                   [(ngModel)]="newUserModel.firstName"
+                   name="firstName"/>
+          </div>
+          <div class="form-group col-xs-12 col-md-6">
+            <label class="mt-validation-container">Last name</label>
+            <input class="form-control" placeholder="Smith" type="text"
+                   [(ngModel)]="newUserModel.lastName"
+                   name="lastName"/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-xs-12 col-md-6">
+            <label class="mt-validation-container">Email</label>
+            <input class="form-control" placeholder="example@mail.com" type="text"
+                   [(ngModel)]="newUserModel.email"
+                   name="email"/>
+          </div>
+          <div class="form-group col-xs-12 col-md-6">
+            <label class="mt-validation-container">Role</label>
+            <input class="form-control" placeholder="User" type="text"
+                   [(ngModel)]="newUserModel.role"
+                   name="role"/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-xs-12 col-md-6">
+            <label class="mt-validation-container">Password</label>
+            <input class="form-control" placeholder="Qq1234567$" type="text"
+                   [(ngModel)]="newUserModel.password"
+                   name="password"/>
+          </div>
+          <div class="form-group col-xs-12 col-md-6">
+            <label class="mt-validation-container">Password confirmation</label>
+            <input class="form-control" placeholder="Qq1234567$" type="text"
+                   [(ngModel)]="newUserModel.password"
+                   name="password-confirm"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </modal-body>
+  <modal-footer>
+    <button type="button" class="btn btn-default"
+            (click)="createUserModal.dismiss()">Cancel
+    </button>
+    <button type="button" class="btn btn-success" (click)="createUser()">Create</button>
+  </modal-footer>
+</modal>
+
+<modal #editUserModal>
+  <modal-header [show-close]="true">
+    <h4 class="modal-title">Edit user</h4>
+  </modal-header>
+  <modal-body>
+    <div class="container-fluid">
+      <div class="create_eform">
+        <div class="row">
+          <div class="form-group col-xs-12 col-md-6">
+            <label class="mt-validation-container">First name</label>
+            <input class="form-control" placeholder="John" type="text"
+                   [(ngModel)]="selectedUserModel.firstName"
+                   name="firstName"/>
+          </div>
+          <div class="form-group col-xs-12 col-md-6">
+            <label class="mt-validation-container">Last name</label>
+            <input class="form-control" placeholder="Smith" type="text"
+                   [(ngModel)]="selectedUserModel.lastName"
+                   name="lastName"/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-xs-12 col-md-6">
+            <label class="mt-validation-container">Email</label>
+            <input class="form-control" placeholder="example@mail.com" type="text"
+                   [(ngModel)]="selectedUserModel.email"
+                   name="email"/>
+          </div>
+          <div class="form-group col-xs-12 col-md-6">
+            <label class="mt-validation-container">Role</label>
+            <input class="form-control" placeholder="User" type="text"
+                   [(ngModel)]="selectedUserModel.role"
+                   name="role"/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-xs-12 col-md-6">
+            <label class="mt-validation-container">Password</label>
+            <input class="form-control" placeholder="Qq1234567$" type="text"
+                   [(ngModel)]="selectedUserModel.password"
+                   name="password"/>
+          </div>
+          <div class="form-group col-xs-12 col-md-6">
+            <label class="mt-validation-container">Password confirmation</label>
+            <input class="form-control" placeholder="Qq1234567$" type="text"
+                   [(ngModel)]="selectedUserModel.password"
+                   name="password-confirm"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </modal-body>
+  <modal-footer>
+    <button type="button" class="btn btn-default"
+            (click)="editUserModal.dismiss()">Cancel
+    </button>
+    <button type="button" class="btn btn-success" (click)="updateUser()">Update</button>
+  </modal-footer>
+</modal>

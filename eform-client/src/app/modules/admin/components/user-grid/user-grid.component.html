@@ -1,0 +1,90 @@
+<table border="0" cellpadding="0" cellspacing="0"
+       class="table table-striped table-bordered table-condensed table-hover dataTable no-footer"
+       id="units" role="grid" aria-describedby="check_lists_info" style="width: 100%;">
+  <thead>
+  <tr role="row">
+    <th class="col-md-2 text-center" rowspan="1" colspan="1">
+      #
+    </th>
+    <th class="col-md-3 text-center" rowspan="1" colspan="1">
+      Email
+    </th>
+    <th class="col-md-3 text-center" rowspan="1" colspan="1">
+      Created date
+    </th>
+    <th class="col-md-2 text-center" rowspan="1" colspan="1">
+      Role
+    </th>
+    <th class="col-md-2 text-center" rowspan="1" colspan="1">
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let userInfoModel of userInfoModelList">
+    <td class="text-center">
+      {{userInfoModel.id}}
+    </td>
+    <td class="text-center">
+      {{userInfoModel.email}}
+    </td>
+    <td class="text-center">
+      {{userInfoModel.createdDate}}
+    </td>
+    <td class="text-center">
+      {{userInfoModel.role}}
+    </td>
+    <td class="text-center">
+      <a tooltip="Edit user"
+         class="needs_tooltip btn btn-ar btn-sm btn-default" placement="top" container="body"
+         (click)="showEditUserModal(userInfoModel.id)"
+         type="button">
+        <span class="fa fa-pencil"></span>
+      </a>
+      <button tooltip="Delete user" placement="top" container="body"
+              class="needs_tooltip btn btn-ar btn-danger btn-sm dangerous-action" (click)="showDeleteUserModal()" type="button">
+        <span class="fa fa-trash-o"></span>
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<div class="row">
+  <div class="col-xs-6">
+    <div class="dataTables_info" id="searchable_groups_info">
+      Viser 10
+      til 1 af 10 linjer
+    </div>
+  </div>
+  <div class="col-xs-6"></div>
+</div>
+
+<modal #deleteUserModal>
+  <modal-header [show-close]="true">
+    <h4 class="modal-title">Delete user?</h4>
+  </modal-header>
+  <modal-body>
+    <div class="container-fluid">
+      <div class='row'>
+        <div class='col-md-3'><label>#</label></div>
+        <div class='col-md-9'> 1</div>
+      </div>
+      <div class='row'>
+        <div class='col-md-3'><label>Date</label></div>
+        <div class='col-md-9'> 27/04/2017</div>
+      </div>
+      <div class='row'>
+        <div class='col-md-3'><label>Email</label></div>
+        <div class='col-md-9'> gid733@ya.ru</div>
+      </div>
+      <div class='row'>
+        <div class='col-md-3'><label>Role</label></div>
+        <div class='col-md-9'> User</div>
+      </div>
+    </div>
+  </modal-body>
+  <modal-footer>
+    <button type="button" class="btn btn-danger" (click)="deleteUser()">OK</button>
+    <button type="button" class="btn btn-default" (click)="deleteUserModal.dismiss()">Cancel
+    </button>
+  </modal-footer>
+</modal>

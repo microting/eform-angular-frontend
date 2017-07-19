@@ -1,9 +1,8 @@
 import {CaseEditElementComponent} from '../case-edit-element/case-edit-element.component';
-import {CasesService} from '../../../../services/cases/cases.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {CaseEditRequest, ReplyElement, ReplyRequest} from 'app/models';
-import {NotifyService} from 'app/modules/helpers/helpers.module';
+import {CasesService, NotifyService} from 'app/services';
 
 @Component({
   selector: 'app-cases-edit',
@@ -15,7 +14,7 @@ export class CasesEditComponent implements OnInit {
   id: number;
   replyElement: ReplyElement = new ReplyElement();
   // REQUEST
-  requestModels: Array<CaseEditRequest> = new Array<CaseEditRequest>();
+  requestModels: Array<CaseEditRequest> = [];
   replyRequest: ReplyRequest = new ReplyRequest();
 
   constructor(private activateRoute: ActivatedRoute, private casesService: CasesService, private notifyService: NotifyService,
@@ -46,7 +45,7 @@ export class CasesEditComponent implements OnInit {
       } else {
         this.notifyService.error({text: operation.message || 'Error'});
       }
-    })
+    });
   }
 
   loadCase() {
@@ -57,6 +56,6 @@ export class CasesEditComponent implements OnInit {
       if (operation && operation.success) {
         this.replyElement = operation.model;
       }
-    })
+    });
   }
 }

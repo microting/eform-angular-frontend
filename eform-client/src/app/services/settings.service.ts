@@ -4,22 +4,21 @@ import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Observable';
 import {OperationResult, SettingsMethods} from '../modules/helpers/helpers.module';
 import {BaseService} from './base.service';
-import {ConnectionStringModel} from '../models/settings/connection-string.model';
+import {Router} from '@angular/router';
+import {SettingsModel} from 'app/models/settings';
 
 @Injectable()
 export class SettingsService extends BaseService {
-
-
   private headers: Headers;
 
-  constructor(private _http: Http) {
-    super(_http);
+  constructor(private _http: Http, router: Router) {
+    super(_http, router);
     this.headers = new Headers();
     this.headers.append('Content-Type', 'application/json');
     this.headers.append('Accept', 'application/json');
   }
 
-  public updateConnectionString = (model: ConnectionStringModel): Observable<OperationResult> => {
-    return this.postModelOperationResult<ConnectionStringModel>(SettingsMethods.UpdateConnectionString, model);
+  public updateConnectionString = (model: SettingsModel): Observable<OperationResult> => {
+    return this.postModelOperationResult<SettingsModel>(SettingsMethods.UpdateConnectionString, model);
   }
 }
