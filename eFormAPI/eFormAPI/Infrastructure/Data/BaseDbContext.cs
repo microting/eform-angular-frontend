@@ -12,6 +12,15 @@ namespace eFormAPI.Web.Infrastructure.Data
         {
             Configuration.ProxyCreationEnabled = false;
             Configuration.LazyLoadingEnabled = false;
+            Database.SetInitializer<BaseDbContext>(null);
+        }
+
+        public BaseDbContext(string connectionString)
+            : base(connectionString)
+        {
+            Configuration.ProxyCreationEnabled = false;
+            Configuration.LazyLoadingEnabled = false;
+            Database.SetInitializer<BaseDbContext>(null);
         }
 
         public static BaseDbContext Create()

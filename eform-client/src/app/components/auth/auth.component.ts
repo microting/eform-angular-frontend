@@ -3,6 +3,7 @@ import { FormBuilder, AbstractControl, FormGroup, Validators } from '@angular/fo
 import { Router } from '@angular/router';
 import {AuthResponseModel, LoginRequestModel} from 'app/models/auth';
 import {AuthService} from 'app/services/accounts/auth.service';
+import {SettingsService} from 'app/services';
 
 
 @Component({
@@ -18,6 +19,7 @@ export class AuthComponent implements OnInit {
 
   constructor(private router: Router,
               private authService: AuthService,
+              private settingsService: SettingsService,
               private fb: FormBuilder) { }
 
   submitForm(): void {
@@ -33,6 +35,11 @@ export class AuthComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.settingsService.connectionStringExist().subscribe((result) => {
+      if (result && result.success === false) {
+        this.router.navigate(['/settings/connection-string']).then();
+      }
+    });
     this.form = this.fb.group({
       username: [
         '',

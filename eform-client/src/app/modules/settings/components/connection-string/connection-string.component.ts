@@ -23,7 +23,7 @@ export class ConnectionStringComponent implements OnInit {
     this.settingsService.updateConnectionString(this.settingsModel).subscribe(operation => {
       if (operation && operation.success) {
         this.spinnerStatus = false;
-        this.router.navigate(['']);
+        this.router.navigate(['/login']).then();
       }
     });
   }

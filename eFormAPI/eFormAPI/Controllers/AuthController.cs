@@ -1,6 +1,7 @@
 ﻿using System.Net.Http;
 using System.Web.Http;
 using eFormAPI.Web.Infrastructure.Identity;
+using eFromAPI.Common.API;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
@@ -35,10 +36,10 @@ namespace eFormAPI.Web.Controllers
 
         // POST api/Account/Logout
         [Route("logout")]
-        public IHttpActionResult Logout()
+        public OperationResult Logout()
         {
             Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
-            return Ok();
+            return new OperationResult(true);
         }
 
         protected override void Dispose(bool disposing)

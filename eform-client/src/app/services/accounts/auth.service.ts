@@ -29,15 +29,23 @@ export class AuthService extends BaseService {
     });
   }
 
+  get isAuth(): boolean {
+    const auth = localStorage.getItem('currentAuth');
+    if (auth) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   // loginAsUser(userId: number): Observable<any> {
   //   return this.post(AuthMethods.LoginAsUser, { user_id: userId }).map((result) => {
   //     return result;
   //   });
   // }
   //
-  // logout(): Observable<any> {
-  //   return this.post(AuthMethods.Logout, null);
-  // }
+   logout(): Observable<any> {
+     return this.post(AuthMethods.Logout, {});
+   }
   //
   // restorePassword (email: string): Observable<string> {
   //   return this.post(AuthMethods.Restore, { email: email }).map((result) => {

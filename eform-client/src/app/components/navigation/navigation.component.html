@@ -3,7 +3,7 @@
     <div class="pull-right">
       <ul class="nav navbar-nav">
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">Full user name</a>
+          <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">{{userInfo.userName}}</a>
           <ul class="dropdown-menu dropdown-menu-right">
             <li>
               <a routerLink="/admin/users" routerLinkActive="active">Manage users</a>
@@ -12,7 +12,7 @@
               <a href="/users/edit">Change password</a>
             </li>
             <li>
-              <a data-no-turbolink="true" href="/sign_out">Sign out</a>
+              <a (click)="signOut()">Sign out</a>
             </li>
           </ul>
         </li>

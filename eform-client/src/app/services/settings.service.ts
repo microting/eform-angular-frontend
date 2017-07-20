@@ -18,7 +18,10 @@ export class SettingsService extends BaseService {
     this.headers.append('Accept', 'application/json');
   }
 
-  public updateConnectionString = (model: SettingsModel): Observable<OperationResult> => {
+  public updateConnectionString(model: SettingsModel): Observable<OperationResult> {
     return this.postModelOperationResult<SettingsModel>(SettingsMethods.UpdateConnectionString, model);
+  }
+  public connectionStringExist(): Observable<OperationResult> {
+    return this.getWithOperationResult(SettingsMethods.ConnectionStringExist);
   }
 }

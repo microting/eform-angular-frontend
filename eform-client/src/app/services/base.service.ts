@@ -103,6 +103,7 @@ export class BaseService {
       errMsg = '401 - Invalid auth';
       notify.error({text: errMsg});
       console.error(errMsg);
+      localStorage.clear();
       window.location.href = '/login';
     }
 

@@ -63,7 +63,7 @@ namespace eFormAPI.Web.Controllers
             }
             catch (Exception)
             {
-                return new OperationDataResult<List<Template_Dto>>(false, "Connection is missing");
+                throw new HttpResponseException(HttpStatusCode.Unauthorized);
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -43,13 +44,16 @@ namespace eFormAPI.Web.Controllers
         [Route("user-info")]
         public UserInfoViewModel GetUserInfo()
         {
-            var externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
-
+            var user = UserManager.FindById(User.Identity.GetUserId<int>());
+            if (user == null)
+            {
+                return null;
+            }
             return new UserInfoViewModel
             {
-                Email = User.Identity.GetUserName(),
-                HasRegistered = externalLogin == null,
-                LoginProvider = externalLogin?.LoginProvider
+                Email = user.Email,
+                Id = user.Id,
+                UserName = user.UserName
             };
         }
 
