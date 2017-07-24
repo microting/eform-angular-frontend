@@ -1,26 +1,36 @@
+using System.Configuration;
 using System.Linq;
 using eFormAPI.Web.Infrastructure.Data;
 using eFormAPI.Web.Infrastructure.Data.Entities;
 using eFormAPI.Web.Infrastructure.Identity;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace eFormAPI.Web.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<eFormAPI.Web.Infrastructure.Data.BaseDbContext>
+    internal sealed class EformMigrationsConfiguration : DbMigrationsConfiguration<BaseDbContext>
     {
-        public Configuration()
+        private string _connectionString;
+        public EformMigrationsConfiguration(string connectionString)
+        {
+            AutomaticMigrationsEnabled = false;
+            _connectionString = connectionString;
+        }
+
+        public EformMigrationsConfiguration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(BaseDbContext context)
         {
+            if (_connectionString == null)
+            {
+                _connectionString = ConfigurationManager.ConnectionStrings["eFormMainConnection"].ConnectionString;
+            }
             // Seed roles
-            var roleManager = new EformRoleManager(new EformRoleStore(new BaseDbContext()));
+            var roleManager = new EformRoleManager(new EformRoleStore(new BaseDbContext(_connectionString)));
             if (!roleManager.RoleExists("admin"))
             {
                 roleManager.Create(new EformRole("admin"));
@@ -30,7 +40,7 @@ namespace eFormAPI.Web.Migrations
                 roleManager.Create(new EformRole("user"));
             }
             // Seed admin and demo users
-            var manager = new EformUserManager(new EformUserStore(new BaseDbContext()));
+            var manager = new EformUserManager(new EformUserStore(new BaseDbContext(_connectionString)));
             var adminUser = new EformUser()
             {
                 UserName = "admin",

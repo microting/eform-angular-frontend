@@ -10,8 +10,8 @@ namespace eFormAPI.Web.Infrastructure.Helpers
 {
     public class EFormCoreHelper
     {
-        private Core _core = null;
-        private Logger Logger = LogManager.GetCurrentClassLogger();
+        private Core _core;
+        private readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         #region ExceptionHandling
 
@@ -53,7 +53,7 @@ namespace eFormAPI.Web.Infrastructure.Helpers
             }
             catch (Exception)
             {
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
+                throw new HttpResponseException(HttpStatusCode.Unauthorized);
             }
 
 
@@ -78,11 +78,9 @@ namespace eFormAPI.Web.Infrastructure.Helpers
             {
                 return _core;
             }
-            else
-            {
-                throw new Exception("Core is not running");
-                //return null;
-            }
+            Logger.Error("Core is not running");
+            throw new Exception("Core is not running");
+            //return null;
         }
 
         #region events

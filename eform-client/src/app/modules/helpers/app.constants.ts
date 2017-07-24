@@ -27,7 +27,8 @@ export let SimpleSitesMethods = {
 };
 
 export let SettingsMethods = {
-  UpdateConnectionString: '/api/settings/connectionstring'
+  UpdateConnectionString: '/api/settings/connection-string',
+  ConnectionStringExist: '/api/settings/connection-string-exist',
 };
 
 export let TemplatesMethods = {
@@ -54,6 +55,7 @@ export let AdvSearchableEntityMethods = {
 };
 
 export let AdminMethods = {
+  GetCurrentUser: '/api/account/user-info',
   GetUser: '/api/admin/get-users',
   GetAllUsers: '/api/admin/get-users',
   DeleteUser: '/api/admin/delete-user',

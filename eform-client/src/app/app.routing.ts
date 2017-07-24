@@ -4,6 +4,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {FullLayoutComponent} from './layouts/fulllayout/fulllayout.component';
 import {SimpleLayoutComponent} from 'app/layouts/simple-layout/simple-layout.component';
 import {AuthComponent} from 'app/components/auth/auth.component';
+import {AuthGuard} from 'app/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -15,18 +16,22 @@ export const routes: Routes = [
     children: [
       {
         path: '',
+        canActivate: [AuthGuard],
         loadChildren: './modules/eform/eform.module#EFormModule'
       },
       {
         path: 'advanced',
+        canActivate: [AuthGuard],
         loadChildren: './modules/advanced/advanced.module#AdvancedModule'
       },
       {
         path: 'simplesites',
+        canActivate: [AuthGuard],
         loadChildren: './modules/simple-sites/simple-sites.module#SimpleSitesModule'
       },
       {
         path: 'cases',
+        canActivate: [AuthGuard],
         loadChildren: './modules/cases/cases.module#CasesModule'
       },
       {
@@ -35,6 +40,7 @@ export const routes: Routes = [
       },
       {
         path: 'admin',
+        canActivate: [AuthGuard],
         loadChildren: './modules/admin/admin.module#AdminModule'
       }
     ]

@@ -67,10 +67,7 @@ namespace eFormAPI.Web.Controllers
                             ? new OperationResult(true, "Worker was updated successfully")
                             : new OperationResult(false, $"Worker with id {simpleSiteModel.Id} could not be updated!");
                     }
-                    else
-                    {
-                        return new OperationResult(false, "Worker with such UId could not be obtained");
-                    }
+                    return new OperationResult(false, "Worker with such UId could not be obtained");
                 }
                 return new OperationResult(false, "Worker UId not found");
             }
