@@ -56,15 +56,15 @@ namespace eFormAPI.Web.Controllers
             {
                 if (File.Exists(inputPath))
                 {
-                    File.Delete(inputPath);
-                    var fileStream = File.Create(inputPath);
-                    fileStream.Dispose();
+                    //File.Delete(inputPath);
+                    //var fileStream = File.Create(inputPath);
+                    //fileStream.Dispose();
+                    return new OperationResult(false, "Connection string already exist");
                 }
-                else
-                {
-                    var fileStream = File.Create(inputPath);
-                    fileStream.Dispose();
-                }
+
+                var fileStream = File.Create(inputPath);
+                fileStream.Dispose();
+
                 File.WriteAllText(inputPath, sdkConnectionString);
             }
             catch (Exception exception)

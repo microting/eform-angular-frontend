@@ -9,6 +9,7 @@ using eFromAPI.Common.Models.Cases.Request;
 
 namespace eFormAPI.Web.Controllers
 {
+    [Authorize]
     public class CasesController : ApiController
     {
         private readonly EFormCoreHelper _coreHelper = new EFormCoreHelper();

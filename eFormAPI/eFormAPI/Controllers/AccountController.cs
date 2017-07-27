@@ -53,7 +53,8 @@ namespace eFormAPI.Web.Controllers
             {
                 Email = user.Email,
                 Id = user.Id,
-                UserName = user.UserName
+                FirstName = user.FirstName,
+                LastName = user.LastName
             };
         }
 

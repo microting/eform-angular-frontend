@@ -56,7 +56,7 @@ export let AdvSearchableEntityMethods = {
 
 export let AdminMethods = {
   GetCurrentUser: '/api/account/user-info',
-  GetUser: '/api/admin/get-users',
+  GetUser: '/api/admin/user',
   GetAllUsers: '/api/admin/get-users',
   DeleteUser: '/api/admin/delete-user',
   CreateUser: '/api/admin/create-user',
