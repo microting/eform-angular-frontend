@@ -10,6 +10,7 @@ using eFromAPI.Common.Models;
 
 namespace eFormAPI.Web.Controllers
 {
+    [Authorize]
     public class SitesController : ApiController
     {
         private readonly EFormCoreHelper _coreHelper = new EFormCoreHelper();

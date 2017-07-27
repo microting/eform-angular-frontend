@@ -232,6 +232,7 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\CasesController.cs" />
     <Compile Include="Controllers\EntitySearchController.cs" />
@@ -262,6 +263,10 @@
     <Compile Include="Migrations\201707190837078_InitialCreate.cs" />
     <Compile Include="Migrations\201707190837078_InitialCreate.Designer.cs">
       <DependentUpon>201707190837078_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707270906018_UserFirstLast.cs" />
+    <Compile Include="Migrations\201707270906018_UserFirstLast.Designer.cs">
+      <DependentUpon>201707270906018_UserFirstLast.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\EformMigrationsConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -302,6 +307,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201707190837078_InitialCreate.resx">
       <DependentUpon>201707190837078_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707270906018_UserFirstLast.resx">
+      <DependentUpon>201707270906018_UserFirstLast.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -3,7 +3,7 @@ import {AdvEntityGroupEditModel, AdvEntityItemModel} from 'app/models/advanced';
 import {AdminService, EntitySearchService} from 'app/services';
 import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 import {NotifyService} from 'app/services/notify.service';
-import {UserRegisterModel} from 'app/models/user';
+import {UserInfoModel, UserRegisterModel} from 'app/models/user';
 
 @Component({
   selector: 'user-edit',
@@ -29,25 +29,38 @@ export class UserEditComponent implements OnChanges {
   }
 
   createUser() {
-    debugger;
     this.adminService.createUser(this.newUserModel).subscribe((data) => {
-      this.newUserModel = new UserRegisterModel;
-      this.onUserChanged.emit();
+      if (data.success) {
+        this.newUserModel = new UserRegisterModel;
+        this.notifyService.success({text: data.message || 'Error'});
+        this.onUserChanged.emit();
+      } else {
+        this.notifyService.error({text: data.message || 'Error'});
+      }
     });
   }
 
   updateUser() {
     this.adminService.updateUser(this.selectedUserModel).subscribe((data) => {
-      this.onUserChanged.emit();
+      if (data.success) {
+        this.notifyService.success({text: data.message || 'Error'});
+        this.onUserChanged.emit();
+      } else {
+        this.notifyService.error({text: data.message || 'Error'});
+      }
     });
   }
 
   getUserInfo() {
-    this.adminService.getUser(this.selectedId).subscribe((data) => {
-      if (data && data.model) {
-        this.selectedUserModel = data.model;
-      }
-    });
+    if (this.selectedId) {
+      this.adminService.getUser(this.selectedId).subscribe((data) => {
+        if (data && data.model) {
+          this.selectedUserModel = data.model;
+        }
+      });
+    } else {
+      this.selectedUserModel = Object.assign({}, new UserRegisterModel());
+    }
   }
 
   openEditUserModal(model: UserRegisterModel) {

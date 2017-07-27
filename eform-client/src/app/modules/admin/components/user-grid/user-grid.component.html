@@ -10,7 +10,7 @@
       Email
     </th>
     <th class="col-md-3 text-center" rowspan="1" colspan="1">
-      Created date
+      Full name
     </th>
     <th class="col-md-2 text-center" rowspan="1" colspan="1">
       Role
@@ -28,7 +28,7 @@
       {{userInfoModel.email}}
     </td>
     <td class="text-center">
-      {{userInfoModel.createdDate}}
+      {{userInfoModel.firstName}} {{userInfoModel.lastName}}
     </td>
     <td class="text-center">
       {{userInfoModel.role}}
@@ -41,7 +41,7 @@
         <span class="fa fa-pencil"></span>
       </a>
       <button tooltip="Delete user" placement="top" container="body"
-              class="needs_tooltip btn btn-ar btn-danger btn-sm dangerous-action" (click)="showDeleteUserModal()" type="button">
+              class="needs_tooltip btn btn-ar btn-danger btn-sm dangerous-action" (click)="showDeleteUserModal(userInfoModel)" type="button">
         <span class="fa fa-trash-o"></span>
       </button>
     </td>
@@ -66,19 +66,19 @@
     <div class="container-fluid">
       <div class='row'>
         <div class='col-md-3'><label>#</label></div>
-        <div class='col-md-9'> 1</div>
-      </div>
-      <div class='row'>
-        <div class='col-md-3'><label>Date</label></div>
-        <div class='col-md-9'> 27/04/2017</div>
+        <div class='col-md-9'> {{selectedUser.id}}</div>
       </div>
       <div class='row'>
         <div class='col-md-3'><label>Email</label></div>
-        <div class='col-md-9'> gid733@ya.ru</div>
+        <div class='col-md-9'> {{selectedUser.email}}</div>
+      </div>
+      <div class='row'>
+        <div class='col-md-3'><label>Full name</label></div>
+        <div class='col-md-9'> {{selectedUser.firstName}} {{selectedUser.lastName}}</div>
       </div>
       <div class='row'>
         <div class='col-md-3'><label>Role</label></div>
-        <div class='col-md-9'> User</div>
+        <div class='col-md-9'> {{selectedUser.role}}</div>
       </div>
     </div>
   </modal-body>

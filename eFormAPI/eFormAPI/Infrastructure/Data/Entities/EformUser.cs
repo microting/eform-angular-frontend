@@ -8,6 +8,8 @@ namespace eFormAPI.Web.Infrastructure.Data.Entities
     public class EformUser : IdentityUser<int, EformUserLogin, EformUserRole,
         EformUserClaim>
     {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(
             UserManager<EformUser, int> manager, string authenticationType)
         {

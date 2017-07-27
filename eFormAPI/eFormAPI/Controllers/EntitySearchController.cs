@@ -8,6 +8,7 @@ using eFromAPI.Common.Models.SearchableList;
 
 namespace eFormAPI.Web.Controllers
 {
+    [Authorize]
     public class EntitySearchController : ApiController
     {
         private readonly EFormCoreHelper _coreHelper = new EFormCoreHelper();

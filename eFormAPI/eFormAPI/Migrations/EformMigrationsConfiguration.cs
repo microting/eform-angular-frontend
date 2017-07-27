@@ -45,11 +45,15 @@ namespace eFormAPI.Web.Migrations
             {
                 UserName = "admin",
                 Email = "admin@mail.com",
-                EmailConfirmed = true,
+                FirstName = "admin",
+                LastName = "admin",
+                EmailConfirmed = true
             };
             var testUser = new EformUser()
             {
                 UserName = "test",
+                FirstName = "John",
+                LastName = "Smith",
                 Email = "test@mail.com",
                 EmailConfirmed = true,
             };

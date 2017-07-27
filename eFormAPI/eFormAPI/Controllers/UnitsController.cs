@@ -7,6 +7,7 @@ using eFromAPI.Common.API;
 
 namespace eFormAPI.Web.Controllers
 {
+    [Authorize]
     public class UnitsController : ApiController
     {
         private readonly EFormCoreHelper _coreHelper = new EFormCoreHelper();

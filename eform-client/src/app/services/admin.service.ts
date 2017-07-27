@@ -41,7 +41,7 @@ export class AdminService extends BaseService {
     return this.postModelOperationResult<UserRegisterModel>(AdminMethods.UpdateUser, model);
   }
 
-  public deleteUser = (userId: string): Observable<OperationResult> => {
+  public deleteUser = (userId: number): Observable<OperationResult> => {
     return this.getWithOperationResult(AdminMethods.DeleteUser + '/' + userId);
   }
 }

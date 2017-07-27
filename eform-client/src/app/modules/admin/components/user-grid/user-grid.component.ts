@@ -2,6 +2,8 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angula
 import {Router} from '@angular/router';
 import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 import {UserInfoModel} from 'app/models/user';
+import {AdminService} from 'app/services';
+import {NotifyService} from 'app/services/notify.service';
 
 @Component({
   selector: 'user-grid',
@@ -14,13 +16,16 @@ export class UserGridComponent implements OnInit {
   @Output() onUserListChanged: EventEmitter<void> = new EventEmitter<void>();
   @Output() onUserSelectedForEdit: EventEmitter<number> = new EventEmitter<number>();
 
-  constructor(private router: Router) {
+  selectedUser: UserInfoModel = new UserInfoModel;
+
+  constructor(private router: Router, private adminService: AdminService, private notifyService: NotifyService) {
   }
 
   ngOnInit() {
   }
 
-  showDeleteUserModal() {
+  showDeleteUserModal(model: UserInfoModel) {
+    this.selectedUser = model;
     this.deleteUserModal.open().then();
   }
 
@@ -29,6 +34,12 @@ export class UserGridComponent implements OnInit {
   }
 
   deleteUser() {
-
+    this.adminService.deleteUser(this.selectedUser.id).subscribe((data) => {
+      if (data.success) {
+        this.notifyService.success({text: data.message || 'Error'});
+      } else {
+        this.notifyService.error({text: data.message || 'Error'});
+      }
+    });
   }
 }
