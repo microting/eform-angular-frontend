@@ -5,4 +5,5 @@ export class UserInfoModel {
   firstName: string;
   lastName: string;
   role: string;
+  userName: string;
 }

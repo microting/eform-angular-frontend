@@ -23,6 +23,7 @@
                      (onPageChanged)="changePage($event)"></user-pagination>
   </div>
   <user-grid [userInfoModelList]="userInfoModelList"
+             [paginationModel]="paginationModel"
              (onUserSelectedForEdit)="onUserSelectedForEdit($event)"
              (onUserListChanged)="getUserInfoList()"></user-grid>
 </div>

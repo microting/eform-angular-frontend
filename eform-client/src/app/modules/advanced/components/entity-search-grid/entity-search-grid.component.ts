@@ -26,7 +26,6 @@ export class EntitySearchGridComponent {
   }
 
   sortByUid() {
-    debugger;
     this.isSortedByNameAsc = false;
     this.isSortedByNameDsc = false;
     this.advEntityGroupListRequestModel.sort = 'id';

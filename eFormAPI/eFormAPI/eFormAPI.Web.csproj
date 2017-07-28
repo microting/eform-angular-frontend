@@ -245,6 +245,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\Consts\EformRoles.cs" />
     <Compile Include="Infrastructure\Data\Entities\EformRole.cs" />
     <Compile Include="Infrastructure\Data\Entities\EformUserClaim.cs" />
     <Compile Include="Infrastructure\Data\Entities\EformUserLogin.cs" />
@@ -254,6 +255,7 @@
     <Compile Include="Infrastructure\Helpers\EFormCoreHelper.cs" />
     <Compile Include="Infrastructure\Data\BaseDbContext.cs" />
     <Compile Include="Infrastructure\Data\Entities\EformRoleStore.cs" />
+    <Compile Include="Infrastructure\Helpers\SettingsHelper.cs" />
     <Compile Include="Infrastructure\Identity\EformRoleManager.cs" />
     <Compile Include="Infrastructure\Data\Entities\EformUser.cs" />
     <Compile Include="Infrastructure\Identity\EformSignInManager.cs" />

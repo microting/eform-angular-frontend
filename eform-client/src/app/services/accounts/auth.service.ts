@@ -4,13 +4,14 @@ import {Router} from '@angular/router';
 import {AuthResponseModel, LoginRequestModel} from 'app/models/auth';
 import {Observable} from 'rxjs/Observable';
 import {BaseService} from '../base.service';
+import {ChangePasswordModel, UserInfoModel} from 'app/models';
 
 export let AuthMethods = {
   Login: 'api/auth/token',
   Logout: 'api/auth/logout',
   CheckToken: '/auth/is-token-actual',
   Restore: '/auth/restore',
-  LoginAsUser: '/auth/login-as-user'
+  ChangePassword: 'api/account/change-password'
 };
 
 @Injectable()
@@ -37,12 +38,25 @@ export class AuthService extends BaseService {
       return false;
     }
   }
+
+  get currentRole(): string {
+    const auth: UserInfoModel = JSON.parse(localStorage.getItem('currentAuth'));
+    if (auth && auth.role) {
+      return auth.role;
+    }
+    return '';
+  }
   // loginAsUser(userId: number): Observable<any> {
   //   return this.post(AuthMethods.LoginAsUser, { user_id: userId }).map((result) => {
   //     return result;
   //   });
   // }
   //
+  changePassword(model: ChangePasswordModel): Observable<any> {
+    return this.post(AuthMethods.ChangePassword, model).map((result) => {
+      return result;
+    });
+  }
    logout(): Observable<any> {
      return this.post(AuthMethods.Logout, {});
    }

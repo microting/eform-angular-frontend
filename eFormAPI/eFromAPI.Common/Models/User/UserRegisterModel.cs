@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace eFromAPI.Common.Models.User
+﻿namespace eFromAPI.Common.Models.User
 {
     public class UserRegisterModel
     {
@@ -16,5 +10,6 @@ namespace eFromAPI.Common.Models.User
         public string Password { get; set; }
         public string PasswordConfimation { get; set; }
         public string Role { get; set; }
+        public int? RoleId { get; set; }
     }
 }

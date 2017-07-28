@@ -31,10 +31,10 @@ namespace eFormAPI.Web.Infrastructure.Identity
             appUserManager.PasswordValidator = new PasswordValidator
             {
                 RequiredLength = 6,
-                RequireNonLetterOrDigit = true,
+                RequireNonLetterOrDigit = false,
                 RequireDigit = false,
-                RequireLowercase = true,
-                RequireUppercase = true,
+                RequireLowercase = false,
+                RequireUppercase = false,
             };
 
             appUserManager.EmailService = new EmailService();
@@ -47,7 +47,7 @@ namespace eFormAPI.Web.Infrastructure.Identity
                         dataProtectionProvider.Create("ASP.NET Identity"))
                     {
                         //Code for email confirmation and reset password life time
-                        TokenLifespan = TimeSpan.FromHours(6)
+                        TokenLifespan = TimeSpan.FromHours(10)
                     };
             }
             return appUserManager;

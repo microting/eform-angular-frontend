@@ -10,6 +10,7 @@ import {UserGridComponent} from 'app/modules/admin/components/user-grid/user-gri
 import {UserComponent} from 'app/modules/admin/components/user/user.component';
 import {UserPaginationComponent} from 'app/modules/admin/components/user-pagination/user-pagination.component';
 import {UserEditComponent} from 'app/modules/admin/components/user-edit/user-edit.component';
+import {ChangePasswordComponent} from 'app/modules/admin/components/change-password/change-password.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import {UserEditComponent} from 'app/modules/admin/components/user-edit/user-edi
   declarations: [
     AdminComponent,
     UserGridComponent,
+    ChangePasswordComponent,
     UserComponent,
     UserPaginationComponent,
     UserEditComponent

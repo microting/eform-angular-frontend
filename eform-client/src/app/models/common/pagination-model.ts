@@ -1,7 +1,7 @@
 export class PaginationModel {
-  pageIndex: number = 1;
-  pageSize: 10;
-  offset: 0;
+  pageIndex: number;
+  pageSize: number;
+  offset: number;
 
   constructor(pageIndex?, pageSize?, offset?) {
     this.pageSize = pageSize;

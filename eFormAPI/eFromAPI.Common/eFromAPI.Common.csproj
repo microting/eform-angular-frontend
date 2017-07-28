@@ -84,15 +84,15 @@
   <ItemGroup>
     <Compile Include="API\OperationDataResult.cs" />
     <Compile Include="API\OperationResult.cs" />
-    <Compile Include="Models\Auth\AccountBindingModels.cs" />
-    <Compile Include="Models\Auth\ClaimBindingModel.cs" />
-    <Compile Include="Models\Auth\RoleBindingModels.cs" />
+    <Compile Include="Models\Auth\ChangePasswordModel.cs" />
+    <Compile Include="Models\User\UserInfoViewModel.cs" />
     <Compile Include="Models\Cases\Request\CaseEditRequest.cs" />
     <Compile Include="Models\Cases\Request\CaseEditRequestField.cs" />
     <Compile Include="Models\Cases\Request\CaseEditRequestFieldValue.cs" />
     <Compile Include="Models\Cases\Request\CaseEditRequestGroupField.cs" />
     <Compile Include="Models\Cases\Request\ReplyRequest.cs" />
     <Compile Include="Models\PaginationModel.cs" />
+    <Compile Include="Models\Settings\AdminSetupModel.cs" />
     <Compile Include="Models\Settings\SettingsModel.cs" />
     <Compile Include="Models\DeployCheckbox.cs" />
     <Compile Include="Models\DeployModel.cs" />
@@ -106,6 +106,7 @@
     <Compile Include="Models\Settings\ConnectionStringSDKModel.cs" />
     <Compile Include="Models\SimpleSiteModel.cs" />
     <Compile Include="Models\SiteNameModel.cs" />
+    <Compile Include="Models\User\UserInfoModelList.cs" />
     <Compile Include="Models\User\UserRegisterModel.cs" />
     <Compile Include="Models\WorkerModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

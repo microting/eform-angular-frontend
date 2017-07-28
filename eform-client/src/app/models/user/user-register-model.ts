@@ -4,6 +4,6 @@ export class UserRegisterModel {
   lastName: string;
   email: string;
   password: string;
-  passwordConfirmation: string;
-  role: number;
+  role: string;
+  userName: string;
 }

@@ -19,6 +19,7 @@ export class UserComponent implements OnInit {
   selectedUserId: number;
 
   constructor(private adminService: AdminService) {
+    this.paginationModel = new PaginationModel(1, 10, 0);
   }
 
   showCreateUserModal() {
@@ -41,6 +42,7 @@ export class UserComponent implements OnInit {
 
   onUserSelectedForEdit(userId: any) {
     this.selectedUserId = userId;
+    this.userEditComponent.editUserModal.open();
   }
 
   changePage(e: any) {

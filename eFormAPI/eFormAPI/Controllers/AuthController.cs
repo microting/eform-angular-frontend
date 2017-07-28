@@ -5,6 +5,7 @@ using eFromAPI.Common.API;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.OAuth;
 
 namespace eFormAPI.Web.Controllers
 {
@@ -39,6 +40,7 @@ namespace eFormAPI.Web.Controllers
         public OperationResult Logout()
         {
             Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
+            Authentication.SignOut(OAuthDefaults.AuthenticationType);
             return new OperationResult(true);
         }
 
