@@ -3,13 +3,14 @@
     <div class="pull-right">
       <ul class="nav navbar-nav">
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">{{userInfo.firstName || ''}} {{userInfo.lastName || 'name'}}</a>
+          <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">{{userInfo.firstName || ''}}
+            {{userInfo.lastName || 'name'}}</a>
           <ul class="dropdown-menu dropdown-menu-right">
-            <li>
+            <li *ngIf="userInfo.role == 'admin'">
               <a routerLink="/admin/users" routerLinkActive="active">Manage users</a>
             </li>
             <li>
-              <a href="/users/edit">Change password</a>
+              <a routerLink="/admin/change-password" routerLinkActive="active">Change password</a>
             </li>
             <li>
               <a (click)="signOut()">Sign out</a>
@@ -63,11 +64,11 @@
                 Searchable list
               </a>
             </li>
-            <li class="">
-              <a routerLink="/" routerLinkActive="active">
-                Settings
-              </a>
-            </li>
+            <!--<li class="">-->
+              <!--<a routerLink="/" routerLinkActive="active">-->
+                <!--Settings-->
+              <!--</a>-->
+            <!--</li>-->
           </ul>
         </li>
       </ul>

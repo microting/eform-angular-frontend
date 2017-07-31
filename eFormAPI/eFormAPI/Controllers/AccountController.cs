@@ -4,10 +4,15 @@ using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using eFormAPI.Web.Infrastructure.Data;
+using eFormAPI.Web.Infrastructure.Data.Entities;
 using eFormAPI.Web.Infrastructure.Identity;
+using eFromAPI.Common.API;
 using eFromAPI.Common.Models.Auth;
+using eFromAPI.Common.Models.User;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -40,7 +45,6 @@ namespace eFormAPI.Web.Controllers
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
         // GET api/account/user-info
-        [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("user-info")]
         public UserInfoViewModel GetUserInfo()
         {
@@ -49,13 +53,40 @@ namespace eFormAPI.Web.Controllers
             {
                 return null;
             }
+            var rolemanager = new EformRoleManager(new EformRoleStore(BaseDbContext.Create()));
+            var roleId = user.Roles.FirstOrDefault()?.RoleId;
+            string role = null;
+            if (roleId != null) role = rolemanager.FindById((int) roleId)?.Name;
             return new UserInfoViewModel
             {
                 Email = user.Email,
                 Id = user.Id,
                 FirstName = user.FirstName,
-                LastName = user.LastName
+                LastName = user.LastName,
+                Role = role
             };
+        }
+
+        [HttpPost]
+        [Route("change-password")]
+        public async Task<OperationResult> ChangePassword(ChangePasswordModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var allErrors = ModelState.Values.SelectMany(v => v.Errors);
+                return new OperationResult(false, string.Join(" ", allErrors.Select(x=>x.ErrorMessage)));
+            }
+
+            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId<int>(),
+                model.OldPassword,
+                model.NewPassword);
+
+            if (!result.Succeeded)
+            {
+                return new OperationResult(false, string.Join(" ", result.Errors));
+            }
+
+            return new OperationResult(true);
         }
 
         #region Help Action
@@ -98,25 +129,6 @@ namespace eFormAPI.Web.Controllers
         //        Logins = logins,
         //        ExternalLoginProviders = GetExternalLogins(returnUrl, generateState)
         //    };
-        //}
-        //[Route("change-password")]
-        //public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-
-        //    IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId<int>(),
-        //        model.OldPassword,
-        //        model.NewPassword);
-
-        //    if (!result.Succeeded)
-        //    {
-        //        return GetErrorResult(result);
-        //    }
-
-        //    return Ok();
         //}
 
         //// POST api/Account/SetPassword

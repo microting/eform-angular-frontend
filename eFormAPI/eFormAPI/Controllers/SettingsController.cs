@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Configuration;
-using System.Data.Common;
-using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Migrations;
 using System.IO;
-using System.Linq;
 using System.Web.Configuration;
 using System.Web.Http;
-using eFormAPI.Web.Infrastructure.Data;
+using eFormAPI.Web.Infrastructure.Helpers;
 using eFormAPI.Web.Migrations;
 using eFormCore;
 using eFromAPI.Common.API;
@@ -95,6 +92,8 @@ namespace eFormAPI.Web.Controllers
                 };
                 var migrator = new DbMigrator(migrationConfiguration);
                 migrator.Update();
+                var settingsHelper = new SettingsHelper(mainConnectionString);
+                settingsHelper.CreateAdminUser(settingsModel.AdminSetupModel);
             }
             catch (Exception exception)
             {

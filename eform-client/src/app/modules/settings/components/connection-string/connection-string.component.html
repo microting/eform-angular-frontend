@@ -12,101 +12,169 @@
 <div class="edit_case">
   <div class="container-fluid">
     <div class="bs-docs-container">
-      <div class="row">
-        <div class="col-md-9" role="main">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              SDK database connection information
+      <form #settingsForm="ngForm">
+        <div class="row">
+          <div class="col-md-10" role="main">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                Admin information
+              </div>
+              <table class="table">
+                <tbody>
+                <tr>
+                  <td class="col-md-2">
+                    <strong>Username*</strong>
+                  </td>
+                  <td>
+                    <input class="form-control" [(ngModel)]="settingsModel.adminSetupModel.userName" required
+                           placeholder="Please enter the admin username..." #userName="ngModel"
+                           type="text" value="" name="userName" id="userName"/>
+                  </td>
+                  <td class="col-md-2">
+                    <strong>First name</strong>
+                  </td>
+                  <td>
+                    <input class="form-control" [(ngModel)]="settingsModel.adminSetupModel.firstName"
+                           placeholder="Please enter the admin first name..." type="text" value="" name="firstName" #firstName="ngModel"
+                           id="firstName"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="col-md-2">
+                    <strong>Password*</strong>
+                  </td>
+                  <td>
+                    <input class="form-control" [(ngModel)]="settingsModel.adminSetupModel.password"
+                           placeholder="Please enter the admin password" required type="text" value="" name="password" #password="ngModel"
+                           id="password"/>
+                  </td>
+                  <td class="col-md-2">
+                    <strong>Last name</strong>
+                  </td>
+                  <td>
+                    <input class="form-control" [(ngModel)]="settingsModel.adminSetupModel.lastName"
+                           placeholder="Please enter the admin last name..." type="text" value="" name="lastName" #lastName="ngModel"
+                           id="lastName"/>
+                  </td>
+                </tr>
+                <tr>
+
+                  <td class="col-md-2">
+                    <strong>Email</strong>
+                  </td>
+                  <td>
+                    <input class="form-control" [(ngModel)]="settingsModel.adminSetupModel.email"
+                           placeholder="Please enter the admin email..." type="text" value="" name="email" id="email" #email="ngModel"/>
+                  </td>
+                  <td class="col-md-2">
+
+                  </td>
+                  <td>
+
+                  </td>
+                </tr>
+                </tbody>
+              </table>
             </div>
-            <table class="table">
-              <tbody>
-              <tr>
-                <td>
-                  <strong>Data Source</strong>
-                </td>
-                <td>
-                  <input class="form-control" [(ngModel)]="settingsModel.connectionStringSDK.source"
-                         placeholder="COMPUTER_NAME\SQLEXPRESS" type="text" value="" name="source" id="source"/>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Initial Catalog</strong>
-                </td>
-                <td>
-                  <input class="form-control" [(ngModel)]="settingsModel.connectionStringSDK.catalogue" placeholder="DATABASE_NAME"
-                         type="text" value="" name="catalogue" id="catalogue"/>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Authentication type</strong>
-                </td>
-                <td>
-                  <input class="form-control" [(ngModel)]="settingsModel.connectionStringSDK.auth"
-                         placeholder="Integrated Security=True" type="text" value="" name="auth" id="auth"/>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Token</strong>
-                </td>
-                <td>
-                  <input class="form-control" [(ngModel)]="settingsModel.connectionStringSDK.token"
-                         placeholder="12345678909876543210adfecdfefdae" type="text" value="" name="token" id="token"/>
-                </td>
-              </tr>
-              </tbody>
-            </table>
           </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-9" role="main">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              Main database connection information
+          <div class="col-md-2">
+            <div class="bs-docs-container hidden-print affix" id="mt-side-bar" role="complementary">
+              <button class="btn btn-ar btn-danger" [disabled]="!settingsForm.form.valid" (click)="updateConnectionString()">Gem</button>
             </div>
-            <table class="table">
-              <tbody>
-              <tr>
-                <td>
-                  <strong>Data Source</strong>
-                </td>
-                <td>
-                  <input class="form-control" [(ngModel)]="settingsModel.connectionStringMain.source"
-                         placeholder="COMPUTER_NAME\SQLEXPRESS" type="text" value="" name="source" id="source"/>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Initial Catalog</strong>
-                </td>
-                <td>
-                  <input class="form-control" [(ngModel)]="settingsModel.connectionStringMain.catalogue" placeholder="DATABASE_NAME"
-                         type="text" value="" name="catalogue" id="catalogue"/>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Authentication type</strong>
-                </td>
-                <td>
-                  <input class="form-control" [(ngModel)]="settingsModel.connectionStringMain.auth"
-                         placeholder="Integrated Security=True" type="text" value="" name="auth" id="auth"/>
-                </td>
-              </tr>
-              </tbody>
-            </table>
+            <eform-spinner [middleActive]="spinnerStatus"></eform-spinner>
           </div>
         </div>
-        <div class="col-md-3">
-          <div class="bs-docs-container hidden-print affix" id="mt-side-bar" role="complementary">
-            <button class="btn btn-ar btn-danger" (click)="updateConnectionString()">Gem</button>
+        <!--SDK database connection information-->
+        <div class="row">
+          <div class="col-md-5" role="main">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                SDK database connection information
+              </div>
+              <table class="table">
+                <tbody>
+                <tr>
+                  <td class="col-md-4">
+                    <strong>Data Source*</strong>
+                  </td>
+                  <td>
+                    <input class="form-control" [(ngModel)]="settingsModel.connectionStringSDK.source"
+                           placeholder="COMPUTER_NAME\SQLEXPRESS" type="text" #sourceSdk="ngModel" value="" required name="source" id="source"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Initial Catalog*</strong>
+                  </td>
+                  <td>
+                    <input class="form-control" [(ngModel)]="settingsModel.connectionStringSDK.catalogue"
+                           placeholder="DATABASE_NAME"
+                           type="text" value="" name="catalogue" required #catalogueSdk="ngModel" id="catalogue"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="col-md-4">
+                    <strong>Authentication type*</strong>
+                  </td>
+                  <td>
+                    <input class="form-control" [(ngModel)]="settingsModel.connectionStringSDK.auth"
+                           placeholder="Integrated Security=True" #authTypeSdk="ngModel" type="text" value="" name="auth" id="auth"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="col-md-4">
+                    <strong>Token*</strong>
+                  </td>
+                  <td>
+                    <input class="form-control" [(ngModel)]="settingsModel.connectionStringSDK.token"
+                           placeholder="12345678909876543210adfecdfefdae" #tokenSdk="ngModel" required type="text" value="" name="token" id="token"/>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-          <eform-spinner [middleActive]="spinnerStatus"></eform-spinner>
+          <div class="col-md-5" role="main">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                Main database connection information
+              </div>
+              <table class="table">
+                <tbody>
+                <tr>
+                  <td class="col-md-4">
+                    <strong>Data Source*</strong>
+                  </td>
+                  <td>
+                    <input class="form-control" [(ngModel)]="settingsModel.connectionStringMain.source"
+                           placeholder="COMPUTER_NAME\SQLEXPRESS" type="text" required #sourceAuth="ngModel" value="" name="source" id="source"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="col-md-4">
+                    <strong>Initial Catalog*</strong>
+                  </td>
+                  <td>
+                    <input class="form-control" [(ngModel)]="settingsModel.connectionStringMain.catalogue"
+                           placeholder="DATABASE_NAME"
+                           type="text" value="" name="catalogue" required #catalogueAuth="ngModel" id="catalogue"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="col-md-4">
+                    <strong>Authentication type*</strong>
+                  </td>
+                  <td>
+                    <input class="form-control" [(ngModel)]="settingsModel.connectionStringMain.auth"
+                           placeholder="Integrated Security=True" type="text" required #typeAuth="ngModel" value="" name="auth" id="auth"/>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </div>

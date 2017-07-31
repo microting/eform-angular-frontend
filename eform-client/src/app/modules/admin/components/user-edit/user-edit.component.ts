@@ -12,7 +12,7 @@ import {UserInfoModel, UserRegisterModel} from 'app/models/user';
 })
 export class UserEditComponent implements OnChanges {
   @Input() selectedId: number;
-  @Output() onUserChanged = new EventEmitter<void>();
+  @Output() onUserListChanged = new EventEmitter<void>();
   @ViewChild('editUserModal') editUserModal: ModalComponent;
   @ViewChild('createUserModal') createUserModal: ModalComponent;
 
@@ -33,7 +33,8 @@ export class UserEditComponent implements OnChanges {
       if (data.success) {
         this.newUserModel = new UserRegisterModel;
         this.notifyService.success({text: data.message || 'Error'});
-        this.onUserChanged.emit();
+        this.onUserListChanged.emit();
+        this.createUserModal.dismiss().then();
       } else {
         this.notifyService.error({text: data.message || 'Error'});
       }
@@ -44,7 +45,8 @@ export class UserEditComponent implements OnChanges {
     this.adminService.updateUser(this.selectedUserModel).subscribe((data) => {
       if (data.success) {
         this.notifyService.success({text: data.message || 'Error'});
-        this.onUserChanged.emit();
+        this.onUserListChanged.emit();
+        this.editUserModal.dismiss().then();
       } else {
         this.notifyService.error({text: data.message || 'Error'});
       }

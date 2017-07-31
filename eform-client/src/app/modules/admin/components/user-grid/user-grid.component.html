@@ -6,10 +6,13 @@
     <th class="col-md-2 text-center" rowspan="1" colspan="1">
       #
     </th>
-    <th class="col-md-3 text-center" rowspan="1" colspan="1">
+    <th class="col-md-2 text-center" rowspan="1" colspan="1">
+      UserName
+    </th>
+    <th class="col-md-2 text-center" rowspan="1" colspan="1">
       Email
     </th>
-    <th class="col-md-3 text-center" rowspan="1" colspan="1">
+    <th class="col-md-2 text-center" rowspan="1" colspan="1">
       Full name
     </th>
     <th class="col-md-2 text-center" rowspan="1" colspan="1">
@@ -20,9 +23,12 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let userInfoModel of userInfoModelList">
+  <tr *ngFor="let userInfoModel of userInfoModelList.userList">
     <td class="text-center">
       {{userInfoModel.id}}
+    </td>
+    <td class="text-center">
+      {{userInfoModel.userName}}
     </td>
     <td class="text-center">
       {{userInfoModel.email}}
@@ -51,8 +57,8 @@
 <div class="row">
   <div class="col-xs-6">
     <div class="dataTables_info" id="searchable_groups_info">
-      Viser 10
-      til 1 af 10 linjer
+      Viser {{this.paginationModel.offset + 1}}
+      til {{getLastPageNumber()}} af {{userInfoModelList.totalUsers}} linjer
     </div>
   </div>
   <div class="col-xs-6"></div>

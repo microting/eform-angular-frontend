@@ -5,3 +5,4 @@ export * from './eFormTemplates';
 export * from './simpleSite';
 export * from './cases'
 export * from './auth'
+export * from './user'

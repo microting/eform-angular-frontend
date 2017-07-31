@@ -28,7 +28,7 @@ namespace eFormAPI.Web.Infrastructure.Security
 
             if (user == null)
             {
-                context.SetError("invalid_grant", "The user name or password is incorrect.");
+                context.SetError("The user name or password is incorrect.", "The user name or password is incorrect.");
                 return;
             }
 

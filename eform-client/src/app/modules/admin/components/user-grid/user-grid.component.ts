@@ -4,6 +4,8 @@ import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 import {UserInfoModel} from 'app/models/user';
 import {AdminService} from 'app/services';
 import {NotifyService} from 'app/services/notify.service';
+import {UserInfoModelList} from 'app/models/user/user-info-model-list';
+import {PaginationModel} from 'app/models/common';
 
 @Component({
   selector: 'user-grid',
@@ -11,7 +13,8 @@ import {NotifyService} from 'app/services/notify.service';
   styleUrls: ['./user-grid.component.css']
 })
 export class UserGridComponent implements OnInit {
-  @Input() userInfoModelList: Array<UserInfoModel> = [];
+  @Input() userInfoModelList: UserInfoModelList = new UserInfoModelList;
+  @Input() paginationModel: PaginationModel = new PaginationModel;
   @ViewChild('deleteUserModal') deleteUserModal: ModalComponent;
   @Output() onUserListChanged: EventEmitter<void> = new EventEmitter<void>();
   @Output() onUserSelectedForEdit: EventEmitter<number> = new EventEmitter<number>();
@@ -37,9 +40,19 @@ export class UserGridComponent implements OnInit {
     this.adminService.deleteUser(this.selectedUser.id).subscribe((data) => {
       if (data.success) {
         this.notifyService.success({text: data.message || 'Error'});
+        this.onUserListChanged.emit();
+        this.deleteUserModal.dismiss().then();
       } else {
         this.notifyService.error({text: data.message || 'Error'});
       }
     });
+  }
+
+  getLastPageNumber(): number {
+    let lastPage = this.paginationModel.offset + this.paginationModel.pageSize;
+    if (lastPage > this.userInfoModelList.totalUsers) {
+      lastPage = this.userInfoModelList.totalUsers;
+    }
+    return lastPage;
   }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -210,6 +211,7 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public HttpResponseMessage GetImage(string fileName)
         {
             string filePath = HttpContext.Current.Server.MapPath($"~/output/datafolder/picture/{fileName}");
