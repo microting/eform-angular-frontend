@@ -22,6 +22,7 @@ namespace eFormAPI.Web.Infrastructure.Security
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
+
             var userManager = context.OwinContext.GetUserManager<EformUserManager>();
 
             EformUser user = await userManager.FindAsync(context.UserName, context.Password);
