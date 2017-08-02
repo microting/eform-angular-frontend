@@ -17,7 +17,7 @@
         [class.sorting]="!isSortedByNameDsc && !isSortedByNameAsc"
         (click)="sortByName()"
         rowspan="1" colspan="1">
-      Navn
+      Name
     </th>
     <th class="col-md-2 text-center" rowspan="1" colspan="1">
     </th>
@@ -33,12 +33,12 @@
     </td>
     <td class="text-center">
       <!--<eform-switch [status]="false" [isDisabledON]="true" [onText]="'ON'" [offText]="'OFF'" [onColor]="'green'" [offColor]="'red'" [size]="'small'"></eform-switch>-->
-      <a (click)="showEditAdvEntityGroupModal(advEntityGroup.entityGroupMUId)" tooltip="Redigér Søgbar liste"
+      <a (click)="showEditAdvEntityGroupModal(advEntityGroup.entityGroupMUId)" tooltip="Edit searchable list"
          class="needs_tooltip btn btn-ar btn-sm btn-default" placement="top" container="body"
          type="button" data-original-title="Edit site">
         <span class="fa fa-pencil"></span>
       </a>
-      <button tooltip="Slet Søgbar element" placement="top" container="body"
+      <button tooltip="Delete searchable option" placement="top" container="body"
               (click)="showDeleteAdvEntityGroupModal(advEntityGroup)"
               class="needs_tooltip btn btn-ar btn-danger btn-sm dangerous-action" type="button">
         <span class="fa fa-trash-o"></span>
@@ -72,7 +72,7 @@
         <div class='col-md-8'> {{selectedAdvEntityGroupModel.updatedAt | date:'dd.MM.y HH:mm:ss'}}</div>
       </div>
       <div class='row'>
-        <div class='col-md-4'><label>Navn</label></div>
+        <div class='col-md-4'><label>Name</label></div>
         <div class='col-md-8'> {{selectedAdvEntityGroupModel.name}}</div>
       </div>
     </div>

@@ -1,14 +1,14 @@
 <header class="main-header main-header-title">
   <div class="container-fluid">
     <h1 class="page-title header-page-title">
-      <div class="container" style="width: 200px !important;">
-        Søgbar lister
+      <div class="container" style="width: 250px !important;">
+        Searchable lists
       </div>
     </h1>
     <div class="pull-right">
-      <button class="needs_tooltip btn btn-ar btn-success" tooltip='Opret Søgbar liste'
+      <button class="needs_tooltip btn btn-ar btn-success" tooltip='Create searchable list'
               (click)="showCreateAdvEntityGroupModal()" type="button">
-        Opret ny Søgbar liste
+        Create new searchable list
       </button>
     </div>
   </div>
@@ -17,7 +17,7 @@
   <div class="row">
     <div class="col-xs-8">
       <div id="check_lists_filter" class="dataTables_filter form-inline">
-        <label>Søg:
+        <label>Search:
           <input type="search" class="form-control input-sm" (ngModelChange)="onSearchChanged($event)"
                  [ngModel]="advEntityGroupListRequestModel.nameFilter"
                  placeholder="">
