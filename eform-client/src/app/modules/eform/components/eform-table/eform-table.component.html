@@ -130,13 +130,14 @@
         </tr>
         </tbody>
       </table>
+      <eform-spinner [middleActive]="isDeploying"></eform-spinner>
     </div>
   </modal-body>
   <modal-footer>
     <button type="button" class="btn btn-default" data-dismiss="deploymentModal" (click)="deploymentModal.dismiss()">
       Cancel
     </button>
-    <button type="button" class="btn btn-success" (click)="submitDeploymentModal()">Save deployment</button>
+    <button type="button" class="btn btn-success" [disabled]="isDeploying" (click)="submitDeploymentModal()">Save deployment</button>
   </modal-footer>
 </modal>
 

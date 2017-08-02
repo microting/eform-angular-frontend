@@ -11,3 +11,8 @@
 .panel {
   border: 0;
 }
+
+.user-addon {
+  padding-left: 13px;
+  padding-right: 14px;
+}
