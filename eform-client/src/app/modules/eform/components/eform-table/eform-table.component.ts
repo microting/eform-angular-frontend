@@ -28,6 +28,7 @@ export class EFormTableComponent implements OnInit {
   deployModel: DeployModel = new DeployModel();
   deployViewModel: DeployModel = new DeployModel();
   deploymentModalTitle: String = 'Edit deployment';
+  isDeploying = false;
 
   constructor(private eFormService: EFormService, private notifyService: NotifyService, private sitesService: SitesService) {
   }
@@ -169,11 +170,14 @@ export class EFormTableComponent implements OnInit {
 
   submitDeploymentModal() {
     if (this.deployModel.id != null) {
+      this.isDeploying = true;
       this.eFormService.deploySingle(this.deployModel).subscribe(operation => {
         if (operation && operation.success) {
           this.loadAllTemplates();
+          this.isDeploying = false;
           this.notifyService.success({text: operation.message || 'Error'});
         } else {
+          this.isDeploying = false;
           this.notifyService.error({text: operation.message || 'Error'});
         }
         this.deploymentModal.close();
