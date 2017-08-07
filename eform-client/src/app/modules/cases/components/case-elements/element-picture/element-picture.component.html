@@ -1,8 +1,5 @@
 <div class="row" *ngFor="let fieldValue of fieldValues">
   <div class="col-md-2">
-    {{fieldValue.id}}
-  </div>
-  <div class="col-md-2">
     <img width="300px" src="/api/templates/getimage?&filename={{fieldValue.uploadedDataObj.fileName}}"/>
   </div>
 </div>
