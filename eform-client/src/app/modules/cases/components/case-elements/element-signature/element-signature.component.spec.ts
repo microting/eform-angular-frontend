@@ -43,6 +43,7 @@ describe('ElementSignatureComponent', () => {
         ElementNumberComponent,
         ElementTextComponent,
         ElementPictureComponent,
+        ElementSignatureComponent,
         ElementCheckboxComponent,
         ElementDateComponent
       ],
