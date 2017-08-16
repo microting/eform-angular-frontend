@@ -40,6 +40,9 @@
             <td>
 
               <div [ngSwitch]="dataItem.fieldType">
+                <div *ngSwitchCase="'Signature'">
+                  <element-signature [fieldValues]="dataItem.fieldValues"></element-signature>
+                </div>
                 <div *ngSwitchCase="'Picture'">
                   <element-picture [fieldValues]="dataItem.fieldValues"></element-picture>
                 </div>

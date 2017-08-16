@@ -4,6 +4,7 @@ export * from './element-date/element-date.component'
 export * from './element-multiselect/element-multiselect.component'
 export * from './element-number/element-number.component'
 export * from './element-picture/element-picture.component';
+export * from './element-signature/element-signature.component';
 export * from './element-singleselect/element-singleselect.component'
 export * from './element-text/element-text.component'
 export * from './element-comment/trumbowyg.component'

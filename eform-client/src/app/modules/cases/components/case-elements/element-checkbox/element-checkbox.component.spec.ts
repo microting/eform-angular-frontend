@@ -16,6 +16,7 @@ import {
   ElementMultiselectComponent,
   ElementNumberComponent,
   ElementPictureComponent,
+  ElementSignatureComponent,
   ElementSingleselectComponent,
   ElementTextComponent,
   TrumbowygComponent
@@ -42,6 +43,7 @@ describe('ElementCheckboxComponent', () => {
         ElementNumberComponent,
         ElementTextComponent,
         ElementPictureComponent,
+        ElementSignatureComponent,
         ElementCheckboxComponent,
         ElementDateComponent
       ],

@@ -14,6 +14,7 @@ import {
   ElementMultiselectComponent,
   ElementNumberComponent,
   ElementPictureComponent,
+  ElementSignatureComponent,
   ElementSingleselectComponent,
   ElementTextComponent,
   TrumbowygComponent
@@ -36,6 +37,7 @@ import {
     ElementNumberComponent,
     ElementTextComponent,
     ElementPictureComponent,
+    ElementSignatureComponent,
     ElementCheckboxComponent,
     ElementDateComponent
   ]
