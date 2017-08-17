@@ -15,6 +15,7 @@ import {
   ElementMultiselectComponent,
   ElementNumberComponent,
   ElementPictureComponent,
+  ElementSignatureComponent,
   ElementSingleselectComponent,
   ElementTextComponent,
   TrumbowygComponent
@@ -40,6 +41,7 @@ import {galleryConfig} from 'app/modules/helpers/helpers.module';
     ElementNumberComponent,
     ElementTextComponent,
     ElementPictureComponent,
+    ElementSignatureComponent,
     ElementCheckboxComponent,
     ElementDateComponent
   ]

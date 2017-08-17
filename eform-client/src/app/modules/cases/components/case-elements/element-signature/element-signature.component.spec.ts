@@ -22,9 +22,9 @@ import {
   TrumbowygComponent
 } from '../index';
 
-describe('ElementCommentComponent', () => {
-  let component: ElementCommentComponent;
-  let fixture: ComponentFixture<ElementCommentComponent>;
+describe('ElementSignatureComponent', () => {
+  let component: ElementSignatureComponent;
+  let fixture: ComponentFixture<ElementSignatureComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -53,7 +53,7 @@ describe('ElementCommentComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ElementCommentComponent);
+    fixture = TestBed.createComponent(ElementPictureComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

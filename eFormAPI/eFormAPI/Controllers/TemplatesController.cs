@@ -62,7 +62,7 @@ namespace eFormAPI.Web.Controllers
                     return new OperationDataResult<List<Template_Dto>>(false, "Check settings before proceed");
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
                 throw new HttpResponseException(HttpStatusCode.Unauthorized);
             }
@@ -195,8 +195,8 @@ namespace eFormAPI.Web.Controllers
             System.IO.Directory.CreateDirectory(System.Web.Hosting.HostingEnvironment.MapPath("~/bin/output/"));
             string filePath = System.Web.Hosting.HostingEnvironment.MapPath($"~/bin/output/{fileName}");
             var fullPath = core.CasesToCsv(id, null, null, filePath,
-                $"{Request.RequestUri.Scheme}://{Request.RequestUri.Authority}{Url.Content("~")}" +
-                "output/dataFolder/");
+                $"{Request.RequestUri.Scheme}://{Request.RequestUri.DnsSafeHost}" +
+                "/api/templates/getimage?&filename=");
 
             HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
             var fileStream = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
