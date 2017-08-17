@@ -1171,3 +1171,7 @@
      margin-left: -15px;
    }
  }
+
+ .g-modal {
+   z-index: 5 !important;
+ }

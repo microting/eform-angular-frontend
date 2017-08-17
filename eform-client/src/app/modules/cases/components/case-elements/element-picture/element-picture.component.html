@@ -1,6 +1,7 @@
-<div class="row" *ngFor="let fieldValue of fieldValues">
-  <div class="col-md-2">
-    <img width="300px" src="/api/templates/getimage?&filename={{fieldValue.uploadedDataObj.fileName}}"/>
+<div class="row grid">
+  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2" *ngFor="let image of images; let i = index">
+    <img width="120px" style="margin: 5px 10px 5px 10px; cursor: pointer" [src]="image.src" (click)="gallery.set(i)"/>
+    <a target="_blank" *ngIf="image.googleMapsLat && image.googleMapsLon" href="{{image.googleMapsUrl}}"><i class="fa fa-map-marker fa-2x" aria-hidden="true"></i></a>
   </div>
 </div>
-<br>
+<gallery-modal></gallery-modal>
