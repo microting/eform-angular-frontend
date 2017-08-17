@@ -2,6 +2,7 @@ import {FormsModule} from '@angular/forms';
 import {CasesRoutingModule} from './cases-routing.module';
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {GalleryModule} from 'ng-gallery';
 import {CasesComponent} from './components/cases.component';
 import {CasesTableComponent} from './components/cases-table/cases-table.component';
 import {CasesEditComponent} from './components/cases-edit/cases-edit.component';
@@ -19,9 +20,12 @@ import {
   TrumbowygComponent
 } from './components/case-elements';
 
+import {galleryConfig} from 'app/modules/helpers/helpers.module';
+
 @NgModule({
   imports: [
     CommonModule,
+    GalleryModule.forRoot(galleryConfig),
     FormsModule,
     CasesRoutingModule
   ],

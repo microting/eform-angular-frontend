@@ -64,7 +64,8 @@ import {AuthGuard} from 'app/guards/auth.guard';
     AdminModule,
     BrowserAnimationsModule,
     CommonModule,
-    DndModule.forRoot()
+    DndModule.forRoot(),
+
   ],
   providers: [
     NotifyService,

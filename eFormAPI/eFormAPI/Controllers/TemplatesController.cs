@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -41,7 +40,7 @@ namespace eFormAPI.Web.Controllers
                                 System.Web.Hosting.HostingEnvironment.MapPath("~/bin/Input.txt"));
 
                         string connectionStr = lines.First();
-                        AdminTools adminTool = new AdminTools(connectionStr, false);
+                        AdminTools adminTool = new AdminTools(connectionStr);
                         adminTool.DbSettingsReloadRemote();
                         return new OperationDataResult<List<Template_Dto>>(false, "Check connection string");
                     }
