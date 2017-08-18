@@ -19,6 +19,19 @@ You need to create an account for Microting API and get your access credentials.
   - Visual Studio 2015
   - MS SQL Server Management Studio
   - Node.js
+  
+  
+## Installation
+  
+  # 1. Node.js & npm installation
+  
+  1. Go to Node.js website[https://nodejs.org/en](https://nodejs.org/en)
+    ![Download Node.js](docs/node_1.png "Download")
+  2. Download and run node.js installer
+  3. Don't forget to check "npm package manager" & "Add to PATH" (they should be checked by default.)
+    ![Install](docs/node_2.png "Install")
+    
+
 
 ## License
 
