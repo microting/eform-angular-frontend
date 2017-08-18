@@ -1,5 +1,7 @@
   # Installation
   
+  # WARNING! This is still work in progress!
+  
   #### 1. Node.js & npm installation
   
   1. Go to Node.js website [https://nodejs.org/en](https://nodejs.org/en)
