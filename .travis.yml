@@ -4,7 +4,7 @@ dotnet: 1.0.3
 dist: trusty
 solution: "./eFormAPI/eFormAPI.sln"
 install:
-- travis_retry dotnet restore -source "https://www.nuget.org/api/v2" ./eFormAPI/eFormAPI.sln
+- travis_retry dotnet restore ./eFormAPI/eFormAPI.sln
 script:
 - dotnet restore
 - xbuild ./eFormAPI/eFormAPI.sln
