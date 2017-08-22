@@ -19,7 +19,12 @@ You need to create an account for Microting API and get your access credentials.
   - Visual Studio 2015
   - MS SQL Server Management Studio
   - Node.js
-
+  
+  
+## Installation
+  
+[Installation instructions](docs/install.md)
+                                                                                      
 ## License
 
 The MIT License (MIT)
