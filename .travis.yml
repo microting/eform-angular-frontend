@@ -1,6 +1,7 @@
 language: csharp
 mono: none
 dotnet: 1.0.3
+dist: trusty
 solution: "./eFormAPI/eFormAPI.sln"
 install:
 - travis_retry nuget restore -source "https://www.nuget.org/api/v2" ./eFormAPI/eFormAPI.sln
