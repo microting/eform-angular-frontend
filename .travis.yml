@@ -1,0 +1,6 @@
+language: csharp
+solution: "./eFormAPI/eFormAPI.sln"
+install:
+- travis_retry nuget restore -source "https://www.nuget.org/api/v2" ./eFormAPI/eFormAPI.sln
+script:
+- xbuild ./eFormAPI/eFormAPI.sln
