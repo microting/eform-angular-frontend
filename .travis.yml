@@ -19,7 +19,6 @@ before_script:
 - sleep 3
 - fluxbox > /dev/null 2>&1 &
 script:
-- cd eFormAPI && dotnet restore
 - travis_retry nuget restore -source "https://www.nuget.org/api/v2" ./eFormAPI/eFormAPI.sln
 - dotnet build ./eFormAPI/eFormAPI -c Release -f net451
 after_success:
