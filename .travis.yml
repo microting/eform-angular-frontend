@@ -11,7 +11,8 @@ install:
 - nvm install 8.0.0
 - nvm use 8.0.0
 script:
-- travis_retry dotnet restore ./eFormAPI/eFormAPI.sln
+- travis_retry nuget restore -source "https://www.nuget.org/api/v2" ./eFormAPI/eFormAPI.sln
+- xbuild ./eFormAPI/eFormAPI.sln
 - cd eform-client && npm install && npm test
 after_success:
 - echo dotnet test and npm test succeeded
