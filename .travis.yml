@@ -4,14 +4,11 @@ language: csharp
 mono: none
 dotnet: 1.0.3
 install: 
-- dotnet restore
 - nvm install 8.0.0
 - nvm use 8.0.0
-- npm install
 script:
 - travis_retry dotnet restore ./eFormAPI/eFormAPI.sln
-- xbuild ./eFormAPI/eFormAPI.sln
-- npm test
+- cd eform-client && npm install && npm test
 after_success:
 - echo dotnet test and npm test succeeded
 after_faliure:
