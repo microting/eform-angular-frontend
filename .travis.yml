@@ -1,10 +1,18 @@
+dist: trusty
+sudo: false
 language: csharp
 mono: none
 dotnet: 1.0.3
-dist: trusty
-solution: "./eFormAPI/eFormAPI.sln"
-install:
-- travis_retry dotnet restore ./eFormAPI/eFormAPI.sln
-script:
+install: 
 - dotnet restore
+- nvm install 8.0.0
+- nvm use 8.0.0
+- npm install
+script:
+- travis_retry dotnet restore ./eFormAPI/eFormAPI.sln
 - xbuild ./eFormAPI/eFormAPI.sln
+- npm test
+after_success:
+- echo dotnet test and npm test succeeded
+after_faliure:
+- echo dotnet test and npm test failed
