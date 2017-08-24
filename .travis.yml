@@ -20,9 +20,9 @@ before_script:
 - fluxbox > /dev/null 2>&1 &
 script:
 - travis_retry nuget restore -source "https://www.nuget.org/api/v2" ./eFormAPI/eFormAPI.sln
-- ls /usr/share/dognet/sdk/2.0.0/
-- ls /usr/share/dognet/sdk/2.0.0/Microsoft/
-- ls /usr/share/dognet/sdk/2.0.0/Microsoft/VisualStudio/
+- ls /usr/share/dotnet/sdk/2.0.0/
+- ls /usr/share/dotnet/sdk/2.0.0/Microsoft/
+- ls /usr/share/dotnet/sdk/2.0.0/Microsoft/VisualStudio/
 - dotnet build /p:VSToolsPath='' ./eFormAPI/eFormAPI -c Release -f net451
 after_success:
 - echo dotnet test and npm test succeeded
