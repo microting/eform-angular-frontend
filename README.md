@@ -1,4 +1,4 @@
-# eform-angular-frontend [![Build Status](https://travis-ci.org/microting/eform-angular-frontend.svg?branch=master)](https://travis-ci.org/microting/eform-angular-frontend)
+# eform-angular-frontend [![Build Status](https://travis-ci.org/microting/eform-angular-frontend.svg?branch=master)](https://travis-ci.org/microting/eform-angular-frontend) [![Coverage Status](https://coveralls.io/repos/github/microting/eform-angular-frontend/badge.svg?branch=master)](https://coveralls.io/github/microting/eform-angular-frontend?branch=master)
 
 A Angular2 Frontend for integrating with the Microting eForm API v1.
 
