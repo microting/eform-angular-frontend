@@ -53,7 +53,7 @@ describe('ElementSignatureComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ElementPictureComponent);
+    fixture = TestBed.createComponent(ElementSignatureComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
