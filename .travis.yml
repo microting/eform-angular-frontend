@@ -23,6 +23,7 @@ script:
 - ls /usr/share/dotnet/sdk/2.0.0/
 - ls /usr/share/dotnet/sdk/2.0.0/Microsoft/
 - ls /usr/share/dotnet/sdk/2.0.0/Microsoft/VisualStudio/
+- xbuild ./eFormAPI/eFormAPI.sln
 - dotnet build /p:VSToolsPath='' ./eFormAPI/eFormAPI -c Release -f net451
 after_success:
 - echo dotnet test and npm test succeeded
