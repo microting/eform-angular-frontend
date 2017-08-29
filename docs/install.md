@@ -69,17 +69,38 @@
   4. Now application is working, don't close the command prompt when app is working (if you want to stop it - press **CTRL+C** to times)
       
   #### 6.2 Running Angular as a Windows Service
-      
-  1. Go to the Angular folder and type **cmd**
+
+  1. Modify svc.js name to have a unique name according to your needs. Default is to leave it as is.
+  ```javascript
+  var svc = new Service({
+	  name: 'eForm angular',
+	  description: 'eForm angular frontend application',
+	  script: 'server.js'
+	});
+  ```
+  2. Modify server.js for the port no according to your needs. Default is to leave it as is.
+  ```javascript
+	const defaultPort = 3000;
+
+	// proxy
+	var apiProxy = httpProxy.createProxyServer();
+	var apiForwardingUrl = 'http://localhost:5000/';
+	apiProxy.on('error', function(e) {
+	  console.error('Error:');
+	  console.info(e);
+	  console.log('-------------------------------------');
+	});
+  ```
+  3. Go to the Angular folder and type **cmd**
   ![file](file_6.png "file")
-  2. install node-windows with npm, unsing the global flag
+  4. install node-windows with npm, unsing the global flag
     **npm install -g node-windows**
-  3. Then call **npm link node-windows**
-  4. If you want to install and start the service, call **npm run winserver-install**
+  5. Then call **npm link node-windows**
+  6. If you want to install and start the service, call **npm run winserver-install**
   ![Install Windows Service](npm_4.png "Install Windows Service")
-  5. Now you application has been started as a Windows Service
+  7. Now you application has been started as a Windows Service
   ![IIS Manager](service_1.png "Windows Service")
-  6. If you want to stop & uninstall, call **npm run winserver-uninstall**
+  8. If you want to stop & uninstall, call **npm run winserver-uninstall**
   ![Uninstall Windows Service](npm_5.png "Uninstall Windows Service")
     
     
