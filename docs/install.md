@@ -123,3 +123,17 @@
   ![IIS Manager](iis_9.png "IIS Manager")
   8. Then go to website  
   
+
+  #### 8. Using Lets encrypt to setup SSL ####
+  
+  2. Setup rule to allow letsencrypt-win-simple handle the certificate
+  5. Add new rule
+  6. Click on blank rule
+  7. Enter patteren .well-known and set Using to Regular Expression, set Action type to "None" and check "Stop processing of subsequent rules"
+  1. Download [https://github.com/Lone-Coder/letsencrypt-win-simple](https://github.com/Lone-Coder/letsencrypt-win-simple)
+
+  #### 9. Set auto upgrade from http to https ####
+  
+  1. Follow the guide on [https://blogs.technet.microsoft.com/dawiese/2016/06/07/redirect-from-http-to-https-using-the-iis-url-rewrite-module/](https://blogs.technet.microsoft.com/dawiese/2016/06/07/redirect-from-http-to-https-using-the-iis-url-rewrite-module/)
+  2. Move the rule, so its no 2 in the list
+  
