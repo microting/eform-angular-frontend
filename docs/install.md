@@ -111,7 +111,7 @@
   2. Install **URL Rewrite extension**
   [https://www.iis.net/downloads/microsoft/url-rewrite](https://www.iis.net/downloads/microsoft/url-rewrite)
   3. Install **APP Requst Routing** extension
-    [https://www.iis.net/downloads/microsoft/application-request-routing](https://www.iis.net/downloads/microsoft/application-request-routing)
+  [https://www.iis.net/downloads/microsoft/application-request-routing](https://www.iis.net/downloads/microsoft/application-request-routing)
   ![IIS Manager](install_1.png "IIS Manager")
   4. Select Rewrite in your website section
   ![IIS Manager](iis_6.png "IIS Manager")
@@ -126,14 +126,18 @@
 
   #### 8. Using Lets encrypt to setup SSL ####
   
-  2. Setup rule to allow letsencrypt-win-simple handle the certificate
-  5. Add new rule
-  6. Click on blank rule
-  7. Enter patteren .well-known and set Using to Regular Expression, set Action type to "None" and check "Stop processing of subsequent rules"
-  1. Download [https://github.com/Lone-Coder/letsencrypt-win-simple](https://github.com/Lone-Coder/letsencrypt-win-simple)
+  1. Setup rule to allow letsencrypt-win-simple handle the certificate
+  2. Add new rule	
+  ![IIS Manager](iis_7.png "IIS Manager")
+  3. Click on blank rule
+  ![IIS Manager](iis_add_blank_rule_1.png "IIS Manager")
+  4. Enter patteren .well-known and set Using to Regular Expression, set Action type to "None" and check "Stop processing of subsequent rules"
+  ![IIS Manager](iis_add_blank_rule_2.png "IIS Manager")
+  5. Download [https://github.com/Lone-Coder/letsencrypt-win-simple](https://github.com/Lone-Coder/letsencrypt-win-simple)
 
   #### 9. Set auto upgrade from http to https ####
   
   1. Follow the guide on [https://blogs.technet.microsoft.com/dawiese/2016/06/07/redirect-from-http-to-https-using-the-iis-url-rewrite-module/](https://blogs.technet.microsoft.com/dawiese/2016/06/07/redirect-from-http-to-https-using-the-iis-url-rewrite-module/)
-  2. Move the rule, so its no 2 in the list
+  2. Move the rule, so its no 2 in the list as shown:
+  !["IIS Manager"](iis_add_blank_rule_3.png "IIS Manager")
   
