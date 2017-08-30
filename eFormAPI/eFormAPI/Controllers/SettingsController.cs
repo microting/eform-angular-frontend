@@ -81,7 +81,13 @@ namespace eFormAPI.Web.Controllers
 
             var configuration = WebConfigurationManager.OpenWebConfiguration("~");
             var section = (ConnectionStringsSection) configuration.GetSection("connectionStrings");
-            section.ConnectionStrings["eFormMainConnection"].ConnectionString = mainConnectionString;
+            try
+            {
+                section.ConnectionStrings["eFormMainConnection"].ConnectionString = mainConnectionString;
+            } catch
+            {
+                section.ConnectionStrings.Add(new ConnectionStringSettings("eFormMainConnection", mainConnectionString, "System.Data.SqlClient"));
+            }                  
             try
             {
                 configuration.Save();
