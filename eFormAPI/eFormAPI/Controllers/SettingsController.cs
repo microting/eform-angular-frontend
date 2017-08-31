@@ -75,6 +75,14 @@ namespace eFormAPI.Web.Controllers
             }
             catch (Exception exception)
             {
+                try
+                {
+                    new AdminTools(sdkConnectionString).DbSetup(settingsModel.ConnectionStringSdk.Token);
+                }
+                catch (Exception exa)
+                {
+
+                }
                 Logger.Error(exception.Message);
                 return new OperationResult(false, "SDK connection string is invalid");
             }
