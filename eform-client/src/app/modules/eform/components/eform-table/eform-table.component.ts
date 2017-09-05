@@ -113,20 +113,12 @@ export class EFormTableComponent implements OnInit {
     this.deploymentModal.open();
   }
 
-  editDeployment(id: number) {
-    if (id <= 0) {
+  editDeployment(model: TemplateDto) {
+    if (model.id <= 0) {
       return;
     }
-    this.deploymentModalTitle = 'Edit deployment';
-    this.getInfoForModal(id);
-  }
-
-  selectWorkers(id: number) {
-    if (id <= 0) {
-      return;
-    }
-    this.deploymentModalTitle = 'New deployment';
-    this.getInfoForModal(id);
+    this.deploymentModalTitle = model.label;
+    this.getInfoForModal(model.id);
   }
 
   fillCheckboxes() {

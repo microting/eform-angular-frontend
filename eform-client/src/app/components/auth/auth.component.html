@@ -1,10 +1,20 @@
+
 <div class="container">
   <div class="col-md-4 col-md-offset-4">
     <section>
       <div class="panel panel-default top wrapper-top">
         <div class="panel-body">
-          <img class="img-responsive img-wrapper" src="../../../assets/images/microting-logo-big.jpg" />
-          <h3 class="text-center">eForm Angular</h3>
+          <div class="row">
+            <div class="col-md-8 col-xs-8">
+              <p class="p-header-wrapper p-font"><strong>Microting eForm</strong></p>
+              <p class="p-font p-description">No more paper-forms <br>
+                and back-office data entry</p>
+            </div>
+            <div class="col-md-4 col-xs-4">
+              <img class="img-responsive img-wrapper" src="../../../assets/images/eform-phone.jpg" />
+            </div>
+          </div>
+
 
           <form [formGroup]="form">
             <div class="input-group input-group-md">
@@ -17,7 +27,6 @@
               <input type="password" formControlName="password" name="password" id="password" class="form-control" placeholder="Password"  required>
             </div>
             <br>
-            <div class="form__error-msg" *ngIf="error">{{error}}</div>
             <button type="submit" class="btn btn-ar btn-success btn-block" (click)="submitForm()">Login</button>
           </form>
         </div>

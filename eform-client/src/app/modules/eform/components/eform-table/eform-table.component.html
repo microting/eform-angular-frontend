@@ -2,12 +2,12 @@
   <div class="container-fluid">
     <h1 class="page-title header-page-title">
       <div class="container">
-        eForms
+        my eForms
       </div>
     </h1>
     <div class="pull-right">
       <button tooltip="Create eForm" (click)="showTemplateCreateModal()" class="needs_tooltip btn btn-ar btn-success"
-              type="button">Create eForm
+              type="button">New eForm
       </button>
     </div>
   </div>
@@ -21,19 +21,16 @@
     <thead>
     <tr role="row">
       <th class="col-md-1 text-center" rowspan="1" colspan="1">
-        #
+        ID
       </th>
       <th class="col-md-2 text-center" rowspan="1" colspan="1">
         Created at
       </th>
-      <th class="col-md-2 text-center" rowspan="1" colspan="1">
-        Updated at
-      </th>
       <th class="col-md-3 text-center" rowspan="1" colspan="1">
-        Label
+        Name eForm
       </th>
       <th class="col-md-2 text-center" rowspan="1" colspan="1">
-        Deployment
+        Pairing
       </th>
       <th class="col-md-1 text-center" rowspan="1" colspan="1">
         Actions
@@ -49,20 +46,17 @@
         {{templateDto.createdAt | date:'dd.MM.y HH:mm:ss'}}
       </td>
       <td class="text-center">
-        {{templateDto.updatedAt | date:'dd.MM.y HH:mm:ss'}}
-      </td>
-      <td class="text-center">
         {{templateDto.label}}
       </td>
       <td class="text-center">
         <span *ngFor="let deployedSite of templateDto.deployedSites">{{deployedSite.siteName}}<br></span>
         <button *ngIf="templateDto.deployedSites.length > 0" class="needs_tooltip btn btn-ar btn-sm btn-success"
-                type="button" tooltip="Edit deployment"
-                (click)="editDeployment(templateDto.id)">Edit deployment
+                type="button" tooltip="Click to edit eForm pairing with user(s)"
+                (click)="editDeployment(templateDto)">Edit pairing
         </button>
         <button *ngIf="templateDto.deployedSites.length == 0" class="needs_tooltip btn btn-ar btn-sm btn-success"
-                type="button" tooltip="New deployment"
-                (click)="selectWorkers(templateDto.id)">Select workers
+                type="button" tooltip="Click to pair eForm with user(s)"
+                (click)="editDeployment(templateDto)">Pair eForm
         </button>
       </td>
       <td class="text-center">
@@ -102,10 +96,10 @@
             Microting ID
           </th>
           <th class="col-md-2 text-center" rowspan="1" colspan="1">
-            Name
+            Name user device
           </th>
           <th class="col-md-2 text-center" rowspan="1" colspan="1">
-            Select
+            Check to pair
           </th>
         </tr>
         </thead>
@@ -137,7 +131,7 @@
     <button type="button" class="btn btn-default" data-dismiss="deploymentModal" (click)="deploymentModal.dismiss()">
       Cancel
     </button>
-    <button type="button" class="btn btn-success" [disabled]="isDeploying" (click)="submitDeploymentModal()">Save deployment</button>
+    <button type="button" class="btn btn-success" [disabled]="isDeploying" (click)="submitDeploymentModal()">Save pairing</button>
   </modal-footer>
 </modal>
 

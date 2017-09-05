@@ -1,9 +1,20 @@
 .logo-container {
   float: left;
   width: 181px;
-  margin: 0 15px 0 15px;
+  margin: 5px 15px 5px 15px;
 }
 
-.header-product-title {
-  float: left;
+.header-product-title-description {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  float: right;
+  margin-right: 15px;
+}
+
+.h5-wrapper {
+  margin-top: 5px;
+}
+
+.h4-wrapper {
+  margin-bottom: 5px;
 }

@@ -17,7 +17,7 @@ export class CaseEditElementComponent implements OnInit {
   @Input() element: CaseElement = new CaseElement();
 
   requestModel: CaseEditRequest = new CaseEditRequest();
-  requestModels: Array<CaseEditRequest> = new Array<CaseEditRequest>();
+  requestModels: Array<CaseEditRequest> = [];
 
   constructor() {
   }
@@ -41,27 +41,26 @@ export class CaseEditElementComponent implements OnInit {
     // if it is single element
     if (this.element.dataItemList) {
       this.element.dataItemList.forEach(item => {
-        let elem = new CaseEditRequestField();
+        const elem = new CaseEditRequestField();
         elem.fieldType = item.fieldType;
         item.fieldValues.forEach(fieldValue => {
-          let val = new CaseEditRequestFieldValue();
+          const val = new CaseEditRequestFieldValue();
           val.fieldId = fieldValue.fieldId;
           val.value = fieldValue.value;
           elem.fieldValues.push(val);
         });
         this.requestModel.fields.push(elem);
       });
-    }
-    else if (this.element.dataItemGroupList) {
+    } else if (this.element.dataItemGroupList) {
       this.element.dataItemGroupList.forEach(y => {
-        let group = new CaseEditRequestGroupField();
+        const group = new CaseEditRequestGroupField();
         group.id = y.id;
         group.label = y.label;
         y.dataItemList.forEach(item => {
-          let elem = new CaseEditRequestField();
+          const elem = new CaseEditRequestField();
           elem.fieldType = item.fieldType;
           item.fieldValues.forEach(fieldValue => {
-            let val = new CaseEditRequestFieldValue();
+            const val = new CaseEditRequestFieldValue();
             val.fieldId = fieldValue.fieldId;
             val.value = fieldValue.value;
             elem.fieldValues.push(val);

@@ -27,6 +27,7 @@ import {NotifyService} from 'app/services/notify.service';
 import {CasesService} from 'app/services/cases/cases.service';
 import {AuthService} from 'app/services/accounts/auth.service';
 import {AuthGuard} from 'app/guards/auth.guard';
+import {ImageService} from './services/files';
 
 // import {
 //   AdminService,
@@ -64,8 +65,7 @@ import {AuthGuard} from 'app/guards/auth.guard';
     AdminModule,
     BrowserAnimationsModule,
     CommonModule,
-    DndModule.forRoot(),
-
+    DndModule.forRoot()
   ],
   providers: [
     NotifyService,
@@ -83,6 +83,7 @@ import {AuthGuard} from 'app/guards/auth.guard';
     EntitySearchService,
     SettingsService,
     EFormService,
+    ImageService
   ],
   bootstrap: [AppComponent]
 })
