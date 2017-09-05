@@ -23,6 +23,10 @@ export class EFormService extends BaseService {
     return this.getWithOperationDataResult<Array<TemplateDto>>(TemplatesMethods.GetAll);
   }
 
+  public getSingle = (id: number): Observable<OperationDataResult<TemplateDto>> => {
+    return this.getWithOperationDataResult<TemplateDto>(TemplatesMethods.GetSingle + '/' + id);
+  }
+
   public deleteSingle = (id: number): Observable<OperationResult> => {
     return this.getWithOperationResult(TemplatesMethods.DeleteSingle + '/' + id);
   }

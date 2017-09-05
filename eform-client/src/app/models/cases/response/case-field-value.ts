@@ -10,6 +10,7 @@ export class CaseFieldValue extends CaseDataItem {
   dateOfDoing: Date;
   value: string;
   valueReadable: string;
+  description: any;
 
   latitude: string;
   longitude: string;

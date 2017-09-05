@@ -2,10 +2,10 @@ import {Component, Input, OnInit} from '@angular/core';
 import {CaseFieldValue} from 'app/models';
 
 @Component({
-  selector: 'element-signature',
-  templateUrl: './element-signature.component.html',
+  selector: 'element-infobox',
+  templateUrl: './element-infobox.component.html',
 })
-export class ElementSignatureComponent implements OnInit {
+export class ElementInfoboxComponent implements OnInit {
   fieldValueObj: CaseFieldValue = new CaseFieldValue();
 
   @Input()
@@ -22,5 +22,6 @@ export class ElementSignatureComponent implements OnInit {
 
   ngOnInit() {
   }
+
 
 }

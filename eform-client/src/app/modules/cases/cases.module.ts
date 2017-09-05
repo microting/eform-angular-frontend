@@ -15,9 +15,12 @@ import {
   ElementMultiselectComponent,
   ElementNumberComponent,
   ElementPictureComponent,
-  ElementSignatureComponent,
+  ElementPdfComponent,
   ElementSingleselectComponent,
   ElementTextComponent,
+  ElementInfoboxComponent,
+  ElementTimerComponent,
+  ElementSignatureComponent,
   TrumbowygComponent
 } from './components/case-elements';
 
@@ -37,13 +40,16 @@ import {galleryConfig} from 'app/modules/helpers/helpers.module';
     CaseEditElementComponent,
     ElementCommentComponent,
     ElementMultiselectComponent,
+    ElementPdfComponent,
     ElementSingleselectComponent,
     ElementNumberComponent,
     ElementTextComponent,
     ElementPictureComponent,
-    ElementSignatureComponent,
     ElementCheckboxComponent,
-    ElementDateComponent
+    ElementDateComponent,
+    ElementInfoboxComponent,
+    ElementTimerComponent,
+    ElementSignatureComponent
   ]
 })
 export class CasesModule {

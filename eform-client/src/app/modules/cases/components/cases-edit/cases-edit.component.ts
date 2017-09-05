@@ -17,8 +17,9 @@ export class CasesEditComponent implements OnInit {
   requestModels: Array<CaseEditRequest> = [];
   replyRequest: ReplyRequest = new ReplyRequest();
 
-  constructor(private activateRoute: ActivatedRoute, private casesService: CasesService, private notifyService: NotifyService,
-              private router: Router) {
+  constructor(private activateRoute: ActivatedRoute,
+              private casesService: CasesService,
+              private notifyService: NotifyService, private router: Router) {
     this.activateRoute.params.subscribe(params => {
       this.id = +params['id'];
     });
@@ -40,7 +41,7 @@ export class CasesEditComponent implements OnInit {
     this.casesService.updateCase(this.replyRequest).subscribe(operation => {
       if (operation && operation.success) {
         this.replyElement = new ReplyElement();
-        this.loadCase();
+        this.router.navigate(['/cases/', this.replyRequest.id]);
         this.notifyService.success({text: operation.message});
       } else {
         this.notifyService.error({text: operation.message || 'Error'});
