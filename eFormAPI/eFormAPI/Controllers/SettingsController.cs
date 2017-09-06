@@ -72,6 +72,7 @@ namespace eFormAPI.Web.Controllers
             try
             {
                 adminTools = new AdminTools(sdkConnectionString);
+                string error = adminTools.DbSetup(settingsModel.ConnectionStringSdk.Token);
             }
             catch (Exception exception)
             {
