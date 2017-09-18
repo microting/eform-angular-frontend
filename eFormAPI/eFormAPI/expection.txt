@@ -1,0 +1,545 @@
+9/12/2017 11:25:55 AM // L:-22 // Write logic failed // 
+9/12/2017 11:25:55 AM // L:-2 // ###########################################################################
+
+######## WriteLogEntry failed
+######## 2017 09/12 11.25:55
+######## EXCEPTION FOUND; BEGIN ########
+######## -Expection at level 1- ########
+Message    :Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+Source     :EntityFramework
+StackTrace :   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   at System.Data.Entity.DbContext.SaveChanges()
+   at eFormSqlController.SqlController.WriteLogEntry(LogEntry logEntry)
+######## -Expection at level 2- ########
+Message    :Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+Source     :EntityFramework
+StackTrace :   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.ValidateRowsAffected(Int64 rowsAffected, UpdateCommand source)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.<Update>b__2(UpdateTranslator ut)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.Update[T](T noChangesResult, Func`2 updateFunction)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.Update()
+   at System.Data.Entity.Core.Objects.ObjectContext.<SaveChangesToStore>b__35()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   at System.Data.Entity.Core.Objects.ObjectContext.<>c__DisplayClass2a.<SaveChangesInternal>b__27()
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChanges(SaveOptions options)
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+######## EXCEPTION FOUND; ENDED ########
+
+
+9/12/2017 11:25:54 AM // L:1 // ###########################################################################
+
+9/12/2017 11:25:55 AM // L:-2 // ###########################################################################
+9/12/2017 11:25:55 AM // L:-22 // Write logic failed // 
+9/12/2017 11:25:55 AM // L:-2 // ###########################################################################
+
+######## WriteLogEntry failed
+######## 2017 09/12 11.25:55
+######## EXCEPTION FOUND; BEGIN ########
+######## -Expection at level 1- ########
+Message    :Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+Source     :EntityFramework
+StackTrace :   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   at System.Data.Entity.DbContext.SaveChanges()
+   at eFormSqlController.SqlController.WriteLogEntry(LogEntry logEntry)
+######## -Expection at level 2- ########
+Message    :Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+Source     :EntityFramework
+StackTrace :   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.ValidateRowsAffected(Int64 rowsAffected, UpdateCommand source)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.<Update>b__2(UpdateTranslator ut)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.Update[T](T noChangesResult, Func`2 updateFunction)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.Update()
+   at System.Data.Entity.Core.Objects.ObjectContext.<SaveChangesToStore>b__35()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   at System.Data.Entity.Core.Objects.ObjectContext.<>c__DisplayClass2a.<SaveChangesInternal>b__27()
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChanges(SaveOptions options)
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+######## EXCEPTION FOUND; ENDED ########
+
+
+9/12/2017 11:25:55 AM // L:2 // Communicator started
+9/12/2017 11:25:55 AM // L:2 // Settings read
+9/12/2017 11:25:55 AM // L:2 // SqlController and Logger started
+9/12/2017 11:25:54 AM // L:1 // StartSqlOnly called
+9/12/2017 11:25:54 AM // L:1 // ###########################################################################
+
+9/12/2017 11:25:55 AM // L:-2 // ###########################################################################
+9/12/2017 11:25:55 AM // L:-22 // Write logic failed // 
+9/12/2017 11:25:55 AM // L:-2 // ###########################################################################
+
+######## WriteLogEntry failed
+######## 2017 09/12 11.25:55
+######## EXCEPTION FOUND; BEGIN ########
+######## -Expection at level 1- ########
+Message    :Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+Source     :EntityFramework
+StackTrace :   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   at System.Data.Entity.DbContext.SaveChanges()
+   at eFormSqlController.SqlController.WriteLogEntry(LogEntry logEntry)
+######## -Expection at level 2- ########
+Message    :Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+Source     :EntityFramework
+StackTrace :   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.ValidateRowsAffected(Int64 rowsAffected, UpdateCommand source)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.<Update>b__2(UpdateTranslator ut)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.Update[T](T noChangesResult, Func`2 updateFunction)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.Update()
+   at System.Data.Entity.Core.Objects.ObjectContext.<SaveChangesToStore>b__35()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   at System.Data.Entity.Core.Objects.ObjectContext.<>c__DisplayClass2a.<SaveChangesInternal>b__27()
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChanges(SaveOptions options)
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+######## EXCEPTION FOUND; ENDED ########
+
+
+9/12/2017 11:25:55 AM // L:3 // Variable Name:end / Content:
+9/12/2017 11:25:55 AM // L:3 // Variable Name:start / Content:
+9/12/2017 11:25:55 AM // L:3 // Variable Name:templatId / Content:3
+9/12/2017 11:25:55 AM // L:2 // CaseReadAll called
+9/12/2017 11:25:55 AM // L:2 // Communicator started
+9/12/2017 11:25:55 AM // L:2 // Settings read
+9/12/2017 11:25:55 AM // L:2 // SqlController and Logger started
+9/12/2017 11:25:54 AM // L:1 // StartSqlOnly called
+9/12/2017 11:25:54 AM // L:1 // ###########################################################################
+
+9/12/2017 11:25:55 AM // L:-2 // ###########################################################################
+9/14/2017 3:55:34 PM // L:-22 // Write logic failed // 
+9/14/2017 3:55:34 PM // L:-2 // ###########################################################################
+
+######## WriteLogEntry failed
+######## 2017 09/14 15.55:34
+######## EXCEPTION FOUND; BEGIN ########
+######## -Expection at level 1- ########
+Message    :Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+Source     :EntityFramework
+StackTrace :   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   at System.Data.Entity.DbContext.SaveChanges()
+   at eFormSqlController.SqlController.WriteLogEntry(LogEntry logEntry)
+######## -Expection at level 2- ########
+Message    :Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+Source     :EntityFramework
+StackTrace :   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.ValidateRowsAffected(Int64 rowsAffected, UpdateCommand source)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.<Update>b__2(UpdateTranslator ut)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.Update[T](T noChangesResult, Func`2 updateFunction)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.Update()
+   at System.Data.Entity.Core.Objects.ObjectContext.<SaveChangesToStore>b__35()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   at System.Data.Entity.Core.Objects.ObjectContext.<>c__DisplayClass2a.<SaveChangesInternal>b__27()
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChanges(SaveOptions options)
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+######## EXCEPTION FOUND; ENDED ########
+
+
+9/14/2017 3:55:03 PM // L:3 // Variable Name:templateId / Content:3
+9/14/2017 3:55:03 PM // L:2 // TemplateItemRead called
+9/14/2017 3:55:01 PM // L:2 // Communicator started
+9/14/2017 3:55:01 PM // L:2 // Settings read
+9/14/2017 3:55:01 PM // L:2 // SqlController and Logger started
+9/14/2017 3:55:01 PM // L:1 // StartSqlOnly called
+9/14/2017 3:55:01 PM // L:1 // ###########################################################################
+
+9/14/2017 3:55:34 PM // L:-2 // ###########################################################################
+9/14/2017 4:22:45 PM // L:-22 // Write logic failed // 
+9/14/2017 4:22:45 PM // L:-2 // ###########################################################################
+
+######## WriteLogEntry failed
+######## 2017 09/14 16.22:45
+######## EXCEPTION FOUND; BEGIN ########
+######## -Expection at level 1- ########
+Message    :Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+Source     :EntityFramework
+StackTrace :   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   at System.Data.Entity.DbContext.SaveChanges()
+   at eFormSqlController.SqlController.WriteLogEntry(LogEntry logEntry)
+######## -Expection at level 2- ########
+Message    :Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+Source     :EntityFramework
+StackTrace :   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.ValidateRowsAffected(Int64 rowsAffected, UpdateCommand source)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.<Update>b__2(UpdateTranslator ut)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.Update[T](T noChangesResult, Func`2 updateFunction)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.Update()
+   at System.Data.Entity.Core.Objects.ObjectContext.<SaveChangesToStore>b__35()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   at System.Data.Entity.Core.Objects.ObjectContext.<>c__DisplayClass2a.<SaveChangesInternal>b__27()
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChanges(SaveOptions options)
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+######## EXCEPTION FOUND; ENDED ########
+
+
+9/14/2017 4:22:45 PM // L:1 // ###########################################################################
+
+9/14/2017 4:22:45 PM // L:-2 // ###########################################################################
+9/14/2017 4:22:46 PM // L:-22 // Write logic failed // 
+9/14/2017 4:22:46 PM // L:-2 // ###########################################################################
+
+######## WriteLogEntry failed
+######## 2017 09/14 16.22:46
+######## EXCEPTION FOUND; BEGIN ########
+######## -Expection at level 1- ########
+Message    :Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+Source     :EntityFramework
+StackTrace :   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   at System.Data.Entity.DbContext.SaveChanges()
+   at eFormSqlController.SqlController.WriteLogEntry(LogEntry logEntry)
+######## -Expection at level 2- ########
+Message    :Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+Source     :EntityFramework
+StackTrace :   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.ValidateRowsAffected(Int64 rowsAffected, UpdateCommand source)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.<Update>b__2(UpdateTranslator ut)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.Update[T](T noChangesResult, Func`2 updateFunction)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.Update()
+   at System.Data.Entity.Core.Objects.ObjectContext.<SaveChangesToStore>b__35()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   at System.Data.Entity.Core.Objects.ObjectContext.<>c__DisplayClass2a.<SaveChangesInternal>b__27()
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChanges(SaveOptions options)
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+######## EXCEPTION FOUND; ENDED ########
+
+
+9/14/2017 4:22:45 PM // L:2 // Communicator started
+9/14/2017 4:22:45 PM // L:2 // Settings read
+9/14/2017 4:22:45 PM // L:2 // SqlController and Logger started
+9/14/2017 4:22:45 PM // L:1 // StartSqlOnly called
+9/14/2017 4:22:45 PM // L:1 // ###########################################################################
+
+9/14/2017 4:22:46 PM // L:-2 // ###########################################################################
+9/14/2017 4:23:14 PM // L:-22 // Write logic failed // 
+9/14/2017 4:23:14 PM // L:-2 // ###########################################################################
+
+######## WriteLogEntry failed
+######## 2017 09/14 16.23:14
+######## EXCEPTION FOUND; BEGIN ########
+######## -Expection at level 1- ########
+Message    :Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+Source     :EntityFramework
+StackTrace :   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   at System.Data.Entity.DbContext.SaveChanges()
+   at eFormSqlController.SqlController.WriteLogEntry(LogEntry logEntry)
+######## -Expection at level 2- ########
+Message    :Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+Source     :EntityFramework
+StackTrace :   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.ValidateRowsAffected(Int64 rowsAffected, UpdateCommand source)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.<Update>b__2(UpdateTranslator ut)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.Update[T](T noChangesResult, Func`2 updateFunction)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.Update()
+   at System.Data.Entity.Core.Objects.ObjectContext.<SaveChangesToStore>b__35()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   at System.Data.Entity.Core.Objects.ObjectContext.<>c__DisplayClass2a.<SaveChangesInternal>b__27()
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChanges(SaveOptions options)
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+######## EXCEPTION FOUND; ENDED ########
+
+
+9/14/2017 4:23:13 PM // L:1 // ###########################################################################
+
+9/14/2017 4:23:14 PM // L:-2 // ###########################################################################
+9/14/2017 4:24:49 PM // L:-22 // Write logic failed // 
+9/14/2017 4:24:49 PM // L:-2 // ###########################################################################
+
+######## WriteLogEntry failed
+######## 2017 09/14 16.24:49
+######## EXCEPTION FOUND; BEGIN ########
+######## -Expection at level 1- ########
+Message    :Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+Source     :EntityFramework
+StackTrace :   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   at System.Data.Entity.DbContext.SaveChanges()
+   at eFormSqlController.SqlController.WriteLogEntry(LogEntry logEntry)
+######## -Expection at level 2- ########
+Message    :Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+Source     :EntityFramework
+StackTrace :   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.ValidateRowsAffected(Int64 rowsAffected, UpdateCommand source)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.<Update>b__2(UpdateTranslator ut)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.Update[T](T noChangesResult, Func`2 updateFunction)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.Update()
+   at System.Data.Entity.Core.Objects.ObjectContext.<SaveChangesToStore>b__35()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   at System.Data.Entity.Core.Objects.ObjectContext.<>c__DisplayClass2a.<SaveChangesInternal>b__27()
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChanges(SaveOptions options)
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+######## EXCEPTION FOUND; ENDED ########
+
+
+9/14/2017 4:24:49 PM // L:2 // Settings read
+9/14/2017 4:24:49 PM // L:2 // SqlController and Logger started
+9/14/2017 4:24:49 PM // L:1 // StartSqlOnly called
+9/14/2017 4:24:48 PM // L:1 // ###########################################################################
+
+9/14/2017 4:24:49 PM // L:-2 // ###########################################################################
+9/14/2017 4:29:03 PM // L:-22 // Write logic failed // 
+9/14/2017 4:29:03 PM // L:-2 // ###########################################################################
+
+######## WriteLogEntry failed
+######## 2017 09/14 16.29:03
+######## EXCEPTION FOUND; BEGIN ########
+######## -Expection at level 1- ########
+Message    :Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+Source     :EntityFramework
+StackTrace :   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   at System.Data.Entity.DbContext.SaveChanges()
+   at eFormSqlController.SqlController.WriteLogEntry(LogEntry logEntry)
+######## -Expection at level 2- ########
+Message    :Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+Source     :EntityFramework
+StackTrace :   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.ValidateRowsAffected(Int64 rowsAffected, UpdateCommand source)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.<Update>b__2(UpdateTranslator ut)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.Update[T](T noChangesResult, Func`2 updateFunction)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.Update()
+   at System.Data.Entity.Core.Objects.ObjectContext.<SaveChangesToStore>b__35()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   at System.Data.Entity.Core.Objects.ObjectContext.<>c__DisplayClass2a.<SaveChangesInternal>b__27()
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChanges(SaveOptions options)
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+######## EXCEPTION FOUND; ENDED ########
+
+
+9/14/2017 4:29:03 PM // L:1 // ###########################################################################
+
+9/14/2017 4:29:03 PM // L:-2 // ###########################################################################
+9/14/2017 4:29:04 PM // L:-22 // Write logic failed // 
+9/14/2017 4:29:04 PM // L:-2 // ###########################################################################
+
+######## WriteLogEntry failed
+######## 2017 09/14 16.29:04
+######## EXCEPTION FOUND; BEGIN ########
+######## -Expection at level 1- ########
+Message    :Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+Source     :EntityFramework
+StackTrace :   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   at System.Data.Entity.DbContext.SaveChanges()
+   at eFormSqlController.SqlController.WriteLogEntry(LogEntry logEntry)
+######## -Expection at level 2- ########
+Message    :Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+Source     :EntityFramework
+StackTrace :   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.ValidateRowsAffected(Int64 rowsAffected, UpdateCommand source)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.<Update>b__2(UpdateTranslator ut)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.Update[T](T noChangesResult, Func`2 updateFunction)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.Update()
+   at System.Data.Entity.Core.Objects.ObjectContext.<SaveChangesToStore>b__35()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   at System.Data.Entity.Core.Objects.ObjectContext.<>c__DisplayClass2a.<SaveChangesInternal>b__27()
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChanges(SaveOptions options)
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+######## EXCEPTION FOUND; ENDED ########
+
+
+9/14/2017 4:29:03 PM // L:1 // StartSqlOnly called
+9/14/2017 4:29:03 PM // L:1 // ###########################################################################
+
+9/14/2017 4:29:04 PM // L:-2 // ###########################################################################
+9/14/2017 4:29:04 PM // L:-22 // Write logic failed // 
+9/14/2017 4:29:04 PM // L:-2 // ###########################################################################
+
+######## WriteLogEntry failed
+######## 2017 09/14 16.29:04
+######## EXCEPTION FOUND; BEGIN ########
+######## -Expection at level 1- ########
+Message    :Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+Source     :EntityFramework
+StackTrace :   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   at System.Data.Entity.DbContext.SaveChanges()
+   at eFormSqlController.SqlController.WriteLogEntry(LogEntry logEntry)
+######## -Expection at level 2- ########
+Message    :Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+Source     :EntityFramework
+StackTrace :   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.ValidateRowsAffected(Int64 rowsAffected, UpdateCommand source)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.<Update>b__2(UpdateTranslator ut)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.Update[T](T noChangesResult, Func`2 updateFunction)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.Update()
+   at System.Data.Entity.Core.Objects.ObjectContext.<SaveChangesToStore>b__35()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   at System.Data.Entity.Core.Objects.ObjectContext.<>c__DisplayClass2a.<SaveChangesInternal>b__27()
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChanges(SaveOptions options)
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+######## EXCEPTION FOUND; ENDED ########
+
+
+9/14/2017 4:29:04 PM // L:2 // Settings read
+9/14/2017 4:29:04 PM // L:2 // SqlController and Logger started
+9/14/2017 4:29:03 PM // L:1 // StartSqlOnly called
+9/14/2017 4:29:03 PM // L:1 // ###########################################################################
+
+9/14/2017 4:29:04 PM // L:-2 // ###########################################################################
+9/17/2017 12:18:17 AM // L:-22 // Write logic failed // 
+9/17/2017 12:18:17 AM // L:-2 // ###########################################################################
+
+######## WriteLogEntry failed
+######## 2017 09/17 00.18:17
+######## EXCEPTION FOUND; BEGIN ########
+######## -Expection at level 1- ########
+Message    :Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+Source     :EntityFramework
+StackTrace :   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   at System.Data.Entity.DbContext.SaveChanges()
+   at eFormSqlController.SqlController.WriteLogEntry(LogEntry logEntry)
+######## -Expection at level 2- ########
+Message    :Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+Source     :EntityFramework
+StackTrace :   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.ValidateRowsAffected(Int64 rowsAffected, UpdateCommand source)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.<Update>b__2(UpdateTranslator ut)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.Update[T](T noChangesResult, Func`2 updateFunction)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.Update()
+   at System.Data.Entity.Core.Objects.ObjectContext.<SaveChangesToStore>b__35()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   at System.Data.Entity.Core.Objects.ObjectContext.<>c__DisplayClass2a.<SaveChangesInternal>b__27()
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChanges(SaveOptions options)
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+######## EXCEPTION FOUND; ENDED ########
+
+
+9/17/2017 12:18:17 AM // L:1 // StartSqlOnly called
+9/17/2017 12:18:17 AM // L:1 // ###########################################################################
+
+9/17/2017 12:18:17 AM // L:-2 // ###########################################################################
+9/17/2017 12:18:18 AM // L:-22 // Write logic failed // 
+9/17/2017 12:18:18 AM // L:-2 // ###########################################################################
+
+######## WriteLogEntry failed
+######## 2017 09/17 00.18:18
+######## EXCEPTION FOUND; BEGIN ########
+######## -Expection at level 1- ########
+Message    :Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+Source     :EntityFramework
+StackTrace :   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   at System.Data.Entity.DbContext.SaveChanges()
+   at eFormSqlController.SqlController.WriteLogEntry(LogEntry logEntry)
+######## -Expection at level 2- ########
+Message    :Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+Source     :EntityFramework
+StackTrace :   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.ValidateRowsAffected(Int64 rowsAffected, UpdateCommand source)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.<Update>b__2(UpdateTranslator ut)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.Update[T](T noChangesResult, Func`2 updateFunction)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.Update()
+   at System.Data.Entity.Core.Objects.ObjectContext.<SaveChangesToStore>b__35()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   at System.Data.Entity.Core.Objects.ObjectContext.<>c__DisplayClass2a.<SaveChangesInternal>b__27()
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChanges(SaveOptions options)
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+######## EXCEPTION FOUND; ENDED ########
+
+
+9/17/2017 12:18:17 AM // L:2 // SqlController and Logger started
+9/17/2017 12:18:17 AM // L:1 // StartSqlOnly called
+9/17/2017 12:18:17 AM // L:1 // ###########################################################################
+
+9/17/2017 12:18:18 AM // L:-2 // ###########################################################################
+9/17/2017 12:18:18 AM // L:-22 // Write logic failed // 
+9/17/2017 12:18:18 AM // L:-2 // ###########################################################################
+
+######## WriteLogEntry failed
+######## 2017 09/17 00.18:18
+######## EXCEPTION FOUND; BEGIN ########
+######## -Expection at level 1- ########
+Message    :Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+Source     :EntityFramework
+StackTrace :   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   at System.Data.Entity.DbContext.SaveChanges()
+   at eFormSqlController.SqlController.WriteLogEntry(LogEntry logEntry)
+######## -Expection at level 2- ########
+Message    :Store update, insert, or delete statement affected an unexpected number of rows (0). Entities may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=472540 for information on understanding and handling optimistic concurrency exceptions.
+Source     :EntityFramework
+StackTrace :   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.ValidateRowsAffected(Int64 rowsAffected, UpdateCommand source)
+   at System.Data.Entity.Core.Mapping.Update.Internal.UpdateTranslator.Update()
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.<Update>b__2(UpdateTranslator ut)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.Update[T](T noChangesResult, Func`2 updateFunction)
+   at System.Data.Entity.Core.EntityClient.Internal.EntityAdapter.Update()
+   at System.Data.Entity.Core.Objects.ObjectContext.<SaveChangesToStore>b__35()
+   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesToStore(SaveOptions options, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction)
+   at System.Data.Entity.Core.Objects.ObjectContext.<>c__DisplayClass2a.<SaveChangesInternal>b__27()
+   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChangesInternal(SaveOptions options, Boolean executeInExistingTransaction)
+   at System.Data.Entity.Core.Objects.ObjectContext.SaveChanges(SaveOptions options)
+   at System.Data.Entity.Internal.InternalContext.SaveChanges()
+######## EXCEPTION FOUND; ENDED ########
+
+
+9/17/2017 12:18:18 AM // L:-1 // 
+######## TemplateItemRead failed
+######## 2017 09/17 00.18:18
+######## EXCEPTION FOUND; BEGIN ########
+######## -Expection at level 1- ########
+Message    :TemplateItemRead failed
+Source     :eFormSqlController
+StackTrace :   at eFormSqlController.SqlController.TemplateItemRead(Int32 templateId)
+   at eFormCore.Core.TemplateItemRead(Int32 templateId)
+######## -Expection at level 2- ########
+Message    :Nullable object must have a value.
+Source     :mscorlib
+StackTrace :   at System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   at System.Nullable`1.get_Value()
+   at eFormSqlController.SqlController.TemplateItemRead(Int32 templateId)
+######## EXCEPTION FOUND; ENDED ########
+
+9/17/2017 12:18:18 AM // L:3 // Variable Name:templateId / Content:4
+9/17/2017 12:18:18 AM // L:2 // TemplateItemRead called
+9/17/2017 12:18:18 AM // L:2 // Communicator started
+9/17/2017 12:18:17 AM // L:2 // Settings read
+9/17/2017 12:18:17 AM // L:2 // SqlController and Logger started
+9/17/2017 12:18:17 AM // L:1 // StartSqlOnly called
+9/17/2017 12:18:17 AM // L:1 // ###########################################################################
+
+9/17/2017 12:18:18 AM // L:-2 // ###########################################################################
