@@ -67,6 +67,9 @@ namespace eFormAPI.Web.Infrastructure.Helpers
             _core.HandleCaseDeleted += EventCaseDeleted;
             _core.HandleFileDownloaded += EventFileDownloaded;
             _core.HandleSiteActivated += EventSiteActivated;
+            //_core.HandleEventLog += EventLog;
+            //_core.HandleEventMessage += EventMessage;
+            //_core.HandleEventWarning += EventWarning;
             _core.HandleEventException += EventException;
 
             running = _core.StartSqlOnly(connectionStr);

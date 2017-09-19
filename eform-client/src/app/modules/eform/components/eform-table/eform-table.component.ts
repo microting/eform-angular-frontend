@@ -1,11 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {EFormService, SitesService} from 'app/services';
-import {SiteNameDto, TemplateDto} from 'app/models';
+import {EFormService, SitesService, } from 'app/services';
 import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
-import {NotifyService} from '../../../../services/notify.service';
-import {EFormXmlModel} from '../../../../models/eFormTemplates/eform-xml.model';
-import {DeployModel} from '../../../../models/eFormTemplates/deploy.model';
-import {DeployCheckbox} from '../../../../models/eFormTemplates/deploy-checkbox.model';
+import {NotifyService} from 'app/services/notify.service';
+import {DeployCheckbox} from 'app/models/eFormTemplates/deploy-checkbox.model';
+import {SiteNameDto, TemplateDto, TemplateColumnModel, UpdateColumnsModel, DeployModel, EFormXmlModel} from 'app/models';
 
 @Component({
   selector: 'app-eform-table',
@@ -19,6 +17,9 @@ export class EFormTableComponent implements OnInit {
   deleteTemplateModal: ModalComponent;
   @ViewChild('createTemplateModal')
   createTemplateModal: ModalComponent;
+  @ViewChild('editCasesColumnsModal')
+  editCasesColumnsModal: ModalComponent;
+
   spinnerStatus = true;
   matchFound = false;
   eFormXmlModel: EFormXmlModel = new EFormXmlModel();
@@ -29,6 +30,9 @@ export class EFormTableComponent implements OnInit {
   deployViewModel: DeployModel = new DeployModel();
   deploymentModalTitle: String = 'Edit deployment';
   isDeploying = false;
+
+  columnModels: Array<TemplateColumnModel> = [];
+  columnEditModel: UpdateColumnsModel = new UpdateColumnsModel;
 
   constructor(private eFormService: EFormService, private notifyService: NotifyService, private sitesService: SitesService) {
   }
@@ -113,20 +117,12 @@ export class EFormTableComponent implements OnInit {
     this.deploymentModal.open();
   }
 
-  editDeployment(id: number) {
-    if (id <= 0) {
+  editDeployment(model: TemplateDto) {
+    if (model.id <= 0) {
       return;
     }
-    this.deploymentModalTitle = 'Edit deployment';
-    this.getInfoForModal(id);
-  }
-
-  selectWorkers(id: number) {
-    if (id <= 0) {
-      return;
-    }
-    this.deploymentModalTitle = 'New deployment';
-    this.getInfoForModal(id);
+    this.deploymentModalTitle = model.label;
+    this.getInfoForModal(model.id);
   }
 
   fillCheckboxes() {
@@ -183,5 +179,34 @@ export class EFormTableComponent implements OnInit {
         this.deploymentModal.close();
       });
     }
+  }
+
+  openEditCasesColumnsModal(templateDto: TemplateDto) {
+    this.selectedTemplateDto = templateDto;
+    this.eFormService.getTemplateColumns(templateDto.id).subscribe((operation) => {
+      if (operation && operation.success) {
+        this.columnModels = operation.model;
+
+        this.eFormService.getCurrentTemplateColumns(templateDto.id).subscribe((result) => {
+          if (result && result.success) {
+            this.columnEditModel = result.model;
+            this.editCasesColumnsModal.open();
+          }
+        });
+
+      }
+    });
+  }
+
+  updateColumns() {
+    this.columnEditModel.templateId = this.selectedTemplateDto.id;
+    this.eFormService.updateTemplateColumns(this.columnEditModel).subscribe((data => {
+      if (data && data.success) {
+        this.notifyService.success({text: 'Columns for template was successfully updated'});
+      } else {
+        this.notifyService.error({text: 'Error while updating columns for template'});
+      }
+      this.editCasesColumnsModal.dismiss().then();
+    }));
   }
 }

@@ -7,6 +7,9 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import {Router} from '@angular/router';
 import {DeployModel, EFormXmlModel} from 'app/models/eFormTemplates';
+import {TemplateColumnModel} from '../../models/cases/response/column-field.model';
+import {TemplateColumnMethods} from '../../modules/helpers/app.constants';
+import {UpdateColumnsModel} from '../../models/cases/request/update-columns.model';
 
 @Injectable()
 export class EFormService extends BaseService {
@@ -23,6 +26,10 @@ export class EFormService extends BaseService {
     return this.getWithOperationDataResult<Array<TemplateDto>>(TemplatesMethods.GetAll);
   }
 
+  public getSingle = (id: number): Observable<OperationDataResult<TemplateDto>> => {
+    return this.getWithOperationDataResult<TemplateDto>(TemplatesMethods.GetSingle + '/' + id);
+  }
+
   public deleteSingle = (id: number): Observable<OperationResult> => {
     return this.getWithOperationResult(TemplatesMethods.DeleteSingle + '/' + id);
   }
@@ -33,5 +40,17 @@ export class EFormService extends BaseService {
 
   public deploySingle = (deployModel: DeployModel): Observable<OperationResult> => {
     return this.postModelOperationResult(TemplatesMethods.DeploySingle, deployModel);
+  }
+
+  public getTemplateColumns = (templateId: number): Observable<OperationDataResult<Array<TemplateColumnModel>>> => {
+    return this.getWithOperationDataResult<Array<TemplateColumnModel>>(TemplateColumnMethods.GetColumns + '/' + templateId);
+  }
+
+  public getCurrentTemplateColumns = (templateId: number): Observable<OperationDataResult<UpdateColumnsModel>> => {
+    return this.getWithOperationDataResult<UpdateColumnsModel>(TemplateColumnMethods.GetColumns + '/current/' + templateId);
+  }
+
+  public updateTemplateColumns = (model: UpdateColumnsModel): Observable<OperationResult> => {
+    return this.postModelOperationResult(TemplateColumnMethods.GetColumns, model);
   }
 }

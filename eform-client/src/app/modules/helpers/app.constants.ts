@@ -33,10 +33,15 @@ export let SettingsMethods = {
 
 export let TemplatesMethods = {
   GetAll: '/api/templates/index',
+  GetSingle: '/api/templates/get',
   DeleteSingle: '/api/templates/delete',
   CreateSingle: '/api/templates/create',
   DeploySingle: '/api/templates/deploy',
   GetCsv: '/api/templates/csv'
+};
+
+export let TemplateColumnMethods = {
+  GetColumns: '/api/template-columns'
 };
 
 export let CasesMethods = {
@@ -61,4 +66,9 @@ export let AdminMethods = {
   DeleteUser: '/api/admin/delete-user',
   CreateUser: '/api/admin/create-user',
   UpdateUser: '/api/admin/update-user'
+};
+
+export let ImageMethods = {
+  Rotate: '/api/templates/rotateImage',
+  Delete: '/api/templates/deleteImage',
 };

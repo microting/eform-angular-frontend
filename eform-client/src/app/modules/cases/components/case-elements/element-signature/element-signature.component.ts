@@ -4,10 +4,18 @@ import {CaseFieldValue} from 'app/models';
 @Component({
   selector: 'element-signature',
   templateUrl: './element-signature.component.html',
-  styleUrls: ['./element-signature.component.css']
 })
 export class ElementSignatureComponent implements OnInit {
-  @Input() fieldValues: Array<CaseFieldValue> = new Array<CaseFieldValue>();
+  fieldValueObj: CaseFieldValue = new CaseFieldValue();
+
+  @Input()
+  get fieldValue() {
+    return this.fieldValueObj;
+  }
+
+  set fieldValue(val) {
+    this.fieldValueObj = val;
+  }
 
   constructor() {
   }
