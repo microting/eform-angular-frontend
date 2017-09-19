@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="RIDER_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$/../..">
+      <sourceFolder url="file://$MODULE_DIR$/../../eFormAPI" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../eFromAPI.Common" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/csc.exe" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/csc.exe.config" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/csc.rsp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/csi.exe" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/csi.exe.config" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/csi.rsp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/Microsoft.Build.Tasks.CodeAnalysis.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/Microsoft.CodeAnalysis.CSharp.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/Microsoft.CodeAnalysis.CSharp.Scripting.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/Microsoft.CodeAnalysis.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/Microsoft.CodeAnalysis.Scripting.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/Microsoft.CodeAnalysis.VisualBasic.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/Microsoft.CSharp.Core.targets" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/Microsoft.DiaSymReader.Native.amd64.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/Microsoft.DiaSymReader.Native.x86.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/Microsoft.VisualBasic.Core.targets" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/Microsoft.Win32.Primitives.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/System.AppContext.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/System.Collections.Immutable.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/System.Console.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/System.Diagnostics.FileVersionInfo.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/System.Diagnostics.Process.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/System.Diagnostics.StackTrace.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/System.IO.Compression.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/System.IO.FileSystem.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/System.IO.FileSystem.DriveInfo.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/System.IO.FileSystem.Primitives.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/System.IO.Pipes.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/System.Reflection.Metadata.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/System.Security.AccessControl.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/System.Security.Claims.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/System.Security.Cryptography.Algorithms.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/System.Security.Cryptography.Encoding.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/System.Security.Cryptography.Primitives.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/System.Security.Cryptography.X509Certificates.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/System.Security.Principal.Windows.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/System.Text.Encoding.CodePages.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/System.Threading.Thread.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/System.ValueTuple.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/System.Xml.ReaderWriter.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/System.Xml.XmlDocument.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/System.Xml.XPath.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/System.Xml.XPath.XDocument.dll" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/vbc.exe" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/vbc.exe.config" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/vbc.rsp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/VBCSCompiler.exe" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../packages/Microsoft.Net.Compilers.2.3.0/tools/VBCSCompiler.exe.config" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/../../eFormAPI/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/../../eFormAPI/obj" />
+      <excludeFolder url="file://$MODULE_DIR$/../../eFromAPI.Common/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/../../eFromAPI.Common/obj" />
+      <excludeFolder url="file://$MODULE_DIR$/../../packages" />
+    </content>
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

@@ -1,14 +1,13 @@
 import {ActivatedRoute, Router} from '@angular/router';
 import {Component, OnInit} from '@angular/core';
-import {CasesService} from '../../../../services/cases/cases.service';
-import {CaseModel} from '../../../../models/cases/case.model';
-import {EFormService} from '../../../../services/eform/eform.service';
-import {TemplateDto} from '../../../../models/dto';
+import {EFormService} from 'app/services/eform/eform.service';
+import {TemplateDto} from 'app/models/dto';
+import {CaseModel} from 'app/models/cases';
+import {CasesService} from 'app/services/cases/cases.service';
 
 @Component({
   selector: 'app-cases-table',
-  templateUrl: './cases-table.component.html',
-  styleUrls: ['./cases-table.component.css']
+  templateUrl: './cases-table.component.html'
 })
 export class CasesTableComponent implements OnInit {
   id: number;

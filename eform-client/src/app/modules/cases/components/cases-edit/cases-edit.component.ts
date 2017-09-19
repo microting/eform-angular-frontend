@@ -3,6 +3,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {CaseEditRequest, ReplyElement, ReplyRequest} from 'app/models';
 import {CasesService, NotifyService} from 'app/services';
+import {TemplateDto} from 'app/models/dto';
+import {EFormService} from 'app/services';
 
 @Component({
   selector: 'app-cases-edit',
@@ -12,6 +14,8 @@ import {CasesService, NotifyService} from 'app/services';
 export class CasesEditComponent implements OnInit {
   @ViewChildren(CaseEditElementComponent) editElements: QueryList<CaseEditElementComponent>;
   id: number;
+  templateId: number;
+  currentTemplate: TemplateDto = new TemplateDto;
   replyElement: ReplyElement = new ReplyElement();
   // REQUEST
   requestModels: Array<CaseEditRequest> = [];
@@ -19,14 +23,17 @@ export class CasesEditComponent implements OnInit {
 
   constructor(private activateRoute: ActivatedRoute,
               private casesService: CasesService,
+              private eFormService: EFormService,
               private notifyService: NotifyService, private router: Router) {
     this.activateRoute.params.subscribe(params => {
       this.id = +params['id'];
+      this.templateId = +params['templateId'];
     });
   }
 
   ngOnInit() {
     this.loadCase();
+    this.loadTemplateInfo();
   }
 
   gem() {
@@ -41,12 +48,22 @@ export class CasesEditComponent implements OnInit {
     this.casesService.updateCase(this.replyRequest).subscribe(operation => {
       if (operation && operation.success) {
         this.replyElement = new ReplyElement();
-        this.router.navigate(['/cases/', this.replyRequest.id]);
+        this.router.navigate(['/cases/', this.currentTemplate.id]).then();
         this.notifyService.success({text: operation.message});
       } else {
         this.notifyService.error({text: operation.message || 'Error'});
       }
     });
+  }
+
+  loadTemplateInfo() {
+    if (this.templateId) {
+      this.eFormService.getSingle(this.templateId).subscribe(operation => {
+        if (operation && operation.success) {
+          this.currentTemplate = operation.model;
+        }
+      });
+    }
   }
 
   loadCase() {

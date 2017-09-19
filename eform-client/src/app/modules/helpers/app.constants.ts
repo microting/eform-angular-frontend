@@ -40,6 +40,10 @@ export let TemplatesMethods = {
   GetCsv: '/api/templates/csv'
 };
 
+export let TemplateColumnMethods = {
+  GetColumns: '/api/template-columns'
+};
+
 export let CasesMethods = {
   EditById: '/api/cases/edit',
   GetCases: '/api/cases/index',

@@ -65,6 +65,11 @@
            type="button" tooltip="Show cases">
           <span class="glyphicon glyphicon-search" data-mt-check-list-id="@(item.Id)"></span>
         </a>
+        <a *ngIf="templateDto.hasCases"
+           class="needs_tooltip btn btn-ar btn-sm btn-default mt-edit-check-list-button" (click)="openEditCasesColumnsModal(templateDto)"
+           type="button" tooltip="Edit columns">
+          <span class="glyphicon glyphicon-align-justify"></span>
+        </a>
         <a *ngIf="templateDto.hasCases" href="/api/templates/csv/{{templateDto.id}}"
            class="needs_tooltip btn btn-ar btn-sm btn-success" type="button" tooltip="Download CSV">
           <span class="fa fa-file-text-o"></span>
@@ -132,6 +137,122 @@
       Cancel
     </button>
     <button type="button" class="btn btn-success" [disabled]="isDeploying" (click)="submitDeploymentModal()">Save pairing</button>
+  </modal-footer>
+</modal>
+
+<modal #editCasesColumnsModal>
+  <modal-header [show-close]="true">
+    <h4 class="modal-title">Select columns for displaying in Cases</h4>
+  </modal-header>
+  <modal-body>
+    <div class="container-fluid">
+      <div class='row'>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>No</th>
+            <th>Field</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><strong>1</strong></td>
+            <td class="col-md-8">
+              <select [(ngModel)]="columnEditModel.fieldId1" class="form-control">
+                <option [value]="null"></option>
+                <option *ngFor="let column of columnModels" [value]="column.id">{{column.label}}</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>2</strong></td>
+            <td>
+              <select [(ngModel)]="columnEditModel.fieldId2" class="form-control">
+                <option [value]="null"></option>
+                <option *ngFor="let column of columnModels" [value]="column.id">{{column.label}}</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>3</strong></td>
+            <td>
+              <select [(ngModel)]="columnEditModel.fieldId3" class="form-control">
+                <option [value]="null"></option>
+                <option *ngFor="let column of columnModels" [value]="column.id">{{column.label}}</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>4</strong></td>
+            <td>
+              <select [(ngModel)]="columnEditModel.fieldId4" class="form-control">
+                <option [value]="null"></option>
+                <option *ngFor="let column of columnModels" [value]="column.id">{{column.label}}</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>5</strong></td>
+            <td>
+              <select [(ngModel)]="columnEditModel.fieldId5" class="form-control">
+                <option [value]="null"></option>
+                <option *ngFor="let column of columnModels" [value]="column.id">{{column.label}}</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>6</strong></td>
+            <td>
+              <select [(ngModel)]="columnEditModel.fieldId6" class="form-control">
+                <option [value]="null"></option>
+                <option *ngFor="let column of columnModels" [value]="column.id">{{column.label}}</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>7</strong></td>
+            <td>
+              <select [(ngModel)]="columnEditModel.fieldId7" class="form-control">
+                <option [value]="null"></option>
+                <option *ngFor="let column of columnModels" [value]="column.id">{{column.label}}</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>8</strong></td>
+            <td>
+              <select [(ngModel)]="columnEditModel.fieldId8" class="form-control">
+                <option [value]="null"></option>
+                <option *ngFor="let column of columnModels" [value]="column.id">{{column.label}}</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>9</strong></td>
+            <td>
+              <select [(ngModel)]="columnEditModel.fieldId9" class="form-control">
+                <option [value]="null"></option>
+                <option *ngFor="let column of columnModels" [value]="column.id">{{column.label}}</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>10</strong></td>
+            <td>
+              <select [(ngModel)]="columnEditModel.fieldId10" class="form-control">
+                <option [value]="null"></option>
+                <option *ngFor="let column of columnModels" [value]="column.id">{{column.label}}</option>
+              </select>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </modal-body>
+  <modal-footer>
+    <button type="button" class="btn btn-danger" (click)="updateColumns()">Save</button>
+    <button type="button" class="btn btn-default" (click)="editCasesColumnsModal.dismiss()">Cancel</button>
   </modal-footer>
 </modal>
 

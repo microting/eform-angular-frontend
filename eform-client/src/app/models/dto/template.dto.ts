@@ -1,4 +1,5 @@
 import {SiteNameDto} from './site-name.dto';
+import {FieldDto} from './field.dto';
 
 export class TemplateDto {
   id: number;
@@ -11,4 +12,15 @@ export class TemplateDto {
   workflowState: String;
   hasCases: Boolean;
   deployedSites: Array<SiteNameDto>;
+
+  field1: FieldDto;
+  field2: FieldDto;
+  field3: FieldDto;
+  field4: FieldDto;
+  field5: FieldDto;
+  field6: FieldDto;
+  field7: FieldDto;
+  field8: FieldDto;
+  field9: FieldDto;
+  field10: FieldDto;
 }
