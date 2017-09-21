@@ -5,6 +5,7 @@ import {FullLayoutComponent} from './layouts/fulllayout/fulllayout.component';
 import {SimpleLayoutComponent} from 'app/layouts/simple-layout/simple-layout.component';
 import {AuthComponent} from 'app/components/auth/auth.component';
 import {AuthGuard} from 'app/guards/auth.guard';
+import {RestorePasswordComponent} from './components/auth/restore-password.component';
 
 export const routes: Routes = [
   {
@@ -56,6 +57,10 @@ export const routes: Routes = [
         path: '',
         component: AuthComponent,
       },
+      {
+        path: 'restore-password',
+        component: RestorePasswordComponent
+      }
     ]
   },
   // otherwise redirect to home

@@ -5,13 +5,16 @@ import {AuthResponseModel, LoginRequestModel} from 'app/models/auth';
 import {Observable} from 'rxjs/Observable';
 import {BaseService} from '../base.service';
 import {ChangePasswordModel, UserInfoModel} from 'app/models';
+import {PasswordRestoreModel} from '../../models/auth/password-restore.model';
 
 export let AuthMethods = {
   Login: 'api/auth/token',
   Logout: 'api/auth/logout',
   CheckToken: '/auth/is-token-actual',
   Restore: '/auth/restore',
-  ChangePassword: 'api/account/change-password'
+  ChangePassword: 'api/account/change-password',
+  RestoreUserPassword: '/api/account/reset-password',
+  EmailRecoveryLink: '/api/account/forgot-password',
 };
 
 @Injectable()
@@ -27,6 +30,19 @@ export class AuthService extends BaseService {
     body.set('grant_type', loginInfo.grant_type);
     return this.postForm(AuthMethods.Login, body).map((result) => {
       return new AuthResponseModel(result);
+    });
+  }
+
+  restorePassword(model: PasswordRestoreModel): Observable<any> {
+    return this.post(AuthMethods.RestoreUserPassword, model).map((result) => {
+      return result;
+    });
+  }
+
+  sendEmailRecoveryLink(rawValue: any): Observable<any> {
+    debugger;
+    return this.post(AuthMethods.EmailRecoveryLink, {email: rawValue.email}).map((result) => {
+      return result;
     });
   }
 
