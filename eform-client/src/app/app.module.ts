@@ -28,6 +28,8 @@ import {CasesService} from 'app/services/cases/cases.service';
 import {AuthService} from 'app/services/accounts/auth.service';
 import {AuthGuard} from 'app/guards/auth.guard';
 import {ImageService} from './services/files';
+import {RestorePasswordComponent} from 'app/components/auth/restore-password.component';
+import {EqualValidatorDirective} from 'app/components/directives/equal-validator.directive';
 
 // import {
 //   AdminService,
@@ -47,11 +49,13 @@ import {ImageService} from './services/files';
   declarations: [
     AppComponent,
     AuthComponent,
+    RestorePasswordComponent,
     HeaderComponent,
     FooterComponent,
     NavigationComponent,
     FullLayoutComponent,
-    SimpleLayoutComponent
+    SimpleLayoutComponent,
+    EqualValidatorDirective
   ],
   imports: [
     ReactiveFormsModule,

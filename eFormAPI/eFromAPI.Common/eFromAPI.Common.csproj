@@ -82,6 +82,8 @@
     <Compile Include="API\OperationDataResult.cs" />
     <Compile Include="API\OperationResult.cs" />
     <Compile Include="Models\Auth\ChangePasswordModel.cs" />
+    <Compile Include="Models\Auth\ForgotPasswordModel.cs" />
+    <Compile Include="Models\Auth\ResetPasswordModel.cs" />
     <Compile Include="Models\DisplayTemplateColumnsModel.cs" />
     <Compile Include="Models\TemplateColumnModel.cs" />
     <Compile Include="Models\UpdateTemplateColumnsModel.cs" />
