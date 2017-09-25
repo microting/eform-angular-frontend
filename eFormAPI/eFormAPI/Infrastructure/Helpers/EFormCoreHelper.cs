@@ -72,7 +72,15 @@ namespace eFormAPI.Web.Infrastructure.Helpers
             //_core.HandleEventWarning += EventWarning;
             _core.HandleEventException += EventException;
 
-            running = _core.StartSqlOnly(connectionStr);
+            try
+            {
+                running = _core.StartSqlOnly(connectionStr);
+            } catch (Exception ex) {
+                AdminTools adminTools = new AdminTools(connectionStr);
+                adminTools.MigrateDb();
+                adminTools.DbSettingsReloadRemote();
+                running = _core.StartSqlOnly(connectionStr);
+            }
 
             if (running)
             {
