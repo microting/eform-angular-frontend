@@ -17,6 +17,11 @@
   padding-right: 14px;
 }
 
+.envelope-addon {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
 .p-header-wrapper {
   margin-top: 35px;
   margin-bottom: 15px;

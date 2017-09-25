@@ -1,42 +1,38 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Configuration;
+using System.IO;
+using System.Net;
+using System.Net.Mail;
+using System.Net.Sockets;
+using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 
 namespace eFormAPI.Web.Infrastructure.Services
 {
     public class EmailService : IIdentityMessageService
     {
-        public async Task SendAsync(IdentityMessage message)
+        public Task SendAsync(IdentityMessage message)
         {
-            await configSendGridasync(message);
-        }
-
-        // Use NuGet to install SendGrid (Basic C# client lib) 
-        private async Task configSendGridasync(IdentityMessage message)
-        {
-            //var myMessage = new SendGridMessage();
-
-            //myMessage.AddTo(message.Destination);
-            //myMessage.From = new System.Net.Mail.MailAddress("taiseer@bitoftech.net", "Taiseer Joudeh");
-            //myMessage.Subject = message.Subject;
-            //myMessage.Text = message.Body;
-            //myMessage.Html = message.Body;
-
-            //var credentials = new NetworkCredential(ConfigurationManager.AppSettings["emailService:Account"], 
-            //                                        ConfigurationManager.AppSettings["emailService:Password"]);
-
-            //// Create a Web transport for sending email.
-            //var transportWeb = new Web(credentials);
-
-            // Send the email.
-            //if (transportWeb != null)
-            //{
-            //    await transportWeb.DeliverAsync(myMessage);
-            //}
-            //else
-            //{
-                //Trace.TraceError("Failed to create Web transport.");
-                await Task.FromResult(0);
-            //}
+            int.TryParse(ConfigurationManager.AppSettings["email:smtpPort"], out int port);
+            var userName = ConfigurationManager.AppSettings["email:login"];
+            var password = ConfigurationManager.AppSettings["email:password"];
+            var smtp = new SmtpClient
+            {
+                Host = ConfigurationManager.AppSettings["email:smtpHost"],
+                Port = port,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(userName, password)
+            };
+            using (var mailMessage = new MailMessage(userName, message.Destination))
+            {
+                mailMessage.Subject = message.Subject;
+                mailMessage.Body = message.Body;
+                mailMessage.IsBodyHtml = true;
+                smtp.Send(mailMessage);
+            }
+            return Task.FromResult(0);
         }
     }
 }
