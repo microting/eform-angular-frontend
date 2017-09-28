@@ -1,0 +1,95 @@
+<header class="main-header main-header-title">
+  <div class="container-fluid">
+    <h1 class="page-title header-page-title">
+      <div class="container">
+        Settings
+      </div>
+    </h1>
+    <div class="pull-right">
+    </div>
+  </div>
+</header>
+<div class="edit_case">
+  <div class="container-fluid">
+    <div class="bs-docs-container">
+      <form #settingsForm="ngForm">
+        <div class="row">
+          <div class="col-md-5" role="main">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                SMTP Information
+              </div>
+              <table class="table">
+                <tbody>
+                <tr>
+                  <td class="col-md-4">
+                    <strong>Host*</strong>
+                  </td>
+                  <td>
+                    <input class="form-control" [(ngModel)]="adminSettingsModel.host"
+                           placeholder="smtp.gmail.com" type="text" #sourceSdk="ngModel" value="" required name="host" id="host"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Port*</strong>
+                  </td>
+                  <td>
+                    <input class="form-control" [(ngModel)]="adminSettingsModel.port"
+                           placeholder="1433"
+                           type="text" name="port" required #catalogueSdk="ngModel" id="port"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="col-md-4">
+                    <strong>Login*</strong>
+                  </td>
+                  <td>
+                    <input class="form-control" [(ngModel)]="adminSettingsModel.login"
+                           placeholder="userName" #authTypeSdk="ngModel" type="text" value="" name="login" id="login"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="col-md-4">
+                    <strong>Password*</strong>
+                  </td>
+                  <td>
+                    <input class="form-control" [(ngModel)]="adminSettingsModel.password"
+                           placeholder="12345678909876543210adfecdfefdae" #tokenSdk="ngModel" required type="text" value="" name="password" id="password"/>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-md-5" role="main">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                Site information
+              </div>
+              <table class="table">
+                <tbody>
+                <tr>
+                  <td class="col-md-4">
+                    <strong>Link*</strong>
+                  </td>
+                  <td>
+                    <input class="form-control" [(ngModel)]="adminSettingsModel.siteLink"
+                           placeholder="https://my-eform-app.com/" type="text" #sourceSdk="ngModel" value="" required name="siteLink" id="siteLink"/>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="bs-docs-container hidden-print affix" id="mt-side-bar" role="complementary">
+              <button class="btn btn-ar btn-danger" [disabled]="!settingsForm.form.valid" (click)="updateAdminSettings()">Gem</button>
+            </div>
+            <eform-spinner [middleActive]="spinnerStatus"></eform-spinner>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

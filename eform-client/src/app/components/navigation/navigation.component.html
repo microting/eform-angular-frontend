@@ -64,11 +64,11 @@
                 Searchable list
               </a>
             </li>
-            <!--<li class="">-->
-              <!--<a routerLink="/" routerLinkActive="active">-->
-                <!--Settings-->
-              <!--</a>-->
-            <!--</li>-->
+            <li class="" *ngIf="userInfo.role == 'admin'">
+              <a routerLink="/settings" routerLinkActive="active">
+                Settings
+              </a>
+            </li>
           </ul>
         </li>
       </ul>

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {SettingsModel} from '../../../../models/settings/connection-string.model';
-import {SettingsService} from '../../../../services/settings.service';
+import {SettingsModel} from 'app/models/settings';
+import {SettingsService} from 'app/services';
 import {Router} from '@angular/router';
 
 @Component({

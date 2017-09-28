@@ -6,6 +6,8 @@ import {OperationResult, SettingsMethods} from '../modules/helpers/helpers.modul
 import {BaseService} from './base.service';
 import {Router} from '@angular/router';
 import {SettingsModel} from 'app/models/settings';
+import {OperationDataResult} from 'app/modules/helpers/operation.models';
+import {AdminSettingsModel} from 'app/models/settings/admin-settings.model';
 
 @Injectable()
 export class SettingsService extends BaseService {
@@ -23,5 +25,11 @@ export class SettingsService extends BaseService {
   }
   public connectionStringExist(): Observable<OperationResult> {
     return this.getWithOperationResult(SettingsMethods.ConnectionStringExist);
+  }
+  public getAdminSettings(): Observable<OperationDataResult<AdminSettingsModel>> {
+    return this.getWithOperationDataResult<AdminSettingsModel>(SettingsMethods.GetAdminSettings);
+  }
+  public updateAdminSettings(model: AdminSettingsModel): Observable<OperationResult> {
+    return this.postModelOperationResult(SettingsMethods.GetAdminSettings, model);
   }
 }

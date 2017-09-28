@@ -69,6 +69,7 @@ export class SimpleSitesTableComponent implements OnInit {
     this.simpleSitesService.createSingleSimpleSite(this.simpleSiteModel).subscribe(operation => {
       if (operation && operation.success) {
         this.loadAllSimpleSites();
+        this.simpleSiteModel = new SimpleSiteModel;
         this.notifyService.success({text: operation.message});
       } else {
         this.notifyService.error({text: operation.message || 'Error'});

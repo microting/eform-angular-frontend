@@ -297,7 +297,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\eFromAPI.Common\eFromAPI.Common.csproj">
+    <ProjectReference Include="..\eFormAPI.Common\eFormAPI.Common.csproj">
       <Project>{515ee205-5349-449e-be13-f83da5b601b9}</Project>
       <Name>eFromAPI.Common</Name>
     </ProjectReference>

@@ -29,6 +29,7 @@ export let SimpleSitesMethods = {
 export let SettingsMethods = {
   UpdateConnectionString: '/api/settings/connection-string',
   ConnectionStringExist: '/api/settings/connection-string-exist',
+  GetAdminSettings: '/api/settings/admin'
 };
 
 export let TemplatesMethods = {
