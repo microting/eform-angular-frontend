@@ -8,6 +8,7 @@ export let WorkersMethods = {
   GetAll: '/api/workers/index',
   GetSingle: '/api/workers/edit',
   UpdateSingle: '/api/workers/update',
+  CreateSingle: '/api/workers/create',
   DeleteSingle: '/api/workers/delete'
 };
 
@@ -29,6 +30,7 @@ export let SimpleSitesMethods = {
 export let SettingsMethods = {
   UpdateConnectionString: '/api/settings/connection-string',
   ConnectionStringExist: '/api/settings/connection-string-exist',
+  GetAdminSettings: '/api/settings/admin'
 };
 
 export let TemplatesMethods = {

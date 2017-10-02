@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eFormAPI.Web", "eFormAPI\eFormAPI.Web.csproj", "{54404CF9-A407-4F55-BC26-B243099E29A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eFromAPI.Common", "eFromAPI.Common\eFromAPI.Common.csproj", "{515EE205-5349-449E-BE13-F83DA5B601B9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eFromAPI.Common", "eFormAPI.Common\eFormAPI.Common.csproj", "{515EE205-5349-449E-BE13-F83DA5B601B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

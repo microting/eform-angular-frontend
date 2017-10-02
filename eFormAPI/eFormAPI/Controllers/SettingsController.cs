@@ -5,20 +5,21 @@ using System.Data.Entity.Migrations;
 using System.IO;
 using System.Web.Configuration;
 using System.Web.Http;
+using eFormAPI.Common.API;
+using eFormAPI.Common.Models.Settings;
+using eFormAPI.Web.Infrastructure.Consts;
 using eFormAPI.Web.Infrastructure.Helpers;
 using eFormAPI.Web.Migrations;
 using eFormCore;
-using eFromAPI.Common.API;
-using eFromAPI.Common.Models.Settings;
 using NLog;
 
 namespace eFormAPI.Web.Controllers
 {
-    [AllowAnonymous]
     public class SettingsController : ApiController
     {
         private readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
+        [AllowAnonymous]
         [HttpGet]
         [Route("api/settings/connection-string-exist")]
         public OperationResult ConnectionStringExist()
@@ -31,6 +32,7 @@ namespace eFormAPI.Web.Controllers
             return new OperationResult(false);
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("api/settings/connection-string")]
         public OperationResult ConnectionString(SettingsModel settingsModel)
@@ -118,6 +120,57 @@ namespace eFormAPI.Web.Controllers
 
             adminTools.DbSetup(settingsModel.ConnectionStringSdk.Token);
             return new OperationResult(true);
+        }
+        
+        [Authorize(Roles = EformRoles.Admin)]
+        [HttpGet]
+        [Route("api/settings/admin")]
+        public OperationDataResult<AdminSettingsModel> GetAdminSettings()
+        {
+            try
+            {
+                var configuration = WebConfigurationManager.OpenWebConfiguration("~");
+                var section = (AppSettingsSection) configuration.GetSection("appSettings");
+                var model = new AdminSettingsModel()
+                {
+                    Host = section.Settings["email:smtpHost"].Value,
+                    Port = section.Settings["email:smtpPort"].Value,
+                    Login = section.Settings["email:login"].Value,
+                    Password = section.Settings["email:password"].Value,
+                    SiteLink = section.Settings["app:siteLink"].Value
+                };
+                return new OperationDataResult<AdminSettingsModel>(true, model);
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message);
+                return new OperationDataResult<AdminSettingsModel>(false, "Can't obtain settings from web.config");
+            }
+        }
+
+        [Authorize(Roles = EformRoles.Admin)]
+        [HttpPost]
+        [Route("api/settings/admin")]
+        public OperationResult UpdateAdminSettings(AdminSettingsModel adminSettingsModel)
+        {
+            try
+            {
+                var configuration = WebConfigurationManager.OpenWebConfiguration("~");
+                var section = (AppSettingsSection) configuration.GetSection("appSettings");
+                section.Settings["email:smtpHost"].Value = adminSettingsModel.Host;
+                section.Settings["email:smtpPort"].Value = adminSettingsModel.Port;
+                section.Settings["email:login"].Value = adminSettingsModel.Login;
+                section.Settings["email:password"].Value = adminSettingsModel.Password;
+                section.Settings["app:siteLink"].Value = adminSettingsModel.SiteLink;
+                configuration.Save();
+                ConfigurationManager.RefreshSection("appSettings");
+                return new OperationResult(true, "Settings have been updated successfully");
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message);
+                return new OperationResult(false, "Can't update settings in web.config");
+            }
         }
     }
 }

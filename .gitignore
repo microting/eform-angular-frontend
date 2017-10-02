@@ -28,3 +28,11 @@ eform-client/package-lock.json
 .idea
 eFormAPI/eFromAPI.Common/bin/Release/*
 eFormAPI/eFormAPI/Properties/PublishProfiles/
+
+eFormAPI/\.idea/
+
+eFormAPI/eFormAPI\.Common/obj/Debug/
+
+eFormAPI/eFormAPI\.Common/bin/Debug/
+
+eform-client/package-lock\.json

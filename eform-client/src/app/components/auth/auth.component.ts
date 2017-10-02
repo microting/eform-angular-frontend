@@ -43,6 +43,7 @@ export class AuthComponent implements OnInit {
   submitRestoreForm(): void {
     this.authService.sendEmailRecoveryLink(this.formRestore.getRawValue()).subscribe((result) => {
         if (result && result.success) {
+          this.formRestore.patchValue({email: ''});
           this.notifyService.success({text: 'Successfully, check your email for instructions'});
         }
       },

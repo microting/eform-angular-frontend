@@ -90,6 +90,7 @@ export class EFormTableComponent implements OnInit {
       this.eFormService.createSingle(this.eFormXmlModel).subscribe(operation => {
         if (operation && operation.success) {
           this.loadAllTemplates();
+          this.eFormXmlModel = new EFormXmlModel;
           this.notifyService.success({text: operation.message || 'Error'});
         } else {
           this.notifyService.error({text: operation.message || 'Error'});
