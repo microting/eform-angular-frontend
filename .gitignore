@@ -25,4 +25,12 @@ eFormAPI/eFormAPI\.sln\.DotSettings\.user
 
 eFormAPI/eFormAPI/output/dataFolder/
 eform-client/package-lock.json
-.idea
+
+
+eFormAPI/\.idea/
+
+eFormAPI/eFormAPI\.Common/obj/Debug/
+
+eFormAPI/eFormAPI\.Common/bin/Debug/
+
+eform-client/package-lock\.json

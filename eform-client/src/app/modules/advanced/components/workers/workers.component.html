@@ -6,12 +6,7 @@
       </div>
     </h1>
     <div class="pull-right">
-      <button class="needs_tooltip btn btn-ar btn-success" type="button" data-toggle="tooltip" data-placement="top"
-              title=""
-              data-bootbox-confirm-label="Save worker" data-bootbox-confirm="load(/Workers/New)"
-              data-bootbox-title="Create worker" data-bootbox-additional-classes="full-width mt-has-form"
-              data-onsuccess="$(&quot;.modal-body form#new_inspection_check_list&quot;).submit();"
-              data-original-title="Create worker">
+      <button class="needs_tooltip btn btn-ar btn-success" type="button" (click)="showCreateWorkerModal()">
         Create worker
       </button>
     </div>
@@ -110,4 +105,44 @@
     </button>
   </modal-footer>
 </modal>
+
+<modal #createWorkerModal>
+  <modal-header [show-close]="true">
+    <h4 class="modal-title">Create Worker</h4>
+  </modal-header>
+  <modal-body>
+    <div class="container-fluid">
+      <div class="create_eform">
+        <div class="row">
+          <div class="form-group col-xs-12 col-md-12">
+            <label class="mt-validation-container">Select site</label>
+            <select class="form-control" (change)="selectSiteForWorker($event)" name="createSite">
+              <option [value]="null">Select worker...</option>
+              <option *ngFor="let site of simpleSites" [value]="site.siteId">{{site.firstName}} {{site.lastName}}</option>
+            </select>
+          </div>
+          <div class="form-group col-xs-12 col-md-12">
+            <label class="mt-validation-container">First name</label>
+            <input class="form-control" [(ngModel)]="newWorkerModel.firstName" placeholder="First name" type="text"
+                   name="createFirstName" id="firstName"/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-xs-12 col-md-12">
+            <label class="mt-validation-container">Last name</label>
+            <input class="form-control" [(ngModel)]="newWorkerModel.lastName" placeholder="Last name" type="text"
+                   name="createLastName" id="lastName"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </modal-body>
+  <modal-footer>
+    <button type="button" class="btn btn-default" data-dismiss="deleteWorkerModal"
+            (click)="createWorkerModal.dismiss()">Cancel
+    </button>
+    <button type="button" class="btn btn-success" [disabled]="!newWorkerModel.siteId || !newWorkerModel.lastName || !newWorkerModel.firstName" (click)="createWorker()">Save "Worker"</button>
+  </modal-footer>
+</modal>
+
 

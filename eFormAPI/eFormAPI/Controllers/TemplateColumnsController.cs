@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using eFormAPI.Common.API;
+using eFormAPI.Common.Models;
 using eFormAPI.Web.Infrastructure.Helpers;
 using eFormSqlController;
-using eFromAPI.Common.API;
-using eFromAPI.Common.Models;
 
 namespace eFormAPI.Web.Controllers
 {
@@ -87,9 +87,24 @@ namespace eFormAPI.Web.Controllers
             try
             {
                 var core = _coreHelper.GetCore();
+                var columnsList = new List<int?>
+                {
+                    model.FieldId1,
+                    model.FieldId2,
+                    model.FieldId3,
+                    model.FieldId4,
+                    model.FieldId5,
+                    model.FieldId6,
+                    model.FieldId7,
+                    model.FieldId8,
+                    model.FieldId9,
+                    model.FieldId10
+                };
+                columnsList = columnsList.OrderBy(x => x == null).ToList();
                 var columnsUpdateResult = core.Advanced_TemplateUpdateFieldIdsForColumns((int)model.TemplateId, 
-                    model.FieldId1, model.FieldId2, model.FieldId3, model.FieldId4, model.FieldId5, model.FieldId6, model.FieldId7, model.FieldId8, 
-                    model.FieldId9, model.FieldId10);
+                    columnsList[0], columnsList[1], columnsList[2], columnsList[3], 
+                    columnsList[4], columnsList[5], columnsList[6], columnsList[7], 
+                    columnsList[8], columnsList[9]);
                 return columnsUpdateResult 
                     ? new OperationResult(true, "Columns was updated") 
                     : new OperationResult(false, "Error while updating columns");

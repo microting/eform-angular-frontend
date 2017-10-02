@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
@@ -7,12 +8,12 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using eFormAPI.Common.API;
+using eFormAPI.Common.Models.Auth;
+using eFormAPI.Common.Models.User;
 using eFormAPI.Web.Infrastructure.Data;
 using eFormAPI.Web.Infrastructure.Data.Entities;
 using eFormAPI.Web.Infrastructure.Identity;
-using eFromAPI.Common.API;
-using eFromAPI.Common.Models.Auth;
-using eFromAPI.Common.Models.User;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -74,9 +75,8 @@ namespace eFormAPI.Web.Controllers
             if (!ModelState.IsValid)
             {
                 var allErrors = ModelState.Values.SelectMany(v => v.Errors);
-                return new OperationResult(false, string.Join(" ", allErrors.Select(x=>x.ErrorMessage)));
+                return new OperationResult(false, string.Join(" ", allErrors.Select(x => x.ErrorMessage)));
             }
-
             var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId<int>(),
                 model.OldPassword,
                 model.NewPassword);
@@ -85,9 +85,56 @@ namespace eFormAPI.Web.Controllers
             {
                 return new OperationResult(false, string.Join(" ", result.Errors));
             }
-
             return new OperationResult(true);
         }
+
+        // POST: /account/forgot-password
+        [HttpPost]
+        [Route("forgot-password")]
+        [AllowAnonymous]
+        public async Task<OperationResult> ForgotPassword(ForgotPasswordModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await UserManager.FindByEmailAsync(model.Email);
+                if (user == null)
+                {
+                    return new OperationResult(false);
+                }
+                var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var link = ConfigurationManager.AppSettings["app:siteLink"];
+                link = $"{link}/login/restore-password?userId={user.Id}&code={code}";
+                await UserManager.SendEmailAsync(user.Id, "Reset Password",
+                    "Please reset your password by clicking <a href=\"" + link + "\">here</a>");
+                return new OperationResult(true);
+            }
+            return new OperationResult(false);
+        }
+
+        // POST: /account/reset-password
+        [HttpPost]
+        [Route("reset-password")]
+        [AllowAnonymous]
+        public async Task<OperationResult> ResetPassword(ResetPasswordModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var allErrors = ModelState.Values.SelectMany(v => v.Errors);
+                return new OperationResult(false, string.Join(" ", allErrors));
+            }
+            var user = await UserManager.FindByIdAsync(model.UserId);
+            if (user == null)
+            {
+                return new OperationResult(false);
+            }
+            var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+            if (result.Succeeded)
+            {
+                return new OperationResult(true);
+            }
+            return new OperationResult(false, string.Join(" ", result));
+        }
+
 
         #region Help Action
 

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import {AuthResponseModel, LoginRequestModel} from 'app/models/auth';
 import {AuthService} from 'app/services/accounts/auth.service';
 import {SettingsService} from 'app/services';
+import {NotifyService} from 'app/services/notify.service';
 
 
 @Component({
@@ -12,22 +13,40 @@ import {SettingsService} from 'app/services';
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent implements OnInit {
-  form: FormGroup;
+  formLogin: FormGroup;
+  formRestore: FormGroup;
   username: AbstractControl;
+  email: AbstractControl;
   password: AbstractControl;
+
+  showLoginForm: boolean = true;
   error: string;
 
   constructor(private router: Router,
               private authService: AuthService,
               private settingsService: SettingsService,
-              private fb: FormBuilder) { }
+              private fb: FormBuilder,
+              private notifyService: NotifyService) { }
 
-  submitForm(): void {
-    this.authService.login(new LoginRequestModel(this.form.getRawValue()))
+  submitLoginForm(): void {
+    this.authService.login(new LoginRequestModel(this.formLogin.getRawValue()))
       .subscribe((result: AuthResponseModel) => {
           localStorage.setItem('currentAuth', JSON.stringify(result));
           this.router.navigate(['/']).then();
         },
+        (error) => {
+          this.error = error;
+        },
+      );
+  }
+
+  submitRestoreForm(): void {
+    this.authService.sendEmailRecoveryLink(this.formRestore.getRawValue()).subscribe((result) => {
+        if (result && result.success) {
+          this.formRestore.patchValue({email: ''});
+          this.notifyService.success({text: 'Successfully, check your email for instructions'});
+        }
+      },
         (error) => {
           this.error = error;
         },
@@ -40,7 +59,7 @@ export class AuthComponent implements OnInit {
         this.router.navigate(['/settings/connection-string']).then();
       }
     });
-    this.form = this.fb.group({
+    this.formLogin = this.fb.group({
       username: [
         '',
         Validators.required,
@@ -50,7 +69,18 @@ export class AuthComponent implements OnInit {
         Validators.required,
       ],
     });
-    this.username = this.form.get('username');
-    this.password = this.form.get('password');
+    this.formRestore = this.fb.group({
+      email: [
+        '',
+        [Validators.required, Validators.email]
+      ]
+    });
+    this.username = this.formLogin.get('username');
+    this.password = this.formLogin.get('password');
+    this.email = this.formRestore.get('email');
+  }
+
+  toggleLoginForm(toggle: boolean) {
+    this.showLoginForm = toggle;
   }
 }

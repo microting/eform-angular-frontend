@@ -5,6 +5,7 @@ import {FormsModule} from '@angular/forms';
 import {SettingsRoutingModule} from './settings-routing.module';
 import {SettingsComponent} from './components/settings.component';
 import {HelpersModule} from 'app/modules/helpers/helpers.module';
+import {AdminSettingsComponent} from './components/admin-settings/admin-settings.component';
 
 @NgModule({
   imports: [
@@ -13,7 +14,7 @@ import {HelpersModule} from 'app/modules/helpers/helpers.module';
     FormsModule,
     HelpersModule
   ],
-  declarations: [ConnectionStringComponent, SettingsComponent]
+  declarations: [ConnectionStringComponent, SettingsComponent, AdminSettingsComponent]
 })
 export class SettingsModule {
 }

@@ -15,20 +15,39 @@
             </div>
           </div>
 
+          <ng-container *ngIf="showLoginForm">
+            <form [formGroup]="formLogin" >
+              <div class="input-group input-group-md">
+                <span class="input-group-addon user-addon"><i class="fa fa-user" aria-hidden="true"></i></span>
+                <input formControlName="username"  type="text" name="username" id="username" class="form-control" placeholder="Username" required>
+              </div>
+              <br>
+              <div class="input-group input-group-md">
+                <span class="input-group-addon"><i class="fa fa-key" aria-hidden="true"></i></span>
+                <input type="password" formControlName="password" name="password" id="password" class="form-control" placeholder="Password"  required>
+              </div>
+              <br>
+              <button type="submit" class="btn btn-ar btn-success btn-block" (click)="submitLoginForm()">Login</button>
+            </form>
+            <a (click)="toggleLoginForm(false)" class="forgot-password" style="cursor: pointer">
+              Forgot the password?
+            </a>
+          </ng-container>
 
-          <form [formGroup]="form">
-            <div class="input-group input-group-md">
-              <span class="input-group-addon user-addon"><i class="fa fa-user" aria-hidden="true"></i></span>
-              <input formControlName="username"  type="text" name="username" id="username" class="form-control" placeholder="Username" required>
-            </div>
-            <br>
-            <div class="input-group input-group-md">
-              <span class="input-group-addon"><i class="fa fa-key" aria-hidden="true"></i></span>
-              <input type="password" formControlName="password" name="password" id="password" class="form-control" placeholder="Password"  required>
-            </div>
-            <br>
-            <button type="submit" class="btn btn-ar btn-success btn-block" (click)="submitForm()">Login</button>
-          </form>
+          <ng-container *ngIf="!showLoginForm">
+            <form [formGroup]="formRestore">
+              <div class="input-group input-group-md">
+                <span class="input-group-addon envelope-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+                <input formControlName="email" type="text" name="email" id="email" class="form-control" placeholder="Email" required>
+              </div>
+              <br>
+              <button type="submit" class="btn btn-ar btn-success btn-block" [disabled]="!email.valid" (click)="submitRestoreForm()">Restore password</button>
+            </form>
+            <a (click)="toggleLoginForm(true)" class="forgot-password" style="cursor: pointer">
+              Back to login
+            </a>
+          </ng-container>
+
         </div>
       </div>
     </section>

@@ -5,5 +5,7 @@ export * from './adv-entity-group.model';
 export * from './adv-entity-group-list-request.model';
 export * from './adv-entity-group-edit.model';
 export * from './adv-entity-item.model';
+export * from './worker-create.model'
+
 
 
