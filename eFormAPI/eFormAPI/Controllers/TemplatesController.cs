@@ -228,8 +228,8 @@ namespace eFormAPI.Web.Controllers
                 var mainElement = core.TemplateRead(deployModel.Id);
                 mainElement.Repeated =
                     0; // We set this right now hardcoded, this will let the eForm be deployed until end date or we actively retract it.
-                mainElement.EndDate = DateTime.Now.AddYears(10);
-                mainElement.StartDate = DateTime.Now;
+                mainElement.EndDate = DateTime.Now.AddYears(10).ToUniversalTime();
+                mainElement.StartDate = DateTime.Now.ToUniversalTime();
                 core.CaseCreate(mainElement, "", sitesToBeDeployedTo, "");
             }
 
