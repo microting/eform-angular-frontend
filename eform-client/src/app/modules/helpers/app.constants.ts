@@ -8,6 +8,7 @@ export let WorkersMethods = {
   GetAll: '/api/workers/index',
   GetSingle: '/api/workers/edit',
   UpdateSingle: '/api/workers/update',
+  CreateSingle: '/api/workers/create',
   DeleteSingle: '/api/workers/delete'
 };
 

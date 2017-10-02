@@ -111,6 +111,7 @@
     <Compile Include="Models\SiteNameModel.cs" />
     <Compile Include="Models\User\UserInfoModelList.cs" />
     <Compile Include="Models\User\UserRegisterModel.cs" />
+    <Compile Include="Models\WorkerCreateModel.cs" />
     <Compile Include="Models\WorkerModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
