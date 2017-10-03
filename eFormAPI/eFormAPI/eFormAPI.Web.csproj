@@ -297,12 +297,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\eFormAPI.Common\eFormAPI.Common.csproj">
-      <Project>{515ee205-5349-449e-be13-f83da5b601b9}</Project>
-      <Name>eFromAPI.Common</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -316,6 +310,12 @@
     <EmbeddedResource Include="Migrations\201707270906018_UserFirstLast.resx">
       <DependentUpon>201707270906018_UserFirstLast.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\eFormAPI.Common\eFormAPI.Common.csproj">
+      <Project>{515ee205-5349-449e-be13-f83da5b601b9}</Project>
+      <Name>eFormAPI.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
