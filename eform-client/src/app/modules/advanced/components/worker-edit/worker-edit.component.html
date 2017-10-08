@@ -47,7 +47,8 @@
         </div>
         <div class="col-md-3">
           <div class="bs-docs-container hidden-print affix" id="mt-side-bar" role="complementary">
-            <button class="btn btn-ar btn-danger" (click)="updateSingle()">Gem</button>
+            <button class="btn btn-ar btn-danger" [disabled]="spinnerStatus" (click)="updateSingle()">Save
+              <i *ngIf="spinnerStatus" class="fa fa-spinner fa-spin"></i></button>
           </div>
         </div>
       </div>

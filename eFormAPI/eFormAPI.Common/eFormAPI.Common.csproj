@@ -85,7 +85,14 @@
     <Compile Include="Models\Auth\ForgotPasswordModel.cs" />
     <Compile Include="Models\Auth\ResetPasswordModel.cs" />
     <Compile Include="Models\DisplayTemplateColumnsModel.cs" />
-    <Compile Include="Models\Settings\AdminSettingsModel.cs" />
+    <Compile Include="Models\Settings\Admin\AdminSettingsModel.cs" />
+    <Compile Include="Models\Settings\Admin\HeaderSettingsModel.cs" />
+    <Compile Include="Models\Settings\Admin\LoginPageSettingsModel.cs" />
+    <Compile Include="Models\Settings\Admin\SMTPSettingsModel.cs" />
+    <Compile Include="Models\Settings\Initial\AdminSetupModel.cs" />
+    <Compile Include="Models\Settings\Initial\ConnectionStringMainModel.cs" />
+    <Compile Include="Models\Settings\Initial\ConnectionStringSDKModel.cs" />
+    <Compile Include="Models\Settings\Initial\InitialSettingsModel.cs" />
     <Compile Include="Models\TemplateColumnModel.cs" />
     <Compile Include="Models\UpdateTemplateColumnsModel.cs" />
     <Compile Include="Models\User\UserInfoViewModel.cs" />
@@ -95,8 +102,6 @@
     <Compile Include="Models\Cases\Request\CaseEditRequestGroupField.cs" />
     <Compile Include="Models\Cases\Request\ReplyRequest.cs" />
     <Compile Include="Models\PaginationModel.cs" />
-    <Compile Include="Models\Settings\AdminSetupModel.cs" />
-    <Compile Include="Models\Settings\SettingsModel.cs" />
     <Compile Include="Models\DeployCheckbox.cs" />
     <Compile Include="Models\DeployModel.cs" />
     <Compile Include="Models\DeployToModel.cs" />
@@ -105,8 +110,6 @@
     <Compile Include="Models\SearchableList\AdvEntityGroupImportModel.cs" />
     <Compile Include="Models\SearchableList\AdvEntityItemModel.cs" />
     <Compile Include="Models\SearchableList\AdvEntityGroupListRequestModel.cs" />
-    <Compile Include="Models\Settings\ConnectionStringMainModel.cs" />
-    <Compile Include="Models\Settings\ConnectionStringSDKModel.cs" />
     <Compile Include="Models\SimpleSiteModel.cs" />
     <Compile Include="Models\SiteNameModel.cs" />
     <Compile Include="Models\User\UserInfoModelList.cs" />

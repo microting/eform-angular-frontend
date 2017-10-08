@@ -234,6 +234,7 @@
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\CasesController.cs" />
     <Compile Include="Controllers\EntitySearchController.cs" />
+    <Compile Include="Controllers\ImagesController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\TemplateColumnsController.cs" />
     <Compile Include="Controllers\TemplatesController.cs" />
