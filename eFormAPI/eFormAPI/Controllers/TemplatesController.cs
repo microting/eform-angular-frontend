@@ -84,9 +84,7 @@ namespace eFormAPI.Web.Controllers
                 {
                     if (ex.Message.Contains("PrimeDb"))
                     {
-                        var lines =
-                            System.IO.File.ReadAllLines(
-                                System.Web.Hosting.HostingEnvironment.MapPath("~/bin/Input.txt"));
+                        var lines = File.ReadAllLines(System.Web.Hosting.HostingEnvironment.MapPath("~/bin/Input.txt"));
 
                         var connectionStr = lines.First();
                         var adminTool = new AdminTools(connectionStr);

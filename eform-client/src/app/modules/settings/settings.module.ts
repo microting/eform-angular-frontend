@@ -6,13 +6,17 @@ import {SettingsRoutingModule} from './settings-routing.module';
 import {SettingsComponent} from './components/settings.component';
 import {HelpersModule} from 'app/modules/helpers/helpers.module';
 import {AdminSettingsComponent} from './components/admin-settings/admin-settings.component';
+import {TooltipModule} from 'ngx-bootstrap';
+import {FileUploadModule} from 'ng2-file-upload';
 
 @NgModule({
   imports: [
     CommonModule,
     SettingsRoutingModule,
     FormsModule,
-    HelpersModule
+    HelpersModule,
+    TooltipModule.forRoot(),
+    FileUploadModule
   ],
   declarations: [ConnectionStringComponent, SettingsComponent, AdminSettingsComponent]
 })

@@ -30,7 +30,13 @@ export let SimpleSitesMethods = {
 export let SettingsMethods = {
   UpdateConnectionString: '/api/settings/connection-string',
   ConnectionStringExist: '/api/settings/connection-string-exist',
-  GetAdminSettings: '/api/settings/admin'
+  GetAdminSettings: '/api/settings/admin',
+  ResetLoginPageSettings: '/api/settings/reset-login-page',
+  ResetHeaderSettings: '/api/settings/reset-page-header',
+  GetLoginPageSettings: '/api/settings/login-page',
+  GetHeaderSettings: '/api/settings/page-header',
+  GetAnonymousImage: 'api/images/login-page-images',
+  GetAuthorizedImage: 'api/images/eform-images'
 };
 
 export let TemplatesMethods = {

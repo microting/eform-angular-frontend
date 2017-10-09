@@ -129,14 +129,14 @@
         </tr>
         </tbody>
       </table>
-      <eform-spinner [middleActive]="isDeploying"></eform-spinner>
     </div>
   </modal-body>
   <modal-footer>
     <button type="button" class="btn btn-default" data-dismiss="deploymentModal" (click)="deploymentModal.dismiss()">
       Cancel
     </button>
-    <button type="button" class="btn btn-success" [disabled]="isDeploying" (click)="submitDeploymentModal()">Save pairing</button>
+    <button type="button" class="btn btn-success" [disabled]="isDeploying" (click)="submitDeploymentModal()">Save pairing
+      <i *ngIf="isDeploying" class="fa fa-spinner fa-spin"></i></button>
   </modal-footer>
 </modal>
 
