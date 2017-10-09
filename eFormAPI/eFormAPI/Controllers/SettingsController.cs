@@ -76,13 +76,13 @@ namespace eFormAPI.Web.Controllers
             try
             {
                 adminTools = new AdminTools(sdkConnectionString);
-                string error = adminTools.DbSetup(settingsModel.ConnectionStringSdk.Token);
+                string error = adminTools.DbSetup(initialSettingsModel.ConnectionStringSdk.Token);
             }
             catch (Exception exception)
             {
                 try
                 {
-                    new AdminTools(sdkConnectionString).DbSetup(settingsModel.ConnectionStringSdk.Token);
+                    new AdminTools(sdkConnectionString).DbSetup(initialSettingsModel.ConnectionStringSdk.Token);
                 }
                 catch (Exception exa)
                 {
