@@ -117,10 +117,19 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="letsencrypt\letsencrypt.exe.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\Cases\Response\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="letsencrypt\letsencrypt.exe" />
+    <Content Include="letsencrypt\Web_Config.xml" />
+    <Content Include="letsencrypt\x64\libeay32.dll" />
+    <Content Include="letsencrypt\x64\ssleay32.dll" />
+    <Content Include="letsencrypt\x86\libeay32.dll" />
+    <Content Include="letsencrypt\x86\ssleay32.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
