@@ -7,7 +7,8 @@ import {CasesService} from 'app/services/cases/cases.service';
 
 @Component({
   selector: 'app-cases-table',
-  templateUrl: './cases-table.component.html'
+  templateUrl: './cases-table.component.html',
+  styleUrls: ['./cases-table.component.css']
 })
 export class CasesTableComponent implements OnInit {
   id: number;
@@ -47,6 +48,12 @@ export class CasesTableComponent implements OnInit {
       }
       this.spinnerStatus = false;
     });
+  }
+
+  downloadTemplatePDF(templateId: number, caseId: number) {
+    this.eFormService.downloadEformPDF(templateId, caseId).subscribe((data => {
+
+    }));
   }
 
 }

@@ -344,5 +344,67 @@ namespace eFormAPI.Web.Controllers
                 new MediaTypeHeaderValue($"application/pdf");
             return result;
         }
+        
+        [HttpGet]
+        [Authorize]
+        [Route("api/templates/download-eform-pdf/{templateId}")]
+        public HttpResponseMessage DownloadEFormPDF(int templateId)
+        {
+            try
+            {
+                var core = _coreHelper.GetCore();
+                var filePath = core.CaseToPdf(templateId, "", DateTime.Now.ToString("yyyyMMddHHmmssffff"));
+                if (!File.Exists(filePath))
+                {
+                    return new HttpResponseMessage(HttpStatusCode.NotFound);
+                }
+
+                var result = new HttpResponseMessage(HttpStatusCode.OK);
+                var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+
+                result.Content = new StreamContent(fileStream);
+                result.Content.Headers.ContentDisposition =
+                    new ContentDispositionHeaderValue("attachment") {FileName = ""}; // TODO: FIX
+                result.Content.Headers.ContentType =
+                    new MediaTypeHeaderValue($"application/pdf");
+                return result;
+            }
+            catch (Exception)
+            {
+                return new HttpResponseMessage(HttpStatusCode.InternalServerError);
+            }
+            
+        }
+        
+        [HttpGet]
+        [Authorize]
+        [Route("api/templates/download-eform-xml/{templateId}")]
+        public HttpResponseMessage DownloadEFormXML(int templateId)
+        {
+            
+            try
+            {
+                var core = _coreHelper.GetCore();
+                var filePath = core.CaseToJasperXml(templateId, DateTime.Now.ToString("yyyyMMddHHmmssffff"));
+                if (!File.Exists(filePath))
+                {
+                    return new HttpResponseMessage(HttpStatusCode.NotFound);
+                }
+
+                var result = new HttpResponseMessage(HttpStatusCode.OK);
+                var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+
+                result.Content = new StreamContent(fileStream);
+                result.Content.Headers.ContentDisposition =
+                    new ContentDispositionHeaderValue("attachment") {FileName = ""}; // TODO: FIX
+                result.Content.Headers.ContentType =
+                    new MediaTypeHeaderValue($"application/pdf");
+                return result;
+            }
+            catch (Exception)
+            {
+                return new HttpResponseMessage(HttpStatusCode.InternalServerError);
+            }
+        }
     }
 }

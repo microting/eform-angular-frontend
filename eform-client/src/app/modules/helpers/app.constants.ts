@@ -45,7 +45,12 @@ export let TemplatesMethods = {
   DeleteSingle: '/api/templates/delete',
   CreateSingle: '/api/templates/create',
   DeploySingle: '/api/templates/deploy',
-  GetCsv: '/api/templates/csv'
+};
+
+export let TemplateFilesMethods = {
+  GetCsv: '/api/template-files/csv',
+  DownloadXML: '/api/template-files/download-eform-xml',
+  DownloadPDF: '/api/template-files/download-case-pdf'
 };
 
 export let TemplateColumnMethods = {
@@ -77,6 +82,6 @@ export let AdminMethods = {
 };
 
 export let ImageMethods = {
-  Rotate: '/api/templates/rotateImage',
-  Delete: '/api/templates/deleteImage',
+  Rotate: '/api/template-files/rotate-image',
+  Delete: '/api/template-files/delete-image',
 };

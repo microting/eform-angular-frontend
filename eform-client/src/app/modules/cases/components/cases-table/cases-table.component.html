@@ -107,11 +107,22 @@
         {{caseModel.fieldValue10}}
       </td>
       <td class="text-center">
-        <a *ngIf="caseModel.status == 100" [routerLink]="['/cases/edit', caseModel.id, this.currentTemplate.id]"
-           class="needs_tooltip btn btn-ar btn-sm btn-default mt-edit-check-list-button" tooltip="Edit case"
-           type="button" data-original-title="Edit case">
-          <span class="glyphicon glyphicon-pencil" data-mt-check-list-id="@(item.Id)"></span>
-        </a>
+        <div class="row row-buttons-wrapper">
+          <a *ngIf="caseModel.status == 100" [routerLink]="['/cases/edit', caseModel.id, this.currentTemplate.id]"
+             class="needs_tooltip btn btn-ar btn-sm btn-default mt-edit-check-list-button" tooltip="Edit case"
+             type="button" data-original-title="Edit case">
+            <span class="glyphicon glyphicon-pencil" data-mt-check-list-id="@(item.Id)"></span>
+          </a>
+        </div>
+
+        <div class="row">
+          <button tooltip="Download PDF" (click)="downloadTemplatePDF(this.currentTemplate.id, caseModel.id)"
+                  class="needs_tooltip btn btn-ar btn-xs btn-default"
+                  type="button">
+            .PDF
+          </button>
+        </div>
+
       </td>
     </tr>
     </tbody>

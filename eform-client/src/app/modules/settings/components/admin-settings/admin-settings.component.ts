@@ -25,6 +25,10 @@ export class AdminSettingsComponent implements OnInit {
 
   ngOnInit() {
     this.getAdminSettings();
+    this.initializeUploaders();
+  }
+
+  initializeUploaders() {
     const re = /(?:\.([^.]+))?$/;
     this.loginPageImageUploader.onAfterAddingFile = f => {
       if (this.loginPageImageUploader.queue.length > 1) {

@@ -8,7 +8,7 @@ import 'rxjs/add/operator/map';
 import {Router} from '@angular/router';
 import {DeployModel, EFormXmlModel} from 'app/models/eFormTemplates';
 import {TemplateColumnModel} from '../../models/cases/response/column-field.model';
-import {TemplateColumnMethods} from '../../modules/helpers/app.constants';
+import {TemplateColumnMethods, TemplateFilesMethods} from '../../modules/helpers/app.constants';
 import {UpdateColumnsModel} from '../../models/cases/request/update-columns.model';
 
 @Injectable()
@@ -52,5 +52,13 @@ export class EFormService extends BaseService {
 
   public updateTemplateColumns = (model: UpdateColumnsModel): Observable<OperationResult> => {
     return this.postModelOperationResult(TemplateColumnMethods.GetColumns, model);
+  }
+
+  public downloadEformXML = (templateId: number): Observable<OperationDataResult<any>> => {
+    return this.getWithOperationDataResult<any>(TemplateFilesMethods.DownloadXML + '/' + templateId);
+  }
+
+  public downloadEformPDF = (templateId: number, caseId: number): Observable<OperationDataResult<any>> => {
+    return this.getWithOperationDataResult<any>(TemplateFilesMethods.DownloadPDF + '/' + templateId + '?caseId=' + caseId);
   }
 }
