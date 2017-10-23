@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eFormAPI.Web", "eFormAPI\eFormAPI.Web.csproj", "{54404CF9-A407-4F55-BC26-B243099E29A8}"
 EndProject
@@ -10,6 +10,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Installation", "Installation", "{DF4D5E9C-F43E-471F-BCEF-81C1363192AB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomActions", "CustomActions\CustomActions.csproj", "{768280FF-C359-4E58-8B5C-1F682B41CC24}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2B167169-F122-4F1F-9881-0DC8C07585B8} = {2B167169-F122-4F1F-9881-0DC8C07585B8}
+	EndProjectSection
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "InstallBundle", "Bundle\InstallBundle.wixproj", "{B63F5F50-AA5B-4BC2-AC61-B2A94B62C042}"
 EndProject
