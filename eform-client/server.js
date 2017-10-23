@@ -3,11 +3,11 @@ const compression = require('compression');
 const path = require('path');
 var httpProxy = require('http-proxy');
 const app = express();
-const defaultPort = 3000;
+const defaultPort = $$port$$;
 
 // proxy
 var apiProxy = httpProxy.createProxyServer();
-var apiForwardingUrl = 'http://localhost:5000/';
+var apiForwardingUrl = 'http://localhost:$$apiport$$/';
 apiProxy.on('error', function(e) {
   console.error('Error:');
   console.info(e);
