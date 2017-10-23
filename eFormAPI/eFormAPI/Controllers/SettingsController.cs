@@ -6,7 +6,6 @@ using System.IO;
 using System.Web.Configuration;
 using System.Web.Http;
 using eFormAPI.Common.API;
-using eFormAPI.Common.Models.Settings;
 using eFormAPI.Common.Models.Settings.Admin;
 using eFormAPI.Common.Models.Settings.Initial;
 using eFormAPI.Web.Infrastructure.Consts;
