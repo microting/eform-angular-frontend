@@ -14,11 +14,13 @@
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <DefineConstants>Debug</DefineConstants>
     <SuppressAllWarnings>False</SuppressAllWarnings>
+	<SuppressValidation>true</SuppressValidation>
     <Pedantic>True</Pedantic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <OutputPath>..\Bundle\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+	<SuppressValidation>true</SuppressValidation>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DomainNameDlg.wxs" />
