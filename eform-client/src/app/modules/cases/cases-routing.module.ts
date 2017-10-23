@@ -14,7 +14,7 @@ const routes: Routes = [
     component: CasesTableComponent,
   },
   {
-    path: 'edit/:id',
+    path: 'edit/:id/:templateId',
     component: CasesEditComponent,
   }
 ];

@@ -34,12 +34,12 @@
       <ul class="nav navbar-nav">
         <li class="">
           <a routerLink="/" routerLinkActive="active">
-            eForms
+            My eForms
           </a>
         </li>
         <li class="">
           <a routerLink="/simplesites" routerLinkActive="active">
-            "Workers"
+            Device users
           </a>
         </li>
         <li class="dropdown">
@@ -64,11 +64,11 @@
                 Searchable list
               </a>
             </li>
-            <!--<li class="">-->
-              <!--<a routerLink="/" routerLinkActive="active">-->
-                <!--Settings-->
-              <!--</a>-->
-            <!--</li>-->
+            <li class="" *ngIf="userInfo.role == 'admin'">
+              <a routerLink="/settings" routerLinkActive="active">
+                Settings
+              </a>
+            </li>
           </ul>
         </li>
       </ul>

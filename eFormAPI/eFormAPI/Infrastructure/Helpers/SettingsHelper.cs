@@ -1,9 +1,9 @@
 ﻿using System.Configuration;
 using System.Linq;
+using eFormAPI.Common.Models.Settings.Initial;
 using eFormAPI.Web.Infrastructure.Data;
 using eFormAPI.Web.Infrastructure.Data.Entities;
 using eFormAPI.Web.Infrastructure.Identity;
-using eFromAPI.Common.Models.Settings;
 using Microsoft.AspNet.Identity;
 
 namespace eFormAPI.Web.Infrastructure.Helpers

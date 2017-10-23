@@ -2,12 +2,12 @@
   <div class="container-fluid">
     <h1 class="page-title header-page-title">
       <div class="container">
-        eForms
+        My eForms
       </div>
     </h1>
     <div class="pull-right">
       <button tooltip="Create eForm" (click)="showTemplateCreateModal()" class="needs_tooltip btn btn-ar btn-success"
-              type="button">Create eForm
+              type="button">New eForm
       </button>
     </div>
   </div>
@@ -21,19 +21,16 @@
     <thead>
     <tr role="row">
       <th class="col-md-1 text-center" rowspan="1" colspan="1">
-        #
+        ID
       </th>
       <th class="col-md-2 text-center" rowspan="1" colspan="1">
         Created at
       </th>
-      <th class="col-md-2 text-center" rowspan="1" colspan="1">
-        Updated at
-      </th>
       <th class="col-md-3 text-center" rowspan="1" colspan="1">
-        Label
+        Name eForm
       </th>
       <th class="col-md-2 text-center" rowspan="1" colspan="1">
-        Deployment
+        Pairing
       </th>
       <th class="col-md-1 text-center" rowspan="1" colspan="1">
         Actions
@@ -49,43 +46,88 @@
         {{templateDto.createdAt | date:'dd.MM.y HH:mm:ss'}}
       </td>
       <td class="text-center">
-        {{templateDto.updatedAt | date:'dd.MM.y HH:mm:ss'}}
-      </td>
-      <td class="text-center">
         {{templateDto.label}}
       </td>
       <td class="text-center">
         <span *ngFor="let deployedSite of templateDto.deployedSites">{{deployedSite.siteName}}<br></span>
         <button *ngIf="templateDto.deployedSites.length > 0" class="needs_tooltip btn btn-ar btn-sm btn-success"
-                type="button" tooltip="Edit deployment"
-                (click)="editDeployment(templateDto.id)">Edit deployment
+                type="button" tooltip="Click to edit eForm pairing with user(s)"
+                (click)="editDeployment(templateDto)">Edit pairing
         </button>
         <button *ngIf="templateDto.deployedSites.length == 0" class="needs_tooltip btn btn-ar btn-sm btn-success"
-                type="button" tooltip="New deployment"
-                (click)="selectWorkers(templateDto.id)">Select workers
+                type="button" tooltip="Click to pair eForm with user(s)"
+                (click)="editDeployment(templateDto)">Pair eForm
         </button>
       </td>
       <td class="text-center">
-        <a *ngIf="templateDto.hasCases" [routerLink]="['/cases', templateDto.id]"
-           class="needs_tooltip btn btn-ar btn-sm btn-default mt-edit-check-list-button"
-           type="button" tooltip="Show cases">
-          <span class="glyphicon glyphicon-search" data-mt-check-list-id="@(item.Id)"></span>
-        </a>
-        <a *ngIf="templateDto.hasCases" href="/api/templates/csv/{{templateDto.id}}"
-           class="needs_tooltip btn btn-ar btn-sm btn-success" type="button" tooltip="Download CSV">
-          <span class="fa fa-file-text-o"></span>
-        </a>
-        <button tooltip="Delete eForm" (click)="showTemplateDeleteModal(templateDto)"
-                class="needs_tooltip btn btn-ar btn-sm btn-danger"
-                type="button">
-          <span class="fa fa-trash-o"></span>
-        </button>
+        <div class="row row-buttons-wrapper">
+          <a *ngIf="templateDto.hasCases" [routerLink]="['/cases', templateDto.id]"
+             class="needs_tooltip btn btn-ar btn-sm btn-default mt-edit-check-list-button"
+             type="button" tooltip="Show cases">
+            <span class="glyphicon glyphicon-search" data-mt-check-list-id="@(item.Id)"></span>
+          </a>
+          <a
+            class="needs_tooltip btn btn-ar btn-sm btn-default mt-edit-check-list-button" (click)="openEditCasesColumnsModal(templateDto)"
+            type="button" tooltip="Edit columns">
+            <span class="glyphicon glyphicon-align-justify"></span>
+          </a>
+          <a *ngIf="templateDto.hasCases" href="/api/template-files/csv/{{templateDto.id}}"
+             class="needs_tooltip btn btn-ar btn-sm btn-success" type="button" tooltip="Download CSV">
+            <span class="fa fa-file-text-o"></span>
+          </a>
+          <button tooltip="Delete eForm" (click)="showTemplateDeleteModal(templateDto)"
+                  class="needs_tooltip btn btn-ar btn-sm btn-danger"
+                  type="button">
+            <span class="fa fa-trash-o"></span>
+          </button>
+        </div>
+        <div class="row">
+          <button tooltip="Download XML" (click)="downloadTemplateXML(templateDto.id)"
+                  class="needs_tooltip btn btn-ar btn-xs btn-default"
+                  type="button">
+            .XML
+          </button>
+          <button *ngIf="templateDto.hasCases" tooltip="Upload ZIP archive" (click)="showUploadTemplateZIP(templateDto)"
+                  class="needs_tooltip btn btn-ar btn-xs btn-default"
+                  type="button">
+            .ZIP
+          </button>
+        </div>
       </td>
     </tr>
     </tbody>
   </table>
   <eform-spinner [middleActive]="spinnerStatus"></eform-spinner>
 </div>
+
+<modal #uploadTemplateZIPModal>
+  <modal-header [show-close]="true">
+    <h4>Upload template ZIP</h4>
+  </modal-header>
+  <modal-body>
+    <div class="create_eform">
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+          <input type="file" ng2FileSelect [uploader]="zipFileUploader"  class="input-wrapper" />
+          <div>
+            <div>
+              Uploading progress:
+              <div class="progress" style="">
+                <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': zipFileUploader.progress + '%' }"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </modal-body>
+  <modal-footer>
+    <button type="button" class="btn btn-default" data-dismiss="createTemplateModal"
+            (click)="uploadTemplateZIPModal.dismiss()">Cancel
+    </button>
+    <button type="button" class="btn btn-success" (click)="uploadTemplateZIP()">Save eForm</button>
+  </modal-footer>
+</modal>
 
 <modal #deploymentModal [size]="'lg'">
   <modal-header [show-close]="true">
@@ -102,10 +144,10 @@
             Microting ID
           </th>
           <th class="col-md-2 text-center" rowspan="1" colspan="1">
-            Name
+            Name user device
           </th>
           <th class="col-md-2 text-center" rowspan="1" colspan="1">
-            Select
+            Check to pair
           </th>
         </tr>
         </thead>
@@ -130,14 +172,130 @@
         </tr>
         </tbody>
       </table>
-      <eform-spinner [middleActive]="isDeploying"></eform-spinner>
     </div>
   </modal-body>
   <modal-footer>
     <button type="button" class="btn btn-default" data-dismiss="deploymentModal" (click)="deploymentModal.dismiss()">
       Cancel
     </button>
-    <button type="button" class="btn btn-success" [disabled]="isDeploying" (click)="submitDeploymentModal()">Save deployment</button>
+    <button type="button" class="btn btn-success" [disabled]="isDeploying" (click)="submitDeploymentModal()">Save pairing
+      <i *ngIf="isDeploying" class="fa fa-spinner fa-spin"></i></button>
+  </modal-footer>
+</modal>
+
+<modal #editCasesColumnsModal>
+  <modal-header [show-close]="true">
+    <h4 class="modal-title">Select columns for displaying in Cases</h4>
+  </modal-header>
+  <modal-body>
+    <div class="container-fluid">
+      <div class='row'>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>No</th>
+            <th>Field</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><strong>1</strong></td>
+            <td class="col-md-8">
+              <select [(ngModel)]="columnEditModel.fieldId1" class="form-control">
+                <option [value]="null"></option>
+                <option *ngFor="let column of columnModels" [value]="column.id">{{column.label}}</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>2</strong></td>
+            <td>
+              <select [(ngModel)]="columnEditModel.fieldId2" class="form-control">
+                <option [value]="null"></option>
+                <option *ngFor="let column of columnModels" [value]="column.id">{{column.label}}</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>3</strong></td>
+            <td>
+              <select [(ngModel)]="columnEditModel.fieldId3" class="form-control">
+                <option [value]="null"></option>
+                <option *ngFor="let column of columnModels" [value]="column.id">{{column.label}}</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>4</strong></td>
+            <td>
+              <select [(ngModel)]="columnEditModel.fieldId4" class="form-control">
+                <option [value]="null"></option>
+                <option *ngFor="let column of columnModels" [value]="column.id">{{column.label}}</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>5</strong></td>
+            <td>
+              <select [(ngModel)]="columnEditModel.fieldId5" class="form-control">
+                <option [value]="null"></option>
+                <option *ngFor="let column of columnModels" [value]="column.id">{{column.label}}</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>6</strong></td>
+            <td>
+              <select [(ngModel)]="columnEditModel.fieldId6" class="form-control">
+                <option [value]="null"></option>
+                <option *ngFor="let column of columnModels" [value]="column.id">{{column.label}}</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>7</strong></td>
+            <td>
+              <select [(ngModel)]="columnEditModel.fieldId7" class="form-control">
+                <option [value]="null"></option>
+                <option *ngFor="let column of columnModels" [value]="column.id">{{column.label}}</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>8</strong></td>
+            <td>
+              <select [(ngModel)]="columnEditModel.fieldId8" class="form-control">
+                <option [value]="null"></option>
+                <option *ngFor="let column of columnModels" [value]="column.id">{{column.label}}</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>9</strong></td>
+            <td>
+              <select [(ngModel)]="columnEditModel.fieldId9" class="form-control">
+                <option [value]="null"></option>
+                <option *ngFor="let column of columnModels" [value]="column.id">{{column.label}}</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>10</strong></td>
+            <td>
+              <select [(ngModel)]="columnEditModel.fieldId10" class="form-control">
+                <option [value]="null"></option>
+                <option *ngFor="let column of columnModels" [value]="column.id">{{column.label}}</option>
+              </select>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </modal-body>
+  <modal-footer>
+    <button type="button" class="btn btn-danger" (click)="updateColumns()">Save</button>
+    <button type="button" class="btn btn-default" (click)="editCasesColumnsModal.dismiss()">Cancel</button>
   </modal-footer>
 </modal>
 

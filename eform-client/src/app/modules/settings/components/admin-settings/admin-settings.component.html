@@ -1,0 +1,267 @@
+<header class="main-header main-header-title">
+  <div class="container-fluid">
+    <h1 class="page-title header-page-title">
+      <div class="container">
+        Settings
+      </div>
+    </h1>
+    <div class="pull-right">
+
+          <button class="btn btn-ar btn-danger" [disabled]="!settingsForm.form.valid || spinnerStatus" (click)="updateAdminSettings()">
+            Save <i *ngIf="spinnerStatus" class="fa fa-spinner fa-spin"></i></button>
+
+    </div>
+  </div>
+</header>
+<div class="edit_case">
+  <div class="container-fluid">
+      <form #settingsForm="ngForm">
+        <div class="row" style="padding-bottom: 15px">
+          <div class="panel-group">
+            <div class="col-md-6" role="main">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <div class="row">
+                    <div class="col-md-10 col-xs-10 panel-header-button-wrapper">
+                      Login page
+                    </div>
+                    <div class="col-md-2 col-xs-2 text-right">
+                      <button class="btn btn-ar btn-default" tooltip="Reset" (click)="resetLoginPageSettings()">
+                        <i class="fa fa-repeat" aria-hidden="true"></i> </button>
+
+                    </div>
+                  </div>
+                </div>
+                <table class="table">
+                  <tbody>
+                  <tr>
+                    <td class="col-md-4">
+                      <strong>Main text</strong>
+                    </td>
+                    <td>
+                      <div class="input-group">
+                        <input class="form-control" [(ngModel)]="adminSettingsModel.loginPageSettingsModel.mainText"
+                               type="text" #mainTextLoginPage="ngModel" name="mainTextLoginPage" id="mainTextLoginPage"/>
+                        <span class="input-group-addon btn glyphicon"
+                              [class.success]="adminSettingsModel.loginPageSettingsModel.mainTextVisible"
+                              [class.glyphicon-eye-open] = "adminSettingsModel.loginPageSettingsModel.mainTextVisible"
+                              [class.danger]="!adminSettingsModel.loginPageSettingsModel.mainTextVisible"
+                              [class.glyphicon-eye-close]="!adminSettingsModel.loginPageSettingsModel.mainTextVisible"
+                              (click)="adminSettingsModel.loginPageSettingsModel.mainTextVisible = !adminSettingsModel.loginPageSettingsModel.mainTextVisible"></span>
+
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="col-md-4">
+                      <strong>Secondary text</strong>
+                    </td>
+                    <td>
+                      <div class="input-group">
+                        <input class="form-control" [(ngModel)]="adminSettingsModel.loginPageSettingsModel.secondaryText" type="text" #secondaryTextLoginPage="ngModel"
+                               name="secondaryTextLoginPage" id="secondaryTextLoginPage"/>
+                        <span class="input-group-addon btn glyphicon"
+                              [class.success]="adminSettingsModel.loginPageSettingsModel.secondaryTextVisible"
+                              [class.glyphicon-eye-open] = "adminSettingsModel.loginPageSettingsModel.secondaryTextVisible"
+                              [class.danger]="!adminSettingsModel.loginPageSettingsModel.secondaryTextVisible"
+                              [class.glyphicon-eye-close]="!adminSettingsModel.loginPageSettingsModel.secondaryTextVisible"
+                              (click)="adminSettingsModel.loginPageSettingsModel.secondaryTextVisible = !adminSettingsModel.loginPageSettingsModel.secondaryTextVisible"></span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="col-md-4">
+                      <strong>Image</strong>
+                    </td>
+                    <td>
+                      <div class="row">
+                        <div class="col-md-2">
+                          <img class="img-responsive img-thumbnail" width="83" height="94" src="{{loginPageImageLink}}" />
+                        </div>
+                        <div class="col-md-4">
+                          <p>Recommended parameters:</p>
+                          <p>Resolution - 90x100</p>
+                          <p>Proportions - 1:1.5</p>
+                        </div>
+                        <div class="col-md-6">
+                          <input type="file" ng2FileSelect [uploader]="loginPageImageUploader" class="image-input-wrapper"/>
+                          <!--<input name="myFile" type="file" class="image-input-wrapper" /> -->
+                          <span class="btn glyphicon pull-right" style="border-radius: 0px"
+                                [class.btn-success]="adminSettingsModel.loginPageSettingsModel.imageLinkVisible"
+                                [class.glyphicon-eye-open] = "adminSettingsModel.loginPageSettingsModel.imageLinkVisible"
+                                [class.btn-danger]="!adminSettingsModel.loginPageSettingsModel.imageLinkVisible"
+                                [class.glyphicon-eye-close]="!adminSettingsModel.loginPageSettingsModel.imageLinkVisible"
+                                (click)="adminSettingsModel.loginPageSettingsModel.imageLinkVisible = !adminSettingsModel.loginPageSettingsModel.imageLinkVisible"></span>
+                        </div>
+                      </div>
+
+
+
+                      <!--<div class="input-group">
+                        <input class="form-control" [(ngModel)]="adminSettingsModel.siteLink"
+                               placeholder="https://my-eform-app.com/" type="text" #sourceSdk="ngModel" value="" required name="siteLink" id="siteLink"/>
+                        <span class="input-group-addon success btn glyphicon glyphicon-eye-open" id="basic-addon1"></span>
+                      </div> -->
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="col-md-6" role="main">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <div class="row">
+                    <div class="col-md-10 col-xs-10 panel-header-button-wrapper">
+                      Site header
+                    </div>
+                    <div class="col-md-2 col-xs-2 text-right">
+                      <button class="btn btn-ar btn-default" tooltip="Reset" (click)="resetHeaderSettings()">
+                        <i class="fa fa-repeat" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <table class="table">
+                  <tbody>
+                  <tr>
+                    <td class="col-md-4">
+                      <strong>Main text</strong>
+                    </td>
+                    <td>
+                      <div class="input-group">
+                        <input class="form-control" [(ngModel)]="adminSettingsModel.headerSettingsModel.mainText" type="text" #headerSettingsMainText="ngModel"
+                               name="headerSettingsMainText" id="headerSettingsMainText"/>
+                        <span class="input-group-addon btn glyphicon"
+                              [class.success]="adminSettingsModel.headerSettingsModel.mainTextVisible"
+                              [class.glyphicon-eye-open] = "adminSettingsModel.headerSettingsModel.mainTextVisible"
+                              [class.danger]="!adminSettingsModel.headerSettingsModel.mainTextVisible"
+                              [class.glyphicon-eye-close]="!adminSettingsModel.headerSettingsModel.mainTextVisible"
+                              (click)="adminSettingsModel.headerSettingsModel.mainTextVisible = !adminSettingsModel.headerSettingsModel.mainTextVisible"></span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="col-md-4">
+                      <strong>Secondary text</strong>
+                    </td>
+                    <td>
+                      <div class="input-group">
+                        <input class="form-control" [(ngModel)]="adminSettingsModel.headerSettingsModel.secondaryText" type="text" #headerSettingsSecondaryText="ngModel"
+                               name="headerSettingsSecondaryText" id="headerSettingsSecondaryText"/>
+                        <span class="input-group-addon btn glyphicon"
+                              [class.success]="adminSettingsModel.headerSettingsModel.secondaryTextVisible"
+                              [class.glyphicon-eye-open] = "adminSettingsModel.headerSettingsModel.secondaryTextVisible"
+                              [class.danger]="!adminSettingsModel.headerSettingsModel.secondaryTextVisible"
+                              [class.glyphicon-eye-close]="!adminSettingsModel.headerSettingsModel.secondaryTextVisible"
+                              (click)="adminSettingsModel.headerSettingsModel.secondaryTextVisible = !adminSettingsModel.headerSettingsModel.secondaryTextVisible"></span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="col-md-4">
+                      <strong>Logo</strong>
+                    </td>
+                    <td>
+                      <div class="row">
+                        <div class="col-md-3">
+                          <img class="img-responsive img-thumbnail" width="160" height="141" src="{{headerImageLink}}" />
+                        </div>
+                        <div class="col-md-4">
+                          <p>Recommended parameters:</p>
+                          <p>Resolution - 170x80</p>
+                          <p>Proportions - 2:1</p>
+
+                        </div>
+                        <div class="col-md-5">
+                          <input type="file" ng2FileSelect [uploader]="headerImageUploader" class="image-input-wrapper"/>
+                          <span class="btn glyphicon pull-right" style="border-radius: 0px"
+                                [class.btn-success]="adminSettingsModel.headerSettingsModel.imageLinkVisible"
+                                [class.glyphicon-eye-open] = "adminSettingsModel.headerSettingsModel.imageLinkVisible"
+                                [class.btn-danger]="!adminSettingsModel.headerSettingsModel.imageLinkVisible"
+                                [class.glyphicon-eye-close]="!adminSettingsModel.headerSettingsModel.imageLinkVisible"
+                                (click)="adminSettingsModel.headerSettingsModel.imageLinkVisible = !adminSettingsModel.headerSettingsModel.imageLinkVisible"></span>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-md-6" role="main">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                SMTP Information
+              </div>
+              <table class="table">
+                <tbody>
+                <tr>
+                  <td class="col-md-4">
+                    <strong>Host*</strong>
+                  </td>
+                  <td>
+                    <input class="form-control" [(ngModel)]="adminSettingsModel.smtpSettingsModel.host"
+                           placeholder="smtp.gmail.com" type="text" #sourceSdk="ngModel" value="" required name="host" id="host"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Port*</strong>
+                  </td>
+                  <td>
+                    <input class="form-control" [(ngModel)]="adminSettingsModel.smtpSettingsModel.port"
+                           placeholder="1433"
+                           type="text" name="port" required #catalogueSdk="ngModel" id="port"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="col-md-4">
+                    <strong>Login*</strong>
+                  </td>
+                  <td>
+                    <input class="form-control" [(ngModel)]="adminSettingsModel.smtpSettingsModel.login"
+                           placeholder="userName" #authTypeSdk="ngModel" type="text" value="" name="login" id="login"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="col-md-4">
+                    <strong>Password*</strong>
+                  </td>
+                  <td>
+                    <input class="form-control" [(ngModel)]="adminSettingsModel.smtpSettingsModel.password"
+                           placeholder="12345678909876543210adfecdfefdae" #tokenSdk="ngModel" required type="text" value="" name="password" id="password"/>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-md-6" role="main">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                Site information
+              </div>
+              <table class="table">
+                <tbody>
+                <tr>
+                  <td class="col-md-4">
+                    <strong>Link*</strong>
+                  </td>
+                  <td>
+                    <input class="form-control" [(ngModel)]="adminSettingsModel.siteLink"
+                           placeholder="https://my-eform-app.com/" type="text" #sourceSdk="ngModel" value="" required name="siteLink" id="siteLink"/>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </form>
+  </div>
+</div>

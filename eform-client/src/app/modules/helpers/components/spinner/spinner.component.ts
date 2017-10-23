@@ -8,6 +8,7 @@ import {Component, Input} from '@angular/core';
 export class SpinnerComponent {
   @Input() middleActive;
   @Input() smallActive;
+  @Input() adaptiveActive;
 
   public constructor() {
   }

@@ -1,0 +1,1157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c3d20186-bd31-4ed2-8ab2-962b4e7beea8" name="Default" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FileColors">
+    <fileColor scope="Non-Project Files (Material Default)" color="2E3C43" />
+    <fileColor scope="Non-Project Files (Material Darker)" color="323232" />
+    <fileColor scope="Non-Project Files (Material Lighter)" color="eae8e8" />
+    <fileColor scope="Non-Project Files (Material Palenight)" color="2f2e43" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="SettingsController.cs" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/eFormAPI/Controllers/SettingsController.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="260">
+              <caret line="26" column="48" lean-forward="false" selection-start-line="26" selection-start-column="48" selection-end-line="26" selection-end-column="48" />
+              <folding>
+                <marker date="1506595690294" expanded="false" signature="6:402" ph="..." />
+                <marker date="1506595690294" expanded="true" signature="438:6880" ph="{...}" />
+                <marker date="1506595690294" expanded="true" signature="492:6878" ph="{...}" />
+                <marker date="1506595690294" expanded="true" signature="730:1009" ph="{...}" />
+                <marker date="1506595690294" expanded="true" signature="874:952" ph="{...}" />
+                <marker date="1506595690294" expanded="true" signature="1181:4457" ph="{...}" />
+                <marker date="1506595690294" expanded="true" signature="2122:2637" ph="{...}" />
+                <marker date="1506595690294" expanded="true" signature="2180:2459" ph="{...}" />
+                <marker date="1506595690294" expanded="true" signature="2219:2351" ph="/* File.Delete(inputPath); ... */" />
+                <marker date="1506595690294" expanded="true" signature="2677:2860" ph="{...}" />
+                <marker date="1506595690294" expanded="true" signature="2876:2970" ph="{...}" />
+                <marker date="1506595690294" expanded="true" signature="3010:3174" ph="{...}" />
+                <marker date="1506595690294" expanded="true" signature="3476:4122" ph="{...}" />
+                <marker date="1506595690294" expanded="true" signature="3719:3843" ph="{...}" />
+                <marker date="1506595690294" expanded="true" signature="4162:4327" ph="{...}" />
+                <marker date="1506595690294" expanded="true" signature="4642:5621" ph="{...}" />
+                <marker date="1506595690294" expanded="true" signature="4668:5394" ph="{...}" />
+                <marker date="1506595690294" expanded="true" signature="4931:5298" ph="{...}" />
+                <marker date="1506595690294" expanded="true" signature="5426:5611" ph="{...}" />
+                <marker date="1506595690294" expanded="true" signature="5815:6872" ph="{...}" />
+                <marker date="1506595690294" expanded="true" signature="5841:6671" ph="{...}" />
+                <marker date="1506595690294" expanded="true" signature="6703:6862" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="web.config" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/eFormAPI/web.config">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="260">
+              <caret line="22" column="55" lean-forward="false" selection-start-line="22" selection-start-column="55" selection-end-line="22" selection-end-column="55" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TemplateColumnsController.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/eFormAPI/Controllers/TemplateColumnsController.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1846">
+              <caret line="81" column="8" lean-forward="false" selection-start-line="81" selection-start-column="8" selection-end-line="81" selection-end-column="8" />
+              <folding>
+                <marker date="1506504742631" expanded="false" signature="6:215" ph="..." />
+                <marker date="1506504742631" expanded="true" signature="251:4696" ph="{...}" />
+                <marker date="1506504742631" expanded="true" signature="328:4694" ph="{...}" />
+                <marker date="1506504742631" expanded="true" signature="582:1916" ph="{...}" />
+                <marker date="1506504742631" expanded="true" signature="608:1733" ph="{...}" />
+                <marker date="1506504742631" expanded="true" signature="888:1341" ph="{...}" />
+                <marker date="1506504742631" expanded="true" signature="1215:1321" ph="{...}" />
+                <marker date="1506504742631" expanded="true" signature="1358:1621" ph="/* List&lt;TemplateColumnModel&gt; templateColumns = fields.Select(field =&gt; new TemplateColumnModel() ... */" />
+                <marker date="1506504742631" expanded="true" signature="1763:1906" ph="{...}" />
+                <marker date="1506504742631" expanded="true" signature="2102:3230" ph="{...}" />
+                <marker date="1506504742631" expanded="true" signature="2128:3045" ph="{...}" />
+                <marker date="1506504742631" expanded="true" signature="2337:2923" ph="{...}" />
+                <marker date="1506504742631" expanded="true" signature="3075:3220" ph="{...}" />
+                <marker date="1506504742631" expanded="true" signature="3377:4688" ph="{...}" />
+                <marker date="1506504742631" expanded="true" signature="3403:4537" ph="{...}" />
+                <marker date="1506504742631" expanded="true" signature="3533:3912" ph="{...}" />
+                <marker date="1506504742631" expanded="true" signature="4567:4678" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AccountController.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/eFormAPI/Controllers/AccountController.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="104">
+              <caret line="22" column="4" lean-forward="false" selection-start-line="22" selection-start-column="4" selection-end-line="22" selection-end-column="15" />
+              <folding>
+                <marker date="1506504742574" expanded="false" signature="6:586" ph="..." />
+                <marker date="1506504742574" expanded="true" signature="622:18688" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="724:18686" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="813:833" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="968:1078" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="1123:1288" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="1498:2203" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="1615:1672" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="1997:2192" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="2343:2973" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="2390:2603" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="2805:2917" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="3180:3985" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="3226:3928" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="3350:3441" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="4188:4894" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="4235:4420" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="4520:4599" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="4733:4811" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="4905:15224" ph="Help Action" />
+                <marker date="1506504742574" expanded="true" signature="4934:9480" ph="/* GET api/Account/ManageInfo?returnUrl=%2F&amp;generateState=true ... */" />
+                <marker date="1506504742574" expanded="true" signature="9491:13417" ph="/* GET api/Account/ExternalLogin ... */" />
+                <marker date="1506504742574" expanded="true" signature="13428:15204" ph="/* POST api/Account/Register ... */" />
+                <marker date="1506504742574" expanded="true" signature="15234:18680" ph="Helpers" />
+                <marker date="1506504742574" expanded="true" signature="15306:15520" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="15367:15472" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="15692:16418" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="15734:15808" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="15844:16382" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="15901:16099" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="15976:16081" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="16140:16320" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="16459:17914" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="16692:17099" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="16777:16887" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="16926:17053" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="17182:17904" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="17400:17469" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="17547:17616" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="17679:17889" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="17970:18660" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="18143:18650" ph="{...}" />
+                <marker date="1506504742574" expanded="true" signature="18256:18409" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AdminController.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/eFormAPI/Controllers/AdminController.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="104">
+              <caret line="19" column="4" lean-forward="false" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="41" />
+              <folding>
+                <marker date="1506504742560" expanded="false" signature="6:488" ph="..." />
+                <marker date="1506504742560" expanded="true" signature="524:8790" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="648:8788" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="881:1056" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="1101:1281" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="1407:2505" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="1433:2273" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="1621:1982" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="2064:2179" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="2313:2495" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="2653:4370" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="2679:4138" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="3126:3843" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="3396:3496" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="4018:4122" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="4178:4360" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="4500:6161" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="4526:5954" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="4645:4784" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="4836:4948" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="5278:5402" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="5486:5661" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="5994:6151" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="6291:7740" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="6317:7533" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="6456:6599" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="6651:6763" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="6821:7072" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="7195:7319" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="7573:7730" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="7853:8782" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="7879:8574" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="7926:8052" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="8143:8262" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="8356:8480" ph="{...}" />
+                <marker date="1506504742560" expanded="true" signature="8614:8772" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SitesController.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/eFormAPI/Controllers/SitesController.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <marker date="1506504742613" expanded="false" signature="6:224" ph="..." />
+                <marker date="1506504742613" expanded="true" signature="260:3133" ph="{...}" />
+                <marker date="1506504742613" expanded="true" signature="327:3131" ph="{...}" />
+                <marker date="1506504742613" expanded="true" signature="493:709" ph="{...}" />
+                <marker date="1506504742613" expanded="true" signature="790:1104" ph="{...}" />
+                <marker date="1506504742613" expanded="true" signature="1191:1837" ph="{...}" />
+                <marker date="1506504742613" expanded="true" signature="1217:1660" ph="{...}" />
+                <marker date="1506504742613" expanded="true" signature="1410:1595" ph="{...}" />
+                <marker date="1506504742613" expanded="true" signature="1690:1827" ph="{...}" />
+                <marker date="1506504742613" expanded="true" signature="1902:3125" ph="{...}" />
+                <marker date="1506504742613" expanded="true" signature="1928:2922" ph="{...}" />
+                <marker date="1506504742613" expanded="true" signature="2144:2382" ph="{...}" />
+                <marker date="1506504742613" expanded="true" signature="2403:2527" ph="{...}" />
+                <marker date="1506504742613" expanded="true" signature="2953:3115" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WorkersController.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/eFormAPI/Controllers/WorkersController.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="277">
+              <caret line="59" column="50" lean-forward="false" selection-start-line="59" selection-start-column="50" selection-end-line="59" selection-end-column="50" />
+              <folding>
+                <marker date="1506504742664" expanded="false" signature="6:206" ph="..." />
+                <marker date="1506504742664" expanded="true" signature="242:2919" ph="{...}" />
+                <marker date="1506504742664" expanded="true" signature="311:2917" ph="{...}" />
+                <marker date="1506504742664" expanded="true" signature="475:708" ph="{...}" />
+                <marker date="1506504742664" expanded="true" signature="787:986" ph="{...}" />
+                <marker date="1506504742664" expanded="true" signature="1069:1821" ph="{...}" />
+                <marker date="1506504742664" expanded="true" signature="1095:1648" ph="{...}" />
+                <marker date="1506504742664" expanded="true" signature="1678:1811" ph="{...}" />
+                <marker date="1506504742664" expanded="true" signature="1886:2911" ph="{...}" />
+                <marker date="1506504742664" expanded="true" signature="1912:2708" ph="{...}" />
+                <marker date="1506504742664" expanded="true" signature="2084:2238" ph="{...}" />
+                <marker date="1506504742664" expanded="true" signature="2739:2901" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Startup.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/eFormAPI/Startup.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <marker date="1504563536000" expanded="false" signature="6:33" ph="..." />
+                <marker date="1504563536000" expanded="true" signature="112:264" ph="{...}" />
+                <marker date="1504563536000" expanded="true" signature="147:262" ph="{...}" />
+                <marker date="1504563536000" expanded="true" signature="204:256" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UnitsController.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/eFormAPI/Controllers/UnitsController.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <marker date="1506504742651" expanded="false" signature="6:159" ph="..." />
+                <marker date="1506504742651" expanded="true" signature="195:1141" ph="{...}" />
+                <marker date="1506504742651" expanded="true" signature="262:1139" ph="{...}" />
+                <marker date="1506504742651" expanded="true" signature="424:622" ph="{...}" />
+                <marker date="1506504742651" expanded="true" signature="705:1133" ph="{...}" />
+                <marker date="1506504742651" expanded="true" signature="731:946" ph="{...}" />
+                <marker date="1506504742651" expanded="true" signature="976:1123" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AdminSettingsModel.cs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/eFormAPI.Common/Models/Settings/AdminSettingsModel.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="182">
+              <caret line="7" column="44" lean-forward="false" selection-start-line="7" selection-start-column="44" selection-end-line="7" selection-end-column="44" />
+              <folding>
+                <marker date="1506592630070" expanded="true" signature="41:307" ph="{...}" />
+                <marker date="1506592630070" expanded="true" signature="79:305" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>C</find>
+      <find>CaseRe</find>
+      <find>CaseRea</find>
+      <find>CaseRead</find>
+      <find>field_type_id</find>
+      <find>D</find>
+      <find>Display</find>
+      <find>DisplayT</find>
+      <find>DisplayTem</find>
+      <find>DisplayTemp</find>
+      <find>DisplayTempl</find>
+      <find>DisplayTempla</find>
+      <find>DisplayTemplat</find>
+      <find>DisplayTemplate</find>
+      <find>DisplayTemplateC</find>
+      <find>DisplayTemplateCo</find>
+      <find>DisplayTemplateCol</find>
+    </findStrings>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/eFormAPI.Common/Models/Settings/AdminSettingsModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/eFormAPI/Startup.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9729B9E6-D791-40A3-B7FE-AF081C8D08E5/90/14dfa0f0/Case.cs" root0="SKIP_INSPECTION" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/06628302-AC87-4CE4-8E17-E1B3899C7836/cf/fb8f9b2a/field_types.cs" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/eFormAPI/web.config" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/eFormAPI/Controllers/TemplatesController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/eFormAPI/Controllers/AuthController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/eFormAPI/Controllers/AdminController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/06628302-AC87-4CE4-8E17-E1B3899C7836/e8/78d0f453/field_values.cs" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/eFormAPI/Controllers/UnitsController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/eFormAPI/Controllers/SimpleSitesController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/eFormAPI/Controllers/CasesController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/06628302-AC87-4CE4-8E17-E1B3899C7836/c1/56d5305f/fields.cs" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/eFormAPI/Controllers/WorkersController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/eFormAPI/Controllers/SettingsController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/eFormAPI/Controllers/AccountController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/eFormAPI/Controllers/EntitySearchController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/06628302-AC87-4CE4-8E17-E1B3899C7836/e2/1913e0a8/MicrotingContextInterface.cs" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/eFormAPI/Controllers/SitesController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/B4A7B306-A85B-430A-A4A9-C0C3FBECC415/03/1c14f118/Case.cs" root0="SKIP_INSPECTION" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/06628302-AC87-4CE4-8E17-E1B3899C7836/b7/a6628038/SqlController.cs" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/eFormAPI/Controllers/TemplateColumnsController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F0F78F5F-0A6C-4200-9149-D87751E6CCD3/8a/49f9c3aa/Core.cs" root0="SKIP_INSPECTION" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/D8D1293C-47CD-4E15-A0E1-ACA124BD24D6/cc/62c69842/SqlController.cs" root0="SKIP_INSPECTION" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F26C5C68-D0C5-41B3-B159-8951CAE26758/6f/85b94658/Field_Dto.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7DFDC7E0-6B43-4BAA-8483-8E83E9D0E9B5/4a/37a07037/Case.cs" root0="SKIP_INSPECTION" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9729B9E6-D791-40A3-B7FE-AF081C8D08E5/dc/929ff1e6/Template_Dto.cs" root0="SKIP_INSPECTION" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F26C5C68-D0C5-41B3-B159-8951CAE26758/df/85d13196/Template_Dto.cs" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/eFormAPI/Infrastructure/Services/EmailService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8082A1E1-C9E5-4D0F-BF7A-ED9373B216F9/90/a95b9e46/Core.cs" root0="SKIP_INSPECTION" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/D8D1293C-47CD-4E15-A0E1-ACA124BD24D6/f6/7d4abe5b/fields.cs" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/eFormAPI/Controllers/AdminController.cs" />
+        <option value="$PROJECT_DIR$/eFormAPI/Controllers/AuthController.cs" />
+        <option value="$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7DFDC7E0-6B43-4BAA-8483-8E83E9D0E9B5/4a/37a07037/Case.cs" />
+        <option value="$PROJECT_DIR$/eFormAPI/Web.config" />
+        <option value="$PROJECT_DIR$/eFormAPI/Controllers/TemplatesController.cs" />
+        <option value="$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/B4A7B306-A85B-430A-A4A9-C0C3FBECC415/03/1c14f118/Case.cs" />
+        <option value="$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8082A1E1-C9E5-4D0F-BF7A-ED9373B216F9/90/a95b9e46/Core.cs" />
+        <option value="$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/D8D1293C-47CD-4E15-A0E1-ACA124BD24D6/f6/7d4abe5b/fields.cs" />
+        <option value="$PROJECT_DIR$/eFormAPI/Controllers/CasesController.cs" />
+        <option value="$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9729B9E6-D791-40A3-B7FE-AF081C8D08E5/90/14dfa0f0/Case.cs" />
+        <option value="$PROJECT_DIR$/eFromAPI.Common/Models/TemplateColumnModel.cs" />
+        <option value="$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/D8D1293C-47CD-4E15-A0E1-ACA124BD24D6/cc/62c69842/SqlController.cs" />
+        <option value="$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9729B9E6-D791-40A3-B7FE-AF081C8D08E5/dc/929ff1e6/Template_Dto.cs" />
+        <option value="$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F26C5C68-D0C5-41B3-B159-8951CAE26758/df/85d13196/Template_Dto.cs" />
+        <option value="$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F26C5C68-D0C5-41B3-B159-8951CAE26758/6f/85b94658/Field_Dto.cs" />
+        <option value="$PROJECT_DIR$/eFromAPI.Common/Models/UpdateTemplateColumnsModel.cs" />
+        <option value="$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F0F78F5F-0A6C-4200-9149-D87751E6CCD3/8a/49f9c3aa/Core.cs" />
+        <option value="$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/06628302-AC87-4CE4-8E17-E1B3899C7836/b7/a6628038/SqlController.cs" />
+        <option value="$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/06628302-AC87-4CE4-8E17-E1B3899C7836/e2/1913e0a8/MicrotingContextInterface.cs" />
+        <option value="$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/06628302-AC87-4CE4-8E17-E1B3899C7836/c1/56d5305f/fields.cs" />
+        <option value="$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/06628302-AC87-4CE4-8E17-E1B3899C7836/e8/78d0f453/field_values.cs" />
+        <option value="$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/06628302-AC87-4CE4-8E17-E1B3899C7836/cf/fb8f9b2a/field_types.cs" />
+        <option value="$PROJECT_DIR$/eFromAPI.Common/Models/DisplayTemplateColumnsModel.cs" />
+        <option value="$PROJECT_DIR$/eFormAPI/Controllers/TemplateColumnsController.cs" />
+        <option value="$PROJECT_DIR$/eFormAPI/Controllers/AccountController.cs" />
+        <option value="$PROJECT_DIR$/eFormAPI.Common/Models/Settings/AdminSettingsModel.cs" />
+        <option value="$PROJECT_DIR$/eFormAPI/web.config" />
+        <option value="$PROJECT_DIR$/eFormAPI/Controllers/SettingsController.cs" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="54" />
+    <option name="y" value="-8" />
+    <option name="width" value="1874" />
+    <option name="height" value="1096" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="SolutionExplorer" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scratches" />
+      <pane id="SolutionExplorer">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="eFormAPI (2 projects)" />
+              <option name="myItemType" value="com.jetbrains.rider.projectView.solutionExplorer.SolutionExplorerNodeRider" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+        <option name="show-file-system" value="false" />
+        <option name="show-all-items" value="false" />
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../movementcrm/MovementCrm.sln" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected=".NET Project.Default">
+    <configuration default="true" type="DotNetProject" factoryName=".NET Project">
+      <option name="PROJECT_PATH" value="" />
+      <option name="PROJECT_KIND" value="None" />
+      <option name="PROJECT_TFM" value="" />
+      <option name="EXE_PATH" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="USE_MONO" value="0" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerJest" factoryName="Jest">
+      <node-interpreter value="project" />
+      <working-dir value="" />
+      <envs />
+      <scope-kind value="ALL" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerProtractor" factoryName="Protractor">
+      <config-file value="" />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="project" working-dir="">
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.npm" factoryName="npm">
+      <command value="run" />
+      <scripts />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="mocha-javascript-test-runner" factoryName="Mocha">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <working-directory />
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui />
+      <extra-mocha-options />
+      <test-kind>DIRECTORY</test-kind>
+      <test-directory />
+      <recursive>false</recursive>
+      <method />
+    </configuration>
+    <configuration default="false" name="Default" type="DotNetProject" factoryName=".NET Project">
+      <option name="PROJECT_PATH" value="$PROJECT_DIR$/eFormAPI/eFormAPI.Web.csproj" />
+      <option name="PROJECT_KIND" value="Web" />
+      <option name="PROJECT_TFM" value=".NETFramework,Version=v4.6" />
+      <option name="EXE_PATH" value="C:/Program Files/IIS Express/iisexpress.exe" />
+      <option name="PROGRAM_PARAMETERS" value="/config:$PROJECT_DIR$/.idea/config/applicationhost.config /site:eFormAPI.Web /apppool:Clr4IntegratedAppPool" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="USE_MONO" value="0" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <envs />
+      <method />
+    </configuration>
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue=".NET Project.Default" />
+    </list>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c3d20186-bd31-4ed2-8ab2-962b4e7beea8" name="Default" comment="" />
+      <created>1504162300900</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1504162300900</updated>
+      <workItem from="1504162303390" duration="1684000" />
+      <workItem from="1504595875121" duration="936000" />
+      <workItem from="1504597128763" duration="1691000" />
+      <workItem from="1504786432108" duration="296000" />
+      <workItem from="1504977956704" duration="330000" />
+      <workItem from="1504979280828" duration="4490000" />
+      <workItem from="1505116247952" duration="1893000" />
+      <workItem from="1505204308323" duration="2577000" />
+      <workItem from="1505233364473" duration="367000" />
+      <workItem from="1505375983839" duration="11182000" />
+      <workItem from="1505596009931" duration="3145000" />
+      <workItem from="1505720403791" duration="2656000" />
+      <workItem from="1505731916843" duration="5736000" />
+      <workItem from="1505809781209" duration="1790000" />
+      <workItem from="1505990748696" duration="126000" />
+      <workItem from="1505991128864" duration="3945000" />
+      <workItem from="1506504195048" duration="2047000" />
+      <workItem from="1506589188600" duration="5449000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="50340000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="54" y="-8" width="1874" height="1096" extended-state="7" />
+    <layout>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Errors In Solution" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3284974" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Unit Tests" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32817337" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="NuGet" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41632652" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1517761" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3265306" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3488132" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="processedProjectFiles" value="true" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/eFormAPI/Controllers/AccountController.cs</url>
+          <line>119</line>
+          <properties startOffset="4211" endOffset="4420" documentPath="$PROJECT_DIR$/eFormAPI/Controllers/AccountController.cs" />
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+      </breakpoints>
+      <breakpoints-dialog>
+        <breakpoints-dialog />
+      </breakpoints-dialog>
+      <option name="time" value="24" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7DFDC7E0-6B43-4BAA-8483-8E83E9D0E9B5/4a/37a07037/Case.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1612">
+          <caret line="62" column="43" lean-forward="false" selection-start-line="62" selection-start-column="43" selection-end-line="62" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eFormAPI/web.config">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="338">
+          <caret line="13" column="102" lean-forward="false" selection-start-line="13" selection-start-column="102" selection-end-line="13" selection-end-column="102" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eFormAPI/Controllers/TemplatesController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="31" column="71" lean-forward="true" selection-start-line="31" selection-start-column="71" selection-end-line="31" selection-end-column="71" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eFormAPI/Controllers/AdminController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="858">
+          <caret line="48" column="11" lean-forward="false" selection-start-line="48" selection-start-column="11" selection-end-line="48" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eFormAPI/Controllers/AuthController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="26">
+          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eFormAPI/Controllers/CasesController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="416">
+          <caret line="23" column="53" lean-forward="false" selection-start-line="23" selection-start-column="53" selection-end-line="23" selection-end-column="53" />
+          <folding>
+            <marker date="1506504742582" expanded="false" signature="6:220" ph="..." />
+            <marker date="1506504742582" expanded="true" signature="256:2733" ph="{...}" />
+            <marker date="1506504742582" expanded="true" signature="323:2731" ph="{...}" />
+            <marker date="1506504742582" expanded="true" signature="487:884" ph="{...}" />
+            <marker date="1506504742582" expanded="true" signature="513:726" ph="{...}" />
+            <marker date="1506504742582" expanded="true" signature="756:874" ph="{...}" />
+            <marker date="1506504742582" expanded="true" signature="965:1678" ph="{...}" />
+            <marker date="1506504742582" expanded="true" signature="991:1541" ph="{...}" />
+            <marker date="1506504742582" expanded="true" signature="1571:1668" ph="{...}" />
+            <marker date="1506504742582" expanded="true" signature="1756:2725" ph="{...}" />
+            <marker date="1506504742582" expanded="true" signature="1938:2231" ph="{...}" />
+            <marker date="1506504742582" expanded="true" signature="2005:2215" ph="{...}" />
+            <marker date="1506504742582" expanded="true" signature="2271:2379" ph="{...}" />
+            <marker date="1506504742582" expanded="true" signature="2395:2577" ph="{...}" />
+            <marker date="1506504742582" expanded="true" signature="2607:2715" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eFormAPI/Controllers/TemplatesController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="416">
+          <caret line="30" column="51" lean-forward="false" selection-start-line="30" selection-start-column="51" selection-end-line="30" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eFormAPI/web.config">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="338">
+          <caret line="13" column="102" lean-forward="false" selection-start-line="13" selection-start-column="102" selection-end-line="13" selection-end-column="102" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7DFDC7E0-6B43-4BAA-8483-8E83E9D0E9B5/4a/37a07037/Case.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1612">
+          <caret line="62" column="43" lean-forward="true" selection-start-line="62" selection-start-column="43" selection-end-line="62" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eFormAPI/Controllers/AdminController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="858">
+          <caret line="48" column="11" lean-forward="false" selection-start-line="48" selection-start-column="11" selection-end-line="48" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eFormAPI/Controllers/AuthController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="26">
+          <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eFormAPI/Controllers/AdminController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="858">
+          <caret line="48" column="11" lean-forward="false" selection-start-line="48" selection-start-column="11" selection-end-line="48" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eFormAPI/Controllers/AuthController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="11" column="15" lean-forward="true" selection-start-line="11" selection-start-column="15" selection-end-line="11" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eFormAPI/Controllers/AdminController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="858">
+          <caret line="48" column="11" lean-forward="false" selection-start-line="48" selection-start-column="11" selection-end-line="48" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eFormAPI/Controllers/AuthController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eFormAPI/Controllers/AdminController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eFormAPI/Controllers/AdminController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eFormAPI/Controllers/AuthController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="26">
+          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7DFDC7E0-6B43-4BAA-8483-8E83E9D0E9B5/4a/37a07037/Case.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="62" column="43" lean-forward="false" selection-start-line="62" selection-start-column="43" selection-end-line="62" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/B4A7B306-A85B-430A-A4A9-C0C3FBECC415/03/1c14f118/Case.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="10" column="15" lean-forward="false" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/D8D1293C-47CD-4E15-A0E1-ACA124BD24D6/f6/7d4abe5b/fields.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="338">
+          <caret line="13" column="15" lean-forward="false" selection-start-line="13" selection-start-column="15" selection-end-line="13" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eFormAPI/Controllers/SimpleSitesController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-390">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eFormAPI/Controllers/EntitySearchController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="16" column="8" lean-forward="false" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/D8D1293C-47CD-4E15-A0E1-ACA124BD24D6/cc/62c69842/SqlController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-212">
+          <caret line="203" column="16" lean-forward="false" selection-start-line="203" selection-start-column="16" selection-end-line="203" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eFormAPI/Controllers/TemplatesController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1716">
+          <caret line="80" column="55" lean-forward="false" selection-start-line="80" selection-start-column="55" selection-end-line="80" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9729B9E6-D791-40A3-B7FE-AF081C8D08E5/dc/929ff1e6/Template_Dto.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="11" column="15" lean-forward="false" selection-start-line="11" selection-start-column="15" selection-end-line="11" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8082A1E1-C9E5-4D0F-BF7A-ED9373B216F9/90/a95b9e46/Core.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="496" column="5" lean-forward="false" selection-start-line="496" selection-start-column="5" selection-end-line="496" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9729B9E6-D791-40A3-B7FE-AF081C8D08E5/90/14dfa0f0/Case.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="641">
+          <caret line="46" column="43" lean-forward="false" selection-start-line="46" selection-start-column="4" selection-end-line="46" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F26C5C68-D0C5-41B3-B159-8951CAE26758/df/85d13196/Template_Dto.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-338">
+          <caret line="11" column="15" lean-forward="false" selection-start-line="11" selection-start-column="15" selection-end-line="11" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F26C5C68-D0C5-41B3-B159-8951CAE26758/6f/85b94658/Field_Dto.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="364">
+          <caret line="14" column="38" lean-forward="false" selection-start-line="10" selection-start-column="4" selection-end-line="14" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eFromAPI.Common/Models/UpdateTemplateColumnsModel.cs" />
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F0F78F5F-0A6C-4200-9149-D87751E6CCD3/8a/49f9c3aa/Core.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="1350" column="42" lean-forward="false" selection-start-line="1350" selection-start-column="42" selection-end-line="1350" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/06628302-AC87-4CE4-8E17-E1B3899C7836/e8/78d0f453/field_values.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="10" column="18" lean-forward="false" selection-start-line="10" selection-start-column="18" selection-end-line="10" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/06628302-AC87-4CE4-8E17-E1B3899C7836/e2/1913e0a8/MicrotingContextInterface.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="39" column="33" lean-forward="false" selection-start-line="39" selection-start-column="33" selection-end-line="39" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/06628302-AC87-4CE4-8E17-E1B3899C7836/b7/a6628038/SqlController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="134" column="29" lean-forward="false" selection-start-line="134" selection-start-column="29" selection-end-line="134" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/06628302-AC87-4CE4-8E17-E1B3899C7836/c1/56d5305f/fields.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="98" column="20" lean-forward="false" selection-start-line="98" selection-start-column="20" selection-end-line="98" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/06628302-AC87-4CE4-8E17-E1B3899C7836/cf/fb8f9b2a/field_types.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="10" column="15" lean-forward="false" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eFromAPI.Common/Models/TemplateColumnModel.cs" />
+    <entry file="file://$PROJECT_DIR$/eFromAPI.Common/Models/DisplayTemplateColumnsModel.cs" />
+    <entry file="file://$PROJECT_DIR$/eFromAPI.Common/Models/Auth/ResetPasswordModel.cs" />
+    <entry file="file://$PROJECT_DIR$/eFormAPI/Controllers/CasesController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1820">
+          <caret line="77" column="13" lean-forward="false" selection-start-line="77" selection-start-column="13" selection-end-line="77" selection-end-column="13" />
+          <folding>
+            <marker date="1506504742582" expanded="false" signature="6:220" ph="..." />
+            <marker date="1506504742582" expanded="true" signature="256:2733" ph="{...}" />
+            <marker date="1506504742582" expanded="true" signature="323:2731" ph="{...}" />
+            <marker date="1506504742582" expanded="true" signature="487:884" ph="{...}" />
+            <marker date="1506504742582" expanded="true" signature="513:726" ph="{...}" />
+            <marker date="1506504742582" expanded="true" signature="756:874" ph="{...}" />
+            <marker date="1506504742582" expanded="true" signature="965:1678" ph="{...}" />
+            <marker date="1506504742582" expanded="true" signature="991:1541" ph="{...}" />
+            <marker date="1506504742582" expanded="true" signature="1571:1668" ph="{...}" />
+            <marker date="1506504742582" expanded="true" signature="1756:2725" ph="{...}" />
+            <marker date="1506504742582" expanded="true" signature="1938:2231" ph="{...}" />
+            <marker date="1506504742582" expanded="true" signature="2005:2215" ph="{...}" />
+            <marker date="1506504742582" expanded="true" signature="2271:2379" ph="{...}" />
+            <marker date="1506504742582" expanded="true" signature="2395:2577" ph="{...}" />
+            <marker date="1506504742582" expanded="true" signature="2607:2715" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eFormAPI.Common/Models/Settings/AdminSettingsModel.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="7" column="44" lean-forward="false" selection-start-line="7" selection-start-column="44" selection-end-line="7" selection-end-column="44" />
+          <folding>
+            <marker date="1506592630070" expanded="true" signature="41:307" ph="{...}" />
+            <marker date="1506592630070" expanded="true" signature="79:305" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eFormAPI/Controllers/UnitsController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1506504742651" expanded="false" signature="6:159" ph="..." />
+            <marker date="1506504742651" expanded="true" signature="195:1141" ph="{...}" />
+            <marker date="1506504742651" expanded="true" signature="262:1139" ph="{...}" />
+            <marker date="1506504742651" expanded="true" signature="424:622" ph="{...}" />
+            <marker date="1506504742651" expanded="true" signature="705:1133" ph="{...}" />
+            <marker date="1506504742651" expanded="true" signature="731:946" ph="{...}" />
+            <marker date="1506504742651" expanded="true" signature="976:1123" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eFormAPI/Controllers/WorkersController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="277">
+          <caret line="59" column="50" lean-forward="false" selection-start-line="59" selection-start-column="50" selection-end-line="59" selection-end-column="50" />
+          <folding>
+            <marker date="1506504742664" expanded="false" signature="6:206" ph="..." />
+            <marker date="1506504742664" expanded="true" signature="242:2919" ph="{...}" />
+            <marker date="1506504742664" expanded="true" signature="311:2917" ph="{...}" />
+            <marker date="1506504742664" expanded="true" signature="475:708" ph="{...}" />
+            <marker date="1506504742664" expanded="true" signature="787:986" ph="{...}" />
+            <marker date="1506504742664" expanded="true" signature="1069:1821" ph="{...}" />
+            <marker date="1506504742664" expanded="true" signature="1095:1648" ph="{...}" />
+            <marker date="1506504742664" expanded="true" signature="1678:1811" ph="{...}" />
+            <marker date="1506504742664" expanded="true" signature="1886:2911" ph="{...}" />
+            <marker date="1506504742664" expanded="true" signature="1912:2708" ph="{...}" />
+            <marker date="1506504742664" expanded="true" signature="2084:2238" ph="{...}" />
+            <marker date="1506504742664" expanded="true" signature="2739:2901" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eFormAPI/Startup.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1504563536000" expanded="false" signature="6:33" ph="..." />
+            <marker date="1504563536000" expanded="true" signature="112:264" ph="{...}" />
+            <marker date="1504563536000" expanded="true" signature="147:262" ph="{...}" />
+            <marker date="1504563536000" expanded="true" signature="204:256" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eFormAPI/web.config">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="22" column="55" lean-forward="false" selection-start-line="22" selection-start-column="55" selection-end-line="22" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eFormAPI/Controllers/AccountController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="22" column="4" lean-forward="false" selection-start-line="22" selection-start-column="4" selection-end-line="22" selection-end-column="15" />
+          <folding>
+            <marker date="1506504742574" expanded="false" signature="6:586" ph="..." />
+            <marker date="1506504742574" expanded="true" signature="622:18688" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="724:18686" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="813:833" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="968:1078" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="1123:1288" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="1498:2203" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="1615:1672" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="1997:2192" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="2343:2973" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="2390:2603" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="2805:2917" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="3180:3985" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="3226:3928" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="3350:3441" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="4188:4894" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="4235:4420" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="4520:4599" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="4733:4811" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="4905:15224" ph="Help Action" />
+            <marker date="1506504742574" expanded="true" signature="4934:9480" ph="/* GET api/Account/ManageInfo?returnUrl=%2F&amp;generateState=true ... */" />
+            <marker date="1506504742574" expanded="true" signature="9491:13417" ph="/* GET api/Account/ExternalLogin ... */" />
+            <marker date="1506504742574" expanded="true" signature="13428:15204" ph="/* POST api/Account/Register ... */" />
+            <marker date="1506504742574" expanded="true" signature="15234:18680" ph="Helpers" />
+            <marker date="1506504742574" expanded="true" signature="15306:15520" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="15367:15472" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="15692:16418" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="15734:15808" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="15844:16382" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="15901:16099" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="15976:16081" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="16140:16320" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="16459:17914" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="16692:17099" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="16777:16887" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="16926:17053" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="17182:17904" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="17400:17469" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="17547:17616" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="17679:17889" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="17970:18660" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="18143:18650" ph="{...}" />
+            <marker date="1506504742574" expanded="true" signature="18256:18409" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eFormAPI/Controllers/AdminController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="19" column="4" lean-forward="false" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="41" />
+          <folding>
+            <marker date="1506504742560" expanded="false" signature="6:488" ph="..." />
+            <marker date="1506504742560" expanded="true" signature="524:8790" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="648:8788" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="881:1056" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="1101:1281" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="1407:2505" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="1433:2273" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="1621:1982" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="2064:2179" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="2313:2495" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="2653:4370" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="2679:4138" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="3126:3843" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="3396:3496" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="4018:4122" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="4178:4360" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="4500:6161" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="4526:5954" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="4645:4784" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="4836:4948" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="5278:5402" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="5486:5661" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="5994:6151" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="6291:7740" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="6317:7533" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="6456:6599" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="6651:6763" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="6821:7072" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="7195:7319" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="7573:7730" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="7853:8782" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="7879:8574" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="7926:8052" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="8143:8262" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="8356:8480" ph="{...}" />
+            <marker date="1506504742560" expanded="true" signature="8614:8772" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eFormAPI/Controllers/SitesController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1506504742613" expanded="false" signature="6:224" ph="..." />
+            <marker date="1506504742613" expanded="true" signature="260:3133" ph="{...}" />
+            <marker date="1506504742613" expanded="true" signature="327:3131" ph="{...}" />
+            <marker date="1506504742613" expanded="true" signature="493:709" ph="{...}" />
+            <marker date="1506504742613" expanded="true" signature="790:1104" ph="{...}" />
+            <marker date="1506504742613" expanded="true" signature="1191:1837" ph="{...}" />
+            <marker date="1506504742613" expanded="true" signature="1217:1660" ph="{...}" />
+            <marker date="1506504742613" expanded="true" signature="1410:1595" ph="{...}" />
+            <marker date="1506504742613" expanded="true" signature="1690:1827" ph="{...}" />
+            <marker date="1506504742613" expanded="true" signature="1902:3125" ph="{...}" />
+            <marker date="1506504742613" expanded="true" signature="1928:2922" ph="{...}" />
+            <marker date="1506504742613" expanded="true" signature="2144:2382" ph="{...}" />
+            <marker date="1506504742613" expanded="true" signature="2403:2527" ph="{...}" />
+            <marker date="1506504742613" expanded="true" signature="2953:3115" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eFormAPI/Controllers/TemplateColumnsController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1846">
+          <caret line="81" column="8" lean-forward="false" selection-start-line="81" selection-start-column="8" selection-end-line="81" selection-end-column="8" />
+          <folding>
+            <marker date="1506504742631" expanded="false" signature="6:215" ph="..." />
+            <marker date="1506504742631" expanded="true" signature="251:4696" ph="{...}" />
+            <marker date="1506504742631" expanded="true" signature="328:4694" ph="{...}" />
+            <marker date="1506504742631" expanded="true" signature="582:1916" ph="{...}" />
+            <marker date="1506504742631" expanded="true" signature="608:1733" ph="{...}" />
+            <marker date="1506504742631" expanded="true" signature="888:1341" ph="{...}" />
+            <marker date="1506504742631" expanded="true" signature="1215:1321" ph="{...}" />
+            <marker date="1506504742631" expanded="true" signature="1358:1621" ph="/* List&lt;TemplateColumnModel&gt; templateColumns = fields.Select(field =&gt; new TemplateColumnModel() ... */" />
+            <marker date="1506504742631" expanded="true" signature="1763:1906" ph="{...}" />
+            <marker date="1506504742631" expanded="true" signature="2102:3230" ph="{...}" />
+            <marker date="1506504742631" expanded="true" signature="2128:3045" ph="{...}" />
+            <marker date="1506504742631" expanded="true" signature="2337:2923" ph="{...}" />
+            <marker date="1506504742631" expanded="true" signature="3075:3220" ph="{...}" />
+            <marker date="1506504742631" expanded="true" signature="3377:4688" ph="{...}" />
+            <marker date="1506504742631" expanded="true" signature="3403:4537" ph="{...}" />
+            <marker date="1506504742631" expanded="true" signature="3533:3912" ph="{...}" />
+            <marker date="1506504742631" expanded="true" signature="4567:4678" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eFormAPI/Controllers/SettingsController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="26" column="48" lean-forward="false" selection-start-line="26" selection-start-column="48" selection-end-line="26" selection-end-column="48" />
+          <folding>
+            <marker date="1506595690294" expanded="false" signature="6:402" ph="..." />
+            <marker date="1506595690294" expanded="true" signature="438:6880" ph="{...}" />
+            <marker date="1506595690294" expanded="true" signature="492:6878" ph="{...}" />
+            <marker date="1506595690294" expanded="true" signature="730:1009" ph="{...}" />
+            <marker date="1506595690294" expanded="true" signature="874:952" ph="{...}" />
+            <marker date="1506595690294" expanded="true" signature="1181:4457" ph="{...}" />
+            <marker date="1506595690294" expanded="true" signature="2122:2637" ph="{...}" />
+            <marker date="1506595690294" expanded="true" signature="2180:2459" ph="{...}" />
+            <marker date="1506595690294" expanded="true" signature="2219:2351" ph="/* File.Delete(inputPath); ... */" />
+            <marker date="1506595690294" expanded="true" signature="2677:2860" ph="{...}" />
+            <marker date="1506595690294" expanded="true" signature="2876:2970" ph="{...}" />
+            <marker date="1506595690294" expanded="true" signature="3010:3174" ph="{...}" />
+            <marker date="1506595690294" expanded="true" signature="3476:4122" ph="{...}" />
+            <marker date="1506595690294" expanded="true" signature="3719:3843" ph="{...}" />
+            <marker date="1506595690294" expanded="true" signature="4162:4327" ph="{...}" />
+            <marker date="1506595690294" expanded="true" signature="4642:5621" ph="{...}" />
+            <marker date="1506595690294" expanded="true" signature="4668:5394" ph="{...}" />
+            <marker date="1506595690294" expanded="true" signature="4931:5298" ph="{...}" />
+            <marker date="1506595690294" expanded="true" signature="5426:5611" ph="{...}" />
+            <marker date="1506595690294" expanded="true" signature="5815:6872" ph="{...}" />
+            <marker date="1506595690294" expanded="true" signature="5841:6671" ph="{...}" />
+            <marker date="1506595690294" expanded="true" signature="6703:6862" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

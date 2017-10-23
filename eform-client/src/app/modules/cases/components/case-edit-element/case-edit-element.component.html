@@ -3,7 +3,7 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <p class="lead black-color">
-        {{element.label}}
+        {{element.id}}
       </p>
     </div>
     <table class="table">
@@ -23,26 +23,28 @@
           </div>
           <div *ngIf="element.approvalEnabled" class="radio">
             <input [(ngModel)]="element.status" id="cl_v[@(dataE.Id)][not_approved]" name="cl_v[@(dataE.Id)]"
-                   type="radio" value="not_approved"
-            />
+                   type="radio" value="not_approved"/>
             <label for="cl_v[@(dataE.Id)][not_approved]">Not approved</label>
           </div>
         </td>
       </tr>
       <ng-container *ngIf="element.dataItemList">
         <ng-container *ngFor="let dataItem of element.dataItemList">
+
+          <!--<pre>{{dataItem | json}}</pre>-->
+          <!--<pre>{{dataItem.fieldType | json}}</pre>
+-->
+
           <tr [style.backgroundColor]="getStyleColorFromDataItem(dataItem)">
             <td>
               <strong>{{dataItem.label}}</strong>
+              <div [innerHTML]="dataItem.description.inderValue"></div>
             </td>
           </tr>
           <tr [style.backgroundColor]="getStyleColorFromDataItem(dataItem)">
             <td>
 
               <div [ngSwitch]="dataItem.fieldType">
-                <div *ngSwitchCase="'Signature'">
-                  <element-signature [fieldValues]="dataItem.fieldValues"></element-signature>
-                </div>
                 <div *ngSwitchCase="'Picture'">
                   <element-picture [fieldValues]="dataItem.fieldValues"></element-picture>
                 </div>
@@ -66,10 +68,25 @@
                 <div *ngSwitchCase="'SingleSelect'">
                   <element-singleselect [(fieldValue)]="dataItem.fieldValues[0]"></element-singleselect>
                 </div>
-
                 <div *ngSwitchCase="'MultiSelect'">
                   <element-multiselect [(fieldValue)]="dataItem.fieldValues[0]"></element-multiselect>
                 </div>
+                <div *ngSwitchCase="'ShowPdf'">
+                  <element-pdf [dataItem]="dataItem"></element-pdf>
+                </div>
+                <div *ngSwitchCase="'None'">
+                  <element-infobox [(fieldValue)]="dataItem.fieldValues[0]"></element-infobox>
+                </div>
+                <div *ngSwitchCase="'Timer'">
+                  <element-timer [(fieldValue)]="dataItem.fieldValues[0]"></element-timer>
+                </div>
+                <div *ngSwitchCase="'Signature'">
+                  <element-signature [(fieldValue)]="dataItem.fieldValues[0]"></element-signature>
+                </div>
+                <!--<div *ngSwitchCase="'SaveButton'">-->
+                  <!--<pre>{{dataItem | json}}</pre>-->
+                  <!--SaveButton-->
+                <!--</div>-->
                 <div *ngSwitchDefault></div>
               </div>
             </td>

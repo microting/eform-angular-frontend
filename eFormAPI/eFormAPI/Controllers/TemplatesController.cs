@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -7,11 +8,11 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Http;
+using eFormAPI.Common.API;
+using eFormAPI.Common.Models;
 using eFormAPI.Web.Infrastructure.Helpers;
 using eFormCore;
 using eFormShared;
-using eFromAPI.Common.API;
-using eFromAPI.Common.Models;
 
 namespace eFormAPI.Web.Controllers
 {
@@ -27,7 +28,7 @@ namespace eFormAPI.Web.Controllers
             {
                 try
                 {
-                    Core core = _coreHelper.GetCore();
+                    var core = _coreHelper.GetCore();
                     var templatesDto = core.TemplateItemReadAll(false);
                     return new OperationDataResult<List<Template_Dto>>(true, templatesDto);
                 }
@@ -35,12 +36,12 @@ namespace eFormAPI.Web.Controllers
                 {
                     if (ex.Message.Contains("PrimeDb"))
                     {
-                        string[] lines =
+                        var lines =
                             System.IO.File.ReadAllLines(
                                 System.Web.Hosting.HostingEnvironment.MapPath("~/bin/Input.txt"));
 
-                        string connectionStr = lines.First();
-                        AdminTools adminTool = new AdminTools(connectionStr);
+                        var connectionStr = lines.First();
+                        var adminTool = new AdminTools(connectionStr);
                         adminTool.DbSettingsReloadRemote();
                         return new OperationDataResult<List<Template_Dto>>(false, "Check connection string");
                     }
@@ -50,7 +51,7 @@ namespace eFormAPI.Web.Controllers
                         {
                             try
                             {
-                                Core core = _coreHelper.GetCore();
+                                var core = _coreHelper.GetCore();
                             }
                             catch (Exception ex2)
                             {
@@ -62,7 +63,53 @@ namespace eFormAPI.Web.Controllers
                     return new OperationDataResult<List<Template_Dto>>(false, "Check settings before proceed");
                 }
             }
-            catch (Exception exception)
+            catch (Exception)
+            {
+                throw new HttpResponseException(HttpStatusCode.Unauthorized);
+            }
+        }
+
+        [HttpGet]
+        public OperationDataResult<Template_Dto> Get(int id)
+        {
+            try
+            {
+                try
+                {
+                    var core = _coreHelper.GetCore();
+                    var templateDto = core.TemplateItemRead(id);
+                    return new OperationDataResult<Template_Dto>(true, templateDto);
+                }
+                catch (Exception ex)
+                {
+                    if (ex.Message.Contains("PrimeDb"))
+                    {
+                        var lines = File.ReadAllLines(System.Web.Hosting.HostingEnvironment.MapPath("~/bin/Input.txt"));
+
+                        var connectionStr = lines.First();
+                        var adminTool = new AdminTools(connectionStr);
+                        adminTool.DbSettingsReloadRemote();
+                        return new OperationDataResult<Template_Dto>(false, "Check connection string");
+                    }
+                    else
+                    {
+                        if (ex.InnerException.Message.Contains("Cannot open database"))
+                        {
+                            try
+                            {
+                                var core = _coreHelper.GetCore();
+                            }
+                            catch (Exception ex2)
+                            {
+                                return new OperationDataResult<Template_Dto>(false, "Core is not started.");
+                            }
+                            return new OperationDataResult<Template_Dto>(false, "Check settings before proceed");
+                        }
+                    }
+                    return new OperationDataResult<Template_Dto>(false, "Check settings before proceed");
+                }
+            }
+            catch (Exception)
             {
                 throw new HttpResponseException(HttpStatusCode.Unauthorized);
             }
@@ -72,12 +119,12 @@ namespace eFormAPI.Web.Controllers
         [HttpPost]
         public OperationResult Create(EFormXmlModel eFormXmlModel)
         {
-            Core core = _coreHelper.GetCore();
+            var core = _coreHelper.GetCore();
 
             var newTemplate = core.TemplateFromXml(eFormXmlModel.EFormXml);
 
             newTemplate = core.TemplateUploadData(newTemplate);
-            List<string> errors = core.TemplateValidation(newTemplate);
+            var errors = core.TemplateValidation(newTemplate);
 
             if (!errors.Any())
             {
@@ -87,7 +134,7 @@ namespace eFormAPI.Web.Controllers
                 return new OperationResult(true, $"eForm \"{newTemplate.Label}\" created successfully");
             }
 
-            string message = errors.Aggregate("", (current, str) => current + ("<br>" + str));
+            var message = errors.Aggregate("", (current, str) => current + ("<br>" + str));
 
             return new OperationResult(false, "eForm could not be created!" + message);
         }
@@ -95,11 +142,17 @@ namespace eFormAPI.Web.Controllers
         [HttpGet]
         public OperationResult Delete(int id)
         {
-            Core core = _coreHelper.GetCore();
+            var core = _coreHelper.GetCore();
             var templateDto = core.TemplateItemRead(id);
+            foreach (var siteUId in templateDto.DeployedSites)
+            {
+                core.CaseDelete(templateDto.Id, siteUId.SiteUId);
+            }
+            var result = core.TemplateDelete(id);
+            
             try
             {
-                return core.TemplateDelete(id)
+                return result
                     ? new OperationResult(true, $"eForm \"{templateDto.Label}\" deleted successfully")
                     : new OperationResult(false, $"eForm \"{templateDto.Label}\" could not be deleted!");
             }
@@ -112,7 +165,7 @@ namespace eFormAPI.Web.Controllers
         [HttpPost]
         public OperationDataResult<DeployToModel> DeployTo(int id)
         {
-            Core core = _coreHelper.GetCore();
+            var core = _coreHelper.GetCore();
             var templateDto = core.TemplateItemRead(id);
             var siteNamesDto = core.Advanced_SiteItemReadAll();
 
@@ -127,12 +180,12 @@ namespace eFormAPI.Web.Controllers
         [HttpPost]
         public OperationResult Deploy(DeployModel deployModel)
         {
-            List<int> deployedSiteIds = new List<int>();
+            var deployedSiteIds = new List<int>();
 
-            List<int> sitesToBeRetractedFrom = new List<int>();
-            List<int> sitesToBeDeployedTo = new List<int>();
+            var sitesToBeRetractedFrom = new List<int>();
+            var sitesToBeDeployedTo = new List<int>();
 
-            Core core = _coreHelper.GetCore();
+            var core = _coreHelper.GetCore();
             var templateDto = core.TemplateItemRead(deployModel.Id);
 
             foreach (var site in templateDto.DeployedSites)
@@ -140,7 +193,7 @@ namespace eFormAPI.Web.Controllers
                 deployedSiteIds.Add(site.SiteUId);
             }
 
-            List<int> requestedSiteIds = deployModel
+            var requestedSiteIds = deployModel
                 .DeployCheckboxes
                 .Select(deployCheckbox => deployCheckbox.Id)
                 .ToList();
@@ -173,8 +226,8 @@ namespace eFormAPI.Web.Controllers
                 var mainElement = core.TemplateRead(deployModel.Id);
                 mainElement.Repeated =
                     0; // We set this right now hardcoded, this will let the eForm be deployed until end date or we actively retract it.
-                mainElement.EndDate = DateTime.Now.AddYears(10);
-                mainElement.StartDate = DateTime.Now;
+                mainElement.EndDate = DateTime.Now.AddYears(10).ToUniversalTime();
+                mainElement.StartDate = DateTime.Now.ToUniversalTime();
                 core.CaseCreate(mainElement, "", sitesToBeDeployedTo, "");
             }
 
@@ -183,22 +236,21 @@ namespace eFormAPI.Web.Controllers
                 core.CaseDelete(deployModel.Id, siteUId);
             }
 
-            return new OperationResult(true, $"eForm \"{templateDto.Label}\" deployed successfully!");
+            return new OperationResult(true, $"\"{templateDto.Label}\" paired successfully.");
         }
 
         [HttpGet]
         public HttpResponseMessage Csv(int id)
         {
-            Core core = _coreHelper.GetCore();
+            var core = _coreHelper.GetCore();
 
-            string fileName = $"{id}_{DateTime.Now.Ticks}.csv";
+            var fileName = $"{id}_{DateTime.Now.Ticks}.csv";
             System.IO.Directory.CreateDirectory(System.Web.Hosting.HostingEnvironment.MapPath("~/bin/output/"));
-            string filePath = System.Web.Hosting.HostingEnvironment.MapPath($"~/bin/output/{fileName}");
+            var filePath = System.Web.Hosting.HostingEnvironment.MapPath($"~/bin/output/{fileName}");
             var fullPath = core.CasesToCsv(id, null, null, filePath,
-                $"{Request.RequestUri.Scheme}://{Request.RequestUri.DnsSafeHost}" +
-                "/api/templates/getimage?&filename=");
+                $"{Request.RequestUri.Scheme}://{Request.RequestUri.Authority}/api/templates/getimage?&filename=");
 
-            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+            var result = new HttpResponseMessage(HttpStatusCode.OK);
             var fileStream = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
 
             result.Content = new StreamContent(fileStream);
@@ -211,24 +263,147 @@ namespace eFormAPI.Web.Controllers
 
         [HttpGet]
         [Authorize]
-        public HttpResponseMessage GetImage(string fileName)
+        public HttpResponseMessage GetImage(string fileName, string noCache = "noCache")
         {
-            string filePath = HttpContext.Current.Server.MapPath($"~/output/datafolder/picture/{fileName}");
+            var filePath = HttpContext.Current.Server.MapPath($"~/output/datafolder/picture/{fileName}");
             if (!File.Exists(filePath))
             {
                 return new HttpResponseMessage(HttpStatusCode.NotFound);
             }
             var extention = Path.GetExtension(filePath).Replace(".", "");
 
-            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+            var result = new HttpResponseMessage(HttpStatusCode.OK);
             var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
 
             result.Content = new StreamContent(fileStream);
-            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
-            result.Content.Headers.ContentDisposition.FileName = fileName;
+            result.Content.Headers.ContentDisposition =
+                new ContentDispositionHeaderValue("attachment") {FileName = fileName};
             result.Content.Headers.ContentType =
                 new MediaTypeHeaderValue($"image/{extention}");
             return result;
+        }
+
+        [HttpGet]
+        [Authorize]
+        public OperationResult RotateImage(string fileName)
+        {
+            var filePath = HttpContext.Current.Server.MapPath($"~/output/datafolder/picture/{fileName}");
+            if (!File.Exists(filePath))
+            {
+                return new OperationResult(false, "File not found");
+            }
+        
+            var img = Image.FromFile(filePath);
+            img.RotateFlip(RotateFlipType.Rotate90FlipNone);
+            img.Save(filePath);
+            img.Dispose();
+
+            return new OperationResult(true, "Image rotated successfully.");
+        }
+
+        [HttpGet]
+        [Authorize]
+        public OperationResult DeleteImage(string fileName, int fieldId, int uploadedObjId)
+        {
+            try
+            {
+                var core = _coreHelper.GetCore();
+                if (!core.Advanced_DeleteUploadedData(fieldId, uploadedObjId))
+                {
+                    return new OperationResult(false, "Error: Image was not deleted");
+                }
+            }
+
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new OperationResult(false, "Error");
+            }
+            return new OperationResult(true, "Image deleted successfully.");
+        }
+
+
+        [HttpGet]
+        [Authorize]
+        public HttpResponseMessage GetPdfFile(string fileName)
+        {
+            var filePath = HttpContext.Current.Server.MapPath($"~/output/datafolder/pdf/{fileName}.pdf");
+            if (!File.Exists(filePath))
+            {
+                return new HttpResponseMessage(HttpStatusCode.NotFound);
+            }
+
+            var result = new HttpResponseMessage(HttpStatusCode.OK);
+            var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+
+            result.Content = new StreamContent(fileStream);
+            result.Content.Headers.ContentDisposition =
+                new ContentDispositionHeaderValue("attachment") {FileName = fileName};
+            result.Content.Headers.ContentType =
+                new MediaTypeHeaderValue($"application/pdf");
+            return result;
+        }
+        
+        [HttpGet]
+        [Authorize]
+        [Route("api/templates/download-eform-pdf/{templateId}")]
+        public HttpResponseMessage DownloadEFormPDF(int templateId)
+        {
+            try
+            {
+                var core = _coreHelper.GetCore();
+                var filePath = core.CaseToPdf(templateId, "", DateTime.Now.ToString("yyyyMMddHHmmssffff"));
+                if (!File.Exists(filePath))
+                {
+                    return new HttpResponseMessage(HttpStatusCode.NotFound);
+                }
+
+                var result = new HttpResponseMessage(HttpStatusCode.OK);
+                var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+
+                result.Content = new StreamContent(fileStream);
+                result.Content.Headers.ContentDisposition =
+                    new ContentDispositionHeaderValue("attachment") {FileName = ""}; // TODO: FIX
+                result.Content.Headers.ContentType =
+                    new MediaTypeHeaderValue($"application/pdf");
+                return result;
+            }
+            catch (Exception)
+            {
+                return new HttpResponseMessage(HttpStatusCode.InternalServerError);
+            }
+            
+        }
+        
+        [HttpGet]
+        [Authorize]
+        [Route("api/templates/download-eform-xml/{templateId}")]
+        public HttpResponseMessage DownloadEFormXML(int templateId)
+        {
+            
+            try
+            {
+                var core = _coreHelper.GetCore();
+                var filePath = core.CaseToJasperXml(templateId, DateTime.Now.ToString("yyyyMMddHHmmssffff"));
+                if (!File.Exists(filePath))
+                {
+                    return new HttpResponseMessage(HttpStatusCode.NotFound);
+                }
+
+                var result = new HttpResponseMessage(HttpStatusCode.OK);
+                var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+
+                result.Content = new StreamContent(fileStream);
+                result.Content.Headers.ContentDisposition =
+                    new ContentDispositionHeaderValue("attachment") {FileName = ""}; // TODO: FIX
+                result.Content.Headers.ContentType =
+                    new MediaTypeHeaderValue($"application/pdf");
+                return result;
+            }
+            catch (Exception)
+            {
+                return new HttpResponseMessage(HttpStatusCode.InternalServerError);
+            }
         }
     }
 }

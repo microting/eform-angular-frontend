@@ -5,7 +5,7 @@
 .img-wrapper {
   max-height: 200px;
   text-align: center;
-  margin: 0 auto;
+  margin: 0 auto 20px;
 }
 
 .panel {
@@ -15,4 +15,22 @@
 .user-addon {
   padding-left: 13px;
   padding-right: 14px;
+}
+
+.envelope-addon {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.p-header-wrapper {
+  margin-top: 35px;
+  margin-bottom: 15px;
+}
+
+.p-font {
+  font-size: 16px;
+}
+
+.p-description {
+  font-weight: 500;
 }

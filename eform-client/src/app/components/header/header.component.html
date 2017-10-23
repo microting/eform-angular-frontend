@@ -1,15 +1,20 @@
-<header class="hidden-xs header-full" id="header_full_top">
+<header class="hidden-xs header-full" id="header_full_top" *ngIf="
+headerSettingsModel.imageLinkVisible ||
+headerSettingsModel.mainTextVisible ||
+headerSettingsModel.secondaryTextVisible">
   <div class="container-fluid">
     <div class="row">
-      <div class="logo-container">
-        <img height="65px" src="../../../assets/images/logo.png">
+      <div class="logo-container" *ngIf="headerSettingsModel.imageLinkVisible">
+        <img height="60px" [src]="logoImage">
       </div>
-      <div class="header-product-title">
-        <h3 class="h3 animated fadeInRight">
-          E-Form Anglular
-        </h3>
+      <div class="header-product-title-description">
+        <h4 class="text-right h4-wrapper" *ngIf="headerSettingsModel.mainTextVisible">
+          <strong>{{headerSettingsModel.mainText}}</strong>
+        </h4>
+        <h5 class="text-right h5-wrapper" *ngIf="headerSettingsModel.secondaryTextVisible">
+          {{headerSettingsModel.secondaryText}}
+        </h5>
       </div>
     </div>
   </div>
 </header>
- 

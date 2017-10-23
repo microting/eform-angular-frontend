@@ -1,11 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {EFormService, SitesService} from 'app/services';
-import {SiteNameDto, TemplateDto} from 'app/models';
+import {EFormService, SitesService, } from 'app/services';
 import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
-import {NotifyService} from '../../../../services/notify.service';
-import {EFormXmlModel} from '../../../../models/eFormTemplates/eform-xml.model';
-import {DeployModel} from '../../../../models/eFormTemplates/deploy.model';
-import {DeployCheckbox} from '../../../../models/eFormTemplates/deploy-checkbox.model';
+import {NotifyService} from 'app/services/notify.service';
+import {DeployCheckbox} from 'app/models/eFormTemplates/deploy-checkbox.model';
+import {SiteNameDto, TemplateDto, TemplateColumnModel, UpdateColumnsModel, DeployModel, EFormXmlModel} from 'app/models';
+import {FileUploader} from 'ng2-file-upload';
 
 @Component({
   selector: 'app-eform-table',
@@ -19,6 +18,11 @@ export class EFormTableComponent implements OnInit {
   deleteTemplateModal: ModalComponent;
   @ViewChild('createTemplateModal')
   createTemplateModal: ModalComponent;
+  @ViewChild('editCasesColumnsModal')
+  editCasesColumnsModal: ModalComponent;
+  @ViewChild('uploadTemplateZIPModal')
+  uploadTemplateZIPModal: ModalComponent;
+
   spinnerStatus = true;
   matchFound = false;
   eFormXmlModel: EFormXmlModel = new EFormXmlModel();
@@ -30,11 +34,25 @@ export class EFormTableComponent implements OnInit {
   deploymentModalTitle: String = 'Edit deployment';
   isDeploying = false;
 
+  columnModels: Array<TemplateColumnModel> = [];
+  columnEditModel: UpdateColumnsModel = new UpdateColumnsModel;
+
+  zipFileUploader: FileUploader = new FileUploader({url: '/api/template-files/upload-eform-zip'});
+
   constructor(private eFormService: EFormService, private notifyService: NotifyService, private sitesService: SitesService) {
   }
 
   ngOnInit() {
     this.loadAllTemplates();
+
+    this.zipFileUploader.onBuildItemForm = (item, form) => {
+      form.append('templateId', this.selectedTemplateDto.id);
+    };
+    this.zipFileUploader.onAfterAddingFile = f => {
+      if (this.zipFileUploader.queue.length > 1) {
+        this.zipFileUploader.removeFromQueue(this.zipFileUploader.queue[0]);
+      }
+    };
   }
 
   loadAllTemplates() {
@@ -86,6 +104,7 @@ export class EFormTableComponent implements OnInit {
       this.eFormService.createSingle(this.eFormXmlModel).subscribe(operation => {
         if (operation && operation.success) {
           this.loadAllTemplates();
+          this.eFormXmlModel = new EFormXmlModel;
           this.notifyService.success({text: operation.message || 'Error'});
         } else {
           this.notifyService.error({text: operation.message || 'Error'});
@@ -113,27 +132,19 @@ export class EFormTableComponent implements OnInit {
     this.deploymentModal.open();
   }
 
-  editDeployment(id: number) {
-    if (id <= 0) {
+  editDeployment(model: TemplateDto) {
+    if (model.id <= 0) {
       return;
     }
-    this.deploymentModalTitle = 'Edit deployment';
-    this.getInfoForModal(id);
-  }
-
-  selectWorkers(id: number) {
-    if (id <= 0) {
-      return;
-    }
-    this.deploymentModalTitle = 'New deployment';
-    this.getInfoForModal(id);
+    this.deploymentModalTitle = model.label;
+    this.getInfoForModal(model.id);
   }
 
   fillCheckboxes() {
     this.deployModel.deployCheckboxes = [];
     for (const siteDto of this.sitesDto) {
       const deployObject = new DeployCheckbox();
-      var currentTemplate = this.templatesDto.filter(x => x.id == this.deployModel.id);
+      const currentTemplate = this.templatesDto.filter(x => x.id == this.deployModel.id);
       for (const templateDto of currentTemplate) {
         for (const deployedSite of templateDto.deployedSites) {
           if (deployedSite.siteUId === siteDto.siteUId) {
@@ -183,5 +194,49 @@ export class EFormTableComponent implements OnInit {
         this.deploymentModal.close();
       });
     }
+  }
+
+  openEditCasesColumnsModal(templateDto: TemplateDto) {
+    this.selectedTemplateDto = templateDto;
+    this.eFormService.getTemplateColumns(templateDto.id).subscribe((operation) => {
+      if (operation && operation.success) {
+        this.columnModels = operation.model;
+
+        this.eFormService.getCurrentTemplateColumns(templateDto.id).subscribe((result) => {
+          if (result && result.success) {
+            this.columnEditModel = result.model;
+            this.editCasesColumnsModal.open();
+          }
+        });
+
+      }
+    });
+  }
+
+  updateColumns() {
+    this.columnEditModel.templateId = this.selectedTemplateDto.id;
+    this.eFormService.updateTemplateColumns(this.columnEditModel).subscribe((data => {
+      if (data && data.success) {
+        this.notifyService.success({text: 'Columns for template was successfully updated'});
+      } else {
+        this.notifyService.error({text: 'Error while updating columns for template'});
+      }
+      this.editCasesColumnsModal.dismiss().then();
+    }));
+  }
+
+  downloadTemplateXML(id: number) {
+    this.eFormService.downloadEformXML(id).subscribe((data => {
+
+    }));
+  }
+
+  showUploadTemplateZIP(templateDto: TemplateDto) {
+    this.selectedTemplateDto = templateDto;
+    this.uploadTemplateZIPModal.open();
+  }
+
+  uploadTemplateZIP() {
+    this.zipFileUploader.queue[0].upload();
   }
 }

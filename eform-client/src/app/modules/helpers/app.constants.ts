@@ -8,6 +8,7 @@ export let WorkersMethods = {
   GetAll: '/api/workers/index',
   GetSingle: '/api/workers/edit',
   UpdateSingle: '/api/workers/update',
+  CreateSingle: '/api/workers/create',
   DeleteSingle: '/api/workers/delete'
 };
 
@@ -29,14 +30,31 @@ export let SimpleSitesMethods = {
 export let SettingsMethods = {
   UpdateConnectionString: '/api/settings/connection-string',
   ConnectionStringExist: '/api/settings/connection-string-exist',
+  GetAdminSettings: '/api/settings/admin',
+  ResetLoginPageSettings: '/api/settings/reset-login-page',
+  ResetHeaderSettings: '/api/settings/reset-page-header',
+  GetLoginPageSettings: '/api/settings/login-page',
+  GetHeaderSettings: '/api/settings/page-header',
+  GetAnonymousImage: 'api/images/login-page-images',
+  GetAuthorizedImage: 'api/images/eform-images'
 };
 
 export let TemplatesMethods = {
   GetAll: '/api/templates/index',
+  GetSingle: '/api/templates/get',
   DeleteSingle: '/api/templates/delete',
   CreateSingle: '/api/templates/create',
   DeploySingle: '/api/templates/deploy',
-  GetCsv: '/api/templates/csv'
+};
+
+export let TemplateFilesMethods = {
+  GetCsv: '/api/template-files/csv',
+  DownloadXML: '/api/template-files/download-eform-xml',
+  DownloadPDF: '/api/template-files/download-case-pdf'
+};
+
+export let TemplateColumnMethods = {
+  GetColumns: '/api/template-columns'
 };
 
 export let CasesMethods = {
@@ -61,4 +79,9 @@ export let AdminMethods = {
   DeleteUser: '/api/admin/delete-user',
   CreateUser: '/api/admin/create-user',
   UpdateUser: '/api/admin/update-user'
+};
+
+export let ImageMethods = {
+  Rotate: '/api/template-files/rotate-image',
+  Delete: '/api/template-files/delete-image',
 };

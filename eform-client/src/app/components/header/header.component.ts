@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {SettingsService} from 'app/services';
+import {HeaderSettingsModel} from 'app/models/settings/header-settings.model';
 
 @Component({
   selector: 'eform-header',
@@ -6,11 +8,23 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  headerSettingsModel: HeaderSettingsModel = new HeaderSettingsModel;
+  logoImage: any;
 
-  constructor() {
+  constructor(private settingsService: SettingsService) {
   }
 
   ngOnInit() {
+    this.settingsService.getHeaderSettings().subscribe((data => {
+      if (data && data.success) {
+        this.headerSettingsModel = data.model;
+        if (this.headerSettingsModel.imageLink && this.headerSettingsModel.imageLinkVisible) {
+          this.logoImage = 'api/images/eform-images?fileName=' + this.headerSettingsModel.imageLink;
+        } else if (!this.headerSettingsModel.imageLink) {
+          this.logoImage = '../../../assets/images/logo.png';
+        }
+      }
+    }));
   }
 
 }

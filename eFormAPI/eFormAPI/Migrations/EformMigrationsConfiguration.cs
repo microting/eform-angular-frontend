@@ -1,5 +1,4 @@
 using System.Configuration;
-using System.Linq;
 using eFormAPI.Web.Infrastructure.Consts;
 using eFormAPI.Web.Infrastructure.Data;
 using eFormAPI.Web.Infrastructure.Data.Entities;

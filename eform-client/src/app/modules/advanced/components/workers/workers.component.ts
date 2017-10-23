@@ -1,9 +1,12 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 import {Router} from '@angular/router';
-import {WorkerDto} from 'app/models/dto';
+import {SiteDto, WorkerDto} from 'app/models/dto';
 import {WorkersService, NotifyService} from 'app/services';
 import {OperationDataResult} from 'app/modules/helpers/operation.models';
+import {WorkerCreateModel} from 'app/models/advanced';
+import {SimpleSitesService} from 'app/services/simple-sites.service';
+import {SimpleSiteModel} from 'app/models/simpleSite';
 
 @Component({
   selector: 'app-workers',
@@ -13,20 +16,34 @@ import {OperationDataResult} from 'app/modules/helpers/operation.models';
 export class WorkersComponent implements OnInit {
   @ViewChild('deleteWorkerModal')
   deleteWorkerModal: ModalComponent;
+  @ViewChild('createWorkerModal')
+  createWorkerModal: ModalComponent;
   spinnerStatus = true;
   selectedWorkerDto: WorkerDto = new WorkerDto();
+  newWorkerModel: WorkerCreateModel = new WorkerCreateModel;
+  simpleSites: Array<SiteDto> = [];
   workersDto: Array<WorkerDto>;
 
-  constructor(private workersService: WorkersService, private router: Router, private notifyService: NotifyService) {
+  constructor(private workersService: WorkersService,
+              private router: Router,
+              private notifyService: NotifyService,
+              private simpleSitesService: SimpleSitesService) {
     this.workersDto = [];
   }
 
   ngOnInit() {
     this.loadAllWorkers();
+    this.loadAllSimpleSites();
   }
 
   loadAllWorkers() {
     this.workersService.getAllWorkers().subscribe(this.onAllWorkersLoaded.bind(this));
+  }
+
+  loadAllSimpleSites() {
+    this.simpleSitesService.getAllSimpleSites().subscribe((data => {
+      this.simpleSites = data.model;
+    }));
   }
 
   onAllWorkersLoaded(operation: OperationDataResult<Array<WorkerDto>>) {
@@ -51,11 +68,38 @@ export class WorkersComponent implements OnInit {
 
   showDeleteWorkerModal(workerDto: WorkerDto) {
     this.selectedWorkerDto = workerDto;
-    this.deleteWorkerModal.open();
+    this.deleteWorkerModal.open().then();
+  }
+
+  showCreateWorkerModal() {
+    this.createWorkerModal.open().then();
   }
 
   submitDeleteWorkerModal(id: number) {
     this.deleteSingle(id);
   }
 
+  createWorker() {
+    this.workersService.createWorker(this.newWorkerModel).subscribe((data => {
+      if (data && data.success) {
+        this.notifyService.success({text: data.message});
+        this.newWorkerModel = new WorkerCreateModel;
+        this.loadAllWorkers();
+      } else {
+        this.notifyService.success({text: data.message});
+      }
+    }));
+  }
+
+  selectSiteForWorker(e: any) {
+    debugger;
+    if (e.target.value != 'null') {
+      let foundSiteDto = this.simpleSites.find(x => x.siteId === +e.target.value);
+      this.newWorkerModel.siteId = foundSiteDto.siteId;
+      this.newWorkerModel.customerNo = foundSiteDto.customerNo;
+    } else {
+      this.newWorkerModel.siteId = null;
+    }
+
+  }
 }

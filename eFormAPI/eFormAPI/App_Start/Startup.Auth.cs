@@ -1,10 +1,8 @@
 ﻿using System;
 using eFormAPI.Web.Infrastructure.Data;
-using eFormAPI.Web.Infrastructure.Data.Entities;
 using eFormAPI.Web.Infrastructure.Identity;
 using eFormAPI.Web.Infrastructure.Security;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
@@ -27,7 +25,10 @@ namespace eFormAPI.Web
 
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
-            app.UseCookieAuthentication(new CookieAuthenticationOptions());
+            app.UseCookieAuthentication(new CookieAuthenticationOptions()
+            {
+                ExpireTimeSpan = TimeSpan.FromDays(1)
+            });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Configure the application for OAuth based flow
@@ -37,7 +38,7 @@ namespace eFormAPI.Web
                 TokenEndpointPath = new PathString("/api/auth/token"),
                 Provider = new ApplicationOAuthProvider(PublicClientId),
                 AuthorizeEndpointPath = new PathString("/api/auth/external-login"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
                 // In production mode set AllowInsecureHttp = false
                 AllowInsecureHttp = true
             };
