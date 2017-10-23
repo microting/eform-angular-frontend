@@ -6,6 +6,8 @@
       </div>
     </h1>
     <div class="pull-right">
+        <button class="btn btn-ar btn-danger" [disabled]="!settingsForm.form.valid" (click)="updateConnectionString()">
+          Save <i *ngIf="spinnerStatus" class="fa fa-spinner fa-spin"></i></button>
     </div>
   </div>
 </header>
@@ -14,7 +16,7 @@
     <div class="bs-docs-container">
       <form #settingsForm="ngForm">
         <div class="row">
-          <div class="col-md-10" role="main">
+          <div class="col-md-12" role="main">
             <div class="panel panel-default">
               <div class="panel-heading">
                 Admin information
@@ -77,16 +79,11 @@
               </table>
             </div>
           </div>
-          <div class="col-md-2">
-            <div class="bs-docs-container hidden-print affix" id="mt-side-bar" role="complementary">
-              <button class="btn btn-ar btn-danger" [disabled]="!settingsForm.form.valid" (click)="updateConnectionString()">Gem</button>
-            </div>
-            <eform-spinner [middleActive]="spinnerStatus"></eform-spinner>
-          </div>
+
         </div>
         <!--SDK database connection information-->
         <div class="row">
-          <div class="col-md-5" role="main">
+          <div class="col-md-6" role="main">
             <div class="panel panel-default">
               <div class="panel-heading">
                 SDK database connection information
@@ -134,7 +131,7 @@
               </table>
             </div>
           </div>
-          <div class="col-md-5" role="main">
+          <div class="col-md-6" role="main">
             <div class="panel panel-default">
               <div class="panel-heading">
                 Main database connection information

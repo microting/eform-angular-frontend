@@ -5,6 +5,7 @@ import {AuthResponseModel, LoginRequestModel} from 'app/models/auth';
 import {AuthService} from 'app/services/accounts/auth.service';
 import {SettingsService} from 'app/services';
 import {NotifyService} from 'app/services/notify.service';
+import {LoginPageSettingsModel} from 'app/models/settings/login-page-settings.model';
 
 
 @Component({
@@ -18,6 +19,8 @@ export class AuthComponent implements OnInit {
   username: AbstractControl;
   email: AbstractControl;
   password: AbstractControl;
+  loginPageSettings: LoginPageSettingsModel = new LoginPageSettingsModel;
+  loginImage: any;
 
   showLoginForm: boolean = true;
   error: string;
@@ -59,6 +62,7 @@ export class AuthComponent implements OnInit {
         this.router.navigate(['/settings/connection-string']).then();
       }
     });
+    this.getSettings();
     this.formLogin = this.fb.group({
       username: [
         '',
@@ -78,6 +82,20 @@ export class AuthComponent implements OnInit {
     this.username = this.formLogin.get('username');
     this.password = this.formLogin.get('password');
     this.email = this.formRestore.get('email');
+  }
+
+  getSettings() {
+    this.settingsService.getLoginPageSettings().subscribe((data) => {
+      if (data && data.success) {
+        debugger;
+        this.loginPageSettings = data.model;
+        if (this.loginPageSettings.imageLink && this.loginPageSettings.imageLinkVisible) {
+          this.loginImage = 'api/images/login-page-images?fileName=' + this.loginPageSettings.imageLink;
+        } else if (!this.loginPageSettings.imageLink) {
+          this.loginImage = '../../../assets/images/eform-phone.jpg';
+        }
+      }
+    });
   }
 
   toggleLoginForm(toggle: boolean) {

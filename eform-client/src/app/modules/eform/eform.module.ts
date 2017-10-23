@@ -7,6 +7,7 @@ import {HelpersModule} from 'app/modules/helpers/helpers.module';
 import {Ng2Bs3ModalModule} from 'ng2-bs3-modal/ng2-bs3-modal';
 import {TooltipModule} from 'ngx-bootstrap';
 import {FormsModule} from '@angular/forms';
+import {FileUploadModule} from 'ng2-file-upload';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import {FormsModule} from '@angular/forms';
     EFormRoutingModule,
     TooltipModule.forRoot(),
     FormsModule,
+    FileUploadModule
   ],
   declarations: [EFormTableComponent, EFormComponent]
 })

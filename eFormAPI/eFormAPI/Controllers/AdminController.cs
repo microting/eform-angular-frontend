@@ -28,13 +28,13 @@ namespace eFormAPI.Web.Controllers
         public EformUserManager UserManager
         {
             get => _eformUserManager ?? Request.GetOwinContext().GetUserManager<EformUserManager>();
-            private set => _eformUserManager = value;
+            set => _eformUserManager = value;
         }
 
         public EformRoleManager RoleManager
         {
             get => _eformRoleManager ?? new EformRoleManager(new EformRoleStore(BaseDbContext.Create()));
-            private set => _eformRoleManager = value;
+            set => _eformRoleManager = value;
         }
 
         [HttpGet]
@@ -126,7 +126,7 @@ namespace eFormAPI.Web.Controllers
                 }
                 if (userRegisterModel.Role == null)
                 {
-                    return new OperationResult(false, $"Role is required");
+                    return new OperationResult(false, "Role is required");
                 }
                 user.Email = userRegisterModel.Email;
                 user.UserName = userRegisterModel.UserName;
@@ -168,7 +168,7 @@ namespace eFormAPI.Web.Controllers
                 }
                 if (userRegisterModel.Role == null)
                 {
-                    return new OperationResult(false, $"Role is required");
+                    return new OperationResult(false, "Role is required");
                 }
                 var user = new EformUser
                 {

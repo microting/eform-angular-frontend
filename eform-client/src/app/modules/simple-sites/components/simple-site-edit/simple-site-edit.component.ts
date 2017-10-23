@@ -44,6 +44,8 @@ export class SimpleSiteEditComponent implements OnInit {
 
         this.simpleSiteModel.userFirstName = this.simpleSiteDto.firstName;
         this.simpleSiteModel.userLastName = this.simpleSiteDto.lastName;
+      } else {
+        this.notifyService.error({text: operation.message || 'Error'});
       }
     });
   }
