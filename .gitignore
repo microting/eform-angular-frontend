@@ -46,3 +46,5 @@ eFormAPI/eFormAPI.Common/obj/
 eFormAPI/eFormAPI.Common/bin/
 eFormAPI/MainInstaller/obj/
 eFormAPI/MainInstaller/bin/
+eFormAPI/AllowMultipleVersionsBundle/bin/
+eFormAPI/AllowMultipleVersionsBundle/obj/

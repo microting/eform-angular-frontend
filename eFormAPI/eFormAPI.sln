@@ -20,10 +20,7 @@ Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "MainInstaller", "MainInstal
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllowMultipleVersions", "AllowMultipleVersions\AllowMultipleVersions.csproj", "{2B167169-F122-4F1F-9881-0DC8C07585B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlowMultipleVersionsBundle", "AlowMultipleVersionsBundle\AlowMultipleVersionsBundle.csproj", "{FF3054DF-B9E9-49A9-9BCE-384C2E657262}"
-	ProjectSection(ProjectDependencies) = postProject
-		{B63F5F50-AA5B-4BC2-AC61-B2A94B62C042} = {B63F5F50-AA5B-4BC2-AC61-B2A94B62C042}
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllowMultipleVersionsBundle", "AllowMultipleVersionsBundle\AllowMultipleVersionsBundle.csproj", "{FF3054DF-B9E9-49A9-9BCE-384C2E657262}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

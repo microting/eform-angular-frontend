@@ -78,8 +78,8 @@ namespace CustomActions
                 var customerNumber = session.CustomActionData["CUSTOMERNUMBER"];
                 var domain = session.CustomActionData["DOMAINNAME"];
 
-                //session.Log("Get latest product version called");
-                //GetProductLatestVersion(TempDir);
+                session.Log("Get latest product version called");
+                GetProductLatestVersion(TempDir);
                 IncrementProgressBar(session);
 
                 var uiPorts = Directory.GetDirectories(IisSitesDir).Where(t => t.Contains("_client_")).Select(t => int.Parse(t.Split('_').Last()));
@@ -90,7 +90,6 @@ namespace CustomActions
                 session.Log("Build Angullar app tasrk started");
                 BuildAngularApp(uiIisDir, angularSolutionLocation);
                 IncrementProgressBar(session);
-                //  var buildAngularTask = Task.Factory.StartNew(() => BuildAngularApp(uiIisDir, angularSolutionLocation));
 
                 var webApiLocation = $@"{TempDir}\eFormAPI\eFormAPI";
                 var webApiPort = GetWebApiPort();
@@ -102,9 +101,6 @@ namespace CustomActions
                 session.Log("Host WebAPI called");
                 HostWebApi(webApiName, webApiPort, webApiIisDir);
                 IncrementProgressBar(session);
-
-                // buildAngularTask.Wait();
-                // session.Log("Build Angullar app tasrk ended");
 
                 session.Log("RunAngularAsWinService called");
                 RunAngularAsWinService(webApiPort, nextUiPort, uiIisDir, uiName);
@@ -126,7 +122,7 @@ namespace CustomActions
                 IncrementProgressBar(session);
 
                 session.Log("Clear temp dir called");
-               // DeleteDirectory(TempDir);
+                DeleteDirectory(TempDir);
                 IncrementProgressBar(session);
 
                 return ActionResult.Success;
@@ -176,8 +172,10 @@ namespace CustomActions
                 // stop sites
                 ControlSites(customerNumber, domain, apiPort, uiPort, false);
                 IncrementProgressBar(session);
-                // GetProductLatestVersion(TempDir);
+
+                GetProductLatestVersion(TempDir);
                 IncrementProgressBar(session);
+
                 // client update
                 var uiName = $"{customerNumber}_{domain}_client_{uiPort}";
                 var uiIisDir = @"C:\inetpub\wwwroot\" + uiName;
@@ -200,7 +198,8 @@ namespace CustomActions
 
                 ControlSites(customerNumber, domain, apiPort, uiPort, true);
                 IncrementProgressBar(session);
-                // DeleteDirectory(TempDir);
+
+                DeleteDirectory(TempDir);
                 IncrementProgressBar(session);
 
                 return ActionResult.Success;
