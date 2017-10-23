@@ -16,7 +16,7 @@
     <util:RegistrySearch Root="HKLM" Key="SOFTWARE\Microsoft\IIS Extensions\Application Request Routing" Variable="ARR"/>
     
     <PackageGroup Id="ReqiredPackages">
-      <ExePackage Id="Git" DisplayName="Git" Cache="no" Compressed="yes" Permanent="yes" Vital="yes" SourceFile=".\Git-2.14.2-64-bit.exe" PerMachine="yes"  InstallCondition="GIT" InstallCommand="/VERYSILENT"/>
+      <ExePackage Id="Git" DisplayName="Git" Cache="no" Compressed="yes" Permanent="yes" Vital="yes" SourceFile=".\Git-2.14.2-64-bit.exe" PerMachine="yes"  InstallCondition="NOT GIT" InstallCommand="/VERYSILENT"/>
       <MsiPackage Id="NodeJS" DisplayName="NodeJS" Cache="no" Compressed="yes" DisplayInternalUI="no" Permanent="yes" Vital="yes" SourceFile=".\node-v8.6.0-x64.msi" ForcePerMachine="yes" InstallCondition="NOT NODEJS"/>
       <MsiPackage Id="URLRewrite" DisplayName="URL Rewrite" Cache="no" Compressed="yes" DisplayInternalUI="no"  Permanent="yes" Vital="yes" SourceFile=".\rewrite_amd64.msi" ForcePerMachine="yes" InstallCondition="NOT URLREWRITE"/>
       <MsiPackage Id="ARR" DisplayName="Application Request Routing" Cache="no" Compressed="yes" DisplayInternalUI="no" Permanent="yes" Vital="yes" SourceFile=".\requestRouter_amd64.msi"  ForcePerMachine="yes" InstallCondition="NOT ARR"/>
