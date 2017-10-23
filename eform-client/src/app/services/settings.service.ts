@@ -8,6 +8,8 @@ import {Router} from '@angular/router';
 import {SettingsModel} from 'app/models/settings';
 import {OperationDataResult} from 'app/modules/helpers/operation.models';
 import {AdminSettingsModel} from 'app/models/settings/admin-settings.model';
+import {LoginPageSettingsModel} from 'app/models/settings/login-page-settings.model';
+import {HeaderSettingsModel} from 'app/models/settings/header-settings.model';
 
 @Injectable()
 export class SettingsService extends BaseService {
@@ -29,7 +31,19 @@ export class SettingsService extends BaseService {
   public getAdminSettings(): Observable<OperationDataResult<AdminSettingsModel>> {
     return this.getWithOperationDataResult<AdminSettingsModel>(SettingsMethods.GetAdminSettings);
   }
+  public getLoginPageSettings(): Observable<OperationDataResult<LoginPageSettingsModel>> {
+    return this.getWithOperationDataResult<LoginPageSettingsModel>(SettingsMethods.GetLoginPageSettings);
+  }
+  public getHeaderSettings(): Observable<OperationDataResult<HeaderSettingsModel>> {
+    return this.getWithOperationDataResult<HeaderSettingsModel>(SettingsMethods.GetHeaderSettings);
+  }
   public updateAdminSettings(model: AdminSettingsModel): Observable<OperationResult> {
     return this.postModelOperationResult(SettingsMethods.GetAdminSettings, model);
+  }
+  public resetLoginPageSettings(): Observable<OperationResult> {
+    return this.getWithOperationResult(SettingsMethods.ResetLoginPageSettings);
+  }
+  public resetHeaderSettings(): Observable<OperationResult> {
+    return this.getWithOperationResult(SettingsMethods.ResetHeaderSettings);
   }
 }

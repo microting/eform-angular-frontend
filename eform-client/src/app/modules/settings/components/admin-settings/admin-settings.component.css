@@ -1,0 +1,49 @@
+
+.input-group-addon.primary {
+  color: rgb(255, 255, 255);
+  background-color: rgb(50, 118, 177);
+  border-color: rgb(40, 94, 142);
+}
+.input-group-addon.success {
+  color: rgb(255, 255, 255);
+  background-color: rgb(92, 184, 92);
+  border-color: rgb(76, 174, 76);
+}
+.input-group-addon.success:hover {
+  color: rgb(255, 255, 255);
+  background-color: #419641;
+  border-color: #419641;
+}
+
+.input-group-addon.info {
+  color: rgb(255, 255, 255);
+  background-color: rgb(57, 179, 215);
+  border-color: rgb(38, 154, 188);
+}
+.input-group-addon.warning {
+  color: rgb(255, 255, 255);
+  background-color: rgb(240, 173, 78);
+  border-color: rgb(238, 162, 54);
+}
+.input-group-addon.danger {
+  color: rgb(255, 255, 255);
+  background-color: #d9534f;
+  border-color: #d43f3a;
+}
+.input-group-addon.danger:hover {
+  color: rgb(255, 255, 255);
+  background-color: #c12e2a;
+  border-color: #c12e2a;
+}
+
+
+
+.panel-header-button-wrapper {
+  margin-top: 6px;
+}
+
+.image-input-wrapper {
+  max-width: 225px;
+  margin-bottom: 10px;
+}
+

@@ -30,7 +30,13 @@ export let SimpleSitesMethods = {
 export let SettingsMethods = {
   UpdateConnectionString: '/api/settings/connection-string',
   ConnectionStringExist: '/api/settings/connection-string-exist',
-  GetAdminSettings: '/api/settings/admin'
+  GetAdminSettings: '/api/settings/admin',
+  ResetLoginPageSettings: '/api/settings/reset-login-page',
+  ResetHeaderSettings: '/api/settings/reset-page-header',
+  GetLoginPageSettings: '/api/settings/login-page',
+  GetHeaderSettings: '/api/settings/page-header',
+  GetAnonymousImage: 'api/images/login-page-images',
+  GetAuthorizedImage: 'api/images/eform-images'
 };
 
 export let TemplatesMethods = {
@@ -39,7 +45,12 @@ export let TemplatesMethods = {
   DeleteSingle: '/api/templates/delete',
   CreateSingle: '/api/templates/create',
   DeploySingle: '/api/templates/deploy',
-  GetCsv: '/api/templates/csv'
+};
+
+export let TemplateFilesMethods = {
+  GetCsv: '/api/template-files/csv',
+  DownloadXML: '/api/template-files/download-eform-xml',
+  DownloadPDF: '/api/template-files/download-case-pdf'
 };
 
 export let TemplateColumnMethods = {
@@ -71,6 +82,6 @@ export let AdminMethods = {
 };
 
 export let ImageMethods = {
-  Rotate: '/api/templates/rotateImage',
-  Delete: '/api/templates/deleteImage',
+  Rotate: '/api/template-files/rotate-image',
+  Delete: '/api/template-files/delete-image',
 };

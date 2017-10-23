@@ -1,6 +1,4 @@
-﻿using eFormShared;
-
-namespace eFormAPI.Common.Models
+﻿namespace eFormAPI.Common.Models
 {
     public class WorkerCreateModel
     {

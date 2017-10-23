@@ -30,29 +30,29 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AWSSDK.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microting.eForm.1.6.2.9\lib\AWSSDK.Core.dll</HintPath>
+    <Reference Include="AWSSDK.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604">
+      <HintPath>..\packages\Microting.eForm.1.6.3.5\lib\AWSSDK.Core.dll</HintPath>
     </Reference>
-    <Reference Include="AWSSDK.SQS, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microting.eForm.1.6.2.9\lib\AWSSDK.SQS.dll</HintPath>
+    <Reference Include="AWSSDK.SQS, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604">
+      <HintPath>..\packages\Microting.eForm.1.6.3.5\lib\AWSSDK.SQS.dll</HintPath>
     </Reference>
-    <Reference Include="eFormCommunicator, Version=1.6.2.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microting.eForm.1.6.2.9\lib\eFormCommunicator.dll</HintPath>
+    <Reference Include="eFormCommunicator, Version=1.6.3.5, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Microting.eForm.1.6.3.5\lib\eFormCommunicator.dll</HintPath>
     </Reference>
-    <Reference Include="eFormCore, Version=1.6.2.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microting.eForm.1.6.2.9\lib\eFormCore.dll</HintPath>
+    <Reference Include="eFormCore, Version=1.6.3.5, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Microting.eForm.1.6.3.5\lib\eFormCore.dll</HintPath>
     </Reference>
-    <Reference Include="eFormData, Version=1.6.2.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microting.eForm.1.6.2.9\lib\eFormData.dll</HintPath>
+    <Reference Include="eFormData, Version=1.6.3.5, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Microting.eForm.1.6.3.5\lib\eFormData.dll</HintPath>
     </Reference>
-    <Reference Include="eFormShared, Version=1.6.2.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microting.eForm.1.6.2.9\lib\eFormShared.dll</HintPath>
+    <Reference Include="eFormShared, Version=1.6.3.5, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Microting.eForm.1.6.3.5\lib\eFormShared.dll</HintPath>
     </Reference>
-    <Reference Include="eFormSqlController, Version=1.6.2.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microting.eForm.1.6.2.9\lib\eFormSqlController.dll</HintPath>
+    <Reference Include="eFormSqlController, Version=1.6.3.5, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Microting.eForm.1.6.3.5\lib\eFormSqlController.dll</HintPath>
     </Reference>
-    <Reference Include="eFormSubscriber, Version=1.6.2.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microting.eForm.1.6.2.9\lib\eFormSubscriber.dll</HintPath>
+    <Reference Include="eFormSubscriber, Version=1.6.3.5, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Microting.eForm.1.6.3.5\lib\eFormSubscriber.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
@@ -85,7 +85,14 @@
     <Compile Include="Models\Auth\ForgotPasswordModel.cs" />
     <Compile Include="Models\Auth\ResetPasswordModel.cs" />
     <Compile Include="Models\DisplayTemplateColumnsModel.cs" />
-    <Compile Include="Models\Settings\AdminSettingsModel.cs" />
+    <Compile Include="Models\Settings\Admin\AdminSettingsModel.cs" />
+    <Compile Include="Models\Settings\Admin\HeaderSettingsModel.cs" />
+    <Compile Include="Models\Settings\Admin\LoginPageSettingsModel.cs" />
+    <Compile Include="Models\Settings\Admin\SMTPSettingsModel.cs" />
+    <Compile Include="Models\Settings\Initial\AdminSetupModel.cs" />
+    <Compile Include="Models\Settings\Initial\ConnectionStringMainModel.cs" />
+    <Compile Include="Models\Settings\Initial\ConnectionStringSDKModel.cs" />
+    <Compile Include="Models\Settings\Initial\InitialSettingsModel.cs" />
     <Compile Include="Models\TemplateColumnModel.cs" />
     <Compile Include="Models\UpdateTemplateColumnsModel.cs" />
     <Compile Include="Models\User\UserInfoViewModel.cs" />
@@ -95,8 +102,6 @@
     <Compile Include="Models\Cases\Request\CaseEditRequestGroupField.cs" />
     <Compile Include="Models\Cases\Request\ReplyRequest.cs" />
     <Compile Include="Models\PaginationModel.cs" />
-    <Compile Include="Models\Settings\AdminSetupModel.cs" />
-    <Compile Include="Models\Settings\SettingsModel.cs" />
     <Compile Include="Models\DeployCheckbox.cs" />
     <Compile Include="Models\DeployModel.cs" />
     <Compile Include="Models\DeployToModel.cs" />
@@ -105,8 +110,6 @@
     <Compile Include="Models\SearchableList\AdvEntityGroupImportModel.cs" />
     <Compile Include="Models\SearchableList\AdvEntityItemModel.cs" />
     <Compile Include="Models\SearchableList\AdvEntityGroupListRequestModel.cs" />
-    <Compile Include="Models\Settings\ConnectionStringMainModel.cs" />
-    <Compile Include="Models\Settings\ConnectionStringSDKModel.cs" />
     <Compile Include="Models\SimpleSiteModel.cs" />
     <Compile Include="Models\SiteNameModel.cs" />
     <Compile Include="Models\User\UserInfoModelList.cs" />
@@ -117,19 +120,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="letsencrypt\letsencrypt.exe.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\Cases\Response\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="letsencrypt\letsencrypt.exe" />
-    <Content Include="letsencrypt\Web_Config.xml" />
-    <Content Include="letsencrypt\x64\libeay32.dll" />
-    <Content Include="letsencrypt\x64\ssleay32.dll" />
-    <Content Include="letsencrypt\x86\libeay32.dll" />
-    <Content Include="letsencrypt\x86\ssleay32.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
