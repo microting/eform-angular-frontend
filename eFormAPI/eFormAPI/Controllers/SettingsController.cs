@@ -75,16 +75,31 @@ namespace eFormAPI.Web.Controllers
             try
             {
                 adminTools = new AdminTools(sdkConnectionString);
+                string error = adminTools.DbSetup(initialSettingsModel.ConnectionStringSdk.Token);
             }
             catch (Exception exception)
             {
+                try
+                {
+                    new AdminTools(sdkConnectionString).DbSetup(initialSettingsModel.ConnectionStringSdk.Token);
+                }
+                catch (Exception exa)
+                {
+
+                }
                 Logger.Error(exception.Message);
                 return new OperationResult(false, "SDK connection string is invalid");
             }
 
             var configuration = WebConfigurationManager.OpenWebConfiguration("~");
             var section = (ConnectionStringsSection) configuration.GetSection("connectionStrings");
-            section.ConnectionStrings["eFormMainConnection"].ConnectionString = mainConnectionString;
+            try
+            {
+                section.ConnectionStrings["eFormMainConnection"].ConnectionString = mainConnectionString;
+            } catch
+            {
+                section.ConnectionStrings.Add(new ConnectionStringSettings("eFormMainConnection", mainConnectionString, "System.Data.SqlClient"));
+            }                  
             try
             {
                 configuration.Save();
