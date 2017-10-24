@@ -10,14 +10,14 @@
 	</Bundle>
 
   <Fragment>
-    <util:RegistrySearch Root="HKLM" Key="SOFTWARE\Node.js" Variable="NODEJS"/>
-    <util:RegistrySearch Root="HKLM" Key="SOFTWARE\GitForWindows" Variable="GIT"/>
-    <util:RegistrySearch Root="HKLM" Key="SOFTWARE\Microsoft\IIS Extensions\URL Rewrite" Variable="URLREWRITE"/>
-    <util:RegistrySearch Root="HKLM" Key="SOFTWARE\Microsoft\IIS Extensions\Application Request Routing" Variable="ARR"/>
+    <util:RegistrySearch Root="HKLM" Key="SOFTWARE\Node.js" Variable="NODEJS" Win64="yes" Value="InstallPath"/>
+    <util:RegistrySearch Root="HKLM" Key="Software\GitForWindows" Win64="yes" Variable="GIT" Value="InstallPath"/>
+    <util:RegistrySearch Root="HKLM" Key="SOFTWARE\Microsoft\IIS Extensions\URL Rewrite" Variable="URLREWRITE" Value="Version"/>
+    <util:RegistrySearch Root="HKLM" Key="SOFTWARE\Microsoft\IIS Extensions\Application Request Routing" Variable="ARR" Value="Version"/>
     
     <PackageGroup Id="ReqiredPackages">
-      <ExePackage Id="Git" DisplayName="Git" Cache="no" Compressed="yes" Permanent="yes" Vital="yes" SourceFile=".\Git-2.14.2-64-bit.exe" PerMachine="yes"  InstallCondition="NOT GIT" InstallCommand="/VERYSILENT"/>
-      <MsiPackage Id="NodeJS" DisplayName="NodeJS" Cache="no" Compressed="yes" DisplayInternalUI="no" Permanent="yes" Vital="yes" SourceFile=".\node-v8.6.0-x64.msi" ForcePerMachine="yes" InstallCondition="NOT NODEJS"/>
+      <ExePackage Id="Git" DisplayName="Git" Cache="no" Compressed="yes" Permanent="yes" Vital="yes" SourceFile=".\Git-2.14.2-64-bit.exe" InstallCondition="NOT GIT" InstallCommand="/VERYSILENT"/>
+      <MsiPackage Id="NodeJS" DisplayName="NodeJS" Cache="no" Compressed="yes" DisplayInternalUI="no" Permanent="yes" Vital="yes" SourceFile=".\node-v8.6.0-x64.msi" InstallCondition="NOT NODEJS"/>
       <MsiPackage Id="URLRewrite" DisplayName="URL Rewrite" Cache="no" Compressed="yes" DisplayInternalUI="no"  Permanent="yes" Vital="yes" SourceFile=".\rewrite_amd64.msi" ForcePerMachine="yes" InstallCondition="NOT URLREWRITE"/>
       <MsiPackage Id="ARR" DisplayName="Application Request Routing" Cache="no" Compressed="yes" DisplayInternalUI="no" Permanent="yes" Vital="yes" SourceFile=".\requestRouter_amd64.msi"  ForcePerMachine="yes" InstallCondition="NOT ARR"/>
       <MsiPackage Id="MainInstaller" DisplayName="eFormsAPI" Cache="no" Compressed="yes" DisplayInternalUI="yes" Permanent="yes" Vital="yes" Visible="no" SourceFile=".\maininstaller.msi" ForcePerMachine="yes" InstallCondition="1"/>
