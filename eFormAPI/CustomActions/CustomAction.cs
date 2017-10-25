@@ -248,6 +248,7 @@ namespace CustomActions
                 RunProcess(@"sc", $"stop eformangular{uiName.Replace(".", "")}.exe");
                 Thread.Sleep(1000);
                 RunProcess(@"C:\Program Files\nodejs\node.exe", "svc.js uninstall", uiIisDir);
+                RunProcess(@"sc", $"delete eformangular{uiName.Replace(".", "")}.exe");
                 IncrementProgressBar(session);
 
                 DeleteDirectory(uiIisDir);
