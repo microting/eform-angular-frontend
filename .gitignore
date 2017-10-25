@@ -48,3 +48,4 @@ eFormAPI/MainInstaller/obj/
 eFormAPI/MainInstaller/bin/
 eFormAPI/AllowMultipleVersionsBundle/bin/
 eFormAPI/AllowMultipleVersionsBundle/obj/
+*.pdb

@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using Microsoft.Web.Administration;
 using System.Collections.Generic;
+using System.Management;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -96,6 +97,7 @@ namespace CustomActions
                 var webApiName = $"{customerNumber}_{domain}_{webApiPort}";
                 var webApiIisDir = IisSitesDir + webApiName;
                 session.Log("Build WebAPI called");
+               // Debugger.Launch();
                 BuildWebApi(webApiLocation, webApiIisDir);
                 IncrementProgressBar(session);
                 session.Log("Host WebAPI called");
@@ -180,6 +182,8 @@ namespace CustomActions
                 var uiName = $"{customerNumber}_{domain}_client_{uiPort}";
                 var uiIisDir = @"C:\inetpub\wwwroot\" + uiName;
 
+                RunProcess(@"sc", $"stop eformangular{uiName.Replace(".", "")}.exe");
+                Thread.Sleep(1000);
                 RunProcess(@"C:\Program Files\nodejs\node.exe", "svc.js uninstall", uiIisDir);
                 IncrementProgressBar(session);
 
@@ -240,8 +244,10 @@ namespace CustomActions
                 RemoveSites(customerNumber, domain, apiPort, uiPort);
                 IncrementProgressBar(session);
 
+                //Debugger.Launch();
+                RunProcess(@"sc", $"stop eformangular{uiName.Replace(".", "")}.exe");
+                Thread.Sleep(1000);
                 RunProcess(@"C:\Program Files\nodejs\node.exe", "svc.js uninstall", uiIisDir);
-                Thread.Sleep(30000);
                 IncrementProgressBar(session);
 
                 DeleteDirectory(uiIisDir);
@@ -323,7 +329,7 @@ namespace CustomActions
         {
             var parentDir = new DirectoryInfo(solutionLocation).Parent.FullName;
             RunProcess(parentDir + @"\nuget\nuget.exe", "restore -PackagesDirectory packages", parentDir);
-            RunProcess(parentDir + @"\msbuild\msbuild.exe", $@"{solutionLocation}\eFormAPI.Web.csproj /p:DeployOnBuild=true /p:PublishProfile=FolderProfile.pubxml");
+            RunProcess(parentDir + @"\msbuild\msbuild.exe", $@"{solutionLocation}\eFormAPI.Web.csproj /p:DeployOnBuild=true /p:PublishProfile=FolderProfile.pubxml", killChildProcess: true);
 
             if (Directory.Exists(iisDir))
                 DeleteDirectory(iisDir);
@@ -473,7 +479,7 @@ namespace CustomActions
             serverManager.CommitChanges();
         }
 
-        static void RunProcess(string fileName, string arguments, string workingDirrectory = null)
+        static void RunProcess(string fileName, string arguments, string workingDirrectory = null, bool killChildProcess =  false)
         {
             using (var process = Process.Start(new ProcessStartInfo
             {
@@ -485,6 +491,34 @@ namespace CustomActions
             }))
             {
                 process.WaitForExit();
+                if (killChildProcess)
+                    KillAllProcessesSpawnedBy((UInt32)process.Id);
+            }
+        }
+
+        private static void KillAllProcessesSpawnedBy(UInt32 parentProcessId)
+        {
+
+            // NOTE: Process Ids are reused!
+            ManagementObjectSearcher searcher = new ManagementObjectSearcher(
+                "SELECT * " +
+                "FROM Win32_Process " +
+                "WHERE ParentProcessId=" + parentProcessId);
+            ManagementObjectCollection collection = searcher.Get();
+            if (collection.Count > 0)
+            {
+                foreach (var item in collection)
+                {
+                    UInt32 childProcessId = (UInt32)item["ProcessId"];
+                    if ((int)childProcessId != Process.GetCurrentProcess().Id)
+                    {
+                        KillAllProcessesSpawnedBy(childProcessId);
+
+                        Process childProcess = Process.GetProcessById((int)childProcessId);
+                        childProcess.Kill();
+                        Thread.Sleep(1000);
+                    }
+                }
             }
         }
 
