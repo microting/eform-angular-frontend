@@ -9,18 +9,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eFormAPI.Common", "eFormAPI
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Installation", "Installation", "{DF4D5E9C-F43E-471F-BCEF-81C1363192AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomActions", "CustomActions\CustomActions.csproj", "{768280FF-C359-4E58-8B5C-1F682B41CC24}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomActions", "Installation\CustomActions\CustomActions.csproj", "{768280FF-C359-4E58-8B5C-1F682B41CC24}"
 	ProjectSection(ProjectDependencies) = postProject
 		{2B167169-F122-4F1F-9881-0DC8C07585B8} = {2B167169-F122-4F1F-9881-0DC8C07585B8}
 	EndProjectSection
 EndProject
-Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "InstallBundle", "Bundle\InstallBundle.wixproj", "{B63F5F50-AA5B-4BC2-AC61-B2A94B62C042}"
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "InstallBundle", "Installation\Bundle\InstallBundle.wixproj", "{B63F5F50-AA5B-4BC2-AC61-B2A94B62C042}"
 EndProject
-Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "MainInstaller", "MainInstaller\MainInstaller.wixproj", "{2B339DEF-FB4F-4987-A361-8B95410C438B}"
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "MainInstaller", "Installation\MainInstaller\MainInstaller.wixproj", "{2B339DEF-FB4F-4987-A361-8B95410C438B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllowMultipleVersions", "AllowMultipleVersions\AllowMultipleVersions.csproj", "{2B167169-F122-4F1F-9881-0DC8C07585B8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllowMultipleVersions", "Installation\AllowMultipleVersions\AllowMultipleVersions.csproj", "{2B167169-F122-4F1F-9881-0DC8C07585B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllowMultipleVersionsBundle", "AllowMultipleVersionsBundle\AllowMultipleVersionsBundle.csproj", "{FF3054DF-B9E9-49A9-9BCE-384C2E657262}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllowMultipleVersionsBundle", "Installation\AllowMultipleVersionsBundle\AllowMultipleVersionsBundle.csproj", "{FF3054DF-B9E9-49A9-9BCE-384C2E657262}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -49,3 +49,11 @@ eFormAPI/MainInstaller/bin/
 eFormAPI/AllowMultipleVersionsBundle/bin/
 eFormAPI/AllowMultipleVersionsBundle/obj/
 *.pdb
+eFormAPI/Installation/AllowMultipleVersionsBundle/obj/
+eFormAPI/Installation/CustomActions/obj/x86/Debug/CustomActions.CA.dll
+eFormAPI/Installation/Bundle/obj/Debug/InstallBundle.wixproj.FileList.txt
+eFormAPI/Installation/CustomActions/obj/
+eFormAPI/Installation/Bundle/obj/
+eFormAPI/Installation/AllowMultipleVersions/obj/
+eFormAPI/Installation/MainInstaller/obj/
+eFormAPI/Installation/AllowMultipleVersionsBundle/bin/
