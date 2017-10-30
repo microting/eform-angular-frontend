@@ -57,3 +57,12 @@ eFormAPI/Installation/Bundle/obj/
 eFormAPI/Installation/AllowMultipleVersions/obj/
 eFormAPI/Installation/MainInstaller/obj/
 eFormAPI/Installation/AllowMultipleVersionsBundle/bin/
+eFormAPI/Installation/Bundle/maininstaller.wixpdb
+eFormAPI/Installation/CustomActions/CustomActions.csproj.user
+eFormAPI/Installation/MainInstaller/BuildedCustomActions/AllowMultipleVersions.exe
+eFormAPI/Installation/MainInstaller/BuildedCustomActions/AllowMultipleVersions.exe.config
+eFormAPI/Installation/MainInstaller/BuildedCustomActions/CustomActions.CA.dll
+eFormAPI/Installation/MainInstaller/BuildedCustomActions/CustomActions.dll
+eFormAPI/Installation/MainInstaller/BuildedCustomActions/Microsoft.Deployment.WindowsInstaller.dll
+eFormAPI/Installation/MainInstaller/BuildedCustomActions/Microsoft.Deployment.WindowsInstaller.xml
+eFormAPI/Installation/MainInstaller/BuildedCustomActions/Microsoft.Web.Administration.dll
