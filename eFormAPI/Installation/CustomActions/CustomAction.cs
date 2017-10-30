@@ -329,8 +329,8 @@ namespace CustomActions
         private static void BuildWebApi(string solutionLocation, string iisDir)
         {
             var parentDir = new DirectoryInfo(solutionLocation).Parent.FullName;
-            RunProcess(parentDir + @"\nuget\nuget.exe", "restore -PackagesDirectory packages", parentDir);
-            RunProcess(parentDir + @"\msbuild\msbuild.exe", $@"{solutionLocation}\eFormAPI.Web.csproj /p:DeployOnBuild=true /p:PublishProfile=FolderProfile.pubxml", killChildProcess: true);
+            RunProcess(parentDir + @"\installation\nuget\nuget.exe", "restore -PackagesDirectory packages", parentDir);
+            RunProcess(parentDir + @"\installation\msbuild\msbuild.exe", $@"{solutionLocation}\eFormAPI.Web.csproj /p:DeployOnBuild=true /p:PublishProfile=FolderProfile.pubxml", killChildProcess: true);
 
             if (Directory.Exists(iisDir))
                 DeleteDirectory(iisDir);
