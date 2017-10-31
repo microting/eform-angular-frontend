@@ -16,8 +16,6 @@ namespace CustomActions
     public class CustomActions
     {
         public static Session Session;
-        public static string IisSitesDir = @"C:\inetpub\wwwroot\";
-        public static string TempDir = @"C:\inetpub\wwwroot\microtingTemp";
 
         [CustomAction]
         public static ActionResult GetAPIsListCA(Session session)
@@ -75,29 +73,30 @@ namespace CustomActions
 
                 if (session.CustomActionData["INSTMODE"] != "Install")
                     return ActionResult.Success;
-                
+
+                var tmpDir = session.CustomActionData["INSTALLFOLDER"] + "microtingTemp";
+
                 var customerNumber = session.CustomActionData["CUSTOMERNUMBER"];
                 var domain = session.CustomActionData["DOMAINNAME"];
 
                 session.Log("Get latest product version called");
-                GetProductLatestVersion(TempDir);
+                GetProductLatestVersion(tmpDir);
                 IncrementProgressBar(session);
 
-                var uiPorts = Directory.GetDirectories(IisSitesDir).Where(t => t.Contains("_client_")).Select(t => int.Parse(t.Split('_').Last()));
-                var nextUiPort = uiPorts.Any() ? uiPorts.Max() + 1 : 3000;
+                var webApiPort = GetWebApiPort();
+                var nextUiPort = webApiPort-2000;
                 var uiName = $"{customerNumber}_{domain}_client_{nextUiPort}";
-                var uiIisDir = IisSitesDir + uiName;
-                var angularSolutionLocation = $@"{TempDir}\eform-client";
-                session.Log("Build Angullar app tasrk started");
+                var uiIisDir = session.CustomActionData["INSTALLFOLDER"] + uiName;
+                var angularSolutionLocation = $@"{tmpDir}\eform-client";
+                session.Log("Build Angullar app task started");
                 BuildAngularApp(uiIisDir, angularSolutionLocation);
                 IncrementProgressBar(session);
 
-                var webApiLocation = $@"{TempDir}\eFormAPI\eFormAPI";
-                var webApiPort = GetWebApiPort();
+                var webApiLocation = $@"{tmpDir}\eFormAPI\eFormAPI";
                 var webApiName = $"{customerNumber}_{domain}_{webApiPort}";
-                var webApiIisDir = IisSitesDir + webApiName;
+                var webApiIisDir = session.CustomActionData["INSTALLFOLDER"] + webApiName;
                 session.Log("Build WebAPI called");
-               // Debugger.Launch();
+
                 BuildWebApi(webApiLocation, webApiIisDir);
                 IncrementProgressBar(session);
                 session.Log("Host WebAPI called");
@@ -120,11 +119,13 @@ namespace CustomActions
                 SaveInstances(webApiName);
                 IncrementProgressBar(session);
 
-                RunProcess($@"{TempDir}\eFormAPI\Installation\letsencrypt\letsencrypt.exe", $"--plugin manual --manualhost {uiName}  --webroot {IisSitesDir.TrimEnd('\\')}");
+                if (session.CustomActionData["GENERATESSL"]== "1")
+                    RunProcess($@"{tmpDir}\eFormAPI\Installation\letsencrypt\letsencrypt.exe", $"--plugin manual --manualhost {uiName}  --webroot {session.CustomActionData["INSTALLFOLDER"].TrimEnd('\\')}");
+
                 IncrementProgressBar(session);
 
                 session.Log("Clear temp dir called");
-                DeleteDirectory(TempDir);
+                DeleteDirectory(tmpDir);
                 IncrementProgressBar(session);
 
                 return ActionResult.Success;
@@ -165,29 +166,33 @@ namespace CustomActions
                 if (session.CustomActionData["INSTMODE"] != "Update")
                     return ActionResult.Success;
 
-                var api = session.CustomActionData["DOMAINNAME"].Split('_');
+                var domainName = session.CustomActionData["DOMAINNAME"];
+                var api =  domainName.Split('_');
                 var domain = api[1];
                 var customerNumber = api.First();
                 var apiPort = int.Parse(api.Last());
                 var uiPort = apiPort - 2000;
 
+                var installDir = GetInstallDirrectory(domainName);
+                var tmpDir = Path.Combine(installDir + "microtingTemp");
+
                 // stop sites
                 ControlSites(customerNumber, domain, apiPort, uiPort, false);
                 IncrementProgressBar(session);
 
-                GetProductLatestVersion(TempDir);
+                GetProductLatestVersion(tmpDir);
                 IncrementProgressBar(session);
 
                 // client update
                 var uiName = $"{customerNumber}_{domain}_client_{uiPort}";
-                var uiIisDir = @"C:\inetpub\wwwroot\" + uiName;
+                var uiIisDir = Path.Combine(installDir + uiName);
 
                 RunProcess(@"sc", $"stop eformangular{uiName.Replace(".", "")}.exe");
                 Thread.Sleep(1000);
                 RunProcess(@"C:\Program Files\nodejs\node.exe", "svc.js uninstall", uiIisDir);
                 IncrementProgressBar(session);
 
-                BuildAngularApp(uiIisDir, TempDir + "\\eform-client");
+                BuildAngularApp(uiIisDir, tmpDir + "\\eform-client");
                 IncrementProgressBar(session);
 
                
@@ -196,14 +201,14 @@ namespace CustomActions
 
                 // api update
                 var webApiName = $"{customerNumber}_{domain}_{apiPort}";
-                var webApiIisDir = @"C:\inetpub\wwwroot\" + webApiName;
-                BuildWebApi(TempDir + "\\eFormAPI\\eFormAPI", webApiIisDir);
+                var webApiIisDir = Path.Combine(installDir + webApiName);
+                BuildWebApi(tmpDir + "\\eFormAPI\\eFormAPI", webApiIisDir);
                 IncrementProgressBar(session);
 
                 ControlSites(customerNumber, domain, apiPort, uiPort, true);
                 IncrementProgressBar(session);
 
-                DeleteDirectory(TempDir);
+                DeleteDirectory(tmpDir);
                 IncrementProgressBar(session);
 
                 return ActionResult.Success;
@@ -227,24 +232,26 @@ namespace CustomActions
 
                 ResetProgressBar(session, 6);
 
-                var api = session.CustomActionData["DOMAINNAME"].Split('_');
+                var domainName = session.CustomActionData["DOMAINNAME"];
+                var api = domainName.Split('_');
                 var domain = api[1];
                 var customerNumber = api.First();
                 var apiPort = int.Parse(api.Last());
                 var uiPort = apiPort - 2000;
 
+                var installDir = GetInstallDirrectory(domainName);          
+
                 var uiName = $"{customerNumber}_{domain}_client_{uiPort}";
-                var uiIisDir = @"C:\inetpub\wwwroot\" + uiName;
+                var uiIisDir = Path.Combine(installDir + uiName);
                 var webApiName = $"{customerNumber}_{domain}_{apiPort}";
-                var webApiIisDir = @"C:\inetpub\wwwroot\" + webApiName;
-                
+                var webApiIisDir = Path.Combine(installDir + webApiName);
+
                 // stop sites
                 ControlSites(customerNumber, domain, apiPort, uiPort, false);
                 IncrementProgressBar(session);
                 RemoveSites(customerNumber, domain, apiPort, uiPort);
                 IncrementProgressBar(session);
 
-                //Debugger.Launch();
                 RunProcess(@"sc", $"stop eformangular{uiName.Replace(".", "")}.exe");
                 Thread.Sleep(1000);
                 RunProcess(@"C:\Program Files\nodejs\node.exe", "svc.js uninstall", uiIisDir);
@@ -351,6 +358,15 @@ namespace CustomActions
                     item.ApplicationPoolName = webApiName;
 
                 serverManager.CommitChanges();
+            }
+        }
+
+        private static string GetInstallDirrectory(string siteName)
+        {
+            using (var serverManager = new ServerManager())
+            {
+                var sitePath = serverManager.Sites[siteName].Applications["/"].VirtualDirectories["/"].PhysicalPath;
+                 return new DirectoryInfo(sitePath).Parent.FullName + "\\";
             }
         }
 
