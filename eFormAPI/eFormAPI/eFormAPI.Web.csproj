@@ -385,4 +385,6 @@
   </Target>
   <Target Name="AfterBuild">
   </Target> -->
+  <Target Name="GatherAllFilesToPublish">
+  </Target>
 </Project>
