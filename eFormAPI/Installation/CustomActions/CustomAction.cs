@@ -337,7 +337,7 @@ namespace CustomActions
         {
             var parentDir = new DirectoryInfo(solutionLocation).Parent.FullName;
             RunProcess(parentDir + @"\installation\nuget\nuget.exe", "restore -PackagesDirectory packages", parentDir);
-            RunProcess(parentDir + @"\installation\msbuild\msbuild.exe", $@"{solutionLocation}\eFormAPI.Web.csproj /p:DeployOnBuild=true /p:PublishProfile=FolderProfile.pubxml", killChildProcess: true);
+            RunProcess(parentDir + @"\installation\msbuild\msbuild.exe", $@"{solutionLocation}\eFormAPI.Web.csproj /p:DeployOnBuild=true /p:PublishProfile=FolderProfile.pubxml /p:Platform=x64", killChildProcess: true);
 
             if (Directory.Exists(iisDir))
                 DeleteDirectory(iisDir);
