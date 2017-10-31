@@ -51,6 +51,10 @@
   1. Install Internet Information Services if not already installed.    
         1. Press the Windows Key and type Windows Features, select the first entry "Turn Windows Feature On of Off"
         2. Check "Internet Information Services" and click OK
+        3. Check .NET Extensibility 4.6
+        3. Check APS.NET 4.6
+        3. Check ISAPI Extensions
+        3. Check ISAPI Filters
   2. Copy compiled files to forlder in server
   ![web server](file_6.png "web server")
   3. Open Internet Information Services (IIS) Manager

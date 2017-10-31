@@ -19,8 +19,6 @@ before_script:
 - sleep 3
 - fluxbox > /dev/null 2>&1 &
 script:
-- travis_retry nuget restore -source "https://www.nuget.org/api/v2" ./eFormAPI/eFormAPI.sln
-- xbuild ./eFormAPI/eFormAPI.sln
 - cd eform-client && npm install
 after_success:
 - echo dotnet test and npm test succeeded
