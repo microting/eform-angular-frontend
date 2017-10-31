@@ -66,3 +66,14 @@ eFormAPI/Installation/MainInstaller/BuildedCustomActions/CustomActions.dll
 eFormAPI/Installation/MainInstaller/BuildedCustomActions/Microsoft.Deployment.WindowsInstaller.dll
 eFormAPI/Installation/MainInstaller/BuildedCustomActions/Microsoft.Deployment.WindowsInstaller.xml
 eFormAPI/Installation/MainInstaller/BuildedCustomActions/Microsoft.Web.Administration.dll
+eFormAPI/Installation/AllowMultipleVersions/bin/x64/Release/AllowMultipleVersions.exe
+eFormAPI/Installation/AllowMultipleVersions/bin/x64/Release/AllowMultipleVersions.exe.config
+eFormAPI/Installation/AllowMultipleVersions/bin/x64/Release/Microsoft.Deployment.WindowsInstaller.dll
+eFormAPI/Installation/AllowMultipleVersionsBundle/Resources/Eform Angular Frontend.wixpdb
+eFormAPI/Installation/Bundle/2.bat
+eFormAPI/Installation/Bundle/log.log
+eFormAPI/Installation/CustomActions/bin/x64/Release/CustomActions.CA.dll
+eFormAPI/Installation/CustomActions/bin/x64/Release/CustomActions.dll
+eFormAPI/Installation/CustomActions/bin/x64/Release/Microsoft.Deployment.WindowsInstaller.dll
+eFormAPI/Installation/CustomActions/bin/x64/Release/Microsoft.Deployment.WindowsInstaller.xml
+eFormAPI/Installation/CustomActions/bin/x64/Release/Microsoft.Web.Administration.dll
