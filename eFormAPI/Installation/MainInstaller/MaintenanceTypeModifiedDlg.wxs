@@ -18,6 +18,7 @@
           <Condition Action="disable">NOUI</Condition>
           <Publish Property="WixUI_InstallMode" Value="Update">1</Publish> 
           <Publish Property="INSTMODE" Value="Update">1</Publish>
+          <Publish Property="INSTALLFOLDER" Value="C:\tmp" >1</Publish>
         </Control>
         <Control Id="Remove" Type="PushButton" X="98" Y="185" Width="139" Height="33" Text="&amp;Remove" >
           <Condition Action="disable">NOUI</Condition>

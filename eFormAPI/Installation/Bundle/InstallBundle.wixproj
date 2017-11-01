@@ -47,8 +47,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Git-2.14.2-64-bit.exe" />
     <Content Include="HyperlinkTheme.xml" />
+    <Content Include="InstallBundle.wax" />
     <Content Include="maininstaller.msi" />
     <Content Include="node-v8.6.0-x64.msi" />
     <Content Include="requestRouter_amd64.msi" />
