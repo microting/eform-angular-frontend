@@ -681,8 +681,6 @@
       </Component>
       <Component Id = "PublishOutput_bin" Guid = "C122131E-662B-49B5-AA72-A4B3F46A83BF" Directory = "TARGETDIR_eFormAPI_PublishOutputbin" KeyPath = "yes">
         <File Id = "bin_Antlr3_Runtime_dll" Name = "Antlr3.Runtime.dll" Source = "..\..\..\eFormAPI\eFormAPI\bin\Release\PublishOutput\bin\Antlr3.Runtime.dll"/>
-        <File Id = "bin_Antlr3_Runtime_pdb" Name = "Antlr3.Runtime.pdb" Source = "..\..\..\eFormAPI\eFormAPI\bin\Release\PublishOutput\bin\Antlr3.Runtime.pdb"/>
-        <File Id = "bin_API_docs_xml" Name = "API.docs.xml" Source = "..\..\..\eFormAPI\eFormAPI\bin\Release\PublishOutput\bin\API.docs.xml"/>
         <File Id = "bin_Autofac_dll" Name = "Autofac.dll" Source = "..\..\..\eFormAPI\eFormAPI\bin\Release\PublishOutput\bin\Autofac.dll"/>
         <File Id = "bin_Autofac_Integration_WebApi_dll" Name = "Autofac.Integration.WebApi.dll" Source = "..\..\..\eFormAPI\eFormAPI\bin\Release\PublishOutput\bin\Autofac.Integration.WebApi.dll"/>
         <File Id = "bin_AutoMapper_dll" Name = "AutoMapper.dll" Source = "..\..\..\eFormAPI\eFormAPI\bin\Release\PublishOutput\bin\AutoMapper.dll"/>
@@ -690,9 +688,7 @@
         <File Id = "bin_AWSSDK_SQS_dll" Name = "AWSSDK.SQS.dll" Source = "..\..\..\eFormAPI\eFormAPI\bin\Release\PublishOutput\bin\AWSSDK.SQS.dll"/>
         <File Id = "bin_eFormAPI_Common_dll" Name = "eFormAPI.Common.dll" Source = "..\..\..\eFormAPI\eFormAPI\bin\Release\PublishOutput\bin\eFormAPI.Common.dll"/>
         <File Id = "bin_eFormAPI_Common_dll_config" Name = "eFormAPI.Common.dll.config" Source = "..\..\..\eFormAPI\eFormAPI\bin\Release\PublishOutput\bin\eFormAPI.Common.dll.config"/>
-        <File Id = "bin_eFormAPI_Common_pdb" Name = "eFormAPI.Common.pdb" Source = "..\..\..\eFormAPI\eFormAPI\bin\Release\PublishOutput\bin\eFormAPI.Common.pdb"/>
         <File Id = "bin_eFormAPI_Web_dll" Name = "eFormAPI.Web.dll" Source = "..\..\..\eFormAPI\eFormAPI\bin\Release\PublishOutput\bin\eFormAPI.Web.dll"/>
-        <File Id = "bin_eFormAPI_Web_pdb" Name = "eFormAPI.Web.pdb" Source = "..\..\..\eFormAPI\eFormAPI\bin\Release\PublishOutput\bin\eFormAPI.Web.pdb"/>
         <File Id = "bin_eFormCommunicator_dll" Name = "eFormCommunicator.dll" Source = "..\..\..\eFormAPI\eFormAPI\bin\Release\PublishOutput\bin\eFormCommunicator.dll"/>
         <File Id = "bin_eFormCore_dll" Name = "eFormCore.dll" Source = "..\..\..\eFormAPI\eFormAPI\bin\Release\PublishOutput\bin\eFormCore.dll"/>
         <File Id = "bin_eFormData_dll" Name = "eFormData.dll" Source = "..\..\..\eFormAPI\eFormAPI\bin\Release\PublishOutput\bin\eFormData.dll"/>
