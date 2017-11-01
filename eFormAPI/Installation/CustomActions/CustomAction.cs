@@ -66,53 +66,52 @@ namespace CustomActions
         public static ActionResult InstallCA(Session session)
         {
             Session = session;
-
             try
             {
-                ResetProgressBar(session, 10);
-
                 if (session.CustomActionData["INSTMODE"] != "Install")
                     return ActionResult.Success;
 
-                var tmpDir = session.CustomActionData["INSTALLFOLDER"] + "microtingTemp";
+                ResetProgressBar(session, 10);
 
+                var installFolder = session.CustomActionData["INSTALLFOLDER"];
                 var customerNumber = session.CustomActionData["CUSTOMERNUMBER"];
                 var domain = session.CustomActionData["DOMAINNAME"];
 
-                session.Log("Get latest product version called");
-                GetProductLatestVersion(tmpDir);
-                IncrementProgressBar(session);
-
+                session.Log("Get web api port");
                 var webApiPort = GetWebApiPort();
-                var nextUiPort = webApiPort-2000;
-                var uiName = $"{customerNumber}_{domain}_client_{nextUiPort}";
-                var uiIisDir = session.CustomActionData["INSTALLFOLDER"] + uiName;
-                var angularSolutionLocation = $@"{tmpDir}\eform-client";
-                session.Log("Build Angullar app task started");
-                BuildAngularApp(uiIisDir, angularSolutionLocation);
-                IncrementProgressBar(session);
-
-                var webApiLocation = $@"{tmpDir}\eFormAPI\eFormAPI";
                 var webApiName = $"{customerNumber}_{domain}_{webApiPort}";
-                var webApiIisDir = session.CustomActionData["INSTALLFOLDER"] + webApiName;
-                session.Log("Build WebAPI called");
-
-                BuildWebApi(webApiLocation, webApiIisDir);
                 IncrementProgressBar(session);
+
+                session.Log("Get ui port");
+                var uiPort = webApiPort-2000;
+                var uiName = $"{customerNumber}_{domain}_client_{uiPort}";
+                IncrementProgressBar(session);
+
+                var clientLocation = Path.Combine(installFolder, uiName);
+                var webApiLocation = Path.Combine(installFolder, webApiName);
+
+                session.Log("Set proper names to folders");
+                RenameFolders(installFolder, webApiLocation, clientLocation);
+                IncrementProgressBar(session);
+
+                session.Log("Build Angullar app task started");
+                BuildAngularApp(clientLocation);
+                IncrementProgressBar(session);
+
                 session.Log("Host WebAPI called");
-                HostWebApi(webApiName, webApiPort, webApiIisDir);
+                HostWebApi(webApiName, webApiPort, webApiLocation);
                 IncrementProgressBar(session);
 
                 session.Log("RunAngularAsWinService called");
-                RunAngularAsWinService(webApiPort, nextUiPort, uiIisDir, uiName);
+                RunAngularAsWinService(webApiPort, uiPort, clientLocation, uiName);
                 IncrementProgressBar(session);
 
                 session.Log("HostAngularApp called");
-                HostAngularApp(uiIisDir, domain, uiName);
+                HostAngularApp(clientLocation, domain, uiName);
                 IncrementProgressBar(session);
 
                 session.Log("AddRedirectionRules called");
-                AddRedirectionRules(uiName, $"http://localhost:{nextUiPort}");
+                AddRedirectionRules(uiName, $"http://localhost:{uiPort}");
                 IncrementProgressBar(session);
 
                 session.Log("SaveInstances called");
@@ -120,12 +119,9 @@ namespace CustomActions
                 IncrementProgressBar(session);
 
                 if (session.CustomActionData["GENERATESSL"]== "1")
-                    RunProcess($@"{tmpDir}\eFormAPI\Installation\letsencrypt\letsencrypt.exe", $"--plugin manual --manualhost {uiName}  --webroot {session.CustomActionData["INSTALLFOLDER"].TrimEnd('\\')}");
+                    RunProcess(Path.Combine(installFolder, "letsencrypt\\letsencrypt.exe"), $"--plugin manual --manualhost {uiName}  --webroot {session.CustomActionData["INSTALLFOLDER"].TrimEnd('\\')}");
 
-                IncrementProgressBar(session);
-
-                session.Log("Clear temp dir called");
-                DeleteDirectory(tmpDir);
+                DeleteDirectory(Path.Combine(installFolder, "letsencrypt"));
                 IncrementProgressBar(session);
 
                 return ActionResult.Success;
@@ -162,9 +158,10 @@ namespace CustomActions
 
             try
             {
-                ResetProgressBar(session, 8);
                 if (session.CustomActionData["INSTMODE"] != "Update")
                     return ActionResult.Success;
+
+                ResetProgressBar(session, 8);
 
                 var domainName = session.CustomActionData["DOMAINNAME"];
                 var api =  domainName.Split('_');
@@ -173,44 +170,44 @@ namespace CustomActions
                 var apiPort = int.Parse(api.Last());
                 var uiPort = apiPort - 2000;
 
-                var installDir = GetInstallDirrectory(domainName);
-                var tmpDir = Path.Combine(installDir + "microtingTemp");
+                var siteDir = GetInstallDirrectory(domainName);
 
                 // stop sites
                 ControlSites(customerNumber, domain, apiPort, uiPort, false);
                 IncrementProgressBar(session);
 
-                GetProductLatestVersion(tmpDir);
-                IncrementProgressBar(session);
-
                 // client update
                 var uiName = $"{customerNumber}_{domain}_client_{uiPort}";
-                var uiIisDir = Path.Combine(installDir + uiName);
+                var uiIisDir = Path.Combine(siteDir + uiName);
+                var webApiLocation = Path.Combine(siteDir, domainName);
 
                 RunProcess(@"sc", $"stop eformangular{uiName.Replace(".", "")}.exe");
                 Thread.Sleep(1000);
                 RunProcess(@"C:\Program Files\nodejs\node.exe", "svc.js uninstall", uiIisDir);
                 IncrementProgressBar(session);
 
-                BuildAngularApp(uiIisDir, tmpDir + "\\eform-client");
+                DeleteDirectory(webApiLocation);
+                DeleteDirectory(uiIisDir);
+
+                session.Log("Set proper names to folders");
+
+                DirectoryCopy(Path.Combine(session.CustomActionData["INSTALLFOLDER"], "eform-api"), webApiLocation);
+                DirectoryCopy(Path.Combine(session.CustomActionData["INSTALLFOLDER"], "eform-client"), uiIisDir);
+
                 IncrementProgressBar(session);
 
-               
+                session.Log("Build Angullar app task started");
+                BuildAngularApp(uiIisDir);
+                IncrementProgressBar(session);
+
+                session.Log("RunAngularAsWinService called");
                 RunAngularAsWinService(apiPort, uiPort, uiIisDir, uiName);
-                IncrementProgressBar(session);
-
-                // api update
-                var webApiName = $"{customerNumber}_{domain}_{apiPort}";
-                var webApiIisDir = Path.Combine(installDir + webApiName);
-                BuildWebApi(tmpDir + "\\eFormAPI\\eFormAPI", webApiIisDir);
                 IncrementProgressBar(session);
 
                 ControlSites(customerNumber, domain, apiPort, uiPort, true);
                 IncrementProgressBar(session);
 
-                DeleteDirectory(tmpDir);
-                IncrementProgressBar(session);
-
+                DeleteDirectory(session.CustomActionData["INSTALLFOLDER"]);
                 return ActionResult.Success;
             }
             catch (Exception ex)
@@ -313,38 +310,19 @@ namespace CustomActions
             return ui;
         }
 
-        private static void GetProductLatestVersion(string directory)
+        private static void RenameFolders(string location, string apiName, string uiName)
         {
-            RunProcess("git", $"clone https://github.com/microting/eform-angular-frontend.git {directory}");
+            Directory.Move(Path.Combine(location, "eform-api"), apiName);
+            Directory.Move(Path.Combine(location, "eform-client"), uiName);
         }
 
-        private static void BuildAngularApp(string appLocation, string appSolutionLocation)
+        private static void BuildAngularApp(string appLocation)
         {
-            if (Directory.Exists(appLocation))
-                DeleteDirectory(appLocation);
-
-            Session.Log("BuildAngularApp -> DirectoryCopy");
-            DirectoryCopy(appSolutionLocation, appLocation);
-
             Session.Log("BuildAngularApp -> npm install");
             RunProcess(@"C:\Program Files\nodejs\npm.cmd", "install", appLocation);
 
             Session.Log("BuildAngularApp -> npm run build");
             RunProcess(@"C:\Program Files\nodejs\npm.cmd", "run build", appLocation);
-        }
-
-        private static void BuildWebApi(string solutionLocation, string iisDir)
-        {
-            var parentDir = new DirectoryInfo(solutionLocation).Parent.FullName;
-            RunProcess(parentDir + @"\installation\nuget\nuget.exe", "restore -PackagesDirectory packages", parentDir);
-            RunProcess(parentDir + @"\installation\msbuild\msbuild.exe", $@"{solutionLocation}\eFormAPI.Web.csproj /p:DeployOnBuild=true /p:PublishProfile=FolderProfile.pubxml /p:Platform=x64", killChildProcess: true);
-
-            if (Directory.Exists(iisDir))
-                DeleteDirectory(iisDir);
-
-            var newLocation = Directory.CreateDirectory(iisDir);
-
-            DirectoryCopy($@"{solutionLocation}\bin\Release\PublishOutput", newLocation.FullName);
         }
 
         private static void HostWebApi(string webApiName, int port, string iisDir)
@@ -496,49 +474,6 @@ namespace CustomActions
             serverManager.CommitChanges();
         }
 
-        static void RunProcess(string fileName, string arguments, string workingDirrectory = null, bool killChildProcess =  false)
-        {
-            using (var process = Process.Start(new ProcessStartInfo
-            {
-                FileName = fileName,
-                Arguments = arguments,
-                WindowStyle = ProcessWindowStyle.Hidden,
-                UseShellExecute = false,
-                WorkingDirectory = workingDirrectory
-            }))
-            {
-                process.WaitForExit();
-                if (killChildProcess)
-                    KillAllProcessesSpawnedBy((UInt32)process.Id);
-            }
-        }
-
-        private static void KillAllProcessesSpawnedBy(UInt32 parentProcessId)
-        {
-
-            // NOTE: Process Ids are reused!
-            ManagementObjectSearcher searcher = new ManagementObjectSearcher(
-                "SELECT * " +
-                "FROM Win32_Process " +
-                "WHERE ParentProcessId=" + parentProcessId);
-            ManagementObjectCollection collection = searcher.Get();
-            if (collection.Count > 0)
-            {
-                foreach (var item in collection)
-                {
-                    UInt32 childProcessId = (UInt32)item["ProcessId"];
-                    if ((int)childProcessId != Process.GetCurrentProcess().Id)
-                    {
-                        KillAllProcessesSpawnedBy(childProcessId);
-
-                        Process childProcess = Process.GetProcessById((int)childProcessId);
-                        childProcess.Kill();
-                        Thread.Sleep(1000);
-                    }
-                }
-            }
-        }
-
         private static void DirectoryCopy(string sourceDirName, string destDirName)
         {
             // Get the subdirectories for the specified directory.
@@ -573,6 +508,21 @@ namespace CustomActions
                 DirectoryCopy(subdir.FullName, temppath);
             }
 
+        }
+
+        static void RunProcess(string fileName, string arguments, string workingDirrectory = null)
+        {
+            using (var process = Process.Start(new ProcessStartInfo
+            {
+                FileName = fileName,
+                Arguments = arguments,
+                WindowStyle = ProcessWindowStyle.Hidden,
+                UseShellExecute = false,
+                WorkingDirectory = workingDirrectory
+            }))
+            {
+                process.WaitForExit();
+            }
         }
 
         private static void ControlSites(string customerNumber, string domain, int apiPort, int uiPort, bool shouldSiteBeStarted)

@@ -33,6 +33,7 @@
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="MainInstaller.wax" />
     <Content Include="MicrotingEULA.rtf" />
   </ItemGroup>
   <ItemGroup>
@@ -46,6 +47,14 @@
     </WixExtension>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\eFormAPI\eFormAPI.Web.csproj">
+      <Name>eFormAPI.Web</Name>
+      <Project>{54404cf9-a407-4f55-bc26-b243099e29a8}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
     <ProjectReference Include="..\CustomActions\CustomActions.csproj">
       <Name>CustomActions</Name>
       <Project>{768280ff-c359-4e58-8b5c-1f682b41cc24}</Project>
