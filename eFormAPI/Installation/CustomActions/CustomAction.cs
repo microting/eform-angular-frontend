@@ -121,7 +121,7 @@ namespace CustomActions
                 if (session.CustomActionData["GENERATESSL"]== "1")
                     RunProcess(Path.Combine(installFolder, "letsencrypt\\letsencrypt.exe"), $"--plugin manual --manualhost {uiName}  --webroot {session.CustomActionData["INSTALLFOLDER"].TrimEnd('\\')}");
 
-                DeleteDirectory(Path.Combine(installFolder, "letsencrypt"));
+                //DeleteDirectory(Path.Combine(installFolder, "letsencrypt"));
                 IncrementProgressBar(session);
 
                 return ActionResult.Success;
