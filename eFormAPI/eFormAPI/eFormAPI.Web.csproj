@@ -307,7 +307,6 @@
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
