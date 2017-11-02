@@ -479,7 +479,6 @@ namespace CustomActions
         {
             ApplicationPool newPool = serverManager.ApplicationPools.Add(name);
             newPool.ManagedRuntimeVersion = "v4.0";
-            newPool.Enable32BitAppOnWin64 = true;
             newPool.ManagedPipelineMode = ManagedPipelineMode.Integrated;
 
             serverManager.CommitChanges();
