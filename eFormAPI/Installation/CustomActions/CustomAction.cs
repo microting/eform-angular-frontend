@@ -118,8 +118,11 @@ namespace CustomActions
                 SaveInstances(webApiName);
                 IncrementProgressBar(session);
 
-                if (session.CustomActionData["GENERATESSL"]== "1")
-                    RunProcess(Path.Combine(installFolder, "letsencrypt\\letsencrypt.exe"), $"--plugin manual --manualhost {uiName}  --webroot {session.CustomActionData["INSTALLFOLDER"].TrimEnd('\\')}");
+                if (session.CustomActionData["GENERATESSL"] == "1")
+                {
+                    var siteId = GetSiteId(uiName);
+                    RunProcess(Path.Combine(installFolder, "letsencrypt\\letsencrypt.exe"), $"--plugin iissite --siteid { siteId } --accepttos --usedefaulttaskuser");
+                }
 
                 DeleteDirectory(Path.Combine(installFolder, "letsencrypt"));
                 IncrementProgressBar(session);
@@ -130,6 +133,14 @@ namespace CustomActions
             {
                 MessageBox.Show(ex.Message + " " + ex.StackTrace);
                 return ActionResult.Failure;
+            }
+        }
+
+        private static long GetSiteId(string uiName)
+        {
+            using (var serverManager = new ServerManager())
+            {
+                return serverManager.Sites[uiName].Id;
             }
         }
 
