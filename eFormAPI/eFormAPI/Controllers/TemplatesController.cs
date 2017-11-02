@@ -226,8 +226,8 @@ namespace eFormAPI.Web.Controllers
                 var mainElement = core.TemplateRead(deployModel.Id);
                 mainElement.Repeated =
                     0; // We set this right now hardcoded, this will let the eForm be deployed until end date or we actively retract it.
-                mainElement.EndDate = DateTime.Now.AddYears(10);
-                mainElement.StartDate = DateTime.Now;
+                mainElement.EndDate = DateTime.Now.AddYears(10).ToUniversalTime();
+                mainElement.StartDate = DateTime.Now.ToUniversalTime();
                 core.CaseCreate(mainElement, "", sitesToBeDeployedTo, "");
             }
 
@@ -248,8 +248,7 @@ namespace eFormAPI.Web.Controllers
             System.IO.Directory.CreateDirectory(System.Web.Hosting.HostingEnvironment.MapPath("~/bin/output/"));
             var filePath = System.Web.Hosting.HostingEnvironment.MapPath($"~/bin/output/{fileName}");
             var fullPath = core.CasesToCsv(id, null, null, filePath,
-                $"{Request.RequestUri.Scheme}://{Request.RequestUri.Authority}{Url.Content("~")}" +
-                "output/dataFolder/");
+                $"{Request.RequestUri.Scheme}://{Request.RequestUri.Authority}/api/templates/getimage?&filename=");
 
             var result = new HttpResponseMessage(HttpStatusCode.OK);
             var fileStream = new FileStream(fullPath, FileMode.Open, FileAccess.Read);

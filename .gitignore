@@ -24,6 +24,10 @@ eFormAPI/eFormAPI/logs/
 eFormAPI/eFormAPI\.sln\.DotSettings\.user
 
 eFormAPI/eFormAPI/output/dataFolder/
+eform-client/package-lock.json
+.idea
+eFormAPI/eFromAPI.Common/bin/Release/*
+eFormAPI/eFormAPI/Properties/PublishProfiles/
 
 eFormAPI/\.idea/
 
