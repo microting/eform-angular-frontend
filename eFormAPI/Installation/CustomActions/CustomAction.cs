@@ -11,6 +11,7 @@ using System.Management;
 using System.Security.AccessControl;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Security.Principal;
 
 namespace CustomActions
 {
@@ -339,10 +340,29 @@ namespace CustomActions
 
             var dSecurity = dInfo.GetAccessControl();
 
-            dSecurity.AddAccessRule(new FileSystemAccessRule("IUSR", FileSystemRights.FullControl, AccessControlType.Allow));
-            dSecurity.AddAccessRule(new FileSystemAccessRule("IIS_IUSRS", FileSystemRights.FullControl, AccessControlType.Allow));
+            IdentityReference eid = new SecurityIdentifier(WellKnownSidType.WorldSid, null);
+            dSecurity.AddAccessRule(new FileSystemAccessRule("IUSR", FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Allow));
+            dSecurity.AddAccessRule(new FileSystemAccessRule("IIS_IUSRS", FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Allow));
 
             dInfo.SetAccessControl(dSecurity);
+
+            ReplaceAllDescendantPermissionsFromObject(dInfo, dSecurity);
+        }
+
+        private static void ReplaceAllDescendantPermissionsFromObject(DirectoryInfo dInfo, DirectorySecurity dSecurity)
+        {
+            dInfo.SetAccessControl(dSecurity);
+
+            foreach (FileInfo fi in dInfo.GetFiles())
+            {
+                var ac = fi.GetAccessControl();
+
+                ac.SetAccessRuleProtection(false, false);
+
+                fi.SetAccessControl(ac);
+            }
+
+            dInfo.GetDirectories().ToList().ForEach(d => ReplaceAllDescendantPermissionsFromObject(d, dSecurity));
         }
 
         private static void BuildAngularApp(string appLocation)
