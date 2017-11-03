@@ -8,6 +8,7 @@ using System.Linq;
 using Microsoft.Web.Administration;
 using System.Collections.Generic;
 using System.Management;
+using System.Security.AccessControl;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -124,6 +125,8 @@ namespace CustomActions
                     RunProcess(Path.Combine(installFolder, "letsencrypt\\letsencrypt.exe"), $"--plugin iissite --siteid { siteId } --accepttos --usedefaulttaskuser");
                 }
 
+                CongigureSecurity(clientLocation);
+                CongigureSecurity(webApiLocation);
                 //DeleteDirectory(Path.Combine(installFolder, "letsencrypt"));
                 IncrementProgressBar(session);
 
@@ -217,6 +220,9 @@ namespace CustomActions
 
                 ControlSites(customerNumber, domain, apiPort, uiPort, true);
                 IncrementProgressBar(session);
+
+                CongigureSecurity(uiIisDir);
+                CongigureSecurity(webApiLocation);
 
                 DeleteDirectory(session.CustomActionData["INSTALLFOLDER"]);
                 return ActionResult.Success;
@@ -325,6 +331,18 @@ namespace CustomActions
         {
             Directory.Move(Path.Combine(location, "eform-api"), apiName);
             Directory.Move(Path.Combine(location, "eform-client"), uiName);
+        }
+
+        public static void CongigureSecurity(string folder)
+        {
+            var dInfo = new DirectoryInfo(folder);
+
+            var dSecurity = dInfo.GetAccessControl();
+
+            dSecurity.AddAccessRule(new FileSystemAccessRule("IUSR", FileSystemRights.FullControl, AccessControlType.Allow));
+            dSecurity.AddAccessRule(new FileSystemAccessRule("IIS_IUSRS", FileSystemRights.FullControl, AccessControlType.Allow));
+
+            dInfo.SetAccessControl(dSecurity);
         }
 
         private static void BuildAngularApp(string appLocation)
