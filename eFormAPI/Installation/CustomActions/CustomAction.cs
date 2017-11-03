@@ -127,8 +127,7 @@ namespace CustomActions
 
                 CongigureSecurity(clientLocation);
                 CongigureSecurity(webApiLocation);
-
-                DeleteDirectory(Path.Combine(installFolder, "letsencrypt"));
+                //DeleteDirectory(Path.Combine(installFolder, "letsencrypt"));
                 IncrementProgressBar(session);
 
                 return ActionResult.Success;
