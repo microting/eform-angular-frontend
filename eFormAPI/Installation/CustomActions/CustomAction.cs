@@ -440,7 +440,7 @@ namespace CustomActions
 
                 ConfigurationElement actionElement1 = rewriteRule.GetChildElement("action");
                 actionElement1["type"] = @"Rewrite";
-                actionElement1["url"] = uiServiceLink + "{R:1}";
+                actionElement1["url"] = uiServiceLink + "/{R:1}";
 
                 rulesCollection.Add(rewriteRule);
 
