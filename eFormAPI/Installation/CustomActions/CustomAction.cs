@@ -201,9 +201,6 @@ namespace CustomActions
                 RunProcess(@"C:\Program Files\nodejs\node.exe", "svc.js uninstall", uiIisDir);
                 IncrementProgressBar(session);
 
-                DeleteDirectory(webApiLocation);
-                DeleteDirectory(uiIisDir);
-
                 session.Log("Set proper names to folders");
 
                 DirectoryCopy(Path.Combine(session.CustomActionData["INSTALLFOLDER"], "eform-api"), webApiLocation);
@@ -546,6 +543,9 @@ namespace CustomActions
             foreach (FileInfo file in files)
             {
                 string temppath = Path.Combine(destDirName, file.Name);
+                if (file.Name.Equals("Web.config", StringComparison.InvariantCultureIgnoreCase) && File.Exists(temppath))
+                    continue;
+
                 file.CopyTo(temppath, true);
             }
 
