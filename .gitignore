@@ -70,8 +70,10 @@ eFormAPI/Installation/AllowMultipleVersions/bin/x64/Release/AllowMultipleVersion
 eFormAPI/Installation/AllowMultipleVersions/bin/x64/Release/AllowMultipleVersions.exe.config
 eFormAPI/Installation/AllowMultipleVersions/bin/x64/Release/Microsoft.Deployment.WindowsInstaller.dll
 eFormAPI/Installation/AllowMultipleVersionsBundle/Resources/Eform Angular Frontend.wixpdb
+eFormAPI/Installation/AllowMultipleVersionsBundle/Resources/Eform Angular Frontend.exe
 eFormAPI/Installation/Bundle/2.bat
 eFormAPI/Installation/Bundle/log.log
+eFormAPI/Installation/Bundle/maininstaller.msi
 eFormAPI/Installation/CustomActions/bin/x64/Release/CustomActions.CA.dll
 eFormAPI/Installation/CustomActions/bin/x64/Release/CustomActions.dll
 eFormAPI/Installation/CustomActions/bin/x64/Release/Microsoft.Deployment.WindowsInstaller.dll
