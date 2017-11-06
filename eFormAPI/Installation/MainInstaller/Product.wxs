@@ -157,7 +157,10 @@
     <Property Id="CUSTOMERNUMBER" Value="{}" Secure="yes" />
     <Property Id="GENERATESSL" Value="{}" Secure="yes" />
     <Property Id="INSTALLFOLDER" Value="C:\inetpub\wwwroot" Secure="yes" />
-
+    
+    <WixVariable Id="WixUIBannerBmp" Value="TopBaner.bmp" />
+    <WixVariable Id="WixUIDialogBmp" Value="WelcomeBanner.bmp" />
+    
     <InstallExecuteSequence>
       <Custom Action="SetProductName" After="InstallInitialize" />
       <Custom Action="SetInstalValues" After="InstallInitialize" />
