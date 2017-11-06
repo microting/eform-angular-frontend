@@ -385,6 +385,8 @@ namespace CustomActions
             RunProcess(@"C:\Program Files\nodejs\npm.cmd", "install -g node-windows", iisDir);
             RunProcess(@"C:\Program Files\nodejs\npm.cmd", "link node-windows", iisDir);
             RunProcess(@"C:\Program Files\nodejs\node.exe", "svc.js install", iisDir);
+
+            RunProcess(@"sc", $"start eformangular{uiName.Replace(".", "")}.exe");
         }
 
         private static void HostAngularApp(string folder, string domain, string siteName)
