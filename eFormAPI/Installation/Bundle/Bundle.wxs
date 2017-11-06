@@ -2,7 +2,7 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension" xmlns:bal="http://schemas.microsoft.com/wix/BalExtension" xmlns:dep="http://schemas.microsoft.com/wix/DependencyExtension">
 	<Bundle Name="Eform Angular Frontend" Version="1.0.0.0" Manufacturer="Microting A/S" UpgradeCode="065bd8e5-533c-47c9-aa38-036c98a0f789" DisableRemove="yes" DisableRepair="yes" DisableModify="yes" dep:ProviderKey="6EEA199E-0A6C-416A-8969-A48ACB0B1130">
     <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.HyperlinkLicense">
-      <bal:WixStandardBootstrapperApplication LicenseUrl="" ThemeFile="HyperlinkTheme.xml" LocalizationFile="HyperlinkTheme.wxl" SuppressOptionsUI="yes" />
+      <bal:WixStandardBootstrapperApplication LicenseUrl="" ThemeFile="HyperlinkTheme.xml" LocalizationFile="HyperlinkTheme.wxl" SuppressOptionsUI="yes"  LogoFile="Logo.png"/>
     </BootstrapperApplicationRef>
 		<Chain>
       <PackageGroupRef Id="ReqiredPackages"/>

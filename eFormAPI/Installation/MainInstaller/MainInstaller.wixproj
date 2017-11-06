@@ -35,6 +35,8 @@
   <ItemGroup>
     <Content Include="MainInstaller.wax" />
     <Content Include="MicrotingEULA.rtf" />
+    <Content Include="TopBaner.bmp" />
+    <Content Include="WelcomeBanner.bmp" />
   </ItemGroup>
   <ItemGroup>
     <WixExtension Include="WixUtilExtension">
