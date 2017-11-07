@@ -167,7 +167,8 @@ namespace eFormAPI.Web.Controllers
             try
             {
                 var core = _coreHelper.GetCore();
-                var filePath = core.CaseToJasperXml(templateId, DateTime.Now.ToString("yyyyMMddHHmmssffff"));
+                int? case_id = core.CaseReadFirst(templateId);
+                var filePath = core.CaseToJasperXml((int)case_id, DateTime.Now.ToString("yyyyMMddHHmmssffff"));
                 if (!File.Exists(filePath))
                 {
                     return new HttpResponseMessage(HttpStatusCode.NotFound);
