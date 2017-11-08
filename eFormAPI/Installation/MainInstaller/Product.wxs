@@ -146,17 +146,21 @@
     </Directory>
 
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
-
     <Property Id="MSIUSEREALADMINDETECTION" Value="1" />
     <Property Id="MSIINSTALLPERUSER" Value="{}" />
 
-
     <SetProperty Id="ARPNOMODIFY" Value="1" After="InstallValidate" Sequence="execute" />
+    
     <Property Id="INSTMODE" Value="{}" Secure="yes" />
     <Property Id="DOMAINNAME" Value="{}" Secure="yes" />
     <Property Id="CUSTOMERNUMBER" Value="{}" Secure="yes" />
     <Property Id="GENERATESSL" Value="{}" Secure="yes" />
     <Property Id="INSTALLFOLDER" Value="C:\inetpub\wwwroot" Secure="yes" />
+    <Property Id="KEEPFOLDERS" Value="eform-api\output" Secure="yes"/>
+    <Property Id="KEEPSETTINGS" Value="1" Secure="yes"/>
+    <Property Id="KEEPFILES" Value="eform-api\input.txt,eform-api\Web.config" Secure="yes"/>
+    <Property Id="USEEXISTINGCONFIGURATION" Value="{}" Secure="yes"/>
+    <Property Id="CONFIGURATIONEXISTS" Value="{}" Secure="yes"/>
     
     <WixVariable Id="WixUIBannerBmp" Value="TopBaner.bmp" />
     <WixVariable Id="WixUIDialogBmp" Value="WelcomeBanner.bmp" />
@@ -175,13 +179,16 @@
 
   <Fragment>
     <CustomAction Id="GetAPIsList" BinaryKey="BinaryCA" DllEntry="GetAPIsListCA" Execute="immediate" />
+    <CustomAction Id="TryFindConfigs" BinaryKey="BinaryCA" DllEntry="TryFindConfigs" Execute="immediate"/>
+
     <CustomAction Id="Install" BinaryKey="BinaryCA" DllEntry="InstallCA" Execute="deferred" Impersonate="no" />
     <CustomAction Id="UpdateService" BinaryKey="BinaryCA" DllEntry="UpdateCA" Execute="deferred" Impersonate="no" />
     <CustomAction Id="RemoveService" BinaryKey="BinaryCA" DllEntry="RemoveCA" Execute="deferred" Impersonate="no" />
+    
     <Binary Id="BinaryCA" SourceFile="BuildedCustomActions\CustomActions.CA.dll" />
 
-    <CustomAction Id="SetInstalValues" Property="Install" Value="INSTMODE=[INSTMODE];DOMAINNAME=[DOMAINNAME];CUSTOMERNUMBER=[CUSTOMERNUMBER];GENERATESSL=[GENERATESSL];INSTALLFOLDER=[INSTALLFOLDER]" />
-    <CustomAction Id="SetRemoveValues" Property="RemoveService" Value="INSTMODE=[INSTMODE];DOMAINNAME=[DOMAINNAME]" />
+    <CustomAction Id="SetInstalValues" Property="Install" Value="INSTMODE=[INSTMODE];DOMAINNAME=[DOMAINNAME];CUSTOMERNUMBER=[CUSTOMERNUMBER];GENERATESSL=[GENERATESSL];INSTALLFOLDER=[INSTALLFOLDER];USEEXISTINGCONFIGURATION=[USEEXISTINGCONFIGURATION];CONFIGURATIONEXISTS=[CONFIGURATIONEXISTS];KEEPFOLDERS=[KEEPFOLDERS];KEEPFILES=[KEEPFILES]"/>
+    <CustomAction Id="SetRemoveValues" Property="RemoveService" Value="INSTMODE=[INSTMODE];DOMAINNAME=[DOMAINNAME];KEEPFOLDERS=[KEEPFOLDERS];KEEPSETTINGS=[KEEPSETTINGS];KEEPFILES=[KEEPFILES]" />
     <CustomAction Id="SetUpdateServiceValues" Property="UpdateService" Value="INSTMODE=[INSTMODE];DOMAINNAME=[DOMAINNAME];INSTALLFOLDER=[INSTALLFOLDER]" />
 
     <CustomAction Id="SetProductName" Property="ProductName" Value="[ProductName] - [DOMAINNAME]" />
