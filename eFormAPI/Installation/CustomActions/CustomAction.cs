@@ -168,7 +168,6 @@ namespace CustomActions
                     return ActionResult.Success;
 
                 ResetProgressBar(session, 10);
-                Debugger.Launch();
 
                 var configurationExists = session.CustomActionData["CONFIGURATIONEXISTS"] == "1";
                 var useExistingConfiguration = session.CustomActionData["USEEXISTINGCONFIGURATION"] == "1";
