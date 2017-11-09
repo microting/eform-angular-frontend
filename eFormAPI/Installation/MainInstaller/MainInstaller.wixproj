@@ -25,6 +25,7 @@
   <ItemGroup>
     <Compile Include="DomainNameDlg.wxs" />
     <Compile Include="EmptyFIieldDlg.wxs" />
+    <Compile Include="KeepSettingsDlg.wxs" />
     <Compile Include="MaintenanceTypeModifiedDlg.wxs" />
     <Compile Include="DomainNameSelectDlg.wxs" />
     <Compile Include="ProgressModifiedDlg.wxs" />

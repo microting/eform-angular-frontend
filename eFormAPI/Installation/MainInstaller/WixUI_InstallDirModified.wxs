@@ -35,19 +35,29 @@
       <Publish Dialog="DomainNameDlg" Control="Back" Event="NewDialog" Value="LicenseAgreementDlg">1</Publish>
       <Publish Dialog="DomainNameDlg" Control="Next" Event="NewDialog" Value="InstallDirDlg">1</Publish>
 
-      <Publish Dialog="VerifyReadyModifiedDlg" Control="Back" Event="NewDialog" Value="InstallDirDlg" Order="1">WixUI_InstallMode = "Install"</Publish>
-      <Publish Dialog="VerifyReadyModifiedDlg" Control="Back" Event="NewDialog" Value="DomainNameSelectDlg" Order="1">WixUI_InstallMode = "Update" OR WixUI_InstallMode = "Remove"</Publish>
+      <Publish Dialog="VerifyReadyModifiedDlg" Control="Back" Event="NewDialog" Value="KeepSettingsDlg" Order="1"><![CDATA[CONFIGURATIONEXISTS AND WixUI_InstallMode <> "Update"]]></Publish>
+      <Publish Dialog="VerifyReadyModifiedDlg" Control="Back" Event="NewDialog" Value="InstallDirDlg" Order="1"><![CDATA[NOT CONFIGURATIONEXISTS AND WixUI_InstallMode <> "Update"]]></Publish>
+      <Publish Dialog="VerifyReadyModifiedDlg" Control="Back" Event="NewDialog" Value="DomainNameSelectDlg" Order="1">WixUI_InstallMode = "Update"</Publish>
+      <Publish Dialog="VerifyReadyModifiedDlg" Control="Back" Event="NewDialog" Value="KeepSettingsDlg" Order="1">WixUI_InstallMode = "Remove"</Publish>
 
       <Publish Dialog="MaintenanceWelcomeDlg" Control="Next" Event="NewDialog" Value="MaintenanceTypeModifiedDlg">1</Publish>
 
       <Publish Dialog="DomainNameSelectDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeModifiedDlg">1</Publish>
-      <Publish Dialog="DomainNameSelectDlg" Control="Next" Event="NewDialog" Value="VerifyReadyModifiedDlg">1</Publish>
+      <Publish Dialog="DomainNameSelectDlg" Control="Next" Event="NewDialog" Value="VerifyReadyModifiedDlg">WixUI_InstallMode = "Update"</Publish>
+      <Publish Dialog="DomainNameSelectDlg" Control="Next" Event="NewDialog" Value="KeepSettingsDlg">WixUI_InstallMode = "Remove"</Publish>
+
+      <Publish Dialog="KeepSettingsDlg" Control="Next" Event="NewDialog" Value="VerifyReadyModifiedDlg">1</Publish>
+      <Publish Dialog="KeepSettingsDlg" Control="Back" Event="NewDialog" Value="DomainNameSelectDlg">WixUI_InstallMode = "Remove"</Publish>
+      <Publish Dialog="KeepSettingsDlg" Control="Back" Event="NewDialog" Value="InstallDirDlg">WixUI_InstallMode = "Install"</Publish>
 
       <Publish Dialog="InstallDirDlg" Control="Back" Event="NewDialog" Value="DomainNameDlg">1</Publish>
       <Publish Dialog="InstallDirDlg" Control="Next" Event="SetTargetPath" Value="[WIXUI_INSTALLDIR]" Order="1">1</Publish>
       <Publish Dialog="InstallDirDlg" Control="Next" Event="DoAction" Value="WixUIValidatePath" Order="2">NOT WIXUI_DONTVALIDATEPATH</Publish>
       <Publish Dialog="InstallDirDlg" Control="Next" Event="SpawnDialog" Value="InvalidDirDlg" Order="3"><![CDATA[NOT WIXUI_DONTVALIDATEPATH AND WIXUI_INSTALLDIR_VALID<>"1"]]></Publish>
-      <Publish Dialog="InstallDirDlg" Control="Next" Event="NewDialog" Value="VerifyReadyModifiedDlg" Order="4">WIXUI_DONTVALIDATEPATH OR WIXUI_INSTALLDIR_VALID="1"</Publish>
+      <Publish Dialog="InstallDirDlg" Control="Next" Event="DoAction" Value="TryFindConfigs" Order="4">1</Publish>
+      <Publish Dialog="InstallDirDlg" Control="Next" Event="NewDialog" Value="KeepSettingsDlg" Order="5">CONFIGURATIONEXISTS</Publish>
+      <Publish Dialog="InstallDirDlg" Control="Next" Event="NewDialog" Value="VerifyReadyModifiedDlg" Order="6">NOT CONFIGURATIONEXISTS AND WIXUI_INSTALLDIR_VALID="1"</Publish>
+     
       <Publish Dialog="InstallDirDlg" Control="ChangeFolder" Property="_BrowseProperty" Value="[WIXUI_INSTALLDIR]" Order="1">1</Publish>
       <Publish Dialog="InstallDirDlg" Control="ChangeFolder" Event="SpawnDialog" Value="BrowseDlg" Order="2">1</Publish>
 

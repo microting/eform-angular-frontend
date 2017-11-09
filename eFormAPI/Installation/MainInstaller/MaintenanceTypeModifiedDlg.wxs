@@ -13,6 +13,7 @@
           <Publish Property="DOMAINNAME" Value="{}" >1</Publish>
           <Publish Property="CUSTOMERNUMBER" Value="{}" >1</Publish>
           <Publish Property="GENERATESSL" Value="{}" >1</Publish>
+          <Publish Property="CONFIGURATIONEXISTS" Value="{}" >1</Publish>
         </Control>
         <Control Id="Update" Type="PushButton" X="98" Y="139" Width="139" Height="33" Text="&amp;Update" >
           <Condition Action="disable">NOUI</Condition>
@@ -23,7 +24,8 @@
         <Control Id="Remove" Type="PushButton" X="98" Y="185" Width="139" Height="33" Text="&amp;Remove" >
           <Condition Action="disable">NOUI</Condition>
           <Publish Property="WixUI_InstallMode" Value="Remove">1</Publish>
-          <Publish Property="INSTMODE" Value="Remove">1</Publish> 
+          <Publish Property="INSTMODE" Value="Remove">1</Publish>
+          <Publish Property="CONFIGURATIONEXISTS" Value="{}" >1</Publish>
         </Control>
 
         <Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="&amp;Back" />

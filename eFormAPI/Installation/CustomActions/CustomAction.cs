@@ -18,7 +18,7 @@ namespace CustomActions
     public class CustomActions
     {
         public static Session Session;
-
+ 
         [CustomAction]
         public static ActionResult GetAPIsListCA(Session session)
         {
@@ -65,6 +65,101 @@ namespace CustomActions
         }
 
         [CustomAction]
+        public static ActionResult TryFindConfigs(Session session)
+        {
+            try
+            {
+                var installFolder = session["INSTALLFOLDER"];
+                if (!Directory.Exists(installFolder))
+                    return ActionResult.Success;
+
+                var customerNumber = session["CUSTOMERNUMBER"];
+                var domain = session["DOMAINNAME"];
+                var appFolderName = $"{customerNumber}_{domain}";
+
+                var configFolders = session["KEEPFOLDERS"].Split(',');
+                var configFiles = session["KEEPFILES"].Split(','); 
+
+                var dirs = Directory.GetDirectories(installFolder).Where(t => t.Contains(appFolderName));
+
+                if (!dirs.Any())
+                {
+                    session["CONFIGURATIONEXISTS"] = null;
+                    return ActionResult.Success;
+                }
+
+                var tmp = Path.Combine(Path.GetTempPath(), "MicrotingTemp");
+                Directory.CreateDirectory(tmp);
+                Directory.CreateDirectory(Path.Combine(tmp, "files"));
+                Directory.CreateDirectory(Path.Combine(tmp, "dirs"));
+
+                bool configsFound = false;
+                foreach (var dir in dirs)
+                {
+                    var formatedFolders = configFolders.Select(t =>
+                        t.Replace("eform-api\\", "")
+                            .Replace("eform-client\\", "")).ToArray();
+                    var formatedNames = configFiles.Select(t =>
+                        t.Replace("eform-api\\", "")
+                            .Replace("eform-client\\", "")).ToArray();
+
+                    var configFoldersFound = SaveConfigFolders(formatedFolders, tmp, dir);
+                    var configFilesFound = SaveConfigFiles(formatedNames, tmp, dir);
+
+                    configsFound = configFoldersFound || configFilesFound || configsFound;
+                }
+
+                if (configsFound)
+                {
+                    session["CONFIGURATIONEXISTS"] = "1";
+                    return ActionResult.Success;
+                }
+
+                session["CONFIGURATIONEXISTS"] = null;
+                return ActionResult.Success;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + " " + ex.StackTrace);
+                return ActionResult.Failure;
+            }
+        }
+
+        private static bool SaveConfigFiles(string[] configFiles, string tmp, string dir)
+        {
+            bool configsFound = false;
+            foreach (var configFile in configFiles)
+            {
+                var configFileFullName = Path.Combine(dir, configFile);
+                if (File.Exists(configFileFullName))
+                {
+                    configsFound = true;
+                    var newDest = Path.Combine(tmp, "files", new FileInfo(configFileFullName).Name);
+                    File.Copy(configFileFullName, newDest, true);
+                }
+            }
+
+            return configsFound;
+        }
+
+        private static bool SaveConfigFolders(string[] configFolders, string tmp, string dir)
+        {
+            var configsFound = false;
+
+            foreach (var configFolder in configFolders)
+            {
+                var configFolderFullName = Path.Combine(dir, configFolder);
+                if (Directory.Exists(configFolderFullName))
+                {
+                    configsFound = true;
+                    DirectoryCopy(configFolderFullName, Path.Combine(tmp, "dirs", new DirectoryInfo(configFolderFullName).Name));
+                }
+            }
+
+            return configsFound;
+        }
+
+        [CustomAction]
         public static ActionResult InstallCA(Session session)
         {
             Session = session;
@@ -75,9 +170,14 @@ namespace CustomActions
 
                 ResetProgressBar(session, 10);
 
+                var configurationExists = session.CustomActionData["CONFIGURATIONEXISTS"] == "1";
+                var useExistingConfiguration = session.CustomActionData["USEEXISTINGCONFIGURATION"] == "1";
                 var installFolder = session.CustomActionData["INSTALLFOLDER"];
                 var customerNumber = session.CustomActionData["CUSTOMERNUMBER"];
                 var domain = session.CustomActionData["DOMAINNAME"];
+
+                if (configurationExists && useExistingConfiguration)
+                    HandlePreviousConfigs(session, installFolder);
 
                 session.Log("Get web api port");
                 var webApiPort = GetWebApiPort();
@@ -140,30 +240,30 @@ namespace CustomActions
             }
         }
 
-        private static long GetSiteId(string uiName)
+        private static void HandlePreviousConfigs(Session session, string installFolder)
         {
-            using (var serverManager = new ServerManager())
+            var keepFiles = session.CustomActionData["KEEPFILES"].Split(',');
+            var keepFolders = session.CustomActionData["KEEPFOLDERS"].Split(',');
+            var tmpConfigs = Path.Combine(Path.GetTempPath(), "MicrotingTemp");
+
+            foreach (var keepFolder in keepFolders)
             {
-                return serverManager.Sites[uiName].Id;
+                var path = Path.Combine(tmpConfigs, "dirs",
+                    keepFolder.Replace("eform-api\\", "").Replace("eform-client\\", ""));
+                if (Directory.Exists(path))
+                    DirectoryCopy(path, Path.Combine(installFolder, keepFolder));
             }
-        }
 
-        public static MessageResult ResetProgressBar(Session session, int totalStatements)
-        {
-            var record = new Record(3);
-            record[1] = 0; // "Reset" message 
-            record[2] = totalStatements;  // total ticks 
-            record[3] = 0; // forward motion 
-            return session.Message(InstallMessage.Progress, record);
-        }
 
-        public static MessageResult IncrementProgressBar(Session session)
-        {
-            var record = new Record(3);
-            record[1] = 2; // "ProgressReport" message 
-            record[2] = 1; // ticks to increment 
-            record[3] = 0; // ignore 
-            return session.Message(InstallMessage.Progress, record);
+            foreach (var keepFile in keepFiles)
+            {
+                var path = Path.Combine(tmpConfigs, "files",
+                    keepFile.Replace("eform-api\\", "").Replace("eform-client\\", ""));
+                if (File.Exists(path))
+                    File.Copy(path, Path.Combine(installFolder, keepFile), true);
+            }
+
+            DeleteDirectory(tmpConfigs);
         }
 
         [CustomAction]
@@ -177,6 +277,10 @@ namespace CustomActions
                     return ActionResult.Success;
 
                 ResetProgressBar(session, 8);
+
+                var instDir = session.CustomActionData["INSTALLFOLDER"];
+                var apiTemp = Path.Combine(instDir, "eform-api");
+                var clientTemp = Path.Combine(instDir, "eform-client");
 
                 var domainName = session.CustomActionData["DOMAINNAME"];
                 var api =  domainName.Split('_');
@@ -203,8 +307,8 @@ namespace CustomActions
 
                 session.Log("Set proper names to folders");
 
-                DirectoryCopy(Path.Combine(session.CustomActionData["INSTALLFOLDER"], "eform-api"), webApiLocation);
-                DirectoryCopy(Path.Combine(session.CustomActionData["INSTALLFOLDER"], "eform-client"), uiIisDir);
+                DirectoryCopy(apiTemp, webApiLocation);
+                DirectoryCopy(clientTemp, uiIisDir);
 
                 IncrementProgressBar(session);
 
@@ -222,7 +326,10 @@ namespace CustomActions
                 CongigureSecurity(uiIisDir);
                 CongigureSecurity(webApiLocation);
 
-                DeleteDirectory(session.CustomActionData["INSTALLFOLDER"]);
+                DeleteDirectory(apiTemp);
+                DeleteDirectory(clientTemp);
+                DeleteDirectory(Path.Combine(instDir, "letsencrypt"));
+
                 return ActionResult.Success;
             }
             catch (Exception ex)
@@ -270,9 +377,21 @@ namespace CustomActions
                 RunProcess(@"sc", $"delete eformangular{uiName.Replace(".", "")}.exe");
                 IncrementProgressBar(session);
 
-                DeleteDirectory(uiIisDir);
+                var keepSettings = session.CustomActionData["KEEPSETTINGS"] == "1";
+                var keepFolders = keepSettings
+                    ? session.CustomActionData["KEEPFOLDERS"].Split(',').Select(t =>
+                        t.Replace("eform-api\\", "")
+                            .Replace("eform-client\\", "")).ToArray()
+                    : new string[0];
+                var keepFiles = keepSettings
+                    ? session.CustomActionData["KEEPFILES"].Split(',').Select(t =>
+                        t.Replace("eform-api\\", "")
+                            .Replace("eform-client\\", "")).ToArray()
+                    : new string[0];
+
+                DeleteDirectory(uiIisDir, keepFolders, keepFiles, uiIisDir);
                 IncrementProgressBar(session);
-                DeleteDirectory(webApiIisDir);
+                DeleteDirectory(webApiIisDir, keepFolders, keepFiles, webApiIisDir);
                 IncrementProgressBar(session);
 
                 var vendorName = "Microting";
@@ -293,10 +412,42 @@ namespace CustomActions
            
         }
 
-        public static void DeleteDirectory(string target_dir)
+        private static long GetSiteId(string uiName)
         {
-            string[] files = Directory.GetFiles(target_dir);
-            string[] dirs = Directory.GetDirectories(target_dir);
+            using (var serverManager = new ServerManager())
+            {
+                return serverManager.Sites[uiName].Id;
+            }
+        }
+
+        public static MessageResult ResetProgressBar(Session session, int totalStatements)
+        {
+            var record = new Record(3);
+            record[1] = 0; // "Reset" message 
+            record[2] = totalStatements;  // total ticks 
+            record[3] = 0; // forward motion 
+            return session.Message(InstallMessage.Progress, record);
+        }
+
+        public static MessageResult IncrementProgressBar(Session session)
+        {
+            var record = new Record(3);
+            record[1] = 2; // "ProgressReport" message 
+            record[2] = 1; // ticks to increment 
+            record[3] = 0; // ignore 
+            return session.Message(InstallMessage.Progress, record);
+        }
+
+        public static void DeleteDirectory(string targetDir) => 
+            DeleteDirectory(targetDir, new string[0], new string[0], targetDir);
+
+        public static void DeleteDirectory(string targetDir, string[] keepFolders, string[] keepFiles, string initialDir)
+        {
+            var keepFoldersModified = keepFolders.Select(t => Path.Combine(initialDir, t)).ToArray();
+            var keepFilesModified = keepFiles.Select(t => Path.Combine(initialDir, t)).ToArray();
+
+            var files = Directory.GetFiles(targetDir).Except(keepFilesModified);
+            var dirs = Directory.GetDirectories(targetDir).Except(keepFoldersModified);
 
             foreach (string file in files)
             {
@@ -305,11 +456,12 @@ namespace CustomActions
             }
 
             foreach (string dir in dirs)
-            {
-                DeleteDirectory(dir);
-            }
+                DeleteDirectory(dir, keepFolders, keepFiles, initialDir);
 
-            Directory.Delete(target_dir, false);
+            if (Directory.GetFiles(targetDir).Any() || Directory.GetDirectories(targetDir).Any())
+                return;
+
+            Directory.Delete(targetDir, false);
         }
 
         private static string GetServiceList()
@@ -327,8 +479,10 @@ namespace CustomActions
 
         private static void RenameFolders(string location, string apiName, string uiName)
         {
-            Directory.Move(Path.Combine(location, "eform-api"), apiName);
-            Directory.Move(Path.Combine(location, "eform-client"), uiName);
+            DirectoryCopy(Path.Combine(location, "eform-api"), apiName, false);
+            DirectoryCopy(Path.Combine(location, "eform-client"), uiName, false);
+            DeleteDirectory(Path.Combine(location, "eform-api"));
+            DeleteDirectory(Path.Combine(location, "eform-client"));
         }
 
         public static void CongigureSecurity(string folder)
@@ -521,7 +675,7 @@ namespace CustomActions
             serverManager.CommitChanges();
         }
 
-        private static void DirectoryCopy(string sourceDirName, string destDirName)
+        private static void DirectoryCopy(string sourceDirName, string destDirName, bool overrideFile = true)
         {
             // Get the subdirectories for the specified directory.
             DirectoryInfo dir = new DirectoryInfo(sourceDirName);
@@ -548,7 +702,10 @@ namespace CustomActions
                 if (file.Name.Equals("Web.config", StringComparison.InvariantCultureIgnoreCase) && File.Exists(temppath))
                     continue;
 
-                file.CopyTo(temppath, true);
+                if (File.Exists(temppath) && !overrideFile)
+                    continue;
+
+                file.CopyTo(temppath, overrideFile);
             }
 
             //copying subdirectories, copy them and their contents to new location.
