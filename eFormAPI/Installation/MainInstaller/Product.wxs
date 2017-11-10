@@ -162,7 +162,7 @@
     <Property Id="USEEXISTINGCONFIGURATION" Value="{}" Secure="yes"/>
     <Property Id="CONFIGURATIONEXISTS" Value="{}" Secure="yes"/>
     
-    <WixVariable Id="WixUIBannerBmp" Value="TopBaner.bmp" />
+    <WixVariable Id="WixUIBannerBmp" Value="TopBanner.bmp" />
     <WixVariable Id="WixUIDialogBmp" Value="WelcomeBanner.bmp" />
     
     <InstallExecuteSequence>
