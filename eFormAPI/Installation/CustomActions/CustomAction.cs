@@ -491,13 +491,71 @@ namespace CustomActions
 
             var dSecurity = dInfo.GetAccessControl();
 
-            IdentityReference eid = new SecurityIdentifier(WellKnownSidType.WorldSid, null);
             dSecurity.AddAccessRule(new FileSystemAccessRule("IUSR", FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Allow));
             dSecurity.AddAccessRule(new FileSystemAccessRule("IIS_IUSRS", FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Allow));
+
+            CanonicalizeDacl(dSecurity);
 
             dInfo.SetAccessControl(dSecurity);
 
             ReplaceAllDescendantPermissionsFromObject(dInfo, dSecurity);
+        }
+
+        static void CanonicalizeDacl(NativeObjectSecurity objectSecurity)
+        {
+            if (objectSecurity == null) { throw new ArgumentNullException("objectSecurity"); }
+            if (objectSecurity.AreAccessRulesCanonical) { return; }
+
+            RawSecurityDescriptor descriptor = new RawSecurityDescriptor(objectSecurity.GetSecurityDescriptorSddlForm(AccessControlSections.Access));
+
+            List<CommonAce> implicitDenyDacl = new List<CommonAce>();
+            List<CommonAce> implicitDenyObjectDacl = new List<CommonAce>();
+            List<CommonAce> inheritedDacl = new List<CommonAce>();
+            List<CommonAce> implicitAllowDacl = new List<CommonAce>();
+            List<CommonAce> implicitAllowObjectDacl = new List<CommonAce>();
+
+            foreach (CommonAce ace in descriptor.DiscretionaryAcl)
+            {
+                if ((ace.AceFlags & AceFlags.Inherited) == AceFlags.Inherited) { inheritedDacl.Add(ace); }
+                else
+                {
+                    switch (ace.AceType)
+                    {
+                        case AceType.AccessAllowed:
+                            implicitAllowDacl.Add(ace);
+                            break;
+
+                        case AceType.AccessDenied:
+                            implicitDenyDacl.Add(ace);
+                            break;
+
+                        case AceType.AccessAllowedObject:
+                            implicitAllowObjectDacl.Add(ace);
+                            break;
+
+                        case AceType.AccessDeniedObject:
+                            implicitDenyObjectDacl.Add(ace);
+                            break;
+                    }
+                }
+            }
+
+            Int32 aceIndex = 0;
+            RawAcl newDacl = new RawAcl(descriptor.DiscretionaryAcl.Revision, descriptor.DiscretionaryAcl.Count);
+            implicitDenyDacl.ForEach(x => newDacl.InsertAce(aceIndex++, x));
+            implicitDenyObjectDacl.ForEach(x => newDacl.InsertAce(aceIndex++, x));
+            implicitAllowDacl.ForEach(x => newDacl.InsertAce(aceIndex++, x));
+            implicitAllowObjectDacl.ForEach(x => newDacl.InsertAce(aceIndex++, x));
+            inheritedDacl.ForEach(x => newDacl.InsertAce(aceIndex++, x));
+
+            if (aceIndex != descriptor.DiscretionaryAcl.Count)
+            {
+                System.Diagnostics.Debug.Fail("The DACL cannot be canonicalized since it would potentially result in a loss of information");
+                return;
+            }
+
+            descriptor.DiscretionaryAcl = newDacl;
+            objectSecurity.SetSecurityDescriptorSddlForm(descriptor.GetSddlForm(AccessControlSections.Access), AccessControlSections.Access);
         }
 
         private static void ReplaceAllDescendantPermissionsFromObject(DirectoryInfo dInfo, DirectorySecurity dSecurity)
