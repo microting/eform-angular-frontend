@@ -18,7 +18,7 @@ namespace eFormAPI.Web.Controllers
         private readonly EFormCoreHelper _coreHelper = new EFormCoreHelper();
 
         [HttpGet]
-        [Route("api/template-files/csv")]
+        [Route("api/template-files/csv/{id}")]
         public HttpResponseMessage Csv(int id)
         {
             var core = _coreHelper.GetCore();
@@ -43,7 +43,7 @@ namespace eFormAPI.Web.Controllers
 
         [HttpGet]
         [Authorize]
-        [Route("api/template-files/getimage")]
+        [Route("api/template-files/get-image")]
         public HttpResponseMessage GetImage(string fileName, string noCache = "noCache")
         {
             var filePath = HttpContext.Current.Server.MapPath($"~/output/datafolder/picture/{fileName}");
@@ -122,7 +122,7 @@ namespace eFormAPI.Web.Controllers
 
             result.Content = new StreamContent(fileStream);
             result.Content.Headers.ContentDisposition =
-                new ContentDispositionHeaderValue("attachment") {FileName = fileName};
+                new ContentDispositionHeaderValue("attachment") {FileName = fileName + ".pdf"};
             result.Content.Headers.ContentType =
                 new MediaTypeHeaderValue("application/pdf");
             return result;
@@ -167,8 +167,8 @@ namespace eFormAPI.Web.Controllers
             try
             {
                 var core = _coreHelper.GetCore();
-                int? case_id = core.CaseReadFirstId(templateId);
-                var filePath = core.CaseToJasperXml((int)case_id, DateTime.Now.ToString("yyyyMMddHHmmssffff"));
+                int? caseId = core.CaseReadFirstId(templateId);
+                var filePath = core.CaseToJasperXml((int)caseId, DateTime.Now.ToString("yyyyMMddHHmmssffff"));
                 if (!File.Exists(filePath))
                 {
                     return new HttpResponseMessage(HttpStatusCode.NotFound);

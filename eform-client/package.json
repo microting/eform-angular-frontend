@@ -36,7 +36,6 @@
     "jquery": "^3.1.1",
     "moment": "^2.18.1",
     "ng-gallery": "^0.7.1",
-    "angular2-uuid": "^1.1.1",
     "ng2-bs3-modal": "^0.10.4",
     "ng2-dnd": "^4.2.0",
     "ng2-file-upload": "^1.2.1",

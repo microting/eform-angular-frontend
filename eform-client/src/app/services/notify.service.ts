@@ -26,6 +26,7 @@ export class NotifyService {
 
   private pnotify(opts) {
     opts.styling = this.pnotifySettings.styling;
+    PNotify.prototype.options.delay = 2000;
     if (this.isDesktop) {
       opts.desktop = opts.desktop || {};
       opts.desktop.desktop = true;

@@ -6,9 +6,9 @@
       </div>
     </h1>
     <div class="pull-right">
-      <button class="needs_tooltip btn btn-ar btn-success" tooltip='Create "Worker"'
+      <button class="needs_tooltip btn btn-ar btn-success" tooltip='Create Device User"'
               (click)="showCreateSimpleSiteModal()" type="button">
-        Create "Worker"
+        New Device User
       </button>
     </div>
   </div>
@@ -70,7 +70,7 @@
         <div *ngIf="siteDto.otpCode != 0">
           {{siteDto.customerNo}} / {{siteDto.otpCode}}
         </div>
-        <button *ngIf="siteDto.otpCode == 0" tooltip="Get OTP code" (click)="showRequestOtpModal(siteDto)"
+        <button *ngIf="siteDto.otpCode == 0" tooltip="New OTP" (click)="showRequestOtpModal(siteDto)"
                 class="needs_tooltip btn btn-ar btn-sm btn-danger"
                 type="button">
           <span class="fa fa-key"></span></button>
@@ -84,7 +84,7 @@
       </td>
 
       <td class="text-center">
-        <a [routerLink]="['/simplesites/simplesiteedit', siteDto.siteId]" tooltip="Edit site"
+        <a [routerLink]="['/simplesites/simplesiteedit', siteDto.siteId]" tooltip="Edit Device User"
            class="needs_tooltip btn btn-ar btn-sm btn-default" data-placement="top" data-toggle="tooltip"
            id="eidt_site_@(item.SiteId)" title="" type="button" data-original-title="Edit site">
           <span class="fa fa-pencil"></span>
@@ -130,7 +130,7 @@
 
 <modal #createSimpleSiteModal>
   <modal-header [show-close]="true">
-    <h4 class="modal-title">Create "Worker"</h4>
+    <h4 class="modal-title">New Device User</h4>
   </modal-header>
   <modal-body>
     <div class="container-fluid">
@@ -153,29 +153,30 @@
     </div>
   </modal-body>
   <modal-footer>
+    <button type="button" class="btn btn-success" (click)="createSimpleSite()">Save</button>
     <button type="button" class="btn btn-default" data-dismiss="deleteWorkerModal"
             (click)="createSimpleSiteModal.dismiss()">Cancel
     </button>
-    <button type="button" class="btn btn-success" (click)="createSimpleSite()">Save "Worker"</button>
   </modal-footer>
 </modal>
 
 
 <modal #otpRequestModal>
   <modal-header [show-close]="true">
-    <h4 class="modal-title">Activate OTP code for : {{selectedSimpleSite.unitId}}!</h4>
+    <h4 class="modal-title">New OTP for: {{selectedSimpleSite.unitId}}!</h4>
   </modal-header>
   <modal-body>
     <div class="container-fluid">
       <h1>
         <span>WARNING!</span>
       </h1>
-      When pressing OK, you will deactivate the current unit assosiated with this location.
-      <br> You will se the new OTP code once you click OK.
+      When pressing OK, you will deactivate the current device paired with this location.
+      <br> If there is data on the current device, these
+      data will be lost after pressing OK.
     </div>
   </modal-body>
   <modal-footer>
-    <button type="button" class="btn btn-danger" (click)="saveRequestOtpModal()">Save</button>
+    <button type="button" class="btn btn-danger" (click)="saveRequestOtpModal()">OK</button>
     <button type="button" class="btn btn-default" data-dismiss="unitOtpRequestModal"
             (click)="otpRequestModal.dismiss()">Cancel
     </button>
