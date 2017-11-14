@@ -36,3 +36,46 @@ eFormAPI/eFormAPI\.Common/obj/Debug/
 eFormAPI/eFormAPI\.Common/bin/Debug/
 
 eform-client/package-lock\.json
+eFormAPI/AllowMultipleVersions/obj/
+eFormAPI/AlowMultipleVersionsBundle/bin/
+eFormAPI/AlowMultipleVersionsBundle/obj/
+eFormAPI/Bundle/bin/
+eFormAPI/Bundle/obj/
+eFormAPI/CustomActions/obj/
+eFormAPI/eFormAPI.Common/obj/
+eFormAPI/eFormAPI.Common/bin/
+eFormAPI/MainInstaller/obj/
+eFormAPI/MainInstaller/bin/
+eFormAPI/AllowMultipleVersionsBundle/bin/
+eFormAPI/AllowMultipleVersionsBundle/obj/
+*.pdb
+eFormAPI/Installation/AllowMultipleVersionsBundle/obj/
+eFormAPI/Installation/CustomActions/obj/x86/Debug/CustomActions.CA.dll
+eFormAPI/Installation/Bundle/obj/Debug/InstallBundle.wixproj.FileList.txt
+eFormAPI/Installation/CustomActions/obj/
+eFormAPI/Installation/Bundle/obj/
+eFormAPI/Installation/AllowMultipleVersions/obj/
+eFormAPI/Installation/MainInstaller/obj/
+eFormAPI/Installation/AllowMultipleVersionsBundle/bin/
+eFormAPI/Installation/Bundle/maininstaller.wixpdb
+eFormAPI/Installation/CustomActions/CustomActions.csproj.user
+eFormAPI/Installation/MainInstaller/BuildedCustomActions/AllowMultipleVersions.exe
+eFormAPI/Installation/MainInstaller/BuildedCustomActions/AllowMultipleVersions.exe.config
+eFormAPI/Installation/MainInstaller/BuildedCustomActions/CustomActions.CA.dll
+eFormAPI/Installation/MainInstaller/BuildedCustomActions/CustomActions.dll
+eFormAPI/Installation/MainInstaller/BuildedCustomActions/Microsoft.Deployment.WindowsInstaller.dll
+eFormAPI/Installation/MainInstaller/BuildedCustomActions/Microsoft.Deployment.WindowsInstaller.xml
+eFormAPI/Installation/MainInstaller/BuildedCustomActions/Microsoft.Web.Administration.dll
+eFormAPI/Installation/AllowMultipleVersions/bin/x64/Release/AllowMultipleVersions.exe
+eFormAPI/Installation/AllowMultipleVersions/bin/x64/Release/AllowMultipleVersions.exe.config
+eFormAPI/Installation/AllowMultipleVersions/bin/x64/Release/Microsoft.Deployment.WindowsInstaller.dll
+eFormAPI/Installation/AllowMultipleVersionsBundle/Resources/Eform Angular Frontend.wixpdb
+eFormAPI/Installation/AllowMultipleVersionsBundle/Resources/Eform Angular Frontend.exe
+eFormAPI/Installation/Bundle/2.bat
+eFormAPI/Installation/Bundle/log.log
+eFormAPI/Installation/Bundle/maininstaller.msi
+eFormAPI/Installation/CustomActions/bin/x64/Release/CustomActions.CA.dll
+eFormAPI/Installation/CustomActions/bin/x64/Release/CustomActions.dll
+eFormAPI/Installation/CustomActions/bin/x64/Release/Microsoft.Deployment.WindowsInstaller.dll
+eFormAPI/Installation/CustomActions/bin/x64/Release/Microsoft.Deployment.WindowsInstaller.xml
+eFormAPI/Installation/CustomActions/bin/x64/Release/Microsoft.Web.Administration.dll
