@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eFormAPI.Web", "eFormAPI\eFormAPI.Web.csproj", "{54404CF9-A407-4F55-BC26-B243099E29A8}"
 EndProject
@@ -52,14 +52,14 @@ Global
 		{54404CF9-A407-4F55-BC26-B243099E29A8}.Release|x86.ActiveCfg = Release|Any CPU
 		{54404CF9-A407-4F55-BC26-B243099E29A8}.Release|x86.Build.0 = Release|Any CPU
 		{515EE205-5349-449E-BE13-F83DA5B601B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{515EE205-5349-449E-BE13-F83DA5B601B9}.Debug|x64.ActiveCfg = Debug|x64
-		{515EE205-5349-449E-BE13-F83DA5B601B9}.Debug|x64.Build.0 = Debug|x64
+		{515EE205-5349-449E-BE13-F83DA5B601B9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{515EE205-5349-449E-BE13-F83DA5B601B9}.Debug|x64.Build.0 = Debug|Any CPU
 		{515EE205-5349-449E-BE13-F83DA5B601B9}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{515EE205-5349-449E-BE13-F83DA5B601B9}.Debug|x86.Build.0 = Debug|Any CPU
 		{515EE205-5349-449E-BE13-F83DA5B601B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{515EE205-5349-449E-BE13-F83DA5B601B9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{515EE205-5349-449E-BE13-F83DA5B601B9}.Release|x64.ActiveCfg = Release|x64
-		{515EE205-5349-449E-BE13-F83DA5B601B9}.Release|x64.Build.0 = Release|x64
+		{515EE205-5349-449E-BE13-F83DA5B601B9}.Release|x64.ActiveCfg = Release|Any CPU
+		{515EE205-5349-449E-BE13-F83DA5B601B9}.Release|x64.Build.0 = Release|Any CPU
 		{515EE205-5349-449E-BE13-F83DA5B601B9}.Release|x86.ActiveCfg = Release|Any CPU
 		{515EE205-5349-449E-BE13-F83DA5B601B9}.Release|x86.Build.0 = Release|Any CPU
 		{768280FF-C359-4E58-8B5C-1F682B41CC24}.Debug|Any CPU.ActiveCfg = Debug|x86

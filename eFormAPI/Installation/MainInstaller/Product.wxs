@@ -493,7 +493,6 @@
       </Component>
       <Component Id = "case_elements_element_signature" Guid = "478429F0-8CF6-4B6E-93DF-4AA8E569CD69" Directory = "TARGETDIR_eform_client_case_elementselement_signature" KeyPath = "yes">
         <File Id = "element_signature_element_signature_component_html" Name = "element-signature.component.html" Source = "..\..\..\eform-client\src\app\modules\cases\components\case-elements\element-signature\element-signature.component.html"/>
-        <File Id = "element_signature_element_signature_component_spec_ts" Name = "element-signature.component.spec.ts" Source = "..\..\..\eform-client\src\app\modules\cases\components\case-elements\element-signature\element-signature.component.spec.ts"/>
         <File Id = "element_signature_element_signature_component_ts" Name = "element-signature.component.ts" Source = "..\..\..\eform-client\src\app\modules\cases\components\case-elements\element-signature\element-signature.component.ts"/>
       </Component>
       <Component Id = "case_elements_element_singleselect" Guid = "769BEE5E-0B90-43D7-9D75-6ABBC827BB0C" Directory = "TARGETDIR_eform_client_case_elementselement_singleselect" KeyPath = "yes">
