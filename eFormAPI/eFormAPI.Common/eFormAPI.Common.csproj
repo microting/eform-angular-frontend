@@ -31,28 +31,28 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AWSSDK.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604">
-      <HintPath>..\packages\Microting.eForm.1.6.3.5\lib\AWSSDK.Core.dll</HintPath>
+      <HintPath>..\packages\Microting.eForm.1.6.4.3\lib\AWSSDK.Core.dll</HintPath>
     </Reference>
     <Reference Include="AWSSDK.SQS, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604">
-      <HintPath>..\packages\Microting.eForm.1.6.3.5\lib\AWSSDK.SQS.dll</HintPath>
+      <HintPath>..\packages\Microting.eForm.1.6.4.3\lib\AWSSDK.SQS.dll</HintPath>
     </Reference>
-    <Reference Include="eFormCommunicator, Version=1.6.3.5, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\Microting.eForm.1.6.3.5\lib\eFormCommunicator.dll</HintPath>
+    <Reference Include="eFormCommunicator, Version=1.6.4.3, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Microting.eForm.1.6.4.3\lib\eFormCommunicator.dll</HintPath>
     </Reference>
-    <Reference Include="eFormCore, Version=1.6.3.5, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\Microting.eForm.1.6.3.5\lib\eFormCore.dll</HintPath>
+    <Reference Include="eFormCore, Version=1.6.4.3, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Microting.eForm.1.6.4.3\lib\eFormCore.dll</HintPath>
     </Reference>
-    <Reference Include="eFormData, Version=1.6.3.5, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\Microting.eForm.1.6.3.5\lib\eFormData.dll</HintPath>
+    <Reference Include="eFormData, Version=1.6.4.3, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Microting.eForm.1.6.4.3\lib\eFormData.dll</HintPath>
     </Reference>
-    <Reference Include="eFormShared, Version=1.6.3.5, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\Microting.eForm.1.6.3.5\lib\eFormShared.dll</HintPath>
+    <Reference Include="eFormShared, Version=1.6.4.3, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Microting.eForm.1.6.4.3\lib\eFormShared.dll</HintPath>
     </Reference>
-    <Reference Include="eFormSqlController, Version=1.6.3.5, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\Microting.eForm.1.6.3.5\lib\eFormSqlController.dll</HintPath>
+    <Reference Include="eFormSqlController, Version=1.6.4.3, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Microting.eForm.1.6.4.3\lib\eFormSqlController.dll</HintPath>
     </Reference>
-    <Reference Include="eFormSubscriber, Version=1.6.3.5, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\Microting.eForm.1.6.3.5\lib\eFormSubscriber.dll</HintPath>
+    <Reference Include="eFormSubscriber, Version=1.6.4.3, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Microting.eForm.1.6.4.3\lib\eFormSubscriber.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>

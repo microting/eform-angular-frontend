@@ -7,7 +7,7 @@
             {{userInfo.lastName || 'name'}}</a>
           <ul class="dropdown-menu dropdown-menu-right">
             <li *ngIf="userInfo.role == 'admin'">
-              <a routerLink="/admin/users" routerLinkActive="active">Manage users</a>
+              <a routerLink="/admin/users" routerLinkActive="active">User Management</a>
             </li>
             <li>
               <a routerLink="/admin/change-password" routerLinkActive="active">Change password</a>
@@ -34,7 +34,7 @@
       <ul class="nav navbar-nav">
         <li class="">
           <a routerLink="/" routerLinkActive="active">
-            My eForms
+            my eForms
           </a>
         </li>
         <li class="">
