@@ -12,6 +12,7 @@ using System.Security.AccessControl;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Security.Principal;
+using System.Management.Automation;
 
 namespace CustomActions
 {
@@ -487,78 +488,26 @@ namespace CustomActions
 
         public static void CongigureSecurity(string folder)
         {
-            var dInfo = new DirectoryInfo(folder);
+            using (var powershell = PowerShell.Create())
+            {
+                powershell.AddScript($"$path = \"{folder}\"; $acl = Get-Acl $path; Set-Acl $path $acl;");
 
-            var dSecurity = dInfo.GetAccessControl();
+                var dInfo = new DirectoryInfo(folder);
 
-            dSecurity.AddAccessRule(new FileSystemAccessRule("IUSR", FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Allow));
-            dSecurity.AddAccessRule(new FileSystemAccessRule("IIS_IUSRS", FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Allow));
+                var dSecurity = dInfo.GetAccessControl();
 
-            CanonicalizeDacl(dSecurity);
+                dSecurity.AddAccessRule(new FileSystemAccessRule("IUSR", FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Allow));
+                dSecurity.AddAccessRule(new FileSystemAccessRule("IIS_IUSRS", FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Allow));
 
-            dInfo.SetAccessControl(dSecurity);
+                dInfo.SetAccessControl(dSecurity);
 
-            ReplaceAllDescendantPermissionsFromObject(dInfo, dSecurity);
+                ReplaceAllDescendantPermissionsFromObject(dInfo, dSecurity, powershell);
+
+                powershell.Invoke();
+            }
         }
 
-        static void CanonicalizeDacl(NativeObjectSecurity objectSecurity)
-        {
-            if (objectSecurity == null) { throw new ArgumentNullException("objectSecurity"); }
-            if (objectSecurity.AreAccessRulesCanonical) { return; }
-
-            RawSecurityDescriptor descriptor = new RawSecurityDescriptor(objectSecurity.GetSecurityDescriptorSddlForm(AccessControlSections.Access));
-
-            List<CommonAce> implicitDenyDacl = new List<CommonAce>();
-            List<CommonAce> implicitDenyObjectDacl = new List<CommonAce>();
-            List<CommonAce> inheritedDacl = new List<CommonAce>();
-            List<CommonAce> implicitAllowDacl = new List<CommonAce>();
-            List<CommonAce> implicitAllowObjectDacl = new List<CommonAce>();
-
-            foreach (CommonAce ace in descriptor.DiscretionaryAcl)
-            {
-                if ((ace.AceFlags & AceFlags.Inherited) == AceFlags.Inherited) { inheritedDacl.Add(ace); }
-                else
-                {
-                    switch (ace.AceType)
-                    {
-                        case AceType.AccessAllowed:
-                            implicitAllowDacl.Add(ace);
-                            break;
-
-                        case AceType.AccessDenied:
-                            implicitDenyDacl.Add(ace);
-                            break;
-
-                        case AceType.AccessAllowedObject:
-                            implicitAllowObjectDacl.Add(ace);
-                            break;
-
-                        case AceType.AccessDeniedObject:
-                            implicitDenyObjectDacl.Add(ace);
-                            break;
-                    }
-                }
-            }
-
-            Int32 aceIndex = 0;
-            RawAcl newDacl = new RawAcl(descriptor.DiscretionaryAcl.Revision, descriptor.DiscretionaryAcl.Count);
-            implicitDenyDacl.ForEach(x => newDacl.InsertAce(aceIndex++, x));
-            implicitDenyObjectDacl.ForEach(x => newDacl.InsertAce(aceIndex++, x));
-            implicitAllowDacl.ForEach(x => newDacl.InsertAce(aceIndex++, x));
-            implicitAllowObjectDacl.ForEach(x => newDacl.InsertAce(aceIndex++, x));
-            inheritedDacl.ForEach(x => newDacl.InsertAce(aceIndex++, x));
-
-            if (aceIndex != descriptor.DiscretionaryAcl.Count)
-            {
-                System.Diagnostics.Debug.Fail("The DACL cannot be canonicalized since it would potentially result in a loss of information");
-                return;
-            }
-
-            descriptor.DiscretionaryAcl = newDacl;
-            objectSecurity.SetSecurityDescriptorSddlForm(descriptor.GetSddlForm(AccessControlSections.Access), AccessControlSections.Access);
-        }
-
-        private static void ReplaceAllDescendantPermissionsFromObject(DirectoryInfo dInfo, DirectorySecurity dSecurity)
+        private static void ReplaceAllDescendantPermissionsFromObject(DirectoryInfo dInfo, DirectorySecurity dSecurity, PowerShell powerShell)
         {
             dInfo.SetAccessControl(dSecurity);
 
@@ -571,7 +520,9 @@ namespace CustomActions
                 fi.SetAccessControl(ac);
             }
 
-            dInfo.GetDirectories().ToList().ForEach(d => ReplaceAllDescendantPermissionsFromObject(d, dSecurity));
+            powerShell.AddScript($"$path = \"{dInfo.FullName}\"; $acl = Get-Acl $path; Set-Acl $path $acl;");
+
+            dInfo.GetDirectories().ToList().ForEach(d => ReplaceAllDescendantPermissionsFromObject(d, dSecurity, powerShell));
         }
 
         private static void BuildAngularApp(string appLocation)
