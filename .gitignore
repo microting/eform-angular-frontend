@@ -79,3 +79,4 @@ eFormAPI/Installation/CustomActions/bin/x64/Release/CustomActions.dll
 eFormAPI/Installation/CustomActions/bin/x64/Release/Microsoft.Deployment.WindowsInstaller.dll
 eFormAPI/Installation/CustomActions/bin/x64/Release/Microsoft.Deployment.WindowsInstaller.xml
 eFormAPI/Installation/CustomActions/bin/x64/Release/Microsoft.Web.Administration.dll
+eFormAPI/Installation/MainInstaller/BuildedCustomActions/System.Management.Automation.dll
