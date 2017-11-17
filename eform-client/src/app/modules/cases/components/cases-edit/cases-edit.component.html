@@ -25,7 +25,7 @@
               </a>
               <ul class="nav">
                 <li *ngFor="let element of replyElement.elementList">
-                  <a href="" (click)="goToSection('#section' + element.id)">
+                  <a style="cursor: pointer;" (click)="goToSection('#section' + element.id)">
                     <i class="icon-chevron-right">{{element.label}}</i>
                   </a>
                 </li>
@@ -41,5 +41,3 @@
     </div>
   </div>
 </div>
-
-<gallery-modal></gallery-modal>

@@ -1,8 +1,8 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {CaseFieldValue} from 'app/models';
-import {GalleryService} from 'ng-gallery';
-import {NotifyService} from 'app/services/notify.service';
 import {ImageService} from 'app/services/files';
+import {NotifyService} from 'app/services/notify.service';
+import {Gallery, GalleryItem} from 'ng-gallery';
 
 @Component({
   selector: 'element-picture',
@@ -13,8 +13,9 @@ export class ElementPictureComponent implements OnChanges {
   @Input() fieldValues: Array<CaseFieldValue> = [];
   geoObjects = [];
   images = [];
+  galleryImages: Array<GalleryItem> = [];
 
-  constructor(private gallery: GalleryService, private imageService: ImageService, private notifyService: NotifyService) {
+  constructor(private gallery: Gallery, private imageService: ImageService, private notifyService: NotifyService) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -39,18 +40,28 @@ export class ElementPictureComponent implements OnChanges {
         }
       });
       if (this.images.length > 0) {
-        this.gallery.reset();
-        this.gallery.load(this.images);
+        this.updateGallery();
       }
     }
   }
 
-  openPicture(i: any) {
+  updateGallery() {
     this.gallery.reset();
+    this.galleryImages = [];
+    this.images.forEach(value => {
+      this.galleryImages.push({
+        src: '/api/template-files/get-image?&filename=' + value.src,
+        thumbnail: '/api/template-files/get-image?&filename=' + value.thumbnail,
+        text: value.text
+      });
+    });
     this.gallery.load(this.images);
-    this.gallery.set(i);
   }
 
+  openPicture(i: any) {
+    this.updateGallery();
+    this.gallery.open(i);
+  }
 
   openGpsWindow(url: string) {
     window.open(url, '_blank');
