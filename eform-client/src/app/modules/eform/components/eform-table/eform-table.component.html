@@ -81,13 +81,13 @@
             <span class="fa fa-trash-o"></span>
           </button>
         </div>
-        <div class="row">
+        <div class="row" *ngIf="templateDto.hasCases">
           <button tooltip="Download XML" (click)="downloadTemplateXML(templateDto.id)"
                   class="needs_tooltip btn btn-ar btn-xs btn-default"
                   type="button">
             .XML
           </button>
-          <button *ngIf="templateDto.hasCases" tooltip="Upload ZIP archive" (click)="showUploadTemplateZIP(templateDto)"
+          <button tooltip="Upload ZIP archive" (click)="showUploadTemplateZIP(templateDto)"
                   class="needs_tooltip btn btn-ar btn-xs btn-default"
                   type="button">
             .ZIP
