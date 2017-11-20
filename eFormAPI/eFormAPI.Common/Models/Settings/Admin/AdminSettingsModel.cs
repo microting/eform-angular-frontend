@@ -6,6 +6,7 @@
         public LoginPageSettingsModel LoginPageSettingsModel { get; set; }
         public SMTPSettingsModel SMTPSettingsModel { get; set; }
         public string SiteLink { get; set; }
+        public string AssemblyVersion { get; set; }
 
         public AdminSettingsModel()
         {

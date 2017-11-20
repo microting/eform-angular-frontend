@@ -35,7 +35,7 @@ declare var moment: any;
       <div class="col-sm-6">
         <div class="form-group">
           <div [ngClass]="{'input-group': !datepickerOptions.hideIcon, 'date': true }">
-            <input id="{{idDatePicker}}" type="text" class="form-control"
+            <input id="{{idDatePicker}}" type="text" class="form-control" style="z-index: 1 !important;"
                    [attr.readonly]="true"
                    [attr.required]="required"
                    [attr.placeholder]="datepickerOptions.placeholder || 'Choose date'"

@@ -82,13 +82,13 @@
           </button>
         </div>
         <div class="row" *ngIf="templateDto.hasCases">
-          <button tooltip="Download XML" (click)="downloadTemplateXML(templateDto.id)"
+          <a tooltip="Download XML" href="/api/template-files/download-eform-xml/{{templateDto.id}}"
                   class="needs_tooltip btn btn-ar btn-xs btn-default"
                   type="button">
             .XML
-          </button>
+          </a>
           <button tooltip="Upload PDF-template (zip)" (click)="showUploadTemplateZIP(templateDto)"
-                  class="needs_tooltip btn btn-ar btn-xs btn-default"
+          class="needs_tooltip btn btn-ar btn-xs btn-default"
                   type="button">
             .ZIP
           </button>

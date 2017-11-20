@@ -30,28 +30,28 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AWSSDK.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
+    <Reference Include="AWSSDK.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604">
       <HintPath>..\packages\Microting.eForm.1.6.4.4\lib\AWSSDK.Core.dll</HintPath>
     </Reference>
-    <Reference Include="AWSSDK.SQS, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
+    <Reference Include="AWSSDK.SQS, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604">
       <HintPath>..\packages\Microting.eForm.1.6.4.4\lib\AWSSDK.SQS.dll</HintPath>
     </Reference>
-    <Reference Include="eFormCommunicator, Version=1.6.4.4, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="eFormCommunicator, Version=1.6.4.4, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\Microting.eForm.1.6.4.4\lib\eFormCommunicator.dll</HintPath>
     </Reference>
-    <Reference Include="eFormCore, Version=1.6.4.4, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="eFormCore, Version=1.6.4.4, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\Microting.eForm.1.6.4.4\lib\eFormCore.dll</HintPath>
     </Reference>
-    <Reference Include="eFormData, Version=1.6.4.4, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="eFormData, Version=1.6.4.4, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\Microting.eForm.1.6.4.4\lib\eFormData.dll</HintPath>
     </Reference>
-    <Reference Include="eFormShared, Version=1.6.4.4, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="eFormShared, Version=1.6.4.4, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\Microting.eForm.1.6.4.4\lib\eFormShared.dll</HintPath>
     </Reference>
-    <Reference Include="eFormSqlController, Version=1.6.4.4, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="eFormSqlController, Version=1.6.4.4, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\Microting.eForm.1.6.4.4\lib\eFormSqlController.dll</HintPath>
     </Reference>
-    <Reference Include="eFormSubscriber, Version=1.6.4.4, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="eFormSubscriber, Version=1.6.4.4, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\Microting.eForm.1.6.4.4\lib\eFormSubscriber.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
