@@ -30,6 +30,7 @@
     <Compile Include="DomainNameSelectDlg.wxs" />
     <Compile Include="ProgressModifiedDlg.wxs" />
     <Compile Include="VerifyReadyModifiedDlg.wxs" />
+    <Compile Include="WelcomeDlgModified.wxs" />
     <Compile Include="WixUI_InstallDirModified.wxs" />
     <Compile Include="Product.wxs" />
   </ItemGroup>
