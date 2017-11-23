@@ -29,7 +29,7 @@ namespace eFormAPI.Web
             {
                 ExpireTimeSpan = TimeSpan.FromDays(1)
             });
-            app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
+            // app.UseExternalSignInCookie(OAuthOptions DefaultAuthenticationTypes.ExternalCookie);
 
             // Configure the application for OAuth based flow
             PublicClientId = "self";
