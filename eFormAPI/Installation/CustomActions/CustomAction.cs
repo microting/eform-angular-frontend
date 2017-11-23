@@ -19,7 +19,17 @@ namespace CustomActions
     public class CustomActions
     {
         public static Session Session;
- 
+        public static string FixACL = @"$out = icacls ""$dirrectory"" /verify /t /q;
+                                    foreach($line in $out)
+                                    {
+                                        if ($line -match '(.:[^:]*): (.*)')
+                                        {
+                                            $path = $Matches[1];
+                                            Set-Acl $path(Get-Acl $path);
+                                        }
+                                    }";
+
+
         [CustomAction]
         public static ActionResult GetAPIsListCA(Session session)
         {
@@ -493,24 +503,28 @@ namespace CustomActions
         {
             using (var powershell = PowerShell.Create())
             {
-                powershell.AddScript($"$path = \"{folder}\"; $acl = Get-Acl $path; Set-Acl $path $acl;");
+                powershell.AddScript(FixACL.Replace("$dirrectory", folder));
+                powershell.Invoke();
 
                 var dInfo = new DirectoryInfo(folder);
 
                 var dSecurity = dInfo.GetAccessControl();
 
                 dSecurity.AddAccessRule(new FileSystemAccessRule("IUSR", FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Allow));
+                powershell.AddScript(string.Format(FixACL, folder));
+                powershell.Invoke();
+
                 dSecurity.AddAccessRule(new FileSystemAccessRule("IIS_IUSRS", FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Allow));
+                powershell.AddScript(string.Format(FixACL, folder));
+                powershell.Invoke();
 
                 dInfo.SetAccessControl(dSecurity);
 
-                ReplaceAllDescendantPermissionsFromObject(dInfo, dSecurity, powershell);
-
-                powershell.Invoke();
+                ReplaceAllDescendantPermissionsFromObject(dInfo, dSecurity);
             }
         }
 
-        private static void ReplaceAllDescendantPermissionsFromObject(DirectoryInfo dInfo, DirectorySecurity dSecurity, PowerShell powerShell)
+        private static void ReplaceAllDescendantPermissionsFromObject(DirectoryInfo dInfo, DirectorySecurity dSecurity)
         {
             dInfo.SetAccessControl(dSecurity);
 
@@ -523,9 +537,7 @@ namespace CustomActions
                 fi.SetAccessControl(ac);
             }
 
-            powerShell.AddScript($"$path = \"{dInfo.FullName}\"; $acl = Get-Acl $path; Set-Acl $path $acl;");
-
-            dInfo.GetDirectories().ToList().ForEach(d => ReplaceAllDescendantPermissionsFromObject(d, dSecurity, powerShell));
+            dInfo.GetDirectories().ToList().ForEach(d => ReplaceAllDescendantPermissionsFromObject(d, dSecurity));
         }
 
         private static void BuildAngularApp(string appLocation)
