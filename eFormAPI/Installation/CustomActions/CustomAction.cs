@@ -511,11 +511,11 @@ namespace CustomActions
                 var dSecurity = dInfo.GetAccessControl();
 
                 dSecurity.AddAccessRule(new FileSystemAccessRule("IUSR", FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Allow));
-                powershell.AddScript(string.Format(FixACL, folder));
+                powershell.AddScript(FixACL.Replace("$dirrectory", folder));
                 powershell.Invoke();
 
                 dSecurity.AddAccessRule(new FileSystemAccessRule("IIS_IUSRS", FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Allow));
-                powershell.AddScript(string.Format(FixACL, folder));
+                powershell.AddScript(FixACL.Replace("$dirrectory", folder));
                 powershell.Invoke();
 
                 dInfo.SetAccessControl(dSecurity);
