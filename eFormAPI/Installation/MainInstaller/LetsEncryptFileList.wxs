@@ -2,28 +2,28 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Fragment>
         <DirectoryRef Id="letsencrypt">
-            <Component Id="cmp37929E6891052DDFA68A9DB9A506EF23" Guid="{4CAE5F0F-E62C-4D9D-AD23-48864045F639}">
+            <Component Id="cmp37929E6891052DDFA68A9DB9A506EF23" Guid="{43897AF9-826D-4E2A-AC39-3D90519D78BB}">
                 <File Id="filCBB0FEB6ED66DF8FD26F5CD92EB52EDC" KeyPath="yes" Source="$(var.LetsEncryptPath)\letsencrypt.exe" />
             </Component>
-            <Component Id="cmpF8E1942B473BDBF4BBCA336A7033A339" Guid="{49370AC8-B3A3-4D88-8A1D-C5A63F78037B}">
+            <Component Id="cmpF8E1942B473BDBF4BBCA336A7033A339" Guid="{73E0CDD4-F06A-4914-9FB7-245A72A59087}">
                 <File Id="fil6B25AF281F70B40B78C9120722F3C003" KeyPath="yes" Source="$(var.LetsEncryptPath)\letsencrypt.exe.config" />
             </Component>
-            <Component Id="cmp8457A13039FA483884B987EC7096E674" Guid="{CBFACF10-692A-4E87-9FDB-4C7F9D72A909}">
+            <Component Id="cmp8457A13039FA483884B987EC7096E674" Guid="{07DCC018-10E6-45DC-B0F1-1144D40634F8}">
                 <File Id="filAC7FEFB67B73C23ED90531988664F6C3" KeyPath="yes" Source="$(var.LetsEncryptPath)\Web_Config.xml" />
             </Component>
             <Directory Id="dir9BEF3F0BAD9B535A976C48CCF430E928" Name="x64">
-                <Component Id="cmpF43B6DA48E89D9D85B3540D612271434" Guid="{55A0BABB-4F70-456B-BC3E-DF48E58F52CE}">
+                <Component Id="cmpF43B6DA48E89D9D85B3540D612271434" Guid="{C0155A9F-725F-418B-8C7B-9E5AF67443AF}">
                     <File Id="fil71E5F06A4842045C81C3CEAD9E8FDCEF" KeyPath="yes" Source="$(var.LetsEncryptPath)\x64\libeay32.dll" />
                 </Component>
-                <Component Id="cmp24002B1540AB87FA06EEEB2CBAA7BC4C" Guid="{11C40349-416C-4715-80C7-063D424FB7BA}">
+                <Component Id="cmp24002B1540AB87FA06EEEB2CBAA7BC4C" Guid="{5F66518D-CCDC-4919-93AC-07F1E313E545}">
                     <File Id="filB20EA68210622EB7CB07499FAAD3CE79" KeyPath="yes" Source="$(var.LetsEncryptPath)\x64\ssleay32.dll" />
                 </Component>
             </Directory>
             <Directory Id="dirB76CABEA115EF02B8185B3B44FE0A498" Name="x86">
-                <Component Id="cmpAE90F97C7AF9326D0BF41676BCA71D8C" Guid="{D0F2B3F1-AAD4-4199-9E88-7BD85F5FD2E6}">
+                <Component Id="cmpAE90F97C7AF9326D0BF41676BCA71D8C" Guid="{51A0F1F7-FAE0-4A25-8333-095F8A14CF45}">
                     <File Id="fil46BE9EE69BFD3A3C72F07794487640AE" KeyPath="yes" Source="$(var.LetsEncryptPath)\x86\libeay32.dll" />
                 </Component>
-                <Component Id="cmp2393461C6BE3DFFB1CC7167B28BBFB00" Guid="{86E27473-86BA-4110-9C74-1BD148C5CBB3}">
+                <Component Id="cmp2393461C6BE3DFFB1CC7167B28BBFB00" Guid="{25932B65-C5C5-4C97-BA9D-6DF6C5DD0F01}">
                     <File Id="fil93F5D081D7A3040A5AF360DF37E42377" KeyPath="yes" Source="$(var.LetsEncryptPath)\x86\ssleay32.dll" />
                 </Component>
             </Directory>

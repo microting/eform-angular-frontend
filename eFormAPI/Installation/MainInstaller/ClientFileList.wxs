@@ -2,854 +2,870 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Fragment>
         <DirectoryRef Id="eform_client">
-            <Component Id="cmpBD5FF4AEC6EB1A8E79EC8200ECBA4196" Guid="{0CA512EF-57B5-4DF5-A77D-B02C015CE2BC}">
+            <Component Id="cmpBD5FF4AEC6EB1A8E79EC8200ECBA4196" Guid="{BA3E0467-8E16-42DA-A95A-B02BBC266ACA}">
                 <File Id="filB0E85DFD04E1F7334EDF7DB832ADF7F9" KeyPath="yes" Source="$(var.ClientPath)\.editorconfig" />
             </Component>
-            <Component Id="cmpEA82CCBE49A26F14EF2B312F5E8F144F" Guid="{976D1EAF-1FE9-4F13-B8FC-B756F3B3E9C6}">
+            <Component Id="cmpEA82CCBE49A26F14EF2B312F5E8F144F" Guid="{1EEE9537-2CE7-4DE4-96B3-F5A837D3CD9C}">
                 <File Id="fil73560603081F56B9D4B006515FC72307" KeyPath="yes" Source="$(var.ClientPath)\.gitignore" />
             </Component>
-            <Component Id="cmpF0C2BF536013509C9E189A8FD0DE3CCB" Guid="{10908938-2F49-4475-BD01-AEE54E830586}">
+            <Component Id="cmpF0C2BF536013509C9E189A8FD0DE3CCB" Guid="{3F97AB84-50EE-4B32-A71B-CD00D5AA9F60}">
                 <File Id="fil675C8521C8F905A99FC088B099503861" KeyPath="yes" Source="$(var.ClientPath)\angular-cli.json" />
             </Component>
-            <Component Id="cmpF4775472632C543717DFABDF1887FC56" Guid="{7A76F23A-0E9B-42E8-A7A0-1447353F89F3}">
+            <Component Id="cmpF4775472632C543717DFABDF1887FC56" Guid="{1C8A28AC-3187-4B1D-A885-BF642DBCE31E}">
                 <File Id="fil563705E6EEB04A03469ED6629924DCB8" KeyPath="yes" Source="$(var.ClientPath)\karma.conf.js" />
             </Component>
-            <Component Id="cmp57996A3C592067508378E18924E48790" Guid="{64E545BB-56C5-4E81-805F-65CD40AB69E0}">
+            <Component Id="cmpD5758B9D0A388D1CF7828946C2956D40" Guid="{3908BE99-A335-48F6-8088-2586189A5B12}">
+                <File Id="fil3EF42C877D5ADD528AA8CE8136547E30" KeyPath="yes" Source="$(var.ClientPath)\package-lock.json" />
+            </Component>
+            <Component Id="cmp57996A3C592067508378E18924E48790" Guid="{F8CEDC76-4766-4142-B6A7-0310E178A034}">
                 <File Id="fil35BC4D7E80815BC615163BD1F92421EE" KeyPath="yes" Source="$(var.ClientPath)\package.json" />
             </Component>
-            <Component Id="cmpBFA2A55B9A1B6E3C64809A78953E9F85" Guid="{BAFA6AA0-D66D-4D2D-9D18-6E252DE1E235}">
+            <Component Id="cmpBFA2A55B9A1B6E3C64809A78953E9F85" Guid="{AAFD22F0-4422-4073-84B5-64BAF27B0487}">
                 <File Id="filFD3B811D92EB7367992CAF1EEB7E9534" KeyPath="yes" Source="$(var.ClientPath)\protractor.conf.js" />
             </Component>
-            <Component Id="cmp71630B074F771EEAD6D5C11272B11658" Guid="{22A1DA06-1C90-4708-9F7B-F1DD673D3BCB}">
+            <Component Id="cmp71630B074F771EEAD6D5C11272B11658" Guid="{4717B0D1-C06D-4FD1-95DF-889D7FC9A13A}">
                 <File Id="fil0D30F2C3F5BFDE1766C3FB156FE9A120" KeyPath="yes" Source="$(var.ClientPath)\proxy.config.json" />
             </Component>
-            <Component Id="cmp50851DA8881BA8C9112ED2510A806A76" Guid="{0F485FB0-3532-46D8-8449-1DA5722FA956}">
+            <Component Id="cmp50851DA8881BA8C9112ED2510A806A76" Guid="{4A9D75D5-EBCE-414D-89B9-972359686CFE}">
                 <File Id="filB22B64D7F95B3A1EABFCEA1E937A877F" KeyPath="yes" Source="$(var.ClientPath)\server.js" />
             </Component>
-            <Component Id="cmpE72B272D855F8FD82F1852454BC50487" Guid="{8433E8DD-4CE2-4E11-B42F-7C30A5D9C6C7}">
+            <Component Id="cmpE72B272D855F8FD82F1852454BC50487" Guid="{1F1E72CF-765A-4298-A287-1CD4EDAD100F}">
                 <File Id="fil3D36F4486573C0915F76F9BB396A892B" KeyPath="yes" Source="$(var.ClientPath)\svc.js" />
             </Component>
-            <Component Id="cmp08A472F83AA798FFF49170D8CC410F5A" Guid="{32E9A234-B2D6-4349-99BC-D28CA06DA6F9}">
+            <Component Id="cmp08A472F83AA798FFF49170D8CC410F5A" Guid="{A9436BD4-D74C-447B-AF68-ABDFC2886701}">
                 <File Id="filF0F9E8B4A57FC05A4817DBC8C39A5170" KeyPath="yes" Source="$(var.ClientPath)\tslint.json" />
             </Component>
+            <Directory Id="dirBA983ECC6C56C15944FCD33764487768" Name=".idea">
+                <Component Id="cmpCA56D356827064819B67C87418853D56" Guid="{F7BBC541-E1D4-4546-9133-2ECFFF3FB843}">
+                    <File Id="fil32F13AFE7AA116C552F655AEF4D1F92E" KeyPath="yes" Source="$(var.ClientPath)\.idea\eform-client.iml" />
+                </Component>
+                <Component Id="cmp7D6C2B1DF27F125CF8772A78CFF78FA9" Guid="{AD4AC4CF-3463-44F1-897E-B2C5CFD7F50D}">
+                    <File Id="fil6D0EAB15DA596E0214DF20920EFC298F" KeyPath="yes" Source="$(var.ClientPath)\.idea\modules.xml" />
+                </Component>
+                <Component Id="cmp58DD7781EBA5EA6F2F225C8D938DA2B1" Guid="{ACC44C60-B235-4950-AC19-FB04F7937D28}">
+                    <File Id="fil240D8ABE3C1A9F5261B3EFDDFEC2BEBF" KeyPath="yes" Source="$(var.ClientPath)\.idea\typescript-compiler.xml" />
+                </Component>
+                <Component Id="cmp93CD72BB3191BB84E669A7D833806DCB" Guid="{A44D4FB1-CAD3-4D7F-8E16-F13035E83353}">
+                    <File Id="fil8B55697395C33E431F718E3CA864D89E" KeyPath="yes" Source="$(var.ClientPath)\.idea\vcs.xml" />
+                </Component>
+                <Component Id="cmp3CAF78FB7B68DB902F1EE7BB84222410" Guid="{A84A0816-2F34-499C-9EED-13A0CB0B6C3B}">
+                    <File Id="filC25A1BB8D42E6EB96B666EA989E22CE5" KeyPath="yes" Source="$(var.ClientPath)\.idea\workspace.xml" />
+                </Component>
+                <Directory Id="dirF332B99C315E00C9A2749F743F4DB52C" Name="inspectionProfiles">
+                    <Component Id="cmp31622047B77DE8D510BD3E678570EB67" Guid="{B9A458BE-6857-4213-9F8D-3587CB922D1B}">
+                        <File Id="filE7EF1F21BBF16DCD7423C5E4428B77AF" KeyPath="yes" Source="$(var.ClientPath)\.idea\inspectionProfiles\Project_Default.xml" />
+                    </Component>
+                </Directory>
+            </Directory>
             <Directory Id="dirD755B5A376077818B770C05C7277D000" Name="e2e">
-                <Component Id="cmp08441AA119FB1E8F6B300BDA87890C4A" Guid="{82754CA1-A4F2-4937-8956-373F5E3444DF}">
+                <Component Id="cmp08441AA119FB1E8F6B300BDA87890C4A" Guid="{A34C0E76-0575-4FBE-B10F-994F2C6F85DE}">
                     <File Id="fil32C55AE28DE7A2A32317DC2A0B141FB2" KeyPath="yes" Source="$(var.ClientPath)\e2e\app.e2e-spec.ts" />
                 </Component>
-                <Component Id="cmp67408B06DC1C5624B954EA9CAFCCAE0C" Guid="{3DCD4CC1-4F2F-4732-B96A-BDE9435DD5D0}">
+                <Component Id="cmp67408B06DC1C5624B954EA9CAFCCAE0C" Guid="{8096EC3E-8C67-46B5-9CE9-E3DE58589100}">
                     <File Id="fil88D90382C1E89C42DB56495ABF64C440" KeyPath="yes" Source="$(var.ClientPath)\e2e\app.po.ts" />
                 </Component>
-                <Component Id="cmpDA6B569C78F0B22576123A215525AF73" Guid="{FFF779F1-877A-4C70-9A91-D46A95694F40}">
+                <Component Id="cmpDA6B569C78F0B22576123A215525AF73" Guid="{C4D59337-0D6A-4E07-BE79-12FEFC166010}">
                     <File Id="fil0A722B33194419D6DAADDBF0FC2A6EF3" KeyPath="yes" Source="$(var.ClientPath)\e2e\tsconfig.json" />
                 </Component>
             </Directory>
             <Directory Id="dirE1A78E5E0192A0B406ABFD80569A967F" Name="src">
-                <Component Id="cmp2512BE1E7F4AD0B3CA508C0D7ECD63E9" Guid="{5C2A8717-E3FB-44BF-AA89-DCE4D8F34D8E}">
+                <Component Id="cmp2512BE1E7F4AD0B3CA508C0D7ECD63E9" Guid="{04F06E18-31F2-40DC-8E73-F4C9E6890FCA}">
                     <File Id="filAD0B17A7E9C779CF81DD379AF287EA50" KeyPath="yes" Source="$(var.ClientPath)\src\favicon.ico" />
                 </Component>
-                <Component Id="cmpC40E9DECD728079FF48A89A580A6C45F" Guid="{C3B3B7F3-E10A-486E-80C6-ECF24CF6D0D9}">
+                <Component Id="cmpC40E9DECD728079FF48A89A580A6C45F" Guid="{7E9D9CC0-8533-46FD-B6A8-01B3C02E23EA}">
                     <File Id="fil818BD7EFBA7520B6DC28AC1229C8C28C" KeyPath="yes" Source="$(var.ClientPath)\src\index.html" />
                 </Component>
-                <Component Id="cmpCBEFF10FE7E75A5846EB33E0A449F930" Guid="{1A538600-EC3F-472A-9D0C-B0D17372065B}">
+                <Component Id="cmpCBEFF10FE7E75A5846EB33E0A449F930" Guid="{039D7CA7-A59A-4638-BD47-B0854DC31FDA}">
                     <File Id="fil54FEA9871594618B2216756FB5F512CD" KeyPath="yes" Source="$(var.ClientPath)\src\main.ts" />
                 </Component>
-                <Component Id="cmp7BD8393759C4224F1BE7CA9A7FBBB9A0" Guid="{00F9D5AC-A555-437E-9BC9-E2A5CFD6C7E8}">
+                <Component Id="cmp7BD8393759C4224F1BE7CA9A7FBBB9A0" Guid="{C484D260-5545-4DC3-9611-625F2C76EADF}">
                     <File Id="fil44482DBBC358FCFB1261D73F3275AE86" KeyPath="yes" Source="$(var.ClientPath)\src\polyfills.ts" />
                 </Component>
-                <Component Id="cmpDFF7F1AF80C9D49369369A3D4A0E1433" Guid="{A1483944-79BC-440B-B007-61EF59BAADE2}">
+                <Component Id="cmpDFF7F1AF80C9D49369369A3D4A0E1433" Guid="{B140A4B2-5044-4807-BBC0-8AFD2FFAFD66}">
                     <File Id="fil9E47EA48B28C9C85B49921357BC8209D" KeyPath="yes" Source="$(var.ClientPath)\src\robots.txt" />
                 </Component>
-                <Component Id="cmp230E9274F37B263462FAE899EC26DEFF" Guid="{A39472BF-9EF5-4104-977B-E84BC4BC8524}">
+                <Component Id="cmp230E9274F37B263462FAE899EC26DEFF" Guid="{81E2DE1C-8CBD-40E7-BB69-CC165E5CC5CD}">
                     <File Id="fil4E326021B829FA494916FD9BE467E4A9" KeyPath="yes" Source="$(var.ClientPath)\src\test.ts" />
                 </Component>
-                <Component Id="cmp19E9A5F227A55A87B22147274A8DF500" Guid="{59030F2B-1B5E-4BF5-BDB4-E37E6D10D482}">
+                <Component Id="cmp19E9A5F227A55A87B22147274A8DF500" Guid="{E766CBA6-8348-4D18-87C4-0CD5A5A04B47}">
                     <File Id="fil6EEFDB2113FAE621A0CF995CB338C46B" KeyPath="yes" Source="$(var.ClientPath)\src\tsconfig.json" />
                 </Component>
                 <Directory Id="dir4B4C339F8F1734FE5DFF292FB91B2554" Name="app">
-                    <Component Id="cmp00B46D0F078F5AF363C274C32A953626" Guid="{D14CDC0C-370E-488F-A1D9-380D0D460047}">
+                    <Component Id="cmp00B46D0F078F5AF363C274C32A953626" Guid="{3DF0FEDF-3622-4543-8347-543C2F805527}">
                         <File Id="fil563E2E62B16DD1F3E2FB914374740BA0" KeyPath="yes" Source="$(var.ClientPath)\src\app\app.module.ts" />
                     </Component>
-                    <Component Id="cmp6F7C6ADABD5A1CB36244125699F8A9CB" Guid="{5BEBE179-C066-4B3E-A873-4ED27540357B}">
+                    <Component Id="cmp6F7C6ADABD5A1CB36244125699F8A9CB" Guid="{65697247-DE81-4657-BC64-60984F380ECF}">
                         <File Id="fil8C0301848DA0CFC68B4B4DD28B9849DC" KeyPath="yes" Source="$(var.ClientPath)\src\app\app.routing.ts" />
                     </Component>
                     <Directory Id="dir21AFC5DC5EBE50008E16524D9D6B603B" Name="components">
-                        <Component Id="cmpDC868EC225BF26FCE4AF75F64EF4BBE9" Guid="{E52AE191-DBD1-4970-B798-14B621030CBF}">
+                        <Component Id="cmpDC868EC225BF26FCE4AF75F64EF4BBE9" Guid="{CADDC351-97FE-4BB4-AE93-C3D2D9F320D5}">
                             <File Id="fil382BF78BF2DEC08431FF760117C8A78D" KeyPath="yes" Source="$(var.ClientPath)\src\app\components\app.component.scss" />
                         </Component>
-                        <Component Id="cmp0FFA28241C8F644E4E6838F33A555709" Guid="{92B8746E-D28D-42E2-ADD8-F49998C4BBAA}">
+                        <Component Id="cmp0FFA28241C8F644E4E6838F33A555709" Guid="{6E6BDEC9-88DE-4B28-BC5D-8A1297E7D4F5}">
                             <File Id="filCD9F9C1A62A71E33A7BBD3D35B5AB183" KeyPath="yes" Source="$(var.ClientPath)\src\app\components\app.component.spec.ts" />
                         </Component>
-                        <Component Id="cmp505762E843C28D5F47D0A8131CE12F8D" Guid="{C3C7F1CF-FA48-44FC-BDD2-BC1EED13A71D}">
+                        <Component Id="cmp505762E843C28D5F47D0A8131CE12F8D" Guid="{9037ED4E-1F44-4DEA-95BF-7D9AF78840D3}">
                             <File Id="filDE546108D312178AB59C15C69D8148A4" KeyPath="yes" Source="$(var.ClientPath)\src\app\components\app.component.ts" />
                         </Component>
                         <Directory Id="dir8C22564D948FB98873AF82E08CC861D4" Name="auth">
-                            <Component Id="cmpDBED9F170402C80B2F8E777131B0F42F" Guid="{836DDFAC-BCDD-4AC8-A282-AFFF44678BC7}">
+                            <Component Id="cmpDBED9F170402C80B2F8E777131B0F42F" Guid="{60EA5BC8-8E76-4E13-B81D-09287E734E1C}">
                                 <File Id="fil469A86AB88130DC90530D53A3F834625" KeyPath="yes" Source="$(var.ClientPath)\src\app\components\auth\auth.component.css" />
                             </Component>
-                            <Component Id="cmp23C05A44B38F0B27B25741CAFEBDB8A2" Guid="{C3E59AF1-C5CE-4A84-99B6-6FFB78D5F99B}">
+                            <Component Id="cmp23C05A44B38F0B27B25741CAFEBDB8A2" Guid="{DF6D45F8-5C9F-4C40-956E-0BEA1A6E8F66}">
                                 <File Id="fil2EC1CF3AAAF684DE3374849CEBE4E778" KeyPath="yes" Source="$(var.ClientPath)\src\app\components\auth\auth.component.html" />
                             </Component>
-                            <Component Id="cmpAADB0399B2D92845157C2B0B6A7AFEA0" Guid="{85093FF6-F668-4779-B71B-D3F00544DB58}">
+                            <Component Id="cmpAADB0399B2D92845157C2B0B6A7AFEA0" Guid="{336A7B49-D185-4D31-AF5C-F1CF6D9CD350}">
                                 <File Id="fil9C67A95F788D6553DF3DF64751BC23C8" KeyPath="yes" Source="$(var.ClientPath)\src\app\components\auth\auth.component.ts" />
                             </Component>
-                            <Component Id="cmp569986C17BEF7D1EB2634194B133B2B1" Guid="{8A26ACDC-4277-4C69-934A-530BBDB311B5}">
+                            <Component Id="cmp569986C17BEF7D1EB2634194B133B2B1" Guid="{B62E57FB-2385-4209-B0D1-7B66E53BD7BA}">
                                 <File Id="filC2F108FF1866394895BD56EE299537F6" KeyPath="yes" Source="$(var.ClientPath)\src\app\components\auth\restore-password.component.css" />
                             </Component>
-                            <Component Id="cmpADEC95F7E1BAF76CC94697B2DE4F24E6" Guid="{1BAFE9B5-9993-4CDE-9C56-A91C17502CDC}">
+                            <Component Id="cmpADEC95F7E1BAF76CC94697B2DE4F24E6" Guid="{C1F88964-5D1A-4F4E-BBED-72698B66A57C}">
                                 <File Id="filC56755CE731BD4B4BD4F4D494B38B8BA" KeyPath="yes" Source="$(var.ClientPath)\src\app\components\auth\restore-password.component.html" />
                             </Component>
-                            <Component Id="cmpF9BC74A577769A633B1F776C8DC62151" Guid="{3035BA37-52C0-466C-9DAE-D87BD8FC0104}">
+                            <Component Id="cmpF9BC74A577769A633B1F776C8DC62151" Guid="{7C3D1CE6-EFF1-40E1-BD82-9E6E3192CB9C}">
                                 <File Id="fil8F3C3DF270345094DEA1CD7E13106F73" KeyPath="yes" Source="$(var.ClientPath)\src\app\components\auth\restore-password.component.ts" />
                             </Component>
                         </Directory>
                         <Directory Id="dir102C578FFDDF76E4DDA88B486377D2A6" Name="directives">
-                            <Component Id="cmp2E82D73F99B6EE96BFAAF66333146F17" Guid="{7FFBEB53-B25D-49F3-9894-457E2E5D65B8}">
+                            <Component Id="cmp2E82D73F99B6EE96BFAAF66333146F17" Guid="{6C5545C2-DE75-426C-A734-D9E5E22CF060}">
                                 <File Id="fil221D77905C7E4E42C5577CB44C85C76F" KeyPath="yes" Source="$(var.ClientPath)\src\app\components\directives\equal-validator.directive.ts" />
                             </Component>
                         </Directory>
                         <Directory Id="dir6BF130315E5B726E5BA6BB0A1ED69B69" Name="footer">
-                            <Component Id="cmpFDD0B3EC4E06E70A5CDBC4888C1482D0" Guid="{1DFC45F7-B021-48D5-B582-9AA002771F98}">
+                            <Component Id="cmpFDD0B3EC4E06E70A5CDBC4888C1482D0" Guid="{554640A1-4866-4FB3-AC62-8F56E99638B4}">
                                 <File Id="fil71480CE0853F38864E54FAEA353CD29E" KeyPath="yes" Source="$(var.ClientPath)\src\app\components\footer\footer.component.css" />
                             </Component>
-                            <Component Id="cmp5A52679A19D3D568F4C7D75ECBEF3F44" Guid="{FA861C84-F7D9-495C-B7DA-2A1AAA460C98}">
+                            <Component Id="cmp5A52679A19D3D568F4C7D75ECBEF3F44" Guid="{89B491EB-B091-47EA-9B5C-FC6EA7B92EDA}">
                                 <File Id="fil3CC826D0799DB52B3ABF987DE0455FCD" KeyPath="yes" Source="$(var.ClientPath)\src\app\components\footer\footer.component.html" />
                             </Component>
-                            <Component Id="cmp224835880696EFAF3A182A6080D15B78" Guid="{83C015CF-92D5-406B-8C45-27532054C374}">
+                            <Component Id="cmp224835880696EFAF3A182A6080D15B78" Guid="{4E53B51E-7802-4F72-BCB8-A908E0B0C9ED}">
                                 <File Id="filF056F760E94ECDF8CDBBB3AE820273E2" KeyPath="yes" Source="$(var.ClientPath)\src\app\components\footer\footer.component.ts" />
                             </Component>
                         </Directory>
                         <Directory Id="dirC03D2035AF38D2C270CF8991A4EA8FF1" Name="header">
-                            <Component Id="cmpFB71BBFF19939AB5154FA8BA9C6B7B03" Guid="{2E2087CF-77CA-4FDF-8881-FD1EAA02383F}">
+                            <Component Id="cmpFB71BBFF19939AB5154FA8BA9C6B7B03" Guid="{23CC4359-2AB8-4B4F-87B9-7EC625337A8C}">
                                 <File Id="fil732ECD137D3F23D68B77C584FD60BA31" KeyPath="yes" Source="$(var.ClientPath)\src\app\components\header\header.component.css" />
                             </Component>
-                            <Component Id="cmpD245958351747B5CEB7552320B2F0A12" Guid="{9CC10541-8C7B-42BD-8C1B-70D603C32494}">
+                            <Component Id="cmpD245958351747B5CEB7552320B2F0A12" Guid="{45E27009-95D1-4E4C-9355-8FF2A5E8927F}">
                                 <File Id="fil26E866179785144F95CD87960F0D3897" KeyPath="yes" Source="$(var.ClientPath)\src\app\components\header\header.component.html" />
                             </Component>
-                            <Component Id="cmp827AEAD29921515AB661E07DFE3D4D12" Guid="{2AFA0772-E997-4FDF-8C36-7B4BA7CBFA62}">
+                            <Component Id="cmp827AEAD29921515AB661E07DFE3D4D12" Guid="{8EBAAEAA-8C90-4DEA-BE30-9D202045C8B7}">
                                 <File Id="fil0BB5EF55371F371B62CBD65EEF18AE8C" KeyPath="yes" Source="$(var.ClientPath)\src\app\components\header\header.component.ts" />
                             </Component>
                         </Directory>
                         <Directory Id="dir89F17C5A02DEB131E343EE1FDC85850F" Name="navigation">
-                            <Component Id="cmp942A9DAC484DEEAD9E56D5F9B15B9F9B" Guid="{F296435F-D173-4291-BBA5-A2DD9052492F}">
+                            <Component Id="cmp942A9DAC484DEEAD9E56D5F9B15B9F9B" Guid="{A1D28D30-6E9A-42D0-9923-B34A56D2C142}">
                                 <File Id="fil229D66A2B0FC7D2EA1F5ED07CEBC2C33" KeyPath="yes" Source="$(var.ClientPath)\src\app\components\navigation\navigation.component.css" />
                             </Component>
-                            <Component Id="cmpFEB8406B2123B8E8C90D2FCC3A85FAEC" Guid="{FA6FA762-C2DE-4B88-8811-2B2CBC98B8F6}">
+                            <Component Id="cmpFEB8406B2123B8E8C90D2FCC3A85FAEC" Guid="{25795B28-601D-42AF-ACC3-83EF3C8B3DD7}">
                                 <File Id="filD8F6D766E69A46856C011C7B1182BCE5" KeyPath="yes" Source="$(var.ClientPath)\src\app\components\navigation\navigation.component.html" />
                             </Component>
-                            <Component Id="cmp3920624BD7F1BF3AF7188E895B0A7370" Guid="{A6C4F074-E97A-413C-8A7E-09D92F1100CF}">
+                            <Component Id="cmp3920624BD7F1BF3AF7188E895B0A7370" Guid="{08A92A3D-A027-4B9E-8156-7C32B2225A52}">
                                 <File Id="fil019CDB90B6B82AE63024A9A7C1CB576A" KeyPath="yes" Source="$(var.ClientPath)\src\app\components\navigation\navigation.component.ts" />
                             </Component>
                         </Directory>
                     </Directory>
                     <Directory Id="dirAB2156ED8816430AA059F4300BB5F1D3" Name="guards">
-                        <Component Id="cmpA969AF0CC4125A8F75FA6DA8DF120314" Guid="{453824A8-8454-44DF-AAA5-E30CB24FA595}">
+                        <Component Id="cmpA969AF0CC4125A8F75FA6DA8DF120314" Guid="{11FC29BE-4E7C-485D-AA9C-68C0B09398B5}">
                             <File Id="fil80A2B053264902FF623BBB96F37DFAFB" KeyPath="yes" Source="$(var.ClientPath)\src\app\guards\auth.guard.ts" />
                         </Component>
                     </Directory>
                     <Directory Id="dirF28A2AEBDB28A42982178DD4370F2EC2" Name="layouts">
-                        <Component Id="cmp9219B9DAC60F92B610B6B8DCBE3B300A" Guid="{6579E294-EEA5-4F92-ABDA-F97FB9FE85B1}">
+                        <Component Id="cmp9219B9DAC60F92B610B6B8DCBE3B300A" Guid="{B743D233-A516-41F9-8582-C3E53CAD1BF6}">
                             <File Id="fil722759A0FAEE2D8CD9358465405E0A1A" KeyPath="yes" Source="$(var.ClientPath)\src\app\layouts\index.ts" />
                         </Component>
                         <Directory Id="dirBEAFB9E9D0035366FF06F186B1BB132C" Name="fulllayout">
-                            <Component Id="cmpDE5AADED5114BDED824CF8C0CA5B9846" Guid="{EFFDFE5D-DDCB-48E2-8E05-926611FC7F80}">
+                            <Component Id="cmpDE5AADED5114BDED824CF8C0CA5B9846" Guid="{11FCF33C-CA1F-4982-BB8A-D270DFAC247D}">
                                 <File Id="fil50774712FCD24D72585489B3D07989C2" KeyPath="yes" Source="$(var.ClientPath)\src\app\layouts\fulllayout\fulllayout.component.css" />
                             </Component>
-                            <Component Id="cmp34DF9EBCCC79B4F7B25E606BF76CFA3E" Guid="{6EB7A4B6-EF0B-4EF1-8BD8-4714545BA547}">
+                            <Component Id="cmp34DF9EBCCC79B4F7B25E606BF76CFA3E" Guid="{7094304A-F497-47D9-AE59-045AC6C039EA}">
                                 <File Id="filD75C8208E927D0AB3E56D2383A7F241C" KeyPath="yes" Source="$(var.ClientPath)\src\app\layouts\fulllayout\fulllayout.component.html" />
                             </Component>
-                            <Component Id="cmp872253757BA1B20CDA486443388737CE" Guid="{A45A6DC0-9A4C-466D-9AF3-71AF939377E3}">
+                            <Component Id="cmp872253757BA1B20CDA486443388737CE" Guid="{DAA0834A-6FF5-4FDD-AAAB-A7A938F6CE37}">
                                 <File Id="fil575A22E824CACFD4DD9AEC27351FDADA" KeyPath="yes" Source="$(var.ClientPath)\src\app\layouts\fulllayout\fulllayout.component.ts" />
                             </Component>
                         </Directory>
                         <Directory Id="dir31D47932B0DCF50B24FA104AE17EC4CA" Name="simple-layout">
-                            <Component Id="cmp8AD79FC432DBDBF3E773471FAE20484D" Guid="{CA58E774-F496-4DD9-BCCE-CE309F30441F}">
+                            <Component Id="cmp8AD79FC432DBDBF3E773471FAE20484D" Guid="{4EFCEE36-BAA9-4B8E-89FC-10C8459A9813}">
                                 <File Id="fil478588D0CAA80BFA273B3C8359488AB1" KeyPath="yes" Source="$(var.ClientPath)\src\app\layouts\simple-layout\simple-layout.component.ts" />
                             </Component>
                         </Directory>
                     </Directory>
                     <Directory Id="dirDE7663C16730AF38BC5F7BB69A4AC58B" Name="models">
-                        <Component Id="cmpA74523F8B643A13685FA06BEB369F4D6" Guid="{656EA9E8-7E38-4E4F-8C4D-C9C7CFFB6CD1}">
+                        <Component Id="cmpA74523F8B643A13685FA06BEB369F4D6" Guid="{77BAC37E-D014-449A-A75B-5E5268B57069}">
                             <File Id="fil2490492A32A8D2E1AAFC5FEC657FD01D" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\index.ts" />
                         </Component>
                         <Directory Id="dirEE9959798B62D9F434EFA1835E62AD56" Name="advanced">
-                            <Component Id="cmp9F4ADC7BEC77BB8023E48C13AA3AB62F" Guid="{23E78601-EF28-4434-BADA-7D421E37AADA}">
+                            <Component Id="cmp9F4ADC7BEC77BB8023E48C13AA3AB62F" Guid="{135FC9A4-0669-411D-A5AE-67CE3203A045}">
                                 <File Id="filCBE82F615BBAA14B658CD9CC2F955BF3" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\advanced\adv-entity-group-edit.model.ts" />
                             </Component>
-                            <Component Id="cmp7F718F3A45B7FC64F712302AEF978A49" Guid="{82F28BA9-9CE0-4FBE-B592-82F32CBD7791}">
+                            <Component Id="cmp7F718F3A45B7FC64F712302AEF978A49" Guid="{38247F6F-813C-4A2A-B826-73EDFF9F44E3}">
                                 <File Id="fil615354C26D34F892B59FC4625C39F9FB" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\advanced\adv-entity-group-list-request.model.ts" />
                             </Component>
-                            <Component Id="cmp22EA3284851E90441EB716E833E70D2D" Guid="{CDE1B8BB-D035-4606-8B97-018935E7F0EF}">
+                            <Component Id="cmp22EA3284851E90441EB716E833E70D2D" Guid="{B28026B8-4FDD-49A8-8DD6-C2383D64E7C6}">
                                 <File Id="filFF34D0C99A057874FA024E2507456A2F" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\advanced\adv-entity-group-list.model.ts" />
                             </Component>
-                            <Component Id="cmp4C00F7325E52FD341BB902CFC869CE5E" Guid="{C643AD55-434E-4914-B6B0-FAF8E3EB5983}">
+                            <Component Id="cmp4C00F7325E52FD341BB902CFC869CE5E" Guid="{3DDAB003-D378-46BE-B395-9B18D2927397}">
                                 <File Id="filF95760FA051D490982A1ED4A1606705C" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\advanced\adv-entity-group.model.ts" />
                             </Component>
-                            <Component Id="cmp84BA83E7B67DE52BDE88632FEF556C31" Guid="{3428E2A8-FDB1-4CE7-A9EC-62E7BAD8B81B}">
+                            <Component Id="cmp84BA83E7B67DE52BDE88632FEF556C31" Guid="{820454CD-354F-4932-B75D-4B0A2F141CCF}">
                                 <File Id="fil10650E54C202C00CD59B044B4827EFB8" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\advanced\adv-entity-item.model.ts" />
                             </Component>
-                            <Component Id="cmp1C17AB8433347851BEE9ACCCCE69C009" Guid="{853BAEB4-C543-4BDE-AC13-78A3B6B64DDF}">
+                            <Component Id="cmp1C17AB8433347851BEE9ACCCCE69C009" Guid="{EB7642C8-0C9B-4356-A81C-1C9B84D5FCA7}">
                                 <File Id="fil4987871333DB5DEE5B950F84F05391AA" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\advanced\index.ts" />
                             </Component>
-                            <Component Id="cmp037481AF70DF0D61520B3948A8B79FDC" Guid="{D22B35DE-19A6-4D9D-9270-2AC439479C89}">
+                            <Component Id="cmp037481AF70DF0D61520B3948A8B79FDC" Guid="{75193BB2-2F07-4E1C-A964-5A6129C5625C}">
                                 <File Id="filCEE9251F11039159A1491BD52EA9892A" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\advanced\site-name.model.ts" />
                             </Component>
-                            <Component Id="cmp0AB8F5D18F49FD57355E7D02A5FA65C5" Guid="{A6FB6157-3257-4CE3-9B19-8FE84BABA1A6}">
+                            <Component Id="cmp0AB8F5D18F49FD57355E7D02A5FA65C5" Guid="{DAF8797E-B36D-4D4D-89C6-3B050C048DA6}">
                                 <File Id="fil601A822A4138B8D2B946CC7E1D5BA0A5" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\advanced\worker-create.model.ts" />
                             </Component>
-                            <Component Id="cmp8E9205A21F12A16BB54A3DC55ECAB7F4" Guid="{23F77DFF-AD93-4F00-8D75-698D56EE0C5B}">
+                            <Component Id="cmp8E9205A21F12A16BB54A3DC55ECAB7F4" Guid="{1189EAD6-25F0-48C5-99A8-71ABB05B849D}">
                                 <File Id="fil4DD03AFAF97043FC75A59AFB32791B8B" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\advanced\worker.model.ts" />
                             </Component>
                         </Directory>
                         <Directory Id="dir80C44268BCDD6DEF6CBB7D0CE14C85D0" Name="auth">
-                            <Component Id="cmp3B48764075EFB063CF571ACE0C954686" Guid="{0874F412-7C26-4F92-84FA-580D3F44F8AE}">
+                            <Component Id="cmp3B48764075EFB063CF571ACE0C954686" Guid="{523774C2-8756-4C36-9433-8BC3C4BB4B86}">
                                 <File Id="fil767EA2657F94686BB1D00F3D0EB82EDD" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\auth\auth-response.model.ts" />
                             </Component>
-                            <Component Id="cmp99AC88813EF7A4C4767A811D233C2E56" Guid="{986AFEB7-41F8-41BD-8C9F-9870A6FE55FC}">
+                            <Component Id="cmp99AC88813EF7A4C4767A811D233C2E56" Guid="{0335C2D3-182A-46FB-89F6-7FA75FF9688F}">
                                 <File Id="filA1CDDA67321CA5A74A9A472311A83664" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\auth\index.ts" />
                             </Component>
-                            <Component Id="cmpCBB08D5792B9E013D480284F25010BF3" Guid="{19F40090-244A-47CD-8744-FF551AC5BEB3}">
+                            <Component Id="cmpCBB08D5792B9E013D480284F25010BF3" Guid="{06D52EF4-6285-4C0A-8156-1873B0D16904}">
                                 <File Id="fil14A4F3CB0EB9D1E066428F5C7DBA4A6D" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\auth\login-request.model.ts" />
                             </Component>
-                            <Component Id="cmpE06ECDA8CED9E6C2034D48D4D33D0E82" Guid="{989239DC-AA14-4DE6-8FD4-44F92B875F1E}">
+                            <Component Id="cmpE06ECDA8CED9E6C2034D48D4D33D0E82" Guid="{A76287DD-06DA-4415-8E1D-40BD3C7F495B}">
                                 <File Id="fil26FB4641A0EDFEFDD8BA1C7A6E0AFCF2" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\auth\password-restore.model.ts" />
                             </Component>
                         </Directory>
                         <Directory Id="dir6F16E856DB748E238934F910920F2B92" Name="cases">
-                            <Component Id="cmp3F59D0E54978C5D21B83961F037718AA" Guid="{BBFF6CCF-F902-4468-ABDC-2527F4E6C0E0}">
+                            <Component Id="cmp3F59D0E54978C5D21B83961F037718AA" Guid="{B0293E22-A19C-4D01-88F7-614C717C8BAD}">
                                 <File Id="filB033FF55111C4DDF91717DB62B477A35" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\cases\case.model.ts" />
                             </Component>
-                            <Component Id="cmp4CEC2CC099B316292BA12A808D1041B2" Guid="{348D425A-AD11-4361-8565-A1EF30716B93}">
+                            <Component Id="cmp4CEC2CC099B316292BA12A808D1041B2" Guid="{8F7D2CE1-C560-4D64-99D8-D8CB7FA7E7C1}">
                                 <File Id="filDEED2DA0E4E60FA85D48BE719BF38F13" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\cases\index.ts" />
                             </Component>
                             <Directory Id="dir5B3634493F1A037512394E22EFCD3B92" Name="request">
-                                <Component Id="cmpCF0BC1294AE7586E9E845F45309F939A" Guid="{6A95D18A-BFCB-48F2-8969-0ACA87FAE762}">
+                                <Component Id="cmpCF0BC1294AE7586E9E845F45309F939A" Guid="{F4789433-DE49-4E86-A6D7-FABED77F2B4F}">
                                     <File Id="filBF37099429AB40B4404E259CCD1C0C18" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\cases\request\edit-request-field-value.model.ts" />
                                 </Component>
-                                <Component Id="cmp68D3E2F3FE7CE8B71734ABE61C701E35" Guid="{99F241DF-2A2A-4B07-BAC7-CB4AD6795973}">
+                                <Component Id="cmp68D3E2F3FE7CE8B71734ABE61C701E35" Guid="{561814AC-8346-40CE-8CAB-F8CE8CCAB35A}">
                                     <File Id="fil48F05468DC13A2EE220A9E6AE6026BA5" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\cases\request\edit-request-field.model.ts" />
                                 </Component>
-                                <Component Id="cmp67B2C555D168F46D533D710342927BCE" Guid="{CE7D863D-66C6-4AF5-B94C-176807111096}">
+                                <Component Id="cmp67B2C555D168F46D533D710342927BCE" Guid="{270003E0-1387-4F52-8C15-FACDACD3EB10}">
                                     <File Id="fil0E077776278A4ADE09F43322C2367C40" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\cases\request\edit-request-group-field.model.ts" />
                                 </Component>
-                                <Component Id="cmp9EBCE9D7C773064E9DC70933C5D8E7CD" Guid="{F9F39A48-AF07-4CBA-B162-DCBFE38628A3}">
+                                <Component Id="cmp9EBCE9D7C773064E9DC70933C5D8E7CD" Guid="{C66E810C-3F3A-43DB-BB49-9A408AA51CC3}">
                                     <File Id="fil2F25709217FCAE54A4183AB5D8F2FE4E" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\cases\request\edit-request.model.ts" />
                                 </Component>
-                                <Component Id="cmp1211B03B3A78D9FE5567C7C02E20E6E8" Guid="{E6E63848-E4D6-44D9-B634-B525D0139849}">
+                                <Component Id="cmp1211B03B3A78D9FE5567C7C02E20E6E8" Guid="{9759194A-92DE-4854-AECB-09EE6FEA80D3}">
                                     <File Id="fil49E90EB6175E4B2DB5863C788E156EBE" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\cases\request\reply-request.model.ts" />
                                 </Component>
-                                <Component Id="cmpC1D810F5C66084C2547BED00482BBED1" Guid="{2FEDEA02-C370-497E-943C-CEE90016E4D3}">
+                                <Component Id="cmpC1D810F5C66084C2547BED00482BBED1" Guid="{36BF8DEE-F1A9-45DE-9EFE-BDF9714A6F0E}">
                                     <File Id="fil0264F76AD0A7BF9811ECC9D3E54DF83F" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\cases\request\update-columns.model.ts" />
                                 </Component>
                             </Directory>
                             <Directory Id="dirFA839DF7A90278DA4656A09AF5B5F41D" Name="response">
-                                <Component Id="cmp7A2A9C8AB00FBC1BC9B2673414A66BEC" Guid="{DC6F9D05-AE94-4977-A48B-A990A0EA61F3}">
+                                <Component Id="cmp7A2A9C8AB00FBC1BC9B2673414A66BEC" Guid="{00713EA7-A1B9-4A27-BC66-442233C5E63E}">
                                     <File Id="filF5C38A649EF42D6E1A5DE3BB55A1C7BF" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\cases\response\case-element.ts" />
                                 </Component>
-                                <Component Id="cmp61CEBF8BE18BA0D088FB1F335F019CFC" Guid="{58357EBB-9513-4F2F-A311-189B6B925AAD}">
+                                <Component Id="cmp61CEBF8BE18BA0D088FB1F335F019CFC" Guid="{E8E525AA-2EB3-4247-BFFA-B1D2BD984089}">
                                     <File Id="fil49A48E4995D019C92CD07570D9705538" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\cases\response\case-field-value.ts" />
                                 </Component>
-                                <Component Id="cmpFAB9588298D053ED2104E4888F9BE6BC" Guid="{023E583F-6252-4A4E-8724-147B9D2FC82B}">
+                                <Component Id="cmpFAB9588298D053ED2104E4888F9BE6BC" Guid="{9DE7710D-6F5C-4C86-95B9-F4D0C012FFCE}">
                                     <File Id="fil8A6E64AFF3681F2ECE951C7E77D80154" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\cases\response\column-field.model.ts" />
                                 </Component>
-                                <Component Id="cmp368366A6A7C589B2E24BEAF464EE0807" Guid="{44C0B549-1257-4FF1-AC2E-6F54D146A7E6}">
+                                <Component Id="cmp368366A6A7C589B2E24BEAF464EE0807" Guid="{753361CF-15C2-42C3-A88A-8A6DA7E3EB96}">
                                     <File Id="fil50A0737016575B89702946216B5DFB06" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\cases\response\data-item-group.model.ts" />
                                 </Component>
-                                <Component Id="cmpC48FF104DC97A7BAA67EF77A1B0B9174" Guid="{CE8B7D50-69E0-442E-AF96-781A0E1B108F}">
+                                <Component Id="cmpC48FF104DC97A7BAA67EF77A1B0B9174" Guid="{95ECD940-3D98-48A8-85B5-E451786A9DA8}">
                                     <File Id="filFC472D28EB6D5D4D2B28E51C812BED55" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\cases\response\data-item.model.ts" />
                                 </Component>
-                                <Component Id="cmp87C1F19A07EAF2A3B90CE1EF5E542C5D" Guid="{173ADB53-E4F2-44BC-9D62-E1A5F8213DB3}">
+                                <Component Id="cmp87C1F19A07EAF2A3B90CE1EF5E542C5D" Guid="{DF81543D-D988-4263-BF83-73E3F42652AD}">
                                     <File Id="fil9F0299D30AF9E98A6D0FD9A4E780E624" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\cases\response\key-value-pair.model.ts" />
                                 </Component>
-                                <Component Id="cmp706691CA21286F05A933668E5ED92D73" Guid="{3FFF1EDD-7570-4E6A-B264-50B298F1D739}">
+                                <Component Id="cmp706691CA21286F05A933668E5ED92D73" Guid="{F9FBF3A8-6F72-4442-A5F9-B26A3AF000D2}">
                                     <File Id="fil69C779B22410EBCAF95609E3B6A3B64B" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\cases\response\reply-element.model.ts" />
                                 </Component>
-                                <Component Id="cmp2AB0C2D487FFEB25596BBA03FC9EDBC4" Guid="{A193A4A5-C98F-4A83-ACC6-931F97D95277}">
+                                <Component Id="cmp2AB0C2D487FFEB25596BBA03FC9EDBC4" Guid="{2893B684-CBCF-4392-8061-C7637B56254E}">
                                     <File Id="filBC83236AB98FB67705441DBA5E6E0D75" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\cases\response\uploaded-data.model.ts" />
                                 </Component>
                             </Directory>
                         </Directory>
                         <Directory Id="dirAE2A529FDDF17D327E90162B4250B905" Name="common">
-                            <Component Id="cmpCD633332A68D090DE8A968B028146712" Guid="{37A5E543-AA88-4550-A69C-9816C6F35D75}">
+                            <Component Id="cmpCD633332A68D090DE8A968B028146712" Guid="{949ECBB9-CBA0-44B9-96C5-7E31274C7676}">
                                 <File Id="fil11DCD565518BC40C93399D1CD37FBF4D" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\common\geo-object.model.ts" />
                             </Component>
-                            <Component Id="cmp2D9A201F5A51D869D7C3FE154C255B36" Guid="{1D8BFD0E-6971-4E02-9BDD-1916B7D34F57}">
+                            <Component Id="cmp2D9A201F5A51D869D7C3FE154C255B36" Guid="{B228BF15-14DD-4729-891D-F0648174F070}">
                                 <File Id="fil6BE9A938F252AF4DBDFE9127C10F33BA" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\common\index.ts" />
                             </Component>
-                            <Component Id="cmp0F260C32E6F0CFDC5BBFF7F8C9BF210F" Guid="{AD8BE5BF-46D6-4ADB-A03A-0C3B62CE10F6}">
+                            <Component Id="cmp0F260C32E6F0CFDC5BBFF7F8C9BF210F" Guid="{6AA52CEE-0549-443E-8B14-9902921035CB}">
                                 <File Id="filA4CD554B72B59B7511B17E4ED6BACF94" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\common\pagination-model.ts" />
                             </Component>
                         </Directory>
                         <Directory Id="dirDA1AB6AF1C8E31B987ABC0B108194D7B" Name="dto">
-                            <Component Id="cmp167C1FD4B6071958E9BE9734C18CB234" Guid="{825C1EAB-CA03-4CB6-83BF-318BBF2F5972}">
+                            <Component Id="cmp167C1FD4B6071958E9BE9734C18CB234" Guid="{F469476B-1315-4541-8FEB-B1D35D58B907}">
                                 <File Id="fil98A303BD65CDE58AA22D2A9466B0A7E0" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\dto\field.dto.ts" />
                             </Component>
-                            <Component Id="cmpED52D791DFBB95042450044317945A01" Guid="{0223D734-A6F7-426E-B2C0-15C530ED1554}">
+                            <Component Id="cmpED52D791DFBB95042450044317945A01" Guid="{0658BC07-801C-48CA-8485-B84BE7A4A234}">
                                 <File Id="filB5EE76F6F343FB26BA6687CE4C55F399" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\dto\index.ts" />
                             </Component>
-                            <Component Id="cmp6DA38C9CEA3ED3F4BD8672361A2EFD89" Guid="{23E576D3-8BB7-4BF5-823E-B620FAE73BCC}">
+                            <Component Id="cmp6DA38C9CEA3ED3F4BD8672361A2EFD89" Guid="{BA9670E1-EB0F-4C8E-B5E8-1A07B229EBC4}">
                                 <File Id="fil386679D858BC312428D3BF160E44C638" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\dto\site-name.dto.ts" />
                             </Component>
-                            <Component Id="cmp38B41750EF7D99027461E2E942316338" Guid="{1FECD908-F97B-4A65-B202-433E4BBB2D05}">
+                            <Component Id="cmp38B41750EF7D99027461E2E942316338" Guid="{9E4D45AD-141E-4635-9BD8-4FDC174518A8}">
                                 <File Id="fil7D9D952E9F59532D498314266B3FE89F" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\dto\site.dto.ts" />
                             </Component>
-                            <Component Id="cmp90384508E854CC8ADDBD48D20AB683BF" Guid="{8837A064-30D7-4F21-9C30-874A4F11BB92}">
+                            <Component Id="cmp90384508E854CC8ADDBD48D20AB683BF" Guid="{A1911B6C-807D-4071-B604-9C769CEE7322}">
                                 <File Id="filF05703F71D0FBC500582EC85088C006D" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\dto\template.dto.ts" />
                             </Component>
-                            <Component Id="cmp9F9832786111C91B05B00545B835E0DC" Guid="{656AD3B7-D421-4E6F-9C43-290F03AEBADD}">
+                            <Component Id="cmp9F9832786111C91B05B00545B835E0DC" Guid="{A1260FF5-3A57-4C1B-96C8-75610DD3D710}">
                                 <File Id="filF09AB41439F2FC6C72F090E0E05A337F" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\dto\unit.dto.ts" />
                             </Component>
-                            <Component Id="cmp6DDE033409DA3743EB35F4A58BFFF630" Guid="{E74B4A83-4D8E-4BB3-874B-D9CC3F40C6E9}">
+                            <Component Id="cmp6DDE033409DA3743EB35F4A58BFFF630" Guid="{F478A52E-A16E-4817-8575-9A8A3466AAC8}">
                                 <File Id="fil55077E95EFC4EECAF38B3D34D0CAB2AC" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\dto\worker.dto.ts" />
                             </Component>
                         </Directory>
                         <Directory Id="dirA4ED0F49C8CB66159988F3938A1F8A55" Name="eFormTemplates">
-                            <Component Id="cmp42EB777EFE95F81515FC13EB3D83AAE3" Guid="{2A3E6983-4494-4D65-B95A-F64347FE3FC2}">
+                            <Component Id="cmp42EB777EFE95F81515FC13EB3D83AAE3" Guid="{CD8834B7-3D58-45D9-A2FE-D15AC3449C32}">
                                 <File Id="fil870B898D98376A7798976D5568928EE8" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\eFormTemplates\deploy-checkbox.model.ts" />
                             </Component>
-                            <Component Id="cmpAFFDD1E1D535F9C3A9B0CF9FF05316D4" Guid="{FE1E592B-26EC-4B38-96A0-3BD172BC029E}">
+                            <Component Id="cmpAFFDD1E1D535F9C3A9B0CF9FF05316D4" Guid="{B33D0552-8DFB-44DF-91FC-6417A85A8D10}">
                                 <File Id="filB35CBE4DA5409137F3169EC7A21609B0" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\eFormTemplates\deploy-to.model.ts" />
                             </Component>
-                            <Component Id="cmp2A8EFD45499220185E3997EFF292D67E" Guid="{4DC9EF9A-2D32-4611-A763-B8E8B5D7B1E1}">
+                            <Component Id="cmp2A8EFD45499220185E3997EFF292D67E" Guid="{B8A32B82-8FF5-4D8A-9F49-68EC832FD8C0}">
                                 <File Id="filD336F39751F0DB4912A516B883951E42" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\eFormTemplates\deploy.model.ts" />
                             </Component>
-                            <Component Id="cmp5284AA323DACD1DC737461A1777D7888" Guid="{06C307E5-0309-48D9-96CB-493B0D68E2B6}">
+                            <Component Id="cmp5284AA323DACD1DC737461A1777D7888" Guid="{D4221180-F62D-4B84-A807-A98688042185}">
                                 <File Id="fil757745975FD79B6194B58BB31D90F725" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\eFormTemplates\eform-xml.model.ts" />
                             </Component>
-                            <Component Id="cmp6BEDEAF6777AC37C690A8CB1AF1CC13B" Guid="{FE4254F1-3F66-4496-A3BF-B87814EC48AA}">
+                            <Component Id="cmp6BEDEAF6777AC37C690A8CB1AF1CC13B" Guid="{A52FCC6D-69E0-4B64-864E-2717AB27D1DB}">
                                 <File Id="fil46D0B7CC9748F94ACF1E3E1FD50C37E7" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\eFormTemplates\index.ts" />
                             </Component>
                         </Directory>
                         <Directory Id="dirF0D693C2008B5E3DA4B74F3F55573290" Name="settings">
-                            <Component Id="cmpD414951C8178D16F3AD3AF4662075CA5" Guid="{155F6C67-AC50-41A7-9C3A-0C4DC0C0313B}">
+                            <Component Id="cmpD414951C8178D16F3AD3AF4662075CA5" Guid="{621AFF49-9519-4EF1-8531-CBE29FA74A74}">
                                 <File Id="fil07F3DDF1537944B9D6EF1BB0AE1CFB9A" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\settings\admin-settings.model.ts" />
                             </Component>
-                            <Component Id="cmp9DA2228EE072D84940F017D076E439CC" Guid="{E787C762-48E8-4579-B838-9F2467397835}">
+                            <Component Id="cmp9DA2228EE072D84940F017D076E439CC" Guid="{026AE201-FA38-44EC-8F95-73913A1BB0ED}">
                                 <File Id="fil565DCC8662B9C23D4B90471ABC23D734" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\settings\admin-setup.model.ts" />
                             </Component>
-                            <Component Id="cmp94187F64B8CCF84A3F2B3C1CBE2EB803" Guid="{BB3DCCFF-E0F6-4E3B-842B-B950FDAB3CCF}">
+                            <Component Id="cmp94187F64B8CCF84A3F2B3C1CBE2EB803" Guid="{F88F55B5-3864-428D-999B-CE2FED7F9C45}">
                                 <File Id="fil16F38844BE43A7A79F36357B84E0F4EB" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\settings\connection-string-main.ts" />
                             </Component>
-                            <Component Id="cmp0E362C25291DE55D241F0C8C6EA50F55" Guid="{E65367A9-31C9-4C76-B570-D3E389CB4366}">
+                            <Component Id="cmp0E362C25291DE55D241F0C8C6EA50F55" Guid="{025D12A3-42E7-457A-A61B-881E56574790}">
                                 <File Id="fil5EA2805410A69A3B480A5F85B2F64D30" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\settings\connection-string-sdk.ts" />
                             </Component>
-                            <Component Id="cmpE8F3955BAB011124F19B7C7FB70B8BCA" Guid="{A2A1F9DC-37EE-49C3-8D46-D30F254BFC76}">
+                            <Component Id="cmpE8F3955BAB011124F19B7C7FB70B8BCA" Guid="{8F3A019A-4474-4AF5-9BCE-D0AEC805817E}">
                                 <File Id="filFB389AFCA00213946E9C3C94DD740BF8" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\settings\connection-string.model.ts" />
                             </Component>
-                            <Component Id="cmpF46B5D7F653557C292D47B31CCF82BA4" Guid="{5A47E09E-5391-438B-80F9-BB5A5EFD7B11}">
+                            <Component Id="cmpF46B5D7F653557C292D47B31CCF82BA4" Guid="{D4193BA8-B379-4CC9-ACF1-1E82A27A6DB6}">
                                 <File Id="fil447676789C9DC2C5BCA0831290605C1B" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\settings\header-settings.model.ts" />
                             </Component>
-                            <Component Id="cmpC6EB999DC9357D5CC4AD11DAA6A30A49" Guid="{7C506425-F523-4049-8349-24411AD76B88}">
+                            <Component Id="cmpC6EB999DC9357D5CC4AD11DAA6A30A49" Guid="{A5F49D5C-EC6D-42B5-883E-2A2FA7FE14DD}">
                                 <File Id="filE280C14922375572D4E1BA928097BFDB" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\settings\index.ts" />
                             </Component>
-                            <Component Id="cmp621BC84ADC8A850E99C7014DFFD3F680" Guid="{7D563FB0-55D9-4977-983B-5FC7DFD0A958}">
+                            <Component Id="cmp621BC84ADC8A850E99C7014DFFD3F680" Guid="{6F51E0EB-47E7-47EF-B404-828ACF2BD08D}">
                                 <File Id="fil10C6C1B490360EE7B08BD423952793F9" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\settings\login-page-settings.model.ts" />
                             </Component>
-                            <Component Id="cmpC455174D0F12DF046E4A54A201766924" Guid="{9CE303EF-6C20-4176-AF99-970BB15F94BC}">
+                            <Component Id="cmpC455174D0F12DF046E4A54A201766924" Guid="{6CABF5DD-C008-4502-82D7-CE2B22DF72D2}">
                                 <File Id="fil371817F4030F4B407F7427C7EB16CB0B" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\settings\smtp-settings.model.ts" />
                             </Component>
                         </Directory>
                         <Directory Id="dir11E415F87AEDE548FF1054E4B4DEA1C6" Name="simpleSite">
-                            <Component Id="cmpA7F074B037427DE936466CA2A90B3791" Guid="{DEBF5487-64A7-4EC8-AAD4-C6395FAB0363}">
+                            <Component Id="cmpA7F074B037427DE936466CA2A90B3791" Guid="{D97311E2-06E2-4880-B183-EC5BCB733390}">
                                 <File Id="filFCDE5732FEAC9A9690196F06AE203087" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\simpleSite\index.ts" />
                             </Component>
-                            <Component Id="cmp91F12C12D21B94D44310AFF8704161B8" Guid="{F906F8EB-74C8-48C1-B9D3-BE9265ACCF87}">
+                            <Component Id="cmp91F12C12D21B94D44310AFF8704161B8" Guid="{9F197DB0-615F-4AD1-B813-D19EC85004A9}">
                                 <File Id="fil82F34065130BE02CF17656B88FBDCA55" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\simpleSite\simple-site.model.ts" />
                             </Component>
                         </Directory>
                         <Directory Id="dirFFAC7BCCFCE57F7E5A58A8233562DE1D" Name="user">
-                            <Component Id="cmpBCB41ACBD0BEE16A0425742911CAD7E1" Guid="{50C76663-120F-4E7C-8EFD-C247B2D966F5}">
+                            <Component Id="cmpBCB41ACBD0BEE16A0425742911CAD7E1" Guid="{52018737-49F7-47C4-9D11-E66529EDB92C}">
                                 <File Id="filD614E43E0AA7942B13A64189634757E7" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\user\change-password.model.ts" />
                             </Component>
-                            <Component Id="cmp9F5C5C1B725E0A687A3D1537B8E3D037" Guid="{6F19B5D4-B7F6-4C27-92A3-200A63CEA92B}">
+                            <Component Id="cmp9F5C5C1B725E0A687A3D1537B8E3D037" Guid="{86E40068-73A5-4124-BBC7-1F749E2C4821}">
                                 <File Id="filA7C0A637E5B4230F7C07A3B63158C3F6" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\user\index.ts" />
                             </Component>
-                            <Component Id="cmp0706D9C7C5B58858596F06B71885D0F4" Guid="{A586B058-1316-406A-8CB7-67A5CE37B0D7}">
+                            <Component Id="cmp0706D9C7C5B58858596F06B71885D0F4" Guid="{19A03465-1943-4A02-8126-AFDAAA2BF0A8}">
                                 <File Id="fil574E54E86FB1945CDE64537E0FA2AA19" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\user\user-info-model-list.ts" />
                             </Component>
-                            <Component Id="cmp8E85254D014BE8B635B7B897AEE365E1" Guid="{01A09C0A-50A5-496D-83A6-09BC61474F67}">
+                            <Component Id="cmp8E85254D014BE8B635B7B897AEE365E1" Guid="{1F912433-561F-40AD-A5A2-54BD44C4F161}">
                                 <File Id="fil51E596B8C7313E3014AFA2912FB7A4AA" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\user\user-info-model.ts" />
                             </Component>
-                            <Component Id="cmp900E5CDF920BBBCF477AB77ABFE59442" Guid="{FAA076BC-09BD-4CD4-A9CB-CACEB08DFC1B}">
+                            <Component Id="cmp900E5CDF920BBBCF477AB77ABFE59442" Guid="{CF79317C-0266-471B-9BF6-C7DBE6319AB4}">
                                 <File Id="filD8B3C04E1541B1461B99D80349996E87" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\user\user-register-model.ts" />
                             </Component>
                         </Directory>
                     </Directory>
                     <Directory Id="dir4714EBF60E8313C0B1014B3174667101" Name="modules">
                         <Directory Id="dirCF53552DDC6711ABD67D138EBA87C4AA" Name="admin">
-                            <Component Id="cmpF9F85943FF012AB96610A1670E3132EE" Guid="{D39BB9AF-FA6D-4C8D-B80E-72784685CF5A}">
+                            <Component Id="cmpF9F85943FF012AB96610A1670E3132EE" Guid="{54F99BAE-8EA3-4813-9B47-C8E54A9883BE}">
                                 <File Id="filB51FA670364AE808F49D2C56D94521FD" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\admin\admin-routing.module.ts" />
                             </Component>
-                            <Component Id="cmpF487178531AD80032A316BA91E075589" Guid="{F91584F0-ABDA-475C-A82F-82CF28A81F98}">
+                            <Component Id="cmpF487178531AD80032A316BA91E075589" Guid="{E699B17C-745D-4232-A1B5-08AB7B8F8BAE}">
                                 <File Id="fil42402FF5FCEABFB9D82AE50165BC9965" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\admin\admin.module.ts" />
                             </Component>
                             <Directory Id="dirB1AD3A29587DF295A7C8D6893B826961" Name="components">
-                                <Component Id="cmp8B6088CAB3E6F444B6452022D608AC66" Guid="{B6EEF74C-4EFB-4ADB-B94A-93AB06DB540D}">
+                                <Component Id="cmp8B6088CAB3E6F444B6452022D608AC66" Guid="{F6377EC9-C01A-49BF-83DC-5C439773BBA0}">
                                     <File Id="fil19E908A26888F117FB5EF93241719C5D" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\admin\components\admin.component.css" />
                                 </Component>
-                                <Component Id="cmp04329C70B6E93438E0DBF561D93B0668" Guid="{3CAF4E84-149C-4EAD-A8FD-796FEA2B2A90}">
+                                <Component Id="cmp04329C70B6E93438E0DBF561D93B0668" Guid="{8E002CCB-E775-474C-A1AE-FEEBD394C1D8}">
                                     <File Id="fil47ED1364B1549A1CE7A6766B752F0584" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\admin\components\admin.component.ts" />
                                 </Component>
                                 <Directory Id="dirFB37C1012BD7DB83596F3F01E2FC2EB5" Name="change-password">
-                                    <Component Id="cmpFAD146246E878A142364449FC9657888" Guid="{37F8CB83-B24A-47A4-918F-85B44CA347B7}">
+                                    <Component Id="cmpFAD146246E878A142364449FC9657888" Guid="{18A33568-423F-4724-A932-2CE0DD43E190}">
                                         <File Id="filEA8DD53B346F11E867BD6E6CE432084C" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\admin\components\change-password\change-password.component.html" />
                                     </Component>
-                                    <Component Id="cmpD0B2E6F29F82940F655663C6F82CCA9C" Guid="{AEA31DD4-B02A-48CB-8E8D-50A675785B57}">
+                                    <Component Id="cmpD0B2E6F29F82940F655663C6F82CCA9C" Guid="{FD70CCFD-0E94-43CA-98A8-B5E232DA14B3}">
                                         <File Id="filDA4630DE109833C34679DD6F06794F90" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\admin\components\change-password\change-password.component.ts" />
                                     </Component>
                                 </Directory>
                                 <Directory Id="dirC74E835B39AECE6FC31B7DF3DF3274FF" Name="user">
-                                    <Component Id="cmp989136448F6D48DCCA7FF1B13100A276" Guid="{229A4EA7-74B1-42D8-B476-4E96978F7A38}">
+                                    <Component Id="cmp989136448F6D48DCCA7FF1B13100A276" Guid="{132D9895-1C98-4195-B31F-1A1E8AB38496}">
                                         <File Id="filFA9155FBC5F23AEA612880EFE378FABD" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\admin\components\user\user.component.css" />
                                     </Component>
-                                    <Component Id="cmpE2984B9E2314F7691D3C6597C1135EE1" Guid="{69451889-72BD-452C-A417-44347B49B635}">
+                                    <Component Id="cmpE2984B9E2314F7691D3C6597C1135EE1" Guid="{1C6E92FD-D036-47C7-BA51-6E0B10C6E122}">
                                         <File Id="fil8710BAD2E74DF52F54B53B7B3842B78C" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\admin\components\user\user.component.html" />
                                     </Component>
-                                    <Component Id="cmpD1FEF603A59D8FF56D51ED0FD72F0A59" Guid="{9D9DE754-C382-4067-8C89-3FD322CFF4F2}">
+                                    <Component Id="cmpD1FEF603A59D8FF56D51ED0FD72F0A59" Guid="{C87DC90A-F147-4CA7-A78B-54808C21C4F8}">
                                         <File Id="filCC4941B76CE04F9CFF1FF7080F17E8CD" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\admin\components\user\user.component.ts" />
                                     </Component>
                                 </Directory>
                                 <Directory Id="dir3D8A9E293A689537B7267AE3F80FE5F3" Name="user-edit">
-                                    <Component Id="cmp8CABBB48CD890675F0C4316652CAD425" Guid="{FC93BB75-DC71-4BA3-B81A-E05154305650}">
+                                    <Component Id="cmp8CABBB48CD890675F0C4316652CAD425" Guid="{32C79C28-E42B-463B-8543-EC918E90A9CE}">
                                         <File Id="filD60E561DBDC422641C14CB296B7E9AA5" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\admin\components\user-edit\user-edit.component.css" />
                                     </Component>
-                                    <Component Id="cmpED51A5DAA5553750E2D94E3D76E66129" Guid="{BF92D425-087B-4A6F-82D6-748D0362A286}">
+                                    <Component Id="cmpED51A5DAA5553750E2D94E3D76E66129" Guid="{19DCD9CD-97B0-4468-91D1-1D6FC9F6D41F}">
                                         <File Id="filC13F2AE2C82E443EB9BD88484D6AFA42" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\admin\components\user-edit\user-edit.component.html" />
                                     </Component>
-                                    <Component Id="cmp9704FDC1C21F009D1A87DB26A9C3D5C0" Guid="{FF638375-BCEE-43F1-A9ED-758CEF481CB0}">
+                                    <Component Id="cmp9704FDC1C21F009D1A87DB26A9C3D5C0" Guid="{6B44FBBD-298E-42F1-AA24-E7E3F440FA41}">
                                         <File Id="fil1511500AD6038EB0BA85BE7B4FB09273" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\admin\components\user-edit\user-edit.component.ts" />
                                     </Component>
                                 </Directory>
                                 <Directory Id="dir6497DCF93A8B61E2D92724A520BC9184" Name="user-grid">
-                                    <Component Id="cmp052B0CB4819CBC8AEAA8AD3E3F0236D5" Guid="{34A15CE2-B542-429A-926E-B31FA67FEDB1}">
+                                    <Component Id="cmp052B0CB4819CBC8AEAA8AD3E3F0236D5" Guid="{5A2A18A2-1678-4F67-830B-1CCC655D303E}">
                                         <File Id="filA6D060C232220EEF0DFA21F246FE3294" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\admin\components\user-grid\user-grid.component.css" />
                                     </Component>
-                                    <Component Id="cmp7AFEA49E15D01E5495E1784026EB5478" Guid="{0CF5655E-9CC5-466D-ACB7-D646042863C1}">
+                                    <Component Id="cmp7AFEA49E15D01E5495E1784026EB5478" Guid="{D9616B7E-0F59-4F0F-A969-C29C3DD3DCEA}">
                                         <File Id="fil0C5EAF17F62C91F23B24CF808F1537E5" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\admin\components\user-grid\user-grid.component.html" />
                                     </Component>
-                                    <Component Id="cmp555B6760ECD3C7F889B2896A5D20614D" Guid="{5C229CA6-9DBF-4399-9D9F-90CD23538E8D}">
+                                    <Component Id="cmp555B6760ECD3C7F889B2896A5D20614D" Guid="{63A3867B-57EF-4B81-B54C-BC61B8C8A19D}">
                                         <File Id="filC1310CA5F01C107A07C118FB735CDD4B" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\admin\components\user-grid\user-grid.component.ts" />
                                     </Component>
                                 </Directory>
                                 <Directory Id="dirB5BD29988E0D041B68F61421293B94EA" Name="user-pagination">
-                                    <Component Id="cmp1989F03DBABFFBE1066ECED781AC8AE1" Guid="{C15E7D4A-E08F-45B7-8A3F-B69CB787617E}">
+                                    <Component Id="cmp1989F03DBABFFBE1066ECED781AC8AE1" Guid="{CEFDA4BA-99B7-4100-89CA-627853D3C3B7}">
                                         <File Id="fil5A61B8506DFFDD1DDA874B02FE0E2EB0" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\admin\components\user-pagination\user-pagination.component.html" />
                                     </Component>
-                                    <Component Id="cmp708E118075BE5622F99D03C90251F68E" Guid="{53984ACC-B065-4050-AACC-8D6E78D67292}">
+                                    <Component Id="cmp708E118075BE5622F99D03C90251F68E" Guid="{2DD5ACC3-13BD-4EAE-8543-0BCF8DF7B289}">
                                         <File Id="fil6FB653080BCDA887F723DA0FBA6A6D1C" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\admin\components\user-pagination\user-pagination.component.ts" />
                                     </Component>
                                 </Directory>
                             </Directory>
                         </Directory>
                         <Directory Id="dirB4D883ADD265E89E5A788C31AF00AFC4" Name="advanced">
-                            <Component Id="cmp9F93FCD6166DC3B7AEFF33793E338F3B" Guid="{7B1BB945-62C3-4F4A-80B3-5385142DFC9C}">
+                            <Component Id="cmp9F93FCD6166DC3B7AEFF33793E338F3B" Guid="{7EEF2B26-199E-4F9D-8485-BCEF46259456}">
                                 <File Id="filBCB5D02941D8C1FA336EF01F25E01378" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\advanced\advanced-routing.module.ts" />
                             </Component>
-                            <Component Id="cmp12E9FF7F8073564839EAD58A9F577980" Guid="{D24F9EFB-A3A1-4384-935D-142B4C218B7B}">
+                            <Component Id="cmp12E9FF7F8073564839EAD58A9F577980" Guid="{C73612B5-290F-4BC1-B3B8-AB7DC37CE2D1}">
                                 <File Id="fil9D4B035F6E288C72BD4715D7F3B15BCF" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\advanced\advanced.module.ts" />
                             </Component>
                             <Directory Id="dir3C42C2E467D6422E885227A7E310C631" Name="components">
-                                <Component Id="cmp27EBE4D41C5C8D93C51A1B9BB2E47040" Guid="{C205B4C3-1BB5-4F48-BF6D-3190AEC90431}">
+                                <Component Id="cmp27EBE4D41C5C8D93C51A1B9BB2E47040" Guid="{B30F8E30-B0FE-4BA3-96D7-EDA117141249}">
                                     <File Id="fil582B63B59CDC0D53DA86E2A6ED1B22E3" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\advanced\components\advanced.component.ts" />
                                 </Component>
                                 <Directory Id="dirFD666EAB36A765076614A656B4E37DA8" Name="edit-entity-group">
-                                    <Component Id="cmpDDDA652127BADBD6C2AF9CB9C89FC819" Guid="{B47F4C6D-FD31-43BB-B972-4BBC7E262F82}">
+                                    <Component Id="cmpDDDA652127BADBD6C2AF9CB9C89FC819" Guid="{7008BE78-71AE-463C-B5A2-A734584D937B}">
                                         <File Id="filA236D531EBF57D3BBBF5BC3953A48897" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\advanced\components\edit-entity-group\edit-entity-group.component.css" />
                                     </Component>
-                                    <Component Id="cmpE2F21858FF2BD062AF8C49EB03DF2268" Guid="{CFB4FB7D-72BE-41EB-8716-78098546BDD6}">
+                                    <Component Id="cmpE2F21858FF2BD062AF8C49EB03DF2268" Guid="{7AB5DB0B-A10B-4C85-B86E-5079D491E497}">
                                         <File Id="fil0745440C536E67EF272B94F92DCF4EEF" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\advanced\components\edit-entity-group\edit-entity-group.component.html" />
                                     </Component>
-                                    <Component Id="cmpFD52805576D2CE04CF863114A0EA1DBB" Guid="{39A76781-EAEB-4C68-BD11-D943D6B9A626}">
+                                    <Component Id="cmpFD52805576D2CE04CF863114A0EA1DBB" Guid="{57A02715-5F7C-43A5-BBA8-3EFDD429DD4C}">
                                         <File Id="fil635F7407B9C897C35DAE67BAAAF3AC3E" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\advanced\components\edit-entity-group\edit-entity-group.component.ts" />
                                     </Component>
                                 </Directory>
                                 <Directory Id="dir3900C2F03E32E9081A3094695AE56ED5" Name="entity-search">
-                                    <Component Id="cmp09D706E60EC2985B6B7AB0639DBE89F1" Guid="{5064C98C-C2E8-4C32-B337-09FECA969864}">
+                                    <Component Id="cmp09D706E60EC2985B6B7AB0639DBE89F1" Guid="{DC9070D1-D58B-4462-BB27-ED1BDFBD9463}">
                                         <File Id="fil60CC470C490C0B562D9281F7BF4418DC" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\advanced\components\entity-search\entity-search.component.css" />
                                     </Component>
-                                    <Component Id="cmp3FE71C3F8EBDDE718EACAED22906D1CB" Guid="{8F409CF5-2C13-4F5B-A103-B5CC3FB308BB}">
+                                    <Component Id="cmp3FE71C3F8EBDDE718EACAED22906D1CB" Guid="{3950C80D-603D-40BE-B96E-86752BF27BF6}">
                                         <File Id="filFF93F5D80A9722BF6F02923AF5D49FC6" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\advanced\components\entity-search\entity-search.component.html" />
                                     </Component>
-                                    <Component Id="cmpFA358ED1A56F2AD32BDD615466457F41" Guid="{146C1A1E-C7F1-4AE4-8A6E-328590911B17}">
+                                    <Component Id="cmpFA358ED1A56F2AD32BDD615466457F41" Guid="{ACABCB6F-BF9C-4709-A9A0-CF2107D6EDEB}">
                                         <File Id="filEDCB8F3C5B6EDEE74945193475E25721" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\advanced\components\entity-search\entity-search.component.ts" />
                                     </Component>
                                 </Directory>
                                 <Directory Id="dir5BBF7CD8A0707009F7EDC4AAF426CBF1" Name="entity-search-grid">
-                                    <Component Id="cmpDA1BB6AE06D6BC1BFE7E745BDF8A26C2" Guid="{638E8E61-CF88-42EF-9D1B-64014E643B11}">
+                                    <Component Id="cmpDA1BB6AE06D6BC1BFE7E745BDF8A26C2" Guid="{2C411DA4-79ED-4943-AA14-8FC2AF2D8C15}">
                                         <File Id="filE171AE2B5BD343D3A38E71F02D0602B7" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\advanced\components\entity-search-grid\entity-search-grid.component.html" />
                                     </Component>
-                                    <Component Id="cmpC9EC0D13D956C3CF16FC1907520798F7" Guid="{DD15F2C4-BCF9-41CB-B3C4-48C67866D48B}">
+                                    <Component Id="cmpC9EC0D13D956C3CF16FC1907520798F7" Guid="{F5A95FDD-46A1-41ED-87BD-305F829A5FB2}">
                                         <File Id="filD2EA4428671F9FD02E86661D5F113EBD" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\advanced\components\entity-search-grid\entity-search-grid.component.ts" />
                                     </Component>
                                 </Directory>
                                 <Directory Id="dir57A928AABB59C40064182B903BA1AC31" Name="entity-search-pagination">
-                                    <Component Id="cmp6AA95136F688627325898363D76E577D" Guid="{9348A810-A483-4153-BBA2-0208FE5E7684}">
+                                    <Component Id="cmp6AA95136F688627325898363D76E577D" Guid="{4C1C77A0-A1A1-4EC8-8E57-9AD1E3C4C557}">
                                         <File Id="fil78CA2AA5C9C5A131CF775CE652F5E1AD" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\advanced\components\entity-search-pagination\entity-search-pagination.component.html" />
                                     </Component>
-                                    <Component Id="cmp2E06F0A7834F6FBC117635E7C2DF5E75" Guid="{05956BBC-C071-4535-B732-4674846EFB2A}">
+                                    <Component Id="cmp2E06F0A7834F6FBC117635E7C2DF5E75" Guid="{FB74211A-446C-470C-83EC-C6A734D1B890}">
                                         <File Id="fil9357D40DED5F2190791519FC588FFC53" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\advanced\components\entity-search-pagination\entity-search-pagination.component.ts" />
                                     </Component>
                                 </Directory>
                                 <Directory Id="dir283ECF0C5C0FB40E58CA4897EF7A0D8A" Name="site-edit">
-                                    <Component Id="cmp4235D34C10D9F4D6DEF67E677E97EAE1" Guid="{A5091102-B1A2-4FF2-9879-19AB4125D867}">
+                                    <Component Id="cmp4235D34C10D9F4D6DEF67E677E97EAE1" Guid="{FE7E6918-D415-4C69-9792-4264A29BEBF9}">
                                         <File Id="fil037814666F459B8B83AD006C98491AB2" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\advanced\components\site-edit\site-edit.component.css" />
                                     </Component>
-                                    <Component Id="cmpCA9EE31C506F804A3BD6A06BAC2CF20F" Guid="{D43F44C2-9E08-4A89-99EB-CAC437B52135}">
+                                    <Component Id="cmpCA9EE31C506F804A3BD6A06BAC2CF20F" Guid="{9612F115-8BFB-4C8C-855E-4AD5B52BCE0B}">
                                         <File Id="fil0D7DB8DF50A3B8B4AF3372DBD5E02A51" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\advanced\components\site-edit\site-edit.component.html" />
                                     </Component>
-                                    <Component Id="cmp34F3CF392BFA5F5209E8E340069C1DD9" Guid="{27EFA4B2-007B-448B-A89F-B4107E59A712}">
+                                    <Component Id="cmp34F3CF392BFA5F5209E8E340069C1DD9" Guid="{1E97FA42-B25B-4F91-A910-21EC682D4C9F}">
                                         <File Id="filECCEC96B836244A2EDA9404E416C98E9" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\advanced\components\site-edit\site-edit.component.ts" />
                                     </Component>
                                 </Directory>
                                 <Directory Id="dirDB711BC6E607AD4B2674A8DF95DEEEA4" Name="sites">
-                                    <Component Id="cmpAEDE273A9E4C936DF9FD17382762FB72" Guid="{F42D9319-318B-41E3-9C5E-9D13E1C15E51}">
+                                    <Component Id="cmpAEDE273A9E4C936DF9FD17382762FB72" Guid="{B0EDF189-B701-4128-93F9-08E4D8DDDCF0}">
                                         <File Id="fil39AB9CFE29A7880F858274E001A6733D" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\advanced\components\sites\sites.component.css" />
                                     </Component>
-                                    <Component Id="cmp5C0DE2E1A24A516F1B264570A50A8866" Guid="{2659FBC4-91C7-41E1-8DE5-A9AC68F05811}">
+                                    <Component Id="cmp5C0DE2E1A24A516F1B264570A50A8866" Guid="{AEDF664F-BDCC-4AF0-9FAC-59975D5F80ED}">
                                         <File Id="filDA3710848156A3275DECD5E35EE5E1EB" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\advanced\components\sites\sites.component.html" />
                                     </Component>
-                                    <Component Id="cmpF6212DF020AFD2A5D861438FBF50D9A4" Guid="{E2D06F63-1174-4CE3-B5F1-F1CEEBADE540}">
+                                    <Component Id="cmpF6212DF020AFD2A5D861438FBF50D9A4" Guid="{8F923C2D-6063-43E6-9E98-0EC27F614DB5}">
                                         <File Id="fil2007C1F706A6D1BC0D61D96F371679AD" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\advanced\components\sites\sites.component.ts" />
                                     </Component>
                                 </Directory>
                                 <Directory Id="dir005367FF8225D74C09989BC8149B583E" Name="units">
-                                    <Component Id="cmp0B087C572F61D4C0E4B9A850D00596BD" Guid="{14DCB80F-EC79-4D24-A265-4AE494C87829}">
+                                    <Component Id="cmp0B087C572F61D4C0E4B9A850D00596BD" Guid="{3FDA3D95-E55F-4B13-85CD-FABCFBBA0B67}">
                                         <File Id="fil62E56032EACE6E869106C3318E4CAC3D" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\advanced\components\units\units.component.css" />
                                     </Component>
-                                    <Component Id="cmp1A2CC5919633096038CEDDAC76B63A65" Guid="{04A2A3B1-4F70-46DF-B2B5-F890D255ADF5}">
+                                    <Component Id="cmp1A2CC5919633096038CEDDAC76B63A65" Guid="{014F0993-8889-4D3C-A251-5E2737F48E48}">
                                         <File Id="fil1B0697D6967F07B9F4D85348537B7B5D" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\advanced\components\units\units.component.html" />
                                     </Component>
-                                    <Component Id="cmpA3A47B35BEDD303D66B94D6FC164EB82" Guid="{E560D4D4-2042-4E60-ACCD-BDFEFCFE87C2}">
+                                    <Component Id="cmpA3A47B35BEDD303D66B94D6FC164EB82" Guid="{07735AAD-320F-4A93-9209-E4C2E5E1F656}">
                                         <File Id="filFDC6FC96E003DC05C10FF8CD71FDC990" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\advanced\components\units\units.component.ts" />
                                     </Component>
                                 </Directory>
                                 <Directory Id="dir8895BA44B79631584FD9663DB2DD7908" Name="worker-edit">
-                                    <Component Id="cmp760CD49668FD189E8B2950D1529A14C1" Guid="{F36227AD-AA1D-47F4-A3E3-9813E23755B7}">
+                                    <Component Id="cmp760CD49668FD189E8B2950D1529A14C1" Guid="{5F2BDE47-C056-4D6E-BD6C-2D680AA1BE4C}">
                                         <File Id="fil166C20E8E20BC9F64099DD21E600F0A7" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\advanced\components\worker-edit\worker-edit.component.css" />
                                     </Component>
-                                    <Component Id="cmpD6CF1B3A022B83B751E92D3CC43F9D61" Guid="{0985C0EC-C359-488E-BE30-222A42DBB5C4}">
+                                    <Component Id="cmpD6CF1B3A022B83B751E92D3CC43F9D61" Guid="{2E9D5CC9-0133-4114-9845-A37E98D43D81}">
                                         <File Id="fil61007119BF2C9455F615B500665AFE72" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\advanced\components\worker-edit\worker-edit.component.html" />
                                     </Component>
-                                    <Component Id="cmp7E27EEB16C4E1221FB2DAFEAC4D87118" Guid="{1429FBDE-A522-40C0-A998-C8D283F0626D}">
+                                    <Component Id="cmp7E27EEB16C4E1221FB2DAFEAC4D87118" Guid="{201D6B38-854A-435A-9029-F1B203BD95F9}">
                                         <File Id="filA2DCAAD2B1FF667CA50C3152212C20DC" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\advanced\components\worker-edit\worker-edit.component.ts" />
                                     </Component>
                                 </Directory>
                                 <Directory Id="dir5E7634A15DEF88B1D0BF4DE379046CBB" Name="workers">
-                                    <Component Id="cmp52E6D1F039B38C5CB805437B6482DF3D" Guid="{CE48E0A6-A8AC-416B-9461-45A714D3E017}">
+                                    <Component Id="cmp52E6D1F039B38C5CB805437B6482DF3D" Guid="{85342BDD-E912-4B99-80E7-18B1C2CDE2C9}">
                                         <File Id="filC5E7267EDAD9AE22B44BF45DA0242F83" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\advanced\components\workers\workers.component.css" />
                                     </Component>
-                                    <Component Id="cmp95D5B3459DE1DF286E23686E94220C42" Guid="{B88AC71F-7785-490C-8C64-FC7FDFC49857}">
+                                    <Component Id="cmp95D5B3459DE1DF286E23686E94220C42" Guid="{269D535B-BB7B-491C-A14A-34762A729D3A}">
                                         <File Id="filCC8F7240FAEB6287A64F14165D61D7E4" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\advanced\components\workers\workers.component.html" />
                                     </Component>
-                                    <Component Id="cmp0B19765FE407EBBD2EEED753BBB1A25A" Guid="{2C9EECF1-C190-4142-B79F-57525796A4F3}">
+                                    <Component Id="cmp0B19765FE407EBBD2EEED753BBB1A25A" Guid="{ACD8FF57-D016-4D05-9ABF-AB13E11392BD}">
                                         <File Id="fil3B5215EA13782E9C28AEAF3C4FA8DB90" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\advanced\components\workers\workers.component.ts" />
                                     </Component>
                                 </Directory>
                             </Directory>
                         </Directory>
                         <Directory Id="dir0A1D2F2F33D926F43D6DCC94B9078F23" Name="cases">
-                            <Component Id="cmp430DB4EB19992BE508E0621237709158" Guid="{9AA08794-ADC3-451E-B1B6-EC03F2B34A9C}">
+                            <Component Id="cmp430DB4EB19992BE508E0621237709158" Guid="{F3DF3A3F-72AD-48BD-8869-ED5D9FFE0624}">
                                 <File Id="fil18B9263D3F15E94F38A028AD51DE4A85" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\cases-routing.module.ts" />
                             </Component>
-                            <Component Id="cmp7E141EDA261C8920B50898CCFC10D4E5" Guid="{6F783546-AE23-4E40-BF94-49E3BCAD49E5}">
+                            <Component Id="cmp7E141EDA261C8920B50898CCFC10D4E5" Guid="{EC079DDA-86D5-486C-A8C5-504E2C11C047}">
                                 <File Id="fil117C84ED94CD6D418A08B6F47138A932" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\cases.module.ts" />
                             </Component>
                             <Directory Id="dir781A7AEF95F5C9C53C18A1E7FF0894FD" Name="components">
-                                <Component Id="cmpC6072F85710F07460E2E570426C5C679" Guid="{32B0ADCF-59DF-42A5-B5C4-790AA8071E01}">
+                                <Component Id="cmpC6072F85710F07460E2E570426C5C679" Guid="{1E4F2902-3B02-4075-8DE6-8957C9B744E3}">
                                     <File Id="filC08A11B8617B9232BC29081167C12F0C" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\cases.component.ts" />
                                 </Component>
                                 <Directory Id="dirDBCDD06F17A604640ED8E2C2EE7BDFED" Name="case-edit-element">
-                                    <Component Id="cmpFF56AEB394BB15925F9D48A7A6D1929F" Guid="{A21C5530-DF2F-4D89-A5AD-E1833E5DDFA3}">
+                                    <Component Id="cmpFF56AEB394BB15925F9D48A7A6D1929F" Guid="{53BE130E-20C7-4A64-B456-2BA151716B06}">
                                         <File Id="fil79215948933A35259CD49C39D9582E18" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-edit-element\case-edit-element.component.html" />
                                     </Component>
-                                    <Component Id="cmp29FF3FC7D518A3883BE84F3A601B5C19" Guid="{C659F79F-5F46-463D-8C59-C52DB49A80DA}">
+                                    <Component Id="cmp29FF3FC7D518A3883BE84F3A601B5C19" Guid="{B82F0997-B43E-4D5D-84A0-021A37E489BB}">
                                         <File Id="filFD437594F9F8E085D675007EB7AB4941" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-edit-element\case-edit-element.component.ts" />
                                     </Component>
                                 </Directory>
                                 <Directory Id="dir9FDE5F9C869AED9132912D64D8C9D540" Name="case-elements">
-                                    <Component Id="cmp3DB5A8CE97906ABB1DB4AA90A4CB2402" Guid="{90D5C034-BAE7-4D2C-A6D4-AE6BCD990553}">
+                                    <Component Id="cmp3DB5A8CE97906ABB1DB4AA90A4CB2402" Guid="{D42D52C6-0866-4686-9657-FC8C59F9F5DC}">
                                         <File Id="filCD114E6F2B727006024991A0B3113534" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\index.ts" />
                                     </Component>
                                     <Directory Id="dirCBAF2A13318AAC242A2F778D8CCCC70A" Name="element-checkbox">
-                                        <Component Id="cmp37979688D5332A854466592DEF0715A2" Guid="{D80A228F-5D3E-4B24-89D4-91BF5FE56BA4}">
-                                            <File Id="filC9CA8E0DC52C0AA9C8FC743AC73E9ACE" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\element-checkbox\element-checkbox.component.css" />
-                                        </Component>
-                                        <Component Id="cmp2129679BD0FDFC6C6EE26C234A82EDA0" Guid="{F4EA69F3-93B3-4685-BB3D-2EAFEA0A707C}">
+                                        <Component Id="cmp2129679BD0FDFC6C6EE26C234A82EDA0" Guid="{D8F6494F-822D-4527-9526-4D948D60932D}">
                                             <File Id="filC5BF0EAA15AA49A5B7EE291359EAC8C3" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\element-checkbox\element-checkbox.component.html" />
                                         </Component>
-                                        <Component Id="cmp25305B0034612D0F48CE5F70FA24F467" Guid="{01FAB416-72F5-40CF-A02F-473212FE7694}">
+                                        <Component Id="cmp25305B0034612D0F48CE5F70FA24F467" Guid="{6329D3BE-BBC3-4699-9460-8AD1578D726F}">
                                             <File Id="filD48D293E8F6E106E52ABC0E019251B37" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\element-checkbox\element-checkbox.component.ts" />
                                         </Component>
                                     </Directory>
                                     <Directory Id="dir92FFFB9FD8F1AC78447AC449E92B89D7" Name="element-comment">
-                                        <Component Id="cmpCF200FB7D9CFD56BA661BBE87BE1302E" Guid="{2E96771B-78C2-479E-ABCC-AB9A27138924}">
+                                        <Component Id="cmpCF200FB7D9CFD56BA661BBE87BE1302E" Guid="{D622D722-92C7-4215-A242-955458630E22}">
                                             <File Id="fil51C477AB06447EF101796FDF7DB6B5A0" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\element-comment\element-comment.component.css" />
                                         </Component>
-                                        <Component Id="cmpF62156343949C63ADC8B31E5331817B0" Guid="{580DFC81-A021-4AFB-9E2D-607AA9D7B044}">
+                                        <Component Id="cmpF62156343949C63ADC8B31E5331817B0" Guid="{5984716D-252A-4196-BFA0-4059A6139EAD}">
                                             <File Id="filC43ABB247EB993C844191409893974AE" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\element-comment\element-comment.component.html" />
                                         </Component>
-                                        <Component Id="cmpA090B6F637FFFFD31BE7B6CF2A8D7555" Guid="{F1DC0D9F-0FB9-4D0E-A540-5F63D2703EF0}">
+                                        <Component Id="cmpA090B6F637FFFFD31BE7B6CF2A8D7555" Guid="{9E5F7EA8-DD04-45D9-B403-48253B945FDF}">
                                             <File Id="filC94AF2F20E15AB1F2836C58025F0D599" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\element-comment\element-comment.component.ts" />
                                         </Component>
-                                        <Component Id="cmpE9F5D935F74530C54668ECC2016D2AA4" Guid="{4BA7AC0C-95B2-4669-BFA3-3B5D7D1D4897}">
+                                        <Component Id="cmpE9F5D935F74530C54668ECC2016D2AA4" Guid="{F1B98C53-EB6A-40C4-AD9E-54F6C7841329}">
                                             <File Id="fil16C3F23A91C7FACA1760AF0066C20B2E" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\element-comment\trumbowyg.component.ts" />
                                         </Component>
                                     </Directory>
                                     <Directory Id="dirF8813EF8A7521993C6C99ACBF636E9E4" Name="element-date">
-                                        <Component Id="cmp95386F08738AC75D853E4D635FE5A7C7" Guid="{97D91BD7-6BB6-4C75-B53B-56CE1C76E1DB}">
+                                        <Component Id="cmp95386F08738AC75D853E4D635FE5A7C7" Guid="{7A125074-9BC8-47AC-B2E2-DCA86838CAD8}">
                                             <File Id="fil6A1B6092DFA9490297A608F394FDF39D" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\element-date\element-date.component.css" />
                                         </Component>
-                                        <Component Id="cmp5B811297A88238AEF0B3B692BA82764B" Guid="{8972A1FF-F25E-4841-A037-42BD7411130E}">
+                                        <Component Id="cmp5B811297A88238AEF0B3B692BA82764B" Guid="{14199267-03DA-4E28-B314-9FB1E4A931AA}">
                                             <File Id="fil6FF50680869BDC65C2E05A8574565E14" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\element-date\element-date.component.ts" />
                                         </Component>
                                     </Directory>
                                     <Directory Id="dirC212673D2EE6244B8E9F033F1271907F" Name="element-infobox">
-                                        <Component Id="cmp02D3C05581774E56F79B52025B930256" Guid="{4767C13D-4D78-4C3A-A6BB-8A434D5942F5}">
+                                        <Component Id="cmp02D3C05581774E56F79B52025B930256" Guid="{CE5EE00D-D807-4551-BCB3-256C70133054}">
                                             <File Id="fil2F9AE5EDBA0C49BCA7A048F0592AEB0D" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\element-infobox\element-infobox.component.html" />
                                         </Component>
-                                        <Component Id="cmp1F02CECC9600B78C01BC6DAA5C4B1AAF" Guid="{E6824BC4-FB7C-4008-ABC2-7DD34B38294A}">
+                                        <Component Id="cmp1F02CECC9600B78C01BC6DAA5C4B1AAF" Guid="{84B9B477-141A-4712-BD7B-1DF23074DF8A}">
                                             <File Id="fil2FFBEEC27A2933B3E0D8B58E1CF23EE4" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\element-infobox\element-infobox.component.ts" />
                                         </Component>
                                     </Directory>
                                     <Directory Id="dirD0B0C30780E3F77034611477DC1AC272" Name="element-multiselect">
-                                        <Component Id="cmpD3A2E4FBFC2B03A8A9B513904C9EFC0E" Guid="{2FA9CE19-5680-4207-85D2-3700381F5597}">
+                                        <Component Id="cmpD3A2E4FBFC2B03A8A9B513904C9EFC0E" Guid="{B8DC8C32-AA0F-4CF9-B713-09C91301EABC}">
                                             <File Id="fil59E8807B2E11BA6C1C458286DF124031" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\element-multiselect\element-multiselect.component.css" />
                                         </Component>
-                                        <Component Id="cmp06A1EE09DF4C4B8A9B9B64150D69A48D" Guid="{2D858503-D5FE-44DE-B191-E1D2631A8559}">
+                                        <Component Id="cmp06A1EE09DF4C4B8A9B9B64150D69A48D" Guid="{04D956A2-F106-434E-BE2E-03733CF11C66}">
                                             <File Id="filCBFC8B037B1A34335DD50579A041E782" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\element-multiselect\element-multiselect.component.html" />
                                         </Component>
-                                        <Component Id="cmpA20AC17CCCA15663FCA35F3DD7C85AA2" Guid="{3720AA52-AE41-45BF-86AB-1B07AD1E0E5A}">
+                                        <Component Id="cmpA20AC17CCCA15663FCA35F3DD7C85AA2" Guid="{B38A6ACF-FC91-44E8-A522-5F0F8D296EA0}">
                                             <File Id="fil778FE5947358B782F9171C14ABA5DE0D" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\element-multiselect\element-multiselect.component.ts" />
                                         </Component>
                                     </Directory>
                                     <Directory Id="dirD281EB22D75608ABA2C06D009C90D979" Name="element-number">
-                                        <Component Id="cmp7F5DDC2F4747174F2214B057C66F6FA3" Guid="{8115E333-05B6-4C07-BEDB-006435CE6651}">
+                                        <Component Id="cmp7F5DDC2F4747174F2214B057C66F6FA3" Guid="{2EB6C97D-EF27-44DA-89C7-E8610C0FDFFC}">
                                             <File Id="fil302A2545E076A365A309DF2887B850D2" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\element-number\element-number.component.css" />
                                         </Component>
-                                        <Component Id="cmp9491FE0C88C146C5A0DEABAAC26A4F0F" Guid="{63771E43-25A3-487E-9D48-F8482031A413}">
+                                        <Component Id="cmp9491FE0C88C146C5A0DEABAAC26A4F0F" Guid="{1FD54913-A372-476F-B9DA-6B73302BFE7B}">
                                             <File Id="filE4B7AF12AB8F9B60339CFECB0510062A" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\element-number\element-number.component.html" />
                                         </Component>
-                                        <Component Id="cmpEB78CDC1AB01123CAA0CE13EA4000155" Guid="{CC3E372E-1BCB-4838-B4E9-6698AC65CA08}">
+                                        <Component Id="cmpEB78CDC1AB01123CAA0CE13EA4000155" Guid="{4F649468-19B3-4E58-ADBA-7561882A9655}">
                                             <File Id="fil3A0F449B63F580BB73B4787415CC303B" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\element-number\element-number.component.ts" />
                                         </Component>
                                     </Directory>
                                     <Directory Id="dir2EDD37F949D9218C25C901C450773DEC" Name="element-pdf">
-                                        <Component Id="cmp8583A12857751B0BD3AD48EE3416D85E" Guid="{FA73755E-A54B-4B2C-BC1D-D14FF36FD166}">
+                                        <Component Id="cmp8583A12857751B0BD3AD48EE3416D85E" Guid="{9AD049C2-21BA-4923-A1C2-EA4F08327280}">
                                             <File Id="filC574D5F3B8243482653997BF105B6743" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\element-pdf\element-text.component.html" />
                                         </Component>
-                                        <Component Id="cmp14B5E513914832B713A0CB5BC43C990B" Guid="{FA21A4F4-F254-4748-8586-DDC3D2743650}">
+                                        <Component Id="cmp14B5E513914832B713A0CB5BC43C990B" Guid="{E3C82514-361A-4AA7-B63E-33EFB979864F}">
                                             <File Id="fil4A4A3FF2ADB7B2AE592C2A739FDB0DB7" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\element-pdf\element-text.component.ts" />
                                         </Component>
                                     </Directory>
                                     <Directory Id="dir2836D6E9FB1875E253E839D49E0404EE" Name="element-picture">
-                                        <Component Id="cmpC4B2193CC0B640790D181152D3334E14" Guid="{12961104-7202-41F6-8D75-AED485EB2608}">
+                                        <Component Id="cmpC4B2193CC0B640790D181152D3334E14" Guid="{CCD72C36-D83B-4BB1-89A1-E2F47B8C11FA}">
                                             <File Id="filAC78AD83C6AA3D7CB61A7DD1A9366837" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\element-picture\element-picture.component.css" />
                                         </Component>
-                                        <Component Id="cmp1EEC969F11EBA0F2CE7C69C096FD1F04" Guid="{4BF1CA9F-88A7-4576-8EBB-C1D21B004AE0}">
+                                        <Component Id="cmp1EEC969F11EBA0F2CE7C69C096FD1F04" Guid="{83EAEE0E-B505-4666-A635-8A94CEC44123}">
                                             <File Id="filAA2D2B26E0EA661059F350946FBBF8FF" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\element-picture\element-picture.component.html" />
                                         </Component>
-                                        <Component Id="cmp2BEA182D0B80C7C5994067E29FE3F193" Guid="{66C2DAC8-FD4B-4F0C-A164-1B334F65DC96}">
+                                        <Component Id="cmp2BEA182D0B80C7C5994067E29FE3F193" Guid="{9426F469-EA3A-4ECA-A873-48F18D3EB661}">
                                             <File Id="fil55410CEBDC1CBD71C97891C4C97FB80B" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\element-picture\element-picture.component.ts" />
                                         </Component>
                                     </Directory>
                                     <Directory Id="dir5353C756BF70DD4AF63F112793304934" Name="element-signature">
-                                        <Component Id="cmp781421BC2197CEFC7D9CC2B4DDA5AF4E" Guid="{922E2D6D-CF46-4D6C-BE1B-B3637B6569E8}">
+                                        <Component Id="cmp781421BC2197CEFC7D9CC2B4DDA5AF4E" Guid="{D7A6740E-9664-4A3E-B443-A583B23A8735}">
                                             <File Id="filD273ED69886FE47AA282B685A4C002B5" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\element-signature\element-signature.component.html" />
                                         </Component>
-                                        <Component Id="cmp446CAFE7924949DF8B44C586ED3923E8" Guid="{BA32ED3A-F789-4FC0-B442-511BECF08A6A}">
-                                            <File Id="filFE0FBCD1824C17C87D8665F8745BED59" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\element-signature\element-signature.component.spec.ts" />
-                                        </Component>
-                                        <Component Id="cmpD9FB2F24234B0D1EB2584107FE51C85C" Guid="{DEB29248-2EAA-42B3-9FC0-FED87C5315D0}">
+                                        <Component Id="cmpD9FB2F24234B0D1EB2584107FE51C85C" Guid="{EAF2D5BC-3A0D-4C0E-A423-CDB69CE2C79F}">
                                             <File Id="fil26F2B801F780EACB48F9193ED259FF03" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\element-signature\element-signature.component.ts" />
                                         </Component>
                                     </Directory>
                                     <Directory Id="dirD219CD0993685C049AC9B7FBD6704AFF" Name="element-singleselect">
-                                        <Component Id="cmp84A874887E6661E390CEB3BE2FFDE31F" Guid="{CEC62B29-A6E8-4BFA-B114-5B49CD21458C}">
+                                        <Component Id="cmp84A874887E6661E390CEB3BE2FFDE31F" Guid="{E593250F-4411-40FB-B987-A86646CB496A}">
                                             <File Id="filCA6E2A0E7769155B27ECE8A03C41FD28" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\element-singleselect\element-singleselect.component.css" />
                                         </Component>
-                                        <Component Id="cmpF63433574BB164B06BC416E04B5BA3C9" Guid="{C11621F0-7E43-48BB-BC3B-6F3523A64435}">
+                                        <Component Id="cmpF63433574BB164B06BC416E04B5BA3C9" Guid="{E7CD9A11-C90D-4763-AADF-0B44F8F0A709}">
                                             <File Id="fil399E646D6444C1DFC125F207FE1A973A" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\element-singleselect\element-singleselect.component.html" />
                                         </Component>
-                                        <Component Id="cmp21B9C4D4FD861AFDCD9054474C01C87B" Guid="{2F89A839-B42E-423E-8673-C64E938FA6B3}">
+                                        <Component Id="cmp21B9C4D4FD861AFDCD9054474C01C87B" Guid="{25A5F367-8FA2-43F2-914A-0DC4C0217214}">
                                             <File Id="fil98556B1B51A3444BEF392945CCE803FA" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\element-singleselect\element-singleselect.component.ts" />
                                         </Component>
                                     </Directory>
                                     <Directory Id="dir0C215F3DBCFFCDEA5F27969C80A50A82" Name="element-text">
-                                        <Component Id="cmp928FEEC943E610679C247DD57964B7E6" Guid="{53322A08-6CCD-4CAE-B6A3-18D8D45BCE18}">
+                                        <Component Id="cmp928FEEC943E610679C247DD57964B7E6" Guid="{229C6E9E-0B69-465B-AA70-A23BBDD75C85}">
                                             <File Id="filC6B46FAB7FADF09174A5DF70CDCC0F79" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\element-text\element-text.component.css" />
                                         </Component>
-                                        <Component Id="cmp40C1A1B67DA46091A507B59191E12AC2" Guid="{767E713C-FCEE-4C4F-97AF-3D08793C0214}">
+                                        <Component Id="cmp40C1A1B67DA46091A507B59191E12AC2" Guid="{4B0BF88A-2DF9-4A58-BB9E-5705EC94C427}">
                                             <File Id="fil8E1A02D266AEFA3259360F4F44CC5906" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\element-text\element-text.component.html" />
                                         </Component>
-                                        <Component Id="cmp887457A304BF9BC0769D865D0F0A3AF3" Guid="{4052F806-8EEA-4ED1-8B0D-2467D7C2DEBA}">
+                                        <Component Id="cmp887457A304BF9BC0769D865D0F0A3AF3" Guid="{115CBFB8-757E-4069-8BCA-387308C57862}">
                                             <File Id="filCED84BFC29514E401F3A55908E3D10C2" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\element-text\element-text.component.ts" />
                                         </Component>
                                     </Directory>
                                     <Directory Id="dirD3A132EF00E5A8B82E16D8D6C947267F" Name="element-timer">
-                                        <Component Id="cmpB0A7CFD5A7EDD5804F95D7F356BDAC72" Guid="{3D6DE33E-2102-435D-A7EC-562DC768E824}">
+                                        <Component Id="cmpB0A7CFD5A7EDD5804F95D7F356BDAC72" Guid="{AEE5E0B6-0648-467B-BEB8-EA541ADF2658}">
                                             <File Id="fil3037D54A606FAA32CF111B4AF385167F" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\element-timer\element-timer.component.html" />
                                         </Component>
-                                        <Component Id="cmp008C2EE2967EB71CDEBBC2E45EE3611D" Guid="{9649020B-9061-4C8F-A40C-4286B344370B}">
+                                        <Component Id="cmp008C2EE2967EB71CDEBBC2E45EE3611D" Guid="{5CCD8325-6F64-4164-BECD-520B93E9F6F6}">
                                             <File Id="fil011F65B834D5EE03CCED23FD7C2A6C43" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\case-elements\element-timer\element-timer.component.ts" />
                                         </Component>
                                     </Directory>
                                 </Directory>
                                 <Directory Id="dir15A1C28C5B961574210FF979DE09F10B" Name="cases-edit">
-                                    <Component Id="cmpA09F0C9D2574DBC92BAE835A82338DDD" Guid="{BDD3D104-5170-4AD1-B474-1900D4C3C68F}">
+                                    <Component Id="cmpA09F0C9D2574DBC92BAE835A82338DDD" Guid="{4D704048-D15C-4178-A28C-E56FE892B08F}">
                                         <File Id="filC0007AEE3995230EB5AC68978FA44D55" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\cases-edit\cases-edit.component.css" />
                                     </Component>
-                                    <Component Id="cmp333EBFC752AD7245C5E7092ECDE77B4D" Guid="{E318BCBE-DFD5-4204-B1FE-47854F9F7ED7}">
+                                    <Component Id="cmp333EBFC752AD7245C5E7092ECDE77B4D" Guid="{06199998-86D3-4F38-BC61-6CD5A8EA62C8}">
                                         <File Id="filCA5B1EB22ED2A087DB44CC7685D2E41B" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\cases-edit\cases-edit.component.html" />
                                     </Component>
-                                    <Component Id="cmp8D5F344A4C45A1B9039E0DB2C849DDAB" Guid="{9B013CF5-693E-4FB3-B9BA-501DBFFC3D7E}">
+                                    <Component Id="cmp8D5F344A4C45A1B9039E0DB2C849DDAB" Guid="{12872ADF-6916-4A39-835E-4D9DAA0FC849}">
                                         <File Id="fil6402038AA83197C3A47983BAAF131982" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\cases-edit\cases-edit.component.ts" />
                                     </Component>
                                 </Directory>
                                 <Directory Id="dirFFB8D40DC942225BA3CB18703E81C901" Name="cases-table">
-                                    <Component Id="cmpC8DD1238E415EA9D4ACD391EB981ED41" Guid="{11A809FF-329F-4F25-89B3-51EB77874ECB}">
+                                    <Component Id="cmpC8DD1238E415EA9D4ACD391EB981ED41" Guid="{1FC70CA2-C108-476B-BB09-6EE35A5EF1B7}">
                                         <File Id="fil87996815108A63E40035F2E4BC1AB52A" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\cases-table\cases-table.component.css" />
                                     </Component>
-                                    <Component Id="cmp63A2A8C45C4FFA29D830B8A0D5821944" Guid="{DA6D9A95-220F-4945-856E-1D3BEB0EEA16}">
+                                    <Component Id="cmp63A2A8C45C4FFA29D830B8A0D5821944" Guid="{55983C05-313B-4C19-A64C-85D46BB554B5}">
                                         <File Id="fil53B053C8A467F733ABE427DF2BC459F2" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\cases-table\cases-table.component.html" />
                                     </Component>
-                                    <Component Id="cmp37D3E664ABDC7356E79C1359D401BCE0" Guid="{29D61F28-94F2-4EDD-B836-134F3AC5240A}">
+                                    <Component Id="cmp37D3E664ABDC7356E79C1359D401BCE0" Guid="{100A6563-6167-4125-831A-A84A0A599661}">
                                         <File Id="filFBCE1B81AED4EC6DC4BEFDEAB754B07D" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\cases\components\cases-table\cases-table.component.ts" />
                                     </Component>
                                 </Directory>
                             </Directory>
                         </Directory>
                         <Directory Id="dir5F8239DC9FF726BCA4FCF3CCBEEAEEAE" Name="eform">
-                            <Component Id="cmpFD7B255A3EB104C2672E71BAED76883D" Guid="{142B9D28-4280-43A3-8ADA-F50EE9B8CAC9}">
+                            <Component Id="cmpFD7B255A3EB104C2672E71BAED76883D" Guid="{E1BF4E3E-292B-454A-8285-CD41410286DE}">
                                 <File Id="fil4AA3477A9EF8C387A696BF47265F38FC" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\eform\eform-routing.module.ts" />
                             </Component>
-                            <Component Id="cmpB09618F1E6BCEF79CF216C9859E511B2" Guid="{8B081018-1E39-43A3-A5A0-CDC31EBC95B7}">
+                            <Component Id="cmpB09618F1E6BCEF79CF216C9859E511B2" Guid="{B7D0ADB5-81A4-41C3-A0E5-A2671AC4AB19}">
                                 <File Id="fil4F8ECC938D37F1E828F836CFAEC91553" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\eform\eform.module.ts" />
                             </Component>
                             <Directory Id="dir37048404929110646F6649A649211C07" Name="components">
-                                <Component Id="cmp037EF5B341B07A465D288FB4527253EF" Guid="{1512F823-C182-4AFF-8EC5-A78EEBAC524A}">
+                                <Component Id="cmp037EF5B341B07A465D288FB4527253EF" Guid="{0381E328-FE67-413C-AD89-C1353255E94E}">
                                     <File Id="fil78EA5EA8B1D93ADACAE2EBBEC7783A7E" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\eform\components\eform.component.css" />
                                 </Component>
-                                <Component Id="cmpF550B33EE08DD975CEDFC539AF038D33" Guid="{657FDB9B-94BF-4225-914E-D52CFCE8A252}">
+                                <Component Id="cmpF550B33EE08DD975CEDFC539AF038D33" Guid="{BC0CD3E6-CE8A-4BCA-ADB2-F7FF36D5E6CB}">
                                     <File Id="fil6B2FD4D1DF7A2C5D73CA533B857405B6" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\eform\components\eform.component.ts" />
                                 </Component>
                                 <Directory Id="dir9033B706DCD0BDA1C639A47EE7488AD1" Name="eform-table">
-                                    <Component Id="cmp818DD60E5AF37A89479A565B130703C3" Guid="{0346BE88-AEB6-4934-B791-B56418801C73}">
+                                    <Component Id="cmp818DD60E5AF37A89479A565B130703C3" Guid="{3EE93B73-DD77-437E-90B8-F16E65B5F150}">
                                         <File Id="filB59504F710C2A2141E912F13A06BD511" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\eform\components\eform-table\eform-table.component.css" />
                                     </Component>
-                                    <Component Id="cmp65CD34C359752379AB61FD0294D39FB1" Guid="{12CFE583-2ABD-44E2-92FB-C6636A8C240B}">
+                                    <Component Id="cmp65CD34C359752379AB61FD0294D39FB1" Guid="{F2134BCE-C101-4090-8548-97874340916F}">
                                         <File Id="fil3C828C91B71B54D4D00A506FB2BD911E" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\eform\components\eform-table\eform-table.component.html" />
                                     </Component>
-                                    <Component Id="cmpD8E2988CE2306262C67EEA3D2D28B6F3" Guid="{E002332B-8E05-4FD1-82FF-54F870F6E824}">
+                                    <Component Id="cmpD8E2988CE2306262C67EEA3D2D28B6F3" Guid="{90F23061-FAF4-4682-875B-E7535C89459B}">
                                         <File Id="filEFE2E4F30ACDEE6C2257D0A5D4D3007A" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\eform\components\eform-table\eform-table.component.ts" />
                                     </Component>
                                 </Directory>
                             </Directory>
                         </Directory>
                         <Directory Id="dirA27C0C61E9537D36D5043EA3ADCDE887" Name="helpers">
-                            <Component Id="cmpBA5188AFB2BD74A2EFD8550B72D46E4B" Guid="{E2A93E09-9542-4FDC-A252-F2DBAACB513A}">
+                            <Component Id="cmpBA5188AFB2BD74A2EFD8550B72D46E4B" Guid="{464E1FBE-5E0B-409E-BBAF-5D91FD4AD13C}">
                                 <File Id="fil2D18A9FBE9B291F7E896AE1001C76021" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\helpers\app.constants.ts" />
                             </Component>
-                            <Component Id="cmpE942C5AEC20097CD395CAB14265B70D6" Guid="{ECE15106-0A4B-4B6C-80EA-9A00B1430C37}">
-                                <File Id="fil5757C4751B1760374FA79BFFC5B0921C" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\helpers\galery-config.ts" />
-                            </Component>
-                            <Component Id="cmpB6EBAC264B0E2DC3EFDEE7BF8F191C32" Guid="{206BC683-3586-4BC1-B198-490EE9190306}">
+                            <Component Id="cmpB6EBAC264B0E2DC3EFDEE7BF8F191C32" Guid="{BE5CA572-E549-41AA-9CDB-90E303D92EA5}">
                                 <File Id="fil26BC9237C2EDD6DF5CB22E1194BB7BA0" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\helpers\helpers.module.ts" />
                             </Component>
-                            <Component Id="cmp69BB627D83DC1AC1B39E64086E89E421" Guid="{317EE967-60E9-4746-9AE9-97626D04B9C9}">
+                            <Component Id="cmp69BB627D83DC1AC1B39E64086E89E421" Guid="{097E21D6-41BB-4474-A2AC-698679C89916}">
                                 <File Id="fil037AC40B7B22F715766CF8431D2815FD" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\helpers\operation.models.ts" />
                             </Component>
                             <Directory Id="dir4BC6AAD91389EA55B1E567A88E3A513C" Name="components">
-                                <Component Id="cmp365B8B822D7F548A6462759853650FD9" Guid="{29B7E770-E2AF-4229-8DF9-5EE296FC602F}">
+                                <Component Id="cmp365B8B822D7F548A6462759853650FD9" Guid="{1065811A-9336-4982-BCFE-686661473A5B}">
                                     <File Id="fil8A64C217DBD3D1F56724B883F984B321" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\helpers\components\index.ts" />
                                 </Component>
                                 <Directory Id="dir7244431D77C739D6289BF93B26959E31" Name="spinner">
-                                    <Component Id="cmp28A8ABE4FF00C53047E7A78191E26027" Guid="{A172DD5E-1DCF-4894-95C6-D7DB8D726E66}">
+                                    <Component Id="cmp28A8ABE4FF00C53047E7A78191E26027" Guid="{84D42677-388E-4599-9EBD-525D2F33FB39}">
                                         <File Id="fil58B9A9B38058F73513AB9EB87DB9A39E" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\helpers\components\spinner\spinner.component.css" />
                                     </Component>
-                                    <Component Id="cmpA27E4D6BE602BEC145247ED343FD2F08" Guid="{D6936CB1-B50A-4551-AE3C-B7F81CF777F1}">
+                                    <Component Id="cmpA27E4D6BE602BEC145247ED343FD2F08" Guid="{08AEC878-416A-4570-9F0D-41BF62C0C690}">
                                         <File Id="fil0B78EF7398BDAD128A0D265D555E2CC7" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\helpers\components\spinner\spinner.component.html" />
                                     </Component>
-                                    <Component Id="cmpA82D755E98617C6C54504EEEFB926B40" Guid="{DCE67535-2F69-40C9-BA53-A94C2087BBA9}">
+                                    <Component Id="cmpA82D755E98617C6C54504EEEFB926B40" Guid="{48BF40F0-F874-42BF-A692-FCCA632467F1}">
                                         <File Id="fil045D8EFA4DD3224F67C50974E304DCD7" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\helpers\components\spinner\spinner.component.ts" />
                                     </Component>
                                 </Directory>
                                 <Directory Id="dir2460AC0A45FDE083082B1F384B58231D" Name="switch">
-                                    <Component Id="cmpA0A2510DC82E72C53C7905AD6736E625" Guid="{52AF24BB-DF7D-4EE9-A683-B9FB6D65092C}">
+                                    <Component Id="cmpA0A2510DC82E72C53C7905AD6736E625" Guid="{E0E05ACF-7C77-49DD-AB5F-5ABB89BE22BB}">
                                         <File Id="filAA3FD731B3F48BAFD55781A13A5BF6B0" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\helpers\components\switch\switch.component.ts" />
                                     </Component>
                                 </Directory>
                             </Directory>
                         </Directory>
                         <Directory Id="dirC4679CEC5020D4ECA61EEAC8FC2A3C08" Name="settings">
-                            <Component Id="cmp82EA3AD09CBD001355C015455F010B9C" Guid="{011EF896-28C6-40B2-91F5-2C268E4FA9F6}">
+                            <Component Id="cmp82EA3AD09CBD001355C015455F010B9C" Guid="{DA9B1012-7031-4ED5-92FC-FA59BE7122B9}">
                                 <File Id="fil9FD9C5F7D15B7FCF79F207D81B79313D" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\settings\settings-routing.module.ts" />
                             </Component>
-                            <Component Id="cmpDF945DFD2845A5036CABB19CBF6ECECA" Guid="{632FE011-91AC-49A0-9F33-6749FC3B50C1}">
+                            <Component Id="cmpDF945DFD2845A5036CABB19CBF6ECECA" Guid="{E95763AC-4902-48E5-B8E9-991DEB5654D6}">
                                 <File Id="fil60D9CA0F86332F71B6E2C56245C0D576" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\settings\settings.module.ts" />
                             </Component>
                             <Directory Id="dir59F03AE8DB45576482697768FBBAE65C" Name="components">
-                                <Component Id="cmpD8C15A56A9DF3B296A443AA033B5908E" Guid="{BE2A9B49-A55A-4ACC-BA18-F1677494C627}">
+                                <Component Id="cmpD8C15A56A9DF3B296A443AA033B5908E" Guid="{F8BF6D60-0C8F-4B40-8EEC-F96764791F21}">
                                     <File Id="fil7126784633692FC8A3F7B9F47178D96D" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\settings\components\settings.component.css" />
                                 </Component>
-                                <Component Id="cmpFA9EDC47A5F172A14DED055DD4163E9D" Guid="{3C4C968A-3834-4BC9-8B81-51C362FEE933}">
+                                <Component Id="cmpFA9EDC47A5F172A14DED055DD4163E9D" Guid="{F79E688F-F2B4-4BBA-87ED-FC0C66BBB74C}">
                                     <File Id="fil4614700BEC20D6E05B02AAA9A964544D" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\settings\components\settings.component.ts" />
                                 </Component>
                                 <Directory Id="dirD919C2A68F8F413FCCF95176CFCFC17A" Name="admin-settings">
-                                    <Component Id="cmp415D97C972A14D0BA8946A5D12D6AD44" Guid="{AB2C904A-E1E5-49DF-9847-B5D03BF95A73}">
+                                    <Component Id="cmp415D97C972A14D0BA8946A5D12D6AD44" Guid="{E1902232-0724-493E-97EA-40668F2FE201}">
                                         <File Id="fil9A79F13E63D65868A0E2F9DCB4B58B51" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\settings\components\admin-settings\admin-settings.component.css" />
                                     </Component>
-                                    <Component Id="cmp5FB48D610CB34CD04B4ED2DBDE924318" Guid="{14F0136E-95AD-4A37-98C4-B29D36B03071}">
+                                    <Component Id="cmp5FB48D610CB34CD04B4ED2DBDE924318" Guid="{5430F5E7-ACFD-4DCF-A3DD-C4ACE415E376}">
                                         <File Id="fil33E624FCAACEE04DA80A53D8D0F122C1" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\settings\components\admin-settings\admin-settings.component.html" />
                                     </Component>
-                                    <Component Id="cmpEC16053106AC8766966F88CACAD2AA6A" Guid="{20FB53DE-3919-4674-AAE3-4C54ED43B60C}">
+                                    <Component Id="cmpEC16053106AC8766966F88CACAD2AA6A" Guid="{221DD303-7111-47E8-A089-A5EA921D5FAB}">
                                         <File Id="fil04F0D4955EAE98082408D8BF699DD28B" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\settings\components\admin-settings\admin-settings.component.ts" />
                                     </Component>
                                 </Directory>
                                 <Directory Id="dir579C0569610C12A72FE5E9E12A9328A5" Name="connection-string">
-                                    <Component Id="cmp13047B42F14150A8B5A5902B44F2E8D5" Guid="{CA0BDF0F-1D58-4517-9561-D58AC1BC45BA}">
+                                    <Component Id="cmp13047B42F14150A8B5A5902B44F2E8D5" Guid="{745ED845-F37F-4DC7-8A01-EE76EAD33A63}">
                                         <File Id="filF4BB257B0FFCFB9CA46B3850F6534E65" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\settings\components\connection-string\connection-string.component.css" />
                                     </Component>
-                                    <Component Id="cmpB3EFE1C636B6BBE2B947B51ECD952EE1" Guid="{89D8E25D-02E9-4BEF-B659-EA96159E65C3}">
+                                    <Component Id="cmpB3EFE1C636B6BBE2B947B51ECD952EE1" Guid="{4AF90205-1E73-4139-8B7B-A2D919512DAE}">
                                         <File Id="fil084EA4683434ECF88F683DE4946B1CB2" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\settings\components\connection-string\connection-string.component.html" />
                                     </Component>
-                                    <Component Id="cmpEDBE73A7E81A3C546D40B9B5DE31EFB8" Guid="{F3D3C2DE-C812-4E21-8C22-AC9CBB7FBA28}">
+                                    <Component Id="cmpEDBE73A7E81A3C546D40B9B5DE31EFB8" Guid="{F6DDE820-4B9F-472F-A3F5-1E32153DC12E}">
                                         <File Id="fil5B8B3F7455E0BCA6BC871459A05ED5EA" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\settings\components\connection-string\connection-string.component.ts" />
                                     </Component>
                                 </Directory>
                             </Directory>
                         </Directory>
                         <Directory Id="dirE59BC358B13E3905791305EAEAB33B48" Name="simple-sites">
-                            <Component Id="cmpAE015E153C6F92B463E145286E7F9520" Guid="{C5F9CDF9-3F6D-4C12-84EA-3470FF8C0A9A}">
+                            <Component Id="cmpAE015E153C6F92B463E145286E7F9520" Guid="{83A068CC-F0E0-4634-860D-AF91B663EE00}">
                                 <File Id="fil081CA6E8EBE15CD13CB83F0CCA5800AD" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\simple-sites\simple-sites-routing.module.ts" />
                             </Component>
-                            <Component Id="cmpCE7F08A2C729E881A684CAB3C37C599F" Guid="{80E3F3D1-A33C-45EC-A22E-5470D130732D}">
+                            <Component Id="cmpCE7F08A2C729E881A684CAB3C37C599F" Guid="{C4A02617-86FC-4A1D-8FCE-CC9DB0DB4CA7}">
                                 <File Id="filB24502D53A80F2968D05F23B4EFE1770" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\simple-sites\simple-sites.module.ts" />
                             </Component>
                             <Directory Id="dir336EDC88637B25DC237C021B47D91372" Name="components">
-                                <Component Id="cmp0003CA3A9787EF37454AE8ADD01CCA22" Guid="{EB97CCEB-993C-4C2F-B9E0-2A767613F27C}">
+                                <Component Id="cmp0003CA3A9787EF37454AE8ADD01CCA22" Guid="{2CC5736F-C9D0-4B15-86D1-EA8801DD089B}">
                                     <File Id="fil6D6DFF67CC35EBD9FF1FBF06D41E385F" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\simple-sites\components\simple-sites.component.css" />
                                 </Component>
-                                <Component Id="cmpD9368D91C57B58FCE2DECA183CB44D2D" Guid="{34475424-0A3D-48CD-91AB-6C2A79C8BB2C}">
+                                <Component Id="cmpD9368D91C57B58FCE2DECA183CB44D2D" Guid="{87F32541-2306-4E92-B14F-8CB1B9EFF27D}">
                                     <File Id="fil1C1C681B4E4C97A708EE247D748DC5E8" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\simple-sites\components\simple-sites.component.ts" />
                                 </Component>
                                 <Directory Id="dir981A53CDBD35AF21DABC832F4CBFA6A2" Name="simple-site-edit">
-                                    <Component Id="cmpC6B7CD05C82CE7E300EEA0CC43A50FDE" Guid="{AB25B50B-E1EA-420A-8D4D-3C154073A22D}">
+                                    <Component Id="cmpC6B7CD05C82CE7E300EEA0CC43A50FDE" Guid="{558EFC21-97B6-4EFC-A55F-406E9E1D1EFC}">
                                         <File Id="filC1A5407A34789C06576368A9B0BD5828" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\simple-sites\components\simple-site-edit\simple-site-edit.component.css" />
                                     </Component>
-                                    <Component Id="cmpD21734FB8DDD462C2E14A796365E4B13" Guid="{9548D5FC-4BD9-40DA-8E0C-98CA355867F5}">
+                                    <Component Id="cmpD21734FB8DDD462C2E14A796365E4B13" Guid="{0B711281-86AC-485C-8AA4-BCD09B49D8AD}">
                                         <File Id="fil974B5B46EC427B12CDB63678EFB1095A" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\simple-sites\components\simple-site-edit\simple-site-edit.component.html" />
                                     </Component>
-                                    <Component Id="cmp1F414C79C666EDC453AC660FB1070E22" Guid="{5CE85A9A-D1DD-42F3-8B3D-1FD2D941AB3F}">
+                                    <Component Id="cmp1F414C79C666EDC453AC660FB1070E22" Guid="{8952462B-CBE3-4ECE-A63A-1CC2DE9BFF16}">
                                         <File Id="fil6806300551B3513AA0AE5CBEA2F3D4EE" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\simple-sites\components\simple-site-edit\simple-site-edit.component.ts" />
                                     </Component>
                                 </Directory>
                                 <Directory Id="dir30A63B2897DFFA1D38F80C56EB337DB8" Name="simple-sites-table">
-                                    <Component Id="cmpBB47EC8F949A3EEED9DCE50FC377D245" Guid="{DD30550C-C41B-4084-8644-52FD81D2C6F2}">
+                                    <Component Id="cmpBB47EC8F949A3EEED9DCE50FC377D245" Guid="{1C249465-33F0-4AA5-9D17-BB32D961129F}">
                                         <File Id="fil95372D49C7F292F22DB6ED0EB540D513" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\simple-sites\components\simple-sites-table\simple-sites-table.component.css" />
                                     </Component>
-                                    <Component Id="cmpDC95B5D09DECB859FAFB49E9536B89A5" Guid="{2039856C-E37D-41C6-9670-B60A94A2A0F6}">
+                                    <Component Id="cmpDC95B5D09DECB859FAFB49E9536B89A5" Guid="{2B51C90E-0F14-49ED-93A2-A884112E76E5}">
                                         <File Id="filAE3DBA27315A05DF37B31C642AFC7AE9" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\simple-sites\components\simple-sites-table\simple-sites-table.component.html" />
                                     </Component>
-                                    <Component Id="cmpF7FC537797CABD13DC65A3A9C6906943" Guid="{C91AB0F6-3A39-4617-991D-0C202B6539CC}">
+                                    <Component Id="cmpF7FC537797CABD13DC65A3A9C6906943" Guid="{B9DE4C91-91E2-4030-887F-97E2FBEC6D20}">
                                         <File Id="fil34C3EDCD6782EED5C55BD5B3ED2EAD36" KeyPath="yes" Source="$(var.ClientPath)\src\app\modules\simple-sites\components\simple-sites-table\simple-sites-table.component.ts" />
                                     </Component>
                                 </Directory>
@@ -857,250 +873,250 @@
                         </Directory>
                     </Directory>
                     <Directory Id="dir208826C5BE0C1641F8579501F4533D7A" Name="services">
-                        <Component Id="cmp063B4042366059BDF4D67D909449C301" Guid="{C4F49C90-F43F-4A66-B175-D96445523CA0}">
+                        <Component Id="cmp063B4042366059BDF4D67D909449C301" Guid="{679275CD-052F-442A-81E7-C4A4A5171A1A}">
                             <File Id="fil5EEA03B998AD508B19B7DAFA64F4A8E5" KeyPath="yes" Source="$(var.ClientPath)\src\app\services\admin.service.ts" />
                         </Component>
-                        <Component Id="cmpA7816D9BCFDD69F3195A9F39041B29AD" Guid="{26BEEEDD-29B8-495F-A6D5-3FD37ECE9407}">
+                        <Component Id="cmpA7816D9BCFDD69F3195A9F39041B29AD" Guid="{FA22E3F3-1E3C-4E68-8939-03613DECB420}">
                             <File Id="fil92B957DE301410BC6FDB5F6A962B9D3D" KeyPath="yes" Source="$(var.ClientPath)\src\app\services\base.service.ts" />
                         </Component>
-                        <Component Id="cmp4902B87302A4EDE98316293EC15404A7" Guid="{FE17DE08-815C-4C6B-8029-80C613ADE3C0}">
+                        <Component Id="cmp4902B87302A4EDE98316293EC15404A7" Guid="{E2227630-C97E-4004-AF94-30560D5C84CF}">
                             <File Id="fil11D7880F403E92CC391FF5B69ECE9ED1" KeyPath="yes" Source="$(var.ClientPath)\src\app\services\entity-search.service.ts" />
                         </Component>
-                        <Component Id="cmpAB82AA4C75FE0056D94CED49C40730E9" Guid="{9A0E02B3-8669-452D-948C-48A1FF914516}">
+                        <Component Id="cmpAB82AA4C75FE0056D94CED49C40730E9" Guid="{0F091AA5-92D3-4F15-93D8-0850A58616BC}">
                             <File Id="filF7A4228E1FF959CBAC5F4483EFC65F62" KeyPath="yes" Source="$(var.ClientPath)\src\app\services\index.ts" />
                         </Component>
-                        <Component Id="cmp8B0CD9D5F6BAE831124ECAA082507010" Guid="{12E7BD26-A9D6-4C17-AC54-8FC41659ACBB}">
+                        <Component Id="cmp8B0CD9D5F6BAE831124ECAA082507010" Guid="{81225664-8F9E-47D2-897B-4CC7D910168A}">
                             <File Id="fil80418D13D524256B95B857FA7D102ED4" KeyPath="yes" Source="$(var.ClientPath)\src\app\services\notify.service.ts" />
                         </Component>
-                        <Component Id="cmp17A5C14284E5AD015872F60259706FA2" Guid="{3CD9ED6B-8CCE-447E-8F3E-11571E41D043}">
+                        <Component Id="cmp17A5C14284E5AD015872F60259706FA2" Guid="{D8A81994-1E92-4FAA-94F7-F9DA8E7E25AB}">
                             <File Id="filA79382B703A3D51530F1DF7768912779" KeyPath="yes" Source="$(var.ClientPath)\src\app\services\settings.service.ts" />
                         </Component>
-                        <Component Id="cmp6D7EF0B5755A7D1F5D6A7BD2F12CD665" Guid="{78E63098-1A37-4810-9739-BD6C790E71D6}">
+                        <Component Id="cmp6D7EF0B5755A7D1F5D6A7BD2F12CD665" Guid="{9A98BD76-5749-4308-B768-0AF774D131A5}">
                             <File Id="filA1ED322CA029777F435401900C1DE1E2" KeyPath="yes" Source="$(var.ClientPath)\src\app\services\simple-sites.service.ts" />
                         </Component>
-                        <Component Id="cmp949D544CF75BDCB83EBD13668F4B7639" Guid="{D66A6FEB-BBAE-4962-B23A-BB6F39A2A9DD}">
+                        <Component Id="cmp949D544CF75BDCB83EBD13668F4B7639" Guid="{9313FD40-5A1C-4FF1-8EB1-52CE7305C60C}">
                             <File Id="fil29A99C7DEA5E37C2359D2DC53A4F0C17" KeyPath="yes" Source="$(var.ClientPath)\src\app\services\sites.service.ts" />
                         </Component>
-                        <Component Id="cmp2FF87344505557FDF2AAE7D5A8203CE5" Guid="{C7C1785E-3B54-44AA-87CA-2187F11A3536}">
+                        <Component Id="cmp2FF87344505557FDF2AAE7D5A8203CE5" Guid="{E574AC09-8081-4411-8A87-B56BA2EDE73B}">
                             <File Id="fil5E7E8F94C056516815B60E70720570AA" KeyPath="yes" Source="$(var.ClientPath)\src\app\services\units.service.ts" />
                         </Component>
-                        <Component Id="cmpA9AE89BAD2DF45C1C17CA53EDC6CB76A" Guid="{EC0F2DDA-D0DD-48B5-88A8-9433D9086136}">
+                        <Component Id="cmpA9AE89BAD2DF45C1C17CA53EDC6CB76A" Guid="{54D3623C-03E1-4403-85F6-0C67C175A584}">
                             <File Id="fil70421C394C76550CBC32AD8558C94691" KeyPath="yes" Source="$(var.ClientPath)\src\app\services\workers.service.ts" />
                         </Component>
                         <Directory Id="dir74585C5D271A488B9C91ACEBA2438F63" Name="accounts">
-                            <Component Id="cmp9F0CD016588F2D1D9684D6BE5B541082" Guid="{381F9A6A-FD41-4307-92C5-27D1E99BB551}">
+                            <Component Id="cmp9F0CD016588F2D1D9684D6BE5B541082" Guid="{EC290900-2B39-423E-951C-B53AD1F5A6BF}">
                                 <File Id="fil9F021EA63B371CE54E0082BF20092E4D" KeyPath="yes" Source="$(var.ClientPath)\src\app\services\accounts\auth.service.ts" />
                             </Component>
                         </Directory>
                         <Directory Id="dir0AF8520C8F89E872A4DD594CE3D86696" Name="cases">
-                            <Component Id="cmpB2C2B29F0A7CA0C8EAB500FA563C74CA" Guid="{DA22550D-31DC-4E4D-99C2-3245C8F00B0C}">
+                            <Component Id="cmpB2C2B29F0A7CA0C8EAB500FA563C74CA" Guid="{78644F37-1127-42EE-A9F2-4594DD4D5AC9}">
                                 <File Id="fil75206CC98B806170B9F4F6EE9016A0AC" KeyPath="yes" Source="$(var.ClientPath)\src\app\services\cases\cases.service.ts" />
                             </Component>
                         </Directory>
                         <Directory Id="dirE020D4C6476EEBE8F0A7C774C54BAC94" Name="eform">
-                            <Component Id="cmp0A87F816E560024918D7923D96609EFD" Guid="{84258D06-B680-4C0F-AE41-A0797312DADC}">
+                            <Component Id="cmp0A87F816E560024918D7923D96609EFD" Guid="{677DBAA1-B063-42D9-911B-118971D5F6A3}">
                                 <File Id="filE5F190555B0FA9690E91B0F42BE70986" KeyPath="yes" Source="$(var.ClientPath)\src\app\services\eform\eform.service.ts" />
                             </Component>
                         </Directory>
                         <Directory Id="dir9C73C4BDACFA53F1FCD6D30260DDA7F4" Name="files">
-                            <Component Id="cmp275D5750388DC29D5E4F047E23333566" Guid="{916DEBEB-92B7-4D71-B0D4-9C799737D98D}">
+                            <Component Id="cmp275D5750388DC29D5E4F047E23333566" Guid="{342216B3-7765-4D67-9E9C-BC271E8EF53E}">
                                 <File Id="filF596DC80146D7855860497AC9F2C31FE" KeyPath="yes" Source="$(var.ClientPath)\src\app\services\files\image.service.ts" />
                             </Component>
-                            <Component Id="cmpCB0C51C9634128EAFD32976F4090C539" Guid="{27508F64-098D-45B8-B9DE-54A55B9A049F}">
+                            <Component Id="cmpCB0C51C9634128EAFD32976F4090C539" Guid="{EF4E9697-A3B8-4706-9738-BC47DE19414D}">
                                 <File Id="fil1EB05FB94199AAC10C2BDF41EF9017AB" KeyPath="yes" Source="$(var.ClientPath)\src\app\services\files\index.ts" />
                             </Component>
                         </Directory>
                     </Directory>
                 </Directory>
                 <Directory Id="dir5410D3918EB1E6D944FCD5721BCD83F0" Name="assets">
-                    <Component Id="cmpF45A5EA3B470FB1CCC1CE8E33AF1C6B2" Guid="{8D79E195-CFFC-4139-9A7C-49CA5D68208C}">
+                    <Component Id="cmpF45A5EA3B470FB1CCC1CE8E33AF1C6B2" Guid="{60B5B766-2DC5-481A-9FC3-7A27369D34B9}">
                         <File Id="fil3DA995C4C30C0D1A492AB9225CBC2181" KeyPath="yes" Source="$(var.ClientPath)\src\assets\bootstrap-datepicker.css" />
                     </Component>
-                    <Component Id="cmp0B88D2373833188CB41DBBE0D8DE97BB" Guid="{D314A760-F692-4E49-AA25-238E56153A5E}">
+                    <Component Id="cmp0B88D2373833188CB41DBBE0D8DE97BB" Guid="{537A4309-58AF-4E75-8692-1C360B9C5380}">
                         <File Id="filEBAC242CC40709CC98D32537B0267822" KeyPath="yes" Source="$(var.ClientPath)\src\assets\bootstrap-datetimepicker.css" />
                     </Component>
-                    <Component Id="cmp4D5FF58B672BDE7E20E858C55508D54E" Guid="{947A7BBE-D851-424E-B828-47F92A257AAE}">
+                    <Component Id="cmp4D5FF58B672BDE7E20E858C55508D54E" Guid="{C918A51D-CB76-4B5C-8CF6-5D4B13382A85}">
                         <File Id="fil19A2D33A45ECCF190AE72E2E58A10F4A" KeyPath="yes" Source="$(var.ClientPath)\src\assets\docs.min.css" />
                     </Component>
-                    <Component Id="cmp36EB5AE85CFC0A9602FF5A38884AB79F" Guid="{2FD740D4-416E-4AD6-B8BF-779E85370ECA}">
+                    <Component Id="cmp36EB5AE85CFC0A9602FF5A38884AB79F" Guid="{18B17720-C378-4441-85B2-7BC3541A91CF}">
                         <File Id="fil82AF198350A30B1A7C4824B7D692669E" KeyPath="yes" Source="$(var.ClientPath)\src\assets\font-awesome.min.css" />
                     </Component>
-                    <Component Id="cmpB9DDB9AF0276170D2116DDE8530DB5CD" Guid="{8BA9DFFD-E575-4A34-8782-0FC1D5E27D80}">
+                    <Component Id="cmpB9DDB9AF0276170D2116DDE8530DB5CD" Guid="{D215B13C-3C0C-4557-BB0E-B6ADDF20927C}">
                         <File Id="fil8C9773A0DF276D8F04351DB095D993ED" KeyPath="yes" Source="$(var.ClientPath)\src\assets\jquery.fileupload.css" />
                     </Component>
-                    <Component Id="cmpDBEB0C7B8CED1AECC828FA97C61C9119" Guid="{2FD7F0EB-F0FA-4276-A531-DB3B93EE79B6}">
+                    <Component Id="cmpDBEB0C7B8CED1AECC828FA97C61C9119" Guid="{4E49024E-4A9A-46A3-8A18-347A71FDA24F}">
                         <File Id="fil6A37CB30CD4140E2FAFA91F6EAB4D1FE" KeyPath="yes" Source="$(var.ClientPath)\src\assets\mt_layout.css" />
                     </Component>
-                    <Component Id="cmp121321A06424ED7254244963EE15AA0D" Guid="{7AAC9CA4-A973-49B8-98A7-13C28DED8F70}">
+                    <Component Id="cmp121321A06424ED7254244963EE15AA0D" Guid="{0B2F0DB5-609D-4180-B019-585770B71B04}">
                         <File Id="fil9509DEB41A74603453A1535D4C50C485" KeyPath="yes" Source="$(var.ClientPath)\src\assets\sticky_footer.css" />
                     </Component>
                     <Directory Id="dir250AF4793DA1C42301D94813492B3293" Name="fonts">
-                        <Component Id="cmpB520A557EBFA2126231A9E62E7C1BEE5" Guid="{B9A9E0E9-8A18-45F7-A991-EE2842FAC4D8}">
+                        <Component Id="cmpB520A557EBFA2126231A9E62E7C1BEE5" Guid="{DE0E5CC0-B57D-45A3-9E36-D830DFAC03A3}">
                             <File Id="fil7209A077AAB508910B1EEEAD501774BA" KeyPath="yes" Source="$(var.ClientPath)\src\assets\fonts\font-mfizz.eot" />
                         </Component>
-                        <Component Id="cmp0E7D5CC6FE49D2A9A1FC14CCDF81A4B9" Guid="{A8853845-7835-4AFD-A59F-ACAA1115C107}">
+                        <Component Id="cmp0E7D5CC6FE49D2A9A1FC14CCDF81A4B9" Guid="{D64A59E7-9FE5-4AA5-8489-C35AF0506E8B}">
                             <File Id="fil1BFD66C3CD2C85C35C22C61503B3CBB8" KeyPath="yes" Source="$(var.ClientPath)\src\assets\fonts\font-mfizz.svg" />
                         </Component>
-                        <Component Id="cmp0E33065293C9B1DA0CABCDD3FA428653" Guid="{C3760AAA-63D1-4E58-87A8-C2EA928AF54A}">
+                        <Component Id="cmp0E33065293C9B1DA0CABCDD3FA428653" Guid="{B76F384F-795F-4AE0-B3B0-A23DAC34DA47}">
                             <File Id="fil1F2F455C7B2678815F1BD06F9283BA53" KeyPath="yes" Source="$(var.ClientPath)\src\assets\fonts\font-mfizz.ttf" />
                         </Component>
-                        <Component Id="cmp08DAAC9539623C4012426F0DBBD784DD" Guid="{B887E42F-BC50-4616-AE32-62EDE68A1CD4}">
+                        <Component Id="cmp08DAAC9539623C4012426F0DBBD784DD" Guid="{3786847E-2258-46DF-B6BD-1CDF93E25999}">
                             <File Id="filF5E5E72FDA443DF47F673A03458EF67D" KeyPath="yes" Source="$(var.ClientPath)\src\assets\fonts\font-mfizz.woff" />
                         </Component>
-                        <Component Id="cmp353FC18CBF363D842C15561E6F3035B0" Guid="{989660DA-64C6-440D-B3C3-3CA86C5BD78D}">
+                        <Component Id="cmp353FC18CBF363D842C15561E6F3035B0" Guid="{A683EB31-CE0A-4DB0-85C3-AC63235C8C5D}">
                             <File Id="filEF789AD6EF6336AC5BA83EC15EF66A3D" KeyPath="yes" Source="$(var.ClientPath)\src\assets\fonts\fontawesome-webfont.eot" />
                         </Component>
-                        <Component Id="cmp01828A624385129DF8F49DBE31E91AFA" Guid="{EFA90D72-A5F5-49EA-933A-5FC6AD16F309}">
+                        <Component Id="cmp01828A624385129DF8F49DBE31E91AFA" Guid="{B5D4ABDA-75C2-4E72-9AAA-809C0C5FCC1A}">
                             <File Id="fil22797B2E5634FD92D611EA8E6F93C72D" KeyPath="yes" Source="$(var.ClientPath)\src\assets\fonts\fontawesome-webfont.svg" />
                         </Component>
-                        <Component Id="cmpB13AE4B7068D9A1D0059A961A22E90BB" Guid="{46E468CB-79C5-4A67-B5A9-9BAEB0812CBA}">
+                        <Component Id="cmpB13AE4B7068D9A1D0059A961A22E90BB" Guid="{4C2640D3-D600-484F-A5F0-5E38C59F37CB}">
                             <File Id="fil61A1142D0121DF40F74C7CFBF56BBD9E" KeyPath="yes" Source="$(var.ClientPath)\src\assets\fonts\fontawesome-webfont.ttf" />
                         </Component>
-                        <Component Id="cmpF6C9017BE504A7CF21C046BD190B1F05" Guid="{BC8AFD30-D62C-4086-B3B9-93A4C9B84EC9}">
+                        <Component Id="cmpF6C9017BE504A7CF21C046BD190B1F05" Guid="{0560B428-1E93-40CB-A3D2-0E3CE32CB09D}">
                             <File Id="fil24404DE2C80B7D89913A6F6865BC6E59" KeyPath="yes" Source="$(var.ClientPath)\src\assets\fonts\fontawesome-webfont.woff" />
                         </Component>
-                        <Component Id="cmp3C6F41CBEE0F1BE902BC3769F8705FA6" Guid="{5C09EE30-E2B9-47E6-A364-F2341B0F8388}">
+                        <Component Id="cmp3C6F41CBEE0F1BE902BC3769F8705FA6" Guid="{B51B734A-4D86-4031-A0EC-97381B3F1EDE}">
                             <File Id="fil9925CFA3C4F6A4A01B5DF41A215F6AD0" KeyPath="yes" Source="$(var.ClientPath)\src\assets\fonts\fontawesome-webfont.woff2" />
                         </Component>
-                        <Component Id="cmp654FD7782AFC1A7CDF01E13DCF2F3D9E" Guid="{9913097F-8701-4B32-962E-B5EFA71CDAB9}">
+                        <Component Id="cmp654FD7782AFC1A7CDF01E13DCF2F3D9E" Guid="{D25FFE4C-E8D9-4537-9538-A01DA1A72863}">
                             <File Id="filA41C5A9B31B2024168D04B94361245EC" KeyPath="yes" Source="$(var.ClientPath)\src\assets\fonts\FontAwesome.otf" />
                         </Component>
-                        <Component Id="cmp72E214D50CF7092126BBAE5A87DE8C76" Guid="{039F2303-977A-487A-BFE1-26811E9C52B6}">
+                        <Component Id="cmp72E214D50CF7092126BBAE5A87DE8C76" Guid="{2B81A782-1899-434C-85F0-3A5D57C2A467}">
                             <File Id="fil4F2EEC5111F76A72EE95592B15415234" KeyPath="yes" Source="$(var.ClientPath)\src\assets\fonts\glyphicons-halflings-regular.eot" />
                         </Component>
-                        <Component Id="cmpAD7B95F0D43C963060DAC01B306FA798" Guid="{9331517F-3F20-45B1-A299-1F60F44050BD}">
+                        <Component Id="cmpAD7B95F0D43C963060DAC01B306FA798" Guid="{152BE88D-BF3E-4EB1-8C9F-E1D54E0992C9}">
                             <File Id="fil49E9A265D4CE729CF242121C26D24A13" KeyPath="yes" Source="$(var.ClientPath)\src\assets\fonts\glyphicons-halflings-regular.svg" />
                         </Component>
-                        <Component Id="cmp5D146E3A251D1958D5E582B1B855B724" Guid="{794D679B-65E8-4936-820E-D061F9EB64CF}">
+                        <Component Id="cmp5D146E3A251D1958D5E582B1B855B724" Guid="{3649DAB3-1580-4A3C-AE2D-8DE04C86933F}">
                             <File Id="fil9F4F3D36A79E65BC32D00F7EC6D2A510" KeyPath="yes" Source="$(var.ClientPath)\src\assets\fonts\glyphicons-halflings-regular.ttf" />
                         </Component>
-                        <Component Id="cmp80B69FF7C7342F90106C5A544A71D1AE" Guid="{D4CF5015-8DDE-477B-A070-E80A729245B2}">
+                        <Component Id="cmp80B69FF7C7342F90106C5A544A71D1AE" Guid="{D50AAFF0-DF9E-4B10-ACB9-EA4140803CA9}">
                             <File Id="filCBF97E923584C2A7A77FB88A436C01A7" KeyPath="yes" Source="$(var.ClientPath)\src\assets\fonts\glyphicons-halflings-regular.woff" />
                         </Component>
-                        <Component Id="cmp733E08825476B7D825621F7860736CF0" Guid="{AA8BF999-84B3-4E79-B9EF-88922D9D5D1A}">
+                        <Component Id="cmp733E08825476B7D825621F7860736CF0" Guid="{44ACAA17-ECE6-4C77-977C-95EA4645E474}">
                             <File Id="fil26BFBE5B99A9C38BE386CB4EEB9B62B6" KeyPath="yes" Source="$(var.ClientPath)\src\assets\fonts\glyphicons-halflings-regular.woff2" />
                         </Component>
-                        <Component Id="cmp24B3E783AE6792C6754B85BE1FD1C1A2" Guid="{E91DF03D-DE09-4F87-8C74-B7A633A4C712}">
+                        <Component Id="cmp24B3E783AE6792C6754B85BE1FD1C1A2" Guid="{4166582A-8323-4BB9-890E-750636FC5514}">
                             <File Id="fil8DCB55D16CEE0B601ADED1B9BD72A59E" KeyPath="yes" Source="$(var.ClientPath)\src\assets\fonts\socialglyphs-webfont.eot" />
                         </Component>
-                        <Component Id="cmpBA7FAD32935D9F8F4335729ECDECEAA2" Guid="{914DBF53-8D25-4EAC-9DB0-932336A16F63}">
+                        <Component Id="cmpBA7FAD32935D9F8F4335729ECDECEAA2" Guid="{031BAC7C-3BE5-4780-B837-A9196EE45362}">
                             <File Id="fil601A70F52C6232BA218D246938D1EE49" KeyPath="yes" Source="$(var.ClientPath)\src\assets\fonts\socialglyphs-webfont.svg" />
                         </Component>
-                        <Component Id="cmp757187C77A47D3F1AB220B4A3A5562F5" Guid="{4EC4D42A-59CE-4345-B8B8-0D75B91EEAB1}">
+                        <Component Id="cmp757187C77A47D3F1AB220B4A3A5562F5" Guid="{94847DA3-4923-4764-91AC-616A38E0D5C9}">
                             <File Id="filF94F18F96A52AAC398D1DA9C127E6F38" KeyPath="yes" Source="$(var.ClientPath)\src\assets\fonts\socialglyphs-webfont.ttf" />
                         </Component>
-                        <Component Id="cmp1029AB61844C15182ECEA7D6E575A4F1" Guid="{49113E81-DD4D-4C74-A5AE-8E922D9F171D}">
+                        <Component Id="cmp1029AB61844C15182ECEA7D6E575A4F1" Guid="{3AFAD4F8-7626-40EA-BC49-95DF280316C8}">
                             <File Id="fil0A416896EE143F6D56122BF3DFE36471" KeyPath="yes" Source="$(var.ClientPath)\src\assets\fonts\socialglyphs-webfont.woff" />
                         </Component>
                     </Directory>
                     <Directory Id="dir6F3EDF109658142A9E6C1CD58789BA8E" Name="images">
-                        <Component Id="cmpD708D302EF04C5B31B7BC545AD76AF48" Guid="{3907980E-67AF-4D0E-9BFE-5B58DF3B63E9}">
+                        <Component Id="cmpD708D302EF04C5B31B7BC545AD76AF48" Guid="{EB70F104-1B50-4B1C-98B6-3DE64EC6ACA5}">
                             <File Id="fil34D83239EE089DA52FCF5B496FF7707B" KeyPath="yes" Source="$(var.ClientPath)\src\assets\images\bx_loader.gif" />
                         </Component>
-                        <Component Id="cmpF873D786F4CAAEEC21CD7D923150E644" Guid="{AAC021C7-7EE5-4AE3-9FCC-F41A3F3D3FCF}">
+                        <Component Id="cmpF873D786F4CAAEEC21CD7D923150E644" Guid="{6A16B9E5-AA75-438A-89FD-C5D8EF579558}">
                             <File Id="filCF61DB63B6E2BDD6F451621AF079C3CA" KeyPath="yes" Source="$(var.ClientPath)\src\assets\images\close.png" />
                         </Component>
-                        <Component Id="cmp17A826D24BAE77F7F0DEDD479C866D81" Guid="{9ABF5B4F-3959-44FD-B41D-F9BA9730C7A8}">
+                        <Component Id="cmp17A826D24BAE77F7F0DEDD479C866D81" Guid="{77C82B2C-7E49-4B15-9102-6047CAF2B1D4}">
                             <File Id="fil2B8300F566D121AECCE7B8C5DDF1C0C3" KeyPath="yes" Source="$(var.ClientPath)\src\assets\images\eform-phone.jpg" />
                         </Component>
-                        <Component Id="cmpF74305B29223DD49AA28DBF185773424" Guid="{AA6328DC-CDB5-4597-8172-FA62846549B1}">
+                        <Component Id="cmpF74305B29223DD49AA28DBF185773424" Guid="{F5C404C4-1D79-4B3A-BD96-77D30B5B15FF}">
                             <File Id="filEF2CCC0E22032DD29C792D6E15BD280B" KeyPath="yes" Source="$(var.ClientPath)\src\assets\images\eform-phone.png" />
                         </Component>
-                        <Component Id="cmpCFDE39E865F078444779C289FD094ABA" Guid="{83640583-1B3C-4741-B3AB-0DC7AD034B5F}">
+                        <Component Id="cmpCFDE39E865F078444779C289FD094ABA" Guid="{77A231F6-235E-4A98-B06A-A912B6237F19}">
                             <File Id="fil6B7B5DAC2A1E219BD0D27152EFC0ECD5" KeyPath="yes" Source="$(var.ClientPath)\src\assets\images\icons-black.png" />
                         </Component>
-                        <Component Id="cmp26F81905A24619E3F1115D6F9C7D12E9" Guid="{C4F4BFDA-8728-4123-BA9B-99A75EF9C9F2}">
+                        <Component Id="cmp26F81905A24619E3F1115D6F9C7D12E9" Guid="{CD42F0F9-960E-45AF-A74D-E10C2AF0AB1C}">
                             <File Id="filC6CCC4D93650CB5F54B573DF359464A5" KeyPath="yes" Source="$(var.ClientPath)\src\assets\images\loading.gif" />
                         </Component>
-                        <Component Id="cmp99949EEC643E52067EC6055A3C420DBC" Guid="{AD1E157D-2913-430A-BA8F-25525969F5BB}">
+                        <Component Id="cmp99949EEC643E52067EC6055A3C420DBC" Guid="{D52B5C91-7EDA-4896-9B20-BE568C7D0C75}">
                             <File Id="fil1DE77413065723599561A3D358802A92" KeyPath="yes" Source="$(var.ClientPath)\src\assets\images\logo.png" />
                         </Component>
-                        <Component Id="cmpC3BCAF5DC5B6775BCC862BCF1694ADBB" Guid="{11B2C25D-CFB4-430F-A1CB-02806B382AEE}">
+                        <Component Id="cmpC3BCAF5DC5B6775BCC862BCF1694ADBB" Guid="{C9AD99E5-61A5-477C-A37A-DE81559023BD}">
                             <File Id="fil055D6C24950D0D5FF7A15D6DD8D525E5" KeyPath="yes" Source="$(var.ClientPath)\src\assets\images\microting-logo-big.jpg" />
                         </Component>
-                        <Component Id="cmp9CEDB62ADF6CAABA27E6703B3A9B5103" Guid="{03ADE0AC-6A89-425E-BD45-E3FF4A50FC49}">
+                        <Component Id="cmp9CEDB62ADF6CAABA27E6703B3A9B5103" Guid="{FE556F8F-212D-48C4-88BC-3C04F9C9555D}">
                             <File Id="fil80E7DA4FA36060D5860073757773959C" KeyPath="yes" Source="$(var.ClientPath)\src\assets\images\next.png" />
                         </Component>
-                        <Component Id="cmp9207236BCC1EE10D372202FC528A3D4E" Guid="{EE2C1C8A-EBF2-42DC-9A8B-6CCBDBBE6B27}">
+                        <Component Id="cmp9207236BCC1EE10D372202FC528A3D4E" Guid="{B34F7A8E-0BFB-4C97-B797-BA9D0ED44A27}">
                             <File Id="fil9BDCD8108AB3BAA5C3F98FF3C58FC771" KeyPath="yes" Source="$(var.ClientPath)\src\assets\images\prev.png" />
                         </Component>
-                        <Component Id="cmpE5755323831DA29A0C7E604E1A402FB6" Guid="{869C4F4C-1A0E-43A7-94C2-8281A5AD596B}">
+                        <Component Id="cmpE5755323831DA29A0C7E604E1A402FB6" Guid="{DD2BC6E0-9ACE-4820-B440-8564E6CB36AC}">
                             <File Id="fil8E32A45B7F9676E57DEF87389CF7191C" KeyPath="yes" Source="$(var.ClientPath)\src\assets\images\sort_asc.png" />
                         </Component>
-                        <Component Id="cmpB8136FD24737950C5F2B996EADB2B1D4" Guid="{CAD1E963-0CE1-4BF5-9192-18579EE7976F}">
+                        <Component Id="cmpB8136FD24737950C5F2B996EADB2B1D4" Guid="{3AA79367-E2B2-4AE1-8248-E741228252EE}">
                             <File Id="fil59AC74F32715AFAED10EBC8EF6D39212" KeyPath="yes" Source="$(var.ClientPath)\src\assets\images\sort_asc_disabled.png" />
                         </Component>
-                        <Component Id="cmp9C232E7FC2F1F993ADE2DDBEBC87816A" Guid="{E789A747-F6D4-42C6-94EC-C3015F17CE90}">
+                        <Component Id="cmp9C232E7FC2F1F993ADE2DDBEBC87816A" Guid="{FCBBE33B-3A0E-4D68-A049-916C3C927F12}">
                             <File Id="filA3B272737F114945F6F1DF48570AC93E" KeyPath="yes" Source="$(var.ClientPath)\src\assets\images\sort_both.png" />
                         </Component>
-                        <Component Id="cmpA30654F850D9BC5375C704FCCFFA72B4" Guid="{78F7245E-ABEA-46C3-8518-E69932A1F560}">
+                        <Component Id="cmpA30654F850D9BC5375C704FCCFFA72B4" Guid="{7BACA43D-F5C3-4F8C-9372-5CD249286CE2}">
                             <File Id="fil06E73EDA33D377B310BD8160364B2F3C" KeyPath="yes" Source="$(var.ClientPath)\src\assets\images\sort_desc.png" />
                         </Component>
-                        <Component Id="cmp0C516B6DC3DF60ADE2879962412BBFC4" Guid="{FE149970-F134-4D24-8AB8-BB1276F1487A}">
+                        <Component Id="cmp0C516B6DC3DF60ADE2879962412BBFC4" Guid="{BE09BE66-56EC-46AF-A97E-42E4993730FF}">
                             <File Id="fil1DEED2BD292245B0645B273D48562BA2" KeyPath="yes" Source="$(var.ClientPath)\src\assets\images\sort_desc_disabled.png" />
                         </Component>
                     </Directory>
                     <Directory Id="dir1C094D9AA0E149715CE6DEC9F0573A73" Name="js">
-                        <Component Id="cmpDC18EB3A0C547D7E9FB382F0E70649E8" Guid="{317491A4-FB61-489E-A13C-9DA2032383C9}">
+                        <Component Id="cmpDC18EB3A0C547D7E9FB382F0E70649E8" Guid="{CFE729BD-D5B1-47B4-8CC2-D84601D5550E}">
                             <File Id="fil7737843B50288561B1F53B25D4031422" KeyPath="yes" Source="$(var.ClientPath)\src\assets\js\bootstrap-datepicker.js" />
                         </Component>
-                        <Component Id="cmp4FAAA073B50C149DB2715CD9C02698DA" Guid="{3BF4F157-6129-4AE4-BBD5-8A9EE65DE697}">
+                        <Component Id="cmp4FAAA073B50C149DB2715CD9C02698DA" Guid="{87A6ABC6-ADF7-4C30-8BE5-163F7E6E3269}">
                             <File Id="filE0F707D5049BC8F07A1906207328B6C1" KeyPath="yes" Source="$(var.ClientPath)\src\assets\js\bootstrap-switch.min.js" />
                         </Component>
-                        <Component Id="cmp9798D7AFF349D33158867743E34EE681" Guid="{894F264C-8E3C-4081-9432-1F718019F034}">
+                        <Component Id="cmp9798D7AFF349D33158867743E34EE681" Guid="{21A62B13-90E8-4639-A3CE-B24EFF55B53B}">
                             <File Id="fil4939BA1185E0F7C81F1E36450749F34E" KeyPath="yes" Source="$(var.ClientPath)\src\assets\js\buttons.js" />
                         </Component>
-                        <Component Id="cmp8055FE6FD19DE124F075B0C52E3288A0" Guid="{4BE12FAF-ECA3-42AF-9F6F-50D4FF195243}">
+                        <Component Id="cmp8055FE6FD19DE124F075B0C52E3288A0" Guid="{849B5D6B-5101-4728-A668-9043C9E8F92B}">
                             <File Id="fil3D015D2ACD1306DC74FB4F5D2B22EA7C" KeyPath="yes" Source="$(var.ClientPath)\src\assets\js\jquery.fileupload-process.js" />
                         </Component>
-                        <Component Id="cmp527AF64EF3B1EA5DDB4A5B8340E5AFC7" Guid="{835B4471-FB67-443D-9D66-1B5F8AFAA27B}">
+                        <Component Id="cmp527AF64EF3B1EA5DDB4A5B8340E5AFC7" Guid="{F0D55C83-BBD3-4162-9095-A87F27D2229D}">
                             <File Id="filA5CE57DCD326D427CC9AB3AF3349AF55" KeyPath="yes" Source="$(var.ClientPath)\src\assets\js\jquery.fileupload-validate.js" />
                         </Component>
-                        <Component Id="cmpBF3F409BBC0A4A208D0F7E74895FC6A9" Guid="{E7594762-9920-49D5-A304-557B2A30EE56}">
+                        <Component Id="cmpBF3F409BBC0A4A208D0F7E74895FC6A9" Guid="{203CBE55-D567-4AD8-AABA-0653FCCB8A15}">
                             <File Id="fil166B23806623396E1307603A852EF7EE" KeyPath="yes" Source="$(var.ClientPath)\src\assets\js\jquery.fileupload.js" />
                         </Component>
-                        <Component Id="cmpEC8AC9809809327515430D4EE264CCA8" Guid="{9E81A98B-80F3-400D-8086-078C4E309E85}">
+                        <Component Id="cmpEC8AC9809809327515430D4EE264CCA8" Guid="{7BAE1AC3-66AD-429A-8E40-F75054FD90FA}">
                             <File Id="fil5B79C7A5371E58D1773996D9DEB9EAE0" KeyPath="yes" Source="$(var.ClientPath)\src\assets\js\jquery.ui.widget.js" />
                         </Component>
-                        <Component Id="cmpD54AA84E63C29C18E9AA2F4283D41363" Guid="{2062AACD-7023-4745-AE2A-E3626D422CA8}">
+                        <Component Id="cmpD54AA84E63C29C18E9AA2F4283D41363" Guid="{30E37773-1639-4FE9-BF23-63D1E7B7DA8C}">
                             <File Id="filA05D351AF867C38A1EB5C5D49F615BCE" KeyPath="yes" Source="$(var.ClientPath)\src\assets\js\jquery.ujs.js" />
                         </Component>
-                        <Component Id="cmpAC7DFBB345006064DC51EB3D041A29FC" Guid="{605D2ECF-3635-4CCF-83E4-8EF1B1E2CB24}">
+                        <Component Id="cmpAC7DFBB345006064DC51EB3D041A29FC" Guid="{A11B3E41-2A24-44EB-B820-B100B0AD1A4C}">
                             <File Id="fil5AC936636B2B2129947AB2E9175DF46D" KeyPath="yes" Source="$(var.ClientPath)\src\assets\js\jquery.validate-vsdoc.js" />
                         </Component>
-                        <Component Id="cmp442F4DD2C29F70AD2C8E6C3AC65318F3" Guid="{2E6398DB-23CE-4B9A-9B21-91356B59A89D}">
+                        <Component Id="cmp442F4DD2C29F70AD2C8E6C3AC65318F3" Guid="{5D703BE3-0C7F-4916-8F86-8558FB065B1C}">
                             <File Id="filB89873594F43FD2B7C50EB71604281D3" KeyPath="yes" Source="$(var.ClientPath)\src\assets\js\jquery.validate.js" />
                         </Component>
-                        <Component Id="cmp649FB8AEAE89648F527AE0F785CE9782" Guid="{ABC9E552-E02A-4972-975E-D2403979F873}">
+                        <Component Id="cmp649FB8AEAE89648F527AE0F785CE9782" Guid="{D0675494-135B-4B4D-ACD0-A26D3327A730}">
                             <File Id="fil96A762A3D4C51096D8C42C9791847E75" KeyPath="yes" Source="$(var.ClientPath)\src\assets\js\jquery.validate.min.js" />
                         </Component>
-                        <Component Id="cmp2872128619ED08AD9A5A87588AAC6F84" Guid="{E6BB70F3-9ED5-4EEB-8152-3690F951742C}">
+                        <Component Id="cmp2872128619ED08AD9A5A87588AAC6F84" Guid="{EE86DC9A-95E6-46C3-A69F-96269C57D600}">
                             <File Id="fil5A6C6DE45D5C62DAAAB42500E20D2B5B" KeyPath="yes" Source="$(var.ClientPath)\src\assets\js\jquery.validate.unobtrusive.js" />
                         </Component>
-                        <Component Id="cmpD31A5CE87D8FF07301088B6D522105FD" Guid="{B103DE78-40F8-418F-95B1-20374E0B970A}">
+                        <Component Id="cmpD31A5CE87D8FF07301088B6D522105FD" Guid="{FCB7327B-4311-4D16-861C-9C599C711A4B}">
                             <File Id="fil75DD4DE9CCEDEBF4F309F7364EAE6C2C" KeyPath="yes" Source="$(var.ClientPath)\src\assets\js\jquery.validate.unobtrusive.min.js" />
                         </Component>
-                        <Component Id="cmp11AB19C2E2B3158FCB9184E26823A215" Guid="{A67F33E1-E29B-45E4-8AD2-009768E460DD}">
+                        <Component Id="cmp11AB19C2E2B3158FCB9184E26823A215" Guid="{AAF6C45D-8F42-4FD3-A7F2-17A7B16A5CBC}">
                             <File Id="fil355327FF3CFAA9785A13DD3DAE52AB51" KeyPath="yes" Source="$(var.ClientPath)\src\assets\js\mt_layout.js" />
                         </Component>
-                        <Component Id="cmp444640189DAD0CB8B63A45785249604C" Guid="{0C5D9FD5-31C0-4326-9DCB-C0BF5AFD4C81}">
+                        <Component Id="cmp444640189DAD0CB8B63A45785249604C" Guid="{7323E152-8E1B-4D30-BE8C-8770F05F36E0}">
                             <File Id="fil83B8BC878FFD3408791F2C8A6F239E97" KeyPath="yes" Source="$(var.ClientPath)\src\assets\js\respond.min.js" />
                         </Component>
-                        <Component Id="cmp8D252DD405A5E618F154BF36BF87A617" Guid="{4F01595B-E73E-4F45-B8CA-9BE2653E4D81}">
+                        <Component Id="cmp8D252DD405A5E618F154BF36BF87A617" Guid="{85E9716A-AFD8-4220-BA1D-C778FFC267A6}">
                             <File Id="filE4B12B3B7E30CCEBC9DC60692815F4BF" KeyPath="yes" Source="$(var.ClientPath)\src\assets\js\trumbowyg.js" />
                         </Component>
                     </Directory>
                     <Directory Id="dir8F09049F744348514A354214F44CE7D9" Name="svg">
-                        <Component Id="cmpF7F917F3837738BF461DB700ADA1537B" Guid="{35DCC167-A23D-459D-97A6-8380AC16326A}">
+                        <Component Id="cmpF7F917F3837738BF461DB700ADA1537B" Guid="{A119D057-574D-4166-A860-62165D8C6570}">
                             <File Id="fil964DA4A5F650774CFEA8EA054EDC8C6B" KeyPath="yes" Source="$(var.ClientPath)\src\assets\svg\icons.svg" />
                         </Component>
                     </Directory>
                 </Directory>
                 <Directory Id="dir0258A35874C9B6AEE977E36DDDAE1AD8" Name="environments">
-                    <Component Id="cmpD7AAF41BA28AC3484FECF045A986E35F" Guid="{D54195A5-CADA-416D-B0FE-76EB1F61C362}">
+                    <Component Id="cmpD7AAF41BA28AC3484FECF045A986E35F" Guid="{0B9FD744-3E22-43EA-A800-B3720B3A5D00}">
                         <File Id="fil0E6EB09D6785736439AC6F93DF068EF4" KeyPath="yes" Source="$(var.ClientPath)\src\environments\environment.prod.ts" />
                     </Component>
-                    <Component Id="cmp85E7EE7B51F70430C334E3E371B21166" Guid="{4161F63D-3113-431F-A068-3BAF10D1DBAC}">
+                    <Component Id="cmp85E7EE7B51F70430C334E3E371B21166" Guid="{AD0800EE-92D5-4707-A54D-FEB2D21E505B}">
                         <File Id="filF5DA277135ACA67D39F3D80031D1CC04" KeyPath="yes" Source="$(var.ClientPath)\src\environments\environment.ts" />
                     </Component>
                 </Directory>
@@ -1113,12 +1129,19 @@
             <ComponentRef Id="cmpEA82CCBE49A26F14EF2B312F5E8F144F" />
             <ComponentRef Id="cmpF0C2BF536013509C9E189A8FD0DE3CCB" />
             <ComponentRef Id="cmpF4775472632C543717DFABDF1887FC56" />
+            <ComponentRef Id="cmpD5758B9D0A388D1CF7828946C2956D40" />
             <ComponentRef Id="cmp57996A3C592067508378E18924E48790" />
             <ComponentRef Id="cmpBFA2A55B9A1B6E3C64809A78953E9F85" />
             <ComponentRef Id="cmp71630B074F771EEAD6D5C11272B11658" />
             <ComponentRef Id="cmp50851DA8881BA8C9112ED2510A806A76" />
             <ComponentRef Id="cmpE72B272D855F8FD82F1852454BC50487" />
             <ComponentRef Id="cmp08A472F83AA798FFF49170D8CC410F5A" />
+            <ComponentRef Id="cmpCA56D356827064819B67C87418853D56" />
+            <ComponentRef Id="cmp7D6C2B1DF27F125CF8772A78CFF78FA9" />
+            <ComponentRef Id="cmp58DD7781EBA5EA6F2F225C8D938DA2B1" />
+            <ComponentRef Id="cmp93CD72BB3191BB84E669A7D833806DCB" />
+            <ComponentRef Id="cmp3CAF78FB7B68DB902F1EE7BB84222410" />
+            <ComponentRef Id="cmp31622047B77DE8D510BD3E678570EB67" />
             <ComponentRef Id="cmp08441AA119FB1E8F6B300BDA87890C4A" />
             <ComponentRef Id="cmp67408B06DC1C5624B954EA9CAFCCAE0C" />
             <ComponentRef Id="cmpDA6B569C78F0B22576123A215525AF73" />
@@ -1268,7 +1291,6 @@
             <ComponentRef Id="cmpFF56AEB394BB15925F9D48A7A6D1929F" />
             <ComponentRef Id="cmp29FF3FC7D518A3883BE84F3A601B5C19" />
             <ComponentRef Id="cmp3DB5A8CE97906ABB1DB4AA90A4CB2402" />
-            <ComponentRef Id="cmp37979688D5332A854466592DEF0715A2" />
             <ComponentRef Id="cmp2129679BD0FDFC6C6EE26C234A82EDA0" />
             <ComponentRef Id="cmp25305B0034612D0F48CE5F70FA24F467" />
             <ComponentRef Id="cmpCF200FB7D9CFD56BA661BBE87BE1302E" />
@@ -1291,7 +1313,6 @@
             <ComponentRef Id="cmp1EEC969F11EBA0F2CE7C69C096FD1F04" />
             <ComponentRef Id="cmp2BEA182D0B80C7C5994067E29FE3F193" />
             <ComponentRef Id="cmp781421BC2197CEFC7D9CC2B4DDA5AF4E" />
-            <ComponentRef Id="cmp446CAFE7924949DF8B44C586ED3923E8" />
             <ComponentRef Id="cmpD9FB2F24234B0D1EB2584107FE51C85C" />
             <ComponentRef Id="cmp84A874887E6661E390CEB3BE2FFDE31F" />
             <ComponentRef Id="cmpF63433574BB164B06BC416E04B5BA3C9" />
@@ -1315,7 +1336,6 @@
             <ComponentRef Id="cmp65CD34C359752379AB61FD0294D39FB1" />
             <ComponentRef Id="cmpD8E2988CE2306262C67EEA3D2D28B6F3" />
             <ComponentRef Id="cmpBA5188AFB2BD74A2EFD8550B72D46E4B" />
-            <ComponentRef Id="cmpE942C5AEC20097CD395CAB14265B70D6" />
             <ComponentRef Id="cmpB6EBAC264B0E2DC3EFDEE7BF8F191C32" />
             <ComponentRef Id="cmp69BB627D83DC1AC1B39E64086E89E421" />
             <ComponentRef Id="cmp365B8B822D7F548A6462759853650FD9" />
