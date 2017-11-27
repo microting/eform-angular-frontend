@@ -248,7 +248,7 @@ namespace eFormAPI.Web.Controllers
             System.IO.Directory.CreateDirectory(System.Web.Hosting.HostingEnvironment.MapPath("~/bin/output/"));
             var filePath = System.Web.Hosting.HostingEnvironment.MapPath($"~/bin/output/{fileName}");
             var fullPath = core.CasesToCsv(id, null, null, filePath,
-                $"{Request.RequestUri.Scheme}://{Request.RequestUri.Authority}/api/templates/getimage?&filename=");
+                $"{core.GetHttpServerAddress()}/api/template-files/get-image?&filename=");
 
             var result = new HttpResponseMessage(HttpStatusCode.OK);
             var fileStream = new FileStream(fullPath, FileMode.Open, FileAccess.Read);

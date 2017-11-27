@@ -27,7 +27,7 @@ namespace eFormAPI.Web.Controllers
             {
                 var core = _coreHelper.GetCore();
                 var unitDto = core.Advanced_UnitRequestOtp(id);
-                return new OperationDataResult<Unit_Dto>(true, unitDto);
+                return new OperationDataResult<Unit_Dto>(true, "New OTP created successfully", unitDto);
             }
             catch (Exception)
             {

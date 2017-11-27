@@ -81,14 +81,14 @@
             <span class="fa fa-trash-o"></span>
           </button>
         </div>
-        <div class="row">
-          <button tooltip="Download XML" (click)="downloadTemplateXML(templateDto.id)"
+        <div class="row" *ngIf="templateDto.hasCases">
+          <a tooltip="Download XML" href="/api/template-files/download-eform-xml/{{templateDto.id}}"
                   class="needs_tooltip btn btn-ar btn-xs btn-default"
                   type="button">
             .XML
-          </button>
-          <button *ngIf="templateDto.hasCases" tooltip="Upload ZIP archive" (click)="showUploadTemplateZIP(templateDto)"
-                  class="needs_tooltip btn btn-ar btn-xs btn-default"
+          </a>
+          <button tooltip="Upload PDF-template (zip)" (click)="showUploadTemplateZIP(templateDto)"
+          class="needs_tooltip btn btn-ar btn-xs btn-default"
                   type="button">
             .ZIP
           </button>
@@ -102,7 +102,7 @@
 
 <modal #uploadTemplateZIPModal>
   <modal-header [show-close]="true">
-    <h4>Upload template ZIP</h4>
+    <h4>Upload PDF-template (zip)</h4>
   </modal-header>
   <modal-body>
     <div class="create_eform">
@@ -125,7 +125,7 @@
     <button type="button" class="btn btn-default" data-dismiss="createTemplateModal"
             (click)="uploadTemplateZIPModal.dismiss()">Cancel
     </button>
-    <button type="button" class="btn btn-success" (click)="uploadTemplateZIP()">Save eForm</button>
+    <button type="button" class="btn btn-success" (click)="uploadTemplateZIP()">Upload</button>
   </modal-footer>
 </modal>
 
@@ -301,8 +301,9 @@
 
 <modal #deleteTemplateModal>
   <modal-header [show-close]="true">
-    <h4 class="modal-title">Are you sure you want to delete eForm?
-      The action can not be undone!</h4>
+    <h4 class="modal-title">Are you sure you want to delete?
+      <br/>
+      The action cannot be undone!</h4>
   </modal-header>
   <modal-body>
     <div class="container-fluid">

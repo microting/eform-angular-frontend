@@ -1,6 +1,6 @@
 <modal #createUserModal [size]="'md'">
   <modal-header [show-close]="true">
-    <h4 class="modal-title">Create user</h4>
+    <h4 class="modal-title">New User</h4>
   </modal-header>
   <modal-body>
     <div class="container-fluid">
@@ -54,16 +54,16 @@
     </div>
   </modal-body>
   <modal-footer>
+    <button type="button" class="btn btn-success" [disabled]="!createForm.form.valid" (click)="createUser()">Save</button>
     <button type="button" class="btn btn-default"
             (click)="createUserModal.dismiss()">Cancel
     </button>
-    <button type="button" class="btn btn-success" [disabled]="!createForm.form.valid" (click)="createUser()">Create</button>
   </modal-footer>
 </modal>
 
 <modal #editUserModal>
   <modal-header [show-close]="true">
-    <h4 class="modal-title">Edit user</h4>
+    <h4 class="modal-title">Edit User</h4>
   </modal-header>
   <modal-body>
     <div class="container-fluid">
@@ -117,9 +117,9 @@
     </div>
   </modal-body>
   <modal-footer>
+    <button type="button" class="btn btn-success" [disabled]="!editForm.form.valid" (click)="updateUser()">Save</button>
     <button type="button" class="btn btn-default"
             (click)="editUserModal.dismiss()">Cancel
     </button>
-    <button type="button" class="btn btn-success" [disabled]="!editForm.form.valid" (click)="updateUser()">Update</button>
   </modal-footer>
 </modal>

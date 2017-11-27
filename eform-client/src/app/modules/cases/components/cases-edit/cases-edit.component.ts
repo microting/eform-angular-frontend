@@ -76,4 +76,11 @@ export class CasesEditComponent implements OnInit {
       }
     });
   }
+
+  goToSection(location: string): void {
+    window.location.hash = location;
+    setTimeout(() => {
+      document.querySelector(location).parentElement.scrollIntoView();
+    });
+  }
 }

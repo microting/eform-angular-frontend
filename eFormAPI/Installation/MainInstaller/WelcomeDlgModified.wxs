@@ -20,7 +20,7 @@
           <Condition Action="hide">NOT Installed OR NOT PATCH</Condition>
         </Control>
         <Control Id="Title" Type="Text" X="135" Y="20" Width="220" Height="60" Transparent="yes" NoPrefix="yes" Text="!(loc.WelcomeDlgTitle)" />
-        <Control Id="Ver" Type="Text" X="3" Y="260" Width="100" Height="60" Transparent="yes" NoPrefix="yes" Text="[ProductVersion]" />
+        <Control Id="Ver" Type="Text" X="3" Y="260" Width="100" Height="60" Transparent="yes" NoPrefix="yes" Text="v[ProductVersion]" />
       </Dialog>
 
       

@@ -25,7 +25,7 @@ namespace eFormAPI.Web.Controllers
         [HttpPost]
         public OperationResult Create(SimpleSiteModel simpleSiteModel)
         {
-            if (!ModelState.IsValid) return new OperationResult(false, "Worker could not be created!");
+            if (!ModelState.IsValid) return new OperationResult(false, "Device User could not be created!");
 
             Core core = _coreHelper.GetCore();
             string siteName = simpleSiteModel.UserFirstName + " " + simpleSiteModel.UserLastName;
@@ -33,8 +33,8 @@ namespace eFormAPI.Web.Controllers
             var siteDto = core.SiteCreate(siteName, simpleSiteModel.UserFirstName, simpleSiteModel.UserLastName, null);
 
             return siteDto != null
-                ? new OperationResult(true, $"Worker \"{siteDto.SiteName}\" created successfully")
-                : new OperationResult(false, "Worker could not be created!");
+                ? new OperationResult(true, $"Device User \"{siteDto.SiteName}\" created successfully")
+                : new OperationResult(false, "Device User could not be created!");
         }
 
         [HttpGet]
@@ -45,7 +45,7 @@ namespace eFormAPI.Web.Controllers
 
             return siteDto != null
                 ? new OperationDataResult<Site_Dto>(true, siteDto)
-                : new OperationDataResult<Site_Dto>(false, $"Worker with id {id} could not be edited!");
+                : new OperationDataResult<Site_Dto>(false, $"Device User with id {id} could not be edited!");
         }
 
         [HttpPost]
@@ -65,16 +65,16 @@ namespace eFormAPI.Web.Controllers
                             simpleSiteModel.UserLastName, workerDto.Email);
 
                         return isUpdated
-                            ? new OperationResult(true, "Worker was updated successfully")
-                            : new OperationResult(false, $"Worker with id {simpleSiteModel.Id} could not be updated!");
+                            ? new OperationResult(true, "Device User updated successfully")
+                            : new OperationResult(false, $"Device User with id {simpleSiteModel.Id} could not be updated!");
                     }
-                    return new OperationResult(false, "Worker with such UId could not be obtained");
+                    return new OperationResult(false, "Device User with such UId could not be obtained");
                 }
-                return new OperationResult(false, "Worker UId not found");
+                return new OperationResult(false, "Device User UId not found");
             }
             catch (Exception)
             {
-                return new OperationResult(false, "Worker could not be updated");
+                return new OperationResult(false, "Device User could not be updated");
             }
         }
 
@@ -87,12 +87,12 @@ namespace eFormAPI.Web.Controllers
                 var siteNameDto = core.Advanced_SiteItemRead(id);
 
                 return core.SiteDelete(siteNameDto.SiteUId)
-                    ? new OperationResult(true, $"Worker \"{siteNameDto.SiteName}\" deleted successfully")
-                    : new OperationResult(false, $"Worker \"{siteNameDto.SiteName}\" could not be deleted!");
+                    ? new OperationResult(true, $"Device User \"{siteNameDto.SiteName}\" deleted successfully")
+                    : new OperationResult(false, $"Device User \"{siteNameDto.SiteName}\" could not be deleted!");
             }
             catch (Exception)
             {
-                return new OperationResult(false, $"Worker with id \"{id}\" could not be deleted!");
+                return new OperationResult(false, $"Device User with id \"{id}\" could not be deleted!");
             }
         }
     }
