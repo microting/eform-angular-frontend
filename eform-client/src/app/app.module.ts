@@ -30,8 +30,7 @@ import {AuthGuard} from 'app/guards/auth.guard';
 import {ImageService} from './services/files';
 import {RestorePasswordComponent} from 'app/components/auth/restore-password.component';
 import {EqualValidatorDirective} from 'app/components/directives/equal-validator.directive';
-import {galleryConfig} from 'app/modules/helpers/galery-config';
-import {GalleryModule} from 'ng-gallery';
+import {NgxGalleryModule} from 'ngx-gallery';
 
 // import {
 //   AdminService,
@@ -67,7 +66,7 @@ import {GalleryModule} from 'ng-gallery';
     AdvancedModule,
     HttpModule,
     SettingsModule,
-    GalleryModule.forRoot(galleryConfig),
+    NgxGalleryModule,
     HelpersModule,
     AdminModule,
     BrowserAnimationsModule,

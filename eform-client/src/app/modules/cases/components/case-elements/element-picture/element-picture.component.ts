@@ -1,21 +1,31 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {CaseFieldValue} from 'app/models';
 import {ImageService} from 'app/services/files';
 import {NotifyService} from 'app/services/notify.service';
-import {Gallery, GalleryItem} from 'ng-gallery';
+import {NgxGalleryComponent, NgxGalleryImage, NgxGalleryOptions} from 'ngx-gallery';
+
 
 @Component({
   selector: 'element-picture',
   templateUrl: './element-picture.component.html',
   styleUrls: ['./element-picture.component.css']
 })
-export class ElementPictureComponent implements OnChanges {
+export class ElementPictureComponent implements OnChanges, OnInit {
   @Input() fieldValues: Array<CaseFieldValue> = [];
   geoObjects = [];
   images = [];
-  galleryImages: Array<GalleryItem> = [];
+  galleryImages: NgxGalleryImage[] = [];
+  galleryOptions: NgxGalleryOptions[] = [];
+  @ViewChild(NgxGalleryComponent) ngxGalleryComponent: NgxGalleryComponent;
 
-  constructor(private gallery: Gallery, private imageService: ImageService, private notifyService: NotifyService) {
+  constructor(private imageService: ImageService, private notifyService: NotifyService) {
+  }
+
+  ngOnInit() {
+    this.galleryOptions = [
+      { image: false, thumbnails: false, width: '0px', height: '0px' },
+      {breakpoint: 500, width: '100%'}
+    ];
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -46,21 +56,19 @@ export class ElementPictureComponent implements OnChanges {
   }
 
   updateGallery() {
-    this.gallery.reset();
     this.galleryImages = [];
     this.images.forEach(value => {
       this.galleryImages.push({
-        src: '/api/template-files/get-image?&filename=' + value.src,
-        thumbnail: '/api/template-files/get-image?&filename=' + value.thumbnail,
-        text: value.text
+        small: value.thumbnail,
+        medium: value.src,
+        big: value.src
       });
     });
-    this.gallery.load(this.images);
   }
 
   openPicture(i: any) {
     this.updateGallery();
-    this.gallery.open(i);
+    this.ngxGalleryComponent.openPreview(i);
   }
 
   openGpsWindow(url: string) {
