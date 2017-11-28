@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Security.Principal;
 using System.Management.Automation;
+using System.Net.NetworkInformation;
 
 namespace CustomActions
 {
@@ -686,8 +687,32 @@ namespace CustomActions
             using (var serverManager = new ServerManager())
             {
                 var usedPorts = serverManager.Sites.Where(t => t.Bindings.First().EndPoint.Port >= 5000).Select(t => t.Bindings.First().EndPoint.Port);
-                return usedPorts.Any() ? usedPorts.Max() + 1 : 5000;
+                var port =  usedPorts.Any() ? usedPorts.Max() + 1 : 5000;
+
+                while (!IsPortAvailable(port))
+                    port += 1;
+
+                return port;
             }
+        }
+
+        private static bool IsPortAvailable(int port)
+        {
+            bool isAvailable = true;
+
+            IPGlobalProperties ipGlobalProperties = IPGlobalProperties.GetIPGlobalProperties();
+            var ports = new List<int>(ipGlobalProperties.GetActiveTcpConnections().Select(t => t.LocalEndPoint.Port));
+            ports.AddRange(ipGlobalProperties.GetActiveTcpListeners().Select(t => t.Port));
+            foreach (var usedPort in ports)
+            {
+                if (usedPort == port || usedPort == port - 2000)
+                {
+                    isAvailable = false;
+                    break;
+                }
+            }
+
+            return isAvailable;
         }
 
         private static void CreateAppPool(ServerManager serverManager, string name)
