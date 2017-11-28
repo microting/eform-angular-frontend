@@ -32,6 +32,28 @@
             <Component Id="cmp08A472F83AA798FFF49170D8CC410F5A" Guid="{1EA7C16A-7675-4A05-A02E-141220E33C93}">
                 <File Id="filF0F9E8B4A57FC05A4817DBC8C39A5170" KeyPath="yes" Source="$(var.ClientPath)\tslint.json" />
             </Component>
+            <Directory Id="dirBA983ECC6C56C15944FCD33764487768" Name=".idea">
+                <Component Id="cmpCA56D356827064819B67C87418853D56" Guid="{96400133-6976-4211-8337-1D0BC3364410}">
+                    <File Id="fil32F13AFE7AA116C552F655AEF4D1F92E" KeyPath="yes" Source="$(var.ClientPath)\.idea\eform-client.iml" />
+                </Component>
+                <Component Id="cmp7D6C2B1DF27F125CF8772A78CFF78FA9" Guid="{566A5016-BADD-454F-B16F-6A0460BCCB5C}">
+                    <File Id="fil6D0EAB15DA596E0214DF20920EFC298F" KeyPath="yes" Source="$(var.ClientPath)\.idea\modules.xml" />
+                </Component>
+                <Component Id="cmp58DD7781EBA5EA6F2F225C8D938DA2B1" Guid="{44B0CE0E-5F58-4F85-BA81-ACC108182CB6}">
+                    <File Id="fil240D8ABE3C1A9F5261B3EFDDFEC2BEBF" KeyPath="yes" Source="$(var.ClientPath)\.idea\typescript-compiler.xml" />
+                </Component>
+                <Component Id="cmp93CD72BB3191BB84E669A7D833806DCB" Guid="{49DD28B0-1B36-40DE-99EB-BA7870909B8D}">
+                    <File Id="fil8B55697395C33E431F718E3CA864D89E" KeyPath="yes" Source="$(var.ClientPath)\.idea\vcs.xml" />
+                </Component>
+                <Component Id="cmp3CAF78FB7B68DB902F1EE7BB84222410" Guid="{1359ECB9-157E-4B37-B40A-4CEBD0199996}">
+                    <File Id="filC25A1BB8D42E6EB96B666EA989E22CE5" KeyPath="yes" Source="$(var.ClientPath)\.idea\workspace.xml" />
+                </Component>
+                <Directory Id="dirF332B99C315E00C9A2749F743F4DB52C" Name="inspectionProfiles">
+                    <Component Id="cmp31622047B77DE8D510BD3E678570EB67" Guid="{C047B4EE-D448-4C72-86DF-46B81BBB54D7}">
+                        <File Id="filE7EF1F21BBF16DCD7423C5E4428B77AF" KeyPath="yes" Source="$(var.ClientPath)\.idea\inspectionProfiles\Project_Default.xml" />
+                    </Component>
+                </Directory>
+            </Directory>
             <Directory Id="dirD755B5A376077818B770C05C7277D000" Name="e2e">
                 <Component Id="cmp08441AA119FB1E8F6B300BDA87890C4A" Guid="{3F542D2A-1703-4F26-8422-B75A0DB57B02}">
                     <File Id="fil32C55AE28DE7A2A32317DC2A0B141FB2" KeyPath="yes" Source="$(var.ClientPath)\e2e\app.e2e-spec.ts" />
@@ -238,6 +260,7 @@
                                     <File Id="fil49E90EB6175E4B2DB5863C788E156EBE" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\cases\request\reply-request.model.ts" />
                                 </Component>
                                 <Component Id="cmpC1D810F5C66084C2547BED00482BBED1" Guid="{E607FC90-2E15-4A76-828D-F0C7E636A308}">
+
                                     <File Id="fil0264F76AD0A7BF9811ECC9D3E54DF83F" KeyPath="yes" Source="$(var.ClientPath)\src\app\models\cases\request\update-columns.model.ts" />
                                 </Component>
                             </Directory>
@@ -1113,12 +1136,19 @@
             <ComponentRef Id="cmpEA82CCBE49A26F14EF2B312F5E8F144F" />
             <ComponentRef Id="cmpF0C2BF536013509C9E189A8FD0DE3CCB" />
             <ComponentRef Id="cmpF4775472632C543717DFABDF1887FC56" />
+            <ComponentRef Id="cmpD5758B9D0A388D1CF7828946C2956D40" />
             <ComponentRef Id="cmp57996A3C592067508378E18924E48790" />
             <ComponentRef Id="cmpBFA2A55B9A1B6E3C64809A78953E9F85" />
             <ComponentRef Id="cmp71630B074F771EEAD6D5C11272B11658" />
             <ComponentRef Id="cmp50851DA8881BA8C9112ED2510A806A76" />
             <ComponentRef Id="cmpE72B272D855F8FD82F1852454BC50487" />
             <ComponentRef Id="cmp08A472F83AA798FFF49170D8CC410F5A" />
+            <ComponentRef Id="cmpCA56D356827064819B67C87418853D56" />
+            <ComponentRef Id="cmp7D6C2B1DF27F125CF8772A78CFF78FA9" />
+            <ComponentRef Id="cmp58DD7781EBA5EA6F2F225C8D938DA2B1" />
+            <ComponentRef Id="cmp93CD72BB3191BB84E669A7D833806DCB" />
+            <ComponentRef Id="cmp3CAF78FB7B68DB902F1EE7BB84222410" />
+            <ComponentRef Id="cmp31622047B77DE8D510BD3E678570EB67" />
             <ComponentRef Id="cmp08441AA119FB1E8F6B300BDA87890C4A" />
             <ComponentRef Id="cmp67408B06DC1C5624B954EA9CAFCCAE0C" />
             <ComponentRef Id="cmpDA6B569C78F0B22576123A215525AF73" />
@@ -1268,7 +1298,6 @@
             <ComponentRef Id="cmpFF56AEB394BB15925F9D48A7A6D1929F" />
             <ComponentRef Id="cmp29FF3FC7D518A3883BE84F3A601B5C19" />
             <ComponentRef Id="cmp3DB5A8CE97906ABB1DB4AA90A4CB2402" />
-            <ComponentRef Id="cmp37979688D5332A854466592DEF0715A2" />
             <ComponentRef Id="cmp2129679BD0FDFC6C6EE26C234A82EDA0" />
             <ComponentRef Id="cmp25305B0034612D0F48CE5F70FA24F467" />
             <ComponentRef Id="cmpCF200FB7D9CFD56BA661BBE87BE1302E" />
@@ -1291,7 +1320,6 @@
             <ComponentRef Id="cmp1EEC969F11EBA0F2CE7C69C096FD1F04" />
             <ComponentRef Id="cmp2BEA182D0B80C7C5994067E29FE3F193" />
             <ComponentRef Id="cmp781421BC2197CEFC7D9CC2B4DDA5AF4E" />
-            <ComponentRef Id="cmp446CAFE7924949DF8B44C586ED3923E8" />
             <ComponentRef Id="cmpD9FB2F24234B0D1EB2584107FE51C85C" />
             <ComponentRef Id="cmp84A874887E6661E390CEB3BE2FFDE31F" />
             <ComponentRef Id="cmpF63433574BB164B06BC416E04B5BA3C9" />
@@ -1315,7 +1343,6 @@
             <ComponentRef Id="cmp65CD34C359752379AB61FD0294D39FB1" />
             <ComponentRef Id="cmpD8E2988CE2306262C67EEA3D2D28B6F3" />
             <ComponentRef Id="cmpBA5188AFB2BD74A2EFD8550B72D46E4B" />
-            <ComponentRef Id="cmpE942C5AEC20097CD395CAB14265B70D6" />
             <ComponentRef Id="cmpB6EBAC264B0E2DC3EFDEE7BF8F191C32" />
             <ComponentRef Id="cmp69BB627D83DC1AC1B39E64086E89E421" />
             <ComponentRef Id="cmp365B8B822D7F548A6462759853650FD9" />
