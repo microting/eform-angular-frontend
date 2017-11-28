@@ -41,6 +41,7 @@
     <Content Include="MainInstaller.wax" />
     <Content Include="MicrotingEULA.rtf" />
     <Content Include="TopBanner.bmp" />
+    <Content Include="Transform.xslt" />
     <Content Include="WelcomeBanner.bmp" />
   </ItemGroup>
   <ItemGroup>
@@ -77,12 +78,12 @@
     <Error Text="The WiX Toolset v3.11 (or newer) build tools must be installed to build this project. To download the WiX Toolset, see http://wixtoolset.org/releases/" />
   </Target>
   <PropertyGroup>
-    <DefineConstants>ClientPath=..\..\..\eform-client; ApiPath=..\..\eformapi\bin; LetsEncryptPath=..\..\..\eFormAPI\Installation\letsencrypt</DefineConstants>
+    <DefineConstants>ClientPath=..\..\..\eform-client; ApiPath=..\..\eformapi; LetsEncryptPath=..\..\..\eFormAPI\Installation\letsencrypt</DefineConstants>
   </PropertyGroup>
   <Target Name="BeforeBuild">
     <HeatDirectory Directory="..\..\..\eform-client" PreprocessorVariable="var.ClientPath" OutputFile="ClientFileList.wxs" ComponentGroupName="ClientFiles" DirectoryRefId="eform_client" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" />
-    <HeatDirectory Directory="..\..\eformapi\bin" PreprocessorVariable="var.ApiPath" OutputFile="ApiFileList.wxs" ComponentGroupName="ApiFiles" DirectoryRefId="eform_api" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" />
-    <HeatDirectory Directory="..\..\..\eFormAPI\Installation\letsencrypt" PreprocessorVariable="var.LetsEncryptPath" OutputFile="LetsEncryptFileList.wxs" ComponentGroupName="LetsEncryptFiles" DirectoryRefId="letsencrypt" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" SuppressFragments="true" SuppressRegistry="true"  SuppressRootDirectory="true"/>
+    <HeatDirectory Directory="..\..\eformapi" PreprocessorVariable="var.ApiPath" Transforms="Transform.xslt" OutputFile="ApiFileList.wxs" ComponentGroupName="ApiFiles" DirectoryRefId="eform_api" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" />
+    <HeatDirectory Directory="..\..\..\eFormAPI\Installation\letsencrypt" PreprocessorVariable="var.LetsEncryptPath" OutputFile="LetsEncryptFileList.wxs" ComponentGroupName="LetsEncryptFiles" DirectoryRefId="letsencrypt" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" />
   </Target>
   <PropertyGroup>
     <PostBuildEvent>"$(ProjectDir)BuildedCustomActions\AllowMultipleVersions.exe" "$(TargetPath)"</PostBuildEvent>
