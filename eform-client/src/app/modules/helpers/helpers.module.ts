@@ -6,7 +6,6 @@ import {DndModule} from 'ng2-dnd';
 export * from './components'
 export * from './app.constants'
 export * from './operation.models'
-export * from './galery-config'
 
 @NgModule({
   imports: [

@@ -7,6 +7,7 @@ export class AdminSettingsModel {
   smtpSettingsModel: SmtpSettingsModel;
   headerSettingsModel: HeaderSettingsModel;
   siteLink: string;
+  assemblyVersion: string;
 
   constructor() {
     this.loginPageSettingsModel = new LoginPageSettingsModel;

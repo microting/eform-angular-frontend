@@ -1,12 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {CaseFieldValue} from 'app/models';
 
 @Component({
   selector: 'element-checkbox',
-  templateUrl: './element-checkbox.component.html',
-  styleUrls: ['./element-checkbox.component.css']
+  templateUrl: './element-checkbox.component.html'
 })
-export class ElementCheckboxComponent implements OnInit {
+export class ElementCheckboxComponent {
   fieldValueObj: CaseFieldValue = new CaseFieldValue();
   isChecked: boolean;
 
@@ -24,13 +23,8 @@ export class ElementCheckboxComponent implements OnInit {
     }
   }
 
-
   constructor() {
   }
-
-  ngOnInit() {
-  }
-
 
   checkBoxChanged(e: any) {
     if (e.target && e.target.checked) {

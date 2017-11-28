@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Migrations;
 using System.IO;
+using System.Reflection;
 using System.Web.Configuration;
 using System.Web.Http;
 using eFormAPI.Common.API;
@@ -19,6 +20,7 @@ namespace eFormAPI.Web.Controllers
     public class SettingsController : ApiController
     {
         private readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly EFormCoreHelper _coreHelper = new EFormCoreHelper();
 
         [AllowAnonymous]
         [HttpGet]
@@ -75,31 +77,16 @@ namespace eFormAPI.Web.Controllers
             try
             {
                 adminTools = new AdminTools(sdkConnectionString);
-                string error = adminTools.DbSetup(initialSettingsModel.ConnectionStringSdk.Token);
             }
             catch (Exception exception)
             {
-                try
-                {
-                    new AdminTools(sdkConnectionString).DbSetup(initialSettingsModel.ConnectionStringSdk.Token);
-                }
-                catch (Exception exa)
-                {
-
-                }
                 Logger.Error(exception.Message);
                 return new OperationResult(false, "SDK connection string is invalid");
             }
 
             var configuration = WebConfigurationManager.OpenWebConfiguration("~");
             var section = (ConnectionStringsSection) configuration.GetSection("connectionStrings");
-            try
-            {
-                section.ConnectionStrings["eFormMainConnection"].ConnectionString = mainConnectionString;
-            } catch
-            {
-                section.ConnectionStrings.Add(new ConnectionStringSettings("eFormMainConnection", mainConnectionString, "System.Data.SqlClient"));
-            }                  
+            section.ConnectionStrings["eFormMainConnection"].ConnectionString = mainConnectionString;
             try
             {
                 configuration.Save();
@@ -186,6 +173,7 @@ namespace eFormAPI.Web.Controllers
         {
             try
             {
+                var core = _coreHelper.GetCore();
                 var configuration = WebConfigurationManager.OpenWebConfiguration("~");
                 var section = (AppSettingsSection) configuration.GetSection("appSettings");
                 var model = new AdminSettingsModel()
@@ -215,7 +203,8 @@ namespace eFormAPI.Web.Controllers
                         SecondaryText = section.Settings["loginPage:secondaryText"]?.Value,
                         SecondaryTextVisible = section.Settings["loginPage:secondaryTextVisible"].Value.Equals("True")
                     },
-                    SiteLink = section.Settings["app:siteLink"].Value
+                    SiteLink = core.GetHttpServerAddress(),
+                    AssemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString()
                 };
                 return new OperationDataResult<AdminSettingsModel>(true, model);
             }
@@ -234,14 +223,14 @@ namespace eFormAPI.Web.Controllers
         {
             try
             {
+                var core = _coreHelper.GetCore();
                 var configuration = WebConfigurationManager.OpenWebConfiguration("~");
                 var section = (AppSettingsSection) configuration.GetSection("appSettings");
+
                 section.Settings["email:smtpHost"].Value = adminSettingsModel.SMTPSettingsModel.Host;
                 section.Settings["email:smtpPort"].Value = adminSettingsModel.SMTPSettingsModel.Port;
                 section.Settings["email:login"].Value = adminSettingsModel.SMTPSettingsModel.Login;
                 section.Settings["email:password"].Value = adminSettingsModel.SMTPSettingsModel.Password;
-                section.Settings["app:siteLink"].Value = adminSettingsModel.SiteLink;
-                
 
                 section.Settings["header:imageLink"].Value = adminSettingsModel.HeaderSettingsModel.ImageLink;
                 section.Settings["header:imageLinkVisible"].Value = adminSettingsModel.HeaderSettingsModel.ImageLinkVisible.ToString();
@@ -264,6 +253,8 @@ namespace eFormAPI.Web.Controllers
 
                 configuration.Save();
                 ConfigurationManager.RefreshSection("appSettings");
+
+                core.SetHttpServerAddress(adminSettingsModel.SiteLink);
                 return new OperationResult(true, "Settings have been updated successfully");
             }
             catch (Exception e)

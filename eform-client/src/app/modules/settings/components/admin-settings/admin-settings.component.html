@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <h1 class="page-title header-page-title">
       <div class="container">
-        Settings
+        Settings <h5 style="display: inline"><small>({{adminSettingsModel.assemblyVersion}})</small></h5>
       </div>
     </h1>
     <div class="pull-right">
@@ -202,26 +202,26 @@
                 <tbody>
                 <tr>
                   <td class="col-md-4">
-                    <strong>Host*</strong>
+                    <strong>Host</strong>
                   </td>
                   <td>
                     <input class="form-control" [(ngModel)]="adminSettingsModel.smtpSettingsModel.host"
-                           placeholder="smtp.gmail.com" type="text" #sourceSdk="ngModel" value="" required name="host" id="host"/>
+                           placeholder="smtp.gmail.com" type="text" #sourceSdk="ngModel" value="" name="host" id="host"/>
                   </td>
                 </tr>
                 <tr>
                   <td>
-                    <strong>Port*</strong>
+                    <strong>Port</strong>
                   </td>
                   <td>
                     <input class="form-control" [(ngModel)]="adminSettingsModel.smtpSettingsModel.port"
                            placeholder="1433"
-                           type="text" name="port" required #catalogueSdk="ngModel" id="port"/>
+                           type="text" name="port" #catalogueSdk="ngModel" id="port"/>
                   </td>
                 </tr>
                 <tr>
                   <td class="col-md-4">
-                    <strong>Login*</strong>
+                    <strong>Login</strong>
                   </td>
                   <td>
                     <input class="form-control" [(ngModel)]="adminSettingsModel.smtpSettingsModel.login"
@@ -230,11 +230,11 @@
                 </tr>
                 <tr>
                   <td class="col-md-4">
-                    <strong>Password*</strong>
+                    <strong>Password</strong>
                   </td>
                   <td>
                     <input class="form-control" [(ngModel)]="adminSettingsModel.smtpSettingsModel.password"
-                           placeholder="12345678909876543210adfecdfefdae" #tokenSdk="ngModel" required type="text" value="" name="password" id="password"/>
+                           placeholder="12345678909876543210adfecdfefdae" #tokenSdk="ngModel" type="text" value="" name="password" id="password"/>
                   </td>
                 </tr>
                 </tbody>

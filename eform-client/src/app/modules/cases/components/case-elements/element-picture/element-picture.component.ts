@@ -1,20 +1,31 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {CaseFieldValue} from 'app/models';
-import {GalleryService} from 'ng-gallery';
-import {NotifyService} from 'app/services/notify.service';
 import {ImageService} from 'app/services/files';
+import {NotifyService} from 'app/services/notify.service';
+import {NgxGalleryComponent, NgxGalleryImage, NgxGalleryOptions} from 'ngx-gallery';
+
 
 @Component({
   selector: 'element-picture',
   templateUrl: './element-picture.component.html',
   styleUrls: ['./element-picture.component.css']
 })
-export class ElementPictureComponent implements OnChanges {
+export class ElementPictureComponent implements OnChanges, OnInit {
   @Input() fieldValues: Array<CaseFieldValue> = [];
   geoObjects = [];
   images = [];
+  galleryImages: NgxGalleryImage[] = [];
+  galleryOptions: NgxGalleryOptions[] = [];
+  @ViewChild(NgxGalleryComponent) ngxGalleryComponent: NgxGalleryComponent;
 
-  constructor(private gallery: GalleryService, private imageService: ImageService, private notifyService: NotifyService) {
+  constructor(private imageService: ImageService, private notifyService: NotifyService) {
+  }
+
+  ngOnInit() {
+    this.galleryOptions = [
+      { image: false, thumbnails: false, width: '0px', height: '0px' },
+      {breakpoint: 500, width: '100%'}
+    ];
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -39,18 +50,26 @@ export class ElementPictureComponent implements OnChanges {
         }
       });
       if (this.images.length > 0) {
-        this.gallery.reset();
-        this.gallery.load(this.images);
+        this.updateGallery();
       }
     }
   }
 
-  openPicture(i: any) {
-    this.gallery.reset();
-    this.gallery.load(this.images);
-    this.gallery.set(i);
+  updateGallery() {
+    this.galleryImages = [];
+    this.images.forEach(value => {
+      this.galleryImages.push({
+        small: value.thumbnail,
+        medium: value.src,
+        big: value.src
+      });
+    });
   }
 
+  openPicture(i: any) {
+    this.updateGallery();
+    this.ngxGalleryComponent.openPreview(i);
+  }
 
   openGpsWindow(url: string) {
     window.open(url, '_blank');
