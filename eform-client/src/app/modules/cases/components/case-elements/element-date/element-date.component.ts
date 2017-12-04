@@ -23,9 +23,9 @@ export interface ITimepickerEvent {
   };
 }
 
-declare var $: any;
-declare var jQuery: any;
-declare var moment: any;
+declare let $: any;
+declare let jQuery: any;
+declare let moment: any;
 
 
 @Component({
@@ -74,7 +74,7 @@ export class ElementDateComponent implements ControlValueAccessor, AfterViewInit
   @Output() dateChange: EventEmitter<Date> = new EventEmitter<Date>();
   @Input('timepicker') timepickerOptions: any = {};
   @Input('datepicker') datepickerOptions: any = {};
-  @Input('hasClearButton') hasClearButton: boolean = false;
+  @Input('hasClearButton') hasClearButton = false;
   @Input() readonly: boolean;
   @Input() required: boolean;
   @Input() tabindex: string;
@@ -94,9 +94,11 @@ export class ElementDateComponent implements ControlValueAccessor, AfterViewInit
   @HostListener('dateChange', ['$event'])
   onChange = (_: any) => {
   }
+
   @HostListener('blur')
   onTouched = () => {
   }
+
 
   @HostBinding('attr.tabindex')
   get tabindexAttr(): string | undefined {
@@ -149,7 +151,7 @@ export class ElementDateComponent implements ControlValueAccessor, AfterViewInit
   }
 
   writeValue(value: any): void {
-    var m = moment.utc(value + 'T00:00:00+00:00', 'mm-DD-yyyy').toDate();
+    const m = moment.utc(value + 'T00:00:00+00:00', 'MM-DD-YYYY').toDate();
     this.date = m;
     if (isDate(this.date)) {
       setTimeout(() => {
@@ -200,20 +202,18 @@ export class ElementDateComponent implements ControlValueAccessor, AfterViewInit
     if (!this.datepicker && this.datepickerOptions !== false) {
       let options = jQuery.extend({enableOnReadonly: !this.readonly}, this.datepickerOptions);
 
-      options.format = 'dd-mm-yyyy';
+      options.format = 'yyyy-mm-dd'; // 'dd-mm-yyyy';
 
       this.datepicker = (<any>$('#' + this.idDatePicker)).datepicker(options);
       this.datepicker
         .on('changeDate', (e: any) => {
           let newDate: Date = e.date;
-
           if (isDate(this.date) && isDate(newDate)) {
             // get hours/minutes
             newDate.setHours(this.date.getHours());
             newDate.setMinutes(this.date.getMinutes());
             newDate.setSeconds(this.date.getSeconds());
           }
-
           this.date = newDate;
           this.dateChange.emit(newDate);
         });
@@ -222,7 +222,7 @@ export class ElementDateComponent implements ControlValueAccessor, AfterViewInit
     }
 
     if (!this.timepicker && this.timepickerOptions !== false) {
-      let options = jQuery.extend({defaultTime: false}, this.timepickerOptions);
+      const options = jQuery.extend({defaultTime: false}, this.timepickerOptions);
       this.timepicker = (<any>$('#' + this.idTimePicker)).timepicker(options);
       this.timepicker
         .on('changeTime.timepicker', (e: ITimepickerEvent) => {
@@ -290,6 +290,7 @@ export class ElementDateComponent implements ControlValueAccessor, AfterViewInit
 }
 
 let id = 0;
+
 function uniqueId(prefix: string): string {
   return prefix + ++id;
 }

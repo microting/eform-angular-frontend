@@ -62,8 +62,10 @@
                   <element-text [(fieldValue)]="dataItem.fieldValues[0]"></element-text>
                 </div>
                 <ng-container *ngSwitchCase="'Date'">
-                  <element-date [(ngModel)]="dataItem.fieldValues[0].value" [datepicker]="{format: 'mm-dd-yyyy' }"
-                                [timepicker]="false"></element-date>
+                  <element-date [(ngModel)]="dataItem.fieldValues[0].value"
+                                [datepicker]="{format: 'yyyy-mm-dd' }"
+                                [timepicker]="false">
+                  </element-date>
                 </ng-container>
                 <div *ngSwitchCase="'SingleSelect'">
                   <element-singleselect [(fieldValue)]="dataItem.fieldValues[0]"></element-singleselect>
@@ -140,7 +142,9 @@
                           </div>
                           <ng-container *ngSwitchCase="'Date'">
                             <element-date [(ngModel)]="dataItem.fieldValues[0].value"
-                                          [datepicker]="{format: 'mm-dd-yyyy' }" [timepicker]="false"></element-date>
+                                          [datepicker]="{format: 'yyyy-mm-dd' }"
+                                          [timepicker]="false">
+                            </element-date>
                           </ng-container>
                           <div *ngSwitchCase="'SingleSelect'">
                             <element-singleselect [(fieldValue)]="dataItem.fieldValues[0]"></element-singleselect>
