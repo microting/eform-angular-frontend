@@ -3,7 +3,7 @@
   <!--<?define MicrotingService_TargetDir=$(var.eFormAPI.Web.TargetDir)?>-->
   <?define ProductName="Microting eForm API" ?>
 
-  <Product Id="*" Name="$(var.ProductName)" Language="1033" Version="1.1.2.4" Manufacturer="Microting A/S">
+  <Product Id="*" Name="$(var.ProductName)" Language="1033" Version="1.1.2.5" Manufacturer="Microting A/S">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" InstallPrivileges="elevated" AdminImage="yes" />
 
     <UIRef Id="WixUI_InstallDirModified" />
