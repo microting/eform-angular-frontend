@@ -1,9 +1,8 @@
-import {Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {Component, Input, QueryList, ViewChildren} from '@angular/core';
 import {
   CaseEditRequest,
   CaseEditRequestField,
   CaseEditRequestFieldValue,
-  CaseEditRequestGroupField,
   CaseElement
 } from 'app/models';
 
@@ -12,17 +11,13 @@ import {
   templateUrl: './case-edit-element.component.html'
 })
 
-export class CaseEditElementComponent implements OnInit {
+export class CaseEditElementComponent {
   @ViewChildren(CaseEditElementComponent) editElements: QueryList<CaseEditElementComponent>;
   @Input() element: CaseElement = new CaseElement();
-
   requestModel: CaseEditRequest = new CaseEditRequest();
   requestModels: Array<CaseEditRequest> = [];
 
   constructor() {
-  }
-
-  ngOnInit() {
   }
 
   clearRequestModel() {
@@ -43,33 +38,40 @@ export class CaseEditElementComponent implements OnInit {
       this.element.dataItemList.forEach(item => {
         const elem = new CaseEditRequestField();
         elem.fieldType = item.fieldType;
-        item.fieldValues.forEach(fieldValue => {
-          const val = new CaseEditRequestFieldValue();
-          val.fieldId = fieldValue.fieldId;
-          val.value = fieldValue.value;
-          elem.fieldValues.push(val);
-        });
-        this.requestModel.fields.push(elem);
-      });
-    } else if (this.element.dataItemGroupList) {
-      this.element.dataItemGroupList.forEach(y => {
-        const group = new CaseEditRequestGroupField();
-        group.id = y.id;
-        group.label = y.label;
-        y.dataItemList.forEach(item => {
-          const elem = new CaseEditRequestField();
-          elem.fieldType = item.fieldType;
+        if (item.fieldValues && item.fieldValues.length > 0) {
           item.fieldValues.forEach(fieldValue => {
             const val = new CaseEditRequestFieldValue();
             val.fieldId = fieldValue.fieldId;
             val.value = fieldValue.value;
             elem.fieldValues.push(val);
           });
-          group.fields.push(elem);
-        });
-        this.requestModel.groupFields.push(group);
+        }
+        if (item.dataItemList && item.dataItemList.length > 0) {
+
+        }
+        this.requestModel.fields.push(elem);
       });
     }
+
+    // else if (this.element.dataItemGroupList ) {
+    //   this.element.dataItemGroupList.forEach(y => {
+    //     const group = new CaseEditRequestGroupField();
+    //     group.id = y.id;
+    //     group.label = y.label;
+    //     y.dataItemList.forEach(item => {
+    //       const elem = new CaseEditRequestField();
+    //       elem.fieldType = item.fieldType;
+    //       item.fieldValues.forEach(fieldValue => {
+    //         const val = new CaseEditRequestFieldValue();
+    //         val.fieldId = fieldValue.fieldId;
+    //         val.value = fieldValue.value;
+    //         elem.fieldValues.push(val);
+    //       });
+    //       group.fields.push(elem);
+    //     });
+    //     this.requestModel.groupFields.push(group);
+    //   });
+    // }
 
     this.editElements.forEach(x => {
       x.extractData();

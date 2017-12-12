@@ -8,8 +8,7 @@ import {EFormService} from 'app/services';
 
 @Component({
   selector: 'app-cases-edit',
-  templateUrl: './cases-edit.component.html',
-  styleUrls: ['./cases-edit.component.css']
+  templateUrl: './cases-edit.component.html'
 })
 export class CasesEditComponent implements OnInit {
   @ViewChildren(CaseEditElementComponent) editElements: QueryList<CaseEditElementComponent>;

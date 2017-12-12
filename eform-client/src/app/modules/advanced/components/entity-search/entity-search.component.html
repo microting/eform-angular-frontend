@@ -24,11 +24,11 @@
         </label>
       </div>
     </div>
-    <entity-search-pagination *ngIf="advEntityGroupListModel.numOfElements > advEntityGroupListRequestModel.pageSize"
+    <table-pagination *ngIf="advEntityGroupListModel.numOfElements > advEntityGroupListRequestModel.pageSize"
                               [limit]="advEntityGroupListRequestModel.pageSize"
                               [size]="advEntityGroupListModel.numOfElements"
                               [offset]="advEntityGroupListRequestModel.offset"
-                              (onPageChanged)="changePage($event)"></entity-search-pagination>
+                              (onPageChanged)="changePage($event)"></table-pagination>
   </div>
   <eform-entity-search-grid [advEntityGroupListModel]="advEntityGroupListModel"
                             [advEntityGroupListRequestModel]="advEntityGroupListRequestModel"

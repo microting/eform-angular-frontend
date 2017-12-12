@@ -2,10 +2,10 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angula
 import { Observable } from 'rxjs/Rx';
 
 @Component({
-  selector: 'entity-search-pagination',
-  templateUrl: './entity-search-pagination.component.html'
+  selector: 'table-pagination',
+  templateUrl: './table-pagination.component.html'
 })
-export class EntitySearchPaginationComponent implements OnChanges, OnInit {
+export class TablePaginationComponent implements OnChanges, OnInit {
   @Output() onPageChanged: EventEmitter<number> = new EventEmitter<number>();
   @Input() offset = 0;
   @Input() limit = 1;

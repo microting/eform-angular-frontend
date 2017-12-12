@@ -5,6 +5,9 @@ import {NotifyService} from 'app/services/notify.service';
 import {DeployCheckbox} from 'app/models/eFormTemplates/deploy-checkbox.model';
 import {SiteNameDto, TemplateDto, TemplateColumnModel, UpdateColumnsModel, DeployModel, EFormXmlModel} from 'app/models';
 import {FileUploader} from 'ng2-file-upload';
+import {TemplateListModel} from 'app/models/eFormTemplates/template-list.model';
+import {TemplateRequestModel} from 'app/models/eFormTemplates/template-request.model';
+import {IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts} from 'angular-2-dropdown-multiselect';
 
 @Component({
   selector: 'app-eform-table',
@@ -26,7 +29,8 @@ export class EFormTableComponent implements OnInit {
   spinnerStatus = true;
   matchFound = false;
   eFormXmlModel: EFormXmlModel = new EFormXmlModel();
-  templatesDto: Array<TemplateDto> = [];
+  templateListModel: TemplateListModel = new TemplateListModel();
+  templateRequestModel: TemplateRequestModel = new TemplateRequestModel;
   selectedTemplateDto: TemplateDto = new TemplateDto();
   sitesDto: Array<SiteNameDto> = [];
   deployModel: DeployModel = new DeployModel();
@@ -39,10 +43,44 @@ export class EFormTableComponent implements OnInit {
 
   zipFileUploader: FileUploader = new FileUploader({url: '/api/template-files/upload-eform-zip'});
 
+  isTagAddOpen = false;
+  optionsModel: number[];
+  myOptions: IMultiSelectOption[];
+  mySettings: IMultiSelectSettings = {
+    dynamicTitleMaxItems: 3,
+    checkedStyle: 'fontawesome',
+    buttonClasses: 'btn btn-default btn-block',
+  };
+  myTexts: IMultiSelectTexts = {
+    searchPlaceholder: 'Find',
+    searchEmptyResult: 'Nothing found...',
+    searchNoRenderText: 'Type in search box to see results...',
+    defaultTitle: 'Select tags for template',
+    allSelected: 'All selected',
+  };
+
+
   constructor(private eFormService: EFormService, private notifyService: NotifyService, private sitesService: SitesService) {
   }
 
+
   ngOnInit() {
+    this.myOptions = [
+      { id: 1, name: 'Zhopa' },
+      { id: 2, name: 'Gondolera' },
+      { id: 3, name: 'Gondolera' },
+      { id: 4, name: 'Gondolera' },
+      { id: 5, name: 'Gondolera' },
+      { id: 6, name: 'Gondolera' },
+      { id: 6, name: 'Gondolera' },
+      { id: 6, name: 'Gondolera' },
+      { id: 6, name: 'Gondolera' },
+      { id: 6, name: 'Gondolera' },
+      { id: 6, name: 'Gondolera' },
+      { id: 6, name: 'Gondolera' },
+      { id: 6, name: 'Gondolera' }
+    ];
+
     this.loadAllTemplates();
 
     this.zipFileUploader.onBuildItemForm = (item, form) => {
@@ -57,10 +95,10 @@ export class EFormTableComponent implements OnInit {
 
   loadAllTemplates() {
     this.spinnerStatus = true;
-    this.eFormService.getAll().subscribe(operation => {
+    this.eFormService.getAll(this.templateRequestModel).subscribe(operation => {
       this.spinnerStatus = false;
       if (operation && operation.success) {
-        this.templatesDto = operation.model;
+        this.templateListModel = operation.model;
       }
     });
   }
@@ -144,7 +182,7 @@ export class EFormTableComponent implements OnInit {
     this.deployModel.deployCheckboxes = [];
     for (const siteDto of this.sitesDto) {
       const deployObject = new DeployCheckbox();
-      const currentTemplate = this.templatesDto.filter(x => x.id == this.deployModel.id);
+      const currentTemplate = this.templateListModel.templates.filter(x => x.id == this.deployModel.id);
       for (const templateDto of currentTemplate) {
         for (const deployedSite of templateDto.deployedSites) {
           if (deployedSite.siteUId === siteDto.siteUId) {
@@ -238,5 +276,36 @@ export class EFormTableComponent implements OnInit {
 
   uploadTemplateZIP() {
     this.zipFileUploader.queue[0].upload();
+  }
+
+  changePage(e: any) {
+    if (e || e === 0) {
+      this.templateRequestModel.offset = e;
+      if (e === 0) {
+        this.templateRequestModel.pageIndex = 0;
+      } else {
+        this.templateRequestModel.pageIndex = Math.floor(e / this.templateRequestModel.pageSize);
+      }
+      this.loadAllTemplates();
+    }
+  }
+
+  sortByColumn(columnName: string, sortedByDsc: boolean) {
+    this.templateRequestModel.sort = columnName;
+    this.templateRequestModel.isSortDsc = sortedByDsc;
+    this.loadAllTemplates();
+  }
+
+  onTagInputChanged(tag: string) {
+    this.templateRequestModel.nameFilter = tag;
+    this.loadAllTemplates();
+  }
+
+  getLastPageNumber(): number {
+    let lastPage = this.templateRequestModel.offset + this.templateRequestModel.pageSize;
+    if (lastPage > this.templateListModel.numOfElements) {
+      lastPage = this.templateListModel.numOfElements;
+    }
+    return lastPage;
   }
 }
