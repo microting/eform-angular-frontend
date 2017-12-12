@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Http;
 using eFormAPI.Common.API;
 using eFormAPI.Common.Models;
+using eFormAPI.Common.Models.Templates;
 using eFormAPI.Web.Infrastructure.Helpers;
 using eFormCore;
 using eFormShared;
@@ -20,9 +21,9 @@ namespace eFormAPI.Web.Controllers
     public class TemplatesController : ApiController
     {
         private readonly EFormCoreHelper _coreHelper = new EFormCoreHelper();
-
-        [HttpGet]
-        public OperationDataResult<List<Template_Dto>> Index()
+        
+        [HttpPost]
+        public OperationDataResult<TemplateListModel> Index(TemplateRequestModel templateRequestModel)
         {
             try
             {
@@ -30,20 +31,28 @@ namespace eFormAPI.Web.Controllers
                 {
                     var core = _coreHelper.GetCore();
                     var templatesDto = core.TemplateItemReadAll(false);
-                    return new OperationDataResult<List<Template_Dto>>(true, templatesDto);
+
+                    var model = new TemplateListModel
+                    {
+                        NumOfElements = 40,
+                        PageNum = templateRequestModel.PageIndex,
+                        Templates = templatesDto
+                    };
+
+
+                    return new OperationDataResult<TemplateListModel>(true, model);
                 }
                 catch (Exception ex)
                 {
                     if (ex.Message.Contains("PrimeDb"))
                     {
-                        var lines =
-                            System.IO.File.ReadAllLines(
+                        var lines = File.ReadAllLines(
                                 System.Web.Hosting.HostingEnvironment.MapPath("~/bin/Input.txt"));
 
                         var connectionStr = lines.First();
                         var adminTool = new AdminTools(connectionStr);
                         adminTool.DbSettingsReloadRemote();
-                        return new OperationDataResult<List<Template_Dto>>(false, "Check connection string");
+                        return new OperationDataResult<TemplateListModel>(false, "Check connection string");
                     }
                     else
                     {
@@ -55,12 +64,12 @@ namespace eFormAPI.Web.Controllers
                             }
                             catch (Exception ex2)
                             {
-                                return new OperationDataResult<List<Template_Dto>>(false, "Core is not started.");
+                                return new OperationDataResult<TemplateListModel>(false, "Core is not started.");
                             }
-                            return new OperationDataResult<List<Template_Dto>>(false, "Check settings before proceed");
+                            return new OperationDataResult<TemplateListModel>(false, "Check settings before proceed");
                         }
                     }
-                    return new OperationDataResult<List<Template_Dto>>(false, "Check settings before proceed");
+                    return new OperationDataResult<TemplateListModel>(false, "Check settings before proceed");
                 }
             }
             catch (Exception)
@@ -243,19 +252,18 @@ namespace eFormAPI.Web.Controllers
         public HttpResponseMessage Csv(int id)
         {
             var core = _coreHelper.GetCore();
-
             var fileName = $"{id}_{DateTime.Now.Ticks}.csv";
-            System.IO.Directory.CreateDirectory(System.Web.Hosting.HostingEnvironment.MapPath("~/bin/output/"));
+            Directory.CreateDirectory(System.Web.Hosting.HostingEnvironment.MapPath("~/bin/output/"));
             var filePath = System.Web.Hosting.HostingEnvironment.MapPath($"~/bin/output/{fileName}");
             var fullPath = core.CasesToCsv(id, null, null, filePath,
-                $"{core.GetHttpServerAddress()}/api/template-files/get-image?&filename=");
+                $"{Request.RequestUri.Scheme}://{Request.RequestUri.Authority}/api/templates/getimage?&filename=");
 
             var result = new HttpResponseMessage(HttpStatusCode.OK);
             var fileStream = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
 
             result.Content = new StreamContent(fileStream);
-            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
-            result.Content.Headers.ContentDisposition.FileName = fileName;
+            result.Content.Headers.ContentDisposition =
+                new ContentDispositionHeaderValue("attachment") {FileName = fileName};
             result.Content.Headers.ContentType =
                 new MediaTypeHeaderValue("application/octet-stream");
             return result;
@@ -340,7 +348,7 @@ namespace eFormAPI.Web.Controllers
             result.Content.Headers.ContentDisposition =
                 new ContentDispositionHeaderValue("attachment") {FileName = fileName};
             result.Content.Headers.ContentType =
-                new MediaTypeHeaderValue($"application/pdf");
+                new MediaTypeHeaderValue("application/pdf");
             return result;
         }
         
@@ -365,7 +373,7 @@ namespace eFormAPI.Web.Controllers
                 result.Content.Headers.ContentDisposition =
                     new ContentDispositionHeaderValue("attachment") {FileName = ""}; // TODO: FIX
                 result.Content.Headers.ContentType =
-                    new MediaTypeHeaderValue($"application/pdf");
+                    new MediaTypeHeaderValue("application/pdf");
                 return result;
             }
             catch (Exception)
@@ -397,7 +405,7 @@ namespace eFormAPI.Web.Controllers
                 result.Content.Headers.ContentDisposition =
                     new ContentDispositionHeaderValue("attachment") {FileName = ""}; // TODO: FIX
                 result.Content.Headers.ContentType =
-                    new MediaTypeHeaderValue($"application/pdf");
+                    new MediaTypeHeaderValue("application/pdf");
                 return result;
             }
             catch (Exception)

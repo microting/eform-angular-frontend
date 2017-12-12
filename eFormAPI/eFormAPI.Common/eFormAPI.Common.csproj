@@ -93,7 +93,9 @@
     <Compile Include="Models\Settings\Initial\ConnectionStringMainModel.cs" />
     <Compile Include="Models\Settings\Initial\ConnectionStringSDKModel.cs" />
     <Compile Include="Models\Settings\Initial\InitialSettingsModel.cs" />
-    <Compile Include="Models\TemplateColumnModel.cs" />
+    <Compile Include="Models\Templates\TemplateColumnModel.cs" />
+    <Compile Include="Models\Templates\TemplateRequestModel.cs" />
+    <Compile Include="Models\Templates\TemplatesSearchModel.cs" />
     <Compile Include="Models\UpdateTemplateColumnsModel.cs" />
     <Compile Include="Models\User\UserInfoViewModel.cs" />
     <Compile Include="Models\Cases\Request\CaseEditRequest.cs" />

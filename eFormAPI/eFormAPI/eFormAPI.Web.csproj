@@ -261,6 +261,7 @@
     <Compile Include="Infrastructure\Helpers\EFormCoreHelper.cs" />
     <Compile Include="Infrastructure\Data\BaseDbContext.cs" />
     <Compile Include="Infrastructure\Data\Entities\EformRoleStore.cs" />
+    <Compile Include="Infrastructure\Helpers\FoldersHelper.cs" />
     <Compile Include="Infrastructure\Helpers\SettingsHelper.cs" />
     <Compile Include="Infrastructure\Identity\EformRoleManager.cs" />
     <Compile Include="Infrastructure\Data\Entities\EformUser.cs" />

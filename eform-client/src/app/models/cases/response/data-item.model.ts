@@ -12,6 +12,7 @@ export class CaseDataItem {
   fieldType: string;
   fieldValue: string;
   fieldValues: Array<CaseFieldValue> = [];
+  dataItemList: Array<CaseDataItem> = [];
   // Picture
   multi: number;
   geolocationEnabled: number;

@@ -7,9 +7,11 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import {Router} from '@angular/router';
 import {DeployModel, EFormXmlModel} from 'app/models/eFormTemplates';
-import {TemplateColumnModel} from '../../models/cases/response/column-field.model';
-import {TemplateColumnMethods, TemplateFilesMethods} from '../../modules/helpers/app.constants';
-import {UpdateColumnsModel} from '../../models/cases/request/update-columns.model';
+import {TemplateColumnModel} from 'app/models/cases/response/column-field.model';
+import {TemplateColumnMethods, TemplateFilesMethods} from 'app/modules/helpers/app.constants';
+import {UpdateColumnsModel} from 'app/models/cases/request/update-columns.model';
+import {TemplateListModel} from 'app/models/eFormTemplates/template-list.model';
+import {TemplateRequestModel} from 'app/models/eFormTemplates/template-request.model';
 
 @Injectable()
 export class EFormService extends BaseService {
@@ -22,8 +24,8 @@ export class EFormService extends BaseService {
     this.headers.append('Accept', 'application/json');
   }
 
-  public getAll = (): Observable<OperationDataResult<Array<TemplateDto>>> => {
-    return this.getWithOperationDataResult<Array<TemplateDto>>(TemplatesMethods.GetAll);
+  public getAll = (model: TemplateRequestModel): Observable<OperationDataResult<TemplateListModel>> => {
+    return this.postModelOperationDataResult(TemplatesMethods.GetAll, model);
   }
 
   public getSingle = (id: number): Observable<OperationDataResult<TemplateDto>> => {

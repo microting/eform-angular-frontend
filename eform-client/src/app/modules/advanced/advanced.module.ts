@@ -14,7 +14,7 @@ import {TooltipModule} from 'ngx-bootstrap/tooltip';
 import {EntitySearchComponent} from './components/entity-search/entity-search.component';
 import {EditEntityGroupComponent} from 'app/modules/advanced/components/edit-entity-group/edit-entity-group.component';
 import {EntitySearchGridComponent} from 'app/modules/advanced/components/entity-search-grid/entity-search-grid.component';
-import {EntitySearchPaginationComponent} from 'app/modules/advanced/components/entity-search-pagination/entity-search-pagination.component';
+import {TablePaginationComponent} from 'app/components/table-pagination/table-pagination.component';
 
 @NgModule({
   imports: [
@@ -35,7 +35,7 @@ import {EntitySearchPaginationComponent} from 'app/modules/advanced/components/e
     EntitySearchComponent,
     EditEntityGroupComponent,
     EntitySearchGridComponent,
-    EntitySearchPaginationComponent
+    TablePaginationComponent
   ],
 })
 export class AdvancedModule {

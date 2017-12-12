@@ -203,7 +203,15 @@ namespace eFormAPI.Web.Controllers
                 {
                     return Request.CreateResponse(HttpStatusCode.BadRequest, "Invalid Request!");
                 }
-                var saveFolder = core.GetJasperPath();
+
+                var saveFolder =
+                    Path.Combine(core.GetJasperPath(),
+                        Path.Combine("templates", templateId.ToString()));
+
+                var zipArchiveFolder =
+                    Path.Combine(core.GetJasperPath(),
+                        Path.Combine("templates", Path.Combine("zip-archives", templateId.ToString())));
+
                 if (string.IsNullOrEmpty(saveFolder))
                 {
                     return Request.CreateResponse(HttpStatusCode.BadRequest, "Folder error");
@@ -212,15 +220,19 @@ namespace eFormAPI.Web.Controllers
                 {
                     Directory.CreateDirectory(saveFolder);
                 }
+                if (!Directory.Exists(zipArchiveFolder))
+                {
+                    Directory.CreateDirectory(zipArchiveFolder);
+                }
                 var files = HttpContext.Current.Request.Files;
                 if (files.Count > 0)
                 {
                     var httpPostedFile = files[0];
                     if (httpPostedFile.ContentLength > 0)
                     {
-                        var filePath = Path.Combine(saveFolder, Path.GetFileName(httpPostedFile.FileName));
-                        var extractPath = Path.Combine(saveFolder, "extract");
-                        if (!File.Exists(filePath))
+                        var filePath = Path.Combine(zipArchiveFolder, Path.GetFileName(httpPostedFile.FileName));
+                        var extractPath = Path.Combine(saveFolder);
+                        if (File.Exists(filePath))
                         {
                             httpPostedFile.SaveAs(filePath);
                         }
@@ -230,6 +242,11 @@ namespace eFormAPI.Web.Controllers
                             {
                                 Directory.CreateDirectory(extractPath);
                             }
+                            else
+                            {
+                                FoldersHelper.ClearFolder(extractPath);
+                            }
+
                             ZipFile.ExtractToDirectory(filePath, extractPath);
                             return Request.CreateResponse(HttpStatusCode.OK);
                         }

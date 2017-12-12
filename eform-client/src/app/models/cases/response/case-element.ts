@@ -1,5 +1,4 @@
 import {CaseDataItem} from './data-item.model';
-import {CaseDataItemGroup} from './data-item-group.model';
 
 export class CaseElement {
   id: number;
@@ -9,6 +8,6 @@ export class CaseElement {
   approvalEnabled: boolean;
   extraFieldsEnabled: boolean;
   dataItemList: Array<CaseDataItem> = [];
-  dataItemGroupList: Array<CaseDataItemGroup> = [];
+  // dataItemGroupList: Array<CaseDataItemGroup> = [];
   elementList: Array<CaseElement> = [];
 }
