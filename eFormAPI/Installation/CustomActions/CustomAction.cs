@@ -13,13 +13,24 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Security.Principal;
 using System.Management.Automation;
+using System.Net.NetworkInformation;
 
 namespace CustomActions
 {
     public class CustomActions
     {
         public static Session Session;
- 
+        public static string FixACL = @"$out = icacls ""$dirrectory"" /verify /t /q;
+                                    foreach($line in $out)
+                                    {
+                                        if ($line -match '(.:[^:]*): (.*)')
+                                        {
+                                            $path = $Matches[1];
+                                            Set-Acl $path(Get-Acl $path);
+                                        }
+                                    }";
+
+
         [CustomAction]
         public static ActionResult GetAPIsListCA(Session session)
         {
@@ -89,7 +100,7 @@ namespace CustomActions
                     return ActionResult.Success;
                 }
 
-                var tmp = Path.Combine(Path.GetTempPath(), "MicrotingTemp");
+                var tmp = Path.Combine("c:\\", "MicrotingTemp");
                 Directory.CreateDirectory(tmp);
                 Directory.CreateDirectory(Path.Combine(tmp, "files"));
                 Directory.CreateDirectory(Path.Combine(tmp, "dirs"));
@@ -245,7 +256,7 @@ namespace CustomActions
         {
             var keepFiles = session.CustomActionData["KEEPFILES"].Split(',');
             var keepFolders = session.CustomActionData["KEEPFOLDERS"].Split(',');
-            var tmpConfigs = Path.Combine(Path.GetTempPath(), "MicrotingTemp");
+            var tmpConfigs = Path.Combine("c:\\", "MicrotingTemp");
 
             foreach (var keepFolder in keepFolders)
             {
@@ -305,6 +316,9 @@ namespace CustomActions
                 Thread.Sleep(1000);
                 RunProcess(@"C:\Program Files\nodejs\node.exe", "svc.js uninstall", uiIisDir);
                 IncrementProgressBar(session);
+
+                DeleteDirectory(Path.Combine(uiIisDir, "node_modules"));
+                DeleteDirectory(Path.Combine(uiIisDir, "dist"));
 
                 session.Log("Set proper names to folders");
 
@@ -490,24 +504,28 @@ namespace CustomActions
         {
             using (var powershell = PowerShell.Create())
             {
-                powershell.AddScript($"$path = \"{folder}\"; $acl = Get-Acl $path; Set-Acl $path $acl;");
+                powershell.AddScript(FixACL.Replace("$dirrectory", folder));
+                powershell.Invoke();
 
                 var dInfo = new DirectoryInfo(folder);
 
                 var dSecurity = dInfo.GetAccessControl();
 
                 dSecurity.AddAccessRule(new FileSystemAccessRule("IUSR", FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Allow));
+                powershell.AddScript(FixACL.Replace("$dirrectory", folder));
+                powershell.Invoke();
+
                 dSecurity.AddAccessRule(new FileSystemAccessRule("IIS_IUSRS", FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Allow));
+                powershell.AddScript(FixACL.Replace("$dirrectory", folder));
+                powershell.Invoke();
 
                 dInfo.SetAccessControl(dSecurity);
 
-                ReplaceAllDescendantPermissionsFromObject(dInfo, dSecurity, powershell);
-
-                powershell.Invoke();
+                ReplaceAllDescendantPermissionsFromObject(dInfo, dSecurity);
             }
         }
 
-        private static void ReplaceAllDescendantPermissionsFromObject(DirectoryInfo dInfo, DirectorySecurity dSecurity, PowerShell powerShell)
+        private static void ReplaceAllDescendantPermissionsFromObject(DirectoryInfo dInfo, DirectorySecurity dSecurity)
         {
             dInfo.SetAccessControl(dSecurity);
 
@@ -520,9 +538,7 @@ namespace CustomActions
                 fi.SetAccessControl(ac);
             }
 
-            powerShell.AddScript($"$path = \"{dInfo.FullName}\"; $acl = Get-Acl $path; Set-Acl $path $acl;");
-
-            dInfo.GetDirectories().ToList().ForEach(d => ReplaceAllDescendantPermissionsFromObject(d, dSecurity, powerShell));
+            dInfo.GetDirectories().ToList().ForEach(d => ReplaceAllDescendantPermissionsFromObject(d, dSecurity));
         }
 
         private static void BuildAngularApp(string appLocation)
@@ -671,8 +687,32 @@ namespace CustomActions
             using (var serverManager = new ServerManager())
             {
                 var usedPorts = serverManager.Sites.Where(t => t.Bindings.First().EndPoint.Port >= 5000).Select(t => t.Bindings.First().EndPoint.Port);
-                return usedPorts.Any() ? usedPorts.Max() + 1 : 5000;
+                var port =  usedPorts.Any() ? usedPorts.Max() + 1 : 5000;
+
+                while (!IsPortAvailable(port))
+                    port += 1;
+
+                return port;
             }
+        }
+
+        private static bool IsPortAvailable(int port)
+        {
+            bool isAvailable = true;
+
+            IPGlobalProperties ipGlobalProperties = IPGlobalProperties.GetIPGlobalProperties();
+            var ports = new List<int>(ipGlobalProperties.GetActiveTcpConnections().Select(t => t.LocalEndPoint.Port));
+            ports.AddRange(ipGlobalProperties.GetActiveTcpListeners().Select(t => t.Port));
+            foreach (var usedPort in ports)
+            {
+                if (usedPort == port || usedPort == port - 2000)
+                {
+                    isAvailable = false;
+                    break;
+                }
+            }
+
+            return isAvailable;
         }
 
         private static void CreateAppPool(ServerManager serverManager, string name)

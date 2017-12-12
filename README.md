@@ -4,7 +4,7 @@
 ![C# Build status](https://microtingas.visualstudio.com/_apis/public/build/definitions/a4743aa9-9116-44c0-8fbc-1145414eaf07/7/badge)
 ![Node Dependencies](https://david-dm.org/microting/eform-angular-frontend.svg)
 
-A Angular2 Frontend for integrating with the Microting eForm API v1.
+An Angular2 Frontend for integrating with the Microting eForm API v1.
 
 ## Support Platforms
 

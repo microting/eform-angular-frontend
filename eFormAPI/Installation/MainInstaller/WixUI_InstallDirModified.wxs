@@ -22,12 +22,12 @@
 
       <Publish Dialog="ExitDialog" Control="Finish" Event="EndDialog" Value="Return" Order="999">1</Publish>
 
-      <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="MaintenanceTypeModifiedDlg">1</Publish>
+      <Publish Dialog="WelcomeDlgModified" Control="Next" Event="NewDialog" Value="MaintenanceTypeModifiedDlg">1</Publish>
 
       <Publish Dialog="MaintenanceTypeModifiedDlg" Control="Update" Event="NewDialog" Value="DomainNameSelectDlg">1</Publish>
       <Publish Dialog="MaintenanceTypeModifiedDlg" Control="Remove" Event="NewDialog" Value="DomainNameSelectDlg">1</Publish>
       <Publish Dialog="MaintenanceTypeModifiedDlg" Control="Install" Event="NewDialog" Value="LicenseAgreementDlg">1</Publish>
-      <Publish Dialog="MaintenanceTypeModifiedDlg" Control="Back" Event="NewDialog" Value="MaintenanceWelcomeDlg">1</Publish>
+      <Publish Dialog="MaintenanceTypeModifiedDlg" Control="Back" Event="NewDialog" Value="WelcomeDlgModified">1</Publish>
 
       <Publish Dialog="LicenseAgreementDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeModifiedDlg">1</Publish>
       <Publish Dialog="LicenseAgreementDlg" Control="Next" Event="NewDialog" Value="DomainNameDlg"></Publish>
