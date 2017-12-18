@@ -80,3 +80,6 @@ eFormAPI/Installation/CustomActions/bin/x64/Release/Microsoft.Deployment.Windows
 eFormAPI/Installation/CustomActions/bin/x64/Release/Microsoft.Deployment.WindowsInstaller.xml
 eFormAPI/Installation/CustomActions/bin/x64/Release/Microsoft.Web.Administration.dll
 eFormAPI/Installation/MainInstaller/BuildedCustomActions/System.Management.Automation.dll
+eFormAPI/Installation/MainInstaller/LetsEncryptFileList.wxs
+eFormAPI/Installation/MainInstaller/ClientFileList.wxs
+eFormAPI/Installation/MainInstaller/ApiFileList.wxs
