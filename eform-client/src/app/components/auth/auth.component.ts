@@ -87,7 +87,6 @@ export class AuthComponent implements OnInit {
   getSettings() {
     this.settingsService.getLoginPageSettings().subscribe((data) => {
       if (data && data.success) {
-        debugger;
         this.loginPageSettings = data.model;
         if (this.loginPageSettings.imageLink && this.loginPageSettings.imageLinkVisible) {
           this.loginImage = 'api/images/login-page-images?fileName=' + this.loginPageSettings.imageLink;

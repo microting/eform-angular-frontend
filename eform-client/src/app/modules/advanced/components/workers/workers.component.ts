@@ -92,7 +92,6 @@ export class WorkersComponent implements OnInit {
   }
 
   selectSiteForWorker(e: any) {
-    debugger;
     if (e.target.value != 'null') {
       let foundSiteDto = this.simpleSites.find(x => x.siteId === +e.target.value);
       this.newWorkerModel.siteId = foundSiteDto.siteId;

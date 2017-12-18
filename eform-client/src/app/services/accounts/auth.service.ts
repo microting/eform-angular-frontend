@@ -40,7 +40,6 @@ export class AuthService extends BaseService {
   }
 
   sendEmailRecoveryLink(rawValue: any): Observable<any> {
-    debugger;
     return this.post(AuthMethods.EmailRecoveryLink, {email: rawValue.email}).map((result) => {
       return result;
     });
