@@ -7,6 +7,7 @@ import {CasesComponent} from './components/cases.component';
 import {CasesTableComponent} from './components/cases-table/cases-table.component';
 import {CasesEditComponent} from './components/cases-edit/cases-edit.component';
 import {CaseEditElementComponent} from './components/case-edit-element/case-edit-element.component';
+import {CaseEditSwitchComponent} from 'app/modules/cases/components/case-edit-switch/case-edit-switch.component';
 
 import {
   ElementCheckboxComponent,
@@ -17,23 +18,27 @@ import {
   ElementPictureComponent,
   ElementPdfComponent,
   ElementSingleselectComponent,
+  ElementContainerComponent,
   ElementTextComponent,
   ElementInfoboxComponent,
   ElementTimerComponent,
   ElementSignatureComponent,
   TrumbowygComponent
 } from './components/case-elements';
+import {CollapseModule} from 'ngx-bootstrap';
 
 @NgModule({
   imports: [
     CommonModule,
     NgxGalleryModule,
     FormsModule,
-    CasesRoutingModule
+    CasesRoutingModule,
+    CollapseModule.forRoot()
   ],
   declarations: [CasesComponent,
     TrumbowygComponent,
     CasesEditComponent,
+    CaseEditSwitchComponent,
     CasesTableComponent,
     CaseEditElementComponent,
     ElementCommentComponent,
@@ -42,6 +47,7 @@ import {
     ElementSingleselectComponent,
     ElementNumberComponent,
     ElementTextComponent,
+    ElementContainerComponent,
     ElementPictureComponent,
     ElementCheckboxComponent,
     ElementDateComponent,
