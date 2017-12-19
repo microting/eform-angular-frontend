@@ -1,8 +1,13 @@
 <div class="panel panel-default">
   <div class="panel-heading" (click)="isCollapsed = !isCollapsed" style="cursor: pointer">
-      <strong>{{dataItemLabel}}</strong>
-        <i class="glyphicon glyphicon-plus" *ngIf="isCollapsed"></i>
-        <i class="glyphicon glyphicon-minus" *ngIf="!isCollapsed"></i>
+<ng-container *ngIf="isCollapsed">
+  <strong>Open group</strong> <i class="glyphicon glyphicon-plus" style="margin-left: 5px;"></i>
+</ng-container>
+<ng-container *ngIf="!isCollapsed">
+  <strong>Close group</strong> <i class="glyphicon glyphicon-minus" style="margin-left: 5px;"></i>
+</ng-container>
+
+
   </div>
   <div [collapse]="isCollapsed" class="panel-body" >
     <ng-container *ngIf="dataItemList">
