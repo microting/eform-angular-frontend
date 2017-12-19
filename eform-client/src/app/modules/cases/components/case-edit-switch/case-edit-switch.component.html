@@ -56,11 +56,12 @@
           <div *ngSwitchCase="'Signature'">
             <element-signature [(fieldValue)]="dataItem.fieldValues[0]"></element-signature>
           </div>
+          <div *ngSwitchCase="'FieldContainer'">
+            <element-container [(fieldValue)]="dataItem.dataItemList" [dataItemLabel]="dataItem.description.inderValue"></element-container>
+          </div>
           <div *ngSwitchDefault></div>
         </div>
-        <div *ngIf="dataItem.label == 'Group open/close'">
-          <element-container [(fieldValue)]="dataItem.dataItemList" [dataItemLabel]="dataItem.description.inderValue"></element-container>
-        </div>
+
       </td>
     </tr>
   </ng-container>
