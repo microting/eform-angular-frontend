@@ -597,7 +597,6 @@
  }
 
  input {
-   border-radius: 0 !important;
    box-shadow: none;
  }
 
@@ -784,7 +783,7 @@
  }
 
  .input-group-addon {
-   border-radius: 0;
+   border-radius: 4px;
    background-color: #ae0000;
    border-color: #9a0000;
    color: #fff;

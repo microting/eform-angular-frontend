@@ -1,13 +1,12 @@
 <ng-container *ngIf="dataItemList">
   <ng-container *ngFor="let dataItem of dataItemList; let i = index">
-    <tr [style.backgroundColor]="getStyleColorFromDataItem(dataItem)">
+    <tr [style.backgroundColor]="getStyleColorFromDataItem(dataItem)" *ngIf="dataItem.fieldType != 'FieldContainer'">
       <td>
         <strong>{{dataItem.label}}</strong>
       </td>
     </tr>
     <tr [style.backgroundColor]="getStyleColorFromDataItem(dataItem)">
       <td>
-
         <div [ngSwitch]="dataItem.fieldType">
           <div *ngSwitchCase="'Picture'">
             <element-picture [fieldValues]="dataItem.fieldValues"></element-picture>
@@ -57,7 +56,7 @@
             <element-signature [(fieldValue)]="dataItem.fieldValues[0]"></element-signature>
           </div>
           <div *ngSwitchCase="'FieldContainer'">
-            <element-container [(fieldValue)]="dataItem.dataItemList" [dataItemLabel]="dataItem.description.inderValue"></element-container>
+            <element-container [(fieldValue)]="dataItem.dataItemList" [dataItemLabel]="dataItem.label"></element-container>
           </div>
           <div *ngSwitchDefault></div>
         </div>
