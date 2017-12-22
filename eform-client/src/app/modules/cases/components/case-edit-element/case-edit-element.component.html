@@ -6,8 +6,8 @@
         {{element.label}}
       </p>
     </div>
-    <table class="table">
-      <tbody>
+    <table class="table">  
+      <tbody *ngIf="element.approvalEnabled || (element.reviewEnabled) && (element.approvalEnabled)">
       <tr>
         <td>
           <div *ngIf="element.approvalEnabled" class="radio">
@@ -28,6 +28,7 @@
           </div>
         </td>
       </tr>
+      </tbody>
       <tbody case-edit-switch  [dataItemList]="element.dataItemList"></tbody>
       <ng-container *ngIf="element.extraFieldsEnabled">
         <tr>
@@ -36,7 +37,6 @@
           </td>
         </tr>
       </ng-container>
-      </tbody>
     </table>
   </div>
 </section>

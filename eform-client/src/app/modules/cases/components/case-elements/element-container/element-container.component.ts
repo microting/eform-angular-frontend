@@ -3,7 +3,8 @@ import {CaseDataItem} from 'app/models/cases/response/data-item.model';
 
 @Component({
   selector: 'element-container',
-  templateUrl: './element-container.component.html'
+  templateUrl: './element-container.component.html',
+  styleUrls: ['./element-container.component.css']
 })
 export class ElementContainerComponent {
   isCollapsed = true;
