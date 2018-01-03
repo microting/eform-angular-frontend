@@ -23,7 +23,7 @@ module.exports = function (config) {
     }],*/
 
     files: [
-      './src/*-test.js',
+      './src/*-test.ts',
       './src/test.ts'
     ],
 
