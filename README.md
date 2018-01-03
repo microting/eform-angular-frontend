@@ -36,7 +36,8 @@ First way is to put breakpoints in the **Sources**. To do that Open **Chrome Dev
 The second way is simple, you can just put a **debugger** word dirrectly in code. After that app will reload and with open **Chrome Dev Tools** on the function call **debugger** will be triggered. 
 For example **debugger** will be triggered on click *Logout* button:
 
-```logout(): Observable<any> {
+```
+logout(): Observable<any> {
 debugger;
      return this.post(AuthMethods.Logout, {});
    }
