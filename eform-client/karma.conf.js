@@ -4,22 +4,34 @@
 module.exports = function (config) {
   config.set({
     basePath: '',
+
     frameworks: ['jasmine', '@angular/cli'],
+
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
       require('karma-remap-istanbul'),
+      require('karma-phantomjs-launcher'),
+      require('karma-junit-reporter'),
       require('@angular/cli/plugins/karma')
     ],
+
+
     files: [{
       pattern: './src/test.ts',
       watched: false
     }],
+
+
     preprocessors: {
       './src/test.ts': ['@angular/cli']
     },
+
+
     mime: {
       'text/x-typescript': ['ts', 'tsx']
+
+
     },
     remapIstanbulReporter: {
       reports: {
@@ -27,18 +39,26 @@ module.exports = function (config) {
         lcovonly: './coverage/coverage.lcov'
       }
     },
+
+
     angularCli: {
       config: './angular-cli.json',
       environment: 'dev'
     },
+
+    junitReporter: {
+      outputFile: 'test_out/unit.xml',
+      suite: 'unit'
+    },
+
     reporters: config.angularCli && config.angularCli.codeCoverage ?
-      ['progress', 'karma-remap-istanbul'] :
-      ['progress'],
+      ['progress', 'karma-remap-istanbul', 'junit'] :
+      ['progress', 'junit'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome'],
-    singleRun: false
+    browsers: ['PhantomJS'],
+    singleRun: true
   });
 };
