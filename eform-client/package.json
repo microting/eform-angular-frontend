@@ -56,6 +56,7 @@
     "@angular/compiler-cli": "^4.2.4",
     "@types/jasmine": "2.5.38",
     "@types/node": "~6.0.60",
+    "angular-mocks": "^1.6.8",
     "codelyzer": "~2.0.0",
     "gulp": "^3.9.1",
     "jasmine-core": "2.5.2",

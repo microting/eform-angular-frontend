@@ -17,11 +17,15 @@ module.exports = function (config) {
     ],
 
 
-    files: [{
+    /*files: [{
       pattern: './src/test.ts',
       watched: false
-    }],
+    }],*/
 
+    files: [
+      './src/*-test.js',
+      './src/test.ts'
+    ],
 
     preprocessors: {
       './src/test.ts': ['@angular/cli']
@@ -35,11 +39,10 @@ module.exports = function (config) {
     },
     remapIstanbulReporter: {
       reports: {
-        html: 'coverage',
-        lcovonly: './coverage/coverage.lcov'
+        html: './test-output/coverage',
+        lcovonly: './test-output/coverage.lcov'
       }
     },
-
 
     angularCli: {
       config: './angular-cli.json',
@@ -47,13 +50,12 @@ module.exports = function (config) {
     },
 
     junitReporter: {
-      outputFile: 'test_out/unit.xml',
+      outputDir: 'test-output',
+      outputFile: 'unit.xml',
       suite: 'unit'
     },
 
-    reporters: config.angularCli && config.angularCli.codeCoverage ?
-      ['progress', 'karma-remap-istanbul', 'junit'] :
-      ['progress', 'junit'],
+    reporters: ['progress', 'karma-remap-istanbul', 'junit'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
