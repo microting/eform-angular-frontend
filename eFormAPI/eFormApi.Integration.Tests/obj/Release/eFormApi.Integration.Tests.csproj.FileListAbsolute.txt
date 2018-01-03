@@ -1,0 +1,17 @@
+C:\Users\trole\Documents\Visual_Studio_2015\Projects\eform-angular-frontend\eFormAPI\eFormApi.Integration.Tests\bin\Release\NUnit3.TestAdapter.dll
+C:\Users\trole\Documents\Visual_Studio_2015\Projects\eform-angular-frontend\eFormAPI\eFormApi.Integration.Tests\bin\Release\nunit.engine.dll
+C:\Users\trole\Documents\Visual_Studio_2015\Projects\eform-angular-frontend\eFormAPI\eFormApi.Integration.Tests\bin\Release\nunit.engine.api.dll
+C:\Users\trole\Documents\Visual_Studio_2015\Projects\eform-angular-frontend\eFormAPI\eFormApi.Integration.Tests\bin\Release\Mono.Cecil.dll
+C:\Users\trole\Documents\Visual_Studio_2015\Projects\eform-angular-frontend\eFormAPI\eFormApi.Integration.Tests\bin\Release\Mono.Cecil.Pdb.dll
+C:\Users\trole\Documents\Visual_Studio_2015\Projects\eform-angular-frontend\eFormAPI\eFormApi.Integration.Tests\bin\Release\Mono.Cecil.Mdb.dll
+C:\Users\trole\Documents\Visual_Studio_2015\Projects\eform-angular-frontend\eFormAPI\eFormApi.Integration.Tests\bin\Release\Mono.Cecil.Rocks.dll
+C:\Users\trole\Documents\Visual_Studio_2015\Projects\eform-angular-frontend\eFormAPI\eFormApi.Integration.Tests\bin\Release\eFormApi.Integration.Tests.dll
+C:\Users\trole\Documents\Visual_Studio_2015\Projects\eform-angular-frontend\eFormAPI\eFormApi.Integration.Tests\bin\Release\eFormApi.Integration.Tests.pdb
+C:\Users\trole\Documents\Visual_Studio_2015\Projects\eform-angular-frontend\eFormAPI\eFormApi.Integration.Tests\bin\Release\eFormApi.Tests.dll
+C:\Users\trole\Documents\Visual_Studio_2015\Projects\eform-angular-frontend\eFormAPI\eFormApi.Integration.Tests\bin\Release\nunit.framework.dll
+C:\Users\trole\Documents\Visual_Studio_2015\Projects\eform-angular-frontend\eFormAPI\eFormApi.Integration.Tests\bin\Release\eFormApi.Tests.pdb
+C:\Users\trole\Documents\Visual_Studio_2015\Projects\eform-angular-frontend\eFormAPI\eFormApi.Integration.Tests\bin\Release\nunit.framework.xml
+C:\Users\trole\Documents\Visual_Studio_2015\Projects\eform-angular-frontend\eFormAPI\eFormApi.Integration.Tests\obj\Release\eFormApi.Integration.Tests.csprojResolveAssemblyReference.cache
+C:\Users\trole\Documents\Visual_Studio_2015\Projects\eform-angular-frontend\eFormAPI\eFormApi.Integration.Tests\obj\Release\eFormApi.Integration.Tests.csproj.CoreCompileInputs.cache
+C:\Users\trole\Documents\Visual_Studio_2015\Projects\eform-angular-frontend\eFormAPI\eFormApi.Integration.Tests\obj\Release\eFormApi.Integration.Tests.dll
+C:\Users\trole\Documents\Visual_Studio_2015\Projects\eform-angular-frontend\eFormAPI\eFormApi.Integration.Tests\obj\Release\eFormApi.Integration.Tests.pdb
