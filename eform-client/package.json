@@ -12,7 +12,8 @@
     "build": "ng build --env=prod",
     "server": "node server.js",
     "winserver-install": "node svc.js install",
-    "winserver-uninstall": "node svc.js uninstall"
+    "winserver-uninstall": "node svc.js uninstall",
+    "test-single-headless": "ng test --single-run=true --browsers=PhantomJS --reporters=progress,junit"
   },
   "private": true,
   "dependencies": {
@@ -62,7 +63,10 @@
     "karma-chrome-launcher": "~2.1.1",
     "karma-cli": "^1.0.1",
     "karma-jasmine": "^1.0.2",
+    "karma-junit-reporter": "^1.2.0",
+    "karma-phantomjs-launcher": "^1.0.4",
     "karma-remap-istanbul": "^0.6.0",
+    "phantomjs-prebuilt": "^2.1.16",
     "protractor": "~5.1.0",
     "ts-node": "~2.0.0",
     "tslint": "~4.5.0",
