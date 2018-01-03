@@ -35,6 +35,12 @@ eFormAPI/eFormAPI\.Common/obj/Debug/
 
 eFormAPI/eFormAPI\.Common/bin/Debug/
 
+eFormApi.Integration.Tests/bin/*
+eFormApi.Integration.Tests/obj/*
+
+eFormApi.Tests/bin/*
+eFormApi.Tests/obj/*
+
 eform-client/package-lock\.json
 eFormAPI/AllowMultipleVersions/obj/
 eFormAPI/AlowMultipleVersionsBundle/bin/
