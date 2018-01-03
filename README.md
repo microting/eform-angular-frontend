@@ -39,7 +39,7 @@ For example **debugger** will be triggered on click *Logout* button:
 ```logout(): Observable<any> {
 debugger;
      return this.post(AuthMethods.Logout, {});
-   }``
+   }```
 
 To use **Augury** go to **Chrome Dev Tools** and navigate to this tab. 
 The component tree displays a hierarchical relationship of the components. When a component is selected, Augury presents additional information about the selected component.
