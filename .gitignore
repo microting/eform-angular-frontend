@@ -89,3 +89,5 @@ eFormAPI/Installation/MainInstaller/BuildedCustomActions/System.Management.Autom
 eFormAPI/Installation/MainInstaller/LetsEncryptFileList.wxs
 eFormAPI/Installation/MainInstaller/ClientFileList.wxs
 eFormAPI/Installation/MainInstaller/ApiFileList.wxs
+/eFormAPI/eFormApi.Integration.Tests/obj/Release
+/eFormAPI/eFormApi.Tests/obj/Release
