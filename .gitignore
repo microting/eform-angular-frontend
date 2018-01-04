@@ -90,4 +90,7 @@ eFormAPI/Installation/MainInstaller/LetsEncryptFileList.wxs
 eFormAPI/Installation/MainInstaller/ClientFileList.wxs
 eFormAPI/Installation/MainInstaller/ApiFileList.wxs
 /eFormAPI/eFormApi.Integration.Tests/obj/Release
+/eFormAPI/eFormApi.Integration.Tests/bin/*
 /eFormAPI/eFormApi.Tests/obj/Release
+/eFormAPI/eFormApi.Tests/bin/*
+/eformAPI/eFormApi.Integration.Tests/bin/*
