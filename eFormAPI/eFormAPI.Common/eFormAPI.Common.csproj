@@ -57,7 +57,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microting.eForm, Version=1.6.4.19, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\Microting.eForm.2.0.9\lib\net45\Microting.eForm.dll</HintPath>
+      <HintPath>..\packages\Microting.eForm.2.1.3\lib\net45\Microting.eForm.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data, Version=6.9.10.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.6.9.10\lib\net45\MySql.Data.dll</HintPath>
