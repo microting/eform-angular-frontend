@@ -232,7 +232,7 @@ namespace eFormAPI.Web.Controllers
                     {
                         var filePath = Path.Combine(zipArchiveFolder, Path.GetFileName(httpPostedFile.FileName));
                         var extractPath = Path.Combine(saveFolder);
-                        if (File.Exists(filePath))
+                        if (!File.Exists(filePath))
                         {
                             httpPostedFile.SaveAs(filePath);
                         }
