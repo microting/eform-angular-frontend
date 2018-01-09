@@ -86,6 +86,10 @@ export class EFormTableComponent implements OnInit {
     this.zipFileUploader.onBuildItemForm = (item, form) => {
       form.append('templateId', this.selectedTemplateDto.id);
     };
+    this.zipFileUploader.onSuccessItem = () => {
+      this.zipFileUploader.clearQueue();
+      this.uploadTemplateZIPModal.dismiss();
+    };
     this.zipFileUploader.onAfterAddingFile = f => {
       if (this.zipFileUploader.queue.length > 1) {
         this.zipFileUploader.removeFromQueue(this.zipFileUploader.queue[0]);
