@@ -317,8 +317,18 @@ namespace CustomActions
                 RunProcess(@"C:\Program Files\nodejs\node.exe", "svc.js uninstall", uiIisDir);
                 IncrementProgressBar(session);
 
-                DeleteDirectory(Path.Combine(uiIisDir, "node_modules"));
-                DeleteDirectory(Path.Combine(uiIisDir, "dist"));
+                try
+                {
+                    DeleteDirectory(Path.Combine(uiIisDir, "node_modules"));
+                } catch { }
+                try
+                {
+                    DeleteDirectory(Path.Combine(uiIisDir, "dist"));
+                } catch { }
+                try
+                {
+                    DeleteDirectory(Path.Combine(uiIisDir, "src"));
+                } catch { }
 
                 session.Log("Set proper names to folders");
 
