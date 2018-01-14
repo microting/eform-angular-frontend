@@ -35,6 +35,12 @@ eFormAPI/eFormAPI\.Common/obj/Debug/
 
 eFormAPI/eFormAPI\.Common/bin/Debug/
 
+eFormApi.Integration.Tests/bin/*
+eFormApi.Integration.Tests/obj/*
+
+eFormApi.Tests/bin/*
+eFormApi.Tests/obj/*
+
 eform-client/package-lock\.json
 eFormAPI/AllowMultipleVersions/obj/
 eFormAPI/AlowMultipleVersionsBundle/bin/
@@ -83,3 +89,10 @@ eFormAPI/Installation/MainInstaller/BuildedCustomActions/System.Management.Autom
 eFormAPI/Installation/MainInstaller/LetsEncryptFileList.wxs
 eFormAPI/Installation/MainInstaller/ClientFileList.wxs
 eFormAPI/Installation/MainInstaller/ApiFileList.wxs
+/eFormAPI/eFormApi.Integration.Tests/obj/Release
+/eFormAPI/eFormApi.Integration.Tests/bin/*
+/eFormAPI/eFormApi.Tests/obj/Release
+/eFormAPI/eFormApi.Tests/bin/*
+/eformAPI/eFormApi.Integration.Tests/bin/*
+eFormAPI/eFormAPI/JasperExporter.jar
+eFormAPI/eFormAPI.Common/JasperExporter.jar
