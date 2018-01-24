@@ -21,3 +21,11 @@
   display: inline-block;
   max-width: 200px;
 }
+
+.inline-block {
+  display: inline-block;
+}
+
+.tags-label {
+  margin-left: 10px;
+}

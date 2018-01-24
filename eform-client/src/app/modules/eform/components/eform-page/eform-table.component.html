@@ -18,16 +18,25 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-xs-8">
-      <div id="check_lists_filter" class="dataTables_filter form-inline">
-          <label>Tag:
-          <input type="search" (input)="onTagInputChanged($event.target.value)" class="form-control input-sm" placeholder="">
+      <div id="check_lists_filter" class="form-inline">
+          <label>Label:
+          <input type="search" (input)="onLabelInputChanged($event.target.value)" class="form-control input-sm" placeholder="">
         </label>
+
+        <div class="inline-block">
+          <label class="inline-block tags-label" for="eFormXML">Tags:</label>
+          <ss-multiselect-dropdown [options]="availableTags"
+                                   [texts]="filterTagTexts"
+                                   [settings]="mySettings"
+                                   (ngModelChange)="loadAllTemplates();"
+                                   [(ngModel)]="templateRequestModel.tagIds"></ss-multiselect-dropdown>
+        </div>
       </div>
     </div>
-    <!--<table-pagination *ngIf="advEntityGroupListModel.numOfElements > advEntityGroupListRequestModel.pageSize"
-                      [limit]="advEntityGroupListRequestModel.pageSize"
-                      [size]="advEntityGroupListModel.numOfElements"
-                      [offset]="advEntityGroupListRequestModel.offset"
+    <!--<table-pagination *ngIf="templateListModel.numOfElements > templateRequestModel.pageSize"
+                      [limit]="templateRequestModel.pageSize"
+                      [size]="templateListModel.numOfElements"
+                      [offset]="templateRequestModel.offset"
                       (onPageChanged)="changePage($event)"></table-pagination>-->
   </div>
   <table border="0" cellpadding="0" cellspacing="0"
@@ -35,45 +44,22 @@
          id="units" role="grid" aria-describedby="check_lists_info" style="width: 100%;">
     <thead>
     <tr role="row">
-      <!-- <th class="col-md-1 text-center"
-          [class.sorting_asc]="isSortedByUidAsc"
-          [class.sorting_desc]="isSortedByUidDsc"
-          [class.sorting]="!isSortedByUidDsc && !isSortedByUidAsc"
-          (click)="sortByUid()"
-          rowspan="1" colspan="1">
-        #
-      </th>
-      <th class="col-md-9 text-center"
-          [class.sorting_asc]="isSortedByNameAsc"
-          [class.sorting_desc]="isSortedByNameDsc"
-          [class.sorting]="!isSortedByNameDsc && !isSortedByNameAsc"
-          (click)="sortByName()"
-          rowspan="1" colspan="1">
-        Navn
-      </th>
-      <th class="col-md-2 text-center" rowspan="1" colspan="1">
-      </th> -->
-      <th class="col-md-1 text-center"
-          [class.sorting_asc]="templateRequestModel.sort == 'id' && !templateRequestModel.isSortDsc"
-          [class.sorting_desc]="templateRequestModel.sort == 'id' && templateRequestModel.isSortDsc"
-          [class.sorting]="templateRequestModel.sort != 'id'"
-          (click)="sortByColumn('id', templateRequestModel.isSortDsc = !templateRequestModel.isSortDsc)"
-          rowspan="1" colspan="1">
+      <th class="col-md-1 text-center" rowspan="1" colspan="1">
         ID
       </th>
       <th class="col-md-2 text-center"
-          [class.sorting_asc]="templateRequestModel.sort == 'date' && !templateRequestModel.isSortDsc"
-          [class.sorting_desc]="templateRequestModel.sort == 'date' && templateRequestModel.isSortDsc"
-          [class.sorting]="templateRequestModel.sort != 'date'"
-          (click)="sortByColumn('date', templateRequestModel.isSortDsc = !templateRequestModel.isSortDsc)"
+          [class.sorting_asc]="templateRequestModel.sort == 'createdAt' && !templateRequestModel.isSortDsc"
+          [class.sorting_desc]="templateRequestModel.sort == 'createdAt' && templateRequestModel.isSortDsc"
+          [class.sorting]="templateRequestModel.sort != 'createdAt'"
+          (click)="sortByColumn('createdAt', templateRequestModel.isSortDsc = !templateRequestModel.isSortDsc)"
           rowspan="1" colspan="1">
         Created at
       </th>
       <th class="col-md-3 text-center"
-          [class.sorting_asc]="templateRequestModel.sort == 'name' && !templateRequestModel.isSortDsc"
-          [class.sorting_desc]="templateRequestModel.sort == 'name' && templateRequestModel.isSortDsc"
-          [class.sorting]="templateRequestModel.sort != 'name'"
-          (click)="sortByColumn('name', templateRequestModel.isSortDsc = !templateRequestModel.isSortDsc)"
+          [class.sorting_asc]="templateRequestModel.sort == 'label' && !templateRequestModel.isSortDsc"
+          [class.sorting_desc]="templateRequestModel.sort == 'label' && templateRequestModel.isSortDsc"
+          [class.sorting]="templateRequestModel.sort != 'label'"
+          (click)="sortByColumn('label', templateRequestModel.isSortDsc = !templateRequestModel.isSortDsc)"
           rowspan="1" colspan="1">
         Name eForm
       </th>
@@ -100,7 +86,9 @@
         {{templateDto.label}}
       </td>
       <td class="text-center">
-
+        <ng-container *ngFor="let tag of templateDto.tags">
+          {{tag.value}},
+        </ng-container>
       </td>
       <td class="text-center">
         <span *ngFor="let deployedSite of templateDto.deployedSites">{{deployedSite.siteName}}<br></span>
@@ -364,9 +352,7 @@
 
 <modal #deleteTemplateModal>
   <modal-header [show-close]="true">
-    <h4 class="modal-title">Are you sure you want to delete?
-      <br/>
-      The action cannot be undone!</h4>
+    <h4 class="modal-title">Are you sure you want to delete?</h4>
   </modal-header>
   <modal-body>
     <div class="container-fluid">
@@ -399,18 +385,18 @@
   <modal-body>
     <div class="create_eform">
       <div class="row">
-        <div class="form-group col-xs-12 col-md-12" *ngIf="false">
+        <div class="form-group col-xs-12 col-md-12">
           <label class="multiselect-label" for="eFormXML">Tags</label>
-          <ss-multiselect-dropdown [options]="myOptions"
+          <ss-multiselect-dropdown [options]="availableTags"
                                    [texts]="myTexts"
                                    [settings]="mySettings"
-                                   [(ngModel)]="optionsModel"></ss-multiselect-dropdown>
+                                   [(ngModel)]="eFormCreateModel.tagIds"></ss-multiselect-dropdown>
           <button class="btn btn-success btn-xs btn-add-tag" *ngIf="!isTagAddOpen"
                   (click)="isTagAddOpen = !isTagAddOpen"><span class="glyphicon glyphicon-plus"></span></button>
           <ng-container *ngIf="isTagAddOpen">
-            <input type="search" class="form-control add-tag-input">
+            <input type="search" [(ngModel)]="eFormCreateModel.newTag" class="form-control add-tag-input">
             <button class="btn btn-danger btn-xs btn-add-tag"
-                    (click)="isTagAddOpen = !isTagAddOpen"><span class="glyphicon glyphicon-remove"></span></button>
+                    (click)="isTagAddOpen = !isTagAddOpen; eFormCreateModel.newTag = '';"><span class="glyphicon glyphicon-remove"></span></button>
           </ng-container>
 
         </div>
@@ -418,7 +404,7 @@
       <div class="row">
         <div class="form-group col-xs-12 col-md-12">
           <label class="mt-validation-container" for="eFormXML">XML from eForm Builder</label>
-          <textarea [(ngModel)]="eFormXmlModel.eFormXml" class="form-control" placeholder="Paste XML here"
+          <textarea [(ngModel)]="eFormCreateModel.eFormXml" class="form-control" placeholder="Paste XML here"
                     name="eFormXML" id="eFormXml" rows="20"></textarea>
         </div>
       </div>

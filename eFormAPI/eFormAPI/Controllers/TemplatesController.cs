@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Http;
+using Amazon.Runtime;
 using eFormAPI.Common.API;
 using eFormAPI.Common.Models;
 using eFormAPI.Common.Models.Templates;
@@ -21,7 +22,7 @@ namespace eFormAPI.Web.Controllers
     public class TemplatesController : ApiController
     {
         private readonly EFormCoreHelper _coreHelper = new EFormCoreHelper();
-        
+
         [HttpPost]
         public OperationDataResult<TemplateListModel> Index(TemplateRequestModel templateRequestModel)
         {
@@ -30,7 +31,12 @@ namespace eFormAPI.Web.Controllers
                 try
                 {
                     var core = _coreHelper.GetCore();
-                    var templatesDto = core.TemplateItemReadAll(false);
+                    var templatesDto = core.TemplateItemReadAll(false,
+                        "",
+                        templateRequestModel.NameFilter,
+                        templateRequestModel.IsSortDsc,
+                        templateRequestModel.Sort,
+                        templateRequestModel.TagIds);
 
                     var model = new TemplateListModel
                     {
@@ -47,7 +53,7 @@ namespace eFormAPI.Web.Controllers
                     if (ex.Message.Contains("PrimeDb"))
                     {
                         var lines = File.ReadAllLines(
-                                System.Web.Hosting.HostingEnvironment.MapPath("~/bin/Input.txt"));
+                            System.Web.Hosting.HostingEnvironment.MapPath("~/bin/Input.txt"));
 
                         var connectionStr = lines.First();
                         var adminTool = new AdminTools(connectionStr);
@@ -128,24 +134,35 @@ namespace eFormAPI.Web.Controllers
         [HttpPost]
         public OperationResult Create(EFormXmlModel eFormXmlModel)
         {
-            var core = _coreHelper.GetCore();
-
-            var newTemplate = core.TemplateFromXml(eFormXmlModel.EFormXml);
-
-            newTemplate = core.TemplateUploadData(newTemplate);
-            var errors = core.TemplateValidation(newTemplate);
-
-            if (!errors.Any())
+            try
             {
-                if (newTemplate == null) return new OperationResult(false, "eForm could not be created!");
-
+                var core = _coreHelper.GetCore();
+                // Create tags
+                var tagList = eFormXmlModel.NewTag.Replace(" ", "").Split(',');
+                foreach (var tag in tagList)
+                {
+                    eFormXmlModel.TagIds.Add(core.TagCreate(tag));
+                }
+                // Create eform
+                var newTemplate = core.TemplateFromXml(eFormXmlModel.EFormXml);
+                newTemplate = core.TemplateUploadData(newTemplate);
+                // Check errors
+                var errors = core.TemplateValidation(newTemplate);
+                if (errors.Any())
+                {
+                    var message = errors.Aggregate("", (current, str) => current + ("<br>" + str));
+                    throw new Exception("eForm could not be created!" + message);
+                }
+                if (newTemplate == null) throw new Exception("eForm could not be created!");
+                // Set tags to eform
                 core.TemplateCreate(newTemplate);
+                core.TemplateSetTags(newTemplate.Id, eFormXmlModel.TagIds);
                 return new OperationResult(true, $"eForm \"{newTemplate.Label}\" created successfully");
             }
-
-            var message = errors.Aggregate("", (current, str) => current + ("<br>" + str));
-
-            return new OperationResult(false, "eForm could not be created!" + message);
+            catch (Exception e)
+            {
+                return new OperationResult(false, e.Message);
+            }
         }
 
         [HttpGet]
@@ -158,7 +175,7 @@ namespace eFormAPI.Web.Controllers
                 core.CaseDelete(templateDto.Id, siteUId.SiteUId);
             }
             var result = core.TemplateDelete(id);
-            
+
             try
             {
                 return result
@@ -300,7 +317,7 @@ namespace eFormAPI.Web.Controllers
             {
                 return new OperationResult(false, "File not found");
             }
-        
+
             var img = Image.FromFile(filePath);
             img.RotateFlip(RotateFlipType.Rotate90FlipNone);
             img.Save(filePath);
@@ -351,7 +368,7 @@ namespace eFormAPI.Web.Controllers
                 new MediaTypeHeaderValue("application/pdf");
             return result;
         }
-        
+
         [HttpGet]
         [Authorize]
         [Route("api/templates/download-eform-pdf/{templateId}")]
@@ -380,15 +397,13 @@ namespace eFormAPI.Web.Controllers
             {
                 return new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
-            
         }
-        
+
         [HttpGet]
         [Authorize]
         [Route("api/templates/download-eform-xml/{templateId}")]
         public HttpResponseMessage DownloadEFormXML(int templateId)
         {
-            
             try
             {
                 var core = _coreHelper.GetCore();

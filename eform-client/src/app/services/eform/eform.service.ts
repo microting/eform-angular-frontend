@@ -6,7 +6,7 @@ import {TemplateDto} from '../../models';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import {Router} from '@angular/router';
-import {DeployModel, EFormXmlModel} from 'app/models/eFormTemplates';
+import {DeployModel, EFormCreateModel} from 'app/models/eFormTemplates';
 import {TemplateColumnModel} from 'app/models/cases/response/column-field.model';
 import {TemplateColumnMethods, TemplateFilesMethods} from 'app/modules/helpers/app.constants';
 import {UpdateColumnsModel} from 'app/models/cases/request/update-columns.model';
@@ -36,7 +36,7 @@ export class EFormService extends BaseService {
     return this.getWithOperationResult(TemplatesMethods.DeleteSingle + '/' + id);
   }
 
-  public createSingle = (eFormXmlModel: EFormXmlModel): Observable<OperationResult> => {
+  public createSingle = (eFormXmlModel: EFormCreateModel): Observable<OperationResult> => {
     return this.postModelOperationResult(TemplatesMethods.CreateSingle, eFormXmlModel);
   }
 

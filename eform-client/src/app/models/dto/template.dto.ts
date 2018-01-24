@@ -1,5 +1,6 @@
 import {SiteNameDto} from './site-name.dto';
 import {FieldDto} from './field.dto';
+import {KeyValueModel} from 'app/models/common';
 
 export class TemplateDto {
   id: number;
@@ -12,6 +13,7 @@ export class TemplateDto {
   workflowState: String;
   hasCases: Boolean;
   deployedSites: Array<SiteNameDto>;
+  tags: Array<KeyValueModel> = [];
 
   field1: FieldDto;
   field2: FieldDto;

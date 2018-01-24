@@ -89,7 +89,7 @@
            id="eidt_site_@(item.SiteId)" title="" type="button" data-original-title="Edit site">
           <span class="fa fa-pencil"></span>
         </a>
-        <button (click)="showDeleteSimpleSiteModal(siteDto)" tooltip="Delete site"
+        <button (click)="showDeleteSimpleSiteModal(siteDto)" tooltip="Delete Device User"
                 class="needs_tooltip btn btn-ar btn-danger btn-sm dangerous-action" type="button">
           <span class="fa fa-trash-o"></span>
         </button>
@@ -102,7 +102,7 @@
 
 <modal #deleteSimpleSiteModal>
   <modal-header [show-close]="true">
-    <h4 class="modal-title">Are you sure you want to delete the site?<br> The action can not be undone!</h4>
+    <h4 class="modal-title">Are you sure you want to delete the site?</h4>
   </modal-header>
   <modal-body>
     <div class="container-fluid">

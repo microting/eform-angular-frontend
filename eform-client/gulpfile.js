@@ -1,13 +1,12 @@
-const Server = require('karma').Server;
-const path = require('path');
 const gulp = require('gulp');
+const protractor = require('gulp-protractor').protractor;
+
 
 gulp.task("tests", function (done) {
-	new Server({
-		configFile: path.join(__dirname, 'karma.conf.js'),
-		singleRun: true,
-	}, function(exitCode) {
-		process.exit(exitCode); // <-- this is the important part
-		done(exitCode);
-	}).start();
+  gulp.src(['e2e/**/*.js'], {read: false})
+    .pipe(protractor({
+        configFile: 'protractor.conf.js'
+      })
+    );
+  done();
 });

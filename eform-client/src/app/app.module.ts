@@ -31,7 +31,7 @@ import {ImageService} from './services/files';
 import {RestorePasswordComponent} from 'app/components/auth/restore-password.component';
 import {EqualValidatorDirective} from 'app/components/directives/equal-validator.directive';
 import {NgxGalleryModule} from 'ngx-gallery';
-import {TablePaginationComponent} from 'app/components/table-pagination/table-pagination.component';
+import {EformTagService} from 'app/services/eform/eform-tag.service';
 
 // import {
 //   AdminService,
@@ -90,7 +90,8 @@ import {TablePaginationComponent} from 'app/components/table-pagination/table-pa
     EntitySearchService,
     SettingsService,
     EFormService,
-    ImageService
+    ImageService,
+    EformTagService,
   ],
   bootstrap: [AppComponent]
 })
