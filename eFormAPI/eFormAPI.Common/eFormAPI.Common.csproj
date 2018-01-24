@@ -56,8 +56,8 @@
       <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microting.eForm, Version=2.1.37.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\Microting.eForm.2.1.37\lib\net45\Microting.eForm.dll</HintPath>
+    <Reference Include="Microting.eForm, Version=2.1.55.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Microting.eForm.2.1.55\lib\net45\Microting.eForm.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data, Version=6.9.10.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.6.9.10\lib\net45\MySql.Data.dll</HintPath>
@@ -95,6 +95,7 @@
     <Compile Include="Models\Auth\ChangePasswordModel.cs" />
     <Compile Include="Models\Auth\ForgotPasswordModel.cs" />
     <Compile Include="Models\Auth\ResetPasswordModel.cs" />
+    <Compile Include="Models\CommonDictionaryModel.cs" />
     <Compile Include="Models\DisplayTemplateColumnsModel.cs" />
     <Compile Include="Models\Settings\Admin\AdminSettingsModel.cs" />
     <Compile Include="Models\Settings\Admin\HeaderSettingsModel.cs" />

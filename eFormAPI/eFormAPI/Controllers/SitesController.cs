@@ -19,7 +19,7 @@ namespace eFormAPI.Web.Controllers
         public OperationDataResult<List<SiteName_Dto>> Index()
         {
             Core core = _coreHelper.GetCore();
-            var siteNamesDto = core.Advanced_SiteItemReadAll();
+            var siteNamesDto = core.Advanced_SiteItemReadAll(false);
 
             return new OperationDataResult<List<SiteName_Dto>>(true, siteNamesDto);
         }

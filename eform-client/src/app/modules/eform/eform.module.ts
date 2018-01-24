@@ -9,6 +9,7 @@ import {TooltipModule} from 'ngx-bootstrap';
 import {FormsModule} from '@angular/forms';
 import {FileUploadModule} from 'ng2-file-upload';
 import {MultiselectDropdownModule} from 'angular-2-dropdown-multiselect';
+import {AdvancedModule} from 'app/modules/advanced/advanced.module';
 
 @NgModule({
   imports: [

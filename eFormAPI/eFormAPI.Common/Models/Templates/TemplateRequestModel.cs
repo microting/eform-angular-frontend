@@ -1,4 +1,6 @@
-﻿namespace eFormAPI.Common.Models.Templates
+﻿using System.Collections.Generic;
+
+namespace eFormAPI.Common.Models.Templates
 {
     public class TemplateRequestModel
     {
@@ -8,6 +10,7 @@
         public int PageSize { get; set; }
         public bool IsSortDsc { get; set; }
         public int Offset { get; set; }
+        public List<int> TagIds { get; set; }
 
         public TemplateRequestModel()
         {
@@ -16,6 +19,7 @@
             PageSize = 10;
             PageIndex = 0;
             Offset = 0;
+            TagIds = new List<int>();
         }
     }
 }

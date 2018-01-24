@@ -1,4 +1,5 @@
 export * from './eform/eform.service';
+export * from './eform/eform-tag.service';
 export * from './settings.service';
 export * from './sites.service';
 export * from './units.service';

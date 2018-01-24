@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web.Http;
 using eFormAPI.Common.API;
 using eFormAPI.Common.Models;
@@ -28,7 +29,8 @@ namespace eFormAPI.Web.Controllers
                     if (field.FieldType != "Picture" 
                         && field.FieldType != "Audio" 
                         && field.FieldType != "Movie"
-                        && field.FieldType != "Signature")
+                        && field.FieldType != "Signature"
+                        && field.FieldType != "SaveButton")
                     templateColumns.Add(new TemplateColumnModel()
                     {
                         Id = field.Id,

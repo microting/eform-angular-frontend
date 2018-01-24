@@ -47,6 +47,10 @@ export let TemplatesMethods = {
   DeploySingle: '/api/templates/deploy',
 };
 
+export let TemplateTagMethods = {
+  Tags: 'api/tags'
+};
+
 export let TemplateFilesMethods = {
   GetCsv: '/api/template-files/csv',
   DownloadXML: '/api/template-files/download-eform-xml',

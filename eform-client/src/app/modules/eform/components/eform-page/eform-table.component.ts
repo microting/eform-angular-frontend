@@ -3,11 +3,13 @@ import {EFormService, SitesService, } from 'app/services';
 import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 import {NotifyService} from 'app/services/notify.service';
 import {DeployCheckbox} from 'app/models/eFormTemplates/deploy-checkbox.model';
-import {SiteNameDto, TemplateDto, TemplateColumnModel, UpdateColumnsModel, DeployModel, EFormXmlModel} from 'app/models';
+import {SiteNameDto, TemplateDto, TemplateColumnModel, UpdateColumnsModel, DeployModel, EFormCreateModel} from 'app/models';
 import {FileUploader} from 'ng2-file-upload';
 import {TemplateListModel} from 'app/models/eFormTemplates/template-list.model';
 import {TemplateRequestModel} from 'app/models/eFormTemplates/template-request.model';
 import {IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts} from 'angular-2-dropdown-multiselect';
+import {CommonDictionaryModel} from 'app/models/common';
+import {EformTagService} from 'app/services/eform/eform-tag.service';
 
 @Component({
   selector: 'app-eform-table',
@@ -28,7 +30,9 @@ export class EFormTableComponent implements OnInit {
 
   spinnerStatus = true;
   matchFound = false;
-  eFormXmlModel: EFormXmlModel = new EFormXmlModel();
+  isDeploying = false;
+
+  eFormCreateModel: EFormCreateModel = new EFormCreateModel();
   templateListModel: TemplateListModel = new TemplateListModel();
   templateRequestModel: TemplateRequestModel = new TemplateRequestModel;
   selectedTemplateDto: TemplateDto = new TemplateDto();
@@ -36,7 +40,9 @@ export class EFormTableComponent implements OnInit {
   deployModel: DeployModel = new DeployModel();
   deployViewModel: DeployModel = new DeployModel();
   deploymentModalTitle: String = 'Edit deployment';
-  isDeploying = false;
+
+  availableTags: Array<CommonDictionaryModel> = [];
+
 
   columnModels: Array<TemplateColumnModel> = [];
   columnEditModel: UpdateColumnsModel = new UpdateColumnsModel;
@@ -44,8 +50,7 @@ export class EFormTableComponent implements OnInit {
   zipFileUploader: FileUploader = new FileUploader({url: '/api/template-files/upload-eform-zip'});
 
   isTagAddOpen = false;
-  optionsModel: number[];
-  myOptions: IMultiSelectOption[];
+
   mySettings: IMultiSelectSettings = {
     dynamicTitleMaxItems: 3,
     checkedStyle: 'fontawesome',
@@ -59,29 +64,25 @@ export class EFormTableComponent implements OnInit {
     allSelected: 'All selected',
   };
 
+  filterTagTexts: IMultiSelectTexts = {
+    searchPlaceholder: 'Find',
+    searchEmptyResult: 'Nothing found...',
+    searchNoRenderText: 'Type in search box to see results...',
+    defaultTitle: 'Select tags for filter',
+    allSelected: 'All selected',
+  };
 
-  constructor(private eFormService: EFormService, private notifyService: NotifyService, private sitesService: SitesService) {
+
+  constructor(private eFormService: EFormService,
+              private notifyService: NotifyService,
+              private sitesService: SitesService,
+              private eformTagService: EformTagService) {
   }
 
 
   ngOnInit() {
-    this.myOptions = [
-      { id: 1, name: 'Zhopa' },
-      { id: 2, name: 'Gondolera' },
-      { id: 3, name: 'Gondolera' },
-      { id: 4, name: 'Gondolera' },
-      { id: 5, name: 'Gondolera' },
-      { id: 6, name: 'Gondolera' },
-      { id: 6, name: 'Gondolera' },
-      { id: 6, name: 'Gondolera' },
-      { id: 6, name: 'Gondolera' },
-      { id: 6, name: 'Gondolera' },
-      { id: 6, name: 'Gondolera' },
-      { id: 6, name: 'Gondolera' },
-      { id: 6, name: 'Gondolera' }
-    ];
-
     this.loadAllTemplates();
+    this.loadAllTags();
 
     this.zipFileUploader.onBuildItemForm = (item, form) => {
       form.append('templateId', this.selectedTemplateDto.id);
@@ -95,6 +96,14 @@ export class EFormTableComponent implements OnInit {
         this.zipFileUploader.removeFromQueue(this.zipFileUploader.queue[0]);
       }
     };
+  }
+
+  loadAllTags() {
+    this.eformTagService.getAvailableTags().subscribe((data => {
+      if (data && data.success) {
+        this.availableTags = data.model;
+      }
+    }));
   }
 
   loadAllTemplates() {
@@ -142,11 +151,11 @@ export class EFormTableComponent implements OnInit {
 
   // Create modal
   createSingleTemplate() {
-    if (this.eFormXmlModel != null) {
-      this.eFormService.createSingle(this.eFormXmlModel).subscribe(operation => {
+    if (this.eFormCreateModel != null) {
+      this.eFormService.createSingle(this.eFormCreateModel).subscribe(operation => {
         if (operation && operation.success) {
           this.loadAllTemplates();
-          this.eFormXmlModel = new EFormXmlModel;
+          this.eFormCreateModel = new EFormCreateModel;
           this.notifyService.success({text: operation.message || 'Error'});
         } else {
           this.notifyService.error({text: operation.message || 'Error'});
@@ -300,8 +309,8 @@ export class EFormTableComponent implements OnInit {
     this.loadAllTemplates();
   }
 
-  onTagInputChanged(tag: string) {
-    this.templateRequestModel.nameFilter = tag;
+  onLabelInputChanged(label: string) {
+    this.templateRequestModel.nameFilter = label;
     this.loadAllTemplates();
   }
 

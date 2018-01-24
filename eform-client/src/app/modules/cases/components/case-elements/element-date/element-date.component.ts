@@ -151,7 +151,7 @@ export class ElementDateComponent implements ControlValueAccessor, AfterViewInit
   }
 
   writeValue(value: any): void {
-    const m = moment.utc(value + 'T00:00:00+00:00', 'MM-DD-YYYY').toDate();
+    const m = moment.utc(value + 'T00:00:00+00:00', 'YYYY-MM-DD').toDate();
     this.date = m;
     if (isDate(this.date)) {
       setTimeout(() => {
