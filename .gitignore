@@ -96,3 +96,5 @@ eFormAPI/Installation/MainInstaller/ApiFileList.wxs
 /eformAPI/eFormApi.Integration.Tests/bin/*
 eFormAPI/eFormAPI/JasperExporter.jar
 eFormAPI/eFormAPI.Common/JasperExporter.jar
+eFormAPI/eFormApi.Integration.Tests/obj/*
+eFormAPI/eFormApi.Tests/obj/*
