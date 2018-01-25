@@ -1,4 +1,5 @@
 ﻿using System.Configuration;
+using System.Data.Entity;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -6,12 +7,12 @@ using System.Web.Http;
 using eFormAPI.Common.API;
 using eFormAPI.Common.Models.Auth;
 using eFormAPI.Common.Models.User;
+using eFormAPI.Web.Infrastructure.Consts;
 using eFormAPI.Web.Infrastructure.Data;
 using eFormAPI.Web.Infrastructure.Data.Entities;
 using eFormAPI.Web.Infrastructure.Identity;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
 
 namespace eFormAPI.Web.Controllers
 {
@@ -20,25 +21,19 @@ namespace eFormAPI.Web.Controllers
     public class AccountController : ApiController
     {
         private EformUserManager _userManager;
+        private readonly EformRoleManager _eformRoleManager;
+        private readonly BaseDbContext _dbContext;
 
-        public AccountController()
+        public AccountController(BaseDbContext dbContext)
         {
+            _eformRoleManager = new EformRoleManager(
+                new EformRoleStore(new BaseDbContext()));
+            ;
+            _dbContext = dbContext;
         }
 
-        public AccountController(EformUserManager userManager,
-            ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
-        {
-            UserManager = userManager;
-            AccessTokenFormat = accessTokenFormat;
-        }
-
-        public EformUserManager UserManager
-        {
-            get => _userManager ?? Request.GetOwinContext().GetUserManager<EformUserManager>();
-            private set => _userManager = value;
-        }
-
-        public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
+        private EformUserManager UserManager =>
+            _userManager ?? Request.GetOwinContext().GetUserManager<EformUserManager>();
 
         // GET api/account/user-info
         [Route("user-info")]
@@ -104,6 +99,44 @@ namespace eFormAPI.Web.Controllers
                 return new OperationResult(true);
             }
             return new OperationResult(false);
+        }
+
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("reset-admin-password")]
+        public async Task<OperationResult> ResetAdminPassword(string code)
+        {
+            var securityCode = ConfigurationManager.AppSettings["restore:securityCode"];
+            if (string.IsNullOrEmpty(securityCode))
+            {
+                return new OperationResult(false, "Please setup security code on server.");
+            }
+            var defaultPassword = ConfigurationManager.AppSettings["restore:defaultPassword"];
+            if (code != securityCode)
+            {
+                return new OperationResult(false, "Invalid security code.");
+            }
+            var role = await _eformRoleManager.FindByNameAsync(EformRoles.Admin);
+            var user = _dbContext.Users.Include(x => x.Roles)
+                .FirstOrDefault(x => x.Roles.Any(y => y.RoleId == role.Id));
+            if (user == null)
+            {
+                return new OperationResult(false, "Admin user not found");
+            }
+            var removeResult = await UserManager.RemovePasswordAsync(user.Id);
+            if (!removeResult.Succeeded)
+            {
+                return new OperationResult(false,
+                    "Error while removing old password. \n" + string.Join(" ", removeResult.Errors));
+            }
+            var addPasswordResult = await UserManager.AddPasswordAsync(user.Id, defaultPassword);
+            if (!addPasswordResult.Succeeded)
+            {
+                return new OperationResult(false,
+                    "Error while adding new password. \n" + string.Join(" ", addPasswordResult.Errors));
+            }
+            return new OperationResult(true, $"Your email: {user.Email}. Password has been reset.");
         }
 
         // POST: /account/reset-password

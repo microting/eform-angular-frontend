@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Http;
+using Castle.Components.DictionaryAdapter.Xml;
 using eFormAPI.Common.API;
 using eFormAPI.Web.Infrastructure.Helpers;
 
@@ -73,12 +74,21 @@ namespace eFormAPI.Web.Controllers
             {
                 return new OperationResult(false, "File not found");
             }
-
-            var img = Image.FromFile(filePath);
-            img.RotateFlip(RotateFlipType.Rotate90FlipNone);
-            img.Save(filePath);
-            img.Dispose();
-
+            try
+            {
+                var img = Image.FromFile(filePath);
+                img.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                img.Save(filePath);
+                img.Dispose();
+            }
+            catch (Exception e)
+            {
+                if (e.Message == "A generic error occurred in GDI+.")
+                {
+                    return new OperationResult(true);
+                }
+                return new OperationResult(false, "Error while rotate image.");
+            }
             return new OperationResult(true, "Image rotated successfully.");
         }
 
