@@ -31,4 +31,8 @@ export class CasesService extends BaseService {
     return this.postModelOperationResult<ReplyRequest>(CasesMethods.UpdateCase, model);
   }
 
+  public deleteCase = (id: number): Observable<OperationResult> => {
+    return this.getWithOperationResult(CasesMethods.DeleteCase + '/' + id);
+  }
+
 }

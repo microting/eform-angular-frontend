@@ -64,7 +64,8 @@ export let TemplateColumnMethods = {
 export let CasesMethods = {
   EditById: '/api/cases/edit',
   GetCases: '/api/cases/index',
-  UpdateCase: '/api/cases/update'
+  UpdateCase: '/api/cases/update',
+  DeleteCase: '/api/cases/delete'
 };
 
 export let AdvSearchableEntityMethods = {

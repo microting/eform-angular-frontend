@@ -10,7 +10,7 @@
 
 .panel {
   border: 0;
-}
+}   
 
 .user-addon {
   padding-left: 13px;
@@ -20,6 +20,11 @@
 .envelope-addon {
   padding-left: 12px;
   padding-right: 12px;
+}
+
+.lock-addon {
+  padding-left: 15px;
+  padding-right: 14px;
 }
 
 .p-header-wrapper {
@@ -33,4 +38,9 @@
 
 .p-description {
   font-weight: 500;
+}
+
+.link-block {
+  margin-bottom: 5px;
+  display: block;
 }

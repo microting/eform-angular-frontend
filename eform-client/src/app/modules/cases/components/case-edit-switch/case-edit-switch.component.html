@@ -45,7 +45,7 @@
             <element-timer [(fieldValue)]="dataItem.fieldValues[0]"></element-timer>
           </div>
           <div *ngSwitchCase="'Signature'">
-            <element-signature [(fieldValue)]="dataItem.fieldValues[0]"></element-signature>
+            <element-signature [fieldValues]="dataItem.fieldValues"></element-signature>
           </div>
           <div *ngSwitchCase="'FieldContainer'">
             <element-container [(fieldValue)]="dataItem.dataItemList" [dataItemLabel]="dataItem.label"></element-container>

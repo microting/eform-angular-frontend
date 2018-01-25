@@ -26,6 +26,7 @@ import {
   TrumbowygComponent
 } from './components/case-elements';
 import {CollapseModule} from 'ngx-bootstrap';
+import {Ng2Bs3ModalModule} from 'ng2-bs3-modal/ng2-bs3-modal';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import {CollapseModule} from 'ngx-bootstrap';
     NgxGalleryModule,
     FormsModule,
     CasesRoutingModule,
-    CollapseModule.forRoot()
+    CollapseModule.forRoot(),
+    Ng2Bs3ModalModule
   ],
   declarations: [CasesComponent,
     TrumbowygComponent,

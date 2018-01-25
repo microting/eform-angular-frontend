@@ -24,6 +24,7 @@ describe('Header image button', () => {
     settingsPage.saveButton.click();
     browser.refresh();
     expect(browser.isElementPresent(settingsPage.headerImageMatcher)).toBeFalsy();
+    browser.sleep(2000);
     settingsPage.SiteHeader.resetButton.click();
     done();
   });

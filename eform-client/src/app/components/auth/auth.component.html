@@ -34,17 +34,36 @@
           </ng-container>
 
           <ng-container *ngIf="!showLoginForm">
-            <form [formGroup]="formRestore">
-              <div class="input-group input-group-md">
-                <span class="input-group-addon envelope-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
-                <input formControlName="email" type="text" name="email" id="email" class="form-control" placeholder="Email" required>
-              </div>
-              <br>
-              <button type="submit" class="btn btn-ar btn-success btn-block" [disabled]="!email.valid" (click)="submitRestoreForm()">Restore password</button>
-            </form>
-            <a (click)="toggleLoginForm(true)" class="forgot-password" style="cursor: pointer">
-              Back to login
-            </a>
+            <ng-container *ngIf="!showAdminResetForm">
+              <form [formGroup]="formRestore">
+                <div class="input-group input-group-md">
+                  <span class="input-group-addon envelope-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+                  <input formControlName="email" type="text" name="email" id="email" class="form-control" placeholder="Email" required>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-ar btn-success btn-block" [disabled]="!email.valid" (click)="submitRestoreForm()">Restore password</button>
+              </form>
+              <a (click)="showAdminResetForm = !showAdminResetForm" class="forgot-password link-block" style="cursor: pointer">
+                Reset admin password
+              </a>
+              <a (click)="toggleLoginForm(true)" class="forgot-password link-block" style="cursor: pointer">
+                Back to login
+              </a>
+            </ng-container>
+            <ng-container *ngIf="showAdminResetForm">
+              <form [formGroup]="formReset">
+                <div class="input-group input-group-md">
+                  <span class="input-group-addon lock-addon"><i class="fa fa-unlock-alt" aria-hidden="true"></i></span>
+                  <input formControlName="secretKey" type="text" name="secretKey" id="secretKey" class="form-control" placeholder="Secret code" required>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-ar btn-success btn-block" [disabled]="!secretKey.valid" (click)="submitResetAdminForm()">Reset password</button>
+              </form>
+              <a (click)="toggleLoginForm(true)" class="forgot-password" style="cursor: pointer">
+                Back to login
+              </a>
+            </ng-container>
+
           </ng-container>
 
         </div>

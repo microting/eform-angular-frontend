@@ -16,13 +16,18 @@ import {LoginPageSettingsModel} from 'app/models/settings/login-page-settings.mo
 export class AuthComponent implements OnInit {
   formLogin: FormGroup;
   formRestore: FormGroup;
+  formReset: FormGroup;
+
   username: AbstractControl;
   email: AbstractControl;
   password: AbstractControl;
+  secretKey: AbstractControl;
+
   loginPageSettings: LoginPageSettingsModel = new LoginPageSettingsModel;
   loginImage: any;
 
   showLoginForm: boolean = true;
+  showAdminResetForm = false;
   error: string;
 
   constructor(private router: Router,
@@ -56,6 +61,21 @@ export class AuthComponent implements OnInit {
       );
   }
 
+
+  submitResetAdminForm() {
+    debugger;
+    const secretKey = this.formReset.getRawValue().secretKey;
+    this.authService.resetAdminPassword(secretKey).subscribe((result) => {
+      if (result && result.success) {
+        this.notifyService.success({text: result.message});
+        this.secretKey.reset();
+        this.toggleLoginForm(true);
+      } else {
+        this.notifyService.error({text: result.message});
+      }
+    });
+  }
+
   ngOnInit() {
     this.settingsService.connectionStringExist().subscribe((result) => {
       if (result && result.success === false) {
@@ -79,9 +99,16 @@ export class AuthComponent implements OnInit {
         [Validators.required, Validators.email]
       ]
     });
+    this.formReset = this.fb.group({
+      secretKey: [
+        '',
+        [Validators.required]
+      ]
+    });
     this.username = this.formLogin.get('username');
     this.password = this.formLogin.get('password');
     this.email = this.formRestore.get('email');
+    this.secretKey = this.formReset.get('secretKey')
   }
 
   getSettings() {
@@ -99,5 +126,6 @@ export class AuthComponent implements OnInit {
 
   toggleLoginForm(toggle: boolean) {
     this.showLoginForm = toggle;
+    this.showAdminResetForm = false;
   }
 }

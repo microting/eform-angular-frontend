@@ -12,6 +12,7 @@ import {NgxGalleryComponent, NgxGalleryImage, NgxGalleryOptions} from 'ngx-galle
 })
 export class ElementPictureComponent implements OnChanges, OnInit {
   @Input() fieldValues: Array<CaseFieldValue> = [];
+  isRotateLocked = false;
   geoObjects = [];
   images = [];
   galleryImages: NgxGalleryImage[] = [];
@@ -84,6 +85,7 @@ export class ElementPictureComponent implements OnChanges, OnInit {
   }
 
   rotatePicture(image: any) {
+    this.isRotateLocked = true;
     this.imageService.rotateImage(image.fileName).subscribe((operation) => {
       if (operation && operation.success) {
         this.notifyService.success({text: operation.message});
@@ -95,6 +97,7 @@ export class ElementPictureComponent implements OnChanges, OnInit {
       } else {
         this.notifyService.error({text: operation.message || 'Error'});
       }
-    });
+      this.isRotateLocked = false;
+    }, () => this.isRotateLocked = false);
   }
 }
