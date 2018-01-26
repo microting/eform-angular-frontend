@@ -111,8 +111,12 @@
           <a *ngIf="caseModel.status == 100" [routerLink]="['/cases/edit', caseModel.id, this.currentTemplate.id]"
              class="needs_tooltip btn btn-ar btn-sm btn-default mt-edit-check-list-button" tooltip="Edit case"
              type="button" data-original-title="Edit case">
-            <span class="glyphicon glyphicon-pencil" data-mt-check-list-id="@(item.Id)"></span>
+            <span class="fa fa-pencil"></span>
           </a>
+          <button tooltip="Delete case" class="needs_tooltip btn btn-ar btn-sm btn-danger" type="button"
+          (click)="showCaseDeleteModal(caseModel)">
+            <span class="fa fa-trash-o trash-icon-wrapper"></span>
+          </button>
         </div>
 
         <div class="row">
@@ -122,11 +126,42 @@
             .PDF
           </button>
         </div>
-
       </td>
     </tr>
     </tbody>
   </table>
 
 </div>
+
+<modal #deleteCaseModal>
+  <modal-header [show-close]="true">
+    <h4 class="modal-title">Are you sure you want to delete?</h4>
+  </modal-header>
+  <modal-body>
+    <div class="container-fluid">
+      <div class='row'>
+        <div class='col-md-4'><label>#</label></div>
+        <div class='col-md-8'> {{selectedCase.id}}</div>
+      </div>
+      <div class='row'>
+        <div class='col-md-4'><label>Accessible at</label></div>
+        <div class='col-md-8'> {{selectedCase.createdAt | date:'dd.MM.y HH:mm:ss'}}</div>
+      </div>
+      <div class='row'>
+        <div class='col-md-4'><label>Finished at</label></div>
+        <div class='col-md-8'> {{selectedCase.doneAt | date:'dd.MM.y HH:mm:ss'}}</div>
+      </div>
+      <div class='row'>
+        <div class='col-md-4'><label>Done by</label></div>
+        <div class='col-md-8'> {{selectedCase.workerName}}</div>
+      </div>
+    </div>
+  </modal-body>
+  <modal-footer>
+    <button type="button" class="btn btn-danger" (click)="submitCaseDelete(selectedCase.id)">OK</button>
+    <button type="button" class="btn btn-default" data-dismiss="deleteTemplateModal"
+            (click)="deleteCaseModal.close()">Cancel
+    </button>
+  </modal-footer>
+</modal>
 

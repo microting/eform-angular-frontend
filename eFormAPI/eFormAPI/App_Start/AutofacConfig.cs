@@ -3,6 +3,7 @@ using System.Web.Http;
 using Autofac;
 using Autofac.Integration.WebApi;
 using eFormAPI.Web.Infrastructure.Data;
+using eFormAPI.Web.Infrastructure.Identity;
 
 namespace eFormAPI.Web
 {
@@ -21,6 +22,7 @@ namespace eFormAPI.Web
             builder.RegisterWebApiFilterProvider(config);
             // Set the dependency resolver to be Autofac.
             builder.RegisterType<BaseDbContext>().InstancePerRequest();
+            builder.RegisterType<EformRoleManager>().InstancePerRequest();
             Container = builder.Build();
         }
     }

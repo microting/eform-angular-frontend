@@ -51,6 +51,23 @@ namespace eFormAPI.Web.Controllers
             }
         }
 
+        [HttpGet]
+        public OperationResult Delete(int id)
+        {
+            try
+            {
+                var core = _coreHelper.GetCore();
+
+                return core.CaseDeleteResult(id)
+                    ? new OperationResult(true, $"Case #{id} deleted successfully")
+                    : new OperationResult(false, "Case could not be removed");
+            }
+            catch (Exception)
+            {
+                return new OperationResult(false, "Case could not be removed");
+            }
+        }
+
         [HttpPost]
         public OperationResult Update(ReplyRequest model)
         {
