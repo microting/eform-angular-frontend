@@ -9,9 +9,9 @@ headerSettingsModel.secondaryTextVisible">
       </div>
       <div class="header-product-title-description">
         <h4 class="text-right h4-wrapper" *ngIf="headerSettingsModel.mainTextVisible">
-          <strong>{{headerSettingsModel.mainText}}</strong>
+          <strong id="main-header-text">{{headerSettingsModel.mainText}}</strong>
         </h4>
-        <h5 class="text-right h5-wrapper" *ngIf="headerSettingsModel.secondaryTextVisible">
+        <h5 id="secondary-header-text" class="text-right h5-wrapper" *ngIf="headerSettingsModel.secondaryTextVisible">
           {{headerSettingsModel.secondaryText}}
         </h5>
       </div>

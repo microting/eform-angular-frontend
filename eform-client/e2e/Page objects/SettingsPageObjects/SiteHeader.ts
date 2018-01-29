@@ -1,13 +1,27 @@
-import {by, element, ElementFinder} from 'protractor';
+import {$, browser, by, element, ElementFinder} from 'protractor';
 
 export class SiteHeader {
   public resetButton: ElementFinder;
-  public logoButton: ElementFinder;
+  public headerImageHideButton: ElementFinder;
+  public mainTextInput: ElementFinder;
+  public secondaryTextInput: ElementFinder;
+  public hideMainTextButton: ElementFinder;
+  public hideSecondaryTextButton: ElementFinder;
+  public secondaryTextHeader: ElementFinder;
+
+  public resetAndRefresh(): void {
+    browser.sleep(2000);
+    this.resetButton.click();
+    browser.refresh();
+    browser.waitForAngularEnabled();
+  }
 
   constructor() {
-    this.logoButton = element(by.xpath('/html/body/eform-root/eform-fulllayout/app-admi' +
-            'n-settings/div/div/form/div[1]/div/div[2]/div/table/tbody/tr[3]/td[2]/div/div[3]/span'));
-    this.resetButton = element(by.xpath('/html/body/eform-root/eform-fulllayout/app-admin-settings/div/div/form/' +
-            'div[1]/div/div[2]/div/div/div/div[2]/button'));
+    this.headerImageHideButton = $('#imageSiteHeaderHide');
+    this.resetButton = $('#siteHeaderReset');
+    this.mainTextInput = $('#headerSettingsMainText');
+    this.secondaryTextInput = $('#headerSettingsSecondaryText');
+    this.hideMainTextButton = $('#mainTextSiteHeaderHide');
+    this.hideSecondaryTextButton = $('#secondaryTextSiteHeaderHide');
   }
 }
