@@ -7,7 +7,6 @@ export class SiteHeader {
   public secondaryTextInput: ElementFinder;
   public hideMainTextButton: ElementFinder;
   public hideSecondaryTextButton: ElementFinder;
-  public secondaryTextHeader: ElementFinder;
 
   public resetAndRefresh(): void {
     browser.sleep(2000);
