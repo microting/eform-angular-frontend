@@ -20,18 +20,31 @@ export class SettingsPage {
   public saveButton: ElementFinder;
   public headerMainText: ElementFinder;
   public headerSecondaryText: ElementFinder;
+  public signOutDropdown: ElementFinder;
+  public signOutButton: ElementFinder;
 
   // helper functions
   public saveAndRefresh(): void {
     this.saveButton.click();
-    browser.wait(protractor.ExpectedConditions.elementToBeClickable(this.saveButton))
+    browser.wait(protractor.ExpectedConditions.elementToBeClickable(this.saveButton));
     browser.refresh();
     browser.waitForAngular();
+  }
+
+  public signOut(): void {
+    this.signOutDropdown.click();
+    this.signOutButton.click();
+    browser.waitForAngular();
+  }
+
+  public signInAndGoToSettings(): void {
+
   }
 
   constructor() {
     // parts of settings
     this.SiteHeader = new SiteHeader();
+    this.LoginPage = new LoginPage();
     // matchers
     this.headerImageMatcher = by.xpath('//*[@id="header_full_top"]/div/div/div[1]/img');
     this.secondaryTextHeaderMatcher = by.css('#secondary-header-text');
@@ -40,6 +53,8 @@ export class SettingsPage {
     this.saveButton = $('button.btn-ar.btn-danger');
     this.headerMainText = element(this.mainTextHeaderMatcher);
     this.headerSecondaryText = element(this.secondaryTextHeaderMatcher);
+    this.signOutDropdown = $('#sign-out-dropdown');
+    this.signOutButton = $('#sign-out');
 
   }
 }

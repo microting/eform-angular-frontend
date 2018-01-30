@@ -12,15 +12,16 @@ const settingsPage: SettingsPage = new SettingsPage();
 
 beforeAll((done) => {
   browser.get('/');
-  loginPage.usernameInput.sendKeys(data.login);
-  loginPage.passwordInput.sendKeys(data.password);
-  loginPage.loginButton.click();
+  loginPage.login();
   mainPage.advancedButton.click();
   mainPage.settingsButton.click();
   done();
 });
+afterAll(function () {
+  browser.close();
+});
 
-describe('Reset button in Settings', function () {
+describe('Reset button in Site header section of Settings', function () {
 
   beforeAll(function (done) {
     settingsPage.SiteHeader.resetButton.click();
