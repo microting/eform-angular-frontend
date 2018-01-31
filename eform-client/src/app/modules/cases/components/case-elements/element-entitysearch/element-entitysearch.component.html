@@ -1,0 +1,11 @@
+<!--<select class="form-control" [(ngModel)]="fieldValueObj.value" name="value">
+  <option *ngFor="let item of fieldValueObj.keyValuePairList"
+          [value]="item.key">{{item.value}}
+  </option>
+</select>-->
+<input class="form-control"
+[placeholder]="fieldValueObj.valueReadable"
+[(ngModel)]="fieldValueObj.valueReadable"
+type="text"
+[value]="fieldValueObj.valueReadable"
+name="value" readonly/>
