@@ -11,7 +11,7 @@
     </xsl:copy>
   </xsl:template>
 
-  <xsl:key name="files-search" match="wix:Component[not(contains(wix:File/@Source, '.config')) and not(contains(wix:File/@Source, '.asax')) and not(contains(wix:File/@Source, '.dll'))]" use="@Id"/>
+  <xsl:key name="files-search" match="wix:Component[not(contains(wix:File/@Source, '.config')) and not(contains(wix:File/@Source, '.asax')) and not(contains(wix:File/@Source, '.dll')) and not(contains(wix:File/@Source, '.jar'))]" use="@Id"/>
   <xsl:key name="files-search" match="wix:Component[contains(wix:File/@Source, '.cs')]" use="@Id"/>
   <xsl:key name="files-search" match="wix:Component[contains(wix:File/@Source,'Web.Release.config')]" use="@Id"/>
   <xsl:key name="files-search" match="wix:Component[contains(wix:File/@Source,'Web.Debug.config')]" use="@Id"/>

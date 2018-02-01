@@ -125,14 +125,14 @@
         </div>
         <div class="row" *ngIf="templateDto.hasCases">
           <a tooltip="Download XML" href="/api/template-files/download-eform-xml/{{templateDto.id}}"
-             class="needs_tooltip btn btn-ar btn-xs btn-default"
+             class="needs_tooltip btn btn-ar btn-sm btn-default"
              type="button">
-            .XML
+             <span class="fa fa-file-code-o"></span>
           </a>
           <button tooltip="Upload ZIP archive" (click)="showUploadTemplateZIP(templateDto)"
-                  class="needs_tooltip btn btn-ar btn-xs btn-default"
+                  class="needs_tooltip btn btn-ar btn-sm btn-default"
                   type="button">
-            .ZIP
+                  <span class="fa fa-file-archive-o"></span>
           </button>
         </div>
       </td>

@@ -32,6 +32,9 @@
           <div *ngSwitchCase="'SingleSelect'">
             <element-singleselect [(fieldValue)]="dataItem.fieldValues[0]"></element-singleselect>
           </div>
+          <div *ngSwitchCase="'EntitySearch'">
+            <element-entitysearch [(fieldValue)]="dataItem.fieldValues[0]"></element-entitysearch>
+          </div>
           <div *ngSwitchCase="'MultiSelect'">
             <element-multiselect [(fieldValue)]="dataItem.fieldValues[0]"></element-multiselect>
           </div>
