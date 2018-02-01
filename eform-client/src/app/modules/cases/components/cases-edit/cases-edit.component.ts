@@ -8,12 +8,14 @@ import {EFormService} from 'app/services';
 
 @Component({
   selector: 'app-cases-edit',
-  templateUrl: './cases-edit.component.html'
+  templateUrl: './cases-edit.component.html',
+  styleUrls: ['./cases-edit.component.css']
 })
 export class CasesEditComponent implements OnInit {
   @ViewChildren(CaseEditElementComponent) editElements: QueryList<CaseEditElementComponent>;
   id: number;
   templateId: number;
+  isFormLocked = false;
   currentTemplate: TemplateDto = new TemplateDto;
   replyElement: ReplyElement = new ReplyElement();
   // REQUEST
@@ -36,6 +38,7 @@ export class CasesEditComponent implements OnInit {
   }
 
   gem() {
+    this.isFormLocked = true;
     this.requestModels = [];
     this.editElements.forEach(x => {
       x.extractData();
@@ -47,9 +50,11 @@ export class CasesEditComponent implements OnInit {
     this.casesService.updateCase(this.replyRequest).subscribe(operation => {
       if (operation && operation.success) {
         this.replyElement = new ReplyElement();
+        this.isFormLocked = false;
         this.router.navigate(['/cases/', this.currentTemplate.id]).then();
         this.notifyService.success({text: operation.message});
       } else {
+        this.isFormLocked = false;
         this.notifyService.error({text: operation.message || 'Error'});
       }
     });
