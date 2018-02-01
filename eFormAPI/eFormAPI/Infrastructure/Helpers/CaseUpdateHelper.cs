@@ -81,7 +81,7 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                             DateTime currentDate = (DateTime)dateFirst.Value;
                             if (currentDate != null)
                             {
-                                string val = $"{dateFirst.FieldId}|{currentDate:MM-dd-yyyy}";
+                                string val = $"{dateFirst.FieldId}|{currentDate:yyyy-MM-dd}";
                                 list.Add(val);
                             }
                         }
