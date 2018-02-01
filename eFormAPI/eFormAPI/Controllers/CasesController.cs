@@ -89,6 +89,10 @@ namespace eFormAPI.Web.Controllers
             try
             {
                 core.CaseUpdate(model.Id, fieldValueList, checkListValueList);
+                var allCases = core.CaseReadAll(model.Id, null, null);
+                foreach (var caseObject in allCases) {
+                    core.CaseUpdateFieldValues(caseObject.Id);
+                }
                 return new OperationResult(true, "Case has been updated");
             }
             catch (Exception)

@@ -33,7 +33,12 @@
             </li>
             <br>
             <li class="text-center">
-              <button class="btn btn-ar btn-danger" (click)="gem()" id="submit_form">Save</button>
+              <button class="btn btn-ar btn-danger" [disabled]="isFormLocked" (click)="gem()" id="submit_form">
+                Save <i *ngIf="isFormLocked" class="fa fa-spinner fa-spin"></i>
+              </button>
+            </li>
+            <li class="text-center m-t-1" *ngIf="isFormLocked">
+              <p>Updating cases, please wait...</p>
             </li>
           </ul>
         </div>
