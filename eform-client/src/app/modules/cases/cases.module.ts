@@ -18,13 +18,13 @@ import {
   ElementPictureComponent,
   ElementPdfComponent,
   ElementSingleselectComponent,
-  ElementEntitySearchComponent,
   ElementContainerComponent,
   ElementTextComponent,
   ElementInfoboxComponent,
   ElementTimerComponent,
   ElementSignatureComponent,
-  TrumbowygComponent
+  TrumbowygComponent,
+  ElementEntitysearchComponent, ElementEntityselectComponent
 } from './components/case-elements';
 import {CollapseModule, TooltipModule} from 'ngx-bootstrap';
 import {Ng2Bs3ModalModule} from 'ng2-bs3-modal/ng2-bs3-modal';
@@ -49,7 +49,6 @@ import {Ng2Bs3ModalModule} from 'ng2-bs3-modal/ng2-bs3-modal';
     ElementMultiselectComponent,
     ElementPdfComponent,
     ElementSingleselectComponent,
-    ElementEntitySearchComponent,
     ElementNumberComponent,
     ElementTextComponent,
     ElementContainerComponent,
@@ -58,7 +57,9 @@ import {Ng2Bs3ModalModule} from 'ng2-bs3-modal/ng2-bs3-modal';
     ElementDateComponent,
     ElementInfoboxComponent,
     ElementTimerComponent,
-    ElementSignatureComponent
+    ElementSignatureComponent,
+    ElementEntitysearchComponent,
+    ElementEntityselectComponent
   ]
 })
 export class CasesModule {

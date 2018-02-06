@@ -5,7 +5,6 @@ export * from './element-multiselect/element-multiselect.component'
 export * from './element-number/element-number.component'
 export * from './element-picture/element-picture.component';
 export * from './element-singleselect/element-singleselect.component'
-export * from './element-entitysearch/element-entitysearch.component'
 export * from './element-text/element-text.component'
 export * from './element-comment/trumbowyg.component'
 export * from './element-pdf/element-text.component'
@@ -13,3 +12,5 @@ export * from './element-infobox/element-infobox.component'
 export * from './element-timer/element-timer.component'
 export * from './element-signature/element-signature.component'
 export * from './element-container/element-container.component'
+export * from './element-entitysearch/element-entitysearch.component';
+export * from './element-entityselect/element-entityselect.component';
