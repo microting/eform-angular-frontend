@@ -57,12 +57,6 @@ export class CasesTableComponent implements OnInit {
     });
   }
 
-  downloadTemplatePDF(templateId: number, caseId: number) {
-    this.eFormService.downloadEformPDF(templateId, caseId).subscribe((data => {
-
-    }));
-  }
-
   submitCaseDelete(id: number) {
     this.casesService.deleteCase(id).subscribe((data => {
       if (data && data.success) {
