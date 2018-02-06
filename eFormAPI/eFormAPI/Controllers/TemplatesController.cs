@@ -138,11 +138,14 @@ namespace eFormAPI.Web.Controllers
             {
                 var core = _coreHelper.GetCore();
                 // Create tags
-                var tagList = eFormXmlModel.NewTag.Replace(" ", "").Split(',');
-                foreach (var tag in tagList)
+                if (eFormXmlModel.NewTag != null)
                 {
-                    eFormXmlModel.TagIds.Add(core.TagCreate(tag));
-                }
+                    var tagList = eFormXmlModel.NewTag.Replace(" ", "").Split(',');
+                    foreach (var tag in tagList)
+                    {
+                        eFormXmlModel.TagIds.Add(core.TagCreate(tag));
+                    }
+                }                
                 // Create eform
                 var newTemplate = core.TemplateFromXml(eFormXmlModel.EFormXml);
                 newTemplate = core.TemplateUploadData(newTemplate);
