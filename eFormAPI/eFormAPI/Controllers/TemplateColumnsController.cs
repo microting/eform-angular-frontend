@@ -107,6 +107,11 @@ namespace eFormAPI.Web.Controllers
                     columnsList[0], columnsList[1], columnsList[2], columnsList[3], 
                     columnsList[4], columnsList[5], columnsList[6], columnsList[7], 
                     columnsList[8], columnsList[9]);
+                var allCases = core.CaseReadAll(model.TemplateId, null, null);
+                foreach (var caseObject in allCases)
+                {
+                    core.CaseUpdateFieldValues(caseObject.Id);
+                }
                 return columnsUpdateResult 
                     ? new OperationResult(true, "Columns was updated") 
                     : new OperationResult(false, "Error while updating columns");

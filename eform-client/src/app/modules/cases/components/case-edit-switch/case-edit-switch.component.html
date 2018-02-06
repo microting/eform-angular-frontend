@@ -1,6 +1,6 @@
 <ng-container *ngIf="dataItemList">
   <ng-container *ngFor="let dataItem of dataItemList; let i = index">
-    <tr [style.backgroundColor]="getStyleColorFromDataItem(dataItem)" *ngIf="dataItem.fieldType != 'FieldContainer'">
+    <tr [style.backgroundColor]="getStyleColorFromDataItem(dataItem)" *ngIf="dataItem.fieldType != 'FieldContainer' && dataItem.fieldType != 'SaveButton'">
       <td>
         <strong>{{dataItem.label}}</strong>
       </td>

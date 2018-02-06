@@ -100,3 +100,4 @@ eFormAPI/eFormApi.Integration.Tests/obj/*
 eFormAPI/eFormApi.Tests/obj/*
 eFormAPI/eFormAPI/content/JasperExporter.jar
 eFormAPI/eFormAPI.Common/content/JasperExporter.jar
+JasperExporter.jar
