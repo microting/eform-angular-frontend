@@ -120,8 +120,8 @@
         </div>
 
         <div class="row">
-          <button tooltip="Download PDF" (click)="downloadTemplatePDF(this.currentTemplate.id, caseModel.id)"
-                  class="needs_tooltip btn btn-ar btn-sm btn-default"
+          <button tooltip="Download PDF" href="/api/template-files/download-case-pdf/{{currentTemplate.id}}?caseId={{caseModel.id}}"
+                  class="needs_tooltip btn btn-ar btn-xs btn-default"
                   type="button">
                   <span class="fa fa-file-pdf-o"></span>
           </button>
