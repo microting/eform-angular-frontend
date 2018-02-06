@@ -156,7 +156,10 @@ namespace eFormAPI.Web.Controllers
                 if (newTemplate == null) throw new Exception("eForm could not be created!");
                 // Set tags to eform
                 core.TemplateCreate(newTemplate);
-                core.TemplateSetTags(newTemplate.Id, eFormXmlModel.TagIds);
+                if (eFormXmlModel.TagIds != null)
+                {
+                    core.TemplateSetTags(newTemplate.Id, eFormXmlModel.TagIds);
+                }
                 return new OperationResult(true, $"eForm \"{newTemplate.Label}\" created successfully");
             }
             catch (Exception e)
