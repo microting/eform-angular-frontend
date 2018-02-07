@@ -74,8 +74,8 @@
       <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microting.eForm, Version=2.1.83.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\Microting.eForm.2.1.83\lib\net45\Microting.eForm.dll</HintPath>
+    <Reference Include="Microting.eForm, Version=2.1.84.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\Microting.eForm.2.1.84\lib\net45\Microting.eForm.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data, Version=6.9.11.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d">
       <HintPath>..\packages\MySql.Data.6.9.11\lib\net45\MySql.Data.dll</HintPath>
