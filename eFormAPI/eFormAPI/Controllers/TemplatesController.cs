@@ -138,11 +138,14 @@ namespace eFormAPI.Web.Controllers
             {
                 var core = _coreHelper.GetCore();
                 // Create tags
-                var tagList = eFormXmlModel.NewTag.Replace(" ", "").Split(',');
-                foreach (var tag in tagList)
+                if (eFormXmlModel.NewTag != null)
                 {
-                    eFormXmlModel.TagIds.Add(core.TagCreate(tag));
-                }
+                    var tagList = eFormXmlModel.NewTag.Replace(" ", "").Split(',');
+                    foreach (var tag in tagList)
+                    {
+                        eFormXmlModel.TagIds.Add(core.TagCreate(tag));
+                    }
+                }                
                 // Create eform
                 var newTemplate = core.TemplateFromXml(eFormXmlModel.EFormXml);
                 newTemplate = core.TemplateUploadData(newTemplate);
@@ -156,7 +159,10 @@ namespace eFormAPI.Web.Controllers
                 if (newTemplate == null) throw new Exception("eForm could not be created!");
                 // Set tags to eform
                 core.TemplateCreate(newTemplate);
-                core.TemplateSetTags(newTemplate.Id, eFormXmlModel.TagIds);
+                if (eFormXmlModel.TagIds != null)
+                {
+                    core.TemplateSetTags(newTemplate.Id, eFormXmlModel.TagIds);
+                }
                 return new OperationResult(true, $"eForm \"{newTemplate.Label}\" created successfully");
             }
             catch (Exception e)
