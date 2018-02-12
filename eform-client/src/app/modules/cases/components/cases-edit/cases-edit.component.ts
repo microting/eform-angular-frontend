@@ -1,10 +1,8 @@
 import {CaseEditElementComponent} from '../case-edit-element/case-edit-element.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {CaseEditRequest, ReplyElement, ReplyRequest} from 'app/models';
-import {CasesService, NotifyService} from 'app/services';
-import {TemplateDto} from 'app/models/dto';
-import {EFormService} from 'app/services';
+import {CaseEditRequest, ReplyElement, ReplyRequest, TemplateDto} from 'app/models';
+import {CasesService, NotifyService, EFormService} from 'app/services';
 
 @Component({
   selector: 'app-cases-edit',

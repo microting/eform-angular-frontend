@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {CaseDataItem} from 'app/models/cases/response/data-item.model';
+import {CaseDataItem} from 'app/models';
 
 @Component({
   selector: 'element-container',

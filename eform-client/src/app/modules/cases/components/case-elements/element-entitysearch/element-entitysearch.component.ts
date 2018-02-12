@@ -1,7 +1,6 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {CaseFieldValue} from 'app/models';
+import {CaseFieldValue, CommonDictionaryTextModel} from 'app/models';
 import {EntitySearchService} from 'app/services';
-import {CommonDictionaryTextModel} from 'app/models/common';
 import {FormControl} from '@angular/forms';
 import {ISubscription} from 'rxjs/Subscription';
 

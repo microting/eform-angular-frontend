@@ -1,4 +1,3 @@
-import {CaseDataItem} from 'app/models';
 
 // export class CaseDataItemGroup {
 //   id: number;

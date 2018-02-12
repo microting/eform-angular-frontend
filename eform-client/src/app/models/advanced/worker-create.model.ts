@@ -1,5 +1,3 @@
-import {SiteDto} from 'app/models/dto';
-
 export class WorkerCreateModel {
   firstName: string;
   lastName: string;

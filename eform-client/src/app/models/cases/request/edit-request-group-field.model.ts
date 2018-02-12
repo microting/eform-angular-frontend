@@ -1,4 +1,4 @@
-import {CaseEditRequestField} from 'app/models';
+import {CaseEditRequestField} from './edit-request-field.model';
 
 export class CaseEditRequestGroupField {
   id: number;

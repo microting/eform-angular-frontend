@@ -1,7 +1,6 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {CaseFieldValue} from 'app/models';
-import {ImageService} from 'app/services/files';
-import {NotifyService} from 'app/services/notify.service';
+import {ImageService, NotifyService} from 'app/services';
 import {NgxGalleryComponent, NgxGalleryImage, NgxGalleryOptions} from 'ngx-gallery';
 
 
