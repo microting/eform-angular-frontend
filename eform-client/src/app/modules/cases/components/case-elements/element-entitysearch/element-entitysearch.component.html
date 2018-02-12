@@ -1,4 +1,10 @@
-<select class="form-control" [(ngModel)]="fieldValueObj.value" name="value" disabled>
+<!-- <select class="form-control" [(ngModel)]="fieldValueObj.value" name="value" disabled>
   <option [value]="fieldValueObj.value">{{fieldValueObj.valueReadable}}
   </option>
 </select>
+-->
+
+<ngx-select [items]="items"
+            (typed)="onSelectInputChanged($event)"
+            [formControl]="selectControl"
+            [placeholder]="fieldValueObj.valueReadable">

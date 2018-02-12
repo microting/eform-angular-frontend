@@ -1,4 +1,4 @@
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CasesRoutingModule} from './cases-routing.module';
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
@@ -24,20 +24,24 @@ import {
   ElementTimerComponent,
   ElementSignatureComponent,
   TrumbowygComponent,
-  ElementEntitysearchComponent, ElementEntityselectComponent
+  ElementEntitysearchComponent,
+  ElementEntityselectComponent
 } from './components/case-elements';
 import {CollapseModule, TooltipModule} from 'ngx-bootstrap';
 import {Ng2Bs3ModalModule} from 'ng2-bs3-modal/ng2-bs3-modal';
+import {NgxSelectModule} from 'ngx-select-ex';
 
 @NgModule({
   imports: [
     CommonModule,
     NgxGalleryModule,
     FormsModule,
+    ReactiveFormsModule,
     CasesRoutingModule,
     CollapseModule.forRoot(),
     Ng2Bs3ModalModule,
     TooltipModule.forRoot(),
+    NgxSelectModule
   ],
   declarations: [CasesComponent,
     TrumbowygComponent,

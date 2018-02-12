@@ -8,6 +8,7 @@ import {OperationDataResult, OperationResult} from 'app/modules/helpers/operatio
 import {BaseService} from 'app/services/base.service';
 import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Observable';
+import {CommonDictionaryModel, CommonDictionaryTextModel} from '../models/common';
 
 @Injectable()
 export class EntitySearchService extends BaseService {
@@ -40,5 +41,10 @@ export class EntitySearchService extends BaseService {
     return this.postModelOperationResult<AdvEntityGroupEditModel>(AdvSearchableEntityMethods.CreateSingle, model);
   }
 
+  public getEntityGroupDictionary = (entityGroupUid: string, searchString: string):
+    Observable<OperationDataResult<Array<CommonDictionaryTextModel>>> => {
+    return this.getWithOperationDataResult<Array<CommonDictionaryTextModel>>(AdvSearchableEntityMethods.GetAll + '/dict/'
+      + entityGroupUid + '?searchString=' + searchString);
+  }
 }
 

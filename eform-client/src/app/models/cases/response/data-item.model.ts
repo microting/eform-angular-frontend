@@ -13,6 +13,7 @@ export class CaseDataItem {
   fieldValue: string;
   fieldValues: Array<CaseFieldValue> = [];
   dataItemList: Array<CaseDataItem> = [];
+  entityGroupId: string;
   // Picture
   multi: number;
   geolocationEnabled: number;
