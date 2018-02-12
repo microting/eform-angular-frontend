@@ -9,10 +9,19 @@
                 <Control Type="Edit" Id="CustomerNumber" Width="220" Height="15" X="45" Y="132" Property="CUSTOMERNUMBER" Text="{80}" />
               
                 <Control Type="CheckBox" Id="certgen" Property="GENERATESSL" Width="215" Height="17" X="45" Y="165" CheckBoxValue="1" Text="Generate SSL certificate" />
+
+                <Control Id="EmailText" Type="Text" X="45" Y="182" Width="220" Height="15" Text ="&amp;Email address:">
+                  <Condition Action="show" >GENERATESSL</Condition> 
+                  <Condition Action="hide"><![CDATA[GENERATESSL <> "1"]]></Condition>
+                </Control>
+              <Control Id="EmailBox" Type="Edit" X="45" Y="196" Width="220" Height="15" Property="EMAIL" Text="{80}">
+                <Condition Action="show" >GENERATESSL</Condition>
+                <Condition Action="hide"><![CDATA[GENERATESSL <> "1"]]></Condition>
+              </Control>
               
                 <Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="&amp;Back" />
                 <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Text="&amp;Next">
-                    <Publish Event="SpawnDialog" Value="EmptyFieldDlg">NOT DOMAINNAME OR NOT CUSTOMERNUMBER</Publish>
+                    <Publish Event="SpawnDialog" Value="EmptyFieldDlg">(NOT DOMAINNAME OR NOT CUSTOMERNUMBER) OR (GENERATESSL AND NOT EMAIL)</Publish>
                 </Control>
                 <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="Cancel">
                     <Publish Event="SpawnDialog" Value="CancelDlg">1</Publish>
