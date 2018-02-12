@@ -235,11 +235,12 @@ namespace CustomActions
                 if (session.CustomActionData["GENERATESSL"] == "1")
                 {
                     var siteId = GetSiteId(uiName);
-                    RunProcess(Path.Combine(installFolder, "letsencrypt\\letsencrypt.exe"), $"--plugin iissite --siteid { siteId } --accepttos --usedefaulttaskuser");
+                    var email = session.CustomActionData["EMAIL"];
+                    RunProcess(Path.Combine(installFolder, "letsencrypt\\letsencrypt.exe"), $"--plugin iissite --siteid { siteId } --emailaddress { email } --accepttos --usedefaulttaskuser");
                 }
 
-                CongigureSecurity(clientLocation);
-                CongigureSecurity(webApiLocation);
+                ConfigureSecurity(clientLocation);
+                ConfigureSecurity(webApiLocation);
                 //DeleteDirectory(Path.Combine(installFolder, "letsencrypt"));
                 IncrementProgressBar(session);
 
@@ -338,8 +339,8 @@ namespace CustomActions
                 ControlSites(customerNumber, domain, apiPort, uiPort, true);
                 IncrementProgressBar(session);
 
-                CongigureSecurity(uiIisDir);
-                CongigureSecurity(webApiLocation);
+                ConfigureSecurity(uiIisDir);
+                ConfigureSecurity(webApiLocation);
 
                 DeleteDirectory(apiTemp);
                 DeleteDirectory(clientTemp);
@@ -500,7 +501,7 @@ namespace CustomActions
             DeleteDirectory(Path.Combine(location, "eform-client"));
         }
 
-        public static void CongigureSecurity(string folder)
+        public static void ConfigureSecurity(string folder)
         {
             using (var powershell = PowerShell.Create())
             {
