@@ -20,7 +20,7 @@ namespace eFormAPI.Web.Controllers
             try
             {
                 var core = _coreHelper.GetCore();
-                var model = core.CaseReadAll(id, null, null);
+                var model = core.CaseReadAll(id, null, null, Constants.WorkflowStates.NotRemoved, "", true, Constants.CaseSortParameters.CreatedAt);
                 return new OperationDataResult<List<Case>>(true, model);
             }
             catch (Exception)
