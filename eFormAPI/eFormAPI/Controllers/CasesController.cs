@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Web.Http;
 using eFormAPI.Common.API;
+using eFormAPI.Common.Models;
 using eFormAPI.Common.Models.Cases.Request;
 using eFormAPI.Web.Infrastructure.Helpers;
 using eFormShared;
