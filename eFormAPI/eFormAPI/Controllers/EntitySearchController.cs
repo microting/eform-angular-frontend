@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using eFormAPI.Common.API;
+using eFormAPI.Common.Models;
 using eFormAPI.Common.Models.SearchableList;
 using eFormAPI.Web.Infrastructure.Helpers;
 using eFormData;
@@ -93,6 +95,35 @@ namespace eFormAPI.Web.Controllers
             catch (Exception exception)
             {
                 return new OperationDataResult<EntityGroup>(false, "Error when obtaining searchable list");
+            }
+        }
+
+        [HttpGet]
+        [Route("api/searchable-groups/dict/{entityGroupUid}")]
+        public OperationDataResult<List<CommonDictionaryTextModel>> GetEntityGroupDictionary(string entityGroupUid, string searchString)
+        {
+            try
+            {
+                var core = _coreHelper.GetCore();
+
+                var entityGroup = core.EntityGroupRead(entityGroupUid, null, searchString);
+
+                var mappedEntityGroupDict = new List<CommonDictionaryTextModel>();
+
+                foreach (var entityGroupItem in entityGroup.EntityGroupItemLst)
+                {
+                    mappedEntityGroupDict.Add(new CommonDictionaryTextModel()
+                    {
+                        Id = entityGroupItem.EntityItemUId,
+                        Text = entityGroupItem.Name
+                    });
+                }
+
+                return new OperationDataResult<List<CommonDictionaryTextModel>>(true, mappedEntityGroupDict);
+            }
+            catch (Exception ex)
+            {
+                return new OperationDataResult<List<CommonDictionaryTextModel>>(false, "Error when obtaining searchable list");
             }
         }
 
