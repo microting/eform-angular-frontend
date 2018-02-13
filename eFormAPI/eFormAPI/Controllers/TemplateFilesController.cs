@@ -258,6 +258,7 @@ namespace eFormAPI.Web.Controllers
                             }
 
                             ZipFile.ExtractToDirectory(filePath, extractPath);
+                            File.Delete(filePath);
                             return Request.CreateResponse(HttpStatusCode.OK);
                         }
                     }

@@ -5,6 +5,8 @@ using System.Web.Http;
 using System.Web.WebPages;
 using eFormCore;
 using NLog;
+using Castle.Windsor;
+using eFormAPI.Web.Installers;
 
 namespace eFormAPI.Web.Infrastructure.Helpers
 {
@@ -12,6 +14,8 @@ namespace eFormAPI.Web.Infrastructure.Helpers
     {
         private Core _core;
         private readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        IWindsorContainer container;
+
 
         #region ExceptionHandling
 
@@ -75,7 +79,9 @@ namespace eFormAPI.Web.Infrastructure.Helpers
             try
             {
                 running = _core.StartSqlOnly(connectionStr);
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 AdminTools adminTools = new AdminTools(connectionStr);
                 adminTools.MigrateDb();
                 adminTools.DbSettingsReloadRemote();
@@ -84,6 +90,11 @@ namespace eFormAPI.Web.Infrastructure.Helpers
 
             if (running)
             {
+                container = new WindsorContainer();
+                container.Install(
+                        new RebusHandlerInstaller()
+                        , new RebusInstaller(System.Configuration.ConfigurationManager.ConnectionStrings["eFormMainConnection"].ConnectionString)
+                    );
                 return _core;
             }
             Logger.Error("Core is not running");
