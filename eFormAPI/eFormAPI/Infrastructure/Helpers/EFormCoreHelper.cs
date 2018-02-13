@@ -7,6 +7,8 @@ using eFormCore;
 using NLog;
 using Castle.Windsor;
 using eFormAPI.Web.Installers;
+using Rebus.Bus;
+using Castle.MicroKernel.Registration;
 
 namespace eFormAPI.Web.Infrastructure.Helpers
 {
@@ -15,7 +17,7 @@ namespace eFormAPI.Web.Infrastructure.Helpers
         private Core _core;
         private readonly Logger Logger = LogManager.GetCurrentClassLogger();
         IWindsorContainer container;
-
+        public IBus bus;
 
         #region ExceptionHandling
 
@@ -63,7 +65,7 @@ namespace eFormAPI.Web.Infrastructure.Helpers
 
             string connectionStr = lines.First();
 
-            this._core = new Core();
+            _core = new Core();
             bool running = false;
             _core.HandleCaseCreated += EventCaseCreated;
             _core.HandleCaseRetrived += EventCaseRetrived;
@@ -91,10 +93,12 @@ namespace eFormAPI.Web.Infrastructure.Helpers
             if (running)
             {
                 container = new WindsorContainer();
+                container.Register(Component.For<Core>().Instance(_core));
                 container.Install(
                         new RebusHandlerInstaller()
                         , new RebusInstaller(System.Configuration.ConfigurationManager.ConnectionStrings["eFormMainConnection"].ConnectionString)
                     );
+                this.bus = container.Resolve<IBus>();
                 return _core;
             }
             Logger.Error("Core is not running");

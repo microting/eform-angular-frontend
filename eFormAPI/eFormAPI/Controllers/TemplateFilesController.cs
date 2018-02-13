@@ -10,6 +10,7 @@ using System.Web.Http;
 using Castle.Components.DictionaryAdapter.Xml;
 using eFormAPI.Common.API;
 using eFormAPI.Web.Infrastructure.Helpers;
+using eFormAPI.Web.Messages;
 
 namespace eFormAPI.Web.Controllers
 {
@@ -259,6 +260,8 @@ namespace eFormAPI.Web.Controllers
 
                             ZipFile.ExtractToDirectory(filePath, extractPath);
                             File.Delete(filePath);
+                            _coreHelper.bus.SendLocal(new GenerateJasperFiles(templateId));
+
                             return Request.CreateResponse(HttpStatusCode.OK);
                         }
                     }
