@@ -262,6 +262,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Handlers\GenerateJasperFilesHandler.cs" />
     <Compile Include="Infrastructure\Consts\EformRoles.cs" />
     <Compile Include="Infrastructure\Data\Entities\EformRole.cs" />
     <Compile Include="Infrastructure\Data\Entities\EformUserClaim.cs" />
@@ -280,6 +281,9 @@
     <Compile Include="Infrastructure\Identity\EformUserManager.cs" />
     <Compile Include="Infrastructure\Security\ApplicationOAuthProvider.cs" />
     <Compile Include="Infrastructure\Security\ChallengeResult.cs" />
+    <Compile Include="Installers\RebusHandlerInstaller.cs" />
+    <Compile Include="Installers\RebusInstaller.cs" />
+    <Compile Include="Messages\GenerateJasperFiles.cs" />
     <Compile Include="Migrations\201707190837078_InitialCreate.cs" />
     <Compile Include="Migrations\201707190837078_InitialCreate.Designer.cs">
       <DependentUpon>201707190837078_InitialCreate.cs</DependentUpon>
@@ -339,6 +343,7 @@
   <ItemGroup>
     <Analyzer Include="..\packages\AWSSDK.SQS.3.3.3\analyzers\dotnet\cs\AWSSDK.SQS.CodeAnalysis.dll" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
