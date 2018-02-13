@@ -1,6 +1,6 @@
 import {SiteNameDto} from './site-name.dto';
 import {FieldDto} from './field.dto';
-import {KeyValueModel} from 'app/models/common';
+import {KeyValueModel} from '../common/key-value.model';
 
 export class TemplateDto {
   id: number;

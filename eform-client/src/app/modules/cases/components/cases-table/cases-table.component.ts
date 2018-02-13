@@ -1,11 +1,8 @@
 import {ActivatedRoute, Router} from '@angular/router';
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {EFormService} from 'app/services/eform/eform.service';
-import {TemplateDto} from 'app/models/dto';
-import {CaseModel} from 'app/models/cases';
-import {CasesService} from 'app/services/cases/cases.service';
+import {TemplateDto, CaseModel} from 'app/models';
+import {CasesService, NotifyService, EFormService} from 'app/services';
 import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
-import {NotifyService} from 'app/services/notify.service';
 
 @Component({
   selector: 'app-cases-table',

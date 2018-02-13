@@ -1,4 +1,4 @@
-import {AdvEntityItemModel} from 'app/models/advanced/adv-entity-item.model';
+import {AdvEntityItemModel} from './adv-entity-item.model';
 export class AdvEntityGroupModel {
   name: string;
   type: string;

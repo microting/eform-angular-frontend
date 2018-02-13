@@ -1,4 +1,4 @@
-import {TemplateDto} from 'app/models/dto';
+import {TemplateDto} from '../dto/template.dto';
 
 export class TemplateListModel {
   numOfElements: number;

@@ -1,4 +1,4 @@
-import {AdvEntityGroupModel} from 'app/models/advanced';
+import {AdvEntityGroupModel} from './adv-entity-group.model';
 export class AdvEntityGroupListModel {
   numOfElements: number;
   pageNum: number;

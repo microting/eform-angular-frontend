@@ -1,13 +1,8 @@
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CasesRoutingModule} from './cases-routing.module';
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {NgxGalleryModule} from 'ngx-gallery';
-import {CasesComponent} from './components/cases.component';
-import {CasesTableComponent} from './components/cases-table/cases-table.component';
-import {CasesEditComponent} from './components/cases-edit/cases-edit.component';
-import {CaseEditElementComponent} from './components/case-edit-element/case-edit-element.component';
-import {CaseEditSwitchComponent} from 'app/modules/cases/components/case-edit-switch/case-edit-switch.component';
 
 import {
   ElementCheckboxComponent,
@@ -24,20 +19,29 @@ import {
   ElementTimerComponent,
   ElementSignatureComponent,
   TrumbowygComponent,
-  ElementEntitysearchComponent, ElementEntityselectComponent
-} from './components/case-elements';
+  ElementEntitysearchComponent,
+  ElementEntityselectComponent,
+  CaseEditSwitchComponent,
+  CaseEditElementComponent,
+  CasesEditComponent,
+  CasesTableComponent,
+  CasesComponent
+} from './components';
 import {CollapseModule, TooltipModule} from 'ngx-bootstrap';
 import {Ng2Bs3ModalModule} from 'ng2-bs3-modal/ng2-bs3-modal';
+import {NgxSelectModule} from 'ngx-select-ex';
 
 @NgModule({
   imports: [
     CommonModule,
     NgxGalleryModule,
     FormsModule,
+    ReactiveFormsModule,
     CasesRoutingModule,
     CollapseModule.forRoot(),
     Ng2Bs3ModalModule,
     TooltipModule.forRoot(),
+    NgxSelectModule
   ],
   declarations: [CasesComponent,
     TrumbowygComponent,
