@@ -115,7 +115,7 @@ namespace eFormAPI.Web.Controllers
                 {
                     mappedEntityGroupDict.Add(new CommonDictionaryTextModel()
                     {
-                        Id = entityGroupItem.EntityItemUId,
+                        Id = entityGroupItem.MicrotingUId,
                         Text = entityGroupItem.Name
                     });
                 }
