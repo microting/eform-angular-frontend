@@ -6,6 +6,7 @@ export * from './units.service';
 export * from './workers.service';
 export * from './cases/cases.service'
 export * from './entity-search.service'
+export * from './entity-select.service'
 export * from './admin.service'
 export * from './accounts/auth.service'
 export * from './accounts/auth.service'

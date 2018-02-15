@@ -1,0 +1,45 @@
+<header class="main-header main-header-title">
+  <div class="container-fluid">
+    <h1 class="page-title header-page-title">
+      <div class="container" style="width: 200px !important;">
+        Seletable lists
+      </div>
+    </h1>
+    <div class="pull-right">
+      <button class="needs_tooltip btn btn-ar btn-success" tooltip='Create new selectable list'
+              (click)="showCreateAdvEntitySelectableGroupModal()" type="button">
+        Create new selectable list
+      </button>
+    </div>
+  </div>
+</header>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-8">
+      <div id="check_lists_filter" class="dataTables_filter form-inline">
+        <label>Search:
+          <input type="search" class="form-control input-sm" (ngModelChange)="onSearchChanged($event)"
+                 [ngModel]="advEntitySelectableGroupListRequestModel.nameFilter"
+                 placeholder="">
+        </label>
+      </div>
+    </div>
+    <table-pagination *ngIf="advEntitySelectableGroupListModel.numOfElements > advEntitySelectableGroupListRequestModel.pageSize"
+                              [limit]="advEntitySelectableGroupListRequestModel.pageSize"
+                              [size]="advEntitySelectableGroupListModel.numOfElements"
+                              [offset]="advEntitySelectableGroupListRequestModel.offset"
+                              (onPageChanged)="changePage($event)"></table-pagination>
+  </div>
+  <eform-entity-select-grid [advEntitySelectableGroupListModel]="advEntitySelectableGroupListModel"
+                            [advEntitySelectableGroupListRequestModel]="advEntitySelectableGroupListRequestModel"
+                            (onEntitySelectableGroupListRequestChanged)="onEntitySelectableGroupListRequestChanged($event)"
+                            (onEntitySelectableGroupSelectedForEdit)="onEntitySelectableGroupSelectedForEdit($event)"
+                            (onEntitySelectableGroupChanged)="getEntitySelectableGroupList()"></eform-entity-select-grid>
+  <eform-spinner [middleActive]="spinnerStatus"></eform-spinner>
+</div>
+
+<edit-entity-selectable-group #editEntitySelectableGroupComponent
+                   [selectedId]="selectedId"
+                   (onLoading)="changeSpinnerStatus($event)"
+                   (onEntitySelectableGroupChanged)="getEntitySelectableGroupList()"></edit-entity-selectable-group>
+

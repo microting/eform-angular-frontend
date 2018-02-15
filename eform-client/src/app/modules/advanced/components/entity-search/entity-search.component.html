@@ -2,13 +2,13 @@
   <div class="container-fluid">
     <h1 class="page-title header-page-title">
       <div class="container" style="width: 200px !important;">
-        Søgbar lister
+        Searchable lists
       </div>
     </h1>
     <div class="pull-right">
-      <button class="needs_tooltip btn btn-ar btn-success" tooltip='Opret Søgbar liste'
-              (click)="showCreateAdvEntityGroupModal()" type="button">
-        Opret ny Søgbar liste
+      <button class="needs_tooltip btn btn-ar btn-success" tooltip='Create new searchable list'
+              (click)="showCreateAdvEntitySearchableGroupModal()" type="button">
+        Create new searchable list
       </button>
     </div>
   </div>
@@ -17,29 +17,29 @@
   <div class="row">
     <div class="col-xs-8">
       <div id="check_lists_filter" class="dataTables_filter form-inline">
-        <label>Søg:
+        <label>Search:
           <input type="search" class="form-control input-sm" (ngModelChange)="onSearchChanged($event)"
-                 [ngModel]="advEntityGroupListRequestModel.nameFilter"
+                 [ngModel]="advEntitySearchableGroupListRequestModel.nameFilter"
                  placeholder="">
         </label>
       </div>
     </div>
-    <table-pagination *ngIf="advEntityGroupListModel.numOfElements > advEntityGroupListRequestModel.pageSize"
-                              [limit]="advEntityGroupListRequestModel.pageSize"
-                              [size]="advEntityGroupListModel.numOfElements"
-                              [offset]="advEntityGroupListRequestModel.offset"
+    <table-pagination *ngIf="advEntitySearchableGroupListModel.numOfElements > advEntitySearchableGroupListRequestModel.pageSize"
+                              [limit]="advEntitySearchableGroupListRequestModel.pageSize"
+                              [size]="advEntitySearchableGroupListModel.numOfElements"
+                              [offset]="advEntitySearchableGroupListRequestModel.offset"
                               (onPageChanged)="changePage($event)"></table-pagination>
   </div>
-  <eform-entity-search-grid [advEntityGroupListModel]="advEntityGroupListModel"
-                            [advEntityGroupListRequestModel]="advEntityGroupListRequestModel"
-                            (onEntityGroupListRequestChanged)="onEntityGroupListRequestChanged($event)"
-                            (onEntityGroupSelectedForEdit)="onEntityGroupSelectedForEdit($event)"
-                            (onEntityGroupChanged)="getEntityGroupList()"></eform-entity-search-grid>
+  <eform-entity-search-grid [advEntitySearchableGroupListModel]="advEntitySearchableGroupListModel"
+                            [advEntitySearchableGroupListRequestModel]="advEntitySearchableGroupListRequestModel"
+                            (onEntitySearchableGroupListRequestChanged)="onEntitySearchableGroupListRequestChanged($event)"
+                            (onEntitySearchableGroupSelectedForEdit)="onEntitySearchableGroupSelectedForEdit($event)"
+                            (onEntitySearchableGroupChanged)="getEntitySearchableGroupList()"></eform-entity-search-grid>
   <eform-spinner [middleActive]="spinnerStatus"></eform-spinner>
 </div>
 
-<edit-entity-group #editEntityGroupComponent
+<edit-entity-searchable-group #editEntitySearchableGroupComponent
                    [selectedId]="selectedId"
                    (onLoading)="changeSpinnerStatus($event)"
-                   (onEntityGroupChanged)="getEntityGroupList()"></edit-entity-group>
+                   (onEntitySearchableGroupChanged)="getEntitySearchableGroupList()"></edit-entity-searchable-group>
 

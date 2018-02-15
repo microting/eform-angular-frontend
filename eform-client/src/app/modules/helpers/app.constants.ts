@@ -77,6 +77,15 @@ export let AdvSearchableEntityMethods = {
   ImportGroup: '/api/searchable-groups/import'
 };
 
+export let AdvSelectableEntityMethods = {
+  GetAll: '/api/selectable-groups',
+  GetSingle: '/api/selectable-groups/get',
+  DeleteSingle: '/api/selectable-groups/delete',
+  CreateSingle: '/api/selectable-groups/create',
+  UpdateSingle: '/api/selectable-groups/update',
+  ImportGroup: '/api/selectable-groups/import'
+};
+
 export let AdminMethods = {
   GetCurrentUser: '/api/account/user-info',
   GetUser: '/api/admin/user',

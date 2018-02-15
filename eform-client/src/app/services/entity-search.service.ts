@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Headers, Http} from '@angular/http';
 import {Router} from '@angular/router';
-import {AdvEntityGroupListModel} from 'app/models';
-import {AdvEntityGroupEditModel, AdvEntityGroupListRequestModel, AdvEntityGroupModel} from 'app/models/advanced';
+import {AdvEntitySearchableGroupListModel} from 'app/models';
+import {AdvEntitySearchableGroupEditModel, AdvEntitySearchableGroupListRequestModel, AdvEntitySearchableGroupModel} from 'app/models/advanced';
 import {AdvSearchableEntityMethods} from 'app/modules/helpers/app.constants';
 import {OperationDataResult, OperationResult} from 'app/modules/helpers/operation.models';
 import {BaseService} from 'app/services/base.service';
@@ -21,27 +21,27 @@ export class EntitySearchService extends BaseService {
     this.headers.append('Accept', 'application/json');
   }
 
-  public getEntityGroupList = (model: AdvEntityGroupListRequestModel): Observable<OperationDataResult<AdvEntityGroupListModel>> => {
-    return this.postModelOperationDataResult<AdvEntityGroupListRequestModel, AdvEntityGroupListModel>(AdvSearchableEntityMethods.GetAll, model);
+  public getEntitySearchableGroupList = (model: AdvEntitySearchableGroupListRequestModel): Observable<OperationDataResult<AdvEntitySearchableGroupListModel>> => {
+    return this.postModelOperationDataResult<AdvEntitySearchableGroupListRequestModel, AdvEntitySearchableGroupListModel>(AdvSearchableEntityMethods.GetAll, model);
   }
 
-  public getEntityGroup = (id: string): Observable<OperationDataResult<AdvEntityGroupModel>> => {
-    return this.getWithOperationDataResult<AdvEntityGroupModel>(AdvSearchableEntityMethods.GetSingle + '/' + id);
+  public getEntitySearchableGroup = (id: string): Observable<OperationDataResult<AdvEntitySearchableGroupModel>> => {
+    return this.getWithOperationDataResult<AdvEntitySearchableGroupModel>(AdvSearchableEntityMethods.GetSingle + '/' + id);
   }
 
-  public updateEntityGroup = (model: AdvEntityGroupEditModel): Observable<OperationResult> => {
-    return this.postModelOperationResult<AdvEntityGroupEditModel>(AdvSearchableEntityMethods.UpdateSingle, model);
+  public updateEntitySearchableGroup = (model: AdvEntitySearchableGroupEditModel): Observable<OperationResult> => {
+    return this.postModelOperationResult<AdvEntitySearchableGroupEditModel>(AdvSearchableEntityMethods.UpdateSingle, model);
   }
 
-  public deleteEntityGroup = (groupUid: string): Observable<OperationResult> => {
+  public deleteEntitySearchableGroup = (groupUid: string): Observable<OperationResult> => {
     return this.getWithOperationResult(AdvSearchableEntityMethods.DeleteSingle + '/' + groupUid);
   }
 
-  public createEntityGroup = (model: AdvEntityGroupEditModel): Observable<OperationResult> => {
-    return this.postModelOperationResult<AdvEntityGroupEditModel>(AdvSearchableEntityMethods.CreateSingle, model);
+  public createEntitySearchableGroup = (model: AdvEntitySearchableGroupEditModel): Observable<OperationResult> => {
+    return this.postModelOperationResult<AdvEntitySearchableGroupEditModel>(AdvSearchableEntityMethods.CreateSingle, model);
   }
 
-  public getEntityGroupDictionary = (entityGroupUid: string, searchString: string):
+  public getEntitySearchableGroupDictionary = (entityGroupUid: string, searchString: string):
     Observable<OperationDataResult<Array<CommonDictionaryTextModel>>> => {
     return this.getWithOperationDataResult<Array<CommonDictionaryTextModel>>(AdvSearchableEntityMethods.GetAll + '/dict/'
       + entityGroupUid + '?searchString=' + searchString);

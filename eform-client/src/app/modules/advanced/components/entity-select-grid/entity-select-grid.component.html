@@ -24,22 +24,22 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let advEntitySearchableGroup of advEntitySearchableGroupListModel.entityGroups">
+  <tr *ngFor="let advEntitySelectableGroup of advEntitySelectableGroupListModel.entityGroups">
     <td class="text-center">
-      {{advEntitySearchableGroup.entityGroupMUId}}
+      {{advEntitySelectableGroup.entityGroupMUId}}
     </td>
     <td class="text-center">
-      {{advEntitySearchableGroup.name}}
+      {{advEntitySelectableGroup.name}}
     </td>
     <td class="text-center">
       <!--<eform-switch [status]="false" [isDisabledON]="true" [onText]="'ON'" [offText]="'OFF'" [onColor]="'green'" [offColor]="'red'" [size]="'small'"></eform-switch>-->
-      <a (click)="showEditAdvEntitySearchableGroupModal(advEntitySearchableGroup.entityGroupMUId)" tooltip="Redigér Søgbar liste"
+      <a (click)="showEditAdvEntitySelectableGroupModal(advEntitySelectableGroup.entityGroupMUId)" tooltip="Redigér Søgbar liste"
          class="needs_tooltip btn btn-ar btn-sm btn-default" placement="top" container="body"
          type="button" data-original-title="Edit site">
         <span class="fa fa-pencil"></span>
       </a>
       <button tooltip="Slet Søgbar element" placement="top" container="body"
-              (click)="showDeleteAdvEntitySearchableGroupModal(advEntitySearchableGroup)"
+              (click)="showDeleteAdvEntitySelectableGroupModal(advEntitySelectableGroup)"
               class="needs_tooltip btn btn-ar btn-danger btn-sm dangerous-action" type="button">
         <span class="fa fa-trash-o"></span>
       </button>
@@ -49,15 +49,15 @@
 </table>
 <div class="row">
   <div class="col-xs-6">
-    <div class="dataTables_info" id="searchable_groups_info" *ngIf="advEntitySearchableGroupListModel.numOfElements > 0">
-      Viser {{this.advEntitySearchableGroupListRequestModel.offset + 1}}
-      til {{getLastPageNumber()}} af {{advEntitySearchableGroupListModel.numOfElements}} linjer
+    <div class="dataTables_info" id="searchable_groups_info" *ngIf="advEntitySelectableGroupListModel.numOfElements > 0">
+      Viser {{this.advEntitySelectableGroupListRequestModel.offset + 1}}
+      til {{getLastPageNumber()}} af {{advEntitySelectableGroupListModel.numOfElements}} linjer
     </div>
   </div>
   <div class="col-xs-6"></div>
 </div>
 
-<modal #deleteAdvEntitySearchableGroupModal>
+<modal #deleteAdvEntitySelectableGroupModal>
   <modal-header [show-close]="true">
     <h4 class="modal-title">Delete searchable_group?</h4>
   </modal-header>
@@ -65,22 +65,22 @@
     <div class="container-fluid">
       <div class='row'>
         <div class='col-md-4'><label>#</label></div>
-        <div class='col-md-8'> {{selectedAdvEntitySearchableGroupModel.entityGroupMUId}}</div>
+        <div class='col-md-8'> {{selectedAdvEntitySelectableGroupModel.entityGroupMUId}}</div>
       </div>
       <div class='row'>
         <div class='col-md-4'><label>Creation date</label></div>
-        <div class='col-md-8'> {{selectedAdvEntitySearchableGroupModel.updatedAt | date:'dd.MM.y HH:mm:ss'}}</div>
+        <div class='col-md-8'> {{selectedAdvEntitySelectableGroupModel.updatedAt | date:'dd.MM.y HH:mm:ss'}}</div>
       </div>
       <div class='row'>
         <div class='col-md-4'><label>Navn</label></div>
-        <div class='col-md-8'> {{selectedAdvEntitySearchableGroupModel.name}}</div>
+        <div class='col-md-8'> {{selectedAdvEntitySelectableGroupModel.name}}</div>
       </div>
     </div>
   </modal-body>
   <modal-footer>
-    <button type="button" class="btn btn-danger" (click)="deleteSelectedAdvEntityGroup()">OK</button>
+    <button type="button" class="btn btn-danger" (click)="deleteSelectedAdvEntitySelectableGroup()">OK</button>
     <button type="button" class="btn btn-default" data-dismiss="deleteWorkerModal"
-            (click)="deleteAdvEntitySearchableGroupModal.dismiss()">Cancel
+            (click)="deleteAdvEntitySelectableGroupModal.dismiss()">Cancel
     </button>
   </modal-footer>
 </modal>

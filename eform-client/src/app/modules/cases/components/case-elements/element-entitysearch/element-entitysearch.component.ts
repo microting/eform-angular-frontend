@@ -39,7 +39,7 @@ export class ElementEntitysearchComponent implements OnInit, OnDestroy {
 
   onSelectInputChanged(searchString: string) {
     if (searchString.length > 2) {
-      this.entitySearchService.getEntityGroupDictionary(this.entityGroupUid, searchString).subscribe((operation => {
+      this.entitySearchService.getEntitySearchableGroupDictionary(this.entityGroupUid, searchString).subscribe((operation => {
         if (operation && operation.success) {
           this.items  = operation.model;
         }
