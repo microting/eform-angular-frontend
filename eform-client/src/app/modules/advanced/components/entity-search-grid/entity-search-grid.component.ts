@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
-import {AdvEntityGroupListModel, AdvEntityGroupListRequestModel, AdvEntityGroupModel} from 'app/models/advanced';
+import {AdvEntitySearchableGroupListModel, AdvEntitySearchableGroupListRequestModel, AdvEntitySearchableGroupModel} from 'app/models/advanced';
 import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 import {EntitySearchService} from 'app/services';
 import {NotifyService} from 'app/services/notify.service';
@@ -8,15 +8,15 @@ import {NotifyService} from 'app/services/notify.service';
   selector: 'eform-entity-search-grid',
   templateUrl: './entity-search-grid.component.html'
 })
-export class EntitySearchGridComponent {
-  @Input() advEntityGroupListModel: AdvEntityGroupListModel;
-  @Input() advEntityGroupListRequestModel: AdvEntityGroupListRequestModel;
-  @Output() onEntityGroupListRequestChanged = new EventEmitter<AdvEntityGroupListRequestModel>();
-  @Output() onEntityGroupChanged = new EventEmitter<void>();
-  @Output() onEntityGroupSelectedForEdit = new EventEmitter<string>();
-  @ViewChild('deleteAdvEntityGroupModal') deleteAdvEntityGroupModal: ModalComponent;
-  selectedAdvEntityGroupId: string;
-  selectedAdvEntityGroupModel: AdvEntityGroupModel = new AdvEntityGroupModel;
+export class EntitySearchableGridComponent {
+  @Input() advEntitySearchableGroupListModel: AdvEntitySearchableGroupListModel;
+  @Input() advEntitySearchableGroupListRequestModel: AdvEntitySearchableGroupListRequestModel;
+  @Output() onEntitySearchableGroupListRequestChanged = new EventEmitter<AdvEntitySearchableGroupListRequestModel>();
+  @Output() onEntitySearchableGroupChanged = new EventEmitter<void>();
+  @Output() onEntitySearchableGroupSelectedForEdit = new EventEmitter<string>();
+  @ViewChild('deleteAdvEntitySearchableGroupModal') deleteAdvEntitySearchableGroupModal: ModalComponent;
+  selectedAdvEntitySearchableGroupId: string;
+  selectedAdvEntitySearchableGroupModel: AdvEntitySearchableGroupModel = new AdvEntitySearchableGroupModel;
   isSortedByUidAsc = false;
   isSortedByUidDsc = false;
   isSortedByNameAsc = false;
@@ -28,67 +28,67 @@ export class EntitySearchGridComponent {
   sortByUid() {
     this.isSortedByNameAsc = false;
     this.isSortedByNameDsc = false;
-    this.advEntityGroupListRequestModel.sort = 'id';
+    this.advEntitySearchableGroupListRequestModel.sort = 'id';
     if (this.isSortedByUidDsc) {
       this.isSortedByUidAsc = true;
       this.isSortedByUidDsc = false;
-      this.advEntityGroupListRequestModel.isSortDsc = false;
+      this.advEntitySearchableGroupListRequestModel.isSortDsc = false;
     } else if (this.isSortedByUidAsc) {
       this.isSortedByUidAsc = false;
       this.isSortedByUidDsc = true;
-      this.advEntityGroupListRequestModel.isSortDsc = true;
+      this.advEntitySearchableGroupListRequestModel.isSortDsc = true;
     } else {
       this.isSortedByUidDsc = true;
-      this.advEntityGroupListRequestModel.isSortDsc = true;
+      this.advEntitySearchableGroupListRequestModel.isSortDsc = true;
     }
-    this.onEntityGroupListRequestChanged.emit(this.advEntityGroupListRequestModel);
+    this.onEntitySearchableGroupListRequestChanged.emit(this.advEntitySearchableGroupListRequestModel);
   }
 
   sortByName() {
     this.isSortedByUidAsc = false;
     this.isSortedByUidDsc = false;
-    this.advEntityGroupListRequestModel.sort = 'name';
+    this.advEntitySearchableGroupListRequestModel.sort = 'name';
     if (this.isSortedByNameDsc) {
       this.isSortedByNameAsc = true;
       this.isSortedByNameDsc = false;
-      this.advEntityGroupListRequestModel.isSortDsc = false;
+      this.advEntitySearchableGroupListRequestModel.isSortDsc = false;
     } else if (this.isSortedByNameAsc) {
       this.isSortedByNameAsc = false;
       this.isSortedByNameDsc = true;
-      this.advEntityGroupListRequestModel.isSortDsc = true;
+      this.advEntitySearchableGroupListRequestModel.isSortDsc = true;
     } else {
       this.isSortedByNameDsc = true;
-      this.advEntityGroupListRequestModel.isSortDsc = true;
+      this.advEntitySearchableGroupListRequestModel.isSortDsc = true;
     }
-    this.onEntityGroupListRequestChanged.emit(this.advEntityGroupListRequestModel);
+    this.onEntitySearchableGroupListRequestChanged.emit(this.advEntitySearchableGroupListRequestModel);
   }
 
-  showDeleteAdvEntityGroupModal(model: AdvEntityGroupModel) {
-    this.selectedAdvEntityGroupModel = model;
-    this.deleteAdvEntityGroupModal.open().then();
+  showDeleteAdvEntitySearchableGroupModal(model: AdvEntitySearchableGroupModel) {
+    this.selectedAdvEntitySearchableGroupModel = model;
+    this.deleteAdvEntitySearchableGroupModal.open().then();
   }
 
-  showEditAdvEntityGroupModal(id: string) {
-    this.selectedAdvEntityGroupId = id;
-    this.onEntityGroupSelectedForEdit.emit(this.selectedAdvEntityGroupId);
+  showEditAdvEntitySearchableGroupModal(id: string) {
+    this.selectedAdvEntitySearchableGroupId = id;
+    this.onEntitySearchableGroupSelectedForEdit.emit(this.selectedAdvEntitySearchableGroupId);
   }
 
-  deleteSelectedAdvEntityGroup() {
-    this.entitySearchService.deleteEntityGroup(this.selectedAdvEntityGroupModel.entityGroupMUId).subscribe((data) => {
+  deleteSelectedAdvEntitySearchableGroup() {
+    this.entitySearchService.deleteEntitySearchableGroup(this.selectedAdvEntitySearchableGroupModel.entityGroupMUId).subscribe((data) => {
       if (data && data.success) {
         this.notifyService.success({text: data.message});
-        this.onEntityGroupChanged.emit();
+        this.onEntitySearchableGroupChanged.emit();
       } else {
         this.notifyService.error({text: data.message});
       }
-      this.deleteAdvEntityGroupModal.dismiss().then();
+      this.deleteAdvEntitySearchableGroupModal.dismiss().then();
     });
   }
 
   getLastPageNumber(): number {
-    let lastPage = this.advEntityGroupListRequestModel.offset + this.advEntityGroupListRequestModel.pageSize;
-    if (lastPage > this.advEntityGroupListModel.numOfElements) {
-      lastPage = this.advEntityGroupListModel.numOfElements;
+    let lastPage = this.advEntitySearchableGroupListRequestModel.offset + this.advEntitySearchableGroupListRequestModel.pageSize;
+    if (lastPage > this.advEntitySearchableGroupListModel.numOfElements) {
+      lastPage = this.advEntitySearchableGroupListModel.numOfElements;
     }
     return lastPage;
   }

@@ -19,7 +19,7 @@ import {SimpleLayoutComponent} from 'app/layouts/simple-layout/simple-layout.com
 import {SimpleSitesModule} from 'app/modules/simple-sites/simple-sites.module';
 import {EFormService} from 'app/services/eform/eform.service';
 import {
-  AdminService, EntitySearchService, SettingsService, SitesService, UnitsService,
+  AdminService, EntitySearchService,EntitySelectService, SettingsService, SitesService, UnitsService,
   WorkersService
 } from 'app/services';
 import {SimpleSitesService} from 'app/services/simple-sites.service';
@@ -88,6 +88,7 @@ import {EformTagService} from 'app/services/eform/eform-tag.service';
     UnitsService,
     SimpleSitesService,
     EntitySearchService,
+    EntitySelectService,
     SettingsService,
     EFormService,
     ImageService,

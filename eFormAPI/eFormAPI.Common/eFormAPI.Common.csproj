@@ -74,8 +74,8 @@
       <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microting.eForm, Version=2.1.90.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\Microting.eForm.2.1.90\lib\net45\Microting.eForm.dll</HintPath>
+    <Reference Include="Microting.eForm, Version=2.1.96.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\Microting.eForm.2.1.96\lib\net45\Microting.eForm.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data, Version=6.9.11.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d">
       <HintPath>..\packages\MySql.Data.6.9.11\lib\net45\MySql.Data.dll</HintPath>
@@ -116,6 +116,10 @@
     <Compile Include="Models\CommonDictionaryModel.cs" />
     <Compile Include="Models\CommonDictionaryTextModel.cs" />
     <Compile Include="Models\DisplayTemplateColumnsModel.cs" />
+    <Compile Include="Models\SelectableList\AdvEntitySelectableGroupEditModel.cs" />
+    <Compile Include="Models\SelectableList\AdvEntitySelectableGroupImportModel.cs" />
+    <Compile Include="Models\SelectableList\AdvEntitySelectableGroupListRequestModel.cs" />
+    <Compile Include="Models\SelectableList\AdvEntitySelectableItemModel.cs" />
     <Compile Include="Models\Settings\Admin\AdminSettingsModel.cs" />
     <Compile Include="Models\Settings\Admin\HeaderSettingsModel.cs" />
     <Compile Include="Models\Settings\Admin\LoginPageSettingsModel.cs" />
@@ -139,10 +143,10 @@
     <Compile Include="Models\DeployModel.cs" />
     <Compile Include="Models\DeployToModel.cs" />
     <Compile Include="Models\EFormXmlModel.cs" />
-    <Compile Include="Models\SearchableList\AdvEntityGroupEditModel.cs" />
-    <Compile Include="Models\SearchableList\AdvEntityGroupImportModel.cs" />
-    <Compile Include="Models\SearchableList\AdvEntityItemModel.cs" />
-    <Compile Include="Models\SearchableList\AdvEntityGroupListRequestModel.cs" />
+    <Compile Include="Models\SearchableList\AdvEntitySearchableGroupEditModel.cs" />
+    <Compile Include="Models\SearchableList\AdvEntitySearchableGroupImportModel.cs" />
+    <Compile Include="Models\SearchableList\AdvEntitySearchableItemModel.cs" />
+    <Compile Include="Models\SearchableList\AdvEntitySearchableGroupListRequestModel.cs" />
     <Compile Include="Models\SimpleSiteModel.cs" />
     <Compile Include="Models\SiteNameModel.cs" />
     <Compile Include="Models\User\UserInfoModelList.cs" />

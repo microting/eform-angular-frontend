@@ -7,6 +7,7 @@ using eFormAPI.Common.Models;
 using eFormAPI.Common.Models.SearchableList;
 using eFormAPI.Web.Infrastructure.Helpers;
 using eFormData;
+using eFormShared;
 
 namespace eFormAPI.Web.Controllers
 {
@@ -17,14 +18,14 @@ namespace eFormAPI.Web.Controllers
 
         [HttpPost]
         [Route("api/searchable-groups")]
-        public OperationDataResult<EntityGroupList> GetEntityGroupList(AdvEntityGroupListRequestModel requestModel)
+        public OperationDataResult<EntityGroupList> GetEntityGroupList(AdvEntitySearchableGroupListRequestModel requestModel)
         {
             try
             {
                 var core = _coreHelper.GetCore();
                 var model = core.Advanced_EntityGroupAll(requestModel.Sort, requestModel.NameFilter,
-                    requestModel.PageIndex, requestModel.PageSize, "EntitySearch", requestModel.IsSortDsc,
-                    "not_removed");
+                    requestModel.PageIndex, requestModel.PageSize, Constants.FieldTypes.EntitySearch, requestModel.IsSortDsc,
+                    Constants.WorkflowStates.NotRemoved);
                 return new OperationDataResult<EntityGroupList>(true, model);
             }
             catch (Exception e)
@@ -35,20 +36,20 @@ namespace eFormAPI.Web.Controllers
 
         [HttpPost]
         [Route("api/searchable-groups/create")]
-        public OperationResult CreateEntityGroup(AdvEntityGroupEditModel editModel)
+        public OperationResult CreateEntityGroup(AdvEntitySearchableGroupEditModel editModel)
         {
             try
             {
                 var core = _coreHelper.GetCore();
-                var groupCreate = core.EntityGroupCreate("EntitySearch", editModel.Name);
-                if (editModel.AdvEntityItemModels.Any())
+                var groupCreate = core.EntityGroupCreate(Constants.FieldTypes.EntitySearch, editModel.Name);
+                if (editModel.AdvEntitySearchableItemModels.Any())
                 {
                     var entityGroup = core.EntityGroupRead(groupCreate.EntityGroupMUId);
                     var nextItemUid = entityGroup.EntityGroupItemLst.Count;
-                    foreach (var entityItem in editModel.AdvEntityItemModels)
+                    foreach (var entityItem in editModel.AdvEntitySearchableItemModels)
                     {
                         entityGroup.EntityGroupItemLst.Add(new EntityItem(entityItem.Name,
-                            entityItem.Description, nextItemUid.ToString(), "created"));
+                            entityItem.Description, nextItemUid.ToString(), Constants.WorkflowStates.Created));
                         nextItemUid++;
                     }
                     core.EntityGroupUpdate(entityGroup);
@@ -63,13 +64,13 @@ namespace eFormAPI.Web.Controllers
 
         [HttpPost]
         [Route("api/searchable-groups/update")]
-        public OperationResult UpdateEntityGroup(AdvEntityGroupEditModel editModel)
+        public OperationResult UpdateEntityGroup(AdvEntitySearchableGroupEditModel editModel)
         {
             try
             {
                 var core = _coreHelper.GetCore();
                 var entityGroup = core.EntityGroupRead(editModel.GroupUid);
-                entityGroup.EntityGroupItemLst = editModel.AdvEntityItemModels;
+                entityGroup.EntityGroupItemLst = editModel.AdvEntitySearchableItemModels;
                 entityGroup.Name = editModel.Name;
                 core.EntityGroupUpdate(entityGroup);
                 return new OperationResult(true, $"{editModel.GroupUid} updated successfully");
@@ -114,7 +115,7 @@ namespace eFormAPI.Web.Controllers
                 {
                     mappedEntityGroupDict.Add(new CommonDictionaryTextModel()
                     {
-                        Id = entityGroupItem.EntityItemUId,
+                        Id = entityGroupItem.MicrotingUId,
                         Text = entityGroupItem.Name
                     });
                 }

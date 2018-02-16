@@ -1,6 +1,6 @@
 ﻿namespace eFormAPI.Common.Models.SearchableList
 {
-    public class AdvEntityItemModel
+    public class AdvEntitySearchableItemModel
     {
         public string Name { get; set; }
         public string Description { get; set; }

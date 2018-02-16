@@ -12,8 +12,11 @@ import {WorkerEditComponent} from './components/worker-edit/worker-edit.componen
 import {SiteEditComponent} from './components/site-edit/site-edit.component';
 import {TooltipModule} from 'ngx-bootstrap/tooltip';
 import {EntitySearchComponent} from './components/entity-search/entity-search.component';
-import {EditEntityGroupComponent} from 'app/modules/advanced/components/edit-entity-group/edit-entity-group.component';
-import {EntitySearchGridComponent} from 'app/modules/advanced/components/entity-search-grid/entity-search-grid.component';
+import {EntitySelectComponent} from './components/entity-select/entity-select.component';
+import {EditEntitySearchableGroupComponent} from 'app/modules/advanced/components/edit-entity-searchable-group/edit-entity-searchable-group.component';
+import {EditEntitySelectableGroupComponent} from 'app/modules/advanced/components/edit-entity-selectable-group/edit-entity-selectable-group.component';
+import {EntitySelectableGridComponent} from 'app/modules/advanced/components/entity-select-grid/entity-select-grid.component';
+import {EntitySearchableGridComponent} from 'app/modules/advanced/components/entity-search-grid/entity-search-grid.component';
 
 @NgModule({
   imports: [
@@ -32,8 +35,11 @@ import {EntitySearchGridComponent} from 'app/modules/advanced/components/entity-
     WorkerEditComponent,
     SiteEditComponent,
     EntitySearchComponent,
-    EditEntityGroupComponent,
-    EntitySearchGridComponent
+    EntitySelectComponent,
+    EditEntitySearchableGroupComponent,
+    EditEntitySelectableGroupComponent,
+    EntitySearchableGridComponent,
+    EntitySelectableGridComponent
   ],
 })
 export class AdvancedModule {

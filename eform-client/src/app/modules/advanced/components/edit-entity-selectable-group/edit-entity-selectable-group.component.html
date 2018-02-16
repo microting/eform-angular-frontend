@@ -1,0 +1,144 @@
+<modal #createAdvEntitySelectableGroupModal [size]="'lg'">
+  <modal-header [show-close]="true">
+    <h4>Create new selectable list</h4>
+  </modal-header>
+  <modal-body>
+    <div class="create_eform">
+      <div class="row">
+        <div class="form-group col-xs-12 col-md-12">
+          <label class="mt-validation-container">Name</label>
+          <span class="mt-icon-md needs_tooltip vcenter">
+            <span *ngIf="!advEntitySelectableGroupEditModel.name"
+              class="glyphicon glyphicon-info-sign glyphicon-info-sign-yellow glyphicon-info-sign-wrapper vertical-align needs_tooltip"
+              tooltip="Påkrævet" data-toggle="tooltip">
+            </span>
+          </span>
+          <input class="form-control mt-required" [(ngModel)]="advEntitySelectableGroupEditModel.name" required type="text"
+                 value="">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <label class="table-title-wrapper">Options</label>
+    </div>
+    <div class="row">
+      <div class="mt-table-head col-sm-1 col-md-1">
+        &nbsp;
+      </div>
+      <div class="table-header-bottom-wrapper col-xs-9 col-md-9">
+        <label class="mt-validation-container">Text</label>
+      </div>
+      <div class="mt-table-head col-sm-2 col-md-2">
+        <div class="mt-searchable-entities-actions pull-right">
+          <button class="needs_tooltip btn btn-ar btn-xs btn-success"
+                  container="body" placement="top" type="button" (click)="showImportAdvEntitySelectableGroupModal()"
+                  tooltip="Importér svarmuligheder">
+            <span class="glyphicon glyphicon-import"></span>
+          </button>
+          <a class="needs_tooltip btn btn-xs btn-ar btn-success" data-bootbox-title="Add searchable_entity to case"
+             container="body" placement="top"
+             (click)="addNewAdvEntitySelectableItem()"
+             tooltip="Opret Svarmulighed">
+            <span class="glyphicon glyphicon-plus"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="panel panel-default " dnd-sortable-container
+           [sortableData]="advEntitySelectableGroupEditModel.advEntitySelectableItemModels"
+           [dropZones]="['source-dropZone']">
+        <div class="panel-body">
+          <ul class="list-group">
+            <li *ngFor="let entityItem of advEntitySelectableGroupEditModel.advEntitySelectableItemModels; let x = index" dnd-draggable
+                dnd-sortable [sortableIndex]="x" [dragEnabled]="true"
+                (onDropSuccess)="actualizeAdvEntitySelectableItemPositions()"
+                [dragData]="entityItem" class="list-group-item">
+              <div class="row vertical-align">
+                <div class="col-md-1 col-xs-2">
+                  <i class="fa fa-bars fa-bars-red fa-bigger-size" aria-hidden="true"></i>
+                </div>
+                <div class="col-md-9 col-xs-5 text-col-wrapper">
+                  {{entityItem.name}}
+                </div>
+                <div class="col-md-2 col-xs-5">
+                  <div class="pull-right">
+                    <div class="vertical-align" style="display: inline-block" *ngIf="!entityItem.name">
+                      <span class="glyphicon-info-sign-inherit">
+<span
+  class="glyphicon glyphicon-info-sign glyphicon-info-sign-yellow glyphicon-info-sign-wrapper mt-error-notification-icon needs_tooltip vcenter"
+  container="body" placement="top" tooltip="Ikke færdigudfyldt!"></span>
+</span>
+                    </div>
+                    <button tooltip="Redigér Søgbar element" (click)="openEditAdvEntitySelectableModal(entityItem)"
+                            class="needs_tooltip btn btn-ar btn-sm btn-default"
+                            placement="top" type="button" container="body">
+                      <span class="fa fa-pencil"></span>
+                    </button>
+                    <button tooltip="Slet Søgbar element" placement="top" (click)="deleteAdvEntitySelectableItem(entityItem)"
+                            class="needs_tooltip btn btn-ar btn-sm btn-danger"
+                            type="button" container="body">
+                      <span class="fa fa-trash-o"></span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <eform-spinner [middleActive]="spinnerStatus"></eform-spinner>
+      <!--<pre> sourceList: {{advEntityGroupEditModel | json}}</pre>-->
+    </div>
+  </modal-body>
+  <modal-footer>
+    <button type="button" class="btn btn-default" data-dismiss="createTemplateModal"
+            (click)="createAdvEntitySelectableGroupModal.dismiss()">Cancel
+    </button>
+    <button type="button" class="btn btn-success" (click)="createEntitySelectableGroup()">Save</button>
+  </modal-footer>
+</modal>
+
+<modal #editAdvEntitySelectableItemModal (onDismiss)="onChildModalDismissed()">
+  <modal-header [show-close]="true">
+    <h4>Edit searchable element</h4>
+  </modal-header>
+  <modal-body>
+    <div class="create_eform">
+      <div class="row">
+        <div class="form-group col-xs-12 col-md-12">
+          <label class="mt-validation-container">Name</label>
+          <input class="form-control mt-required" [(ngModel)]="selectedAdvEntitySelectableItemModel.name" type="text" value="">
+        </div>
+      </div>
+    </div>
+  </modal-body>
+  <modal-footer>
+    <button type="button" class="btn btn-default" data-dismiss="createTemplateModal"
+            (click)="editAdvEntitySelectableItemModal.dismiss()">Cancel
+    </button>
+    <button type="button" class="btn btn-success" (click)="onAdvEntitySelectableItemChanged(selectedAdvEntitySelectableItemModel)">Ok
+    </button>
+  </modal-footer>
+</modal>
+
+<modal #importAdvEntitySelectableGroupModal [size]="'lg'" (onDismiss)="onChildModalDismissed()">
+  <modal-header [show-close]="true">
+    <h4>Import options (max 100 entries)</h4>
+  </modal-header>
+  <modal-body>
+    <div class="create_eform">
+      <div class="row">
+        <div class="form-group col-xs-12 col-md-12">
+          <textarea #importString class="form-control" name="eFormXML" id="eFormXml" rows="20"></textarea>
+        </div>
+      </div>
+    </div>
+  </modal-body>
+  <modal-footer>
+    <button type="button" class="btn btn-default" data-dismiss="createTemplateModal"
+            (click)="importAdvEntitySelectableGroupModal.dismiss()">Cancel
+    </button>
+    <button type="button" class="btn btn-success" (click)="importAdvEntitySelectableGroup(importString.value)">Import</button>
+  </modal-footer>
+</modal>

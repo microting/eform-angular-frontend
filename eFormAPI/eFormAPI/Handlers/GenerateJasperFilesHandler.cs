@@ -1,24 +1,28 @@
 ﻿using eFormAPI.Web.Messages;
 using System.Threading.Tasks;
 using Rebus.Handlers;
+using System;
+using eFormCore;
 
 namespace eFormAPI.Web.Handlers
 {
     public class GenerateJasperFilesHandler : IHandleMessages<GenerateJasperFiles>
     {
-        //private readonly SqlController sqlController;
+        private readonly Core _core;
 
-        public GenerateJasperFilesHandler()
+        public GenerateJasperFilesHandler(Core core)
         {
-            //this.sqlController = sqlController;
+            _core = core;
         }
 
-#pragma warning disable 1998
+        #pragma warning disable 1998
         public async Task Handle(GenerateJasperFiles message)
         {
-            //sqlController.NotificationCreate(message.NotificationId, message.MicrotringUUID, Constants.Notifications.UnitActivate);
-
-            // Potentially send new message onto local queue
+            int? caseId = _core.CaseReadFirstId(message.TemplateId);
+            if (caseId != null)
+            {
+                _core.CaseToPdf((int)caseId, message.TemplateId.ToString(), DateTime.Now.ToString("yyyyMMddHHmmssffff"));
+            }
         }
     }
 }

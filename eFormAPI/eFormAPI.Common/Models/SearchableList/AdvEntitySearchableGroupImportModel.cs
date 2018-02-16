@@ -1,6 +1,6 @@
 ﻿namespace eFormAPI.Common.Models.SearchableList
 {
-    public class AdvEntityGroupImportModel
+    public class AdvEntitySearchableGroupImportModel
     {
         public string ImportString { get; set; }
     }

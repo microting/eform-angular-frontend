@@ -7,6 +7,7 @@ import {WorkersComponent} from './components/workers/workers.component';
 import {WorkerEditComponent} from './components/worker-edit/worker-edit.component';
 import {SiteEditComponent} from './components/site-edit/site-edit.component';
 import {EntitySearchComponent} from './components/entity-search/entity-search.component';
+import {EntitySelectComponent} from './components/entity-select/entity-select.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,10 @@ const routes: Routes = [
   {
     path: 'entity-search',
     component: EntitySearchComponent
+  },
+  {
+    path: 'entity-select',
+    component: EntitySelectComponent
   }
 ];
 

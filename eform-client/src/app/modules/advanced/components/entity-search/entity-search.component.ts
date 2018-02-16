@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {EntitySearchService} from 'app/services';
-import {AdvEntityGroupListModel, AdvEntityGroupListRequestModel} from 'app/models/advanced';
-import {EditEntityGroupComponent} from '../edit-entity-group/edit-entity-group.component';
+import {AdvEntitySearchableGroupListModel, AdvEntitySearchableGroupListRequestModel} from 'app/models/advanced';
+import {EditEntitySearchableGroupComponent} from '../edit-entity-searchable-group/edit-entity-searchable-group.component';
 
 @Component({
   selector: 'eform-searchable-list',
@@ -11,41 +11,41 @@ import {EditEntityGroupComponent} from '../edit-entity-group/edit-entity-group.c
 export class EntitySearchComponent implements OnInit {
   spinnerStatus: boolean;
   selectedId: number;
-  advEntityGroupListModel: AdvEntityGroupListModel = new AdvEntityGroupListModel();
-  advEntityGroupListRequestModel: AdvEntityGroupListRequestModel = new AdvEntityGroupListRequestModel();
-  @ViewChild('editEntityGroupComponent') editEntityGroupComponent: EditEntityGroupComponent;
+  advEntitySearchableGroupListModel: AdvEntitySearchableGroupListModel = new AdvEntitySearchableGroupListModel();
+  advEntitySearchableGroupListRequestModel: AdvEntitySearchableGroupListRequestModel = new AdvEntitySearchableGroupListRequestModel();
+  @ViewChild('editEntitySearchableGroupComponent') editEntitySearchableGroupComponent: EditEntitySearchableGroupComponent;
 
   constructor(private entitySearchService: EntitySearchService) {
   }
 
   ngOnInit() {
-    this.getEntityGroupList();
+    this.getEntitySearchableGroupList();
   }
 
   onSearchChanged(e: any) {
-    this.advEntityGroupListRequestModel.nameFilter = e;
+    this.advEntitySearchableGroupListRequestModel.nameFilter = e;
     this.changePage(0);
   }
 
-  onEntityGroupListRequestChanged(e: any) {
-    this.advEntityGroupListRequestModel = e;
-    this.getEntityGroupList();
+  onEntitySearchableGroupListRequestChanged(e: any) {
+    this.advEntitySearchableGroupListRequestModel = e;
+    this.getEntitySearchableGroupList();
   }
 
-  onEntityGroupSelectedForEdit(e: any) {
+  onEntitySearchableGroupSelectedForEdit(e: any) {
     this.selectedId = e;
-    this.editEntityGroupComponent.createAdvEntityGroupModal.open();
+    this.editEntitySearchableGroupComponent.createAdvEntitySearchableGroupModal.open();
   }
 
-  showCreateAdvEntityGroupModal() {
+  showCreateAdvEntitySearchableGroupModal() {
     this.selectedId = 0;
-    this.editEntityGroupComponent.createAdvEntityGroupModal.open();
+    this.editEntitySearchableGroupComponent.createAdvEntitySearchableGroupModal.open();
   }
 
-  getEntityGroupList() {
-    this.entitySearchService.getEntityGroupList(this.advEntityGroupListRequestModel).subscribe((data) => {
+  getEntitySearchableGroupList() {
+    this.entitySearchService.getEntitySearchableGroupList(this.advEntitySearchableGroupListRequestModel).subscribe((data) => {
       if (data && data.model) {
-        this.advEntityGroupListModel = data.model;
+        this.advEntitySearchableGroupListModel = data.model;
       }
     });
   }
@@ -53,20 +53,20 @@ export class EntitySearchComponent implements OnInit {
   changeSpinnerStatus(e: any) {
     this.spinnerStatus = e;
     if (e === false) {
-      this.editEntityGroupComponent.createAdvEntityGroupModal.dismiss().then();
+      this.editEntitySearchableGroupComponent.createAdvEntitySearchableGroupModal.dismiss().then();
       this.selectedId = 0;
     }
   }
 
   changePage(e: any) {
     if (e || e === 0) {
-      this.advEntityGroupListRequestModel.offset = e;
+      this.advEntitySearchableGroupListRequestModel.offset = e;
       if (e === 0) {
-        this.advEntityGroupListRequestModel.pageIndex = 0;
+        this.advEntitySearchableGroupListRequestModel.pageIndex = 0;
       } else {
-        this.advEntityGroupListRequestModel.pageIndex = Math.floor(e / this.advEntityGroupListRequestModel.pageSize);
+        this.advEntitySearchableGroupListRequestModel.pageIndex = Math.floor(e / this.advEntitySearchableGroupListRequestModel.pageSize);
       }
-      this.getEntityGroupList();
+      this.getEntitySearchableGroupList();
     }
   }
 }

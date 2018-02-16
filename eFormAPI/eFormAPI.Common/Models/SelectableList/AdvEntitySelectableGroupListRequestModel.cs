@@ -1,6 +1,6 @@
-﻿namespace eFormAPI.Common.Models.SearchableList
+﻿namespace eFormAPI.Common.Models.SelectableList
 {
-    public class AdvEntityGroupListRequestModel
+    public class AdvEntitySelectableGroupListRequestModel
     {
         public string Sort { get; set; }
         public string NameFilter { get; set; }
