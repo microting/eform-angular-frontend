@@ -1,6 +1,6 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {CaseFieldValue, CommonDictionaryTextModel} from 'app/models';
-import {EntitySearchService} from 'app/services';
+import {EntitySearchService, EntitySelectService} from 'app/services';
 import {FormControl} from '@angular/forms';
 import {ISubscription} from 'rxjs/Subscription';
 
@@ -26,25 +26,21 @@ export class ElementEntityselectComponent implements OnInit, OnDestroy {
     this.fieldValueObj = val;
   }
 
-  constructor(private entitySearchService: EntitySearchService) {
+  constructor(private entitySelectService: EntitySelectService) {
   }
 
   ngOnInit() {
     this.sub = this.selectControl.valueChanges.subscribe(value => this.onSelectedChanged(value));
+
+    this.entitySelectService.getEntitySelectableGroupDictionary(this.entityGroupUid).subscribe((operation => {
+      if (operation && operation.success) {
+        this.items  = operation.model;
+      }
+    }));
   }
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
-  }
-
-  onSelectInputChanged(searchString: string) {
-    if (searchString.length > 2) {
-      this.entitySearchService.getEntitySearchableGroupDictionary(this.entityGroupUid, searchString).subscribe((operation => {
-        if (operation && operation.success) {
-          this.items  = operation.model;
-        }
-      }));
-    }
   }
 
   onSelectedChanged(value: string) {
