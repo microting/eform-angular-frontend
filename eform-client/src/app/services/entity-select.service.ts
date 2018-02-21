@@ -41,10 +41,10 @@ export class EntitySelectService extends BaseService {
     return this.postModelOperationResult<AdvEntitySelectableGroupEditModel>(AdvSelectableEntityMethods.CreateSingle, model);
   }
 
-  public getEntitySelectableGroupDictionary = (entityGroupUid: string, searchString: string):
+  public getEntitySelectableGroupDictionary = (entityGroupUid: string):
     Observable<OperationDataResult<Array<CommonDictionaryTextModel>>> => {
     return this.getWithOperationDataResult<Array<CommonDictionaryTextModel>>(AdvSelectableEntityMethods.GetAll + '/dict/'
-      + entityGroupUid + '?searchString=' + searchString);
+      + entityGroupUid);
   }
 }
 
