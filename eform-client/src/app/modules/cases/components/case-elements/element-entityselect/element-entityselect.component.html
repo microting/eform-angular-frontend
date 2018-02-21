@@ -1,3 +1,4 @@
 <ngx-select [items]="items"
+            (typed)="onSelectInputChanged($event)"
             [formControl]="selectControl"
             [placeholder]="fieldValueObj.valueReadable">

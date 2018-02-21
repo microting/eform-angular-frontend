@@ -107,6 +107,14 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                         list.Add(val);
                     }
                     break;
+                case "EntitySelect":
+                    var entitySelect = editRequestField?.FieldValues?.First();
+                    if (entitySelect?.Value != null && entitySelect?.FieldId != null)
+                    {
+                        string val = $"{entitySelect.FieldId}|{entitySelect.Value.ToString()}";
+                        list.Add(val);
+                    }
+                    break;
                 case "MultiSelect":
                     var multiFirst = editRequestField?.FieldValues?.First();
                     if (multiFirst?.Value != null && multiFirst?.FieldId != null)
