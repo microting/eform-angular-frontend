@@ -54,7 +54,7 @@
             <element-entitysearch [(fieldValue)]="dataItem.fieldValues[0]" [entityGroupUid]="dataItem.entityGroupId"></element-entitysearch>
           </div>
           <div *ngSwitchCase="'EntitySelect'">
-            <element-entityselect [(fieldValue)]="dataItem.fieldValues[0]"></element-entityselect>
+            <element-entitysearch [(fieldValue)]="dataItem.fieldValues[0]" [entityGroupUid]="dataItem.entityGroupId"></element-entitysearch>
           </div>
           <div *ngSwitchDefault></div>
         </div>

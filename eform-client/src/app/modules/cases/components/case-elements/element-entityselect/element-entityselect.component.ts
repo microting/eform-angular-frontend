@@ -1,7 +1,8 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {CaseFieldValue, CommonDictionaryTextModel} from 'app/models';
-import {ISubscription} from 'rxjs/Subscription';
+import {EntitySearchService} from 'app/services';
 import {FormControl} from '@angular/forms';
+import {ISubscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'element-entityselect',
@@ -11,8 +12,10 @@ import {FormControl} from '@angular/forms';
 export class ElementEntityselectComponent implements OnInit, OnDestroy {
   sub:  ISubscription;
   selectControl = new FormControl();
-  fieldValueObj: CaseFieldValue = new CaseFieldValue();
   items: Array<CommonDictionaryTextModel> = [];
+
+  fieldValueObj: CaseFieldValue = new CaseFieldValue();
+  @Input() entityGroupUid: string;
 
   @Input()
   get fieldValue() {
@@ -23,22 +26,28 @@ export class ElementEntityselectComponent implements OnInit, OnDestroy {
     this.fieldValueObj = val;
   }
 
-  constructor() {
+  constructor(private entitySearchService: EntitySearchService) {
   }
 
   ngOnInit() {
     this.sub = this.selectControl.valueChanges.subscribe(value => this.onSelectedChanged(value));
-    for (const keyValuePair of this.fieldValueObj.keyValuePairList) {
-      this.items.push({id: keyValuePair.key, text: keyValuePair.value});
-    }
   }
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
 
+  onSelectInputChanged(searchString: string) {
+    if (searchString.length > 2) {
+      this.entitySearchService.getEntitySearchableGroupDictionary(this.entityGroupUid, searchString).subscribe((operation => {
+        if (operation && operation.success) {
+          this.items  = operation.model;
+        }
+      }));
+    }
+  }
+
   onSelectedChanged(value: string) {
     this.fieldValue.value = value;
   }
-
 }
