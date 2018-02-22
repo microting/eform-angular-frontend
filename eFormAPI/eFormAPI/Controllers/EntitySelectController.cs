@@ -101,13 +101,13 @@ namespace eFormAPI.Web.Controllers
 
         [HttpGet]
         [Route("api/selectable-groups/dict/{entityGroupUid}")]
-        public OperationDataResult<List<CommonDictionaryTextModel>> GetEntityGroupDictionary(string entityGroupUid, string searchString)
+        public OperationDataResult<List<CommonDictionaryTextModel>> GetEntityGroupDictionary(string entityGroupUid)
         {
             try
             {
                 var core = _coreHelper.GetCore();
 
-                var entityGroup = core.EntityGroupRead(entityGroupUid, null, searchString);
+                var entityGroup = core.EntityGroupRead(entityGroupUid);
 
                 var mappedEntityGroupDict = new List<CommonDictionaryTextModel>();
 
