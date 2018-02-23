@@ -4,7 +4,6 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {AuthResponseModel, PasswordRestoreModel} from 'app/models/auth';
 import {AuthService} from 'app/services/accounts/auth.service';
 import {Subscription} from 'rxjs/Subscription';
-import {toNumber} from 'ngx-bootstrap/timepicker/timepicker.utils';
 import {NotifyService} from 'app/services/notify.service';
 import {LoginPageSettingsModel} from 'app/models/settings/login-page-settings.model';
 import {SettingsService} from 'app/services';

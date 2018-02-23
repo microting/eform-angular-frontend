@@ -4,7 +4,7 @@ import {Headers, Http} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {OperationDataResult, OperationResult} from '../../modules/helpers/helpers.module';
 import 'rxjs/add/operator/map';
-import {CaseModel, ReplyElement, ReplyRequest} from 'app/models';
+import {CaseModel, ReplyElement, ReplyRequest, CaseListModel, CasesRequestModel} from 'app/models';
 import {Router} from '@angular/router';
 import {CasesMethods} from 'app/modules/helpers/app.constants';
 
@@ -23,8 +23,8 @@ export class CasesService extends BaseService {
     return this.getWithOperationDataResult<ReplyElement>(CasesMethods.EditById + '/' + id);
   }
 
-  public getCases = (id: number): Observable<OperationDataResult<Array<CaseModel>>> => {
-    return this.getWithOperationDataResult<Array<CaseModel>>(CasesMethods.GetCases + '/' + id);
+  public getCases = (model: CasesRequestModel): Observable<OperationDataResult<CaseListModel>> => {
+    return this.postModelOperationResult(CasesMethods.GetCases, model);
   }
 
   public updateCase = (model: ReplyRequest): Observable<OperationResult> => {

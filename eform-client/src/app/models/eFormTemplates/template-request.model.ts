@@ -9,8 +9,9 @@ export class TemplateRequestModel {
 
   constructor() {
     this.tagIds = [];
-    this.sort = '';
+    this.sort = 'id';
     this.nameFilter = '';
+    this.isSortDsc = true;
     this.pageSize = 10;
     this.pageIndex = 0;
     this.offset = 0;

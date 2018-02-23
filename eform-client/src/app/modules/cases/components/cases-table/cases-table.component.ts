@@ -1,6 +1,6 @@
 import {ActivatedRoute, Router} from '@angular/router';
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {TemplateDto, CaseModel} from 'app/models';
+import {TemplateDto, CaseModel, CasesRequestModel, CaseListModel} from 'app/models';
 import {CasesService, NotifyService, EFormService} from 'app/services';
 import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 
@@ -14,8 +14,9 @@ export class CasesTableComponent implements OnInit {
   deleteCaseModal: ModalComponent;
 
   id: number;
-  caseModels: Array<CaseModel> = [];
+  caseListModel: CaseListModel = new CaseListModel();
   currentTemplate: TemplateDto = new TemplateDto;
+  casesRequestModel: CasesRequestModel = new CasesRequestModel();
   selectedCase: CaseModel = new CaseModel;
   spinnerStatus: boolean;
 
@@ -35,10 +36,10 @@ export class CasesTableComponent implements OnInit {
   }
 
   loadAllCases() {
-    this.casesService.getCases(this.id).subscribe(operation => {
+    this.casesService.getCases(this.casesRequestModel).subscribe(operation => {
       this.spinnerStatus = true;
       if (operation && operation.success) {
-        this.caseModels = operation.model;
+        this.caseListModel = operation.model;
       }
       this.spinnerStatus = false;
     });
@@ -64,6 +65,29 @@ export class CasesTableComponent implements OnInit {
       }
       this.deleteCaseModal.close();
     }));
+  }
+
+  changePage(e: any) {
+    if (e || e === 0) {
+      this.casesRequestModel.offset = e;
+      if (e === 0) {
+        this.casesRequestModel.pageIndex = 0;
+      } else {
+        this.casesRequestModel.pageIndex = Math.floor(e / this.casesRequestModel.pageSize);
+      }
+      this.loadAllCases();
+    }
+  }
+
+  sortByColumn(columnName: string, sortedByDsc: boolean) {
+    this.casesRequestModel.sort = columnName;
+    this.casesRequestModel.isSortDsc = sortedByDsc;
+    this.loadAllCases();
+  }
+
+  onLabelInputChanged(label: string) {
+    this.casesRequestModel.nameFilter = label;
+    this.loadAllCases();
   }
 
   showCaseDeleteModal(model: CaseModel) {

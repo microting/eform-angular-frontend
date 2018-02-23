@@ -44,7 +44,11 @@
          id="units" role="grid" aria-describedby="check_lists_info" style="width: 100%;">
     <thead>
     <tr role="row">
-      <th class="col-md-1 text-center" rowspan="1" colspan="1">
+      <th class="col-md-1 text-center" [class.sorting_asc]="templateRequestModel.sort == 'id' && !templateRequestModel.isSortDsc"
+          [class.sorting_desc]="templateRequestModel.sort == 'id' && templateRequestModel.isSortDsc"
+          [class.sorting]="templateRequestModel.sort != 'id'"
+          (click)="sortByColumn('id', templateRequestModel.isSortDsc = !templateRequestModel.isSortDsc)"
+          rowspan="1" colspan="1">
         ID
       </th>
       <th class="col-md-2 text-center"

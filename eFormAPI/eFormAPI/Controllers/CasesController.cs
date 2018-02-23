@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Web.Http;
 using eFormAPI.Common.API;
-using eFormAPI.Common.Models;
 using eFormAPI.Common.Models.Cases.Request;
+using eFormAPI.Common.Models.Cases.Response;
 using eFormAPI.Web.Infrastructure.Helpers;
 using eFormShared;
 using eFormData;
@@ -15,18 +15,26 @@ namespace eFormAPI.Web.Controllers
     {
         private readonly EFormCoreHelper _coreHelper = new EFormCoreHelper();
 
-        [HttpGet]
-        public OperationDataResult<List<Case>> Index(int id)
+        [HttpPost]
+        public OperationDataResult<CaseListModel> Index(CaseRequestModel requestModel)
         {
             try
             {
                 var core = _coreHelper.GetCore();
-                var model = core.CaseReadAll(id, null, null, Constants.WorkflowStates.NotRemoved, "", true, Constants.CaseSortParameters.CreatedAt);
-                return new OperationDataResult<List<Case>>(true, model);
+                var caseList = core.CaseReadAll(requestModel.TemplateId, null, null, Constants.WorkflowStates.NotRemoved, requestModel.NameFilter,
+                    requestModel.IsSortDsc, requestModel.Sort);
+                var model = new CaseListModel()
+                {
+                    NumOfElements = 40,
+                    PageNum = requestModel.PageIndex,
+                    Cases = caseList
+                };
+
+                return new OperationDataResult<CaseListModel>(true, model);
             }
             catch (Exception)
             {
-                return new OperationDataResult<List<Case>>(false, "Case loading failed");
+                return new OperationDataResult<CaseListModel>(false, "Case loading failed");
             }
         }
 
