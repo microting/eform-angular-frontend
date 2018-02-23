@@ -177,7 +177,7 @@ namespace eFormAPI.Web.Controllers
             try
             {
                 var core = _coreHelper.GetCore();
-                int? caseId = core.CaseReadFirstId(templateId);
+                int? caseId = core.CaseReadFirstId(templateId, "not_revmoed");
                 var filePath = core.CaseToJasperXml((int)caseId, DateTime.Now.ToString("yyyyMMddHHmmssffff"));
                 if (!File.Exists(filePath))
                 {
