@@ -92,16 +92,16 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                     }
                     break;
                 case "SingleSelect":
-                    var singleFirst = editRequestField?.FieldValues?.First();
-                    if (singleFirst?.Value != null && singleFirst?.FieldId != null)
+                    var singleSelect = editRequestField?.FieldValues?.First();
+                    if (singleSelect?.Value != null && singleSelect?.Value != "0" && singleSelect?.FieldId != null)
                     {
-                        string val = $"{singleFirst.FieldId}|{singleFirst.Value.ToString()}";
+                        string val = $"{singleSelect.FieldId}|{singleSelect.Value.ToString()}";
                         list.Add(val);
                     }
                     break;
                 case "EntitySearch":
                     var entitySearch = editRequestField?.FieldValues?.First();
-                    if (entitySearch?.Value != null && entitySearch?.FieldId != null)
+                    if (entitySearch?.Value != null && entitySearch?.Value != "0" && entitySearch?.FieldId != null)
                     {
                         string val = $"{entitySearch.FieldId}|{entitySearch.Value.ToString()}";
                         list.Add(val);
