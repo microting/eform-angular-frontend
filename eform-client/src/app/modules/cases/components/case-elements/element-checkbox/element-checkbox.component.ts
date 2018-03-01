@@ -16,8 +16,12 @@ export class ElementCheckboxComponent {
 
   set fieldValue(val) {
     this.fieldValueObj = val;
-    if (val.value == 'checked' || val.value == '1') {
-      this.isChecked = true;
+    if (val) {
+      if (val.value == 'checked' || val.value == '1') {
+        this.isChecked = true;
+      } else {
+        this.isChecked = false;
+      }
     } else {
       this.isChecked = false;
     }

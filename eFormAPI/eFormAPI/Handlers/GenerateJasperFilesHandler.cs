@@ -18,7 +18,7 @@ namespace eFormAPI.Web.Handlers
         #pragma warning disable 1998
         public async Task Handle(GenerateJasperFiles message)
         {
-            int? caseId = _core.CaseReadFirstId(message.TemplateId);
+            int? caseId = _core.CaseReadFirstId(message.TemplateId, "not_removed");
             if (caseId != null)
             {
                 _core.CaseToPdf((int)caseId, message.TemplateId.ToString(), DateTime.Now.ToString("yyyyMMddHHmmssffff"));
