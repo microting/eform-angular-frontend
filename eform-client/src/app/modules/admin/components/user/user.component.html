@@ -1,4 +1,4 @@
-<header class="main-header main-header-title">
+<header class="main-header main-header-title user-page-title-wrapper">
   <div class="container-fluid">
     <h1 class="page-title header-page-title">
       <div class="container" style="width: 300px !important;">
@@ -16,6 +16,14 @@
 </header>
 <div class="container-fluid">
   <div class="row">
+    <div class="checkbox checkbox-wrapper">
+      <input  name="isChecked"
+              value="{{isChecked}}" [checked]="isChecked"
+              (change)="checkBoxChanged($event)"
+              type="checkbox">
+      <label for="isChecked"><strong>Force users to use 2-f-auth</strong></label>
+      <br>
+    </div>
     <user-pagination *ngIf="userInfoModelList.totalUsers > paginationModel.pageSize"
                      [limit]="paginationModel.pageSize"
                      [size]="userInfoModelList.totalUsers"

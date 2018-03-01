@@ -17,6 +17,7 @@ export class UserComponent implements OnInit {
   paginationModel: PaginationModel = new PaginationModel;
   spinnerStatus: boolean;
   selectedUserId: number;
+  isChecked = false;
 
   constructor(private adminService: AdminService) {
     this.paginationModel = new PaginationModel(1, 10, 0);
@@ -54,6 +55,16 @@ export class UserComponent implements OnInit {
         this.paginationModel.pageIndex = Math.floor(e / this.paginationModel.pageSize);
       }
       this.getUserInfoList();
+    }
+  }
+
+  checkBoxChanged(e: any) {
+    if (e.target && e.target.checked) {
+      this.isChecked = true;
+    } else if (e.target && !e.target.checked) {
+      this.isChecked = false;
+    } else {
+      return;
     }
   }
 
