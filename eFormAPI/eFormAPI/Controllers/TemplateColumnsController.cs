@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
-using eFormAPI.Common.API;
-using eFormAPI.Common.Models;
-using eFormAPI.Common.Models.Templates;
 using eFormAPI.Web.Infrastructure.Helpers;
+using eFormAPI.Web.Infrastructure.Models.API;
+using eFormAPI.Web.Infrastructure.Models.Templates;
 
 namespace eFormAPI.Web.Controllers
 {

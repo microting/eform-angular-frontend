@@ -8,8 +8,8 @@ using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Http;
 using Castle.Components.DictionaryAdapter.Xml;
-using eFormAPI.Common.API;
 using eFormAPI.Web.Infrastructure.Helpers;
+using eFormAPI.Web.Infrastructure.Models.API;
 using eFormAPI.Web.Messages;
 
 namespace eFormAPI.Web.Controllers

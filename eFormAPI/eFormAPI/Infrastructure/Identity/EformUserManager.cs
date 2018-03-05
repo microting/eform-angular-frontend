@@ -1,6 +1,9 @@
-﻿using System;
+﻿
+
+using System;
 using eFormAPI.Web.Infrastructure.Data;
 using eFormAPI.Web.Infrastructure.Data.Entities;
+using eFormAPI.Web.Infrastructure.Identity.Providers;
 using eFormAPI.Web.Infrastructure.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -36,6 +39,21 @@ namespace eFormAPI.Web.Infrastructure.Identity
                 RequireLowercase = false,
                 RequireUppercase = false,
             };
+
+
+
+            appUserManager.RegisterTwoFactorProvider("PhoneCode", new PhoneNumberTokenProvider<EformUser, int>
+            {
+                MessageFormat = "Your security code is: {0}"
+            });
+
+            appUserManager.RegisterTwoFactorProvider("EmailCode", new EmailTokenProvider<EformUser, int>
+            {
+                Subject = "SecurityCode",
+                BodyFormat = "Your security code is {0}"
+            });
+
+            appUserManager.RegisterTwoFactorProvider("GoogleAuthenticator", new GoogleAuthenticatorTokenProvider());
 
             appUserManager.EmailService = new EmailService();
 

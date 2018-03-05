@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Http;
-using eFormAPI.Common.API;
-using eFormAPI.Common.Models.Cases.Request;
-using eFormAPI.Common.Models.Cases.Response;
 using eFormAPI.Web.Infrastructure.Helpers;
+using eFormAPI.Web.Infrastructure.Models.API;
+using eFormAPI.Web.Infrastructure.Models.Cases.Request;
+using eFormAPI.Web.Infrastructure.Models.Cases.Response;
 using eFormShared;
 using eFormData;
 

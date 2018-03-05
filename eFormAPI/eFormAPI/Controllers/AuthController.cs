@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using System.Web.Http;
-using eFormAPI.Common.API;
 using eFormAPI.Web.Infrastructure.Identity;
+using eFormAPI.Web.Infrastructure.Models.API;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;

@@ -9,10 +9,10 @@ using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Http;
 using Amazon.Runtime;
-using eFormAPI.Common.API;
-using eFormAPI.Common.Models;
-using eFormAPI.Common.Models.Templates;
 using eFormAPI.Web.Infrastructure.Helpers;
+using eFormAPI.Web.Infrastructure.Models;
+using eFormAPI.Web.Infrastructure.Models.API;
+using eFormAPI.Web.Infrastructure.Models.Templates;
 using eFormCore;
 using eFormShared;
 

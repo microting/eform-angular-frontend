@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Http;
-using eFormAPI.Common.API;
-using eFormAPI.Common.Models;
 using eFormAPI.Web.Infrastructure.Helpers;
+using eFormAPI.Web.Infrastructure.Models.API;
+using eFormAPI.Web.Infrastructure.Models.Common;
 
 namespace eFormAPI.Web.Controllers
 {
