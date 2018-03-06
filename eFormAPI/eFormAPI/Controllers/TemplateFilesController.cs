@@ -147,7 +147,7 @@ namespace eFormAPI.Web.Controllers
             {
                 var core = _coreHelper.GetCore();
                 var filePath = core.CaseToPdf(caseId, templateId.ToString(),
-                    DateTime.Now.ToString("yyyyMMddHHmmssffff"));
+                    DateTime.Now.ToString("yyyyMMddHHmmssffff"), $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image?&filename=");
                 if (!File.Exists(filePath))
                 {
                     return new HttpResponseMessage(HttpStatusCode.NotFound);
@@ -178,7 +178,7 @@ namespace eFormAPI.Web.Controllers
             {
                 var core = _coreHelper.GetCore();
                 int? caseId = core.CaseReadFirstId(templateId, "not_revmoed");
-                var filePath = core.CaseToJasperXml((int)caseId, DateTime.Now.ToString("yyyyMMddHHmmssffff"));
+                var filePath = core.CaseToJasperXml((int)caseId, DateTime.Now.ToString("yyyyMMddHHmmssffff"), $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image?&filename=");
                 if (!File.Exists(filePath))
                 {
                     return new HttpResponseMessage(HttpStatusCode.NotFound);

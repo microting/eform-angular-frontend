@@ -21,7 +21,7 @@ namespace eFormAPI.Web.Handlers
             int? caseId = _core.CaseReadFirstId(message.TemplateId, "not_removed");
             if (caseId != null)
             {
-                _core.CaseToPdf((int)caseId, message.TemplateId.ToString(), DateTime.Now.ToString("yyyyMMddHHmmssffff"));
+                _core.CaseToPdf((int)caseId, message.TemplateId.ToString(), DateTime.Now.ToString("yyyyMMddHHmmssffff"), $"{_core.GetHttpServerAddress()}/" + "api/template-files/get-image?&filename=");
             }
         }
     }
