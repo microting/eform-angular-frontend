@@ -106,7 +106,7 @@
         </button>
       </td>
       <td class="text-center">
-        <div class="row row-buttons-wrapper">
+        <div class="row row-buttons-wrapper btn-group" role="group">
           <a *ngIf="templateDto.hasCases" [routerLink]="['/cases', templateDto.id]"
              class="needs_tooltip btn btn-ar btn-sm btn-default mt-edit-check-list-button"
              type="button" tooltip="Show cases">
@@ -127,7 +127,8 @@
             <span class="fa fa-trash-o"></span>
           </button>
         </div>
-        <div class="row" *ngIf="templateDto.hasCases">
+        <br>
+        <div class="row row-buttons-wrapper btn-group" *ngIf="templateDto.hasCases" role="group">
           <a tooltip="Download XML" href="/api/template-files/download-eform-xml/{{templateDto.id}}"
              class="needs_tooltip btn btn-ar btn-sm btn-default"
              type="button">
