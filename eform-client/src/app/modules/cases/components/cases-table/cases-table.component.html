@@ -177,7 +177,7 @@
         {{caseModel.fieldValue10}}
       </td>
       <td class="text-center">
-        <div class="row row-buttons-wrapper btn-group" role="group" style="width: 100%;">
+        <div class="row row-buttons-wrapper btn-group" role="group">
           <a *ngIf="caseModel.status == 100" [routerLink]="['/cases/edit', caseModel.id, this.currentTemplate.id]"
              class="needs_tooltip btn btn-ar btn-sm btn-default mt-edit-check-list-button" tooltip="Edit case"
              type="button" data-original-title="Edit case">

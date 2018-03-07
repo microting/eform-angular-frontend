@@ -208,6 +208,7 @@ export class ElementDateComponent implements ControlValueAccessor, AfterViewInit
       this.datepicker
         .on('changeDate', (e: any) => {
           let newDate: Date = e.date;
+          newDate = new Date(newDate);
           if (isDate(this.date) && isDate(newDate)) {
             // get hours/minutes
             newDate.setHours(this.date.getHours());
