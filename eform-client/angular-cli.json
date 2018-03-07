@@ -51,7 +51,8 @@
       "assets/js/respond.min.js",
       "assets/js/buttons.js",
       "assets/js/bootstrap-switch.min.js",
-      "assets/js/mt_layout.js"
+      "assets/js/mt_layout.js",
+      {"gulp": "gulp"}
     ],
     "environmentSource": "environments/environment.ts",
     "environments": {
