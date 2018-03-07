@@ -11,6 +11,7 @@ import {
   SimpleChanges
 } from '@angular/core';
 import {ControlValueAccessor, NgControl} from '@angular/forms';
+import {CaseDataItem, CaseFieldValue} from 'app/models';
 
 
 export interface ITimepickerEvent {
@@ -87,7 +88,8 @@ export class ElementDateComponent implements ControlValueAccessor, AfterViewInit
   // instances
   datepicker: any;
   timepicker: any;
-
+  
+  fieldValueObj: CaseFieldValue = new CaseFieldValue();
   idDatePicker: string = uniqueId('q-datepicker_');
   idTimePicker: string = uniqueId('q-timepicker_');
 
