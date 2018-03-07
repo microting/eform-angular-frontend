@@ -11,8 +11,6 @@ import {
   SimpleChanges
 } from '@angular/core';
 import {ControlValueAccessor, NgControl} from '@angular/forms';
-import {CaseDataItem, CaseFieldValue} from 'app/models';
-
 
 export interface ITimepickerEvent {
   time: {
@@ -88,8 +86,7 @@ export class ElementDateComponent implements ControlValueAccessor, AfterViewInit
   // instances
   datepicker: any;
   timepicker: any;
-  
-  fieldValueObj: CaseFieldValue = new CaseFieldValue();
+
   idDatePicker: string = uniqueId('q-datepicker_');
   idTimePicker: string = uniqueId('q-timepicker_');
 
@@ -210,15 +207,11 @@ export class ElementDateComponent implements ControlValueAccessor, AfterViewInit
       this.datepicker
         .on('changeDate', (e: any) => {
           let newDate: Date = e.date;
-          newDate = new Date(newDate);
-          if (isDate(this.date) && isDate(newDate)) {
-            // get hours/minutes
-            newDate.setHours(this.date.getHours());
-            newDate.setMinutes(this.date.getMinutes());
-            newDate.setSeconds(this.date.getSeconds());
-          }
+          newDate.setHours(12);
+          newDate.setMinutes(0);
+          newDate.setSeconds(0);
           this.date = newDate;
-          this.dateChange.emit(newDate);
+          this.dateChange.emit(newDate);       
         });
     } else if (this.datepickerOptions === false) {
       (<any>$('#' + this.idDatePicker)).remove();
