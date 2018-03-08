@@ -59,7 +59,7 @@ namespace eFormAPI.Web.Controllers
 
             result.Content = new StreamContent(fileStream);
             result.Content.Headers.ContentDisposition =
-                new ContentDispositionHeaderValue("attachment") {FileName = fileName};
+                new ContentDispositionHeaderValue("inline") {FileName = fileName};
             result.Content.Headers.ContentType =
                 new MediaTypeHeaderValue($"image/{extention}");
             return result;
