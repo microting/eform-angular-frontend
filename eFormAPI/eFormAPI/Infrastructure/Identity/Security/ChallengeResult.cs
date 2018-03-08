@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-namespace eFormAPI.Web.Infrastructure.Security
+namespace eFormAPI.Web.Infrastructure.Identity.Security
 {
     public class ChallengeResult : IHttpActionResult
     {

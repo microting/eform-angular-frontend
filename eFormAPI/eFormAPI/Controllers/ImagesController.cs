@@ -71,7 +71,8 @@ namespace eFormAPI.Web.Controllers
         public HttpResponseMessage PostLoginPageImages()
         {
             var iUploadedCnt = 0;
-            var saveFolder = System.Web.Hosting.HostingEnvironment.MapPath("~/output/datafolder/picture/settings/login-page");
+            var saveFolder =
+                System.Web.Hosting.HostingEnvironment.MapPath("~/output/datafolder/picture/settings/login-page");
             if (string.IsNullOrEmpty(saveFolder))
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, "Folder error");

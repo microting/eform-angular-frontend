@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace eFormAPI.Web.Messages
+﻿namespace eFormAPI.Web.Messages
 {
     public class GenerateJasperFiles
     {

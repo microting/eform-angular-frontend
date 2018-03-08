@@ -51,7 +51,7 @@ namespace eFormAPI.Web.Controllers
                 return new OperationResult(false, $"Worker with id {workerModel.Id} can't be updated!");
             }
         }
-        
+
         [HttpPost]
         [Route("api/workers/create")]
         public OperationResult Сreate(WorkerCreateModel model)
@@ -59,7 +59,8 @@ namespace eFormAPI.Web.Controllers
             try
             {
                 Core core = _coreHelper.GetCore();
-                var workerDto = core.Advanced_WorkerCreate(model.FirstName, model.LastName, model.SiteId + "." + model.CustomerNo + "@invalid.invalid");
+                var workerDto = core.Advanced_WorkerCreate(model.FirstName, model.LastName,
+                    model.SiteId + "." + model.CustomerNo + "@invalid.invalid");
                 var createdWorker =
                     core.Advanced_SiteWorkerCreate(new SiteName_Dto(model.SiteId, "", null, null), workerDto);
 

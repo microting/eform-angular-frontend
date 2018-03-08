@@ -9,7 +9,9 @@ namespace eFormAPI.Web.Infrastructure.Identity
     public class EformRoleManager : RoleManager<EformRole, int>
     {
         public EformRoleManager(IRoleStore<EformRole, int> roleStore)
-            : base(roleStore) {}
+            : base(roleStore)
+        {
+        }
 
         public static EformRoleManager Create(IdentityFactoryOptions<EformRoleManager> options, IOwinContext context)
         {

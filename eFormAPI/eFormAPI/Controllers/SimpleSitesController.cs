@@ -66,7 +66,8 @@ namespace eFormAPI.Web.Controllers
 
                         return isUpdated
                             ? new OperationResult(true, "Device User updated successfully")
-                            : new OperationResult(false, $"Device User with id {simpleSiteModel.Id} could not be updated!");
+                            : new OperationResult(false,
+                                $"Device User with id {simpleSiteModel.Id} could not be updated!");
                     }
                     return new OperationResult(false, "Device User with such UId could not be obtained");
                 }

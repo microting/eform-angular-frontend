@@ -44,4 +44,12 @@ export class AdminService extends BaseService {
   public deleteUser = (userId: number): Observable<OperationResult> => {
     return this.getWithOperationResult(AdminMethods.DeleteUser + '/' + userId);
   }
+
+  public enableTwoFactorAuth(): Observable<OperationResult> {
+    return this.get(AdminMethods.EnableTwoFactorAuth);
+  }
+
+  public disableTwoFactorAuth(): Observable<OperationResult> {
+    return this.get(AdminMethods.DisableTwoFactorAuth);
+  }
 }

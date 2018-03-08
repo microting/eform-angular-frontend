@@ -1,11 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {SettingsModel} from 'app/models';
-import {SettingsService} from 'app/services';
-import {Router} from '@angular/router';
-import {AdminSettingsModel} from 'app/models/settings/admin-settings.model';
-import {NotifyService} from 'app/services/notify.service';
+import {ActivatedRoute, Params, Router} from '@angular/router';
+import {AdminSettingsModel} from 'app/models';
+import {NotifyService, AuthService, SettingsService} from 'app/services';
 import {FileItem, FileUploader} from 'ng2-file-upload';
-import { UUID } from 'angular2-uuid';
+import {UUID} from 'angular2-uuid';
 
 @Component({
   selector: 'app-admin-settings',
@@ -19,13 +17,25 @@ export class AdminSettingsComponent implements OnInit {
   loginPageImageLink: string;
   spinnerStatus: boolean;
   adminSettingsModel: AdminSettingsModel = new AdminSettingsModel;
+  googlePsk: string;
 
-  constructor(private settingsService: SettingsService, private router: Router, private notifyService: NotifyService) {
+  constructor(private settingsService: SettingsService,
+              private authService: AuthService,
+              private router: Router,
+              private activatedRoute: ActivatedRoute,
+              private notifyService: NotifyService) {
   }
 
+  get currentRole(): string {
+    return this.authService.currentRole;
+  };
+
   ngOnInit() {
-    this.getAdminSettings();
-    this.initializeUploaders();
+    if (this.currentRole === 'admin') {
+      this.getAdminSettings();
+      this.initializeUploaders();
+    }
+    this.getGoogleAuthenticatorInfo();
   }
 
   initializeUploaders() {
@@ -42,7 +52,7 @@ export class AdminSettingsComponent implements OnInit {
     };
     this.loginPageImageUploader.onAfterAddingAll = (files: FileItem[]) => {
       files.forEach(fileItem => {
-        fileItem.file.name = UUID.UUID() + '.' + re.exec(fileItem.file.name)[1] ;
+        fileItem.file.name = UUID.UUID() + '.' + re.exec(fileItem.file.name)[1];
         this.adminSettingsModel.loginPageSettingsModel.imageLink = fileItem.file.name;
       });
     };
@@ -76,6 +86,22 @@ export class AdminSettingsComponent implements OnInit {
       } else {
         this.notifyService.error({text: operation.message});
         this.spinnerStatus = false;
+      }
+    });
+  }
+
+  getGoogleAuthenticatorInfo() {
+    this.authService.getGoogleAuthenticatorInfo().subscribe((data) => {
+      if (data && data.model && data.model.psk) {
+        this.googlePsk = data.model.psk;
+      }
+    });
+  }
+
+  deleteGoogleAuthenticatorInfo() {
+    this.authService.deleteGoogleAuthenticatorInfo().subscribe((data) => {
+      if (data && data.success) {
+        this.googlePsk = null;
       }
     });
   }

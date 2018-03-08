@@ -21,7 +21,8 @@ namespace eFormAPI.Web.Controllers
             try
             {
                 var core = _coreHelper.GetCore();
-                var caseList = core.CaseReadAll(requestModel.TemplateId, null, null, Constants.WorkflowStates.NotRemoved, requestModel.NameFilter,
+                var caseList = core.CaseReadAll(requestModel.TemplateId, null, null,
+                    Constants.WorkflowStates.NotRemoved, requestModel.NameFilter,
                     requestModel.IsSortDsc, requestModel.Sort);
                 var model = new CaseListModel()
                 {

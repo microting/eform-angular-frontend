@@ -92,7 +92,9 @@ export let AdminMethods = {
   GetAllUsers: '/api/admin/get-users',
   DeleteUser: '/api/admin/delete-user',
   CreateUser: '/api/admin/create-user',
-  UpdateUser: '/api/admin/update-user'
+  UpdateUser: '/api/admin/update-user',
+  EnableTwoFactorAuth: 'api/admin/enable-two-factor',
+  DisableTwoFactorAuth: 'api/admin/disable-two-factor'
 };
 
 export let ImageMethods = {

@@ -360,3 +360,5 @@ eFormAPI/eFormAPI.Common/content/JasperExporter.jar
 JasperExporter.jar
 eFormAPI/.idea/*
 eFormAPI/eFormAPI/expection\.txt
+
+\.DS_Store

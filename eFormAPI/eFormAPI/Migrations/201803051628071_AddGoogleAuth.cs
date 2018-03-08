@@ -1,6 +1,5 @@
 namespace eFormAPI.Web.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
     
     public partial class AddGoogleAuth : DbMigration

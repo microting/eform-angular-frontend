@@ -288,9 +288,11 @@
     <Compile Include="Infrastructure\Data\Entities\EformUser.cs" />
     <Compile Include="Infrastructure\Identity\EformSignInManager.cs" />
     <Compile Include="Infrastructure\Identity\EformUserManager.cs" />
-    <Compile Include="Infrastructure\Identity\Providers\GoogleAuthenticatorTokenProvider.cs" />
     <Compile Include="Infrastructure\Models\Auth\ChangePasswordModel.cs" />
     <Compile Include="Infrastructure\Models\Auth\ForgotPasswordModel.cs" />
+    <Compile Include="Infrastructure\Models\Auth\GoogleAuthenticatorModel.cs" />
+    <Compile Include="Infrastructure\Models\Auth\GoogleAuthInfoModel.cs" />
+    <Compile Include="Infrastructure\Models\Auth\LoginModel.cs" />
     <Compile Include="Infrastructure\Models\Auth\ResetPasswordModel.cs" />
     <Compile Include="Infrastructure\Models\Cases\Request\CaseEditRequest.cs" />
     <Compile Include="Infrastructure\Models\Cases\Request\CaseEditRequestField.cs" />
@@ -334,8 +336,8 @@
     <Compile Include="Infrastructure\Models\User\UserRegisterModel.cs" />
     <Compile Include="Infrastructure\Models\WorkerCreateModel.cs" />
     <Compile Include="Infrastructure\Models\WorkerModel.cs" />
-    <Compile Include="Infrastructure\Security\ApplicationOAuthProvider.cs" />
-    <Compile Include="Infrastructure\Security\ChallengeResult.cs" />
+    <Compile Include="Infrastructure\Identity\Providers\ApplicationOAuthProvider.cs" />
+    <Compile Include="Infrastructure\Identity\Security\ChallengeResult.cs" />
     <Compile Include="Installers\RebusHandlerInstaller.cs" />
     <Compile Include="Installers\RebusInstaller.cs" />
     <Compile Include="Messages\GenerateJasperFiles.cs" />

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
@@ -18,12 +20,17 @@ using NLog;
 namespace eFormAPI.Web.Controllers
 {
     [Authorize(Roles = EformRoles.Admin)]
-    [RoutePrefix("api/admin")]
     public class AdminController : ApiController
     {
         private EformUserManager _eformUserManager;
         private EformRoleManager _eformRoleManager;
+        private readonly string _connectionString;
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
+        public AdminController()
+        {
+            _connectionString = ConfigurationManager.ConnectionStrings["eFormMainConnection"].ConnectionString;
+        }
 
         public EformUserManager UserManager
         {
@@ -38,7 +45,7 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpGet]
-        [Route("user/{userId}")]
+        [Route("api/admin/user/{userId}")]
         public OperationDataResult<UserRegisterModel> GetUser(int userId)
         {
             try
@@ -57,7 +64,7 @@ namespace eFormAPI.Web.Controllers
 
                 if (model?.RoleId != null)
                 {
-                    model.Role = RoleManager.FindById((int)model.RoleId).Name;
+                    model.Role = RoleManager.FindById((int) model.RoleId).Name;
                 }
                 return new OperationDataResult<UserRegisterModel>(true, model);
             }
@@ -69,7 +76,7 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpPost]
-        [Route("get-users")]
+        [Route("api/admin/get-users")]
         public OperationDataResult<UserInfoModelList> GetAllUsers(PaginationModel paginationModel)
         {
             try
@@ -114,7 +121,7 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpPost]
-        [Route("update-user")]
+        [Route("api/admin/update-user")]
         public OperationResult UpdateUser(UserRegisterModel userRegisterModel)
         {
             try
@@ -156,7 +163,7 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpPost]
-        [Route("create-user")]
+        [Route("api/admin/create-user")]
         public OperationResult CreateUser(UserRegisterModel userRegisterModel)
         {
             try
@@ -170,13 +177,20 @@ namespace eFormAPI.Web.Controllers
                 {
                     return new OperationResult(false, "Role is required");
                 }
+                var twoFactorEnabled = UserManager.Users.FirstOrDefault()?.TwoFactorEnabled;
+                if (twoFactorEnabled == null)
+                {
+                    twoFactorEnabled = false;
+                }
                 var user = new EformUser
                 {
                     Email = userRegisterModel.Email,
                     UserName = userRegisterModel.UserName,
                     FirstName = userRegisterModel.FirstName,
                     LastName = userRegisterModel.LastName,
+                    TwoFactorEnabled = (bool) twoFactorEnabled,
                 };
+
                 var result = UserManager.Create(user, userRegisterModel.Password);
                 if (!result.Succeeded)
                 {
@@ -194,7 +208,7 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpGet]
-        [Route("delete-user/{userId}")]
+        [Route("api/admin/delete-user/{userId}")]
         public OperationResult DeleteUser(int userId)
         {
             try
@@ -220,6 +234,56 @@ namespace eFormAPI.Web.Controllers
                 _logger.Error(exception.Message);
                 return new OperationResult(false, "Error while deleting user");
             }
+        }
+
+        [HttpGet]
+        [Route("api/admin/enable-two-factor")]
+        [Authorize(Roles = EformRoles.Admin)]
+        public OperationResult EnableTwoFactorAuthForce()
+        {
+            var queryString = @"
+                UPDATE Users
+                SET TwoFactorEnabled = 1";
+            try
+            {
+                using (var connection =
+                    new SqlConnection(_connectionString))
+                {
+                    connection.Open();
+                    var command = new SqlCommand(queryString, connection);
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception)
+            {
+                return new OperationResult(false);
+            }
+            return new OperationResult(true);
+        }
+
+        [HttpGet]
+        [Route("api/admin/disable-two-factor")]
+        [Authorize(Roles = EformRoles.Admin)]
+        public OperationResult DisableTwoFactorAuthForce()
+        {
+            var queryString = @"
+                UPDATE Users
+                SET TwoFactorEnabled = 0";
+            try
+            {
+                using (var connection =
+                    new SqlConnection(_connectionString))
+                {
+                    connection.Open();
+                    var command = new SqlCommand(queryString, connection);
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception)
+            {
+                return new OperationResult(false);
+            }
+            return new OperationResult(true);
         }
     }
 }
