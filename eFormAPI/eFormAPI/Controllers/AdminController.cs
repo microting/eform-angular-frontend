@@ -189,6 +189,7 @@ namespace eFormAPI.Web.Controllers
                     FirstName = userRegisterModel.FirstName,
                     LastName = userRegisterModel.LastName,
                     TwoFactorEnabled = (bool) twoFactorEnabled,
+                    IsGoogleAuthenticatorEnabled = false
                 };
 
                 var result = UserManager.Create(user, userRegisterModel.Password);

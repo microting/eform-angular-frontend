@@ -32,7 +32,8 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                 FirstName = adminSetupModel.FirstName,
                 LastName = adminSetupModel.LastName,
                 EmailConfirmed = true,
-                TwoFactorEnabled = false
+                TwoFactorEnabled = false,
+                IsGoogleAuthenticatorEnabled = false
             };
             if (!manager.Users.Any(x => x.Email.Equals(adminUser.Email)))
             {

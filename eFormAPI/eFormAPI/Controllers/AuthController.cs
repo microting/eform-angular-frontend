@@ -104,6 +104,7 @@ namespace eFormAPI.Web.Controllers
                 if (user != null)
                 {
                     user.GoogleAuthenticatorSecretKey = null;
+                    user.IsGoogleAuthenticatorEnabled = false;
                     var updateResult = UserManager.UpdateAsync(user).Result;
                     if (updateResult.Succeeded)
                     {
@@ -140,7 +141,7 @@ namespace eFormAPI.Web.Controllers
                     "The user name or password is incorrect.");
             }
             // generate PSK and barcode
-            if (!string.IsNullOrEmpty(user.GoogleAuthenticatorSecretKey))
+            if (!string.IsNullOrEmpty(user.GoogleAuthenticatorSecretKey) && user.IsGoogleAuthenticatorEnabled)
             {
                 return new OperationDataResult<GoogleAuthenticatorModel>(true, new GoogleAuthenticatorModel());
             }

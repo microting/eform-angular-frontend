@@ -93,9 +93,11 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-md-8">
-              <h3>1. Add EformApplication to Google Authenticator</h3>
-              <p>Open Google Authenticator and add EformApplication by scanning the QR Code to the right.</p>
-              <h3>2. Enter the 6 digit code that Google Authenticator generates</h3>
+              <ng-container *ngIf="googleAuthenticatorModel.psk">
+                <h3>Add EformApplication to Google Authenticator</h3>
+                <p>Open Google Authenticator and add EformApplication by scanning the QR Code to the right.</p>
+              </ng-container>
+              <h3>Enter the 6 digit code that Google Authenticator generates</h3>
               <p *ngIf="googleAuthenticatorModel.psk">
                 Your PSK: <strong>{{googleAuthenticatorModel.psk}}</strong>
               </p>

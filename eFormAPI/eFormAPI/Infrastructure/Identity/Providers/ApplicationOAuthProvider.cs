@@ -58,6 +58,17 @@ namespace eFormAPI.Web.Infrastructure.Identity.Providers
                     context.SetError("Invalid code", "Invalid code");
                     return;
                 }
+                // update user entity
+                if (!user.IsGoogleAuthenticatorEnabled)
+                {
+                    user.IsGoogleAuthenticatorEnabled = true;
+                    var updateResult = userManager.UpdateAsync(user).Result;
+                    if (!updateResult.Succeeded)
+                    {
+                        context.SetError("PSK or code is empty", "PSK or code is empty");
+                        return;
+                    }
+                }
             }
             var oAuthIdentity = await user.GenerateUserIdentityAsync(userManager,
                 OAuthDefaults.AuthenticationType);
