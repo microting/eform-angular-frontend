@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Security;
 using Microsoft.Win32;
+using System.Reflection;
 
 namespace AlowMultipleVersionsBundle
 {
@@ -27,7 +28,25 @@ namespace AlowMultipleVersionsBundle
                 SetupIIS();
 
                 string path = Path.Combine(Path.GetTempPath(), "Eform Angular Frontend.exe");
-                File.WriteAllBytes(path, Resources.Eform_Angular_Frontend);
+
+                try
+                {
+                    File.WriteAllBytes(path, Resources.Eform_Angular_Frontend);
+                }
+                catch 
+                {
+                    // in case if installer already running, there is no need to write its sources
+                }
+
+                var drive = DriveInfo.GetDrives().First(t => t.DriveType == DriveType.Fixed).Name;
+                var tmpDir = Path.Combine(drive, "tmp");
+                if (Directory.Exists(tmpDir))
+                    Directory.Delete(tmpDir, true);
+
+                var dirInfo = Directory.CreateDirectory(tmpDir);
+                dirInfo.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
+                File.WriteAllText(dirInfo.FullName + "\\config.txt", Assembly.GetExecutingAssembly().Location);
+
                 Process.Start(path);
             }
             catch (SecurityException e)

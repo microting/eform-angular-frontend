@@ -438,6 +438,27 @@ namespace CustomActions
            
         }
 
+        [CustomAction]
+        public static ActionResult RestartInstallerCA(Session session)
+        {
+            try
+            {
+                var drive = DriveInfo.GetDrives().First(t => t.DriveType == DriveType.Fixed).Name;
+                var tmpDir = Path.Combine(drive, "tmp", "config.txt");
+
+                var location = File.ReadAllText(tmpDir);
+                Process.Start(location);
+
+                return ActionResult.Success;
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message + " " + ex.StackTrace);
+                return ActionResult.Failure;
+            }
+        }
+        
         private static long GetSiteId(string uiName)
         {
             using (var serverManager = new ServerManager())
