@@ -20,10 +20,11 @@
       <DialogRef Id="ResumeDlg" />
       <DialogRef Id="UserExit" />
 
-      <Publish Dialog="ExitDialog" Control="Finish" Event="EndDialog" Value="Return" Order="999">1</Publish>
+      <Publish Dialog="ExitDlgModified" Control="Finish" Event="EndDialog" Value="Return" Order="999">1</Publish>
+      <Publish Dialog="ExitDlgModified" Control="StartOver" Event="EndDialog" Value="Return" Order="999">1</Publish>
 
       <Publish Dialog="WelcomeDlgModified" Control="Next" Event="NewDialog" Value="MaintenanceTypeModifiedDlg">1</Publish>
-
+  
       <Publish Dialog="MaintenanceTypeModifiedDlg" Control="Update" Event="NewDialog" Value="DomainNameSelectDlg">1</Publish>
       <Publish Dialog="MaintenanceTypeModifiedDlg" Control="Remove" Event="NewDialog" Value="DomainNameSelectDlg">1</Publish>
       <Publish Dialog="MaintenanceTypeModifiedDlg" Control="Install" Event="NewDialog" Value="LicenseAgreementDlg">1</Publish>

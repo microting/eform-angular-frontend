@@ -24,6 +24,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ApiFileList.wxs" />
+    <Compile Include="ExitDlgModified.wxs" />
     <Compile Include="DomainNameDlg.wxs" />
     <Compile Include="EmptyFIieldDlg.wxs" />
     <Compile Include="ClientFileList.wxs" />
