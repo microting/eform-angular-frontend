@@ -36,19 +36,19 @@
           rowspan="1" colspan="1">
         #
       </th>
-      <th class="text-center" [class.sorting_asc]="casesRequestModel.sort == 'createdAt' && !casesRequestModel.isSortDsc"
-          [class.sorting_desc]="casesRequestModel.sort == 'createdAt' && casesRequestModel.isSortDsc"
-          [class.sorting]="casesRequestModel.sort != 'createdAt'"
-          (click)="sortByColumn('createdAt', casesRequestModel.isSortDsc = !casesRequestModel.isSortDsc)"
-          rowspan="1" colspan="1">
-        Data accessible at
-      </th>
       <th class="text-center" [class.sorting_asc]="casesRequestModel.sort == 'finishedAt' && !casesRequestModel.isSortDsc"
           [class.sorting_desc]="casesRequestModel.sort == 'finishedAt' && casesRequestModel.isSortDsc"
           [class.sorting]="casesRequestModel.sort != 'finishedAt'"
           (click)="sortByColumn('finishedAt', casesRequestModel.isSortDsc = !casesRequestModel.isSortDsc)"
           rowspan="1" colspan="1">
         eForm finished at
+      </th>
+      <th class="text-center" [class.sorting_asc]="casesRequestModel.sort == 'createdAt' && !casesRequestModel.isSortDsc"
+          [class.sorting_desc]="casesRequestModel.sort == 'createdAt' && casesRequestModel.isSortDsc"
+          [class.sorting]="casesRequestModel.sort != 'createdAt'"
+          (click)="sortByColumn('createdAt', casesRequestModel.isSortDsc = !casesRequestModel.isSortDsc)"
+          rowspan="1" colspan="1">
+        Data accessible at
       </th>
       <th class="text-center" [class.sorting_asc]="casesRequestModel.sort == 'finishedAt' && !casesRequestModel.isSortDsc"
           [class.sorting_desc]="casesRequestModel.sort == 'finishedAt' && casesRequestModel.isSortDsc"
@@ -138,10 +138,10 @@
         {{caseModel.id}}
       </td>
       <td class="text-center">
-        {{caseModel.createdAt | date:'dd.MM.y HH:mm:ss'}}
+        {{caseModel.doneAt | date:'dd.MM.y HH:mm:ss'}}
       </td>
       <td class="text-center">
-        {{caseModel.doneAt | date:'dd.MM.y HH:mm:ss'}}
+        {{caseModel.createdAt | date:'dd.MM.y HH:mm:ss'}}
       </td>
       <td class="text-center">
         {{caseModel.workerName}}
@@ -177,7 +177,7 @@
         {{caseModel.fieldValue10}}
       </td>
       <td class="text-center">
-        <div class="row row-buttons-wrapper btn-group" role="group">
+        <div class="row-buttons-wrapper btn-group" role="group">
           <a *ngIf="caseModel.status == 100" [routerLink]="['/cases/edit', caseModel.id, this.currentTemplate.id]"
              class="needs_tooltip btn btn-ar btn-sm btn-default mt-edit-check-list-button" tooltip="Edit case"
              type="button" data-original-title="Edit case">
