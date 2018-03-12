@@ -658,17 +658,17 @@ namespace CustomActions
 
                 foreach (ConfigurationElement ce in handlersCollection)
                 {
-                    if (ce.GetAttribute("name").ToString() == "get-image-png")
+                    if (ce.GetAttributeValue("name").ToString() == "get-image-png")
                     {
                         MessageBox.Show("pngHandlerMissing");
                         pngHandlerMissing = false;
                     }
-                    if (ce.GetAttribute("name").ToString() == "get-image-jpg")
+                    if (ce.GetAttributeValue("name").ToString() == "get-image-jpg")
                     {
                         MessageBox.Show("jpgHandlerMissing");
                         jpgHandlerMissing = false;
                     }
-                    if (ce.GetAttribute("name").ToString() == "get-image-jpeg")
+                    if (ce.GetAttributeValue("name").ToString() == "get-image-jpeg")
                     {
                         MessageBox.Show("jpegHandlerMissing");
                         jpegHandlerMissing = false;
