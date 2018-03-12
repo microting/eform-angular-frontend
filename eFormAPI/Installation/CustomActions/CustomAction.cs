@@ -216,6 +216,10 @@ namespace CustomActions
                 HostWebApi(webApiName, webApiPort, webApiLocation);
                 IncrementProgressBar(session);
 
+                session.Log("Host WebAPI called");
+                AddImageHandlers(webApiName);
+                IncrementProgressBar(session);
+
                 session.Log("RunAngularAsWinService called");
                 RunAngularAsWinService(webApiPort, uiPort, clientLocation, uiName);
                 IncrementProgressBar(session);
@@ -582,15 +586,15 @@ namespace CustomActions
             RunProcess(@"C:\Program Files\nodejs\npm.cmd", "run build", appLocation);
         }
 
-        private static void HostWebApi(string webApiName, int port, string iisDir)
+        private static void HostWebApi(string siteName, int port, string iisDir)
         {
             using (var serverManager = new ServerManager())
             {
-                CreateAppPool(serverManager, webApiName);
+                CreateAppPool(serverManager, siteName);
 
-                serverManager.Sites.Add(webApiName, iisDir, port);
-                foreach (var item in serverManager.Sites[webApiName].Applications)
-                    item.ApplicationPoolName = webApiName;
+                serverManager.Sites.Add(siteName, iisDir, port);
+                foreach (var item in serverManager.Sites[siteName].Applications)
+                    item.ApplicationPoolName = siteName;
 
                 serverManager.CommitChanges();
             }
@@ -630,6 +634,51 @@ namespace CustomActions
 
                 foreach (var item in serverManager.Sites[siteName].Applications)
                     item.ApplicationPoolName = siteName;
+                serverManager.CommitChanges();
+            }
+        }
+
+        private static void AddImageHandlers(string siteName)
+        {
+
+            using (ServerManager serverManager = new ServerManager())
+            {
+                var config = serverManager.GetWebConfiguration(siteName);
+                var handlersSection = config.GetSection("system.webServer/handlers");
+                var handlersCollection = handlersSection.GetCollection();
+
+                ConfigurationElement configurationElement = handlersCollection.CreateElement("add");
+                configurationElement["name"] = "get-image-png";
+                configurationElement["path"] = "*.png";
+                configurationElement["verb"] = "GET";
+                configurationElement["type"] = "System.Web.Handlers.TransferRequestHandler";
+                configurationElement["preCondition"] = "integratedMode,runtimeVersionv4.0";
+                configurationElement["responseBufferLimit"] = "0";
+
+                handlersCollection.Add(configurationElement);
+
+
+                ConfigurationElement configurationElement = handlersCollection.CreateElement("add");
+                configurationElement["name"] = "get-image-jpg";
+                configurationElement["path"] = "*.jpg";
+                configurationElement["verb"] = "GET";
+                configurationElement["type"] = "System.Web.Handlers.TransferRequestHandler";
+                configurationElement["preCondition"] = "integratedMode,runtimeVersionv4.0";
+                configurationElement["responseBufferLimit"] = "0";
+
+                handlersCollection.Add(configurationElement);
+
+
+                ConfigurationElement configurationElement = handlersCollection.CreateElement("add");
+                configurationElement["name"] = "get-image-jpeg";
+                configurationElement["path"] = "*.jpeg";
+                configurationElement["verb"] = "GET";
+                configurationElement["type"] = "System.Web.Handlers.TransferRequestHandler";
+                configurationElement["preCondition"] = "integratedMode,runtimeVersionv4.0";
+                configurationElement["responseBufferLimit"] = "0";
+
+                handlersCollection.Add(configurationElement);
+
                 serverManager.CommitChanges();
             }
         }
