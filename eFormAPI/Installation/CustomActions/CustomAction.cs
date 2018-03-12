@@ -691,7 +691,7 @@ namespace CustomActions
                         MessageBox.Show("pngHandlerMissing 5");
                         configurationElementpng["preCondition"] = "integratedMode,runtimeVersionv4.0";
                         MessageBox.Show("pngHandlerMissing 6");
-                        configurationElementpng["responseBufferLimit"] = "0";
+                        configurationElementpng["responseBufferLimit"] = 0;
                         MessageBox.Show("pngHandlerMissing 7");
 
                         handlersCollection.Add(configurationElementpng);
@@ -711,7 +711,7 @@ namespace CustomActions
                         configurationElementjpg["verb"] = "GET";
                         configurationElementjpg["type"] = @"System.Web.Handlers.TransferRequestHandler";
                         configurationElementjpg["preCondition"] = "integratedMode,runtimeVersionv4.0";
-                        configurationElementjpg["responseBufferLimit"] = "0";
+                        configurationElementjpg["responseBufferLimit"] = 0;
 
                         handlersCollection.Add(configurationElementjpg);
                     }
@@ -731,7 +731,7 @@ namespace CustomActions
                         configurationElementjpeg["verb"] = "GET";
                         configurationElementjpeg["type"] = @"System.Web.Handlers.TransferRequestHandler";
                         configurationElementjpeg["preCondition"] = "integratedMode,runtimeVersionv4.0";
-                        configurationElementjpeg["responseBufferLimit"] = "0";
+                        configurationElementjpeg["responseBufferLimit"] = 0;
 
                         handlersCollection.Add(configurationElementjpeg);
                     }
