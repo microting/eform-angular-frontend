@@ -346,6 +346,11 @@ namespace CustomActions
                 BuildAngularApp(uiIisDir);
                 IncrementProgressBar(session);
 
+                session.Log("AddImageHandlers called");
+                AddImageHandlers(uiName);
+                IncrementProgressBar(session);
+                
+
                 session.Log("RunAngularAsWinService called");
                 RunAngularAsWinService(apiPort, uiPort, uiIisDir, uiName);
                 IncrementProgressBar(session);
@@ -646,39 +651,63 @@ namespace CustomActions
                 var config = serverManager.GetWebConfiguration(siteName);
                 var handlersSection = config.GetSection("system.webServer/handlers");
                 var handlersCollection = handlersSection.GetCollection();
+                bool pngHandlerMissing = true;
+                bool jpgHandlerMissing = true;
+                bool jpegHandlerMissing = true;
 
-                ConfigurationElement configurationElementpng = handlersCollection.CreateElement("add");
-                configurationElementpng["name"] = "get-image-png";
-                configurationElementpng["path"] = "*.png";
-                configurationElementpng["verb"] = "GET";
-                configurationElementpng["type"] = "System.Web.Handlers.TransferRequestHandler";
-                configurationElementpng["preCondition"] = "integratedMode,runtimeVersionv4.0";
-                configurationElementpng["responseBufferLimit"] = "0";
+                foreach (ConfigurationElement ce in handlersCollection)
+                {
+                    if (ce.GetAttribute("name") == "get-image-png")
+                    {
+                        pngHandlerMissing = false;
+                    }
+                    if (ce.GetAttribute("name") == "get-image-jpg")
+                    {
+                        jpgHandlerMissing = false;
+                    }
+                    if (ce.GetAttribute("name") == "get-image-jpeg")
+                    {
+                        jpegHandlerMissing = false;
+                    }
+                }
+                if (pngHandlerMissing)
+                {
+                    ConfigurationElement configurationElementpng = handlersCollection.CreateElement("add");
+                    configurationElementpng["name"] = "get-image-png";
+                    configurationElementpng["path"] = "*.png";
+                    configurationElementpng["verb"] = "GET";
+                    configurationElementpng["type"] = "System.Web.Handlers.TransferRequestHandler";
+                    configurationElementpng["preCondition"] = "integratedMode,runtimeVersionv4.0";
+                    configurationElementpng["responseBufferLimit"] = "0";
 
-                handlersCollection.Add(configurationElementpng);
+                    handlersCollection.Add(configurationElementpng);
+                }
+                if (jpgHandlerMissing)
+                {
+                    ConfigurationElement configurationElementjpg = handlersCollection.CreateElement("add");
+                    configurationElementjpg["name"] = "get-image-jpg";
+                    configurationElementjpg["path"] = "*.jpg";
+                    configurationElementjpg["verb"] = "GET";
+                    configurationElementjpg["type"] = "System.Web.Handlers.TransferRequestHandler";
+                    configurationElementjpg["preCondition"] = "integratedMode,runtimeVersionv4.0";
+                    configurationElementjpg["responseBufferLimit"] = "0";
 
+                    handlersCollection.Add(configurationElementjpg);
+                }
 
-                ConfigurationElement configurationElementjpg = handlersCollection.CreateElement("add");
-                configurationElementjpg["name"] = "get-image-jpg";
-                configurationElementjpg["path"] = "*.jpg";
-                configurationElementjpg["verb"] = "GET";
-                configurationElementjpg["type"] = "System.Web.Handlers.TransferRequestHandler";
-                configurationElementjpg["preCondition"] = "integratedMode,runtimeVersionv4.0";
-                configurationElementjpg["responseBufferLimit"] = "0";
+                if (jpegHandlerMissing)
+                {
+                    ConfigurationElement configurationElementjpeg = handlersCollection.CreateElement("add");
+                    configurationElementjpeg["name"] = "get-image-jpeg";
+                    configurationElementjpeg["path"] = "*.jpeg";
+                    configurationElementjpeg["verb"] = "GET";
+                    configurationElementjpeg["type"] = "System.Web.Handlers.TransferRequestHandler";
+                    configurationElementjpeg["preCondition"] = "integratedMode,runtimeVersionv4.0";
+                    configurationElementjpeg["responseBufferLimit"] = "0";
 
-                handlersCollection.Add(configurationElementjpg);
-
-
-                ConfigurationElement configurationElementjpeg = handlersCollection.CreateElement("add");
-                configurationElementjpeg["name"] = "get-image-jpeg";
-                configurationElementjpeg["path"] = "*.jpeg";
-                configurationElementjpeg["verb"] = "GET";
-                configurationElementjpeg["type"] = "System.Web.Handlers.TransferRequestHandler";
-                configurationElementjpeg["preCondition"] = "integratedMode,runtimeVersionv4.0";
-                configurationElementjpeg["responseBufferLimit"] = "0";
-
-                handlersCollection.Add(configurationElementjpeg);
-
+                    handlersCollection.Add(configurationElementjpeg);
+                }            
+                
                 serverManager.CommitChanges();
             }
         }
