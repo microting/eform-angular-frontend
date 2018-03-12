@@ -36,7 +36,7 @@ namespace eFormAPI.Web.Controllers
 
             result.Content = new StreamContent(fileStream);
             result.Content.Headers.ContentDisposition =
-                new ContentDispositionHeaderValue("attachment") {FileName = fileName};
+                new ContentDispositionHeaderValue("attachment") { FileName = fileName };
             result.Content.Headers.ContentType =
                 new MediaTypeHeaderValue("application/octet-stream");
             return result;
@@ -59,7 +59,7 @@ namespace eFormAPI.Web.Controllers
 
             result.Content = new StreamContent(fileStream);
             result.Content.Headers.ContentDisposition =
-                new ContentDispositionHeaderValue("inline") {FileName = fileName};
+                new ContentDispositionHeaderValue("inline") { FileName = fileName };
             result.Content.Headers.ContentType =
                 new MediaTypeHeaderValue($"image/{extention}");
             return result;
@@ -132,7 +132,7 @@ namespace eFormAPI.Web.Controllers
 
             result.Content = new StreamContent(fileStream);
             result.Content.Headers.ContentDisposition =
-                new ContentDispositionHeaderValue("attachment") {FileName = fileName + ".pdf"};
+                new ContentDispositionHeaderValue("attachment") { FileName = fileName + ".pdf" };
             result.Content.Headers.ContentType =
                 new MediaTypeHeaderValue("application/pdf");
             return result;
@@ -158,7 +158,7 @@ namespace eFormAPI.Web.Controllers
 
                 result.Content = new StreamContent(fileStream);
                 result.Content.Headers.ContentDisposition =
-                    new ContentDispositionHeaderValue("attachment") {FileName = Path.GetFileName(filePath)};
+                    new ContentDispositionHeaderValue("attachment") { FileName = Path.GetFileName(filePath) };
                 result.Content.Headers.ContentType =
                     new MediaTypeHeaderValue("application/pdf");
                 return result;
