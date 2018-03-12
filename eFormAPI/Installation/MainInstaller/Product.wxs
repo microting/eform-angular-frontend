@@ -64,7 +64,8 @@
   <Fragment>
     <CustomAction Id="GetAPIsList" BinaryKey="BinaryCA" DllEntry="GetAPIsListCA" Execute="immediate" />
     <CustomAction Id="TryFindConfigs" BinaryKey="BinaryCA" DllEntry="TryFindConfigs" Execute="immediate"/>
-
+    <CustomAction Id="RestartInstaller" BinaryKey="BinaryCA" DllEntry="RestartInstallerCA" Execute="immediate" />
+    
     <CustomAction Id="Install" BinaryKey="BinaryCA" DllEntry="InstallCA" Execute="deferred" Impersonate="no" />
     <CustomAction Id="UpdateService" BinaryKey="BinaryCA" DllEntry="UpdateCA" Execute="deferred" Impersonate="no" />
     <CustomAction Id="RemoveService" BinaryKey="BinaryCA" DllEntry="RemoveCA" Execute="deferred" Impersonate="no" />
