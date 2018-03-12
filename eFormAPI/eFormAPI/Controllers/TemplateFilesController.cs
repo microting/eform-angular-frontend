@@ -14,12 +14,13 @@ using eFormAPI.Web.Messages;
 
 namespace eFormAPI.Web.Controllers
 {
-    [Authorize]
+
     public class TemplateFilesController : ApiController
     {
         private readonly EFormCoreHelper _coreHelper = new EFormCoreHelper();
 
         [HttpGet]
+        [Authorize]
         [Route("api/template-files/csv/{id}")]
         public HttpResponseMessage Csv(int id)
         {
@@ -29,7 +30,8 @@ namespace eFormAPI.Web.Controllers
             Directory.CreateDirectory(System.Web.Hosting.HostingEnvironment.MapPath("~/bin/output/"));
             var filePath = System.Web.Hosting.HostingEnvironment.MapPath($"~/bin/output/{fileName}");
             var fullPath = core.CasesToCsv(id, null, null, filePath,
-                $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image?&filename=");
+                $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image/");
+            //$"{core.GetHttpServerAddress()}/" + "api/template-files/get-image?&filename=");
 
             var result = new HttpResponseMessage(HttpStatusCode.OK);
             var fileStream = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
@@ -43,8 +45,9 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpGet]
-        [Authorize]
-        [Route("api/template-files/get-image")]
+        [Route("api/template-files/get-image/{fileName}.png")]
+        [Route("api/template-files/get-image/{fileName}.jpg")]
+        [Route("api/template-files/get-image/{fileName}.jpeg")]
         public HttpResponseMessage GetImage(string fileName, string noCache = "noCache")
         {
             var filePath = HttpContext.Current.Server.MapPath($"~/output/datafolder/picture/{fileName}");
@@ -147,7 +150,8 @@ namespace eFormAPI.Web.Controllers
             {
                 var core = _coreHelper.GetCore();
                 var filePath = core.CaseToPdf(caseId, templateId.ToString(),
-                    DateTime.Now.ToString("yyyyMMddHHmmssffff"), $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image?&filename=");
+                    DateTime.Now.ToString("yyyyMMddHHmmssffff"), $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image/");
+                //DateTime.Now.ToString("yyyyMMddHHmmssffff"), $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image?&filename=");
                 if (!File.Exists(filePath))
                 {
                     return new HttpResponseMessage(HttpStatusCode.NotFound);
@@ -178,7 +182,8 @@ namespace eFormAPI.Web.Controllers
             {
                 var core = _coreHelper.GetCore();
                 int? caseId = core.CaseReadFirstId(templateId, "not_revmoed");
-                var filePath = core.CaseToJasperXml((int)caseId, DateTime.Now.ToString("yyyyMMddHHmmssffff"), $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image?&filename=");
+                var filePath = core.CaseToJasperXml((int)caseId, DateTime.Now.ToString("yyyyMMddHHmmssffff"), $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image/");
+                //var filePath = core.CaseToJasperXml((int)caseId, DateTime.Now.ToString("yyyyMMddHHmmssffff"), $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image?&filename=");
                 if (!File.Exists(filePath))
                 {
                     return new HttpResponseMessage(HttpStatusCode.NotFound);
