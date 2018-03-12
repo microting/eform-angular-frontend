@@ -145,7 +145,7 @@ namespace eFormAPI.Web.Controllers
                     {
                         eFormXmlModel.TagIds.Add(core.TagCreate(tag));
                     }
-                }                
+                }
                 // Create eform
                 var newTemplate = core.TemplateFromXml(eFormXmlModel.EFormXml);
                 newTemplate = core.TemplateUploadData(newTemplate);
@@ -286,7 +286,7 @@ namespace eFormAPI.Web.Controllers
 
             result.Content = new StreamContent(fileStream);
             result.Content.Headers.ContentDisposition =
-                new ContentDispositionHeaderValue("attachment") {FileName = fileName};
+                new ContentDispositionHeaderValue("attachment") { FileName = fileName };
             result.Content.Headers.ContentType =
                 new MediaTypeHeaderValue("application/octet-stream");
             return result;
@@ -308,7 +308,7 @@ namespace eFormAPI.Web.Controllers
 
             result.Content = new StreamContent(fileStream);
             result.Content.Headers.ContentDisposition =
-                new ContentDispositionHeaderValue("attachment") {FileName = fileName};
+                new ContentDispositionHeaderValue("attachment") { FileName = fileName };
             result.Content.Headers.ContentType =
                 new MediaTypeHeaderValue($"image/{extention}");
             return result;
@@ -369,7 +369,7 @@ namespace eFormAPI.Web.Controllers
 
             result.Content = new StreamContent(fileStream);
             result.Content.Headers.ContentDisposition =
-                new ContentDispositionHeaderValue("attachment") {FileName = fileName};
+                new ContentDispositionHeaderValue("attachment") { FileName = fileName };
             result.Content.Headers.ContentType =
                 new MediaTypeHeaderValue("application/pdf");
             return result;
@@ -394,7 +394,7 @@ namespace eFormAPI.Web.Controllers
 
                 result.Content = new StreamContent(fileStream);
                 result.Content.Headers.ContentDisposition =
-                    new ContentDispositionHeaderValue("attachment") {FileName = ""}; // TODO: FIX
+                    new ContentDispositionHeaderValue("attachment") { FileName = "" }; // TODO: FIX
                 result.Content.Headers.ContentType =
                     new MediaTypeHeaderValue("application/pdf");
                 return result;
@@ -424,7 +424,7 @@ namespace eFormAPI.Web.Controllers
 
                 result.Content = new StreamContent(fileStream);
                 result.Content.Headers.ContentDisposition =
-                    new ContentDispositionHeaderValue("attachment") {FileName = ""}; // TODO: FIX
+                    new ContentDispositionHeaderValue("attachment") { FileName = "" }; // TODO: FIX
                 result.Content.Headers.ContentType =
                     new MediaTypeHeaderValue("application/pdf");
                 return result;
