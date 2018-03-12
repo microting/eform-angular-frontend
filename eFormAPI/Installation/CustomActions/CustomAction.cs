@@ -674,7 +674,7 @@ namespace CustomActions
                 {
                     ConfigurationElement configurationElementpng = handlersCollection.CreateElement("add");
                     configurationElementpng["name"] = "get-image-png";
-                    configurationElementpng["path"] = "*.png";
+                    configurationElementpng["path"] = @"*.png";
                     configurationElementpng["verb"] = "GET";
                     configurationElementpng["type"] = "System.Web.Handlers.TransferRequestHandler";
                     configurationElementpng["preCondition"] = "integratedMode,runtimeVersionv4.0";
@@ -686,7 +686,7 @@ namespace CustomActions
                 {
                     ConfigurationElement configurationElementjpg = handlersCollection.CreateElement("add");
                     configurationElementjpg["name"] = "get-image-jpg";
-                    configurationElementjpg["path"] = "*.jpg";
+                    configurationElementjpg["path"] = @"*.jpg";
                     configurationElementjpg["verb"] = "GET";
                     configurationElementjpg["type"] = "System.Web.Handlers.TransferRequestHandler";
                     configurationElementjpg["preCondition"] = "integratedMode,runtimeVersionv4.0";
@@ -699,7 +699,7 @@ namespace CustomActions
                 {
                     ConfigurationElement configurationElementjpeg = handlersCollection.CreateElement("add");
                     configurationElementjpeg["name"] = "get-image-jpeg";
-                    configurationElementjpeg["path"] = "*.jpeg";
+                    configurationElementjpeg["path"] = @"*.jpeg";
                     configurationElementjpeg["verb"] = "GET";
                     configurationElementjpeg["type"] = "System.Web.Handlers.TransferRequestHandler";
                     configurationElementjpeg["preCondition"] = "integratedMode,runtimeVersionv4.0";
