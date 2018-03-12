@@ -680,12 +680,19 @@ namespace CustomActions
                     try
                     {
                         ConfigurationElement configurationElementpng = handlersCollection.CreateElement("add");
+                        MessageBox.Show("pngHandlerMissing 1");
                         configurationElementpng["name"] = "get-image-png";
+                        MessageBox.Show("pngHandlerMissing 2");
                         configurationElementpng["path"] = @"*.png";
+                        MessageBox.Show("pngHandlerMissing 3");
                         configurationElementpng["verb"] = "GET";
+                        MessageBox.Show("pngHandlerMissing 4");
                         configurationElementpng["type"] = @"System.Web.Handlers.TransferRequestHandler";
+                        MessageBox.Show("pngHandlerMissing 5");
                         configurationElementpng["preCondition"] = "integratedMode,runtimeVersionv4.0";
+                        MessageBox.Show("pngHandlerMissing 6");
                         configurationElementpng["responseBufferLimit"] = "0";
+                        MessageBox.Show("pngHandlerMissing 7");
 
                         handlersCollection.Add(configurationElementpng);
                     } catch (Exception ex)
