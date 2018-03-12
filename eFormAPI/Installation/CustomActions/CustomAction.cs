@@ -647,37 +647,37 @@ namespace CustomActions
                 var handlersSection = config.GetSection("system.webServer/handlers");
                 var handlersCollection = handlersSection.GetCollection();
 
-                ConfigurationElement configurationElement = handlersCollection.CreateElement("add");
-                configurationElement["name"] = "get-image-png";
-                configurationElement["path"] = "*.png";
-                configurationElement["verb"] = "GET";
-                configurationElement["type"] = "System.Web.Handlers.TransferRequestHandler";
-                configurationElement["preCondition"] = "integratedMode,runtimeVersionv4.0";
-                configurationElement["responseBufferLimit"] = "0";
+                ConfigurationElement configurationElementpng = handlersCollection.CreateElement("add");
+                configurationElementpng["name"] = "get-image-png";
+                configurationElementpng["path"] = "*.png";
+                configurationElementpng["verb"] = "GET";
+                configurationElementpng["type"] = "System.Web.Handlers.TransferRequestHandler";
+                configurationElementpng["preCondition"] = "integratedMode,runtimeVersionv4.0";
+                configurationElementpng["responseBufferLimit"] = "0";
 
-                handlersCollection.Add(configurationElement);
-
-
-                ConfigurationElement configurationElement = handlersCollection.CreateElement("add");
-                configurationElement["name"] = "get-image-jpg";
-                configurationElement["path"] = "*.jpg";
-                configurationElement["verb"] = "GET";
-                configurationElement["type"] = "System.Web.Handlers.TransferRequestHandler";
-                configurationElement["preCondition"] = "integratedMode,runtimeVersionv4.0";
-                configurationElement["responseBufferLimit"] = "0";
-
-                handlersCollection.Add(configurationElement);
+                handlersCollection.Add(configurationElementpng);
 
 
-                ConfigurationElement configurationElement = handlersCollection.CreateElement("add");
-                configurationElement["name"] = "get-image-jpeg";
-                configurationElement["path"] = "*.jpeg";
-                configurationElement["verb"] = "GET";
-                configurationElement["type"] = "System.Web.Handlers.TransferRequestHandler";
-                configurationElement["preCondition"] = "integratedMode,runtimeVersionv4.0";
-                configurationElement["responseBufferLimit"] = "0";
+                ConfigurationElement configurationElementjpg = handlersCollection.CreateElement("add");
+                configurationElementjpg["name"] = "get-image-jpg";
+                configurationElementjpg["path"] = "*.jpg";
+                configurationElementjpg["verb"] = "GET";
+                configurationElementjpg["type"] = "System.Web.Handlers.TransferRequestHandler";
+                configurationElementjpg["preCondition"] = "integratedMode,runtimeVersionv4.0";
+                configurationElementjpg["responseBufferLimit"] = "0";
 
-                handlersCollection.Add(configurationElement);
+                handlersCollection.Add(configurationElementjpg);
+
+
+                ConfigurationElement configurationElementjpeg = handlersCollection.CreateElement("add");
+                configurationElementjpeg["name"] = "get-image-jpeg";
+                configurationElementjpeg["path"] = "*.jpeg";
+                configurationElementjpeg["verb"] = "GET";
+                configurationElementjpeg["type"] = "System.Web.Handlers.TransferRequestHandler";
+                configurationElementjpeg["preCondition"] = "integratedMode,runtimeVersionv4.0";
+                configurationElementjpeg["responseBufferLimit"] = "0";
+
+                handlersCollection.Add(configurationElementjpeg);
 
                 serverManager.CommitChanges();
             }
