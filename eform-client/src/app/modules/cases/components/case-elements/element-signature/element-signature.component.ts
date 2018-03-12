@@ -29,8 +29,8 @@ export class ElementSignatureComponent implements OnInit, OnChanges {
       this.fieldValues.forEach(value => {
         if (value.uploadedDataObj) {
           this.images.push({
-            src: '/api/template-files/get-image?&filename=' + value.uploadedDataObj.fileName,
-            thumbnail: '/api/template-files/get-image?&filename=' + value.uploadedDataObj.fileName,
+            src: '/api/template-files/get-image/' + value.uploadedDataObj.fileName,
+            thumbnail: '/api/template-files/get-image/' + value.uploadedDataObj.fileName,
             fileName: value.uploadedDataObj.fileName,
             text: value.id.toString(),
             fieldId: value.fieldId,

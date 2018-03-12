@@ -37,8 +37,8 @@ export class ElementPictureComponent implements OnChanges, OnInit {
             lat: value.latitude,
           });
           this.images.push({
-            src: '/api/template-files/get-image?&filename=' + value.uploadedDataObj.fileName,
-            thumbnail: '/api/template-files/get-image?&filename=' + value.uploadedDataObj.fileName,
+            src: '/api/template-files/get-image/' + value.uploadedDataObj.fileName,
+            thumbnail: '/api/template-files/get-image/' + value.uploadedDataObj.fileName,
             fileName: value.uploadedDataObj.fileName,
             text: value.id.toString(),
             googleMapsLat: value.latitude,
