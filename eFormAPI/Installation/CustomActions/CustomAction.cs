@@ -683,14 +683,14 @@ namespace CustomActions
                         configurationElementpng["name"] = "get-image-png";
                         configurationElementpng["path"] = @"*.png";
                         configurationElementpng["verb"] = "GET";
-                        configurationElementpng["type"] = "System.Web.Handlers.TransferRequestHandler";
+                        configurationElementpng["type"] = @"System.Web.Handlers.TransferRequestHandler";
                         configurationElementpng["preCondition"] = "integratedMode,runtimeVersionv4.0";
                         configurationElementpng["responseBufferLimit"] = "0";
 
                         handlersCollection.Add(configurationElementpng);
                     } catch (Exception ex)
                     {
-                        MessageBox.Show("pngHandlerMissing ex is : " + ex.Message);
+                        MessageBox.Show("pngHandlerMissing ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
                     }
                     
                 }
@@ -702,7 +702,7 @@ namespace CustomActions
                         configurationElementjpg["name"] = "get-image-jpg";
                         configurationElementjpg["path"] = @"*.jpg";
                         configurationElementjpg["verb"] = "GET";
-                        configurationElementjpg["type"] = "System.Web.Handlers.TransferRequestHandler";
+                        configurationElementjpg["type"] = @"System.Web.Handlers.TransferRequestHandler";
                         configurationElementjpg["preCondition"] = "integratedMode,runtimeVersionv4.0";
                         configurationElementjpg["responseBufferLimit"] = "0";
 
@@ -710,7 +710,7 @@ namespace CustomActions
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("jpgHandlerMissing ex is : " + ex.Message);
+                        MessageBox.Show("jpgHandlerMissing ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
                     }
                 }
 
@@ -722,7 +722,7 @@ namespace CustomActions
                         configurationElementjpeg["name"] = "get-image-jpeg";
                         configurationElementjpeg["path"] = @"*.jpeg";
                         configurationElementjpeg["verb"] = "GET";
-                        configurationElementjpeg["type"] = "System.Web.Handlers.TransferRequestHandler";
+                        configurationElementjpeg["type"] = @"System.Web.Handlers.TransferRequestHandler";
                         configurationElementjpeg["preCondition"] = "integratedMode,runtimeVersionv4.0";
                         configurationElementjpeg["responseBufferLimit"] = "0";
 
@@ -730,7 +730,7 @@ namespace CustomActions
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("jpegHandlerMissing ex is : " + ex.Message);
+                        MessageBox.Show("jpegHandlerMissing ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
                     }
                 }            
                 
