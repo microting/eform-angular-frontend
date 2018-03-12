@@ -648,6 +648,7 @@ namespace CustomActions
 
             using (ServerManager serverManager = new ServerManager())
             {
+                MessageBox.Show("AddImageHandlers called");
                 var config = serverManager.GetWebConfiguration(siteName);
                 var handlersSection = config.GetSection("system.webServer/handlers");
                 var handlersCollection = handlersSection.GetCollection();
@@ -659,53 +660,78 @@ namespace CustomActions
                 {
                     if (ce.GetAttribute("name").ToString() == "get-image-png")
                     {
+                        MessageBox.Show("pngHandlerMissing");
                         pngHandlerMissing = false;
                     }
                     if (ce.GetAttribute("name").ToString() == "get-image-jpg")
                     {
+                        MessageBox.Show("jpgHandlerMissing");
                         jpgHandlerMissing = false;
                     }
                     if (ce.GetAttribute("name").ToString() == "get-image-jpeg")
                     {
+                        MessageBox.Show("jpegHandlerMissing");
                         jpegHandlerMissing = false;
                     }
                 }
+
                 if (pngHandlerMissing)
                 {
-                    ConfigurationElement configurationElementpng = handlersCollection.CreateElement("add");
-                    configurationElementpng["name"] = "get-image-png";
-                    configurationElementpng["path"] = @"*.png";
-                    configurationElementpng["verb"] = "GET";
-                    configurationElementpng["type"] = "System.Web.Handlers.TransferRequestHandler";
-                    configurationElementpng["preCondition"] = "integratedMode,runtimeVersionv4.0";
-                    configurationElementpng["responseBufferLimit"] = "0";
+                    try
+                    {
+                        ConfigurationElement configurationElementpng = handlersCollection.CreateElement("add");
+                        configurationElementpng["name"] = "get-image-png";
+                        configurationElementpng["path"] = @"*.png";
+                        configurationElementpng["verb"] = "GET";
+                        configurationElementpng["type"] = "System.Web.Handlers.TransferRequestHandler";
+                        configurationElementpng["preCondition"] = "integratedMode,runtimeVersionv4.0";
+                        configurationElementpng["responseBufferLimit"] = "0";
 
-                    handlersCollection.Add(configurationElementpng);
+                        handlersCollection.Add(configurationElementpng);
+                    } catch (Exception ex)
+                    {
+                        MessageBox.Show("pngHandlerMissing ex is : " + ex.Message);
+                    }
+                    
                 }
                 if (jpgHandlerMissing)
                 {
-                    ConfigurationElement configurationElementjpg = handlersCollection.CreateElement("add");
-                    configurationElementjpg["name"] = "get-image-jpg";
-                    configurationElementjpg["path"] = @"*.jpg";
-                    configurationElementjpg["verb"] = "GET";
-                    configurationElementjpg["type"] = "System.Web.Handlers.TransferRequestHandler";
-                    configurationElementjpg["preCondition"] = "integratedMode,runtimeVersionv4.0";
-                    configurationElementjpg["responseBufferLimit"] = "0";
+                    try
+                    {
+                        ConfigurationElement configurationElementjpg = handlersCollection.CreateElement("add");
+                        configurationElementjpg["name"] = "get-image-jpg";
+                        configurationElementjpg["path"] = @"*.jpg";
+                        configurationElementjpg["verb"] = "GET";
+                        configurationElementjpg["type"] = "System.Web.Handlers.TransferRequestHandler";
+                        configurationElementjpg["preCondition"] = "integratedMode,runtimeVersionv4.0";
+                        configurationElementjpg["responseBufferLimit"] = "0";
 
-                    handlersCollection.Add(configurationElementjpg);
+                        handlersCollection.Add(configurationElementjpg);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("jpgHandlerMissing ex is : " + ex.Message);
+                    }
                 }
 
                 if (jpegHandlerMissing)
                 {
-                    ConfigurationElement configurationElementjpeg = handlersCollection.CreateElement("add");
-                    configurationElementjpeg["name"] = "get-image-jpeg";
-                    configurationElementjpeg["path"] = @"*.jpeg";
-                    configurationElementjpeg["verb"] = "GET";
-                    configurationElementjpeg["type"] = "System.Web.Handlers.TransferRequestHandler";
-                    configurationElementjpeg["preCondition"] = "integratedMode,runtimeVersionv4.0";
-                    configurationElementjpeg["responseBufferLimit"] = "0";
+                    try
+                    {
+                        ConfigurationElement configurationElementjpeg = handlersCollection.CreateElement("add");
+                        configurationElementjpeg["name"] = "get-image-jpeg";
+                        configurationElementjpeg["path"] = @"*.jpeg";
+                        configurationElementjpeg["verb"] = "GET";
+                        configurationElementjpeg["type"] = "System.Web.Handlers.TransferRequestHandler";
+                        configurationElementjpeg["preCondition"] = "integratedMode,runtimeVersionv4.0";
+                        configurationElementjpeg["responseBufferLimit"] = "0";
 
-                    handlersCollection.Add(configurationElementjpeg);
+                        handlersCollection.Add(configurationElementjpeg);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("jpegHandlerMissing ex is : " + ex.Message);
+                    }
                 }            
                 
                 serverManager.CommitChanges();
