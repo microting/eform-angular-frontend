@@ -657,15 +657,15 @@ namespace CustomActions
 
                 foreach (ConfigurationElement ce in handlersCollection)
                 {
-                    if (ce.GetAttribute("name") == "get-image-png")
+                    if (ce.GetAttribute("name").ToString() == "get-image-png")
                     {
                         pngHandlerMissing = false;
                     }
-                    if (ce.GetAttribute("name") == "get-image-jpg")
+                    if (ce.GetAttribute("name").ToString() == "get-image-jpg")
                     {
                         jpgHandlerMissing = false;
                     }
-                    if (ce.GetAttribute("name") == "get-image-jpeg")
+                    if (ce.GetAttribute("name").ToString() == "get-image-jpeg")
                     {
                         jpegHandlerMissing = false;
                     }
