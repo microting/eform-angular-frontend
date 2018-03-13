@@ -656,23 +656,23 @@ namespace CustomActions
 
                 ConfigurationSection handlersSection = config.GetSection("system.webServer/handlers");
                 ConfigurationElementCollection handlersCollection = handlersSection.GetCollection();
-                bool pngHandlerMissing = true;
-                bool jpgHandlerMissing = true;
-                bool jpegHandlerMissing = true;
-                ConfigurationElement toRemoveCe = null;
+                //bool pngHandlerMissing = true;
+                //bool jpgHandlerMissing = true;
+                //bool jpegHandlerMissing = true;
+                //ConfigurationElement toRemoveCe = null;
 
                 List<ConfigurationElement> toRemoveElements = new List<ConfigurationElement>();
 
-                //foreach (ConfigurationElement ce in handlersCollection)
-                //{
-                //    toRemoveElements.Add(ce);
-                //}
+                foreach (ConfigurationElement ce in handlersCollection)
+                {
+                    toRemoveElements.Add(ce);
+                }
 
-                //foreach (ConfigurationElement ce in toRemoveElements)
-                //{
-                //    handlersCollection.Remove(ce);
-                //}
-                handlersCollection.Clear();
+                foreach (ConfigurationElement ce in toRemoveElements)
+                {
+                    handlersCollection.Remove(ce);
+                }
+                //handlersCollection.Clear();
 
                 try
                 {
