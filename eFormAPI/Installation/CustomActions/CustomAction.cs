@@ -650,7 +650,7 @@ namespace CustomActions
 
             using (ServerManager serverManager = new ServerManager())
             {
-                MessageBox.Show("AddImageHandlers called");
+                //MessageBox.Show("AddImageHandlers called");
                 var config = serverManager.GetWebConfiguration(siteName);
                 var handlersSection = config.GetSection("system.webServer/handlers");
                 var handlersCollection = handlersSection.GetCollection();
@@ -682,19 +682,20 @@ namespace CustomActions
                     try
                     {
                         ConfigurationElement configurationElementpng = handlersCollection.CreateElement("add");
-                        MessageBox.Show("pngHandlerMissing 1");
+                        //MessageBox.Show("pngHandlerMissing 1");
                         configurationElementpng["name"] = "get-image-png";
-                        MessageBox.Show("pngHandlerMissing 2");
+                        //MessageBox.Show("pngHandlerMissing 2");
                         configurationElementpng["path"] = @"*.png";
-                        MessageBox.Show("pngHandlerMissing 3");
+                        //MessageBox.Show("pngHandlerMissing 3");
                         configurationElementpng["verb"] = "GET";
-                        MessageBox.Show("pngHandlerMissing 4");
+                        //MessageBox.Show("pngHandlerMissing 4");
                         configurationElementpng["type"] = @"System.Web.Handlers.TransferRequestHandler";
-                        MessageBox.Show("pngHandlerMissing 5");
+                        //MessageBox.Show("pngHandlerMissing 5");
                         configurationElementpng["preCondition"] = "integratedMode,runtimeVersionv4.0";
-                        MessageBox.Show("pngHandlerMissing 6");
+                        //MessageBox.Show("pngHandlerMissing 6");
                         configurationElementpng["responseBufferLimit"] = 0;
-                        MessageBox.Show("pngHandlerMissing 7");
+                        //MessageBox.Show("pngHandlerMissing 7");
+                        MessageBox.Show("configurationElementpng is " + configurationElementpng.ToString());
 
                         handlersCollection.Add(configurationElementpng);
                     } catch (Exception ex)
