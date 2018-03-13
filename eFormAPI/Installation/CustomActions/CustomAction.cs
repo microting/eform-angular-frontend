@@ -675,6 +675,12 @@ namespace CustomActions
                         MessageBox.Show("jpegHandlerMissing");
                         jpegHandlerMissing = false;
                     }
+                    string obj = "";
+                    foreach (var part in ce.Attributes)
+                    {
+                        obj += part.Name + " : " + part.Value + "\n";
+                    }
+                    MessageBox.Show("current ce is :\n" + obj.ToString());
                 }
 
                 if (pngHandlerMissing)
