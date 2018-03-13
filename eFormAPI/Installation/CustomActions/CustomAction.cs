@@ -348,10 +348,10 @@ namespace CustomActions
                 BuildAngularApp(uiIisDir);
                 IncrementProgressBar(session);
 
-                //session.Log("AddImageHandlers called");
-                //AddImageHandlers(webApiName);
-                //IncrementProgressBar(session);
-                
+                session.Log("AddImageHandlers called");
+                AddImageHandlers(uiName);
+                IncrementProgressBar(session);
+
 
                 session.Log("RunAngularAsWinService called");
                 RunAngularAsWinService(apiPort, uiPort, uiIisDir, uiName);
