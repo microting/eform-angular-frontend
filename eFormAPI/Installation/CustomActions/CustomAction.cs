@@ -349,7 +349,7 @@ namespace CustomActions
                 IncrementProgressBar(session);
 
                 session.Log("AddImageHandlers called");
-                AddImageHandlers(uiName);
+                AddImageHandlers(webApiName);
                 IncrementProgressBar(session);
 
 
@@ -652,12 +652,14 @@ namespace CustomActions
             {
                 //MessageBox.Show("AddImageHandlers called for siteName " + siteName);
 
-                var config = serverManager.GetWebConfiguration(siteName);
-                var handlersSection = config.GetSection("system.webServer/handlers");
-                var handlersCollection = handlersSection.GetCollection();
+                Configuration config = serverManager.GetWebConfiguration(siteName);
+
+                ConfigurationSection handlersSection = config.GetSection("system.webServer/handlers");
+                ConfigurationElementCollection handlersCollection = handlersSection.GetCollection();
                 bool pngHandlerMissing = true;
                 bool jpgHandlerMissing = true;
                 bool jpegHandlerMissing = true;
+                //ConfigurationElement toRemoveCe;
 
                 foreach (ConfigurationElement ce in handlersCollection)
                 {
@@ -675,6 +677,10 @@ namespace CustomActions
                     {
                         MessageBox.Show("jpegHandlerMissing");
                         jpegHandlerMissing = false;
+                    }
+                    if (ce.GetAttributeValue("name").ToString() == "ExtensionlessUrlHandler-Integrated-4.0")
+                    {
+                        handlersCollection.Remove(ce);
                     }
                     //string obj = "";
                     //foreach (var part in ce.Attributes)
@@ -753,8 +759,8 @@ namespace CustomActions
                     {
                         MessageBox.Show("jpegHandlerMissing ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
                     }
-                }            
-                
+                }
+
                 serverManager.CommitChanges();
             }
         }
