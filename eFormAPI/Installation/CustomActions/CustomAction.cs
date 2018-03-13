@@ -698,38 +698,38 @@ namespace CustomActions
                 //handlersCollection.Clear();
 
 
-                //try
-                //{
-                //    ConfigurationElement ele = handlersCollection.CreateElement("remove");
-                //    ele["name"] = "ExtensionlessUrlHandler-Integrated-4.0";
-                //    handlersCollection.Add(ele);
-                //}
-                //catch (Exception ex)
-                //{
-                //    MessageBox.Show("ExtensionlessUrlHandler ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
-                //}
+                try
+                {
+                    ConfigurationElement ele = handlersCollection.CreateElement("remove");
+                    ele["name"] = "ExtensionlessUrlHandler-Integrated-4.0";
+                    handlersCollection.Add(ele);
+                }
+                catch (Exception ex)
+                {
+                    //MessageBox.Show("ExtensionlessUrlHandler ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
+                }
 
-                //try
-                //{
-                //    ConfigurationElement ele = handlersCollection.CreateElement("remove");
-                //    ele["name"] = "OPTIONSVerbHandler";
-                //    handlersCollection.Add(ele);
-                //}
-                //catch (Exception ex)
-                //{
-                //    MessageBox.Show("OPTIONSVerbHandler ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
-                //}
+                try
+                {
+                    ConfigurationElement ele = handlersCollection.CreateElement("remove");
+                    ele["name"] = "OPTIONSVerbHandler";
+                    handlersCollection.Add(ele);
+                }
+                catch (Exception ex)
+                {
+                    //MessageBox.Show("OPTIONSVerbHandler ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
+                }
 
-                //try
-                //{
-                //    ConfigurationElement ele = handlersCollection.CreateElement("remove");
-                //    ele["name"] = "TRACEVerbHandler";
-                //    handlersCollection.Add(ele);
-                //}
-                //catch (Exception ex)
-                //{
-                //    MessageBox.Show("TRACEVerbHandler ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
-                //}
+                try
+                {
+                    ConfigurationElement ele = handlersCollection.CreateElement("remove");
+                    ele["name"] = "TRACEVerbHandler";
+                    handlersCollection.Add(ele);
+                }
+                catch (Exception ex)
+                {
+                    //MessageBox.Show("TRACEVerbHandler ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
+                }
 
                 try
                 {
