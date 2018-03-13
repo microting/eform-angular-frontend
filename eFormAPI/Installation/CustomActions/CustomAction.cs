@@ -716,7 +716,8 @@ namespace CustomActions
                         }
                         //MessageBox.Show("configurationElementpng is " + obj.ToString());
 
-                        handlersCollection.Remove(toRemoveCe);
+                        handlersCollection.Clear();
+                        //handlersCollection.Remove(toRemoveCe);
                         handlersCollection.Add(configurationElementpng);
                     } catch (Exception ex)
                     {
@@ -735,7 +736,6 @@ namespace CustomActions
                         configurationElementjpg["type"] = @"System.Web.Handlers.TransferRequestHandler";
                         configurationElementjpg["preCondition"] = "integratedMode,runtimeVersionv4.0";
                         configurationElementjpg["responseBufferLimit"] = 0;
-
                         handlersCollection.Add(configurationElementjpg);
                     }
                     catch (Exception ex)
