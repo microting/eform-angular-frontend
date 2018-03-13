@@ -314,6 +314,8 @@ namespace CustomActions
 
                 // client update
                 var uiName = $"{customerNumber}_{domain}_client_{uiPort}";
+
+                var webApiName = $"{customerNumber}_{domain}_{apiPort}";
                 var uiIisDir = Path.Combine(siteDir + uiName);
                 var webApiLocation = Path.Combine(siteDir, domainName);
 
@@ -347,7 +349,7 @@ namespace CustomActions
                 IncrementProgressBar(session);
 
                 session.Log("AddImageHandlers called");
-                AddImageHandlers(uiName);
+                AddImageHandlers(webApiName);
                 IncrementProgressBar(session);
                 
 
