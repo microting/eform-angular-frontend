@@ -659,7 +659,7 @@ namespace CustomActions
                 bool pngHandlerMissing = true;
                 bool jpgHandlerMissing = true;
                 bool jpegHandlerMissing = true;
-                //ConfigurationElement toRemoveCe;
+                ConfigurationElement toRemoveCe = null;
 
                 foreach (ConfigurationElement ce in handlersCollection)
                 {
@@ -680,7 +680,8 @@ namespace CustomActions
                     }
                     if (ce.GetAttributeValue("name").ToString() == "ExtensionlessUrlHandler-Integrated-4.0")
                     {
-                        handlersCollection.Remove(ce);
+                        toRemoveCe = ce;
+                        //handlersCollection.Remove(ce);
                     }
                     //string obj = "";
                     //foreach (var part in ce.Attributes)
@@ -695,25 +696,27 @@ namespace CustomActions
                     try
                     {
                         ConfigurationElement configurationElementpng = handlersCollection.CreateElement("add");
-                        //MessageBox.Show("pngHandlerMissing 1");
+                        MessageBox.Show("pngHandlerMissing 1");
                         configurationElementpng["name"] = "get-image-png";
-                        //MessageBox.Show("pngHandlerMissing 2");
+                        MessageBox.Show("pngHandlerMissing 2");
                         configurationElementpng["path"] = @"*.png";
-                        //MessageBox.Show("pngHandlerMissing 3");
+                        MessageBox.Show("pngHandlerMissing 3");
                         configurationElementpng["verb"] = "GET";
-                        //MessageBox.Show("pngHandlerMissing 4");
+                        MessageBox.Show("pngHandlerMissing 4");
                         configurationElementpng["type"] = @"System.Web.Handlers.TransferRequestHandler";
-                        //MessageBox.Show("pngHandlerMissing 5");
+                        MessageBox.Show("pngHandlerMissing 5");
                         configurationElementpng["preCondition"] = "integratedMode,runtimeVersionv4.0";
-                        //MessageBox.Show("pngHandlerMissing 6");
+                        MessageBox.Show("pngHandlerMissing 6");
                         configurationElementpng["responseBufferLimit"] = 0;
-                        //MessageBox.Show("pngHandlerMissing 7");
+                        MessageBox.Show("pngHandlerMissing 7");
                         string obj = "";
                         foreach (var part in configurationElementpng.Attributes)
                         {
                             obj += part.Name + " : " + part.Value + "\n";
                         }
                         //MessageBox.Show("configurationElementpng is " + obj.ToString());
+
+                        handlersCollection.Remove(toRemoveCe);
                         handlersCollection.Add(configurationElementpng);
                     } catch (Exception ex)
                     {
