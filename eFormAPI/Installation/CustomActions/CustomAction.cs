@@ -650,7 +650,8 @@ namespace CustomActions
 
             using (ServerManager serverManager = new ServerManager())
             {
-                //MessageBox.Show("AddImageHandlers called");
+                MessageBox.Show("AddImageHandlers called for siteName " + siteName);
+
                 var config = serverManager.GetWebConfiguration(siteName);
                 var handlersSection = config.GetSection("system.webServer/handlers");
                 var handlersCollection = handlersSection.GetCollection();
@@ -675,12 +676,12 @@ namespace CustomActions
                         MessageBox.Show("jpegHandlerMissing");
                         jpegHandlerMissing = false;
                     }
-                    string obj = "";
-                    foreach (var part in ce.Attributes)
-                    {
-                        obj += part.Name + " : " + part.Value + "\n";
-                    }
-                    MessageBox.Show("current ce is :\n" + obj.ToString());
+                    //string obj = "";
+                    //foreach (var part in ce.Attributes)
+                    //{
+                    //    obj += part.Name + " : " + part.Value + "\n";
+                    //}
+                    //MessageBox.Show("current ce is :\n" + obj.ToString());
                 }
 
                 if (pngHandlerMissing)
