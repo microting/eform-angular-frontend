@@ -695,7 +695,12 @@ namespace CustomActions
                         //MessageBox.Show("pngHandlerMissing 6");
                         configurationElementpng["responseBufferLimit"] = 0;
                         //MessageBox.Show("pngHandlerMissing 7");
-                        MessageBox.Show("configurationElementpng is " + configurationElementpng.ToString());
+                        string obj = "";
+                        foreach (var part in configurationElementpng.Attributes)
+                        {
+                            obj += part.Name + " : " + part.Value + "\n";
+                        }
+                        MessageBox.Show("configurationElementpng is " + obj.ToString());
 
                         handlersCollection.Add(configurationElementpng);
                     } catch (Exception ex)
