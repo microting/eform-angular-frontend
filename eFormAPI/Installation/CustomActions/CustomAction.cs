@@ -348,9 +348,9 @@ namespace CustomActions
                 BuildAngularApp(uiIisDir);
                 IncrementProgressBar(session);
 
-                session.Log("AddImageHandlers called");
-                AddImageHandlers(webApiName);
-                IncrementProgressBar(session);
+                //session.Log("AddImageHandlers called");
+                //AddImageHandlers(webApiName);
+                //IncrementProgressBar(session);
                 
 
                 session.Log("RunAngularAsWinService called");
@@ -650,7 +650,7 @@ namespace CustomActions
 
             using (ServerManager serverManager = new ServerManager())
             {
-                MessageBox.Show("AddImageHandlers called for siteName " + siteName);
+                //MessageBox.Show("AddImageHandlers called for siteName " + siteName);
 
                 var config = serverManager.GetWebConfiguration(siteName);
                 var handlersSection = config.GetSection("system.webServer/handlers");
@@ -707,8 +707,7 @@ namespace CustomActions
                         {
                             obj += part.Name + " : " + part.Value + "\n";
                         }
-                        MessageBox.Show("configurationElementpng is " + obj.ToString());
-
+                        //MessageBox.Show("configurationElementpng is " + obj.ToString());
                         handlersCollection.Add(configurationElementpng);
                     } catch (Exception ex)
                     {
