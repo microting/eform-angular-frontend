@@ -216,6 +216,10 @@ namespace CustomActions
                 HostWebApi(webApiName, webApiPort, webApiLocation);
                 IncrementProgressBar(session);
 
+                session.Log("Host WebAPI called");
+                AddImageHandlers(webApiName);
+                IncrementProgressBar(session);
+
                 session.Log("RunAngularAsWinService called");
                 RunAngularAsWinService(webApiPort, uiPort, clientLocation, uiName);
                 IncrementProgressBar(session);
@@ -310,6 +314,8 @@ namespace CustomActions
 
                 // client update
                 var uiName = $"{customerNumber}_{domain}_client_{uiPort}";
+
+                var webApiName = $"{customerNumber}_{domain}_{apiPort}";
                 var uiIisDir = Path.Combine(siteDir + uiName);
                 var webApiLocation = Path.Combine(siteDir, domainName);
 
@@ -341,6 +347,11 @@ namespace CustomActions
                 session.Log("Build Angullar app task started");
                 BuildAngularApp(uiIisDir);
                 IncrementProgressBar(session);
+
+                session.Log("AddImageHandlers called");
+                AddImageHandlers(webApiName);
+                IncrementProgressBar(session);
+
 
                 session.Log("RunAngularAsWinService called");
                 RunAngularAsWinService(apiPort, uiPort, uiIisDir, uiName);
@@ -438,6 +449,27 @@ namespace CustomActions
            
         }
 
+        [CustomAction]
+        public static ActionResult RestartInstallerCA(Session session)
+        {
+            try
+            {
+                var drive = DriveInfo.GetDrives().First(t => t.DriveType == DriveType.Fixed).Name;
+                var tmpDir = Path.Combine(drive, "tmp", "config.txt");
+
+                var location = File.ReadAllText(tmpDir);
+                Process.Start(location);
+
+                return ActionResult.Success;
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message + " " + ex.StackTrace);
+                return ActionResult.Failure;
+            }
+        }
+        
         private static long GetSiteId(string uiName)
         {
             using (var serverManager = new ServerManager())
@@ -561,15 +593,15 @@ namespace CustomActions
             RunProcess(@"C:\Program Files\nodejs\npm.cmd", "run build", appLocation);
         }
 
-        private static void HostWebApi(string webApiName, int port, string iisDir)
+        private static void HostWebApi(string siteName, int port, string iisDir)
         {
             using (var serverManager = new ServerManager())
             {
-                CreateAppPool(serverManager, webApiName);
+                CreateAppPool(serverManager, siteName);
 
-                serverManager.Sites.Add(webApiName, iisDir, port);
-                foreach (var item in serverManager.Sites[webApiName].Applications)
-                    item.ApplicationPoolName = webApiName;
+                serverManager.Sites.Add(siteName, iisDir, port);
+                foreach (var item in serverManager.Sites[siteName].Applications)
+                    item.ApplicationPoolName = siteName;
 
                 serverManager.CommitChanges();
             }
@@ -609,6 +641,193 @@ namespace CustomActions
 
                 foreach (var item in serverManager.Sites[siteName].Applications)
                     item.ApplicationPoolName = siteName;
+                serverManager.CommitChanges();
+            }
+        }
+
+        private static void AddImageHandlers(string siteName)
+        {
+
+            using (ServerManager serverManager = new ServerManager())
+            {
+                //MessageBox.Show("AddImageHandlers called for siteName " + siteName);
+
+                Configuration config = serverManager.GetWebConfiguration(siteName);
+
+                ConfigurationSection handlersSection = config.GetSection("system.webServer/handlers");
+                ConfigurationElementCollection handlersCollection = handlersSection.GetCollection();
+                bool pngHandlerMissing = true;
+                bool jpgHandlerMissing = true;
+                bool jpegHandlerMissing = true;
+                bool add1Missing = true;
+                bool remove1Missing = true;
+                bool remove2Missing = true;
+                bool remove3Missing = true;
+                //ConfigurationElement toRemoveCe = null;
+
+                List<ConfigurationElement> toRemoveElements = new List<ConfigurationElement>();
+
+                foreach (ConfigurationElement ce in handlersCollection)
+                {
+                    //if (ce.GetAttributeValue("name").ToString() == "get-image-png")
+                    //{
+                    //    //MessageBox.Show("pngHandlerMissing");
+                    //    pngHandlerMissing = false;
+                    //}
+                    //if (ce.GetAttributeValue("name").ToString() == "get-image-jpg")
+                    //{
+                    //    //MessageBox.Show("jpgHandlerMissing");
+                    //    jpgHandlerMissing = false;
+                    //}
+                    //if (ce.GetAttributeValue("name").ToString() == "get-image-jpeg")
+                    //{
+                    //    //MessageBox.Show("jpegHandlerMissing");
+                    //    jpegHandlerMissing = false;
+                    //}
+                    //if (ce.GetAttributeValue("name").ToString() == "ExtensionlessUrlHandler-Integrated-4.0")
+                    //{
+                    //    add1Missing = false;
+                    //}
+                    //if (ce.GetAttributeValue("name").ToString() == "OPTIONSVerbHandler")
+                    //{
+                    //    remove2Missing = false;
+                    //}
+                    //if (ce.GetAttributeValue("name").ToString() == "TRACEVerbHandler")
+                    //{
+                    //    remove3Missing = false;
+                    //}
+
+                    //if (ce.GetAttributeValue("name").ToString() == "ExtensionlessUrlHandler-Integrated-4.0")
+                    //{
+                    //    toRemoveCe = ce;
+                    //}
+                    toRemoveElements.Add(ce);
+
+                }
+                //try
+                //{
+                //    if (toRemoveCe != null)
+                //        handlersCollection.Remove(toRemoveCe);
+                //} catch { }
+                foreach (ConfigurationElement ce in toRemoveElements)
+                {
+                    handlersCollection.Remove(ce);
+                }
+                handlersCollection.Clear();
+
+                if (remove1Missing)
+                {
+                    try
+                    {
+                        ConfigurationElement ele = handlersCollection.CreateElement("remove");
+                        ele["name"] = "ExtensionlessUrlHandler-Integrated-4.0";
+                        handlersCollection.Add(ele);
+                    }
+                    catch (Exception ex)
+                    {
+                        //MessageBox.Show("ExtensionlessUrlHandler ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
+                    }
+                }
+
+                if (remove2Missing)
+                {
+                    try
+                    {
+                        ConfigurationElement ele = handlersCollection.CreateElement("remove");
+                        ele["name"] = "OPTIONSVerbHandler";
+                        handlersCollection.Add(ele);
+                    }
+                    catch (Exception ex)
+                    {
+                        //MessageBox.Show("OPTIONSVerbHandler ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
+                    }
+                }
+
+                if (remove3Missing) {
+                    try
+                    {
+                        ConfigurationElement ele = handlersCollection.CreateElement("remove");
+                        ele["name"] = "TRACEVerbHandler";
+                        handlersCollection.Add(ele);
+                    }
+                    catch (Exception ex)
+                    {
+                        //MessageBox.Show("TRACEVerbHandler ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
+                    }
+                }
+                if (add1Missing)
+                {
+                    try
+                    {
+                        ConfigurationElement ele = handlersCollection.CreateElement("add");
+                        ele["name"] = "ExtensionlessUrlHandler-Integrated-4.0";
+                        ele["path"] = @"*.";
+                        ele["verb"] = "*";
+                        ele["type"] = @"System.Web.Handlers.TransferRequestHandler";
+                        ele["preCondition"] = "integratedMode,runtimeVersionv4.0";
+                        handlersCollection.Add(ele);
+                    }
+                    catch
+                    {
+                        //MessageBox.Show("pngHandlerMissing ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
+                    }
+                }             
+
+                if (pngHandlerMissing) {
+                    try
+                    {
+                        ConfigurationElement ele = handlersCollection.CreateElement("add");
+                        ele["name"] = "get-image-png";
+                        ele["path"] = @"*.png";
+                        ele["verb"] = "GET";
+                        ele["type"] = @"System.Web.Handlers.TransferRequestHandler";
+                        ele["preCondition"] = "integratedMode,runtimeVersionv4.0";
+                        ele["responseBufferLimit"] = 0;
+                        handlersCollection.Add(ele);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("pngHandlerMissing ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
+                    }
+                }
+                
+                if (jpgHandlerMissing) {
+                    try
+                    {
+                        ConfigurationElement ele = handlersCollection.CreateElement("add");
+                        ele["name"] = "get-image-jpg";
+                        ele["path"] = @"*.jpg";
+                        ele["verb"] = "GET";
+                        ele["type"] = @"System.Web.Handlers.TransferRequestHandler";
+                        ele["preCondition"] = "integratedMode,runtimeVersionv4.0";
+                        ele["responseBufferLimit"] = 0;
+                        handlersCollection.Add(ele);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("jpgHandlerMissing ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
+                    }
+                }
+                
+                if (jpegHandlerMissing) {
+                    try
+                    {
+                        ConfigurationElement ele = handlersCollection.CreateElement("add");
+                        ele["name"] = "get-image-jpeg";
+                        ele["path"] = @"*.jpeg";
+                        ele["verb"] = "GET";
+                        ele["type"] = @"System.Web.Handlers.TransferRequestHandler";
+                        ele["preCondition"] = "integratedMode,runtimeVersionv4.0";
+                        ele["responseBufferLimit"] = 0;
+
+                        handlersCollection.Add(ele);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("jpegHandlerMissing ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
+                    }
+                }
+
                 serverManager.CommitChanges();
             }
         }

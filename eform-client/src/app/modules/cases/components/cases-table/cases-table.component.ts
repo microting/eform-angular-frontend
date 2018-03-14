@@ -36,6 +36,7 @@ export class CasesTableComponent implements OnInit {
   }
 
   loadAllCases() {
+    this.casesRequestModel.templateId = this.id;
     this.casesService.getCases(this.casesRequestModel).subscribe(operation => {
       this.spinnerStatus = true;
       if (operation && operation.success) {

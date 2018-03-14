@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Security;
 using Microsoft.Win32;
+using System.Reflection;
+using System.Threading;
 
 namespace AlowMultipleVersionsBundle
 {
@@ -13,6 +15,11 @@ namespace AlowMultipleVersionsBundle
         {
             try
             {
+                string path = Path.Combine(Path.GetTempPath(), "Eform Angular Frontend.exe");
+                if (IsFileLocked(path))
+                    // wait for previous installer finish
+                    Thread.Sleep(2000);
+
                 var unistall =
                     Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall",
                         true);
@@ -26,8 +33,18 @@ namespace AlowMultipleVersionsBundle
 
                 SetupIIS();
 
-                string path = Path.Combine(Path.GetTempPath(), "Eform Angular Frontend.exe");
-                File.WriteAllBytes(path, Resources.Eform_Angular_Frontend);
+                if (!IsFileLocked(path))
+                    File.WriteAllBytes(path, Resources.Eform_Angular_Frontend);
+                
+                var drive = DriveInfo.GetDrives().First(t => t.DriveType == DriveType.Fixed).Name;
+                var tmpDir = Path.Combine(drive, "tmp");
+                if (Directory.Exists(tmpDir))
+                    Directory.Delete(tmpDir, true);
+
+                var dirInfo = Directory.CreateDirectory(tmpDir);
+                dirInfo.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
+                File.WriteAllText(dirInfo.FullName + "\\config.txt", Assembly.GetExecutingAssembly().Location);
+
                 Process.Start(path);
             }
             catch (SecurityException e)
@@ -35,6 +52,26 @@ namespace AlowMultipleVersionsBundle
                 Console.WriteLine("Please run installer package as administrator");
             }
 
+        }
+
+        static bool IsFileLocked(string path)
+        {
+            FileStream stream = null;
+
+            try
+            {
+                stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.None);
+            }
+            catch (IOException)
+            {
+                return true;
+            }
+            finally
+            {
+                if (stream != null)
+                    stream.Close();
+            }
+            return false;
         }
 
         static void SetupIIS()

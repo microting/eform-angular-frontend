@@ -9,6 +9,7 @@ export class CaseFieldValue extends CaseDataItem {
   fieldType: string;
   dateOfDoing: Date;
   value: string;
+  microtingUuid: string;
   valueReadable: string;
   description: any;
 

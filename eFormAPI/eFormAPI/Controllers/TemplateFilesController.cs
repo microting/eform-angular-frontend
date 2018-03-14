@@ -13,12 +13,13 @@ using eFormAPI.Web.Messages;
 
 namespace eFormAPI.Web.Controllers
 {
-    [Authorize]
+
     public class TemplateFilesController : ApiController
     {
         private readonly EFormCoreHelper _coreHelper = new EFormCoreHelper();
 
         [HttpGet]
+        [Authorize]
         [Route("api/template-files/csv/{id}")]
         public HttpResponseMessage Csv(int id)
         {
@@ -28,25 +29,25 @@ namespace eFormAPI.Web.Controllers
             Directory.CreateDirectory(System.Web.Hosting.HostingEnvironment.MapPath("~/bin/output/"));
             var filePath = System.Web.Hosting.HostingEnvironment.MapPath($"~/bin/output/{fileName}");
             var fullPath = core.CasesToCsv(id, null, null, filePath,
-                $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image?&filename=");
+                $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image/");
+            //$"{core.GetHttpServerAddress()}/" + "api/template-files/get-image?&filename=");
 
             var result = new HttpResponseMessage(HttpStatusCode.OK);
             var fileStream = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
 
             result.Content = new StreamContent(fileStream);
             result.Content.Headers.ContentDisposition =
-                new ContentDispositionHeaderValue("attachment") {FileName = fileName};
+                new ContentDispositionHeaderValue("attachment") { FileName = fileName };
             result.Content.Headers.ContentType =
                 new MediaTypeHeaderValue("application/octet-stream");
             return result;
         }
 
         [HttpGet]
-        [Authorize]
-        [Route("api/template-files/get-image")]
-        public HttpResponseMessage GetImage(string fileName, string noCache = "noCache")
+        [Route("api/template-files/get-image/{fileName}.{ext}")]
+        public HttpResponseMessage GetImage(string fileName, string ext, string noCache = "noCache")
         {
-            var filePath = HttpContext.Current.Server.MapPath($"~/output/datafolder/picture/{fileName}");
+            var filePath = HttpContext.Current.Server.MapPath($"~/output/datafolder/picture/{fileName}.{ext}");
             if (!File.Exists(filePath))
             {
                 return new HttpResponseMessage(HttpStatusCode.NotFound);
@@ -58,7 +59,7 @@ namespace eFormAPI.Web.Controllers
 
             result.Content = new StreamContent(fileStream);
             result.Content.Headers.ContentDisposition =
-                new ContentDispositionHeaderValue("attachment") {FileName = fileName};
+                new ContentDispositionHeaderValue("inline") { FileName = fileName };
             result.Content.Headers.ContentType =
                 new MediaTypeHeaderValue($"image/{extention}");
             return result;
@@ -131,7 +132,7 @@ namespace eFormAPI.Web.Controllers
 
             result.Content = new StreamContent(fileStream);
             result.Content.Headers.ContentDisposition =
-                new ContentDispositionHeaderValue("attachment") {FileName = fileName + ".pdf"};
+                new ContentDispositionHeaderValue("attachment") { FileName = fileName + ".pdf" };
             result.Content.Headers.ContentType =
                 new MediaTypeHeaderValue("application/pdf");
             return result;
@@ -146,7 +147,8 @@ namespace eFormAPI.Web.Controllers
             {
                 var core = _coreHelper.GetCore();
                 var filePath = core.CaseToPdf(caseId, templateId.ToString(),
-                    DateTime.Now.ToString("yyyyMMddHHmmssffff"));
+                    DateTime.Now.ToString("yyyyMMddHHmmssffff"), $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image/");
+                //DateTime.Now.ToString("yyyyMMddHHmmssffff"), $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image?&filename=");
                 if (!File.Exists(filePath))
                 {
                     return new HttpResponseMessage(HttpStatusCode.NotFound);
@@ -157,7 +159,7 @@ namespace eFormAPI.Web.Controllers
 
                 result.Content = new StreamContent(fileStream);
                 result.Content.Headers.ContentDisposition =
-                    new ContentDispositionHeaderValue("attachment") {FileName = Path.GetFileName(filePath)};
+                    new ContentDispositionHeaderValue("attachment") { FileName = Path.GetFileName(filePath) };
                 result.Content.Headers.ContentType =
                     new MediaTypeHeaderValue("application/pdf");
                 return result;
@@ -177,7 +179,7 @@ namespace eFormAPI.Web.Controllers
             {
                 var core = _coreHelper.GetCore();
                 int? caseId = core.CaseReadFirstId(templateId, "not_revmoed");
-                var filePath = core.CaseToJasperXml((int) caseId, DateTime.Now.ToString("yyyyMMddHHmmssffff"));
+                var filePath = core.CaseToJasperXml((int)caseId, DateTime.Now.ToString("yyyyMMddHHmmssffff"), $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image/");
                 if (!File.Exists(filePath))
                 {
                     return new HttpResponseMessage(HttpStatusCode.NotFound);

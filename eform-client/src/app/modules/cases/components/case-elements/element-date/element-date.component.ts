@@ -12,7 +12,6 @@ import {
 } from '@angular/core';
 import {ControlValueAccessor, NgControl} from '@angular/forms';
 
-
 export interface ITimepickerEvent {
   time: {
     value: number, // getTime()
@@ -208,14 +207,11 @@ export class ElementDateComponent implements ControlValueAccessor, AfterViewInit
       this.datepicker
         .on('changeDate', (e: any) => {
           let newDate: Date = e.date;
-          if (isDate(this.date) && isDate(newDate)) {
-            // get hours/minutes
-            newDate.setHours(this.date.getHours());
-            newDate.setMinutes(this.date.getMinutes());
-            newDate.setSeconds(this.date.getSeconds());
-          }
+          newDate.setHours(12);
+          newDate.setMinutes(0);
+          newDate.setSeconds(0);
           this.date = newDate;
-          this.dateChange.emit(newDate);
+          this.dateChange.emit(newDate);       
         });
     } else if (this.datepickerOptions === false) {
       (<any>$('#' + this.idDatePicker)).remove();

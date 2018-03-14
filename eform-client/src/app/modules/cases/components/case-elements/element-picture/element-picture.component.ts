@@ -37,8 +37,8 @@ export class ElementPictureComponent implements OnChanges, OnInit {
             lat: value.latitude,
           });
           this.images.push({
-            src: '/api/template-files/get-image?&filename=' + value.uploadedDataObj.fileName,
-            thumbnail: '/api/template-files/get-image?&filename=' + value.uploadedDataObj.fileName,
+            src: '/api/template-files/get-image/' + value.uploadedDataObj.fileName,
+            thumbnail: '/api/template-files/get-image/' + value.uploadedDataObj.fileName,
             fileName: value.uploadedDataObj.fileName,
             text: value.id.toString(),
             googleMapsLat: value.latitude,
@@ -89,7 +89,7 @@ export class ElementPictureComponent implements OnChanges, OnInit {
       if (operation && operation.success) {
         this.notifyService.success({text: operation.message});
         this.images = this.images.filter(x => x.fileName !== image.fileName);
-        image.src = image.src + '&noCache=' + Math.floor(Math.random() * 1000).toString();
+        image.src = image.src + '?noCache=' + Math.floor(Math.random() * 1000).toString();
         image.thumbnail = image.src;
         this.images.push(image);
         this.updateGallery();

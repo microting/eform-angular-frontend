@@ -5,6 +5,7 @@ export class CasesRequestModel {
   pageSize: number;
   isSortDsc: boolean;
   offset: number;
+  templateId: number;
 
   constructor() {
     this.sort = 'id';
