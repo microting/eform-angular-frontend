@@ -661,40 +661,42 @@ namespace CustomActions
                 bool jpegHandlerMissing = true;
                 ConfigurationElement toRemoveCe = null;
 
-                //List<ConfigurationElement> toRemoveElements = new List<ConfigurationElement>();
+                List<ConfigurationElement> toRemoveElements = new List<ConfigurationElement>();
 
                 foreach (ConfigurationElement ce in handlersCollection)
                 {
-                    if (ce.GetAttributeValue("name").ToString() == "get-image-png")
-                    {
-                        //MessageBox.Show("pngHandlerMissing");
-                        pngHandlerMissing = false;
-                    }
-                    if (ce.GetAttributeValue("name").ToString() == "get-image-jpg")
-                    {
-                        //MessageBox.Show("jpgHandlerMissing");
-                        jpgHandlerMissing = false;
-                    }
-                    if (ce.GetAttributeValue("name").ToString() == "get-image-jpeg")
-                    {
-                        //MessageBox.Show("jpegHandlerMissing");
-                        jpegHandlerMissing = false;
-                    }
+                    //if (ce.GetAttributeValue("name").ToString() == "get-image-png")
+                    //{
+                    //    //MessageBox.Show("pngHandlerMissing");
+                    //    pngHandlerMissing = false;
+                    //}
+                    //if (ce.GetAttributeValue("name").ToString() == "get-image-jpg")
+                    //{
+                    //    //MessageBox.Show("jpgHandlerMissing");
+                    //    jpgHandlerMissing = false;
+                    //}
+                    //if (ce.GetAttributeValue("name").ToString() == "get-image-jpeg")
+                    //{
+                    //    //MessageBox.Show("jpegHandlerMissing");
+                    //    jpegHandlerMissing = false;
+                    //}
 
-                    if (ce.GetAttributeValue("name").ToString() == "ExtensionlessUrlHandler-Integrated-4.0")
-                    {
-                        toRemoveCe = ce;
-                    }
+                    //if (ce.GetAttributeValue("name").ToString() == "ExtensionlessUrlHandler-Integrated-4.0")
+                    //{
+                    //    toRemoveCe = ce;
+                    //}
+                    toRemoveElements.Add(ce);
+
                 }
-                try
-                {
-                    if (toRemoveCe != null)
-                        handlersCollection.Remove(toRemoveCe);
-                } catch { }
-                //foreach (ConfigurationElement ce in toRemoveElements)
+                //try
                 //{
-                //    handlersCollection.Remove(ce);
-                //}
+                //    if (toRemoveCe != null)
+                //        handlersCollection.Remove(toRemoveCe);
+                //} catch { }
+                foreach (ConfigurationElement ce in toRemoveElements)
+                {
+                    handlersCollection.Remove(ce);
+                }
                 //handlersCollection.Clear();
 
 
