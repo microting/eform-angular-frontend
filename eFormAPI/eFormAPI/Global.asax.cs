@@ -1,6 +1,14 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Configuration;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Migrations;
+using System.Diagnostics;
+using System.Web.Configuration;
 using System.Web.Http;
 using System.Web.Mvc;
+using eFormAPI.Web.Infrastructure.Helpers;
+using eFormAPI.Web.Infrastructure.Models.API;
+using eFormAPI.Web.Migrations;
 
 namespace eFormAPI.Web
 {
@@ -17,6 +25,24 @@ namespace eFormAPI.Web
             if (Debugger.IsAttached)
             {
                 SwaggerConfig.Register(GlobalConfiguration.Configuration);
+            }
+
+            // Migrations
+            try
+            {
+                var configuration = WebConfigurationManager.OpenWebConfiguration("~");
+                var section = (ConnectionStringsSection)configuration.GetSection("connectionStrings");
+                var connString = section.ConnectionStrings["eFormMainConnection"].ConnectionString;
+                var migrationConfiguration = new EformMigrationsConfiguration(connString)
+                {
+                    TargetDatabase = new DbConnectionInfo(connString, "System.Data.SqlClient")
+                };
+                var migrator = new DbMigrator(migrationConfiguration);
+                migrator.Update();
+            }
+            catch (Exception exception)
+            {
+                throw new Exception($"Error while migrate database: {exception.Message}");
             }
         }
     }
