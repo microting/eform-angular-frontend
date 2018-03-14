@@ -660,6 +660,7 @@ namespace CustomActions
                 bool jpgHandlerMissing = true;
                 bool jpegHandlerMissing = true;
                 bool add1Missing = true;
+                bool remove1Missing = true;
                 bool remove2Missing = true;
                 bool remove3Missing = true;
                 //ConfigurationElement toRemoveCe = null;
