@@ -45,12 +45,10 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpGet]
-        [Route("api/template-files/get-image/{fileName}.png")]
-        [Route("api/template-files/get-image/{fileName}.jpg")]
-        [Route("api/template-files/get-image/{fileName}.jpeg")]
-        public HttpResponseMessage GetImage(string fileName, string noCache = "noCache")
+        [Route("api/template-files/get-image/{fileName}.{ext}")]
+        public HttpResponseMessage GetImage(string fileName, string ext, string noCache = "noCache")
         {
-            var filePath = HttpContext.Current.Server.MapPath($"~/output/datafolder/picture/{fileName}");
+            var filePath = HttpContext.Current.Server.MapPath($"~/output/datafolder/picture/{fileName}.{ext}");
             if (!File.Exists(filePath))
             {
                 return new HttpResponseMessage(HttpStatusCode.NotFound);
