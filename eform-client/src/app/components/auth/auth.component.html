@@ -92,15 +92,25 @@
       <div class="panel panel-default top wrapper-top">
         <div class="panel-body">
           <div class="row">
-            <div class="col-md-8">
-              <ng-container *ngIf="googleAuthenticatorModel.psk">
-                <h3>Add EformApplication to Google Authenticator</h3>
-                <p>Open Google Authenticator and add EformApplication by scanning the QR Code to the right.</p>
-              </ng-container>
-              <h3>Enter the 6 digit code that Google Authenticator generates</h3>
-              <p *ngIf="googleAuthenticatorModel.psk">
-                Your PSK: <strong>{{googleAuthenticatorModel.psk}}</strong>
-              </p>
+            <div class="col-md-4 col-md-offset-4">
+              <div class="row">
+                <div class="col-md-12 col-xs-12">
+                  <ng-container *ngIf="!googleAuthenticatorModel.barcodeUrl">
+                    <img width="100%" src="../../../assets/images/google-auth-image.jpg"/>
+                  </ng-container>
+                  <ng-container *ngIf="googleAuthenticatorModel.psk">
+                    <p class="p-header-wrapper p-font">
+                      Open Google Authenticator and add EformApplication by scanning the QR Code to the right.
+                    </p>
+                  </ng-container>
+                  <p>Enter the 6 digit code that Google Authenticator generates</p>
+                  <p *ngIf="googleAuthenticatorModel.psk">
+                    Your PSK: <strong>{{googleAuthenticatorModel.psk}}</strong>
+                  </p>
+                </div>
+              </div>
+
+
               <form [formGroup]="formGoogleAuth">
                 <div class="input-group input-group-md">
                     <span class="input-group-addon lock-addon"><i class="fa fa-unlock-alt"
@@ -117,10 +127,9 @@
                 Back to login
               </a>
             </div>
-            <div class="col-md-4">
-              <ng-container *ngIf="googleAuthenticatorModel.barcodeUrl">
-                <img width="100%" src="http://qrcode.kaywa.com/img.php?s=4&d={{googleAuthenticatorModel.barcodeUrl || ''}}"/>
-              </ng-container>
+            <div class="col-md-4" *ngIf="googleAuthenticatorModel.barcodeUrl">
+              <img width="100%"
+                   src="http://qrcode.kaywa.com/img.php?s=4&d={{googleAuthenticatorModel.barcodeUrl || ''}}"/>
             </div>
           </div>
         </div>
