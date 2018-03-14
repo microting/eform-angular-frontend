@@ -662,39 +662,39 @@ namespace CustomActions
                 bool add1Missing = true;
                 bool remove2Missing = true;
                 bool remove3Missing = true;
-                ConfigurationElement toRemoveCe = null;
+                //ConfigurationElement toRemoveCe = null;
 
                 List<ConfigurationElement> toRemoveElements = new List<ConfigurationElement>();
 
                 foreach (ConfigurationElement ce in handlersCollection)
                 {
-                    if (ce.GetAttributeValue("name").ToString() == "get-image-png")
-                    {
-                        //MessageBox.Show("pngHandlerMissing");
-                        pngHandlerMissing = false;
-                    }
-                    if (ce.GetAttributeValue("name").ToString() == "get-image-jpg")
-                    {
-                        //MessageBox.Show("jpgHandlerMissing");
-                        jpgHandlerMissing = false;
-                    }
-                    if (ce.GetAttributeValue("name").ToString() == "get-image-jpeg")
-                    {
-                        //MessageBox.Show("jpegHandlerMissing");
-                        jpegHandlerMissing = false;
-                    }
-                    if (ce.GetAttributeValue("name").ToString() == "ExtensionlessUrlHandler-Integrated-4.0")
-                    {
-                        add1Missing = true;
-                    }
-                    if (ce.GetAttributeValue("name").ToString() == "OPTIONSVerbHandler")
-                    {
-                        remove2Missing = true;
-                    }
-                    if (ce.GetAttributeValue("name").ToString() == "TRACEVerbHandler")
-                    {
-                        remove3Missing = true;
-                    }
+                    //if (ce.GetAttributeValue("name").ToString() == "get-image-png")
+                    //{
+                    //    //MessageBox.Show("pngHandlerMissing");
+                    //    pngHandlerMissing = false;
+                    //}
+                    //if (ce.GetAttributeValue("name").ToString() == "get-image-jpg")
+                    //{
+                    //    //MessageBox.Show("jpgHandlerMissing");
+                    //    jpgHandlerMissing = false;
+                    //}
+                    //if (ce.GetAttributeValue("name").ToString() == "get-image-jpeg")
+                    //{
+                    //    //MessageBox.Show("jpegHandlerMissing");
+                    //    jpegHandlerMissing = false;
+                    //}
+                    //if (ce.GetAttributeValue("name").ToString() == "ExtensionlessUrlHandler-Integrated-4.0")
+                    //{
+                    //    add1Missing = false;
+                    //}
+                    //if (ce.GetAttributeValue("name").ToString() == "OPTIONSVerbHandler")
+                    //{
+                    //    remove2Missing = false;
+                    //}
+                    //if (ce.GetAttributeValue("name").ToString() == "TRACEVerbHandler")
+                    //{
+                    //    remove3Missing = false;
+                    //}
 
                     //if (ce.GetAttributeValue("name").ToString() == "ExtensionlessUrlHandler-Integrated-4.0")
                     //{
@@ -714,19 +714,19 @@ namespace CustomActions
                 }
                 handlersCollection.Clear();
 
-                //if (remove1Missing)
-                //{
-                //    try
-                //    {
-                //        ConfigurationElement ele = handlersCollection.CreateElement("remove");
-                //        ele["name"] = "ExtensionlessUrlHandler-Integrated-4.0";
-                //        handlersCollection.Add(ele);
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        //MessageBox.Show("ExtensionlessUrlHandler ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
-                //    }
-                //}
+                if (remove1Missing)
+                {
+                    try
+                    {
+                        ConfigurationElement ele = handlersCollection.CreateElement("remove");
+                        ele["name"] = "ExtensionlessUrlHandler-Integrated-4.0";
+                        handlersCollection.Add(ele);
+                    }
+                    catch (Exception ex)
+                    {
+                        //MessageBox.Show("ExtensionlessUrlHandler ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
+                    }
+                }
 
                 if (remove2Missing)
                 {
