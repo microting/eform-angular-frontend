@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security;
 using Microsoft.Win32;
 using System.Reflection;
+using System.Threading;
 
 namespace AlowMultipleVersionsBundle
 {
@@ -14,6 +15,11 @@ namespace AlowMultipleVersionsBundle
         {
             try
             {
+                string path = Path.Combine(Path.GetTempPath(), "Eform Angular Frontend.exe");
+                if (IsFileLocked(path))
+                    // wait for previous installer finish
+                    Thread.Sleep(2000);
+
                 var unistall =
                     Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall",
                         true);
@@ -27,17 +33,9 @@ namespace AlowMultipleVersionsBundle
 
                 SetupIIS();
 
-                string path = Path.Combine(Path.GetTempPath(), "Eform Angular Frontend.exe");
-
-                try
-                {
+                if (!IsFileLocked(path))
                     File.WriteAllBytes(path, Resources.Eform_Angular_Frontend);
-                }
-                catch 
-                {
-                    // in case if installer already running, there is no need to write its sources
-                }
-
+                
                 var drive = DriveInfo.GetDrives().First(t => t.DriveType == DriveType.Fixed).Name;
                 var tmpDir = Path.Combine(drive, "tmp");
                 if (Directory.Exists(tmpDir))
@@ -54,6 +52,26 @@ namespace AlowMultipleVersionsBundle
                 Console.WriteLine("Please run installer package as administrator");
             }
 
+        }
+
+        static bool IsFileLocked(string path)
+        {
+            FileStream stream = null;
+
+            try
+            {
+                stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.None);
+            }
+            catch (IOException)
+            {
+                return true;
+            }
+            finally
+            {
+                if (stream != null)
+                    stream.Close();
+            }
+            return false;
         }
 
         static void SetupIIS()
