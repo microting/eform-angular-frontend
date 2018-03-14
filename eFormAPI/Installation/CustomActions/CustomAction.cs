@@ -659,27 +659,42 @@ namespace CustomActions
                 bool pngHandlerMissing = true;
                 bool jpgHandlerMissing = true;
                 bool jpegHandlerMissing = true;
+                bool add1Missing = true;
+                bool remove2Missing = true;
+                bool remove3Missing = true;
                 ConfigurationElement toRemoveCe = null;
 
                 List<ConfigurationElement> toRemoveElements = new List<ConfigurationElement>();
 
                 foreach (ConfigurationElement ce in handlersCollection)
                 {
-                    //if (ce.GetAttributeValue("name").ToString() == "get-image-png")
-                    //{
-                    //    //MessageBox.Show("pngHandlerMissing");
-                    //    pngHandlerMissing = false;
-                    //}
-                    //if (ce.GetAttributeValue("name").ToString() == "get-image-jpg")
-                    //{
-                    //    //MessageBox.Show("jpgHandlerMissing");
-                    //    jpgHandlerMissing = false;
-                    //}
-                    //if (ce.GetAttributeValue("name").ToString() == "get-image-jpeg")
-                    //{
-                    //    //MessageBox.Show("jpegHandlerMissing");
-                    //    jpegHandlerMissing = false;
-                    //}
+                    if (ce.GetAttributeValue("name").ToString() == "get-image-png")
+                    {
+                        //MessageBox.Show("pngHandlerMissing");
+                        pngHandlerMissing = false;
+                    }
+                    if (ce.GetAttributeValue("name").ToString() == "get-image-jpg")
+                    {
+                        //MessageBox.Show("jpgHandlerMissing");
+                        jpgHandlerMissing = false;
+                    }
+                    if (ce.GetAttributeValue("name").ToString() == "get-image-jpeg")
+                    {
+                        //MessageBox.Show("jpegHandlerMissing");
+                        jpegHandlerMissing = false;
+                    }
+                    if (ce.GetAttributeValue("name").ToString() == "ExtensionlessUrlHandler-Integrated-4.0")
+                    {
+                        add1Missing = true;
+                    }
+                    if (ce.GetAttributeValue("name").ToString() == "OPTIONSVerbHandler")
+                    {
+                        remove2Missing = true;
+                    }
+                    if (ce.GetAttributeValue("name").ToString() == "TRACEVerbHandler")
+                    {
+                        remove3Missing = true;
+                    }
 
                     //if (ce.GetAttributeValue("name").ToString() == "ExtensionlessUrlHandler-Integrated-4.0")
                     //{
@@ -697,56 +712,65 @@ namespace CustomActions
                 {
                     handlersCollection.Remove(ce);
                 }
-                //handlersCollection.Clear();
+                handlersCollection.Clear();
 
+                //if (remove1Missing)
+                //{
+                //    try
+                //    {
+                //        ConfigurationElement ele = handlersCollection.CreateElement("remove");
+                //        ele["name"] = "ExtensionlessUrlHandler-Integrated-4.0";
+                //        handlersCollection.Add(ele);
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        //MessageBox.Show("ExtensionlessUrlHandler ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
+                //    }
+                //}
 
-                try
+                if (remove2Missing)
                 {
-                    ConfigurationElement ele = handlersCollection.CreateElement("remove");
-                    ele["name"] = "ExtensionlessUrlHandler-Integrated-4.0";
-                    handlersCollection.Add(ele);
-                }
-                catch (Exception ex)
-                {
-                    //MessageBox.Show("ExtensionlessUrlHandler ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
-                }
-
-                try
-                {
-                    ConfigurationElement ele = handlersCollection.CreateElement("remove");
-                    ele["name"] = "OPTIONSVerbHandler";
-                    handlersCollection.Add(ele);
-                }
-                catch (Exception ex)
-                {
-                    //MessageBox.Show("OPTIONSVerbHandler ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
-                }
-
-                try
-                {
-                    ConfigurationElement ele = handlersCollection.CreateElement("remove");
-                    ele["name"] = "TRACEVerbHandler";
-                    handlersCollection.Add(ele);
-                }
-                catch (Exception ex)
-                {
-                    //MessageBox.Show("TRACEVerbHandler ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
+                    try
+                    {
+                        ConfigurationElement ele = handlersCollection.CreateElement("remove");
+                        ele["name"] = "OPTIONSVerbHandler";
+                        handlersCollection.Add(ele);
+                    }
+                    catch (Exception ex)
+                    {
+                        //MessageBox.Show("OPTIONSVerbHandler ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
+                    }
                 }
 
-                try
-                {
-                    ConfigurationElement ele = handlersCollection.CreateElement("add");
-                    ele["name"] = "ExtensionlessUrlHandler-Integrated-4.0";
-                    ele["path"] = @"*.";
-                    ele["verb"] = "*";
-                    ele["type"] = @"System.Web.Handlers.TransferRequestHandler";
-                    ele["preCondition"] = "integratedMode,runtimeVersionv4.0";
-                    handlersCollection.Add(ele);
+                if (remove3Missing) {
+                    try
+                    {
+                        ConfigurationElement ele = handlersCollection.CreateElement("remove");
+                        ele["name"] = "TRACEVerbHandler";
+                        handlersCollection.Add(ele);
+                    }
+                    catch (Exception ex)
+                    {
+                        //MessageBox.Show("TRACEVerbHandler ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
+                    }
                 }
-                catch 
+                if (add1Missing)
                 {
-                    //MessageBox.Show("pngHandlerMissing ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
-                }
+                    try
+                    {
+                        ConfigurationElement ele = handlersCollection.CreateElement("add");
+                        ele["name"] = "ExtensionlessUrlHandler-Integrated-4.0";
+                        ele["path"] = @"*.";
+                        ele["verb"] = "*";
+                        ele["type"] = @"System.Web.Handlers.TransferRequestHandler";
+                        ele["preCondition"] = "integratedMode,runtimeVersionv4.0";
+                        handlersCollection.Add(ele);
+                    }
+                    catch
+                    {
+                        //MessageBox.Show("pngHandlerMissing ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
+                    }
+                }             
 
                 if (pngHandlerMissing) {
                     try
