@@ -24,6 +24,12 @@ export class BaseService {
       .catch(this.handleError);
   }
 
+  delete<T>(method: string): Observable<T> {
+    return this.http.delete(method, {headers: this.apiHeaders})
+      .map((response) => this.extractData<T>(response))
+      .catch(this.handleError);
+  }
+
   postForm<T>(method: string, body: any): Observable<T> {
     return this.http.post(method, body.toString(), {headers: this.formHeaders})
       .map((response) => this.extractData<T>(response))

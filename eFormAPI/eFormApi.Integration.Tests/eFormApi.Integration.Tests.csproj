@@ -73,10 +73,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\eFormAPI.Common\eFormAPI.Common.csproj">
-      <Project>{515ee205-5349-449e-be13-f83da5b601b9}</Project>
-      <Name>eFormAPI.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\eFormApi.Tests\eFormApi.Tests.csproj">
       <Project>{12d13bc6-8f04-4409-941c-dcfb60b00d05}</Project>
       <Name>eFormApi.Tests</Name>

@@ -1,9 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {UserEditComponent} from 'app/modules/admin/components/user-edit/user-edit.component';
-import {UserInfoModel, UserRegisterModel} from 'app/models/user';
+import {UserRegisterModel} from 'app/models/user';
 import {UserInfoModelList} from 'app/models/user/user-info-model-list';
 import {PaginationModel} from 'app/models/common';
-import {AdminService} from 'app/services';
+import {AdminService, AuthService} from 'app/services';
 
 @Component({
   selector: 'eform-user',
@@ -17,19 +17,29 @@ export class UserComponent implements OnInit {
   paginationModel: PaginationModel = new PaginationModel;
   spinnerStatus: boolean;
   selectedUserId: number;
+  isChecked = false;
+  twoFactorCheckboxDisabled = true;
 
-  constructor(private adminService: AdminService) {
+  constructor(private adminService: AdminService, private authService: AuthService) {
     this.paginationModel = new PaginationModel(1, 10, 0);
   }
 
   showCreateUserModal() {
     this.userFullModel = new UserRegisterModel;
-    this.userEditComponent.createUserModal.open();
+    this.userEditComponent.createUserModal.open().then();
   }
 
 
   ngOnInit() {
     this.getUserInfoList();
+    this.getTwoFactorInfo();
+  }
+
+  getTwoFactorInfo() {
+    this.authService.twoFactorAuthInfo().subscribe((data) => {
+      this.isChecked = data.model;
+      this.twoFactorCheckboxDisabled = false;
+    }, () => this.twoFactorCheckboxDisabled = false);
   }
 
   getUserInfoList() {
@@ -57,4 +67,20 @@ export class UserComponent implements OnInit {
     }
   }
 
+  checkBoxChanged(e: any) {
+    this.twoFactorCheckboxDisabled = true;
+    if (e.target && e.target.checked) {
+      this.adminService.enableTwoFactorAuth().subscribe(() => {
+        this.isChecked = true;
+        this.twoFactorCheckboxDisabled = false;
+      }, () => this.twoFactorCheckboxDisabled = false);
+    } else if (e.target && !e.target.checked) {
+      this.adminService.disableTwoFactorAuth().subscribe(() => {
+        this.isChecked = false;
+        this.twoFactorCheckboxDisabled = false;
+      }, () => this.twoFactorCheckboxDisabled = false);
+    } else {
+      return;
+    }
+  }
 }

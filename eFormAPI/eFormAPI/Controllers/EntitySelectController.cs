@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
-using eFormAPI.Common.API;
-using eFormAPI.Common.Models;
-using eFormAPI.Common.Models.SelectableList;
 using eFormAPI.Web.Infrastructure.Helpers;
+using eFormAPI.Web.Infrastructure.Models.API;
+using eFormAPI.Web.Infrastructure.Models.Common;
+using eFormAPI.Web.Infrastructure.Models.SelectableList;
 using eFormData;
 using eFormShared;
 
@@ -18,13 +18,15 @@ namespace eFormAPI.Web.Controllers
 
         [HttpPost]
         [Route("api/selectable-groups")]
-        public OperationDataResult<EntityGroupList> GetEntityGroupList(AdvEntitySelectableGroupListRequestModel requestModel)
+        public OperationDataResult<EntityGroupList> GetEntityGroupList(
+            AdvEntitySelectableGroupListRequestModel requestModel)
         {
             try
             {
                 var core = _coreHelper.GetCore();
                 var model = core.Advanced_EntityGroupAll(requestModel.Sort, requestModel.NameFilter,
-                    requestModel.PageIndex, requestModel.PageSize, Constants.FieldTypes.EntitySelect, requestModel.IsSortDsc,
+                    requestModel.PageIndex, requestModel.PageSize, Constants.FieldTypes.EntitySelect,
+                    requestModel.IsSortDsc,
                     Constants.WorkflowStates.NotRemoved);
                 return new OperationDataResult<EntityGroupList>(true, model);
             }
@@ -124,7 +126,8 @@ namespace eFormAPI.Web.Controllers
             }
             catch (Exception ex)
             {
-                return new OperationDataResult<List<CommonDictionaryTextModel>>(false, "Error when obtaining searchable list");
+                return new OperationDataResult<List<CommonDictionaryTextModel>>(false,
+                    "Error when obtaining searchable list");
             }
         }
 

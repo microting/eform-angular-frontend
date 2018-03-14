@@ -1,11 +1,18 @@
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import {Router} from '@angular/router';
-import {AuthResponseModel, LoginRequestModel} from 'app/models/auth';
 import {Observable} from 'rxjs/Observable';
 import {BaseService} from '../base.service';
-import {ChangePasswordModel, UserInfoModel} from 'app/models';
-import {PasswordRestoreModel} from '../../models/auth/password-restore.model';
+import {
+  ChangePasswordModel,
+  UserInfoModel,
+  AuthResponseModel,
+  LoginRequestModel,
+  PasswordRestoreModel,
+  GoogleAuthenticatorModel,
+  GoogleAuthInfoModel
+} from 'app/models';
+import {OperationDataResult, OperationResult} from '../../modules/helpers/operation.models';
 
 export let AuthMethods = {
   Login: 'api/auth/token',
@@ -15,7 +22,11 @@ export let AuthMethods = {
   ChangePassword: 'api/account/change-password',
   RestoreUserPassword: '/api/account/reset-password',
   EmailRecoveryLink: '/api/account/forgot-password',
-  ResetAdminPassword: '/api/account/reset-admin-password'
+  ResetAdminPassword: '/api/account/reset-admin-password',
+  TwoFactorAuthInfo: 'api/auth/two-factor-info',
+  LoginAndGetGoogleAuthKey: 'api/auth/google-auth-key',
+  GetGoogleAuthenticatorInfo: 'api/auth/google-auth-info',
+  DeleteGoogleAuthenticatorInfo: 'api/auth/google-auth-info'
 };
 
 @Injectable()
@@ -29,6 +40,9 @@ export class AuthService extends BaseService {
     body.set('username', loginInfo.username);
     body.set('password', loginInfo.password);
     body.set('grant_type', loginInfo.grant_type);
+    if (loginInfo.code) {
+      body.set('code', loginInfo.code);
+    }
     return this.postForm(AuthMethods.Login, body).map((result) => {
       return new AuthResponseModel(result);
     });
@@ -68,21 +82,36 @@ export class AuthService extends BaseService {
     }
     return '';
   }
-  // loginAsUser(userId: number): Observable<any> {
-  //   return this.post(AuthMethods.LoginAsUser, { user_id: userId }).map((result) => {
-  //     return result;
-  //   });
-  // }
-  //
+
   changePassword(model: ChangePasswordModel): Observable<any> {
     return this.post(AuthMethods.ChangePassword, model).map((result) => {
       return result;
     });
   }
-   logout(): Observable<any> {
-     return this.post(AuthMethods.Logout, {});
-   }
-  //
+
+  logout(): Observable<any> {
+    return this.get(AuthMethods.Logout);
+  }
+
+  public twoFactorAuthInfo(): Observable<OperationDataResult<boolean>> {
+    return this.getWithOperationDataResult(AuthMethods.TwoFactorAuthInfo);
+  }
+
+  loginAndGetGoogleAuthKey(loginInfo: LoginRequestModel): Observable<OperationDataResult<GoogleAuthenticatorModel>> {
+    const body = new URLSearchParams();
+    body.set('username', loginInfo.username);
+    body.set('password', loginInfo.password);
+    return this.postForm(AuthMethods.LoginAndGetGoogleAuthKey, body);
+  }
+
+  public getGoogleAuthenticatorInfo(): Observable<OperationDataResult<GoogleAuthInfoModel>> {
+    return this.getWithOperationDataResult(AuthMethods.GetGoogleAuthenticatorInfo);
+  }
+
+  public deleteGoogleAuthenticatorInfo(): Observable<OperationResult> {
+    return this.delete(AuthMethods.GetGoogleAuthenticatorInfo);
+  }
+
   // restorePassword (email: string): Observable<string> {
   //   return this.post(AuthMethods.Restore, { email: email }).map((result) => {
   //     return result;

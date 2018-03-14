@@ -10,6 +10,10 @@ namespace eFormAPI.Web.Infrastructure.Data.Entities
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+
+        public bool IsGoogleAuthenticatorEnabled { get; set; }
+        public string GoogleAuthenticatorSecretKey { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(
             UserManager<EformUser, int> manager, string authenticationType)
         {

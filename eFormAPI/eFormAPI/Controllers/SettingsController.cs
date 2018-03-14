@@ -6,11 +6,11 @@ using System.IO;
 using System.Reflection;
 using System.Web.Configuration;
 using System.Web.Http;
-using eFormAPI.Common.API;
-using eFormAPI.Common.Models.Settings.Admin;
-using eFormAPI.Common.Models.Settings.Initial;
 using eFormAPI.Web.Infrastructure.Consts;
 using eFormAPI.Web.Infrastructure.Helpers;
+using eFormAPI.Web.Infrastructure.Models.API;
+using eFormAPI.Web.Infrastructure.Models.Settings.Admin;
+using eFormAPI.Web.Infrastructure.Models.Settings.Initial;
 using eFormAPI.Web.Migrations;
 using eFormCore;
 using NLog;
@@ -233,7 +233,8 @@ namespace eFormAPI.Web.Controllers
                 section.Settings["email:password"].Value = adminSettingsModel.SMTPSettingsModel.Password;
 
                 section.Settings["header:imageLink"].Value = adminSettingsModel.HeaderSettingsModel.ImageLink;
-                section.Settings["header:imageLinkVisible"].Value = adminSettingsModel.HeaderSettingsModel.ImageLinkVisible.ToString();
+                section.Settings["header:imageLinkVisible"].Value =
+                    adminSettingsModel.HeaderSettingsModel.ImageLinkVisible.ToString();
                 section.Settings["header:mainText"].Value = adminSettingsModel.HeaderSettingsModel.MainText;
                 section.Settings["header:mainTextVisible"].Value =
                     adminSettingsModel.HeaderSettingsModel.MainTextVisible.ToString();
@@ -242,13 +243,15 @@ namespace eFormAPI.Web.Controllers
                     adminSettingsModel.HeaderSettingsModel.SecondaryTextVisible.ToString();
 
                 section.Settings["loginPage:imageLink"].Value = adminSettingsModel.LoginPageSettingsModel.ImageLink;
-                section.Settings["loginPage:imageLinkVisible"].Value = adminSettingsModel.LoginPageSettingsModel.ImageLinkVisible.ToString();
+                section.Settings["loginPage:imageLinkVisible"].Value =
+                    adminSettingsModel.LoginPageSettingsModel.ImageLinkVisible.ToString();
                 section.Settings["loginPage:mainText"].Value = adminSettingsModel.LoginPageSettingsModel.MainText;
                 section.Settings["loginPage:mainTextVisible"].Value =
                     adminSettingsModel.LoginPageSettingsModel.MainTextVisible.ToString();
                 section.Settings["loginPage:secondaryText"].Value =
                     adminSettingsModel.LoginPageSettingsModel.SecondaryText;
-                section.Settings["loginPage:secondaryTextVisible"].Value = adminSettingsModel.LoginPageSettingsModel.SecondaryTextVisible.ToString();
+                section.Settings["loginPage:secondaryTextVisible"].Value = adminSettingsModel.LoginPageSettingsModel
+                    .SecondaryTextVisible.ToString();
 
 
                 configuration.Save();
@@ -275,14 +278,14 @@ namespace eFormAPI.Web.Controllers
             {
                 var configuration = WebConfigurationManager.OpenWebConfiguration("~");
                 var section = (AppSettingsSection) configuration.GetSection("appSettings");
-                
+
                 section.Settings["loginPage:imageLink"].Value = "";
                 section.Settings["loginPage:imageLinkVisible"].Value = "True";
                 section.Settings["loginPage:mainText"].Value = "Microting eForm";
                 section.Settings["loginPage:mainTextVisible"].Value = "True";
                 section.Settings["loginPage:secondaryText"].Value = "No more paper-forms and back-office data entry";
                 section.Settings["loginPage:secondaryTextVisible"].Value = "True";
-                
+
                 configuration.Save();
                 ConfigurationManager.RefreshSection("appSettings");
                 return new OperationResult(true, "Login page settings have been reseted successfully");
@@ -303,14 +306,14 @@ namespace eFormAPI.Web.Controllers
             {
                 var configuration = WebConfigurationManager.OpenWebConfiguration("~");
                 var section = (AppSettingsSection) configuration.GetSection("appSettings");
-                
+
                 section.Settings["header:imageLink"].Value = "";
                 section.Settings["header:imageLinkVisible"].Value = "True";
                 section.Settings["header:mainText"].Value = "Microting eForm";
                 section.Settings["header:mainTextVisible"].Value = "True";
                 section.Settings["header:secondaryText"].Value = "No more paper-forms and back-office data entry";
                 section.Settings["header:secondaryTextVisible"].Value = "True";
-                
+
                 configuration.Save();
                 ConfigurationManager.RefreshSection("appSettings");
                 return new OperationResult(true, "Header settings have been reseted successfully");

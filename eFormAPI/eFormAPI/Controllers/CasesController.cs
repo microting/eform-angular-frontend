@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Http;
-using eFormAPI.Common.API;
-using eFormAPI.Common.Models.Cases.Request;
-using eFormAPI.Common.Models.Cases.Response;
 using eFormAPI.Web.Infrastructure.Helpers;
+using eFormAPI.Web.Infrastructure.Models.API;
+using eFormAPI.Web.Infrastructure.Models.Cases.Request;
+using eFormAPI.Web.Infrastructure.Models.Cases.Response;
 using eFormShared;
 using eFormData;
 
@@ -21,7 +21,8 @@ namespace eFormAPI.Web.Controllers
             try
             {
                 var core = _coreHelper.GetCore();
-                var caseList = core.CaseReadAll(requestModel.TemplateId, null, null, Constants.WorkflowStates.NotRemoved, requestModel.NameFilter,
+                var caseList = core.CaseReadAll(requestModel.TemplateId, null, null,
+                    Constants.WorkflowStates.NotRemoved, requestModel.NameFilter,
                     requestModel.IsSortDsc, requestModel.Sort);
                 var model = new CaseListModel()
                 {

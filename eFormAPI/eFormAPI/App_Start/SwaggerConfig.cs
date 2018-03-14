@@ -7,7 +7,7 @@ using Swashbuckle.Swagger;
 
 namespace eFormAPI.Web
 {
-    public class SwaggerConfig
+    public static class SwaggerConfig
     {
         public static void Register(HttpConfiguration _configuration)
         {

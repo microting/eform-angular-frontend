@@ -1,9 +1,9 @@
 ﻿using System.Configuration;
 using System.Linq;
-using eFormAPI.Common.Models.Settings.Initial;
 using eFormAPI.Web.Infrastructure.Data;
 using eFormAPI.Web.Infrastructure.Data.Entities;
 using eFormAPI.Web.Infrastructure.Identity;
+using eFormAPI.Web.Infrastructure.Models.Settings.Initial;
 using Microsoft.AspNet.Identity;
 
 namespace eFormAPI.Web.Infrastructure.Helpers
@@ -32,6 +32,8 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                 FirstName = adminSetupModel.FirstName,
                 LastName = adminSetupModel.LastName,
                 EmailConfirmed = true,
+                TwoFactorEnabled = false,
+                IsGoogleAuthenticatorEnabled = false
             };
             if (!manager.Users.Any(x => x.Email.Equals(adminUser.Email)))
             {
