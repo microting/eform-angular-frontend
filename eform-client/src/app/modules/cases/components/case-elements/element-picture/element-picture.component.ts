@@ -89,7 +89,7 @@ export class ElementPictureComponent implements OnChanges, OnInit {
       if (operation && operation.success) {
         this.notifyService.success({text: operation.message});
         this.images = this.images.filter(x => x.fileName !== image.fileName);
-        image.src = image.src + '&noCache=' + Math.floor(Math.random() * 1000).toString();
+        image.src = image.src + '?noCache=' + Math.floor(Math.random() * 1000).toString();
         image.thumbnail = image.src;
         this.images.push(image);
         this.updateGallery();
