@@ -281,7 +281,13 @@
               </tr>
               <tr *ngIf="googlePsk">
                 <td class="col-md-12">
-                  <p>Your PSK (Secret key): <strong>{{googlePsk}}</strong></p>
+                  <p>Status: <strong>Enabled</strong></p>
+                  <p>Secret key between <strong>Eform</strong> application and <strong>Google Authenticator</strong>.
+                    Keep it safe and do not tell anyone.
+                  </p>
+                  <p>You should remove this key, if <strong>Google Authenticator</strong>
+                    is reinstalled or key was removed</p>
+                  <p><strong>{{googlePsk}}</strong></p>
                 </td>
               </tr>
               <tr *ngIf="googlePsk">
