@@ -47,9 +47,13 @@ export class AuthComponent implements OnInit {
       // send pre-request
       this.authService.loginAndGetGoogleAuthKey(new LoginRequestModel(this.formLogin.getRawValue()))
         .subscribe((result) => {
-          this.googleAuthenticatorModel = result.model;
-          this.showTwoFactorForm = true;
-        });
+            if (result.model) {
+              this.googleAuthenticatorModel = result.model;
+              this.showTwoFactorForm = true;
+            } else {
+              this.notifyService.error({text: '400 - Bad Request The user name or password is incorrect'});
+            }
+          });
     } else {
       this.authService.login(new LoginRequestModel(this.formLogin.getRawValue()))
         .subscribe((result: AuthResponseModel) => {
