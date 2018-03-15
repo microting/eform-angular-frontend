@@ -9,6 +9,7 @@ using System.Web.Http;
 using eFormAPI.Web.Infrastructure.Consts;
 using eFormAPI.Web.Infrastructure.Data;
 using eFormAPI.Web.Infrastructure.Data.Entities;
+using eFormAPI.Web.Infrastructure.Helpers;
 using eFormAPI.Web.Infrastructure.Identity;
 using eFormAPI.Web.Infrastructure.Models.API;
 using eFormAPI.Web.Infrastructure.Models.Common;
@@ -177,18 +178,13 @@ namespace eFormAPI.Web.Controllers
                 {
                     return new OperationResult(false, "Role is required");
                 }
-                var twoFactorEnabled = UserManager.Users.FirstOrDefault()?.TwoFactorEnabled;
-                if (twoFactorEnabled == null)
-                {
-                    twoFactorEnabled = false;
-                }
                 var user = new EformUser
                 {
                     Email = userRegisterModel.Email,
                     UserName = userRegisterModel.UserName,
                     FirstName = userRegisterModel.FirstName,
                     LastName = userRegisterModel.LastName,
-                    TwoFactorEnabled = (bool) twoFactorEnabled,
+                    TwoFactorEnabled = false,
                     IsGoogleAuthenticatorEnabled = false
                 };
 
@@ -242,18 +238,9 @@ namespace eFormAPI.Web.Controllers
         [Authorize(Roles = EformRoles.Admin)]
         public OperationResult EnableTwoFactorAuthForce()
         {
-            var queryString = @"
-                UPDATE Users
-                SET TwoFactorEnabled = 1";
             try
             {
-                using (var connection =
-                    new SqlConnection(_connectionString))
-                {
-                    connection.Open();
-                    var command = new SqlCommand(queryString, connection);
-                    command.ExecuteNonQuery();
-                }
+                SettingsHelper.UpdateTwoFactorAuthForceInfo(true);
             }
             catch (Exception)
             {
@@ -267,18 +254,9 @@ namespace eFormAPI.Web.Controllers
         [Authorize(Roles = EformRoles.Admin)]
         public OperationResult DisableTwoFactorAuthForce()
         {
-            var queryString = @"
-                UPDATE Users
-                SET TwoFactorEnabled = 0";
             try
             {
-                using (var connection =
-                    new SqlConnection(_connectionString))
-                {
-                    connection.Open();
-                    var command = new SqlCommand(queryString, connection);
-                    command.ExecuteNonQuery();
-                }
+                SettingsHelper.UpdateTwoFactorAuthForceInfo(false);
             }
             catch (Exception)
             {

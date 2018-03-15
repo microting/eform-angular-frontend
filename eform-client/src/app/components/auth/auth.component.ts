@@ -27,7 +27,7 @@ export class AuthComponent implements OnInit {
   loginImage: any;
 
   // Two factor
-  twoFactorEnabled = false;
+  twoFactorForced = false;
   showTwoFactorForm = false;
   googleAuthenticatorModel: GoogleAuthenticatorModel = new GoogleAuthenticatorModel;
 
@@ -42,29 +42,34 @@ export class AuthComponent implements OnInit {
               private notifyService: NotifyService) {
   }
 
+  login() {
+    this.authService.login(new LoginRequestModel(this.formLogin.getRawValue()))
+      .subscribe((result: AuthResponseModel) => {
+          localStorage.setItem('currentAuth', JSON.stringify(result));
+          this.router.navigate(['/']).then();
+        },
+        (error) => {
+          this.error = error;
+        },
+      );
+  }
+
   submitLoginForm(): void {
-    if (this.twoFactorEnabled) {
       // send pre-request
       this.authService.loginAndGetGoogleAuthKey(new LoginRequestModel(this.formLogin.getRawValue()))
         .subscribe((result) => {
+          if (result.success) {
+            // check if two factor is enabled
             if (result.model) {
               this.googleAuthenticatorModel = result.model;
               this.showTwoFactorForm = true;
             } else {
-              this.notifyService.error({text: '400 - Bad Request The user name or password is incorrect'});
+              this.login();
             }
-          });
-    } else {
-      this.authService.login(new LoginRequestModel(this.formLogin.getRawValue()))
-        .subscribe((result: AuthResponseModel) => {
-            localStorage.setItem('currentAuth', JSON.stringify(result));
-            this.router.navigate(['/']).then();
-          },
-          (error) => {
-            this.error = error;
-          },
-        );
-    }
+          } else {
+            this.notifyService.error({text: '400 - Bad Request The user name or password is incorrect'});
+          }
+        });
   }
 
   submitRestoreForm(): void {
@@ -166,7 +171,7 @@ export class AuthComponent implements OnInit {
 
   getTwoFactorInfo() {
     this.authService.twoFactorAuthInfo().subscribe((data) => {
-      this.twoFactorEnabled = data.model;
+      this.twoFactorForced = data.model;
     });
   }
 

@@ -4,6 +4,7 @@ import {AdminSettingsModel} from 'app/models';
 import {NotifyService, AuthService, SettingsService} from 'app/services';
 import {FileItem, FileUploader} from 'ng2-file-upload';
 import {UUID} from 'angular2-uuid';
+import {GoogleAuthInfoModel} from '../../../../models';
 
 @Component({
   selector: 'app-admin-settings',
@@ -17,7 +18,7 @@ export class AdminSettingsComponent implements OnInit {
   loginPageImageLink: string;
   spinnerStatus: boolean;
   adminSettingsModel: AdminSettingsModel = new AdminSettingsModel;
-  googlePsk: string;
+  googleAuthInfoModel: GoogleAuthInfoModel = new GoogleAuthInfoModel;
 
   constructor(private settingsService: SettingsService,
               private authService: AuthService,
@@ -92,8 +93,28 @@ export class AdminSettingsComponent implements OnInit {
 
   getGoogleAuthenticatorInfo() {
     this.authService.getGoogleAuthenticatorInfo().subscribe((data) => {
-      if (data && data.model && data.model.psk) {
-        this.googlePsk = data.model.psk;
+      if (data && data.model) {
+        this.googleAuthInfoModel = data.model;
+      }
+    });
+  }
+
+  isTwoFactorEnabledCheckBoxChanged(e) {
+    if (e.target && e.target.checked) {
+      this.googleAuthInfoModel.isTwoFactorEnabled = true;
+    } else if (e.target && !e.target.checked) {
+      this.googleAuthInfoModel.isTwoFactorEnabled = false;
+    } else {
+      return;
+    }
+    this.authService.updateGoogleAuthenticatorInfo(this.googleAuthInfoModel).subscribe((data) => {
+      if (data.success) {
+        this.authService.logout().subscribe(() => {
+          localStorage.clear();
+          this.router.navigate(['/login']).then();
+        });
+      } else {
+        this.notifyService.error({text: data.message});
       }
     });
   }
@@ -101,7 +122,7 @@ export class AdminSettingsComponent implements OnInit {
   deleteGoogleAuthenticatorInfo() {
     this.authService.deleteGoogleAuthenticatorInfo().subscribe((data) => {
       if (data && data.success) {
-        this.googlePsk = null;
+        this.googleAuthInfoModel.psk = null;
       }
     });
   }

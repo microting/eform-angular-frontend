@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Base32;
 using eFormAPI.Web.Infrastructure.Data.Entities;
+using eFormAPI.Web.Infrastructure.Helpers;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
@@ -36,7 +37,8 @@ namespace eFormAPI.Web.Infrastructure.Identity.Providers
             var requestData = await context.Request.ReadFormAsync();
             var psk = user.GoogleAuthenticatorSecretKey;
             var code = requestData.Get("code");
-            if (user.TwoFactorEnabled)
+            var isTwoFactorAuthForced = SettingsHelper.GetTwoFactorAuthForceInfo();
+            if (user.TwoFactorEnabled || isTwoFactorAuthForced)
             {
                 // check input params
                 if (string.IsNullOrEmpty(psk) || string.IsNullOrEmpty(code))

@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Linq;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using Base32;
+using eFormAPI.Web.Infrastructure.Helpers;
 using eFormAPI.Web.Infrastructure.Identity;
 using eFormAPI.Web.Infrastructure.Models.API;
 using eFormAPI.Web.Infrastructure.Models.Auth;
@@ -57,18 +57,12 @@ namespace eFormAPI.Web.Controllers
         {
             try
             {
-                var user = UserManager.Users.FirstOrDefault();
-                if (user != null)
-                {
-                    var twoFactorEnabled = user.TwoFactorEnabled;
-                    return new OperationDataResult<bool>(true, twoFactorEnabled);
-                }
+                return new OperationDataResult<bool>(true, SettingsHelper.GetTwoFactorAuthForceInfo());
             }
             catch (Exception)
             {
                 return new OperationDataResult<bool>(false);
             }
-            return new OperationDataResult<bool>(false);
         }
 
         [HttpGet]
@@ -82,7 +76,9 @@ namespace eFormAPI.Web.Controllers
                 {
                     var model = new GoogleAuthInfoModel()
                     {
-                        PSK = user.GoogleAuthenticatorSecretKey
+                        PSK = user.GoogleAuthenticatorSecretKey,
+                        IsTwoFactorEnabled = user.TwoFactorEnabled,
+                        IsTwoFactorForced = SettingsHelper.GetTwoFactorAuthForceInfo()
                     };
                     return new OperationDataResult<GoogleAuthInfoModel>(true, model);
                 }
@@ -92,6 +88,30 @@ namespace eFormAPI.Web.Controllers
                 return new OperationDataResult<GoogleAuthInfoModel>(false);
             }
             return new OperationDataResult<GoogleAuthInfoModel>(false);
+        }
+
+        [HttpPost]
+        [Route("api/auth/google-auth-info")]
+        public OperationResult UpdateGoogleAuthenticatorInfo(GoogleAuthInfoModel requestModel)
+        {
+            try
+            {
+                var user = UserManager.FindById(User.Identity.GetUserId<int>());
+                if (user != null)
+                {
+                    user.TwoFactorEnabled = requestModel.IsTwoFactorEnabled;
+                    var updateResult = UserManager.UpdateAsync(user).Result;
+                    if (updateResult.Succeeded)
+                    {
+                        return new OperationResult(true);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return new OperationResult(false);
+            }
+            return new OperationResult(false);
         }
 
         [HttpDelete]
@@ -139,6 +159,12 @@ namespace eFormAPI.Web.Controllers
             {
                 return new OperationDataResult<GoogleAuthenticatorModel>(false,
                     "The user name or password is incorrect.");
+            }
+            // check if two factor is enabled
+            var isTwoFactorAuthForced = SettingsHelper.GetTwoFactorAuthForceInfo();
+            if (!user.TwoFactorEnabled && !isTwoFactorAuthForced)
+            {
+                return new OperationDataResult<GoogleAuthenticatorModel>(true);
             }
             // generate PSK and barcode
             if (!string.IsNullOrEmpty(user.GoogleAuthenticatorSecretKey) && user.IsGoogleAuthenticatorEnabled)
