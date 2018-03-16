@@ -26,6 +26,7 @@ export let AuthMethods = {
   TwoFactorAuthInfo: 'api/auth/two-factor-info',
   LoginAndGetGoogleAuthKey: 'api/auth/google-auth-key',
   GetGoogleAuthenticatorInfo: 'api/auth/google-auth-info',
+  UpdateGoogleAuthenticatorInfo: 'api/auth/google-auth-info',
   DeleteGoogleAuthenticatorInfo: 'api/auth/google-auth-info'
 };
 
@@ -106,6 +107,10 @@ export class AuthService extends BaseService {
 
   public getGoogleAuthenticatorInfo(): Observable<OperationDataResult<GoogleAuthInfoModel>> {
     return this.getWithOperationDataResult(AuthMethods.GetGoogleAuthenticatorInfo);
+  }
+
+  public updateGoogleAuthenticatorInfo(model: GoogleAuthInfoModel ): Observable<OperationResult> {
+    return this.postModelOperationResult(AuthMethods.UpdateGoogleAuthenticatorInfo, model);
   }
 
   public deleteGoogleAuthenticatorInfo(): Observable<OperationResult> {

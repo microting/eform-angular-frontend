@@ -109,7 +109,6 @@ export class EditEntitySearchableGroupComponent implements OnChanges {
 
   addNewAdvEntitySearchableItem() {
     const item = new AdvEntitySearchableItemModel();
-    debugger;
     item.entityItemUId = this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels.length.toString();
     this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels.push(item);
   }
