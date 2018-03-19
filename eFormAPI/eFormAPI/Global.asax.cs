@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Web.Configuration;
 using System.Web.Http;
 using System.Web.Mvc;
+using Castle.Core.Internal;
 using eFormAPI.Web.Infrastructure.Helpers;
 using eFormAPI.Web.Infrastructure.Models.API;
 using eFormAPI.Web.Migrations;
@@ -33,12 +34,15 @@ namespace eFormAPI.Web
                 var configuration = WebConfigurationManager.OpenWebConfiguration("~");
                 var section = (ConnectionStringsSection)configuration.GetSection("connectionStrings");
                 var connString = section.ConnectionStrings["eFormMainConnection"].ConnectionString;
-                var migrationConfiguration = new EformMigrationsConfiguration(connString)
+                if (!connString.IsNullOrEmpty())
                 {
-                    TargetDatabase = new DbConnectionInfo(connString, "System.Data.SqlClient")
-                };
-                var migrator = new DbMigrator(migrationConfiguration);
-                migrator.Update();
+                    var migrationConfiguration = new EformMigrationsConfiguration(connString)
+                    {
+                        TargetDatabase = new DbConnectionInfo(connString, "System.Data.SqlClient")
+                    };
+                    var migrator = new DbMigrator(migrationConfiguration);
+                    migrator.Update();
+                }
             }
             catch (Exception exception)
             {
