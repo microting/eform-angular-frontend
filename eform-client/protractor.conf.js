@@ -10,10 +10,7 @@ exports.config = {
     // './e2e/settings.login-page.e2e-spec.ts'
   ],
   capabilities: {
-    'browserName': 'chrome',
-    'chromeOptions': {
-      'args': ["--headless", "--disable-gpu"]
-    }
+    'browserName': 'chrome'
   },
 
   directConnect: true,
