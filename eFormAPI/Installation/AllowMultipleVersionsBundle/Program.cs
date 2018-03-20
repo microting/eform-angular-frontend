@@ -33,8 +33,14 @@ namespace AlowMultipleVersionsBundle
 
                 SetupIIS();
 
-                if (!IsFileLocked(path))
-                    File.WriteAllBytes(path, Resources.Eform_Angular_Frontend);
+                try
+				{
+					File.WriteAllBytes(path, Resources.Eform_Angular_Frontend);
+				}
+                catch(Exception)
+				{
+					
+				}
                 
                 var drive = DriveInfo.GetDrives().First(t => t.DriveType == DriveType.Fixed).Name;
                 var tmpDir = Path.Combine(drive, "tmp");
