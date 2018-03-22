@@ -30,7 +30,6 @@ namespace eFormAPI.Web.Controllers
             var filePath = System.Web.Hosting.HostingEnvironment.MapPath($"~/bin/output/{fileName}");
             var fullPath = core.CasesToCsv(id, null, null, filePath,
                 $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image/");
-            //$"{core.GetHttpServerAddress()}/" + "api/template-files/get-image?&filename=");
 
             var result = new HttpResponseMessage(HttpStatusCode.OK);
             var fileStream = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
@@ -47,7 +46,9 @@ namespace eFormAPI.Web.Controllers
         [Route("api/template-files/get-image/{fileName}.{ext}")]
         public HttpResponseMessage GetImage(string fileName, string ext, string noCache = "noCache")
         {
-            var filePath = HttpContext.Current.Server.MapPath($"~/output/datafolder/picture/{fileName}.{ext}");
+            var core = _coreHelper.GetCore();
+
+            var filePath = $"{core.GetPicturePath()}\\{fileName}.{ext}";
             if (!File.Exists(filePath))
             {
                 var resultNotFound = new HttpResponseMessage(HttpStatusCode.NotFound);
@@ -72,7 +73,9 @@ namespace eFormAPI.Web.Controllers
         [Route("api/template-files/rotate-image")]
         public OperationResult RotateImage(string fileName)
         {
-            var filePath = HttpContext.Current.Server.MapPath($"~/output/datafolder/picture/{fileName}");
+            var core = _coreHelper.GetCore();
+
+            var filePath = $"{core.GetPicturePath()}\\{fileName}";
             if (!File.Exists(filePath))
             {
                 return new OperationResult(false, "File not found");
@@ -123,7 +126,9 @@ namespace eFormAPI.Web.Controllers
         [Route("api/template-files/get-pdf-file")]
         public HttpResponseMessage GetPdfFile(string fileName)
         {
-            var filePath = HttpContext.Current.Server.MapPath($"~/output/datafolder/pdf/{fileName}.pdf");
+            var core = _coreHelper.GetCore();
+
+            var filePath = $"{core.GetPdfPath()}\\{fileName}.pdf";
             if (!File.Exists(filePath))
             {
                 return new HttpResponseMessage(HttpStatusCode.NotFound);
