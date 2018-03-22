@@ -50,7 +50,9 @@ namespace eFormAPI.Web.Controllers
             var filePath = HttpContext.Current.Server.MapPath($"~/output/datafolder/picture/{fileName}.{ext}");
             if (!File.Exists(filePath))
             {
-                return new HttpResponseMessage(HttpStatusCode.NotFound);
+                var resultNotFound = new HttpResponseMessage(HttpStatusCode.NotFound);
+                resultNotFound.Content = new StringContent($"Trying to find file at location: {filePath}");
+                return resultNotFound;
             }
             var extention = Path.GetExtension(filePath).Replace(".", "");
 
