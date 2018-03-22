@@ -40,9 +40,9 @@ export const routes: Routes = [
         loadChildren: './modules/settings/settings.module#SettingsModule'
       },
       {
-        path: 'admin',
+        path: 'account-management',
         canActivate: [AuthGuard],
-        loadChildren: './modules/admin/admin.module#AdminModule'
+        loadChildren: './modules/account-management/account-management.module#AccountManagementModule'
       }
     ]
   },

@@ -1,0 +1,54 @@
+<header class="main-header main-header-title">
+  <div class="container-fluid">
+    <h1 class="page-title header-page-title">
+      <div class="container">
+        Google Authenticator
+      </div>
+    </h1>
+  </div>
+</header>
+<div class="edit_case">
+  <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12" role="main">
+          <div class="panel panel-default">
+            <table class="table">
+              <tbody>
+              <tr>
+                <td class="col-md-12">
+                  <div class="checkbox checkbox-wrapper">
+                    <input  name="isTwoFactorEnabled"
+                            id="isTwoFactorEnabled"
+                            value="{{googleAuthInfoModel.isTwoFactorEnabled}}"
+                            [checked]="googleAuthInfoModel.isTwoFactorEnabled"
+                            [disabled]="googleAuthInfoModel.isTwoFactorForced"
+                            (change)="isTwoFactorEnabledCheckBoxChanged($event)"
+                            type="checkbox">
+                    <label for="isTwoFactorEnabled"><strong>Status</strong> (change will logout you from the application)</label>
+                    <br>
+                  </div>
+                  <ng-container *ngIf="googleAuthInfoModel.psk">
+                    <p>Secret key between <strong>Eform</strong> application and <strong>Google Authenticator</strong>.
+                      Keep it safe and do not tell anyone.
+                    </p>
+                    <p>You should remove this key, if <strong>Google Authenticator</strong>
+                      is reinstalled or key was removed</p>
+                    <p><strong>{{googleAuthInfoModel.psk}}</strong></p>
+                  </ng-container>
+                </td>
+              </tr>
+              <tr *ngIf="googleAuthInfoModel.psk">
+                <td class="col-md-12">
+                  <button class="btn btn-ar btn-warning" id="deleteGoogleAuthenticatorInfo"
+                          tooltip="Remove google authenticator secret key" (click)="deleteGoogleAuthenticatorInfo()">
+                    Remove PSK
+                  </button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

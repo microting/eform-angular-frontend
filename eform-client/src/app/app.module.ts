@@ -13,13 +13,13 @@ import {FullLayoutComponent} from './layouts/fulllayout/fulllayout.component';
 import {SettingsModule} from './modules/settings/settings.module';
 import {DndModule} from 'ng2-dnd';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {AdminModule} from 'app/modules/admin/admin.module';
+import {AccountManagementModule} from 'app/modules/account-management/account-management.module';
 import {AuthComponent} from 'app/components/auth/auth.component';
 import {SimpleLayoutComponent} from 'app/layouts/simple-layout/simple-layout.component';
 import {SimpleSitesModule} from 'app/modules/simple-sites/simple-sites.module';
 import {EFormService} from 'app/services/eform/eform.service';
 import {
-  AdminService, EntitySearchService,EntitySelectService, SettingsService, SitesService, UnitsService,
+  AdminService, EntitySearchService, EntitySelectService, SettingsService, SitesService, UnitsService,
   WorkersService
 } from 'app/services';
 import {SimpleSitesService} from 'app/services/simple-sites.service';
@@ -69,7 +69,7 @@ import {EformTagService} from 'app/services/eform/eform-tag.service';
     SettingsModule,
     NgxGalleryModule,
     HelpersModule,
-    AdminModule,
+    AccountManagementModule,
     BrowserAnimationsModule,
     CommonModule,
     DndModule.forRoot()

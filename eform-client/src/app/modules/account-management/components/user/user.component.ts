@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {UserEditComponent} from 'app/modules/admin/components/user-edit/user-edit.component';
+import {UserEditComponent} from 'app/modules/account-management/components/user-edit/user-edit.component';
 import {UserRegisterModel} from 'app/models/user';
 import {UserInfoModelList} from 'app/models/user/user-info-model-list';
 import {PaginationModel} from 'app/models/common';
