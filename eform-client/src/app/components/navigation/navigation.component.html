@@ -7,10 +7,13 @@
             {{userInfo.lastName || 'name'}}</a>
           <ul class="dropdown-menu dropdown-menu-right">
             <li *ngIf="userInfo.role == 'admin'">
-              <a routerLink="/admin/users" routerLinkActive="active">User Management</a>
+              <a routerLink="/account-management/users" routerLinkActive="active">User Management</a>
             </li>
             <li>
-              <a routerLink="/admin/change-password" routerLinkActive="active">Change password</a>
+              <a routerLink="/account-management/google-authenticator" routerLinkActive="active">Google Authenticator</a>
+            </li>
+            <li>
+              <a routerLink="/account-management/change-password" routerLinkActive="active">Change password</a>
             </li>
             <li>
               <a (click)="signOut()" id="sign-out">Sign out</a>
@@ -71,7 +74,7 @@
               </a>
             </li>
             <li class="">
-              <a routerLink="/settings" routerLinkActive="active">
+              <a routerLink="/settings" routerLinkActive="active" *ngIf="userInfo.role == 'admin'">
                 Settings
               </a>
             </li>
