@@ -18,7 +18,6 @@ export class AdminSettingsComponent implements OnInit {
   loginPageImageLink: string;
   spinnerStatus: boolean;
   adminSettingsModel: AdminSettingsModel = new AdminSettingsModel;
-  googleAuthInfoModel: GoogleAuthInfoModel = new GoogleAuthInfoModel;
 
   constructor(private settingsService: SettingsService,
               private authService: AuthService,
@@ -36,7 +35,6 @@ export class AdminSettingsComponent implements OnInit {
       this.getAdminSettings();
       this.initializeUploaders();
     }
-    this.getGoogleAuthenticatorInfo();
   }
 
   initializeUploaders() {
@@ -87,42 +85,6 @@ export class AdminSettingsComponent implements OnInit {
       } else {
         this.notifyService.error({text: operation.message});
         this.spinnerStatus = false;
-      }
-    });
-  }
-
-  getGoogleAuthenticatorInfo() {
-    this.authService.getGoogleAuthenticatorInfo().subscribe((data) => {
-      if (data && data.model) {
-        this.googleAuthInfoModel = data.model;
-      }
-    });
-  }
-
-  isTwoFactorEnabledCheckBoxChanged(e) {
-    if (e.target && e.target.checked) {
-      this.googleAuthInfoModel.isTwoFactorEnabled = true;
-    } else if (e.target && !e.target.checked) {
-      this.googleAuthInfoModel.isTwoFactorEnabled = false;
-    } else {
-      return;
-    }
-    this.authService.updateGoogleAuthenticatorInfo(this.googleAuthInfoModel).subscribe((data) => {
-      if (data.success) {
-        this.authService.logout().subscribe(() => {
-          localStorage.clear();
-          this.router.navigate(['/login']).then();
-        });
-      } else {
-        this.notifyService.error({text: data.message});
-      }
-    });
-  }
-
-  deleteGoogleAuthenticatorInfo() {
-    this.authService.deleteGoogleAuthenticatorInfo().subscribe((data) => {
-      if (data && data.success) {
-        this.googleAuthInfoModel.psk = null;
       }
     });
   }
