@@ -6,6 +6,7 @@ using System.Security;
 using Microsoft.Win32;
 using System.Reflection;
 using System.Threading;
+using Microsoft.Web.Administration;
 
 namespace AlowMultipleVersionsBundle
 {
@@ -103,6 +104,16 @@ namespace AlowMultipleVersionsBundle
             RunProcess(
                 dism,
                 $"/NoRestart /Online /Enable-Feature {string.Join(" ", featureNames.Select(name => $"/FeatureName:{name}"))}");
+
+            // enable proxy
+            using (ServerManager serverManager = new ServerManager())
+            {
+                Configuration config = serverManager.GetApplicationHostConfiguration();
+                ConfigurationSection proxySection = config.GetSection("system.webServer/proxy");
+                proxySection["enabled"] = true;
+
+                serverManager.CommitChanges();
+            }
         }
 
         static void RunProcess(string fileName, string arguments)
