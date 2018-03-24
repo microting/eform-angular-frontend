@@ -7,6 +7,7 @@ using Microsoft.Win32;
 using System.Reflection;
 using System.Threading;
 using Microsoft.Web.Administration;
+using System.Collections.Generic;
 
 namespace AlowMultipleVersionsBundle
 {
@@ -85,25 +86,44 @@ namespace AlowMultipleVersionsBundle
         {
             var featureNames = new[]
             {
-                "IIS-ApplicationDevelopment",
-                "IIS-CommonHttpFeatures",
-                "IIS-DefaultDocument",
-                "IIS-ISAPIExtensions",
-                "IIS-ISAPIFilter",
-                "IIS-ManagementConsole",
-                "IIS-NetFxExtensibility",
-                "IIS-RequestFiltering",
-                "IIS-Security",
-                "IIS-StaticContent",
-                "IIS-WebServer",
-                "IIS-WebServerRole",
+                "DefaultDocument",
+                "DirectoryBrowse",
+                "HttpErrors",
+                "StaticContent",
+                "HttpRedirect",
+                "HttpLogging",
+                "HttpCompressionStatic",
+                "RequestFiltering",
+                "ISAPIFilter",
+                "ISAPIExtensions",
+                "NetFxExtensibility",
+                "ManagementConsole",
+                "NetFxExtensibility45",
+                "ASPNET45",
             };
+
+
             bool is64bit = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"));
             var dism = is64bit ? @"C:\WINDOWS\SYSNATIVE\DISM.EXE" : "dism";
 
-            RunProcess(
-                dism,
-                $"/NoRestart /Online /Enable-Feature {string.Join(" ", featureNames.Select(name => $"/FeatureName:{name}"))}");
+            // Removing Installed features from array
+            featureNames = FiaturesNotExist(featureNames);
+
+            if (featureNames.Length > 0)
+            {
+                for (int index = 0; index < featureNames.Length; index++)
+                {
+                    Console.WriteLine(string.Format("Trying to enable {0} feature", featureNames[index]));
+                    RunProcess(
+                    dism,
+                    $"/NoRestart /Online /Enable-Feature {$"/FeatureName:{"IIS-" + featureNames[index]}"}");
+                }
+
+                // Restart when enabling was complited
+                Restart();
+            }
+
+            Console.ReadKey();
 
             // enable proxy
             using (ServerManager serverManager = new ServerManager())
@@ -127,6 +147,34 @@ namespace AlowMultipleVersionsBundle
             {
                 process.WaitForExit();
             }
+        }
+
+        static string[] FiaturesNotExist(string[] features)
+        {
+            var newFeatureList = new List<string>();
+            for (var index = 0; index < features.Length; index++)
+            {
+                if (Registry.GetValue(@"HKEY_LOCAL_MACHINE\Software\Microsoft\InetStp\Components", features[index], null) == null)
+                {
+                    if (features[index] == "DirectoryBrowse")
+                        newFeatureList.Add("DirectoryBrowsing");
+                    else
+                        newFeatureList.Add(features[index]);
+                }
+            }
+
+            //if (Registry.GetValue(@"HKEY_LOCAL_MACHINE\Software\Microsoft\IIS Extensions\applicationInitialization", "Version", null) == null)
+            //    newFeatureList.Add("applicationInitialization");
+
+            return newFeatureList.ToArray();
+        }
+
+        static void Restart()
+        {
+            Console.WriteLine("All required IIS components were installed, your computer will restart now");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+            Process.Start("shutdown", "/r /t 0");
         }
     }
 }
