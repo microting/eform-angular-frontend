@@ -36,6 +36,16 @@ namespace CustomActions
         {
             try
             {
+                // enable proxy
+                using (ServerManager serverManager = new ServerManager())
+                {
+                    Configuration config = serverManager.GetApplicationHostConfiguration();
+                    ConfigurationSection proxySection = config.GetSection("system.webServer/proxy");
+                    proxySection["enabled"] = true;
+
+                    serverManager.CommitChanges();
+                }
+
                 var ui = GetServiceList();
                 if (string.IsNullOrEmpty(ui))
                 {

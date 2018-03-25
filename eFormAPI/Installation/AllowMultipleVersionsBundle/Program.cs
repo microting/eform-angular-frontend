@@ -99,7 +99,9 @@ namespace AlowMultipleVersionsBundle
                 "NetFxExtensibility",
                 "ManagementConsole",
                 "NetFxExtensibility45",
+                "WindowsAuthentication",
                 "ASPNET45",
+                "ApplicationInit"
             };
 
 
@@ -116,23 +118,11 @@ namespace AlowMultipleVersionsBundle
                     Console.WriteLine(string.Format("Trying to enable {0} feature", featureNames[index]));
                     RunProcess(
                     dism,
-                    $"/NoRestart /Online /Enable-Feature {$"/FeatureName:{"IIS-" + featureNames[index]}"}");
+                    $"/NoRestart /Online /Enable-Feature /FeatureName:IIS-{ featureNames[index]} /all");
                 }
 
                 // Restart when enabling was complited
                 Restart();
-            }
-
-            Console.ReadKey();
-
-            // enable proxy
-            using (ServerManager serverManager = new ServerManager())
-            {
-                Configuration config = serverManager.GetApplicationHostConfiguration();
-                ConfigurationSection proxySection = config.GetSection("system.webServer/proxy");
-                proxySection["enabled"] = true;
-
-                serverManager.CommitChanges();
             }
         }
 
@@ -158,13 +148,16 @@ namespace AlowMultipleVersionsBundle
                 {
                     if (features[index] == "DirectoryBrowse")
                         newFeatureList.Add("DirectoryBrowsing");
+                    else if (features[index] == "ApplicationInit")
+                        continue;
                     else
                         newFeatureList.Add(features[index]);
                 }
             }
 
-            //if (Registry.GetValue(@"HKEY_LOCAL_MACHINE\Software\Microsoft\IIS Extensions\applicationInitialization", "Version", null) == null)
-            //    newFeatureList.Add("applicationInitialization");
+            var value = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Notifications\OptionalFeatures\IIS-ApplicationInit", "Selection", null);
+            if (value?.ToString() != 1.ToString())
+                newFeatureList.Add("ApplicationInit");
 
             return newFeatureList.ToArray();
         }
