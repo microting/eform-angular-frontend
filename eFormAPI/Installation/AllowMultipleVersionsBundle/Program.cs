@@ -7,6 +7,7 @@ using Microsoft.Win32;
 using System.Reflection;
 using System.Threading;
 using Microsoft.Web.Administration;
+using System.Collections.Generic;
 
 namespace AlowMultipleVersionsBundle
 {
@@ -85,34 +86,43 @@ namespace AlowMultipleVersionsBundle
         {
             var featureNames = new[]
             {
-                "IIS-ApplicationDevelopment",
-                "IIS-CommonHttpFeatures",
-                "IIS-DefaultDocument",
-                "IIS-ISAPIExtensions",
-                "IIS-ISAPIFilter",
-                "IIS-ManagementConsole",
-                "IIS-NetFxExtensibility",
-                "IIS-RequestFiltering",
-                "IIS-Security",
-                "IIS-StaticContent",
-                "IIS-WebServer",
-                "IIS-WebServerRole",
+                "DefaultDocument",
+                "DirectoryBrowse",
+                "HttpErrors",
+                "StaticContent",
+                "HttpRedirect",
+                "HttpLogging",
+                "HttpCompressionStatic",
+                "RequestFiltering",
+                "ISAPIFilter",
+                "ISAPIExtensions",
+                "NetFxExtensibility",
+                "ManagementConsole",
+                "NetFxExtensibility45",
+                "WindowsAuthentication",
+                "ASPNET45",
+                "ApplicationInit"
             };
+
+
             bool is64bit = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"));
             var dism = is64bit ? @"C:\WINDOWS\SYSNATIVE\DISM.EXE" : "dism";
 
-            RunProcess(
-                dism,
-                $"/NoRestart /Online /Enable-Feature {string.Join(" ", featureNames.Select(name => $"/FeatureName:{name}"))}");
+            // Removing Installed features from array
+            featureNames = FiaturesNotExist(featureNames);
 
-            // enable proxy
-            using (ServerManager serverManager = new ServerManager())
+            if (featureNames.Length > 0)
             {
-                Configuration config = serverManager.GetApplicationHostConfiguration();
-                ConfigurationSection proxySection = config.GetSection("system.webServer/proxy");
-                proxySection["enabled"] = true;
+                for (int index = 0; index < featureNames.Length; index++)
+                {
+                    Console.WriteLine(string.Format("Trying to enable {0} feature", featureNames[index]));
+                    RunProcess(
+                    dism,
+                    $"/NoRestart /Online /Enable-Feature /FeatureName:IIS-{ featureNames[index]} /all");
+                }
 
-                serverManager.CommitChanges();
+                // Restart when enabling was complited
+                Restart();
             }
         }
 
@@ -127,6 +137,37 @@ namespace AlowMultipleVersionsBundle
             {
                 process.WaitForExit();
             }
+        }
+
+        static string[] FiaturesNotExist(string[] features)
+        {
+            var newFeatureList = new List<string>();
+            for (var index = 0; index < features.Length; index++)
+            {
+                if (Registry.GetValue(@"HKEY_LOCAL_MACHINE\Software\Microsoft\InetStp\Components", features[index], null) == null)
+                {
+                    if (features[index] == "DirectoryBrowse")
+                        newFeatureList.Add("DirectoryBrowsing");
+                    else if (features[index] == "ApplicationInit")
+                        continue;
+                    else
+                        newFeatureList.Add(features[index]);
+                }
+            }
+
+            var value = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Notifications\OptionalFeatures\IIS-ApplicationInit", "Selection", null);
+            if (value?.ToString() != 1.ToString())
+                newFeatureList.Add("ApplicationInit");
+
+            return newFeatureList.ToArray();
+        }
+
+        static void Restart()
+        {
+            Console.WriteLine("All required IIS components were installed, your computer will restart now");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+            Process.Start("shutdown", "/r /t 0");
         }
     }
 }
