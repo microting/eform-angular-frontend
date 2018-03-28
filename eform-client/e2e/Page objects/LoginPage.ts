@@ -1,4 +1,4 @@
-import {$, by, element, ElementFinder, ProtractorBy} from 'protractor';
+import {$, by, element, ElementFinder} from 'protractor';
 import {By} from '@angular/platform-browser';
 import {default as data} from '../data';
 

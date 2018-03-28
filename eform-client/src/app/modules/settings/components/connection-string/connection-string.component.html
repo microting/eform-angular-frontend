@@ -96,7 +96,7 @@
                   </td>
                   <td>
                     <input class="form-control" [(ngModel)]="settingsModel.connectionStringSDK.source"
-                           placeholder="COMPUTER_NAME\SQLEXPRESS" type="text" #sourceSdk="ngModel" value="" required name="source" id="source"/>
+                           placeholder="COMPUTER_NAME\SQLEXPRESS" type="text" #sourceSdk="ngModel" value="" required name="source" id="sourceSDK"/>
                   </td>
                 </tr>
                 <tr>
@@ -106,7 +106,7 @@
                   <td>
                     <input class="form-control" [(ngModel)]="settingsModel.connectionStringSDK.catalogue"
                            placeholder="DATABASE_NAME"
-                           type="text" value="" name="catalogue" required #catalogueSdk="ngModel" id="catalogue"/>
+                           type="text" value="" name="catalogue" required #catalogueSdk="ngModel" id="catalogueSDK"/>
                   </td>
                 </tr>
                 <tr>
@@ -115,7 +115,7 @@
                   </td>
                   <td>
                     <input class="form-control" [(ngModel)]="settingsModel.connectionStringSDK.auth"
-                           placeholder="Integrated Security=True" #authTypeSdk="ngModel" type="text" value="" name="auth" id="auth"/>
+                           placeholder="Integrated Security=True" #authTypeSdk="ngModel" type="text" value="" name="auth" id="authSDK"/>
                   </td>
                 </tr>
                 <tr>
@@ -144,7 +144,7 @@
                   </td>
                   <td>
                     <input class="form-control" [(ngModel)]="settingsModel.connectionStringMain.source"
-                           placeholder="COMPUTER_NAME\SQLEXPRESS" type="text" required #sourceAuth="ngModel" value="" name="source" id="source"/>
+                           placeholder="COMPUTER_NAME\SQLEXPRESS" type="text" required #sourceAuth="ngModel" value="" name="source" id="sourceMain"/>
                   </td>
                 </tr>
                 <tr>
@@ -154,7 +154,7 @@
                   <td>
                     <input class="form-control" [(ngModel)]="settingsModel.connectionStringMain.catalogue"
                            placeholder="DATABASE_NAME"
-                           type="text" value="" name="catalogue" required #catalogueAuth="ngModel" id="catalogue"/>
+                           type="text" value="" name="catalogue" required #catalogueAuth="ngModel" id="catalogueMain"/>
                   </td>
                 </tr>
                 <tr>
@@ -163,7 +163,7 @@
                   </td>
                   <td>
                     <input class="form-control" [(ngModel)]="settingsModel.connectionStringMain.auth"
-                           placeholder="Integrated Security=True" type="text" required #typeAuth="ngModel" value="" name="auth" id="auth"/>
+                           placeholder="Integrated Security=True" type="text" required #typeAuth="ngModel" value="" name="auth" id="authMain"/>
                   </td>
                 </tr>
                 </tbody>
