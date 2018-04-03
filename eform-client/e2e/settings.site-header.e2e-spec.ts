@@ -4,14 +4,18 @@ import {default as data} from './data';
 import {SettingsPage} from './Page objects/SettingsPage';
 import {LoginPage} from './Page objects/LoginPage';
 import {MainPage} from './Page objects/MainPage';
+import {DatabasePage} from './Page objects/DatabasePage';
+import {until} from 'selenium-webdriver';
 
 const loginPage: LoginPage = new LoginPage();
 const mainPage: MainPage = new MainPage();
 const settingsPage: SettingsPage = new SettingsPage();
-
+const databasePage: DatabasePage = new DatabasePage();
 
 beforeAll((done) => {
   browser.get('/');
+    databasePage.saveDatabase();
+    browser.wait(ExpectedConditions.visibilityOf(loginPage.loginButton));
   loginPage.login();
   mainPage.advancedButton.click();
   mainPage.settingsButton.click();
