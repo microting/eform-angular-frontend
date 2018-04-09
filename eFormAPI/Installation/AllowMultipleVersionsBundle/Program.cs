@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Threading;
 using Microsoft.Web.Administration;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace AlowMultipleVersionsBundle
 {
@@ -164,10 +165,9 @@ namespace AlowMultipleVersionsBundle
 
         static void Restart()
         {
-            Console.WriteLine("All required IIS components were installed, your computer will restart now");
-            Console.WriteLine("Press any key to continue...");
-            Console.ReadKey();
-            Process.Start("shutdown", "/r /t 0");
+            var result = MessageBox.Show("To continue with installation process restart required", "Restart required", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes || result == DialogResult.OK)
+                Process.Start("shutdown", "/r /t 0");
         }
     }
 }
