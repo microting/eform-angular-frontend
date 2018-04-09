@@ -155,7 +155,7 @@ namespace AlowMultipleVersionsBundle
                 }
             }
 
-            var value = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\Notifications\OptionalFeatures\IIS-ApplicationInit", "Selection", null);
+            var value = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\ServerManager\ServicingStorage\ServerComponentCache\Web-AppInit", "InstallState", null);
             if (value?.ToString() != 1.ToString())
                 newFeatureList.Add("ApplicationInit");
 
