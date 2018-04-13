@@ -61,13 +61,13 @@ The major feature of Augury is the Router Tree, which displays the routing infor
   
 ## Installation
   
-[Installation instructions](docs/install.md)
+[Download our latests release](https://github.com/microting/eform-angular-frontend/releases)
                                                                                       
 ## License
 
 The MIT License (MIT)
 
-Copyright (c) 2007-2017 microting
+Copyright (c) 2007-2018 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

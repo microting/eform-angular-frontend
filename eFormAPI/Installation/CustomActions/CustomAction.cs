@@ -36,6 +36,16 @@ namespace CustomActions
         {
             try
             {
+                // enable proxy
+                using (ServerManager serverManager = new ServerManager())
+                {
+                    Configuration config = serverManager.GetApplicationHostConfiguration();
+                    ConfigurationSection proxySection = config.GetSection("system.webServer/proxy");
+                    proxySection["enabled"] = true;
+
+                    serverManager.CommitChanges();
+                }
+
                 var ui = GetServiceList();
                 if (string.IsNullOrEmpty(ui))
                 {
@@ -358,6 +368,8 @@ namespace CustomActions
                 IncrementProgressBar(session);
 
                 ControlSites(customerNumber, domain, apiPort, uiPort, true);
+
+                HandleUpdateWebConfigFile(webApiLocation);
                 IncrementProgressBar(session);
 
                 ConfigureSecurity(uiIisDir);
@@ -375,6 +387,19 @@ namespace CustomActions
                 return ActionResult.Failure;
             }
             
+        }
+
+        public static bool HandleUpdateWebConfigFile(string filePath);
+        {
+
+            var fileContents = File.ReadAllText(filePath + @"\Web.config");
+
+            fileContents = fileContents.Replace("<bindingRedirect oldVersion=\"0.0.0.0 - 10.0.0.0\" newVersion=\"10.0.0.0\" />", 
+                "<bindingRedirect oldVersion=\"0.0.0.0 - 11.0.0.0\" newVersion=\"11.0.0.0\" />");
+
+            File.WriteAllText(filePath, fileContents);
+
+            return true;
         }
 
         [CustomAction]

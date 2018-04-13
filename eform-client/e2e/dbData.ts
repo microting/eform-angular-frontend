@@ -4,12 +4,12 @@ export default {
   email: 'admin@admin.com',
   firstName: 'John',
   lastNAme: 'Smith',
-  dataSourceSDK: '.\\SQLEXPRESS',
+  dataSourceSDK: '(LocalDb)\SharedInstance',
   initialCatalogueSDK: 'eFormSDK',
-  authenticationTypeSDK: 'User ID=sa;Password=Qq1234567$',
+  authenticationTypeSDK: 'Integrated Security=True',
   token: 'b3abe9893bf46e5bd98186222bf8ff22',
-  dataSourceMain: '.\\SQLEXPRESS',
+  dataSourceMain: '(LocalDb)\SharedInstance',
   initialCatalogueMain: 'eFormMain',
-  authenticationTypeMain: 'User ID=sa;Password=Qq1234567$'
+  authenticationTypeMain: 'Integrated Security=True'
 };
 

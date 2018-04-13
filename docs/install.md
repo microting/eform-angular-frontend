@@ -1,6 +1,6 @@
-  # Installation
+  # Manual installation
   
-  # WARNING! This is still work in progress!
+  # DEPRECATION WARNING! This is still work in progress and not recommended. Use our installer found in releases!
   
   #### 1. Node.js & npm installation
   
