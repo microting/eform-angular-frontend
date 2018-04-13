@@ -6,10 +6,10 @@ export default {
   lastNAme: 'Smith',
   dataSourceSDK: '(LocalDb)\SharedInstance',
   initialCatalogueSDK: 'eFormSDK',
-  authenticationTypeSDK: '',
+  authenticationTypeSDK: 'Integrated Security=True',
   token: 'b3abe9893bf46e5bd98186222bf8ff22',
   dataSourceMain: '(LocalDb)\SharedInstance',
   initialCatalogueMain: 'eFormMain',
-  authenticationTypeMain: ''
+  authenticationTypeMain: 'Integrated Security=True'
 };
 
