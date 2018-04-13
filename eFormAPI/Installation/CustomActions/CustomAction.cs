@@ -389,7 +389,7 @@ namespace CustomActions
             
         }
 
-        public static bool HandleUpdateWebConfigFile(string filePath);
+        public static bool HandleUpdateWebConfigFile(string filePath)
         {
 
             var fileContents = File.ReadAllText(filePath + @"\Web.config");
