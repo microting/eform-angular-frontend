@@ -82,7 +82,7 @@ namespace eFormAPI.Web.Infrastructure.Helpers
             {
                 running = _core.StartSqlOnly(connectionStr);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 AdminTools adminTools = new AdminTools(connectionStr);
                 adminTools.MigrateDb();

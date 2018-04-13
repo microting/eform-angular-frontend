@@ -67,7 +67,7 @@ namespace eFormAPI.Web.Controllers
                             {
                                 var core = _coreHelper.GetCore();
                             }
-                            catch (Exception ex2)
+                            catch (Exception)
                             {
                                 return new OperationDataResult<TemplateListModel>(false, "Core is not started.");
                             }
@@ -113,7 +113,7 @@ namespace eFormAPI.Web.Controllers
                             {
                                 var core = _coreHelper.GetCore();
                             }
-                            catch (Exception ex2)
+                            catch (Exception)
                             {
                                 return new OperationDataResult<Template_Dto>(false, "Core is not started.");
                             }
