@@ -66,7 +66,7 @@ namespace eFormAPI.Web.Controllers
 
                 return new OperationResult(true, $"Worker was successfully created!");
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return new OperationResult(false, $"Error while creating worker");
             }
