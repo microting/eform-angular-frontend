@@ -30,7 +30,7 @@ namespace eFormAPI.Web.Controllers
                     Constants.WorkflowStates.NotRemoved);
                 return new OperationDataResult<EntityGroupList>(true, model);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return new OperationDataResult<EntityGroupList>(false, "Searchable list loading failed");
             }
@@ -58,7 +58,7 @@ namespace eFormAPI.Web.Controllers
                 }
                 return new OperationResult(true, $"{groupCreate.EntityGroupMUId} created successfully");
             }
-            catch (Exception exception)
+            catch (Exception)
             {
                 return new OperationResult(false, "Searchable list creation failed");
             }
@@ -77,7 +77,7 @@ namespace eFormAPI.Web.Controllers
                 core.EntityGroupUpdate(entityGroup);
                 return new OperationResult(true, $"{editModel.GroupUid} updated successfully");
             }
-            catch (Exception exception)
+            catch (Exception)
             {
                 return new OperationResult(false, "Searchable list creation failed");
             }
@@ -95,7 +95,7 @@ namespace eFormAPI.Web.Controllers
 
                 return new OperationDataResult<EntityGroup>(true, entityGroup);
             }
-            catch (Exception exception)
+            catch (Exception)
             {
                 return new OperationDataResult<EntityGroup>(false, "Error when obtaining searchable list");
             }
@@ -125,7 +125,7 @@ namespace eFormAPI.Web.Controllers
 
                 return new OperationDataResult<List<CommonDictionaryTextModel>>(true, mappedEntityGroupDict);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new OperationDataResult<List<CommonDictionaryTextModel>>(false,
                     "Error when obtaining searchable list");
@@ -145,7 +145,7 @@ namespace eFormAPI.Web.Controllers
                     ? new OperationResult(true, $"{entityGroupUid} deleted successfully")
                     : new OperationResult(false, "Error when deleting searchable list");
             }
-            catch (Exception exception)
+            catch (Exception)
             {
                 return new OperationResult(false, "Error when deleting searchable list");
             }
@@ -163,7 +163,7 @@ namespace eFormAPI.Web.Controllers
 
                 return new OperationResult(true, $"deleted successfully");
             }
-            catch (Exception exception)
+            catch (Exception)
             {
                 return new OperationResult(false, "Error when deleting searchable list");
             }

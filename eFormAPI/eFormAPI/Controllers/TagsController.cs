@@ -31,7 +31,7 @@ namespace eFormAPI.Web.Controllers
                 });
                 return new OperationDataResult<List<CommonDictionaryModel>>(true, model);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new OperationDataResult<List<CommonDictionaryModel>>(false, "Error while obtaining tags");
             }
@@ -46,7 +46,7 @@ namespace eFormAPI.Web.Controllers
                 var result = _coreHelper.GetCore().TagDelete(tagId);
                 return new OperationDataResult<bool>(result, result);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new OperationDataResult<bool>(false, "Error while deleting tags");
             }

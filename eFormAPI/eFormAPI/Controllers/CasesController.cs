@@ -92,7 +92,7 @@ namespace eFormAPI.Web.Controllers
                     fieldValueList.AddRange(CaseUpdateHelper.GetFieldList(element));
                 });
             }
-            catch (Exception exception)
+            catch (Exception)
             {
                 return new OperationResult(false, "Case could not be updated");
             }
