@@ -391,13 +391,17 @@ namespace CustomActions
 
         public static bool HandleUpdateWebConfigFile(string filePath)
         {
+            try
+            {
+                var fileContents = File.ReadAllText(filePath + @"\Web.config");
 
-            var fileContents = File.ReadAllText(filePath + @"\Web.config");
+                fileContents = fileContents.Replace("<bindingRedirect oldVersion=\"0.0.0.0 - 10.0.0.0\" newVersion=\"10.0.0.0\" />",
+                    "<bindingRedirect oldVersion=\"0.0.0.0 - 11.0.0.0\" newVersion=\"11.0.0.0\" />");
 
-            fileContents = fileContents.Replace("<bindingRedirect oldVersion=\"0.0.0.0 - 10.0.0.0\" newVersion=\"10.0.0.0\" />", 
-                "<bindingRedirect oldVersion=\"0.0.0.0 - 11.0.0.0\" newVersion=\"11.0.0.0\" />");
+                File.WriteAllText(filePath, fileContents);
+            } catch { }
 
-            File.WriteAllText(filePath, fileContents);
+            
 
             return true;
         }
