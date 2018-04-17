@@ -10,6 +10,7 @@
     "pree2e": "webdriver-manager update --standalone false --gecko false",
     "e2e": "protractor",
     "build": "ng build --aot --prod --env=prod",
+    "build-test": "ng build --env=prod",
     "server": "node server.js",
     "winserver-install": "node svc.js install",
     "winserver-uninstall": "node svc.js uninstall",

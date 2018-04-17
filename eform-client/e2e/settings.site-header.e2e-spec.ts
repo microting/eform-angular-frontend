@@ -14,10 +14,13 @@ const databasePage: DatabasePage = new DatabasePage();
 
 beforeAll((done) => {
   browser.get('/');
+  browser.wait(ExpectedConditions.visibilityOf(settingsPage.saveButton));
     databasePage.saveDatabase();
     browser.wait(ExpectedConditions.visibilityOf(loginPage.loginButton));
   loginPage.login();
+  browser.wait(ExpectedConditions.visibilityOf(mainPage.advancedButton));
   mainPage.advancedButton.click();
+  browser.wait(ExpectedConditions.visibilityOf(mainPage.settingsButton));
   mainPage.settingsButton.click();
   done();
 });

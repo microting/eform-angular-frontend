@@ -8,7 +8,7 @@ import {UserInfoModelList} from 'app/models/user/user-info-model-list';
 import {PaginationModel} from 'app/models/common';
 
 @Component({
-  selector: 'user-grid',
+  selector: 'user-view-grid',
   templateUrl: './user-grid.component.html',
   styleUrls: ['./user-grid.component.css']
 })
