@@ -4,11 +4,11 @@ export default {
   email: 'admin@admin.com',
   firstName: 'John',
   lastNAme: 'Smith',
-  dataSourceSDK: '(LocalDb)\SharedInstance',
+  dataSourceSDK: '(LocalDb)\\SharedInstance',
   initialCatalogueSDK: 'eFormSDK',
   authenticationTypeSDK: 'Integrated Security=True',
   token: 'b3abe9893bf46e5bd98186222bf8ff22',
-  dataSourceMain: '(LocalDb)\SharedInstance',
+  dataSourceMain: '(LocalDb)\\SharedInstance',
   initialCatalogueMain: 'eFormMain',
   authenticationTypeMain: 'Integrated Security=True'
 };
