@@ -33,13 +33,14 @@
                      [offset]="paginationModel.offset"
                      (onPageChanged)="changePage($event)"></user-pagination>
   </div>
-  <user-grid [userInfoModelList]="userInfoModelList"
+  <user-view-grid [userInfoModelList]="userInfoModelList"
              [paginationModel]="paginationModel"
              (onUserSelectedForEdit)="onUserSelectedForEdit($event)"
-             (onUserListChanged)="getUserInfoList()"></user-grid>
+             (onUserListChanged)="getUserInfoList()"></user-view-grid>
 </div>
 
 <user-edit #userEditComponent
            [selectedId]="selectedUserId"
            (onUserListChanged)="getUserInfoList()"></user-edit>
+
 
