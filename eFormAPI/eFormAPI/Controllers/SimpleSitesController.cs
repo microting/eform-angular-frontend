@@ -30,11 +30,34 @@ namespace eFormAPI.Web.Controllers
             Core core = _coreHelper.GetCore();
             string siteName = simpleSiteModel.UserFirstName + " " + simpleSiteModel.UserLastName;
 
-            var siteDto = core.SiteCreate(siteName, simpleSiteModel.UserFirstName, simpleSiteModel.UserLastName, null);
+            try
+            {
+                var siteDto = core.SiteCreate(siteName, simpleSiteModel.UserFirstName, simpleSiteModel.UserLastName, null);
 
-            return siteDto != null
-                ? new OperationResult(true, $"Device User \"{siteDto.SiteName}\" created successfully")
-                : new OperationResult(false, "Device User could not be created!");
+                return siteDto != null
+                    ? new OperationResult(true, $"Device User \"{siteDto.SiteName}\" created successfully")
+                    : new OperationResult(false, "Device User could not be created!");
+
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    if (ex.InnerException.Message == "The remote server returned an error: (402) Payment Required.")
+                    {
+                        return new OperationResult(false, "You need to buy more licenses for additional units to be added.");
+                    }
+                    else
+                    {
+                        return new OperationResult(false, "Device User could not be created!");
+                    }
+                }
+                catch
+                {
+                    return new OperationResult(false, "Device User could not be created!");
+                }
+
+            }
         }
 
         [HttpGet]
