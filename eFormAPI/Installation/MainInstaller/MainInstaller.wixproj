@@ -8,6 +8,9 @@
     <SchemaVersion>2.0</SchemaVersion>
     <OutputName>maininstaller</OutputName>
     <OutputType>Package</OutputType>
+	<WixToolPath>$(ProjectDir)..\wix\3.11\</WixToolPath>
+	<WixTargetsPath>$(WixToolPath)\wix.targets</WixTargetsPath>
+	<WixTasksPath>wixtasks.dll</WixTasksPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <OutputPath>..\Bundle\</OutputPath>
@@ -73,8 +76,7 @@
       <RefTargetDir>INSTALLFOLDER</RefTargetDir>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="$(WixTargetsPath)" Condition=" '$(WixTargetsPath)' != '' " />
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets" Condition=" '$(WixTargetsPath)' == '' AND Exists('$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets') " />
+  <Import Project="$(WixTargetsPath)"/>
   <PropertyGroup>
     <DefineConstants>ClientPath=..\..\..\eform-client; ApiPath=..\..\eformapi; LetsEncryptPath=..\..\..\eFormAPI\Installation\letsencrypt</DefineConstants>
   </PropertyGroup>

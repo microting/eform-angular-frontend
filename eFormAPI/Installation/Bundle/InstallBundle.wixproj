@@ -9,6 +9,9 @@
     <OutputName>Eform Angular Frontend</OutputName>
     <OutputType>Bundle</OutputType>
     <Name>InstallBundle</Name>
+	<WixToolPath>$(ProjectDir)..\wix\3.11\</WixToolPath>
+	<WixTargetsPath>$(WixToolPath)\wix.targets</WixTargetsPath>
+	<WixTasksPath>wixtasks.dll</WixTasksPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <OutputPath>..\AllowMultipleVersionsBundle\Resources\</OutputPath>
@@ -58,8 +61,7 @@
   <ItemGroup>
     <EmbeddedResource Include="HyperlinkTheme.wxl" />
   </ItemGroup>
-  <Import Project="$(WixTargetsPath)" Condition=" '$(WixTargetsPath)' != '' " />
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets" Condition=" '$(WixTargetsPath)' == '' AND Exists('$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets') " />
+  <Import Project="$(WixTargetsPath)"/>
   <!--
 	To modify your build process, add your task inside one of the targets below and uncomment it.
 	Other similar extension points exist, see Wix.targets.
