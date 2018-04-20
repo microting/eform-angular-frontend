@@ -12,7 +12,9 @@
     <AssemblyName>CustomActions</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <WixCATargetsPath Condition=" '$(WixCATargetsPath)' == '' ">..\wix\3.11\sdk\wix.ca.targets</WixCATargetsPath>
+	<WixToolPath>$(ProjectDir)..\wix\3.11\sdk</WixToolPath>
+    <WixCATargetsPath>$(WixToolPath)\sdk\wix.ca.targets</WixCATargetsPath>
+	<WixTasksPath>$(WixToolPath)\WixTasks.dll</WixTasksPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
