@@ -9,9 +9,9 @@
     <OutputName>Eform Angular Frontend</OutputName>
     <OutputType>Bundle</OutputType>
     <Name>InstallBundle</Name>
-	<WixToolPath>$(ProjectDir)..\wix\3.11\</WixToolPath>
+	<!--<WixToolPath>$(ProjectDir)..\wix\3.11\</WixToolPath>
 	<WixTargetsPath>$(WixToolPath)\wix.targets</WixTargetsPath>
-	<WixTasksPath>wixtasks.dll</WixTasksPath>
+	<WixTasksPath>wixtasks.dll</WixTasksPath>-->
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <OutputPath>..\AllowMultipleVersionsBundle\Resources\</OutputPath>
@@ -58,6 +58,11 @@
     <Content Include="requestRouter_amd64.msi" />
     <Content Include="rewrite_amd64.msi" />
   </ItemGroup>
+  <Import Project="$(WixTargetsPath)" Condition=" '$(WixTargetsPath)' != '' " />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets" Condition=" '$(WixTargetsPath)' == '' AND Exists('$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets') " />
+  <Target Name="EnsureWixToolsetInstalled" Condition=" '$(WixTargetsImported)' != 'true' ">
+    <Error Text="The WiX Toolset v3.11 (or newer) build tools must be installed to build this project. To download the WiX Toolset, see http://wixtoolset.org/releases/" />
+  </Target>
   <ItemGroup>
     <EmbeddedResource Include="HyperlinkTheme.wxl" />
   </ItemGroup>
