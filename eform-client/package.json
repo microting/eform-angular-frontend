@@ -61,6 +61,7 @@
     "angular-mocks": "^1.6.8",
     "codelyzer": "~2.0.0",
     "gulp": "^3.9.1",
+    "gulp-clean": "^0.4.0",
     "gulp-protractor": "^4.1.0",
     "jasmine-core": "2.5.2",
     "jasmine-spec-reporter": "2.5.0",
