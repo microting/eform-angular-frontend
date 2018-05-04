@@ -4,6 +4,7 @@ using System.Web.Http;
 using eFormAPI.Web.Infrastructure.Helpers;
 using eFormAPI.Web.Infrastructure.Models.API;
 using eFormAPI.Web.Infrastructure.Models.Common;
+using eFormAPI.Web.Infrastructure.Models.Tags;
 
 namespace eFormAPI.Web.Controllers
 {
@@ -39,16 +40,50 @@ namespace eFormAPI.Web.Controllers
 
         [HttpDelete]
         [Route("api/tags")]
-        public OperationDataResult<bool> DeleteTag(int tagId)
+        public OperationResult DeleteTag(int tagId)
         {
             try
             {
                 var result = _coreHelper.GetCore().TagDelete(tagId);
-                return new OperationDataResult<bool>(result, result);
+                return new OperationResult(result);
             }
             catch (Exception)
             {
-                return new OperationDataResult<bool>(false, "Error while deleting tags");
+                return new OperationResult(false, "Error while deleting tags");
+            }
+        }
+
+        [HttpPost]
+        [Route("api/tags")]
+        public OperationResult CreateTag(string tagName)
+        {
+            try
+            {
+                var result = _coreHelper.GetCore().TagCreate(tagName);
+                if (result > 0)
+                {
+                    return new OperationResult(true);
+                }
+                return new OperationResult(false);
+            }
+            catch (Exception)
+            {
+                return new OperationResult(false, "Error while creating tag");
+            }
+        }
+
+        [HttpPost]
+        [Route("api/tags/eform")]
+        public OperationResult UpdateEformTags(UpdateEformTagsModel requestModel)
+        {
+            try
+            {
+                var result = _coreHelper.GetCore().TemplateSetTags(requestModel.EformId, requestModel.TagsIds);
+                return new OperationResult(result);
+            }
+            catch (Exception)
+            {
+                return new OperationResult(false, "Error while updating eform tags");
             }
         }
     }
