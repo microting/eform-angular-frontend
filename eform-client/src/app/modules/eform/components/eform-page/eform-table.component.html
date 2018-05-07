@@ -90,9 +90,23 @@
         {{templateDto.label}}
       </td>
       <td class="text-center">
-        <ng-container *ngFor="let tag of templateDto.tags">
-          {{tag.value}},
-        </ng-container>
+        <div class="row">
+          <div class="col-md-10">
+            <ng-container *ngFor="let tag of templateDto.tags; let i = index">
+              {{tag.value}}
+              <ng-container *ngIf="templateDto.tags.length - 1 !== i">
+                ,
+              </ng-container>
+            </ng-container>
+          </div>
+          <div class="col-md-2">
+            <a (click)="showTemplateTagsEdit(templateDto)"
+              class="needs_tooltip btn btn-ar btn-xs btn-default"
+              type="button" tooltip="Edit tags">
+              <span class="glyphicon glyphicon-pencil"></span>
+            </a>
+          </div>
+        </div>
       </td>
       <td class="text-center">
         <span *ngFor="let deployedSite of templateDto.deployedSites">{{deployedSite.siteName}}<br></span>
@@ -383,6 +397,69 @@
   </modal-footer>
 </modal>
 
+<modal #updateTemplateTagsModal>
+  <modal-header [show-close]="true">
+    <h4 class="modal-title">Select tags for template</h4>
+  </modal-header>
+  <modal-body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="form-group col-xs-12 col-md-12">
+          <label class="multiselect-label" for="eFormXML">Template tags</label>
+          <ss-multiselect-dropdown [options]="availableTags"
+                                   [texts]="myTexts"
+                                   [(ngModel)]="selectedTemplateTagsIds"
+                                   [disabled]="isTagsProcessing"
+                                   [settings]="mySettings">
+          </ss-multiselect-dropdown>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-xs-12 col-md-12">
+          <label class="multiselect-label" for="eFormXML">New tag</label>
+          <div class="col-md-9 col-xs-9 new-tag-block form-group">
+            <input type="search" class="form-control" #newTagInput>
+          </div>
+          <div class="col-md-3 col-xs-3">
+            <button class="btn btn-success btn-md" [disabled]="isTagsProcessing"
+                    (click)="createNewTag(newTagInput.value); newTagInput.value = ''">
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-xs-12 col-md-12">
+          <label class="multiselect-label" for="eFormXML">Tag list</label>
+          <div class="col-md-9 col-xs-9 new-tag-block">
+            <select class="form-control" #tagRemoveId>
+              <option *ngFor="let availableTag of availableTags"
+                      [disabled]="isTagsProcessing"
+                      [value]="availableTag.id">
+                {{availableTag.name}}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-3 col-xs-3">
+            <button class="btn btn-danger"
+                    [disabled]="isTagsProcessing"
+                    (click)="removeTemplateTag(tagRemoveId.value)">
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </modal-body>
+  <modal-footer>
+    <button type="button" class="btn btn-danger" [disabled]="isTagsProcessing"
+            (click)="updateTemplateTags(selectedTemplateDto.id)">Save</button>
+    <button type="button" class="btn btn-default" data-dismiss="deleteTemplateModal"
+            (click)="updateTemplateTagsModal.dismiss()">Cancel
+    </button>
+  </modal-footer>
+</modal>
+
 <modal #createTemplateModal [size]="'lg'">
   <modal-header [show-close]="true">
     <h4>Create eForm</h4>
@@ -401,7 +478,9 @@
           <ng-container *ngIf="isTagAddOpen">
             <input type="search" [(ngModel)]="eFormCreateModel.newTag" class="form-control add-tag-input">
             <button class="btn btn-danger btn-xs btn-add-tag"
-                    (click)="isTagAddOpen = !isTagAddOpen; eFormCreateModel.newTag = '';"><span class="glyphicon glyphicon-remove"></span></button>
+                    (click)="isTagAddOpen = !isTagAddOpen; eFormCreateModel.newTag = '';">
+              <span class="glyphicon glyphicon-remove"></span>
+            </button>
           </ng-container>
 
         </div>
