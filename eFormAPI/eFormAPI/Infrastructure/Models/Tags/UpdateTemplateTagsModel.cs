@@ -2,9 +2,9 @@
 
 namespace eFormAPI.Web.Infrastructure.Models.Tags
 {
-    public class UpdateEformTagsModel
+    public class UpdateTemplateTagsModel
     {
-        public int EformId { get; set; }
+        public int TemplateId { get; set; }
         public List<int> TagsIds { get; set; } = new List<int>();
     }
 }

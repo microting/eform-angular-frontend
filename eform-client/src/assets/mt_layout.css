@@ -132,7 +132,6 @@
    padding-left: 0;
    /*margin: 20px 0;*/
    margin-bottom: 20px;
-   border-radius: 0px;
  }
 
  .col-xs-4.pull-right>.dataTables_paginate.paging_simple_numbers>.paginate_button.previous {
@@ -605,7 +604,6 @@
 
  .form-control {
    display: block;
-   border-radius: 0;
    width: 100%;
    height: 36px;
    padding: 6px 12px;
@@ -659,7 +657,6 @@
    top: 2px;
    margin-left: -20px;
    border: 1px solid #ccc;
-   border-radius: 0px;
    background-color: #fff;
    transition: border 0.15s ease-in-out;
  }

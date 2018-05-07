@@ -8,6 +8,8 @@ import {Router} from '@angular/router';
 
 import {TemplateTagMethods} from 'app/modules/helpers/app.constants';
 import {CommonDictionaryModel} from 'app/models/common';
+import {OperationResult} from 'app/modules/helpers/operation.models';
+import {TemplateTagsUpdateModel} from 'app/models/eFormTemplates';
 
 @Injectable()
 export class EformTagService extends BaseService {
@@ -22,5 +24,17 @@ export class EformTagService extends BaseService {
 
   public getAvailableTags = (): Observable<OperationDataResult<Array<CommonDictionaryModel>>> => {
     return this.getWithOperationResult(TemplateTagMethods.Tags);
+  }
+
+  public deleteTag = (tagId: number): Observable<OperationResult> => {
+    return this.getWithOperationResult(TemplateTagMethods.DeleteTag + '?tagId=' + tagId);
+  }
+
+  public createTag = (tagName: string): Observable<OperationResult> => {
+    return this.postModelOperationResult(TemplateTagMethods.Tags + '?tagName=' + tagName, {});
+  }
+
+  public updateTemplateTags = (model: TemplateTagsUpdateModel): Observable<OperationResult> => {
+    return this.postModelOperationResult(TemplateTagMethods.TemplateTags, model);
   }
 }

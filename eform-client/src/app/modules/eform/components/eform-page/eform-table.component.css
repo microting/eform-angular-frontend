@@ -29,3 +29,7 @@
 .tags-label {
   margin-left: 10px;
 }
+
+.new-tag-block {
+  padding-left: 0px !important;
+}

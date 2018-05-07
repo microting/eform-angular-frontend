@@ -38,18 +38,20 @@ namespace eFormAPI.Web.Controllers
             }
         }
 
-        [HttpDelete]
-        [Route("api/tags")]
+        [HttpGet]
+        [Route("api/tags/delete")]
         public OperationResult DeleteTag(int tagId)
         {
             try
             {
                 var result = _coreHelper.GetCore().TagDelete(tagId);
-                return new OperationResult(result);
+                return result
+                    ? new OperationResult(true, "Tag was deleted successfully")
+                    : new OperationResult(false, "Error while deleted tag");
             }
             catch (Exception)
             {
-                return new OperationResult(false, "Error while deleting tags");
+                return new OperationResult(false, "Error while removing tag");
             }
         }
 
@@ -60,30 +62,30 @@ namespace eFormAPI.Web.Controllers
             try
             {
                 var result = _coreHelper.GetCore().TagCreate(tagName);
-                if (result > 0)
-                {
-                    return new OperationResult(true);
-                }
-                return new OperationResult(false);
+                return result > 0 ?
+                    new OperationResult(true, $"Tag \"{tagName}\" was created successfully")
+                  : new OperationResult(false, $"Error while creating \"{tagName}\" tag");
             }
             catch (Exception)
             {
-                return new OperationResult(false, "Error while creating tag");
+                return new OperationResult(false, $"Error while creating \"{tagName}\" tag");
             }
         }
 
         [HttpPost]
-        [Route("api/tags/eform")]
-        public OperationResult UpdateEformTags(UpdateEformTagsModel requestModel)
+        [Route("api/tags/template")]
+        public OperationResult UpdateTemplateTags(UpdateTemplateTagsModel requestModel)
         {
             try
             {
-                var result = _coreHelper.GetCore().TemplateSetTags(requestModel.EformId, requestModel.TagsIds);
-                return new OperationResult(result);
+                var result = _coreHelper.GetCore().TemplateSetTags(requestModel.TemplateId, requestModel.TagsIds);
+                return result
+                    ? new OperationResult(true, "Template tags was updated successfully")
+                    : new OperationResult(false, "Error while updating template tags");
             }
             catch (Exception)
             {
-                return new OperationResult(false, "Error while updating eform tags");
+                return new OperationResult(false, "Error while updating template tags");
             }
         }
     }

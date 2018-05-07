@@ -325,7 +325,7 @@
     <Compile Include="Infrastructure\Models\Settings\Initial\InitialSettingsModel.cs" />
     <Compile Include="Infrastructure\Models\SimpleSiteModel.cs" />
     <Compile Include="Infrastructure\Models\SiteNameModel.cs" />
-    <Compile Include="Infrastructure\Models\Tags\UpdateEformTagsModel.cs" />
+    <Compile Include="Infrastructure\Models\Tags\UpdateTemplateTagsModel.cs" />
     <Compile Include="Infrastructure\Models\Templates\DeployCheckbox.cs" />
     <Compile Include="Infrastructure\Models\Templates\DeployModel.cs" />
     <Compile Include="Infrastructure\Models\Templates\DeployToModel.cs" />

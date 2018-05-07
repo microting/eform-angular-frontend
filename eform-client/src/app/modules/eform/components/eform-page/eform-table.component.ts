@@ -10,6 +10,7 @@ import {TemplateRequestModel} from 'app/models/eFormTemplates/template-request.m
 import {IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts} from 'angular-2-dropdown-multiselect';
 import {CommonDictionaryModel} from 'app/models/common';
 import {EformTagService} from 'app/services/eform/eform-tag.service';
+import {TemplateTagsUpdateModel} from '../../../../models/eFormTemplates';
 
 @Component({
   selector: 'app-eform-table',
@@ -27,22 +28,27 @@ export class EFormTableComponent implements OnInit {
   editCasesColumnsModal: ModalComponent;
   @ViewChild('uploadTemplateZIPModal')
   uploadTemplateZIPModal: ModalComponent;
+  @ViewChild('updateTemplateTagsModal')
+  updateTemplateTagsModal: ModalComponent;
 
   spinnerStatus = true;
   matchFound = false;
   isDeploying = false;
+  isTagsProcessing = false;
 
   eFormCreateModel: EFormCreateModel = new EFormCreateModel();
   templateListModel: TemplateListModel = new TemplateListModel();
   templateRequestModel: TemplateRequestModel = new TemplateRequestModel;
-  selectedTemplateDto: TemplateDto = new TemplateDto();
+
   sitesDto: Array<SiteNameDto> = [];
   deployModel: DeployModel = new DeployModel();
   deployViewModel: DeployModel = new DeployModel();
   deploymentModalTitle: String = 'Edit deployment';
 
-  availableTags: Array<CommonDictionaryModel> = [];
+  selectedTemplateDto: TemplateDto = new TemplateDto();
+  selectedTemplateTagsIds: Array<number> = [];
 
+  availableTags: Array<CommonDictionaryModel> = [];
 
   columnModels: Array<TemplateColumnModel> = [];
   columnEditModel: UpdateColumnsModel = new UpdateColumnsModel;
@@ -161,6 +167,7 @@ export class EFormTableComponent implements OnInit {
           this.notifyService.error({text: operation.message || 'Error'});
         }
         this.createTemplateModal.close();
+        this.loadAllTags();
       });
     }
   }
@@ -291,6 +298,15 @@ export class EFormTableComponent implements OnInit {
     this.zipFileUploader.queue[0].upload();
   }
 
+  showTemplateTagsEdit(templateDto: TemplateDto) {
+    this.selectedTemplateDto = templateDto;
+    this.selectedTemplateTagsIds = [];
+    for (const templateTagKeyValue of templateDto.tags) {
+      this.selectedTemplateTagsIds.push(templateTagKeyValue.key);
+    }
+    this.updateTemplateTagsModal.open();
+  }
+
   changePage(e: any) {
     if (e || e === 0) {
       this.templateRequestModel.offset = e;
@@ -320,5 +336,49 @@ export class EFormTableComponent implements OnInit {
       lastPage = this.templateListModel.numOfElements;
     }
     return lastPage;
+  }
+
+  createNewTag(name: string) {
+    this.isTagsProcessing = true;
+    this.eformTagService.createTag(name).subscribe((operation => {
+      this.isTagsProcessing = false;
+      if (operation && operation.success) {
+        this.loadAllTags();
+        this.notifyService.success({text: operation.message || 'Error'});
+      } else {
+        this.notifyService.error({text: operation.message || 'Error'});
+      }
+    }));
+  }
+
+  removeTemplateTag(tagId: number) {
+    this.isTagsProcessing = true;
+    this.eformTagService.deleteTag(tagId).subscribe((operation => {
+      this.isTagsProcessing = false;
+      if (operation && operation.success) {
+        this.loadAllTags();
+        this.notifyService.success({text: operation.message || 'Error'});
+      } else {
+        this.notifyService.error({text: operation.message || 'Error'});
+      }
+    }));
+  }
+
+  updateTemplateTags(templateId: number) {
+    this.isTagsProcessing = true;
+    const templateTagsUpdateModel = new TemplateTagsUpdateModel();
+    templateTagsUpdateModel.templateId = templateId;
+    templateTagsUpdateModel.tagsIds = this.selectedTemplateTagsIds;
+    this.eformTagService.updateTemplateTags(templateTagsUpdateModel).subscribe((operation => {
+      this.isTagsProcessing = false;
+      if (operation && operation.success) {
+        this.loadAllTags();
+        this.notifyService.success({text: operation.message || 'Error'});
+        this.updateTemplateTagsModal.dismiss();
+        this.loadAllTemplates();
+      } else {
+        this.notifyService.error({text: operation.message || 'Error'});
+      }
+    }));
   }
 }

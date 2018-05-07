@@ -48,7 +48,9 @@ export let TemplatesMethods = {
 };
 
 export let TemplateTagMethods = {
-  Tags: 'api/tags'
+  Tags: 'api/tags',
+  DeleteTag: 'api/tags/delete',
+  TemplateTags: 'api/tags/template'
 };
 
 export let TemplateFilesMethods = {
