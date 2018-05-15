@@ -97,7 +97,7 @@
                         </div>
                         <div class="col-md-6">
                           <input type="file" ng2FileSelect [uploader]="loginPageImageUploader"
-                                 class="image-input-wrapper"/>
+                                 class="image-input-wrapper" id="loginPageFileInput"/>
                           <!--<input name="myFile" type="file" class="image-input-wrapper" /> -->
                           <span class="btn glyphicon pull-right" style="border-radius: 0px"
                                 id="imageLoginPageHide"
@@ -193,7 +193,7 @@
                         </div>
                         <div class="col-md-5">
                           <input type="file" ng2FileSelect [uploader]="headerImageUploader"
-                                 class="image-input-wrapper"/>
+                                 class="image-input-wrapper" id="siteHeaderFileInput"/>
                           <span class="btn glyphicon pull-right" style="border-radius: 0px"
                                 id="imageSiteHeaderHide"
                                 [class.btn-success]="adminSettingsModel.headerSettingsModel.imageLinkVisible"

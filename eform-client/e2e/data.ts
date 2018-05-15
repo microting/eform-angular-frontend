@@ -8,7 +8,8 @@ export default {
     },
     customSettings: {
       mainTextSample: 'Sample main text',
-      secondaryTextSample: 'Sample secondary text'
+      secondaryTextSample: 'Sample secondary text',
+      logoFilePath: '../../src/assets/test-images/pict1.jpg'
     }
   },
   LoginPageSettings: {
