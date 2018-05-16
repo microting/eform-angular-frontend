@@ -22,6 +22,7 @@ export class SettingsPage {
   public headerSecondaryText: ElementFinder;
   public signOutDropdown: ElementFinder;
   public signOutButton: ElementFinder;
+  public fileInput: ElementFinder;
 
   // helper functions
   public saveAndRefresh(): void {
@@ -35,10 +36,6 @@ export class SettingsPage {
     this.signOutDropdown.click();
     this.signOutButton.click();
     browser.waitForAngular();
-  }
-
-  public signInAndGoToSettings(): void {
-
   }
 
   constructor() {
@@ -55,6 +52,5 @@ export class SettingsPage {
     this.headerSecondaryText = element(this.secondaryTextHeaderMatcher);
     this.signOutDropdown = $('#sign-out-dropdown');
     this.signOutButton = $('#sign-out');
-
   }
 }
