@@ -41,8 +41,15 @@ namespace eFormAPI.Web.Infrastructure.Helpers
             };
             if (!manager.Users.Any(x => x.Email.Equals(adminUser.Email)))
             {
-                manager.Create(adminUser, adminSetupModel.Password);
-                manager.AddToRole(adminUser.Id, "admin");
+                IdentityResult ir = manager.Create(adminUser, adminSetupModel.Password);
+                if (ir != null)
+                {
+                    manager.AddToRole(adminUser.Id, "admin");
+                } else
+                {
+                    throw new Exception("Could not create the user");
+                }
+                
             }
         }
 
