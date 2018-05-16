@@ -7,6 +7,7 @@ export class SiteHeader {
   public secondaryTextInput: ElementFinder;
   public hideMainTextButton: ElementFinder;
   public hideSecondaryTextButton: ElementFinder;
+  public fileInput: ElementFinder;
 
   public resetAndRefresh(): void {
     browser.sleep(2000);
@@ -22,5 +23,6 @@ export class SiteHeader {
     this.secondaryTextInput = $('#headerSettingsSecondaryText');
     this.hideMainTextButton = $('#mainTextSiteHeaderHide');
     this.hideSecondaryTextButton = $('#secondaryTextSiteHeaderHide');
+    this.fileInput = $('#siteHeaderFileInput');
   }
 }
