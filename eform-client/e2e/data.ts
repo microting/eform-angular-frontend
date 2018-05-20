@@ -26,6 +26,8 @@ export default {
   DeviceUsersPage: {
     sampleFirstName: 'FirstName',
     sampleLastName: 'LastName',
+    sampleEditFistName: 'Edit First Name',
+    sampleEditLastName: 'Edit Last Name',
     notAvaliableName: 'N/A',
     rowCountSelector: '#tableBody tr',
     deleteUserXPath: '//*[@id="tableBody"]/tr[3]/td[6]/button'

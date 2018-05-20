@@ -9,7 +9,8 @@ exports.config = {
     './e2e/tests/settings.site-header.e2e-spec.ts',
     './e2e/tests/settings.login-page.e2e-spec.ts',
     './e2e/tests/device-users.add.e2e-spec.ts',
-    './e2e/tests/device-users.delete.e2e-spec.ts'
+    './e2e/tests/device-users.delete.e2e-spec.ts',
+    './e2e/tests/device-users.edit.e2e-spec.ts'
   ],
   suites: {
     'site-header': './e2e/tests/settings.site-header.e2e-spec.ts',

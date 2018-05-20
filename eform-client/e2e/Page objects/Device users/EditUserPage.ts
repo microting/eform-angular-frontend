@@ -1,4 +1,5 @@
 import {$, ElementFinder} from 'protractor';
+import data from '../../data';
 
 export class EditUserPage {
   // elements
@@ -11,7 +12,14 @@ export class EditUserPage {
     this.saveButton.click();
   }
 
-  constructor(){
+  fillInputs() {
+    this.firstNameInput.clear();
+    this.firstNameInput.sendKeys(data.DeviceUsersPage.sampleEditFistName);
+    this.lastNameInput.clear();
+    this.lastNameInput.sendKeys(data.DeviceUsersPage.sampleEditLastName);
+  }
+
+  constructor() {
     this.firstNameInput = $('#firstName');
     this.lastNameInput = $('#lastName');
     this.saveButton = $('#saveButton');

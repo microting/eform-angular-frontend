@@ -36,5 +36,26 @@ describe('Tests for user deletion', function () {
       done();
     });
   });
+
+  describe('Cancel button in delete modal', function () {
+    it('should not delete user', async function (done) {
+      console.log('Adding person');
+      const initialrowNumber = deviceUsersPage.getRowsNumber();
+      deviceUsersPage.newDeviceUserButton.click();
+      browser.wait(ExpectedConditions.visibilityOf(deviceUsersPage.addNewUserModal.saveButton));
+      deviceUsersPage.addNewUserModal.fillFirstNameInput();
+      deviceUsersPage.addNewUserModal.fillLastNameInput();
+      deviceUsersPage.addNewUserModal.save();
+      browser.wait(ExpectedConditions.visibilityOf(deviceUsersPage.newDeviceUserButton));
+      const finalRowSnumber = deviceUsersPage.getRowsNumber();
+      expect(await initialrowNumber + 1).toEqual(await finalRowSnumber, 'User was not added!');
+      deviceUsersPage.deleteUserButton.click();
+      deviceUsersPage.deleteModal.cancelButton.click();
+      browser.wait(ExpectedConditions.elementToBeClickable(deviceUsersPage.newDeviceUserButton));
+      const afterDeleteCancel = deviceUsersPage.getRowsNumber();
+      expect(await afterDeleteCancel).toEqual(await initialrowNumber + 1);
+      done();
+    });
+  });
 });
 
