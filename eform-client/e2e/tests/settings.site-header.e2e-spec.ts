@@ -1,14 +1,16 @@
-import {browser, element, ExpectedConditions, $} from 'protractor';
+import {browser, element, ExpectedConditions} from 'protractor';
 import {default as data} from '../data';
 import {SettingsPage} from '../Page objects/SettingsPage';
 import {LoginPage} from '../Page objects/LoginPage';
-import {MainPage} from '../Page objects/MainPage';
+import {Navbar} from '../Page objects/Navbar';
 import {DatabasePage} from '../Page objects/DatabasePage';
+import {signOut} from '../Helper methods/other-helper-methods';
+import {goToSettingsPage} from '../Helper methods/go-to-pages';
 
 const path = require('path');
 
 const loginPage: LoginPage = new LoginPage();
-const mainPage: MainPage = new MainPage();
+const navbar: Navbar = new Navbar();
 const settingsPage: SettingsPage = new SettingsPage();
 const databasePage: DatabasePage = new DatabasePage();
 
@@ -20,11 +22,12 @@ describe('Reset button in Site header section of Settings', function () {
     browser.wait(ExpectedConditions.visibilityOf(settingsPage.saveButton));
     databasePage.saveDatabase(); // enter needed info in inputs and press save
     browser.wait(ExpectedConditions.visibilityOf(loginPage.loginButton));
-    loginPage.login();
-    browser.wait(ExpectedConditions.visibilityOf(mainPage.advancedButton));
-    mainPage.advancedButton.click();
-    browser.wait(ExpectedConditions.visibilityOf(mainPage.settingsButton));
-    mainPage.settingsButton.click();
+    // loginPage.login();
+    // browser.wait(ExpectedConditions.visibilityOf(navbar.advancedButton));
+    // navbar.advancedButton.click();
+    // browser.wait(ExpectedConditions.visibilityOf(navbar.settingsButton));
+    // navbar.settingsButton.click();
+    goToSettingsPage();
     settingsPage.SiteHeader.resetButton.click();
     browser.refresh();
     done();
@@ -54,7 +57,7 @@ describe('Reset button in Site header section of Settings', function () {
 describe('Settings in Site header section', () => {
 
   afterAll(function (done) {
-    settingsPage.signOut();
+    signOut();
     done();
   });
 
