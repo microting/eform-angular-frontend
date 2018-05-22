@@ -7,7 +7,7 @@
     </h1>
     <div class="pull-right">
       <button class="needs_tooltip btn btn-ar btn-success" tooltip='Create Device User"'
-              (click)="showCreateSimpleSiteModal()" type="button">
+              (click)="showCreateSimpleSiteModal()" type="button" id="newDeviceUserButton">
         New Device User
       </button>
     </div>
@@ -39,7 +39,7 @@
       </th>
     </tr>
     </thead>
-    <tbody>
+    <tbody id="tableBody">
     <tr *ngFor="let siteDto of sitesDto">
       <td class="text-center">
         {{siteDto.siteId}}
@@ -86,7 +86,7 @@
       <td class="text-center">
         <a [routerLink]="['/simplesites/simplesiteedit', siteDto.siteId]" tooltip="Edit Device User"
            class="needs_tooltip btn btn-ar btn-sm btn-default" data-placement="top" data-toggle="tooltip"
-           id="eidt_site_@(item.SiteId)" title="" type="button" data-original-title="Edit site">
+           title="" type="button" data-original-title="Edit site">
           <span class="fa fa-pencil"></span>
         </a>
         <button (click)="showDeleteSimpleSiteModal(siteDto)" tooltip="Delete Device User"
@@ -121,8 +121,8 @@
     </div>
   </modal-body>
   <modal-footer>
-    <button type="button" class="btn btn-danger" (click)="deleteSimpleSite(selectedSimpleSite.siteId)">OK</button>
-    <button type="button" class="btn btn-default" data-dismiss="deleteWorkerModal"
+    <button type="button" class="btn btn-danger" (click)="deleteSimpleSite(selectedSimpleSite.siteId)" id="deleteOkButton">OK</button>
+    <button type="button" class="btn btn-default" data-dismiss="deleteWorkerModal" id="deleteCancelButton"
             (click)="deleteSimpleSiteModal.dismiss()">Cancel
     </button>
   </modal-footer>
@@ -153,9 +153,9 @@
     </div>
   </modal-body>
   <modal-footer>
-    <button type="button" class="btn btn-success" (click)="createSimpleSite()">Save</button>
+    <button type="button" class="btn btn-success" (click)="createSimpleSite()" id="saveButton">Save</button>
     <button type="button" class="btn btn-default" data-dismiss="deleteWorkerModal"
-            (click)="createSimpleSiteModal.dismiss()">Cancel
+            (click)="createSimpleSiteModal.dismiss()" id="cancelButton">Cancel
     </button>
   </modal-footer>
 </modal>

@@ -4,18 +4,31 @@
 /*global jasmine */
 var SpecReporter = require('jasmine-spec-reporter');
 exports.config = {
-  allScriptsTimeout: 20000,
   allScriptsTimeout: 450000,
   specs: [
-    './e2e/settings.site-header.e2e-spec.ts'
+    './e2e/tests/settings.site-header.e2e-spec.ts',
+    './e2e/tests/settings.login-page.e2e-spec.ts',
+    './e2e/tests/device-users.add.e2e-spec.ts',
+    './e2e/tests/device-users.delete.e2e-spec.ts',
+    './e2e/tests/device-users.edit.e2e-spec.ts'
   ],
-  capabilities: {
-    'browserName': 'chrome'
+  suites: {
+    'site-header': './e2e/tests/settings.site-header.e2e-spec.ts',
+    'login-page': './e2e/tests/settings.login-page.e2e-spec.ts',
+    'device-users-add': './e2e/tests/device-users.add.e2e-spec.ts',
+    'device-users-edit': './e2e/tests/device-users.edit.e2e-spec.ts',
+    'device-users-delete': './e2e/tests/device-users.delete.e2e-spec.ts',
   },
-
+  capabilities: {
+    browserName: 'chrome',
+    maxSessions: 1,
+    maxInstances: 1
+  },
   directConnect: true,
-  baseUrl: 'http://localhost:4200/',
-  framework: 'jasmine',
+  baseUrl:
+    'http://localhost:4200/',
+  framework:
+    'jasmine',
   jasmineNodeOpts: {
     showColors: true,
     defaultTimeoutInterval: 360000,
@@ -33,3 +46,4 @@ exports.config = {
   }
 
 };
+

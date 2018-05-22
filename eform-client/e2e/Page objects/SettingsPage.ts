@@ -20,8 +20,6 @@ export class SettingsPage {
   public saveButton: ElementFinder;
   public headerMainText: ElementFinder;
   public headerSecondaryText: ElementFinder;
-  public signOutDropdown: ElementFinder;
-  public signOutButton: ElementFinder;
   public fileInput: ElementFinder;
 
   // helper functions
@@ -29,12 +27,6 @@ export class SettingsPage {
     this.saveButton.click();
     browser.wait(protractor.ExpectedConditions.elementToBeClickable(this.saveButton));
     browser.refresh();
-    browser.waitForAngular();
-  }
-
-  public signOut(): void {
-    this.signOutDropdown.click();
-    this.signOutButton.click();
     browser.waitForAngular();
   }
 
@@ -50,7 +42,6 @@ export class SettingsPage {
     this.saveButton = $('button.btn-ar.btn-danger');
     this.headerMainText = element(this.mainTextHeaderMatcher);
     this.headerSecondaryText = element(this.secondaryTextHeaderMatcher);
-    this.signOutDropdown = $('#sign-out-dropdown');
-    this.signOutButton = $('#sign-out');
+
   }
 }
