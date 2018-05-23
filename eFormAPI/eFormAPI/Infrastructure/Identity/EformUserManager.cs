@@ -23,7 +23,7 @@ namespace eFormAPI.Web.Infrastructure.Identity
             // Configure validation logic for usernames
             appUserManager.UserValidator = new UserValidator<EformUser, int>(appUserManager)
             {
-                AllowOnlyAlphanumericUserNames = true,
+                AllowOnlyAlphanumericUserNames = false,
                 RequireUniqueEmail = true
             };
 
