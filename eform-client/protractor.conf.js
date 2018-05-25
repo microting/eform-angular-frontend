@@ -6,11 +6,11 @@ var SpecReporter = require('jasmine-spec-reporter');
 exports.config = {
   allScriptsTimeout: 450000,
   specs: [
-    './e2e/tests/settings.site-header.e2e-spec.ts',
-    './e2e/tests/settings.login-page.e2e-spec.ts',
-    './e2e/tests/device-users.add.e2e-spec.ts',
-    './e2e/tests/device-users.delete.e2e-spec.ts',
-    './e2e/tests/device-users.edit.e2e-spec.ts'
+    './e2e/tests/settings/settings.site-header.e2e-spec.ts',
+    './e2e/tests/settings/settings.login-page.e2e-spec.ts',
+    './e2e/tests/device-users/device-users.add.e2e-spec.ts',
+    './e2e/tests/device-users/device-users.delete.e2e-spec.ts',
+    './e2e/tests/device-users/device-users.edit.e2e-spec.ts'
   ],
   suites: {
     'site-header': './e2e/tests/settings.site-header.e2e-spec.ts',

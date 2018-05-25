@@ -1,10 +1,10 @@
-import {Navbar} from '../Page objects/Navbar';
-import {goToDeviceUsersPage} from '../Helper methods/go-to-pages';
-import {DeviceUsersPage} from '../Page objects/Device users/DeviceUsersPage';
+import {Navbar} from '../../Page objects/Navbar';
+import {goToDeviceUsersPage} from '../../Helper methods/go-to-pages';
+import {DeviceUsersPage} from '../../Page objects/Device users/DeviceUsersPage';
 import {browser, ExpectedConditions} from 'protractor';
-import {signOut} from '../Helper methods/other-helper-methods';
-import {getRowObject} from '../Page objects/Device users/row-object';
-import data from '../data';
+import {signOut} from '../../Helper methods/other-helper-methods';
+import {getRowObject} from '../../Page objects/Device users/row-object';
+import data from '../../data';
 
 const navbar: Navbar = new Navbar();
 const deviceUsersPage: DeviceUsersPage = new DeviceUsersPage();

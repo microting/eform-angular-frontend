@@ -1,11 +1,11 @@
 import {browser, element, ExpectedConditions} from 'protractor';
-import {default as data} from '../data';
-import {SettingsPage} from '../Page objects/SettingsPage';
-import {LoginPage} from '../Page objects/LoginPage';
-import {Navbar} from '../Page objects/Navbar';
-import {DatabasePage} from '../Page objects/DatabasePage';
-import {signOut} from '../Helper methods/other-helper-methods';
-import {goToSettingsPage} from '../Helper methods/go-to-pages';
+import {default as data} from '../../data';
+import {SettingsPage} from '../../Page objects/SettingsPage';
+import {LoginPage} from '../../Page objects/LoginPage';
+import {Navbar} from '../../Page objects/Navbar';
+import {DatabasePage} from '../../Page objects/DatabasePage';
+import {signOut} from '../../Helper methods/other-helper-methods';
+import {goToSettingsPage} from '../../Helper methods/go-to-pages';
 
 const path = require('path');
 

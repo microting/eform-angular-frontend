@@ -1,6 +1,6 @@
-import {goToDeviceUsersPage} from '../Helper methods/go-to-pages';
-import {signOut} from '../Helper methods/other-helper-methods';
-import {DeviceUsersPage} from '../Page objects/Device users/DeviceUsersPage';
+import {goToDeviceUsersPage} from '../../Helper methods/go-to-pages';
+import {signOut} from '../../Helper methods/other-helper-methods';
+import {DeviceUsersPage} from '../../Page objects/Device users/DeviceUsersPage';
 import {browser, ExpectedConditions} from 'protractor';
 
 

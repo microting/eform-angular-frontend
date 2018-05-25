@@ -1,10 +1,10 @@
-import {goToDeviceUsersPage} from '../Helper methods/go-to-pages';
-import {signOut} from '../Helper methods/other-helper-methods';
+import {goToDeviceUsersPage} from '../../Helper methods/go-to-pages';
+import {signOut} from '../../Helper methods/other-helper-methods';
 import {browser, ExpectedConditions} from 'protractor';
-import {DeviceUsersPage} from '../Page objects/Device users/DeviceUsersPage';
-import {getRowObject} from '../Page objects/Device users/row-object';
-import {EditUserPage} from '../Page objects/Device users/EditUserPage';
-import data from '../data';
+import {DeviceUsersPage} from '../../Page objects/Device users/DeviceUsersPage';
+import {getRowObject} from '../../Page objects/Device users/row-object';
+import {EditUserPage} from '../../Page objects/Device users/EditUserPage';
+import data from '../../data';
 
 const deviceUsersPage = new DeviceUsersPage();
 const editUserPage = new EditUserPage();

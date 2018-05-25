@@ -1,10 +1,10 @@
-import {LoginPage} from '../Page objects/LoginPage';
-import {SettingsPage} from '../Page objects/SettingsPage';
-import {Navbar} from '../Page objects/Navbar';
-import {default as data} from '../data';
+import {LoginPage} from '../../Page objects/LoginPage';
+import {SettingsPage} from '../../Page objects/SettingsPage';
+import {Navbar} from '../../Page objects/Navbar';
+import {default as data} from '../../data';
 import {browser} from 'protractor';
-import {signOut} from '../Helper methods/other-helper-methods';
-import {goToSettingsPage} from '../Helper methods/go-to-pages';
+import {signOut} from '../../Helper methods/other-helper-methods';
+import {goToSettingsPage} from '../../Helper methods/go-to-pages';
 
 const loginPage: LoginPage = new LoginPage();
 const settingsPage: SettingsPage = new SettingsPage();
