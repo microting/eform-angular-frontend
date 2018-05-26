@@ -18,8 +18,8 @@ describe('Main Page - EDIT, DELETE AND CREATE TAGS', function () {
 
   });
   describe('NEGATIVE: user', function () {
-    it('should not perform any changes by clicking "Cancel" in ', function () {
+    it('should not perform any changes by clicking "Cancel" in tag edit window', function () {
 
     });
-  })
+  });
 });

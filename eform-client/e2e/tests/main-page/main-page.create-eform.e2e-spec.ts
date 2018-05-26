@@ -1,4 +1,8 @@
 describe('Main Page - CREATE', function () {
+
+  goToMa
+
+
   describe('Positive: user', function () {
     it('should create eform without any tags', function () {
 
@@ -25,5 +29,5 @@ describe('Main Page - CREATE', function () {
   describe('Negative: user ', function () {
     it('should not create eform if he presses Cancel', function () {
     });
-  })
+  });
 });

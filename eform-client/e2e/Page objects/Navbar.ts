@@ -2,6 +2,7 @@ import {$, by, element, ElementFinder} from 'protractor';
 
 export class Navbar {
 
+  mainPageButton: ElementFinder;
   advancedButton: ElementFinder;
   settingsButton: ElementFinder;
   deviceUsersButton: ElementFinder;
@@ -16,5 +17,6 @@ export class Navbar {
     this.headerImage = element(by.xpath('//*[@id="header_full_top"]/div/div/div[1]/img'));
     this.signOutDropdown = $('#sign-out-dropdown');
     this.signOutButton = $('#sign-out');
+    this.mainPageButton = $('a[href="/"]');
   }
 }
