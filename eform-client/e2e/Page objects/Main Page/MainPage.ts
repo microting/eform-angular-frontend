@@ -1,10 +1,11 @@
-import {$, ElementFinder} from 'protractor';
+import {$, $$, browser, ElementFinder, ExpectedConditions} from 'protractor';
 import {DeleteEformModal} from './delete-eform.modal';
 import {EditColumnsModal} from './edit-columns.modal';
 import {EditTagModal} from './edit-tag.modal';
 import {PairEformModal} from './pair-eform.modal';
 import {CreateEformModal} from './create-eform.modal';
 import {MainPageRowObject} from './mainPage.row-object';
+import {promise} from 'selenium-webdriver';
 
 export class MainPage {
   // Modals
@@ -21,11 +22,13 @@ export class MainPage {
   createdAtSortBtn: ElementFinder;
   nameEFormSortBtn: ElementFinder;
   tagSelector: ElementFinder;
-  mainPageRowObject: MainPageRowObject;
+  firstMainPageRowObjectList: MainPageRowObject;
+  MainPageRowObjectList: MainPageRowObject[];
 
   // actions
-  createEform() {
-
+  async getRowNumber() {
+    const rowNum = $$('#mainPageEFormsTableBody > tr').count();
+    return await rowNum;
   }
 
   selectTagForFilter(tagName) {

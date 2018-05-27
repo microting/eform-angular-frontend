@@ -80,7 +80,7 @@
       </th>
     </tr>
     </thead>
-    <tbody>
+    <tbody id="mainPageEFormsTableBody">
     <tr *ngFor="let templateDto of templateListModel.templates">
       <td class="text-center">
         {{templateDto.id}}
@@ -489,7 +489,7 @@
             <input type="search" [(ngModel)]="eFormCreateModel.newTag" class="form-control add-tag-input"
                    id="addTagInput">
             <button class="btn btn-danger btn-xs btn-add-tag"
-                    (click)="isTagAddOpen = !isTagAddOpen; eFormCreateModel.newTag = '';">
+                    (click)="isTagAddOpen = !isTagAddOpen; eFormCreateModel.newTag = '';" id="closeTagInputBtn">
               <span class="glyphicon glyphicon-remove"></span>
             </button>
           </ng-container>
@@ -500,7 +500,7 @@
         <div class="form-group col-xs-12 col-md-12">
           <label class="mt-validation-container" for="eFormXML">XML from eForm Builder</label>
           <textarea [(ngModel)]="eFormCreateModel.eFormXml" class="form-control" placeholder="Paste XML here"
-                    name="eFormXML" id="eFormXml" rows="20" id="xmlTextArea"></textarea>
+                    name="eFormXML" id="eFormXml" rows="20" ></textarea>
         </div>
       </div>
     </div>

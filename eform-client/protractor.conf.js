@@ -13,11 +13,12 @@ exports.config = {
     './e2e/tests/device-users/device-users.edit.e2e-spec.ts'
   ],
   suites: {
-    'site-header': './e2e/tests/settings.site-header.e2e-spec.ts',
-    'login-page': './e2e/tests/settings.login-page.e2e-spec.ts',
-    'device-users-add': './e2e/tests/device-users.add.e2e-spec.ts',
-    'device-users-edit': './e2e/tests/device-users.edit.e2e-spec.ts',
-    'device-users-delete': './e2e/tests/device-users.delete.e2e-spec.ts',
+    'site-header': './e2e/tests/settings/settings.site-header.e2e-spec.ts',
+    'login-page': './e2e/tests/settings/settings.login-page.e2e-spec.ts',
+    'device-users-add': './e2e/tests/device-users/device-users.add.e2e-spec.ts',
+    'device-users-edit': './e2e/tests/device-users/device-users.edit.e2e-spec.ts',
+    'device-users-delete': './e2e/tests/device-users/device-users.delete.e2e-spec.ts',
+    'main-page-create': './e2e/tests/main-page/main-page.create-eform.e2e-spec.ts'
   },
   capabilities: {
     browserName: 'chrome',
@@ -31,7 +32,7 @@ exports.config = {
     'jasmine',
   jasmineNodeOpts: {
     showColors: true,
-    defaultTimeoutInterval: 360000,
+    defaultTimeoutInterval: 720000,
     print: function () {
     }
   },

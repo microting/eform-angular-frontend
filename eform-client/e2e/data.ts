@@ -31,6 +31,16 @@ export default {
     notAvaliableName: 'N/A',
     rowCountSelector: '#tableBody tr',
     deleteUserXPath: '//*[@id="tableBody"]/tr[3]/td[6]/button'
+  },
+  MainPage: {
+    wordToReplaceInXML: /TESTER alle felter/gi,
+    wordToReplaceBy: 'TEST',
+    auxiliaryNumberForReplacing: 1000000,
+    firstTagForAdding: 'testTag1',
+    secondTagForAdding: 'testTag2',
+    thirdTagForAdding: 'testTag3',
+    forthTagForAdding: 'testTag4',
+    fifthTagForAdding: 'testTag5',
   }
 
 };

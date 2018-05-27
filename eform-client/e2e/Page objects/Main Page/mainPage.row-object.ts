@@ -11,7 +11,7 @@ export class MainPageRowObject {
   deleteEFormBtn: ElementFinder;
 }
 
-export async function CreateMainPageRowObject(rowNumber: number) {
+export async function getMainPageRowObject(rowNumber: number) {
   const _mainPageRowObj = new MainPageRowObject();
   _mainPageRowObj.id = +element(by.xpath(`//*[@id="units"]/tbody/tr[${rowNumber}]/td[1]`)).getText();
   _mainPageRowObj.createdAt = element(by.xpath(`//*[@id="units"]/tbody/tr[${rowNumber}]/td[2]`)).getText();

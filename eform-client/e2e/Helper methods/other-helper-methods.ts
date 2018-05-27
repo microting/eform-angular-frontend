@@ -23,3 +23,7 @@ export function signOut() {
   navbar.signOutButton.click();
   browser.wait(ExpectedConditions.elementToBeClickable(loginPage.loginButton));
 }
+
+export function waitFor(element) {
+  browser.wait(ExpectedConditions.elementToBeClickable(element));
+}
