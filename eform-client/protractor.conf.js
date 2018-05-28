@@ -10,7 +10,9 @@ exports.config = {
     './e2e/tests/settings/settings.login-page.e2e-spec.ts',
     './e2e/tests/device-users/device-users.add.e2e-spec.ts',
     './e2e/tests/device-users/device-users.delete.e2e-spec.ts',
-    './e2e/tests/device-users/device-users.edit.e2e-spec.ts'
+    './e2e/tests/device-users/device-users.edit.e2e-spec.ts',
+    './e2e/tests/main-page/main-page.create-eform.e2e-spec.ts',
+    './e2e/tests/main-page/main-page.filter-eform.e2e-spec.ts'
   ],
   suites: {
     'site-header': './e2e/tests/settings/settings.site-header.e2e-spec.ts',
@@ -18,7 +20,8 @@ exports.config = {
     'device-users-add': './e2e/tests/device-users/device-users.add.e2e-spec.ts',
     'device-users-edit': './e2e/tests/device-users/device-users.edit.e2e-spec.ts',
     'device-users-delete': './e2e/tests/device-users/device-users.delete.e2e-spec.ts',
-    'main-page-create': './e2e/tests/main-page/main-page.create-eform.e2e-spec.ts'
+    'main-page-create': './e2e/tests/main-page/main-page.create-eform.e2e-spec.ts',
+    'main-page-filter':'./e2e/tests/main-page/main-page.filter-eform.e2e-spec.ts'
   },
   capabilities: {
     browserName: 'chrome',

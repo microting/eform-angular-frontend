@@ -1,4 +1,4 @@
-import {$, $$, browser, ElementFinder, ExpectedConditions} from 'protractor';
+import {$, $$, browser, by, element, ElementArrayFinder, ElementFinder, ExpectedConditions} from 'protractor';
 import {DeleteEformModal} from './delete-eform.modal';
 import {EditColumnsModal} from './edit-columns.modal';
 import {EditTagModal} from './edit-tag.modal';
@@ -22,8 +22,7 @@ export class MainPage {
   createdAtSortBtn: ElementFinder;
   nameEFormSortBtn: ElementFinder;
   tagSelector: ElementFinder;
-  firstMainPageRowObjectList: MainPageRowObject;
-  MainPageRowObjectList: MainPageRowObject[];
+
 
   // actions
   async getRowNumber() {
@@ -32,7 +31,12 @@ export class MainPage {
   }
 
   selectTagForFilter(tagName) {
+    const tag = element(by.xpath(`//*[@id="tagSelector"]//span[text()="${tagName}"]`));
+    tag.click();
+  }
 
+  getTagsForFilter(): ElementArrayFinder {
+    return element.all(by.xpath('//*[@id="tagSelector"]/div/div/a'));
   }
 
   sortByID() {

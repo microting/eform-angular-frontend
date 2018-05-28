@@ -41,7 +41,7 @@ export default {
     thirdTagForAdding: 'testTag3',
     forthTagForAdding: 'testTag4',
     fifthTagForAdding: 'testTag5',
+    tagsNumberForSelectionForFilter: 2
   }
-
-};
+}
 
