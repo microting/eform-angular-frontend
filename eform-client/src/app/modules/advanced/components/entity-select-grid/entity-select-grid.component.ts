@@ -1,8 +1,13 @@
 import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
-import {AdvEntitySelectableGroupListModel, AdvEntitySelectableGroupListRequestModel, AdvEntitySelectableGroupModel} from 'app/models/advanced';
 import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
-import {EntitySelectService} from 'app/services';
-import {NotifyService} from 'app/services/notify.service';
+import {
+  AdvEntitySelectableGroupListModel,
+  AdvEntitySelectableGroupListRequestModel,
+  AdvEntitySelectableGroupModel
+} from 'app/models/advanced';
+import {EntitySelectService, NotifyService} from 'app/services';
+
+
 
 @Component({
   selector: 'eform-entity-select-grid',

@@ -2,14 +2,12 @@ import {Injectable} from '@angular/core';
 import {Headers, Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Observable';
-import {OperationResult, SettingsMethods} from '../modules/helpers/helpers.module';
-import {BaseService} from './base.service';
 import {Router} from '@angular/router';
-import {SettingsModel} from 'app/models/settings';
-import {OperationDataResult} from 'app/modules/helpers/operation.models';
-import {AdminSettingsModel} from 'app/models/settings/admin-settings.model';
-import {LoginPageSettingsModel} from 'app/models/settings/login-page-settings.model';
-import {HeaderSettingsModel} from 'app/models/settings/header-settings.model';
+
+import {BaseService} from './base.service';
+import {OperationResult, SettingsMethods, OperationDataResult} from '../modules/helpers/helpers.module';
+import {AdminSettingsModel, SettingsModel,
+  LoginPageSettingsModel, HeaderSettingsModel} from 'app/models';
 
 @Injectable()
 export class SettingsService extends BaseService {
@@ -22,28 +20,28 @@ export class SettingsService extends BaseService {
     this.headers.append('Accept', 'application/json');
   }
 
-  public updateConnectionString(model: SettingsModel): Observable<OperationResult> {
+  updateConnectionString(model: SettingsModel): Observable<OperationResult> {
     return this.postModelOperationResult<SettingsModel>(SettingsMethods.UpdateConnectionString, model);
   }
-  public connectionStringExist(): Observable<OperationResult> {
+  connectionStringExist(): Observable<OperationResult> {
     return this.getWithOperationResult(SettingsMethods.ConnectionStringExist);
   }
-  public getAdminSettings(): Observable<OperationDataResult<AdminSettingsModel>> {
+  getAdminSettings(): Observable<OperationDataResult<AdminSettingsModel>> {
     return this.getWithOperationDataResult<AdminSettingsModel>(SettingsMethods.GetAdminSettings);
   }
-  public getLoginPageSettings(): Observable<OperationDataResult<LoginPageSettingsModel>> {
+  getLoginPageSettings(): Observable<OperationDataResult<LoginPageSettingsModel>> {
     return this.getWithOperationDataResult<LoginPageSettingsModel>(SettingsMethods.GetLoginPageSettings);
   }
-  public getHeaderSettings(): Observable<OperationDataResult<HeaderSettingsModel>> {
+  getHeaderSettings(): Observable<OperationDataResult<HeaderSettingsModel>> {
     return this.getWithOperationDataResult<HeaderSettingsModel>(SettingsMethods.GetHeaderSettings);
   }
-  public updateAdminSettings(model: AdminSettingsModel): Observable<OperationResult> {
+  updateAdminSettings(model: AdminSettingsModel): Observable<OperationResult> {
     return this.postModelOperationResult(SettingsMethods.GetAdminSettings, model);
   }
-  public resetLoginPageSettings(): Observable<OperationResult> {
+  resetLoginPageSettings(): Observable<OperationResult> {
     return this.getWithOperationResult(SettingsMethods.ResetLoginPageSettings);
   }
-  public resetHeaderSettings(): Observable<OperationResult> {
+  resetHeaderSettings(): Observable<OperationResult> {
     return this.getWithOperationResult(SettingsMethods.ResetHeaderSettings);
   }
 }

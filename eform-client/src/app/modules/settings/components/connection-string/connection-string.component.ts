@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {SettingsModel} from 'app/models/settings';
+import {SettingsModel} from 'app/models';
 import {SettingsService} from 'app/services';
 import {Router} from '@angular/router';
 

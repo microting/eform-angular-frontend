@@ -2,14 +2,14 @@
 import {Headers, Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Observable';
+import {Router} from '@angular/router';
+
 import {OperationDataResult, UnitsMethods} from '../modules/helpers/helpers.module';
 import {BaseService} from './base.service';
-import {Router} from '@angular/router';
 import {UnitDto} from 'app/models/dto';
+
 @Injectable()
 export class UnitsService extends BaseService {
-
-
   private headers: Headers;
   private currentUser: any;
 
@@ -20,10 +20,10 @@ export class UnitsService extends BaseService {
     this.headers.append('Accept', 'application/json');
   }
 
-  public getAllUnits = (): Observable<OperationDataResult<Array<UnitDto>>> => {
+  getAllUnits(): Observable<OperationDataResult<Array<UnitDto>>> {
     return this.getWithOperationDataResult<Array<UnitDto>>(UnitsMethods.GetAll);
   }
-  public requestOtp = (id: number): Observable<OperationDataResult<UnitDto>> => {
+  requestOtp(id: number): Observable<OperationDataResult<UnitDto>> {
     return this.getWithOperationDataResult<UnitDto>(UnitsMethods.RequestOtp + '/' + id.toString());
   }
 

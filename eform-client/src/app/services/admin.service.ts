@@ -3,12 +3,12 @@ import {Headers, Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Observable';
 import {BaseService} from 'app/services/base.service';
-import {OperationDataResult, OperationResult} from 'app/modules/helpers/operation.models';
-import {UserInfoModel, UserRegisterModel} from 'app/models/user';
-import {AdminMethods} from 'app/modules/helpers/app.constants';
-import {PaginationModel} from 'app/models/common';
-import {UserInfoModelList} from 'app/models/user/user-info-model-list';
 import {Router} from '@angular/router';
+
+import {OperationDataResult, OperationResult} from 'app/modules/helpers/operation.models';
+import {UserInfoModel, UserRegisterModel, UserInfoModelList, PaginationModel} from 'app/models';
+import {AdminMethods} from 'app/modules/helpers/app.constants';
+
 
 @Injectable()
 export class AdminService extends BaseService {
@@ -21,35 +21,35 @@ export class AdminService extends BaseService {
     this.headers.append('Accept', 'application/json');
   }
 
-  public getAllUsers(model: PaginationModel): Observable<OperationDataResult<UserInfoModelList>> {
+  getAllUsers(model: PaginationModel): Observable<OperationDataResult<UserInfoModelList>> {
     return this.postModelOperationDataResult<PaginationModel, UserInfoModelList>(AdminMethods.GetAllUsers, model);
   }
 
-  public getCurrentUserInfo(): Observable<UserInfoModel> {
+  getCurrentUserInfo(): Observable<UserInfoModel> {
     return this.get(AdminMethods.GetCurrentUser);
   }
 
-  public getUser = (userId: number): Observable<OperationDataResult<UserRegisterModel>> => {
+  getUser(userId: number): Observable<OperationDataResult<UserRegisterModel>> {
     return this.getWithOperationDataResult<UserRegisterModel>(AdminMethods.GetUser + '/' + userId);
   }
 
-  public createUser = (model: UserRegisterModel): Observable<OperationResult> => {
+  createUser(model: UserRegisterModel): Observable<OperationResult> {
     return this.postModelOperationResult<UserRegisterModel>(AdminMethods.CreateUser, model);
   }
 
-  public updateUser = (model: UserRegisterModel): Observable<OperationResult> => {
+  updateUser(model: UserRegisterModel): Observable<OperationResult> {
     return this.postModelOperationResult<UserRegisterModel>(AdminMethods.UpdateUser, model);
   }
 
-  public deleteUser = (userId: number): Observable<OperationResult> => {
+  deleteUser(userId: number): Observable<OperationResult> {
     return this.getWithOperationResult(AdminMethods.DeleteUser + '/' + userId);
   }
 
-  public enableTwoFactorAuth(): Observable<OperationResult> {
+  enableTwoFactorAuth(): Observable<OperationResult> {
     return this.get(AdminMethods.EnableTwoFactorAuth);
   }
 
-  public disableTwoFactorAuth(): Observable<OperationResult> {
+  disableTwoFactorAuth(): Observable<OperationResult> {
     return this.get(AdminMethods.DisableTwoFactorAuth);
   }
 }

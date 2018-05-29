@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {SiteDto} from '../../../../models/dto/site.dto';
-import {SimpleSiteModel} from '../../../../models/simpleSite/simple-site.model';
-import {SimpleSitesService} from '../../../../services/simple-sites.service';
+import {SiteDto, SimpleSiteModel} from 'app/models';
+import {SimpleSitesService, NotifyService} from 'app/services';
 import {ActivatedRoute, Router} from '@angular/router';
-import {NotifyService} from '../../../../services/notify.service';
 
 @Component({
   selector: 'app-simple-site-edit',

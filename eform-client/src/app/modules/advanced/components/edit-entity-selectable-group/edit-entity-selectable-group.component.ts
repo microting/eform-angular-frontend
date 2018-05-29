@@ -1,8 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, Output, ViewChild} from '@angular/core';
-import {AdvEntitySelectableGroupEditModel, AdvEntitySelectableItemModel} from 'app/models/advanced';
-import {EntitySelectService} from 'app/services';
+import {AdvEntitySelectableGroupEditModel, AdvEntitySelectableItemModel} from 'app/models';
+import {EntitySelectService, NotifyService} from 'app/services';
 import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
-import {NotifyService} from 'app/services/notify.service';
 
 @Component({
   selector: 'edit-entity-selectable-group',

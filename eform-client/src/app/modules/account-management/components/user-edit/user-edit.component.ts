@@ -1,10 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, Output, ViewChild} from '@angular/core';
-import {AdvEntitySearchableGroupEditModel, AdvEntitySearchableItemModel} from 'app/models/advanced';
-import {AdvEntitySelectableGroupEditModel, AdvEntitySelectableItemModel} from 'app/models/advanced';
-import {AdminService, EntitySearchService} from 'app/services';
+import {AdminService, NotifyService} from 'app/services';
 import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
-import {NotifyService} from 'app/services/notify.service';
-import {UserInfoModel, UserRegisterModel} from 'app/models/user';
+import {UserRegisterModel} from 'app/models/user';
 
 @Component({
   selector: 'user-edit',

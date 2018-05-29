@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {NotifyService} from 'app/services/notify.service';
-import {SitesService} from 'app/services';
-import {SiteNameModel} from 'app/models/advanced';
-import {SiteNameDto} from 'app/models/dto';
+import {NotifyService, SitesService} from 'app/services';
+import {SiteNameModel, SiteNameDto} from 'app/models';
 
 @Component({
   selector: 'app-site-edit',

@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
-import {UnitDto} from 'app/models/dto';
+import {UnitDto} from 'app/models';
 import {NotifyService, UnitsService} from 'app/services';
 
 @Component({

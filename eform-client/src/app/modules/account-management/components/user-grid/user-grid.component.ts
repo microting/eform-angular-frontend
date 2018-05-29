@@ -1,11 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
-import {UserInfoModel} from 'app/models/user';
-import {AdminService} from 'app/services';
-import {NotifyService} from 'app/services/notify.service';
-import {UserInfoModelList} from 'app/models/user/user-info-model-list';
-import {PaginationModel} from 'app/models/common';
+import {AdminService, NotifyService} from 'app/services';
+import {UserInfoModelList, PaginationModel, UserInfoModel} from 'app/models';
 
 @Component({
   selector: 'user-view-grid',
