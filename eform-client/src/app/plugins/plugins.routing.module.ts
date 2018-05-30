@@ -5,15 +5,9 @@ import {AuthGuard} from 'app/guards/auth.guard';
 
 export const routes: Routes = [
   {
-    path: '',
+    path: 'example-pn',
     canActivate: [AuthGuard],
-    children: [
-      {
-        path: 'example-pn',
-        canActivate: [AuthGuard],
-        loadChildren: './modules/example-pn/example-pn.module#ExamplePnModule'
-      }
-    ]
+    loadChildren: './modules/example-pn/example-pn.module#ExamplePnModule'
   }
 ];
 
