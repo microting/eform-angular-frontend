@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {ExamplePnMainService} from './services';
 import {ExamplePnPageComponent} from './components';
 import {ExamplePnRoutingModule} from './example-pn.routing.module';
 
@@ -8,6 +9,7 @@ import {ExamplePnRoutingModule} from './example-pn.routing.module';
     CommonModule,
     ExamplePnRoutingModule
   ],
-  declarations: [ExamplePnPageComponent]
+  declarations: [ExamplePnPageComponent],
+  providers: [ExamplePnMainService]
 })
 export class ExamplePnModule { }
