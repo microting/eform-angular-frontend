@@ -44,7 +44,7 @@ export const routes: Routes = [
         loadChildren: './modules/account-management/account-management.module#AccountManagementModule'
       },
       {
-        path: 'plugin',
+        path: 'plugins',
         canActivate: [AuthGuard],
         loadChildren: './plugins/plugins.module#PluginsModule',
         data: { preload: true }
