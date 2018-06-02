@@ -17,22 +17,24 @@ const databasePage: DatabasePage = new DatabasePage();
 
 describe('Reset button in Site header section of Settings', function () {
   // Navigate to login page, then save db and reset header settings to make them default
-  beforeAll(function (done) {
+  beforeAll(async function (done) {
     browser.get('/');
-    browser.wait(ExpectedConditions.visibilityOf(settingsPage.saveButton));
-    databasePage.saveDatabase(); // enter needed info in inputs and press save
-    browser.wait(ExpectedConditions.visibilityOf(loginPage.loginButton));
-    // loginPage.login();
-    // browser.wait(ExpectedConditions.visibilityOf(navbar.advancedButton));
-    // navbar.advancedButton.click();
-    // browser.wait(ExpectedConditions.visibilityOf(navbar.settingsButton));
-    // navbar.settingsButton.click();
+    try {
+      await databasePage.saveButton.isDisplayed();
+      databasePage.saveDatabase(); // enter needed info in inputs and press save
+      browser.wait(ExpectedConditions.visibilityOf(loginPage.loginButton));
+    } catch (e) {
+    }
     goToSettingsPage();
     settingsPage.SiteHeader.resetButton.click();
     browser.refresh();
     done();
   });
 
+  beforeEach(done => {
+    browser.waitForAngular();
+    done();
+  });
   // check that everything reset fine
   it('should reset image', function (done) {
     expect(browser.isElementPresent(settingsPage.headerImageMatcher))
@@ -55,6 +57,11 @@ describe('Reset button in Site header section of Settings', function () {
 
 // Check changing texts
 describe('Settings in Site header section', () => {
+
+  beforeEach(done => {
+    browser.waitForAngular();
+    done();
+  });
 
   afterAll(function (done) {
     signOut();

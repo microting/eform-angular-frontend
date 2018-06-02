@@ -2,7 +2,7 @@ import {goToMainPage} from '../../Helper methods/go-to-pages';
 import {signOut, waitFor} from '../../Helper methods/other-helper-methods';
 import {MainPage} from '../../Page objects/Main Page/MainPage';
 import data from '../../data';
-import {$, browser, by, element, ExpectedConditions} from 'protractor';
+import {$, browser, ExpectedConditions} from 'protractor';
 import {getMainPageRowObject} from '../../Page objects/Main Page/mainPage.row-object';
 
 const mainPage = new MainPage();
@@ -20,7 +20,21 @@ describe('Main Page - CREATE', function () {
   });
 
   describe('Positive: user', function () {
-
+    beforeAll(done =>{
+      browser.get(data.startPageUrl);
+      signOut();
+      done();
+    });
+    beforeEach(done => {
+      goToMainPage();
+      browser.waitForAngular();
+      done();
+    });
+    afterEach(done => {
+      signOut();
+      browser.waitForAngular();
+      done();
+    });
     it('should create eform without any tags', async function (done) {
       const initRowNum = await mainPage.getRowNumber();
       mainPage.newEformBtn.click();
@@ -39,10 +53,18 @@ describe('Main Page - CREATE', function () {
       mainPage.newEformBtn.click();
       try {
         await mainPage.createEFormModal.closeTagInputBtn.isDisplayed();
+        await waitFor(mainPage.createEFormModal.closeTagInputBtn);
+        await browser.sleep(1500);
         await mainPage.createEFormModal.closeTagInputBtn.click();
+        await browser.sleep(1500);
+        await waitFor(mainPage.createEFormModal.addTagBtn);
+        await browser.sleep(1500);
         await mainPage.createEFormModal.addTagBtn.click();
       } catch (e) {
+        await waitFor(mainPage.createEFormModal.addTagBtn);
+        await browser.sleep(1500);
         await mainPage.createEFormModal.addTagBtn.click();
+        await browser.sleep(1500);
       }
       mainPage.createEFormModal.addTagInput.sendKeys(data.MainPage.firstTagForAdding);
       mainPage.createEFormModal.enterXML(data.MainPage.wordToReplaceBy);
@@ -61,10 +83,18 @@ describe('Main Page - CREATE', function () {
       browser.sleep(5000);
       try {
         await mainPage.createEFormModal.closeTagInputBtn.isDisplayed();
+        await waitFor(mainPage.createEFormModal.closeTagInputBtn);
+        await browser.sleep(1500);
         await mainPage.createEFormModal.closeTagInputBtn.click();
+        await browser.sleep(1500);
+        await waitFor(mainPage.createEFormModal.addTagBtn);
+        await browser.sleep(1500);
         await mainPage.createEFormModal.addTagBtn.click();
       } catch (e) {
+        await waitFor(mainPage.createEFormModal.addTagBtn);
+        await browser.sleep(1500);
         await mainPage.createEFormModal.addTagBtn.click();
+        await browser.sleep(1500);
       }
       const tagArrayForAdding = [data.MainPage.secondTagForAdding, data.MainPage.thirdTagForAdding];
       const stringWithTagsForAdding = tagArrayForAdding.join(',');
@@ -85,10 +115,18 @@ describe('Main Page - CREATE', function () {
       browser.wait(ExpectedConditions.elementToBeClickable(mainPage.createEFormModal.saveEFormBtn));
       try {
         await mainPage.createEFormModal.closeTagInputBtn.isDisplayed();
+        await waitFor(mainPage.createEFormModal.closeTagInputBtn);
+        await browser.sleep(1500);
         await mainPage.createEFormModal.closeTagInputBtn.click();
+        await browser.sleep(1500);
+        await waitFor(mainPage.createEFormModal.addTagBtn);
+        await browser.sleep(1500);
         await mainPage.createEFormModal.addTagBtn.click();
       } catch (e) {
+        await waitFor(mainPage.createEFormModal.addTagBtn);
+        await browser.sleep(1500);
         await mainPage.createEFormModal.addTagBtn.click();
+        await browser.sleep(1500);
       }
       mainPage.createEFormModal.addTagInput.sendKeys(data.MainPage.thirdTagForAdding);
       mainPage.createEFormModal.tagSelector.click();
@@ -109,9 +147,18 @@ describe('Main Page - CREATE', function () {
       waitFor(mainPage.createEFormModal.saveEFormBtn);
       try {
         await mainPage.createEFormModal.closeTagInputBtn.isDisplayed();
+        await waitFor(mainPage.createEFormModal.closeTagInputBtn);
+        await browser.sleep(1500);
         await mainPage.createEFormModal.closeTagInputBtn.click();
+        await browser.sleep(1500);
+        await waitFor(mainPage.createEFormModal.addTagBtn);
+        await browser.sleep(1500);
+        await mainPage.createEFormModal.addTagBtn.click();
       } catch (e) {
-
+        await waitFor(mainPage.createEFormModal.addTagBtn);
+        await browser.sleep(1500);
+        await mainPage.createEFormModal.addTagBtn.click();
+        await browser.sleep(1500);
       }
       mainPage.createEFormModal.tagSelector.click();
       mainPage.createEFormModal.selectTag(data.MainPage.firstTagForAdding);
@@ -150,6 +197,11 @@ describe('Main Page - CREATE', function () {
     });
   });
   describe('Negative: user ', function () {
+    beforeEach(done => {
+      goToMainPage();
+      browser.waitForAngular();
+      done();
+    });
     it('should not create eform if xml is empty', async function (done) {
       browser.sleep(5000);
       const initRowNum = await mainPage.getRowNumber();
@@ -159,20 +211,10 @@ describe('Main Page - CREATE', function () {
       waitFor(mainPage.newEformBtn);
       const finalRowNum = await mainPage.getRowNumber();
       expect(finalRowNum).toEqual(initRowNum);
-      done();
-    });
-    it('should not create eform if he presses Cancel', async function (done) {
-      const initRowNum = await mainPage.getRowNumber();
-      mainPage.newEformBtn.click();
-      waitFor(mainPage.createEFormModal.saveEFormBtn);
-      mainPage.createEFormModal.enterXML(data.MainPage.wordToReplaceBy);
-      mainPage.createEFormModal.cancelBtn.click();
-      browser.wait(ExpectedConditions.elementToBeClickable(mainPage.newEformBtn));
-      const finalRowNum = await mainPage.getRowNumber();
-      expect(finalRowNum).toEqual(initRowNum);
+      browser.waitForAngular();
+      browser.sleep(4000);
       done();
     });
 
   });
-})
-;
+});

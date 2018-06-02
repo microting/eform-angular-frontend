@@ -1,13 +1,13 @@
-import {browser, ExpectedConditions} from 'protractor';
+import {browser, ElementFinder, ExpectedConditions} from 'protractor';
 import {LoginPage} from '../Page objects/LoginPage';
 import {default as data} from '../data';
 import {Navbar} from '../Page objects/Navbar';
 
 const loginPage = new LoginPage();
 const navbar = new Navbar();
-const startPageUrl = data.startPageUrl;
 
 export function waitTillVisibleAndClick(element): void {
+  browser.waitForAngular();
   browser.wait(ExpectedConditions.visibilityOf(element));
   element.click();
 }
@@ -27,3 +27,4 @@ export function signOut() {
 export function waitFor(element) {
   browser.wait(ExpectedConditions.elementToBeClickable(element));
 }
+

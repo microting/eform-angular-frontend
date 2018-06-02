@@ -5,7 +5,7 @@ export class DeleteModal {
   public cancelButton: ElementFinder;
 
   constructor() {
-    this.okButton = $('#deleteOkButton');
-    this.cancelButton = $('#deleteCancelButton');
+    this.okButton = $('#deleteModalOkButton');
+    this.cancelButton = $('#deleteModalCancelButton');
   }
 }

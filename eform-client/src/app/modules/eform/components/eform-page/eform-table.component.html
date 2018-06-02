@@ -417,7 +417,7 @@
                                    [texts]="myTexts"
                                    [(ngModel)]="selectedTemplateTagsIds"
                                    [disabled]="isTagsProcessing"
-                                   [settings]="mySettings">
+                                   [settings]="mySettings" id="templateTagsSelector">
           </ss-multiselect-dropdown>
         </div>
       </div>
@@ -425,11 +425,11 @@
         <div class="form-group col-xs-12 col-md-12">
           <label class="multiselect-label" for="eFormXML">New tag</label>
           <div class="col-md-9 col-xs-9 new-tag-block form-group">
-            <input type="search" class="form-control" #newTagInput>
+            <input type="search" class="form-control" #newTagInput id="newTagInput">
           </div>
           <div class="col-md-3 col-xs-3">
             <button class="btn btn-success btn-md" [disabled]="isTagsProcessing"
-                    (click)="createNewTag(newTagInput.value); newTagInput.value = ''">
+                    (click)="createNewTag(newTagInput.value); newTagInput.value = ''" id="saveNewTagBtn">
               Save
             </button>
           </div>
@@ -439,7 +439,7 @@
         <div class="form-group col-xs-12 col-md-12">
           <label class="multiselect-label" for="eFormXML">Tag list</label>
           <div class="col-md-9 col-xs-9 new-tag-block">
-            <select class="form-control" #tagRemoveId>
+            <select class="form-control" #tagRemoveId id="tagListSelectorForDelete">
               <option *ngFor="let availableTag of availableTags"
                       [disabled]="isTagsProcessing"
                       [value]="availableTag.id">
@@ -450,7 +450,7 @@
           <div class="col-md-3 col-xs-3">
             <button class="btn btn-danger"
                     [disabled]="isTagsProcessing"
-                    (click)="removeTemplateTag(tagRemoveId.value)">
+                    (click)="removeTemplateTag(tagRemoveId.value)" id="deleteTagBtn">
               Delete
             </button>
           </div>
@@ -460,10 +460,10 @@
   </modal-body>
   <modal-footer>
     <button type="button" class="btn btn-danger" [disabled]="isTagsProcessing"
-            (click)="updateTemplateTags(selectedTemplateDto.id)">Save
+            (click)="updateTemplateTags(selectedTemplateDto.id)" id="saveTemplateTagBtn">Save
     </button>
     <button type="button" class="btn btn-default" data-dismiss="deleteTemplateModal"
-            (click)="updateTemplateTagsModal.dismiss()">Cancel
+            (click)="updateTemplateTagsModal.dismiss()" id="cancelCreationOfTemplateTagBtn">Cancel
     </button>
   </modal-footer>
 </modal>

@@ -13,7 +13,7 @@ export class MainPageRowObject {
 
 export async function getMainPageRowObject(rowNumber: number) {
   const _mainPageRowObj = new MainPageRowObject();
-  _mainPageRowObj.id = +element(by.xpath(`//*[@id="units"]/tbody/tr[${rowNumber}]/td[1]`)).getText();
+  _mainPageRowObj.id = +(await element(by.xpath(`//*[@id="units"]/tbody/tr[${rowNumber}]/td[1]`)).getText());
   _mainPageRowObj.createdAt = await element(by.xpath(`//*[@id="units"]/tbody/tr[${rowNumber}]/td[2]`)).getText();
   _mainPageRowObj.nameEForm = await element(by.xpath(`//*[@id="units"]/tbody/tr[${rowNumber}]/td[3]`)).getText();
   const tagsString = await element(by.xpath(`//*[@id="units"]/tbody/tr[${rowNumber}]/td[4]/div/div[1]`)).getText();

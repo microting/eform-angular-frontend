@@ -107,7 +107,7 @@ describe('Main page - FILTERS', function () {
       expect(filteredByTags).toBeTruthy('Eforms are filtered by tags incorrectly');
       randomTagArray.forEach(tag => tag.click());
       const postRefilterRowNum = await mainPage.getRowNumber();
-      expect(postRefilterRowNum).toBeGreaterThan(finalRowNum, 'Deleting tags in selector hasn\'t reduced eforms number');
+      expect(postRefilterRowNum).toBeGreaterThan(finalRowNum, 'Deleting tags in selector hasn\'t increased eforms number');
       done();
     });
   });

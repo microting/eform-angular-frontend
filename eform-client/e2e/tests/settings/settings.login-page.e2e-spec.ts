@@ -16,15 +16,21 @@ describe('Login page settings tests', function () {
     signOut();
     done();
   });
+  beforeAll(function (done) {
+    goToSettingsPage();
+    settingsPage.LoginPage.resetButton.click();
+    browser.waitForAngular();
+    browser.refresh();
+    signOut();
+    done();
+  });
 
   // testing reset button
   describe('Reset button in login page section of Settings', function () {
 
-    beforeAll(function (done) {
-      goToSettingsPage();
-      settingsPage.LoginPage.resetButton.click();
-      browser.refresh();
-      signOut();
+
+    beforeEach(done => {
+      browser.waitForAngular();
       done();
     });
     it('should reset login page image', function (done) {
@@ -57,6 +63,11 @@ describe('Login page settings tests', function () {
 // reset in login page section and refresh page after each test case
     afterEach((done) => {
       goToSettingsPage();
+      done();
+    });
+    beforeEach(done => {
+      browser.waitForAngular();
+      browser.sleep(5000)
       done();
     });
 

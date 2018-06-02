@@ -5,7 +5,7 @@ export class DeleteEformModal {
   deleteEFormOkBtn: ElementFinder;
   deleteEFormCancelBtn: ElementFinder;
 
-  constructor(){
+  constructor() {
     this.deleteEFormOkBtn = $('#deleteEFormOkBtn');
     this.deleteEFormCancelBtn = $('#deleteEFormCancelBtn');
   }
