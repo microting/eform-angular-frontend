@@ -18,11 +18,11 @@ export class ImageService extends BaseService {
     this.headers.append('Accept', 'application/json');
   }
 
-  public rotateImage(fileName: string): Observable<OperationResult> {
+  rotateImage(fileName: string): Observable<OperationResult> {
     return this.getWithOperationResult(ImageMethods.Rotate + '?&fileName=' + fileName);
   }
 
-  public deleteImage(fileName, fieldId, uploadedObjId: number): Observable<OperationResult> {
+  deleteImage(fileName, fieldId, uploadedObjId: number): Observable<OperationResult> {
     return this.getWithOperationResult(ImageMethods.Delete
       + '?&fileName=' + fileName
       + '&fieldId=' + fieldId

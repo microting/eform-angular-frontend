@@ -1,12 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 import {Router} from '@angular/router';
-import {SiteDto, WorkerDto} from 'app/models/dto';
-import {WorkersService, NotifyService} from 'app/services';
+import {SiteDto, WorkerDto, WorkerCreateModel} from 'app/models';
+import {WorkersService, NotifyService, SimpleSitesService} from 'app/services';
 import {OperationDataResult} from 'app/modules/helpers/operation.models';
-import {WorkerCreateModel} from 'app/models/advanced';
-import {SimpleSitesService} from 'app/services/simple-sites.service';
-import {SimpleSiteModel} from 'app/models/simpleSite';
 
 @Component({
   selector: 'app-workers',

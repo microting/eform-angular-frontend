@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {WorkerDto} from 'app/models/dto';
-import {WorkerModel} from 'app/models/advanced';
+import {WorkerDto, WorkerModel} from 'app/models';
 import {WorkersService, NotifyService} from 'app/services';
 
 @Component({

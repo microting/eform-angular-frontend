@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
-import {SiteNameDto} from 'app/models/dto';
+import {SiteNameDto} from 'app/models';
 import {SitesService, NotifyService} from 'app/services';
 
 @Component({

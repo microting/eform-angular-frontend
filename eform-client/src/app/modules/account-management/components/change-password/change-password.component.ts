@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ChangePasswordModel} from 'app/models/user';
-import {AuthService} from 'app/services/accounts/auth.service';
-import {NotifyService} from 'app/services/notify.service';
+import {NotifyService, AuthService} from 'app/services';
 
 @Component({
   selector: 'change-password',

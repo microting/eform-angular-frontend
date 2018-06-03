@@ -2,11 +2,11 @@ import {Injectable} from '@angular/core';
 import {Headers, Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Observable';
+import {Router} from '@angular/router';
+
 import {OperationDataResult, OperationResult, WorkersMethods} from '../modules/helpers/helpers.module';
 import {BaseService} from './base.service';
-import {Router} from '@angular/router';
-import {WorkerDto} from 'app/models/dto';
-import {WorkerCreateModel, WorkerModel} from 'app/models/advanced';
+import {WorkerCreateModel, WorkerModel, WorkerDto} from 'app/models';
 
 @Injectable()
 export class WorkersService extends BaseService {
@@ -19,23 +19,23 @@ export class WorkersService extends BaseService {
     this.headers.append('Accept', 'application/json');
   }
 
-  public getAllWorkers = (): Observable<OperationDataResult<Array<WorkerDto>>> => {
+  getAllWorkers(): Observable<OperationDataResult<Array<WorkerDto>>> {
     return this.getWithOperationDataResult<Array<WorkerDto>>(WorkersMethods.GetAll);
   }
 
-  public getSingleWorker = (id: number): Observable<OperationDataResult<WorkerDto>> => {
+  getSingleWorker(id: number): Observable<OperationDataResult<WorkerDto>> {
     return this.getWithOperationDataResult<WorkerDto>(WorkersMethods.GetSingle + '/' + id);
   }
 
-  public updateSingleWorker = (model: WorkerModel): Observable<OperationResult> => {
+  updateSingleWorker(model: WorkerModel): Observable<OperationResult> {
     return this.postModelOperationResult<WorkerModel>(WorkersMethods.UpdateSingle, model);
   }
 
-  public deleteSingleWorker = (id: number): Observable<OperationResult> => {
+  deleteSingleWorker(id: number): Observable<OperationResult> {
     return this.getWithOperationResult(WorkersMethods.DeleteSingle + '/' + id);
   }
 
-  public createWorker = (model: WorkerCreateModel): Observable<OperationResult> => {
+  createWorker(model: WorkerCreateModel): Observable<OperationResult> {
     return this.postModelOperationResult<WorkerCreateModel>(WorkersMethods.CreateSingle, model);
   }
 

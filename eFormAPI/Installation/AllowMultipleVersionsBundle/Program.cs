@@ -54,7 +54,7 @@ namespace AlowMultipleVersionsBundle
                 dirInfo.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
                 File.WriteAllText(dirInfo.FullName + "\\config.txt", Assembly.GetExecutingAssembly().Location);
 
-                Process.Start(path);
+                Process.Start(path, $"-l \"{ Path.Combine(Environment.CurrentDirectory, "logs.log" )}\"");
             }
             catch (SecurityException e)
             {

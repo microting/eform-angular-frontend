@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {EntitySelectService} from 'app/services';
-import {AdvEntitySelectableGroupListModel, AdvEntitySelectableGroupListRequestModel} from 'app/models/advanced';
+import {AdvEntitySelectableGroupListModel, AdvEntitySelectableGroupListRequestModel} from 'app/models';
 import {EditEntitySelectableGroupComponent} from '../edit-entity-selectable-group/edit-entity-selectable-group.component';
 
 @Component({

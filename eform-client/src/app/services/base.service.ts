@@ -1,10 +1,11 @@
 import {Headers, Http, Response} from '@angular/http';
 import {Router} from '@angular/router';
-import {AuthResponseModel} from 'app/models/auth';
-import {NotifyService} from 'app/services/notify.service';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Observable';
+
+import {AuthResponseModel} from 'app/models/auth';
+import {NotifyService} from 'app/services/notify.service';
 import {OperationDataResult, OperationResult} from '../modules/helpers/operation.models';
 
 export class BaseService {

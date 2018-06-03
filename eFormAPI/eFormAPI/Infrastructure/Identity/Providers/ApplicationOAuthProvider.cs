@@ -52,9 +52,8 @@ namespace eFormAPI.Web.Infrastructure.Identity.Providers
                     return;
                 }
                 // check code
-                long timeStepMatched = 0;
                 var otp = new Totp(Base32Encoder.Decode(user.GoogleAuthenticatorSecretKey));
-                var isCodeValid = otp.VerifyTotp(code, out timeStepMatched, new VerificationWindow(1, 1));
+                var isCodeValid = otp.VerifyTotp(code,  out long timeStepMatched, new VerificationWindow(1, 1));
                 if (!isCodeValid)
                 {
                     context.SetError("Invalid code", "Invalid code");

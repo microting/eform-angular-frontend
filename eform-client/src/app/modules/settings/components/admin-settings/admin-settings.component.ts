@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Params, Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AdminSettingsModel} from 'app/models';
 import {NotifyService, AuthService, SettingsService} from 'app/services';
 import {FileItem, FileUploader} from 'ng2-file-upload';
 import {UUID} from 'angular2-uuid';
-import {GoogleAuthInfoModel} from '../../../../models';
 
 @Component({
   selector: 'app-admin-settings',

@@ -1,8 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 import {Router} from '@angular/router';
-import {SimpleSiteModel} from 'app/models/simpleSite';
-import {SiteDto} from 'app/models/dto';
+import {SiteDto, SimpleSiteModel} from 'app/models';
 import {SimpleSitesService, NotifyService, UnitsService} from 'app/services';
 
 @Component({

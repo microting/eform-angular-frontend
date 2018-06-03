@@ -82,6 +82,9 @@
     <Reference Include="Castle.Windsor, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Windsor.4.1.0\lib\net45\Castle.Windsor.dll</HintPath>
     </Reference>
+    <Reference Include="EformBase.Pn">
+      <HintPath>Plugins\EformBase\EformBase.Pn.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -130,8 +133,8 @@
     <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
     </Reference>
-    <Reference Include="Microting.eForm, Version=2.1.208.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\Microting.eForm.2.1.208\lib\net45\Microting.eForm.dll</HintPath>
+    <Reference Include="Microting.eForm, Version=2.1.220.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\Microting.eForm.2.1.220\lib\net45\Microting.eForm.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data, Version=6.9.11.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d">
       <HintPath>..\packages\MySql.Data.6.9.11\lib\net45\MySql.Data.dll</HintPath>
@@ -271,10 +274,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Handlers\GenerateJasperFilesHandler.cs" />
     <Compile Include="Infrastructure\Models\API\OperationDataResult.cs" />
     <Compile Include="Infrastructure\Models\API\OperationResult.cs" />
-    <Compile Include="Infrastructure\Consts\EformRoles.cs" />
     <Compile Include="Infrastructure\Data\Entities\EformRole.cs" />
     <Compile Include="Infrastructure\Data\Entities\EformUserClaim.cs" />
     <Compile Include="Infrastructure\Data\Entities\EformUserLogin.cs" />
@@ -341,9 +342,6 @@
     <Compile Include="Infrastructure\Models\WorkerModel.cs" />
     <Compile Include="Infrastructure\Identity\Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Infrastructure\Identity\Security\ChallengeResult.cs" />
-    <Compile Include="Installers\RebusHandlerInstaller.cs" />
-    <Compile Include="Installers\RebusInstaller.cs" />
-    <Compile Include="Messages\GenerateJasperFiles.cs" />
     <Compile Include="Migrations\201707190837078_InitialCreate.cs" />
     <Compile Include="Migrations\201707190837078_InitialCreate.Designer.cs">
       <DependentUpon>201707190837078_InitialCreate.cs</DependentUpon>
@@ -401,7 +399,9 @@
       <DependentUpon>201803051628071_AddGoogleAuth.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Plugins\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

@@ -1,10 +1,10 @@
-﻿using eFormAPI.Web.Messages;
+﻿using System;
 using System.Threading.Tasks;
-using Rebus.Handlers;
-using System;
 using eFormCore;
+using EformBase.Pn.Infrastructure.Messages;
+using Rebus.Handlers;
 
-namespace eFormAPI.Web.Handlers
+namespace EformBase.Pn.Infrastructure.Handlers
 {
     public class GenerateJasperFilesHandler : IHandleMessages<GenerateJasperFiles>
     {
@@ -15,7 +15,7 @@ namespace eFormAPI.Web.Handlers
             _core = core;
         }
 
-        #pragma warning disable 1998
+#pragma warning disable 1998
         public async Task Handle(GenerateJasperFiles message)
         {
             int? caseId = _core.CaseReadFirstId(message.TemplateId, "not_removed");

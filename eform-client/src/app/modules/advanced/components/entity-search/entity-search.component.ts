@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {EntitySearchService} from 'app/services';
-import {AdvEntitySearchableGroupListModel, AdvEntitySearchableGroupListRequestModel} from 'app/models/advanced';
+import {AdvEntitySearchableGroupListModel, AdvEntitySearchableGroupListRequestModel} from 'app/models';
 import {EditEntitySearchableGroupComponent} from '../edit-entity-searchable-group/edit-entity-searchable-group.component';
 
 @Component({

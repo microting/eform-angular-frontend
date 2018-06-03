@@ -1,9 +1,9 @@
-﻿using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using Rebus.Handlers;
 
-namespace eFormAPI.Web.Installers
+namespace EformBase.Pn.Infrastructure.Installers
 {
     public class RebusHandlerInstaller : IWindsorInstaller
     {
