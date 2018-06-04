@@ -3,7 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 
 import {PreloadResolverConfig} from 'app/configs';
 import {FullLayoutComponent, SimpleLayoutComponent} from 'app/layouts';
-import {RestorePasswordComponent, AuthComponent} from 'app/components';
+import {RestorePasswordComponent, AuthComponent, SignOutComponent} from 'app/components';
 import {AuthGuard} from 'app/guards';
 
 export const routes: Routes = [
@@ -65,6 +65,10 @@ export const routes: Routes = [
       {
         path: 'restore-password',
         component: RestorePasswordComponent
+      },
+      {
+        path: 'sign-out',
+        component: SignOutComponent
       }
     ]
   },

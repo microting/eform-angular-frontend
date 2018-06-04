@@ -10,8 +10,10 @@ import {DndModule} from 'ng2-dnd';
 
 import {AccountManagementModule, SimpleSitesModule, SettingsModule, AdvancedModule, HelpersModule} from 'app/modules';
 import {PluginsModule} from 'app/plugins/plugins.module';
-import {AppComponent, AuthComponent, RestorePasswordComponent, HeaderComponent,
-  NavigationComponent, FooterComponent} from 'app/components';
+import {
+  AppComponent, AuthComponent, RestorePasswordComponent, HeaderComponent,
+  NavigationComponent, FooterComponent, SignOutComponent
+} from 'app/components';
 import {FullLayoutComponent, SimpleLayoutComponent} from 'app/layouts';
 import {
   AdminService, EntitySearchService, EntitySelectService, SettingsService,
@@ -42,6 +44,7 @@ import {EqualValidatorDirective} from 'app/components/directives/equal-validator
     AppComponent,
     AuthComponent,
     RestorePasswordComponent,
+    SignOutComponent,
     HeaderComponent,
     FooterComponent,
     NavigationComponent,

@@ -7,15 +7,15 @@
               *ngIf="menu.appendLeftStyles && (userInfo.role == menu.guard
               || userInfo.role == 'admin'
               || menu.guard == '')">
-            <a class="dropdown-toggle" *ngIf="menu.submenus.length > 0"
+            <a class="dropdown-toggle" *ngIf="menu.submenus.length > 0" id="{{menu.e2eId || 'm1'}}"
                data-toggle="dropdown" href="javascript:void(0);">
               {{menu.name}}
             </a>
-            <a *ngIf="menu.submenus.length == 0" routerLink="{{menu.link}}">
+            <a *ngIf="menu.submenus.length == 0" routerLink="{{menu.link}}" id="{{menu.e2eId || 'm2'}}">
               {{menu.name}}
             </a>
             <ul class="dropdown-menu dropdown-menu-right" *ngIf="menu.submenus.length > 0">
-              <li *ngFor="let submenu of menu.submenus">
+              <li *ngFor="let submenu of menu.submenus" id="{{submenu.e2eId || 'm3'}}">
                 <a routerLink="{{submenu.link}}" routerLinkActive="active"
                    *ngIf="userInfo.role == submenu.guard || userInfo.role == 'admin' || submenu.guard == ''">
                   {{submenu.name}}
@@ -43,14 +43,16 @@
           <li [ngClass]="{'dropdown': menu.submenus.length > 0}"
               *ngIf="!menu.appendLeftStyles && (userInfo.role == menu.guard || userInfo.role == 'admin' || menu.guard == '')">
             <a class="dropdown-toggle" *ngIf="menu.submenus.length > 0"
+               id="{{menu.e2eId || 'm4'}}"
                data-toggle="dropdown" href="javascript:void(0);">
               {{menu.name}}
             </a>
-            <a class="dropdown-toggle" *ngIf="menu.submenus.length == 0" routerLink="{{menu.link}}" routerLinkActive="active">
+            <a class="dropdown-toggle" *ngIf="menu.submenus.length == 0" routerLink="{{menu.link}}" id="{{menu.e2eId || 'm5'}}"
+               routerLinkActive="active">
               {{menu.name}}
             </a>
             <ul class="dropdown-menu dropdown-menu-right" *ngIf="menu.submenus.length > 0">
-              <li *ngFor="let submenu of menu.submenus">
+              <li *ngFor="let submenu of menu.submenus" id="{{submenu.e2eId || 'm6'}}">
                 <a routerLink="{{submenu.link}}" routerLinkActive="active"
                    *ngIf="userInfo.role == submenu.guard || userInfo.role == 'admin' || submenu.guard == ''">
                   {{submenu.name}}
