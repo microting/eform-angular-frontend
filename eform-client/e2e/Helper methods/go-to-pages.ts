@@ -21,8 +21,10 @@ export function goToDeviceUsersPage() {
   waitTillVisibleAndClick(navbar.deviceUsersButton);
 }
 
-export function myEFormsPage() {
-
+export function goToMainPage() {
+  browser.get(data.startPageUrl);
+  loginPage.login();
+  waitTillVisibleAndClick(navbar.mainPageButton);
 }
 
 export function gotToSites() {

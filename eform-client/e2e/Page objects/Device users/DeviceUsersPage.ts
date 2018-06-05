@@ -9,9 +9,9 @@ import {DeleteModal} from './delete.modal';
 export class DeviceUsersPage {
 
   // modal windows
-  OTPModal = new OtpModal();
-  addNewUserModal = new AddNewUserModal();
-  deleteModal = new DeleteModal();
+  OTPModal: OtpModal;
+  addNewUserModal: AddNewUserModal;
+  deleteModal: DeleteModal;
   // elements
   newDeviceUserButton: ElementFinder;
   deleteUserButton: ElementFinder;
@@ -24,16 +24,20 @@ export class DeviceUsersPage {
 
   async usersCleanup() {
     let startNum = await this.getRowsNumber();
-    while (startNum > 2) {
+    for (let i = 0; i < startNum - 2; i++) {
+      // while (startNum > 2) {
       this.deleteUserButton.click();
       this.deleteModal.okButton.click();
       startNum = await this.getRowsNumber();
     }
-    return;
+    // return;
   }
 
   constructor() {
     this.newDeviceUserButton = $('#newDeviceUserButton');
     this.deleteUserButton = element(by.xpath(data.DeviceUsersPage.deleteUserXPath));
+    this.OTPModal = new OtpModal();
+    this.addNewUserModal = new AddNewUserModal();
+    this.deleteModal = new DeleteModal();
   }
 }

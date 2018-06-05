@@ -1,29 +1,4 @@
-﻿ /*
- The MIT License(MIT)
-
- Copyright(c) 2007-2018 microting
-
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in all
- copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
- */
- /* FIXES BEGIN */
-
- @font-face {
+﻿ @font-face {
    font-family: 'Glyphicons Halflings';
    src: url('fonts/glyphicons-halflings-regular.eot');
    src: url('fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('fonts/glyphicons-halflings-regular.woff') format('woff'), url('fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
@@ -37,28 +12,9 @@
    font-style: normal
  }
 
- .header-full-title {
-   /*background-image: url('images/image/logo_big.png');
-   TODO: find image
-   */
- }
-
- .paper-back-full {
-   /*background-image: url('images/back.png');
-   TODO: find image
-   */
- }
-
  .bx-wrapper .bx-loading {
    background-image: url('images/bx_loader.gif');
  }
-
- .navbar-default .navbar-brand {
-   /*background-image: url('images/logo.png');
-   TODO: find image
-   */
- }
- /*jquery.bxslider*/
 
  .bx-wrapper .bx-loading {
    background: url('images/bx_loader.gif') center center no-repeat #fff;
@@ -69,15 +25,6 @@
    background-image: url('images/bx_loader.gif');
    /* path to your loading animation */
  }
- /*widthboxed*/
-
- #sb-site {
-   /*background-image: url('images/back.png');
-   TODO: find image
-   */
- }
- /*lightbox*/
- /*body:after {content: url('images/close.png') url('images/loading.gif') url('images/prev.png') url('images/next.png');}*/
 
  .lb-cancel {
    background: url('images/loading.gif') no-repeat;
@@ -103,11 +50,11 @@
 
  .trumbowyg-editor.trumbowyg-reset-css div,
  .trumbowyg-editor.trumbowyg-reset-css p {
-   margin-bottom: 0px !important;
+   margin-bottom: 0 !important;
  }
 
  .btn-ar>.fa {
-   margin-right: 0px;
+   margin-right: 0;
  }
  /* FIXES END */
 
@@ -293,12 +240,11 @@
 
  .edit_picture_thumbnail_element {
    display: inline-block;
-   margin: 0px 5px;
-   margin-bottom: 15px;
+   margin: 0px 5px 15px;
    min-width: 110px;
  }
 
- */ .glyphicon-spin {
+ .glyphicon-spin {
    -webkit-animation: spin 2s infinite linear;
    -moz-animation: spin 2s infinite linear;
    -o-animation: spin 2s infinite linear;
@@ -370,8 +316,6 @@
  .header-full-title h1 {
    margin-bottom: 5px;
    margin-top: 15px;
-   /*font-family: "Muli";*/
-   /*word-spacing: -7px;*/
    color: #000;
    font-size: 32px;
  }
@@ -1173,4 +1117,8 @@
 
  .g-modal {
    z-index: 5 !important;
+ }
+
+ .tooltip .tooltip-inner {
+   width: 6em;
  }

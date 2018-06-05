@@ -1,16 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {EFormService, SitesService, } from 'app/services';
-import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
-import {NotifyService} from 'app/services/notify.service';
-import {DeployCheckbox} from 'app/models/eFormTemplates/deploy-checkbox.model';
-import {SiteNameDto, TemplateDto, TemplateColumnModel, UpdateColumnsModel, DeployModel, EFormCreateModel} from 'app/models';
 import {FileUploader} from 'ng2-file-upload';
-import {TemplateListModel} from 'app/models/eFormTemplates/template-list.model';
-import {TemplateRequestModel} from 'app/models/eFormTemplates/template-request.model';
-import {IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts} from 'angular-2-dropdown-multiselect';
-import {CommonDictionaryModel} from 'app/models/common';
-import {EformTagService} from 'app/services/eform/eform-tag.service';
-import {TemplateTagsUpdateModel} from '../../../../models/eFormTemplates';
+import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
+import {IMultiSelectSettings, IMultiSelectTexts} from 'angular-2-dropdown-multiselect';
+import {SiteNameDto, TemplateDto, TemplateColumnModel,
+  UpdateColumnsModel, DeployModel, EFormCreateModel, DeployCheckbox,
+  CommonDictionaryModel, TemplateTagsUpdateModel, TemplateRequestModel, TemplateListModel} from 'app/models';
+import {EFormService, SitesService, NotifyService, EformTagService} from 'app/services';
 
 @Component({
   selector: 'app-eform-table',

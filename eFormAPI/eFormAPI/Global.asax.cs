@@ -3,13 +3,10 @@ using System.Configuration;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Migrations;
 using System.Diagnostics;
-using System.Web;
 using System.Web.Configuration;
 using System.Web.Http;
 using System.Web.Mvc;
 using Castle.Core.Internal;
-using eFormAPI.Web.Infrastructure.Helpers;
-using eFormAPI.Web.Infrastructure.Models.API;
 using eFormAPI.Web.Migrations;
 
 namespace eFormAPI.Web
@@ -54,7 +51,6 @@ namespace eFormAPI.Web
         protected void Application_BeginRequest()
         {
             Context.Response.Cache.SetLastModifiedFromFileDependencies();
-           // Context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
         }
     }
 }

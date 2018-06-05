@@ -2,24 +2,28 @@
   <div class="container-fluid">
     <div class="pull-right">
       <ul class="nav navbar-nav">
-        <li class="dropdown">
-          <a id="sign-out-dropdown" class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">{{userInfo.firstName || ''}}
-            {{userInfo.lastName || 'name'}}</a>
-          <ul class="dropdown-menu dropdown-menu-right">
-            <li *ngIf="userInfo.role == 'admin'">
-              <a routerLink="/account-management/users" routerLinkActive="active">User Management</a>
-            </li>
-            <li>
-              <a routerLink="/account-management/google-authenticator" routerLinkActive="active">Google Authenticator</a>
-            </li>
-            <li>
-              <a routerLink="/account-management/change-password" routerLinkActive="active">Change password</a>
-            </li>
-            <li>
-              <a (click)="signOut()" id="sign-out">Sign out</a>
-            </li>
-          </ul>
-        </li>
+        <ng-container *ngFor="let menu of navigationMenu">
+          <li [ngClass]="{'dropdown': menu.submenus.length > 0}"
+              *ngIf="menu.appendLeftStyles && (userInfo.role == menu.guard
+              || userInfo.role == 'admin'
+              || menu.guard == '')">
+            <a class="dropdown-toggle" *ngIf="menu.submenus.length > 0" id="{{menu.e2eId || 'm1'}}"
+               data-toggle="dropdown" href="javascript:void(0);">
+              {{menu.name}}
+            </a>
+            <a *ngIf="menu.submenus.length == 0" routerLink="{{menu.link}}" id="{{menu.e2eId || 'm2'}}">
+              {{menu.name}}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right" *ngIf="menu.submenus.length > 0">
+              <li *ngFor="let submenu of menu.submenus" id="{{submenu.e2eId || 'm3'}}">
+                <a routerLink="{{submenu.link}}" routerLinkActive="active"
+                   *ngIf="userInfo.role == submenu.guard || userInfo.role == 'admin' || submenu.guard == ''">
+                  {{submenu.name}}
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ng-container>
       </ul>
     </div>
     <div class="navbar-header">
@@ -35,51 +39,28 @@
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="">
-          <a routerLink="/" routerLinkActive="active">
-            My eForms
-          </a>
-        </li>
-        <li class="">
-          <a routerLink="/simplesites" routerLinkActive="active">
-            Device users
-          </a>
-        </li>
-        <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">Advanced</a>
-          <ul class="dropdown-menu dropdown-menu-right">
-            <li class="">
-              <a routerLink="/advanced/sites" routerLinkActive="active">
-                Sites
-              </a>
-            </li>
-            <li class="">
-              <a routerLink="/advanced/workers" routerLinkActive="active">
-                Workers
-              </a>
-            </li>
-            <li class="">
-              <a routerLink="/advanced/units" routerLinkActive="active">
-                Units
-              </a>
-            </li>
-            <li class="">
-              <a routerLink="/advanced/entity-search" routerLinkActive="active">
-                Searchable list
-              </a>
-            </li>
-            <li class="">
-              <a routerLink="/advanced/entity-select" routerLinkActive="active">
-                Selectable list
-              </a>
-            </li>
-            <li class="">
-              <a routerLink="/settings" routerLinkActive="active" *ngIf="userInfo.role == 'admin'">
-                Settings
-              </a>
-            </li>
-          </ul>
-        </li>
+        <ng-container *ngFor="let menu of navigationMenu">
+          <li [ngClass]="{'dropdown': menu.submenus.length > 0}"
+              *ngIf="!menu.appendLeftStyles && (userInfo.role == menu.guard || userInfo.role == 'admin' || menu.guard == '')">
+            <a class="dropdown-toggle" *ngIf="menu.submenus.length > 0"
+               id="{{menu.e2eId || 'm4'}}"
+               data-toggle="dropdown" href="javascript:void(0);">
+              {{menu.name}}
+            </a>
+            <a class="dropdown-toggle" *ngIf="menu.submenus.length == 0" routerLink="{{menu.link}}" id="{{menu.e2eId || 'm5'}}"
+               routerLinkActive="active">
+              {{menu.name}}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right" *ngIf="menu.submenus.length > 0">
+              <li *ngFor="let submenu of menu.submenus" id="{{submenu.e2eId || 'm6'}}">
+                <a routerLink="{{submenu.link}}" routerLinkActive="active"
+                   *ngIf="userInfo.role == submenu.guard || userInfo.role == 'admin' || submenu.guard == ''">
+                  {{submenu.name}}
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ng-container>
       </ul>
     </div>
   </div>

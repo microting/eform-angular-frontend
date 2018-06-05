@@ -1,7 +1,12 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Web.Http;
+using System.Web.Http.Dispatcher;
 using Autofac.Integration.WebApi;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
@@ -37,6 +42,35 @@ namespace eFormAPI.Web
                 routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new {id = RouteParameter.Optional}
             );
+
+            // plugin loader for web api
+            config.Services.Replace(typeof(IAssembliesResolver), new EformAssembliesResolver());
+        }
+    }
+
+    public class EformAssembliesResolver : DefaultAssembliesResolver
+    {
+        public override ICollection<Assembly> GetAssemblies()
+        {
+            var path = System.Web.Hosting.HostingEnvironment.MapPath("~/Plugins");
+            if (path == null)
+            {
+                throw new Exception("Plugin path not found");
+            }
+            var assemblies = new List<Assembly>(base.GetAssemblies());
+            var directories = Directory.EnumerateDirectories(path);
+            foreach (var directory in directories)
+            {
+                var pluginList = Directory.GetFiles(directory)
+                    .Where(x => x.EndsWith("Pn.dll") && Path.GetFileName(x) != "EformBase.Pn.dll")
+                    .ToList();
+
+                foreach (var plugin in pluginList)
+                {
+                    assemblies.Add(Assembly.LoadFrom(Path.Combine(plugin)));
+                }
+            }
+            return assemblies;
         }
     }
 }

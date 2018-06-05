@@ -1,10 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 
-import {AuthService} from 'app/services/accounts/auth.service';
-import {NotifyService} from 'app/services/notify.service';
-import {GoogleAuthInfoModel} from '../../../../models';
-import {SettingsService} from '../../../../services';
+import {AuthService, NotifyService, SettingsService} from 'app/services';
+import {GoogleAuthInfoModel} from 'app/models';
 
 @Component({
   selector: 'google-authenticator',

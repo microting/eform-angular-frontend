@@ -1,11 +1,10 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-// Layouts
-import {FullLayoutComponent} from './layouts/fulllayout/fulllayout.component';
-import {SimpleLayoutComponent} from 'app/layouts/simple-layout/simple-layout.component';
-import {AuthComponent} from 'app/components/auth/auth.component';
-import {AuthGuard} from 'app/guards/auth.guard';
-import {RestorePasswordComponent} from './components/auth/restore-password.component';
+
+import {PreloadResolverConfig} from 'app/configs';
+import {FullLayoutComponent, SimpleLayoutComponent} from 'app/layouts';
+import {RestorePasswordComponent, AuthComponent, SignOutComponent} from 'app/components';
+import {AuthGuard} from 'app/guards';
 
 export const routes: Routes = [
   {
@@ -43,7 +42,13 @@ export const routes: Routes = [
         path: 'account-management',
         canActivate: [AuthGuard],
         loadChildren: './modules/account-management/account-management.module#AccountManagementModule'
-      }
+      },
+      {
+        path: 'plugins',
+        canActivate: [AuthGuard],
+        loadChildren: './plugins/plugins.module#PluginsModule',
+        data: { preload: true }
+      },
     ]
   },
   {
@@ -60,6 +65,10 @@ export const routes: Routes = [
       {
         path: 'restore-password',
         component: RestorePasswordComponent
+      },
+      {
+        path: 'sign-out',
+        component: SignOutComponent
       }
     ]
   },
@@ -68,7 +77,7 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {useHash: false})],
+  imports: [RouterModule.forRoot(routes, {useHash: false, preloadingStrategy: PreloadResolverConfig })],
   exports: [RouterModule]
 })
 export class AppRoutingModule {

@@ -9,7 +9,7 @@
       <button tooltip="Create eForm"
               (click)="showTemplateCreateModal()"
               class="needs_tooltip btn btn-ar btn-success"
-              type="button">New eForm
+              type="button" id="newEFormBtn">New eForm
       </button>
     </div>
   </div>
@@ -19,8 +19,9 @@
   <div class="row">
     <div class="col-xs-8">
       <div id="check_lists_filter" class="form-inline">
-          <label>Label:
-          <input type="search" (keyup.enter)="onLabelInputChanged($event.target.value)" class="form-control input-sm" placeholder="">
+        <label>Label:
+          <input type="search" (keyup.enter)="onLabelInputChanged($event.target.value)" class="form-control input-sm"
+                 placeholder="" id="labelInput">
         </label>
 
         <div class="inline-block">
@@ -29,7 +30,7 @@
                                    [texts]="filterTagTexts"
                                    [settings]="mySettings"
                                    (ngModelChange)="loadAllTemplates();"
-                                   [(ngModel)]="templateRequestModel.tagIds"></ss-multiselect-dropdown>
+                                   [(ngModel)]="templateRequestModel.tagIds" id="tagSelector"></ss-multiselect-dropdown>
         </div>
       </div>
     </div>
@@ -44,11 +45,12 @@
          id="units" role="grid" aria-describedby="check_lists_info" style="width: 100%;">
     <thead>
     <tr role="row">
-      <th class="col-md-1 text-center" [class.sorting_asc]="templateRequestModel.sort == 'id' && !templateRequestModel.isSortDsc"
+      <th class="col-md-1 text-center"
+          [class.sorting_asc]="templateRequestModel.sort == 'id' && !templateRequestModel.isSortDsc"
           [class.sorting_desc]="templateRequestModel.sort == 'id' && templateRequestModel.isSortDsc"
           [class.sorting]="templateRequestModel.sort != 'id'"
           (click)="sortByColumn('id', templateRequestModel.isSortDsc = !templateRequestModel.isSortDsc)"
-          rowspan="1" colspan="1">
+          rowspan="1" colspan="1" id="idSort">
         ID
       </th>
       <th class="col-md-2 text-center"
@@ -56,7 +58,7 @@
           [class.sorting_desc]="templateRequestModel.sort == 'createdAt' && templateRequestModel.isSortDsc"
           [class.sorting]="templateRequestModel.sort != 'createdAt'"
           (click)="sortByColumn('createdAt', templateRequestModel.isSortDsc = !templateRequestModel.isSortDsc)"
-          rowspan="1" colspan="1">
+          rowspan="1" colspan="1" id="createdAtSort">
         Created at
       </th>
       <th class="col-md-3 text-center"
@@ -64,7 +66,7 @@
           [class.sorting_desc]="templateRequestModel.sort == 'label' && templateRequestModel.isSortDsc"
           [class.sorting]="templateRequestModel.sort != 'label'"
           (click)="sortByColumn('label', templateRequestModel.isSortDsc = !templateRequestModel.isSortDsc)"
-          rowspan="1" colspan="1">
+          rowspan="1" colspan="1" id="nameEFormSort">
         Name eForm
       </th>
       <th class="col-md-2 text-center">
@@ -78,7 +80,7 @@
       </th>
     </tr>
     </thead>
-    <tbody>
+    <tbody id="mainPageEFormsTableBody">
     <tr *ngFor="let templateDto of templateListModel.templates">
       <td class="text-center">
         {{templateDto.id}}
@@ -101,8 +103,8 @@
           </div>
           <div class="col-md-2">
             <a (click)="showTemplateTagsEdit(templateDto)"
-              class="needs_tooltip btn btn-ar btn-xs btn-default"
-              type="button" tooltip="Edit tags">
+               class="needs_tooltip btn btn-ar btn-xs btn-default"
+               type="button" tooltip="Edit tags">
               <span class="glyphicon glyphicon-pencil"></span>
             </a>
           </div>
@@ -127,7 +129,8 @@
             <span class="glyphicon glyphicon-search" data-mt-check-list-id="@(item.Id)"></span>
           </a>
           <a
-            class="needs_tooltip btn btn-ar btn-sm btn-default mt-edit-check-list-button" (click)="openEditCasesColumnsModal(templateDto)"
+            class="needs_tooltip btn btn-ar btn-sm btn-default mt-edit-check-list-button"
+            (click)="openEditCasesColumnsModal(templateDto)"
             type="button" tooltip="Edit columns">
             <span class="glyphicon glyphicon-align-justify"></span>
           </a>
@@ -146,12 +149,12 @@
           <a tooltip="Download XML" href="/api/template-files/download-eform-xml/{{templateDto.id}}"
              class="needs_tooltip btn btn-ar btn-sm btn-default"
              type="button">
-             <span class="fa fa-file-code-o"></span>
+            <span class="fa fa-file-code-o"></span>
           </a>
           <button tooltip="Upload ZIP archive" (click)="showUploadTemplateZIP(templateDto)"
                   class="needs_tooltip btn btn-ar btn-sm btn-default"
                   type="button">
-                  <span class="fa fa-file-archive-o"></span>
+            <span class="fa fa-file-archive-o"></span>
           </button>
         </div>
       </td>
@@ -178,12 +181,13 @@
     <div class="create_eform">
       <div class="row">
         <div class="col-xs-12 col-md-12">
-          <input type="file" ng2FileSelect [uploader]="zipFileUploader"  class="input-wrapper" />
+          <input type="file" ng2FileSelect [uploader]="zipFileUploader" class="input-wrapper"/>
           <div>
             <div>
               Uploading progress:
               <div class="progress" style="">
-                <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': zipFileUploader.progress + '%' }"></div>
+                <div class="progress-bar" role="progressbar"
+                     [ngStyle]="{ 'width': zipFileUploader.progress + '%' }"></div>
               </div>
             </div>
           </div>
@@ -248,7 +252,8 @@
     <button type="button" class="btn btn-default" data-dismiss="deploymentModal" (click)="deploymentModal.dismiss()">
       Cancel
     </button>
-    <button type="button" class="btn btn-success" [disabled]="isDeploying" (click)="submitDeploymentModal()">Save pairing
+    <button type="button" class="btn btn-success" [disabled]="isDeploying" (click)="submitDeploymentModal()">Save
+      pairing
       <i *ngIf="isDeploying" class="fa fa-spinner fa-spin"></i></button>
   </modal-footer>
 </modal>
@@ -390,9 +395,11 @@
     </div>
   </modal-body>
   <modal-footer>
-    <button type="button" class="btn btn-danger" (click)="submitTemplateDeleteModal(selectedTemplateDto.id)">OK</button>
+    <button type="button" class="btn btn-danger" (click)="submitTemplateDeleteModal(selectedTemplateDto.id)"
+            id="deleteEFormOkBtn">OK
+    </button>
     <button type="button" class="btn btn-default" data-dismiss="deleteTemplateModal"
-            (click)="deleteTemplateModal.dismiss()">Cancel
+            (click)="deleteTemplateModal.dismiss()" id="deleteEFormCancelBtn">Cancel
     </button>
   </modal-footer>
 </modal>
@@ -410,7 +417,7 @@
                                    [texts]="myTexts"
                                    [(ngModel)]="selectedTemplateTagsIds"
                                    [disabled]="isTagsProcessing"
-                                   [settings]="mySettings">
+                                   [settings]="mySettings" id="templateTagsSelector">
           </ss-multiselect-dropdown>
         </div>
       </div>
@@ -418,11 +425,11 @@
         <div class="form-group col-xs-12 col-md-12">
           <label class="multiselect-label" for="eFormXML">New tag</label>
           <div class="col-md-9 col-xs-9 new-tag-block form-group">
-            <input type="search" class="form-control" #newTagInput>
+            <input type="search" class="form-control" #newTagInput id="newTagInput">
           </div>
           <div class="col-md-3 col-xs-3">
             <button class="btn btn-success btn-md" [disabled]="isTagsProcessing"
-                    (click)="createNewTag(newTagInput.value); newTagInput.value = ''">
+                    (click)="createNewTag(newTagInput.value); newTagInput.value = ''" id="saveNewTagBtn">
               Save
             </button>
           </div>
@@ -432,7 +439,7 @@
         <div class="form-group col-xs-12 col-md-12">
           <label class="multiselect-label" for="eFormXML">Tag list</label>
           <div class="col-md-9 col-xs-9 new-tag-block">
-            <select class="form-control" #tagRemoveId>
+            <select class="form-control" #tagRemoveId id="tagListSelectorForDelete">
               <option *ngFor="let availableTag of availableTags"
                       [disabled]="isTagsProcessing"
                       [value]="availableTag.id">
@@ -443,7 +450,7 @@
           <div class="col-md-3 col-xs-3">
             <button class="btn btn-danger"
                     [disabled]="isTagsProcessing"
-                    (click)="removeTemplateTag(tagRemoveId.value)">
+                    (click)="removeTemplateTag(tagRemoveId.value)" id="deleteTagBtn">
               Delete
             </button>
           </div>
@@ -453,9 +460,10 @@
   </modal-body>
   <modal-footer>
     <button type="button" class="btn btn-danger" [disabled]="isTagsProcessing"
-            (click)="updateTemplateTags(selectedTemplateDto.id)">Save</button>
+            (click)="updateTemplateTags(selectedTemplateDto.id)" id="saveTemplateTagBtn">Save
+    </button>
     <button type="button" class="btn btn-default" data-dismiss="deleteTemplateModal"
-            (click)="updateTemplateTagsModal.dismiss()">Cancel
+            (click)="updateTemplateTagsModal.dismiss()" id="cancelCreationOfTemplateTagBtn">Cancel
     </button>
   </modal-footer>
 </modal>
@@ -472,13 +480,16 @@
           <ss-multiselect-dropdown [options]="availableTags"
                                    [texts]="myTexts"
                                    [settings]="mySettings"
-                                   [(ngModel)]="eFormCreateModel.tagIds"></ss-multiselect-dropdown>
+                                   [(ngModel)]="eFormCreateModel.tagIds"
+                                   id="createEFormMultiSelector"></ss-multiselect-dropdown>
           <button class="btn btn-success btn-xs btn-add-tag" *ngIf="!isTagAddOpen"
-                  (click)="isTagAddOpen = !isTagAddOpen"><span class="glyphicon glyphicon-plus"></span></button>
+                  (click)="isTagAddOpen = !isTagAddOpen" id="addTagBtn"><span class="glyphicon glyphicon-plus"></span>
+          </button>
           <ng-container *ngIf="isTagAddOpen">
-            <input type="search" [(ngModel)]="eFormCreateModel.newTag" class="form-control add-tag-input">
+            <input type="search" [(ngModel)]="eFormCreateModel.newTag" class="form-control add-tag-input"
+                   id="addTagInput">
             <button class="btn btn-danger btn-xs btn-add-tag"
-                    (click)="isTagAddOpen = !isTagAddOpen; eFormCreateModel.newTag = '';">
+                    (click)="isTagAddOpen = !isTagAddOpen; eFormCreateModel.newTag = '';" id="closeTagInputBtn">
               <span class="glyphicon glyphicon-remove"></span>
             </button>
           </ng-container>
@@ -489,15 +500,17 @@
         <div class="form-group col-xs-12 col-md-12">
           <label class="mt-validation-container" for="eFormXML">XML from eForm Builder</label>
           <textarea [(ngModel)]="eFormCreateModel.eFormXml" class="form-control" placeholder="Paste XML here"
-                    name="eFormXML" id="eFormXml" rows="20"></textarea>
+                    name="eFormXML" id="eFormXml" rows="20" ></textarea>
         </div>
       </div>
     </div>
   </modal-body>
   <modal-footer>
     <button type="button" class="btn btn-default" data-dismiss="createTemplateModal"
-            (click)="createTemplateModal.dismiss()">Cancel
+            (click)="createTemplateModal.dismiss()" id="createEFormCancelBtn">Cancel
     </button>
-    <button type="button" class="btn btn-success" (click)="submitTemplateCreateModal()">Save eForm</button>
+    <button type="button" class="btn btn-success" (click)="submitTemplateCreateModal()" id="createEFormSaveEFormBtn">
+      Save eForm
+    </button>
   </modal-footer>
 </modal>

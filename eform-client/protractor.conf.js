@@ -4,20 +4,30 @@
 /*global jasmine */
 var SpecReporter = require('jasmine-spec-reporter');
 exports.config = {
-  allScriptsTimeout: 450000,
+  allScriptsTimeout: 4500000,
   specs: [
-    './e2e/tests/settings.site-header.e2e-spec.ts',
-    './e2e/tests/settings.login-page.e2e-spec.ts',
-    './e2e/tests/device-users.add.e2e-spec.ts',
-    './e2e/tests/device-users.delete.e2e-spec.ts',
-    './e2e/tests/device-users.edit.e2e-spec.ts'
+    './e2e/tests/settings/settings.site-header.e2e-spec.ts',
+    './e2e/tests/settings/settings.login-page.e2e-spec.ts',
+    './e2e/tests/device-users/device-users.add.e2e-spec.ts',
+    './e2e/tests/device-users/device-users.delete.e2e-spec.ts',
+    './e2e/tests/device-users/device-users.edit.e2e-spec.ts',
+    './e2e/tests/main-page/main-page.create-eform.e2e-spec.ts',
+    './e2e/tests/main-page/main-page.filter-eform.e2e-spec.ts',
+    './e2e/tests/main-page/main-page.sort-eform.e2e-spec.ts',
+    './e2e/tests/main-page/main-page.tags.e2e-spec.ts',
+    './e2e/tests/main-page/main-page.delete-eform.e2e-spec.ts'
   ],
   suites: {
-    'site-header': './e2e/tests/settings.site-header.e2e-spec.ts',
-    'login-page': './e2e/tests/settings.login-page.e2e-spec.ts',
-    'device-users-add': './e2e/tests/device-users.add.e2e-spec.ts',
-    'device-users-edit': './e2e/tests/device-users.edit.e2e-spec.ts',
-    'device-users-delete': './e2e/tests/device-users.delete.e2e-spec.ts',
+    'site-header': './e2e/tests/settings/settings.site-header.e2e-spec.ts',
+    'login-page': './e2e/tests/settings/settings.login-page.e2e-spec.ts',
+    'device-users-add': './e2e/tests/device-users/device-users.add.e2e-spec.ts',
+    'device-users-edit': './e2e/tests/device-users/device-users.edit.e2e-spec.ts',
+    'device-users-delete': './e2e/tests/device-users/device-users.delete.e2e-spec.ts',
+    'main-page-create': './e2e/tests/main-page/main-page.create-eform.e2e-spec.ts',
+    'main-page-filter':'./e2e/tests/main-page/main-page.filter-eform.e2e-spec.ts',
+    'main-page-sort':'./e2e/tests/main-page/main-page.sort-eform.e2e-spec.ts',
+    'main-page-tags':'./e2e/tests/main-page/main-page.tags.e2e-spec.ts',
+    'main-page-delete':'./e2e/tests/main-page/main-page.delete-eform.e2e-spec.ts'
   },
   capabilities: {
     browserName: 'chrome',
@@ -31,7 +41,7 @@ exports.config = {
     'jasmine',
   jasmineNodeOpts: {
     showColors: true,
-    defaultTimeoutInterval: 360000,
+    defaultTimeoutInterval: 720000,
     print: function () {
     }
   },

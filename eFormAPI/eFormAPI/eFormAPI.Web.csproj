@@ -82,6 +82,9 @@
     <Reference Include="Castle.Windsor, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Windsor.4.1.0\lib\net45\Castle.Windsor.dll</HintPath>
     </Reference>
+    <Reference Include="EformBase.Pn">
+      <HintPath>Plugins\EformBase\EformBase.Pn.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -271,10 +274,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Handlers\GenerateJasperFilesHandler.cs" />
     <Compile Include="Infrastructure\Models\API\OperationDataResult.cs" />
     <Compile Include="Infrastructure\Models\API\OperationResult.cs" />
-    <Compile Include="Infrastructure\Consts\EformRoles.cs" />
     <Compile Include="Infrastructure\Data\Entities\EformRole.cs" />
     <Compile Include="Infrastructure\Data\Entities\EformUserClaim.cs" />
     <Compile Include="Infrastructure\Data\Entities\EformUserLogin.cs" />
@@ -341,9 +342,6 @@
     <Compile Include="Infrastructure\Models\WorkerModel.cs" />
     <Compile Include="Infrastructure\Identity\Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Infrastructure\Identity\Security\ChallengeResult.cs" />
-    <Compile Include="Installers\RebusHandlerInstaller.cs" />
-    <Compile Include="Installers\RebusInstaller.cs" />
-    <Compile Include="Messages\GenerateJasperFiles.cs" />
     <Compile Include="Migrations\201707190837078_InitialCreate.cs" />
     <Compile Include="Migrations\201707190837078_InitialCreate.Designer.cs">
       <DependentUpon>201707190837078_InitialCreate.cs</DependentUpon>
@@ -402,7 +400,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\packages\AWSSDK.SQS.3.3.3.7\analyzers\dotnet\cs\AWSSDK.SQS.CodeAnalysis.dll" />
+    <Folder Include="Plugins\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
