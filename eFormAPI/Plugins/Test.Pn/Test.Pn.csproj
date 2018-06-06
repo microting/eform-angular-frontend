@@ -32,10 +32,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EformBase.Pn">
-      <HintPath>..\..\..\eFormAPI\Plugins\EformBase\EformBase.Pn.dll</HintPath>
+      <HintPath>..\..\eFormAPI\bin\EformBase.Pn.dll</HintPath>
     </Reference>
     <Reference Include="Microting.eForm">
-      <HintPath>..\..\..\eFormAPI\Plugins\EformBase\Microting.eForm.dll</HintPath>
+      <HintPath>..\..\eFormAPI\bin\Microting.eForm.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
