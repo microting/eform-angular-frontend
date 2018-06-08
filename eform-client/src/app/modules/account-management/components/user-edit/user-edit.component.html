@@ -1,6 +1,6 @@
 <modal #createUserModal [size]="'md'">
   <modal-header [show-close]="true">
-    <h4 class="modal-title">New User</h4>
+    <h4 class="modal-title" translate>New User</h4>
   </modal-header>
   <modal-body>
     <div class="container-fluid">
@@ -8,14 +8,16 @@
 
         <div class="row">
           <div class="form-group col-xs-12 col-md-6">
-            <label class="mt-validation-container">Username*</label>
-            <input class="form-control" required placeholder="testUser" #createUserName="ngModel" type="text"
+            <label class="mt-validation-container">{{'Username' | translate}}*</label>
+            <input class="form-control" required placeholder="testUser"
+                   #createUserName="ngModel" type="text"
                    [(ngModel)]="newUserModel.userName"
                    name="createUserName"/>
           </div>
           <div class="form-group col-xs-12 col-md-6">
-            <label class="mt-validation-container">Email*</label>
-            <input class="form-control" placeholder="example@mail.com" required #createEmail="ngModel" type="text"
+            <label class="mt-validation-container">{{'Email' | translate}}*</label>
+            <input class="form-control" placeholder="example@mail.com"
+                   required #createEmail="ngModel" type="text"
                    [(ngModel)]="newUserModel.email"
                    name="createEmail"/>
           </div>
@@ -23,13 +25,13 @@
         </div>
         <div class="row">
           <div class="form-group col-xs-12 col-md-6">
-            <label class="mt-validation-container">First name</label>
+            <label class="mt-validation-container" translate>First Name</label>
             <input class="form-control" placeholder="John" type="text"
                    [(ngModel)]="newUserModel.firstName"
                    name="createFirstName"/>
           </div>
           <div class="form-group col-xs-12 col-md-6">
-            <label class="mt-validation-container">Last name</label>
+            <label class="mt-validation-container" translate>Last Name</label>
             <input class="form-control" placeholder="Smith" type="text"
                    [(ngModel)]="newUserModel.lastName"
                    name="createLastName"/>
@@ -37,15 +39,16 @@
         </div>
         <div class="row">
           <div class="form-group col-xs-12 col-md-6">
-            <label class="mt-validation-container">Role*</label>
+            <label class="mt-validation-container">{{'Role' | translate}}*</label>
             <select class="form-control" [(ngModel)]="newUserModel.role" name="createRole">
               <option [value]="'admin'">Admin</option>
               <option [value]="'user'">User</option>
             </select>
           </div>
           <div class="form-group col-xs-12 col-md-6">
-            <label class="mt-validation-container">Password*</label>
-            <input class="form-control" placeholder="Qq123457$" required #createPassword="ngModel" type="text"
+            <label class="mt-validation-container">{{'Password' | translate}}*</label>
+            <input class="form-control" placeholder="Qq123457$"
+                   required #createPassword="ngModel" type="text"
                    [(ngModel)]="newUserModel.password"
                    name="createPassword"/>
           </div>
@@ -54,16 +57,17 @@
     </div>
   </modal-body>
   <modal-footer>
-    <button type="button" class="btn btn-success" [disabled]="!createForm.form.valid" (click)="createUser()">Save</button>
+    <button type="button" class="btn btn-success" [disabled]="!createForm.form.valid"
+            (click)="createUser()" translate>Save</button>
     <button type="button" class="btn btn-default"
-            (click)="createUserModal.dismiss()">Cancel
+            (click)="createUserModal.dismiss()" translate>Cancel
     </button>
   </modal-footer>
 </modal>
 
 <modal #editUserModal>
   <modal-header [show-close]="true">
-    <h4 class="modal-title">Edit User</h4>
+    <h4 class="modal-title" translate>Edit User</h4>
   </modal-header>
   <modal-body>
     <div class="container-fluid">
@@ -71,14 +75,16 @@
 
         <div class="row">
           <div class="form-group col-xs-12 col-md-6">
-            <label class="mt-validation-container">Username*</label>
-            <input class="form-control" required placeholder="testUser" #userNameEdit="ngModel" type="text"
+            <label class="mt-validation-container">{{'Username' | translate}}*</label>
+            <input class="form-control"
+                   required placeholder="testUser" #userNameEdit="ngModel" type="text"
                    [(ngModel)]="selectedUserModel.userName"
                    name="userName"/>
           </div>
           <div class="form-group col-xs-12 col-md-6">
-            <label class="mt-validation-container">Email*</label>
-            <input class="form-control" placeholder="example@mail.com" required #emailEdit="ngModel" type="text"
+            <label class="mt-validation-container">{{'Email' | translate}}*</label>
+            <input class="form-control" placeholder="example@mail.com"
+                   required #emailEdit="ngModel" type="text"
                    [(ngModel)]="selectedUserModel.email"
                    name="email"/>
           </div>
@@ -86,13 +92,13 @@
         </div>
         <div class="row">
           <div class="form-group col-xs-12 col-md-6">
-            <label class="mt-validation-container">First name</label>
+            <label class="mt-validation-container" translate>First Name</label>
             <input class="form-control" placeholder="John" type="text"
                    [(ngModel)]="selectedUserModel.firstName"
                    name="firstNameEdit"/>
           </div>
           <div class="form-group col-xs-12 col-md-6">
-            <label class="mt-validation-container">Last name</label>
+            <label class="mt-validation-container" translate>Last Name</label>
             <input class="form-control" placeholder="Smith" type="text"
                    [(ngModel)]="selectedUserModel.lastName"
                    name="lastNameEdit"/>
@@ -100,14 +106,15 @@
         </div>
         <div class="row">
           <div class="form-group col-xs-12 col-md-6">
-            <label class="mt-validation-container">Role*</label>
-            <select class="form-control" required #roleEdit="ngModel" name="editRole" [(ngModel)]="selectedUserModel.role">
-              <option [value]="'admin'">Admin</option>
-              <option [value]="'user'" selected>User</option>
+            <label class="mt-validation-container">{{'Role' | translate}}*</label>
+            <select class="form-control" required #roleEdit="ngModel"
+                    name="editRole" [(ngModel)]="selectedUserModel.role">
+              <option [value]="'admin'" translate>Admin</option>
+              <option [value]="'user'" selected translate>User</option>
             </select>
           </div>
           <div class="form-group col-xs-12 col-md-6">
-            <label class="mt-validation-container">New password</label>
+            <label class="mt-validation-container" translate>New password</label>
             <input class="form-control" placeholder="Left empty if want to keep old" type="text"
                    [(ngModel)]="selectedUserModel.password"
                    name="password"/>
@@ -117,9 +124,9 @@
     </div>
   </modal-body>
   <modal-footer>
-    <button type="button" class="btn btn-success" [disabled]="!editForm.form.valid" (click)="updateUser()">Save</button>
+    <button type="button" class="btn btn-success" [disabled]="!editForm.form.valid"
+            (click)="updateUser()" translate>Save</button>
     <button type="button" class="btn btn-default"
-            (click)="editUserModal.dismiss()">Cancel
-    </button>
+            (click)="editUserModal.dismiss()" translate>Cancel</button>
   </modal-footer>
 </modal>

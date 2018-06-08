@@ -2,13 +2,13 @@
   <div class="container-fluid">
     <h1 class="page-title header-page-title">
       <div class="container">
-        Seletable lists
+        {{ 'Selectable lists' | translate }}
       </div>
     </h1>
     <div class="pull-right">
-      <button class="needs_tooltip btn btn-ar btn-success" tooltip='Create new selectable list'
+      <button class="needs_tooltip btn btn-ar btn-success"
               (click)="showCreateAdvEntitySelectableGroupModal()" type="button">
-        Create new selectable list
+        {{ 'Create new selectable list' | translate }}
       </button>
     </div>
   </div>
@@ -17,7 +17,7 @@
   <div class="row">
     <div class="col-xs-8">
       <div id="check_lists_filter" class="dataTables_filter form-inline">
-        <label>Search:
+        <label>{{ 'Search' | translate }}:
           <input type="search" class="form-control input-sm" (ngModelChange)="onSearchChanged($event)"
                  [ngModel]="advEntitySelectableGroupListRequestModel.nameFilter"
                  placeholder="">

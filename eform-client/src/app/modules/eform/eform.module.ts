@@ -1,3 +1,4 @@
+import {TranslateModule} from '@ngx-translate/core';
 import {EFormRoutingModule} from './eform-routing.module';
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
@@ -17,7 +18,8 @@ import {AdvancedModule} from 'app/modules/advanced/advanced.module';
     HelpersModule,
     Ng2Bs3ModalModule,
     EFormRoutingModule,
-    TooltipModule.forRoot(),
+    TooltipModule,
+    TranslateModule.forChild(),
     FormsModule,
     FileUploadModule,
     MultiselectDropdownModule

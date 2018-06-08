@@ -2,12 +2,12 @@
   <div class="container-fluid">
     <h1 class="page-title header-page-title">
       <div class="container">
-        Workers
+        {{ 'Workers' | translate }}
       </div>
     </h1>
     <div class="pull-right">
       <button class="needs_tooltip btn btn-ar btn-success" type="button" (click)="showCreateWorkerModal()">
-        Create worker
+        {{ 'Create Worker' | translate }}
       </button>
     </div>
   </div>
@@ -19,22 +19,22 @@
     <thead>
     <tr role="row">
       <th class="col-md-2 text-center" rowspan="1" colspan="1">
-        Created at
+        {{ 'Created at' | translate }}
       </th>
       <th class="col-md-2 text-center" rowspan="1" colspan="1">
-        Updated at
+        {{ 'Updated at' | translate }}
       </th>
       <th class="col-md-2 text-center" rowspan="1" colspan="1">
-        First name
+        {{ 'First Name' | translate }}
       </th>
       <th class="col-md-2 text-center" rowspan="1" colspan="1">
-        Last name
+        {{ 'Last Name' | translate }}
       </th>
       <th class="col-md-2 text-center" rowspan="1" colspan="1">
         Microting UID
       </th>
       <th class="col-md-2 text-center" rowspan="1" colspan="1">
-        Actions
+        {{ 'Actions' | translate }}
       </th>
     </tr>
     </thead>
@@ -56,12 +56,12 @@
         {{workerDto.workerUId}}
       </td>
       <td class="text-center">
-        <a [routerLink]="['/advanced/workeredit', workerDto.workerUId]" tooltip="Edit worker"
+        <a [routerLink]="['/advanced/workeredit', workerDto.workerUId]" tooltip="{{ 'Edit Worker' | translate }}"
            class="needs_tooltip btn btn-ar btn-sm btn-default" data-placement="top" data-toggle="tooltip"
-           id="edit_site_@(item.WorkerUId)" title="" type="button" data-original-title="Edit worker">
+           id="edit_site_@(item.WorkerUId)" title="" type="button">
           <span class="fa fa-pencil"></span>
         </a>
-        <button tooltip="Delete worker" (click)="showDeleteWorkerModal(workerDto)"
+        <button tooltip="{{ 'Delete Worker' | translate }}" (click)="showDeleteWorkerModal(workerDto)"
                 class="needs_tooltip btn btn-ar btn-sm btn-danger"
                 type="button">
           <span class="fa fa-trash-o"></span>
@@ -75,7 +75,7 @@
 
 <modal #deleteWorkerModal>
   <modal-header [show-close]="true">
-    <h4 class="modal-title">Are you sure you want to delete the worker?</h4>
+    <h4 class="modal-title">{{ 'Are you sure you want to delete the worker' | translate }}?</h4>
   </modal-header>
   <modal-body>
     <div class="container-fluid">
@@ -84,53 +84,54 @@
         <div class='col-md-8'> {{selectedWorkerDto.workerUId}}</div>
       </div>
       <div class='row'>
-        <div class='col-md-4'><label>Creation date</label></div>
+        <div class='col-md-4'><label>{{ 'Creation Date' | translate }}</label></div>
         <div class='col-md-8'> {{selectedWorkerDto.createdAt}}</div>
       </div>
       <div class='row'>
-        <div class='col-md-4'><label>First name</label></div>
+        <div class='col-md-4'><label>{{ 'First Name' | translate }}</label></div>
         <div class='col-md-8'> {{selectedWorkerDto.firstName}}</div>
       </div>
       <div class='row'>
-        <div class='col-md-4'><label>Last name</label></div>
+        <div class='col-md-4'><label>{{ 'Last Name' | translate }}</label></div>
         <div class='col-md-8'> {{selectedWorkerDto.lastName}}</div>
       </div>
     </div>
   </modal-body>
   <modal-footer>
-    <button type="button" class="btn btn-danger" (click)="submitDeleteWorkerModal(selectedWorkerDto.workerUId)">OK
+    <button type="button" class="btn btn-danger"
+            (click)="submitDeleteWorkerModal(selectedWorkerDto.workerUId)">{{ 'OK' | translate }}
     </button>
     <button type="button" class="btn btn-default" data-dismiss="deleteWorkerModal"
-            (click)="deleteWorkerModal.dismiss()">Cancel
+            (click)="deleteWorkerModal.dismiss()">{{ 'Cancel' | translate }}
     </button>
   </modal-footer>
 </modal>
 
 <modal #createWorkerModal>
   <modal-header [show-close]="true">
-    <h4 class="modal-title">Create Worker</h4>
+    <h4 class="modal-title">{{ 'Create Worker' | translate }}</h4>
   </modal-header>
   <modal-body>
     <div class="container-fluid">
       <div class="create_eform">
         <div class="row">
           <div class="form-group col-xs-12 col-md-12">
-            <label class="mt-validation-container">Select site</label>
+            <label class="mt-validation-container">{{ 'Select Worker' | translate }}</label>
             <select class="form-control" (change)="selectSiteForWorker($event)" name="createSite">
-              <option [value]="null">Select worker...</option>
+              <option [value]="null">{{ 'Select Worker' | translate }}...</option>
               <option *ngFor="let site of simpleSites" [value]="site.siteId">{{site.firstName}} {{site.lastName}}</option>
             </select>
           </div>
           <div class="form-group col-xs-12 col-md-12">
-            <label class="mt-validation-container">First name</label>
-            <input class="form-control" [(ngModel)]="newWorkerModel.firstName" placeholder="First name" type="text"
+            <label class="mt-validation-container">{{ 'First Name' | translate }}</label>
+            <input class="form-control" [(ngModel)]="newWorkerModel.firstName" placeholder="{{ 'First Name' | translate }}" type="text"
                    name="createFirstName" id="firstName"/>
           </div>
         </div>
         <div class="row">
           <div class="form-group col-xs-12 col-md-12">
-            <label class="mt-validation-container">Last name</label>
-            <input class="form-control" [(ngModel)]="newWorkerModel.lastName" placeholder="Last name" type="text"
+            <label class="mt-validation-container">{{ 'Last Name' | translate }}</label>
+            <input class="form-control" [(ngModel)]="newWorkerModel.lastName" placeholder="{{ 'Last name' | translate }}" type="text"
                    name="createLastName" id="lastName"/>
           </div>
         </div>
@@ -139,9 +140,9 @@
   </modal-body>
   <modal-footer>
     <button type="button" class="btn btn-default" data-dismiss="deleteWorkerModal"
-            (click)="createWorkerModal.dismiss()">Cancel
+            (click)="createWorkerModal.dismiss()">{{ 'Cancel' | translate }}
     </button>
-    <button type="button" class="btn btn-success" [disabled]="!newWorkerModel.siteId || !newWorkerModel.lastName || !newWorkerModel.firstName" (click)="createWorker()">Save "Worker"</button>
+    <button type="button" class="btn btn-success" [disabled]="!newWorkerModel.siteId || !newWorkerModel.lastName || !newWorkerModel.firstName" (click)="createWorker()">{{ 'Save Worker' | translate }}</button>
   </modal-footer>
 </modal>
 

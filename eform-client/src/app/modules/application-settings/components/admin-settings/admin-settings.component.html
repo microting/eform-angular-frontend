@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <h1 class="page-title header-page-title">
       <div class="container">
-        Settings
+        {{ 'Settings' | translate }}
         <h5 style="display: inline">
           <small>({{adminSettingsModel.assemblyVersion}})</small>
         </h5>
@@ -12,8 +12,8 @@
 
       <button class="btn btn-ar btn-danger" [disabled]="!settingsForm.form.valid || spinnerStatus"
               (click)="updateAdminSettings()">
-        Save <i *ngIf="spinnerStatus" class="fa fa-spinner fa-spin"></i></button>
-
+        {{ 'Save' | translate }}<i *ngIf="spinnerStatus" class="fa fa-spinner fa-spin"></i>
+      </button>
     </div>
   </div>
 </header>
@@ -28,13 +28,14 @@
                 <div class="panel-heading">
                   <div class="row">
                     <div class="col-md-10 col-xs-10 panel-header-button-wrapper">
-                      Login page
+                      {{ 'Login Page' | translate }}
                     </div>
                     <div class="col-md-2 col-xs-2 text-right">
-                      <button class="btn btn-ar btn-default" id="loginPageReset" tooltip="Reset"
+                      <button class="btn btn-ar btn-default" id="loginPageReset"
+                              tooltip="{{ 'Reset' | translate }}"
                               (click)="resetLoginPageSettings()">
-                        <i class="fa fa-repeat" aria-hidden="true"></i></button>
-
+                        <i class="fa fa-repeat" aria-hidden="true"></i>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -42,7 +43,7 @@
                   <tbody>
                   <tr>
                     <td class="col-md-4">
-                      <strong>Main text</strong>
+                      <strong>{{ 'Main Text' | translate }}</strong>
                     </td>
                     <td>
                       <div class="input-group">
@@ -62,7 +63,7 @@
                   </tr>
                   <tr>
                     <td class="col-md-4">
-                      <strong>Secondary text</strong>
+                      <strong>{{ 'Secondary Text' | translate }}</strong>
                     </td>
                     <td>
                       <div class="input-group">
@@ -82,7 +83,7 @@
                   </tr>
                   <tr>
                     <td class="col-md-4">
-                      <strong>Image</strong>
+                      <strong>{{ 'Image' | translate }}</strong>
                     </td>
                     <td>
                       <div class="row">
@@ -91,9 +92,9 @@
                                src="{{loginPageImageLink}}"/>
                         </div>
                         <div class="col-md-4">
-                          <p>Recommended parameters:</p>
-                          <p>Resolution - 90x100</p>
-                          <p>Proportions - 1:1.5</p>
+                          <p>{{ 'Recommended parameters' | translate }}:</p>
+                          <p>{{ 'Resolution' | translate }} - 90x100</p>
+                          <p>{{ 'Proportions' | translate }} - 1:1.5</p>
                         </div>
                         <div class="col-md-6">
                           <input type="file" ng2FileSelect [uploader]="loginPageImageUploader"
@@ -126,10 +127,10 @@
                 <div class="panel-heading">
                   <div class="row">
                     <div class="col-md-10 col-xs-10 panel-header-button-wrapper">
-                      Site header
+                      {{ 'Site Header' | translate }}
                     </div>
                     <div class="col-md-2 col-xs-2 text-right">
-                      <button class="btn btn-ar btn-default" id="siteHeaderReset" tooltip="Reset"
+                      <button class="btn btn-ar btn-default" id="siteHeaderReset" tooltip="{{ 'Reset' | translate }}"
                               (click)="resetHeaderSettings()">
                         <i class="fa fa-repeat" aria-hidden="true"></i>
                       </button>
@@ -140,7 +141,7 @@
                   <tbody>
                   <tr>
                     <td class="col-md-4">
-                      <strong>Main text</strong>
+                      <strong>{{ 'Main Text' | translate }}</strong>
                     </td>
                     <td>
                       <div class="input-group">
@@ -159,7 +160,7 @@
                   </tr>
                   <tr>
                     <td class="col-md-4">
-                      <strong>Secondary text</strong>
+                      <strong>{{ 'Secondary Text' | translate }}</strong>
                     </td>
                     <td>
                       <div class="input-group">
@@ -178,7 +179,7 @@
                   </tr>
                   <tr>
                     <td class="col-md-4">
-                      <strong>Logo</strong>
+                      <strong>{{ 'Logo' | translate }}</strong>
                     </td>
                     <td>
                       <div class="row">
@@ -186,9 +187,9 @@
                           <img class="img-responsive img-thumbnail" width="160" height="141" src="{{headerImageLink}}"/>
                         </div>
                         <div class="col-md-4">
-                          <p>Recommended parameters:</p>
-                          <p>Resolution - 170x80</p>
-                          <p>Proportions - 2:1</p>
+                          <p>{{ 'Recommended parameters' | translate }}:</p>
+                          <p>{{ 'Resolution' | translate }} - 170x80</p>
+                          <p>{{ 'Proportions' | translate }} - 2:1</p>
 
                         </div>
                         <div class="col-md-5">
@@ -215,13 +216,13 @@
           <div class="col-md-6" role="main">
             <div class="panel panel-default">
               <div class="panel-heading">
-                SMTP Information
+                {{ 'SMTP Information' | translate }}
               </div>
               <table class="table">
                 <tbody>
                 <tr>
                   <td class="col-md-4">
-                    <strong>Host</strong>
+                    <strong>{{ 'Host' | translate }}</strong>
                   </td>
                   <td>
                     <input class="form-control" [(ngModel)]="adminSettingsModel.smtpSettingsModel.host"
@@ -231,7 +232,7 @@
                 </tr>
                 <tr>
                   <td>
-                    <strong>Port</strong>
+                    <strong>{{ 'Port' | translate }}</strong>
                   </td>
                   <td>
                     <input class="form-control" [(ngModel)]="adminSettingsModel.smtpSettingsModel.port"
@@ -241,7 +242,7 @@
                 </tr>
                 <tr>
                   <td class="col-md-4">
-                    <strong>Login</strong>
+                    <strong>{{ 'Login' | translate }}</strong>
                   </td>
                   <td>
                     <input class="form-control" [(ngModel)]="adminSettingsModel.smtpSettingsModel.login"
@@ -250,7 +251,7 @@
                 </tr>
                 <tr>
                   <td class="col-md-4">
-                    <strong>Password</strong>
+                    <strong>{{ 'Password' | translate }}</strong>
                   </td>
                   <td>
                     <input class="form-control" [(ngModel)]="adminSettingsModel.smtpSettingsModel.password"

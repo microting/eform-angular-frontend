@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
 import {UserInfoModel} from 'app/models/user';
 import {AdminService} from 'app/services';
 import {AuthService} from 'app/services/accounts/auth.service';
@@ -14,7 +15,8 @@ export class NavigationComponent implements OnInit {
   navigationMenu: any;
   constructor(private authService: AuthService,
               private router: Router,
-              private adminService: AdminService) {
+              private adminService: AdminService,
+              private translateService: TranslateService) {
   }
 
   ngOnInit() {
@@ -29,83 +31,77 @@ export class NavigationComponent implements OnInit {
             appendLeftStyles: true,
             submenus: [
               {
-                name: 'User Management',
+                name: this.translateService.instant('User Management'),
                 e2eId: 'user-management-menu',
                 link: '/account-management/users',
                 guard: 'admin'
               },
               {
-                name: 'Google Authenticator',
+                name: this.translateService.instant('Settings'),
                 e2eId: '',
-                link: '/account-management/google-authenticator'
+                link: '/account-management/settings'
               },
               {
-                name: 'Change password',
+                name: this.translateService.instant('Change password'),
                 e2eId: '',
                 link: '/account-management/change-password'
               },
               {
-                name: 'Sign out',
+                name: this.translateService.instant('Logout'),
                 e2eId: 'sign-out',
                 link: '/login/sign-out'
               }
             ]
           },
           {
-            name: 'My eForms',
+            name: this.translateService.instant('My eForms'),
             e2eId: '',
             link: '/',
             submenus: []
           },
           {
-            name: 'Device users',
+            name: this.translateService.instant('Device Users'),
             e2eId: '',
             link: '/simplesites',
             submenus: []
           },
           {
-            name: 'Advanced',
+            name: this.translateService.instant('Advanced'),
             e2eId: '',
             submenus: [
               {
-                name: 'Sites',
+                name: this.translateService.instant('Sites'),
                 e2eId: '',
                 link: '/advanced/sites',
               },
               {
-                name: 'Workers',
+                name: this.translateService.instant('Workers'),
                 e2eId: '',
                 link: '/advanced/workers',
               },
               {
-                name: 'Units',
+                name: this.translateService.instant('Units'),
                 e2eId: '',
                 link: '/advanced/units',
               },
               {
-                name: 'Searchable list',
+                name: this.translateService.instant('Searchable list'),
                 e2eId: '',
                 link: '/advanced/entity-search',
               },
               {
-                name: 'Selectable list',
+                name: this.translateService.instant('Selectable list'),
                 e2eId: '',
                 link: '/advanced/entity-select'
               },
               {
-                name: 'Settings',
+                name: this.translateService.instant('Application Settings'),
                 e2eId: '',
-                link: '/settings',
+                link: '/application-settings',
                 guard: 'admin'
               }
             ]
-          },
-          {
-            name: 'Example plugin',
-            e2eId: '',
-            link: '/plugins/example-pn',
-            submenus: []
-          },
+          }
         ];
       });
     }

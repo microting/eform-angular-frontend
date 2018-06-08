@@ -13,7 +13,7 @@
   <div class="row">
     <div class="col-xs-8">
       <div id="check_lists_filter" class="form-inline">
-        <label>Search:
+        <label>{{ 'Search' | translate }}:
           <input type="search" (keyup.enter)="onLabelInputChanged($event.target.value)" class="form-control input-sm" placeholder="">
         </label>
       </div>
@@ -41,21 +41,21 @@
           [class.sorting]="casesRequestModel.sort != 'finishedAt'"
           (click)="sortByColumn('finishedAt', casesRequestModel.isSortDsc = !casesRequestModel.isSortDsc)"
           rowspan="1" colspan="1">
-        eForm finished at
+        {{ 'eForm finished at' | translate }}
       </th>
       <th class="text-center" [class.sorting_asc]="casesRequestModel.sort == 'createdAt' && !casesRequestModel.isSortDsc"
           [class.sorting_desc]="casesRequestModel.sort == 'createdAt' && casesRequestModel.isSortDsc"
           [class.sorting]="casesRequestModel.sort != 'createdAt'"
           (click)="sortByColumn('createdAt', casesRequestModel.isSortDsc = !casesRequestModel.isSortDsc)"
           rowspan="1" colspan="1">
-        Data accessible at
+        {{ 'Data accessible at' | translate }}
       </th>
       <th class="text-center" [class.sorting_asc]="casesRequestModel.sort == 'finishedAt' && !casesRequestModel.isSortDsc"
           [class.sorting_desc]="casesRequestModel.sort == 'finishedAt' && casesRequestModel.isSortDsc"
           [class.sorting]="casesRequestModel.sort != 'finishedAt'"
           (click)="sortByColumn('finishedAt', casesRequestModel.isSortDsc = !casesRequestModel.isSortDsc)"
           rowspan="1" colspan="1">
-        eForm done by
+        {{ 'eForm done by' | translate }}
       </th>
       <th *ngIf="currentTemplate.field1" [class.sorting_asc]="casesRequestModel.sort == 'field1' && !casesRequestModel.isSortDsc"
           [class.sorting_desc]="casesRequestModel.sort == 'field1' && casesRequestModel.isSortDsc"
@@ -128,7 +128,7 @@
         {{currentTemplate.field10.label}}
       </th>
       <th class="text-center" rowspan="1" colspan="1">
-        Edit case
+        {{ 'Edit Case' | translate }}
       </th>
     </tr>
     </thead>
@@ -179,15 +179,15 @@
       <td class="text-center">
         <div class="row-buttons-wrapper btn-group" role="group">
           <a *ngIf="caseModel.status == 100" [routerLink]="['/cases/edit', caseModel.id, this.currentTemplate.id]"
-             class="needs_tooltip btn btn-ar btn-sm btn-default mt-edit-check-list-button" tooltip="Edit case"
-             type="button" data-original-title="Edit case">
+             class="needs_tooltip btn btn-ar btn-sm btn-default mt-edit-check-list-button" tooltip="{{ 'Edit Case' | translate }}"
+             type="button">
             <span class="fa fa-pencil"></span>
           </a>
-          <button tooltip="Delete case" class="needs_tooltip btn btn-ar btn-sm btn-danger" type="button"
+          <button tooltip="{{ 'Delete Case' | translate }}" class="needs_tooltip btn btn-ar btn-sm btn-danger" type="button"
           (click)="showCaseDeleteModal(caseModel)">
             <span class="fa fa-trash-o trash-icon-wrapper"></span>
           </button>
-          <a tooltip="Download PDF" href="/api/template-files/download-case-pdf/{{currentTemplate.id}}?caseId={{caseModel.id}}"
+          <a tooltip="{{ 'Download' | translate }} PDF" href="/api/template-files/download-case-pdf/{{currentTemplate.id}}?caseId={{caseModel.id}}"
                   class="needs_tooltip btn btn-ar btn-sm btn-default"
                   type="button">
                   <span class="fa fa-file-pdf-o"></span>
@@ -211,7 +211,7 @@
 
 <modal #deleteCaseModal>
   <modal-header [show-close]="true">
-    <h4 class="modal-title">Are you sure you want to delete?</h4>
+    <h4 class="modal-title">{{ 'Are you sure you want to delete this case' | translate }}?</h4>
   </modal-header>
   <modal-body>
     <div class="container-fluid">
@@ -220,24 +220,26 @@
         <div class='col-md-8'> {{selectedCase.id}}</div>
       </div>
       <div class='row'>
-        <div class='col-md-4'><label>Accessible at</label></div>
+        <div class='col-md-4'><label>{{ 'Accessible at' | translate }}</label></div>
         <div class='col-md-8'> {{selectedCase.createdAt | date:'dd.MM.y HH:mm:ss'}}</div>
       </div>
       <div class='row'>
-        <div class='col-md-4'><label>Finished at</label></div>
+        <div class='col-md-4'><label>{{ 'Finished at' | translate }}</label></div>
         <div class='col-md-8'> {{selectedCase.doneAt | date:'dd.MM.y HH:mm:ss'}}</div>
       </div>
       <div class='row'>
-        <div class='col-md-4'><label>Done by</label></div>
+        <div class='col-md-4'><label>{{ 'Done by' | translate }}</label></div>
         <div class='col-md-8'> {{selectedCase.workerName}}</div>
       </div>
     </div>
   </modal-body>
   <modal-footer>
-    <button type="button" class="btn btn-danger" (click)="submitCaseDelete(selectedCase.id)">OK</button>
+    <button type="button" class="btn btn-danger"
+            (click)="submitCaseDelete(selectedCase.id)">
+      {{ 'OK' | translate }}</button>
     <button type="button" class="btn btn-default" data-dismiss="deleteTemplateModal"
-            (click)="deleteCaseModal.close()">Cancel
-    </button>
+            (click)="deleteCaseModal.close()">
+      {{ 'Cancel' | translate }}</button>
   </modal-footer>
 </modal>
 

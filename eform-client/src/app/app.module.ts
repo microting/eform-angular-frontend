@@ -1,4 +1,8 @@
+import {HttpClientModule} from '@angular/common/http';
+import {TranslateModule} from '@ngx-translate/core';
 import {PreloadResolverConfig} from 'app/configs';
+import {translateConfig} from 'app/configs/locale.helper';
+import {CollapseModule, TooltipModule} from 'ngx-bootstrap';
 import {AppRoutingModule} from './app.routing';
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
@@ -8,7 +12,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgxGalleryModule} from 'ngx-gallery';
 import {DndModule} from 'ng2-dnd';
 
-import {AccountManagementModule, SimpleSitesModule, SettingsModule, AdvancedModule, HelpersModule} from 'app/modules';
+import {AccountManagementModule, SimpleSitesModule, ApplicationSettingsModule, AdvancedModule, HelpersModule} from 'app/modules';
 import {PluginsModule} from 'app/plugins/plugins.module';
 import {
   AppComponent, AuthComponent, RestorePasswordComponent, HeaderComponent,
@@ -59,14 +63,18 @@ import {EqualValidatorDirective} from 'app/components/directives/equal-validator
     AppRoutingModule,
     SimpleSitesModule,
     AdvancedModule,
+    HttpClientModule,
     HttpModule,
-    SettingsModule,
+    ApplicationSettingsModule,
     NgxGalleryModule,
     HelpersModule,
     AccountManagementModule,
     BrowserAnimationsModule,
     CommonModule,
-    DndModule.forRoot()
+    TooltipModule.forRoot(),
+    DndModule.forRoot(),
+    TranslateModule.forRoot(translateConfig),
+    CollapseModule.forRoot()
   ],
   providers: [
     NotifyService,

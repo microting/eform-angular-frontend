@@ -17,7 +17,7 @@
         [class.sorting]="!isSortedByNameDsc && !isSortedByNameAsc"
         (click)="sortByName()"
         rowspan="1" colspan="1">
-      Name
+      {{ 'Name' | translate }}
     </th>
     <th class="col-md-2 text-center" rowspan="1" colspan="1">
     </th>
@@ -35,10 +35,10 @@
       <!--<eform-switch [status]="false" [isDisabledON]="true" [onText]="'ON'" [offText]="'OFF'" [onColor]="'green'" [offColor]="'red'" [size]="'small'"></eform-switch>-->
       <a (click)="showEditAdvEntitySelectableGroupModal(advEntitySelectableGroup.entityGroupMUId)" tooltip="Redigér Søgbar liste"
          class="needs_tooltip btn btn-ar btn-sm btn-default" placement="top" container="body"
-         type="button" data-original-title="Edit site">
+         type="button">
         <span class="fa fa-pencil"></span>
       </a>
-      <button tooltip="Slet Søgbar element" placement="top" container="body"
+      <button tooltip="{{ 'Slet Søgbar element' | translate }}" placement="top" container="body"
               (click)="showDeleteAdvEntitySelectableGroupModal(advEntitySelectableGroup)"
               class="needs_tooltip btn btn-ar btn-danger btn-sm dangerous-action" type="button">
         <span class="fa fa-trash-o"></span>
@@ -49,7 +49,7 @@
 </table>
 <div class="row">
   <div class="col-xs-6">
-    <div class="dataTables_info" id="searchable_groups_info" *ngIf="advEntitySelectableGroupListModel.numOfElements > 0">
+    <div class="dataTables_info" id="searchable_groups_info" *ngIf="advEntitySelectableGroupListModel.numOfElements > 0" translate>
       Showing {{this.advEntitySelectableGroupListRequestModel.offset + 1}}
       to {{getLastPageNumber()}} of {{advEntitySelectableGroupListModel.numOfElements}} records
     </div>
@@ -59,7 +59,7 @@
 
 <modal #deleteAdvEntitySelectableGroupModal>
   <modal-header [show-close]="true">
-    <h4 class="modal-title">Delete searchable_group?</h4>
+    <h4 class="modal-title">{{ 'Delete' | translate }} searchable_group?</h4>
   </modal-header>
   <modal-body>
     <div class="container-fluid">
@@ -68,11 +68,11 @@
         <div class='col-md-8'> {{selectedAdvEntitySelectableGroupModel.entityGroupMUId}}</div>
       </div>
       <div class='row'>
-        <div class='col-md-4'><label>Creation date</label></div>
+        <div class='col-md-4'><label>{{ 'Creation date' | translate }}</label></div>
         <div class='col-md-8'> {{selectedAdvEntitySelectableGroupModel.updatedAt | date:'dd.MM.y HH:mm:ss'}}</div>
       </div>
       <div class='row'>
-        <div class='col-md-4'><label>Navn</label></div>
+        <div class='col-md-4'><label>{{ 'Name' | translate }}</label></div>
         <div class='col-md-8'> {{selectedAdvEntitySelectableGroupModel.name}}</div>
       </div>
     </div>
@@ -80,7 +80,7 @@
   <modal-footer>
     <button type="button" class="btn btn-danger" (click)="deleteSelectedAdvEntitySelectableGroup()">OK</button>
     <button type="button" class="btn btn-default" data-dismiss="deleteWorkerModal"
-            (click)="deleteAdvEntitySelectableGroupModal.dismiss()">Cancel
+            (click)="deleteAdvEntitySelectableGroupModal.dismiss()">{{ 'Cancel' | translate }}
     </button>
   </modal-footer>
 </modal>

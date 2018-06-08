@@ -2,13 +2,13 @@
   <div class="container-fluid">
     <h1 class="page-title header-page-title">
       <div class="container">
-        Searchable lists
+        {{ 'Searchable lists' | translate }}
       </div>
     </h1>
     <div class="pull-right">
       <button class="needs_tooltip btn btn-ar btn-success" tooltip='Create new searchable list'
               (click)="showCreateAdvEntitySearchableGroupModal()" type="button">
-        Create new searchable list
+        {{ 'Create new searchable list' | translate }}
       </button>
     </div>
   </div>
@@ -17,8 +17,9 @@
   <div class="row">
     <div class="col-xs-8">
       <div id="check_lists_filter" class="dataTables_filter form-inline">
-        <label>Search:
-          <input type="search" class="form-control input-sm" (ngModelChange)="onSearchChanged($event)"
+        <label>{{ 'Search' | translate }}:
+          <input type="search" class="form-control input-sm"
+                 (ngModelChange)="onSearchChanged($event)"
                  [ngModel]="advEntitySearchableGroupListRequestModel.nameFilter"
                  placeholder="">
         </label>

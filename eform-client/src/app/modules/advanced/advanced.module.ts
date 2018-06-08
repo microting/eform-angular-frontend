@@ -1,3 +1,4 @@
+import {TranslateModule} from '@ngx-translate/core';
 import {HelpersModule} from '../helpers/helpers.module';
 import {FormsModule} from '@angular/forms';
 import {AdvancedRoutingModule} from './advanced-routing.module';
@@ -23,7 +24,8 @@ import {EntitySearchableGridComponent} from 'app/modules/advanced/components/ent
     CommonModule,
     FormsModule,
     AdvancedRoutingModule,
-    TooltipModule.forRoot(),
+    TooltipModule,
+    TranslateModule.forChild(),
     Ng2Bs3ModalModule,
     HelpersModule
   ],

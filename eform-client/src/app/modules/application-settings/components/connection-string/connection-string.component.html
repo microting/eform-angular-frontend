@@ -33,11 +33,11 @@
                            type="text" value="" name="userName" id="userName"/>
                   </td>
                   <td class="col-md-2">
-                    <strong>First name</strong>
+                    <strong>First Name</strong>
                   </td>
                   <td>
                     <input class="form-control" [(ngModel)]="settingsModel.adminSetupModel.firstName"
-                           placeholder="Please enter the admin first name..." type="text" value="" name="firstName" #firstName="ngModel"
+                           placeholder="{{'Please enter the admin first name' | translate}}..." type="text" value="" name="firstName" #firstName="ngModel"
                            id="firstName"/>
                   </td>
                 </tr>
@@ -51,7 +51,7 @@
                            id="password"/>
                   </td>
                   <td class="col-md-2">
-                    <strong>Last name</strong>
+                    <strong>Last Name</strong>
                   </td>
                   <td>
                     <input class="form-control" [(ngModel)]="settingsModel.adminSetupModel.lastName"

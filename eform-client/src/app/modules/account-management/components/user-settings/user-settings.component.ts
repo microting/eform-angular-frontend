@@ -1,25 +1,35 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
 
 import {AuthService, NotifyService, SettingsService} from 'app/services';
-import {GoogleAuthInfoModel} from 'app/models';
+import {GoogleAuthInfoModel, UserSettingsModel} from 'app/models';
 
 @Component({
-  selector: 'google-authenticator',
-  templateUrl: './google-authenticator.component.html'
+  selector: 'user-settings',
+  templateUrl: './user-settings.component.html'
 })
-export class GoogleAuthenticatorComponent implements OnInit {
+export class UserSettingsComponent implements OnInit {
+  languages = [
+    {id: 'en-US', text: 'English'},
+    {id: 'da-DK', text: 'Danish'}
+    ];
+
+  userSettingsModel: UserSettingsModel = new UserSettingsModel();
+
   googleAuthInfoModel: GoogleAuthInfoModel = new GoogleAuthInfoModel;
 
   constructor(private settingsService: SettingsService,
               private authService: AuthService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
-              private notifyService: NotifyService) {
+              private notifyService: NotifyService,
+              private translate: TranslateService) {
   }
 
   ngOnInit(): void {
     this.getGoogleAuthenticatorInfo();
+    this.localeSwitcher();
   }
 
   getGoogleAuthenticatorInfo() {
@@ -28,6 +38,17 @@ export class GoogleAuthenticatorComponent implements OnInit {
         this.googleAuthInfoModel = data.model;
       }
     });
+  }
+
+  localeSwitcher() {
+      this.userSettingsModel.language = localStorage.getItem('locale');
+      if (!this.userSettingsModel.language) {
+        this.userSettingsModel.language = 'da-DK';
+      }
+      // TODO: FIX
+      localStorage.setItem('locale', this.userSettingsModel.language);
+      this.translate.setDefaultLang(this.userSettingsModel.language);
+      this.translate.use(this.userSettingsModel.language);
   }
 
   isTwoFactorEnabledCheckBoxChanged(e) {

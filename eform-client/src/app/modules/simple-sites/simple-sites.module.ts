@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {TranslateModule} from '@ngx-translate/core';
 import {SimpleSitesRoutingModule} from './simple-sites-routing.module';
 import {SimpleSitesComponent} from './components/simple-sites.component';
 import {SimpleSitesTableComponent} from './components/simple-sites-table/simple-sites-table.component';
@@ -7,13 +8,14 @@ import {SimpleSiteEditComponent} from './components/simple-site-edit/simple-site
 import {FormsModule} from '@angular/forms';
 import {TooltipModule} from 'ngx-bootstrap';
 import {Ng2Bs3ModalModule} from 'ng2-bs3-modal/ng2-bs3-modal';
-import {HelpersModule} from '../helpers/helpers.module';
+import {HelpersModule} from 'app/modules/helpers/helpers.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    TooltipModule.forRoot(),
+    TooltipModule,
+    TranslateModule.forChild(),
     Ng2Bs3ModalModule,
     HelpersModule,
     SimpleSitesRoutingModule
