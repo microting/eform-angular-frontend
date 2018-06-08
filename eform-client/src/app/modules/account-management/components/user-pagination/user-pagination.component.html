@@ -6,7 +6,7 @@
        tabindex="0"
        [ngClass]="{'disabled': currentPage == 1}"
        (click)="selectPage(currentPage - 1)"
-       id="check_lists_previous" translate>Previous
+       id="check_lists_previous">{{ 'Previous' | translate }}
     </a>
     <span>
       <a class="paginate_button"
@@ -23,7 +23,7 @@
        tabindex="0"
        [ngClass]="{'disabled': currentPage == totalPages}"
        (click)="selectPage(currentPage + 1)"
-       id="check_lists_next" translate>Next
+       id="check_lists_next">{{ 'Next' | translate }}
     </a>
   </div>
 </div>

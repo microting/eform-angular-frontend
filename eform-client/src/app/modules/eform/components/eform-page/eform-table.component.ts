@@ -61,7 +61,7 @@ export class EFormTableComponent implements OnInit {
     searchPlaceholder: 'Find',
     searchEmptyResult: 'Nothing found...',
     searchNoRenderText: 'Type in search box to see results...',
-    defaultTitle: 'Select tags for template',
+    defaultTitle: '...',
     allSelected: 'All selected',
   };
 

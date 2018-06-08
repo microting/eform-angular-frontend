@@ -1,11 +1,10 @@
 <modal #createUserModal [size]="'md'">
   <modal-header [show-close]="true">
-    <h4 class="modal-title" translate>New User</h4>
+    <h4 class="modal-title">{{ 'New User' | translate }}</h4>
   </modal-header>
   <modal-body>
     <div class="container-fluid">
       <form #createForm="ngForm" class="create_eform">
-
         <div class="row">
           <div class="form-group col-xs-12 col-md-6">
             <label class="mt-validation-container">{{'Username' | translate}}*</label>
@@ -25,13 +24,13 @@
         </div>
         <div class="row">
           <div class="form-group col-xs-12 col-md-6">
-            <label class="mt-validation-container" translate>First Name</label>
+            <label class="mt-validation-container">{{ 'First Name' | translate }}</label>
             <input class="form-control" placeholder="John" type="text"
                    [(ngModel)]="newUserModel.firstName"
                    name="createFirstName"/>
           </div>
           <div class="form-group col-xs-12 col-md-6">
-            <label class="mt-validation-container" translate>Last Name</label>
+            <label class="mt-validation-container">{{ 'Last Name' | translate }}</label>
             <input class="form-control" placeholder="Smith" type="text"
                    [(ngModel)]="newUserModel.lastName"
                    name="createLastName"/>
@@ -58,16 +57,16 @@
   </modal-body>
   <modal-footer>
     <button type="button" class="btn btn-success" [disabled]="!createForm.form.valid"
-            (click)="createUser()" translate>Save</button>
+            (click)="createUser()">{{ 'Save' | translate }}</button>
     <button type="button" class="btn btn-default"
-            (click)="createUserModal.dismiss()" translate>Cancel
+            (click)="createUserModal.dismiss()">{{ 'Cancel' | translate }}
     </button>
   </modal-footer>
 </modal>
 
 <modal #editUserModal>
   <modal-header [show-close]="true">
-    <h4 class="modal-title" translate>Edit User</h4>
+    <h4 class="modal-title" translate>{{ 'Edit User' | translate }}</h4>
   </modal-header>
   <modal-body>
     <div class="container-fluid">
@@ -92,13 +91,13 @@
         </div>
         <div class="row">
           <div class="form-group col-xs-12 col-md-6">
-            <label class="mt-validation-container" translate>First Name</label>
+            <label class="mt-validation-container">{{ 'First Name' | translate }}</label>
             <input class="form-control" placeholder="John" type="text"
                    [(ngModel)]="selectedUserModel.firstName"
                    name="firstNameEdit"/>
           </div>
           <div class="form-group col-xs-12 col-md-6">
-            <label class="mt-validation-container" translate>Last Name</label>
+            <label class="mt-validation-container">{{ 'Last Name' | translate }}</label>
             <input class="form-control" placeholder="Smith" type="text"
                    [(ngModel)]="selectedUserModel.lastName"
                    name="lastNameEdit"/>
@@ -109,13 +108,13 @@
             <label class="mt-validation-container">{{'Role' | translate}}*</label>
             <select class="form-control" required #roleEdit="ngModel"
                     name="editRole" [(ngModel)]="selectedUserModel.role">
-              <option [value]="'admin'" translate>Admin</option>
-              <option [value]="'user'" selected translate>User</option>
+              <option [value]="'admin'">Admin</option>
+              <option [value]="'user'" selected>User</option>
             </select>
           </div>
           <div class="form-group col-xs-12 col-md-6">
-            <label class="mt-validation-container" translate>New password</label>
-            <input class="form-control" placeholder="Left empty if want to keep old" type="text"
+            <label class="mt-validation-container">{{ 'New password' | translate }}</label>
+            <input class="form-control" placeholder="{{ 'Left empty if want to keep old' | translate }}" type="text"
                    [(ngModel)]="selectedUserModel.password"
                    name="password"/>
           </div>
@@ -125,8 +124,8 @@
   </modal-body>
   <modal-footer>
     <button type="button" class="btn btn-success" [disabled]="!editForm.form.valid"
-            (click)="updateUser()" translate>Save</button>
+            (click)="updateUser()">{{ 'Save' | translate }}</button>
     <button type="button" class="btn btn-default"
-            (click)="editUserModal.dismiss()" translate>Cancel</button>
+            (click)="editUserModal.dismiss()">{{ 'Cancel' | translate }}</button>
   </modal-footer>
 </modal>
