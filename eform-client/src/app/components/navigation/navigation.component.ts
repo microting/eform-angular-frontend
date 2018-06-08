@@ -100,12 +100,12 @@ export class NavigationComponent implements OnInit {
               }
             ]
           },
-          {
+          /**{
             name: 'Example plugin',
             e2eId: '',
             link: '/plugins/example-pn',
             submenus: []
-          },
+          },*/
         ];
       });
     }
