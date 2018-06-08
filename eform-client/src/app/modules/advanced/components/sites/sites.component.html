@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <h1 class="page-title header-page-title">
       <div class="container">
-        Sites
+        {{ 'Sites' | translate }}
       </div>
     </h1>
   </div>
@@ -15,19 +15,19 @@
     <thead>
     <tr role="row">
       <th class="col-md-2 text-center" rowspan="1" colspan="1">
-        Created at
+        {{ 'Created at' | translate }}
       </th>
       <th class="col-md-2 text-center" rowspan="1" colspan="1">
-        Updated at
+        {{ 'Updated at' | translate }}
       </th>
       <th class="col-md-2 text-center" rowspan="1" colspan="1">
-        Name
+        {{ 'Name' | translate }}
       </th>
       <th class="col-md-2 text-center" rowspan="1" colspan="1">
         Microting UID
       </th>
       <th class="col-md-2 text-center" rowspan="1" colspan="1">
-        Actions
+        {{ 'Actions' | translate }}
       </th>
     </tr>
     </thead>
@@ -46,9 +46,8 @@
         {{siteDto.siteUId}}
       </td>
       <td class="text-center">
-        <a [routerLink]="['/advanced/siteedit', siteDto.siteUId]" tooltip="Edit site"
-           class="needs_tooltip btn btn-ar btn-sm btn-default" data-placement="top" data-toggle="tooltip" type="button"
-           data-original-title="Edit site">
+        <a [routerLink]="['/advanced/siteedit', siteDto.siteUId]" tooltip="{{ 'Edit Site' | translate }}"
+           class="needs_tooltip btn btn-ar btn-sm btn-default" data-placement="top" data-toggle="tooltip" type="button">
           <span class="fa fa-pencil"></span>
         </a>
         <button tooltip="Delete site" (click)="showDeleteSiteModal(siteDto)"
@@ -65,8 +64,9 @@
 
 <modal #deleteSiteModal>
   <modal-header [show-close]="true">
-    <h4 class="modal-title">Are you sure you want to delete the site?
-      The action can not be undone!</h4>
+    <h4 class="modal-title">
+      {{ 'Are you sure you want to delete the site? The action can not be undone' | translate }}!
+    </h4>
   </modal-header>
   <modal-body>
     <div class="container-fluid">
@@ -75,19 +75,21 @@
         <div class='col-md-8'> {{selectedSiteDto.siteUId}}</div>
       </div>
       <div class='row'>
-        <div class='col-md-4'><label>Creation_date</label></div>
+        <div class='col-md-4'><label>{{ 'Creation Date' | translate }}</label></div>
         <div class='col-md-8'> {{selectedSiteDto.createdAt}}</div>
       </div>
       <div class='row'>
-        <div class='col-md-4'><label>Name:</label></div>
+        <div class='col-md-4'><label>{{ 'Name' | translate }}</label></div>
         <div class='col-md-8'> {{selectedSiteDto.siteName}}</div>
       </div>
     </div>
   </modal-body>
   <modal-footer>
-    <button type="button" class="btn btn-danger" (click)="submitDeleteSiteModal(selectedSiteDto.siteUId)">OK</button>
-    <button type="button" class="btn btn-default" data-dismiss="deleteSiteModal" (click)="deleteSiteModal.dismiss()">
-      Cancel
+    <button type="button" class="btn btn-danger"
+            (click)="submitDeleteSiteModal(selectedSiteDto.siteUId)">{{ 'OK' | translate }}</button>
+    <button type="button" class="btn btn-default" data-dismiss="deleteSiteModal"
+            (click)="deleteSiteModal.dismiss()">
+      {{ 'Cancel' | translate }}
     </button>
   </modal-footer>
 </modal>

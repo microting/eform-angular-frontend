@@ -1,4 +1,5 @@
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {TranslateModule} from '@ngx-translate/core';
 import {CasesRoutingModule} from './cases-routing.module';
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
@@ -38,9 +39,10 @@ import {NgxSelectModule} from 'ngx-select-ex';
     FormsModule,
     ReactiveFormsModule,
     CasesRoutingModule,
-    CollapseModule.forRoot(),
+    CollapseModule,
+    TranslateModule.forChild(),
     Ng2Bs3ModalModule,
-    TooltipModule.forRoot(),
+    TooltipModule,
     NgxSelectModule
   ],
   declarations: [CasesComponent,

@@ -2,14 +2,14 @@
   <div class="container-fluid">
     <h1 class="page-title header-page-title">
       <div class="container">
-        my eForms
+        {{ 'My eForms' | translate }}
       </div>
     </h1>
     <div class="pull-right">
-      <button tooltip="Create eForm"
+      <button tooltip="{{ 'Create eForm' | translate }}"
               (click)="showTemplateCreateModal()"
               class="needs_tooltip btn btn-ar btn-success"
-              type="button" id="newEFormBtn">New eForm
+              type="button" id="newEFormBtn">{{ 'New eForm' | translate }}
       </button>
     </div>
   </div>
@@ -19,13 +19,13 @@
   <div class="row">
     <div class="col-xs-8">
       <div id="check_lists_filter" class="form-inline">
-        <label>Label:
+        <label>{{ 'Label' | translate }}:
           <input type="search" (keyup.enter)="onLabelInputChanged($event.target.value)" class="form-control input-sm"
                  placeholder="" id="labelInput">
         </label>
 
         <div class="inline-block">
-          <label class="inline-block tags-label" for="eFormXML">Tags:</label>
+          <label class="inline-block tags-label" for="eFormXML">{{ 'Tags' | translate }}:</label>
           <ss-multiselect-dropdown [options]="availableTags"
                                    [texts]="filterTagTexts"
                                    [settings]="mySettings"
@@ -59,7 +59,7 @@
           [class.sorting]="templateRequestModel.sort != 'createdAt'"
           (click)="sortByColumn('createdAt', templateRequestModel.isSortDsc = !templateRequestModel.isSortDsc)"
           rowspan="1" colspan="1" id="createdAtSort">
-        Created at
+        {{ 'Created at' | translate }}
       </th>
       <th class="col-md-3 text-center"
           [class.sorting_asc]="templateRequestModel.sort == 'label' && !templateRequestModel.isSortDsc"
@@ -67,16 +67,16 @@
           [class.sorting]="templateRequestModel.sort != 'label'"
           (click)="sortByColumn('label', templateRequestModel.isSortDsc = !templateRequestModel.isSortDsc)"
           rowspan="1" colspan="1" id="nameEFormSort">
-        Name eForm
+        {{ 'eForm Name' | translate }}
       </th>
       <th class="col-md-2 text-center">
-        Tags
+        {{ 'Tags' | translate }}
       </th>
       <th class="col-md-1 text-center" rowspan="1" colspan="1">
-        Pairing
+        {{ 'Pairing' | translate }}
       </th>
       <th class="col-md-1 text-center" rowspan="1" colspan="1">
-        Actions
+        {{ 'Actions' | translate }}
       </th>
     </tr>
     </thead>
@@ -104,7 +104,7 @@
           <div class="col-md-2">
             <a (click)="showTemplateTagsEdit(templateDto)"
                class="needs_tooltip btn btn-ar btn-xs btn-default"
-               type="button" tooltip="Edit tags">
+               type="button" tooltip="{{ 'Edit tags' | translate }}">
               <span class="glyphicon glyphicon-pencil"></span>
             </a>
           </div>
@@ -113,32 +113,32 @@
       <td class="text-center">
         <span *ngFor="let deployedSite of templateDto.deployedSites">{{deployedSite.siteName}}<br></span>
         <button *ngIf="templateDto.deployedSites.length > 0" class="needs_tooltip btn btn-ar btn-sm btn-success"
-                type="button" tooltip="Click to edit eForm pairing with user(s)"
-                (click)="editDeployment(templateDto)">Edit pairing
+                type="button" tooltip="{{ 'Click to edit eForm pairing with user(s)' | translate }}"
+                (click)="editDeployment(templateDto)">{{ 'Edit pairing' | translate }}
         </button>
         <button *ngIf="templateDto.deployedSites.length == 0" class="needs_tooltip btn btn-ar btn-sm btn-success"
-                type="button" tooltip="Click to pair eForm with user(s)"
-                (click)="editDeployment(templateDto)">Pair eForm
+                type="button" tooltip="{{ 'Click to pair eForm with user(s)' | translate }}"
+                (click)="editDeployment(templateDto)">{{ 'Pair eForm' | translate }}
         </button>
       </td>
       <td class="text-center">
         <div class="row row-buttons-wrapper btn-group" role="group">
           <a *ngIf="templateDto.hasCases" [routerLink]="['/cases', templateDto.id]"
              class="needs_tooltip btn btn-ar btn-sm btn-default mt-edit-check-list-button"
-             type="button" tooltip="Show cases">
+             type="button" tooltip="{{ 'Show cases' | translate }}">
             <span class="glyphicon glyphicon-search" data-mt-check-list-id="@(item.Id)"></span>
           </a>
           <a
             class="needs_tooltip btn btn-ar btn-sm btn-default mt-edit-check-list-button"
             (click)="openEditCasesColumnsModal(templateDto)"
-            type="button" tooltip="Edit columns">
+            type="button" tooltip="{{ 'Edit columns' | translate }}">
             <span class="glyphicon glyphicon-align-justify"></span>
           </a>
           <a *ngIf="templateDto.hasCases" href="/api/template-files/csv/{{templateDto.id}}"
-             class="needs_tooltip btn btn-ar btn-sm btn-success" type="button" tooltip="Download CSV">
+             class="needs_tooltip btn btn-ar btn-sm btn-success" type="button" tooltip="{{ 'Download CSV' | translate }}">
             <span class="fa fa-file-text-o"></span>
           </a>
-          <button tooltip="Delete eForm" (click)="showTemplateDeleteModal(templateDto)"
+          <button tooltip="{{ 'Delete eForm' | translate }}" (click)="showTemplateDeleteModal(templateDto)"
                   class="needs_tooltip btn btn-ar btn-sm btn-danger"
                   type="button">
             <span class="fa fa-trash-o"></span>
@@ -146,12 +146,12 @@
         </div>
         <br>
         <div class="row row-buttons-wrapper btn-group" *ngIf="templateDto.hasCases" role="group">
-          <a tooltip="Download XML" href="/api/template-files/download-eform-xml/{{templateDto.id}}"
+          <a tooltip="{{ 'Download' | translate }} XML" href="/api/template-files/download-eform-xml/{{templateDto.id}}"
              class="needs_tooltip btn btn-ar btn-sm btn-default"
              type="button">
             <span class="fa fa-file-code-o"></span>
           </a>
-          <button tooltip="Upload ZIP archive" (click)="showUploadTemplateZIP(templateDto)"
+          <button tooltip="{{ 'Upload ZIP archive' | translate }}" (click)="showUploadTemplateZIP(templateDto)"
                   class="needs_tooltip btn btn-ar btn-sm btn-default"
                   type="button">
             <span class="fa fa-file-archive-o"></span>
@@ -163,7 +163,7 @@
   </table>
   <div class="row" *ngIf="false">
     <div class="col-xs-6">
-      <div class="dataTables_info" id="searchable_groups_info" *ngIf="templateListModel.numOfElements > 0">
+      <div class="dataTables_info" id="searchable_groups_info" *ngIf="templateListModel.numOfElements > 0" translate>
         Showing {{this.templateRequestModel.offset + 1}}
         to {{getLastPageNumber()}} of {{templateListModel.numOfElements}} records
       </div>
@@ -175,7 +175,7 @@
 
 <modal #uploadTemplateZIPModal>
   <modal-header [show-close]="true">
-    <h4>Upload template ZIP</h4>
+    <h4>{{ 'Upload template ZIP' | translate }}</h4>
   </modal-header>
   <modal-body>
     <div class="create_eform">
@@ -184,7 +184,7 @@
           <input type="file" ng2FileSelect [uploader]="zipFileUploader" class="input-wrapper"/>
           <div>
             <div>
-              Uploading progress:
+              {{ 'Uploading progress' | translate }}:
               <div class="progress" style="">
                 <div class="progress-bar" role="progressbar"
                      [ngStyle]="{ 'width': zipFileUploader.progress + '%' }"></div>
@@ -197,9 +197,9 @@
   </modal-body>
   <modal-footer>
     <button type="button" class="btn btn-default" data-dismiss="createTemplateModal"
-            (click)="uploadTemplateZIPModal.dismiss()">Cancel
+            (click)="uploadTemplateZIPModal.dismiss()">{{ 'Cancel' | translate }}
     </button>
-    <button type="button" class="btn btn-success" (click)="uploadTemplateZIP()">Save eForm</button>
+    <button type="button" class="btn btn-success" (click)="uploadTemplateZIP()">{{ 'Save eForm' | translate }}</button>
   </modal-footer>
 </modal>
 
@@ -218,10 +218,10 @@
             Microting ID
           </th>
           <th class="col-md-2 text-center" rowspan="1" colspan="1">
-            Name user device
+            {{ 'User device name' | translate }}
           </th>
           <th class="col-md-2 text-center" rowspan="1" colspan="1">
-            Check to pair
+            {{ 'Check to pair' | translate }}
           </th>
         </tr>
         </thead>
@@ -250,17 +250,15 @@
   </modal-body>
   <modal-footer>
     <button type="button" class="btn btn-default" data-dismiss="deploymentModal" (click)="deploymentModal.dismiss()">
-      Cancel
-    </button>
-    <button type="button" class="btn btn-success" [disabled]="isDeploying" (click)="submitDeploymentModal()">Save
-      pairing
-      <i *ngIf="isDeploying" class="fa fa-spinner fa-spin"></i></button>
+      {{ 'Cancel' | translate }}</button>
+    <button type="button" class="btn btn-success" [disabled]="isDeploying" (click)="submitDeploymentModal()">
+     {{ 'Save pairing' | translate }}<i *ngIf="isDeploying" class="fa fa-spinner fa-spin"></i></button>
   </modal-footer>
 </modal>
 
 <modal #editCasesColumnsModal>
   <modal-header [show-close]="true">
-    <h4 class="modal-title">Select columns for displaying in Cases</h4>
+    <h4 class="modal-title">{{ 'Select columns for displaying in Cases' | translate }}</h4>
   </modal-header>
   <modal-body>
     <div class="container-fluid">
@@ -269,7 +267,7 @@
           <thead>
           <tr>
             <th>No</th>
-            <th>Field</th>
+            <th>{{ 'Field' | translate }}</th>
           </tr>
           </thead>
           <tbody>
@@ -369,14 +367,16 @@
     </div>
   </modal-body>
   <modal-footer>
-    <button type="button" class="btn btn-danger" (click)="updateColumns()">Save</button>
-    <button type="button" class="btn btn-default" (click)="editCasesColumnsModal.dismiss()">Cancel</button>
+    <button type="button" class="btn btn-danger" (click)="updateColumns()">
+      {{ 'Save' | translate }}</button>
+    <button type="button" class="btn btn-default" (click)="editCasesColumnsModal.dismiss()">
+      {{ 'Cancel' | translate }}</button>
   </modal-footer>
 </modal>
 
 <modal #deleteTemplateModal>
   <modal-header [show-close]="true">
-    <h4 class="modal-title">Are you sure you want to delete?</h4>
+    <h4 class="modal-title">{{ 'Are you sure you want to delete' | translate }}?</h4>
   </modal-header>
   <modal-body>
     <div class="container-fluid">
@@ -385,34 +385,34 @@
         <div class='col-md-8'> {{selectedTemplateDto.id}}</div>
       </div>
       <div class='row'>
-        <div class='col-md-4'><label>Creation_date</label></div>
+        <div class='col-md-4'><label>{{ 'Creation Date' | translate }}</label></div>
         <div class='col-md-8'> {{selectedTemplateDto.createdAt | date:'dd.MM.y HH:mm:ss'}}</div>
       </div>
       <div class='row'>
-        <div class='col-md-4'><label>Name:</label></div>
+        <div class='col-md-4'><label>{{ 'Name' | translate }}:</label></div>
         <div class='col-md-8'> {{selectedTemplateDto.label}}</div>
       </div>
     </div>
   </modal-body>
   <modal-footer>
     <button type="button" class="btn btn-danger" (click)="submitTemplateDeleteModal(selectedTemplateDto.id)"
-            id="deleteEFormOkBtn">OK
-    </button>
+            id="deleteEFormOkBtn">
+      {{ 'OK' | translate }}</button>
     <button type="button" class="btn btn-default" data-dismiss="deleteTemplateModal"
-            (click)="deleteTemplateModal.dismiss()" id="deleteEFormCancelBtn">Cancel
-    </button>
+            (click)="deleteTemplateModal.dismiss()" id="deleteEFormCancelBtn">
+      {{ 'Cancel' | translate }}</button>
   </modal-footer>
 </modal>
 
 <modal #updateTemplateTagsModal>
   <modal-header [show-close]="true">
-    <h4 class="modal-title">Select tags for template</h4>
+    <h4 class="modal-title">{{ 'Select tags for template' | translate }}</h4>
   </modal-header>
   <modal-body>
     <div class="container-fluid">
       <div class="row">
         <div class="form-group col-xs-12 col-md-12">
-          <label class="multiselect-label" for="eFormXML">Template tags</label>
+          <label class="multiselect-label" for="eFormXML">{{ 'Template tags' | translate }}</label>
           <ss-multiselect-dropdown [options]="availableTags"
                                    [texts]="myTexts"
                                    [(ngModel)]="selectedTemplateTagsIds"
@@ -423,21 +423,20 @@
       </div>
       <div class="row">
         <div class="form-group col-xs-12 col-md-12">
-          <label class="multiselect-label" for="eFormXML">New tag</label>
+          <label class="multiselect-label" for="eFormXML">{{ 'New tag' | translate }}</label>
           <div class="col-md-9 col-xs-9 new-tag-block form-group">
             <input type="search" class="form-control" #newTagInput id="newTagInput">
           </div>
           <div class="col-md-3 col-xs-3">
             <button class="btn btn-success btn-md" [disabled]="isTagsProcessing"
                     (click)="createNewTag(newTagInput.value); newTagInput.value = ''" id="saveNewTagBtn">
-              Save
-            </button>
+              {{ 'Save' | translate }}</button>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="form-group col-xs-12 col-md-12">
-          <label class="multiselect-label" for="eFormXML">Tag list</label>
+          <label class="multiselect-label" for="eFormXML">{{ 'Tag list' | translate }}</label>
           <div class="col-md-9 col-xs-9 new-tag-block">
             <select class="form-control" #tagRemoveId id="tagListSelectorForDelete">
               <option *ngFor="let availableTag of availableTags"
@@ -451,7 +450,7 @@
             <button class="btn btn-danger"
                     [disabled]="isTagsProcessing"
                     (click)="removeTemplateTag(tagRemoveId.value)" id="deleteTagBtn">
-              Delete
+              {{ 'Delete' | translate }}
             </button>
           </div>
         </div>
@@ -460,23 +459,23 @@
   </modal-body>
   <modal-footer>
     <button type="button" class="btn btn-danger" [disabled]="isTagsProcessing"
-            (click)="updateTemplateTags(selectedTemplateDto.id)" id="saveTemplateTagBtn">Save
-    </button>
+            (click)="updateTemplateTags(selectedTemplateDto.id)" id="saveTemplateTagBtn">
+      {{ 'Save' | translate }}</button>
     <button type="button" class="btn btn-default" data-dismiss="deleteTemplateModal"
-            (click)="updateTemplateTagsModal.dismiss()" id="cancelCreationOfTemplateTagBtn">Cancel
-    </button>
+            (click)="updateTemplateTagsModal.dismiss()" id="cancelCreationOfTemplateTagBtn">
+      {{ 'Cancel' | translate }}</button>
   </modal-footer>
 </modal>
 
 <modal #createTemplateModal [size]="'lg'">
   <modal-header [show-close]="true">
-    <h4>Create eForm</h4>
+    <h4>{{ 'Create eForm' | translate }}</h4>
   </modal-header>
   <modal-body>
     <div class="create_eform">
       <div class="row">
         <div class="form-group col-xs-12 col-md-12">
-          <label class="multiselect-label" for="eFormXML">Tags</label>
+          <label class="multiselect-label" for="eFormXML">{{ 'Tags' | translate }}</label>
           <ss-multiselect-dropdown [options]="availableTags"
                                    [texts]="myTexts"
                                    [settings]="mySettings"
@@ -498,8 +497,10 @@
       </div>
       <div class="row">
         <div class="form-group col-xs-12 col-md-12">
-          <label class="mt-validation-container" for="eFormXML">XML from eForm Builder</label>
-          <textarea [(ngModel)]="eFormCreateModel.eFormXml" class="form-control" placeholder="Paste XML here"
+          <label class="mt-validation-container" for="eFormXML">
+            {{ 'XML from eForm Builder' | translate }}
+          </label>
+          <textarea [(ngModel)]="eFormCreateModel.eFormXml" class="form-control" placeholder="{{ 'Paste XML here' | translate }}"
                     name="eFormXML" id="eFormXml" rows="20" ></textarea>
         </div>
       </div>
@@ -507,10 +508,9 @@
   </modal-body>
   <modal-footer>
     <button type="button" class="btn btn-default" data-dismiss="createTemplateModal"
-            (click)="createTemplateModal.dismiss()" id="createEFormCancelBtn">Cancel
-    </button>
+            (click)="createTemplateModal.dismiss()" id="createEFormCancelBtn">
+      {{ 'Cancel' | translate }}</button>
     <button type="button" class="btn btn-success" (click)="submitTemplateCreateModal()" id="createEFormSaveEFormBtn">
-      Save eForm
-    </button>
+      {{ 'Save eForm' | translate }}</button>
   </modal-footer>
 </modal>

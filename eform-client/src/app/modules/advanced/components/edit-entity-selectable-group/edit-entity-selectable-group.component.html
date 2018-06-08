@@ -1,16 +1,16 @@
 <modal #createAdvEntitySelectableGroupModal [size]="'lg'">
   <modal-header [show-close]="true">
-    <h4>Create new selectable list</h4>
+    <h4 translate>Create new selectable list</h4>
   </modal-header>
   <modal-body>
     <div class="create_eform">
       <div class="row">
         <div class="form-group col-xs-12 col-md-12">
-          <label class="mt-validation-container">Name</label>
+          <label class="mt-validation-container" translate>Name</label>
           <span class="mt-icon-md needs_tooltip vcenter">
             <span *ngIf="!advEntitySelectableGroupEditModel.name"
               class="glyphicon glyphicon-info-sign glyphicon-info-sign-yellow glyphicon-info-sign-wrapper vertical-align needs_tooltip"
-              tooltip="Påkrævet" data-toggle="tooltip">
+              tooltip="{{'Required' | translate}}" data-toggle="tooltip">
             </span>
           </span>
           <input class="form-control mt-required" [(ngModel)]="advEntitySelectableGroupEditModel.name" required type="text"
@@ -19,26 +19,26 @@
       </div>
     </div>
     <div class="row">
-      <label class="table-title-wrapper">Options</label>
+      <label class="table-title-wrapper" translate>Options</label>
     </div>
     <div class="row">
       <div class="mt-table-head col-sm-1 col-md-1">
         &nbsp;
       </div>
       <div class="table-header-bottom-wrapper col-xs-9 col-md-9">
-        <label class="mt-validation-container">Text</label>
+        <label class="mt-validation-container" translate>Text</label>
       </div>
       <div class="mt-table-head col-sm-2 col-md-2">
         <div class="mt-searchable-entities-actions pull-right">
           <button class="needs_tooltip btn btn-ar btn-xs btn-success"
                   container="body" placement="top" type="button" (click)="showImportAdvEntitySelectableGroupModal()"
-                  tooltip="Importér svarmuligheder">
+                  tooltip="{{'Importér svarmuligheder' | translate}}">
             <span class="glyphicon glyphicon-import"></span>
           </button>
           <a class="needs_tooltip btn btn-xs btn-ar btn-success" data-bootbox-title="Add searchable_entity to case"
              container="body" placement="top"
              (click)="addNewAdvEntitySelectableItem()"
-             tooltip="Opret Svarmulighed">
+             tooltip="{{'Opret Svarmulighed' | translate}}">
             <span class="glyphicon glyphicon-plus"></span>
           </a>
         </div>
@@ -67,15 +67,15 @@
                       <span class="glyphicon-info-sign-inherit">
 <span
   class="glyphicon glyphicon-info-sign glyphicon-info-sign-yellow glyphicon-info-sign-wrapper mt-error-notification-icon needs_tooltip vcenter"
-  container="body" placement="top" tooltip="Ikke færdigudfyldt!"></span>
+  container="body" placement="top" tooltip="{{'Ikke færdigudfyldt' | translate}}!"></span>
 </span>
                     </div>
-                    <button tooltip="Redigér Søgbar element" (click)="openEditAdvEntitySelectableModal(entityItem)"
+                    <button tooltip="{{ 'Redigér Søgbar element' | translate }}" (click)="openEditAdvEntitySelectableModal(entityItem)"
                             class="needs_tooltip btn btn-ar btn-sm btn-default"
                             placement="top" type="button" container="body">
                       <span class="fa fa-pencil"></span>
                     </button>
-                    <button tooltip="Slet Søgbar element" placement="top" (click)="deleteAdvEntitySelectableItem(entityItem)"
+                    <button tooltip="{{ 'Slet Søgbar element' | translate }}" placement="top" (click)="deleteAdvEntitySelectableItem(entityItem)"
                             class="needs_tooltip btn btn-ar btn-sm btn-danger"
                             type="button" container="body">
                       <span class="fa fa-trash-o"></span>
@@ -93,21 +93,21 @@
   </modal-body>
   <modal-footer>
     <button type="button" class="btn btn-default" data-dismiss="createTemplateModal"
-            (click)="createAdvEntitySelectableGroupModal.dismiss()">Cancel
+            (click)="createAdvEntitySelectableGroupModal.dismiss()" translate>Cancel
     </button>
-    <button type="button" class="btn btn-success" (click)="createEntitySelectableGroup()">Save</button>
+    <button type="button" class="btn btn-success" (click)="createEntitySelectableGroup()">{{ 'Save' | translate }}</button>
   </modal-footer>
 </modal>
 
 <modal #editAdvEntitySelectableItemModal (onDismiss)="onChildModalDismissed()">
   <modal-header [show-close]="true">
-    <h4>Edit searchable element</h4>
+    <h4>{{ 'Edit searchable element' | translate }}</h4>
   </modal-header>
   <modal-body>
     <div class="create_eform">
       <div class="row">
         <div class="form-group col-xs-12 col-md-12">
-          <label class="mt-validation-container">Name</label>
+          <label class="mt-validation-container">{{ 'Name' | translate }}</label>
           <input class="form-control mt-required" [(ngModel)]="selectedAdvEntitySelectableItemModel.name" type="text" value="">
         </div>
       </div>
@@ -115,16 +115,16 @@
   </modal-body>
   <modal-footer>
     <button type="button" class="btn btn-default" data-dismiss="createTemplateModal"
-            (click)="editAdvEntitySelectableItemModal.dismiss()">Cancel
+            (click)="editAdvEntitySelectableItemModal.dismiss()">{{ 'Cancel' | translate }}
     </button>
-    <button type="button" class="btn btn-success" (click)="onAdvEntitySelectableItemChanged(selectedAdvEntitySelectableItemModel)">Ok
-    </button>
+    <button type="button" class="btn btn-success" (click)="onAdvEntitySelectableItemChanged(selectedAdvEntitySelectableItemModel)">
+      {{ 'Ok' | translate }}</button>
   </modal-footer>
 </modal>
 
 <modal #importAdvEntitySelectableGroupModal [size]="'lg'" (onDismiss)="onChildModalDismissed()">
   <modal-header [show-close]="true">
-    <h4>Import options (max 100 entries)</h4>
+    <h4>{{ 'Import options (max 100 entries)' | translate }}</h4>
   </modal-header>
   <modal-body>
     <div class="create_eform">
@@ -137,8 +137,9 @@
   </modal-body>
   <modal-footer>
     <button type="button" class="btn btn-default" data-dismiss="createTemplateModal"
-            (click)="importAdvEntitySelectableGroupModal.dismiss()">Cancel
+            (click)="importAdvEntitySelectableGroupModal.dismiss()">{{ 'Cancel' | translate }}
     </button>
-    <button type="button" class="btn btn-success" (click)="importAdvEntitySelectableGroup(importString.value)">Import</button>
+    <button type="button" class="btn btn-success" (click)="importAdvEntitySelectableGroup(importString.value)">
+      {{ 'Import' | translate }}</button>
   </modal-footer>
 </modal>

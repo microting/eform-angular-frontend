@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <h1 class="page-title header-page-title">
       <div class="container">
-        Edit:
+        {{ 'Edit' | translate }}:
         {{siteDto.siteName}}
       </div>
     </h1>
@@ -22,7 +22,7 @@
               <tbody>
               <tr>
                 <td>
-                  <strong>Name</strong>
+                  <strong>{{ 'Name' | translate }}</strong>
                 </td>
                 <td>
                   <input class="form-control" [(ngModel)]="siteModel.siteName" placeholder="{{siteDto.siteName}}"
@@ -35,7 +35,7 @@
         </div>
         <div class="col-md-3">
           <div class="bs-docs-container hidden-print affix" id="mt-side-bar" role="complementary">
-            <button class="btn btn-ar btn-danger" (click)="updateSingle()">Save</button>
+            <button class="btn btn-ar btn-danger" (click)="updateSingle()">{{ 'Save' | translate }}</button>
           </div>
         </div>
       </div>

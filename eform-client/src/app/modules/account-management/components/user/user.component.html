@@ -1,14 +1,14 @@
 <header class="main-header main-header-title user-page-title-wrapper">
   <div class="container-fluid">
     <h1 class="page-title header-page-title">
-      <div class="container" style="width: 300px !important;">
+      <div class="container" style="width: 300px !important;" translate>
         User Management
       </div>
     </h1>
     <div class="pull-right">
       <button class="needs_tooltip btn btn-ar btn-success" tooltip='Create user'
               (click)="showCreateUserModal()"
-              type="button">
+              type="button" translate>
         New User
       </button>
     </div>
@@ -24,8 +24,10 @@
               [disabled]="twoFactorCheckboxDisabled"
               (change)="checkBoxChanged($event)"
               type="checkbox">
-      <label for="isChecked"><strong>Force users to use 2-f-auth</strong></label>
-      <br>
+      <label for="isChecked">
+        <strong translate>Force users to use 2-f-auth</strong>
+      </label>
+      <br/>
     </div>
     <user-pagination *ngIf="userInfoModelList.totalUsers > paginationModel.pageSize"
                      [limit]="paginationModel.pageSize"

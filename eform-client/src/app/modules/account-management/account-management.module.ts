@@ -1,3 +1,6 @@
+import {TranslateModule} from '@ngx-translate/core';
+import {UserSettingsComponent} from 'app/modules/account-management/components/user-settings/user-settings.component';
+import {NgxSelectModule} from 'ngx-select-ex';
 import {HelpersModule} from '../helpers/helpers.module';
 import {FormsModule} from '@angular/forms';
 import {AccountManagementRoutingModule} from './account-management-routing.module';
@@ -11,7 +14,6 @@ import {UserComponent} from './components/user/user.component';
 import {UserPaginationComponent} from './components/user-pagination/user-pagination.component';
 import {UserEditComponent} from './components/user-edit/user-edit.component';
 import {ChangePasswordComponent} from './components/change-password/change-password.component';
-import {GoogleAuthenticatorComponent} from './components/google-authenticator/google-authenticator.component';
 
 
 @NgModule({
@@ -19,7 +21,9 @@ import {GoogleAuthenticatorComponent} from './components/google-authenticator/go
     CommonModule,
     FormsModule,
     AccountManagementRoutingModule,
-    TooltipModule.forRoot(),
+    TooltipModule,
+    TranslateModule,
+    NgxSelectModule,
     Ng2Bs3ModalModule,
     HelpersModule
   ],
@@ -30,7 +34,7 @@ import {GoogleAuthenticatorComponent} from './components/google-authenticator/go
     UserComponent,
     UserPaginationComponent,
     UserEditComponent,
-    GoogleAuthenticatorComponent
+    UserSettingsComponent
   ],
 })
 export class AccountManagementModule {

@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import {UserSettingsComponent} from './components/user-settings/user-settings.component';
 import {ChangePasswordComponent} from './components/change-password/change-password.component';
 import {UserComponent} from './components/user/user.component';
-import {GoogleAuthenticatorComponent} from "./components/google-authenticator/google-authenticator.component";
 
 const routes: Routes = [
   {
@@ -14,8 +14,8 @@ const routes: Routes = [
     component: ChangePasswordComponent,
   },
   {
-    path: 'google-authenticator',
-    component: GoogleAuthenticatorComponent,
+    path: 'settings',
+    component: UserSettingsComponent,
   }
 ];
 

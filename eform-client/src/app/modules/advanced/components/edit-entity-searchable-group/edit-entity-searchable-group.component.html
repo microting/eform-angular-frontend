@@ -1,6 +1,6 @@
 <modal #createAdvEntitySearchableGroupModal [size]="'lg'">
   <modal-header [show-close]="true">
-    <h4>Opret Søgbar liste</h4>
+    <h4 translate>Create searchable list</h4>
   </modal-header>
   <modal-body>
     <div class="create_eform">
@@ -10,7 +10,7 @@
           <span class="mt-icon-md needs_tooltip vcenter">
             <span *ngIf="!advEntitySearchableGroupEditModel.name"
               class="glyphicon glyphicon-info-sign glyphicon-info-sign-yellow glyphicon-info-sign-wrapper vertical-align needs_tooltip"
-              tooltip="Påkrævet" data-toggle="tooltip">
+              tooltip="{{'Required' | translate}}" data-toggle="tooltip">
             </span>
           </span>
           <input class="form-control mt-required" [(ngModel)]="advEntitySearchableGroupEditModel.name" required type="text"
@@ -19,26 +19,26 @@
       </div>
     </div>
     <div class="row">
-      <label class="table-title-wrapper">Svarmuligheder</label>
+      <label class="table-title-wrapper" translate>Svarmuligheder</label>
     </div>
     <div class="row">
       <div class="mt-table-head col-sm-1 col-md-1">
         &nbsp;
       </div>
       <div class="table-header-bottom-wrapper col-xs-9 col-md-9">
-        <label class="mt-validation-container">Tekst</label>
+        <label class="mt-validation-container" translate>Text</label>
       </div>
       <div class="mt-table-head col-sm-2 col-md-2">
         <div class="mt-searchable-entities-actions pull-right">
           <button class="needs_tooltip btn btn-ar btn-xs btn-success"
                   container="body" placement="top" type="button" (click)="showImportAdvEntitySearchableGroupModal()"
-                  tooltip="Importér svarmuligheder">
+                  tooltip="{{'Svarmuligheder' | translate}}">
             <span class="glyphicon glyphicon-import"></span>
           </button>
           <a class="needs_tooltip btn btn-xs btn-ar btn-success" data-bootbox-title="Add searchable_entity to case"
              container="body" placement="top"
              (click)="addNewAdvEntitySearchableItem()"
-             tooltip="Opret Svarmulighed">
+             tooltip="{{'Opret Svarmulighed' | translate}}">
             <span class="glyphicon glyphicon-plus"></span>
           </a>
         </div>
@@ -70,12 +70,12 @@
   container="body" placement="top" tooltip="Ikke færdigudfyldt!"></span>
 </span>
                     </div>
-                    <button tooltip="Redigér Søgbar element" (click)="openEditAdvEntitySearchableModal(entityItem)"
+                    <button tooltip="{{'Redigér Søgbar element' | translate}}" (click)="openEditAdvEntitySearchableModal(entityItem)"
                             class="needs_tooltip btn btn-ar btn-sm btn-default"
                             placement="top" type="button" container="body">
                       <span class="fa fa-pencil"></span>
                     </button>
-                    <button tooltip="Slet Søgbar element" placement="top" (click)="deleteAdvEntitySearchableItem(entityItem)"
+                    <button tooltip="{{'Slet Søgbar element' | translate}}" placement="top" (click)="deleteAdvEntitySearchableItem(entityItem)"
                             class="needs_tooltip btn btn-ar btn-sm btn-danger"
                             type="button" container="body">
                       <span class="fa fa-trash-o"></span>
@@ -93,21 +93,22 @@
   </modal-body>
   <modal-footer>
     <button type="button" class="btn btn-default" data-dismiss="createTemplateModal"
-            (click)="createAdvEntitySearchableGroupModal.dismiss()">Annullér
-    </button>
-    <button type="button" class="btn btn-success" (click)="createEntitySearchableGroup()">Save</button>
+            (click)="createAdvEntitySearchableGroupModal.dismiss()" translate>
+      Cancel</button>
+    <button type="button" class="btn btn-success" (click)="createEntitySearchableGroup()" translate>
+      Save</button>
   </modal-footer>
 </modal>
 
 <modal #editAdvEntitySearchableItemModal (onDismiss)="onChildModalDismissed()">
   <modal-header [show-close]="true">
-    <h4>Redigér Søgbar element</h4>
+    <h4 translate>Redigér Søgbar element</h4>
   </modal-header>
   <modal-body>
     <div class="create_eform">
       <div class="row">
         <div class="form-group col-xs-12 col-md-12">
-          <label class="mt-validation-container">Name</label>
+          <label class="mt-validation-container" translate>Name</label>
           <input class="form-control mt-required" [(ngModel)]="selectedAdvEntitySearchableItemModel.name" type="text" value="">
         </div>
       </div>
@@ -115,16 +116,18 @@
   </modal-body>
   <modal-footer>
     <button type="button" class="btn btn-default" data-dismiss="createTemplateModal"
-            (click)="editAdvEntitySearchableItemModal.dismiss()">Annullér
-    </button>
-    <button type="button" class="btn btn-success" (click)="onAdvEntitySearchableItemChanged(selectedAdvEntitySearchableItemModel)">Ok
+            (click)="editAdvEntitySearchableItemModal.dismiss()" translate>
+      Cancel</button>
+    <button type="button" class="btn btn-success"
+            (click)="onAdvEntitySearchableItemChanged(selectedAdvEntitySearchableItemModel)" translate>
+      Ok
     </button>
   </modal-footer>
 </modal>
 
 <modal #importAdvEntitySearchableGroupModal [size]="'lg'" (onDismiss)="onChildModalDismissed()">
   <modal-header [show-close]="true">
-    <h4>Importér svarmuligheder (max 100)</h4>
+    <h4 translate>Importér svarmuligheder (max 100)</h4>
   </modal-header>
   <modal-body>
     <div class="create_eform">
@@ -137,8 +140,10 @@
   </modal-body>
   <modal-footer>
     <button type="button" class="btn btn-default" data-dismiss="createTemplateModal"
-            (click)="importAdvEntitySearchableGroupModal.dismiss()">Annullér
+            (click)="importAdvEntitySearchableGroupModal.dismiss()" translate>Cancel
     </button>
-    <button type="button" class="btn btn-success" (click)="importAdvEntitySearchableGroup(importString.value)">Importér</button>
+    <button type="button" class="btn btn-success"
+            (click)="importAdvEntitySearchableGroup(importString.value)" translate>
+      Importér</button>
   </modal-footer>
 </modal>

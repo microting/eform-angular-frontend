@@ -2,13 +2,13 @@
   <div class="container-fluid">
     <h1 class="page-title header-page-title">
       <div class="container">
-        Device users
+        {{ 'Device Users' | translate }}
       </div>
     </h1>
     <div class="pull-right">
-      <button class="needs_tooltip btn btn-ar btn-success" tooltip='Create Device User"'
+      <button class="needs_tooltip btn btn-ar btn-success" tooltip="{{ 'Create Device User' | translate }}"
               (click)="showCreateSimpleSiteModal()" type="button" id="newDeviceUserButton">
-        New Device User
+        {{ 'New Device User' | translate }}
       </button>
     </div>
   </div>
@@ -20,22 +20,22 @@
     <thead>
     <tr role="row">
       <th class="col-md-1 text-center" rowspan="1" colspan="1">
-        Site ID
+        {{ 'Site ID' | translate }}
       </th>
       <th class="col-md-3 text-center" rowspan="1" colspan="1">
-        First name
+        {{ 'First Name' | translate }}
       </th>
       <th class="col-md-3 text-center" rowspan="1" colspan="1">
-        Last name
+        {{ 'Last Name' | translate }}
       </th>
       <th class="col-md-1 text-center" rowspan="1" colspan="1">
-        Device ID
+        {{ 'Device ID' | translate }}
       </th>
       <th class="col-md-2 text-center" rowspan="1" colspan="1">
-        Customer no &amp; OTP
+        {{ 'Customer no &amp; OTP' | translate }}
       </th>
       <th class="col-md-2 text-center" rowspan="1" colspan="1">
-        Actions
+        {{ 'Actions' | translate }}
       </th>
     </tr>
     </thead>
@@ -70,7 +70,7 @@
         <div *ngIf="siteDto.otpCode != 0">
           {{siteDto.customerNo}} / {{siteDto.otpCode}}
         </div>
-        <button *ngIf="siteDto.otpCode == 0" tooltip="New OTP" (click)="showRequestOtpModal(siteDto)"
+        <button *ngIf="siteDto.otpCode == 0" tooltip="{{ 'New OTP' | translate }}" (click)="showRequestOtpModal(siteDto)"
                 class="needs_tooltip btn btn-ar btn-sm btn-danger"
                 type="button">
           <span class="fa fa-key"></span></button>
@@ -80,16 +80,16 @@
       </td>
 
       <td *ngIf="!siteDto" class="text-center">
-        <span> N / A </span>
+        <span> N/A </span>
       </td>
 
       <td class="text-center">
-        <a [routerLink]="['/simplesites/simplesiteedit', siteDto.siteId]" tooltip="Edit Device User"
+        <a [routerLink]="['/simplesites/simplesiteedit', siteDto.siteId]" tooltip="{{ 'Edit Device User' | translate }}"
            class="needs_tooltip btn btn-ar btn-sm btn-default" data-placement="top" data-toggle="tooltip"
-           title="" type="button" data-original-title="Edit site">
+           title="" type="button">
           <span class="fa fa-pencil"></span>
         </a>
-        <button (click)="showDeleteSimpleSiteModal(siteDto)" tooltip="Delete Device User"
+        <button (click)="showDeleteSimpleSiteModal(siteDto)" tooltip="{{ 'Delete Device User' | translate }}"
                 class="needs_tooltip btn btn-ar btn-danger btn-sm dangerous-action" type="button">
           <span class="fa fa-trash-o"></span>
         </button>
@@ -102,7 +102,7 @@
 
 <modal #deleteSimpleSiteModal>
   <modal-header [show-close]="true">
-    <h4 class="modal-title">Are you sure you want to delete the site?</h4>
+    <h4 class="modal-title">{{ 'Are you sure you want to delete' | translate }}?</h4>
   </modal-header>
   <modal-body>
     <div class="container-fluid">
@@ -111,40 +111,43 @@
         <div class='col-md-8'> {{selectedSimpleSite.siteId}}</div>
       </div>
       <div class='row'>
-        <div class='col-md-4'><label>First name</label></div>
+        <div class='col-md-4'><label>{{ 'First Name' | translate }}</label></div>
         <div class='col-md-8'> {{selectedSimpleSite.firstName}}</div>
       </div>
       <div class='row'>
-        <div class='col-md-4'><label>Last name:</label></div>
+        <div class='col-md-4'><label>{{ 'Last Name' | translate }}</label></div>
         <div class='col-md-8'> {{selectedSimpleSite.lastName}}</div>
       </div>
     </div>
   </modal-body>
   <modal-footer>
-    <button type="button" class="btn btn-danger" (click)="deleteSimpleSite(selectedSimpleSite.siteId)" id="deleteModalOkButton">OK</button>
+    <button type="button" class="btn btn-danger"
+            (click)="deleteSimpleSite(selectedSimpleSite.siteId)"
+            id="deleteModalOkButton">
+      {{ 'OK' | translate }}</button>
     <button type="button" class="btn btn-default" data-dismiss="deleteWorkerModal" id="deleteModalCancelButton"
-            (click)="deleteSimpleSiteModal.dismiss()">Cancel
-    </button>
+            (click)="deleteSimpleSiteModal.dismiss()">
+      {{ 'Cancel' | translate }}</button>
   </modal-footer>
 </modal>
 
 <modal #createSimpleSiteModal>
   <modal-header [show-close]="true">
-    <h4 class="modal-title">New Device User</h4>
+    <h4 class="modal-title">{{ 'New Device User' | translate }}</h4>
   </modal-header>
   <modal-body>
     <div class="container-fluid">
       <div class="create_eform">
         <div class="row">
           <div class="form-group col-xs-12 col-md-12">
-            <label class="mt-validation-container">First name</label>
-            <input class="form-control" [(ngModel)]="simpleSiteModel.userFirstName" placeholder="First name" type="text"
+            <label class="mt-validation-container">{{ 'First Name' | translate }}</label>
+            <input class="form-control" [(ngModel)]="simpleSiteModel.userFirstName" placeholder="First Name" type="text"
                    name="firstName" id="firstName"/>
           </div>
         </div>
         <div class="row">
           <div class="form-group col-xs-12 col-md-12">
-            <label class="mt-validation-container">Last name</label>
+            <label class="mt-validation-container">{{ 'Last Name' | translate }}</label>
             <input class="form-control" [(ngModel)]="simpleSiteModel.userLastName" placeholder="Last name" type="text"
                    name="lastName" id="lastName"/>
           </div>
@@ -155,7 +158,7 @@
   <modal-footer>
     <button type="button" class="btn btn-success" (click)="createSimpleSite()" id="saveButton">Save</button>
     <button type="button" class="btn btn-default" data-dismiss="deleteWorkerModal"
-            (click)="createSimpleSiteModal.dismiss()" id="cancelButton">Cancel
+            (click)="createSimpleSiteModal.dismiss()" id="cancelButton">{{ 'Cancel' | translate }}
     </button>
   </modal-footer>
 </modal>
@@ -168,18 +171,17 @@
   <modal-body>
     <div class="container-fluid">
       <h1>
-        <span>WARNING!</span>
+        <span>{{ 'WARNING' | translate }}!</span>
       </h1>
-      When pressing OK, you will deactivate the current device paired with this location.
-      <br> If there is data on the current device, these
-      data will be lost after pressing OK.
+      {{ 'When pressing OK, you will deactivate the current device paired with this location' | translate }}.
+      <br> {{ 'If there is data on the current device, this data will be lost after pressing OK' | translate }}.
     </div>
   </modal-body>
   <modal-footer>
-    <button type="button" class="btn btn-danger" (click)="saveRequestOtpModal()">OK</button>
+    <button type="button" class="btn btn-danger" (click)="saveRequestOtpModal()">
+      {{ 'OK' | translate }}</button>
     <button type="button" class="btn btn-default" data-dismiss="unitOtpRequestModal"
-            (click)="otpRequestModal.dismiss()">Cancel
-    </button>
+            (click)="otpRequestModal.dismiss()">{{ 'Cancel' | translate }}</button>
   </modal-footer>
 </modal>
 

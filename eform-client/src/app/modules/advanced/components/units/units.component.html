@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <h1 class="page-title header-page-title">
       <div class="container">
-        Units
+        {{ 'Units' | translate }}
       </div>
     </h1>
   </div>
@@ -14,13 +14,13 @@
     <thead>
     <tr role="row">
       <th class="col-md-2 text-center" rowspan="1" colspan="1">
-        Created at
+        {{ 'Created at' | translate }}
       </th>
       <th class="col-md-2 text-center" rowspan="1" colspan="1">
-        Updated at
+        {{ 'Updated at' | translate }}
       </th>
       <th class="col-md-2 text-center" rowspan="1" colspan="1">
-        Customer no &amp; OTP
+        {{ 'Customer' | translate }} No &amp; OTP
       </th>
       <th class="col-md-2 text-center" rowspan="1" colspan="1">
         Microting UID
@@ -41,7 +41,8 @@
           {{unitModel.customerNo}} / {{unitModel.otpCode}}
         </div>
 
-        <button *ngIf="unitModel.otpCode == 0" tooltip="Get OTP code" (click)="showRequestOtpModal(unitModel)"
+        <button *ngIf="unitModel.otpCode == 0" tooltip="{{ 'Get OTP code' | translate }}"
+                (click)="showRequestOtpModal(unitModel)"
                 class="needs_tooltip btn btn-ar btn-sm btn-danger"
                 type="button">
           <span class="fa fa-key"></span>
@@ -58,21 +59,21 @@
 
 <modal #unitOtpRequestModal>
   <modal-header [show-close]="true">
-    <h4 class="modal-title">Activate OTP code for : {{selectedUnitModel.unitUId}}!</h4>
+    <h4 class="modal-title">{{ 'Activate OTP code for' | translate }} : {{selectedUnitModel.unitUId}}!</h4>
   </modal-header>
   <modal-body>
     <div class="container-fluid">
       <h1>
-        <span>WARNING!</span>
+        <span>{{ 'WARNING' | translate }}!</span>
       </h1>
-      When pressing OK, you will deactivate the current unit assosiated with this location.
-      <br> You will se the new OTP code once you click OK.
+      {{ 'When pressing OK, you will deactivate the current unit assosiated with this location' | translate }}.
+      <br> {{ 'You will se the new OTP code once you click OK' | translate }}.
     </div>
   </modal-body>
   <modal-footer>
-    <button type="button" class="btn btn-danger" (click)="saveRequestOtpModal()">Save</button>
+    <button type="button" class="btn btn-danger" (click)="saveRequestOtpModal()">{{ 'Save' | translate }}</button>
     <button type="button" class="btn btn-default" data-dismiss="unitOtpRequestModal"
-            (click)="unitOtpRequestModal.dismiss()">Cancel
+            (click)="unitOtpRequestModal.dismiss()">{{ 'Cancel' | translate }}
     </button>
   </modal-footer>
 </modal>

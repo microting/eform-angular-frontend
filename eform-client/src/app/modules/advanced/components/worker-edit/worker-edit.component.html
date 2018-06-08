@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <h1 class="page-title header-page-title">
       <div class="container">
-        Edit:
+        {{ 'Edit' | translate }}:
         {{workerDto.firstName}}
         {{workerDto.lastName}}
       </div>
@@ -23,7 +23,7 @@
               <tbody>
               <tr>
                 <td>
-                  <strong>First name</strong>
+                  <strong>{{ 'First Name' | translate }}</strong>
                 </td>
                 <td>
                   <input class="form-control" [(ngModel)]="workerModel.userFirstName"
@@ -33,7 +33,7 @@
               </tr>
               <tr>
                 <td>
-                  <strong>Last name</strong>
+                  <strong>{{ 'Last Name' | translate }}</strong>
                 </td>
                 <td>
                   <input class="form-control" [(ngModel)]="workerModel.userLastName"

@@ -6,19 +6,19 @@
     <th class="col-md-2 text-center" rowspan="1" colspan="1">
       #
     </th>
-    <th class="col-md-2 text-center" rowspan="1" colspan="1">
+    <th class="col-md-2 text-center" rowspan="1" colspan="1" translate>
       Username
     </th>
-    <th class="col-md-2 text-center" rowspan="1" colspan="1">
+    <th class="col-md-2 text-center" rowspan="1" colspan="1" translate>
       Email
     </th>
-    <th class="col-md-2 text-center" rowspan="1" colspan="1">
-      Full name
+    <th class="col-md-2 text-center" rowspan="1" colspan="1" translate>
+      Full Name
     </th>
-    <th class="col-md-2 text-center" rowspan="1" colspan="1">
+    <th class="col-md-2 text-center" rowspan="1" colspan="1" translate>
       Role
     </th>
-    <th class="col-md-2 text-center" rowspan="1" colspan="1">
+    <th class="col-md-2 text-center" rowspan="1" colspan="1" translate>
     </th>
   </tr>
   </thead>
@@ -40,14 +40,14 @@
       {{userInfoModel.role}}
     </td>
     <td class="text-center">
-      <a tooltip="Edit user"
+      <a tooltip="{{'Edit User' | translate}}"
          class="needs_tooltip btn btn-ar btn-sm btn-default" placement="top" container="body"
-         (click)="showEditUserModal(userInfoModel.id)"
-         type="button">
+         (click)="showEditUserModal(userInfoModel.id)" type="button">
         <span class="fa fa-pencil"></span>
       </a>
-      <button tooltip="Delete user" placement="top" container="body"
-              class="needs_tooltip btn btn-ar btn-danger btn-sm dangerous-action" (click)="showDeleteUserModal(userInfoModel)" type="button">
+      <button tooltip="{{'Delete User' | translate}}" placement="top" container="body"
+              class="needs_tooltip btn btn-ar btn-danger btn-sm dangerous-action"
+              (click)="showDeleteUserModal(userInfoModel)" type="button">
         <span class="fa fa-trash-o"></span>
       </button>
     </td>
@@ -56,7 +56,7 @@
 </table>
 <div class="row">
   <div class="col-xs-6">
-    <div class="dataTables_info" id="searchable_groups_info">
+    <div class="dataTables_info" id="searchable_groups_info" translate>
       Showing {{this.paginationModel.offset + 1}}
       to {{getLastPageNumber()}} of {{userInfoModelList.totalUsers}} records
     </div>
@@ -66,7 +66,7 @@
 
 <modal #deleteUserModal>
   <modal-header [show-close]="true">
-    <h4 class="modal-title">Delete user?</h4>
+    <h4 class="modal-title">{{'Delete User' | translate}}?</h4>
   </modal-header>
   <modal-body>
     <div class="container-fluid">
@@ -75,22 +75,24 @@
         <div class='col-md-9'> {{selectedUser.id}}</div>
       </div>
       <div class='row'>
-        <div class='col-md-3'><label>Email</label></div>
+        <div class='col-md-3'><label translate>Email</label></div>
         <div class='col-md-9'> {{selectedUser.email}}</div>
       </div>
       <div class='row'>
-        <div class='col-md-3'><label>Full name</label></div>
+        <div class='col-md-3'><label translate>Full Name</label></div>
         <div class='col-md-9'> {{selectedUser.firstName}} {{selectedUser.lastName}}</div>
       </div>
       <div class='row'>
-        <div class='col-md-3'><label>Role</label></div>
+        <div class='col-md-3'><label translate>Role</label></div>
         <div class='col-md-9'> {{selectedUser.role}}</div>
       </div>
     </div>
   </modal-body>
   <modal-footer>
-    <button type="button" class="btn btn-danger" (click)="deleteUser()">OK</button>
-    <button type="button" class="btn btn-default" (click)="deleteUserModal.dismiss()">Cancel
+    <button type="button" class="btn btn-danger" (click)="deleteUser()" translate>
+      OK</button>
+    <button type="button" class="btn btn-default" (click)="deleteUserModal.dismiss()" translate>
+      Cancel
     </button>
   </modal-footer>
 </modal>

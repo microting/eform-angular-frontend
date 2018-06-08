@@ -6,7 +6,7 @@
         {{element.label}}
       </p>
     </div>
-    <table class="table">  
+    <table class="table">
       <tbody *ngIf="element.approvalEnabled || (element.reviewEnabled) && (element.approvalEnabled)">
       <tr>
         <td>
@@ -14,17 +14,17 @@
             <input [(ngModel)]="element.status" id="cl_v[@(dataE.Id)][approved]" name="cl_v[@(dataE.Id)]" type="radio"
                    value="approved"
             />
-            <label for="cl_v[@(dataE.Id)][approved]">Approved</label>
+            <label for="cl_v[@(dataE.Id)][approved]">{{ 'Approved' | translate }}</label>
           </div>
           <div *ngIf="(element.reviewEnabled) && (element.approvalEnabled)" class="radio">
             <input [(ngModel)]="element.status" id="cl_v[@(dataE.Id)][review]" name="cl_v[@(dataE.Id)]" type="radio"
                    value="review"/>
-            <label for="cl_v[@(dataE.Id)][review]">Review</label>
+            <label for="cl_v[@(dataE.Id)][review]">{{ 'Review' | translate }}</label>
           </div>
           <div *ngIf="element.approvalEnabled" class="radio">
             <input [(ngModel)]="element.status" id="cl_v[@(dataE.Id)][not_approved]" name="cl_v[@(dataE.Id)]"
                    type="radio" value="not_approved"/>
-            <label for="cl_v[@(dataE.Id)][not_approved]">Not approved</label>
+            <label for="cl_v[@(dataE.Id)][not_approved]">{{ 'Not approved' | translate }}</label>
           </div>
         </td>
       </tr>

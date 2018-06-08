@@ -34,11 +34,11 @@
             <br>
             <li class="text-center">
               <button class="btn btn-ar btn-danger" [disabled]="isFormLocked" (click)="gem()" id="submit_form">
-                Save <i *ngIf="isFormLocked" class="fa fa-spinner fa-spin"></i>
+                {{ 'Save' | translate }} <i *ngIf="isFormLocked" class="fa fa-spinner fa-spin"></i>
               </button>
             </li>
             <li class="text-center m-t-1" *ngIf="isFormLocked">
-              <p>Updating cases, please wait...</p>
+              <p>{{ 'Updating cases, please wait' | translate }}...</p>
             </li>
           </ul>
         </div>

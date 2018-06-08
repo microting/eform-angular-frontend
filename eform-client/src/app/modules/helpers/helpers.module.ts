@@ -1,3 +1,4 @@
+import {TranslateModule} from '@ngx-translate/core';
 import {SpinnerComponent, SwitchComponent, TablePaginationComponent} from './components';
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
@@ -10,6 +11,7 @@ export * from './operation.models'
 
 @NgModule({
   imports: [
+    TranslateModule,
     CommonModule,
     DndModule
   ],

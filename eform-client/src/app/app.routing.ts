@@ -35,8 +35,8 @@ export const routes: Routes = [
         loadChildren: './modules/cases/cases.module#CasesModule'
       },
       {
-        path: 'settings',
-        loadChildren: './modules/settings/settings.module#SettingsModule'
+        path: 'application-settings',
+        loadChildren: './modules/application-settings/application-settings.module#ApplicationSettingsModule'
       },
       {
         path: 'account-management',

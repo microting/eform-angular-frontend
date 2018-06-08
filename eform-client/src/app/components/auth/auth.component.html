@@ -22,20 +22,21 @@
                 <div class="input-group input-group-md">
                   <span class="input-group-addon user-addon"><i class="fa fa-user" aria-hidden="true"></i></span>
                   <input formControlName="username" type="text" name="username" id="username" class="form-control"
-                         placeholder="Username" required>
+                         placeholder="{{'Username' | translate}}" required>
                 </div>
                 <br>
                 <div class="input-group input-group-md">
                   <span class="input-group-addon"><i class="fa fa-key" aria-hidden="true"></i></span>
                   <input type="password" formControlName="password" name="password" id="password" class="form-control"
-                         placeholder="Password" required>
+                         placeholder="{{'Password' | translate}}" required>
                 </div>
                 <br>
-                <button type="submit" class="btn btn-ar btn-success btn-block" (click)="submitLoginForm()">Login
+                <button type="submit" class="btn btn-ar btn-success btn-block" (click)="submitLoginForm()">
+                  {{ 'Login' | translate }}
                 </button>
               </form>
               <a (click)="toggleLoginForm(false)" class="forgot-password" style="cursor: pointer">
-                Forgot the password?
+                {{ 'Forgot password' | translate }}?
               </a>
             </ng-container>
 
@@ -46,19 +47,19 @@
                     <span class="input-group-addon envelope-addon"><i class="fa fa-envelope"
                                                                       aria-hidden="true"></i></span>
                     <input formControlName="email" type="text" name="email" id="email" class="form-control"
-                           placeholder="Email" required>
+                           placeholder="{{'Email' | translate}}" required>
                   </div>
                   <br>
                   <button type="submit" class="btn btn-ar btn-success btn-block" [disabled]="!email.valid"
-                          (click)="submitRestoreForm()">Restore password
+                          (click)="submitRestoreForm()">{{ 'Restore password' | translate }}
                   </button>
                 </form>
                 <a (click)="showAdminResetForm = !showAdminResetForm" class="forgot-password link-block"
                    style="cursor: pointer">
-                  Reset admin password
+                  {{ 'Reset admin password' | translate }}
                 </a>
                 <a (click)="toggleLoginForm(true)" class="forgot-password link-block" style="cursor: pointer">
-                  Back to login
+                  {{ 'Back to login' | translate }}
                 </a>
               </ng-container>
               <ng-container *ngIf="showAdminResetForm">
@@ -67,15 +68,15 @@
                     <span class="input-group-addon lock-addon"><i class="fa fa-unlock-alt"
                                                                   aria-hidden="true"></i></span>
                     <input formControlName="secretKey" type="text" name="secretKey" id="secretKey" class="form-control"
-                           placeholder="Secret code" required>
+                           placeholder="{{'Secret code' | translate}}" required>
                   </div>
                   <br>
                   <button type="submit" class="btn btn-ar btn-success btn-block" [disabled]="!secretKey.valid"
-                          (click)="submitResetAdminForm()">Reset password
+                          (click)="submitResetAdminForm()">{{ 'Reset password' | translate }}
                   </button>
                 </form>
                 <a (click)="toggleLoginForm(true)" class="forgot-password" style="cursor: pointer">
-                  Back to login
+                  {{ 'Back to login' | translate }}
                 </a>
               </ng-container>
             </ng-container>
@@ -99,13 +100,13 @@
                     <img width="100%" src="../../../assets/images/google-auth-image.jpg"/>
                   </ng-container>
                   <ng-container *ngIf="googleAuthenticatorModel.psk">
-                    <p class="p-header-wrapper p-font">
+                    <p class="p-header-wrapper p-font" translate>
                       Open Google Authenticator and add EformApplication by scanning the QR Code to the right.
                     </p>
                   </ng-container>
-                  <p>Enter the 6 digit code that Google Authenticator generates</p>
+                  <p translate>Enter the 6 digit code that Google Authenticator generates</p>
                   <p *ngIf="googleAuthenticatorModel.psk">
-                    Your PSK: <strong>{{googleAuthenticatorModel.psk}}</strong>
+                    {{'Your PSK' | translate}}: <strong>{{googleAuthenticatorModel.psk}}</strong>
                   </p>
                 </div>
               </div>
@@ -116,14 +117,14 @@
                     <span class="input-group-addon lock-addon"><i class="fa fa-unlock-alt"
                                                                   aria-hidden="true"></i></span>
                   <input formControlName="code" type="text" name="code" id="code" class="form-control"
-                         placeholder="Code" required>
+                         placeholder="{{'Code' | translate}}" required>
                 </div>
                 <br>
                 <button type="submit" class="btn btn-ar btn-success btn-block" [disabled]="!code.valid"
-                        (click)="submitGoogleAuthForm()">Send
+                        (click)="submitGoogleAuthForm()" translate>Send
                 </button>
               </form>
-              <a (click)="toggleLoginForm(true)" class="forgot-password" style="cursor: pointer">
+              <a (click)="toggleLoginForm(true)" class="forgot-password" style="cursor: pointer" translate>
                 Back to login
               </a>
             </div>
