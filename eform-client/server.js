@@ -3,7 +3,7 @@ const compression = require('compression');
 const path = require('path');
 var httpProxy = require('http-proxy');
 const app = express();
-const defaultPort = $$port$$;
+const defaultPort = process.env.PORT || $$port$$;
 
 // proxy
 var apiProxy = httpProxy.createProxyServer();
