@@ -101,7 +101,13 @@ export class NavigationComponent implements OnInit {
                 guard: 'admin'
               }
             ]
-          }
+          },
+          /**{
+            name: 'Example plugin',
+            e2eId: '',
+            link: '/plugins/example-pn',
+            submenus: []
+          },*/
         ];
       });
     }

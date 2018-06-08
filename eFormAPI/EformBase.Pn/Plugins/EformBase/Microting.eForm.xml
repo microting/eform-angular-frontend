@@ -1,0 +1,726 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microting.eForm</name>
+    </assembly>
+    <members>
+        <member name="M:eFormCore.Core.CaseCreate(eFormData.MainElement,System.String,System.Int32)">
+            <summary>
+            This method will send the mainElement to the Microting API endpoint.
+            </summary>
+            <param name="mainElement">eForm to be deployed</param>
+            <param name="caseUId">Optional own id</param>
+            <param name="siteUid">API id of the site to deploy the eForm at</param>
+            <returns>Microting API ID</returns>
+        </member>
+        <member name="M:eFormCore.ICore.Start(System.String)">
+            <summary>
+            Starts the Core and enables Events. Restarts if needed
+            </summary>
+        </member>
+        <member name="M:eFormCore.ICore.Close">
+            <summary>
+            Closes the Core and disables Events
+            </summary>
+        </member>
+        <member name="M:eFormCore.ICore.Running">
+            <summary>
+            Tells if the Core is useable
+            </summary>
+        </member>
+        <member name="M:eFormCore.ICore.TemplateFromXml(System.String)">
+            <summary>
+            Converts XML from ex. eForm Builder or other sources, into a MainElement
+            </summary>
+            <param name="xmlString">XML string to be converted</param>
+        </member>
+        <member name="M:eFormCore.ICore.TemplateCreate(eFormData.MainElement)">
+            <summary>
+            Tries to create an eForm template in the Microting local DB. Returns that templat's templatId
+            </summary>
+            <param name="mainElement">Templat MainElement to be inserted into the Microting local DB</param>
+        </member>
+        <member name="M:eFormCore.ICore.TemplateRead(System.Int32)">
+            <summary>
+            Tries to retrieve the template MainElement from the Microting DB
+            </summary>
+            <param name="templateId">Template MainElement's ID to be retrieved from the Microting local DB</param>
+        </member>
+        <member name="M:eFormCore.ICore.TemplateItemRead(System.Int32)">
+            <summary>
+            Tries to retrieve the template meta data from the Microting DB
+            </summary>
+            <param name="templateId">Template MainElement's ID to be retrieved from the Microting local DB</param>
+        </member>
+        <member name="M:eFormCore.ICore.TemplateItemReadAll(System.Boolean)">
+            <summary>
+            Tries to retrieve all templates meta data from the Microting DB
+            </summary>
+            <param name="includeRemoved">Filters list to only show all active or all including removed</param>
+        </member>
+        <member name="M:eFormCore.ICore.TemplateDelete(System.Int32)">
+            <summary>
+            Tries to delete an eForm template in the Microting local DB. Returns if it was successfully
+            </summary>
+            <param name="templateId">Template MainElement's ID to be retrieved from the Microting local DB</param>
+        </member>
+        <member name="M:eFormCore.ICore.CaseCreate(eFormData.MainElement,System.String,System.Int32)">
+            <summary>
+            Tries to create an eForm case(s) in the Microting local DB, and creates it in the Microting system
+            </summary>
+            <param name="mainElement">The templat MainElement the case(s) will be based on</param>
+            <param name="caseUId">NEEDS TO BE UNIQUE IF ASSIGNED. The unique identifier that you can assign yourself to the set of case(s)</param>
+            <param name="siteId">siteId that the case will be sent to</param>
+            
+        </member>
+        <member name="M:eFormCore.ICore.CaseCreate(eFormData.MainElement,System.String,System.Collections.Generic.List{System.Int32},System.String)">
+            <summary>
+            Tries to create an eForm case(s) in the Microting local DB, and creates it in the Microting system, with extended parameters
+            </summary>
+            <param name="mainElement">The templat MainElement the case(s) will be based on</param>
+            <param name="caseUId">NEEDS TO BE UNIQUE IF ASSIGNED. The unique identifier that you can assign yourself to the set of case(s). If used (not blank or null), the cases are connected. Meaning that if one is completed, all in the set is retracted. If you wish to use caseUId and not have the cases connected, use this method multiple times, each with a unique caseUId</param>
+            <param name="siteIds">List of siteIds that case(s) will be sent to</param>
+            <param name="custom">Custom extended parameter</param>
+        </member>
+        <member name="M:eFormCore.ICore.CaseCheck(System.String)">
+            <summary>
+            Tries to retrieve the status of a case
+            </summary>
+            <param name="microtingUId">Microting ID of the eForm case</param>
+        </member>
+        <member name="M:eFormCore.ICore.CaseRead(System.String,System.String)">
+            <summary>
+            Tries to retrieve the answered full case from the DB
+            </summary>
+            <param name="microtingUId">Microting ID of the eForm case</param>
+            <param name="checkUId">If left empty, "0" or NULL it will try to retrieve the first check. Alternative is stating the Id of the specific check wanted to retrieve</param>
+        </member>
+        <member name="M:eFormCore.ICore.CaseUpdate(System.Int32,System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.String})">
+            <summary>
+            Tries to set the resultats of a case to new values
+            </summary>
+            <param name="newFieldValuePairLst">List of '[fieldValueId]|[new value]'</param>
+            <param name="newCheckListValuePairLst">List of '[checkListValueId]|[new status]'</param>
+        </member>
+        <member name="M:eFormCore.ICore.CaseDelete(System.String)">
+            <summary>
+            Marks a case as deleted, and will remove it from the device, if needed
+            </summary>
+            <param name="microtingUId">Microting ID of the eForm case</param>
+        </member>
+        <member name="M:eFormCore.ICore.CaseLookupMUId(System.String)">
+            <summary>
+            Looks up the case's markers, from the match
+            </summary>
+            <param name="microtingUId">Microting unique ID of the eForm case</param>
+        </member>
+        <member name="M:eFormCore.ICore.CaseLookupCaseId(System.Int32)">
+            <summary>
+            Looks up the case's markers, from the match
+            </summary>
+            <param name="CaseId">Microting DB's ID of the eForm case</param>
+        </member>
+        <member name="M:eFormCore.ICore.CaseLookupCaseUId(System.String)">
+            <summary>
+            Looks up the case's markers, from the matches
+            </summary>
+            <param name="caseUId">Case's unique ID of the set of case(s)</param>
+        </member>
+        <member name="M:eFormCore.ICore.CaseIdLookup(System.String,System.String)">
+            <summary>
+            Looks up the case's ID, from the match
+            </summary>
+            <param name="microtingUId">Microting ID of the eForm case</param>
+            <param name="checkUId">If left empty, "0" or NULL it will try to retrieve the first check. Alternative is stating the Id of the specific check wanted to retrieve</param>
+        </member>
+        <member name="M:eFormCore.ICore.CasesToExcel(System.Nullable{System.Int32},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.String,System.String)">
+            <summary>
+            Tries to retrieve all connected cases to a templat, and delivers them as a Excel fil, at the returned path's location
+            </summary>
+            <param name="templateId">The templat's ID to be used. Null will remove this limit</param>
+            <param name="start">Only cases from after this time limit. Null will remove this limit</param>
+            <param name="end">Only cases from before this time limit. Null will remove this limit</param>
+            <param name="pathAndName">Location where fil is to be placed, along with fil name. No extension needed. Relative or absolut. WARNING: Excel might use its default location</param>
+        </member>
+        <member name="M:eFormCore.ICore.CasesToCsv(System.Nullable{System.Int32},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.String,System.String)">
+            <summary>
+            Tries to retrieve all connected cases to a templat, and delivers them as a CSV fil, at the returned path's location
+            </summary>
+            <param name="templateId">The templat's ID to be used. Null will remove this limit</param>
+            <param name="start">Only cases from after this time limit. Null will remove this limit</param>
+            <param name="end">Only cases from before this time limit. Null will remove this limit</param>
+            <param name="pathAndName">Location where fil is to be placed, along with fil name. No extension needed. Relative or absolut</param>
+        </member>
+        <member name="M:eFormCore.ICore.SiteCreate(System.String,System.String,System.String,System.String)">
+            <summary>
+            Tries to create an site in the Microting local DB and Microting API. Returns that site's data
+            </summary>
+            <param name="name">Site's name to be created</param>
+            <param name="userFirstName">Site user's first name to be created</param>
+            <param name="userLastName">Site user's last name to be created</param>
+            <param name="userEmail">Site user's email to be created</param>
+        </member>
+        <member name="M:eFormCore.ICore.SiteRead(System.Int32)">
+            <summary>
+            Tries to retrieve the site data from the Microting DB
+            </summary>
+            <param name="siteId">Site ID to be retrieved from the Microting local DB</param>
+        </member>
+        <member name="M:eFormCore.ICore.SiteReadAll(System.Boolean)">
+            <summary>
+            Tries to retrieve all sites data from the Microting DB
+            </summary>
+            <param name="includeRemoved">Filters list to only show all active or all including removed</param>
+        </member>
+        <member name="M:eFormCore.ICore.SiteReset(System.Int32)">
+            <summary>
+            Tries to retrieve reset the site's access details
+            </summary>
+            <param name="siteId">Site ID to be reset</param>
+        </member>
+        <member name="M:eFormCore.ICore.SiteUpdate(System.Int32,System.String,System.String,System.String,System.String)">
+            <summary>
+            Tries to update a site's data in the Microting local DB and Microting API. Returns that site's data
+            </summary>
+            <param name="siteId">Site ID of the site to be updated</param>
+            <param name="name">Site's name to be updated</param>
+            <param name="userFirstName">Site user's first name to be updated</param>
+            <param name="userLastName">Site user's last name to updated</param>
+            <param name="userEmail">Site user's email to be updated</param>
+        </member>
+        <member name="M:eFormCore.ICore.SiteDelete(System.Int32)">
+            <summary>
+            Tries to delete the site
+            </summary>
+            <param name="siteId">Site ID to be deleted</param>
+        </member>
+        <member name="M:eFormCore.ICore.EntityGroupCreate(System.String,System.String)">
+            <summary>
+            Creates an EntityGroup, and returns its unique microting id for further use
+            </summary>
+            <param name="entityType">Entity type, either "EntitySearch" or "EntitySelect"</param>
+            <param name="name">Templat MainElement's ID to be retrieved from the Microting local DB</param>
+        </member>
+        <member name="M:eFormCore.ICore.EntityGroupRead(System.String)">
+            <summary>
+            Returns the EntityGroup and its EntityItems
+            </summary>
+            <param name="entityGroupMUId">The unique microting id of the EntityGroup</param>
+        </member>
+        <member name="M:eFormCore.ICore.EntityGroupUpdate(eFormData.EntityGroup)">
+            <summary>
+            Updates the EntityGroup and its EntityItems for those needed
+            </summary>
+            <param name="entityGroup">The EntityGroup and its EntityItems</param>
+        </member>
+        <member name="M:eFormCore.ICore.EntityGroupDelete(System.String)">
+            <summary>
+            Deletes an EntityGroup, both its items should be deleted before using
+            </summary>
+            <param name="entityGroupMUId">The unique microting id of the EntityGroup</param>
+        </member>
+        <member name="M:eFormCommunicator.Communicator.#ctor(System.String,System.String,System.String,System.String,System.String,eFormShared.Log)">
+            <summary>
+            Microting XML eForm API C# DLL.
+            </summary>
+            <param name="token">Your company's XML eForm API access token.</param>
+            <param name="comAddressApi">Microting's eForm API server address.</param>
+            <param name="comOrganizationId">Your company's organization id.</param>
+        </member>
+        <member name="M:eFormCommunicator.Communicator.PostXml(System.String,System.Int32)">
+            <summary>
+            Posts the XML eForm to Microting and returns the XML encoded restponse (Does not support the complex elements Entity_Search or Entity_Select).
+            </summary>
+            <param name="xmlString">XML encoded eForm string.</param>
+            <param name="siteId">Your device's Microting ID.</param>
+        </member>
+        <member name="M:eFormCommunicator.Communicator.CheckStatus(System.String,System.Int32)">
+            <summary>
+            Retrieve the XML encoded status from Microting.
+            </summary>
+            <param name="eFormId">Identifier of the eForm to retrieve status of.</param>
+            <param name="siteId">Your device's Microting ID.</param>
+        </member>
+        <member name="M:eFormCommunicator.Communicator.Retrieve(System.String,System.Int32)">
+            <summary>
+            Retrieve the XML encoded results from Microting.
+            </summary>
+            <param name="eFormId">Identifier of the eForm to retrieve results from.</param>
+            <param name="siteId">Your device's Microting ID.</param>
+        </member>
+        <member name="M:eFormCommunicator.Communicator.RetrieveFromId(System.String,System.Int32,System.String)">
+            <summary>
+            Retrieve the XML encoded results from Microting.
+            </summary>
+            <param name="eFormId">Identifier of the eForm to retrieve results from.</param>
+            <param name="siteId">Your device's Microting ID.</param>
+            <param name="eFormCheckId">Identifier of the check to begin from.</param>
+        </member>
+        <member name="M:eFormCommunicator.Communicator.Delete(System.String,System.Int32)">
+            <summary>
+            Marks an element for deletion and retrieve the XML encoded response from Microting.
+            </summary>
+            <param name="eFormId">Identifier of the eForm to mark for deletion.</param>
+            <param name="siteId">Your device's Microting ID.</param>
+        </member>
+        <member name="M:eFormCommunicator.Http.Post(System.String,System.String)">
+            <summary>
+            Posts the element to Microting and returns the XML encoded restponse.
+            </summary>
+            <param name="xmlData">Element converted to a xml encoded string.</param>
+        </member>
+        <member name="M:eFormCommunicator.Http.Status(System.String,System.String)">
+            <summary>
+            Retrieve the XML encoded status from Microting.
+            </summary>
+            <param name="elementId">Identifier of the element to retrieve status of.</param>
+        </member>
+        <member name="M:eFormCommunicator.Http.Retrieve(System.String,System.String,System.Int32)">
+            <summary>
+            Retrieve the XML encoded results from Microting.
+            </summary>
+            <param name="microtingUuid">Identifier of the element to retrieve results from.</param>
+            <param name="microtingCheckUuid">Identifier of the check to begin from.</param>
+        </member>
+        <member name="M:eFormCommunicator.Http.Delete(System.String,System.String)">
+            <summary>
+            Deletes a element and retrieve the XML encoded response from Microting.
+            </summary>
+            <param name="elementId">Identifier of the element to delete.</param>
+        </member>
+        <member name="M:eFormCommunicator.Http.Validator(System.Object,System.Security.Cryptography.X509Certificates.X509Certificate,System.Security.Cryptography.X509Certificates.X509Chain,System.Net.Security.SslPolicyErrors)">
+            <summary>
+            This method is a hack and will allways return true
+            </summary>
+            <param name='sender'>
+            The sender object
+            </param>
+            <param name='certificate'>
+            The certificate object
+            </param>
+            <param name='chain'>
+            The certificate chain
+            </param>
+            <param name='sslpolicyErrors'>
+            SslPolicy Enum
+            </param>
+        </member>
+        <member name="M:eFormCommunicator.HttpFake.Validator(System.Object,System.Security.Cryptography.X509Certificates.X509Certificate,System.Security.Cryptography.X509Certificates.X509Chain,System.Net.Security.SslPolicyErrors)">
+            <summary>
+            This method is a hack and will allways return true
+            </summary>
+            <param name='sender'>
+            The sender object
+            </param>
+            <param name='certificate'>
+            The certificate object
+            </param>
+            <param name='chain'>
+            The certificate chain
+            </param>
+            <param name='sslpolicyErrors'>
+            SslPolicy Enum
+            </param>
+        </member>
+        <member name="P:eFormShared.Template_Dto.Id">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:eFormShared.Template_Dto.CreatedAt">
+             <summary>
+            ...
+             </summary>
+        </member>
+        <member name="P:eFormShared.Template_Dto.UpdatedAt">
+             <summary>
+            ...
+             </summary>
+        </member>
+        <member name="P:eFormShared.Template_Dto.Label">
+            <summary>
+            Label
+            </summary>
+        </member>
+        <member name="P:eFormShared.Template_Dto.Description">
+            <summary>
+            Descrition
+            </summary>
+        </member>
+        <member name="P:eFormShared.Template_Dto.Repeated">
+            <summary>
+            Repeated
+            </summary>
+        </member>
+        <member name="P:eFormShared.Template_Dto.FolderName">
+            <summary>
+            FolderName
+            </summary>
+        </member>
+        <member name="P:eFormShared.Template_Dto.WorkflowState">
+            <summary>
+            WorkflowState
+            </summary>
+        </member>
+        <member name="P:eFormShared.Template_Dto.DeployedSites">
+            <summary>
+            WorkflowState
+            </summary>
+        </member>
+        <member name="P:eFormShared.Template_Dto.HasCases">
+            <summary>
+            WorkflowState
+            </summary>
+        </member>
+        <member name="P:eFormShared.Template_Dto.DisplayIndex">
+            <summary>
+            DiplayIndex
+            </summary>
+        </member>
+        <member name="P:eFormShared.Template_Dto.Field1">
+            <summary>
+            Field1
+            </summary>
+        </member>
+        <member name="P:eFormShared.Template_Dto.Field2">
+            <summary>
+            Field2
+            </summary>
+        </member>
+        <member name="P:eFormShared.Template_Dto.Field3">
+            <summary>
+            Field3
+            </summary>
+        </member>
+        <member name="P:eFormShared.Template_Dto.Field4">
+            <summary>
+            Field4
+            </summary>
+        </member>
+        <member name="P:eFormShared.Template_Dto.Field5">
+            <summary>
+            Field5
+            </summary>
+        </member>
+        <member name="P:eFormShared.Template_Dto.Field6">
+            <summary>
+            Field6
+            </summary>
+        </member>
+        <member name="P:eFormShared.Template_Dto.Field7">
+            <summary>
+            Field7
+            </summary>
+        </member>
+        <member name="P:eFormShared.Template_Dto.Field8">
+            <summary>
+            Field8
+            </summary>
+        </member>
+        <member name="P:eFormShared.Template_Dto.Field9">
+            <summary>
+            Field9
+            </summary>
+        </member>
+        <member name="P:eFormShared.Template_Dto.Field10">
+            <summary>
+            Field10
+            </summary>
+        </member>
+        <member name="P:eFormShared.Template_Dto.Tags">
+            <summary>
+            Tags
+            </summary>
+        </member>
+        <member name="P:eFormShared.Field_Dto.Id">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:eFormShared.Field_Dto.Label">
+            <summary>
+            Label
+            </summary>
+        </member>
+        <member name="P:eFormShared.Field_Dto.Description">
+            <summary>
+            Descrition
+            </summary>
+        </member>
+        <member name="P:eFormShared.Field_Dto.FieldTypeId">
+            <summary>
+            Repeated
+            </summary>
+        </member>
+        <member name="P:eFormShared.Field_Dto.FieldType">
+            <summary>
+            Descrition
+            </summary>
+        </member>
+        <member name="P:eFormShared.Field_Dto.CheckListId">
+            <summary>
+            checkListId
+            </summary>
+        </member>
+        <member name="P:eFormShared.Case_Dto.CaseId">
+            <summary>
+            Local case identifier
+            </summary>
+        </member>
+        <member name="P:eFormShared.Case_Dto.Stat">
+            <summary>
+            Status of the case
+            </summary>
+        </member>
+        <member name="P:eFormShared.Case_Dto.SiteUId">
+            <summary>
+            Unique identifier of device
+            </summary>
+        </member>
+        <member name="P:eFormShared.Case_Dto.CaseType">
+            <summary>
+            Identifier of a collection of cases in your system
+            </summary>
+        </member>
+        <member name="P:eFormShared.Case_Dto.CaseUId">
+            <summary>
+            Unique identifier of a group of case(s) in your system
+            </summary>
+        </member>
+        <member name="P:eFormShared.Case_Dto.MicrotingUId">
+             <summary>
+            Unique identifier of that specific eForm in Microting system
+             </summary>
+        </member>
+        <member name="P:eFormShared.Case_Dto.CheckUId">
+            <summary>
+            Unique identifier of that check of the eForm. Only used if repeat
+            </summary>
+        </member>
+        <member name="P:eFormShared.Case_Dto.Custom">
+            <summary>
+            Custom data. Only used in special cases
+            </summary>
+        </member>
+        <member name="P:eFormShared.Case_Dto.CheckListId">
+            <summary>
+            Unique identifier of device
+            </summary>
+        </member>
+        <member name="P:eFormShared.Case_Dto.WorkflowState">
+            <summary>
+            WorkflowState
+            </summary>
+        </member>
+        <member name="P:eFormShared.File_Dto.SiteUId">
+            <summary>
+            Unique identifier of device
+            </summary>
+        </member>
+        <member name="P:eFormShared.File_Dto.CaseType">
+            <summary>
+            Identifier of a collection of cases in your system
+            </summary>
+        </member>
+        <member name="P:eFormShared.File_Dto.CaseUId">
+            <summary>
+            Unique identifier of a group of case(s) in your system
+            </summary>
+        </member>
+        <member name="P:eFormShared.File_Dto.MicrotingUId">
+             <summary>
+            Unique identifier of that specific eForm in Microting system
+             </summary>
+        </member>
+        <member name="P:eFormShared.File_Dto.CheckUId">
+            <summary>
+            Unique identifier of that check of the eForm. Only used if repeat
+            </summary>
+        </member>
+        <member name="P:eFormShared.File_Dto.FileLocation">
+            <summary>
+            Location of the fil
+            </summary>
+        </member>
+        <member name="P:eFormShared.Site_Dto.SiteId">
+             <summary>
+            ...
+             </summary>
+        </member>
+        <member name="P:eFormShared.Site_Dto.SiteName">
+             <summary>
+            ...
+             </summary>
+        </member>
+        <member name="P:eFormShared.Site_Dto.FirstName">
+             <summary>
+            ...
+             </summary>
+        </member>
+        <member name="P:eFormShared.Site_Dto.LastName">
+             <summary>
+            ...
+             </summary>
+        </member>
+        <member name="P:eFormShared.Site_Dto.CustomerNo">
+             <summary>
+            ...
+             </summary>
+        </member>
+        <member name="P:eFormShared.Site_Dto.OtpCode">
+             <summary>
+            ...
+             </summary>
+        </member>
+        <member name="P:eFormShared.Site_Dto.UnitId">
+             <summary>
+            ...
+             </summary>
+        </member>
+        <member name="P:eFormShared.Site_Dto.WorkerUid">
+             <summary>
+            ...
+             </summary>
+        </member>
+        <member name="P:eFormShared.SiteName_Dto.SiteUId">
+             <summary>
+            ...
+             </summary>
+        </member>
+        <member name="P:eFormShared.SiteName_Dto.SiteName">
+             <summary>
+            ...
+             </summary>
+        </member>
+        <member name="P:eFormShared.SiteName_Dto.CreatedAt">
+             <summary>
+            ...
+             </summary>
+        </member>
+        <member name="P:eFormShared.SiteName_Dto.UpdatedAt">
+             <summary>
+            ...
+             </summary>
+        </member>
+        <member name="P:eFormShared.Worker_Dto.WorkerUId">
+             <summary>
+            ...
+             </summary>
+        </member>
+        <member name="P:eFormShared.Worker_Dto.FirstName">
+             <summary>
+            ...
+             </summary>
+        </member>
+        <member name="P:eFormShared.Worker_Dto.LastName">
+             <summary>
+            ...
+             </summary>
+        </member>
+        <member name="P:eFormShared.Worker_Dto.Email">
+             <summary>
+            ...
+             </summary>
+        </member>
+        <member name="P:eFormShared.Worker_Dto.CreatedAt">
+             <summary>
+            ...
+             </summary>
+        </member>
+        <member name="P:eFormShared.Worker_Dto.UpdatedAt">
+             <summary>
+            ...
+             </summary>
+        </member>
+        <member name="P:eFormShared.Site_Worker_Dto.MicrotingUId">
+             <summary>
+            ...
+             </summary>
+        </member>
+        <member name="P:eFormShared.Site_Worker_Dto.SiteUId">
+             <summary>
+            ...
+             </summary>
+        </member>
+        <member name="P:eFormShared.Site_Worker_Dto.WorkerUId">
+             <summary>
+            ...
+             </summary>
+        </member>
+        <member name="P:eFormShared.Unit_Dto.UnitUId">
+             <summary>
+            ...
+             </summary>
+        </member>
+        <member name="P:eFormShared.Unit_Dto.CustomerNo">
+             <summary>
+            ...
+             </summary>
+        </member>
+        <member name="P:eFormShared.Unit_Dto.OtpCode">
+             <summary>
+            ...
+             </summary>
+        </member>
+        <member name="P:eFormShared.Unit_Dto.SiteUId">
+             <summary>
+            ...
+             </summary>
+        </member>
+        <member name="P:eFormShared.Unit_Dto.CreatedAt">
+             <summary>
+            ...
+             </summary>
+        </member>
+        <member name="P:eFormShared.Unit_Dto.UpdatedAt">
+             <summary>
+            ...
+             </summary>
+        </member>
+        <member name="P:eFormShared.Tag.Id">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:eFormShared.Tag.Name">
+            <summary>
+            Name
+            </summary>
+        </member>
+        <member name="P:eFormShared.Tag.TaggingCount">
+            <summary>
+            TaggingCount
+            </summary>
+        </member>
+        <member name="P:eFormData.EntityGroup.CreatedAt">
+             <summary>
+            ...
+             </summary>
+        </member>
+        <member name="P:eFormData.EntityGroup.UpdatedAt">
+             <summary>
+            ...
+             </summary>
+        </member>
+        <member name="M:eFormSubscriber.Subscriber.#ctor(eFormSqlController.SqlController,eFormShared.Log,Rebus.Bus.IBus)">
+            <summary>
+            Microting notification server subscriber C# DLL.
+            </summary>
+        </member>
+        <member name="M:eFormSubscriber.Subscriber.Start">
+            <summary>
+            Starts a Notification Subscriber to Microting
+            </summary>
+        </member>
+        <member name="M:eFormSubscriber.Subscriber.Close">
+            <summary>
+            Sends the close command to the Notification Subscriber
+            </summary>
+        </member>
+        <member name="M:eFormSubscriber.Subscriber.IsActive">
+            <summary>
+            Tells if the Notification Subscriber to Microting is running.
+            </summary>
+        </member>
+    </members>
+</doc>
