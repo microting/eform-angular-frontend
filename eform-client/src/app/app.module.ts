@@ -22,7 +22,7 @@ import {FullLayoutComponent, SimpleLayoutComponent} from 'app/layouts';
 import {
   AdminService, EntitySearchService, EntitySelectService, SettingsService,
   SitesService, UnitsService, WorkersService, CasesService, AuthService, NotifyService,
-  ImageService, SimpleSitesService, EFormService, EformTagService
+  ImageService, SimpleSitesService, EFormService, EformTagService, LocaleService
 } from 'app/services';
 import {AuthGuard} from 'app/guards';
 import {EqualValidatorDirective} from 'app/components/directives/equal-validator.directive';
@@ -95,6 +95,7 @@ import {EqualValidatorDirective} from 'app/components/directives/equal-validator
     EFormService,
     ImageService,
     EformTagService,
+    LocaleService,
     PreloadResolverConfig
   ],
   bootstrap: [AppComponent]
