@@ -102,7 +102,7 @@ export class BaseService {
       errMsg = '403 - Invalid connection string';
       notify.error({text: errMsg});
       console.error(errMsg);
-      window.location.href = '/settings/connection-string';
+      window.location.href = '/application-settings/connection-string';
     }
 
 // Handle 403 - Unauthorized

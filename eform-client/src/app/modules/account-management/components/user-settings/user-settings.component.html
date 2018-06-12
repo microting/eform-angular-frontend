@@ -7,7 +7,7 @@
     </h1>
     <div class="pull-right">
       <button class="btn btn-ar btn-danger" (click)="updateUserProfileSettings()">
-        {{ 'Save' | translate }} <i class="fa fa-spinner fa-spin"></i></button>
+        {{ 'Save' | translate }} <i class="fa fa-spinner fa-spin" *ngIf="false"></i></button>
     </div>
   </div>
 </header>
@@ -17,7 +17,7 @@
       <div class="col-md-6" role="main">
         <div class="panel panel-default">
           <div class="panel-heading">
-            {{'Timezone' | translate}} & {{'Language' | translate }}
+            {{'Language' | translate }}
           </div>
           <table class="table">
             <tbody>
@@ -29,16 +29,6 @@
                 <ngx-select [items]="languages"
                             [(ngModel)]="userSettingsModel.language">
                 </ngx-select>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <strong>{{ 'Timezone' | translate }}</strong>
-              </td>
-              <td>
-                <input class="form-control"
-                       placeholder="1433"
-                       type="text" name="port"  id="port"/>
               </td>
             </tr>
             </tbody>

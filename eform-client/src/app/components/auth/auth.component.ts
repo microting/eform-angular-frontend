@@ -117,7 +117,7 @@ export class AuthComponent implements OnInit {
     this.initLocale();
     this.settingsService.connectionStringExist().subscribe((result) => {
       if (result && result.success === false) {
-        this.router.navigate(['/settings/connection-string']).then();
+        this.router.navigate(['/application-settings/connection-string']).then();
       }
     });
     this.getSettings();
