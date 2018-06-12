@@ -6,7 +6,7 @@ const app = express();
 const defaultPort = process.env.PORT || $$port$$;
 
 // proxy
-var apiProxy = httpProxy.createProxyServer({"changeOrigin": true});
+var apiProxy = httpProxy.createProxyServer();
 var apiForwardingUrl = 'http://localhost:$$apiport$$/';
 apiProxy.on('error', function(e) {
   console.error('Error:');
