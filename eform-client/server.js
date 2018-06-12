@@ -15,7 +15,7 @@ apiProxy.on('error', function(e) {
 });
 
 // gzip
-app.use(compression());
+// app.use(compression());
 app.use(express.static(__dirname + '/dist'));
 
 // api handler
