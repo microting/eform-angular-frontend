@@ -6,7 +6,7 @@ const app = express();
 const defaultPort = process.env.PORT || $$port$$;
 
 // proxy
-var apiProxy = httpProxy.createProxyServer();
+var apiProxy = httpProxy.createProxyServer({changeOrigin: true});
 var apiForwardingUrl = 'http://localhost:$$apiport$$/';
 apiProxy.on('error', function(e) {
   console.error('Error:');
@@ -29,6 +29,7 @@ app.all('/api/*', function (req, res) {
 
 // so that PathLocationStrategy can be used
 app.all('/*', function (req, res) {
+  res.removeHeader('accept-encoding');
   res.sendFile(path.join(__dirname + '/dist/index.html'));
 });
 
