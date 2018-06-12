@@ -1,13 +1,13 @@
 <header class="main-header main-header-title">
   <div class="container-fluid">
     <h1 class="page-title header-page-title">
-      <div class="container" translate>
-        Profile Settings
+      <div class="container">
+        {{ 'Profile Settings' | translate }}
       </div>
     </h1>
     <div class="pull-right">
-      <button class="btn btn-ar btn-danger">
-        {{'Save' | translate}} <i class="fa fa-spinner fa-spin"></i></button>
+      <button class="btn btn-ar btn-danger" (click)="updateUserProfileSettings()">
+        {{ 'Save' | translate }} <i class="fa fa-spinner fa-spin" *ngIf="false"></i></button>
     </div>
   </div>
 </header>
@@ -17,28 +17,18 @@
       <div class="col-md-6" role="main">
         <div class="panel panel-default">
           <div class="panel-heading">
-            {{'Timezone' | translate}} & {{'Language' | translate }}
+            {{'Language' | translate }}
           </div>
           <table class="table">
             <tbody>
             <tr>
               <td class="col-md-4">
-                <strong translate>Language</strong>
+                <strong>{{ 'Language' | translate }}</strong>
               </td>
               <td>
                 <ngx-select [items]="languages"
                             [(ngModel)]="userSettingsModel.language">
                 </ngx-select>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <strong translate>Timezone</strong>
-              </td>
-              <td>
-                <input class="form-control"
-                       placeholder="1433"
-                       type="text" name="port"  id="port"/>
               </td>
             </tr>
             </tbody>
@@ -47,7 +37,7 @@
       </div>
       <div class="col-md-6" role="main">
         <div class="panel panel-default">
-          <div class="panel-heading" translate>
+          <div class="panel-heading">
             Google Authenticator
           </div>
           <table class="table">
@@ -62,7 +52,9 @@
                           [disabled]="googleAuthInfoModel.isTwoFactorForced"
                           (change)="isTwoFactorEnabledCheckBoxChanged($event)"
                           type="checkbox">
-                  <label for="isTwoFactorEnabled" translate><strong>Status</strong> (change will logout you from the application)</label>
+                  <label for="isTwoFactorEnabled">
+                    <strong>{{ 'Status' | translate }}</strong>
+                    ({{ 'change will logout you from the application' | translate }})</label>
                   <br>
                 </div>
                 <ng-container *ngIf="googleAuthInfoModel.psk" >
@@ -71,16 +63,16 @@
                   </p>
                   <p translate>You should remove this key, if <strong>Google Authenticator</strong>
                     is reinstalled or key was removed</p>
-                  <p translate><strong>{{googleAuthInfoModel.psk}}</strong></p>
+                  <p><strong>{{googleAuthInfoModel.psk}}</strong></p>
                 </ng-container>
               </td>
             </tr>
             <tr *ngIf="googleAuthInfoModel.psk">
               <td class="col-md-12">
                 <button class="btn btn-ar btn-warning" id="deleteGoogleAuthenticatorInfo"
-                        tooltip="Remove google authenticator secret key"
-                        (click)="deleteGoogleAuthenticatorInfo()" translate>
-                  Remove PSK
+                        tooltip="{{ 'Remove google authenticator secret key' | translate }}"
+                        (click)="deleteGoogleAuthenticatorInfo()">
+                  {{ 'Remove PSK' | translate }}
                 </button>
               </td>
             </tr>

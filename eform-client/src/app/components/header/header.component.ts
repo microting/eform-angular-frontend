@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {SettingsService} from 'app/services';
+import {TranslateService} from '@ngx-translate/core';
+import {LocaleService, SettingsService} from 'app/services';
 import {HeaderSettingsModel} from 'app/models/settings/header-settings.model';
 
 @Component({
@@ -11,10 +12,12 @@ export class HeaderComponent implements OnInit {
   headerSettingsModel: HeaderSettingsModel = new HeaderSettingsModel;
   logoImage: any;
 
-  constructor(private settingsService: SettingsService) {
+  constructor(private settingsService: SettingsService,
+              private localeService: LocaleService) {
   }
 
   ngOnInit() {
+    this.initLocale();
     this.settingsService.connectionStringExist().subscribe((result) => {
       if (result && result.success === true) {
         this.settingsService.getHeaderSettings().subscribe((data => {
@@ -37,6 +40,10 @@ export class HeaderComponent implements OnInit {
       }
     });
 
+  }
+
+  initLocale() {
+    this.localeService.initLocale();
   }
 
 }

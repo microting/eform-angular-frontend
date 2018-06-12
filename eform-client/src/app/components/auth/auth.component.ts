@@ -3,7 +3,7 @@ import {FormBuilder, AbstractControl, FormGroup, Validators} from '@angular/form
 import {Router} from '@angular/router';
 import {AuthResponseModel, LoginRequestModel, LoginPageSettingsModel, GoogleAuthenticatorModel} from 'app/models';
 import {AuthService} from 'app/services/accounts/auth.service';
-import {SettingsService} from 'app/services';
+import {LocaleService, SettingsService} from 'app/services';
 import {NotifyService} from 'app/services/notify.service';
 
 @Component({
@@ -39,8 +39,8 @@ export class AuthComponent implements OnInit {
               private authService: AuthService,
               private settingsService: SettingsService,
               private fb: FormBuilder,
-              private notifyService: NotifyService) {
-  }
+              private notifyService: NotifyService,
+              private localeService: LocaleService) {}
 
   login() {
     this.authService.login(new LoginRequestModel(this.formLogin.getRawValue()))
@@ -114,9 +114,10 @@ export class AuthComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.initLocale();
     this.settingsService.connectionStringExist().subscribe((result) => {
       if (result && result.success === false) {
-        this.router.navigate(['/settings/connection-string']).then();
+        this.router.navigate(['/application-settings/connection-string']).then();
       }
     });
     this.getSettings();
@@ -179,5 +180,9 @@ export class AuthComponent implements OnInit {
     this.showLoginForm = toggle;
     this.showAdminResetForm = false;
     this.showTwoFactorForm = false;
+  }
+
+  initLocale() {
+    this.localeService.initLocale();
   }
 }

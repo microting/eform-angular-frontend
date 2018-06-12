@@ -1,15 +1,15 @@
 <header class="main-header main-header-title user-page-title-wrapper">
   <div class="container-fluid">
     <h1 class="page-title header-page-title">
-      <div class="container" style="width: 300px !important;" translate>
-        User Management
+      <div class="container" style="width: 300px !important;">
+        {{ 'User Management' | translate }}
       </div>
     </h1>
     <div class="pull-right">
       <button class="needs_tooltip btn btn-ar btn-success" tooltip='Create user'
               (click)="showCreateUserModal()"
-              type="button" translate>
-        New User
+              type="button">
+        {{ 'New User' | translate }}
       </button>
     </div>
   </div>
@@ -25,7 +25,7 @@
               (change)="checkBoxChanged($event)"
               type="checkbox">
       <label for="isChecked">
-        <strong translate>Force users to use 2-f-auth</strong>
+        <strong>{{ 'Force users to use 2-f-auth' | translate }}</strong>
       </label>
       <br/>
     </div>
