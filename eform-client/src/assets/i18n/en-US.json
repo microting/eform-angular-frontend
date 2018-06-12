@@ -37,8 +37,8 @@
   "Done by": "Done by",
   "OK": "OK",
   "Cancel": "Cancel",
-  "Redigér Søgbar element": "Redigér Søgbar element",
-  "Slet Søgbar element": "Slet Søgbar element",
+  "Edit Searchable item": "Edit Searchable item",
+  "Delete Searchable item": "Delete Searchable item",
   "Edit searchable element": "Edit searchable element",
   "Name": "Name",
   "Ok": "Ok",
@@ -81,9 +81,11 @@
   "Paste XML here": "Paste XML here",
   "Creation date": "Creation date",
   "Searchable lists": "Searchable lists",
+  "Searchable list": "Searchable list",
   "Create new searchable list": "Create new searchable list",
   "Edit site": "Edit site",
   "Selectable lists": "Selectable lists",
+  "Selectable list": "Selectable list",
   "Create new selectable list": "Create new selectable list",
   "Terms of Service": "Terms of Service",
   "Privacy Policy": "Privacy Policy",
@@ -146,7 +148,16 @@
   "change will logout you from the application": "change will logout you from the application",
   "Remove google authenticator secret key": "Remove google authenticator secret key",
   "Remove PSK": "Remove PSK",
-  "Full Name": "Full Name"
+  "Full Name": "Full Name",
+  "My eForms": "My eForms",
+  "Role": "Role",
+  "Delete User": "Delete User",
+  "Profile Settings": "Profile Settings",
+  "Open Google Authenticator and add Eform application by scanning the QR Code to the right": "Open Google Authenticator and add Eform application by scanning the QR Code to the right",
+  "Enter the 6 digit code that Google Authenticator generates": "Enter the 6 digit code that Google Authenticator generates",
+
+  "Showing to of records": "Showing {{currentPageAmount}} to {{currentPage}} of {{total}} records",
+  "Google Authenticator description": "<p>Secret key between <strong>Eform</strong> application and <strong>Google Authenticator</strong>. Keep it safe and do not tell anyone.</p><p>You should remove this key, if <strong>Google Authenticator</strong> is reinstalled or key was removed</p>"
 }
 
 

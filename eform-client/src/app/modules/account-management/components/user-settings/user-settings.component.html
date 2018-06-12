@@ -58,11 +58,9 @@
                   <br>
                 </div>
                 <ng-container *ngIf="googleAuthInfoModel.psk" >
-                  <p translate>Secret key between <strong>Eform</strong> application and <strong>Google Authenticator</strong>.
-                    Keep it safe and do not tell anyone.
-                  </p>
-                  <p translate>You should remove this key, if <strong>Google Authenticator</strong>
-                    is reinstalled or key was removed</p>
+                  <div [innerHTML]="'Google Authenticator description' | translate">
+                  </div>
+
                   <p><strong>{{googleAuthInfoModel.psk}}</strong></p>
                 </ng-container>
               </td>

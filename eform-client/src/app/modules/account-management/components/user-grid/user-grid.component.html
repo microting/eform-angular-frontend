@@ -57,8 +57,9 @@
 <div class="row">
   <div class="col-xs-6">
     <div class="dataTables_info" id="searchable_groups_info" translate>
-      Showing {{this.paginationModel.offset + 1}}
-      to {{getLastPageNumber()}} of {{userInfoModelList.totalUsers}} records
+      {{ 'Showing to of records' |
+      translate:{currentPageAmount: (this.paginationModel.offset + 1),
+      currentPage: getLastPageNumber(), total: userInfoModelList.totalUsers} }}
     </div>
   </div>
   <div class="col-xs-6"></div>
