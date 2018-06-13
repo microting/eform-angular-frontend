@@ -38,8 +38,8 @@
   "Done by": "Gøres ved",
   "OK": "OK",
   "Cancel": "Afbestille",
-  "Redigér Søgbar element": "Rediger Søgbar element",
-  "Slet Søgbar element": "Slet Søgbar element",
+  "Edit Searchable item": "Rediger Søgbar element",
+  "Delete Searchable item": "Slet Søgbar element",
   "Edit searchable element": "Rediger søgbart element",
   "Name": "Navn",
   "Ok": "Ok",
@@ -150,5 +150,10 @@
   "change will logout you from the application": "ændre vil logge dig fra programmet",
   "Remove google authenticator secret key": "Fjern Google Authenticator-hemmelig nøgle",
   "Remove PSK": "Fjern PSK",
-  "Full Name": "Fulde navn"
+  "Full Name": "Fulde navn",
+  "Open Google Authenticator and add Eform application by scanning the QR Code to the right": "Åbn Google Authenticator og tilføj Eform applikation ved at scanne QR-koden til højre",
+  "Enter the 6 digit code that Google Authenticator generates": "Indtast den 6-cifrede kode, som Google Authenticator genererer",
+
+  "Showing to of records": "Viser {{currentPageAmount}} til {{currentPage}} ud af {{total}} poster",
+  "Google Authenticator description": "<p>Hemmelig nøgle mellem <strong>Eform</strong> applikation og  <strong>Google Authenticator</strong>. Hold det sikkert og fortæl ikke nogen.</p><p>Du bør fjerne denne nøgle, hvis <strong>Google Authenticator</strong> geninstalleres eller nøglen er fjernet</p>"
 }

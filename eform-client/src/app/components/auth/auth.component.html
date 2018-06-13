@@ -100,11 +100,11 @@
                     <img width="100%" src="../../../assets/images/google-auth-image.jpg"/>
                   </ng-container>
                   <ng-container *ngIf="googleAuthenticatorModel.psk">
-                    <p class="p-header-wrapper p-font" translate>
-                      Open Google Authenticator and add EformApplication by scanning the QR Code to the right.
+                    <p class="p-header-wrapper p-font">
+                      {{ 'Open Google Authenticator and add Eform application by scanning the QR Code to the right' | translate }}.
                     </p>
                   </ng-container>
-                  <p translate>Enter the 6 digit code that Google Authenticator generates</p>
+                  <p>{{ 'Enter the 6 digit code that Google Authenticator generates' | translate }}</p>
                   <p *ngIf="googleAuthenticatorModel.psk">
                     {{'Your PSK' | translate}}: <strong>{{googleAuthenticatorModel.psk}}</strong>
                   </p>

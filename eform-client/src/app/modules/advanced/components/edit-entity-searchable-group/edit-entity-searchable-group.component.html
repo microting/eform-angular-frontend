@@ -70,12 +70,12 @@
   container="body" placement="top" tooltip="Ikke færdigudfyldt!"></span>
 </span>
                     </div>
-                    <button tooltip="{{'Redigér Søgbar element' | translate}}" (click)="openEditAdvEntitySearchableModal(entityItem)"
+                    <button tooltip="{{'Edit Searchable item' | translate}}" (click)="openEditAdvEntitySearchableModal(entityItem)"
                             class="needs_tooltip btn btn-ar btn-sm btn-default"
                             placement="top" type="button" container="body">
                       <span class="fa fa-pencil"></span>
                     </button>
-                    <button tooltip="{{'Slet Søgbar element' | translate}}" placement="top" (click)="deleteAdvEntitySearchableItem(entityItem)"
+                    <button tooltip="{{ 'Delete Searchable item' | translate }}" placement="top" (click)="deleteAdvEntitySearchableItem(entityItem)"
                             class="needs_tooltip btn btn-ar btn-sm btn-danger"
                             type="button" container="body">
                       <span class="fa fa-trash-o"></span>
@@ -102,7 +102,7 @@
 
 <modal #editAdvEntitySearchableItemModal (onDismiss)="onChildModalDismissed()">
   <modal-header [show-close]="true">
-    <h4 translate>Redigér Søgbar element</h4>
+    <h4>{{ 'Edit Searchable item' | translate }}</h4>
   </modal-header>
   <modal-body>
     <div class="create_eform">
