@@ -163,9 +163,10 @@
   </table>
   <div class="row" *ngIf="false">
     <div class="col-xs-6">
-      <div class="dataTables_info" id="searchable_groups_info" *ngIf="templateListModel.numOfElements > 0" translate>
-        Showing {{this.templateRequestModel.offset + 1}}
-        to {{getLastPageNumber()}} of {{templateListModel.numOfElements}} records
+      <div class="dataTables_info" id="searchable_groups_info" *ngIf="templateListModel.numOfElements > 0">
+        {{ 'Showing to of records' |
+        translate:{currentPageAmount: (this.templateRequestModel.offset + 1),
+        currentPage: getLastPageNumber(), total: templateListModel.numOfElements} }}
       </div>
     </div>
     <div class="col-xs-6"></div>

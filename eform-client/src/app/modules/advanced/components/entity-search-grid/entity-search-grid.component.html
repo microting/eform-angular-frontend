@@ -38,7 +38,7 @@
          type="button">
         <span class="fa fa-pencil"></span>
       </a>
-      <button tooltip="Slet Søgbar element" placement="top" container="body"
+      <button tooltip="{{ 'Delete Searchable item' | translate }}" placement="top" container="body"
               (click)="showDeleteAdvEntitySearchableGroupModal(advEntitySearchableGroup)"
               class="needs_tooltip btn btn-ar btn-danger btn-sm dangerous-action" type="button">
         <span class="fa fa-trash-o"></span>
@@ -49,9 +49,10 @@
 </table>
 <div class="row">
   <div class="col-xs-6">
-    <div class="dataTables_info" id="searchable_groups_info" *ngIf="advEntitySearchableGroupListModel.numOfElements > 0" translate>
-      Showing {{this.advEntitySearchableGroupListRequestModel.offset + 1}}
-      to {{getLastPageNumber()}} of {{advEntitySearchableGroupListModel.numOfElements}} records
+    <div class="dataTables_info" id="searchable_groups_info" *ngIf="advEntitySearchableGroupListModel.numOfElements > 0">
+      {{ 'Showing to of records' |
+      translate:{currentPageAmount: (this.advEntitySearchableGroupListRequestModel.offset + 1),
+      currentPage: getLastPageNumber(), total: advEntitySearchableGroupListModel.numOfElements} }}
     </div>
   </div>
   <div class="col-xs-6"></div>
