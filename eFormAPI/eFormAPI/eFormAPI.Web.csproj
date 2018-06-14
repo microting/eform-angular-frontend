@@ -320,7 +320,9 @@
     <Compile Include="Infrastructure\Models\Settings\Initial\AdminSetupModel.cs" />
     <Compile Include="Infrastructure\Models\Settings\Initial\ConnectionStringMainModel.cs" />
     <Compile Include="Infrastructure\Models\Settings\Initial\ConnectionStringSDKModel.cs" />
+    <Compile Include="Infrastructure\Models\Settings\Initial\GeneralAppSetupSettingsModel.cs" />
     <Compile Include="Infrastructure\Models\Settings\Initial\InitialSettingsModel.cs" />
+    <Compile Include="Infrastructure\Models\Settings\User\UserSettingsModel.cs" />
     <Compile Include="Infrastructure\Models\SimpleSiteModel.cs" />
     <Compile Include="Infrastructure\Models\SiteNameModel.cs" />
     <Compile Include="Infrastructure\Models\Tags\UpdateTemplateTagsModel.cs" />
@@ -350,6 +352,10 @@
     <Compile Include="Migrations\201803051628071_AddGoogleAuth.cs" />
     <Compile Include="Migrations\201803051628071_AddGoogleAuth.Designer.cs">
       <DependentUpon>201803051628071_AddGoogleAuth.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806142159030_AddLocaleForUser.cs" />
+    <Compile Include="Migrations\201806142159030_AddLocaleForUser.Designer.cs">
+      <DependentUpon>201806142159030_AddLocaleForUser.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\EformMigrationsConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -394,6 +400,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803051628071_AddGoogleAuth.resx">
       <DependentUpon>201803051628071_AddGoogleAuth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806142159030_AddLocaleForUser.resx">
+      <DependentUpon>201806142159030_AddLocaleForUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

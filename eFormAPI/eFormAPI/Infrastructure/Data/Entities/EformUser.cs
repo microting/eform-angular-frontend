@@ -11,6 +11,8 @@ namespace eFormAPI.Web.Infrastructure.Data.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
+        public string Locale { get; set; }
+
         public bool IsGoogleAuthenticatorEnabled { get; set; }
         public string GoogleAuthenticatorSecretKey { get; set; }
 

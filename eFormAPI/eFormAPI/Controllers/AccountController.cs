@@ -9,6 +9,7 @@ using eFormAPI.Web.Infrastructure.Data.Entities;
 using eFormAPI.Web.Infrastructure.Identity;
 using eFormAPI.Web.Infrastructure.Models.API;
 using eFormAPI.Web.Infrastructure.Models.Auth;
+using eFormAPI.Web.Infrastructure.Models.Settings.User;
 using eFormAPI.Web.Infrastructure.Models.User;
 using EformBase.Pn.Consts;
 using Microsoft.AspNet.Identity;
@@ -57,6 +58,43 @@ namespace eFormAPI.Web.Controllers
                 Role = role
             };
         }
+
+        // GET api/account/user-settings
+        [HttpGet]
+        [Route("user-settings")]
+        public OperationDataResult<UserSettingsModel> GetUserSettings()
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId<int>());
+            if (user == null)
+            {
+                return new OperationDataResult<UserSettingsModel>(false, "User not found");
+            }
+            return new OperationDataResult<UserSettingsModel>(true, new UserSettingsModel()
+            {
+                Locale = user.Locale
+            });
+        }
+
+        // POST api/account/user-settings
+        [HttpPost]
+        [Route("user-settings")]
+        public OperationResult UpdateUserSettings(UserSettingsModel model)
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId<int>());
+            if (user == null)
+            {
+                return new OperationResult(false, "User not found");
+            }
+            user.Locale = model.Locale;
+            var updateResult = UserManager.UpdateAsync(user).Result;
+            if (!updateResult.Succeeded)
+            {
+                return new OperationResult(false,
+                    $"Error while updating user settings: {string.Join(", ", updateResult.Errors.Select(x => x.ToString()).ToArray())}");
+            }
+            return new OperationResult(true);
+        }
+
 
         [HttpPost]
         [Route("change-password")]

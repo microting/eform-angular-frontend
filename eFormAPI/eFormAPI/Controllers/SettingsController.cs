@@ -42,9 +42,6 @@ namespace eFormAPI.Web.Controllers
         public OperationResult UpdateConnectionString(InitialSettingsModel initialSettingsModel)
         {
             if (!ModelState.IsValid) return new OperationResult(false, "Required fields are not filled");
-
-            var inputPath = System.Web.Hosting.HostingEnvironment.MapPath("~/bin/Input.txt");
-            AdminTools adminTools;
             var sdkConnectionString = "Data Source="
                                       + initialSettingsModel.ConnectionStringSdk.Source + ";Initial Catalog="
                                       + initialSettingsModel.ConnectionStringSdk.Catalogue + ";"
@@ -54,14 +51,17 @@ namespace eFormAPI.Web.Controllers
                                        + initialSettingsModel.ConnectionStringMain.Source + ";Initial Catalog="
                                        + initialSettingsModel.ConnectionStringMain.Catalogue + ";"
                                        + initialSettingsModel.ConnectionStringMain.Auth;
-
+            // Save SDK connection string
+            var inputPath = System.Web.Hosting.HostingEnvironment.MapPath("~/bin/Input.txt");
+            if (inputPath == null)
+            {
+                return new OperationResult(false, "Error while creating file for SDK");
+            }
+            AdminTools adminTools;
             try
             {
                 if (File.Exists(inputPath))
                 {
-                    //File.Delete(inputPath);
-                    //var fileStream = File.Create(inputPath);
-                    //fileStream.Dispose();
                     return new OperationResult(false, "Connection string already exist");
                 }
 
@@ -84,10 +84,15 @@ namespace eFormAPI.Web.Controllers
                 Logger.Error(exception.Message);
                 return new OperationResult(false, "SDK connection string is invalid");
             }
-
+            // Save Main connection string
             var configuration = WebConfigurationManager.OpenWebConfiguration("~");
-            var section = (ConnectionStringsSection) configuration.GetSection("connectionStrings");
-            section.ConnectionStrings["eFormMainConnection"].ConnectionString = mainConnectionString;
+            var connStringsSection = (ConnectionStringsSection) configuration.GetSection("connectionStrings");
+            connStringsSection.ConnectionStrings["eFormMainConnection"].ConnectionString = mainConnectionString;
+            // Save general app settings
+            var section = (AppSettingsSection) configuration.GetSection("appSettings");
+            section.Settings["general:defaultLocale"].Value =
+                initialSettingsModel.GeneralAppSetupSettingsModel.DefaultLocale;
+            // Save settings and migrate DB
             try
             {
                 configuration.Save();
@@ -106,7 +111,7 @@ namespace eFormAPI.Web.Controllers
                 Logger.Error(exception.Message);
                 return new OperationResult(false, "Main connection string is invalid");
             }
-
+            // Setup SDK DB
             adminTools.DbSetup(initialSettingsModel.ConnectionStringSdk.Token);
             return new OperationResult(true);
         }

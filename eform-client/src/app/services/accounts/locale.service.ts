@@ -17,7 +17,6 @@ export class LocaleService extends BaseService {
   }
 
   initLocale() {
-    debugger;
     let language = localStorage.getItem('locale');
     if (!language) {
       language = 'en-US';
