@@ -37,6 +37,22 @@ namespace eFormAPI.Web.Controllers
         }
 
         [AllowAnonymous]
+        [HttpGet]
+        [Route("api/settings/default-locale")]
+        public OperationDataResult<string> GetDefaultLocale()
+        {
+            var configuration = WebConfigurationManager.OpenWebConfiguration("~");
+            var section = (AppSettingsSection)configuration.GetSection("appSettings");
+            var locale = section.Settings["general:defaultLocale"].Value;
+            if (locale == null)
+            {
+                return new OperationDataResult<string>(true, "en-US");
+            }
+            return new OperationDataResult<string>(true, model: locale);
+        }
+
+
+        [AllowAnonymous]
         [HttpPost]
         [Route("api/settings/connection-string")]
         public OperationResult UpdateConnectionString(InitialSettingsModel initialSettingsModel)
@@ -311,7 +327,7 @@ namespace eFormAPI.Web.Controllers
             try
             {
                 var configuration = WebConfigurationManager.OpenWebConfiguration("~");
-                var section = (AppSettingsSection) configuration.GetSection("appSettings");
+                var section = (AppSettingsSection)configuration.GetSection("appSettings");
 
                 section.Settings["header:imageLink"].Value = "";
                 section.Settings["header:imageLinkVisible"].Value = "True";
