@@ -1,6 +1,8 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Base32;
 using eFormAPI.Web.Infrastructure.Data.Entities;
@@ -73,6 +75,10 @@ namespace eFormAPI.Web.Infrastructure.Identity.Providers
             }
             var oAuthIdentity = await user.GenerateUserIdentityAsync(userManager,
                 OAuthDefaults.AuthenticationType);
+
+            // Add custom claims
+            oAuthIdentity.AddClaim(new Claim("locale", user.Locale));
+
             var cookiesIdentity = await user.GenerateUserIdentityAsync(userManager,
                 CookieAuthenticationDefaults.AuthenticationType);
 
@@ -125,6 +131,7 @@ namespace eFormAPI.Web.Infrastructure.Identity.Providers
                 {"userId", user.Id.ToString()},
                 {"userName", user.UserName},
                 {"role", role},
+                {"locale", user.Locale},
             };
             return new AuthenticationProperties(data);
         }

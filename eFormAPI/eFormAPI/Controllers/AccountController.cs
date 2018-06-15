@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using eFormAPI.Web.Infrastructure.Data;
 using eFormAPI.Web.Infrastructure.Data.Entities;
+using eFormAPI.Web.Infrastructure.Helpers;
 using eFormAPI.Web.Infrastructure.Identity;
 using eFormAPI.Web.Infrastructure.Models.API;
 using eFormAPI.Web.Infrastructure.Models.Auth;
@@ -29,7 +30,6 @@ namespace eFormAPI.Web.Controllers
         {
             _eformRoleManager = new EformRoleManager(
                 new EformRoleStore(new BaseDbContext()));
-            ;
             _dbContext = dbContext;
         }
 
@@ -67,7 +67,7 @@ namespace eFormAPI.Web.Controllers
             var user = UserManager.FindById(User.Identity.GetUserId<int>());
             if (user == null)
             {
-                return new OperationDataResult<UserSettingsModel>(false, "User not found");
+                return new OperationDataResult<UserSettingsModel>(false, LocaleHelper.GetString("UserNotFound"));
             }
             return new OperationDataResult<UserSettingsModel>(true, new UserSettingsModel()
             {
@@ -83,7 +83,7 @@ namespace eFormAPI.Web.Controllers
             var user = UserManager.FindById(User.Identity.GetUserId<int>());
             if (user == null)
             {
-                return new OperationResult(false, "User not found");
+                return new OperationResult(false, LocaleHelper.GetString("UserNotFound"));
             }
             user.Locale = model.Locale;
             var updateResult = UserManager.UpdateAsync(user).Result;
@@ -174,7 +174,7 @@ namespace eFormAPI.Web.Controllers
                 return new OperationResult(false,
                     "Error while adding new password. \n" + string.Join(" ", addPasswordResult.Errors));
             }
-            return new OperationResult(true, $"Your email: {user.Email}. Password has been reset.");
+            return new OperationResult(true, LocaleHelper.GetString("YourEmailPasswordHasBeenReset", user.Email));
         }
 
         // POST: /account/reset-password
