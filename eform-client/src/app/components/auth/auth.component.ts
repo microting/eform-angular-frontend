@@ -3,7 +3,7 @@ import {FormBuilder, AbstractControl, FormGroup, Validators} from '@angular/form
 import {Router} from '@angular/router';
 import {AuthResponseModel, LoginRequestModel, LoginPageSettingsModel, GoogleAuthenticatorModel} from 'app/models';
 import {AuthService} from 'app/services/accounts/auth.service';
-import {LocaleService, SettingsService} from 'app/services';
+import {LocaleService, AppSettingsService, UserSettingsService} from 'app/services';
 import {NotifyService} from 'app/services/notify.service';
 
 @Component({
@@ -37,16 +37,20 @@ export class AuthComponent implements OnInit {
 
   constructor(private router: Router,
               private authService: AuthService,
-              private settingsService: SettingsService,
+              private settingsService: AppSettingsService,
               private fb: FormBuilder,
               private notifyService: NotifyService,
-              private localeService: LocaleService) {}
+              private localeService: LocaleService,
+              private userSettings: UserSettingsService) {}
 
   login() {
     this.authService.login(new LoginRequestModel(this.formLogin.getRawValue()))
       .subscribe((result: AuthResponseModel) => {
           localStorage.setItem('currentAuth', JSON.stringify(result));
-          this.router.navigate(['/']).then();
+          this.userSettings.getUserSettings().subscribe((data) => {
+            localStorage.setItem('locale', data.model.locale);
+            this.router.navigate(['/']).then();
+          });
         },
         (error) => {
           this.error = error;

@@ -10,7 +10,7 @@ import {AdminSettingsModel, SettingsModel,
   LoginPageSettingsModel, HeaderSettingsModel} from 'app/models';
 
 @Injectable()
-export class SettingsService extends BaseService {
+export class AppSettingsService extends BaseService {
   private headers: Headers;
 
   constructor(private _http: Http, router: Router) {

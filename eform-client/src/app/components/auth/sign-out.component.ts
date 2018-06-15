@@ -18,7 +18,7 @@ export class SignOutComponent implements OnInit, AfterViewChecked {
 
   signOut() {
     this.authService.logout().subscribe(() => {
-      localStorage.clear();
+      localStorage.removeItem('currentAuth');
       this.router.navigate(['/login']).then();
     });
   }

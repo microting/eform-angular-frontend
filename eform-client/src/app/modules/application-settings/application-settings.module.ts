@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
+import {NgxSelectModule} from 'ngx-select-ex';
 import {ConnectionStringComponent} from './components/connection-string/connection-string.component';
 import {FormsModule} from '@angular/forms';
 import {ApplicationSettingsRoutingModule} from './application-settings-routing.module';
@@ -18,7 +19,8 @@ import {FileUploadModule} from 'ng2-file-upload';
     HelpersModule,
     TooltipModule,
     TranslateModule.forChild(),
-    FileUploadModule
+    FileUploadModule,
+    NgxSelectModule,
   ],
   declarations: [ConnectionStringComponent, ApplicationSettingsComponent, AdminSettingsComponent]
 })

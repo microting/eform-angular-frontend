@@ -6,35 +6,14 @@
       </div>
     </h1>
     <div class="pull-right">
-      <button class="btn btn-ar btn-danger" (click)="updateUserProfileSettings()">
-        {{ 'Save' | translate }} <i class="fa fa-spinner fa-spin" *ngIf="false"></i></button>
+      <button class="btn btn-ar btn-danger" (click)="updateUserProfileSettings()" [disabled]="isSettingsUpdating">
+        {{ 'Save' | translate }} <i class="fa fa-spinner fa-spin" *ngIf="isSettingsUpdating"></i></button>
     </div>
   </div>
 </header>
 <div class="edit_case">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-6" role="main">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            {{'Language' | translate }}
-          </div>
-          <table class="table">
-            <tbody>
-            <tr>
-              <td class="col-md-4">
-                <strong>{{ 'Language' | translate }}</strong>
-              </td>
-              <td>
-                <ngx-select [items]="languages"
-                            [(ngModel)]="userSettingsModel.language">
-                </ngx-select>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
       <div class="col-md-6" role="main">
         <div class="panel panel-default">
           <div class="panel-heading">
@@ -72,6 +51,27 @@
                         (click)="deleteGoogleAuthenticatorInfo()">
                   {{ 'Remove PSK' | translate }}
                 </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-md-6" role="main">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            {{'General' | translate }}
+          </div>
+          <table class="table">
+            <tbody>
+            <tr>
+              <td class="col-md-4">
+                <strong>{{ 'Language' | translate }}</strong>
+              </td>
+              <td>
+                <ngx-select [items]="languages"
+                            [(ngModel)]="userSettingsModel.locale">
+                </ngx-select>
               </td>
             </tr>
             </tbody>

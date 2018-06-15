@@ -18,12 +18,21 @@ export class LocaleService extends BaseService {
 
   initLocale() {
     let language = localStorage.getItem('locale');
+    debugger;
     if (!language) {
-      language = 'en-US';
+      language = this.getLocaleByBrowser();
       localStorage.setItem('locale', language);
     }
     this.translateService.setDefaultLang('en-US');
     this.translateService.use(language);
+  }
+
+  getLocaleByBrowser() {
+    let browserCulture = this.translateService.getBrowserCultureLang();
+    if (!browserCulture) {
+      browserCulture = 'en-US';
+    }
+    return browserCulture;
   }
 
   updateUserLocale(localeName: string) {

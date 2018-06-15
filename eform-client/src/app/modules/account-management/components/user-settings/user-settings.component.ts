@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 
-import {AuthService, NotifyService, SettingsService, LocaleService} from 'app/services';
+import {AuthService, NotifyService, AppSettingsService, LocaleService, UserSettingsService} from 'app/services';
 import {GoogleAuthInfoModel, UserSettingsModel} from 'app/models';
 
 @Component({
@@ -14,22 +14,24 @@ export class UserSettingsComponent implements OnInit {
     {id: 'da-DK', text: 'Danish'}
     ];
 
+  isSettingsUpdating = false;
   userSettingsModel: UserSettingsModel = new UserSettingsModel();
 
   googleAuthInfoModel: GoogleAuthInfoModel = new GoogleAuthInfoModel;
 
-  constructor(private settingsService: SettingsService,
-              private authService: AuthService,
+  constructor(private authService: AuthService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
               private notifyService: NotifyService,
-              private localeService: LocaleService) {
+              private localeService: LocaleService,
+              private userSettingsService: UserSettingsService) {
   }
 
   ngOnInit(): void {
     this.getGoogleAuthenticatorInfo();
+    this.getUserSettings();
 
-    this.userSettingsModel.language = this.localeService.getCurrentUserLocale();
+    this.userSettingsModel.locale = this.localeService.getCurrentUserLocale();
   }
 
   getGoogleAuthenticatorInfo() {
@@ -37,6 +39,12 @@ export class UserSettingsComponent implements OnInit {
       if (data && data.model) {
         this.googleAuthInfoModel = data.model;
       }
+    });
+  }
+
+  getUserSettings() {
+    this.userSettingsService.getUserSettings().subscribe((data) => {
+      this.userSettingsModel = data.model;
     });
   }
 
@@ -51,7 +59,7 @@ export class UserSettingsComponent implements OnInit {
     this.authService.updateGoogleAuthenticatorInfo(this.googleAuthInfoModel).subscribe((data) => {
       if (data.success) {
         this.authService.logout().subscribe(() => {
-          localStorage.clear();
+          localStorage.removeItem('currentAuth');
           this.router.navigate(['/login']).then();
         });
       } else {
@@ -69,10 +77,16 @@ export class UserSettingsComponent implements OnInit {
   }
 
   updateUserProfileSettings() {
-    this.localeService.updateUserLocale(this.userSettingsModel.language);
-    this.authService.logout().subscribe(() => {
-      localStorage.removeItem('currentAuth');
-      this.router.navigate(['/login']).then();
-    });
+    this.userSettingsService.updateUserSettings(this.userSettingsModel).subscribe(((data) => {
+      this.isSettingsUpdating = true;
+      this.localeService.updateUserLocale(this.userSettingsModel.locale);
+      this.authService.logout().subscribe(() => {
+        this.isSettingsUpdating = false;
+        localStorage.removeItem('currentAuth');
+        this.router.navigate(['/login']).then();
+      });
+    }), error => {
+      this.isSettingsUpdating = false;
+      });
   }
 }
