@@ -6,7 +6,7 @@ import {AuthService} from 'app/services/accounts/auth.service';
 import {Subscription} from 'rxjs/Subscription';
 import {NotifyService} from 'app/services/notify.service';
 import {LoginPageSettingsModel} from 'app/models/settings/login-page-settings.model';
-import {SettingsService} from 'app/services';
+import {AppSettingsService} from 'app/services';
 
 
 @Component({
@@ -31,7 +31,7 @@ export class RestorePasswordComponent implements OnInit {
               private fb: FormBuilder,
               private activatedRoute: ActivatedRoute,
               private notifyService: NotifyService,
-              private settingsService: SettingsService) { }
+              private settingsService: AppSettingsService) { }
 
   submitPasswordRestoreForm(): void {
     this.passwordRestoreModel.password = this.password.value;

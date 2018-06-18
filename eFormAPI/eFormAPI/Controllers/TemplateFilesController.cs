@@ -79,7 +79,7 @@ namespace eFormAPI.Web.Controllers
             var filePath = $"{core.GetPicturePath()}\\{fileName}";
             if (!File.Exists(filePath))
             {
-                return new OperationResult(false, "File not found");
+                return new OperationResult(false, LocaleHelper.GetString("FileNotFound"));
             }
             try
             {
@@ -94,9 +94,9 @@ namespace eFormAPI.Web.Controllers
                 {
                     return new OperationResult(true);
                 }
-                return new OperationResult(false, "Error while rotate image.");
+                return new OperationResult(false, LocaleHelper.GetString("ErrorWhileRotateImage"));
             }
-            return new OperationResult(true, "Image rotated successfully.");
+            return new OperationResult(true, LocaleHelper.GetString("ImageRotatedSuccessfully"));
         }
 
         [HttpGet]
@@ -109,16 +109,16 @@ namespace eFormAPI.Web.Controllers
                 var core = _coreHelper.GetCore();
                 if (!core.Advanced_DeleteUploadedData(fieldId, uploadedObjId))
                 {
-                    return new OperationResult(false, "Error: Image was not deleted");
+                    return new OperationResult(false, LocaleHelper.GetString("ImageNotDeleted"));
                 }
             }
 
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                return new OperationResult(false, "Error");
+                return new OperationResult(false, LocaleHelper.GetString("ImageNotDeleted"));
             }
-            return new OperationResult(true, "Image deleted successfully.");
+            return new OperationResult(true, LocaleHelper.GetString("ImageDeletedSuccessfully"));
         }
 
 
@@ -275,7 +275,7 @@ namespace eFormAPI.Web.Controllers
                         }
                     }
                 }
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "Invalid Request!");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, LocaleHelper.GetString("InvalidRequest"));
             }
             catch (Exception)
             {

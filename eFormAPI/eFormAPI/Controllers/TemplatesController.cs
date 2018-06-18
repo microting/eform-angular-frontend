@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
+using eFormAPI.Web.Infrastructure.Helpers;
 using eFormAPI.Web.Infrastructure.Models;
 using eFormAPI.Web.Infrastructure.Models.API;
 using eFormAPI.Web.Infrastructure.Models.Templates;
@@ -53,7 +54,7 @@ namespace eFormAPI.Web.Controllers
                         var connectionStr = lines.First();
                         var adminTool = new AdminTools(connectionStr);
                         adminTool.DbSettingsReloadRemote();
-                        return new OperationDataResult<TemplateListModel>(false, "Check connection string");
+                        return new OperationDataResult<TemplateListModel>(false, LocaleHelper.GetString("CheckConnectionString"));
                     }
                     else
                     {
@@ -65,12 +66,12 @@ namespace eFormAPI.Web.Controllers
                             }
                             catch (Exception)
                             {
-                                return new OperationDataResult<TemplateListModel>(false, "Core is not started.");
+                                return new OperationDataResult<TemplateListModel>(false, LocaleHelper.GetString("CoreIsNotStarted"));
                             }
-                            return new OperationDataResult<TemplateListModel>(false, "Check settings before proceed");
+                            return new OperationDataResult<TemplateListModel>(false, LocaleHelper.GetString("CheckSettingsBeforeProceed"));
                         }
                     }
-                    return new OperationDataResult<TemplateListModel>(false, "Check settings before proceed");
+                    return new OperationDataResult<TemplateListModel>(false, LocaleHelper.GetString("CheckSettingsBeforeProceed"));
                 }
             }
             catch (Exception)
@@ -99,7 +100,7 @@ namespace eFormAPI.Web.Controllers
                         var connectionStr = lines.First();
                         var adminTool = new AdminTools(connectionStr);
                         adminTool.DbSettingsReloadRemote();
-                        return new OperationDataResult<Template_Dto>(false, "Check connection string");
+                        return new OperationDataResult<Template_Dto>(false, LocaleHelper.GetString("CheckConnectionString"));
                     }
                     else
                     {
@@ -111,12 +112,12 @@ namespace eFormAPI.Web.Controllers
                             }
                             catch (Exception)
                             {
-                                return new OperationDataResult<Template_Dto>(false, "Core is not started.");
+                                return new OperationDataResult<Template_Dto>(false, LocaleHelper.GetString("CoreIsNotStarted"));
                             }
-                            return new OperationDataResult<Template_Dto>(false, "Check settings before proceed");
+                            return new OperationDataResult<Template_Dto>(false, LocaleHelper.GetString("CheckSettingsBeforeProceed"));
                         }
                     }
-                    return new OperationDataResult<Template_Dto>(false, "Check settings before proceed");
+                    return new OperationDataResult<Template_Dto>(false, LocaleHelper.GetString("CheckSettingsBeforeProceed"));
                 }
             }
             catch (Exception)
@@ -149,16 +150,16 @@ namespace eFormAPI.Web.Controllers
                 if (errors.Any())
                 {
                     var message = errors.Aggregate("", (current, str) => current + ("<br>" + str));
-                    throw new Exception("eForm could not be created!" + message);
+                    throw new Exception(LocaleHelper.GetString("eFormCouldNotBeCreated") + message);
                 }
-                if (newTemplate == null) throw new Exception("eForm could not be created!");
+                if (newTemplate == null) throw new Exception(LocaleHelper.GetString("eFormCouldNotBeCreated"));
                 // Set tags to eform
                 core.TemplateCreate(newTemplate);
                 if (eFormXmlModel.TagIds != null)
                 {
                     core.TemplateSetTags(newTemplate.Id, eFormXmlModel.TagIds);
                 }
-                return new OperationResult(true, $"eForm \"{newTemplate.Label}\" created successfully");
+                return new OperationResult(true, LocaleHelper.GetString("eFormParamCreatedSuccessfully", newTemplate.Label));
             }
             catch (Exception e)
             {
@@ -180,12 +181,12 @@ namespace eFormAPI.Web.Controllers
             try
             {
                 return result
-                    ? new OperationResult(true, $"eForm \"{templateDto.Label}\" deleted successfully")
-                    : new OperationResult(false, $"eForm \"{templateDto.Label}\" could not be deleted!");
+                    ? new OperationResult(true, LocaleHelper.GetString("eFormParamDeletedSuccessfully", templateDto.Label))
+                    : new OperationResult(false, LocaleHelper.GetString("eFormParamCouldNotBeDeleted", templateDto.Label));
             }
             catch (Exception)
             {
-                return new OperationResult(false, $"eForm \"{templateDto.Label}\" could not be deleted!");
+                return new OperationResult(false, LocaleHelper.GetString("eFormParamCouldNotBeDeleted", id));
             }
         }
 
@@ -263,7 +264,7 @@ namespace eFormAPI.Web.Controllers
                 core.CaseDelete(deployModel.Id, siteUId);
             }
 
-            return new OperationResult(true, $"\"{templateDto.Label}\" paired successfully.");
+            return new OperationResult(true, LocaleHelper.GetString("ParamPairedSuccessfully", templateDto.Label));
         }
 
         //[HttpGet]

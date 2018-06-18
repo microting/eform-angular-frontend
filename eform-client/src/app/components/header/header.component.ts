@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {LocaleService, SettingsService} from 'app/services';
+import {LocaleService, AppSettingsService, UserSettingsService} from 'app/services';
 import {HeaderSettingsModel} from 'app/models/settings/header-settings.model';
 
 @Component({
@@ -12,14 +12,15 @@ export class HeaderComponent implements OnInit {
   headerSettingsModel: HeaderSettingsModel = new HeaderSettingsModel;
   logoImage: any;
 
-  constructor(private settingsService: SettingsService,
-              private localeService: LocaleService) {
+  constructor(private settingsService: AppSettingsService,
+              private localeService: LocaleService,
+              private userSettingsService: UserSettingsService) {
   }
 
   ngOnInit() {
-    this.initLocale();
     this.settingsService.connectionStringExist().subscribe((result) => {
       if (result && result.success === true) {
+        this.getUserSettings();
         this.settingsService.getHeaderSettings().subscribe((data => {
           if (data && data.success) {
             this.headerSettingsModel = data.model;
@@ -42,8 +43,11 @@ export class HeaderComponent implements OnInit {
 
   }
 
-  initLocale() {
-    this.localeService.initLocale();
+  getUserSettings() {
+    this.userSettingsService.getUserSettings().subscribe(((data) => {
+      localStorage.setItem('locale', data.model.locale);
+      this.localeService.initLocale();
+    }));
   }
 
 }

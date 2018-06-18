@@ -1,8 +1,11 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Base32;
+using Castle.Core.Internal;
 using eFormAPI.Web.Infrastructure.Data.Entities;
 using eFormAPI.Web.Infrastructure.Helpers;
 using Microsoft.AspNet.Identity.Owin;
@@ -73,6 +76,14 @@ namespace eFormAPI.Web.Infrastructure.Identity.Providers
             }
             var oAuthIdentity = await user.GenerateUserIdentityAsync(userManager,
                 OAuthDefaults.AuthenticationType);
+
+            // Add custom claims
+            if (!user.Locale.IsNullOrEmpty())
+            {
+                oAuthIdentity.AddClaim(new Claim("locale", user.Locale));
+            }
+            
+
             var cookiesIdentity = await user.GenerateUserIdentityAsync(userManager,
                 CookieAuthenticationDefaults.AuthenticationType);
 
@@ -125,7 +136,12 @@ namespace eFormAPI.Web.Infrastructure.Identity.Providers
                 {"userId", user.Id.ToString()},
                 {"userName", user.UserName},
                 {"role", role},
+                
             };
+            if (!user.Locale.IsNullOrEmpty())
+            {
+                data.Add("locale", user.Locale);
+            }
             return new AuthenticationProperties(data);
         }
     }

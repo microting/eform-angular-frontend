@@ -271,6 +271,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\Attributes\LocaleMiddleware.cs" />
+    <Compile Include="Infrastructure\Helpers\LocaleHelper.cs" />
     <Compile Include="Infrastructure\Models\API\OperationDataResult.cs" />
     <Compile Include="Infrastructure\Models\API\OperationResult.cs" />
     <Compile Include="Infrastructure\Data\Entities\EformRole.cs" />
@@ -320,7 +322,9 @@
     <Compile Include="Infrastructure\Models\Settings\Initial\AdminSetupModel.cs" />
     <Compile Include="Infrastructure\Models\Settings\Initial\ConnectionStringMainModel.cs" />
     <Compile Include="Infrastructure\Models\Settings\Initial\ConnectionStringSDKModel.cs" />
+    <Compile Include="Infrastructure\Models\Settings\Initial\GeneralAppSetupSettingsModel.cs" />
     <Compile Include="Infrastructure\Models\Settings\Initial\InitialSettingsModel.cs" />
+    <Compile Include="Infrastructure\Models\Settings\User\UserSettingsModel.cs" />
     <Compile Include="Infrastructure\Models\SimpleSiteModel.cs" />
     <Compile Include="Infrastructure\Models\SiteNameModel.cs" />
     <Compile Include="Infrastructure\Models\Tags\UpdateTemplateTagsModel.cs" />
@@ -351,9 +355,23 @@
     <Compile Include="Migrations\201803051628071_AddGoogleAuth.Designer.cs">
       <DependentUpon>201803051628071_AddGoogleAuth.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806142159030_AddLocaleForUser.cs" />
+    <Compile Include="Migrations\201806142159030_AddLocaleForUser.Designer.cs">
+      <DependentUpon>201806142159030_AddLocaleForUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\EformMigrationsConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Infrastructure\Services\EmailService.cs" />
+    <Compile Include="Properties\Resources.da.Designer.cs">
+      <DependentUpon>Resources.da.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -394,6 +412,17 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803051628071_AddGoogleAuth.resx">
       <DependentUpon>201803051628071_AddGoogleAuth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806142159030_AddLocaleForUser.resx">
+      <DependentUpon>201806142159030_AddLocaleForUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.da.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.da.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

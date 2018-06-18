@@ -171,6 +171,32 @@
             </div>
           </div>
         </div>
+        <div class="row">
+          <div class="col-md-6" role="main">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                General application settings
+              </div>
+              <table class="table">
+                <tbody>
+                <tr>
+                  <td class="col-md-4">
+                    <strong>Default Language</strong>
+                  </td>
+                  <td>
+                    <ngx-select [items]="languages"
+                                required
+                                #defaultLanguage="ngModel"
+                                name="default-language"
+                                [(ngModel)]="settingsModel.generalAppSetupSettingsModel.defaultLocale">
+                    </ngx-select>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </form>
     </div>
   </div>

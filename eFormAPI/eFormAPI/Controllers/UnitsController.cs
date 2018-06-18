@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Http;
+using eFormAPI.Web.Infrastructure.Helpers;
 using eFormAPI.Web.Infrastructure.Models.API;
 using eFormShared;
 using EformBase.Pn.Infrastructure;
@@ -27,11 +28,11 @@ namespace eFormAPI.Web.Controllers
             {
                 var core = _coreHelper.GetCore();
                 var unitDto = core.Advanced_UnitRequestOtp(id);
-                return new OperationDataResult<Unit_Dto>(true, "New OTP created successfully", unitDto);
+                return new OperationDataResult<Unit_Dto>(true, LocaleHelper.GetString("NewOTPCreatedSuccessfully"), unitDto);
             }
             catch (Exception)
             {
-                return new OperationDataResult<Unit_Dto>(false, $"Unit \"{id}\" OTP request could not be completed!");
+                return new OperationDataResult<Unit_Dto>(false, LocaleHelper.GetString("UnitParamOTPCouldNotCompleted", id));
             }
         }
     }

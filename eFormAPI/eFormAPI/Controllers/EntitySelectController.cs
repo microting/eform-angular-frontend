@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using eFormAPI.Web.Infrastructure.Helpers;
 using eFormAPI.Web.Infrastructure.Models.API;
 using eFormAPI.Web.Infrastructure.Models.Common;
 using eFormAPI.Web.Infrastructure.Models.SelectableList;
@@ -32,7 +33,7 @@ namespace eFormAPI.Web.Controllers
             }
             catch (Exception)
             {
-                return new OperationDataResult<EntityGroupList>(false, "Searchable list loading failed");
+                return new OperationDataResult<EntityGroupList>(false, LocaleHelper.GetString("SelectableGroupLoadingFailed"));
             }
         }
 
@@ -56,11 +57,11 @@ namespace eFormAPI.Web.Controllers
                     }
                     core.EntityGroupUpdate(entityGroup);
                 }
-                return new OperationResult(true, $"{groupCreate.EntityGroupMUId} created successfully");
+                return new OperationResult(true, LocaleHelper.GetString("ParamCreatedSuccessfully", groupCreate.EntityGroupMUId));
             }
             catch (Exception)
             {
-                return new OperationResult(false, "Searchable list creation failed");
+                return new OperationResult(false, LocaleHelper.GetString("SelectableListCreationFailed"));
             }
         }
 
@@ -75,11 +76,11 @@ namespace eFormAPI.Web.Controllers
                 entityGroup.EntityGroupItemLst = editModel.AdvEntitySelectableItemModels;
                 entityGroup.Name = editModel.Name;
                 core.EntityGroupUpdate(entityGroup);
-                return new OperationResult(true, $"{editModel.GroupUid} updated successfully");
+                return new OperationResult(true, LocaleHelper.GetString("ParamUpdatedSuccessfully", editModel.GroupUid));
             }
             catch (Exception)
             {
-                return new OperationResult(false, "Searchable list creation failed");
+                return new OperationResult(false, LocaleHelper.GetString("SelectableListCreationFailed"));
             }
         }
 
@@ -97,7 +98,7 @@ namespace eFormAPI.Web.Controllers
             }
             catch (Exception)
             {
-                return new OperationDataResult<EntityGroup>(false, "Error when obtaining searchable list");
+                return new OperationDataResult<EntityGroup>(false, LocaleHelper.GetString("ErrorWhileObtainSelectableList"));
             }
         }
 
@@ -127,7 +128,7 @@ namespace eFormAPI.Web.Controllers
             catch (Exception)
             {
                 return new OperationDataResult<List<CommonDictionaryTextModel>>(false,
-                    "Error when obtaining searchable list");
+                    LocaleHelper.GetString("ErrorWhileObtainSelectableList"));
             }
         }
 
@@ -141,12 +142,12 @@ namespace eFormAPI.Web.Controllers
 
 
                 return core.EntityGroupDelete(entityGroupUid)
-                    ? new OperationResult(true, $"{entityGroupUid} deleted successfully")
-                    : new OperationResult(false, "Error when deleting searchable list");
+                    ? new OperationResult(true, LocaleHelper.GetString("ParamDeletedSuccessfully", entityGroupUid))
+                    : new OperationResult(false, LocaleHelper.GetString("ErrorWhileDeletingSelectableList"));
             }
             catch (Exception )
             {
-                return new OperationResult(false, "Error when deleting searchable list");
+                return new OperationResult(false, LocaleHelper.GetString("ErrorWhileDeletingSelectableList"));
             }
         }
 
@@ -160,11 +161,11 @@ namespace eFormAPI.Web.Controllers
                 var core = _coreHelper.GetCore();
 
 
-                return new OperationResult(true, $"deleted successfully");
+                return new OperationResult(true, LocaleHelper.GetString("ParamDeletedSuccessfully", entityGroupUid));
             }
             catch (Exception)
             {
-                return new OperationResult(false, "Error when deleting searchable list");
+                return new OperationResult(false, LocaleHelper.GetString("ErrorWhileDeletingSelectableList"));
             }
         }
     }

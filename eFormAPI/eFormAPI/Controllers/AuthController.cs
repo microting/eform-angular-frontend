@@ -151,14 +151,14 @@ namespace eFormAPI.Web.Controllers
             // check model
             if (!ModelState.IsValid)
             {
-                return new OperationDataResult<GoogleAuthenticatorModel>(false, "Invalid username or password");
+                return new OperationDataResult<GoogleAuthenticatorModel>(false, LocaleHelper.GetString("InvalidUserNameOrPassword"));
             }
             // try to sign in with user creds
             var user = UserManager.Find(loginModel.Username, loginModel.Password);
             if (user == null)
             {
                 return new OperationDataResult<GoogleAuthenticatorModel>(false,
-                    "The user name or password is incorrect.");
+                    LocaleHelper.GetString("UserNameOrPasswordIncorrect"));
             }
             // check if two factor is enabled
             var isTwoFactorAuthForced = SettingsHelper.GetTwoFactorAuthForceInfo();
@@ -183,7 +183,7 @@ namespace eFormAPI.Web.Controllers
             var updateResult = UserManager.UpdateAsync(user).Result;
             if (!updateResult.Succeeded)
             {
-                return new OperationDataResult<GoogleAuthenticatorModel>(false, "Error while updating user PSK");
+                return new OperationDataResult<GoogleAuthenticatorModel>(false, LocaleHelper.GetString("ErrorWhileUpdatingPSK"));
             }
             // return
             return new OperationDataResult<GoogleAuthenticatorModel>(true, model);

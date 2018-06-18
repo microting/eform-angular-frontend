@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using eFormAPI.Web.Infrastructure.Attributes;
 using eFormAPI.Web.Infrastructure.Data;
 using eFormAPI.Web.Infrastructure.Identity;
 using eFormAPI.Web.Infrastructure.Identity.Providers;
@@ -44,6 +46,9 @@ namespace eFormAPI.Web
 
             // Enable the application to use bearer tokens to authenticate users
             app.UseOAuthBearerTokens(OAuthOptions);
+
+            // Culture
+            app.Use(typeof(LocaleMiddleware));
 
             // Uncomment the following lines to enable logging in with third party login providers
             //app.UseMicrosoftAccountAuthentication(

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using eFormAPI.Web.Infrastructure.Helpers;
 using eFormAPI.Web.Infrastructure.Models.API;
 using eFormAPI.Web.Infrastructure.Models.Templates;
 using EformBase.Pn.Infrastructure;
@@ -45,7 +46,7 @@ namespace eFormAPI.Web.Controllers
             }
             catch (Exception)
             {
-                return new OperationDataResult<List<TemplateColumnModel>>(false, "Error while obtaining columns");
+                return new OperationDataResult<List<TemplateColumnModel>>(false, LocaleHelper.GetString("ErrorWhileObtainColumns"));
             }
         }
 
@@ -76,7 +77,7 @@ namespace eFormAPI.Web.Controllers
             }
             catch (Exception)
             {
-                return new OperationDataResult<DisplayTemplateColumnsModel>(false, "Error while obtaining columns");
+                return new OperationDataResult<DisplayTemplateColumnsModel>(false, LocaleHelper.GetString("ErrorWhileObtainColumns"));
             }
         }
 
@@ -111,12 +112,12 @@ namespace eFormAPI.Web.Controllers
                     core.CaseUpdateFieldValues(caseObject.Id);
                 }
                 return columnsUpdateResult
-                    ? new OperationResult(true, "Columns was updated")
-                    : new OperationResult(false, "Error while updating columns");
+                    ? new OperationResult(true, LocaleHelper.GetString("ColumnsWereUpdated"))
+                    : new OperationResult(false, LocaleHelper.GetString("ErrorWhileUpdatingColumns"));
             }
             catch (Exception)
             {
-                return new OperationResult(false, "Error while updating columns");
+                return new OperationResult(false, LocaleHelper.GetString("ErrorWhileUpdatingColumns"));
             }
         }
     }

@@ -20,9 +20,9 @@ import {
 } from 'app/components';
 import {FullLayoutComponent, SimpleLayoutComponent} from 'app/layouts';
 import {
-  AdminService, EntitySearchService, EntitySelectService, SettingsService,
+  AdminService, EntitySearchService, EntitySelectService, AppSettingsService,
   SitesService, UnitsService, WorkersService, CasesService, AuthService, NotifyService,
-  ImageService, SimpleSitesService, EFormService, EformTagService, LocaleService
+  ImageService, SimpleSitesService, EFormService, EformTagService, LocaleService, UserSettingsService
 } from 'app/services';
 import {AuthGuard} from 'app/guards';
 import {EqualValidatorDirective} from 'app/components/directives/equal-validator.directive';
@@ -91,11 +91,12 @@ import {EqualValidatorDirective} from 'app/components/directives/equal-validator
     SimpleSitesService,
     EntitySearchService,
     EntitySelectService,
-    SettingsService,
+    AppSettingsService,
     EFormService,
     ImageService,
     EformTagService,
     LocaleService,
+    UserSettingsService,
     PreloadResolverConfig
   ],
   bootstrap: [AppComponent]

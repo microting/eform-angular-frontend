@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {SettingsModel} from 'app/models';
-import {SettingsService} from 'app/services';
+import {AppSettingsService} from 'app/services';
 import {Router} from '@angular/router';
 
 @Component({
@@ -12,7 +12,12 @@ export class ConnectionStringComponent implements OnInit {
   spinnerStatus: boolean;
   settingsModel: SettingsModel = new SettingsModel();
 
-  constructor(private settingsService: SettingsService, private router: Router) {
+  languages = [
+    {id: 'en-US', text: 'English'},
+    {id: 'da-DK', text: 'Danish'}
+  ];
+
+  constructor(private settingsService: AppSettingsService, private router: Router) {
   }
 
   ngOnInit() {

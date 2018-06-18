@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Http;
+using eFormAPI.Web.Infrastructure.Helpers;
 using EformBase.Pn.Consts;
 
 namespace eFormAPI.Web.Controllers
@@ -75,7 +76,7 @@ namespace eFormAPI.Web.Controllers
                 System.Web.Hosting.HostingEnvironment.MapPath("~/output/datafolder/picture/settings/login-page");
             if (string.IsNullOrEmpty(saveFolder))
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "Folder error");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, LocaleHelper.GetString("FolderError"));
             }
             if (!Directory.Exists(saveFolder))
             {
@@ -99,7 +100,7 @@ namespace eFormAPI.Web.Controllers
             {
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
-            return Request.CreateResponse(HttpStatusCode.BadRequest, "Invalid Request!");
+            return Request.CreateResponse(HttpStatusCode.BadRequest, LocaleHelper.GetString("InvalidRequest"));
         }
 
         [HttpPost]
@@ -111,7 +112,7 @@ namespace eFormAPI.Web.Controllers
             var saveFolder = System.Web.Hosting.HostingEnvironment.MapPath("~/output/datafolder/picture/settings");
             if (string.IsNullOrEmpty(saveFolder))
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "Folder error");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, LocaleHelper.GetString("FolderError"));
             }
             if (!Directory.Exists(saveFolder))
             {
@@ -135,7 +136,7 @@ namespace eFormAPI.Web.Controllers
             {
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
-            return Request.CreateResponse(HttpStatusCode.BadRequest, "Invalid Request!");
+            return Request.CreateResponse(HttpStatusCode.BadRequest, LocaleHelper.GetString("InvalidRequest"));
         }
     }
 }

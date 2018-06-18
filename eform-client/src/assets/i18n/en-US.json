@@ -155,6 +155,7 @@
   "Profile Settings": "Profile Settings",
   "Open Google Authenticator and add Eform application by scanning the QR Code to the right": "Open Google Authenticator and add Eform application by scanning the QR Code to the right",
   "Enter the 6 digit code that Google Authenticator generates": "Enter the 6 digit code that Google Authenticator generates",
+  "General": "General",
 
   "Showing to of records": "Showing {{currentPageAmount}} to {{currentPage}} of {{total}} records",
   "Google Authenticator description": "<p>Secret key between <strong>Eform</strong> application and <strong>Google Authenticator</strong>. Keep it safe and do not tell anyone.</p><p>You should remove this key, if <strong>Google Authenticator</strong> is reinstalled or key was removed</p>"

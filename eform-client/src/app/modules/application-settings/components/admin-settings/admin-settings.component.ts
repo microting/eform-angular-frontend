@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AdminSettingsModel} from 'app/models';
-import {NotifyService, AuthService, SettingsService} from 'app/services';
+import {NotifyService, AuthService, AppSettingsService} from 'app/services';
 import {FileItem, FileUploader} from 'ng2-file-upload';
 import {UUID} from 'angular2-uuid';
 
@@ -18,7 +18,7 @@ export class AdminSettingsComponent implements OnInit {
   spinnerStatus: boolean;
   adminSettingsModel: AdminSettingsModel = new AdminSettingsModel;
 
-  constructor(private settingsService: SettingsService,
+  constructor(private settingsService: AppSettingsService,
               private authService: AuthService,
               private router: Router,
               private activatedRoute: ActivatedRoute,

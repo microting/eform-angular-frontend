@@ -3,12 +3,16 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web.Configuration;
 using System.Web.Http;
+using Castle.Core.Internal;
 using eFormAPI.Web.Infrastructure.Data;
 using eFormAPI.Web.Infrastructure.Data.Entities;
+using eFormAPI.Web.Infrastructure.Helpers;
 using eFormAPI.Web.Infrastructure.Identity;
 using eFormAPI.Web.Infrastructure.Models.API;
 using eFormAPI.Web.Infrastructure.Models.Auth;
+using eFormAPI.Web.Infrastructure.Models.Settings.User;
 using eFormAPI.Web.Infrastructure.Models.User;
 using EformBase.Pn.Consts;
 using Microsoft.AspNet.Identity;
@@ -28,7 +32,6 @@ namespace eFormAPI.Web.Controllers
         {
             _eformRoleManager = new EformRoleManager(
                 new EformRoleStore(new BaseDbContext()));
-            ;
             _dbContext = dbContext;
         }
 
@@ -57,6 +60,54 @@ namespace eFormAPI.Web.Controllers
                 Role = role
             };
         }
+
+        // GET api/account/user-settings
+        [HttpGet]
+        [Route("user-settings")]
+        public OperationDataResult<UserSettingsModel> GetUserSettings()
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId<int>());
+            if (user == null)
+            {
+                return new OperationDataResult<UserSettingsModel>(false, LocaleHelper.GetString("UserNotFound"));
+            }
+            var locale = user.Locale;
+            if (locale.IsNullOrEmpty())
+            {
+                var configuration = WebConfigurationManager.OpenWebConfiguration("~");
+                var section = (AppSettingsSection)configuration.GetSection("appSettings");
+                locale = section.Settings["general:defaultLocale"].Value;
+                if (locale == null)
+                {
+                    locale = "en-US";
+                }
+            }
+            return new OperationDataResult<UserSettingsModel>(true, new UserSettingsModel()
+            {
+                Locale = locale
+            });
+        }
+
+        // POST api/account/user-settings
+        [HttpPost]
+        [Route("user-settings")]
+        public OperationResult UpdateUserSettings(UserSettingsModel model)
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId<int>());
+            if (user == null)
+            {
+                return new OperationResult(false, LocaleHelper.GetString("UserNotFound"));
+            }
+            user.Locale = model.Locale;
+            var updateResult = UserManager.UpdateAsync(user).Result;
+            if (!updateResult.Succeeded)
+            {
+                return new OperationResult(false,
+                    $"Error while updating user settings: {string.Join(", ", updateResult.Errors.Select(x => x.ToString()).ToArray())}");
+            }
+            return new OperationResult(true);
+        }
+
 
         [HttpPost]
         [Route("change-password")]
@@ -110,33 +161,33 @@ namespace eFormAPI.Web.Controllers
             var securityCode = ConfigurationManager.AppSettings["restore:securityCode"];
             if (string.IsNullOrEmpty(securityCode))
             {
-                return new OperationResult(false, "Please setup security code on server.");
+                return new OperationResult(false, LocaleHelper.GetString("PleaseSetupSecurityCode"));
             }
             var defaultPassword = ConfigurationManager.AppSettings["restore:defaultPassword"];
             if (code != securityCode)
             {
-                return new OperationResult(false, "Invalid security code.");
+                return new OperationResult(false, "InvalidSecurityCode");
             }
             var role = await _eformRoleManager.FindByNameAsync(EformRoles.Admin);
             var user = _dbContext.Users.Include(x => x.Roles)
                 .FirstOrDefault(x => x.Roles.Any(y => y.RoleId == role.Id));
             if (user == null)
             {
-                return new OperationResult(false, "Admin user not found");
+                return new OperationResult(false, LocaleHelper.GetString("AdminUserNotFound"));
             }
             var removeResult = await UserManager.RemovePasswordAsync(user.Id);
             if (!removeResult.Succeeded)
             {
                 return new OperationResult(false,
-                    "Error while removing old password. \n" + string.Join(" ", removeResult.Errors));
+                    LocaleHelper.GetString("ErrorWhileRemovingOldPassword") + ". \n" + string.Join(" ", removeResult.Errors));
             }
             var addPasswordResult = await UserManager.AddPasswordAsync(user.Id, defaultPassword);
             if (!addPasswordResult.Succeeded)
             {
                 return new OperationResult(false,
-                    "Error while adding new password. \n" + string.Join(" ", addPasswordResult.Errors));
+                    LocaleHelper.GetString("ErrorWhileAddNewPassword") + ". \n" + string.Join(" ", addPasswordResult.Errors));
             }
-            return new OperationResult(true, $"Your email: {user.Email}. Password has been reset.");
+            return new OperationResult(true, LocaleHelper.GetString("YourEmailPasswordHasBeenReset", user.Email));
         }
 
         // POST: /account/reset-password
