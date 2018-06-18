@@ -3,7 +3,9 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web.Configuration;
 using System.Web.Http;
+using Castle.Core.Internal;
 using eFormAPI.Web.Infrastructure.Data;
 using eFormAPI.Web.Infrastructure.Data.Entities;
 using eFormAPI.Web.Infrastructure.Helpers;
@@ -69,9 +71,20 @@ namespace eFormAPI.Web.Controllers
             {
                 return new OperationDataResult<UserSettingsModel>(false, LocaleHelper.GetString("UserNotFound"));
             }
+            var locale = user.Locale;
+            if (locale.IsNullOrEmpty())
+            {
+                var configuration = WebConfigurationManager.OpenWebConfiguration("~");
+                var section = (AppSettingsSection)configuration.GetSection("appSettings");
+                locale = section.Settings["general:defaultLocale"].Value;
+                if (locale == null)
+                {
+                    locale = "en-US";
+                }
+            }
             return new OperationDataResult<UserSettingsModel>(true, new UserSettingsModel()
             {
-                Locale = user.Locale
+                Locale = locale
             });
         }
 
