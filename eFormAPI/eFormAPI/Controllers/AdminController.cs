@@ -71,7 +71,7 @@ namespace eFormAPI.Web.Controllers
             catch (Exception exception)
             {
                 _logger.Error(exception.Message);
-                return new OperationDataResult<UserRegisterModel>(false, "Error when obtaining users");
+                return new OperationDataResult<UserRegisterModel>(false, LocaleHelper.GetString("ErrorWhileObtainUsers"));
             }
         }
 
@@ -116,7 +116,7 @@ namespace eFormAPI.Web.Controllers
             catch (Exception exception)
             {
                 _logger.Error(exception.Message);
-                return new OperationDataResult<UserInfoModelList>(false, "Error when obtaining users");
+                return new OperationDataResult<UserInfoModelList>(false, LocaleHelper.GetString("ErrorWhileObtainUsers"));
             }
         }
 
@@ -129,11 +129,11 @@ namespace eFormAPI.Web.Controllers
                 var user = UserManager.FindById(userRegisterModel.Id);
                 if (user == null)
                 {
-                    return new OperationResult(false, $"User {userRegisterModel.UserName} not found");
+                    return new OperationResult(false, LocaleHelper.GetString("UserNotFoundUserName", userRegisterModel.UserName));
                 }
                 if (userRegisterModel.Role == null)
                 {
-                    return new OperationResult(false, "Role is required");
+                    return new OperationResult(false, LocaleHelper.GetString("RoleIsRequired"));
                 }
                 user.Email = userRegisterModel.Email;
                 user.UserName = userRegisterModel.UserName;
@@ -153,12 +153,12 @@ namespace eFormAPI.Web.Controllers
                 // change role
                 UserManager.RemoveFromRoles(user.Id, EformRoles.Admin, EformRoles.User);
                 UserManager.AddToRole(user.Id, userRegisterModel.Role);
-                return new OperationResult(true, $"User {user.UserName} was updated");
+                return new OperationResult(true, LocaleHelper.GetString("UserUserNameWasUpdated", user.UserName));
             }
             catch (Exception exception)
             {
                 _logger.Error(exception.Message);
-                return new OperationResult(false, "Error when updating user");
+                return new OperationResult(false, LocaleHelper.GetString("ErrorWhileUpdatingUser"));
             }
         }
 
@@ -171,11 +171,11 @@ namespace eFormAPI.Web.Controllers
                 var userResult = UserManager.FindByName(userRegisterModel.UserName);
                 if (userResult != null)
                 {
-                    return new OperationResult(false, $"User {userRegisterModel.UserName} already exist");
+                    return new OperationResult(false, LocaleHelper.GetString("UserUserNameAlreadyExist", userRegisterModel.UserName));
                 }
                 if (userRegisterModel.Role == null)
                 {
-                    return new OperationResult(false, "Role is required");
+                    return new OperationResult(false, LocaleHelper.GetString("RoleIsRequired"));
                 }
                 var user = new EformUser
                 {
@@ -194,12 +194,12 @@ namespace eFormAPI.Web.Controllers
                 }
                 // change role
                 UserManager.AddToRole(user.Id, userRegisterModel.Role.ToLower());
-                return new OperationResult(true, $"User {user.UserName} was created");
+                return new OperationResult(true, LocaleHelper.GetString("UserUserNameWasCreated", user.UserName));
             }
             catch (Exception exception)
             {
                 _logger.Error(exception.Message);
-                return new OperationResult(false, "Error when creating user");
+                return new OperationResult(false, LocaleHelper.GetString("ErrorWhileCreatingUser"));
             }
         }
 
@@ -211,24 +211,24 @@ namespace eFormAPI.Web.Controllers
             {
                 if (userId == 1)
                 {
-                    return new OperationResult(false, "Can't delete primary admin user");
+                    return new OperationResult(false, LocaleHelper.GetString("CantDeletePrimaryAdminUser"));
                 }
                 var user = UserManager.FindById(userId);
                 if (user == null)
                 {
-                    return new OperationResult(false, $"User {userId} not found");
+                    return new OperationResult(false, LocaleHelper.GetString("UserUserNameNotFound", userId));
                 }
                 var result = UserManager.Delete(user);
                 if (!result.Succeeded)
                 {
                     return new OperationResult(false, string.Join(" ", result.Errors));
                 }
-                return new OperationResult(true, $"User {userId} was deleted");
+                return new OperationResult(true, LocaleHelper.GetString("UserParamWasDeleted", userId));
             }
             catch (Exception exception)
             {
                 _logger.Error(exception.Message);
-                return new OperationResult(false, "Error while deleting user");
+                return new OperationResult(false, LocaleHelper.GetString("ErrorWhileDeletingUser"));
             }
         }
 

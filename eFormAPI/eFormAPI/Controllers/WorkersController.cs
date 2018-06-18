@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Http;
+using eFormAPI.Web.Infrastructure.Helpers;
 using eFormAPI.Web.Infrastructure.Models;
 using eFormAPI.Web.Infrastructure.Models.API;
 using eFormCore;
@@ -43,12 +44,12 @@ namespace eFormAPI.Web.Controllers
                     workerModel.UserLastName, workerDto.Email);
 
                 return isUpdated
-                    ? new OperationResult(true, $"Worker with id {workerModel.Id} was updated!")
-                    : new OperationResult(false, $"Worker with id {workerModel.Id} wasn't updated!");
+                    ? new OperationResult(true, LocaleHelper.GetString("WorkerParamWasUpdated", workerModel.Id))
+                    : new OperationResult(false, LocaleHelper.GetString("WorkerParamCantBeUpdated", workerModel.Id));
             }
             catch (Exception)
             {
-                return new OperationResult(false, $"Worker with id {workerModel.Id} can't be updated!");
+                return new OperationResult(false, LocaleHelper.GetString("WorkerParamCantBeUpdated", workerModel.Id));
             }
         }
 
@@ -64,11 +65,11 @@ namespace eFormAPI.Web.Controllers
                 var createdWorker =
                     core.Advanced_SiteWorkerCreate(new SiteName_Dto(model.SiteId, "", null, null), workerDto);
 
-                return new OperationResult(true, $"Worker was successfully created!");
+                return new OperationResult(true, LocaleHelper.GetString("WorkerWasSuccessfullyCreated"));
             }
             catch (Exception)
             {
-                return new OperationResult(false, $"Error while creating worker");
+                return new OperationResult(false, LocaleHelper.GetString("ErrorWhileCreatingWorker"));
             }
         }
 
@@ -82,22 +83,20 @@ namespace eFormAPI.Web.Controllers
 
                 if (workerDto.Equals(null))
                 {
-                    return new OperationDataResult<SiteNameModel>(false, $"Site with id {id} could not be deleted!");
+                    return new OperationDataResult<SiteNameModel>(false, LocaleHelper.GetString("SiteWithIdCouldNotBeDeleted", id));
                 }
 
                 return core.Advanced_WorkerDelete(id)
                     ? new OperationDataResult<SiteNameModel>(true,
-                        $"Worker \"{workerDto.FirstName} {workerDto.LastName}\" " +
-                        "deleted successfully")
+                        LocaleHelper.GetString("WorkerParamDeletedSuccessfully", workerDto.FirstName, workerDto.LastName))
                     : new OperationDataResult<SiteNameModel>(false,
-                        $"Worker \"{workerDto.FirstName} {workerDto.LastName}\" " +
-                        "could not be deleted!");
+                        LocaleHelper.GetString("WorkerParamCantBeDeted", workerDto.FirstName, workerDto.LastName));
             }
 
             catch (Exception)
             {
                 return new OperationDataResult<SiteNameModel>(false,
-                    $"Site with id {id} could not be deleted!");
+                    LocaleHelper.GetString("SiteWithIdCouldNotBeDeleted", id));
             }
         }
     }

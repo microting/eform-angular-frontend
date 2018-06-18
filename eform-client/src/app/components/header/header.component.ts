@@ -18,9 +18,9 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getUserSettings();
     this.settingsService.connectionStringExist().subscribe((result) => {
       if (result && result.success === true) {
+        this.getUserSettings();
         this.settingsService.getHeaderSettings().subscribe((data => {
           if (data && data.success) {
             this.headerSettingsModel = data.model;

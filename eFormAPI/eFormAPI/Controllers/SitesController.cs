@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Web.Http;
 using AutoMapper;
+using eFormAPI.Web.Infrastructure.Helpers;
 using eFormAPI.Web.Infrastructure.Models;
 using eFormAPI.Web.Infrastructure.Models.API;
 using eFormCore;
@@ -52,7 +53,7 @@ namespace eFormAPI.Web.Controllers
             }
             catch (Exception)
             {
-                return new OperationResult(false, $"Site with id {siteNameModel.Id} could not be updated!");
+                return new OperationResult(false, LocaleHelper.GetString("SiteParamCouldNotBeUpdated", siteNameModel.Id));
             }
         }
 
@@ -73,20 +74,18 @@ namespace eFormAPI.Web.Controllers
                 }
                 else
                 {
-                    return new OperationResult(false, $"Site with id {id} not found.");
+                    return new OperationResult(false, LocaleHelper.GetString("SiteParamNotFound", id));
                 }
 
                 return core.Advanced_SiteItemDelete(id)
-                    ? new OperationResult(true, $"Site \"{siteNameModel.SiteName}\" " +
-                                                "deleted successfully")
-                    : new OperationResult(false, $"Site \"{siteNameModel.SiteName}\" " +
-                                                 "could not be deleted!");
+                    ? new OperationResult(true, LocaleHelper.GetString("SiteParamDeletedSuccessfully", siteNameModel.SiteName))
+                    : new OperationResult(false, LocaleHelper.GetString("SiteParamCouldNotBeDeleted", siteNameModel.SiteName));
             }
 
             catch (Exception)
             {
                 return new OperationDataResult<SiteNameModel>(false,
-                    $"Site with id {id} could not be deleted!");
+                    LocaleHelper.GetString("SiteParamCouldNotBeDeleted", id));
             }
         }
     }

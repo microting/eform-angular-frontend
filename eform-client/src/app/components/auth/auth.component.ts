@@ -120,12 +120,13 @@ export class AuthComponent implements OnInit {
   ngOnInit() {
     this.initLocale();
     this.settingsService.connectionStringExist().subscribe((result) => {
-      if (result && result.success === false) {
+      if (result && !result.success) {
         this.router.navigate(['/application-settings/connection-string']).then();
+      } else if (result && result.success) {
+        this.getSettings();
+        this.getTwoFactorInfo();
       }
     });
-    this.getSettings();
-    this.getTwoFactorInfo();
     this.formLogin = this.fb.group({
       username: [
         '',

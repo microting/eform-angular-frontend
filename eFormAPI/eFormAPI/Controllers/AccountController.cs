@@ -161,31 +161,31 @@ namespace eFormAPI.Web.Controllers
             var securityCode = ConfigurationManager.AppSettings["restore:securityCode"];
             if (string.IsNullOrEmpty(securityCode))
             {
-                return new OperationResult(false, "Please setup security code on server.");
+                return new OperationResult(false, LocaleHelper.GetString("PleaseSetupSecurityCode"));
             }
             var defaultPassword = ConfigurationManager.AppSettings["restore:defaultPassword"];
             if (code != securityCode)
             {
-                return new OperationResult(false, "Invalid security code.");
+                return new OperationResult(false, "InvalidSecurityCode");
             }
             var role = await _eformRoleManager.FindByNameAsync(EformRoles.Admin);
             var user = _dbContext.Users.Include(x => x.Roles)
                 .FirstOrDefault(x => x.Roles.Any(y => y.RoleId == role.Id));
             if (user == null)
             {
-                return new OperationResult(false, "Admin user not found");
+                return new OperationResult(false, LocaleHelper.GetString("AdminUserNotFound"));
             }
             var removeResult = await UserManager.RemovePasswordAsync(user.Id);
             if (!removeResult.Succeeded)
             {
                 return new OperationResult(false,
-                    "Error while removing old password. \n" + string.Join(" ", removeResult.Errors));
+                    LocaleHelper.GetString("ErrorWhileRemovingOldPassword") + ". \n" + string.Join(" ", removeResult.Errors));
             }
             var addPasswordResult = await UserManager.AddPasswordAsync(user.Id, defaultPassword);
             if (!addPasswordResult.Succeeded)
             {
                 return new OperationResult(false,
-                    "Error while adding new password. \n" + string.Join(" ", addPasswordResult.Errors));
+                    LocaleHelper.GetString("ErrorWhileAddNewPassword") + ". \n" + string.Join(" ", addPasswordResult.Errors));
             }
             return new OperationResult(true, LocaleHelper.GetString("YourEmailPasswordHasBeenReset", user.Email));
         }

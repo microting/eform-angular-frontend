@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Http;
+using eFormAPI.Web.Infrastructure.Helpers;
 using eFormAPI.Web.Infrastructure.Models.API;
 using eFormAPI.Web.Infrastructure.Models.Common;
 using eFormAPI.Web.Infrastructure.Models.Tags;
@@ -34,7 +35,7 @@ namespace eFormAPI.Web.Controllers
             }
             catch (Exception)
             {
-                return new OperationDataResult<List<CommonDictionaryModel>>(false, "Error while obtaining tags");
+                return new OperationDataResult<List<CommonDictionaryModel>>(false, LocaleHelper.GetString("ErrorWhileObtainTags"));
             }
         }
 
@@ -46,12 +47,12 @@ namespace eFormAPI.Web.Controllers
             {
                 var result = _coreHelper.GetCore().TagDelete(tagId);
                 return result
-                    ? new OperationResult(true, "Tag was deleted successfully")
-                    : new OperationResult(false, "Error while deleted tag");
+                    ? new OperationResult(true, LocaleHelper.GetString("TagDeletedSuccessfully"))
+                    : new OperationResult(false, LocaleHelper.GetString("ErrorWhileDeletingTag"));
             }
             catch (Exception)
             {
-                return new OperationResult(false, "Error while removing tag");
+                return new OperationResult(false, LocaleHelper.GetString("ErrorWhileDeletingTag"));
             }
         }
 
@@ -63,12 +64,12 @@ namespace eFormAPI.Web.Controllers
             {
                 var result = _coreHelper.GetCore().TagCreate(tagName);
                 return result > 0 ?
-                    new OperationResult(true, $"Tag \"{tagName}\" was created successfully")
-                  : new OperationResult(false, $"Error while creating \"{tagName}\" tag");
+                    new OperationResult(true, LocaleHelper.GetString("TagParamCreatedSuccessfully", tagName))
+                  : new OperationResult(false, LocaleHelper.GetString("ErrorWhileCreatingParamTag", tagName));
             }
             catch (Exception)
             {
-                return new OperationResult(false, $"Error while creating \"{tagName}\" tag");
+                return new OperationResult(false, LocaleHelper.GetString("ErrorWhileCreatingParamTag", tagName));
             }
         }
 
@@ -80,12 +81,12 @@ namespace eFormAPI.Web.Controllers
             {
                 var result = _coreHelper.GetCore().TemplateSetTags(requestModel.TemplateId, requestModel.TagsIds);
                 return result
-                    ? new OperationResult(true, "Template tags was updated successfully")
-                    : new OperationResult(false, "Error while updating template tags");
+                    ? new OperationResult(true, LocaleHelper.GetString("TemplateTagUpdatedSuccessfully"))
+                    : new OperationResult(false, LocaleHelper.GetString("ErrorWhileUpdatingTemplateTags"));
             }
             catch (Exception)
             {
-                return new OperationResult(false, "Error while updating template tags");
+                return new OperationResult(false, LocaleHelper.GetString("ErrorWhileUpdatingTemplateTags"));
             }
         }
     }

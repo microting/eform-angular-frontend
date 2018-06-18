@@ -36,7 +36,7 @@ namespace eFormAPI.Web.Controllers
             }
             catch (Exception)
             {
-                return new OperationDataResult<CaseListModel>(false, "Case loading failed");
+                return new OperationDataResult<CaseListModel>(false, LocaleHelper.GetString("CaseLoadingFailed"));
             }
         }
 
@@ -70,12 +70,12 @@ namespace eFormAPI.Web.Controllers
                 var core = _coreHelper.GetCore();
 
                 return core.CaseDeleteResult(id)
-                    ? new OperationResult(true, $"Case #{id} deleted successfully")
-                    : new OperationResult(false, "Case could not be removed");
+                    ? new OperationResult(true, LocaleHelper.GetString("CaseParamDeletedSuccessfully", id))
+                    : new OperationResult(false, LocaleHelper.GetString("CaseCouldNotBeRemoved"));
             }
             catch (Exception)
             {
-                return new OperationResult(false, "Case could not be removed");
+                return new OperationResult(false, LocaleHelper.GetString("CaseCouldNotBeRemoved"));
             }
         }
 
@@ -95,17 +95,17 @@ namespace eFormAPI.Web.Controllers
             }
             catch (Exception)
             {
-                return new OperationResult(false, "Case could not be updated");
+                return new OperationResult(false, LocaleHelper.GetString("CaseCouldNotBeUpdated"));
             }
             try
             {
                 core.CaseUpdate(model.Id, fieldValueList, checkListValueList);
                 core.CaseUpdateFieldValues(model.Id);
-                return new OperationResult(true, "Case has been updated");
+                return new OperationResult(true, LocaleHelper.GetString("CaseHasBeenUpdated"));
             }
             catch (Exception)
             {
-                return new OperationResult(false, "Case could not be updated");
+                return new OperationResult(false, LocaleHelper.GetString("CaseCouldNotBeUpdated"));
             }
         }
     }

@@ -57,7 +57,7 @@ namespace eFormAPI.Web.Controllers
         [Route("api/settings/connection-string")]
         public OperationResult UpdateConnectionString(InitialSettingsModel initialSettingsModel)
         {
-            if (!ModelState.IsValid) return new OperationResult(false, "Required fields are not filled");
+            if (!ModelState.IsValid) return new OperationResult(false, LocaleHelper.GetString("RequestFieldsAreNotFilled"));
             var sdkConnectionString = "Data Source="
                                       + initialSettingsModel.ConnectionStringSdk.Source + ";Initial Catalog="
                                       + initialSettingsModel.ConnectionStringSdk.Catalogue + ";"
@@ -71,14 +71,14 @@ namespace eFormAPI.Web.Controllers
             var inputPath = System.Web.Hosting.HostingEnvironment.MapPath("~/bin/Input.txt");
             if (inputPath == null)
             {
-                return new OperationResult(false, "Error while creating file for SDK");
+                return new OperationResult(false, LocaleHelper.GetString("ErrorWhileCreatingFileForSDK"));
             }
             AdminTools adminTools;
             try
             {
                 if (File.Exists(inputPath))
                 {
-                    return new OperationResult(false, "Connection string already exist");
+                    return new OperationResult(false, LocaleHelper.GetString("ConnectionStringAlreadyExist"));
                 }
 
                 var fileStream = File.Create(inputPath);
@@ -89,7 +89,7 @@ namespace eFormAPI.Web.Controllers
             catch (Exception exception)
             {
                 Logger.Error(exception.Message);
-                return new OperationResult(false, "Could not write connection string in /bin/Input.txt");
+                return new OperationResult(false, LocaleHelper.GetString("CouldNotWriteConnectionString"));
             }
             try
             {
@@ -98,7 +98,7 @@ namespace eFormAPI.Web.Controllers
             catch (Exception exception)
             {
                 Logger.Error(exception.Message);
-                return new OperationResult(false, "SDK connection string is invalid");
+                return new OperationResult(false, LocaleHelper.GetString("SDKConnectionStringIsInvalid"));
             }
             // Save Main connection string
             var configuration = WebConfigurationManager.OpenWebConfiguration("~");
@@ -125,7 +125,7 @@ namespace eFormAPI.Web.Controllers
             catch (Exception exception)
             {
                 Logger.Error(exception.Message);
-                return new OperationResult(false, "Main connection string is invalid");
+                return new OperationResult(false, LocaleHelper.GetString("MainConnectionStringIsInvalid"));
             }
             // Setup SDK DB
             adminTools.DbSetup(initialSettingsModel.ConnectionStringSdk.Token);
@@ -155,7 +155,7 @@ namespace eFormAPI.Web.Controllers
             catch (Exception e)
             {
                 Logger.Error(e.Message);
-                return new OperationDataResult<LoginPageSettingsModel>(false, "Can't obtain settings from web.config");
+                return new OperationDataResult<LoginPageSettingsModel>(false, LocaleHelper.GetString("CantObtainSettingsFromWebConfig"));
             }
         }
 
@@ -233,7 +233,7 @@ namespace eFormAPI.Web.Controllers
             catch (Exception e)
             {
                 Logger.Error(e.Message);
-                return new OperationDataResult<AdminSettingsModel>(false, "Can't obtain settings from web.config");
+                return new OperationDataResult<AdminSettingsModel>(false, LocaleHelper.GetString("CantObtainSettingsFromWebConfig"));
             }
         }
 
@@ -280,12 +280,12 @@ namespace eFormAPI.Web.Controllers
                 ConfigurationManager.RefreshSection("appSettings");
 
                 core.SetHttpServerAddress(adminSettingsModel.SiteLink);
-                return new OperationResult(true, "Settings have been updated successfully");
+                return new OperationResult(true, LocaleHelper.GetString("SettingsUpdatedSuccessfully"));
             }
             catch (Exception e)
             {
                 Logger.Error(e.Message);
-                return new OperationResult(false, "Can't update settings in web.config");
+                return new OperationResult(false, LocaleHelper.GetString("CantUpdateSettingsInWebConfig"));
             }
         }
 
