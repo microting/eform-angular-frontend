@@ -102,12 +102,12 @@ export class NavigationComponent implements OnInit {
               }
             ]
           },
-          /**{
-            name: 'Example plugin',
+          {
+            name: 'Vehicles PN',
             e2eId: '',
-            link: '/plugins/example-pn',
+            link: '/plugins/vehicles-pn',
             submenus: []
-          },*/
+          }
         ];
       });
     }

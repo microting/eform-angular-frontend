@@ -1,0 +1,29 @@
+<div class="col-xs-4 pull-right">
+  <div class="dataTables_paginate paging_simple_numbers" id="check_lists_paginate">
+    <a class="paginate_button previous"
+       aria-controls="check_lists"
+       data-dt-idx="0"
+       tabindex="0"
+       [ngClass]="{'disabled': currentPage == 1}"
+       (click)="selectPage(currentPage - 1)"
+       id="check_lists_previous">{{ 'Previous' | translate }}
+    </a>
+    <span>
+      <a class="paginate_button"
+         *ngFor="let page of pages | async"
+         [ngClass]="{'current': currentPage === page}"
+         aria-controls="check_lists"
+         data-dt-idx="1"
+         (click)="selectPage(page)"
+         tabindex="0">{{page}}</a>
+    </span>
+    <a class="paginate_button next"
+       aria-controls="check_lists"
+       data-dt-idx="2"
+       tabindex="0"
+       [ngClass]="{'disabled': currentPage == totalPages}"
+       (click)="selectPage(currentPage + 1)"
+       id="check_lists_next">{{ 'Next' | translate }}
+    </a>
+  </div>
+</div>

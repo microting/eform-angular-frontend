@@ -1,0 +1,128 @@
+<modal #createVehicle [size]="'md'">
+  <modal-header [show-close]="true">
+    <h4 class="modal-title">{{ 'New vehicle' | translate }}</h4>
+  </modal-header>
+  <modal-body>
+    <div class="container-fluid">
+      <form #createForm="ngForm" class="create_eform">
+        <div class="row">
+          <div class="form-group col-xs-12 col-md-6">
+            <label class="mt-validation-container">{{'Contact number' | translate}}*</label>
+            <input class="form-control" required
+                   type="text"
+                   name="createUserName"/>
+          </div>
+          <div class="form-group col-xs-12 col-md-6">
+            <label class="mt-validation-container">{{'Customer name' | translate}}*</label>
+            <input class="form-control"
+                   required type="text"
+                   name="createEmail"/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-xs-12 col-md-6">
+            <label class="mt-validation-container">{{'Mark' | translate}}*</label>
+            <input class="form-control" required
+                   type="text"
+                   name="createUserName"/>
+          </div>
+          <div class="form-group col-xs-12 col-md-6">
+            <label class="mt-validation-container">{{'Model' | translate}}*</label>
+            <input class="form-control"
+                   required type="text"
+                   name="createEmail"/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-xs-12 col-md-6">
+            <label class="mt-validation-container">{{ 'Registration date' | translate }}*</label>
+            <input class="form-control" type="text"
+                   name="createFirstName"/>
+          </div>
+          <div class="form-group col-xs-12 col-md-6">
+            <label class="mt-validation-container">{{ 'WIN number' | translate }}*</label>
+            <input class="form-control" type="text"
+                   name="createLastName"/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-xs-12 col-md-6">
+            <label class="mt-validation-container">{{'Start of contract' | translate}}*</label>
+            <vehicles-pn-datepicker [(ngModel)]="testModel" name="createStartOfContract" [datepicker]="{format: 'yyyy-mm-dd' }"
+                                    [timepicker]="false">
+            </vehicles-pn-datepicker>
+          </div>
+          <div class="form-group col-xs-12 col-md-6">
+            <label class="mt-validation-container">{{'End of contract' | translate}}*</label>
+            <vehicles-pn-datepicker [(ngModel)]="testModel" name="createStartOfContract" [datepicker]="{format: 'yyyy-mm-dd' }"
+                                    [timepicker]="false">
+            </vehicles-pn-datepicker>
+          </div>
+        </div>
+      </form>
+    </div>
+  </modal-body>
+  <modal-footer>
+    <button type="button" class="btn btn-success" [disabled]="!createForm.form.valid">{{ 'Save' | translate }}</button>
+    <button type="button" class="btn btn-default">{{ 'Cancel' | translate }}
+    </button>
+  </modal-footer>
+</modal>
+
+<modal #editVehicle>
+  <modal-header [show-close]="true">
+    <h4 class="modal-title" translate>{{ 'Edit vehicle' | translate }}</h4>
+  </modal-header>
+  <modal-body>
+    <div class="container-fluid">
+      <form #editForm="ngForm" class="create_eform">
+
+        <div class="row">
+          <div class="form-group col-xs-12 col-md-6">
+            <label class="mt-validation-container">{{'Username' | translate}}*</label>
+            <input class="form-control"
+                   required placeholder="testUser" type="text"
+                   name="userName"/>
+          </div>
+          <div class="form-group col-xs-12 col-md-6">
+            <label class="mt-validation-container">{{'Email' | translate}}*</label>
+            <input class="form-control" placeholder="example@mail.com"
+                   required type="text"
+                   name="email"/>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="form-group col-xs-12 col-md-6">
+            <label class="mt-validation-container">{{ 'First Name' | translate }}</label>
+            <input class="form-control" placeholder="John" type="text"
+                   name="firstNameEdit"/>
+          </div>
+          <div class="form-group col-xs-12 col-md-6">
+            <label class="mt-validation-container">{{ 'Last Name' | translate }}</label>
+            <input class="form-control" placeholder="Smith" type="text"
+                   name="lastNameEdit"/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-xs-12 col-md-6">
+            <label class="mt-validation-container">{{'Role' | translate}}*</label>
+            <vehicles-pn-datepicker [(ngModel)]="testModel" name="editStartOfContract" [datepicker]="{format: 'yyyy-mm-dd' }"
+                          [timepicker]="false">
+            </vehicles-pn-datepicker>
+          </div>
+          <div class="form-group col-xs-12 col-md-6">
+            <label class="mt-validation-container">{{ 'New password' | translate }}</label>
+            <vehicles-pn-datepicker [(ngModel)]="testModel" name="editEndOfContract"[datepicker]="{format: 'yyyy-mm-dd' }"
+                          [timepicker]="false">
+            </vehicles-pn-datepicker>
+          </div>
+        </div>
+      </form>
+    </div>
+  </modal-body>
+  <modal-footer>
+    <button type="button" class="btn btn-success">{{ 'Save' | translate }}</button>
+    <button type="button" class="btn btn-default">{{ 'Cancel' | translate }}</button>
+  </modal-footer>
+</modal>
