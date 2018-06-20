@@ -39,4 +39,16 @@ export class VehiclesPnPageComponent implements OnInit {
     }));
   }
 
+  changePage(e: any) {
+    if (e || e === 0) {
+      this.vehiclesRequestModel.offset = e;
+      if (e === 0) {
+        this.vehiclesRequestModel.pageIndex = 0;
+      } else {
+        this.vehiclesRequestModel.pageIndex = Math.floor(e / this.vehiclesRequestModel.pageSize);
+      }
+      this.getAllVehicles();
+    }
+  }
+
 }

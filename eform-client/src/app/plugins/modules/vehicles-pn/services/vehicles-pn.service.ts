@@ -26,13 +26,7 @@ export class VehiclesPnService extends BaseService {
   }
 
   getAllVehicles(model: VehiclesPnRequestModel): Observable<any> {
-    return this.get(VehiclePnMethods.VehiclePn
-      + '?sortColumnName=' + model.sortColumnName
-      + '&pageIndex=' + model.pageIndex
-      + '&offset=' + model.offset
-      + '&pageSize=' + model.pageSize
-      + '&isSortDsc=' + model.isSortDsc
-    );
+    return this.post(VehiclePnMethods.VehiclePn, model);
   }
 
   updateVehicle(model: VehiclePnModel): Observable<any> {
