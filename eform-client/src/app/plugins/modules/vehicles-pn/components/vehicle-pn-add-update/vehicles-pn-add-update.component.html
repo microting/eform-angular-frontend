@@ -29,7 +29,7 @@
           <div class="form-group col-xs-12 col-md-6">
             <label class="mt-validation-container">{{'Model' | translate}}*</label>
             <input class="form-control"
-                   required [(ngModel)]="newVehicleModel.vehicleModel"
+                   required [(ngModel)]="newVehicleModel.modelName"
                    type="text" #createVehicleModel="ngModel"
                    name="createVehicleModel"/>
           </div>
@@ -110,7 +110,7 @@
           <div class="form-group col-xs-12 col-md-6">
             <label class="mt-validation-container">{{'Model' | translate}}*</label>
             <input class="form-control" required #editVehicleModel="ngModel"
-                   type="text" [(ngModel)]="selectedVehicleModel.vehicleModel"
+                   type="text" [(ngModel)]="selectedVehicleModel.modelName"
                    name="editVehicleModel"/>
           </div>
         </div>

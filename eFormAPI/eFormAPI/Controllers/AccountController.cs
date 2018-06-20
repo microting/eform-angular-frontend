@@ -10,11 +10,11 @@ using eFormAPI.Web.Infrastructure.Data;
 using eFormAPI.Web.Infrastructure.Data.Entities;
 using eFormAPI.Web.Infrastructure.Helpers;
 using eFormAPI.Web.Infrastructure.Identity;
-using eFormAPI.Web.Infrastructure.Models.API;
 using eFormAPI.Web.Infrastructure.Models.Auth;
 using eFormAPI.Web.Infrastructure.Models.Settings.User;
 using eFormAPI.Web.Infrastructure.Models.User;
 using EformBase.Pn.Consts;
+using EformBase.Pn.Infrastructure.Models.API;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 

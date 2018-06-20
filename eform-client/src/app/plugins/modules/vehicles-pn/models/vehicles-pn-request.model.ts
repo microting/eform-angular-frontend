@@ -1,19 +1,15 @@
 export class VehiclesPnRequestModel {
-  public sort: string;
-  nameFilter: string;
-  tagIds: Array<number> = [];
+  sortColumnName: string;
   pageIndex: number;
+  offset: number;
   pageSize: number;
   isSortDsc: boolean;
-  offset: number;
 
   constructor() {
-    this.tagIds = [];
-    this.sort = 'id';
-    this.nameFilter = '';
+    this.sortColumnName = 'id';
     this.isSortDsc = true;
-    this.pageSize = 10000;
-    this.pageIndex = 0;
+    this.pageSize = 10;
+    this.pageIndex = 1;
     this.offset = 0;
   }
 }

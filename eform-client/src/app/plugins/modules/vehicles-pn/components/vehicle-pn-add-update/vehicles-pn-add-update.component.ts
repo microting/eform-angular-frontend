@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 
 import {VehiclePnModel} from '../../models';
@@ -9,10 +9,10 @@ import {VehiclesPnService} from '../../services';
   templateUrl: './vehicles-pn-add-update.component.html'
 })
 export class VehiclesPnAddUpdateComponent implements OnInit {
+  @Input() selectedVehicleModel: VehiclePnModel = new VehiclePnModel();
   @ViewChild('createVehicleModal') createVehicleModal: ModalComponent;
   @ViewChild('editVehicleModal') editVehicleModal: ModalComponent;
 
-  selectedVehicleModel: VehiclePnModel = new VehiclePnModel();
   newVehicleModel: VehiclePnModel = new VehiclePnModel();
 
   constructor(private vehiclesService: VehiclesPnService) {
@@ -33,14 +33,14 @@ export class VehiclesPnAddUpdateComponent implements OnInit {
 
   updateVehicle() {
     this.vehiclesService.updateVehicle(this.selectedVehicleModel).subscribe(((data) => {
-
+      this.editVehicleModal.dismiss();
     }));
   }
 
   createVehicle() {
-    debugger;
     this.vehiclesService.createVehicle(this.newVehicleModel).subscribe(((data) => {
       this.newVehicleModel = new VehiclePnModel();
+      this.createVehicleModal.dismiss();
     }));
   }
 

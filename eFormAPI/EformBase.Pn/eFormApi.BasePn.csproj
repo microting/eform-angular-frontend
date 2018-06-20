@@ -106,6 +106,8 @@
     <Compile Include="Infrastructure\Installers\RebusInstaller.cs" />
     <Compile Include="Infrastructure\Installers\RebusHandlerInstaller.cs" />
     <Compile Include="Infrastructure\Messages\GenerateJasperFiles.cs" />
+    <Compile Include="Infrastructure\Models\API\OperationDataResult.cs" />
+    <Compile Include="Infrastructure\Models\API\OperationResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

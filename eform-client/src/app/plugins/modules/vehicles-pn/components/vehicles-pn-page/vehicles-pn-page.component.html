@@ -36,7 +36,7 @@
         {{ 'Customer name' | translate }}
       </th>
       <th class="text-center" rowspan="1" colspan="1">
-        {{ 'Mark' | translate }}
+        {{ 'Brand' | translate }}
       </th>
       <th class="text-center" rowspan="1" colspan="1">
         {{ 'Model' | translate }}
@@ -59,38 +59,38 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-      <td>
-
-      </td>
-      <td>
-
+    <tr *ngFor="let vehicle of vehiclesModel.vehicles">
+      <td class="text-center">
+        {{vehicle.id}}
       </td>
       <td class="text-center">
-
+        {{vehicle.contactNumber}}
       </td>
       <td class="text-center">
-
+        {{vehicle.customerName}}
       </td>
       <td class="text-center">
-
+        {{vehicle.brand}}
       </td>
       <td class="text-center">
-
+        {{vehicle.modelName}}
       </td>
       <td class="text-center">
-
+        {{vehicle.registrationDate}}
       </td>
       <td class="text-center">
-
+        {{vehicle.winNumber}}
       </td>
       <td class="text-center">
-
+        {{vehicle.contractStartDate}}
+      </td>
+      <td class="text-center">
+        {{vehicle.contractEndDate}}
       </td>
       <td class="text-center">
         <div class="row row-buttons-wrapper btn-group" role="group">
           <a class="needs_tooltip btn btn-ar btn-sm btn-default mt-edit-check-list-button"
-             (click)="showEditVehicleModal()"
+             (click)="showEditVehicleModal(vehicle)"
              type="button" tooltip="{{ 'Edit vehicle' | translate }}">
             <span class="glyphicon glyphicon-list-alt" data-mt-check-list-id="@(item.Id)"></span>
           </a>
@@ -110,4 +110,4 @@
   <vehicles-pn-spinner [middleActive]="spinnerStatus"></vehicles-pn-spinner>
 </div>
 
-<vehicles-pn-add-update-pn-page #vehiclePnAddUpdateComponent></vehicles-pn-add-update-pn-page>
+<vehicles-pn-add-update-pn-page #vehiclePnAddUpdateComponent [selectedVehicleModel]="selectedVehicleModel"></vehicles-pn-add-update-pn-page>

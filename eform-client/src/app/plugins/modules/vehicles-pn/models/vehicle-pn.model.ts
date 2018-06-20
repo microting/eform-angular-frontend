@@ -3,7 +3,7 @@ export class VehiclePnModel {
   contactNumber: string;
   customerName: string;
   brand: string;
-  vehicleModel: string;
+  modelName: string;
   registrationDate: string;
   winNumber: string;
   contractStartDate: string;

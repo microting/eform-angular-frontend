@@ -5,13 +5,13 @@ import {BaseService} from 'app/services/base.service';
 
 import {Observable} from 'rxjs/Observable';
 import {Router} from '@angular/router';
-import {VehiclePnModel} from '../models';
+import {VehiclePnModel, VehiclesPnRequestModel} from '../models';
 
 import {OperationDataResult, OperationResult} from 'app/modules/helpers/operation.models';
 
 export let VehiclePnMethods = {
-  VehiclePn: 'api/plugins/vehicles-pn',
-  UpdateVehiclePn: 'api/plugins/vehicles-pn/vehicle-update'
+  VehiclePn: 'api/vehicles-pn',
+  UpdateVehiclePn: 'api/vehicles-pn/vehicle-update'
 };
 
 @Injectable()
@@ -25,8 +25,14 @@ export class VehiclesPnService extends BaseService {
     this.headers.append('Accept', 'application/json');
   }
 
-  getAllVehicles(): Observable<any> {
-    return this.get(VehiclePnMethods.VehiclePn);
+  getAllVehicles(model: VehiclesPnRequestModel): Observable<any> {
+    return this.get(VehiclePnMethods.VehiclePn
+      + '?sortColumnName=' + model.sortColumnName
+      + '&pageIndex=' + model.pageIndex
+      + '&offset=' + model.offset
+      + '&pageSize=' + model.pageSize
+      + '&isSortDsc=' + model.isSortDsc
+    );
   }
 
   updateVehicle(model: VehiclePnModel): Observable<any> {
