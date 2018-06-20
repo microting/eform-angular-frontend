@@ -1,1 +1,1 @@
-export * from './vehicle-pn.service';
+export * from './vehicles-pn.service';

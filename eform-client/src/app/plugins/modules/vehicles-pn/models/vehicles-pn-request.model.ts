@@ -1,4 +1,4 @@
-export class VehiclesRequestModel {
+export class VehiclesPnRequestModel {
   public sort: string;
   nameFilter: string;
   tagIds: Array<number> = [];

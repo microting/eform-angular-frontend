@@ -1,18 +1,21 @@
 import {Injectable} from '@angular/core';
 import {Headers, Http} from '@angular/http';
 import 'rxjs/add/operator/map';
-import {Observable} from 'rxjs/Observable';
 import {BaseService} from 'app/services/base.service';
+
+import {Observable} from 'rxjs/Observable';
 import {Router} from '@angular/router';
+import {VehiclePnModel} from '../models';
 
 import {OperationDataResult, OperationResult} from 'app/modules/helpers/operation.models';
 
 export let VehiclePnMethods = {
-  VehiclePn: 'api/plugins/vehicles-pn'
+  VehiclePn: 'api/plugins/vehicles-pn',
+  UpdateVehiclePn: 'api/plugins/vehicles-pn/vehicle-update'
 };
 
 @Injectable()
-export class VehiclePnService extends BaseService {
+export class VehiclesPnService extends BaseService {
   private headers: Headers;
 
   constructor(private _http: Http, router: Router) {
@@ -26,11 +29,11 @@ export class VehiclePnService extends BaseService {
     return this.get(VehiclePnMethods.VehiclePn);
   }
 
-  updateVehicle(): Observable<any> {
-    return this.get(VehiclePnMethods.VehiclePn);
+  updateVehicle(model: VehiclePnModel): Observable<any> {
+    return this.postModelOperationResult(VehiclePnMethods.VehiclePn, model);
   }
 
-  createVehicle(): Observable<any> {
-    return this.get(VehiclePnMethods.VehiclePn);
+  createVehicle(model: VehiclePnModel): Observable<any> {
+    return this.postModelOperationResult(VehiclePnMethods.VehiclePn, model);
   }
 }

@@ -1,2 +1,2 @@
-export * from './vehicle.model';
-export * from './vehicles-request.model';
+export * from './vehicle-pn.model';
+export * from './vehicles-pn-request.model';

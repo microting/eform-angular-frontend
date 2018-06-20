@@ -5,7 +5,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {Ng2Bs3ModalModule} from 'ng2-bs3-modal/ng2-bs3-modal';
 import {TooltipModule} from 'ngx-bootstrap';
 
-import {HelpersModule} from 'app/modules/helpers/helpers.module';
+import {VehiclesPnService} from './services';
 import {
   VehiclesPnPaginationComponent,
   VehiclesPnAddUpdateComponent,
@@ -21,7 +21,6 @@ import {VehiclesPnRoutingModule} from './vehicles-pn.routing.module';
     ReactiveFormsModule,
     VehiclesPnRoutingModule,
     TooltipModule,
-    HelpersModule,
     FormsModule,
     TranslateModule,
     Ng2Bs3ModalModule
@@ -32,7 +31,8 @@ import {VehiclesPnRoutingModule} from './vehicles-pn.routing.module';
     VehiclesPnPaginationComponent,
     VehiclesPnSpinnerComponent,
     VehiclesPnDatepickerComponent
-  ]
+  ],
+  providers: [VehiclesPnService]
 })
 export class VehiclesPnModule {
 }
