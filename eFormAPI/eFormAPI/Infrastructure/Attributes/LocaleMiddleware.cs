@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Configuration;
+using Castle.Core.Internal;
 using Microsoft.Owin;
 
 namespace eFormAPI.Web.Infrastructure.Attributes
@@ -19,15 +20,19 @@ namespace eFormAPI.Web.Infrastructure.Attributes
         {
             var claimsPrincipal = context.Authentication?.User;
             var locale = claimsPrincipal?.Claims.SingleOrDefault(x => x.Type == "locale")?.Value;
-            if (locale == null)
+            if (locale.IsNullOrEmpty())
             {
                 var configuration = WebConfigurationManager.OpenWebConfiguration("~");
                 var section = (AppSettingsSection)configuration.GetSection("appSettings");
 
                 var defaltLocale = section.Settings["general:defaultLocale"]?.Value;
-                if (string.IsNullOrEmpty(defaltLocale))
+                if (!defaltLocale.IsNullOrEmpty())
                 {
                     SetCultureOnThread(defaltLocale);
+                }
+                else
+                {
+                    SetCultureOnThread("en-US");
                 }
                 await Next.Invoke(context);
                 return;
