@@ -5,7 +5,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 // Missing translation
 export class EformMissingTranslationHandler implements MissingTranslationHandler {
   handle(params: MissingTranslationHandlerParams) {
-    console.warn('Missing translation for: ' + params.key);
+    // console.warn('Missing translation for: ' + params.key);
     return params.key;
   }
 }

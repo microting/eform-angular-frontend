@@ -103,9 +103,9 @@ export class NavigationComponent implements OnInit {
             ]
           },
           {
-            name: 'Vehicles PN',
+            name: 'Example PN',
             e2eId: '',
-            link: '/plugins/vehicles-pn',
+            link: '/plugins/example-pn',
             submenus: []
           }
         ];
