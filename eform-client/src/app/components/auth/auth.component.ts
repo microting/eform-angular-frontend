@@ -118,7 +118,7 @@ export class AuthComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.initLocale();
+    this.localeService.initLocale();
     this.settingsService.connectionStringExist().subscribe((result) => {
       if (result && !result.success) {
         this.router.navigate(['/application-settings/connection-string']).then();
@@ -185,9 +185,5 @@ export class AuthComponent implements OnInit {
     this.showLoginForm = toggle;
     this.showAdminResetForm = false;
     this.showTwoFactorForm = false;
-  }
-
-  initLocale() {
-    this.localeService.initLocale();
   }
 }

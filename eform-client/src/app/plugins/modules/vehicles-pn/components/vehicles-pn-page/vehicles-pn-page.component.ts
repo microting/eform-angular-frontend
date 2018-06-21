@@ -1,4 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
+import {LocaleService} from 'app/services';
 
 import {VehiclePnModel, VehiclesPnModel, VehiclesPnRequestModel} from '../../models';
 import {VehiclesPnService} from '../../services';
@@ -16,12 +18,21 @@ export class VehiclesPnPageComponent implements OnInit {
   selectedVehicleModel: VehiclePnModel = new VehiclePnModel();
   spinnerStatus = false;
 
-  constructor(private vehiclesService: VehiclesPnService) {
+  constructor(private vehiclesService: VehiclesPnService,
+              private translateService: TranslateService,
+              private localeService: LocaleService) {
 
   }
 
   ngOnInit() {
+    this.setTranslation();
     this.getAllVehicles();
+  }
+
+  setTranslation() {
+    const lang = this.localeService.getCurrentUserLocale();
+    const i18n = require(`../../i18n/${lang}.json`);
+    this.translateService.setTranslation(lang, i18n, true);
   }
 
   showCreateVehicleModal() {

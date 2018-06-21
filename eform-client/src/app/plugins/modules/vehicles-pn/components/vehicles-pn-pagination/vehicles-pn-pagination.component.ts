@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angula
 import { Observable } from 'rxjs/Rx';
 
 @Component({
-  selector: 'vehicles-pagination',
+  selector: 'vehicles-pn-pagination',
   templateUrl: './vehicles-pn-pagination.component.html'
 })
 export class VehiclesPnPaginationComponent implements OnChanges, OnInit {

@@ -14,31 +14,38 @@ namespace Vehicles.Pn.Controllers
         [Route("api/vehicles-pn")]
         public OperationDataResult<VehiclesPnModel> GetAllVehicles(VehiclesPnRequestModel pnRequestModel)
         {
-
-            var core = _coreHelper.GetCore();
-           
-            var vehiclesModel = new VehiclesPnModel();
-            return new OperationDataResult<VehiclesPnModel>(true, vehiclesModel);
+            var vehiclesPnModel = new VehiclesPnModel()
+            {
+                Total = 1,
+                Vehicles = new List<VehiclePnModel>()
+            };
+            
+            
+            return new OperationDataResult<VehiclesPnModel>(true, vehiclesPnModel);
         }
 
         [HttpPost]
         [Route("api/vehicles-pn/create-vehicle")]
-        public OperationResult CreateVehicle(VehiclePnModel pnModel)
+        public OperationResult CreateVehicle(VehiclePnModel vehiclePnCreateModel)
         {
-            var core = _coreHelper.GetCore();
-        
-            return new OperationResult(true, $"Vehicle {pnModel.Brand} {pnModel.ModelName} created");
-        
+            var vehiclePnModel = new VehiclePnModel();
+
+            vehiclePnModel = vehiclePnCreateModel;
+
+
+            return new OperationResult(true, 
+                $"Vehicle {vehiclePnCreateModel.Brand} {vehiclePnCreateModel.ModelName} created");
         }
         
         [HttpPost]
         [Route("api/vehicles-pn/update-vehicle")]
-        public OperationResult UpdateVehicle(VehiclePnModel pnModel)
+        public OperationResult UpdateVehicle(VehiclePnModel vehiclePnUpdateModel)
         {
-        
-            var core = _coreHelper.GetCore();
-        
-            return new OperationResult(true, $"Vehicle {pnModel.Id} updated");
+            var vehiclePnEntity = new VehiclePnModel();
+
+            vehiclePnEntity = vehiclePnUpdateModel;
+
+            return new OperationResult(true, $"Vehicle {vehiclePnUpdateModel.Id} updated");
         }
 
     }
