@@ -101,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Consts\EformRoles.cs" />
+    <Compile Include="Helpers\LocaleHelper.cs" />
     <Compile Include="Infrastructure\Handlers\GenerateJasperFilesHandler.cs" />
     <Compile Include="Infrastructure\EFormCoreHelper.cs" />
     <Compile Include="Infrastructure\Installers\RebusInstaller.cs" />
