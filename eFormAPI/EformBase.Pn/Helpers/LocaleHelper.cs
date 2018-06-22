@@ -1,5 +1,5 @@
 ﻿using System.Threading;
-using eFormAPI.BasePn.Properties;
+using EformBase.Pn.Properties;
 
 namespace EformBase.Pn.Helpers
 {
