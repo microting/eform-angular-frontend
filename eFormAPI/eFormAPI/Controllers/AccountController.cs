@@ -76,7 +76,7 @@ namespace eFormAPI.Web.Controllers
             {
                 var configuration = WebConfigurationManager.OpenWebConfiguration("~");
                 var section = (AppSettingsSection)configuration.GetSection("appSettings");
-                locale = section.Settings["general:defaultLocale"].Value;
+                locale = section.Settings["general:defaultLocale"]?.Value;
                 if (locale == null)
                 {
                     locale = "en-US";
