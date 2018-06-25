@@ -7,11 +7,6 @@ export const routes: Routes = [
     path: 'example-pn',
     canActivate: [AuthGuard],
     loadChildren: './modules/example-pn/example-pn.module#ExamplePnModule'
-  },
-  {
-    path: 'vehicles-pn',
-    canActivate: [AuthGuard],
-    loadChildren: './modules/vehicles-pn/vehicles-pn.module#VehiclesPnModule'
   }
 ];
 

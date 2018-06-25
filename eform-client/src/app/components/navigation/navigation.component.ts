@@ -121,12 +121,6 @@ export class NavigationComponent implements OnInit {
               guard: 'admin'
             }
           ]
-        },
-        {
-          name: 'Vehicles PN',
-          e2eId: '',
-          link: '/plugins/vehicles-pn',
-          submenus: []
         }
       ];
     }, 500);
