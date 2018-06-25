@@ -12,15 +12,12 @@ export class HeaderComponent implements OnInit {
   headerSettingsModel: HeaderSettingsModel = new HeaderSettingsModel;
   logoImage: any;
 
-  constructor(private settingsService: AppSettingsService,
-              private localeService: LocaleService,
-              private userSettingsService: UserSettingsService) {
+  constructor(private settingsService: AppSettingsService) {
   }
 
   ngOnInit() {
     this.settingsService.connectionStringExist().subscribe((result) => {
       if (result && result.success === true) {
-        this.getUserSettings();
         this.settingsService.getHeaderSettings().subscribe((data => {
           if (data && data.success) {
             this.headerSettingsModel = data.model;
@@ -41,13 +38,6 @@ export class HeaderComponent implements OnInit {
       }
     });
 
-  }
-
-  getUserSettings() {
-    this.userSettingsService.getUserSettings().subscribe(((data) => {
-      localStorage.setItem('locale', data.model.locale);
-      this.localeService.initLocale();
-    }));
   }
 
 }

@@ -52,19 +52,26 @@ namespace eFormAPI.Web
     {
         public override ICollection<Assembly> GetAssemblies()
         {
-            var path = System.Web.Hosting.HostingEnvironment.MapPath("~/plugins");
-            try
-            {
-                Directory.CreateDirectory(path);                
-            } catch
-            {
-                throw new Exception("Unable to create directory for plugins");
-            }            
-            
+            var path = System.Web.Hosting.HostingEnvironment.MapPath("~/Plugins");
             if (path == null)
-            {                
+            {
                 throw new Exception("Plugin path not found");
             }
+
+            if (!Directory.Exists(path))
+            {
+                try
+                {
+                    Directory.CreateDirectory(path);
+                }
+                catch
+                {
+                    throw new Exception("Unable to create directory for plugins");
+                }
+            }
+                      
+           
+            
             var assemblies = new List<Assembly>(base.GetAssemblies());
             var directories = Directory.EnumerateDirectories(path);
             foreach (var directory in directories)

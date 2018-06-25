@@ -1,4 +1,4 @@
-﻿namespace eFormAPI.Web.Infrastructure.Models.API
+﻿namespace EformBase.Pn.Infrastructure.Models.API
 {
     public class OperationResult
     {

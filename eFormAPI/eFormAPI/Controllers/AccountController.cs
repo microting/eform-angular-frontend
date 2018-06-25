@@ -8,13 +8,13 @@ using System.Web.Http;
 using Castle.Core.Internal;
 using eFormAPI.Web.Infrastructure.Data;
 using eFormAPI.Web.Infrastructure.Data.Entities;
-using eFormAPI.Web.Infrastructure.Helpers;
 using eFormAPI.Web.Infrastructure.Identity;
-using eFormAPI.Web.Infrastructure.Models.API;
 using eFormAPI.Web.Infrastructure.Models.Auth;
 using eFormAPI.Web.Infrastructure.Models.Settings.User;
 using eFormAPI.Web.Infrastructure.Models.User;
 using EformBase.Pn.Consts;
+using EformBase.Pn.Helpers;
+using EformBase.Pn.Infrastructure.Models.API;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 
@@ -76,7 +76,7 @@ namespace eFormAPI.Web.Controllers
             {
                 var configuration = WebConfigurationManager.OpenWebConfiguration("~");
                 var section = (AppSettingsSection)configuration.GetSection("appSettings");
-                locale = section.Settings["general:defaultLocale"].Value;
+                locale = section.Settings["general:defaultLocale"]?.Value;
                 if (locale == null)
                 {
                     locale = "en-US";

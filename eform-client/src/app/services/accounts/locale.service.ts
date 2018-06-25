@@ -33,7 +33,6 @@ export class LocaleService extends BaseService {
       this.translateService.setDefaultLang('en-US');
       this.translateService.use(language);
     }
-
   }
 
   updateUserLocale(localeName: string) {
