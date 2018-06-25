@@ -12,7 +12,7 @@ export class Navbar {
 
   constructor() {
     this.advancedButton = element(by.xpath('//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'));
-    this.settingsButton = $('a[href="/settings"]');
+    this.settingsButton = $('a[href="/application-settings"]');
     this.deviceUsersButton = $('a[href="/simplesites"]');
     this.headerImage = element(by.xpath('//*[@id="header_full_top"]/div/div/div[1]/img'));
     this.signOutDropdown = $('#sign-out-dropdown');

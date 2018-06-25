@@ -1,4 +1,4 @@
-import {$, ElementFinder} from 'protractor';
+import {$, by, element, ElementFinder} from 'protractor';
 import {default as dbData} from '../dbData';
 
 export class DatabasePage {
@@ -16,7 +16,13 @@ export class DatabasePage {
   public initialCatalogMain: ElementFinder;
   public authenticationTypeMain: ElementFinder;
   public saveButton: ElementFinder;
+  public defaultLanguageSelector: ElementFinder;
+  public englishLanguageOption: ElementFinder;
 
+  selectLanguage(languageName) {
+    this.englishLanguageOption = element(by.cssContainingText('.dropdown-item', languageName));
+    this.englishLanguageOption.click();
+  }
   public saveDatabase(): void {
     // just fill in all inputs for database connection with appropriate values
     this.username.sendKeys(dbData.username);
@@ -31,6 +37,8 @@ export class DatabasePage {
     this.dataSourceMain.sendKeys(dbData.dataSourceMain);
     this.initialCatalogMain.sendKeys(dbData.initialCatalogueMain);
     this.authenticationTypeMain.sendKeys(dbData.authenticationTypeMain);
+    this.defaultLanguageSelector.click();
+    this.selectLanguage(dbData.languageOptions.english);
     this.saveButton.click(); // click "Save" button and submit all inputs
   }
 
@@ -48,7 +56,6 @@ export class DatabasePage {
     this.initialCatalogMain = $('#catalogueMain');
     this.authenticationTypeMain = $('#authMain');
     this.saveButton = $('button.btn.btn-danger.btn-ar');
-
-
+    this.defaultLanguageSelector = $('#defaultLanguageSelector');
   }
 }

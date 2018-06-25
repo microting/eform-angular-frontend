@@ -11,5 +11,9 @@ export default {
   dataSourceMain: '(LocalDb)\\SharedInstance',
   initialCatalogueMain: 'eFormMain',
   authenticationTypeMain: 'Integrated Security=True'
+  languageOptions: {
+    english: 'English',
+    danish: 'Danish'
+  }
 };
 

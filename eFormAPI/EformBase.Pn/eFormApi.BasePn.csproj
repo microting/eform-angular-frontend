@@ -119,12 +119,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Consts\EformRoles.cs" />
+    <Compile Include="Helpers\LocaleHelper.cs" />
     <Compile Include="Infrastructure\Handlers\GenerateJasperFilesHandler.cs" />
     <Compile Include="Infrastructure\EFormCoreHelper.cs" />
     <Compile Include="Infrastructure\Installers\RebusInstaller.cs" />
     <Compile Include="Infrastructure\Installers\RebusHandlerInstaller.cs" />
     <Compile Include="Infrastructure\Messages\GenerateJasperFiles.cs" />
+    <Compile Include="Infrastructure\Models\API\OperationDataResult.cs" />
+    <Compile Include="Infrastructure\Models\API\OperationResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -137,6 +145,11 @@
     <Analyzer Include="..\packages\AWSSDK.SQS.3.3.3.7\analyzers\dotnet\cs\AWSSDK.SQS.CodeAnalysis.dll" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.da.resx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <Content Include="JasperExporter.jar" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

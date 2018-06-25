@@ -6,7 +6,7 @@
           <li [ngClass]="{'dropdown': menu.submenus.length > 0}"
               *ngIf="menu.appendLeftStyles && (userInfo.role == menu.guard
               || userInfo.role == 'admin'
-              || menu.guard == '')">
+              || menu.guard == null)">
             <a class="dropdown-toggle" *ngIf="menu.submenus.length > 0" id="{{menu.e2eId || 'm1'}}"
                data-toggle="dropdown" href="javascript:void(0);">
               {{menu.name}}
@@ -17,7 +17,7 @@
             <ul class="dropdown-menu dropdown-menu-right" *ngIf="menu.submenus.length > 0">
               <li *ngFor="let submenu of menu.submenus" id="{{submenu.e2eId || 'm3'}}">
                 <a routerLink="{{submenu.link}}" routerLinkActive="active"
-                   *ngIf="userInfo.role == submenu.guard || userInfo.role == 'admin' || submenu.guard == ''">
+                   *ngIf="userInfo.role == submenu.guard || userInfo.role == 'admin' || submenu.guard == null">
                   {{submenu.name}}
                 </a>
               </li>
@@ -41,7 +41,7 @@
       <ul class="nav navbar-nav">
         <ng-container *ngFor="let menu of navigationMenu">
           <li [ngClass]="{'dropdown': menu.submenus.length > 0}"
-              *ngIf="!menu.appendLeftStyles && (userInfo.role == menu.guard || userInfo.role == 'admin' || menu.guard == '')">
+              *ngIf="!menu.appendLeftStyles && (userInfo.role == menu.guard || userInfo.role == 'admin' || menu.guard == null)">
             <a class="dropdown-toggle" *ngIf="menu.submenus.length > 0"
                id="{{menu.e2eId || 'm4'}}"
                data-toggle="dropdown" href="javascript:void(0);">
@@ -54,7 +54,7 @@
             <ul class="dropdown-menu dropdown-menu-right" *ngIf="menu.submenus.length > 0">
               <li *ngFor="let submenu of menu.submenus" id="{{submenu.e2eId || 'm6'}}">
                 <a routerLink="{{submenu.link}}" routerLinkActive="active"
-                   *ngIf="userInfo.role == submenu.guard || userInfo.role == 'admin' || submenu.guard == ''">
+                   *ngIf="userInfo.role == submenu.guard || userInfo.role == 'admin' || submenu.guard == null">
                   {{submenu.name}}
                 </a>
               </li>

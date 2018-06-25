@@ -45,7 +45,8 @@ import {NgxSelectModule} from 'ngx-select-ex';
     TooltipModule,
     NgxSelectModule
   ],
-  declarations: [CasesComponent,
+  declarations: [
+    CasesComponent,
     TrumbowygComponent,
     CasesEditComponent,
     CaseEditSwitchComponent,

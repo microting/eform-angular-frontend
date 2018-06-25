@@ -272,9 +272,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\Attributes\LocaleMiddleware.cs" />
-    <Compile Include="Infrastructure\Helpers\LocaleHelper.cs" />
-    <Compile Include="Infrastructure\Models\API\OperationDataResult.cs" />
-    <Compile Include="Infrastructure\Models\API\OperationResult.cs" />
     <Compile Include="Infrastructure\Data\Entities\EformRole.cs" />
     <Compile Include="Infrastructure\Data\Entities\EformUserClaim.cs" />
     <Compile Include="Infrastructure\Data\Entities\EformUserLogin.cs" />
