@@ -45,7 +45,7 @@ namespace eFormAPI.Web.Infrastructure.Attributes
         {
             var cultureIfo = new CultureInfo(locale);
             Thread.CurrentThread.CurrentCulture = cultureIfo;
-            Thread.CurrentThread.CurrentCulture = cultureIfo;
+            Thread.CurrentThread.CurrentUICulture = cultureIfo;
             CultureInfo.DefaultThreadCurrentCulture = cultureIfo;
             CultureInfo.DefaultThreadCurrentUICulture = cultureIfo;
         }

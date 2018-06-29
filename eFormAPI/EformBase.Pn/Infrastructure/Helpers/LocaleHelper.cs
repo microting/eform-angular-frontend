@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using EformBase.Pn.Properties;
 
-namespace EformBase.Pn.Helpers
+namespace EformBase.Pn.Infrastructure.Helpers
 {
     public static class LocaleHelper
     {
