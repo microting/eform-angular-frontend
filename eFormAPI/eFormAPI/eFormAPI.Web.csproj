@@ -143,7 +143,7 @@
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.4.11\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.4.5.6\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="OtpSharp, Version=1.3.0.4, Culture=neutral, PublicKeyToken=1ec2a4a54aeffc1e, processorArchitecture=MSIL">
       <HintPath>..\packages\OtpSharp.1.3.0.4\lib\net40\OtpSharp.dll</HintPath>
@@ -176,6 +176,7 @@
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web.Cors, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Cors.5.0.0\lib\net45\System.Web.Cors.dll</HintPath>
@@ -272,19 +273,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\Attributes\LocaleMiddleware.cs" />
-    <Compile Include="Infrastructure\Data\Entities\EformRole.cs" />
-    <Compile Include="Infrastructure\Data\Entities\EformUserClaim.cs" />
-    <Compile Include="Infrastructure\Data\Entities\EformUserLogin.cs" />
-    <Compile Include="Infrastructure\Data\Entities\EformUserRole.cs" />
-    <Compile Include="Infrastructure\Data\Entities\EformUserStore.cs" />
     <Compile Include="Infrastructure\Helpers\CaseUpdateHelper.cs" />
     <Compile Include="Infrastructure\Helpers\EFormCoreHelper.cs" />
-    <Compile Include="Infrastructure\Data\BaseDbContext.cs" />
-    <Compile Include="Infrastructure\Data\Entities\EformRoleStore.cs" />
     <Compile Include="Infrastructure\Helpers\FoldersHelper.cs" />
+    <Compile Include="Infrastructure\Helpers\PluginHelper.cs" />
     <Compile Include="Infrastructure\Helpers\SettingsHelper.cs" />
     <Compile Include="Infrastructure\Identity\EformRoleManager.cs" />
-    <Compile Include="Infrastructure\Data\Entities\EformUser.cs" />
     <Compile Include="Infrastructure\Identity\EformSignInManager.cs" />
     <Compile Include="Infrastructure\Identity\EformUserManager.cs" />
     <Compile Include="Infrastructure\Models\Auth\ChangePasswordModel.cs" />
@@ -359,18 +353,6 @@
     <Compile Include="Migrations\EformMigrationsConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Infrastructure\Services\EmailService.cs" />
-    <Compile Include="Properties\Resources.da.Designer.cs">
-      <DependentUpon>Resources.da.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -414,16 +396,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806142159030_AddLocaleForUser.resx">
       <DependentUpon>201806142159030_AddLocaleForUser.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.da.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.da.Designer.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

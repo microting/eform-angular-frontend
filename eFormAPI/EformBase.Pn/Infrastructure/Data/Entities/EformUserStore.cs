@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace eFormAPI.Web.Infrastructure.Data.Entities
+namespace EformBase.Pn.Infrastructure.Data.Entities
 {
     public class EformUserStore : UserStore<EformUser, EformRole, int,
         EformUserLogin, EformUserRole, EformUserClaim>

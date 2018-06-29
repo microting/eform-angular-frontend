@@ -1,8 +1,14 @@
 ﻿using System;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Migrations;
+using System.Linq;
+using Castle.Core.Internal;
 using eFormAPI.Web.Infrastructure.Attributes;
-using eFormAPI.Web.Infrastructure.Data;
+using eFormAPI.Web.Infrastructure.Helpers;
 using eFormAPI.Web.Infrastructure.Identity;
 using eFormAPI.Web.Infrastructure.Identity.Providers;
+using EformBase.Pn.Infrastructure.Data;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
@@ -48,6 +54,37 @@ namespace eFormAPI.Web
 
             // Culture
             app.Use(typeof(LocaleMiddleware));
+
+            // Load Plugins
+            var assemblies = PluginHelper.GetPluginAssemblies();
+            // Migrate databases
+            foreach (var assembly in assemblies)
+            {
+                var contextList = assembly.GetTypes().Where(x => x.BaseType?.Name == nameof(DbContext)).ToList();
+                foreach (var dbContextType in contextList)
+                {
+                    var dbContext = dbContextType.CreateInstance<DbContext>();
+                    var migrationConfigurationType = assembly.GetTypes()
+                        .FirstOrDefault(x => x.Name == "PnMigrationConfiguration");
+                    // migrate DB
+                    try
+                    {
+                        var connectionString = dbContext.Database.Connection.ConnectionString;
+                        var migrationConfiguration = migrationConfigurationType
+                            .CreateInstance<DbMigrationsConfiguration>();
+                        migrationConfiguration.TargetDatabase =
+                            new DbConnectionInfo(connectionString, "System.Data.SqlClient");
+                        migrationConfiguration.AutomaticMigrationsEnabled = true;
+                        var migrator = new DbMigrator(migrationConfiguration);
+                        migrator.Update();
+                    }
+                    catch (Exception exception)
+                    {
+                        throw new Exception($"Error while migrating plugins DB: {exception.Message}");
+                    }
+                }
+            }
+
 
             // Uncomment the following lines to enable logging in with third party login providers
             //app.UseMicrosoftAccountAuthentication(
