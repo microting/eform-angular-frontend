@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace eFormAPI.Web.Infrastructure.Data.Entities
+namespace EformBase.Pn.Infrastructure.Data.Entities
 {
     public class EformUser : IdentityUser<int, EformUserLogin, EformUserRole,
         EformUserClaim>

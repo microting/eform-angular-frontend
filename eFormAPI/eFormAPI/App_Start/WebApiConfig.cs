@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
@@ -8,6 +6,7 @@ using System.Reflection;
 using System.Web.Http;
 using System.Web.Http.Dispatcher;
 using Autofac.Integration.WebApi;
+using eFormAPI.Web.Infrastructure.Helpers;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json;
@@ -52,39 +51,10 @@ namespace eFormAPI.Web
     {
         public override ICollection<Assembly> GetAssemblies()
         {
-            var path = System.Web.Hosting.HostingEnvironment.MapPath("~/Plugins");
-            if (path == null)
-            {
-                throw new Exception("Plugin path not found");
-            }
-
-            if (!Directory.Exists(path))
-            {
-                try
-                {
-                    Directory.CreateDirectory(path);
-                }
-                catch
-                {
-                    throw new Exception("Unable to create directory for plugins");
-                }
-            }
-                      
-           
-            
             var assemblies = new List<Assembly>(base.GetAssemblies());
-            var directories = Directory.EnumerateDirectories(path);
-            foreach (var directory in directories)
-            {
-                var pluginList = Directory.GetFiles(directory)
-                    .Where(x => x.EndsWith("Pn.dll") && Path.GetFileName(x) != "EformBase.Pn.dll")
-                    .ToList();
-
-                foreach (var plugin in pluginList)
-                {
-                    assemblies.Add(Assembly.LoadFrom(Path.Combine(plugin)));
-                }
-            }
+            // Load Plugins
+            var pluginsAssemblies = PluginHelper.GetPluginAssemblies();
+            assemblies.AddRange(pluginsAssemblies);
             return assemblies;
         }
     }

@@ -1,8 +1,8 @@
 using System.Configuration;
-using eFormAPI.Web.Infrastructure.Data;
-using eFormAPI.Web.Infrastructure.Data.Entities;
 using eFormAPI.Web.Infrastructure.Identity;
 using EformBase.Pn.Consts;
+using EformBase.Pn.Infrastructure.Data;
+using EformBase.Pn.Infrastructure.Data.Entities;
 using Microsoft.AspNet.Identity;
 
 namespace eFormAPI.Web.Migrations
