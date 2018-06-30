@@ -13,14 +13,12 @@ describe('Main Page - CREATE', function () {
     goToMainPage();
     done();
   });
-
   afterAll(done => {
     signOut();
     done();
   });
-
   describe('Positive: user', function () {
-    beforeAll(done =>{
+    beforeAll(done => {
       browser.get(data.startPageUrl);
       signOut();
       done();
@@ -43,9 +41,9 @@ describe('Main Page - CREATE', function () {
       browser.wait(ExpectedConditions.elementToBeClickable(mainPage.newEformBtn));
       const finalRowNum = await mainPage.getRowNumber();
       const awaitedTagArray = [''];
-      expect(finalRowNum).toEqual(initRowNum + 1);
+      expect(finalRowNum).toEqual(initRowNum + 1, 'EForm was not added');
       const firstRowObj = await getMainPageRowObject(1);
-      expect(firstRowObj.tags).toEqual(awaitedTagArray);
+      expect(firstRowObj.tags).toEqual(awaitedTagArray, 'Tag list is not empty');
       done();
     });
     it('should create eform simultaneously with creating 1 tag', async function (done) {
@@ -74,7 +72,7 @@ describe('Main Page - CREATE', function () {
       expect(finalRowNum).toEqual(initRowNum + 1, 'Row was not added!');
       const firstRowObj = await getMainPageRowObject(1);
       const awaitedTagArray = [data.MainPage.firstTagForAdding];
-      expect(firstRowObj.tags).toEqual(awaitedTagArray);
+      expect(firstRowObj.tags).toEqual(awaitedTagArray, 'Tags are added not properly');
       done();
     });
     it('should create eform simultaneously with creating 2 and more tags', async function (done) {
@@ -199,11 +197,10 @@ describe('Main Page - CREATE', function () {
   describe('Negative: user ', function () {
     beforeEach(done => {
       goToMainPage();
-      browser.waitForAngular();
       done();
     });
     it('should not create eform if xml is empty', async function (done) {
-      browser.sleep(5000);
+      browser.waitForAngular();
       const initRowNum = await mainPage.getRowNumber();
       mainPage.newEformBtn.click();
       waitFor(mainPage.createEFormModal.cancelBtn);
@@ -212,7 +209,6 @@ describe('Main Page - CREATE', function () {
       const finalRowNum = await mainPage.getRowNumber();
       expect(finalRowNum).toEqual(initRowNum);
       browser.waitForAngular();
-      browser.sleep(4000);
       done();
     });
 

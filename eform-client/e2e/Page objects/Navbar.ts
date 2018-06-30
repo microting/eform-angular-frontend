@@ -17,6 +17,6 @@ export class Navbar {
     this.headerImage = element(by.xpath('//*[@id="header_full_top"]/div/div/div[1]/img'));
     this.signOutDropdown = $('#sign-out-dropdown');
     this.signOutButton = $('#sign-out');
-    this.mainPageButton = $('#mainPage');
+    this.mainPageButton = $('a#m5[href="/"]');
   }
 }

@@ -25,28 +25,23 @@ describe('Main page - DELETE', function () {
     });
     it('should delete existing eform', async function (done) {
       const firstRowObj = await getMainPageRowObject(1);
-      const firstRowObjId = firstRowObj.id;
       firstRowObj.deleteEFormBtn.click();
       waitTillVisibleAndClick(mainPage.deleteEformModal.deleteEFormOkBtn);
-      const rowObjIdArr: string[] = [];
-      for (let i = 1; i <= await mainPage.getRowNumber(); i++) {
-        let obj = await getMainPageRowObject(i);
-        rowObjIdArr.push(obj.id.toString());
-      }
-      const rowIsDeleted: boolean = rowObjIdArr.filter(item => firstRowObjId.toString() === item).length === 0;
+      const allMainPageRowObjects = await MainPage.getAllMainPageRowObjects();
+      const rowIsDeleted: boolean = allMainPageRowObjects.filter(item => item.id === firstRowObj.id).length === 0;
       expect(rowIsDeleted).toBeTruthy('Some error occured during delettion');
-      try {
-        const initObj = await getMainPageRowObject(1);
-        if (initObj.id !== firstRowObj.id) {
-          while ( await mainPage.getRowNumber() > 0 ) {
-            let o = await getMainPageRowObject(1);
-            o.deleteEFormBtn.click();
-            waitTillVisibleAndClick(mainPage.deleteEformModal.deleteEFormOkBtn);
-            waitFor(mainPage.newEformBtn);
-          }
-        }
-      } catch (e) {
-      }
+      // try {
+      //   const initObj = await getMainPageRowObject(1);
+      //   if (initObj.id !== firstRowObj.id) {
+      //     while ( await mainPage.getRowNumber() > 0 ) {
+      //       let o = await getMainPageRowObject(1);
+      //       o.deleteEFormBtn.click();
+      //       waitTillVisibleAndClick(mainPage.deleteEformModal.deleteEFormOkBtn);
+      //       waitFor(mainPage.newEformBtn);
+      //     }
+      //   }
+      // } catch (e) {
+      // }
       done();
     });
   });

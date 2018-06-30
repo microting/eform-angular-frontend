@@ -24,7 +24,8 @@ export function goToDeviceUsersPage() {
 export function goToMainPage() {
   browser.get(data.startPageUrl);
   loginPage.login();
-  waitTillVisibleAndClick(navbar.mainPageButton);
+  browser.waitForAngular();
+  // waitTillVisibleAndClick(navbar.mainPageButton);
 }
 
 export function gotToSites() {

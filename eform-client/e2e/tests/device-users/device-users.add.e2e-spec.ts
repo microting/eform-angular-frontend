@@ -6,7 +6,6 @@ import {signOut} from '../../Helper methods/other-helper-methods';
 import {getRowObject} from '../../Page objects/Device users/row-object';
 import data from '../../data';
 
-const navbar: Navbar = new Navbar();
 const deviceUsersPage: DeviceUsersPage = new DeviceUsersPage();
 
 describe('Tests for adding users', function () {

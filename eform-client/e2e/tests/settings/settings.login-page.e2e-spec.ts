@@ -67,7 +67,7 @@ describe('Login page settings tests', function () {
     });
     beforeEach(done => {
       browser.waitForAngular();
-      browser.sleep(5000)
+      browser.sleep(5000);
       done();
     });
 
