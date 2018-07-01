@@ -17,7 +17,6 @@ export class PairEformModal {
     rowObj.paired = await rowObj.checkToPairChbx.isSelected();
     return rowObj;
   }
-
   async getAllPairingModalRowObjects() {
     const pairingModalRowObjNum = await element.all(by.xpath('//*[@id="pairingModalTableBody"]/tr')).count();
     for (let i = 1; i <= pairingModalRowObjNum; i++) {
@@ -26,7 +25,6 @@ export class PairEformModal {
     this.checkedPairEformRowObjects = this.pairEformRowObjects.filter(obj => obj.paired === true);
     this.uncheckedPairEformRowObjects = this.pairEformRowObjects.filter(obj => obj.paired === false);
   }
-
   constructor() {
     this.saveBtn = $('#pairingModalSaveBtn');
     this.cancelBtn = $('#pairingModalCancelBtn');

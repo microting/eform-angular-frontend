@@ -31,6 +31,7 @@ exports.config = {
     'main-page-delete':'./e2e/tests/main-page/main-page.delete-eform.e2e-spec.ts',
     'main-page-pairing':'./e2e/tests/main-page/main-page.pairing-eform.e2e-spec.ts'
   },
+  SELENIUM_PROMISE_MANAGER: false,
   capabilities: {
     browserName: 'chrome',
     maxSessions: 1,

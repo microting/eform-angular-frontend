@@ -1,14 +1,14 @@
 import {by, element} from 'protractor';
 
 // returning row with some number like an object.
-export function getRowObject(rowNumber: number): RowObject {
+export async function getRowObject(rowNumber: number): Promise<RowObject> {
   const rowObject = new RowObject();
   // cells of the row
-  rowObject.siteID = element(by.xpath(`//*[@id="simple_sites"]/tbody/tr[${rowNumber}]/td[1]`)).getText();
-  rowObject.firstName = element(by.css(`#tableBody > tr:nth-child(${rowNumber}) > td:nth-child(2) > span:nth-last-child(1)`)).getText();
-  rowObject.lastName = element(by.css(`#tableBody > tr:nth-child(${rowNumber}) > td:nth-child(3) > span:nth-last-child(1)`)).getText();
-  rowObject.deviceId = element(by.xpath(`//*[@id="simple_sites"]/tbody/tr[${rowNumber}]/td[4]/div`)).getText();
-  rowObject.otpCode = element(by.xpath(`//*[@id="simple_sites"]/tbody/tr[${rowNumber}]/td[5]/div`)).getText();
+  rowObject.siteID = await element(by.xpath(`//*[@id="simple_sites"]/tbody/tr[${rowNumber}]/td[1]`)).getText();
+  rowObject.firstName = await element(by.css(`#tableBody > tr:nth-child(${rowNumber}) > td:nth-child(2) > span:nth-last-child(1)`)).getText();
+  rowObject.lastName = await element(by.css(`#tableBody > tr:nth-child(${rowNumber}) > td:nth-child(3) > span:nth-last-child(1)`)).getText();
+  rowObject.deviceId = await element(by.xpath(`//*[@id="simple_sites"]/tbody/tr[${rowNumber}]/td[4]/div`)).getText();
+  rowObject.otpCode = await element(by.xpath(`//*[@id="simple_sites"]/tbody/tr[${rowNumber}]/td[5]/div`)).getText();
   rowObject.retrieveOtpCodeButton = rowNumber < 3 ? element(by
     .xpath(`//*[@id="simple_sites"]/tbody/tr[${rowNumber}]/td[5]/button`)) : null;
 

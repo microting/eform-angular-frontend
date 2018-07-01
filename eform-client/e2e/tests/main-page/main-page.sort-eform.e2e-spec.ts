@@ -10,17 +10,15 @@ const mainPage: MainPage = new MainPage();
 
 describe('Main Page - SORT', function () {
   describe('user', function () {
-    beforeEach(done => {
-      goToMainPage();
-      browser.waitForAngular();
-      done();
+    beforeEach(async () => {
+      await goToMainPage();
+      await browser.waitForAngular();
     });
-    afterEach(done => {
-      signOut();
-      browser.waitForAngular();
-      done();
+    afterEach(async () => {
+      await signOut();
+      await browser.waitForAngular();
     });
-    it('should be able to sort by ID', async function (done) {
+    it('should be able to sort by ID', async () => {
       const initIDArr: number[] = [];
       const rowNum = await mainPage.getRowNumber();
       for (let i = 1; i <= rowNum; i++) {
@@ -28,15 +26,14 @@ describe('Main Page - SORT', function () {
       }
       const arrayIsSortedByAscending: boolean = initIDArr.every((item, i, arr) => i === 0 || item <= arr[i - 1]);
       expect(arrayIsSortedByAscending).toBeTruthy('Array is not sorted by ascending (the greatest is above and the lowest is below');
-      mainPage.idSortBtn.click();
+      await mainPage.idSortBtn.click();
       const finalIDArr = [];
       for (let i = 1; i <= rowNum; i++) {
         finalIDArr.push((await getMainPageRowObject(i)).id);
       }
       expect(finalIDArr).toEqual(initIDArr.reverse(), 'Sorting - The the greatest number below and the lowest is above - doesn\'t work properly');
-      done();
     });
-    it('should be able to sort by "Created at"', async function (done) {
+    it('should be able to sort by "Created at"', async () => {
       // Parse date string into date
       const toDateFunc = (createdAtStr) => {
         const [globalPart, dayPart] = createdAtStr.split(' ');
@@ -47,7 +44,7 @@ describe('Main Page - SORT', function () {
         return date;
       };
 
-      mainPage.createdAtSortBtn.click();
+      await mainPage.createdAtSortBtn.click();
       const initCreatedAtArr: Date[] = [];
       const rowNum = await mainPage.getRowNumber();
       for (let i = 1; i <= rowNum; i++) {
@@ -63,10 +60,9 @@ describe('Main Page - SORT', function () {
         finalCreatedAtArr.push(toDateFunc(createdAt));
       }
       expect(finalCreatedAtArr).toEqual(initCreatedAtArr.reverse(), 'Sorting - The the greatest number below and the lowest is above - doesn\'t work properly');
-      done();
     });
-    it('should be able to sort by "Name eForm"', async function (done) {
-      mainPage.nameEFormSortBtn.click();
+    it('should be able to sort by "Name eForm"', async () => {
+      await mainPage.nameEFormSortBtn.click();
       const initNameArr = [];
       const rowNum = await mainPage.getRowNumber();
       for (let i = 1; i <= rowNum; i++) {
@@ -74,13 +70,12 @@ describe('Main Page - SORT', function () {
       }
       const arrayIsSortedByDescending: boolean = initNameArr.every((item, i, arr) => i === 0 || item >= arr[i - 1]);
       expect(arrayIsSortedByDescending).toBeTruthy('Array is not sorted by ascending (the greatest is above and the lowest is below');
-      mainPage.nameEFormSortBtn.click();
+      await mainPage.nameEFormSortBtn.click();
       const finalNameArr = [];
       for (let i = 1; i <= rowNum; i++) {
         finalNameArr.push((await getMainPageRowObject(i)).nameEForm);
       }
       expect(finalNameArr).toEqual(initNameArr.reverse(), 'Sorting - The the greatest number below and the lowest is aboe - doesn\'t work properly');
-      done();
     });
   });
 });

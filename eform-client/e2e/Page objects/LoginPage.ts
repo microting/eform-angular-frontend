@@ -15,14 +15,14 @@ export class LoginPage {
   public loginPageImageMatcher: By;
 
   // login method, used on Login Page
-  public login(): void {
-    // browser.wait(ExpectedConditions.elementToBeClickable(this.usernameInput));
-    this.usernameInput.clear();
-    // browser.wait(ExpectedConditions.elementToBeClickable(this.passwordInput));
-    this.passwordInput.clear();
-    this.usernameInput.sendKeys(data.login);
-    this.passwordInput.sendKeys(data.password);
-    this.loginButton.click();
+  public async login(): Promise<void> {
+    await browser.wait(ExpectedConditions.elementToBeClickable(this.usernameInput));
+    await this.usernameInput.clear();
+    await browser.wait(ExpectedConditions.elementToBeClickable(this.passwordInput));
+    await this.passwordInput.clear();
+    await this.usernameInput.sendKeys(data.login);
+    await this.passwordInput.sendKeys(data.password);
+    await this.loginButton.click();
   }
 
 

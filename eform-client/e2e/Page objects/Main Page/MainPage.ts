@@ -40,7 +40,6 @@ export class MainPage {
   }
 
   getTagsForFilter(): ElementArrayFinder {
-    browser.waitForAngular();
     return element.all(by.xpath('//*[@id="tagSelector"]/div/ul/li/a'));
   }
 
