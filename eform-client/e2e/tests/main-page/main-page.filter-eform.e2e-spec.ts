@@ -9,17 +9,15 @@ const mainPage = new MainPage();
 
 
 describe('Main page - FILTERS', function () {
-
-  beforeAll(done => {
-    goToMainPage();
-    done();
-  });
-  afterAll(done => {
-    signOut();
-    done();
-  });
-
   describe('By label user', function () {
+    beforeAll(done => {
+      goToMainPage();
+      done();
+    });
+    afterAll(done => {
+      signOut();
+      done();
+    });
     it('should be able to filter by 1 word in label input', async function (done) {
       const initRowNum = await mainPage.getRowNumber();
       const initRowObjArr: MainPageRowObject[] = [];
@@ -29,8 +27,8 @@ describe('Main page - FILTERS', function () {
       const initNameArr = initRowObjArr.map(obj => obj.nameEForm);
       // const randomName: string = initNameArr[Math.floor(Math.random() * initNameArr.length)];
       const randomName: string = initNameArr[0];
-      mainPage.labelInput.sendKeys(randomName);
-      mainPage.labelInput.sendKeys(protractor.Key.ENTER);
+      await mainPage.labelInput.sendKeys(randomName);
+      await mainPage.labelInput.sendKeys(protractor.Key.ENTER);
       const finalRowNum = await mainPage.getRowNumber();
       const finalRowObjArr: MainPageRowObject[] = [];
       for (let i = 1; i <= finalRowNum; i++) {
@@ -41,7 +39,7 @@ describe('Main page - FILTERS', function () {
       expect(everyNameContainsSelecedLabel).toBeTruthy();
       done();
     });
-    xit('should be able to see all eforms by leaving label input empty', async function (done) {
+    it('should be able to see all eforms by leaving label input empty', async function (done) {
       const initRowNum = await mainPage.getRowNumber();
       mainPage.labelInput.clear();
       mainPage.labelInput.sendKeys(protractor.Key.ENTER);
@@ -50,7 +48,15 @@ describe('Main page - FILTERS', function () {
       done();
     });
   });
-  xdescribe('By tag user', function () {
+  describe('By tag user', function () {
+    beforeAll(done => {
+      goToMainPage();
+      done();
+    });
+    afterAll(done => {
+      signOut();
+      done();
+    });
     it('should be able to filter using 1 tag', async function (done) {
       mainPage.tagSelector.click();
       const tagArray: ElementArrayFinder = mainPage.getTagsForFilter(); // ElementArrayFinder lacks functionality compared to ordinary

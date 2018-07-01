@@ -9,22 +9,7 @@ const mainPage: MainPage = new MainPage();
 
 
 describe('Main Page - SORT', function () {
-  // beforeAll(done => {
-  //     goToMainPage();
-  //     done();
-  //   }
-  // );
-
-  // afterAll(done => {
-  //   signOut();
-  //   done();
-  // });
   describe('user', function () {
-    // beforeAll(done => {
-    //   browser.get(data.startPageUrl);
-    //   signOut();
-    //   done();
-    // });
     beforeEach(done => {
       goToMainPage();
       browser.waitForAngular();
@@ -36,7 +21,6 @@ describe('Main Page - SORT', function () {
       done();
     });
     it('should be able to sort by ID', async function (done) {
-      // mainPage.idSortBtn.click();
       const initIDArr: number[] = [];
       const rowNum = await mainPage.getRowNumber();
       for (let i = 1; i <= rowNum; i++) {

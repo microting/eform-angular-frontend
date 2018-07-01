@@ -8,29 +8,14 @@ import {getMainPageRowObject} from '../../Page objects/Main Page/mainPage.row-ob
 const mainPage = new MainPage();
 
 describe('Main Page - CREATE', function () {
-
-  beforeAll(done => {
-    goToMainPage();
-    done();
-  });
-  afterAll(done => {
-    signOut();
-    done();
-  });
   describe('Positive: user', function () {
     beforeAll(done => {
-      browser.get(data.startPageUrl);
-      signOut();
-      done();
-    });
-    beforeEach(done => {
       goToMainPage();
       browser.waitForAngular();
       done();
     });
-    afterEach(done => {
+    afterAll(done => {
       signOut();
-      browser.waitForAngular();
       done();
     });
     it('should create eform without any tags', async function (done) {
@@ -195,8 +180,12 @@ describe('Main Page - CREATE', function () {
     });
   });
   describe('Negative: user ', function () {
-    beforeEach(done => {
+    beforeAll(done => {
       goToMainPage();
+      done();
+    });
+    afterAll(done => {
+      signOut();
       done();
     });
     it('should not create eform if xml is empty', async function (done) {
@@ -211,6 +200,5 @@ describe('Main Page - CREATE', function () {
       browser.waitForAngular();
       done();
     });
-
   });
 });

@@ -7,20 +7,13 @@ import {goToMainPage} from '../../Helper methods/go-to-pages';
 const mainPage = new MainPage();
 
 
-describe('Main page - DELETE', function () {
-  beforeAll(done => {
-    goToMainPage();
-    done();
-  });
-  afterAll(done => {
-    signOut();
-    done();
-  });
-  describe('user', function () {
-    beforeEach(done => {
-      waitTillVisibleAndClick(mainPage.newEformBtn);
-      mainPage.createEFormModal.enterXML(data.MainPage.wordToReplaceBy);
-      mainPage.createEFormModal.saveEFormBtn.click();
+describe('Main page - DELETE. User', function () {
+    beforeAll(done => {
+      goToMainPage();
+      done();
+    });
+    afterAll(done => {
+      signOut();
       done();
     });
     it('should delete existing eform', async function (done) {
@@ -30,19 +23,6 @@ describe('Main page - DELETE', function () {
       const allMainPageRowObjects = await MainPage.getAllMainPageRowObjects();
       const rowIsDeleted: boolean = allMainPageRowObjects.filter(item => item.id === firstRowObj.id).length === 0;
       expect(rowIsDeleted).toBeTruthy('Some error occured during delettion');
-      // try {
-      //   const initObj = await getMainPageRowObject(1);
-      //   if (initObj.id !== firstRowObj.id) {
-      //     while ( await mainPage.getRowNumber() > 0 ) {
-      //       let o = await getMainPageRowObject(1);
-      //       o.deleteEFormBtn.click();
-      //       waitTillVisibleAndClick(mainPage.deleteEformModal.deleteEFormOkBtn);
-      //       waitFor(mainPage.newEformBtn);
-      //     }
-      //   }
-      // } catch (e) {
-      // }
       done();
     });
-  });
 });

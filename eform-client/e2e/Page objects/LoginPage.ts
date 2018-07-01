@@ -1,4 +1,4 @@
-import {$, by, element, ElementFinder} from 'protractor';
+import {$, browser, by, element, ElementFinder, ExpectedConditions} from 'protractor';
 import {By} from '@angular/platform-browser';
 import {default as data} from '../data';
 
@@ -16,7 +16,9 @@ export class LoginPage {
 
   // login method, used on Login Page
   public login(): void {
+    // browser.wait(ExpectedConditions.elementToBeClickable(this.usernameInput));
     this.usernameInput.clear();
+    // browser.wait(ExpectedConditions.elementToBeClickable(this.passwordInput));
     this.passwordInput.clear();
     this.usernameInput.sendKeys(data.login);
     this.passwordInput.sendKeys(data.password);

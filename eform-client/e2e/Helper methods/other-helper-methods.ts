@@ -1,29 +1,29 @@
 import {browser, by, element, ElementFinder, ExpectedConditions} from 'protractor';
 import {LoginPage} from '../Page objects/LoginPage';
-import {default as data} from '../data';
 import {Navbar} from '../Page objects/Navbar';
 
-const loginPage = new LoginPage();
-const navbar = new Navbar();
 
-export function waitTillVisibleAndClick(element): void {
+export function waitTillVisibleAndClick(element: ElementFinder): void {
   browser.waitForAngular();
   browser.wait(ExpectedConditions.visibilityOf(element));
   element.click();
 }
 
-export function getToPage(page) {
-  browser.get(data.startPageUrl);
-  loginPage.login();
-  waitTillVisibleAndClick(page);
-}
-
 export function signOut() {
+  const loginPage = new LoginPage();
+  const navbar = new Navbar();
+  // browser.waitForAngular();
+  // browser.wait(ExpectedConditions.elementToBeClickable(navbar.signOutButton));
+  // browser.wait(ExpectedConditions.elementToBeClickable(navbar.signOutButton));
+  // navbar.signOutDropdown.click();
+  // browser.waitForAngular();
+  // navbar.signOutButton.click();
+  // browser.wait(ExpectedConditions.elementToBeClickable(loginPage.loginButton));
   browser.waitForAngular();
-  navbar.signOutDropdown.click();
+  waitTillVisibleAndClick(navbar.signOutDropdown);
   browser.waitForAngular();
-  navbar.signOutButton.click();
-  browser.wait(ExpectedConditions.elementToBeClickable(loginPage.loginButton));
+  waitTillVisibleAndClick(navbar.signOutButton);
+  waitTillVisibleAndClick(loginPage.loginButton);
 }
 
 export function waitFor(element) {
