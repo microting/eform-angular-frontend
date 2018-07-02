@@ -1,30 +1,32 @@
-import {browser, ElementFinder, ExpectedConditions} from 'protractor';
+import {browser, by, element, ElementFinder, ExpectedConditions} from 'protractor';
 import {LoginPage} from '../Page objects/LoginPage';
-import {default as data} from '../data';
 import {Navbar} from '../Page objects/Navbar';
 
-const loginPage = new LoginPage();
-const navbar = new Navbar();
 
-export function waitTillVisibleAndClick(element): void {
-  browser.waitForAngular();
-  browser.wait(ExpectedConditions.visibilityOf(element));
-  element.click();
+export async function waitTillVisibleAndClick(element: ElementFinder): Promise<void> {
+  await browser.waitForAngular();
+  await browser.wait(ExpectedConditions.visibilityOf(element));
+  await element.click();
 }
 
-export function getToPage(page) {
-  browser.get(data.startPageUrl);
-  loginPage.login();
-  waitTillVisibleAndClick(page);
+export async function signOut() {
+  const loginPage = new LoginPage();
+  const navbar = new Navbar();
+  await browser.waitForAngular();
+  await waitTillVisibleAndClick(navbar.signOutDropdown);
+  await browser.waitForAngular();
+  await waitTillVisibleAndClick(navbar.signOutButton);
+  await waitFor(loginPage.loginButton);
 }
 
-export function signOut() {
-  navbar.signOutDropdown.click();
-  navbar.signOutButton.click();
-  browser.wait(ExpectedConditions.elementToBeClickable(loginPage.loginButton));
+export async function waitFor(element) {
+  await browser.wait(ExpectedConditions.elementToBeClickable(element));
 }
 
-export function waitFor(element) {
-  browser.wait(ExpectedConditions.elementToBeClickable(element));
+export async function getStringsFromXpath(xpath, arr) {
+  const x = element.all(by.xpath(xpath));
+  for (let i = 0; i < await x.count(); i++) {
+    const item = x.get(i);
+    arr.push(await item.getText());
+  }
 }
-

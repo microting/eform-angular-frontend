@@ -8,109 +8,90 @@ import {goToSettingsPage} from '../../Helper methods/go-to-pages';
 
 const loginPage: LoginPage = new LoginPage();
 const settingsPage: SettingsPage = new SettingsPage();
-const navbar: Navbar = new Navbar();
 
 
-describe('Login page settings tests', function () {
-  afterAll(done => {
-    signOut();
-    done();
+describe('Login page settings tests', async () => {
+  afterAll(async () => {
+    await signOut();
   });
-  beforeAll(function (done) {
-    goToSettingsPage();
-    settingsPage.LoginPage.resetButton.click();
-    browser.waitForAngular();
-    browser.refresh();
-    signOut();
-    done();
+  beforeAll(async () => {
+    await goToSettingsPage();
+    await settingsPage.LoginPage.resetButton.click();
+    await browser.waitForAngular();
+    await browser.refresh();
+    await signOut();
   });
 
   // testing reset button
   describe('Reset button in login page section of Settings', function () {
-
-
-    beforeEach(done => {
-      browser.waitForAngular();
-      done();
+    beforeEach(async () => {
+      await browser.waitForAngular();
     });
-    it('should reset login page image', function (done) {
-      expect(browser.isElementPresent(loginPage.loginPageImageMatcher))
+    afterAll(async () => {
+      await goToSettingsPage();
+    });
+    it('should reset login page image', async () => {
+      expect(await browser.isElementPresent(loginPage.loginPageImageMatcher))
         .toBeTruthy();
-      done();
     });
-    it('should reset login page main text', function (done) {
-      expect(browser.isElementPresent(loginPage.loginPageMainTextMatcher)).toBeTruthy();
-      expect(loginPage.loginPageMainText.getText())
+    it('should reset login page main text', async () => {
+      expect(await browser.isElementPresent(loginPage.loginPageMainTextMatcher)).toBeTruthy();
+      expect(await loginPage.loginPageMainText.getText())
         .toEqual(data.LoginPageSettings.defaultSettings.loginPageMainText);
-      done();
     });
-    it('should reset login page secondary text', function (done) {
-      expect(browser.isElementPresent(loginPage.loginPageSecondaryTextMatcher)).toBeTruthy();
-      expect(loginPage.loginPageSecondaryText.getText())
+    it('should reset login page secondary text', async () => {
+      expect(await browser.isElementPresent(loginPage.loginPageSecondaryTextMatcher)).toBeTruthy();
+      expect(await loginPage.loginPageSecondaryText.getText())
         .toEqual(data.LoginPageSettings.defaultSettings.loginPageSecondaryText);
-      done();
-    });
-    // get back to settings page by logging in, clicking Advanced -> Settings
-    afterAll(function (done) {
-      goToSettingsPage();
-      done();
     });
   });
 
 // testing login page section of settings
   describe('Settings in Login Page section', () => {
-
 // reset in login page section and refresh page after each test case
-    afterEach((done) => {
-      goToSettingsPage();
-      done();
+    afterEach(async () => {
+      await goToSettingsPage();
     });
-    beforeEach(done => {
-      browser.waitForAngular();
-      browser.sleep(5000)
-      done();
+    beforeEach(async () => {
+      await browser.waitForAngular();
+      await  browser.sleep(5000);
     });
 
-    it('should hide logo in header', (done) => {
-      settingsPage.LoginPage.loginPageImageHideButton.click();
-      settingsPage.saveAndRefresh();
-      signOut();
-      expect(browser.isElementPresent(loginPage.loginPageImageMatcher)).toBeFalsy();
-      done();
+    it('should hide logo in header', async () => {
+      await settingsPage.LoginPage.loginPageImageHideButton.click();
+      await settingsPage.saveAndRefresh();
+      await signOut();
+      expect(await browser.isElementPresent(loginPage.loginPageImageMatcher)).toBeFalsy();
     });
 
-    it('should change Main text in header', function (done) {
-      settingsPage.LoginPage.mainTextInput.clear();
-      settingsPage.LoginPage.mainTextInput.sendKeys(data.LoginPageSettings.customSettings.loginPageMainTextSample);
-      settingsPage.saveAndRefresh();
-      signOut();
-      expect(loginPage.loginPageMainText.getText()).toEqual(data.LoginPageSettings.customSettings.loginPageMainTextSample);
-      done();
+    it('should change Main text in header', async () => {
+      await settingsPage.LoginPage.mainTextInput.clear();
+      await settingsPage.LoginPage.mainTextInput.sendKeys(data.LoginPageSettings.customSettings.loginPageMainTextSample);
+      await settingsPage.saveAndRefresh();
+      await signOut();
+      expect(await loginPage.loginPageMainText.getText()).toEqual(data.LoginPageSettings.customSettings.loginPageMainTextSample);
     });
 
-    it('should change secondary text', function (done) {
-      settingsPage.LoginPage.secondaryTextInput.clear();
-      settingsPage.LoginPage.secondaryTextInput.sendKeys(data.LoginPageSettings.customSettings.loginPageSecondaryTextSample);
-      settingsPage.saveAndRefresh();
-      signOut();
-      expect(loginPage.loginPageSecondaryText.getText()).toEqual(data.LoginPageSettings.customSettings.loginPageSecondaryTextSample);
-      done();
+    it('should change secondary text', async () => {
+      await settingsPage.LoginPage.secondaryTextInput.clear();
+      await settingsPage.LoginPage.secondaryTextInput.sendKeys(data.LoginPageSettings.customSettings.loginPageSecondaryTextSample);
+      await settingsPage.saveAndRefresh();
+      await signOut();
+      expect(await loginPage.loginPageSecondaryText.getText()).toEqual(data.LoginPageSettings.customSettings.loginPageSecondaryTextSample);
     });
 
-    it('should hide main text', function (done) {
-      settingsPage.LoginPage.mainTextHideButton.click();
-      settingsPage.saveAndRefresh();
-      signOut();
-      expect(browser.isElementPresent(loginPage.loginPageMainText)).toBeFalsy();
-      done();
+    it('should hide main text', async () => {
+      await settingsPage.LoginPage.mainTextHideButton.click();
+      await settingsPage.saveAndRefresh();
+      await signOut();
+      expect(await browser.isElementPresent(loginPage.loginPageMainText)).toBeFalsy();
     });
 
-    it('should hide secodary text', function (done) {
-      settingsPage.LoginPage.secondaryTextHideButton.click();
-      settingsPage.saveAndRefresh();
-      signOut();
-      expect(browser.isElementPresent(loginPage.loginPageSecondaryText)).toBeFalsy();
-      done();
+    it('should hide secodary text', async () => {
+      await settingsPage.LoginPage.secondaryTextHideButton.click();
+      await settingsPage.saveAndRefresh();
+      await signOut();
+      expect(await browser.isElementPresent(loginPage.loginPageSecondaryText)).toBeFalsy();
     });
 
     xit('should be able to change logo file', function () {

@@ -4,6 +4,7 @@ import {AddNewUserModal} from './add-new-user.modal';
 import data from '../../data';
 import {getRowObject, RowObject} from './row-object';
 import {DeleteModal} from './delete.modal';
+import {waitTillVisibleAndClick} from '../../Helper methods/other-helper-methods';
 
 
 export class DeviceUsersPage {
@@ -18,16 +19,16 @@ export class DeviceUsersPage {
   lastUser: RowObject;
 
   // actions
-  async getRowsNumber() {
-    return $$(data.DeviceUsersPage.rowCountSelector).count();
+  async getRowsNumber(): Promise<number> {
+    return await $$(data.DeviceUsersPage.rowCountSelector).count();
   }
 
-  async usersCleanup() {
+  async usersCleanup(): Promise<void> {
     let startNum = await this.getRowsNumber();
-    for (let i = 0; i < startNum - 2; i++) {
+    for (let i = 0; i < startNum - 2;  i++) {
       // while (startNum > 2) {
-      this.deleteUserButton.click();
-      this.deleteModal.okButton.click();
+      await waitTillVisibleAndClick(this.deleteUserButton);
+      await waitTillVisibleAndClick(this.deleteModal.okButton);
       startNum = await this.getRowsNumber();
     }
     // return;

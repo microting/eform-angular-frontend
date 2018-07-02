@@ -2,7 +2,6 @@ import {browser, element, ExpectedConditions} from 'protractor';
 import {default as data} from '../../data';
 import {SettingsPage} from '../../Page objects/SettingsPage';
 import {LoginPage} from '../../Page objects/LoginPage';
-import {Navbar} from '../../Page objects/Navbar';
 import {DatabasePage} from '../../Page objects/DatabasePage';
 import {signOut} from '../../Helper methods/other-helper-methods';
 import {goToSettingsPage} from '../../Helper methods/go-to-pages';
@@ -10,117 +9,100 @@ import {goToSettingsPage} from '../../Helper methods/go-to-pages';
 const path = require('path');
 
 const loginPage: LoginPage = new LoginPage();
-const navbar: Navbar = new Navbar();
 const settingsPage: SettingsPage = new SettingsPage();
 const databasePage: DatabasePage = new DatabasePage();
 
-
 describe('Reset button in Site header section of Settings', function () {
   // Navigate to login page, then save db and reset header settings to make them default
-  beforeAll(async function (done) {
-    browser.get('/');
+  beforeAll(async function () {
+    await browser.get('/');
     try {
       await databasePage.saveButton.isDisplayed();
-      databasePage.saveDatabase(); // enter needed info in inputs and press save
-      browser.wait(ExpectedConditions.visibilityOf(loginPage.loginButton));
+      await databasePage.saveDatabase(); // enter needed info in inputs and press save
+      await browser.wait(ExpectedConditions.visibilityOf(loginPage.loginButton));
     } catch (e) {
     }
-    goToSettingsPage();
-    settingsPage.SiteHeader.resetButton.click();
-    browser.refresh();
-    done();
+    await goToSettingsPage();
+    await settingsPage.SiteHeader.resetButton.click();
+    await browser.refresh();
   });
 
-  beforeEach(done => {
-    browser.waitForAngular();
-    done();
+  beforeEach(async () => {
+    await browser.waitForAngular();
   });
   // check that everything reset fine
-  it('should reset image', function (done) {
-    expect(browser.isElementPresent(settingsPage.headerImageMatcher))
+  it('should reset image', async function () {
+    expect(await browser.isElementPresent(settingsPage.headerImageMatcher))
       .toBeTruthy();
-    done();
   });
-  it('should reset header main text', function (done) {
-    expect(browser.isElementPresent(settingsPage.mainTextHeaderMatcher)).toBeTruthy();
-    expect(settingsPage.headerMainText.getText())
+  it('should reset header main text', async function () {
+    expect(await browser.isElementPresent(settingsPage.mainTextHeaderMatcher)).toBeTruthy();
+    expect(await settingsPage.headerMainText.getText())
       .toEqual(data.SiteHeaderSettings.defaultSettings.headerMainText);
-    done();
   });
-  it('should reset header secondary text', function (done) {
-    expect(browser.isElementPresent(settingsPage.secondaryTextHeaderMatcher)).toBeTruthy();
-    expect(settingsPage.headerSecondaryText.getText())
+  it('should reset header secondary text', async function () {
+    expect(await browser.isElementPresent(settingsPage.secondaryTextHeaderMatcher)).toBeTruthy();
+    expect(await settingsPage.headerSecondaryText.getText())
       .toEqual(data.SiteHeaderSettings.defaultSettings.headerSecondaryText);
-    done();
   });
 });
 
 // Check changing texts
 describe('Settings in Site header section', () => {
 
-  beforeEach(done => {
-    browser.waitForAngular();
-    done();
+  beforeEach(async () => {
+    await browser.waitForAngular();
+  });
+  afterAll(async () => {
+    await signOut();
   });
 
-  afterAll(function (done) {
-    signOut();
-    done();
+  afterEach(async () => {
+    await settingsPage.SiteHeader.resetAndRefresh();
   });
 
-  afterEach((done) => {
-    settingsPage.SiteHeader.resetAndRefresh();
-    done();
+  it('should hide logo in header', async () => {
+    expect(await element(settingsPage.headerImageMatcher).isDisplayed()).toBeTruthy();
+    await settingsPage.SiteHeader.headerImageHideButton.click();
+    await settingsPage.saveAndRefresh();
+    expect(await browser.isElementPresent(settingsPage.headerImageMatcher)).toBeFalsy();
   });
 
-  it('should hide logo in header', (done) => {
-    expect(element(settingsPage.headerImageMatcher).isDisplayed()).toBeTruthy();
-    settingsPage.SiteHeader.headerImageHideButton.click();
-    settingsPage.saveAndRefresh();
-    expect(browser.isElementPresent(settingsPage.headerImageMatcher)).toBeFalsy();
-    done();
-  });
-
-  it('should change Main text in header', function (done) {
-    settingsPage.SiteHeader.mainTextInput.clear();
-    settingsPage.SiteHeader.mainTextInput.sendKeys(data.SiteHeaderSettings.customSettings.mainTextSample);
-    settingsPage.saveAndRefresh();
-    expect(settingsPage.headerMainText.getText())
+  it('should change Main text in header', async () => {
+    await settingsPage.SiteHeader.mainTextInput.clear();
+    await settingsPage.SiteHeader.mainTextInput.sendKeys(data.SiteHeaderSettings.customSettings.mainTextSample);
+    await settingsPage.saveAndRefresh();
+    expect(await settingsPage.headerMainText.getText())
       .toEqual(data.SiteHeaderSettings.customSettings.mainTextSample);
-    done();
   });
 
-  it('should change secondary text in header', function (done) {
-    settingsPage.SiteHeader.secondaryTextInput.clear();
-    settingsPage.SiteHeader.secondaryTextInput.sendKeys(data.SiteHeaderSettings.customSettings.secondaryTextSample);
-    settingsPage.saveAndRefresh();
-    expect(settingsPage.headerSecondaryText.getText()).toEqual(data.SiteHeaderSettings.customSettings.secondaryTextSample);
-    done();
+  it('should change secondary text in header', async () => {
+    await settingsPage.SiteHeader.secondaryTextInput.clear();
+    await settingsPage.SiteHeader.secondaryTextInput.sendKeys(data.SiteHeaderSettings.customSettings.secondaryTextSample);
+    await settingsPage.saveAndRefresh();
+    expect(await settingsPage.headerSecondaryText.getText()).toEqual(data.SiteHeaderSettings.customSettings.secondaryTextSample);
   });
 
-  it('should hide main text in header', function (done) {
-    settingsPage.SiteHeader.hideMainTextButton.click();
-    settingsPage.saveAndRefresh();
-    expect(browser.isElementPresent(settingsPage.mainTextHeaderMatcher)).toBeFalsy();
-    done();
+  it('should hide main text in header', async () => {
+    await settingsPage.SiteHeader.hideMainTextButton.click();
+    await settingsPage.saveAndRefresh();
+    expect(await browser.isElementPresent(settingsPage.mainTextHeaderMatcher)).toBeFalsy();
   });
 
-  it('should hide secodary text in header', function (done) {
-    settingsPage.SiteHeader.hideSecondaryTextButton.click();
-    settingsPage.saveAndRefresh();
-    expect(browser.isElementPresent(settingsPage.secondaryTextHeaderMatcher)).toBeFalsy();
-    done();
+  it('should hide secodary text in header', async () => {
+    await settingsPage.SiteHeader.hideSecondaryTextButton.click();
+    await settingsPage.saveAndRefresh();
+    expect(await browser.isElementPresent(settingsPage.secondaryTextHeaderMatcher)).toBeFalsy();
   });
 
   // This test will be completed as soon as tool for image comparison is found
-  xit('should be able to change logo file', function (done) {
+  xit('should be able to change logo file', async function () {
     const fileToUpload = data.SiteHeaderSettings.customSettings.logoFilePath;
     const absolutePath = path.resolve(__dirname, fileToUpload);
     settingsPage.SiteHeader.fileInput.sendKeys(absolutePath);
-    settingsPage.saveAndRefresh();
+    await settingsPage.saveAndRefresh();
     expect((element(settingsPage.headerImageMatcher)).getAttribute('src'))
       .toEqual(absolutePath);
-    done();
   });
 
 });

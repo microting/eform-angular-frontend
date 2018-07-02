@@ -14,7 +14,8 @@
     "server": "node server.js",
     "winserver-install": "node svc.js install",
     "winserver-uninstall": "node svc.js uninstall",
-    "test-single-headless": "ng test --single-run=true --browsers=PhantomJS --reporters=progress,junit"
+    "test-single-headless": "ng test --single-run=true --browsers=PhantomJS --reporters=progress,junit",
+    "test-suite":"node .\\node_modules\\protractor\\bin\\protractor --suite"
   },
   "private": true,
   "dependencies": {

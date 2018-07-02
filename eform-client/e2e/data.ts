@@ -42,7 +42,7 @@ export default {
     forthTagForAdding: 'testTag4',
     fifthTagForAdding: 'testTag5',
     tagsNumberForSelectionForFilter: 2,
-    xpathForTagsInTagSelectorInEditTagModal: '//*[@id="templateTagsSelector"]/div/div/a/span/span[2]',
+    xpathForTagsInTagSelectorInEditTagModal: '//*[@id="templateTagsSelector"]/div/ul/li/a',
     xpathForTagsInTagListForDeletion: '//*[@id="tagListSelectorForDelete"]/option'
   }
 };
