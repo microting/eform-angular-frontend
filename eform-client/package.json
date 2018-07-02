@@ -15,7 +15,7 @@
     "winserver-install": "node svc.js install",
     "winserver-uninstall": "node svc.js uninstall",
     "test-single-headless": "ng test --single-run=true --browsers=PhantomJS --reporters=progress,junit",
-    "test-suite":"node .\\node_modules\\protractor\\bin\\protractor --suite"
+    "test-suite": "node .\\node_modules\\protractor\\bin\\protractor --suite"
   },
   "private": true,
   "dependencies": {
@@ -77,7 +77,7 @@
     "karma-remap-istanbul": "^0.6.0",
     "path": "^0.12.7",
     "phantomjs-prebuilt": "^2.1.16",
-    "protractor": "~5.1.0",
+    "protractor": "~5.3.2",
     "run-sequence": "^2.2.1",
     "ts-node": "~2.0.0",
     "tslint": "~4.5.0",

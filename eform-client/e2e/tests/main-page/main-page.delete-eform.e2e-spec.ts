@@ -19,7 +19,9 @@ describe('Main page - DELETE. User', function () {
     it('should delete existing eform', async  () => {
       browser.waitForAngular();
       const firstRowObj = await getMainPageRowObject(1);
+      await browser.sleep(3000);
       await firstRowObj.deleteEFormBtn.click();
+      browser.sleep(3000);
       await waitTillVisibleAndClick(mainPage.deleteEformModal.deleteEFormOkBtn);
       const allMainPageRowObjects = await MainPage.getAllMainPageRowObjects();
       const rowIsDeleted: boolean = allMainPageRowObjects.filter(item => item.id === firstRowObj.id).length === 0;

@@ -56,6 +56,7 @@ exports.config = {
   },
   onPrepare: function () {
     jasmine.getEnv().addReporter(new SpecReporter());
+    browser.driver.manage().window().maximize();
   }
 
 };
