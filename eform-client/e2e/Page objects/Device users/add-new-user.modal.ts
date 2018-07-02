@@ -10,21 +10,21 @@ export class AddNewUserModal {
   public cancelButton: ElementFinder;
 
   // actions
-  fillFirstNameInput(): void {
-    this.firstNameInput.sendKeys(data.DeviceUsersPage.sampleFirstName);
+  async fillFirstNameInput(): Promise<void> {
+    await this.firstNameInput.sendKeys(data.DeviceUsersPage.sampleFirstName);
 
   }
 
-  fillLastNameInput(): void {
-    this.lastNameInput.sendKeys(data.DeviceUsersPage.sampleLastName);
+  async fillLastNameInput(): Promise<void>{
+    await this.lastNameInput.sendKeys(data.DeviceUsersPage.sampleLastName);
   }
 
-  save(): void {
-    this.saveButton.click();
+  async save(): Promise<void> {
+    await this.saveButton.click();
   }
 
-  cancel(): void {
-    this.cancelButton.click();
+  async cancel(): Promise<void> {
+    await this.cancelButton.click();
   }
 
   constructor() {

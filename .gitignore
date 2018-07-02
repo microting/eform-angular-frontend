@@ -366,3 +366,7 @@ eFormAPI/eFormAPI/Plugins/
 eFormAPI/EformBase\.Pn/Plugins/EformBase/
 
 eFormAPI/Plugins/Vehicles\.Pn/Vehicles/
+
+eform-client/src/app/plugins/modules/
+
+eFormAPI/Plugins/

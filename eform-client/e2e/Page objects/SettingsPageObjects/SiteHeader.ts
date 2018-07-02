@@ -9,11 +9,11 @@ export class SiteHeader {
   public hideSecondaryTextButton: ElementFinder;
   public fileInput: ElementFinder;
 
-  public resetAndRefresh(): void {
-    browser.sleep(2000);
-    this.resetButton.click();
-    browser.refresh();
-    browser.waitForAngularEnabled();
+  public async resetAndRefresh(): Promise<void> {
+    await browser.sleep(2000);
+    await this.resetButton.click();
+    await browser.refresh();
+    await browser.waitForAngularEnabled();
   }
 
   constructor() {

@@ -226,7 +226,7 @@
           </th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="pairingModalTableBody">
         <tr *ngFor="let siteDto of sitesDto">
           <td>
             {{siteDto.siteUId}}
@@ -250,9 +250,9 @@
     </div>
   </modal-body>
   <modal-footer>
-    <button type="button" class="btn btn-default" data-dismiss="deploymentModal" (click)="deploymentModal.dismiss()">
+    <button type="button" class="btn btn-default" data-dismiss="deploymentModal" (click)="deploymentModal.dismiss()" id="pairingModalCancelBtn">
       {{ 'Cancel' | translate }}</button>
-    <button type="button" class="btn btn-success" [disabled]="isDeploying" (click)="submitDeploymentModal()">
+    <button type="button" class="btn btn-success" [disabled]="isDeploying" (click)="submitDeploymentModal()" id="pairingModalSaveBtn">
      {{ 'Save pairing' | translate }}<i *ngIf="isDeploying" class="fa fa-spinner fa-spin"></i></button>
   </modal-footer>
 </modal>

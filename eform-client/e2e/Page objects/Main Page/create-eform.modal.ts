@@ -14,18 +14,18 @@ export class CreateEformModal {
   closeTagInputBtn: ElementFinder;
 
   // actions
-  selectTag(tagName) {
+  async selectTag(tagName) {
     const tag = element(by.xpath(`//*[@id="createEFormMultiSelector"]//span[text()="${tagName}"]`));
-    tag.click();
+    await tag.click();
   };
 
-  enterXML(name) {
+  async enterXML(name) {
     let text = xmlData.xmlTest1.text;
     text = text.replace(data.MainPage.wordToReplaceInXML,
       name + Math.floor(Math.random() * data.MainPage.auxiliaryNumberForReplacing) + 1);
-    this.xmlTextArea.clear();
-    browser.executeScript(`document.querySelector('#eFormXml').value = arguments[0];`, text);
-    this.xmlTextArea.sendKeys(' ');
+    await this.xmlTextArea.clear();
+    await browser.executeScript(`document.querySelector('#eFormXml').value = arguments[0];`, text);
+    await this.xmlTextArea.sendKeys(' ');
   }
 
   constructor() {

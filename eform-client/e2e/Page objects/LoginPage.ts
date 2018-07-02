@@ -1,4 +1,4 @@
-import {$, by, element, ElementFinder} from 'protractor';
+import {$, browser, by, element, ElementFinder, ExpectedConditions} from 'protractor';
 import {By} from '@angular/platform-browser';
 import {default as data} from '../data';
 
@@ -15,12 +15,14 @@ export class LoginPage {
   public loginPageImageMatcher: By;
 
   // login method, used on Login Page
-  public login(): void {
-    this.usernameInput.clear();
-    this.passwordInput.clear();
-    this.usernameInput.sendKeys(data.login);
-    this.passwordInput.sendKeys(data.password);
-    this.loginButton.click();
+  public async login(): Promise<void> {
+    await browser.wait(ExpectedConditions.elementToBeClickable(this.usernameInput));
+    await this.usernameInput.clear();
+    await browser.wait(ExpectedConditions.elementToBeClickable(this.passwordInput));
+    await this.passwordInput.clear();
+    await this.usernameInput.sendKeys(data.login);
+    await this.passwordInput.sendKeys(data.password);
+    await this.loginButton.click();
   }
 
 

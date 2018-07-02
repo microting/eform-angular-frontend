@@ -19,27 +19,27 @@ export class DatabasePage {
   public defaultLanguageSelector: ElementFinder;
   public englishLanguageOption: ElementFinder;
 
-  selectLanguage(languageName) {
+  public async selectLanguage(languageName) : Promise<void> {
     this.englishLanguageOption = element(by.cssContainingText('.dropdown-item', languageName));
-    this.englishLanguageOption.click();
+    await this.englishLanguageOption.click();
   }
-  public saveDatabase(): void {
+  public async saveDatabase(): Promise<void> {
     // just fill in all inputs for database connection with appropriate values
-    this.username.sendKeys(dbData.username);
-    this.password.sendKeys(dbData.password);
-    this.email.sendKeys(dbData.email);
-    this.firstName.sendKeys(dbData.firstName);
-    this.lastName.sendKeys(dbData.lastNAme);
-    this.dataSourceSDK.sendKeys(dbData.dataSourceSDK);
-    this.initialCatalogSDK.sendKeys(dbData.initialCatalogueSDK);
-    this.authenticationTypeSDK.sendKeys(dbData.authenticationTypeSDK);
-    this.token.sendKeys(dbData.token);
-    this.dataSourceMain.sendKeys(dbData.dataSourceMain);
-    this.initialCatalogMain.sendKeys(dbData.initialCatalogueMain);
-    this.authenticationTypeMain.sendKeys(dbData.authenticationTypeMain);
-    this.defaultLanguageSelector.click();
-    this.selectLanguage(dbData.languageOptions.english);
-    this.saveButton.click(); // click "Save" button and submit all inputs
+    await this.username.sendKeys(dbData.username);
+    await this.password.sendKeys(dbData.password);
+    await this.email.sendKeys(dbData.email);
+    await this.firstName.sendKeys(dbData.firstName);
+    await this.lastName.sendKeys(dbData.lastNAme);
+    await this.dataSourceSDK.sendKeys(dbData.dataSourceSDK);
+    await this.initialCatalogSDK.sendKeys(dbData.initialCatalogueSDK);
+    await this.authenticationTypeSDK.sendKeys(dbData.authenticationTypeSDK);
+    await this.token.sendKeys(dbData.token);
+    await this.dataSourceMain.sendKeys(dbData.dataSourceMain);
+    await this.initialCatalogMain.sendKeys(dbData.initialCatalogueMain);
+    await this.authenticationTypeMain.sendKeys(dbData.authenticationTypeMain);
+    await this.defaultLanguageSelector.click();
+    await this.selectLanguage(dbData.languageOptions.english);
+    await this.saveButton.click(); // click "Save" button and submit all inputs
   }
 
   constructor() {

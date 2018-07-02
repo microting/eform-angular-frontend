@@ -6,7 +6,7 @@ using Base32;
 using eFormAPI.Web.Infrastructure.Helpers;
 using eFormAPI.Web.Infrastructure.Identity;
 using eFormAPI.Web.Infrastructure.Models.Auth;
-using EformBase.Pn.Helpers;
+using EformBase.Pn.Infrastructure.Helpers;
 using EformBase.Pn.Infrastructure.Models.API;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;

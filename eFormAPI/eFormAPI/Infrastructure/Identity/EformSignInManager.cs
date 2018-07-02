@@ -1,4 +1,4 @@
-﻿using eFormAPI.Web.Infrastructure.Data.Entities;
+﻿using EformBase.Pn.Infrastructure.Data.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;

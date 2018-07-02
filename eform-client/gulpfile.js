@@ -28,7 +28,7 @@ const runSpawn = function (done, task, opt_arg, opt_io) {
 };
 
 gulp.task('webdriver:update', function (done) {
-  runSpawn(done, 'node', ['./node_modules/protractor/bin/webdriver-manager', 'update']);
+  runSpawn(done, 'node', ['./node_modules/protractor/bin/webdriver-manager', 'update', '--versions.standalone=3.13.0', '--versions.chrome=2.39']);
 });
 
 gulp.task('tests', function (done) {

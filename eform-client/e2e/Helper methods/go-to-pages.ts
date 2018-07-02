@@ -8,23 +8,24 @@ import data from '../data';
 const loginPage = new LoginPage();
 const navbar = new Navbar();
 
-export function goToSettingsPage() {
-  browser.get(data.startPageUrl);
+export async function goToSettingsPage() {
+  await browser.get(data.startPageUrl);
   loginPage.login();
-  waitTillVisibleAndClick(navbar.advancedButton);
-  waitTillVisibleAndClick(navbar.settingsButton);
+  await waitTillVisibleAndClick(navbar.advancedButton);
+  await waitTillVisibleAndClick(navbar.settingsButton);
 }
 
-export function goToDeviceUsersPage() {
-  browser.get(data.startPageUrl);
-  loginPage.login();
-  waitTillVisibleAndClick(navbar.deviceUsersButton);
+export async function goToDeviceUsersPage() {
+  await browser.get(data.startPageUrl);
+  await loginPage.login();
+  await waitTillVisibleAndClick(navbar.deviceUsersButton);
 }
 
-export function goToMainPage() {
-  browser.get(data.startPageUrl);
-  loginPage.login();
-  waitTillVisibleAndClick(navbar.mainPageButton);
+export async function goToMainPage() {
+  await browser.get(data.startPageUrl);
+  await loginPage.login();
+  await browser.waitForAngular();
+  // waitTillVisibleAndClick(navbar.mainPageButton);
 }
 
 export function gotToSites() {

@@ -23,11 +23,11 @@ export class SettingsPage {
   public fileInput: ElementFinder;
 
   // helper functions
-  public saveAndRefresh(): void {
-    this.saveButton.click();
-    browser.wait(protractor.ExpectedConditions.elementToBeClickable(this.saveButton));
-    browser.refresh();
-    browser.waitForAngular();
+  public async saveAndRefresh(): Promise<void> {
+    await this.saveButton.click();
+    await browser.wait(protractor.ExpectedConditions.elementToBeClickable(this.saveButton));
+    await browser.refresh();
+    await browser.waitForAngular();
   }
 
   constructor() {
@@ -42,6 +42,5 @@ export class SettingsPage {
     this.saveButton = $('button.btn-ar.btn-danger');
     this.headerMainText = element(this.mainTextHeaderMatcher);
     this.headerSecondaryText = element(this.secondaryTextHeaderMatcher);
-
   }
 }

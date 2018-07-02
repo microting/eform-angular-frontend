@@ -8,15 +8,15 @@ export class EditUserPage {
   public saveButton: ElementFinder;
 
   // actions
-  save(): void {
-    this.saveButton.click();
+  async save(): Promise<void> {
+    await this.saveButton.click();
   }
 
-  fillInputs() {
-    this.firstNameInput.clear();
-    this.firstNameInput.sendKeys(data.DeviceUsersPage.sampleEditFistName);
-    this.lastNameInput.clear();
-    this.lastNameInput.sendKeys(data.DeviceUsersPage.sampleEditLastName);
+  async fillInputs(): Promise<void> {
+    await this.firstNameInput.clear();
+    await this.firstNameInput.sendKeys(data.DeviceUsersPage.sampleEditFistName);
+    await this.lastNameInput.clear();
+    await this.lastNameInput.sendKeys(data.DeviceUsersPage.sampleEditLastName);
   }
 
   constructor() {
