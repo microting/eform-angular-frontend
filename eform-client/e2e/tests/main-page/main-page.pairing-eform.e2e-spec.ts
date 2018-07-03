@@ -14,7 +14,6 @@ describe('Pairing on the main page:', function () {
   afterAll(async () => {
     await signOut();
   });
-
   describe('After clicking "Pair eForm" button user', function () {
     afterEach(async () => {
       const mainPage = new MainPage();
@@ -29,8 +28,8 @@ describe('Pairing on the main page:', function () {
       await browser.waitForAngular();
       await waitFor(mainPage.pairEformModal.saveBtn);
       await mainPage.pairEformModal.getAllPairingModalRowObjects();
-      const uncheckedPairEformModalRowObj1 = mainPage.pairEformModal.uncheckedPairEformRowObjects[3];
-      const uncheckedPairEformModalRowObj2 = mainPage.pairEformModal.uncheckedPairEformRowObjects[4];
+      const uncheckedPairEformModalRowObj1 = mainPage.pairEformModal.uncheckedPairEformRowObjects[0];
+      const uncheckedPairEformModalRowObj2 = mainPage.pairEformModal.uncheckedPairEformRowObjects[0];
       await uncheckedPairEformModalRowObj1.checkToPairChbx.click();
       await uncheckedPairEformModalRowObj2.checkToPairChbx.click();
       let expectedPairedNamesArr: string[] = [];
@@ -86,7 +85,7 @@ describe('Pairing on the main page:', function () {
       let expectedPairedNamesArr: string[] = [];
       try {
         const checkedPairEformModalRowObj = mainPage.pairEformModal.checkedPairEformRowObjects[0];
-        const uncheckedPairEformModalRowObj = mainPage.pairEformModal.uncheckedPairEformRowObjects[3];
+        const uncheckedPairEformModalRowObj = mainPage.pairEformModal.uncheckedPairEformRowObjects[0];
         await checkedPairEformModalRowObj.checkToPairChbx.click();
         await uncheckedPairEformModalRowObj.checkToPairChbx.click();
         mainPage.pairEformModal.checkedPairEformRowObjects.shift(); // remove clicked row from list of checked rows

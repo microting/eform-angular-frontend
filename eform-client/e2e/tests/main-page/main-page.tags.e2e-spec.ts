@@ -66,6 +66,7 @@ describe('Main Page - EDIT, DELETE AND CREATE TAGS', function () {
       const randomTagText = await randomTag.getText();
       await randomTag.click();
       await mainPage.editTagModal.saveBtn.click();
+      await browser.sleep(4000);
       const finalFirstRowObj = await getMainPageRowObject(1);
       expect(finalFirstRowObj.tags.indexOf(randomTagText) !== -1).toBeTruthy('Tag was not added');
     });

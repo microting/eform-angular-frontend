@@ -1,5 +1,5 @@
 import {PairingModalRowObject} from './pairingModal.row-object';
-import {$, by, element, ElementFinder} from 'protractor';
+import {$, browser, by, element, ElementFinder} from 'protractor';
 
 export class PairEformModal {
   public pairEformRowObjects: PairingModalRowObject[] = [];
@@ -18,6 +18,7 @@ export class PairEformModal {
     return rowObj;
   }
   async getAllPairingModalRowObjects() {
+    await browser.sleep(4000);
     const pairingModalRowObjNum = await element.all(by.xpath('//*[@id="pairingModalTableBody"]/tr')).count();
     for (let i = 1; i <= pairingModalRowObjNum; i++) {
       this.pairEformRowObjects.push(await this.getPairingModalRowObj(i));
