@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Web.Http;
 using eFormAPI.Web.Infrastructure.Models.Common;
 using eFormAPI.Web.Infrastructure.Models.Tags;
-using EformBase.Pn.Infrastructure;
-using EformBase.Pn.Infrastructure.Helpers;
-using EformBase.Pn.Infrastructure.Models.API;
+using eFormApi.BasePn.Infrastructure;
+using eFormApi.BasePn.Infrastructure.Helpers;
+using eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Controllers
 {

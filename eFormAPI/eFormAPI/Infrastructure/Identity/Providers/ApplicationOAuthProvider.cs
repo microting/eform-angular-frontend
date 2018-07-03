@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Base32;
 using Castle.Core.Internal;
 using eFormAPI.Web.Infrastructure.Helpers;
-using EformBase.Pn.Infrastructure.Data.Entities;
+using eFormApi.BasePn.Infrastructure.Data.Entities;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
