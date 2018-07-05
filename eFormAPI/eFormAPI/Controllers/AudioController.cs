@@ -11,10 +11,10 @@ namespace eFormAPI.Web.Controllers
     public class AudioController : ApiController
     {
         [HttpGet]
-        [Route("api/audio/eform-audio/{fileName}")]
-        public HttpResponseMessage GetAudio(string fileName)
+        [Route("api/audio/eform-audio/{fileName}.{ext}")]
+        public HttpResponseMessage GetAudio(string fileName, string ext)
         {
-            var filePath = HttpContext.Current.Server.MapPath($"~/output/datafolder/picture/{fileName}.wav");
+            var filePath = HttpContext.Current.Server.MapPath($"~/output/datafolder/picture/{fileName}.{ext}");
             if (!File.Exists(filePath))
             {
                 return new HttpResponseMessage(HttpStatusCode.NotFound);
