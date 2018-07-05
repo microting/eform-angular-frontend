@@ -19,6 +19,7 @@ import {
   ElementInfoboxComponent,
   ElementTimerComponent,
   ElementSignatureComponent,
+  ElementAudioComponent,
   TrumbowygComponent,
   ElementEntitysearchComponent,
   ElementEntityselectComponent,
@@ -66,7 +67,8 @@ import {NgxSelectModule} from 'ngx-select-ex';
     ElementTimerComponent,
     ElementSignatureComponent,
     ElementEntitysearchComponent,
-    ElementEntityselectComponent
+    ElementEntityselectComponent,
+    ElementAudioComponent
   ]
 })
 export class CasesModule {

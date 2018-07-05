@@ -14,3 +14,4 @@ export * from './element-signature/element-signature.component'
 export * from './element-container/element-container.component'
 export * from './element-entitysearch/element-entitysearch.component';
 export * from './element-entityselect/element-entityselect.component';
+export * from './element-audio/element-audio.component';
