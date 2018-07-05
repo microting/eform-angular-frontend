@@ -1,6 +1,5 @@
-<audio controls>
-  <source src="" type="audio/ogg">
+<audio controls preload="auto" src="/api/audio/eform-audio?fileName={{fieldValueObj.uploadedDataObj.fileName}}">
+  This text displays if the audio tag isn't supported.
 </audio>
-<textarea class="form-control"
-          name="value"></textarea>
+<trumbowyg-editor [(content)]="fieldValueObj.value"></trumbowyg-editor>
 

@@ -11,25 +11,24 @@ namespace eFormAPI.Web.Controllers
     public class AudioController : ApiController
     {
         [HttpGet]
-        [Route("api/audio/eform-audio/{fileName}.{ext}")]
-        public HttpResponseMessage GetAudio(string fileName, string ext)
+        [Route("api/audio/eform-audio")]
+        public HttpResponseMessage GetAudio(string fileName)
         {
-            var filePath = HttpContext.Current.Server.MapPath($"~/output/datafolder/picture/{fileName}.{ext}");
+            var filePath = HttpContext.Current.Server.MapPath($"~/output/datafolder/picture/{fileName}");
             if (!File.Exists(filePath))
             {
                 return new HttpResponseMessage(HttpStatusCode.NotFound);
             }
-            const string mime = "vnd.wave";
-            var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            var result = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StreamContent(fileStream)
-            };
-            result.Content.Headers.ContentDisposition =
-                new ContentDispositionHeaderValue("attachment") {FileName = fileName};
+           
+            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+            var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            result.Content = new StreamContent(stream);
             result.Content.Headers.ContentType =
-                new MediaTypeHeaderValue($"audio/{mime}");
+                new MediaTypeHeaderValue("audio/wav");
+            result.Content.Headers.ContentLength = stream.Length;
+            result.Content.Headers.ContentRange = new ContentRangeHeaderValue(0, stream.Length);
             return result;
+
         }
     }
 }
