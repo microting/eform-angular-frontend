@@ -9,7 +9,7 @@ const mainPage = new MainPage();
 
 
 describe('Main page - FILTERS', function () {
-  xdescribe('By label user', function () {
+  describe('By label user', function () {
     beforeAll(async () => {
       await goToMainPage();
     });
@@ -55,7 +55,9 @@ describe('Main page - FILTERS', function () {
     });
     it('should be able to filter using 1 tag', async () => {
       await browser.waitForAngular();
+      await browser.sleep(5000);
       await waitTillVisibleAndClick(mainPage.tagSelector);
+      await browser.sleep(5000);
       const tagArray: ElementArrayFinder = mainPage.getTagsForFilter(); // ElementArrayFinder lacks functionality compared to ordinary
                                                                         // arrays. Thus it is better to make simple array
       const tagArr: ElementFinder[] = []; // This is simple array of ElementFinder elements
@@ -98,7 +100,6 @@ describe('Main page - FILTERS', function () {
       }
       await randomTagArray.forEach(async (item) => await item.click()) ;
       await browser.waitForAngular();
-      await browser.sleep(5000);
       const finalRowNum = await mainPage.getRowNumber();
       const finalRowObjArr: MainPageRowObject[] = [];
       for (let i = 1; i <= finalRowNum; i++) {
@@ -114,7 +115,6 @@ describe('Main page - FILTERS', function () {
       expect(filteredByTags).toBeTruthy('Eforms are filtered by tags incorrectly');
       await randomTagArray.forEach(async tag => await tag.click());
       await browser.waitForAngular();
-      await browser.sleep(5000);
       const postRefilterRowNum = await mainPage.getRowNumber();
       expect(postRefilterRowNum).toBeGreaterThan(finalRowNum, 'Deleting tags in selector hasn\'t increased eforms number');
     });

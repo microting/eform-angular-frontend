@@ -1,4 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
 import {FileUploader} from 'ng2-file-upload';
 import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
 import {IMultiSelectSettings, IMultiSelectTexts} from 'angular-2-dropdown-multiselect';
@@ -77,7 +78,8 @@ export class EFormTableComponent implements OnInit {
   constructor(private eFormService: EFormService,
               private notifyService: NotifyService,
               private sitesService: SitesService,
-              private eformTagService: EformTagService) {
+              private eformTagService: EformTagService,
+              private translateService: TranslateService) {
   }
 
 
@@ -97,6 +99,8 @@ export class EFormTableComponent implements OnInit {
         this.zipFileUploader.removeFromQueue(this.zipFileUploader.queue[0]);
       }
     };
+
+    this.initTagsSelectorSettings();
   }
 
   loadAllTags() {
@@ -375,5 +379,25 @@ export class EFormTableComponent implements OnInit {
         this.notifyService.error({text: operation.message || 'Error'});
       }
     }));
+  }
+
+  private initTagsSelectorSettings() {
+    setTimeout(() => {
+      this.myTexts = {
+        searchPlaceholder: this.translateService.instant('Find'),
+        searchEmptyResult: this.translateService.instant('Nothing found') + '...',
+        searchNoRenderText: this.translateService.instant('Type in search box to see results') + '...',
+        defaultTitle: '...',
+        allSelected: this.translateService.instant('All selected')
+      };
+
+      this.filterTagTexts = {
+        searchPlaceholder: this.translateService.instant('Find'),
+        searchEmptyResult: this.translateService.instant('Nothing found') + '...',
+        searchNoRenderText: this.translateService.instant('Type in search box to see results') + '...',
+        defaultTitle: this.translateService.instant('Select tags for filter'),
+        allSelected: this.translateService.instant('All selected')
+      };
+    }, 500);
   }
 }

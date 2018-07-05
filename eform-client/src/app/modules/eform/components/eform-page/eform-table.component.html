@@ -489,7 +489,7 @@
             <input type="search" [(ngModel)]="eFormCreateModel.newTag" class="form-control add-tag-input"
                    id="addTagInput">
             <button class="btn btn-danger btn-xs btn-add-tag"
-                    (click)="isTagAddOpen = !isTagAddOpen; eFormCreateModel.newTag = '';" id="closeTagInputBtn">
+                    (click)="isTagAddOpen = !isTagAddOpen; eFormCreateModel.newTag = null;" id="closeTagInputBtn">
               <span class="glyphicon glyphicon-remove"></span>
             </button>
           </ng-container>
@@ -511,7 +511,9 @@
     <button type="button" class="btn btn-default" data-dismiss="createTemplateModal"
             (click)="createTemplateModal.dismiss()" id="createEFormCancelBtn">
       {{ 'Cancel' | translate }}</button>
-    <button type="button" class="btn btn-success" (click)="submitTemplateCreateModal()" id="createEFormSaveEFormBtn">
+    <button type="button" class="btn btn-success"
+            [disabled]="isTagAddOpen && !eFormCreateModel.newTag"
+            (click)="submitTemplateCreateModal()" id="createEFormSaveEFormBtn">
       {{ 'Save eForm' | translate }}</button>
   </modal-footer>
 </modal>

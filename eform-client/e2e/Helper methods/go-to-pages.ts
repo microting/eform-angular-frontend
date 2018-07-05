@@ -25,6 +25,7 @@ export async function goToMainPage() {
   await browser.get(data.startPageUrl);
   await loginPage.login();
   await browser.waitForAngular();
+  await browser.sleep(5000);
   // waitTillVisibleAndClick(navbar.mainPageButton);
 }
 

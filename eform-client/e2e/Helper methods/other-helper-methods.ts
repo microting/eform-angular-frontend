@@ -13,8 +13,10 @@ export async function signOut() {
   const loginPage = new LoginPage();
   const navbar = new Navbar();
   await browser.waitForAngular();
+  browser.sleep(3000);
   await waitTillVisibleAndClick(navbar.signOutDropdown);
   await browser.waitForAngular();
+  browser.sleep(3000);
   await waitTillVisibleAndClick(navbar.signOutButton);
   await waitFor(loginPage.loginButton);
 }

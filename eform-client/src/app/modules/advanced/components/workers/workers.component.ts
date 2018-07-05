@@ -54,7 +54,7 @@ export class WorkersComponent implements OnInit {
   deleteSingle(id: number) {
     this.workersService.deleteSingleWorker(id).subscribe(operation => {
       if (operation && operation.success) {
-        this.router.navigate(['/advanced/workers/']);
+        this.loadAllWorkers();
         this.notifyService.success({text: operation.message});
       } else {
         this.notifyService.error({text: operation.message || 'Error'});

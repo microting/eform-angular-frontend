@@ -34,7 +34,8 @@ export class MainPage {
 
   // actions
   async getRowNumber() { // this method will be made static in future
-    browser.waitForAngular();
+    await browser.sleep(5000);
+    await browser.waitForAngular();
     const rowNum = $$('#mainPageEFormsTableBody > tr').count();
     return await rowNum;
   }
