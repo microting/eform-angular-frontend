@@ -404,12 +404,6 @@
   <ItemGroup>
     <Folder Include="Plugins\" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\EformBase.Pn\eFormApi.BasePn.csproj">
-      <Project>{e271aa01-fc8d-42f2-acaa-17ab95e98ca0}</Project>
-      <Name>eFormApi.BasePn</Name>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

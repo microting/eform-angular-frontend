@@ -4,9 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eFormAPI.Web", "eFormAPI\eFormAPI.Web.csproj", "{54404CF9-A407-4F55-BC26-B243099E29A8}"
-	ProjectSection(ProjectDependencies) = postProject
-		{E271AA01-FC8D-42F2-ACAA-17AB95E98CA0} = {E271AA01-FC8D-42F2-ACAA-17AB95E98CA0}
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Installation", "Installation", "{DF4D5E9C-F43E-471F-BCEF-81C1363192AB}"
 EndProject
@@ -41,8 +38,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eFormApi.Tests", "eFormApi.Tests\eFormApi.Tests.csproj", "{12D13BC6-8F04-4409-941C-DCFB60B00D05}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eFormApi.Integration.Tests", "eFormApi.Integration.Tests\eFormApi.Integration.Tests.csproj", "{CC6EA000-5ADF-47B3-8182-DFF8A932830C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eFormApi.BasePn", "EformBase.Pn\eFormApi.BasePn.csproj", "{E271AA01-FC8D-42F2-ACAA-17AB95E98CA0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -128,18 +123,6 @@ Global
 		{CC6EA000-5ADF-47B3-8182-DFF8A932830C}.Release|x64.Build.0 = Release|x64
 		{CC6EA000-5ADF-47B3-8182-DFF8A932830C}.Release|x86.ActiveCfg = Release|Any CPU
 		{CC6EA000-5ADF-47B3-8182-DFF8A932830C}.Release|x86.Build.0 = Release|Any CPU
-		{E271AA01-FC8D-42F2-ACAA-17AB95E98CA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E271AA01-FC8D-42F2-ACAA-17AB95E98CA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E271AA01-FC8D-42F2-ACAA-17AB95E98CA0}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{E271AA01-FC8D-42F2-ACAA-17AB95E98CA0}.Debug|x64.Build.0 = Debug|Any CPU
-		{E271AA01-FC8D-42F2-ACAA-17AB95E98CA0}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{E271AA01-FC8D-42F2-ACAA-17AB95E98CA0}.Debug|x86.Build.0 = Debug|Any CPU
-		{E271AA01-FC8D-42F2-ACAA-17AB95E98CA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E271AA01-FC8D-42F2-ACAA-17AB95E98CA0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E271AA01-FC8D-42F2-ACAA-17AB95E98CA0}.Release|x64.ActiveCfg = Release|x64
-		{E271AA01-FC8D-42F2-ACAA-17AB95E98CA0}.Release|x64.Build.0 = Release|x64
-		{E271AA01-FC8D-42F2-ACAA-17AB95E98CA0}.Release|x86.ActiveCfg = Release|Any CPU
-		{E271AA01-FC8D-42F2-ACAA-17AB95E98CA0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
