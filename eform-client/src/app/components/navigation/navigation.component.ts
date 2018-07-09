@@ -22,14 +22,11 @@ export class NavigationComponent implements OnInit {
   }
 
   ngOnInit() {
-    debugger;
     if (this.authService.isAuth) {
       this.adminService.getCurrentUserInfo().subscribe((result) => {
         this.userInfo = result;
-        debugger;
         this.userSettingsService.getUserSettings().subscribe(((data) => {
           localStorage.setItem('locale', data.model.locale);
-          debugger;
           this.initLocaleAsync().then(() => {
             this.initNavigationMenu();
           });

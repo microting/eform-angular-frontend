@@ -30,7 +30,7 @@ namespace eFormAPI.Web
             try
             {
                 var configuration = WebConfigurationManager.OpenWebConfiguration("~");
-                var section = (ConnectionStringsSection)configuration.GetSection("connectionStrings");
+                var section = (ConnectionStringsSection) configuration.GetSection("connectionStrings");
                 var connString = section.ConnectionStrings["eFormMainConnection"].ConnectionString;
                 if (!connString.IsNullOrEmpty())
                 {
