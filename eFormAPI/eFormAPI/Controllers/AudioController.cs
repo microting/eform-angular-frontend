@@ -24,11 +24,10 @@ namespace eFormAPI.Web.Controllers
             var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             result.Content = new StreamContent(stream);
             result.Content.Headers.ContentType =
-                new MediaTypeHeaderValue("audio/wav");
+                new MediaTypeHeaderValue("application/octet-stream");
             result.Content.Headers.ContentLength = stream.Length;
             result.Content.Headers.ContentRange = new ContentRangeHeaderValue(0, stream.Length);
             return result;
-
         }
     }
 }
