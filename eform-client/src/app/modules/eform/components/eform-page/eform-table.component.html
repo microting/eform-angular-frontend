@@ -501,7 +501,8 @@
           <label class="mt-validation-container" for="eFormXML">
             {{ 'XML from eForm Builder' | translate }}
           </label>
-          <textarea [(ngModel)]="eFormCreateModel.eFormXml" class="form-control" placeholder="{{ 'Paste XML here' | translate }}"
+          <textarea [(ngModel)]="eFormCreateModel.eFormXml"
+                    class="form-control" placeholder="{{ 'Paste XML here' | translate }}"
                     name="eFormXML" id="eFormXml" rows="20" ></textarea>
         </div>
       </div>
@@ -512,8 +513,8 @@
             (click)="createTemplateModal.dismiss()" id="createEFormCancelBtn">
       {{ 'Cancel' | translate }}</button>
     <button type="button" class="btn btn-success"
-            [disabled]="isTagAddOpen && !eFormCreateModel.newTag"
+            [disabled]="(isTagAddOpen && !eFormCreateModel.newTag) || isEformCreating"
             (click)="submitTemplateCreateModal()" id="createEFormSaveEFormBtn">
-      {{ 'Save eForm' | translate }}</button>
+      {{ 'Save eForm' | translate }} <i *ngIf="isEformCreating" class="fa fa-spinner fa-spin"></i></button>
   </modal-footer>
 </modal>

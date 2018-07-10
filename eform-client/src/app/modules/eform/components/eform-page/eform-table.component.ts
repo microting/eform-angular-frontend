@@ -31,6 +31,7 @@ export class EFormTableComponent implements OnInit {
   matchFound = false;
   isDeploying = false;
   isTagsProcessing = false;
+  isEformCreating = false;
 
   eFormCreateModel: EFormCreateModel = new EFormCreateModel();
   templateListModel: TemplateListModel = new TemplateListModel();
@@ -157,7 +158,8 @@ export class EFormTableComponent implements OnInit {
   // Create modal
   createSingleTemplate() {
     if (this.eFormCreateModel != null) {
-      this.eFormService.createSingle(this.eFormCreateModel).subscribe(operation => {
+      this.isEformCreating = true;
+      this.eFormService.createSingle(this.eFormCreateModel).subscribe((operation => {
         if (operation && operation.success) {
           this.loadAllTemplates();
           this.eFormCreateModel = new EFormCreateModel;
@@ -166,7 +168,10 @@ export class EFormTableComponent implements OnInit {
           this.notifyService.error({text: operation.message || 'Error'});
         }
         this.createTemplateModal.close();
+        this.isEformCreating = false;
         this.loadAllTags();
+      }), error => {
+        this.isEformCreating = false;
       });
     }
   }
