@@ -1,4 +1,6 @@
-<audio controls preload="auto" src="/api/audio/eform-audio?fileName={{fieldValueObj.uploadedDataObj.fileName}}">
+<audio controls preload="auto"
+       *ngIf="fieldValueObj.uploadedDataObj && fieldValueObj.uploadedDataObj.fileName"
+       src="/api/audio/eform-audio?fileName={{fieldValueObj.uploadedDataObj.fileName}}">
   This text displays if the audio tag isn't supported.
 </audio>
 <trumbowyg-editor [(content)]="fieldValueObj.value"></trumbowyg-editor>
