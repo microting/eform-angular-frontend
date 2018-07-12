@@ -37,7 +37,7 @@ exports.config = {
     maxSessions: 1,
     maxInstances: 1
   },
-  directConnect: true,
+  directConnect: false,
   baseUrl:
     'VSTS_TEST_SERVER_ADDRESS',
   framework:
