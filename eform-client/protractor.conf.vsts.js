@@ -37,7 +37,7 @@ exports.config = {
     maxSessions: 1,
     maxInstances: 1
   },
-  directConnect: false,
+  directConnect: true,
   baseUrl:
     'VSTS_TEST_SERVER_ADDRESS',
   framework:
@@ -45,6 +45,8 @@ exports.config = {
   jasmineNodeOpts: {
     showColors: true,
     defaultTimeoutInterval: 720000,
+    includeStackTrace: true,
+    isVerbose: true,
     print: function () {
     }
   },
