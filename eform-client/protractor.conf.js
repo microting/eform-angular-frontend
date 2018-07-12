@@ -36,7 +36,6 @@ exports.config = {
   capabilities: {
     browserName: 'chrome',
     maxSessions: 1,
-    maxInstances: 1
     maxInstances: 1,
     // options for headless mode
     chromeOptions: {args: ["--headless", "--disable-gpu"]}
