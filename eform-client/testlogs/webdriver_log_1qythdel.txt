@@ -1,0 +1,4324 @@
+13:21:52.884 |   3522ms | a3f861 | NewSession
+    {"browserName":"chrome","maxSessions":1,"maxInstances":1,"count":1}
+13:21:56.414 |     10ms | a3f861 | SetTimeouts
+    ERROR 13: unknown error: 'ms' must be a double
+  (Session info: chrome=67.0.3396.99)
+  (Driver info: chromedriver=2.39.562718 (9a2698cba08cf5a471a29d30c8b3e12becabb0e9),platform=Windows NT 10.0.16299 x86_64)
+13:21:56.427 |      3ms | a3f861 | SetTimeouts
+13:22:08.097 |     87ms | a3f861 | Go data:text/html,<html></html>
+13:22:08.189 |   2486ms | /session/a3f861e0e0db89ed408b65abf9286e10/execute
+13:22:08.093 |   3708ms | /session/a3f861e0e0db89ed408b65abf9286e10/window/current/maximize
+13:22:10.679 |   1127ms | /session/a3f861e0e0db89ed408b65abf9286e10/execute
+13:22:11.809 |  10276ms | /session/a3f861e0e0db89ed408b65abf9286e10/execute_async
+13:22:22.095 |     21ms | a3f861 | FindElements
+    Using xpath '//*[@id="header_full_top"]/div/div/div[1]/img'
+    Elements: 
+13:22:22.128 |     19ms | a3f861 | FindElements
+    Using css selector '#main-header-text'
+    Elements: 
+13:22:22.150 |     10ms | a3f861 | FindElements
+    Using css selector '#main-header-text'
+    Elements: 
+13:22:22.169 |     18ms | a3f861 | FindElements
+    Using css selector '#secondary-header-text'
+    Elements: 
+13:22:22.191 |     10ms | a3f861 | FindElements
+    Using css selector '#secondary-header-text'
+    Elements: 
+13:22:22.210 |     11ms | a3f861 | FindElements
+    Using xpath '//*[@id="header_full_top"]/div/div/div[1]/img'
+    Elements: 
+13:22:24.228 |     17ms | a3f861 | FindElements
+    Using css selector '#siteHeaderReset'
+    Elements: 
+13:22:24.254 |     18ms | a3f861 | FindElements
+    Using css selector '#headerSettingsMainText'
+    Elements: 
+13:22:26.276 |      9ms | a3f861 | FindElements
+    Using css selector '#siteHeaderReset'
+    Elements: 
+13:22:26.292 |     16ms | a3f861 | FindElements
+    Using css selector '#headerSettingsSecondaryText'
+    Elements: 
+13:22:28.313 |     12ms | a3f861 | FindElements
+    Using css selector '#siteHeaderReset'
+    Elements: 
+13:22:28.334 |     21ms | a3f861 | FindElements
+    Using css selector '#mainTextSiteHeaderHide'
+    Elements: 
+13:22:30.385 |    456ms | a3f861 | FindElements
+    Using css selector '#siteHeaderReset'
+    Elements: 
+13:22:30.851 |     27ms | a3f861 | FindElements
+    Using css selector '#secondaryTextSiteHeaderHide'
+    Elements: 
+13:22:32.939 |    472ms | a3f861 | FindElements
+    Using css selector '#siteHeaderReset'
+    Elements: 
+13:22:33.534 |     63ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:33.602 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:33.626 |     22ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:33.653 |     19ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:33.676 |     24ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:33.704 |     21ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:33.730 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:33.750 |     18ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:33.774 |     34ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:33.816 |     53ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:33.874 |     30ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:33.909 |     40ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:33.953 |     31ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:33.990 |     33ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.030 |     36ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.071 |     20ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.132 |     21ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.158 |     34ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.198 |     36ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.238 |     21ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.264 |     22ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.290 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.313 |     19ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.336 |     32ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.373 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.396 |     19ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.419 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.441 |     26ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.471 |     18ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.495 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.515 |     58ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.578 |     36ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.620 |     23ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.649 |     22ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.675 |     18ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.697 |     16ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.717 |     22ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.745 |     20ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.769 |     20ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.797 |     33ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.833 |     21ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.858 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.879 |     19ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.902 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.923 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.945 |     20ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.969 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:34.986 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.002 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.019 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.036 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.052 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.071 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.088 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.107 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.128 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.144 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.160 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.178 |     16ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.200 |     16ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.220 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.236 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.254 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.268 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.283 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.299 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.313 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.326 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.342 |     16ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.363 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.379 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.391 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.405 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.424 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.438 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.456 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.470 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.487 |     18ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.510 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.528 |     25ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.558 |     20ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.583 |    137ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.724 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.741 |    125ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.872 |     47ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:35.925 |     78ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:36.007 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:36.025 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:36.044 |    106ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:36.154 |     18ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:36.178 |     19ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:36.201 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:36.223 |     18ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:36.246 |     16ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:36.267 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:36.286 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:36.304 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:36.326 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:36.343 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:36.360 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:36.379 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:36.399 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:36.416 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:36.435 |     21ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:36.466 |     35ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:36.507 |     31ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:36.543 |    120ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:36.668 |    120ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:36.794 |     93ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:36.894 |    109ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:37.011 |     52ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:37.068 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:37.086 |     16ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:37.111 |     34ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:37.150 |    120ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:37.277 |     92ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:37.375 |    241ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:37.626 |     43ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:37.675 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:37.695 |     16ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:37.715 |     19ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:37.738 |     18ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:37.761 |     36ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:37.801 |     18ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:37.823 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:37.845 |    111ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:37.963 |     22ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:37.988 |     30ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:38.025 |     21ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:38.051 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:38.069 |     18ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:38.092 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:38.110 |     25ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:38.146 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:38.164 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:38.182 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:38.198 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:38.213 |     90ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:38.311 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:38.328 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:38.343 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:38.361 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:38.381 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:38.396 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:38.414 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:38.430 |     19ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:38.452 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:38.469 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:38.485 |     18ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:38.509 |     21ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:38.535 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:38.548 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:38.563 |    178ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:38.745 |     73ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:38.824 |     28ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:38.865 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:38.926 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:39.011 |    170ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:39.185 |     86ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:39.276 |     52ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:39.344 |     40ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:39.391 |     70ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:39.561 |     52ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:39.617 |    196ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:39.817 |     18ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:39.839 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:39.858 |     21ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:39.883 |     19ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:39.925 |     59ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:39.991 |     49ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:40.044 |     18ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:40.068 |     25ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:40.098 |     20ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:40.124 |     42ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:40.184 |     67ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:40.257 |     24ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:40.285 |     16ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:40.306 |     18ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:40.328 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:40.347 |     48ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:40.408 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:40.429 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:40.447 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:40.467 |     47ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:40.525 |     22ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:40.551 |     29ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:40.585 |     27ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:40.617 |     25ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:40.645 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:40.662 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:40.677 |     16ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:40.697 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:40.714 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:40.733 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:40.748 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:40.762 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:40.778 |     22ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:40.807 |     26ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:40.840 |     20ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:40.866 |     32ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:40.913 |    232ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:41.150 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:41.171 |     16ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:41.192 |    103ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:41.299 |     24ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:41.327 |     18ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:41.350 |    149ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:41.504 |    161ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:41.669 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:41.687 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:41.710 |    254ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:41.975 |    150ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:42.130 |     40ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:42.175 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:42.194 |    420ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:42.619 |    226ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:42.849 |     59ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:42.913 |     16ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:42.936 |     21ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:42.961 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:43.008 |     85ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:43.098 |     40ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:43.143 |     35ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:43.182 |     18ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:43.204 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:43.221 |     20ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:43.246 |     21ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:43.272 |     23ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:43.300 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:43.321 |     43ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:43.370 |     28ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:43.404 |     18ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:43.426 |     44ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:43.478 |     49ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:43.532 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:43.552 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:43.574 |     16ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:43.595 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:43.616 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:43.632 |     20ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:43.655 |    185ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:43.845 |     24ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:43.872 |     22ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:43.898 |     28ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:43.930 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:43.949 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:43.964 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:43.980 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:43.995 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:44.012 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:44.026 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:44.041 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:44.054 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:44.068 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:44.079 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:44.093 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:44.106 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:44.120 |    175ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:44.299 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:44.320 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:44.336 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:44.353 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:44.368 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:44.384 |     27ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:44.418 |     20ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:44.443 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:44.461 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:44.477 |    210ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:44.691 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:44.708 |     21ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:44.736 |     26ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:44.768 |     38ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:44.811 |     26ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:44.841 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:44.862 |     21ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:44.891 |     29ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:44.924 |     22ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:44.952 |     23ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:44.995 |    103ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.103 |    145ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.252 |     25ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.304 |     18ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.327 |     19ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.354 |     21ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.380 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.402 |     16ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.422 |     63ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.491 |     29ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.524 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.539 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.554 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.569 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.585 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.600 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.616 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.633 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.652 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.669 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.684 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.699 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.713 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.727 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.740 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.752 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.765 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.778 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.794 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.808 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.821 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.835 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.849 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.861 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.874 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.888 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.901 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.915 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.927 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.942 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.955 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.969 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.980 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:45.992 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.005 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.017 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.028 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.040 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.052 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.064 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.079 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.094 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.112 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.131 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.148 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.160 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.177 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.191 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.205 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.220 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.234 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.247 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.266 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.277 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.293 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.310 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.325 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.340 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.354 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.367 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.380 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.393 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.408 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.425 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.440 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.455 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.471 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.486 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.499 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.515 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.532 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.549 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.570 |     16ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.592 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.612 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.626 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.643 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.660 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.674 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.688 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.701 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.713 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.728 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.746 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.766 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.782 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.797 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.816 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.831 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.849 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.866 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.883 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.896 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.912 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.929 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.944 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.959 |     28ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:46.991 |     18ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:47.012 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:47.028 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:47.045 |     16ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:47.066 |     18ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:47.089 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:47.103 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:47.121 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:47.137 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:47.155 |     23ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:47.183 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:47.200 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:47.214 |     36ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:47.252 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:47.266 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:47.277 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:47.290 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:47.303 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:47.317 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:47.330 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:47.344 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:47.359 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:47.374 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:47.388 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:47.402 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:47.417 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:47.521 |    232ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:47.757 |    268ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.030 |    226ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.260 |     60ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.324 |     51ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.380 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.398 |     16ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.419 |     20ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.442 |     16ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.463 |     19ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.488 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.506 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.525 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.544 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.566 |     43ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.613 |     19ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.635 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.653 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.670 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.692 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.709 |     23ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.738 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.754 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.774 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.787 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.800 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.812 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.830 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.840 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.854 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.868 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.881 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.892 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.907 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.919 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.933 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.946 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.958 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.971 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.984 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:48.996 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.011 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.029 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.043 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.057 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.071 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.084 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.096 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.112 |     29ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.145 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.162 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.181 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.196 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.211 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.225 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.241 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.256 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.269 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.282 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.294 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.306 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.319 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.334 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.345 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.356 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.369 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.382 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.395 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.406 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.418 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.431 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.444 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.455 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.468 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.485 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.499 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.517 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.537 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.553 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.568 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.583 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.595 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.607 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.621 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.634 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.647 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.660 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.670 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.683 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.695 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.707 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.721 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.733 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.745 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.759 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.773 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.788 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.801 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.815 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.829 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.843 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.859 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.875 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.888 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.902 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.916 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.930 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.945 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.959 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.973 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:49.988 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.003 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.017 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.031 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.050 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.072 |     18ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.095 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.114 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.131 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.147 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.162 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.177 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.192 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.206 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.220 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.235 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.251 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.267 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.283 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.297 |     18ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.319 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.333 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.349 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.368 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.383 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.398 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.412 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.426 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.439 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.455 |     16ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.473 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.487 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.503 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.515 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.529 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.541 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.554 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.568 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.582 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.596 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.607 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.623 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.636 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.650 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.665 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.679 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.694 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.714 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.727 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.741 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.753 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.768 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.782 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.796 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.812 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.832 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.847 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.861 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.873 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.885 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.899 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.910 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.922 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.934 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.945 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.960 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.977 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:50.994 |     19ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.017 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.033 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.049 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.061 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.072 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.084 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.097 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.108 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.120 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.134 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.147 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.160 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.170 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.181 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.193 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.206 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.219 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.231 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.243 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.255 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.265 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.279 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.291 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.302 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.316 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.333 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.348 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.367 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.385 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.400 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.419 |     20ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.443 |     20ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.468 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.487 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.504 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.518 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.536 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.554 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.571 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.588 |     38ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.630 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.649 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.666 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.681 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.694 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.709 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.728 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.739 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.753 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.766 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.781 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.794 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.807 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.821 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.834 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.847 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.860 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.872 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.886 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.900 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.915 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.928 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.942 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.953 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.966 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.980 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:51.992 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.003 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.016 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.028 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.041 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.054 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.066 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.080 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.093 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.103 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.118 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.131 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.143 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.155 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.167 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.179 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.192 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.204 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.218 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.230 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.244 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.255 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.267 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.288 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.301 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.314 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.327 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.339 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.351 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.366 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.379 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.392 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.405 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.418 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.431 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.443 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.455 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.469 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.483 |     19ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.508 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.523 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.540 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.554 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.569 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.584 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.596 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.613 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.627 |     18ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.649 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.664 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.679 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.692 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.703 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.719 |     18ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.742 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.754 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.772 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.786 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.798 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.811 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.824 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.836 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.851 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.864 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.876 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.887 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.900 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.912 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.925 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.937 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.949 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.962 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.972 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.985 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:52.998 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.011 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.021 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.032 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.047 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.060 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.070 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.085 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.099 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.111 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.124 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.136 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.148 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.162 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.172 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.189 |     18ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.212 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.228 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.242 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.255 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.269 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.281 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.293 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.304 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.316 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.328 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.338 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.350 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.363 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.376 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.387 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.398 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.410 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.422 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.437 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.449 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.464 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.477 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.492 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.509 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.522 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.536 |     33ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.574 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.584 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.596 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.608 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.620 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.632 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.646 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.658 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.670 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.683 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.697 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.708 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.721 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.733 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.744 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.755 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.768 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.779 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.792 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.807 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.821 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.835 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.849 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.862 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.876 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.887 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.902 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.915 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.932 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.945 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.961 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.973 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:53.987 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.001 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.019 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.035 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.050 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.068 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.087 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.103 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.120 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.133 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.146 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.158 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.170 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.183 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.195 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.208 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.219 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.231 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.243 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.253 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.265 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.278 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.299 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.312 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.325 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.336 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.348 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.361 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.374 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.387 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.400 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.412 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.424 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.435 |     16ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.456 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.467 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.481 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.494 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.508 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.520 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.532 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.544 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.561 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.574 |     54ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.633 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.654 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.671 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.684 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.701 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.715 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.730 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.745 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.760 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.774 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.790 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.806 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.824 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.845 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.867 |     19ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.891 |     20ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.915 |     63ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:54.982 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:55.003 |     21ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:55.027 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:55.046 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:55.062 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:55.080 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:55.096 |     23ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:55.123 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:55.139 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:55.157 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:55.171 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:55.183 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:55.196 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:55.213 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:55.231 |     23ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:55.258 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:55.275 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:55.292 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:55.311 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:55.324 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:55.334 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:55.347 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:55.362 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:55.374 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:55.385 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:55.398 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:55.411 |     19ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:55.434 |     33ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:55.471 |     73ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:55.549 |    129ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:55.682 |    561ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:56.247 |    379ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:56.631 |    100ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:56.735 |     43ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:56.781 |     21ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:56.807 |     26ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:56.837 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:56.883 |     22ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:56.909 |    359ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:57.273 |    208ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:57.487 |    290ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:57.843 |    350ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:58.197 |    125ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:58.326 |    279ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:58.609 |     30ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:58.643 |     31ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:58.678 |     19ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:58.701 |     26ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:58.731 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:58.748 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:58.766 |     47ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:58.818 |     45ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:58.867 |     46ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:58.916 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:58.934 |     57ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:58.995 |     47ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:59.045 |     19ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:59.068 |     19ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:59.091 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:59.108 |     16ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:59.132 |     29ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:59.166 |     22ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:59.192 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:59.209 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:59.224 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:59.242 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:59.261 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:59.276 |     30ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:59.309 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:59.324 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:59.339 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:59.355 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:59.369 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:59.390 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:59.407 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:59.424 |    321ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:22:59.758 |    291ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:00.053 |    351ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:00.407 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:00.425 |     70ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:00.500 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:00.518 |     27ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:00.550 |     91ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:00.645 |     20ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:00.670 |    351ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:01.026 |     20ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:01.050 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:01.065 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:01.080 |    137ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:01.221 |     34ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:01.260 |    360ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:01.627 |    302ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:01.932 |    550ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:02.487 |     23ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:02.515 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:02.533 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:02.552 |     20ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:02.576 |     44ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:02.623 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:02.641 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:02.655 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:02.672 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:02.687 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:02.701 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:02.715 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:02.728 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:02.747 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:02.765 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:02.777 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:02.791 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:02.805 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:02.820 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:02.833 |     23ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:02.860 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:02.874 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:02.888 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:02.904 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:02.919 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:02.934 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:02.950 |     16ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:02.970 |    119ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.093 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.105 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.120 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.141 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.152 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.163 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.175 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.187 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.201 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.214 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.224 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.236 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.247 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.258 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.271 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.289 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.310 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.326 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.344 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.359 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.374 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.390 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.407 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.422 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.439 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.454 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.467 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.480 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.495 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.508 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.521 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.532 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.543 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.558 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.570 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.582 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.596 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.607 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.621 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.634 |     34ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.672 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.688 |     38ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.732 |     46ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.784 |     26ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.814 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.833 |     16ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.852 |     16ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.871 |     22ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.904 |     50ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:03.958 |    115ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:04.077 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:04.093 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:04.110 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:04.129 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:04.143 |     25ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:04.173 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:04.197 |    120ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:04.326 |    103ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:04.437 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:04.456 |     29ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:04.489 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:04.521 |     18ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:04.543 |    372ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:04.919 |     85ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.006 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.022 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.038 |     32ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.074 |     53ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.130 |     40ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.174 |     35ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.212 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.235 |    138ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.378 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.395 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.412 |     16ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.433 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.450 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.466 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.480 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.501 |     30ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.533 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.547 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.568 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.579 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.589 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.600 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.613 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.624 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.640 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.650 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.660 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.673 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.684 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.696 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.710 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.719 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.730 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.743 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.754 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.764 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.778 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.788 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.801 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.813 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.823 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.836 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.848 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.860 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.873 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.885 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.897 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.907 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.918 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.928 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.938 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.950 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.959 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.969 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.981 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:05.991 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.005 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.017 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.028 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.038 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.050 |      6ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.061 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.071 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.081 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.091 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.107 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.119 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.130 |      6ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.140 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.152 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.163 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.174 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.184 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.196 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.208 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.219 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.231 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.243 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.253 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.265 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.278 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.289 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.302 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.314 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.325 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.336 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.348 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.359 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.370 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.381 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.393 |     20ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.417 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.434 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.449 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.462 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.473 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.486 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.497 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.510 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.526 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.546 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.557 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.569 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.580 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.591 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.600 |      6ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.609 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.618 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.628 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.638 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.648 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.657 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.667 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.677 |      6ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.687 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.698 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.707 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.718 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.729 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.740 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.752 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.763 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.774 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.783 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.795 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.805 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.815 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.825 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.835 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.845 |      6ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.854 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.864 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.875 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.886 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.898 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.908 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.918 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.928 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.937 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.947 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.957 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.967 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.979 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.988 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:06.998 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.008 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.018 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.029 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.040 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.052 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.063 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.073 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.084 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.095 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.106 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.118 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.130 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.143 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.159 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.171 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.181 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.194 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.204 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.218 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.229 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.241 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.252 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.264 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.273 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.285 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.296 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.306 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.316 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.326 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.337 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.349 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.360 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.372 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.385 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.396 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.407 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.421 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.433 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.445 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.455 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.466 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.477 |      6ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.487 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.498 |      6ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.507 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.519 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.529 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.538 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.547 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.556 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.565 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.576 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.585 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.595 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.604 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.616 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.627 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.636 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.646 |      6ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.655 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.664 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.675 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.688 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.700 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.710 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.719 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.729 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.738 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.748 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.759 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.769 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.779 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.789 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.799 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.810 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.820 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.830 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.840 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.851 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.863 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.874 |     21ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.898 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.911 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.923 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.933 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.943 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.954 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.964 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.975 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.986 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:07.997 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.010 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.021 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.033 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.045 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.056 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.069 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.086 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.097 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.109 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.120 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.132 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.148 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.166 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.178 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.191 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.204 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.217 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.231 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.242 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.255 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.267 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.280 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.291 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.302 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.313 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.325 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.336 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.349 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.363 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.379 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.401 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.417 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.436 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.453 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.470 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.487 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.505 |     16ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.525 |     18ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.547 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.565 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.584 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.602 |     18ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.625 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.642 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.658 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.676 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.695 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.713 |     17ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.734 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.751 |     14ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.769 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.785 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.800 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.819 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.835 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.852 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.869 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.883 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.895 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.907 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.919 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.930 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.941 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.951 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.961 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.971 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.982 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:08.993 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.011 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.026 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.037 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.050 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.065 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.080 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.095 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.109 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.121 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.134 |     15ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.153 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.167 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.179 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.191 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.202 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.213 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.224 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.234 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.245 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.258 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.271 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.283 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.295 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.307 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.318 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.329 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.339 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.352 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.364 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.376 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.389 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.406 |     12ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.423 |     26ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.454 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.466 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.478 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.492 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.503 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.516 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.528 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.540 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.552 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.564 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.575 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.586 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.600 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.612 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.625 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.640 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.652 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.664 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.676 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.689 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.701 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.713 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.725 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.736 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.748 |     11ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.762 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.774 |      8ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.785 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.798 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.812 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.822 |      7ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.832 |     19ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.855 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.872 |     10ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.887 |      9ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.900 |     13ms | a3f861 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+13:23:09.917 |     24ms | a3f861 | FindElements

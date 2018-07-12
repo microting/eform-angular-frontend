@@ -1,0 +1,747 @@
+00:16:12.778 |   4762ms | dca582 | NewSession
+    {"browserName":"chrome","maxSessions":1,"maxInstances":1,"count":1}
+00:16:17.556 |     13ms | dca582 | SetTimeouts
+    ERROR 13: unknown error: 'ms' must be a double
+  (Session info: chrome=67.0.3396.99)
+  (Driver info: chromedriver=2.39.562718 (9a2698cba08cf5a471a29d30c8b3e12becabb0e9),platform=Windows NT 10.0.16299 x86_64)
+00:16:17.573 |      6ms | dca582 | SetTimeouts
+00:16:24.588 |   1131ms | /session/dca582c26941b68c68d1c90e15c612bd/window/current/maximize
+00:16:24.590 |   1191ms | dca582 | Go data:text/html,<html></html>
+00:16:25.785 |   6607ms | /session/dca582c26941b68c68d1c90e15c612bd/execute
+00:16:32.397 |     24ms | /session/dca582c26941b68c68d1c90e15c612bd/execute
+00:16:32.425 |     50ms | /session/dca582c26941b68c68d1c90e15c612bd/execute_async
+00:16:32.639 |    155ms | dca582 | Waiting for Angular
+00:16:32.640 |     44ms | dca582 | FindElements
+    Using css selector '#username'
+    Elements: 0.5107076215379807-1
+00:16:32.750 |     60ms | dca582 | Waiting for Angular
+00:16:32.751 |     34ms | dca582 | IsElementEnabled (0.5107076215379807-1)
+00:16:32.811 |     23ms | dca582 | Waiting for Angular
+00:16:32.812 |     21ms | dca582 | FindElements
+    Using css selector '#username'
+    Elements: 0.5107076215379807-1
+00:16:32.852 |     16ms | dca582 | Waiting for Angular
+00:16:32.853 |     32ms | /session/dca582c26941b68c68d1c90e15c612bd/element/0.5107076215379807-1/displayed
+00:16:32.967 |     79ms | dca582 | Waiting for Angular
+00:16:32.968 |     17ms | dca582 | FindElements
+    Using css selector '#username'
+    Elements: 0.5107076215379807-1
+00:16:33.004 |     17ms | dca582 | Waiting for Angular
+00:16:33.004 |     21ms | dca582 | IsElementEnabled (0.5107076215379807-1)
+00:16:33.043 |     15ms | dca582 | Waiting for Angular
+00:16:33.044 |     14ms | dca582 | FindElements
+    Using css selector '#username'
+    Elements: 0.5107076215379807-1
+00:16:33.075 |     14ms | dca582 | Waiting for Angular
+00:16:33.076 |     40ms | dca582 | ElementClear (0.5107076215379807-1)
+00:16:33.175 |     56ms | dca582 | Waiting for Angular
+00:16:33.175 |     41ms | dca582 | FindElements
+    Using css selector '#password'
+    Elements: 0.5107076215379807-2
+00:16:33.253 |     35ms | dca582 | Waiting for Angular
+00:16:33.254 |     28ms | dca582 | IsElementEnabled (0.5107076215379807-2)
+00:16:33.297 |     13ms | dca582 | Waiting for Angular
+00:16:33.298 |     15ms | dca582 | FindElements
+    Using css selector '#password'
+    Elements: 0.5107076215379807-2
+00:16:33.334 |     19ms | dca582 | Waiting for Angular
+00:16:33.334 |     24ms | /session/dca582c26941b68c68d1c90e15c612bd/element/0.5107076215379807-2/displayed
+00:16:33.379 |     17ms | dca582 | Waiting for Angular
+00:16:33.380 |     17ms | dca582 | FindElements
+    Using css selector '#password'
+    Elements: 0.5107076215379807-2
+00:16:33.427 |     27ms | dca582 | Waiting for Angular
+00:16:33.428 |     14ms | dca582 | IsElementEnabled (0.5107076215379807-2)
+00:16:33.462 |     17ms | dca582 | Waiting for Angular
+00:16:33.464 |     17ms | dca582 | FindElements
+    Using css selector '#password'
+    Elements: 0.5107076215379807-2
+00:16:33.500 |     17ms | dca582 | Waiting for Angular
+00:16:33.501 |     38ms | dca582 | ElementClear (0.5107076215379807-2)
+00:16:33.554 |     12ms | dca582 | Waiting for Angular
+00:16:33.555 |     13ms | dca582 | FindElements
+    Using css selector '#username'
+    Elements: 0.5107076215379807-1
+00:16:33.580 |      9ms | dca582 | Waiting for Angular
+00:16:33.581 |    122ms | dca582 | ElementSendKeys (0.5107076215379807-1)
+    Send: admin
+00:16:33.726 |     20ms | dca582 | Waiting for Angular
+00:16:33.727 |     16ms | dca582 | FindElements
+    Using css selector '#password'
+    Elements: 0.5107076215379807-2
+00:16:33.763 |     17ms | dca582 | Waiting for Angular
+00:16:33.765 |    106ms | dca582 | ElementSendKeys (0.5107076215379807-2)
+    Send: Qq1234567$
+00:16:33.901 |     27ms | dca582 | Waiting for Angular
+00:16:33.902 |     23ms | dca582 | FindElements
+    Using css selector 'button.btn-success'
+    Elements: 0.5107076215379807-3
+00:16:33.942 |     13ms | dca582 | Waiting for Angular
+00:16:33.943 |    110ms | dca582 | ElementClick (0.5107076215379807-3)
+00:16:39.076 |     13ms | dca582 | Waiting for Angular
+00:16:39.077 |     26ms | dca582 | FindElements
+    Using css selector '#newEFormBtn'
+    Elements: 0.5107076215379807-4
+00:16:39.119 |     14ms | dca582 | Waiting for Angular
+00:16:39.120 |     26ms | dca582 | IsElementEnabled (0.5107076215379807-4)
+00:16:39.179 |     30ms | dca582 | Waiting for Angular
+00:16:39.180 |     32ms | dca582 | FindElements
+    Using css selector '#newEFormBtn'
+    Elements: 0.5107076215379807-4
+00:16:39.236 |     21ms | dca582 | Waiting for Angular
+00:16:39.237 |     36ms | /session/dca582c26941b68c68d1c90e15c612bd/element/0.5107076215379807-4/displayed
+00:16:39.314 |     38ms | dca582 | Waiting for Angular
+00:16:39.315 |     37ms | dca582 | FindElements
+    Using css selector '#newEFormBtn'
+    Elements: 0.5107076215379807-4
+00:16:39.384 |     29ms | dca582 | Waiting for Angular
+00:16:39.385 |     18ms | dca582 | IsElementEnabled (0.5107076215379807-4)
+00:16:39.432 |     24ms | dca582 | Waiting for Angular
+00:16:39.433 |     60ms | dca582 | FindElements
+    Using xpath '//*[@id="mainPageEFormsTableBody"]/tr[1]/td[1]'
+    Elements: 0.5107076215379807-5
+00:16:39.548 |     53ms | dca582 | Waiting for Angular
+00:16:39.548 |     50ms | dca582 | GetElementText (0.5107076215379807-5)
+    1338
+00:16:39.626 |     26ms | dca582 | Waiting for Angular
+00:16:39.627 |     96ms | dca582 | FindElements
+    Using xpath '//*[@id="mainPageEFormsTableBody"]/tr[1]/td[2]'
+    Elements: 0.5107076215379807-6
+00:16:39.814 |     88ms | dca582 | Waiting for Angular
+00:16:39.815 |     34ms | dca582 | GetElementText (0.5107076215379807-6)
+    03.07.2018 00:13:24
+00:16:39.869 |     17ms | dca582 | Waiting for Angular
+00:16:39.870 |     50ms | dca582 | FindElements
+    Using xpath '//*[@id="mainPageEFormsTableBody"]/tr[1]/td[3]'
+    Elements: 0.5107076215379807-7
+00:16:39.952 |     29ms | dca582 | Waiting for Angular
+00:16:39.953 |     42ms | dca582 | GetElementText (0.5107076215379807-7)
+    TEST481971
+00:16:40.024 |     26ms | dca582 | Waiting for Angular
+00:16:40.025 |     29ms | dca582 | FindElements
+    Using xpath '//*[@id="mainPageEFormsTableBody"]//tr[1]/td[4]/div/div[1]'
+    Elements: 0.5107076215379807-8
+00:16:40.077 |     20ms | dca582 | Waiting for Angular
+00:16:40.077 |     31ms | dca582 | GetElementText (0.5107076215379807-8)
+    testTag1
+00:16:40.123 |     12ms | dca582 | Waiting for Angular
+00:16:40.124 |     24ms | dca582 | FindElements
+    Using xpath '//*[@id="mainPageEFormsTableBody"]/tr[1]/td[5]/span'
+    Elements: 
+00:16:40.165 |     14ms | dca582 | Waiting for Angular
+00:16:40.166 |     38ms | dca582 | FindElements
+    Using xpath '//*[@id="mainPageEFormsTableBody"]/tr[1]/td[5]/button'
+    Elements: 0.5107076215379807-9
+00:16:40.225 |     18ms | dca582 | Waiting for Angular
+00:16:40.227 |    248ms | dca582 | ElementClick (0.5107076215379807-9)
+00:16:42.501 |   2022ms | dca582 | Waiting for Angular
+00:16:42.502 |     50ms | dca582 | FindElements
+    Using css selector '#pairingModalSaveBtn'
+    Elements: 0.5107076215379807-10
+00:16:42.575 |     21ms | dca582 | Waiting for Angular
+00:16:42.576 |     32ms | dca582 | IsElementEnabled (0.5107076215379807-10)
+00:16:42.625 |     14ms | dca582 | Waiting for Angular
+00:16:42.626 |     17ms | dca582 | FindElements
+    Using css selector '#pairingModalSaveBtn'
+    Elements: 0.5107076215379807-10
+00:16:42.662 |     16ms | dca582 | Waiting for Angular
+00:16:42.663 |     36ms | /session/dca582c26941b68c68d1c90e15c612bd/element/0.5107076215379807-10/displayed
+00:16:42.724 |     22ms | dca582 | Waiting for Angular
+00:16:42.725 |     21ms | dca582 | FindElements
+    Using css selector '#pairingModalSaveBtn'
+    Elements: 0.5107076215379807-10
+00:16:42.766 |     17ms | dca582 | Waiting for Angular
+00:16:42.766 |     21ms | dca582 | IsElementEnabled (0.5107076215379807-10)
+00:16:46.818 |     26ms | dca582 | Waiting for Angular
+00:16:46.819 |     26ms | dca582 | FindElements
+    Using xpath '//*[@id="pairingModalTableBody"]/tr'
+    Elements: 0.5107076215379807-11,0.5107076215379807-12,0.5107076215379807-13
+00:16:46.858 |     10ms | dca582 | Waiting for Angular
+00:16:46.859 |     21ms | dca582 | FindElements
+    Using xpath '//*[@id="pairingModalTableBody"]/tr[1]/td[1]'
+    Elements: 0.5107076215379807-14
+00:16:46.894 |     12ms | dca582 | Waiting for Angular
+00:16:46.895 |     25ms | dca582 | GetElementText (0.5107076215379807-14)
+    5753
+00:16:46.945 |     22ms | dca582 | Waiting for Angular
+00:16:46.946 |     35ms | dca582 | FindElements
+    Using xpath '//*[@id="pairingModalTableBody"]/tr[1]/td[2]'
+    Elements: 0.5107076215379807-15
+00:16:47.002 |     18ms | dca582 | Waiting for Angular
+00:16:47.003 |     40ms | dca582 | GetElementText (0.5107076215379807-15)
+    Niels Windfeld-Lund
+00:16:47.067 |     22ms | dca582 | Waiting for Angular
+00:16:47.069 |     27ms | dca582 | FindElements
+    Using xpath '//*[@id="pairingModalTableBody"]/tr[1]/td[3]/div[1]/div/input'
+    Elements: 0.5107076215379807-16
+00:16:47.112 |     12ms | dca582 | Waiting for Angular
+00:16:47.113 |     29ms | /session/dca582c26941b68c68d1c90e15c612bd/element/0.5107076215379807-16/selected
+00:16:47.164 |     19ms | dca582 | Waiting for Angular
+00:16:47.165 |     46ms | dca582 | FindElements
+    Using xpath '//*[@id="pairingModalTableBody"]/tr[2]/td[1]'
+    Elements: 0.5107076215379807-17
+00:16:47.265 |     51ms | dca582 | Waiting for Angular
+00:16:47.266 |     35ms | dca582 | GetElementText (0.5107076215379807-17)
+    6235
+00:16:47.317 |     14ms | dca582 | Waiting for Angular
+00:16:47.318 |     21ms | dca582 | FindElements
+    Using xpath '//*[@id="pairingModalTableBody"]/tr[2]/td[2]'
+    Elements: 0.5107076215379807-18
+00:16:47.350 |      9ms | dca582 | Waiting for Angular
+00:16:47.350 |     23ms | dca582 | GetElementText (0.5107076215379807-18)
+    Samsung 8 tommers
+00:16:47.385 |     10ms | dca582 | Waiting for Angular
+00:16:47.386 |     20ms | dca582 | FindElements
+    Using xpath '//*[@id="pairingModalTableBody"]/tr[2]/td[3]/div[2]/div/input'
+    Elements: 0.5107076215379807-19
+00:16:47.423 |     11ms | dca582 | Waiting for Angular
+00:16:47.424 |     18ms | /session/dca582c26941b68c68d1c90e15c612bd/element/0.5107076215379807-19/selected
+00:16:47.461 |     17ms | dca582 | Waiting for Angular
+00:16:47.462 |     32ms | dca582 | FindElements
+    Using xpath '//*[@id="pairingModalTableBody"]/tr[3]/td[1]'
+    Elements: 0.5107076215379807-20
+00:16:47.518 |     22ms | dca582 | Waiting for Angular
+00:16:47.519 |     34ms | dca582 | GetElementText (0.5107076215379807-20)
+    6275
+00:16:47.570 |     15ms | dca582 | Waiting for Angular
+00:16:47.571 |     19ms | dca582 | FindElements
+    Using xpath '//*[@id="pairingModalTableBody"]/tr[3]/td[2]'
+    Elements: 0.5107076215379807-21
+00:16:47.602 |     10ms | dca582 | Waiting for Angular
+00:16:47.603 |     21ms | dca582 | GetElementText (0.5107076215379807-21)
+    Samsung S6 (nwl)
+00:16:47.636 |     10ms | dca582 | Waiting for Angular
+00:16:47.637 |     23ms | dca582 | FindElements
+    Using xpath '//*[@id="pairingModalTableBody"]/tr[3]/td[3]/div[3]/div/input'
+    Elements: 0.5107076215379807-22
+00:16:47.673 |     11ms | dca582 | Waiting for Angular
+00:16:47.674 |     20ms | /session/dca582c26941b68c68d1c90e15c612bd/element/0.5107076215379807-22/selected
+00:16:47.715 |     18ms | dca582 | Waiting for Angular
+00:16:47.717 |     23ms | dca582 | FindElements
+    Using xpath '//*[@id="pairingModalTableBody"]/tr[1]/td[3]/div[1]/div/input'
+    Elements: 0.5107076215379807-16
+00:16:47.758 |     16ms | dca582 | Waiting for Angular
+00:16:47.759 |    145ms | dca582 | ElementClick (0.5107076215379807-16)
+00:16:47.931 |     24ms | dca582 | Waiting for Angular
+00:16:47.932 |     17ms | dca582 | FindElements
+    Using xpath '//*[@id="pairingModalTableBody"]/tr[1]/td[3]/div[1]/div/input'
+    Elements: 0.5107076215379807-16
+00:16:47.973 |     22ms | dca582 | Waiting for Angular
+00:16:47.974 |    110ms | dca582 | ElementClick (0.5107076215379807-16)
+00:16:48.099 |     13ms | dca582 | Waiting for Angular
+00:16:48.100 |     14ms | dca582 | FindElements
+    Using css selector '#pairingModalSaveBtn'
+    Elements: 0.5107076215379807-10
+00:16:48.135 |     18ms | dca582 | Waiting for Angular
+00:16:48.136 |    201ms | dca582 | ElementClick (0.5107076215379807-10)
+00:16:49.310 |    969ms | dca582 | Waiting for Angular
+00:16:49.310 |     30ms | dca582 | FindElements
+    Using css selector '#newEFormBtn'
+    Elements: 0.5107076215379807-4
+00:16:51.916 |   2572ms | dca582 | Waiting for Angular
+00:16:51.917 |     16ms | dca582 | IsElementEnabled (0.5107076215379807-4)
+00:16:51.953 |     17ms | dca582 | Waiting for Angular
+00:16:51.954 |     29ms | dca582 | FindElements
+    Using css selector '#newEFormBtn'
+    Elements: 0.5107076215379807-4
+00:16:52.005 |     20ms | dca582 | Waiting for Angular
+00:16:52.006 |     18ms | /session/dca582c26941b68c68d1c90e15c612bd/element/0.5107076215379807-4/displayed
+00:16:52.049 |     22ms | dca582 | Waiting for Angular
+00:16:52.050 |     19ms | dca582 | FindElements
+    Using css selector '#newEFormBtn'
+    Elements: 0.5107076215379807-4
+00:16:52.085 |     13ms | dca582 | Waiting for Angular
+00:16:52.086 |      8ms | dca582 | IsElementEnabled (0.5107076215379807-4)
+00:16:52.107 |     10ms | dca582 | Waiting for Angular
+00:16:52.107 |     13ms | dca582 | FindElements
+    Using xpath '//*[@id="mainPageEFormsTableBody"]/tr[1]/td[1]'
+    Elements: 0.5107076215379807-23
+00:16:52.131 |      9ms | dca582 | Waiting for Angular
+00:16:52.131 |     22ms | dca582 | GetElementText (0.5107076215379807-23)
+    1338
+00:16:52.167 |     11ms | dca582 | Waiting for Angular
+00:16:52.167 |     15ms | dca582 | FindElements
+    Using xpath '//*[@id="mainPageEFormsTableBody"]/tr[1]/td[2]'
+    Elements: 0.5107076215379807-24
+00:16:52.199 |     15ms | dca582 | Waiting for Angular
+00:16:52.199 |     47ms | dca582 | GetElementText (0.5107076215379807-24)
+    03.07.2018 00:13:24
+00:16:52.285 |     36ms | dca582 | Waiting for Angular
+00:16:52.286 |     19ms | dca582 | FindElements
+    Using xpath '//*[@id="mainPageEFormsTableBody"]/tr[1]/td[3]'
+    Elements: 0.5107076215379807-25
+00:16:52.318 |     11ms | dca582 | Waiting for Angular
+00:16:52.319 |     23ms | dca582 | GetElementText (0.5107076215379807-25)
+    TEST481971
+00:16:52.355 |     10ms | dca582 | Waiting for Angular
+00:16:52.355 |     12ms | dca582 | FindElements
+    Using xpath '//*[@id="mainPageEFormsTableBody"]//tr[1]/td[4]/div/div[1]'
+    Elements: 0.5107076215379807-26
+00:16:52.380 |     11ms | dca582 | Waiting for Angular
+00:16:52.380 |     23ms | dca582 | GetElementText (0.5107076215379807-26)
+    testTag1
+00:16:52.416 |     11ms | dca582 | Waiting for Angular
+00:16:52.417 |     12ms | dca582 | FindElements
+    Using xpath '//*[@id="mainPageEFormsTableBody"]/tr[1]/td[5]/span'
+    Elements: 
+00:16:52.449 |     12ms | dca582 | Waiting for Angular
+00:16:52.450 |     24ms | dca582 | FindElements
+    Using css selector '#labelInput'
+    Elements: 0.5107076215379807-27
+00:16:52.491 |     13ms | dca582 | Waiting for Angular
+00:16:52.491 |     96ms | dca582 | ElementClick (0.5107076215379807-27)
+00:16:52.606 |      9ms | dca582 | Waiting for Angular
+00:16:52.606 |     16ms | dca582 | FindElements
+    Using css selector '#newEFormBtn'
+    Elements: 0.5107076215379807-4
+00:16:52.636 |     12ms | dca582 | Waiting for Angular
+00:16:52.637 |     14ms | dca582 | IsElementEnabled (0.5107076215379807-4)
+00:16:52.671 |     18ms | dca582 | Waiting for Angular
+00:16:52.672 |     22ms | dca582 | FindElements
+    Using css selector '#newEFormBtn'
+    Elements: 0.5107076215379807-4
+00:16:52.721 |     24ms | dca582 | Waiting for Angular
+00:16:52.722 |     27ms | /session/dca582c26941b68c68d1c90e15c612bd/element/0.5107076215379807-4/displayed
+00:16:52.769 |     17ms | dca582 | Waiting for Angular
+00:16:52.770 |     19ms | dca582 | FindElements
+    Using css selector '#newEFormBtn'
+    Elements: 0.5107076215379807-4
+00:16:52.815 |     24ms | dca582 | Waiting for Angular
+00:16:52.816 |     13ms | dca582 | IsElementEnabled (0.5107076215379807-4)
+00:16:52.845 |     13ms | dca582 | Waiting for Angular
+00:16:52.846 |     13ms | dca582 | FindElements
+    Using xpath '//*[@id="mainPageEFormsTableBody"]/tr[1]/td[1]'
+    Elements: 0.5107076215379807-23
+00:16:52.871 |     10ms | dca582 | Waiting for Angular
+00:16:52.871 |     12ms | dca582 | GetElementText (0.5107076215379807-23)
+    1338
+00:16:52.894 |      9ms | dca582 | Waiting for Angular
+00:16:52.895 |     11ms | dca582 | FindElements
+    Using xpath '//*[@id="mainPageEFormsTableBody"]/tr[1]/td[2]'
+    Elements: 0.5107076215379807-24
+00:16:52.920 |     12ms | dca582 | Waiting for Angular
+00:16:52.921 |     21ms | dca582 | GetElementText (0.5107076215379807-24)
+    03.07.2018 00:13:24
+00:16:52.961 |     17ms | dca582 | Waiting for Angular
+00:16:52.962 |     23ms | dca582 | FindElements
+    Using xpath '//*[@id="mainPageEFormsTableBody"]/tr[1]/td[3]'
+    Elements: 0.5107076215379807-25
+00:16:53.000 |     13ms | dca582 | Waiting for Angular
+00:16:53.001 |     14ms | dca582 | GetElementText (0.5107076215379807-25)
+    TEST481971
+00:16:53.030 |     11ms | dca582 | Waiting for Angular
+00:16:53.031 |     16ms | dca582 | FindElements
+    Using xpath '//*[@id="mainPageEFormsTableBody"]//tr[1]/td[4]/div/div[1]'
+    Elements: 0.5107076215379807-26
+00:16:53.062 |     13ms | dca582 | Waiting for Angular
+00:16:53.063 |     18ms | dca582 | GetElementText (0.5107076215379807-26)
+    testTag1
+00:16:53.093 |      9ms | dca582 | Waiting for Angular
+00:16:53.095 |     12ms | dca582 | FindElements
+    Using xpath '//*[@id="mainPageEFormsTableBody"]/tr[1]/td[5]/span'
+    Elements: 
+00:16:53.120 |      9ms | dca582 | Waiting for Angular
+00:16:53.120 |     10ms | dca582 | FindElements
+    Using xpath '//*[@id="mainPageEFormsTableBody"]/tr[1]/td[5]/button'
+    Elements: 0.5107076215379807-28
+00:16:53.144 |     12ms | dca582 | Waiting for Angular
+00:16:53.145 |    183ms | dca582 | ElementClick (0.5107076215379807-28)
+00:16:55.131 |   1799ms | dca582 | Waiting for Angular
+00:16:55.132 |     17ms | dca582 | FindElements
+    Using css selector '#pairingModalSaveBtn'
+    Elements: 0.5107076215379807-10
+00:16:55.177 |     25ms | dca582 | Waiting for Angular
+00:16:55.178 |     14ms | dca582 | IsElementEnabled (0.5107076215379807-10)
+00:16:55.212 |     18ms | dca582 | Waiting for Angular
+00:16:55.213 |     35ms | dca582 | FindElements
+    Using css selector '#pairingModalSaveBtn'
+    Elements: 0.5107076215379807-10
+00:16:55.278 |     27ms | dca582 | Waiting for Angular
+00:16:55.279 |     17ms | /session/dca582c26941b68c68d1c90e15c612bd/element/0.5107076215379807-10/displayed
+00:16:55.319 |     21ms | dca582 | Waiting for Angular
+00:16:55.320 |     16ms | dca582 | FindElements
+    Using css selector '#pairingModalSaveBtn'
+    Elements: 0.5107076215379807-10
+00:16:55.349 |     10ms | dca582 | Waiting for Angular
+00:16:55.350 |     11ms | dca582 | IsElementEnabled (0.5107076215379807-10)
+00:16:59.374 |     10ms | dca582 | Waiting for Angular
+00:16:59.375 |     13ms | dca582 | FindElements
+    Using xpath '//*[@id="pairingModalTableBody"]/tr'
+    Elements: 0.5107076215379807-29,0.5107076215379807-30,0.5107076215379807-31
+00:16:59.400 |      9ms | dca582 | Waiting for Angular
+00:16:59.401 |     15ms | dca582 | FindElements
+    Using xpath '//*[@id="pairingModalTableBody"]/tr[1]/td[1]'
+    Elements: 0.5107076215379807-32
+00:16:59.431 |     13ms | dca582 | Waiting for Angular
+00:16:59.432 |     36ms | dca582 | GetElementText (0.5107076215379807-32)
+    5753
+00:16:59.490 |     19ms | dca582 | Waiting for Angular
+00:16:59.491 |     80ms | dca582 | FindElements
+    Using xpath '//*[@id="pairingModalTableBody"]/tr[1]/td[2]'
+    Elements: 0.5107076215379807-33
+00:16:59.588 |     15ms | dca582 | Waiting for Angular
+00:16:59.589 |     32ms | dca582 | GetElementText (0.5107076215379807-33)
+    Niels Windfeld-Lund
+00:16:59.639 |     14ms | dca582 | Waiting for Angular
+00:16:59.639 |     27ms | dca582 | FindElements
+    Using xpath '//*[@id="pairingModalTableBody"]/tr[1]/td[3]/div[1]/div/input'
+    Elements: 0.5107076215379807-34
+00:16:59.687 |     18ms | dca582 | Waiting for Angular
+00:16:59.688 |     35ms | /session/dca582c26941b68c68d1c90e15c612bd/element/0.5107076215379807-34/selected
+00:16:59.752 |     27ms | dca582 | Waiting for Angular
+00:16:59.753 |     44ms | dca582 | FindElements
+    Using xpath '//*[@id="pairingModalTableBody"]/tr[2]/td[1]'
+    Elements: 0.5107076215379807-35
+00:16:59.818 |     19ms | dca582 | Waiting for Angular
+00:16:59.819 |     33ms | dca582 | GetElementText (0.5107076215379807-35)
+    6235
+00:16:59.863 |      8ms | dca582 | Waiting for Angular
+00:16:59.863 |     19ms | dca582 | FindElements
+    Using xpath '//*[@id="pairingModalTableBody"]/tr[2]/td[2]'
+    Elements: 0.5107076215379807-36
+00:16:59.898 |     12ms | dca582 | Waiting for Angular
+00:16:59.900 |     31ms | dca582 | GetElementText (0.5107076215379807-36)
+    Samsung 8 tommers
+00:16:59.947 |     14ms | dca582 | Waiting for Angular
+00:16:59.948 |     30ms | dca582 | FindElements
+    Using xpath '//*[@id="pairingModalTableBody"]/tr[2]/td[3]/div[2]/div/input'
+    Elements: 0.5107076215379807-37
+00:16:59.999 |     19ms | dca582 | Waiting for Angular
+00:17:00.000 |     30ms | /session/dca582c26941b68c68d1c90e15c612bd/element/0.5107076215379807-37/selected
+00:17:00.049 |     16ms | dca582 | Waiting for Angular
+00:17:00.050 |     37ms | dca582 | FindElements
+    Using xpath '//*[@id="pairingModalTableBody"]/tr[3]/td[1]'
+    Elements: 0.5107076215379807-38
+00:17:00.104 |     15ms | dca582 | Waiting for Angular
+00:17:00.105 |     36ms | dca582 | GetElementText (0.5107076215379807-38)
+    6275
+00:17:00.156 |     12ms | dca582 | Waiting for Angular
+00:17:00.157 |     23ms | dca582 | FindElements
+    Using xpath '//*[@id="pairingModalTableBody"]/tr[3]/td[2]'
+    Elements: 0.5107076215379807-39
+00:17:00.197 |     14ms | dca582 | Waiting for Angular
+00:17:00.198 |     33ms | dca582 | GetElementText (0.5107076215379807-39)
+    Samsung S6 (nwl)
+00:17:00.246 |     12ms | dca582 | Waiting for Angular
+00:17:00.247 |     25ms | dca582 | FindElements
+    Using xpath '//*[@id="pairingModalTableBody"]/tr[3]/td[3]/div[3]/div/input'
+    Elements: 0.5107076215379807-40
+00:17:00.282 |      8ms | dca582 | Waiting for Angular
+00:17:00.283 |     26ms | /session/dca582c26941b68c68d1c90e15c612bd/element/0.5107076215379807-40/selected
+00:17:00.344 |     32ms | dca582 | Waiting for Angular
+00:17:00.345 |     41ms | dca582 | FindElements
+    Using css selector '#pairingModalSaveBtn'
+    Elements: 0.5107076215379807-10
+00:17:00.406 |     18ms | dca582 | Waiting for Angular
+00:17:00.407 |    177ms | dca582 | ElementClick (0.5107076215379807-10)
+00:17:01.922 |   1334ms | dca582 | Waiting for Angular
+00:17:01.922 |     40ms | dca582 | FindElements
+    Using css selector '#newEFormBtn'
+    Elements: 0.5107076215379807-4
+00:17:04.468 |   2504ms | dca582 | Waiting for Angular
+00:17:04.468 |     16ms | dca582 | IsElementEnabled (0.5107076215379807-4)
+00:17:04.504 |     18ms | dca582 | Waiting for Angular
+00:17:04.505 |     20ms | dca582 | FindElements
+    Using css selector '#newEFormBtn'
+    Elements: 0.5107076215379807-4
+00:17:04.554 |     25ms | dca582 | Waiting for Angular
+00:17:04.555 |     32ms | /session/dca582c26941b68c68d1c90e15c612bd/element/0.5107076215379807-4/displayed
+00:17:04.602 |     13ms | dca582 | Waiting for Angular
+00:17:04.602 |     10ms | dca582 | FindElements
+    Using css selector '#newEFormBtn'
+    Elements: 0.5107076215379807-4
+00:17:04.623 |      9ms | dca582 | Waiting for Angular
+00:17:04.624 |      9ms | dca582 | IsElementEnabled (0.5107076215379807-4)
+00:17:04.643 |      8ms | dca582 | Waiting for Angular
+00:17:04.644 |     18ms | dca582 | FindElements
+    Using xpath '//*[@id="mainPageEFormsTableBody"]/tr[1]/td[1]'
+    Elements: 0.5107076215379807-41
+00:17:04.672 |      8ms | dca582 | Waiting for Angular
+00:17:04.672 |     33ms | dca582 | GetElementText (0.5107076215379807-41)
+    1338
+00:17:04.717 |     10ms | dca582 | Waiting for Angular
+00:17:04.717 |     28ms | dca582 | FindElements
+    Using xpath '//*[@id="mainPageEFormsTableBody"]/tr[1]/td[2]'
+    Elements: 0.5107076215379807-42
+00:17:04.760 |     12ms | dca582 | Waiting for Angular
+00:17:04.761 |     44ms | dca582 | GetElementText (0.5107076215379807-42)
+    03.07.2018 00:13:24
+00:17:04.824 |     17ms | dca582 | Waiting for Angular
+00:17:04.825 |     27ms | dca582 | FindElements
+    Using xpath '//*[@id="mainPageEFormsTableBody"]/tr[1]/td[3]'
+    Elements: 0.5107076215379807-43
+00:17:04.869 |     14ms | dca582 | Waiting for Angular
+00:17:04.870 |     36ms | dca582 | GetElementText (0.5107076215379807-43)
+    TEST481971
+00:17:04.923 |     15ms | dca582 | Waiting for Angular
+00:17:04.924 |     33ms | dca582 | FindElements
+    Using xpath '//*[@id="mainPageEFormsTableBody"]//tr[1]/td[4]/div/div[1]'
+    Elements: 0.5107076215379807-44
+00:17:04.978 |     19ms | dca582 | Waiting for Angular
+00:17:04.978 |     50ms | dca582 | GetElementText (0.5107076215379807-44)
+    testTag1
+00:17:05.053 |     22ms | dca582 | Waiting for Angular
+00:17:05.054 |     30ms | dca582 | FindElements
+    Using xpath '//*[@id="mainPageEFormsTableBody"]/tr[1]/td[5]/span'
+    Elements: 
+00:17:05.101 |     12ms | dca582 | Waiting for Angular
+00:17:05.102 |     19ms | dca582 | FindElements
+    Using css selector '#labelInput'
+    Elements: 0.5107076215379807-27
+00:17:05.134 |     10ms | dca582 | Waiting for Angular
+00:17:05.134 |    126ms | dca582 | ElementClick (0.5107076215379807-27)
+00:17:05.287 |     19ms | dca582 | Waiting for Angular
+00:17:05.288 |     20ms | dca582 | FindElements
+    Using css selector '#newEFormBtn'
+    Elements: 0.5107076215379807-4
+00:17:05.327 |     16ms | dca582 | Waiting for Angular
+00:17:05.327 |     16ms | dca582 | IsElementEnabled (0.5107076215379807-4)
+00:17:05.360 |     15ms | dca582 | Waiting for Angular
+00:17:05.361 |     15ms | dca582 | FindElements
+    Using css selector '#newEFormBtn'
+    Elements: 0.5107076215379807-4
+00:17:05.390 |     12ms | dca582 | Waiting for Angular
+00:17:05.390 |     13ms | /session/dca582c26941b68c68d1c90e15c612bd/element/0.5107076215379807-4/displayed
+00:17:05.416 |     11ms | dca582 | Waiting for Angular
+00:17:05.417 |     14ms | dca582 | FindElements
+    Using css selector '#newEFormBtn'
+    Elements: 0.5107076215379807-4
+00:17:05.446 |     13ms | dca582 | Waiting for Angular
+00:17:05.447 |     13ms | dca582 | IsElementEnabled (0.5107076215379807-4)
+00:17:05.477 |     14ms | dca582 | Waiting for Angular
+00:17:05.477 |     17ms | dca582 | FindElements
+    Using xpath '//*[@id="mainPageEFormsTableBody"]/tr[1]/td[1]'
+    Elements: 0.5107076215379807-41
+00:17:05.517 |     19ms | dca582 | Waiting for Angular
+00:17:05.518 |     30ms | dca582 | GetElementText (0.5107076215379807-41)
+    1338
+00:17:05.564 |     12ms | dca582 | Waiting for Angular
+00:17:05.564 |     17ms | dca582 | FindElements
+    Using xpath '//*[@id="mainPageEFormsTableBody"]/tr[1]/td[2]'
+    Elements: 0.5107076215379807-42
+00:17:05.597 |     14ms | dca582 | Waiting for Angular
+00:17:05.597 |     14ms | dca582 | GetElementText (0.5107076215379807-42)
+    03.07.2018 00:13:24
+00:17:05.624 |     11ms | dca582 | Waiting for Angular
+00:17:05.625 |     14ms | dca582 | FindElements
+    Using xpath '//*[@id="mainPageEFormsTableBody"]/tr[1]/td[3]'
+    Elements: 0.5107076215379807-43
+00:17:05.654 |     11ms | dca582 | Waiting for Angular
+00:17:05.654 |     14ms | dca582 | GetElementText (0.5107076215379807-43)
+    TEST481971
+00:17:05.683 |     12ms | dca582 | Waiting for Angular
+00:17:05.684 |     18ms | dca582 | FindElements
+    Using xpath '//*[@id="mainPageEFormsTableBody"]//tr[1]/td[4]/div/div[1]'
+    Elements: 0.5107076215379807-44
+00:17:05.724 |     17ms | dca582 | Waiting for Angular
+00:17:05.725 |     34ms | dca582 | GetElementText (0.5107076215379807-44)
+    testTag1
+00:17:05.778 |     15ms | dca582 | Waiting for Angular
+00:17:05.778 |     19ms | dca582 | FindElements
+    Using xpath '//*[@id="mainPageEFormsTableBody"]/tr[1]/td[5]/span'
+    Elements: 
+00:17:05.814 |     14ms | dca582 | Waiting for Angular
+00:17:05.815 |     31ms | dca582 | FindElements
+    Using xpath '//*[@id="mainPageEFormsTableBody"]/tr[1]/td[5]/button'
+    Elements: 0.5107076215379807-45
+00:17:05.860 |     11ms | dca582 | Waiting for Angular
+00:17:05.861 |    163ms | dca582 | ElementClick (0.5107076215379807-45)
+00:17:07.792 |   1763ms | dca582 | Waiting for Angular
+00:17:07.793 |     25ms | dca582 | FindElements
+    Using css selector '#pairingModalSaveBtn'
+    Elements: 0.5107076215379807-10
+00:17:07.839 |     19ms | dca582 | Waiting for Angular
+00:17:07.839 |     30ms | dca582 | IsElementEnabled (0.5107076215379807-10)
+00:17:07.886 |     14ms | dca582 | Waiting for Angular
+00:17:07.887 |     15ms | dca582 | FindElements
+    Using css selector '#pairingModalSaveBtn'
+    Elements: 0.5107076215379807-10
+00:17:07.918 |     13ms | dca582 | Waiting for Angular
+00:17:07.920 |     31ms | /session/dca582c26941b68c68d1c90e15c612bd/element/0.5107076215379807-10/displayed
+00:17:07.969 |     15ms | dca582 | Waiting for Angular
+00:17:07.970 |     15ms | dca582 | FindElements
+    Using css selector '#pairingModalSaveBtn'
+    Elements: 0.5107076215379807-10
+00:17:07.999 |     12ms | dca582 | Waiting for Angular
+00:17:08.000 |     23ms | dca582 | IsElementEnabled (0.5107076215379807-10)
+00:17:12.042 |     16ms | dca582 | Waiting for Angular
+00:17:12.043 |     52ms | dca582 | FindElements
+    Using xpath '//*[@id="pairingModalTableBody"]/tr'
+    Elements: 0.5107076215379807-46,0.5107076215379807-47,0.5107076215379807-48
+00:17:12.135 |     16ms | dca582 | Waiting for Angular
+00:17:12.136 |     15ms | dca582 | FindElements
+    Using xpath '//*[@id="pairingModalTableBody"]/tr[1]/td[1]'
+    Elements: 0.5107076215379807-49
+00:17:12.165 |     11ms | dca582 | Waiting for Angular
+00:17:12.166 |     30ms | dca582 | GetElementText (0.5107076215379807-49)
+    5753
+00:17:12.212 |     12ms | dca582 | Waiting for Angular
+00:17:12.212 |     19ms | dca582 | FindElements
+    Using xpath '//*[@id="pairingModalTableBody"]/tr[1]/td[2]'
+    Elements: 0.5107076215379807-50
+00:17:12.248 |     15ms | dca582 | Waiting for Angular
+00:17:12.249 |     30ms | dca582 | GetElementText (0.5107076215379807-50)
+    Niels Windfeld-Lund
+00:17:12.293 |     12ms | dca582 | Waiting for Angular
+00:17:12.294 |     15ms | dca582 | FindElements
+    Using xpath '//*[@id="pairingModalTableBody"]/tr[1]/td[3]/div[1]/div/input'
+    Elements: 0.5107076215379807-51
+00:17:12.328 |     17ms | dca582 | Waiting for Angular
+00:17:12.328 |     29ms | /session/dca582c26941b68c68d1c90e15c612bd/element/0.5107076215379807-51/selected
+00:17:12.381 |     20ms | dca582 | Waiting for Angular
+00:17:12.381 |     13ms | dca582 | FindElements
+    Using xpath '//*[@id="pairingModalTableBody"]/tr[2]/td[1]'
+    Elements: 0.5107076215379807-52
+00:17:12.404 |      7ms | dca582 | Waiting for Angular
+00:17:12.405 |     24ms | dca582 | GetElementText (0.5107076215379807-52)
+    6235
+00:17:12.443 |     12ms | dca582 | Waiting for Angular
+00:17:12.444 |     13ms | dca582 | FindElements
+    Using xpath '//*[@id="pairingModalTableBody"]/tr[2]/td[2]'
+    Elements: 0.5107076215379807-53
+00:17:12.474 |     15ms | dca582 | Waiting for Angular
+00:17:12.474 |     40ms | dca582 | GetElementText (0.5107076215379807-53)
+    Samsung 8 tommers
+00:17:12.534 |     17ms | dca582 | Waiting for Angular
+00:17:12.534 |     15ms | dca582 | FindElements
+    Using xpath '//*[@id="pairingModalTableBody"]/tr[2]/td[3]/div[2]/div/input'
+    Elements: 0.5107076215379807-54
+00:17:12.566 |     15ms | dca582 | Waiting for Angular
+00:17:12.566 |     17ms | /session/dca582c26941b68c68d1c90e15c612bd/element/0.5107076215379807-54/selected
+00:17:12.599 |     14ms | dca582 | Waiting for Angular
+00:17:12.599 |     12ms | dca582 | FindElements
+    Using xpath '//*[@id="pairingModalTableBody"]/tr[3]/td[1]'
+    Elements: 0.5107076215379807-55
+00:17:12.623 |     10ms | dca582 | Waiting for Angular
+00:17:12.623 |     27ms | dca582 | GetElementText (0.5107076215379807-55)
+    6275
+00:17:12.671 |     18ms | dca582 | Waiting for Angular
+00:17:12.672 |     19ms | dca582 | FindElements
+    Using xpath '//*[@id="pairingModalTableBody"]/tr[3]/td[2]'
+    Elements: 0.5107076215379807-56
+00:17:12.711 |     17ms | dca582 | Waiting for Angular
+00:17:12.712 |     28ms | dca582 | GetElementText (0.5107076215379807-56)
+    Samsung S6 (nwl)
+00:17:12.760 |     17ms | dca582 | Waiting for Angular
+00:17:12.761 |     14ms | dca582 | FindElements
+    Using xpath '//*[@id="pairingModalTableBody"]/tr[3]/td[3]/div[3]/div/input'
+    Elements: 0.5107076215379807-57
+00:17:12.791 |     14ms | dca582 | Waiting for Angular
+00:17:12.792 |     27ms | /session/dca582c26941b68c68d1c90e15c612bd/element/0.5107076215379807-57/selected
+00:17:12.837 |     15ms | dca582 | Waiting for Angular
+00:17:12.838 |     17ms | dca582 | FindElements
+    Using css selector '#pairingModalSaveBtn'
+    Elements: 0.5107076215379807-10
+00:17:12.875 |     17ms | dca582 | Waiting for Angular
+00:17:12.876 |    166ms | dca582 | ElementClick (0.5107076215379807-10)
+00:17:14.370 |   1326ms | dca582 | Waiting for Angular
+00:17:14.371 |     19ms | dca582 | FindElements
+    Using css selector '#newEFormBtn'
+    Elements: 0.5107076215379807-4
+00:17:16.915 |   2523ms | dca582 | Waiting for Angular
+00:17:16.916 |      9ms | dca582 | IsElementEnabled (0.5107076215379807-4)
+00:17:16.937 |     10ms | dca582 | Waiting for Angular
+00:17:16.938 |     14ms | dca582 | FindElements
+    Using css selector '#newEFormBtn'
+    Elements: 0.5107076215379807-4
+00:17:16.977 |     23ms | dca582 | Waiting for Angular
+00:17:16.978 |     15ms | /session/dca582c26941b68c68d1c90e15c612bd/element/0.5107076215379807-4/displayed
+00:17:17.007 |     11ms | dca582 | Waiting for Angular
+00:17:17.008 |     36ms | dca582 | FindElements
+    Using css selector '#newEFormBtn'
+    Elements: 0.5107076215379807-4
+00:17:17.071 |     23ms | dca582 | Waiting for Angular
+00:17:17.072 |     13ms | dca582 | IsElementEnabled (0.5107076215379807-4)
+00:17:17.104 |     16ms | dca582 | Waiting for Angular
+00:17:17.105 |     19ms | dca582 | FindElements
+    Using xpath '//*[@id="mainPageEFormsTableBody"]/tr[1]/td[1]'
+    Elements: 0.5107076215379807-58
+00:17:17.140 |     13ms | dca582 | Waiting for Angular
+00:17:17.141 |     28ms | dca582 | GetElementText (0.5107076215379807-58)
+    1338
+00:17:17.180 |      9ms | dca582 | Waiting for Angular
+00:17:17.180 |     11ms | dca582 | FindElements
+    Using xpath '//*[@id="mainPageEFormsTableBody"]/tr[1]/td[2]'
+    Elements: 0.5107076215379807-59
+00:17:17.202 |      9ms | dca582 | Waiting for Angular
+00:17:17.203 |     42ms | dca582 | GetElementText (0.5107076215379807-59)
+    03.07.2018 00:13:24
+00:17:17.264 |     17ms | dca582 | Waiting for Angular
+00:17:17.266 |     27ms | dca582 | FindElements
+    Using xpath '//*[@id="mainPageEFormsTableBody"]/tr[1]/td[3]'
+    Elements: 0.5107076215379807-60
+00:17:17.314 |     19ms | dca582 | Waiting for Angular
+00:17:17.314 |     34ms | dca582 | GetElementText (0.5107076215379807-60)
+    TEST481971
+00:17:17.361 |     10ms | dca582 | Waiting for Angular
+00:17:17.362 |     15ms | dca582 | FindElements
+    Using xpath '//*[@id="mainPageEFormsTableBody"]//tr[1]/td[4]/div/div[1]'
+    Elements: 0.5107076215379807-61
+00:17:17.387 |      8ms | dca582 | Waiting for Angular
+00:17:17.388 |     22ms | dca582 | GetElementText (0.5107076215379807-61)
+    testTag1
+00:17:17.423 |     11ms | dca582 | Waiting for Angular
+00:17:17.424 |     14ms | dca582 | FindElements
+    Using xpath '//*[@id="mainPageEFormsTableBody"]/tr[1]/td[5]/span'
+    Elements: 
+00:17:17.452 |     11ms | dca582 | Waiting for Angular
+00:17:17.453 |     14ms | dca582 | FindElements
+    Using css selector '#labelInput'
+    Elements: 0.5107076215379807-27
+00:17:17.491 |     22ms | dca582 | Waiting for Angular
+00:17:17.491 |     89ms | dca582 | ElementClick (0.5107076215379807-27)
+00:17:17.608 |     23ms | dca582 | Waiting for Angular
+00:17:17.609 |     21ms | dca582 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 0.5107076215379807-62
+00:17:17.644 |      8ms | dca582 | Waiting for Angular
+00:17:17.645 |     16ms | dca582 | IsElementEnabled (0.5107076215379807-62)
+00:17:17.675 |     13ms | dca582 | Waiting for Angular
+00:17:17.676 |     15ms | dca582 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 0.5107076215379807-62
+00:17:17.710 |     16ms | dca582 | Waiting for Angular
+00:17:17.711 |     34ms | /session/dca582c26941b68c68d1c90e15c612bd/element/0.5107076215379807-62/displayed
+00:17:17.759 |     12ms | dca582 | Waiting for Angular
+00:17:17.760 |     16ms | dca582 | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 0.5107076215379807-62
+00:17:17.791 |     13ms | dca582 | Waiting for Angular
+00:17:17.792 |    112ms | dca582 | ElementClick (0.5107076215379807-62)
+00:17:17.924 |     18ms | dca582 | Waiting for Angular
+00:17:17.925 |     39ms | dca582 | FindElements
+    Using css selector '#sign-out'
+    Elements: 0.5107076215379807-63
+00:17:17.985 |     17ms | dca582 | Waiting for Angular
+00:17:17.986 |     23ms | dca582 | IsElementEnabled (0.5107076215379807-63)
+00:17:18.025 |     14ms | dca582 | Waiting for Angular
+00:17:18.026 |     15ms | dca582 | FindElements
+    Using css selector '#sign-out'
+    Elements: 0.5107076215379807-63
+00:17:18.062 |     17ms | dca582 | Waiting for Angular
+00:17:18.063 |     30ms | /session/dca582c26941b68c68d1c90e15c612bd/element/0.5107076215379807-63/displayed
+00:17:18.112 |     16ms | dca582 | Waiting for Angular
+00:17:18.112 |     13ms | dca582 | FindElements
+    Using css selector '#sign-out'
+    Elements: 0.5107076215379807-63
+00:17:18.137 |      9ms | dca582 | Waiting for Angular
+00:17:18.138 |    136ms | dca582 | ElementClick (0.5107076215379807-63)
+00:17:19.051 |    774ms | dca582 | Waiting for Angular
+00:17:19.052 |     26ms | dca582 | FindElements
+    Using css selector 'button.btn-success'
+    Elements: 0.5107076215379807-64
+00:17:19.403 |    320ms | dca582 | Waiting for Angular
+00:17:19.404 |     15ms | dca582 | IsElementEnabled (0.5107076215379807-64)
+00:17:19.428 |      7ms | dca582 | Waiting for Angular
+00:17:19.429 |     10ms | dca582 | FindElements
+    Using css selector 'button.btn-success'
+    Elements: 0.5107076215379807-64
+00:17:19.450 |      9ms | dca582 | Waiting for Angular
+00:17:19.450 |     26ms | /session/dca582c26941b68c68d1c90e15c612bd/element/0.5107076215379807-64/displayed
+00:17:19.496 |     15ms | dca582 | Waiting for Angular
+00:17:19.497 |     15ms | dca582 | FindElements
+    Using css selector 'button.btn-success'
+    Elements: 0.5107076215379807-64
+00:17:19.523 |      8ms | dca582 | Waiting for Angular
+00:17:19.524 |     10ms | dca582 | IsElementEnabled (0.5107076215379807-64)
+00:17:19.542 |    330ms | dca582 | DeleteSession

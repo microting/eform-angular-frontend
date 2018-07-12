@@ -1,0 +1,48 @@
+20:06:49.225 |   3733ms | 079649 | NewSession
+    {"browserName":"chrome","maxSessions":1,"maxInstances":1,"count":1}
+20:06:52.969 |     14ms | 079649 | SetTimeouts
+    ERROR 13: unknown error: 'ms' must be a double
+  (Session info: chrome=67.0.3396.99)
+  (Driver info: chromedriver=2.39.562718 (9a2698cba08cf5a471a29d30c8b3e12becabb0e9),platform=Windows NT 10.0.16299 x86_64)
+20:06:52.987 |      8ms | 079649 | SetTimeouts
+20:07:07.396 |   1173ms | /session/07964941032fd8849eb6731e706f61a5/window/current/maximize
+20:07:07.399 |   1265ms | 079649 | Go data:text/html,<html></html>
+20:07:08.667 |   5537ms | /session/07964941032fd8849eb6731e706f61a5/execute
+20:07:14.211 |     26ms | /session/07964941032fd8849eb6731e706f61a5/execute
+20:07:14.241 |     32ms | /session/07964941032fd8849eb6731e706f61a5/execute_async
+20:07:14.284 |     34ms | 079649 | FindElements
+    Using xpath '//*[@id="header_full_top"]/div/div/div[1]/img'
+    Elements: 
+20:07:14.337 |     35ms | 079649 | FindElements
+    Using css selector '#main-header-text'
+    Elements: 
+20:07:14.377 |     33ms | 079649 | FindElements
+    Using css selector '#main-header-text'
+    Elements: 
+20:07:14.425 |     37ms | 079649 | FindElements
+    Using css selector '#secondary-header-text'
+    Elements: 
+20:07:14.467 |     11ms | 079649 | FindElements
+    Using css selector '#secondary-header-text'
+    Elements: 
+20:07:14.489 |     12ms | 079649 | FindElements
+    Using xpath '//*[@id="header_full_top"]/div/div/div[1]/img'
+    Elements: 
+20:07:16.506 |     18ms | 079649 | FindElements
+    Using css selector '#siteHeaderReset'
+    Elements: 
+20:07:16.533 |     21ms | 079649 | FindElements
+    Using css selector '#headerSettingsMainText'
+    Elements: 
+20:07:18.559 |     12ms | 079649 | FindElements
+    Using css selector '#siteHeaderReset'
+    Elements: 
+20:07:18.579 |     20ms | 079649 | FindElements
+    Using css selector '#headerSettingsSecondaryText'
+    Elements: 
+20:07:20.603 |     13ms | 079649 | FindElements
+    Using css selector '#siteHeaderReset'
+    Elements: 
+20:07:20.628 |     27ms | 079649 | FindElements
+    Using css selector '#mainTextSiteHeaderHide'
+    Elements: 

@@ -89,7 +89,6 @@ describe('Main Page - CREATE', function () {
     it('should create eform with creating 1 tag and using 1 already prepared tag', async () => {
       const initRowNum = await mainPage.getRowNumber();
       await mainPage.newEformBtn.click();
-      await browser.wait(ExpectedConditions.elementToBeClickable(mainPage.createEFormModal.saveEFormBtn));
       try {
         await mainPage.createEFormModal.closeTagInputBtn.isDisplayed();
         await waitFor(mainPage.createEFormModal.closeTagInputBtn);
@@ -120,21 +119,13 @@ describe('Main Page - CREATE', function () {
     it('should create eform while adding 1 already prepared tag', async () => {
       const initRowNum = await mainPage.getRowNumber();
       await mainPage.newEformBtn.click();
-      await waitFor(mainPage.createEFormModal.saveEFormBtn);
       try {
         await mainPage.createEFormModal.closeTagInputBtn.isDisplayed();
         await waitFor(mainPage.createEFormModal.closeTagInputBtn);
         await browser.sleep(1500);
         await mainPage.createEFormModal.closeTagInputBtn.click();
         await browser.sleep(1500);
-        await waitFor(mainPage.createEFormModal.addTagBtn);
-        await browser.sleep(1500);
-        await mainPage.createEFormModal.addTagBtn.click();
       } catch (e) {
-        await waitFor(mainPage.createEFormModal.addTagBtn);
-        await browser.sleep(1500);
-        await mainPage.createEFormModal.addTagBtn.click();
-        await browser.sleep(1500);
       }
       await mainPage.createEFormModal.tagSelector.click();
       await mainPage.createEFormModal.selectTag(data.MainPage.firstTagForAdding);
@@ -150,7 +141,6 @@ describe('Main Page - CREATE', function () {
     it('should create eform while adding more than 2 already prepared tags', async () => {
       const initRowNum = await mainPage.getRowNumber();
       await mainPage.newEformBtn.click();
-      await browser.wait(ExpectedConditions.elementToBeClickable(mainPage.createEFormModal.saveEFormBtn));
       try {
         await mainPage.createEFormModal.closeTagInputBtn.isDisplayed();
         await mainPage.createEFormModal.closeTagInputBtn.click();
@@ -181,6 +171,11 @@ describe('Main Page - CREATE', function () {
       await browser.waitForAngular();
       const initRowNum = await mainPage.getRowNumber();
       await mainPage.newEformBtn.click();
+      try {
+        await mainPage.createEFormModal.closeTagInputBtn.isDisplayed();
+        await mainPage.createEFormModal.closeTagInputBtn.click();
+      } catch (e) {
+      }
       await waitFor(mainPage.createEFormModal.cancelBtn);
       await mainPage.createEFormModal.saveEFormBtn.click();
       await waitFor(mainPage.newEformBtn);

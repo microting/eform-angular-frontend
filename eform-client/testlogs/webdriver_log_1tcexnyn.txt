@@ -1,0 +1,1664 @@
+19:59:39.039 |   3829ms | 7121ad | NewSession
+    {"browserName":"chrome","maxSessions":1,"maxInstances":1,"count":1}
+19:59:42.877 |     11ms | 7121ad | SetTimeouts
+    ERROR 13: unknown error: 'ms' must be a double
+  (Session info: chrome=67.0.3396.99)
+  (Driver info: chromedriver=2.39.562718 (9a2698cba08cf5a471a29d30c8b3e12becabb0e9),platform=Windows NT 10.0.16299 x86_64)
+19:59:42.893 |      5ms | 7121ad | SetTimeouts
+19:59:54.219 |    201ms | 7121ad | Go data:text/html,<html></html>
+19:59:54.427 |   5639ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:00:00.071 |     11ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:00:00.087 |     20ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute_async
+20:00:13.257 |  13143ms | 7121ad | Waiting for Angular
+20:00:13.258 |     44ms | 7121ad | FindElements
+    Using css selector 'button.btn.btn-danger.btn-ar'
+    Elements: 0.17162450231928772-1
+20:00:13.328 |     21ms | 7121ad | Waiting for Angular
+20:00:13.329 |     26ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.17162450231928772-1/displayed
+20:00:13.371 |     11ms | 7121ad | Waiting for Angular
+20:00:13.372 |     19ms | 7121ad | FindElements
+    Using css selector '#userName'
+    Elements: 0.17162450231928772-2
+20:00:13.406 |     12ms | 7121ad | Waiting for Angular
+20:00:13.407 |    112ms | 7121ad | ElementSendKeys (0.17162450231928772-2)
+    Send: admin
+20:00:13.538 |     15ms | 7121ad | Waiting for Angular
+20:00:13.539 |     48ms | 7121ad | FindElements
+    Using css selector '#password'
+    Elements: 0.17162450231928772-3
+20:00:13.600 |     10ms | 7121ad | Waiting for Angular
+20:00:13.601 |    127ms | 7121ad | ElementSendKeys (0.17162450231928772-3)
+    Send: Qq1234567$
+20:00:13.745 |     14ms | 7121ad | Waiting for Angular
+20:00:13.747 |     33ms | 7121ad | FindElements
+    Using css selector '#email'
+    Elements: 0.17162450231928772-4
+20:00:13.802 |     19ms | 7121ad | Waiting for Angular
+20:00:13.803 |    213ms | 7121ad | ElementSendKeys (0.17162450231928772-4)
+    Send: admin@admin.com
+20:00:14.031 |     12ms | 7121ad | Waiting for Angular
+20:00:14.032 |     24ms | 7121ad | FindElements
+    Using css selector '#firstName'
+    Elements: 0.17162450231928772-5
+20:00:14.067 |      9ms | 7121ad | Waiting for Angular
+20:00:14.068 |     65ms | 7121ad | ElementSendKeys (0.17162450231928772-5)
+    Send: John
+20:00:14.147 |     13ms | 7121ad | Waiting for Angular
+20:00:14.148 |     27ms | 7121ad | FindElements
+    Using css selector '#lastName'
+    Elements: 0.17162450231928772-6
+20:00:14.207 |     28ms | 7121ad | Waiting for Angular
+20:00:14.208 |     93ms | 7121ad | ElementSendKeys (0.17162450231928772-6)
+    Send: Smith
+20:00:14.315 |     11ms | 7121ad | Waiting for Angular
+20:00:14.316 |     21ms | 7121ad | FindElements
+    Using css selector '#sourceSDK'
+    Elements: 0.17162450231928772-7
+20:00:14.358 |     17ms | 7121ad | Waiting for Angular
+20:00:14.359 |    155ms | 7121ad | ElementSendKeys (0.17162450231928772-7)
+    Send: .\SQLEXPRESS01
+20:00:14.544 |     28ms | 7121ad | Waiting for Angular
+20:00:14.545 |     28ms | 7121ad | FindElements
+    Using css selector '#catalogueSDK'
+    Elements: 0.17162450231928772-8
+20:00:14.593 |     18ms | 7121ad | Waiting for Angular
+20:00:14.594 |    132ms | 7121ad | ElementSendKeys (0.17162450231928772-8)
+    Send: 480_SDK
+20:00:14.742 |     13ms | 7121ad | Waiting for Angular
+20:00:14.743 |     30ms | 7121ad | FindElements
+    Using css selector '#authSDK'
+    Elements: 0.17162450231928772-9
+20:00:14.786 |     11ms | 7121ad | Waiting for Angular
+20:00:14.787 |    191ms | 7121ad | ElementSendKeys (0.17162450231928772-9)
+    Send: Integrated Security=True
+20:00:14.997 |     16ms | 7121ad | Waiting for Angular
+20:00:14.997 |     28ms | 7121ad | FindElements
+    Using css selector '#token'
+    Elements: 0.17162450231928772-10
+20:00:15.042 |     14ms | 7121ad | Waiting for Angular
+20:00:15.043 |    275ms | 7121ad | ElementSendKeys (0.17162450231928772-10)
+    Send: b3abe9893bf46e5bd98186222bf8ff22
+20:00:15.331 |     11ms | 7121ad | Waiting for Angular
+20:00:15.332 |     20ms | 7121ad | FindElements
+    Using css selector '#sourceMain'
+    Elements: 0.17162450231928772-11
+20:00:15.365 |     11ms | 7121ad | Waiting for Angular
+20:00:15.366 |    162ms | 7121ad | ElementSendKeys (0.17162450231928772-11)
+    Send: .\SQLEXPRESS01
+20:00:15.545 |     15ms | 7121ad | Waiting for Angular
+20:00:15.545 |     28ms | 7121ad | FindElements
+    Using css selector '#catalogueMain'
+    Elements: 0.17162450231928772-12
+20:00:15.589 |     13ms | 7121ad | Waiting for Angular
+20:00:15.590 |     99ms | 7121ad | ElementSendKeys (0.17162450231928772-12)
+    Send: eFormMain
+20:00:15.705 |     14ms | 7121ad | Waiting for Angular
+20:00:15.706 |     33ms | 7121ad | FindElements
+    Using css selector '#authMain'
+    Elements: 0.17162450231928772-13
+20:00:15.757 |     16ms | 7121ad | Waiting for Angular
+20:00:15.758 |    205ms | 7121ad | ElementSendKeys (0.17162450231928772-13)
+    Send: Integrated Security=True
+20:00:15.979 |     14ms | 7121ad | Waiting for Angular
+20:00:15.979 |     18ms | 7121ad | FindElements
+    Using css selector '#defaultLanguageSelector'
+    Elements: 0.17162450231928772-14
+20:00:16.008 |      9ms | 7121ad | Waiting for Angular
+20:00:16.011 |     67ms | 7121ad | ElementClick (0.17162450231928772-14)
+20:00:16.094 |     12ms | 7121ad | Waiting for Angular
+20:00:16.095 |     12ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:00:16.121 |     12ms | 7121ad | Waiting for Angular
+20:00:16.122 |    120ms | 7121ad | ElementClick (0.17162450231928772-15)
+20:00:16.257 |     12ms | 7121ad | Waiting for Angular
+20:00:16.258 |     12ms | 7121ad | FindElements
+    Using css selector 'button.btn.btn-danger.btn-ar'
+    Elements: 0.17162450231928772-1
+20:00:16.282 |     10ms | 7121ad | Waiting for Angular
+20:00:16.283 |     66ms | 7121ad | ElementClick (0.17162450231928772-1)
+20:00:19.604 |   3252ms | 7121ad | Waiting for Angular
+20:00:19.605 |     33ms | 7121ad | FindElements
+    Using css selector 'button.btn-success'
+    Elements: 0.17162450231928772-16
+20:00:31.489 |  11848ms | 7121ad | Waiting for Angular
+20:00:31.490 |     17ms | 7121ad | IsElementEnabled (0.17162450231928772-16)
+20:00:31.844 |    334ms | 7121ad | Waiting for Angular
+20:00:31.844 |     19ms | 7121ad | FindElements
+    Using css selector 'button.btn-success'
+    Elements: 0.17162450231928772-16
+20:00:31.876 |     10ms | 7121ad | Waiting for Angular
+20:00:31.876 |     19ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.17162450231928772-16/displayed
+20:00:31.901 |     40ms | 7121ad | Go data:text/html,<html></html>
+20:00:31.945 |   4748ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:00:36.697 |     10ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:00:36.711 |     21ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute_async
+20:00:36.767 |     26ms | 7121ad | Waiting for Angular
+20:00:36.777 |     34ms | 7121ad | Waiting for Angular
+20:00:36.768 |     32ms | 7121ad | FindElements
+    Using css selector '#username'
+    Elements: 0.61311768981959-1
+20:00:36.778 |     43ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:00:36.829 |     26ms | 7121ad | Waiting for Angular
+20:00:36.840 |     15ms | 7121ad | Waiting for Angular
+20:00:36.830 |     29ms | 7121ad | IsElementEnabled (0.61311768981959-1)
+20:00:36.841 |     28ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:00:36.882 |     20ms | 7121ad | Waiting for Angular
+20:00:36.891 |     18ms | 7121ad | Waiting for Angular
+20:00:36.883 |     22ms | 7121ad | FindElements
+    Using css selector '#username'
+    Elements: 0.61311768981959-1
+20:00:36.892 |     24ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:00:36.924 |     17ms | 7121ad | Waiting for Angular
+20:00:36.933 |     13ms | 7121ad | Waiting for Angular
+20:00:36.925 |     25ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.61311768981959-1/displayed
+20:00:36.934 |     25ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:00:36.966 |     14ms | 7121ad | Waiting for Angular
+20:00:36.974 |     12ms | 7121ad | Waiting for Angular
+20:00:36.967 |     15ms | 7121ad | FindElements
+    Using css selector '#username'
+    Elements: 0.61311768981959-1
+20:00:36.975 |     19ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:00:37.004 |     19ms | 7121ad | Waiting for Angular
+20:00:37.012 |     14ms | 7121ad | Waiting for Angular
+20:00:37.005 |     18ms | 7121ad | IsElementEnabled (0.61311768981959-1)
+20:00:37.013 |     23ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:00:37.045 |     19ms | 7121ad | Waiting for Angular
+20:00:37.054 |     14ms | 7121ad | Waiting for Angular
+20:00:37.046 |     18ms | 7121ad | FindElements
+    Using css selector '#username'
+    Elements: 0.61311768981959-1
+20:00:37.054 |     28ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:00:37.092 |     25ms | 7121ad | Waiting for Angular
+20:00:37.105 |     19ms | 7121ad | Waiting for Angular
+20:00:37.093 |     60ms | 7121ad | ElementClear (0.61311768981959-1)
+20:00:37.106 |     60ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:00:37.186 |     31ms | 7121ad | Waiting for Angular
+20:00:37.199 |     29ms | 7121ad | Waiting for Angular
+20:00:37.187 |     37ms | 7121ad | FindElements
+    Using css selector '#password'
+    Elements: 0.61311768981959-2
+20:00:37.200 |     36ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:00:37.242 |     15ms | 7121ad | Waiting for Angular
+20:00:37.243 |     24ms | 7121ad | IsElementEnabled (0.61311768981959-2)
+20:00:37.284 |     14ms | 7121ad | Waiting for Angular
+20:00:37.285 |     16ms | 7121ad | FindElements
+    Using css selector '#password'
+    Elements: 0.61311768981959-2
+20:00:37.321 |     17ms | 7121ad | Waiting for Angular
+20:00:37.321 |     27ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.61311768981959-2/displayed
+20:00:37.363 |     12ms | 7121ad | Waiting for Angular
+20:00:37.364 |     11ms | 7121ad | FindElements
+    Using css selector '#password'
+    Elements: 0.61311768981959-2
+20:00:37.386 |      9ms | 7121ad | Waiting for Angular
+20:00:37.387 |      8ms | 7121ad | IsElementEnabled (0.61311768981959-2)
+20:00:37.405 |      8ms | 7121ad | Waiting for Angular
+20:00:37.406 |     10ms | 7121ad | FindElements
+    Using css selector '#password'
+    Elements: 0.61311768981959-2
+20:00:37.425 |      8ms | 7121ad | Waiting for Angular
+20:00:37.426 |     25ms | 7121ad | ElementClear (0.61311768981959-2)
+20:00:37.464 |     11ms | 7121ad | Waiting for Angular
+20:00:37.465 |     11ms | 7121ad | FindElements
+    Using css selector '#username'
+    Elements: 0.61311768981959-1
+20:00:37.489 |     10ms | 7121ad | Waiting for Angular
+20:00:37.490 |     91ms | 7121ad | ElementSendKeys (0.61311768981959-1)
+    Send: admin
+20:00:37.592 |      9ms | 7121ad | Waiting for Angular
+20:00:37.593 |     14ms | 7121ad | FindElements
+    Using css selector '#password'
+    Elements: 0.61311768981959-2
+20:00:37.620 |     11ms | 7121ad | Waiting for Angular
+20:00:37.620 |     71ms | 7121ad | ElementSendKeys (0.61311768981959-2)
+    Send: Qq1234567$
+20:00:37.704 |      9ms | 7121ad | Waiting for Angular
+20:00:37.705 |     20ms | 7121ad | FindElements
+    Using css selector 'button.btn-success'
+    Elements: 0.61311768981959-3
+20:00:37.738 |     10ms | 7121ad | Waiting for Angular
+20:00:37.739 |    105ms | 7121ad | ElementClick (0.61311768981959-3)
+20:00:38.474 |   1230ms | 7121ad | Waiting for Angular
+20:00:38.475 |     12ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:00:38.811 |    321ms | 7121ad | Waiting for Angular
+20:00:38.812 |     11ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:00:39.078 |    252ms | 7121ad | Waiting for Angular
+20:00:39.079 |     23ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:00:44.868 |   5761ms | 7121ad | Waiting for Angular
+20:00:44.870 |     25ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 0.61311768981959-4
+20:00:44.909 |     12ms | 7121ad | Waiting for Angular
+20:00:44.910 |     38ms | 7121ad | IsElementEnabled (0.61311768981959-4)
+20:00:44.963 |     13ms | 7121ad | Waiting for Angular
+20:00:44.964 |     31ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 0.61311768981959-4
+20:00:45.009 |     11ms | 7121ad | Waiting for Angular
+20:00:45.010 |     26ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.61311768981959-4/displayed
+20:00:45.053 |     14ms | 7121ad | Waiting for Angular
+20:00:45.054 |     13ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 0.61311768981959-4
+20:00:45.082 |     12ms | 7121ad | Waiting for Angular
+20:00:45.082 |     96ms | 7121ad | ElementClick (0.61311768981959-4)
+20:00:45.190 |     10ms | 7121ad | Waiting for Angular
+20:00:45.191 |     22ms | 7121ad | FindElements
+    Using css selector 'a[href="/application-settings"]'
+    Elements: 0.61311768981959-5
+20:00:45.225 |     10ms | 7121ad | Waiting for Angular
+20:00:45.225 |     16ms | 7121ad | IsElementEnabled (0.61311768981959-5)
+20:00:45.256 |     13ms | 7121ad | Waiting for Angular
+20:00:45.256 |     28ms | 7121ad | FindElements
+    Using css selector 'a[href="/application-settings"]'
+    Elements: 0.61311768981959-5
+20:00:45.304 |     16ms | 7121ad | Waiting for Angular
+20:00:45.305 |     27ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.61311768981959-5/displayed
+20:00:45.344 |     10ms | 7121ad | Waiting for Angular
+20:00:45.345 |     11ms | 7121ad | FindElements
+    Using css selector 'a[href="/application-settings"]'
+    Elements: 0.61311768981959-5
+20:00:45.368 |     10ms | 7121ad | Waiting for Angular
+20:00:45.369 |    166ms | 7121ad | ElementClick (0.61311768981959-5)
+20:00:46.077 |    538ms | 7121ad | Waiting for Angular
+20:00:46.078 |     20ms | 7121ad | FindElements
+    Using css selector '#siteHeaderReset'
+    Elements: 0.61311768981959-6
+20:00:46.109 |      9ms | 7121ad | Waiting for Angular
+20:00:46.109 |     87ms | 7121ad | ElementClick (0.61311768981959-6)
+20:00:46.472 |    273ms | 7121ad | Waiting for Angular
+20:00:46.473 |     23ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:00:46.502 |     62ms | 7121ad | Go data:text/html,<html></html>
+20:00:46.568 |   6413ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:00:52.986 |    102ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:00:53.091 |     33ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute_async
+20:01:04.137 |  11003ms | 7121ad | Waiting for Angular
+20:01:04.138 |     26ms | 7121ad | FindElements
+    Using xpath '//*[@id="header_full_top"]/div/div/div[1]/img'
+    Elements: 0.10351856803823889-1
+20:01:04.186 |     19ms | 7121ad | Waiting for Angular
+20:01:04.188 |     17ms | 7121ad | IsElementEnabled (0.10351856803823889-1)
+20:01:04.225 |      9ms | 7121ad | Waiting for Angular
+20:01:04.226 |     21ms | 7121ad | FindElements
+    Using css selector '#main-header-text'
+    Elements: 0.10351856803823889-2
+20:01:04.260 |     11ms | 7121ad | Waiting for Angular
+20:01:04.261 |     13ms | 7121ad | IsElementEnabled (0.10351856803823889-2)
+20:01:04.284 |      7ms | 7121ad | Waiting for Angular
+20:01:04.285 |      9ms | 7121ad | FindElements
+    Using css selector '#main-header-text'
+    Elements: 0.10351856803823889-2
+20:01:04.303 |      7ms | 7121ad | Waiting for Angular
+20:01:04.304 |     19ms | 7121ad | GetElementText (0.10351856803823889-2)
+    Microting eForm
+20:01:04.337 |      9ms | 7121ad | Waiting for Angular
+20:01:04.337 |     16ms | 7121ad | FindElements
+    Using css selector '#secondary-header-text'
+    Elements: 0.10351856803823889-3
+20:01:04.364 |      9ms | 7121ad | Waiting for Angular
+20:01:04.365 |     16ms | 7121ad | IsElementEnabled (0.10351856803823889-3)
+20:01:04.395 |     11ms | 7121ad | Waiting for Angular
+20:01:04.395 |     12ms | 7121ad | FindElements
+    Using css selector '#secondary-header-text'
+    Elements: 0.10351856803823889-3
+20:01:04.420 |     10ms | 7121ad | Waiting for Angular
+20:01:04.421 |     21ms | 7121ad | GetElementText (0.10351856803823889-3)
+    No more paper-forms and back-office data entry
+20:01:04.457 |     10ms | 7121ad | Waiting for Angular
+20:01:04.458 |     10ms | 7121ad | FindElements
+    Using xpath '//*[@id="header_full_top"]/div/div/div[1]/img'
+    Elements: 0.10351856803823889-1
+20:01:04.479 |      9ms | 7121ad | Waiting for Angular
+20:01:04.479 |     20ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.10351856803823889-1/displayed
+20:01:04.513 |     10ms | 7121ad | Waiting for Angular
+20:01:04.514 |     23ms | 7121ad | FindElements
+    Using css selector '#imageSiteHeaderHide'
+    Elements: 0.10351856803823889-4
+20:01:04.549 |     10ms | 7121ad | Waiting for Angular
+20:01:04.550 |     95ms | 7121ad | ElementClick (0.10351856803823889-4)
+20:01:04.660 |     11ms | 7121ad | Waiting for Angular
+20:01:04.660 |     18ms | 7121ad | FindElements
+    Using css selector 'button.btn-ar.btn-danger'
+    Elements: 0.10351856803823889-5
+20:01:04.688 |      8ms | 7121ad | Waiting for Angular
+20:01:04.689 |     70ms | 7121ad | ElementClick (0.10351856803823889-5)
+20:01:05.536 |    773ms | 7121ad | Waiting for Angular
+20:01:05.537 |     14ms | 7121ad | FindElements
+    Using css selector 'button.btn-ar.btn-danger'
+    Elements: 0.10351856803823889-5
+20:01:19.190 |  13636ms | 7121ad | Waiting for Angular
+20:01:19.190 |     19ms | 7121ad | IsElementEnabled (0.10351856803823889-5)
+20:01:19.223 |     11ms | 7121ad | Waiting for Angular
+20:01:19.223 |     14ms | 7121ad | FindElements
+    Using css selector 'button.btn-ar.btn-danger'
+    Elements: 0.10351856803823889-5
+20:01:19.250 |     11ms | 7121ad | Waiting for Angular
+20:01:19.250 |     25ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.10351856803823889-5/displayed
+20:01:19.290 |     11ms | 7121ad | Waiting for Angular
+20:01:19.291 |     12ms | 7121ad | FindElements
+    Using css selector 'button.btn-ar.btn-danger'
+    Elements: 0.10351856803823889-5
+20:01:19.315 |     10ms | 7121ad | Waiting for Angular
+20:01:19.316 |      9ms | 7121ad | IsElementEnabled (0.10351856803823889-5)
+20:01:19.337 |     10ms | 7121ad | Waiting for Angular
+20:01:19.338 |      6ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:01:19.349 |     31ms | 7121ad | Go data:text/html,<html></html>
+20:01:19.383 |   4042ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:01:23.430 |     27ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:01:23.461 |     29ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute_async
+20:01:24.274 |    780ms | 7121ad | Waiting for Angular
+20:01:24.275 |     14ms | 7121ad | FindElements
+    Using xpath '//*[@id="header_full_top"]/div/div/div[1]/img'
+    Elements: 
+20:01:26.304 |      9ms | 7121ad | Waiting for Angular
+20:01:26.304 |     19ms | 7121ad | FindElements
+    Using css selector '#siteHeaderReset'
+    Elements: 0.34178912454096766-1
+20:01:26.334 |      9ms | 7121ad | Waiting for Angular
+20:01:26.335 |     82ms | 7121ad | ElementClick (0.34178912454096766-1)
+20:01:26.851 |    431ms | 7121ad | Waiting for Angular
+20:01:26.852 |      7ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:01:26.862 |     26ms | 7121ad | Go data:text/html,<html></html>
+20:01:26.890 |   5105ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:01:31.999 |     41ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:01:32.043 |     16ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute_async
+20:01:50.278 |  18213ms | 7121ad | Waiting for Angular
+20:01:50.279 |     44ms | 7121ad | FindElements
+    Using css selector '#headerSettingsMainText'
+    Elements: 0.7966237047840836-1
+20:01:50.342 |     17ms | 7121ad | Waiting for Angular
+20:01:50.343 |     34ms | 7121ad | ElementClear (0.7966237047840836-1)
+20:01:50.416 |     36ms | 7121ad | Waiting for Angular
+20:01:50.417 |     27ms | 7121ad | FindElements
+    Using css selector '#headerSettingsMainText'
+    Elements: 0.7966237047840836-1
+20:01:50.467 |     19ms | 7121ad | Waiting for Angular
+20:01:50.468 |    272ms | 7121ad | ElementSendKeys (0.7966237047840836-1)
+    Send: Sample main text
+20:01:50.757 |     15ms | 7121ad | Waiting for Angular
+20:01:50.758 |     31ms | 7121ad | FindElements
+    Using css selector 'button.btn-ar.btn-danger'
+    Elements: 0.7966237047840836-2
+20:01:50.807 |     15ms | 7121ad | Waiting for Angular
+20:01:50.808 |    115ms | 7121ad | ElementClick (0.7966237047840836-2)
+20:01:51.969 |   1044ms | 7121ad | Waiting for Angular
+20:01:51.971 |     33ms | 7121ad | FindElements
+    Using css selector 'button.btn-ar.btn-danger'
+    Elements: 0.7966237047840836-2
+20:02:10.894 |  18886ms | 7121ad | Waiting for Angular
+20:02:10.895 |     22ms | 7121ad | IsElementEnabled (0.7966237047840836-2)
+20:02:10.939 |     19ms | 7121ad | Waiting for Angular
+20:02:10.940 |     24ms | 7121ad | FindElements
+    Using css selector 'button.btn-ar.btn-danger'
+    Elements: 0.7966237047840836-2
+20:02:10.979 |     12ms | 7121ad | Waiting for Angular
+20:02:10.980 |     34ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.7966237047840836-2/displayed
+20:02:11.030 |     14ms | 7121ad | Waiting for Angular
+20:02:11.031 |     17ms | 7121ad | FindElements
+    Using css selector 'button.btn-ar.btn-danger'
+    Elements: 0.7966237047840836-2
+20:02:11.067 |     16ms | 7121ad | Waiting for Angular
+20:02:11.068 |     11ms | 7121ad | IsElementEnabled (0.7966237047840836-2)
+20:02:11.091 |     10ms | 7121ad | Waiting for Angular
+20:02:11.091 |      7ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:02:11.105 |     39ms | 7121ad | Go data:text/html,<html></html>
+20:02:11.148 |   4631ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:02:15.782 |     14ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:02:15.799 |     28ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute_async
+20:02:16.727 |    895ms | 7121ad | Waiting for Angular
+20:02:16.728 |     29ms | 7121ad | FindElements
+    Using css selector '#main-header-text'
+    Elements: 0.0833410964410346-1
+20:02:16.807 |     48ms | 7121ad | Waiting for Angular
+20:02:16.808 |     44ms | 7121ad | GetElementText (0.0833410964410346-1)
+    Sample main text
+20:02:18.863 |      8ms | 7121ad | Waiting for Angular
+20:02:18.864 |     18ms | 7121ad | FindElements
+    Using css selector '#siteHeaderReset'
+    Elements: 0.0833410964410346-2
+20:02:18.893 |      9ms | 7121ad | Waiting for Angular
+20:02:18.894 |    151ms | 7121ad | ElementClick (0.0833410964410346-2)
+20:02:19.184 |    136ms | 7121ad | Waiting for Angular
+20:02:19.185 |     13ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:02:19.205 |     92ms | 7121ad | Go data:text/html,<html></html>
+20:02:19.300 |   6300ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:02:25.604 |     10ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:02:25.618 |    151ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute_async
+20:02:35.070 |   9289ms | 7121ad | Waiting for Angular
+20:02:35.070 |     39ms | 7121ad | FindElements
+    Using css selector '#headerSettingsSecondaryText'
+    Elements: 0.8284890276841799-1
+20:02:35.133 |     21ms | 7121ad | Waiting for Angular
+20:02:35.135 |     42ms | 7121ad | ElementClear (0.8284890276841799-1)
+20:02:35.194 |     15ms | 7121ad | Waiting for Angular
+20:02:35.194 |     12ms | 7121ad | FindElements
+    Using css selector '#headerSettingsSecondaryText'
+    Elements: 0.8284890276841799-1
+20:02:35.221 |     13ms | 7121ad | Waiting for Angular
+20:02:35.222 |    209ms | 7121ad | ElementSendKeys (0.8284890276841799-1)
+    Send: Sample secondary text
+20:02:35.443 |     10ms | 7121ad | Waiting for Angular
+20:02:35.444 |     18ms | 7121ad | FindElements
+    Using css selector 'button.btn-ar.btn-danger'
+    Elements: 0.8284890276841799-2
+20:02:35.472 |      8ms | 7121ad | Waiting for Angular
+20:02:35.473 |     86ms | 7121ad | ElementClick (0.8284890276841799-2)
+20:02:36.325 |    763ms | 7121ad | Waiting for Angular
+20:02:36.325 |     11ms | 7121ad | FindElements
+    Using css selector 'button.btn-ar.btn-danger'
+    Elements: 0.8284890276841799-2
+20:02:46.473 |  10135ms | 7121ad | Waiting for Angular
+20:02:46.473 |     16ms | 7121ad | IsElementEnabled (0.8284890276841799-2)
+20:02:46.503 |     11ms | 7121ad | Waiting for Angular
+20:02:46.503 |     12ms | 7121ad | FindElements
+    Using css selector 'button.btn-ar.btn-danger'
+    Elements: 0.8284890276841799-2
+20:02:46.542 |     24ms | 7121ad | Waiting for Angular
+20:02:46.543 |     28ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.8284890276841799-2/displayed
+20:02:46.583 |      9ms | 7121ad | Waiting for Angular
+20:02:46.584 |      9ms | 7121ad | FindElements
+    Using css selector 'button.btn-ar.btn-danger'
+    Elements: 0.8284890276841799-2
+20:02:46.604 |      8ms | 7121ad | Waiting for Angular
+20:02:46.605 |      8ms | 7121ad | IsElementEnabled (0.8284890276841799-2)
+20:02:46.622 |      7ms | 7121ad | Waiting for Angular
+20:02:46.623 |      5ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:02:46.635 |     32ms | 7121ad | Go data:text/html,<html></html>
+20:02:46.670 |   4334ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:02:51.010 |     43ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:02:51.056 |     31ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute_async
+20:02:52.210 |   1119ms | 7121ad | Waiting for Angular
+20:02:52.211 |     24ms | 7121ad | FindElements
+    Using css selector '#secondary-header-text'
+    Elements: 0.6382688705221164-1
+20:02:52.247 |     10ms | 7121ad | Waiting for Angular
+20:02:52.248 |     30ms | 7121ad | GetElementText (0.6382688705221164-1)
+    Sample secondary text
+20:02:54.288 |      7ms | 7121ad | Waiting for Angular
+20:02:54.289 |     16ms | 7121ad | FindElements
+    Using css selector '#siteHeaderReset'
+    Elements: 0.6382688705221164-2
+20:02:54.318 |      9ms | 7121ad | Waiting for Angular
+20:02:54.319 |    115ms | 7121ad | ElementClick (0.6382688705221164-2)
+20:02:54.568 |    131ms | 7121ad | Waiting for Angular
+20:02:54.569 |      7ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:02:54.583 |     55ms | 7121ad | Go data:text/html,<html></html>
+20:02:54.642 |   5772ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:03:00.417 |     13ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:03:00.433 |     20ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute_async
+20:03:16.382 |  15919ms | 7121ad | Waiting for Angular
+20:03:16.383 |     20ms | 7121ad | FindElements
+    Using css selector '#mainTextSiteHeaderHide'
+    Elements: 0.2183617770326487-1
+20:03:16.415 |      9ms | 7121ad | Waiting for Angular
+20:03:16.416 |     83ms | 7121ad | ElementClick (0.2183617770326487-1)
+20:03:16.510 |      9ms | 7121ad | Waiting for Angular
+20:03:16.510 |     16ms | 7121ad | FindElements
+    Using css selector 'button.btn-ar.btn-danger'
+    Elements: 0.2183617770326487-2
+20:03:16.535 |      7ms | 7121ad | Waiting for Angular
+20:03:16.535 |     55ms | 7121ad | ElementClick (0.2183617770326487-2)
+20:03:17.241 |    649ms | 7121ad | Waiting for Angular
+20:03:17.242 |     14ms | 7121ad | FindElements
+    Using css selector 'button.btn-ar.btn-danger'
+    Elements: 0.2183617770326487-2
+20:03:28.197 |  10939ms | 7121ad | Waiting for Angular
+20:03:28.198 |     17ms | 7121ad | IsElementEnabled (0.2183617770326487-2)
+20:03:28.231 |     14ms | 7121ad | Waiting for Angular
+20:03:28.232 |     24ms | 7121ad | FindElements
+    Using css selector 'button.btn-ar.btn-danger'
+    Elements: 0.2183617770326487-2
+20:03:28.282 |     15ms | 7121ad | Waiting for Angular
+20:03:28.283 |     93ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.2183617770326487-2/displayed
+20:03:28.419 |     39ms | 7121ad | Waiting for Angular
+20:03:28.420 |     13ms | 7121ad | FindElements
+    Using css selector 'button.btn-ar.btn-danger'
+    Elements: 0.2183617770326487-2
+20:03:28.452 |     16ms | 7121ad | Waiting for Angular
+20:03:28.452 |     12ms | 7121ad | IsElementEnabled (0.2183617770326487-2)
+20:03:28.477 |     11ms | 7121ad | Waiting for Angular
+20:03:28.478 |      8ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:03:28.491 |     41ms | 7121ad | Go data:text/html,<html></html>
+20:03:28.535 |   4943ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:03:33.482 |     28ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:03:33.514 |     19ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute_async
+20:03:34.792 |   1249ms | 7121ad | Waiting for Angular
+20:03:34.792 |     25ms | 7121ad | FindElements
+    Using css selector '#main-header-text'
+    Elements: 
+20:03:36.832 |     10ms | 7121ad | Waiting for Angular
+20:03:36.833 |     21ms | 7121ad | FindElements
+    Using css selector '#siteHeaderReset'
+    Elements: 0.6649266679116588-1
+20:03:36.867 |      9ms | 7121ad | Waiting for Angular
+20:03:36.868 |    124ms | 7121ad | ElementClick (0.6649266679116588-1)
+20:03:37.431 |    437ms | 7121ad | Waiting for Angular
+20:03:37.432 |     10ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:03:37.446 |     98ms | 7121ad | Go data:text/html,<html></html>
+20:03:37.548 |   4575ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:03:42.126 |     62ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:03:42.192 |    114ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute_async
+20:03:57.343 |  15031ms | 7121ad | Waiting for Angular
+20:03:57.344 |     37ms | 7121ad | FindElements
+    Using css selector '#secondaryTextSiteHeaderHide'
+    Elements: 0.7756209751961873-1
+20:03:57.392 |      9ms | 7121ad | Waiting for Angular
+20:03:57.392 |     91ms | 7121ad | ElementClick (0.7756209751961873-1)
+20:03:57.493 |      8ms | 7121ad | Waiting for Angular
+20:03:57.493 |     17ms | 7121ad | FindElements
+    Using css selector 'button.btn-ar.btn-danger'
+    Elements: 0.7756209751961873-2
+20:03:57.525 |     12ms | 7121ad | Waiting for Angular
+20:03:57.526 |    109ms | 7121ad | ElementClick (0.7756209751961873-2)
+20:03:58.315 |    677ms | 7121ad | Waiting for Angular
+20:03:58.316 |     20ms | 7121ad | FindElements
+    Using css selector 'button.btn-ar.btn-danger'
+    Elements: 0.7756209751961873-2
+20:04:08.981 |  10640ms | 7121ad | Waiting for Angular
+20:04:08.981 |     24ms | 7121ad | IsElementEnabled (0.7756209751961873-2)
+20:04:09.070 |     62ms | 7121ad | Waiting for Angular
+20:04:09.071 |     20ms | 7121ad | FindElements
+    Using css selector 'button.btn-ar.btn-danger'
+    Elements: 0.7756209751961873-2
+20:04:09.103 |     10ms | 7121ad | Waiting for Angular
+20:04:09.104 |     27ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.7756209751961873-2/displayed
+20:04:09.145 |     12ms | 7121ad | Waiting for Angular
+20:04:09.146 |     14ms | 7121ad | FindElements
+    Using css selector 'button.btn-ar.btn-danger'
+    Elements: 0.7756209751961873-2
+20:04:09.173 |     11ms | 7121ad | Waiting for Angular
+20:04:09.174 |     10ms | 7121ad | IsElementEnabled (0.7756209751961873-2)
+20:04:09.196 |     10ms | 7121ad | Waiting for Angular
+20:04:09.197 |      7ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:04:09.208 |     44ms | 7121ad | Go data:text/html,<html></html>
+20:04:09.257 |   4110ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:04:13.372 |     27ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:04:13.403 |     66ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute_async
+20:04:14.134 |    661ms | 7121ad | Waiting for Angular
+20:04:14.134 |     19ms | 7121ad | FindElements
+    Using css selector '#secondary-header-text'
+    Elements: 
+20:04:16.178 |     22ms | 7121ad | Waiting for Angular
+20:04:16.179 |     28ms | 7121ad | FindElements
+    Using css selector '#siteHeaderReset'
+    Elements: 0.8181293568781416-1
+20:04:16.227 |     16ms | 7121ad | Waiting for Angular
+20:04:16.228 |    124ms | 7121ad | ElementClick (0.8181293568781416-1)
+20:04:16.790 |    435ms | 7121ad | Waiting for Angular
+20:04:16.791 |      8ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:04:16.804 |     44ms | 7121ad | Go data:text/html,<html></html>
+20:04:16.850 |   4360ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:04:21.215 |     11ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:04:21.228 |    114ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute_async
+20:04:35.177 |  13825ms | 7121ad | Waiting for Angular
+20:04:35.178 |     21ms | 7121ad | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 0.02023296915881323-1
+20:04:35.212 |     11ms | 7121ad | Waiting for Angular
+20:04:35.212 |     14ms | 7121ad | IsElementEnabled (0.02023296915881323-1)
+20:04:35.237 |      8ms | 7121ad | Waiting for Angular
+20:04:35.238 |     10ms | 7121ad | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 0.02023296915881323-1
+20:04:35.259 |      9ms | 7121ad | Waiting for Angular
+20:04:35.259 |     20ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.02023296915881323-1/displayed
+20:04:35.289 |      8ms | 7121ad | Waiting for Angular
+20:04:35.289 |     14ms | 7121ad | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 0.02023296915881323-1
+20:04:35.315 |     10ms | 7121ad | Waiting for Angular
+20:04:35.316 |     60ms | 7121ad | ElementClick (0.02023296915881323-1)
+20:04:35.386 |      7ms | 7121ad | Waiting for Angular
+20:04:35.387 |     16ms | 7121ad | FindElements
+    Using css selector '#sign-out'
+    Elements: 0.02023296915881323-2
+20:04:35.412 |      7ms | 7121ad | Waiting for Angular
+20:04:35.412 |     11ms | 7121ad | IsElementEnabled (0.02023296915881323-2)
+20:04:35.433 |      8ms | 7121ad | Waiting for Angular
+20:04:35.434 |      8ms | 7121ad | FindElements
+    Using css selector '#sign-out'
+    Elements: 0.02023296915881323-2
+20:04:35.452 |      8ms | 7121ad | Waiting for Angular
+20:04:35.452 |     16ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.02023296915881323-2/displayed
+20:04:35.477 |      7ms | 7121ad | Waiting for Angular
+20:04:35.478 |     10ms | 7121ad | FindElements
+    Using css selector '#sign-out'
+    Elements: 0.02023296915881323-2
+20:04:35.497 |      8ms | 7121ad | Waiting for Angular
+20:04:35.498 |     77ms | 7121ad | ElementClick (0.02023296915881323-2)
+20:04:35.997 |    419ms | 7121ad | Waiting for Angular
+20:04:35.998 |     17ms | 7121ad | FindElements
+    Using css selector 'button.btn-success'
+    Elements: 0.02023296915881323-3
+20:04:36.347 |    329ms | 7121ad | Waiting for Angular
+20:04:36.348 |     11ms | 7121ad | IsElementEnabled (0.02023296915881323-3)
+20:04:36.370 |      8ms | 7121ad | Waiting for Angular
+20:04:36.371 |     10ms | 7121ad | FindElements
+    Using css selector 'button.btn-success'
+    Elements: 0.02023296915881323-3
+20:04:36.392 |      9ms | 7121ad | Waiting for Angular
+20:04:36.393 |     19ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.02023296915881323-3/displayed
+20:04:36.425 |     11ms | 7121ad | Waiting for Angular
+20:04:36.426 |     10ms | 7121ad | FindElements
+    Using css selector 'button.btn-success'
+    Elements: 0.02023296915881323-3
+20:04:36.460 |     21ms | 7121ad | Waiting for Angular
+20:04:36.461 |     13ms | 7121ad | IsElementEnabled (0.02023296915881323-3)
+20:04:36.482 |     40ms | 7121ad | Go data:text/html,<html></html>
+20:04:36.525 |   5698ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:04:42.227 |     10ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:04:42.240 |    123ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute_async
+20:04:42.376 |      9ms | 7121ad | Waiting for Angular
+20:04:42.382 |     16ms | 7121ad | Waiting for Angular
+20:04:42.377 |     21ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:04:42.383 |     29ms | 7121ad | FindElements
+    Using css selector '#username'
+    Elements: 0.9990854335083847-1
+20:04:42.418 |     16ms | 7121ad | Waiting for Angular
+20:04:42.427 |     12ms | 7121ad | Waiting for Angular
+20:04:42.420 |     19ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:04:42.428 |     26ms | 7121ad | IsElementEnabled (0.9990854335083847-1)
+20:04:42.462 |     19ms | 7121ad | Waiting for Angular
+20:04:42.469 |     12ms | 7121ad | Waiting for Angular
+20:04:42.463 |     16ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:04:42.470 |     24ms | 7121ad | FindElements
+    Using css selector '#username'
+    Elements: 0.9990854335083847-1
+20:04:42.506 |     23ms | 7121ad | Waiting for Angular
+20:04:42.513 |     16ms | 7121ad | Waiting for Angular
+20:04:42.507 |     17ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:04:42.514 |     36ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.9990854335083847-1/displayed
+20:04:42.568 |     40ms | 7121ad | Waiting for Angular
+20:04:42.576 |     23ms | 7121ad | Waiting for Angular
+20:04:42.569 |     25ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:04:42.577 |     31ms | 7121ad | FindElements
+    Using css selector '#username'
+    Elements: 0.9990854335083847-1
+20:04:42.616 |     17ms | 7121ad | Waiting for Angular
+20:04:42.622 |     12ms | 7121ad | Waiting for Angular
+20:04:42.616 |     15ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:04:42.623 |     14ms | 7121ad | IsElementEnabled (0.9990854335083847-1)
+20:04:42.648 |     12ms | 7121ad | Waiting for Angular
+20:04:42.655 |     13ms | 7121ad | Waiting for Angular
+20:04:42.649 |     14ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:04:42.655 |     17ms | 7121ad | FindElements
+    Using css selector '#username'
+    Elements: 0.9990854335083847-1
+20:04:42.681 |     14ms | 7121ad | Waiting for Angular
+20:04:42.689 |     15ms | 7121ad | Waiting for Angular
+20:04:42.682 |     18ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:04:42.690 |     46ms | 7121ad | ElementClear (0.9990854335083847-1)
+20:04:42.754 |     50ms | 7121ad | Waiting for Angular
+20:04:42.766 |     28ms | 7121ad | Waiting for Angular
+20:04:42.755 |     30ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:04:42.767 |     58ms | 7121ad | FindElements
+    Using css selector '#password'
+    Elements: 0.9990854335083847-2
+20:04:42.841 |     53ms | 7121ad | Waiting for Angular
+20:04:42.848 |     20ms | 7121ad | Waiting for Angular
+20:04:42.842 |     14ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:04:42.849 |     21ms | 7121ad | IsElementEnabled (0.9990854335083847-2)
+20:04:42.877 |     18ms | 7121ad | Waiting for Angular
+20:04:42.883 |     10ms | 7121ad | Waiting for Angular
+20:04:42.878 |     12ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:04:42.884 |     17ms | 7121ad | FindElements
+    Using css selector '#password'
+    Elements: 0.9990854335083847-2
+20:04:42.907 |     13ms | 7121ad | Waiting for Angular
+20:04:42.913 |      9ms | 7121ad | Waiting for Angular
+20:04:42.908 |     12ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:04:42.914 |     21ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.9990854335083847-2/displayed
+20:04:42.940 |     16ms | 7121ad | Waiting for Angular
+20:04:42.947 |     10ms | 7121ad | Waiting for Angular
+20:04:42.941 |     16ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:04:42.948 |     17ms | 7121ad | FindElements
+    Using css selector '#password'
+    Elements: 0.9990854335083847-2
+20:04:42.971 |     10ms | 7121ad | Waiting for Angular
+20:04:42.976 |      9ms | 7121ad | Waiting for Angular
+20:04:42.972 |     11ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:04:42.977 |     11ms | 7121ad | IsElementEnabled (0.9990854335083847-2)
+20:04:43.002 |     15ms | 7121ad | Waiting for Angular
+20:04:43.012 |     19ms | 7121ad | Waiting for Angular
+20:04:43.003 |     23ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:04:43.013 |     26ms | 7121ad | FindElements
+    Using css selector '#password'
+    Elements: 0.9990854335083847-2
+20:04:43.053 |     23ms | 7121ad | Waiting for Angular
+20:04:43.059 |     17ms | 7121ad | Waiting for Angular
+20:04:43.053 |     16ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:04:43.060 |     42ms | 7121ad | ElementClear (0.9990854335083847-2)
+20:04:43.110 |     37ms | 7121ad | Waiting for Angular
+20:04:43.118 |     13ms | 7121ad | Waiting for Angular
+20:04:43.111 |     16ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:04:43.119 |     17ms | 7121ad | FindElements
+    Using css selector '#username'
+    Elements: 0.9990854335083847-1
+20:04:43.142 |     13ms | 7121ad | Waiting for Angular
+20:04:43.150 |     12ms | 7121ad | Waiting for Angular
+20:04:43.143 |     16ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:04:43.151 |     66ms | 7121ad | ElementSendKeys (0.9990854335083847-1)
+    Send: admin
+20:04:43.223 |     60ms | 7121ad | Waiting for Angular
+20:04:43.229 |      9ms | 7121ad | Waiting for Angular
+20:04:43.223 |     16ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:04:43.230 |     23ms | 7121ad | FindElements
+    Using css selector '#password'
+    Elements: 0.9990854335083847-2
+20:04:43.277 |     34ms | 7121ad | Waiting for Angular
+20:04:43.310 |     54ms | 7121ad | Waiting for Angular
+20:04:43.278 |     43ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:04:43.311 |    167ms | 7121ad | ElementSendKeys (0.9990854335083847-2)
+    Send: Qq1234567$
+20:04:43.490 |    166ms | 7121ad | Waiting for Angular
+20:04:43.500 |     20ms | 7121ad | Waiting for Angular
+20:04:43.491 |     19ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:04:43.501 |     48ms | 7121ad | FindElements
+    Using css selector 'button.btn-success'
+    Elements: 0.9990854335083847-3
+20:04:43.561 |     45ms | 7121ad | Waiting for Angular
+20:04:43.569 |     17ms | 7121ad | Waiting for Angular
+20:04:43.562 |     29ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:04:43.570 |    100ms | 7121ad | ElementClick (0.9990854335083847-3)
+20:04:43.994 |    400ms | 7121ad | Waiting for Angular
+20:04:43.995 |     13ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:04:44.328 |    317ms | 7121ad | Waiting for Angular
+20:04:44.329 |     10ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:04:44.900 |    557ms | 7121ad | Waiting for Angular
+20:04:44.901 |     32ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:04:49.065 |   4128ms | 7121ad | Waiting for Angular
+20:04:49.066 |     45ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 0.9990854335083847-4
+20:04:49.124 |     11ms | 7121ad | Waiting for Angular
+20:04:49.124 |     21ms | 7121ad | IsElementEnabled (0.9990854335083847-4)
+20:04:49.157 |     10ms | 7121ad | Waiting for Angular
+20:04:49.158 |     13ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 0.9990854335083847-4
+20:04:49.181 |      8ms | 7121ad | Waiting for Angular
+20:04:49.181 |     22ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.9990854335083847-4/displayed
+20:04:49.213 |      8ms | 7121ad | Waiting for Angular
+20:04:49.215 |     14ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 0.9990854335083847-4
+20:04:49.241 |     10ms | 7121ad | Waiting for Angular
+20:04:49.242 |    115ms | 7121ad | ElementClick (0.9990854335083847-4)
+20:04:49.369 |     10ms | 7121ad | Waiting for Angular
+20:04:49.369 |     21ms | 7121ad | FindElements
+    Using css selector 'a[href="/application-settings"]'
+    Elements: 0.9990854335083847-5
+20:04:49.402 |     10ms | 7121ad | Waiting for Angular
+20:04:49.403 |     15ms | 7121ad | IsElementEnabled (0.9990854335083847-5)
+20:04:49.431 |     10ms | 7121ad | Waiting for Angular
+20:04:49.432 |     10ms | 7121ad | FindElements
+    Using css selector 'a[href="/application-settings"]'
+    Elements: 0.9990854335083847-5
+20:04:49.453 |      8ms | 7121ad | Waiting for Angular
+20:04:49.454 |     18ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.9990854335083847-5/displayed
+20:04:49.481 |      7ms | 7121ad | Waiting for Angular
+20:04:49.481 |      9ms | 7121ad | FindElements
+    Using css selector 'a[href="/application-settings"]'
+    Elements: 0.9990854335083847-5
+20:04:49.502 |      9ms | 7121ad | Waiting for Angular
+20:04:49.503 |    126ms | 7121ad | ElementClick (0.9990854335083847-5)
+20:04:50.481 |    848ms | 7121ad | Waiting for Angular
+20:04:50.481 |     18ms | 7121ad | FindElements
+    Using css selector '#loginPageReset'
+    Elements: 0.9990854335083847-6
+20:04:50.510 |      9ms | 7121ad | Waiting for Angular
+20:04:50.510 |    124ms | 7121ad | ElementClick (0.9990854335083847-6)
+20:04:50.793 |    154ms | 7121ad | Waiting for Angular
+20:04:50.794 |     24ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:04:50.823 |     43ms | 7121ad | Go data:text/html,<html></html>
+20:04:50.869 |   5673ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:04:56.544 |     15ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:04:56.562 |    113ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute_async
+20:05:13.197 |  16517ms | 7121ad | Waiting for Angular
+20:05:13.198 |     30ms | 7121ad | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 0.327168370883677-1
+20:05:13.240 |     10ms | 7121ad | Waiting for Angular
+20:05:13.241 |     19ms | 7121ad | IsElementEnabled (0.327168370883677-1)
+20:05:13.272 |     10ms | 7121ad | Waiting for Angular
+20:05:13.273 |     13ms | 7121ad | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 0.327168370883677-1
+20:05:13.298 |     10ms | 7121ad | Waiting for Angular
+20:05:13.299 |     24ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.327168370883677-1/displayed
+20:05:13.335 |     10ms | 7121ad | Waiting for Angular
+20:05:13.336 |     21ms | 7121ad | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 0.327168370883677-1
+20:05:13.380 |     21ms | 7121ad | Waiting for Angular
+20:05:13.381 |     91ms | 7121ad | ElementClick (0.327168370883677-1)
+20:05:13.486 |     11ms | 7121ad | Waiting for Angular
+20:05:13.486 |     22ms | 7121ad | FindElements
+    Using css selector '#sign-out'
+    Elements: 0.327168370883677-2
+20:05:13.528 |     18ms | 7121ad | Waiting for Angular
+20:05:13.529 |     22ms | 7121ad | IsElementEnabled (0.327168370883677-2)
+20:05:13.595 |     42ms | 7121ad | Waiting for Angular
+20:05:13.596 |     37ms | 7121ad | FindElements
+    Using css selector '#sign-out'
+    Elements: 0.327168370883677-2
+20:05:13.649 |     13ms | 7121ad | Waiting for Angular
+20:05:13.650 |     32ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.327168370883677-2/displayed
+20:05:13.694 |      9ms | 7121ad | Waiting for Angular
+20:05:13.695 |      9ms | 7121ad | FindElements
+    Using css selector '#sign-out'
+    Elements: 0.327168370883677-2
+20:05:13.714 |      8ms | 7121ad | Waiting for Angular
+20:05:13.715 |     80ms | 7121ad | ElementClick (0.327168370883677-2)
+20:05:14.224 |    427ms | 7121ad | Waiting for Angular
+20:05:14.225 |     13ms | 7121ad | FindElements
+    Using css selector 'button.btn-success'
+    Elements: 0.327168370883677-3
+20:05:14.560 |    319ms | 7121ad | Waiting for Angular
+20:05:14.562 |     20ms | 7121ad | IsElementEnabled (0.327168370883677-3)
+20:05:14.595 |     10ms | 7121ad | Waiting for Angular
+20:05:14.596 |     24ms | 7121ad | FindElements
+    Using css selector 'button.btn-success'
+    Elements: 0.327168370883677-3
+20:05:14.641 |     19ms | 7121ad | Waiting for Angular
+20:05:14.642 |     29ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.327168370883677-3/displayed
+20:05:14.685 |     12ms | 7121ad | Waiting for Angular
+20:05:14.685 |     20ms | 7121ad | FindElements
+    Using css selector 'button.btn-success'
+    Elements: 0.327168370883677-3
+20:05:14.719 |     11ms | 7121ad | Waiting for Angular
+20:05:14.719 |     11ms | 7121ad | IsElementEnabled (0.327168370883677-3)
+20:05:14.744 |     11ms | 7121ad | Waiting for Angular
+20:05:14.745 |     26ms | 7121ad | FindElements
+    Using css selector '#loginPageImage'
+    Elements: 0.327168370883677-4
+20:05:14.782 |      9ms | 7121ad | Waiting for Angular
+20:05:14.782 |     13ms | 7121ad | IsElementEnabled (0.327168370883677-4)
+20:05:14.811 |     10ms | 7121ad | Waiting for Angular
+20:05:14.811 |     21ms | 7121ad | FindElements
+    Using css selector '#loginPageMainText'
+    Elements: 0.327168370883677-5
+20:05:14.841 |      8ms | 7121ad | Waiting for Angular
+20:05:14.842 |     16ms | 7121ad | IsElementEnabled (0.327168370883677-5)
+20:05:14.870 |     10ms | 7121ad | Waiting for Angular
+20:05:14.871 |     11ms | 7121ad | FindElements
+    Using css selector '#loginPageMainText'
+    Elements: 0.327168370883677-5
+20:05:14.894 |     10ms | 7121ad | Waiting for Angular
+20:05:14.895 |     31ms | 7121ad | GetElementText (0.327168370883677-5)
+    Microting eForm
+20:05:14.953 |     22ms | 7121ad | Waiting for Angular
+20:05:14.954 |     24ms | 7121ad | FindElements
+    Using css selector '#loginPageSecondaryText'
+    Elements: 0.327168370883677-6
+20:05:14.992 |     12ms | 7121ad | Waiting for Angular
+20:05:14.992 |     17ms | 7121ad | IsElementEnabled (0.327168370883677-6)
+20:05:15.021 |      9ms | 7121ad | Waiting for Angular
+20:05:15.021 |     10ms | 7121ad | FindElements
+    Using css selector '#loginPageSecondaryText'
+    Elements: 0.327168370883677-6
+20:05:15.041 |      8ms | 7121ad | Waiting for Angular
+20:05:15.042 |     32ms | 7121ad | GetElementText (0.327168370883677-6)
+    No more paper-forms and back-office data entry
+20:05:15.080 |     34ms | 7121ad | Go data:text/html,<html></html>
+20:05:15.117 |   6319ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:05:21.441 |     16ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:05:21.460 |     32ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute_async
+20:05:21.515 |     15ms | 7121ad | Waiting for Angular
+20:05:21.515 |     20ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:21.547 |      8ms | 7121ad | Waiting for Angular
+20:05:21.548 |     10ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:21.569 |      8ms | 7121ad | Waiting for Angular
+20:05:21.569 |     12ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:21.597 |     13ms | 7121ad | Waiting for Angular
+20:05:21.598 |     12ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:21.630 |     17ms | 7121ad | Waiting for Angular
+20:05:21.631 |     26ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:21.673 |     13ms | 7121ad | Waiting for Angular
+20:05:21.674 |     16ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:21.714 |     21ms | 7121ad | Waiting for Angular
+20:05:21.715 |    124ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:21.861 |     17ms | 7121ad | Waiting for Angular
+20:05:21.862 |     13ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:21.888 |     10ms | 7121ad | Waiting for Angular
+20:05:21.889 |      9ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:21.910 |      8ms | 7121ad | Waiting for Angular
+20:05:21.911 |      9ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:21.941 |     17ms | 7121ad | Waiting for Angular
+20:05:21.942 |     15ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:21.971 |     10ms | 7121ad | Waiting for Angular
+20:05:21.972 |     12ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:21.996 |      8ms | 7121ad | Waiting for Angular
+20:05:21.997 |     11ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:22.014 |    516ms | 7121ad | Waiting for Angular
+20:05:22.021 |     10ms | 7121ad | Waiting for Angular
+20:05:22.015 |     24ms | 7121ad | FindElements
+    Using css selector '#username'
+    Elements: 0.9362948197741359-1
+20:05:22.023 |     25ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:22.058 |     17ms | 7121ad | Waiting for Angular
+20:05:22.070 |     19ms | 7121ad | Waiting for Angular
+20:05:22.059 |     30ms | 7121ad | IsElementEnabled (0.9362948197741359-1)
+20:05:22.071 |     27ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:22.103 |     12ms | 7121ad | Waiting for Angular
+20:05:22.104 |      9ms | 7121ad | FindElements
+    Using css selector '#username'
+    Elements: 0.9362948197741359-1
+20:05:22.118 |     16ms | 7121ad | Waiting for Angular
+20:05:22.127 |     12ms | 7121ad | Waiting for Angular
+20:05:22.119 |     15ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:22.128 |     27ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.9362948197741359-1/displayed
+20:05:22.160 |     22ms | 7121ad | Waiting for Angular
+20:05:22.165 |      8ms | 7121ad | Waiting for Angular
+20:05:22.161 |     12ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:22.165 |     17ms | 7121ad | FindElements
+    Using css selector '#username'
+    Elements: 0.9362948197741359-1
+20:05:22.188 |     11ms | 7121ad | Waiting for Angular
+20:05:22.195 |     10ms | 7121ad | Waiting for Angular
+20:05:22.189 |     15ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:22.196 |     16ms | 7121ad | IsElementEnabled (0.9362948197741359-1)
+20:05:22.222 |     12ms | 7121ad | Waiting for Angular
+20:05:22.234 |     20ms | 7121ad | Waiting for Angular
+20:05:22.223 |     21ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:22.234 |     21ms | 7121ad | FindElements
+    Using css selector '#username'
+    Elements: 0.9362948197741359-1
+20:05:22.263 |     16ms | 7121ad | Waiting for Angular
+20:05:22.270 |     13ms | 7121ad | Waiting for Angular
+20:05:22.264 |     14ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:22.270 |     42ms | 7121ad | ElementClear (0.9362948197741359-1)
+20:05:22.326 |     45ms | 7121ad | Waiting for Angular
+20:05:22.333 |     18ms | 7121ad | Waiting for Angular
+20:05:22.326 |     17ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:22.333 |     26ms | 7121ad | FindElements
+    Using css selector '#password'
+    Elements: 0.9362948197741359-2
+20:05:22.365 |     19ms | 7121ad | Waiting for Angular
+20:05:22.373 |     12ms | 7121ad | Waiting for Angular
+20:05:22.366 |     15ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:22.374 |     19ms | 7121ad | IsElementEnabled (0.9362948197741359-2)
+20:05:22.400 |     16ms | 7121ad | Waiting for Angular
+20:05:22.406 |     10ms | 7121ad | Waiting for Angular
+20:05:22.401 |     18ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:22.407 |     23ms | 7121ad | FindElements
+    Using css selector '#password'
+    Elements: 0.9362948197741359-2
+20:05:22.438 |     14ms | 7121ad | Waiting for Angular
+20:05:22.442 |     10ms | 7121ad | Waiting for Angular
+20:05:22.438 |     13ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:22.443 |     26ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.9362948197741359-2/displayed
+20:05:22.477 |     24ms | 7121ad | Waiting for Angular
+20:05:22.482 |     11ms | 7121ad | Waiting for Angular
+20:05:22.477 |     12ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:22.482 |     14ms | 7121ad | FindElements
+    Using css selector '#password'
+    Elements: 0.9362948197741359-2
+20:05:22.504 |     13ms | 7121ad | Waiting for Angular
+20:05:22.511 |     12ms | 7121ad | Waiting for Angular
+20:05:22.505 |     18ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:22.511 |     18ms | 7121ad | IsElementEnabled (0.9362948197741359-2)
+20:05:22.558 |     31ms | 7121ad | Waiting for Angular
+20:05:22.568 |     35ms | 7121ad | Waiting for Angular
+20:05:22.559 |     19ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:22.568 |     24ms | 7121ad | FindElements
+    Using css selector '#password'
+    Elements: 0.9362948197741359-2
+20:05:22.601 |     20ms | 7121ad | Waiting for Angular
+20:05:22.615 |     21ms | 7121ad | Waiting for Angular
+20:05:22.602 |     29ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:22.616 |     62ms | 7121ad | ElementClear (0.9362948197741359-2)
+20:05:22.687 |     52ms | 7121ad | Waiting for Angular
+20:05:22.693 |     12ms | 7121ad | Waiting for Angular
+20:05:22.688 |     14ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:22.694 |     19ms | 7121ad | FindElements
+    Using css selector '#username'
+    Elements: 0.9362948197741359-1
+20:05:22.725 |     20ms | 7121ad | Waiting for Angular
+20:05:22.734 |     18ms | 7121ad | Waiting for Angular
+20:05:22.726 |     64ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:22.735 |    149ms | 7121ad | ElementSendKeys (0.9362948197741359-1)
+    Send: admin
+20:05:22.897 |    102ms | 7121ad | Waiting for Angular
+20:05:22.910 |     23ms | 7121ad | Waiting for Angular
+20:05:22.897 |     26ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:22.911 |     22ms | 7121ad | FindElements
+    Using css selector '#password'
+    Elements: 0.9362948197741359-2
+20:05:22.943 |     16ms | 7121ad | Waiting for Angular
+20:05:22.951 |     15ms | 7121ad | Waiting for Angular
+20:05:22.944 |     30ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:22.952 |    130ms | 7121ad | ElementSendKeys (0.9362948197741359-2)
+    Send: Qq1234567$
+20:05:23.093 |    116ms | 7121ad | Waiting for Angular
+20:05:23.099 |     15ms | 7121ad | Waiting for Angular
+20:05:23.094 |     13ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:23.100 |     16ms | 7121ad | FindElements
+    Using css selector 'button.btn-success'
+    Elements: 0.9362948197741359-3
+20:05:23.124 |     12ms | 7121ad | Waiting for Angular
+20:05:23.131 |     13ms | 7121ad | Waiting for Angular
+20:05:23.124 |     18ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:23.132 |    114ms | 7121ad | ElementClick (0.9362948197741359-3)
+20:05:23.565 |    418ms | 7121ad | Waiting for Angular
+20:05:23.566 |     12ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:23.903 |    321ms | 7121ad | Waiting for Angular
+20:05:23.904 |     20ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:24.306 |    378ms | 7121ad | Waiting for Angular
+20:05:24.307 |     13ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:05:29.117 |   4794ms | 7121ad | Waiting for Angular
+20:05:29.118 |    135ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 0.9362948197741359-4
+20:05:29.265 |      9ms | 7121ad | Waiting for Angular
+20:05:29.266 |     14ms | 7121ad | IsElementEnabled (0.9362948197741359-4)
+20:05:29.289 |      7ms | 7121ad | Waiting for Angular
+20:05:29.290 |     12ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 0.9362948197741359-4
+20:05:29.313 |      9ms | 7121ad | Waiting for Angular
+20:05:29.314 |     15ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.9362948197741359-4/displayed
+20:05:29.339 |      8ms | 7121ad | Waiting for Angular
+20:05:29.341 |     36ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 0.9362948197741359-4
+20:05:29.390 |     10ms | 7121ad | Waiting for Angular
+20:05:29.391 |    148ms | 7121ad | ElementClick (0.9362948197741359-4)
+20:05:29.563 |     21ms | 7121ad | Waiting for Angular
+20:05:29.563 |     21ms | 7121ad | FindElements
+    Using css selector 'a[href="/application-settings"]'
+    Elements: 0.9362948197741359-5
+20:05:29.593 |      7ms | 7121ad | Waiting for Angular
+20:05:29.594 |     14ms | 7121ad | IsElementEnabled (0.9362948197741359-5)
+20:05:29.620 |     10ms | 7121ad | Waiting for Angular
+20:05:29.621 |     12ms | 7121ad | FindElements
+    Using css selector 'a[href="/application-settings"]'
+    Elements: 0.9362948197741359-5
+20:05:29.651 |     16ms | 7121ad | Waiting for Angular
+20:05:29.651 |     41ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.9362948197741359-5/displayed
+20:05:29.702 |      8ms | 7121ad | Waiting for Angular
+20:05:29.703 |     13ms | 7121ad | FindElements
+    Using css selector 'a[href="/application-settings"]'
+    Elements: 0.9362948197741359-5
+20:05:29.728 |     10ms | 7121ad | Waiting for Angular
+20:05:29.729 |    155ms | 7121ad | ElementClick (0.9362948197741359-5)
+20:05:34.908 |     11ms | 7121ad | Waiting for Angular
+20:05:34.908 |     25ms | 7121ad | FindElements
+    Using css selector '#imageLoginPageHide'
+    Elements: 0.9362948197741359-6
+20:05:34.943 |      8ms | 7121ad | Waiting for Angular
+20:05:34.944 |     63ms | 7121ad | ElementClick (0.9362948197741359-6)
+20:05:35.022 |     11ms | 7121ad | Waiting for Angular
+20:05:35.022 |     19ms | 7121ad | FindElements
+    Using css selector 'button.btn-ar.btn-danger'
+    Elements: 0.9362948197741359-7
+20:05:35.051 |      8ms | 7121ad | Waiting for Angular
+20:05:35.051 |     71ms | 7121ad | ElementClick (0.9362948197741359-7)
+20:05:35.798 |    670ms | 7121ad | Waiting for Angular
+20:05:35.798 |     16ms | 7121ad | FindElements
+    Using css selector 'button.btn-ar.btn-danger'
+    Elements: 0.9362948197741359-7
+20:05:47.594 |  11779ms | 7121ad | Waiting for Angular
+20:05:47.594 |     20ms | 7121ad | IsElementEnabled (0.9362948197741359-7)
+20:05:47.627 |     11ms | 7121ad | Waiting for Angular
+20:05:47.628 |     18ms | 7121ad | FindElements
+    Using css selector 'button.btn-ar.btn-danger'
+    Elements: 0.9362948197741359-7
+20:05:47.779 |    130ms | 7121ad | Waiting for Angular
+20:05:47.780 |     29ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.9362948197741359-7/displayed
+20:05:47.822 |     10ms | 7121ad | Waiting for Angular
+20:05:47.823 |     12ms | 7121ad | FindElements
+    Using css selector 'button.btn-ar.btn-danger'
+    Elements: 0.9362948197741359-7
+20:05:47.852 |     15ms | 7121ad | Waiting for Angular
+20:05:47.853 |     14ms | 7121ad | IsElementEnabled (0.9362948197741359-7)
+20:05:47.879 |      9ms | 7121ad | Waiting for Angular
+20:05:47.880 |      8ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:05:47.891 |     42ms | 7121ad | Go data:text/html,<html></html>
+20:05:47.937 |   5973ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:05:53.913 |     51ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:05:53.967 |     35ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute_async
+20:05:55.230 |   1221ms | 7121ad | Waiting for Angular
+20:05:55.231 |     15ms | 7121ad | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 
+20:05:55.770 |    521ms | 7121ad | Waiting for Angular
+20:05:55.771 |      9ms | 7121ad | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 0.18095958318596717-1
+20:05:55.790 |      8ms | 7121ad | Waiting for Angular
+20:05:55.791 |     19ms | 7121ad | IsElementEnabled (0.18095958318596717-1)
+20:05:55.833 |     20ms | 7121ad | Waiting for Angular
+20:05:55.834 |     19ms | 7121ad | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 0.18095958318596717-1
+20:05:55.868 |     12ms | 7121ad | Waiting for Angular
+20:05:55.869 |     24ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.18095958318596717-1/displayed
+20:05:55.904 |      9ms | 7121ad | Waiting for Angular
+20:05:55.905 |     13ms | 7121ad | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 0.18095958318596717-1
+20:05:55.930 |     10ms | 7121ad | Waiting for Angular
+20:05:55.930 |     83ms | 7121ad | ElementClick (0.18095958318596717-1)
+20:05:56.024 |      8ms | 7121ad | Waiting for Angular
+20:05:56.025 |     20ms | 7121ad | FindElements
+    Using css selector '#sign-out'
+    Elements: 0.18095958318596717-2
+20:05:56.060 |     11ms | 7121ad | Waiting for Angular
+20:05:56.060 |     15ms | 7121ad | IsElementEnabled (0.18095958318596717-2)
+20:05:56.091 |     13ms | 7121ad | Waiting for Angular
+20:05:56.092 |     22ms | 7121ad | FindElements
+    Using css selector '#sign-out'
+    Elements: 0.18095958318596717-2
+20:05:56.124 |      7ms | 7121ad | Waiting for Angular
+20:05:56.125 |     15ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.18095958318596717-2/displayed
+20:05:56.149 |      7ms | 7121ad | Waiting for Angular
+20:05:56.150 |     10ms | 7121ad | FindElements
+    Using css selector '#sign-out'
+    Elements: 0.18095958318596717-2
+20:05:56.170 |      9ms | 7121ad | Waiting for Angular
+20:05:56.171 |     97ms | 7121ad | ElementClick (0.18095958318596717-2)
+20:05:57.007 |    737ms | 7121ad | Waiting for Angular
+20:05:57.008 |     68ms | 7121ad | FindElements
+    Using css selector 'button.btn-success'
+    Elements: 0.18095958318596717-3
+20:05:57.331 |    253ms | 7121ad | Waiting for Angular
+20:05:57.332 |     20ms | 7121ad | IsElementEnabled (0.18095958318596717-3)
+20:05:57.366 |     11ms | 7121ad | Waiting for Angular
+20:05:57.367 |     16ms | 7121ad | FindElements
+    Using css selector 'button.btn-success'
+    Elements: 0.18095958318596717-3
+20:05:57.401 |     15ms | 7121ad | Waiting for Angular
+20:05:57.402 |     21ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.18095958318596717-3/displayed
+20:05:57.441 |     16ms | 7121ad | Waiting for Angular
+20:05:57.443 |     12ms | 7121ad | FindElements
+    Using css selector 'button.btn-success'
+    Elements: 0.18095958318596717-3
+20:05:57.467 |     10ms | 7121ad | Waiting for Angular
+20:05:57.468 |     11ms | 7121ad | IsElementEnabled (0.18095958318596717-3)
+20:05:57.492 |     11ms | 7121ad | Waiting for Angular
+20:05:57.493 |     21ms | 7121ad | FindElements
+    Using css selector '#loginPageImage'
+    Elements: 
+20:05:57.521 |     71ms | 7121ad | Go data:text/html,<html></html>
+20:05:57.594 |   4848ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:06:02.445 |     33ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:06:02.485 |     11ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute_async
+20:06:02.513 |     13ms | 7121ad | Waiting for Angular
+20:06:02.522 |     21ms | 7121ad | Waiting for Angular
+20:06:02.513 |     39ms | 7121ad | FindElements
+    Using css selector '#username'
+    Elements: 0.5752775184004768-1
+20:06:02.523 |     59ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:02.592 |     37ms | 7121ad | Waiting for Angular
+20:06:02.598 |     13ms | 7121ad | Waiting for Angular
+20:06:02.592 |     21ms | 7121ad | IsElementEnabled (0.5752775184004768-1)
+20:06:02.599 |     22ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:02.628 |     13ms | 7121ad | Waiting for Angular
+20:06:02.641 |     16ms | 7121ad | Waiting for Angular
+20:06:02.642 |     12ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:02.664 |      7ms | 7121ad | Waiting for Angular
+20:06:02.665 |      9ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:02.687 |      9ms | 7121ad | Waiting for Angular
+20:06:02.687 |      9ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:02.706 |      7ms | 7121ad | Waiting for Angular
+20:06:02.707 |      9ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:02.726 |      7ms | 7121ad | Waiting for Angular
+20:06:02.727 |      8ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:02.749 |     11ms | 7121ad | Waiting for Angular
+20:06:02.750 |     16ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:02.820 |     50ms | 7121ad | Waiting for Angular
+20:06:02.820 |     13ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:02.845 |      9ms | 7121ad | Waiting for Angular
+20:06:02.846 |     13ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:02.873 |     10ms | 7121ad | Waiting for Angular
+20:06:02.874 |     15ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:02.900 |      8ms | 7121ad | Waiting for Angular
+20:06:02.902 |     13ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:02.931 |     13ms | 7121ad | Waiting for Angular
+20:06:02.932 |     53ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:03.084 |     95ms | 7121ad | Waiting for Angular
+20:06:03.084 |     14ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:03.116 |     14ms | 7121ad | Waiting for Angular
+20:06:03.117 |     14ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:02.629 |    513ms | 7121ad | FindElements
+    Using css selector '#username'
+    Elements: 0.5752775184004768-1
+20:06:03.151 |     17ms | 7121ad | Waiting for Angular
+20:06:03.160 |     16ms | 7121ad | Waiting for Angular
+20:06:03.152 |     18ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:03.161 |     34ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.5752775184004768-1/displayed
+20:06:03.202 |     29ms | 7121ad | Waiting for Angular
+20:06:03.208 |     10ms | 7121ad | Waiting for Angular
+20:06:03.203 |     18ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:03.209 |     30ms | 7121ad | FindElements
+    Using css selector '#username'
+    Elements: 0.5752775184004768-1
+20:06:03.257 |     32ms | 7121ad | Waiting for Angular
+20:06:03.271 |     27ms | 7121ad | Waiting for Angular
+20:06:03.258 |     23ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:03.271 |     29ms | 7121ad | IsElementEnabled (0.5752775184004768-1)
+20:06:03.308 |     23ms | 7121ad | Waiting for Angular
+20:06:03.315 |     13ms | 7121ad | Waiting for Angular
+20:06:03.309 |     14ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:03.315 |     16ms | 7121ad | FindElements
+    Using css selector '#username'
+    Elements: 0.5752775184004768-1
+20:06:03.338 |     12ms | 7121ad | Waiting for Angular
+20:06:03.344 |     10ms | 7121ad | Waiting for Angular
+20:06:03.339 |     12ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:03.345 |     29ms | 7121ad | ElementClear (0.5752775184004768-1)
+20:06:03.382 |     27ms | 7121ad | Waiting for Angular
+20:06:03.390 |     14ms | 7121ad | Waiting for Angular
+20:06:03.383 |     16ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:03.391 |     28ms | 7121ad | FindElements
+    Using css selector '#password'
+    Elements: 0.5752775184004768-2
+20:06:03.427 |     24ms | 7121ad | Waiting for Angular
+20:06:03.433 |     11ms | 7121ad | Waiting for Angular
+20:06:03.428 |     19ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:03.433 |     29ms | 7121ad | IsElementEnabled (0.5752775184004768-2)
+20:06:03.473 |     23ms | 7121ad | Waiting for Angular
+20:06:03.487 |     22ms | 7121ad | Waiting for Angular
+20:06:03.473 |     30ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:03.488 |     33ms | 7121ad | FindElements
+    Using css selector '#password'
+    Elements: 0.5752775184004768-2
+20:06:03.538 |     32ms | 7121ad | Waiting for Angular
+20:06:03.548 |     24ms | 7121ad | Waiting for Angular
+20:06:03.539 |     21ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:03.549 |     37ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.5752775184004768-2/displayed
+20:06:03.597 |     34ms | 7121ad | Waiting for Angular
+20:06:03.605 |     16ms | 7121ad | Waiting for Angular
+20:06:03.597 |     18ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:03.605 |     22ms | 7121ad | FindElements
+    Using css selector '#password'
+    Elements: 0.5752775184004768-2
+20:06:03.649 |     29ms | 7121ad | Waiting for Angular
+20:06:03.658 |     28ms | 7121ad | Waiting for Angular
+20:06:03.650 |     17ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:03.658 |     18ms | 7121ad | IsElementEnabled (0.5752775184004768-2)
+20:06:03.690 |     19ms | 7121ad | Waiting for Angular
+20:06:03.697 |     18ms | 7121ad | Waiting for Angular
+20:06:03.691 |     17ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:03.698 |     23ms | 7121ad | FindElements
+    Using css selector '#password'
+    Elements: 0.5752775184004768-2
+20:06:03.729 |     17ms | 7121ad | Waiting for Angular
+20:06:03.744 |     20ms | 7121ad | Waiting for Angular
+20:06:03.729 |     33ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:03.745 |     67ms | 7121ad | ElementClear (0.5752775184004768-2)
+20:06:03.822 |     54ms | 7121ad | Waiting for Angular
+20:06:03.833 |     18ms | 7121ad | Waiting for Angular
+20:06:03.823 |     19ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:03.834 |     19ms | 7121ad | FindElements
+    Using css selector '#username'
+    Elements: 0.5752775184004768-1
+20:06:03.862 |     16ms | 7121ad | Waiting for Angular
+20:06:03.869 |     13ms | 7121ad | Waiting for Angular
+20:06:03.862 |     18ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:03.870 |     94ms | 7121ad | ElementSendKeys (0.5752775184004768-1)
+    Send: admin
+20:06:04.006 |    122ms | 7121ad | Waiting for Angular
+20:06:04.032 |     65ms | 7121ad | Waiting for Angular
+20:06:04.007 |     39ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:04.033 |     34ms | 7121ad | FindElements
+    Using css selector '#password'
+    Elements: 0.5752775184004768-2
+20:06:04.111 |     62ms | 7121ad | Waiting for Angular
+20:06:04.119 |     50ms | 7121ad | Waiting for Angular
+20:06:04.111 |     19ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:04.120 |    133ms | 7121ad | ElementSendKeys (0.5752775184004768-2)
+    Send: Qq1234567$
+20:06:04.260 |    126ms | 7121ad | Waiting for Angular
+20:06:04.268 |     12ms | 7121ad | Waiting for Angular
+20:06:04.261 |     17ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:04.269 |     21ms | 7121ad | FindElements
+    Using css selector 'button.btn-success'
+    Elements: 0.5752775184004768-3
+20:06:04.303 |     20ms | 7121ad | Waiting for Angular
+20:06:04.314 |     20ms | 7121ad | Waiting for Angular
+20:06:04.304 |     19ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:04.314 |    110ms | 7121ad | ElementClick (0.5752775184004768-3)
+20:06:04.537 |    210ms | 7121ad | Waiting for Angular
+20:06:04.537 |     10ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:04.870 |    320ms | 7121ad | Waiting for Angular
+20:06:04.871 |    173ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+20:06:09.252 |   4205ms | 7121ad | Waiting for Angular
+20:06:09.253 |     21ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 0.5752775184004768-4
+20:06:09.283 |      8ms | 7121ad | Waiting for Angular
+20:06:09.284 |     13ms | 7121ad | IsElementEnabled (0.5752775184004768-4)
+20:06:09.307 |      8ms | 7121ad | Waiting for Angular
+20:06:09.308 |     10ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 0.5752775184004768-4
+20:06:09.328 |      7ms | 7121ad | Waiting for Angular
+20:06:09.328 |     25ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.5752775184004768-4/displayed
+20:06:09.366 |     10ms | 7121ad | Waiting for Angular
+20:06:09.366 |     14ms | 7121ad | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 0.5752775184004768-4
+20:06:09.391 |      9ms | 7121ad | Waiting for Angular
+20:06:09.392 |    120ms | 7121ad | ElementClick (0.5752775184004768-4)
+20:06:09.524 |      9ms | 7121ad | Waiting for Angular
+20:06:09.525 |     21ms | 7121ad | FindElements
+    Using css selector 'a[href="/application-settings"]'
+    Elements: 0.5752775184004768-5
+20:06:09.559 |     11ms | 7121ad | Waiting for Angular
+20:06:09.560 |     16ms | 7121ad | IsElementEnabled (0.5752775184004768-5)
+20:06:09.598 |     20ms | 7121ad | Waiting for Angular
+20:06:09.598 |     14ms | 7121ad | FindElements
+    Using css selector 'a[href="/application-settings"]'
+    Elements: 0.5752775184004768-5
+20:06:09.627 |     13ms | 7121ad | Waiting for Angular
+20:06:09.628 |     24ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.5752775184004768-5/displayed
+20:06:09.664 |     10ms | 7121ad | Waiting for Angular
+20:06:09.665 |     11ms | 7121ad | FindElements
+    Using css selector 'a[href="/application-settings"]'
+    Elements: 0.5752775184004768-5
+20:06:09.689 |     11ms | 7121ad | Waiting for Angular
+20:06:09.690 |    158ms | 7121ad | ElementClick (0.5752775184004768-5)
+20:06:14.859 |      8ms | 7121ad | Waiting for Angular
+20:06:14.859 |     18ms | 7121ad | FindElements
+    Using css selector '#mainTextLoginPage'
+    Elements: 0.5752775184004768-6
+20:06:14.886 |      7ms | 7121ad | Waiting for Angular
+20:06:14.887 |     23ms | 7121ad | ElementClear (0.5752775184004768-6)
+20:06:14.924 |     12ms | 7121ad | Waiting for Angular
+20:06:14.925 |     12ms | 7121ad | FindElements
+    Using css selector '#mainTextLoginPage'
+    Elements: 0.5752775184004768-6
+20:06:14.954 |     14ms | 7121ad | Waiting for Angular
+20:06:14.955 |    221ms | 7121ad | ElementSendKeys (0.5752775184004768-6)
+    Send: Sample login page main text
+20:06:15.189 |     10ms | 7121ad | Waiting for Angular
+20:06:15.189 |     18ms | 7121ad | FindElements
+    Using css selector 'button.btn-ar.btn-danger'
+    Elements: 0.5752775184004768-7
+20:06:15.218 |      9ms | 7121ad | Waiting for Angular
+20:06:15.218 |     70ms | 7121ad | ElementClick (0.5752775184004768-7)
+20:06:16.056 |    766ms | 7121ad | Waiting for Angular
+20:06:16.056 |     13ms | 7121ad | FindElements
+    Using css selector 'button.btn-ar.btn-danger'
+    Elements: 0.5752775184004768-7
+20:06:27.912 |  11841ms | 7121ad | Waiting for Angular
+20:06:27.913 |     16ms | 7121ad | IsElementEnabled (0.5752775184004768-7)
+20:06:27.940 |      8ms | 7121ad | Waiting for Angular
+20:06:27.941 |     10ms | 7121ad | FindElements
+    Using css selector 'button.btn-ar.btn-danger'
+    Elements: 0.5752775184004768-7
+20:06:27.963 |      9ms | 7121ad | Waiting for Angular
+20:06:27.963 |     23ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.5752775184004768-7/displayed
+20:06:27.997 |      9ms | 7121ad | Waiting for Angular
+20:06:27.998 |     10ms | 7121ad | FindElements
+    Using css selector 'button.btn-ar.btn-danger'
+    Elements: 0.5752775184004768-7
+20:06:28.019 |      9ms | 7121ad | Waiting for Angular
+20:06:28.020 |      8ms | 7121ad | IsElementEnabled (0.5752775184004768-7)
+20:06:28.041 |     11ms | 7121ad | Waiting for Angular
+20:06:28.042 |      7ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:06:28.054 |     42ms | 7121ad | Go data:text/html,<html></html>
+20:06:28.099 |   5019ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:06:33.121 |     98ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute
+20:06:33.221 |     27ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/execute_async
+20:06:34.789 |   1537ms | 7121ad | Waiting for Angular
+20:06:34.790 |     27ms | 7121ad | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 0.1423675946022085-1
+20:06:34.835 |     16ms | 7121ad | Waiting for Angular
+20:06:34.836 |     17ms | 7121ad | IsElementEnabled (0.1423675946022085-1)
+20:06:34.864 |      9ms | 7121ad | Waiting for Angular
+20:06:34.865 |     11ms | 7121ad | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 0.1423675946022085-1
+20:06:34.887 |      9ms | 7121ad | Waiting for Angular
+20:06:34.888 |     18ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.1423675946022085-1/displayed
+20:06:34.917 |      9ms | 7121ad | Waiting for Angular
+20:06:34.918 |     11ms | 7121ad | FindElements
+    Using css selector '#sign-out-dropdown'
+    Elements: 0.1423675946022085-1
+20:06:34.945 |     14ms | 7121ad | Waiting for Angular
+20:06:34.946 |    171ms | 7121ad | ElementClick (0.1423675946022085-1)
+20:06:35.130 |     11ms | 7121ad | Waiting for Angular
+20:06:35.131 |     18ms | 7121ad | FindElements
+    Using css selector '#sign-out'
+    Elements: 0.1423675946022085-2
+20:06:35.160 |      9ms | 7121ad | Waiting for Angular
+20:06:35.160 |     12ms | 7121ad | IsElementEnabled (0.1423675946022085-2)
+20:06:35.181 |      7ms | 7121ad | Waiting for Angular
+20:06:35.181 |     12ms | 7121ad | FindElements
+    Using css selector '#sign-out'
+    Elements: 0.1423675946022085-2
+20:06:35.205 |      9ms | 7121ad | Waiting for Angular
+20:06:35.205 |     22ms | /session/7121ad1e06671baa22a4cd5bc67ce6ea/element/0.1423675946022085-2/displayed
+20:06:35.242 |     12ms | 7121ad | Waiting for Angular
+20:06:35.243 |     12ms | 7121ad | FindElements
+    Using css selector '#sign-out'
+    Elements: 0.1423675946022085-2
+20:06:35.270 |     13ms | 7121ad | Waiting for Angular
+20:06:35.271 |    105ms | 7121ad | ElementClick (0.1423675946022085-2)
+20:06:35.804 |    426ms | 7121ad | Waiting for Angular
+20:06:35.805 |     10ms | 7121ad | FindElements
+    Using css selector 'button.btn-success'
+    Elements: 0.1423675946022085-3

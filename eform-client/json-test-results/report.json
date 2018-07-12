@@ -1,0 +1,453 @@
+[
+  {
+    "description": "Reset button in Site header section of Settings should reset image",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 11521
+  },
+  {
+    "description": "Reset button in Site header section of Settings should reset header main text",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 110
+  },
+  {
+    "description": "Reset button in Site header section of Settings should reset header secondary text",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 136
+  },
+  {
+    "description": "Settings in Site header section should hide logo in header",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 28860
+  },
+  {
+    "description": "Settings in Site header section should change Main text in header",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 35838
+  },
+  {
+    "description": "Settings in Site header section should change secondary text in header",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 46273
+  },
+  {
+    "description": "Settings in Site header section should hide main text in header",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 37499
+  },
+  {
+    "description": "Settings in Site header section should hide secodary text in header",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 40791
+  },
+  {
+    "description": "Settings in Site header section should be able to change logo file",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 4
+  },
+  {
+    "description": "Login page settings tests Reset button in login page section of Settings should reset login page image",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 94
+  },
+  {
+    "description": "Login page settings tests Reset button in login page section of Settings should reset login page main text",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 117
+  },
+  {
+    "description": "Login page settings tests Reset button in login page section of Settings should reset login page secondary text",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 194
+  },
+  {
+    "description": "Login page settings tests Settings in Login Page section should hide logo in header",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 41390
+  },
+  {
+    "description": "Login page settings tests Settings in Login Page section should change Main text in header",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 41523
+  },
+  {
+    "description": "Login page settings tests Settings in Login Page section should change secondary text",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 40713
+  },
+  {
+    "description": "Login page settings tests Settings in Login Page section should hide main text",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 43477
+  },
+  {
+    "description": "Login page settings tests Settings in Login Page section should hide secodary text",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 42223
+  },
+  {
+    "description": "Login page settings tests Settings in Login Page section should be able to change logo file",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 0
+  },
+  {
+    "description": "Tests for adding users Should add new device user with first name and last name",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 15801
+  },
+  {
+    "description": "Tests for adding users Should add new device user with only first name",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 13926
+  },
+  {
+    "description": "Tests for adding users Should add new device user with only last name",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 13665
+  },
+  {
+    "description": "Tests for adding users Should not add add new device user without first and last names",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 8261
+  },
+  {
+    "description": "Tests for adding users Should not add add new device user if cancel was clicked",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 8388
+  },
+  {
+    "description": "Tests for user deletion Device user delete button should delete user",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 25680
+  },
+  {
+    "description": "Tests for user deletion Cancel button in delete modal should not delete user",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 33331
+  },
+  {
+    "description": "Edit user tests User edit button should edit first and last names",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 21432
+  },
+  {
+    "description": "Main Page - CREATE Positive: user should create eform without any tags",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 18229
+  },
+  {
+    "description": "Main Page - CREATE Positive: user should create eform simultaneously with creating 1 tag",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 20014
+  },
+  {
+    "description": "Main Page - CREATE Positive: user should create eform simultaneously with creating 2 and more tags",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 26817
+  },
+  {
+    "description": "Main Page - CREATE Positive: user should create eform with creating 1 tag and using 1 already prepared tag",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 22243
+  },
+  {
+    "description": "Main Page - CREATE Positive: user should create eform while adding 1 already prepared tag",
+    "assertions": [
+      {
+        "passed": false,
+        "errorMsg": "Expected $[0] = 'testTag1 ,' to equal 'testTag1'.",
+        "stackTrace": "Error: Failed expectation\n    at Suite.<anonymous> (C:\\WORK\\eform-angular-frontend\\eform-client\\e2e\\tests\\main-page\\main-page.create-eform.e2e-spec.ts:148:27)\n    at step (C:\\WORK\\eform-angular-frontend\\eform-client\\e2e\\tests\\main-page\\main-page.create-eform.e2e-spec.ts:32:23)\n    at Object.next (C:\\WORK\\eform-angular-frontend\\eform-client\\e2e\\tests\\main-page\\main-page.create-eform.e2e-spec.ts:13:53)\n    at fulfilled (C:\\WORK\\eform-angular-frontend\\eform-client\\e2e\\tests\\main-page\\main-page.create-eform.e2e-spec.ts:4:58)\n    at <anonymous>\n    at process._tickCallback (internal/process/next_tick.js:188:7)"
+      }
+    ],
+    "duration": 21507
+  },
+  {
+    "description": "Main Page - CREATE Positive: user should create eform while adding more than 2 already prepared tags",
+    "assertions": [
+      {
+        "passed": false,
+        "errorMsg": "Expected $[1] = 'testTag2 ,' to equal 'testTag2'.",
+        "stackTrace": "Error: Failed expectation\n    at Suite.<anonymous> (C:\\WORK\\eform-angular-frontend\\eform-client\\e2e\\tests\\main-page\\main-page.create-eform.e2e-spec.ts:170:27)\n    at step (C:\\WORK\\eform-angular-frontend\\eform-client\\e2e\\tests\\main-page\\main-page.create-eform.e2e-spec.ts:32:23)\n    at Object.next (C:\\WORK\\eform-angular-frontend\\eform-client\\e2e\\tests\\main-page\\main-page.create-eform.e2e-spec.ts:13:53)\n    at fulfilled (C:\\WORK\\eform-angular-frontend\\eform-client\\e2e\\tests\\main-page\\main-page.create-eform.e2e-spec.ts:4:58)\n    at <anonymous>\n    at process._tickCallback (internal/process/next_tick.js:188:7)"
+      }
+    ],
+    "duration": 17028
+  },
+  {
+    "description": "Main Page - CREATE Negative: user  should not create eform if xml is empty",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 13685
+  },
+  {
+    "description": "Main page - FILTERS By label user should be able to filter by 1 word in label input",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 17061
+  },
+  {
+    "description": "Main page - FILTERS By label user should be able to see all eforms by leaving label input empty",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 10147
+  },
+  {
+    "description": "Main page - FILTERS By tag user should be able to filter using 1 tag",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 21967
+  },
+  {
+    "description": "Main page - FILTERS By tag user should be able to filter using several tags",
+    "assertions": [
+      {
+        "passed": false,
+        "errorMsg": "Expected false to be truthy 'Eforms are filtered by tags incorrectly'.",
+        "stackTrace": "Error: Failed expectation\n    at Suite.<anonymous> (C:\\WORK\\eform-angular-frontend\\eform-client\\e2e\\tests\\main-page\\main-page.filter-eform.e2e-spec.ts:115:30)\n    at step (C:\\WORK\\eform-angular-frontend\\eform-client\\e2e\\tests\\main-page\\main-page.filter-eform.e2e-spec.ts:32:23)\n    at Object.next (C:\\WORK\\eform-angular-frontend\\eform-client\\e2e\\tests\\main-page\\main-page.filter-eform.e2e-spec.ts:13:53)\n    at fulfilled (C:\\WORK\\eform-angular-frontend\\eform-client\\e2e\\tests\\main-page\\main-page.filter-eform.e2e-spec.ts:4:58)\n    at <anonymous>\n    at process._tickCallback (internal/process/next_tick.js:188:7)"
+      }
+    ],
+    "duration": 11986
+  },
+  {
+    "description": "Main Page - SORT user should be able to sort by ID",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 32962
+  },
+  {
+    "description": "Main Page - SORT user should be able to sort by \"Created at\"",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 33922
+  },
+  {
+    "description": "Main Page - SORT user should be able to sort by \"Name eForm\"",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 32959
+  },
+  {
+    "description": "Main Page - EDIT, DELETE AND CREATE TAGS POSITIVE: user should not perform any changes by doing nothing and clicking \"Save\" in tag edit window",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 18629
+  },
+  {
+    "description": "Main Page - EDIT, DELETE AND CREATE TAGS POSITIVE: user should add already prepared tag to eform",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 15575
+  },
+  {
+    "description": "Main Page - EDIT, DELETE AND CREATE TAGS POSITIVE: user should delete eForm tag from eform",
+    "assertions": [
+      {
+        "passed": false,
+        "errorMsg": "Expected false to be truthy 'Added tag was not deleted'.",
+        "stackTrace": "Error: Failed expectation\n    at Suite.<anonymous> (C:\\WORK\\eform-angular-frontend\\eform-client\\e2e\\tests\\main-page\\main-page.tags.e2e-spec.ts:111:85)\n    at step (C:\\WORK\\eform-angular-frontend\\eform-client\\e2e\\tests\\main-page\\main-page.tags.e2e-spec.ts:32:23)\n    at Object.next (C:\\WORK\\eform-angular-frontend\\eform-client\\e2e\\tests\\main-page\\main-page.tags.e2e-spec.ts:13:53)\n    at fulfilled (C:\\WORK\\eform-angular-frontend\\eform-client\\e2e\\tests\\main-page\\main-page.tags.e2e-spec.ts:4:58)\n    at <anonymous>\n    at process._tickCallback (internal/process/next_tick.js:188:7)"
+      }
+    ],
+    "duration": 18352
+  },
+  {
+    "description": "Main Page - EDIT, DELETE AND CREATE TAGS POSITIVE: user should delete tag from list",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 17303
+  },
+  {
+    "description": "Main Page - EDIT, DELETE AND CREATE TAGS POSITIVE: user should create tag",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 14946
+  },
+  {
+    "description": "Main page - DELETE. User should delete existing eform",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 16611
+  },
+  {
+    "description": "Pairing on the main page: After clicking \"Pair eForm\" button user should pair several device users",
+    "assertions": [
+      {
+        "passed": false,
+        "errorMsg": "Expected $.length = 0 to equal 2.\nExpected $[0] = undefined to equal 'Niels Windfeld-Lund'.\nExpected $[1] = undefined to equal 'Niels Windfeld-Lund'.",
+        "stackTrace": "Error: Failed expectation\n    at Suite.<anonymous> (C:\\WORK\\eform-angular-frontend\\eform-client\\e2e\\tests\\main-page\\main-page.pairing-eform.e2e-spec.ts:47:44)\n    at step (C:\\WORK\\eform-angular-frontend\\eform-client\\e2e\\tests\\main-page\\main-page.pairing-eform.e2e-spec.ts:32:23)\n    at Object.next (C:\\WORK\\eform-angular-frontend\\eform-client\\e2e\\tests\\main-page\\main-page.pairing-eform.e2e-spec.ts:13:53)\n    at fulfilled (C:\\WORK\\eform-angular-frontend\\eform-client\\e2e\\tests\\main-page\\main-page.pairing-eform.e2e-spec.ts:4:58)\n    at <anonymous>\n    at process._tickCallback (internal/process/next_tick.js:188:7)"
+      }
+    ],
+    "duration": 11370
+  },
+  {
+    "description": "Pairing on the main page: After clicking \"Pair eForm\" button user should unpair one",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 10818
+  },
+  {
+    "description": "Pairing on the main page: After clicking \"Pair eForm\" button user should pair and unpair simultaneously",
+    "assertions": [
+      {
+        "passed": true
+      }
+    ],
+    "duration": 10592
+  }
+]

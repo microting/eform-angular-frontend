@@ -1,0 +1,7 @@
+20:19:24.769 |   4326ms | a039b8 | NewSession
+    {"browserName":"chrome","maxSessions":1,"maxInstances":1,"count":1}
+20:19:29.106 |     14ms | a039b8 | SetTimeouts
+    ERROR 13: unknown error: 'ms' must be a double
+  (Session info: chrome=67.0.3396.99)
+  (Driver info: chromedriver=2.39.562718 (9a2698cba08cf5a471a29d30c8b3e12becabb0e9),platform=Windows NT 10.0.16299 x86_64)
+20:19:29.125 |      6ms | a039b8 | SetTimeouts

@@ -1,0 +1,1896 @@
+19:52:04.594 |   3486ms | 6fae9b | NewSession
+    {"browserName":"chrome","maxSessions":1,"maxInstances":1,"count":1}
+19:52:08.087 |      9ms | 6fae9b | SetTimeouts
+    ERROR 13: unknown error: 'ms' must be a double
+  (Session info: chrome=67.0.3396.99)
+  (Driver info: chromedriver=2.39.562718 (9a2698cba08cf5a471a29d30c8b3e12becabb0e9),platform=Windows NT 10.0.16299 x86_64)
+19:52:08.100 |      4ms | 6fae9b | SetTimeouts
+19:52:20.174 |     84ms | 6fae9b | Go data:text/html,<html></html>
+19:52:20.262 |   5163ms | /session/6fae9b5a8f77567885e32f8b77ede5a0/execute
+19:52:25.429 |     19ms | /session/6fae9b5a8f77567885e32f8b77ede5a0/execute
+19:52:25.453 |     24ms | /session/6fae9b5a8f77567885e32f8b77ede5a0/execute_async
+19:52:25.625 |    140ms | 6fae9b | Waiting for Angular
+19:52:25.626 |     44ms | 6fae9b | FindElements
+    Using css selector 'button.btn.btn-danger.btn-ar'
+    Elements: 
+19:52:25.681 |     39ms | 6fae9b | Go data:text/html,<html></html>
+19:52:25.723 |   4267ms | /session/6fae9b5a8f77567885e32f8b77ede5a0/execute
+19:52:29.994 |     15ms | /session/6fae9b5a8f77567885e32f8b77ede5a0/execute
+19:52:30.012 |     17ms | /session/6fae9b5a8f77567885e32f8b77ede5a0/execute_async
+19:52:30.067 |     29ms | 6fae9b | Waiting for Angular
+19:52:30.077 |     37ms | 6fae9b | Waiting for Angular
+19:52:30.068 |     33ms | 6fae9b | FindElements
+    Using css selector '#username'
+    Elements: 0.6271553592740948-1
+19:52:30.078 |     45ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:30.131 |     27ms | 6fae9b | Waiting for Angular
+19:52:30.132 |     14ms | 6fae9b | IsElementEnabled (0.6271553592740948-1)
+19:52:30.153 |     25ms | 6fae9b | Waiting for Angular
+19:52:30.166 |     17ms | 6fae9b | Waiting for Angular
+19:52:30.154 |     22ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:30.167 |     18ms | 6fae9b | FindElements
+    Using css selector '#username'
+    Elements: 0.6271553592740948-1
+19:52:30.192 |     13ms | 6fae9b | Waiting for Angular
+19:52:30.207 |     19ms | 6fae9b | Waiting for Angular
+19:52:30.193 |     26ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:30.208 |     35ms | /session/6fae9b5a8f77567885e32f8b77ede5a0/element/0.6271553592740948-1/displayed
+19:52:30.262 |     39ms | 6fae9b | Waiting for Angular
+19:52:30.273 |     26ms | 6fae9b | Waiting for Angular
+19:52:30.263 |     30ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:30.273 |     39ms | 6fae9b | FindElements
+    Using css selector '#username'
+    Elements: 0.6271553592740948-1
+19:52:30.331 |     35ms | 6fae9b | Waiting for Angular
+19:52:30.348 |     32ms | 6fae9b | Waiting for Angular
+19:52:30.332 |     34ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:30.349 |     31ms | 6fae9b | IsElementEnabled (0.6271553592740948-1)
+19:52:30.393 |     23ms | 6fae9b | Waiting for Angular
+19:52:30.409 |     26ms | 6fae9b | Waiting for Angular
+19:52:30.393 |     27ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:30.410 |     29ms | 6fae9b | FindElements
+    Using css selector '#username'
+    Elements: 0.6271553592740948-1
+19:52:30.450 |     25ms | 6fae9b | Waiting for Angular
+19:52:30.463 |     21ms | 6fae9b | Waiting for Angular
+19:52:30.451 |     30ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:30.511 |     26ms | 6fae9b | Waiting for Angular
+19:52:30.512 |     32ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:30.570 |     23ms | 6fae9b | Waiting for Angular
+19:52:30.571 |     15ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:30.604 |     15ms | 6fae9b | Waiting for Angular
+19:52:30.604 |     16ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:30.635 |     11ms | 6fae9b | Waiting for Angular
+19:52:30.636 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:30.663 |     12ms | 6fae9b | Waiting for Angular
+19:52:30.663 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:30.689 |     12ms | 6fae9b | Waiting for Angular
+19:52:30.689 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:30.715 |     12ms | 6fae9b | Waiting for Angular
+19:52:30.716 |     14ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:30.744 |     11ms | 6fae9b | Waiting for Angular
+19:52:30.745 |     15ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:30.778 |     15ms | 6fae9b | Waiting for Angular
+19:52:30.782 |     20ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:30.818 |     12ms | 6fae9b | Waiting for Angular
+19:52:30.819 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:30.845 |     10ms | 6fae9b | Waiting for Angular
+19:52:30.846 |     13ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:30.875 |     13ms | 6fae9b | Waiting for Angular
+19:52:30.876 |     14ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:30.904 |     11ms | 6fae9b | Waiting for Angular
+19:52:30.905 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:30.930 |     12ms | 6fae9b | Waiting for Angular
+19:52:30.930 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:30.956 |     11ms | 6fae9b | Waiting for Angular
+19:52:30.957 |     14ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:30.989 |     15ms | 6fae9b | Waiting for Angular
+19:52:30.990 |     15ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.022 |     13ms | 6fae9b | Waiting for Angular
+19:52:31.022 |     15ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.051 |     10ms | 6fae9b | Waiting for Angular
+19:52:31.052 |     13ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.080 |     10ms | 6fae9b | Waiting for Angular
+19:52:31.081 |     20ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.116 |     12ms | 6fae9b | Waiting for Angular
+19:52:31.117 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.142 |      9ms | 6fae9b | Waiting for Angular
+19:52:31.143 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.167 |     10ms | 6fae9b | Waiting for Angular
+19:52:31.168 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.193 |     11ms | 6fae9b | Waiting for Angular
+19:52:31.194 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.219 |     10ms | 6fae9b | Waiting for Angular
+19:52:31.220 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.247 |     13ms | 6fae9b | Waiting for Angular
+19:52:31.248 |     14ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.278 |     12ms | 6fae9b | Waiting for Angular
+19:52:31.278 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.305 |     12ms | 6fae9b | Waiting for Angular
+19:52:31.306 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.328 |      9ms | 6fae9b | Waiting for Angular
+19:52:31.329 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.353 |     10ms | 6fae9b | Waiting for Angular
+19:52:31.354 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.379 |     11ms | 6fae9b | Waiting for Angular
+19:52:31.380 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.406 |     11ms | 6fae9b | Waiting for Angular
+19:52:31.407 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.429 |      9ms | 6fae9b | Waiting for Angular
+19:52:31.429 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.456 |     12ms | 6fae9b | Waiting for Angular
+19:52:31.457 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.480 |     10ms | 6fae9b | Waiting for Angular
+19:52:31.480 |     14ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.525 |     28ms | 6fae9b | Waiting for Angular
+19:52:31.525 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.550 |      9ms | 6fae9b | Waiting for Angular
+19:52:31.551 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.574 |     10ms | 6fae9b | Waiting for Angular
+19:52:31.575 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.605 |     16ms | 6fae9b | Waiting for Angular
+19:52:31.606 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.630 |     10ms | 6fae9b | Waiting for Angular
+19:52:31.630 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.652 |      8ms | 6fae9b | Waiting for Angular
+19:52:31.653 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.676 |     11ms | 6fae9b | Waiting for Angular
+19:52:31.677 |     16ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.705 |      9ms | 6fae9b | Waiting for Angular
+19:52:31.706 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.731 |     10ms | 6fae9b | Waiting for Angular
+19:52:31.731 |     21ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.767 |     11ms | 6fae9b | Waiting for Angular
+19:52:31.768 |     14ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.793 |      8ms | 6fae9b | Waiting for Angular
+19:52:31.794 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.817 |      8ms | 6fae9b | Waiting for Angular
+19:52:31.818 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.841 |     10ms | 6fae9b | Waiting for Angular
+19:52:31.842 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.870 |     11ms | 6fae9b | Waiting for Angular
+19:52:31.871 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.895 |      9ms | 6fae9b | Waiting for Angular
+19:52:31.896 |     14ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.927 |     13ms | 6fae9b | Waiting for Angular
+19:52:31.928 |     14ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.958 |     12ms | 6fae9b | Waiting for Angular
+19:52:31.959 |     13ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:31.999 |     20ms | 6fae9b | Waiting for Angular
+19:52:32.002 |     15ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:32.033 |     11ms | 6fae9b | Waiting for Angular
+19:52:32.034 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:32.061 |     11ms | 6fae9b | Waiting for Angular
+19:52:32.061 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:32.082 |      9ms | 6fae9b | Waiting for Angular
+19:52:32.083 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:32.105 |      8ms | 6fae9b | Waiting for Angular
+19:52:32.106 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:32.128 |     10ms | 6fae9b | Waiting for Angular
+19:52:32.129 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:32.152 |      9ms | 6fae9b | Waiting for Angular
+19:52:32.153 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:32.179 |     10ms | 6fae9b | Waiting for Angular
+19:52:32.180 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:32.205 |     10ms | 6fae9b | Waiting for Angular
+19:52:32.206 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:32.230 |      9ms | 6fae9b | Waiting for Angular
+19:52:32.231 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:32.255 |      9ms | 6fae9b | Waiting for Angular
+19:52:32.256 |     17ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:32.287 |     10ms | 6fae9b | Waiting for Angular
+19:52:32.288 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:32.309 |      8ms | 6fae9b | Waiting for Angular
+19:52:32.310 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:32.342 |     19ms | 6fae9b | Waiting for Angular
+19:52:32.343 |     18ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:32.372 |      8ms | 6fae9b | Waiting for Angular
+19:52:32.373 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:32.394 |      8ms | 6fae9b | Waiting for Angular
+19:52:32.394 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:32.417 |     10ms | 6fae9b | Waiting for Angular
+19:52:32.418 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:32.445 |     12ms | 6fae9b | Waiting for Angular
+19:52:32.445 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:32.470 |     10ms | 6fae9b | Waiting for Angular
+19:52:32.471 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:32.496 |     11ms | 6fae9b | Waiting for Angular
+19:52:32.497 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:32.520 |      8ms | 6fae9b | Waiting for Angular
+19:52:32.521 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:32.544 |     11ms | 6fae9b | Waiting for Angular
+19:52:32.544 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:32.570 |     10ms | 6fae9b | Waiting for Angular
+19:52:32.571 |     19ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:32.579 |     37ms | 6fae9b | ElementClear (0.6271553592740948-1)
+19:52:32.624 |     30ms | 6fae9b | Waiting for Angular
+19:52:32.630 |     12ms | 6fae9b | Waiting for Angular
+19:52:32.626 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:32.630 |     24ms | 6fae9b | FindElements
+    Using css selector '#password'
+    Elements: 0.6271553592740948-2
+19:52:32.663 |     22ms | 6fae9b | Waiting for Angular
+19:52:32.669 |     13ms | 6fae9b | Waiting for Angular
+19:52:32.663 |     18ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:32.670 |     23ms | 6fae9b | IsElementEnabled (0.6271553592740948-2)
+19:52:32.703 |     20ms | 6fae9b | Waiting for Angular
+19:52:32.713 |     17ms | 6fae9b | Waiting for Angular
+19:52:32.704 |     24ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:32.714 |     27ms | 6fae9b | FindElements
+    Using css selector '#password'
+    Elements: 0.6271553592740948-2
+19:52:32.750 |     18ms | 6fae9b | Waiting for Angular
+19:52:32.759 |     16ms | 6fae9b | Waiting for Angular
+19:52:32.751 |     16ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:32.759 |     30ms | /session/6fae9b5a8f77567885e32f8b77ede5a0/element/0.6271553592740948-2/displayed
+19:52:32.802 |     31ms | 6fae9b | Waiting for Angular
+19:52:32.815 |     24ms | 6fae9b | Waiting for Angular
+19:52:32.803 |     21ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:32.816 |     17ms | 6fae9b | FindElements
+    Using css selector '#password'
+    Elements: 0.6271553592740948-2
+19:52:32.840 |     13ms | 6fae9b | Waiting for Angular
+19:52:32.846 |     10ms | 6fae9b | Waiting for Angular
+19:52:32.841 |     13ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:32.847 |     13ms | 6fae9b | IsElementEnabled (0.6271553592740948-2)
+19:52:32.868 |     11ms | 6fae9b | Waiting for Angular
+19:52:32.876 |     13ms | 6fae9b | Waiting for Angular
+19:52:32.869 |     16ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:32.877 |     17ms | 6fae9b | FindElements
+    Using css selector '#password'
+    Elements: 0.6271553592740948-2
+19:52:32.903 |     14ms | 6fae9b | Waiting for Angular
+19:52:32.910 |     13ms | 6fae9b | Waiting for Angular
+19:52:32.904 |     15ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:32.934 |     12ms | 6fae9b | Waiting for Angular
+19:52:32.935 |     14ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:32.966 |     15ms | 6fae9b | Waiting for Angular
+19:52:32.967 |     13ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:32.993 |      9ms | 6fae9b | Waiting for Angular
+19:52:32.993 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.017 |      8ms | 6fae9b | Waiting for Angular
+19:52:33.018 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.040 |      9ms | 6fae9b | Waiting for Angular
+19:52:33.041 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.062 |      9ms | 6fae9b | Waiting for Angular
+19:52:33.063 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.083 |      7ms | 6fae9b | Waiting for Angular
+19:52:33.084 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.108 |     10ms | 6fae9b | Waiting for Angular
+19:52:33.108 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.128 |      8ms | 6fae9b | Waiting for Angular
+19:52:33.129 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.150 |      8ms | 6fae9b | Waiting for Angular
+19:52:33.150 |     23ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.186 |     10ms | 6fae9b | Waiting for Angular
+19:52:33.187 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.213 |     12ms | 6fae9b | Waiting for Angular
+19:52:33.214 |     14ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.241 |      9ms | 6fae9b | Waiting for Angular
+19:52:33.241 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.267 |     10ms | 6fae9b | Waiting for Angular
+19:52:33.267 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.290 |      9ms | 6fae9b | Waiting for Angular
+19:52:33.291 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.314 |     11ms | 6fae9b | Waiting for Angular
+19:52:33.314 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.340 |     12ms | 6fae9b | Waiting for Angular
+19:52:33.341 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.363 |      8ms | 6fae9b | Waiting for Angular
+19:52:33.364 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.388 |     12ms | 6fae9b | Waiting for Angular
+19:52:33.388 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.414 |      9ms | 6fae9b | Waiting for Angular
+19:52:33.414 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.439 |     11ms | 6fae9b | Waiting for Angular
+19:52:33.440 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.465 |     11ms | 6fae9b | Waiting for Angular
+19:52:33.466 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.492 |     11ms | 6fae9b | Waiting for Angular
+19:52:33.492 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.514 |      9ms | 6fae9b | Waiting for Angular
+19:52:33.515 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.536 |     10ms | 6fae9b | Waiting for Angular
+19:52:33.536 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.559 |      8ms | 6fae9b | Waiting for Angular
+19:52:33.559 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.581 |      8ms | 6fae9b | Waiting for Angular
+19:52:33.582 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.603 |      9ms | 6fae9b | Waiting for Angular
+19:52:33.604 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.629 |     12ms | 6fae9b | Waiting for Angular
+19:52:33.629 |     14ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.658 |     12ms | 6fae9b | Waiting for Angular
+19:52:33.659 |     17ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.697 |     18ms | 6fae9b | Waiting for Angular
+19:52:33.698 |     13ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.727 |     12ms | 6fae9b | Waiting for Angular
+19:52:33.727 |     14ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.755 |     10ms | 6fae9b | Waiting for Angular
+19:52:33.756 |     15ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.787 |     11ms | 6fae9b | Waiting for Angular
+19:52:33.788 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.811 |      9ms | 6fae9b | Waiting for Angular
+19:52:33.812 |     13ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.836 |      8ms | 6fae9b | Waiting for Angular
+19:52:33.837 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.863 |     10ms | 6fae9b | Waiting for Angular
+19:52:33.864 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.886 |      9ms | 6fae9b | Waiting for Angular
+19:52:33.887 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.912 |     11ms | 6fae9b | Waiting for Angular
+19:52:33.912 |     13ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.940 |     12ms | 6fae9b | Waiting for Angular
+19:52:33.941 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.963 |      9ms | 6fae9b | Waiting for Angular
+19:52:33.964 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:33.991 |     12ms | 6fae9b | Waiting for Angular
+19:52:33.992 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.018 |     11ms | 6fae9b | Waiting for Angular
+19:52:34.018 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.041 |      8ms | 6fae9b | Waiting for Angular
+19:52:34.041 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.061 |      8ms | 6fae9b | Waiting for Angular
+19:52:34.061 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.082 |      9ms | 6fae9b | Waiting for Angular
+19:52:34.083 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.121 |     27ms | 6fae9b | Waiting for Angular
+19:52:34.121 |     25ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.159 |     10ms | 6fae9b | Waiting for Angular
+19:52:34.160 |     14ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.188 |     11ms | 6fae9b | Waiting for Angular
+19:52:34.189 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.210 |      9ms | 6fae9b | Waiting for Angular
+19:52:34.211 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.237 |     11ms | 6fae9b | Waiting for Angular
+19:52:34.237 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.260 |      9ms | 6fae9b | Waiting for Angular
+19:52:34.261 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.280 |      7ms | 6fae9b | Waiting for Angular
+19:52:34.281 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.305 |      9ms | 6fae9b | Waiting for Angular
+19:52:34.306 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.328 |      9ms | 6fae9b | Waiting for Angular
+19:52:34.328 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.349 |      8ms | 6fae9b | Waiting for Angular
+19:52:34.349 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.372 |     10ms | 6fae9b | Waiting for Angular
+19:52:34.372 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.398 |     13ms | 6fae9b | Waiting for Angular
+19:52:34.398 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.422 |      9ms | 6fae9b | Waiting for Angular
+19:52:34.423 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.445 |      9ms | 6fae9b | Waiting for Angular
+19:52:34.446 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.466 |      7ms | 6fae9b | Waiting for Angular
+19:52:34.467 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.488 |      8ms | 6fae9b | Waiting for Angular
+19:52:34.488 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.510 |      8ms | 6fae9b | Waiting for Angular
+19:52:34.510 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.534 |     10ms | 6fae9b | Waiting for Angular
+19:52:34.534 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.555 |      8ms | 6fae9b | Waiting for Angular
+19:52:34.555 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.580 |     12ms | 6fae9b | Waiting for Angular
+19:52:34.580 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.600 |      7ms | 6fae9b | Waiting for Angular
+19:52:34.601 |     20ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.633 |      9ms | 6fae9b | Waiting for Angular
+19:52:34.634 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.657 |      9ms | 6fae9b | Waiting for Angular
+19:52:34.658 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.681 |      8ms | 6fae9b | Waiting for Angular
+19:52:34.682 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.702 |      8ms | 6fae9b | Waiting for Angular
+19:52:34.702 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.730 |     12ms | 6fae9b | Waiting for Angular
+19:52:34.730 |     49ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.794 |     11ms | 6fae9b | Waiting for Angular
+19:52:34.795 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.822 |     11ms | 6fae9b | Waiting for Angular
+19:52:34.824 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.847 |     10ms | 6fae9b | Waiting for Angular
+19:52:34.847 |     13ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.879 |     14ms | 6fae9b | Waiting for Angular
+19:52:34.880 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.911 |     16ms | 6fae9b | Waiting for Angular
+19:52:34.911 |     20ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.951 |     14ms | 6fae9b | Waiting for Angular
+19:52:34.952 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:34.980 |     12ms | 6fae9b | Waiting for Angular
+19:52:34.970 |     34ms | 6fae9b | ElementClear (0.6271553592740948-2)
+19:52:34.980 |     32ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.018 |     11ms | 6fae9b | Waiting for Angular
+19:52:35.028 |     12ms | 6fae9b | Waiting for Angular
+19:52:35.019 |     19ms | 6fae9b | FindElements
+    Using css selector '#username'
+    Elements: 0.6271553592740948-1
+19:52:35.029 |     22ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.061 |     19ms | 6fae9b | Waiting for Angular
+19:52:35.068 |     14ms | 6fae9b | Waiting for Angular
+19:52:35.069 |     13ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.097 |     11ms | 6fae9b | Waiting for Angular
+19:52:35.097 |     14ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.126 |     11ms | 6fae9b | Waiting for Angular
+19:52:35.127 |     13ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.157 |     12ms | 6fae9b | Waiting for Angular
+19:52:35.158 |     13ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.185 |     10ms | 6fae9b | Waiting for Angular
+19:52:35.186 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.207 |      7ms | 6fae9b | Waiting for Angular
+19:52:35.208 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.240 |     19ms | 6fae9b | Waiting for Angular
+19:52:35.240 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.259 |      7ms | 6fae9b | Waiting for Angular
+19:52:35.260 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.282 |      9ms | 6fae9b | Waiting for Angular
+19:52:35.283 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.303 |      8ms | 6fae9b | Waiting for Angular
+19:52:35.303 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.328 |     14ms | 6fae9b | Waiting for Angular
+19:52:35.329 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.353 |     10ms | 6fae9b | Waiting for Angular
+19:52:35.354 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.377 |     10ms | 6fae9b | Waiting for Angular
+19:52:35.377 |     51ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.442 |     11ms | 6fae9b | Waiting for Angular
+19:52:35.442 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.464 |      7ms | 6fae9b | Waiting for Angular
+19:52:35.465 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.486 |      8ms | 6fae9b | Waiting for Angular
+19:52:35.486 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.507 |      8ms | 6fae9b | Waiting for Angular
+19:52:35.508 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.529 |      7ms | 6fae9b | Waiting for Angular
+19:52:35.530 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.551 |      8ms | 6fae9b | Waiting for Angular
+19:52:35.552 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.572 |      8ms | 6fae9b | Waiting for Angular
+19:52:35.573 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.597 |     12ms | 6fae9b | Waiting for Angular
+19:52:35.597 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.621 |      9ms | 6fae9b | Waiting for Angular
+19:52:35.621 |     14ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.648 |     10ms | 6fae9b | Waiting for Angular
+19:52:35.649 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.673 |      8ms | 6fae9b | Waiting for Angular
+19:52:35.673 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.694 |      9ms | 6fae9b | Waiting for Angular
+19:52:35.694 |     13ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.724 |     13ms | 6fae9b | Waiting for Angular
+19:52:35.725 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.750 |      9ms | 6fae9b | Waiting for Angular
+19:52:35.751 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.773 |      8ms | 6fae9b | Waiting for Angular
+19:52:35.774 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.797 |     10ms | 6fae9b | Waiting for Angular
+19:52:35.797 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.819 |      9ms | 6fae9b | Waiting for Angular
+19:52:35.819 |     14ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.846 |     10ms | 6fae9b | Waiting for Angular
+19:52:35.846 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.869 |      9ms | 6fae9b | Waiting for Angular
+19:52:35.870 |     14ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.898 |      9ms | 6fae9b | Waiting for Angular
+19:52:35.899 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.921 |      9ms | 6fae9b | Waiting for Angular
+19:52:35.922 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.947 |     11ms | 6fae9b | Waiting for Angular
+19:52:35.947 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.968 |      7ms | 6fae9b | Waiting for Angular
+19:52:35.969 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:35.990 |      9ms | 6fae9b | Waiting for Angular
+19:52:35.991 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.012 |      8ms | 6fae9b | Waiting for Angular
+19:52:36.013 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.040 |     11ms | 6fae9b | Waiting for Angular
+19:52:36.041 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.063 |      8ms | 6fae9b | Waiting for Angular
+19:52:36.063 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.087 |     10ms | 6fae9b | Waiting for Angular
+19:52:36.088 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.112 |     10ms | 6fae9b | Waiting for Angular
+19:52:36.112 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.137 |     10ms | 6fae9b | Waiting for Angular
+19:52:36.138 |     13ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.164 |      9ms | 6fae9b | Waiting for Angular
+19:52:36.165 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.185 |      7ms | 6fae9b | Waiting for Angular
+19:52:36.186 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.208 |      9ms | 6fae9b | Waiting for Angular
+19:52:36.208 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.229 |      7ms | 6fae9b | Waiting for Angular
+19:52:36.229 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.247 |      6ms | 6fae9b | Waiting for Angular
+19:52:36.249 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.270 |      8ms | 6fae9b | Waiting for Angular
+19:52:36.271 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.294 |      9ms | 6fae9b | Waiting for Angular
+19:52:36.295 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.319 |     10ms | 6fae9b | Waiting for Angular
+19:52:36.320 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.343 |      9ms | 6fae9b | Waiting for Angular
+19:52:36.344 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.370 |     13ms | 6fae9b | Waiting for Angular
+19:52:36.371 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.394 |      8ms | 6fae9b | Waiting for Angular
+19:52:36.395 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.417 |      8ms | 6fae9b | Waiting for Angular
+19:52:36.418 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.440 |     10ms | 6fae9b | Waiting for Angular
+19:52:36.440 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.463 |      8ms | 6fae9b | Waiting for Angular
+19:52:36.463 |     18ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.499 |     15ms | 6fae9b | Waiting for Angular
+19:52:36.500 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.525 |     10ms | 6fae9b | Waiting for Angular
+19:52:36.526 |     13ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.553 |     11ms | 6fae9b | Waiting for Angular
+19:52:36.553 |     21ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.597 |     20ms | 6fae9b | Waiting for Angular
+19:52:36.597 |     14ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.626 |     12ms | 6fae9b | Waiting for Angular
+19:52:36.626 |     13ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.655 |     13ms | 6fae9b | Waiting for Angular
+19:52:36.656 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.679 |      9ms | 6fae9b | Waiting for Angular
+19:52:36.680 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.704 |      9ms | 6fae9b | Waiting for Angular
+19:52:36.705 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.726 |      9ms | 6fae9b | Waiting for Angular
+19:52:36.726 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.748 |      8ms | 6fae9b | Waiting for Angular
+19:52:36.749 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.773 |      9ms | 6fae9b | Waiting for Angular
+19:52:36.773 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.799 |     12ms | 6fae9b | Waiting for Angular
+19:52:36.800 |     14ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.833 |     16ms | 6fae9b | Waiting for Angular
+19:52:36.834 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.857 |     11ms | 6fae9b | Waiting for Angular
+19:52:36.858 |     14ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.886 |     10ms | 6fae9b | Waiting for Angular
+19:52:36.887 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.912 |     11ms | 6fae9b | Waiting for Angular
+19:52:36.913 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.938 |     10ms | 6fae9b | Waiting for Angular
+19:52:36.939 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.961 |      9ms | 6fae9b | Waiting for Angular
+19:52:36.961 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:36.983 |      9ms | 6fae9b | Waiting for Angular
+19:52:36.984 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.004 |      8ms | 6fae9b | Waiting for Angular
+19:52:37.005 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.027 |      9ms | 6fae9b | Waiting for Angular
+19:52:37.028 |     14ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.056 |     10ms | 6fae9b | Waiting for Angular
+19:52:37.057 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.078 |      8ms | 6fae9b | Waiting for Angular
+19:52:37.078 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.102 |      9ms | 6fae9b | Waiting for Angular
+19:52:37.103 |     18ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.110 |     74ms | 6fae9b | ElementSendKeys (0.6271553592740948-1)
+    Send: admin
+19:52:37.191 |     68ms | 6fae9b | Waiting for Angular
+19:52:37.198 |     12ms | 6fae9b | Waiting for Angular
+19:52:37.192 |     17ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.199 |     21ms | 6fae9b | FindElements
+    Using css selector '#password'
+    Elements: 0.6271553592740948-2
+19:52:37.228 |     16ms | 6fae9b | Waiting for Angular
+19:52:37.237 |     14ms | 6fae9b | Waiting for Angular
+19:52:37.229 |     16ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.261 |     12ms | 6fae9b | Waiting for Angular
+19:52:37.261 |     13ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.285 |      9ms | 6fae9b | Waiting for Angular
+19:52:37.286 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.310 |     12ms | 6fae9b | Waiting for Angular
+19:52:37.311 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.337 |     10ms | 6fae9b | Waiting for Angular
+19:52:37.338 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.358 |      7ms | 6fae9b | Waiting for Angular
+19:52:37.359 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.386 |     11ms | 6fae9b | Waiting for Angular
+19:52:37.386 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.406 |      7ms | 6fae9b | Waiting for Angular
+19:52:37.406 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.427 |      7ms | 6fae9b | Waiting for Angular
+19:52:37.427 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.447 |      8ms | 6fae9b | Waiting for Angular
+19:52:37.448 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.466 |      7ms | 6fae9b | Waiting for Angular
+19:52:37.467 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.486 |      8ms | 6fae9b | Waiting for Angular
+19:52:37.486 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.509 |      9ms | 6fae9b | Waiting for Angular
+19:52:37.510 |     16ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.541 |     12ms | 6fae9b | Waiting for Angular
+19:52:37.542 |     13ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.577 |     20ms | 6fae9b | Waiting for Angular
+19:52:37.577 |     16ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.607 |     12ms | 6fae9b | Waiting for Angular
+19:52:37.607 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.630 |     10ms | 6fae9b | Waiting for Angular
+19:52:37.631 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.655 |     10ms | 6fae9b | Waiting for Angular
+19:52:37.656 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.677 |      8ms | 6fae9b | Waiting for Angular
+19:52:37.677 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.700 |      9ms | 6fae9b | Waiting for Angular
+19:52:37.700 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.720 |      8ms | 6fae9b | Waiting for Angular
+19:52:37.721 |      8ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.739 |      7ms | 6fae9b | Waiting for Angular
+19:52:37.740 |      8ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.758 |      8ms | 6fae9b | Waiting for Angular
+19:52:37.759 |      8ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.777 |      7ms | 6fae9b | Waiting for Angular
+19:52:37.778 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.799 |      8ms | 6fae9b | Waiting for Angular
+19:52:37.800 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.820 |      8ms | 6fae9b | Waiting for Angular
+19:52:37.821 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.845 |     10ms | 6fae9b | Waiting for Angular
+19:52:37.846 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.873 |     13ms | 6fae9b | Waiting for Angular
+19:52:37.874 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.900 |     11ms | 6fae9b | Waiting for Angular
+19:52:37.901 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.921 |      7ms | 6fae9b | Waiting for Angular
+19:52:37.922 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.943 |      7ms | 6fae9b | Waiting for Angular
+19:52:37.944 |      8ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.963 |      8ms | 6fae9b | Waiting for Angular
+19:52:37.963 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:37.984 |      7ms | 6fae9b | Waiting for Angular
+19:52:37.984 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.003 |      8ms | 6fae9b | Waiting for Angular
+19:52:38.003 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.028 |     12ms | 6fae9b | Waiting for Angular
+19:52:38.028 |     13ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.059 |     14ms | 6fae9b | Waiting for Angular
+19:52:38.059 |     18ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.094 |     13ms | 6fae9b | Waiting for Angular
+19:52:38.094 |     15ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.124 |     12ms | 6fae9b | Waiting for Angular
+19:52:38.124 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.149 |     10ms | 6fae9b | Waiting for Angular
+19:52:38.149 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.172 |     10ms | 6fae9b | Waiting for Angular
+19:52:38.173 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.194 |      8ms | 6fae9b | Waiting for Angular
+19:52:38.195 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.216 |      8ms | 6fae9b | Waiting for Angular
+19:52:38.216 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.239 |      8ms | 6fae9b | Waiting for Angular
+19:52:38.240 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.260 |      7ms | 6fae9b | Waiting for Angular
+19:52:38.260 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.282 |      8ms | 6fae9b | Waiting for Angular
+19:52:38.283 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.305 |      9ms | 6fae9b | Waiting for Angular
+19:52:38.305 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.328 |      8ms | 6fae9b | Waiting for Angular
+19:52:38.329 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.354 |     13ms | 6fae9b | Waiting for Angular
+19:52:38.354 |     17ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.382 |      8ms | 6fae9b | Waiting for Angular
+19:52:38.383 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.405 |      9ms | 6fae9b | Waiting for Angular
+19:52:38.406 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.429 |     11ms | 6fae9b | Waiting for Angular
+19:52:38.430 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.450 |      8ms | 6fae9b | Waiting for Angular
+19:52:38.450 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.470 |      8ms | 6fae9b | Waiting for Angular
+19:52:38.470 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.495 |     12ms | 6fae9b | Waiting for Angular
+19:52:38.496 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.517 |      8ms | 6fae9b | Waiting for Angular
+19:52:38.518 |      8ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.537 |      8ms | 6fae9b | Waiting for Angular
+19:52:38.538 |      8ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.558 |      8ms | 6fae9b | Waiting for Angular
+19:52:38.558 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.579 |      7ms | 6fae9b | Waiting for Angular
+19:52:38.580 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.604 |     11ms | 6fae9b | Waiting for Angular
+19:52:38.604 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.632 |     11ms | 6fae9b | Waiting for Angular
+19:52:38.632 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.656 |     10ms | 6fae9b | Waiting for Angular
+19:52:38.657 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.685 |     12ms | 6fae9b | Waiting for Angular
+19:52:38.685 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.710 |     10ms | 6fae9b | Waiting for Angular
+19:52:38.710 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.762 |     38ms | 6fae9b | Waiting for Angular
+19:52:38.762 |     38ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.816 |     12ms | 6fae9b | Waiting for Angular
+19:52:38.817 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.850 |     19ms | 6fae9b | Waiting for Angular
+19:52:38.851 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.872 |      9ms | 6fae9b | Waiting for Angular
+19:52:38.872 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.896 |      9ms | 6fae9b | Waiting for Angular
+19:52:38.896 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.916 |      8ms | 6fae9b | Waiting for Angular
+19:52:38.916 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.936 |      7ms | 6fae9b | Waiting for Angular
+19:52:38.937 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.957 |      8ms | 6fae9b | Waiting for Angular
+19:52:38.957 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:38.979 |      9ms | 6fae9b | Waiting for Angular
+19:52:38.979 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.001 |      8ms | 6fae9b | Waiting for Angular
+19:52:39.002 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.024 |      9ms | 6fae9b | Waiting for Angular
+19:52:39.025 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.046 |      8ms | 6fae9b | Waiting for Angular
+19:52:39.046 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.068 |      9ms | 6fae9b | Waiting for Angular
+19:52:39.070 |     15ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.098 |      9ms | 6fae9b | Waiting for Angular
+19:52:39.098 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.118 |      7ms | 6fae9b | Waiting for Angular
+19:52:39.119 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.139 |      8ms | 6fae9b | Waiting for Angular
+19:52:39.140 |     13ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.166 |      9ms | 6fae9b | Waiting for Angular
+19:52:39.167 |      8ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.189 |     10ms | 6fae9b | Waiting for Angular
+19:52:39.190 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.211 |      7ms | 6fae9b | Waiting for Angular
+19:52:39.212 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.233 |      8ms | 6fae9b | Waiting for Angular
+19:52:39.234 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.255 |      8ms | 6fae9b | Waiting for Angular
+19:52:39.255 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.279 |     11ms | 6fae9b | Waiting for Angular
+19:52:39.279 |     16ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.286 |    114ms | 6fae9b | ElementSendKeys (0.6271553592740948-2)
+    Send: Qq1234567$
+19:52:39.407 |    109ms | 6fae9b | Waiting for Angular
+19:52:39.413 |     10ms | 6fae9b | Waiting for Angular
+19:52:39.408 |     14ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.414 |     24ms | 6fae9b | FindElements
+    Using css selector 'button.btn-success'
+    Elements: 0.6271553592740948-3
+19:52:39.445 |     19ms | 6fae9b | Waiting for Angular
+19:52:39.452 |     11ms | 6fae9b | Waiting for Angular
+19:52:39.446 |     14ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.486 |     21ms | 6fae9b | Waiting for Angular
+19:52:39.487 |     20ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.526 |     16ms | 6fae9b | Waiting for Angular
+19:52:39.526 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.549 |      9ms | 6fae9b | Waiting for Angular
+19:52:39.549 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.571 |      9ms | 6fae9b | Waiting for Angular
+19:52:39.571 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.595 |     10ms | 6fae9b | Waiting for Angular
+19:52:39.595 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.618 |      8ms | 6fae9b | Waiting for Angular
+19:52:39.619 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.642 |      8ms | 6fae9b | Waiting for Angular
+19:52:39.642 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.665 |      8ms | 6fae9b | Waiting for Angular
+19:52:39.666 |     16ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.705 |     18ms | 6fae9b | Waiting for Angular
+19:52:39.706 |     15ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.734 |      9ms | 6fae9b | Waiting for Angular
+19:52:39.735 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.762 |     13ms | 6fae9b | Waiting for Angular
+19:52:39.763 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.791 |     12ms | 6fae9b | Waiting for Angular
+19:52:39.791 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.815 |      9ms | 6fae9b | Waiting for Angular
+19:52:39.815 |     17ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.843 |      8ms | 6fae9b | Waiting for Angular
+19:52:39.844 |     15ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.874 |     11ms | 6fae9b | Waiting for Angular
+19:52:39.875 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.907 |     19ms | 6fae9b | Waiting for Angular
+19:52:39.908 |      8ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.930 |     10ms | 6fae9b | Waiting for Angular
+19:52:39.930 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.954 |     10ms | 6fae9b | Waiting for Angular
+19:52:39.954 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:39.977 |     11ms | 6fae9b | Waiting for Angular
+19:52:39.977 |     16ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.009 |     13ms | 6fae9b | Waiting for Angular
+19:52:40.010 |     15ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.040 |     13ms | 6fae9b | Waiting for Angular
+19:52:40.040 |     13ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.067 |     11ms | 6fae9b | Waiting for Angular
+19:52:40.067 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.090 |     10ms | 6fae9b | Waiting for Angular
+19:52:40.090 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.110 |      7ms | 6fae9b | Waiting for Angular
+19:52:40.111 |      8ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.129 |      7ms | 6fae9b | Waiting for Angular
+19:52:40.130 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.150 |      7ms | 6fae9b | Waiting for Angular
+19:52:40.151 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.169 |      7ms | 6fae9b | Waiting for Angular
+19:52:40.170 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.192 |      8ms | 6fae9b | Waiting for Angular
+19:52:40.192 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.214 |      8ms | 6fae9b | Waiting for Angular
+19:52:40.215 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.236 |      8ms | 6fae9b | Waiting for Angular
+19:52:40.236 |      8ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.256 |      8ms | 6fae9b | Waiting for Angular
+19:52:40.257 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.275 |      7ms | 6fae9b | Waiting for Angular
+19:52:40.276 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.295 |      7ms | 6fae9b | Waiting for Angular
+19:52:40.296 |     13ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.322 |      9ms | 6fae9b | Waiting for Angular
+19:52:40.323 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.344 |      8ms | 6fae9b | Waiting for Angular
+19:52:40.345 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.366 |      8ms | 6fae9b | Waiting for Angular
+19:52:40.367 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.386 |      7ms | 6fae9b | Waiting for Angular
+19:52:40.387 |      8ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.405 |      7ms | 6fae9b | Waiting for Angular
+19:52:40.406 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.425 |      7ms | 6fae9b | Waiting for Angular
+19:52:40.426 |      8ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.445 |      9ms | 6fae9b | Waiting for Angular
+19:52:40.445 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.465 |      8ms | 6fae9b | Waiting for Angular
+19:52:40.466 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.489 |     11ms | 6fae9b | Waiting for Angular
+19:52:40.490 |     25ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.527 |      8ms | 6fae9b | Waiting for Angular
+19:52:40.528 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.551 |      8ms | 6fae9b | Waiting for Angular
+19:52:40.552 |      8ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.570 |      7ms | 6fae9b | Waiting for Angular
+19:52:40.570 |      8ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.589 |      8ms | 6fae9b | Waiting for Angular
+19:52:40.590 |      8ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.612 |     10ms | 6fae9b | Waiting for Angular
+19:52:40.612 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.632 |      8ms | 6fae9b | Waiting for Angular
+19:52:40.633 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.652 |      7ms | 6fae9b | Waiting for Angular
+19:52:40.653 |      8ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.672 |      8ms | 6fae9b | Waiting for Angular
+19:52:40.673 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.693 |      7ms | 6fae9b | Waiting for Angular
+19:52:40.694 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.715 |      7ms | 6fae9b | Waiting for Angular
+19:52:40.715 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.739 |     11ms | 6fae9b | Waiting for Angular
+19:52:40.740 |     14ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.772 |     15ms | 6fae9b | Waiting for Angular
+19:52:40.773 |     15ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.801 |     10ms | 6fae9b | Waiting for Angular
+19:52:40.801 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.826 |     12ms | 6fae9b | Waiting for Angular
+19:52:40.827 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.849 |      8ms | 6fae9b | Waiting for Angular
+19:52:40.850 |      8ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.868 |      7ms | 6fae9b | Waiting for Angular
+19:52:40.868 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.890 |      9ms | 6fae9b | Waiting for Angular
+19:52:40.891 |      8ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.911 |      9ms | 6fae9b | Waiting for Angular
+19:52:40.911 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.932 |      7ms | 6fae9b | Waiting for Angular
+19:52:40.932 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.952 |      7ms | 6fae9b | Waiting for Angular
+19:52:40.953 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.974 |      9ms | 6fae9b | Waiting for Angular
+19:52:40.975 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:40.997 |     10ms | 6fae9b | Waiting for Angular
+19:52:40.998 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.021 |      9ms | 6fae9b | Waiting for Angular
+19:52:41.021 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.046 |     10ms | 6fae9b | Waiting for Angular
+19:52:41.047 |      8ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.067 |      8ms | 6fae9b | Waiting for Angular
+19:52:41.068 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.091 |     10ms | 6fae9b | Waiting for Angular
+19:52:41.092 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.114 |      9ms | 6fae9b | Waiting for Angular
+19:52:41.115 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.135 |      7ms | 6fae9b | Waiting for Angular
+19:52:41.135 |      8ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.153 |      7ms | 6fae9b | Waiting for Angular
+19:52:41.154 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.177 |      8ms | 6fae9b | Waiting for Angular
+19:52:41.178 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.208 |     13ms | 6fae9b | Waiting for Angular
+19:52:41.209 |     21ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.254 |     19ms | 6fae9b | Waiting for Angular
+19:52:41.254 |     20ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.293 |     16ms | 6fae9b | Waiting for Angular
+19:52:41.294 |     15ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.329 |     16ms | 6fae9b | Waiting for Angular
+19:52:41.330 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.353 |      8ms | 6fae9b | Waiting for Angular
+19:52:41.354 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.379 |     11ms | 6fae9b | Waiting for Angular
+19:52:41.379 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.411 |     13ms | 6fae9b | Waiting for Angular
+19:52:41.412 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.435 |      9ms | 6fae9b | Waiting for Angular
+19:52:41.435 |      8ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.455 |      9ms | 6fae9b | Waiting for Angular
+19:52:41.455 |      8ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.475 |      8ms | 6fae9b | Waiting for Angular
+19:52:41.476 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.501 |     12ms | 6fae9b | Waiting for Angular
+19:52:41.501 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.534 |     18ms | 6fae9b | Waiting for Angular
+19:52:41.535 |     13ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.559 |      8ms | 6fae9b | Waiting for Angular
+19:52:41.559 |     14ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.591 |     15ms | 6fae9b | Waiting for Angular
+19:52:41.591 |     17ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.624 |     13ms | 6fae9b | Waiting for Angular
+19:52:41.625 |     14ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.651 |      8ms | 6fae9b | Waiting for Angular
+19:52:41.651 |     15ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.682 |     13ms | 6fae9b | Waiting for Angular
+19:52:41.683 |     13ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.716 |     17ms | 6fae9b | Waiting for Angular
+19:52:41.717 |     14ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.743 |     10ms | 6fae9b | Waiting for Angular
+19:52:41.744 |     13ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.770 |      9ms | 6fae9b | Waiting for Angular
+19:52:41.770 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.795 |     11ms | 6fae9b | Waiting for Angular
+19:52:41.800 |     32ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.855 |     20ms | 6fae9b | Waiting for Angular
+19:52:41.856 |     17ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.886 |     10ms | 6fae9b | Waiting for Angular
+19:52:41.887 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.918 |     15ms | 6fae9b | Waiting for Angular
+19:52:41.919 |     13ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.944 |      8ms | 6fae9b | Waiting for Angular
+19:52:41.945 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:41.979 |     19ms | 6fae9b | Waiting for Angular
+19:52:41.980 |      9ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:42.009 |     17ms | 6fae9b | Waiting for Angular
+19:52:42.010 |     16ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:42.063 |     33ms | 6fae9b | Waiting for Angular
+19:52:42.043 |     91ms | 6fae9b | ElementClick (0.6271553592740948-3)
+19:52:42.064 |     77ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:42.565 |    420ms | 6fae9b | Waiting for Angular
+19:52:42.566 |     10ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:42.791 |    213ms | 6fae9b | Waiting for Angular
+19:52:42.792 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:42.987 |    179ms | 6fae9b | Waiting for Angular
+19:52:42.988 |     13ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 
+19:52:46.417 |   3413ms | 6fae9b | Waiting for Angular
+19:52:46.418 |     25ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 0.6271553592740948-4
+19:52:46.461 |     15ms | 6fae9b | Waiting for Angular
+19:52:46.462 |     17ms | 6fae9b | IsElementEnabled (0.6271553592740948-4)
+19:52:46.494 |     12ms | 6fae9b | Waiting for Angular
+19:52:46.495 |     12ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 0.6271553592740948-4
+19:52:46.516 |      7ms | 6fae9b | Waiting for Angular
+19:52:46.516 |     16ms | /session/6fae9b5a8f77567885e32f8b77ede5a0/element/0.6271553592740948-4/displayed
+19:52:46.541 |      7ms | 6fae9b | Waiting for Angular
+19:52:46.542 |     11ms | 6fae9b | FindElements
+    Using xpath '//*[@id="bs-example-navbar-collapse-1"]/ul/li[3]/a'
+    Elements: 0.6271553592740948-4
+19:52:46.565 |      9ms | 6fae9b | Waiting for Angular
+19:52:48.619 |    106ms | 6fae9b | ElementClick (0.6271553592740948-4)
+19:52:48.768 |     41ms | 6fae9b | Waiting for Angular
+19:52:48.768 |     15ms | 6fae9b | FindElements
+    Using css selector 'a[href="/application-settings"]'
+    Elements: 0.6271553592740948-5
+19:52:48.792 |      8ms | 6fae9b | Waiting for Angular
+19:52:48.792 |     12ms | 6fae9b | IsElementEnabled (0.6271553592740948-5)
+19:52:48.811 |      6ms | 6fae9b | Waiting for Angular
+19:52:48.812 |      9ms | 6fae9b | FindElements
+    Using css selector 'a[href="/application-settings"]'
+    Elements: 0.6271553592740948-5
+19:52:48.830 |      8ms | 6fae9b | Waiting for Angular
+19:52:48.831 |     15ms | /session/6fae9b5a8f77567885e32f8b77ede5a0/element/0.6271553592740948-5/displayed
+19:52:48.853 |      6ms | 6fae9b | Waiting for Angular
+19:52:48.854 |      7ms | 6fae9b | FindElements
+    Using css selector 'a[href="/application-settings"]'
+    Elements: 0.6271553592740948-5
+19:52:48.868 |      6ms | 6fae9b | Waiting for Angular
+19:52:50.906 |    139ms | 6fae9b | ElementClick (0.6271553592740948-5)
+19:52:51.794 |    747ms | 6fae9b | Waiting for Angular
+19:52:51.795 |     14ms | 6fae9b | FindElements
+    Using css selector '#siteHeaderReset'
+    Elements: 0.6271553592740948-6
+19:52:51.818 |      7ms | 6fae9b | Waiting for Angular
+19:52:53.851 |    100ms | 6fae9b | ElementClick (0.6271553592740948-6)
+19:52:54.076 |    122ms | 6fae9b | Waiting for Angular
+19:52:54.077 |     17ms | /session/6fae9b5a8f77567885e32f8b77ede5a0/execute
+19:52:54.100 |     47ms | 6fae9b | Go data:text/html,<html></html>

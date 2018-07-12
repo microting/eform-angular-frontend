@@ -7,8 +7,8 @@ export default {
   dataSourceSDK: '(LocalDb)\\SharedInstance',
   initialCatalogueSDK: 'eFormSDK',
   authenticationTypeSDK: 'Integrated Security=True',
-  token: 'b3abe9893bf46e5bd98186222bf8ff22',
   dataSourceMain: '(LocalDb)\\SharedInstance',
+  token: 'abc1234567890abc1234567890abcdef',
   initialCatalogueMain: 'eFormMain',
   authenticationTypeMain: 'Integrated Security=True',
   languageOptions: {
