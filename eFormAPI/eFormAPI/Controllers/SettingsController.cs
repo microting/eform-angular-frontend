@@ -42,14 +42,22 @@ namespace eFormAPI.Web.Controllers
         [Route("api/settings/default-locale")]
         public OperationDataResult<string> GetDefaultLocale()
         {
-            var configuration = WebConfigurationManager.OpenWebConfiguration("~");
-            var section = (AppSettingsSection)configuration.GetSection("appSettings");
-            var locale = section.Settings["general:defaultLocale"].Value;
-            if (locale == null)
+            try
             {
+                var configuration = WebConfigurationManager.OpenWebConfiguration("~");
+                var section = (AppSettingsSection)configuration.GetSection("appSettings");
+                var locale = section.Settings["general:defaultLocale"].Value;
+                if (locale == null)
+                {
+                    return new OperationDataResult<string>(true, "en-US");
+                }
+                return new OperationDataResult<string>(true, model: locale);
+            } catch
+            {
+                // We do this if any of the above fail for some reason, then we set it to default en-US
                 return new OperationDataResult<string>(true, "en-US");
             }
-            return new OperationDataResult<string>(true, model: locale);
+            
         }
 
 
