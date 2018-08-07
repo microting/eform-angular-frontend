@@ -53,7 +53,7 @@ exports.config = {
   useAllAngular2AppRoots: true,
   beforeLaunch: function () {
     require('ts-node').register({
-      project: 'e2e'
+      project: 'eForm-frontend-angular-CI/drop/e2e'
     });
   },
   onPrepare: function () {
