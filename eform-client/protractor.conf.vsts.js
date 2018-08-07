@@ -15,7 +15,8 @@ exports.config = {
     './e2e/tests/main-page/main-page.filter-eform.e2e-spec.ts',
     './e2e/tests/main-page/main-page.sort-eform.e2e-spec.ts',
     './e2e/tests/main-page/main-page.tags.e2e-spec.ts',
-    './e2e/tests/main-page/main-page.delete-eform.e2e-spec.ts'
+    './e2e/tests/main-page/main-page.delete-eform.e2e-spec.ts',
+    './e2e/tests/main-page/main-page.pairing-eform.e2e-spec.ts'
   ],
   suites: {
     'site-header': './e2e/tests/settings/settings.site-header.e2e-spec.ts',
@@ -27,7 +28,8 @@ exports.config = {
     'main-page-filter':'./e2e/tests/main-page/main-page.filter-eform.e2e-spec.ts',
     'main-page-sort':'./e2e/tests/main-page/main-page.sort-eform.e2e-spec.ts',
     'main-page-tags':'./e2e/tests/main-page/main-page.tags.e2e-spec.ts',
-    'main-page-delete':'./e2e/tests/main-page/main-page.delete-eform.e2e-spec.ts'
+    'main-page-delete':'./e2e/tests/main-page/main-page.delete-eform.e2e-spec.ts',
+    'main-page-pairing':'./e2e/tests/main-page/main-page.pairing-eform.e2e-spec.ts'
   },
   capabilities: {
     browserName: 'chrome',
@@ -43,13 +45,15 @@ exports.config = {
   jasmineNodeOpts: {
     showColors: true,
     defaultTimeoutInterval: 720000,
+    includeStackTrace: true,
+    isVerbose: true,
     print: function () {
     }
   },
   useAllAngular2AppRoots: true,
   beforeLaunch: function () {
     require('ts-node').register({
-      project: 'e2e'
+      project: 'eForm-frontend-angular-CI/drop/e2e'
     });
   },
   onPrepare: function () {
