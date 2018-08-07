@@ -7,15 +7,15 @@ import {CaseFieldValue} from 'app/models';
   styleUrls: ['./element-audio.component.css']
 })
 export class ElementAudioComponent implements OnInit {
-  fieldValueObj: CaseFieldValue = new CaseFieldValue();
+  fieldValueObjects: Array<CaseFieldValue> = [];
 
   @Input()
-  get fieldValue() {
-    return this.fieldValueObj;
+  get fieldValues() {
+    return this.fieldValueObjects;
   }
 
-  set fieldValue(val) {
-    this.fieldValueObj = val;
+  set fieldValues(val) {
+    this.fieldValueObjects = val;
   }
 
   constructor() {

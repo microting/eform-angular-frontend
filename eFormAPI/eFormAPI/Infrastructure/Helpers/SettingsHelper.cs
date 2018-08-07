@@ -41,6 +41,11 @@ namespace eFormAPI.Web.Infrastructure.Helpers
             };
             if (!manager.Users.Any(x => x.Email.Equals(adminUser.Email)))
             {
+                manager.UserValidator = new UserValidator<EformUser, int>(manager)
+                {
+                    AllowOnlyAlphanumericUserNames = false,
+                    RequireUniqueEmail = true
+                };
                 IdentityResult ir = manager.Create(adminUser, adminSetupModel.Password);
                 if (ir != null)
                 {
