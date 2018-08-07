@@ -20,6 +20,7 @@ export class DeviceUsersPage {
 
   // actions
   async getRowsNumber(): Promise<number> {
+    await browser.sleep(4000);
     return await $$(data.DeviceUsersPage.rowCountSelector).count();
   }
 

@@ -81,6 +81,7 @@ describe('Tests for adding users', function () {
       const initialRowsNumber = await deviceUsersPage.getRowsNumber();
       await deviceUsersPage.newDeviceUserButton.click();
       await browser.wait(ExpectedConditions.visibilityOf(deviceUsersPage.addNewUserModal.saveButton));
+      await browser.sleep(4000);
       await deviceUsersPage.addNewUserModal.cancelButton.click();
       await browser.wait(ExpectedConditions.visibilityOf(deviceUsersPage.newDeviceUserButton));
       const finalRowsNumber = await deviceUsersPage.getRowsNumber();

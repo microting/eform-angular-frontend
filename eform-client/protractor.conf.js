@@ -32,10 +32,13 @@ exports.config = {
     'main-page-pairing':'./e2e/tests/main-page/main-page.pairing-eform.e2e-spec.ts'
   },
   SELENIUM_PROMISE_MANAGER: false,
+  ignoreUncaughtExceptions: true,
   capabilities: {
     browserName: 'chrome',
     maxSessions: 1,
-    maxInstances: 1
+    maxInstances: 1,
+    // options for headless mode
+    chromeOptions: {args: ["--headless", "--disable-gpu"]}
   },
   directConnect: true,
   baseUrl:

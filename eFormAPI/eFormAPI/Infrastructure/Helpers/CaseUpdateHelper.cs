@@ -123,6 +123,14 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                         list.Add(val);
                     }
                     break;
+                case "Audio":
+                    var audioFirst = editRequestField?.FieldValues?.First();
+                    if (audioFirst?.Value != null && audioFirst?.FieldId != null)
+                    {
+                        string val = $"{audioFirst.FieldId}|{audioFirst.Value.ToString()}";
+                        list.Add(val);
+                    }
+                    break;
             }
             return list;
         }

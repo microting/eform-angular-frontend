@@ -57,7 +57,7 @@
             <element-entityselect [(fieldValue)]="dataItem.fieldValues[0]" [entityGroupUid]="dataItem.entityGroupId"></element-entityselect>
           </div>
           <div *ngSwitchCase="'Audio'">
-            <element-audio [(fieldValue)]="dataItem.fieldValues[0]"></element-audio>
+            <element-audio [(fieldValues)]="dataItem.fieldValues"></element-audio>
           </div>
           <div *ngSwitchDefault></div>
         </div>
