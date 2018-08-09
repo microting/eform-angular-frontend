@@ -6,11 +6,11 @@ export default {
   lastNAme: 'Smith',
   dataSourceSDK: 'dataSourceSDKValue',
   initialCatalogueSDK: 'eformsdk-test',
-  authenticationTypeSDK: 'User ID=USER_NAME;Password=PASSWORD_VSTS',
+  authenticationTypeSDK: 'Persist Security Info=False;User ID=USER_NAME;Password=PASSWORD_VSTS;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;',
   token: 'abc1234567890abc1234567890abcdef',
   dataSourceMain: 'dataSourceSDKValue',
   initialCatalogueMain: 'eFormMain',
-  authenticationTypeMain: 'User ID=USER_NAME;Password=PASSWORD_VSTS',
+  authenticationTypeMain: 'Persist Security Info=False;User ID=USER_NAME;Password=PASSWORD_VSTS;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;',
   languageOptions: {
     english: 'English',
     danish: 'Danish'

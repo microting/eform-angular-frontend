@@ -67,13 +67,11 @@ namespace eFormAPI.Web.Controllers
         public OperationResult UpdateConnectionString(InitialSettingsModel initialSettingsModel)
         {
             if (!ModelState.IsValid) return new OperationResult(false, LocaleHelper.GetString("RequestFieldsAreNotFilled"));
-            var sdkConnectionString = "Data Source="
-                                      + initialSettingsModel.ConnectionStringSdk.Source + ";Initial Catalog="
+            var sdkConnectionString = initialSettingsModel.ConnectionStringSdk.Source + ";Initial Catalog="
                                       + initialSettingsModel.ConnectionStringSdk.Catalogue + ";"
                                       + initialSettingsModel.ConnectionStringSdk.Auth;
 
-            var mainConnectionString = "Data Source="
-                                       + initialSettingsModel.ConnectionStringMain.Source + ";Initial Catalog="
+            var mainConnectionString = initialSettingsModel.ConnectionStringMain.Source + ";Initial Catalog="
                                        + initialSettingsModel.ConnectionStringMain.Catalogue + ";"
                                        + initialSettingsModel.ConnectionStringMain.Auth;
             // Save SDK connection string
