@@ -37,7 +37,7 @@ export class CaseEditElementComponent {
       if (item.fieldValues && item.fieldValues.length > 0) {
         item.fieldValues.forEach(fieldValue => {
           const val = new CaseEditRequestFieldValue();
-          val.fieldId = fieldValue.fieldId;
+          val.fieldId = fieldValue.id;
           val.value = fieldValue.value;
           elem.fieldValues.push(val);
         });
