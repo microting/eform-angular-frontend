@@ -1,0 +1,31 @@
+<div class="mb-2">
+  <form [formGroup]="formLogin">
+    <div class="md-form">
+      <i class="material-icons prefix">
+        person
+      </i>
+      <input mdbInputDirective
+             [mdbValidate]="false"
+             formControlName="username"
+             type="text" id="username" name="username" class="form-control">
+      <label for="username">{{'Username' | translate}}</label>
+    </div>
+    <div class="md-form">
+      <i class="material-icons prefix">
+        lock
+      </i>
+      <input mdbInputDirective
+             [mdbValidate]="false"
+             formControlName="password"
+             type="text" id="password" name="password" class="form-control">
+      <label for="password">{{'Password' | translate}}</label>
+    </div>
+    <button mdbWavesEffect type="button" class="btn btn-success btn-lg btn-block" (click)="submitLoginForm()" id="loginBtn">
+      {{'Login' | translate}}
+    </button>
+  </form>
+  <eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>
+</div>
+<a class="link-primary" [routerLink]="['restore-password']">{{'Forgot password' | translate}}?</a>
+
+

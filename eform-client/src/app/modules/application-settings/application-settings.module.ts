@@ -1,28 +1,25 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {TranslateModule} from '@ngx-translate/core';
-import {NgxSelectModule} from 'ngx-select-ex';
-import {ConnectionStringComponent} from './components/connection-string/connection-string.component';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import {ApplicationSettingsRoutingModule} from './application-settings-routing.module';
-import {ApplicationSettingsComponent} from './components/application-settings.component';
-import {HelpersModule} from 'app/modules/helpers/helpers.module';
-import {AdminSettingsComponent} from './components/admin-settings/admin-settings.component';
-import {TooltipModule} from 'ngx-bootstrap';
+import {NgSelectModule} from '@ng-select/ng-select';
+import {TranslateModule} from '@ngx-translate/core';
 import {FileUploadModule} from 'ng2-file-upload';
+import {MDBBootstrapModule} from 'port/angular-bootstrap-md';
+import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
+import {ApplicationSettingsRouting} from './application-settings.routing';
+import {AdminSettingsComponent, ConnectionSetupComponent} from './components';
 
 @NgModule({
   imports: [
     CommonModule,
-    ApplicationSettingsRoutingModule,
+    NgSelectModule,
+    ApplicationSettingsRouting,
+    MDBBootstrapModule,
+    EformSharedModule,
     FormsModule,
-    HelpersModule,
-    TooltipModule,
-    TranslateModule.forChild(),
-    FileUploadModule,
-    NgxSelectModule,
+    TranslateModule,
+    FileUploadModule
   ],
-  declarations: [ConnectionStringComponent, ApplicationSettingsComponent, AdminSettingsComponent]
+  declarations: [AdminSettingsComponent, ConnectionSetupComponent]
 })
-export class ApplicationSettingsModule {
-}
+export class ApplicationSettingsModule { }

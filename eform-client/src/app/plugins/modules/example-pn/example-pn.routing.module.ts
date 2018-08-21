@@ -1,13 +1,13 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-import {AuthGuard} from 'app/guards';
+import {AuthGuard} from 'src/app/common/guards';
 import {ExamplePnPageComponent} from './components';
 
 export const routes: Routes = [
   {
     path: '',
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     component: ExamplePnPageComponent
   }
 ];

@@ -1,10 +1,4 @@
-<div class="checkbox" *ngFor="let item of fieldValueObj.keyValuePairList">
-  <input checked="checked"
-         name="keyvalue"
-         type="checkbox"
-         [checked]="item.selected"
-         (change)="updateCheckedOptions(item, $event)"
-         value="{{item}}">
-  <label for="keyvalue">{{item.value}}</label>
-  <br>
-</div>
+<ng-select
+  [placeholder]="'Column 1'"
+  [multiple]="true"
+  [items]="['English', 'Danish']"></ng-select>
