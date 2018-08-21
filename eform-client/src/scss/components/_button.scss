@@ -1,0 +1,20 @@
+@import '../utilities/colors';
+
+.btn {
+  padding: 0.5rem 1.2rem;
+  &:not(.btn-block) {
+    display: inline-flex;
+  }
+  &.btn-neutral {
+    color: $eform-gray;
+    & > i {
+      color: $eform-gray-dark;
+    }
+    &:active {
+      color: $eform-gray-dark;
+    }
+  }
+  &.btn-icon {
+    padding: 0.5rem 0.5rem;
+  }
+}

@@ -1,7 +1,7 @@
 {
   "Settings": "Indstillinger",
   "Save": "Gem",
-  "Login Page": "Login Page",
+  "Login Page": "Login side",
   "Reset": "Nulstil",
   "Main Text": "Hovedtekst",
   "Secondary Text": "Sekundær tekst",
@@ -9,7 +9,7 @@
   "Recommended parameters": "Anbefalede parametre",
   "Resolution": "Påløsning",
   "Proportions": "Proportioner",
-  "Site Header": "Site Header",
+  "Site header": "Webstedoverskrift",
   "Logo": "Logo",
   "SMTP Information": "SMTP-oplysninger",
   "Host": "Vært",

@@ -1,0 +1,42 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{'eForm Pairing'}}</h3>
+      </div>
+      <div class="modal-body table-responsive">
+        <table class="table table-xs table-bordered text-center">
+          <thead>
+          <tr>
+            <th>Microting ID</th>
+            <th>{{ 'Device user' | translate }}</th>
+            <th>{{ 'Check to pair' | translate }}</th>
+          </tr>
+          </thead>
+          <tbody id="pairingModalTableBody">
+          <tr *ngFor="let siteDto of sitesDto">
+            <td class="align-middle">{{siteDto.siteUId}}</td>
+            <td class="align-middle">{{siteDto.siteName}}</td>
+            <td class="align-middle">
+              <div *ngFor="let checkboxModel of deployViewModel.deployCheckboxes">
+                <div *ngIf="checkboxModel.id == siteDto.siteUId">
+                  <label class="md-checkbox" (change)="addToArray($event, deployViewModel.id)">
+                    <input [checked]="checkboxModel.isChecked" value="{{checkboxModel.isChecked}}" type="checkbox"/>
+                    <label  class="md-checkbox--fake"></label>
+                  </label>
+                </div>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" (click)="submitDeployment()">{{'Save'}}</button>
+        <button class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Cancel'}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>

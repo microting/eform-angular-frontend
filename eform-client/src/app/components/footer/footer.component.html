@@ -1,20 +1,16 @@
-<div id="footer_placeholder" style="height: 148px; background-color: white"></div>
-<div id="my_footer_id_2" style="z-index: 999">
-  <aside id="footer-widgets">
-    <br>
-    <div class="container text-center">
+<footer class="footer stick-down">
+  <div id="footer-widgets">
+    <div class="d-flex justify-content-center p-3">
       <a href="https://www.microting.com/terms-of-service" target="_blank">
-        {{ 'Terms of Service' | translate }}
-      </a> |
+        {{'Terms of Service' | translate}}
+      </a> <span class="ml-2 mr-2"> | </span>
       <a href="https://www.microting.com/privacy-policy" target="_blank">
-        {{ 'Privacy Policy' | translate }}
+        {{'Privacy Policy' | translate}}
       </a>
       <b></b>
     </div>
-  </aside>
-  <footer id="footer">
-    <p>
-      © Microting A/S 2007 - 2018
-    </p>
-  </footer>
-</div>
+  </div>
+  <div class="footer-copyright text-center p-2 copyright-section">
+    <p>© Microting A/S 2007 - 2018</p>
+  </div>
+</footer>

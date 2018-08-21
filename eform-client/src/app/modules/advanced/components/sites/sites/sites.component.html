@@ -1,0 +1,60 @@
+<eform-page-subheader [title]="'Sites' | translate">
+
+</eform-page-subheader>
+
+<!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
+<div class="container-fluid">
+  <div class="row pt-3 table-responsive no-gutters">
+    <table class="table table-sm table-striped text-center">
+      <thead>
+      <tr>
+        <th scope="col">{{ 'Created at' | translate }}</th>
+        <th scope="col"> {{ 'Updated at' | translate }}</th>
+        <th scope="col">{{ 'Name' | translate }}</th>
+        <th scope="col"> Microting UID</th>
+        <th scope="col">{{ 'Actions' | translate }}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let siteDto of sitesDto">
+        <td scope="row">
+          {{siteDto.createdAt | date:'dd.MM.y HH:mm:ss'}}
+        </td>
+        <td>
+          {{siteDto.updatedAt | date:'dd.MM.y HH:mm:ss'}}
+        </td>
+        <td>{{siteDto.siteName}}</td>
+        <td>
+          {{siteDto.siteUId}}
+        </td>
+        <td>
+          <div class="d-flex flex-row justify-content-center">
+            <button class="btn btn-accent text-black-50 btn-icon mb-2 " mdbTooltip="{{'Edit Site' | translate}}" mdbWavesEffect
+                    (click)="openEditModal(siteDto)">
+              <i class="material-icons">
+                edit
+              </i>
+            </button>
+            <button class="btn btn-danger btn-icon mb-2 "
+                    mdbTooltip="{{'Delete site' | translate}}"
+                    (click)="openDeleteModal(siteDto)">
+              <i class="material-icons">
+                delete_forever
+              </i>
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>
+
+<app-site-edit
+  [siteNameDto]="selectedSiteDto"
+  #modalSiteEdit></app-site-edit>
+<app-site-delete
+  [siteNameDto]="selectedSiteDto"
+  #modalSiteDelete></app-site-delete>

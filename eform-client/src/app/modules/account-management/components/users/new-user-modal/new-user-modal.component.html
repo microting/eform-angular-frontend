@@ -1,0 +1,91 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{ 'New User' | translate }}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <form #createForm="ngForm">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="md-form">
+                  <input mdbInputDirective
+                         [mdbValidate]="false"
+                         class="form-control"
+                         required #createPassword="ngModel" type="text"
+                         [(ngModel)]="newUserModel.password" id="createPassword"
+                         name="createPassword">
+                  <label for="createPassword">{{'Password' | translate}}*</label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <ng-select required
+                           bindLabel="value"
+                           bindValue="id"
+                           [(ngModel)]="newUserModel.role" name="createRole"
+                           [placeholder]="'Role' | translate"
+                           [items]="[{id: 'admin', value: 'Admin'}, {id: 'user', value: 'User'}]"></ng-select>
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="md-form">
+                  <input mdbInputDirective
+                         [mdbValidate]="false"
+                         #createUserName="ngModel" type="text"
+                         [(ngModel)]="newUserModel.userName"
+                         name="createUserName" id="createUserName" class="form-control">
+                  <label for="createUserName">{{'Username' | translate}} </label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="md-form">
+                  <input mdbInputDirective
+                         [mdbValidate]="false"
+                         class="form-control"
+                         required #createEmail="ngModel" type="text"
+                         [(ngModel)]="newUserModel.email" id="createEmail"
+                         name="createEmail">
+                  <label for="createEmail">{{'Email' | translate}}</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="md-form">
+                  <input mdbInputDirective
+                         [mdbValidate]="false"
+                         class="form-control" type="text"
+                         [(ngModel)]="newUserModel.firstName" id="createFirstName"
+                         name="createFirstName">
+                  <label for="createFirstName">{{ 'First Name' | translate }}</label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="md-form">
+                  <input mdbInputDirective
+                         [mdbValidate]="false"
+                         class="form-control" type="text"
+                         [(ngModel)]="newUserModel.lastName"
+                         name="createLastName" id="createLastName">
+                  <label for="createLastName">{{ 'Last Name' | translate }}</label>
+                </div>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" [disabled]="!createForm.form.valid"
+                (click)="createUser()">{{ 'Create' | translate }}
+        </button>
+        <button class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Cancel' | translate}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>

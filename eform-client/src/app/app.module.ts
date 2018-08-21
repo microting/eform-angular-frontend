@@ -1,104 +1,73 @@
 import {HttpClientModule} from '@angular/common/http';
-import {TranslateModule} from '@ngx-translate/core';
-import {PreloadResolverConfig} from 'app/configs';
-import {translateConfig} from 'app/configs/locale.helper';
-import {CollapseModule, TooltipModule} from 'ngx-bootstrap';
-import {AppRoutingModule} from './app.routing';
-import {CommonModule} from '@angular/common';
-import {NgModule} from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {NgxGalleryModule} from 'ngx-gallery';
-import {DndModule} from 'ng2-dnd';
+import {TranslateModule} from '@ngx-translate/core';
+import {DragulaModule} from 'ng2-dragula';
+import {ToastrModule} from 'ngx-toastr';
 
-import {AccountManagementModule, SimpleSitesModule, ApplicationSettingsModule, AdvancedModule, HelpersModule} from 'app/modules';
-import {PluginsModule} from 'app/plugins/plugins.module';
+import {MDBBootstrapModule} from 'port/angular-bootstrap-md';
+import {providers} from 'src/app/app.declarations';
+import {AppRoutingModule} from 'src/app/app.routing';
+import {translateConfig} from 'src/app/common/helpers';
+import {PluginsModule} from 'src/app/plugins/plugins.module';
 import {
-  AppComponent, AuthComponent, RestorePasswordComponent, HeaderComponent,
-  NavigationComponent, FooterComponent, SignOutComponent
-} from 'app/components';
-import {FullLayoutComponent, SimpleLayoutComponent} from 'app/layouts';
-import {
-  AdminService, EntitySearchService, EntitySelectService, AppSettingsService,
-  SitesService, UnitsService, WorkersService, CasesService, AuthService, NotifyService,
-  ImageService, SimpleSitesService, EFormService, EformTagService, LocaleService, UserSettingsService
-} from 'app/services';
-import {AuthGuard} from 'app/guards';
-import {EqualValidatorDirective} from 'app/components/directives/equal-validator.directive';
+  AppComponent,
+  FooterComponent,
+  HeaderComponent,
+  NavigationComponent,
+  SimpleLayoutComponent,
+  FullLayoutComponent,
+} from './components';
 
 
 
-// import {
-//   AdminService,
-//   AuthService,
-//   EntitySearchService,
-//   SettingsService,
-//   SitesService,
-//   UnitsService,
-//   EFormService,
-//   CasesService,
-//   SimpleSitesService,
-//   WorkersService
-// } from 'app/services';
+// const routes = [{
+//   path: '',
+//   component: FullLayoutComponent,
+//   children: [
+//     {path: '', component: BareboneComponent},
+//     {path: 'application-settings', component: SettingsComponent},
+//     {path: 'account-management/settings', component: ProfileSettingsComponent},
+//     {path: 'account-management/change-password', component: ChangePasswordComponent},
+//     {path: 'account-management/users', component: UsersPageComponent},
+//     {path: 'simplesites', component: DeviceUsersPageComponent},
+//     {path: 'dbsetup', component: DatabaseSetupComponent}
+//     ]},
+//   {
+//     path: '',
+//     component: SimpleLayoutComponent,
+//     children: [
+//       {path: 'auth', component: AuthComponent}]
+//   }];
 
 
 @NgModule({
   declarations: [
+    // Layouts
+    SimpleLayoutComponent,
+    FullLayoutComponent,
+    // Components
     AppComponent,
-    AuthComponent,
-    RestorePasswordComponent,
-    SignOutComponent,
     HeaderComponent,
     FooterComponent,
-    NavigationComponent,
-    FullLayoutComponent,
-    SimpleLayoutComponent,
-    EqualValidatorDirective
+    NavigationComponent
   ],
   imports: [
-    PluginsModule,
-    ReactiveFormsModule,
-    FormsModule,
+    // Libs
     AppRoutingModule,
-    SimpleSitesModule,
-    AdvancedModule,
-    HttpClientModule,
-    HttpModule,
-    ApplicationSettingsModule,
-    NgxGalleryModule,
-    HelpersModule,
-    AccountManagementModule,
-    BrowserAnimationsModule,
-    CommonModule,
-    TooltipModule.forRoot(),
-    DndModule.forRoot(),
+    BrowserModule,
+    MDBBootstrapModule.forRoot(),
     TranslateModule.forRoot(translateConfig),
-    CollapseModule.forRoot()
+    HttpClientModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+    DragulaModule.forRoot(),
+    // Modules
+    PluginsModule
   ],
-  providers: [
-    NotifyService,
-    AuthGuard,
-    AuthService,
-    SitesService,
-    CasesService,
-    AdminService,
-    NotifyService,
-    UnitsService,
-    SitesService,
-    WorkersService,
-    UnitsService,
-    SimpleSitesService,
-    EntitySearchService,
-    EntitySelectService,
-    AppSettingsService,
-    EFormService,
-    ImageService,
-    EformTagService,
-    LocaleService,
-    UserSettingsService,
-    PreloadResolverConfig
-  ],
+  schemas: [NO_ERRORS_SCHEMA],
+  providers: [providers],
   bootstrap: [AppComponent]
 })
 export class AppModule {

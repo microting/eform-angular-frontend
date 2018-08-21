@@ -9,7 +9,7 @@
   "Recommended parameters": "Recommended parameters",
   "Resolution": "Resolution",
   "Proportions": "Proportions",
-  "Site Header": "Site Header",
+  "Site header": "Site header",
   "Logo": "Logo",
   "SMTP Information": "SMTP Information",
   "Host": "Host",
@@ -144,19 +144,16 @@
   "Left empty if want to keep old": "Left empty if want to keep old",
   "Username": "Username",
   "Email": "Email",
-  "Status": "Status",
   "change will logout you from the application": "change will logout you from the application",
   "Remove google authenticator secret key": "Remove google authenticator secret key",
   "Remove PSK": "Remove PSK",
   "Full Name": "Full Name",
   "My eForms": "My eForms",
-  "Role": "Role",
   "Delete User": "Delete User",
   "Profile Settings": "Profile Settings",
   "Open Google Authenticator and add Eform application by scanning the QR Code to the right": "Open Google Authenticator and add Eform application by scanning the QR Code to the right",
   "Enter the 6 digit code that Google Authenticator generates": "Enter the 6 digit code that Google Authenticator generates",
   "General": "General",
-
   "Find": "Find",
   "Nothing found": "Nothing found",
   "Type in search box to see results": "Type in search box to see results",
@@ -164,7 +161,20 @@
   "All selected": "All selected",
 
   "Showing to of records": "Showing {{currentPageAmount}} to {{currentPage}} of {{total}} records",
-  "Google Authenticator description": "<p>Secret key between <strong>Eform</strong> application and <strong>Google Authenticator</strong>. Keep it safe and do not tell anyone.</p><p>You should remove this key, if <strong>Google Authenticator</strong> is reinstalled or key was removed</p>"
+  "Google Authenticator description": "<p>Secret key between <strong>Eform</strong> application and <strong>Google Authenticator</strong>. Keep it safe and do not tell anyone.</p><p>You should remove this key, if <strong>Google Authenticator</strong> is reinstalled or key was removed</p>",
+
+  "New OTP for": "New OTP for",
+  "Loading": "Loading",
+  "Pending": "Pending",
+  "Upload": "Upload",
+  "Role": "Role",
+  "Status": "Status",
+  "New list": "New list",
+  "Name is required": "Ikke færdigudfyldt",
+  "Edit searchable list": "Edit searchable list",
+  "eForm Pairing": "eForm Pairing",
+  "Tag for removal": "Tag for removal",
+  "New tags": "New tags"
 }
 
 

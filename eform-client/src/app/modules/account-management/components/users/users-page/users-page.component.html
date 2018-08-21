@@ -1,0 +1,86 @@
+<eform-page-subheader [title]="'User Management' | translate">
+  <div class="p-3">
+    <button
+      class="btn btn-success" (click)="openNewUserModal()"
+      mdbTooltip="{{'Create user' | translate}}">{{'New User' | translate}}</button>
+  </div>
+</eform-page-subheader>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="pt-3">
+        <label class="md-checkbox" (click)="checked($event)">
+          <input name="isChecked"
+                 id="isChecked"
+                 value="{{isChecked}}"
+                 [checked]="isChecked" type="checkbox" />
+          <label class="md-checkbox--fake"></label>
+          <div (click)="checked($event)">{{ 'Force users to use 2-f-auth' | translate }}</div>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="row p-1 table-responsive no-gutters">
+    <table class="table table-striped text-center">
+      <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">{{ 'Username' | translate }}</th>
+        <th scope="col">{{ 'Email' | translate }}</th>
+        <th scope="col">{{ 'Full Name' | translate }}</th>
+        <th scope="col">{{ 'Role' | translate }}</th>
+        <th scope="col">{{'Actions' | translate}}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let userInfoModel of userInfoModelList.userList">
+        <td scope="row">{{userInfoModel.id}}</td>
+        <td>  {{userInfoModel.userName}}</td>
+        <td> {{userInfoModel.email}}</td>
+        <td>
+          {{userInfoModel.firstName}} {{userInfoModel.lastName}}
+        </td>
+        <td>
+          {{userInfoModel.role}}
+        </td>
+        <td>
+
+          <div class="d-flex flex-row justify-content-center">
+            <button class="btn btn-accent text-black-50 btn-icon mb-2" mdbTooltip="{{'Edit User' | translate}}"
+                    (click)="openEditModal(userInfoModel.id)">
+              <i class="material-icons">
+                edit
+              </i>
+            </button>
+            <button class="btn btn-danger btn-icon mb-2 "
+                    mdbTooltip="{{'Delete User' | translate}}"
+                    (click)="openRemoveUserModal(userInfoModel)">
+              <i class="material-icons">
+                delete_forever
+              </i>
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!--pagination(if required)-->
+  <eform-pagination *ngIf="userInfoModelList.totalUsers > paginationModel.pageSize"
+                    [limit]="paginationModel.pageSize"
+                    [size]="userInfoModelList.totalUsers"
+                    [offset]="paginationModel.offset"
+                    (onPageChanged)="changePage($event)"></eform-pagination>
+</div>
+
+<eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>
+
+<app-user-edit-modal (onUserUpdated)="getUserInfoList()" #userEditModal></app-user-edit-modal>
+<app-new-user-modal (onUserCreated)="getUserInfoList()" #newUserModal></app-new-user-modal>
+<app-remove-user-modal [selectedUser]="selectedUser"
+                       (onUserDeleted)="getUserInfoList()" #removeUserModal></app-remove-user-modal>
+<!--<app-create-eform-modal #modalNewEform></app-create-eform-modal>-->
+<!--<app-cases-column-modal #modalCasesColumns></app-cases-column-modal>-->
+

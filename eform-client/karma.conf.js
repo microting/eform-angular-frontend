@@ -18,12 +18,12 @@ module.exports = function (config) {
 
 
     /*files: [{
-      pattern: './src/test.ts',
+      pattern: './src/isChecked.ts',
       watched: false
     }],*/
 
     files: [
-      './src/*-test.ts',
+      './src/*-isChecked.ts',
       './src/test.ts'
     ],
 
@@ -39,8 +39,8 @@ module.exports = function (config) {
     },
     remapIstanbulReporter: {
       reports: {
-        html: './test-output/coverage',
-        lcovonly: './test-output/coverage.lcov'
+        html: './isChecked-output/coverage',
+        lcovonly: './isChecked-output/coverage.lcov'
       }
     },
 
@@ -50,7 +50,7 @@ module.exports = function (config) {
     },
 
     junitReporter: {
-      outputDir: 'test-output',
+      outputDir: 'isChecked-output',
       outputFile: 'unit.xml',
       suite: 'unit'
     },

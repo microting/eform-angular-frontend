@@ -1,0 +1,14 @@
+@import '../utilities/colors';
+
+a {
+  &.link-primary {
+    color: $eform-red;
+    &:hover {
+      color: $eform-red-dark;
+    }
+  }
+}
+
+.text-danger {
+  color: $eform-red;
+}

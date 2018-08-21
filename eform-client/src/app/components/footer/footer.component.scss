@@ -1,0 +1,30 @@
+@import "../../../scss/utilities/colors";
+
+footer {
+  color: $eform-gray;
+}
+
+#footer-widgets {
+  background-color: $eform-gray;
+  font-size: 0.9rem;
+}
+
+a {
+  color: white;
+}
+
+span {
+  color: white;
+}
+
+.copyright-section {
+  background-color: $eform-gray-dark !important;
+  color: white;
+  font-size: 0.9rem;
+}
+
+.stick-down {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}

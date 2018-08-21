@@ -1,45 +1,12 @@
-<section id="section{{element.id}}" *ngIf="element.dataItemList">
-  <hr class="soften"/>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <p class="lead black-color">
-        {{element.label}}
-      </p>
-    </div>
-    <table class="table">
-      <tbody *ngIf="element.approvalEnabled || (element.reviewEnabled) && (element.approvalEnabled)">
-      <tr>
-        <td>
-          <div *ngIf="element.approvalEnabled" class="radio">
-            <input [(ngModel)]="element.status" id="cl_v[@(dataE.Id)][approved]" name="cl_v[@(dataE.Id)]" type="radio"
-                   value="approved"
-            />
-            <label for="cl_v[@(dataE.Id)][approved]">{{ 'Approved' | translate }}</label>
-          </div>
-          <div *ngIf="(element.reviewEnabled) && (element.approvalEnabled)" class="radio">
-            <input [(ngModel)]="element.status" id="cl_v[@(dataE.Id)][review]" name="cl_v[@(dataE.Id)]" type="radio"
-                   value="review"/>
-            <label for="cl_v[@(dataE.Id)][review]">{{ 'Review' | translate }}</label>
-          </div>
-          <div *ngIf="element.approvalEnabled" class="radio">
-            <input [(ngModel)]="element.status" id="cl_v[@(dataE.Id)][not_approved]" name="cl_v[@(dataE.Id)]"
-                   type="radio" value="not_approved"/>
-            <label for="cl_v[@(dataE.Id)][not_approved]">{{ 'Not approved' | translate }}</label>
-          </div>
-        </td>
-      </tr>
-      </tbody>
-      <tbody case-edit-switch  [dataItemList]="element.dataItemList"></tbody>
-      <ng-container *ngIf="element.extraFieldsEnabled">
-        <tr>
-          <td>
-            ExtraFieldsEnabled
-          </td>
-        </tr>
-      </ng-container>
-    </table>
+<div class="card z-depth-3 mb-4 mt-4" style="width: 100%">
+  <div class="card-header">
+    <h5>Case name</h5>
   </div>
-</section>
-<ng-container *ngIf="element.elementList">
-  <case-edit-element [element]="elem" *ngFor="let elem of element.elementList"></case-edit-element>
-</ng-container>
+  <div class="card-body">
+    <app-case-edit-switch></app-case-edit-switch>
+  </div>
+
+
+</div>
+
+

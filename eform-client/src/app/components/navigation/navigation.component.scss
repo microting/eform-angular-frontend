@@ -1,0 +1,36 @@
+@import "../../../scss/utilities/colors";
+
+.navbar-bg {
+  background-color: $eform-gray;
+  color: white;
+}
+
+.nav-item {
+  & a {
+    padding: 0.5rem 0.8rem !important;
+  }
+}
+
+.dropdown-item a {
+  color: $eform-red-dark;
+}
+
+.dropdown-menu {
+  padding-top: 0;
+}
+
+.nav-item a {
+  color: white !important;
+  background-color: $eform-gray;
+  &.active {
+    background-color: $eform-red;
+  }
+  &:hover {
+    color: $eform-gray-light !important;
+  }
+}
+
+.outbounds-fix {
+  left: auto;
+  right: 0;
+}

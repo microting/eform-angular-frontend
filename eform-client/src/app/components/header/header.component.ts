@@ -1,21 +1,30 @@
-import {Component, OnInit} from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
-import {LocaleService, AppSettingsService, UserSettingsService} from 'app/services';
-import {HeaderSettingsModel} from 'app/models/settings/header-settings.model';
+import { Component, OnInit } from '@angular/core';
+import {EventBrokerService} from 'src/app/common/helpers';
+import {HeaderSettingsModel} from 'src/app/common/models/settings';
+import {AppSettingsService} from 'src/app/common/services/app-settings';
 
 @Component({
-  selector: 'eform-header',
+  selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
   headerSettingsModel: HeaderSettingsModel = new HeaderSettingsModel;
   logoImage: any;
 
-  constructor(private settingsService: AppSettingsService) {
+  private brokerListener: any;
+  constructor(private eventBrokerService: EventBrokerService, private settingsService: AppSettingsService) {
+    this.brokerListener = eventBrokerService.listen<void>('get-header-settings',
+      () => {
+        this.getSettings();
+      });
   }
 
   ngOnInit() {
+    this.getSettings();
+  }
+
+  getSettings() {
     this.settingsService.connectionStringExist().subscribe((result) => {
       if (result && result.success === true) {
         this.settingsService.getHeaderSettings().subscribe((data => {
@@ -37,7 +46,6 @@ export class HeaderComponent implements OnInit {
         this.headerSettingsModel.secondaryText = 'No more paper-forms and back-office data entry';
       }
     });
-
   }
 
 }

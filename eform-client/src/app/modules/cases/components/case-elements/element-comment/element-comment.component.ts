@@ -1,25 +1,13 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {CaseFieldValue} from 'app/models';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'element-comment',
   templateUrl: './element-comment.component.html',
-  styleUrls: ['./element-comment.component.css']
+  styleUrls: ['./element-comment.component.scss']
 })
 export class ElementCommentComponent implements OnInit {
-  fieldValueObj: CaseFieldValue = new CaseFieldValue();
 
-  @Input()
-  get fieldValue() {
-    return this.fieldValueObj;
-  }
-
-  set fieldValue(val) {
-    this.fieldValueObj = val;
-  }
-
-  constructor() {
-  }
+  constructor() { }
 
   ngOnInit() {
   }

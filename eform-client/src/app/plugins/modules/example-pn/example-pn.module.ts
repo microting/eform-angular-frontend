@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
-import {ExamplePnMainService} from './services';
+// import {ExamplePnMainService} from './services';
 import {ExamplePnPageComponent} from './components';
 import {ExamplePnRoutingModule} from './example-pn.routing.module';
 
@@ -12,6 +12,6 @@ import {ExamplePnRoutingModule} from './example-pn.routing.module';
     TranslateModule
   ],
   declarations: [ExamplePnPageComponent],
-  providers: [ExamplePnMainService]
+  providers: []
 })
 export class ExamplePnModule { }

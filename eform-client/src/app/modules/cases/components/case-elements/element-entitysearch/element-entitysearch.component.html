@@ -1,5 +1,3 @@
-<ngx-select [items]="items"
-            (typed)="onSelectInputChanged($event)"
-            [formControl]="selectControl"
-            [(ngModel)]="fieldValueObj.microtingUuid"
-            [placeholder]="fieldValueObj.valueReadable">
+<ng-select
+  [placeholder]="'Column 1'"
+  [items]="['English', 'Danish']"></ng-select>

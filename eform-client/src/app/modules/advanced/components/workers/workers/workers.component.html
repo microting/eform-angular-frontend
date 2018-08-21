@@ -1,0 +1,70 @@
+<eform-page-subheader [title]="'Workers' | translate">
+  <div class="p-3">
+    <button
+      class="btn btn-success"
+      (click)="openCreateModal()">{{ 'Create Worker' | translate }}</button>
+  </div>
+</eform-page-subheader>
+
+<!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
+<div class="container-fluid">
+  <div class="row p-1 table-responsive no-gutters">
+    <table class="table table-sm table-striped text-center">
+      <thead>
+      <tr>
+        <th scope="col">{{ 'Created at' | translate }}</th>
+        <th scope="col"> {{ 'Updated at' | translate }}</th>
+        <th scope="col">{{ 'First Name' | translate }}</th>
+        <th scope="col">{{ 'Last Name' | translate }}</th>
+        <th scope="col"> Microting UID</th>
+        <th scope="col">{{ 'Actions' | translate }}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let workerDto of workersDto">
+        <td scope="row">{{workerDto.createdAt | date:'dd.MM.y HH:mm:ss'}}</td>
+        <td>{{workerDto.updatedAt | date:'dd.MM.y HH:mm:ss'}}</td>
+        <td>{{workerDto.firstName}}</td>
+        <td>
+          {{workerDto.lastName}}
+        </td>
+        <td>
+          {{workerDto.workerUId}}
+        </td>
+        <td>
+          <div class="d-flex flex-row justify-content-center">
+            <button class="btn btn-success btn-icon mb-2 " mdbTooltip="{{'Edit Worker' | translate}}"
+                    (click)="openEditModal(workerDto)">
+              <i class="material-icons">
+                edit
+              </i>
+            </button>
+            <button
+              class="btn btn-danger btn-icon mb-2 "
+              mdbTooltip="{{'Delete Worker' | translate}}"
+              (click)="openDeleteModal(workerDto)">
+              <i class="material-icons">
+                delete_forever
+              </i>
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>
+
+<app-worker-create
+  (onWorkerCreated)="loadAllWorkers()"
+  #modalWorkerCreate></app-worker-create>
+<app-worker-edit
+  (onWorkerEdited)="loadAllWorkers()"
+  [selectedWorkerDto]="selectedWorkerDto"
+  #modalWorkerEdit></app-worker-edit>
+<app-worker-delete
+  (onWorkerDeleted)="loadAllWorkers()"
+  [selectedWorkerDto]="selectedWorkerDto"
+  #modalWorkerDelete></app-worker-delete>
