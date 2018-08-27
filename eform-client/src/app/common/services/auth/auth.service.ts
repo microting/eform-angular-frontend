@@ -46,7 +46,6 @@ export class AuthService extends BaseService {
     if (loginInfo.code) {
       body = body.append('code', loginInfo.code);
     }
-    debugger;
     return this.postUrlEncoded(AuthMethods.Login, body).pipe(map((result) => {
       return result;
     }));
@@ -94,10 +93,6 @@ export class AuthService extends BaseService {
     return this.post(AuthMethods.ChangePassword, model).pipe(map((result) => {
       return result;
     }));
-  }
-
-  logout(): Observable<any> {
-    return this.get(AuthMethods.Logout);
   }
 
   twoFactorAuthInfo(): Observable<OperationDataResult<boolean>> {

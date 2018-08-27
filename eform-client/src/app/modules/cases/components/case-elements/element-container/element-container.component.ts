@@ -1,15 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {CaseDataItem} from 'src/app/common/models/cases';
 
 @Component({
   selector: 'element-container',
   templateUrl: './element-container.component.html',
   styleUrls: ['./element-container.component.scss']
 })
-export class ElementContainerComponent implements OnInit {
+export class ElementContainerComponent  {
+  dataItemList: Array<CaseDataItem> = [];
+  @Input() dataItemLabel: string;
+  @Input()
+  get fieldValue() {
+    return this.dataItemList;
+  }
+  set fieldValue(val) {
+    this.dataItemList = val;
+  }
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor() {
   }
 
 }

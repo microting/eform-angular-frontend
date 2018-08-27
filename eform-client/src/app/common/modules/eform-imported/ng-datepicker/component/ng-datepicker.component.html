@@ -1,11 +1,14 @@
 <div class="ngx-datepicker-container">
   <div class="md-form">
-    <i class="material-icons prefix" (click)="toggle()">
+    <i class="material-icons prefix text-black-50" (click)="toggle()">
       date_range
     </i>
     <input mdbInputDirective type="text" *ngIf="!headless" class="form-control"
            [(ngModel)]="displayValue" readonly [placeholder]="placeholder"
            [ngClass]="addClass" [ngStyle]="addStyle" [id]="fieldId" [disabled]="disabled" (click)="toggle()"/>
+    <label style="
+    font-size: 13px;
+    margin-top: -23px;" for="{{fieldId}}" *ngIf="placeholder && innerValue">{{placeholder}}</label>
   </div>
 
   <ng-content></ng-content>

@@ -1,7 +1,12 @@
+@import "../utilities/colors";
+$highlight-color: $eform-gray;
 
-$highlight-color: #444444;
+.ng-select-wrapper {
+  margin-top: 11px;
+}
+
 .ng-select {
-  padding-bottom: 1.5em;
+  padding-bottom: 1.25em;
   &.ng-select-disabled {
     .ng-select-container {
       &:after {
@@ -53,9 +58,9 @@ $highlight-color: #444444;
   }
   .ng-select-container {
     align-items: baseline;
-    min-height: 60px;
+    min-height: 51.5px;
     &:after {
-      border-bottom: 0.7px solid rgba(0, 0, 0, .42);
+      border-bottom: 1px solid rgba(0, 0, 0, .20);
       content: '';
       width: 100%;
       bottom: 0;

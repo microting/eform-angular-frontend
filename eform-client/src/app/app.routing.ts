@@ -45,12 +45,11 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
         loadChildren: './modules/account-management/account-management.module#AccountManagementModule'
       },
-      // {
-      //   path: 'plugins',
-      //   canActivate: [AuthGuard],
-      //   loadChildren: './plugins/plugins.module#PluginsModule',
-      //   data: { preload: true }
-      // },
+      {
+        path: 'plugins',
+        canActivate: [AuthGuard],
+        loadChildren: './plugins/plugins.module#PluginsModule'
+      },
     ]
   },
   {

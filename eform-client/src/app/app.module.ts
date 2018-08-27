@@ -2,7 +2,10 @@ import {HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {GalleryModule} from '@ngx-gallery/core';
+import {GallerizeModule} from '@ngx-gallery/gallerize';
 import {TranslateModule} from '@ngx-translate/core';
+import { LightboxModule } from  '@ngx-gallery/lightbox';
 import {DragulaModule} from 'ng2-dragula';
 import {ToastrModule} from 'ngx-toastr';
 
@@ -63,6 +66,9 @@ import {
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     DragulaModule.forRoot(),
+    GalleryModule.forRoot(),
+    LightboxModule.forRoot(),
+    GallerizeModule,
     // Modules
     PluginsModule
   ],

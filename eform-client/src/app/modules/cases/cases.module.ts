@@ -1,6 +1,9 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {NgSelectModule} from '@ng-select/ng-select';
+import {GalleryModule} from '@ngx-gallery/core';
+import {GallerizeModule} from '@ngx-gallery/gallerize';
+import {LightboxModule} from '@ngx-gallery/lightbox';
 import {TranslateModule} from '@ngx-translate/core';
 import {MDBBootstrapModule} from 'port/angular-bootstrap-md';
 import {EformImportedModule} from 'src/app/common/modules/eform-imported/eform-imported.module';
@@ -23,7 +26,9 @@ import {
   ElementSingleselectComponent,
   ElementTextComponent,
   RemoveCaseModalComponent,
-  ElementTimerComponent
+  ElementTimerComponent,
+  ElementPictureComponent,
+  ElementSignatureComponent
 } from './components';
 
 @NgModule({
@@ -34,7 +39,10 @@ import {
     CasesRoutingModule,
     CommonModule,
     NgSelectModule,
-    EformImportedModule
+    EformImportedModule,
+    GallerizeModule,
+    LightboxModule,
+    GalleryModule
   ],
   declarations: [
     CasesTableComponent,
@@ -55,7 +63,9 @@ import {
     ElementInfoboxComponent,
     ElementTimerComponent,
     RemoveCaseModalComponent,
-    ElementContainerComponent]
+    ElementContainerComponent,
+    ElementPictureComponent,
+    ElementSignatureComponent]
 })
 export class CasesModule {
 }

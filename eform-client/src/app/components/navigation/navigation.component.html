@@ -36,6 +36,7 @@
                     *ngFor="let subMenu of menu.submenus"
                     class="dropdown-item waves-light"
                     routerLink="{{subMenu.link}}"
+                    routerLinkActive="active"
                     id="{{subMenu.e2eId}}">
                     {{subMenu.name}}
                   </a>
@@ -45,27 +46,48 @@
           </ng-template>
         </ng-container>
       </ul>
+      <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <div mdbDropdown class="dropdown">
+                <a *ngIf="userMenu?.name"
+                  mdbDropdownToggle
+                  mdbWavesEffect
+                  class="nav-link dropdown-toggle waves-light"
+                   id="userDropdown">{{userMenu.name}}</a>
+                <div class="dropdown-menu outbounds-fix" *ngIf="userMenu?.submenus?.length">
+                  <a
+                    *ngFor="let subMenu of userMenu.submenus"
+                    id="{{subMenu.e2eId}}"
+                    class="dropdown-item waves-light"
+                    routerLink="{{subMenu.link}}"
+                    routerLinkActive="active">
+                    {{subMenu.name}}
+                  </a>
+                </div>
+              </div>
+            </li>
+      </ul>
     </div>
     <!--right menu-->
-    <div class="pull-right ml-auto">
-      <div mdbDropdown class="nav-item dropdown">
-        <a
-          mdbDropdownToggle
-          mdbWavesEffect
-          id="userDropdown"
-          class="nav-link dropdown-toggle waves-light" *ngIf="userMenu?.name">{{userMenu.name}}</a>
-        <!--dropdown-menu-right doesn't work at navbar, bootstrap bug?-->
-        <div class="dropdown-menu outbounds-fix" *ngIf="userMenu?.submenus?.length">
-          <a
-            *ngFor="let subMenu of userMenu.submenus"
-            id="{{subMenu.e2eId}}"
-            class="dropdown-item waves-light"
-            routerLink="{{subMenu.link}}"
-            routerLinkActive="active">
-            {{subMenu.name}}
-          </a>
-        </div>
-      </div>
-    </div>
+    <!--<div class="pull-right ml-auto">-->
+      <!--<div mdbDropdown class="nav-item dropdown">-->
+        <!--<a-->
+          <!--mdbDropdownToggle-->
+          <!--mdbWavesEffect-->
+          <!--id="userDropdown"-->
+          <!--class="nav-link dropdown-toggle waves-light" *ngIf="userMenu?.name">{{userMenu.name}}</a>-->
+        <!--&lt;!&ndash;dropdown-menu-right doesn't work at navbar, bootstrap bug?&ndash;&gt;-->
+        <!--<div class="dropdown-menu outbounds-fix" *ngIf="userMenu?.submenus?.length">-->
+          <!--<a-->
+            <!--*ngFor="let subMenu of userMenu.submenus"-->
+            <!--id="{{subMenu.e2eId}}"-->
+            <!--class="dropdown-item waves-light"-->
+            <!--routerLink="{{subMenu.link}}"-->
+            <!--routerLinkActive="active">-->
+            <!--{{subMenu.name}}-->
+          <!--</a>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
   </nav>
 </div>

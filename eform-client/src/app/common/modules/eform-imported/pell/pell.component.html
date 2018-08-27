@@ -1,8 +1,1 @@
-<div #pell>
-  <div [class]="actionBarClass">
-    <button *ngFor="let action of actions" [class]="actionButtonClass" [title]="action.title" 
-    (click)="action.result()" [innerHTML]="action.icon">
-    </button>
-  </div>
-  <div contenteditable="true" [class]="contentClass" (input)="onInput($event)"></div>
-</div>
+<div #wysiwyg></div>

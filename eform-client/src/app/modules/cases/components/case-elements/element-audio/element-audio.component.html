@@ -1,11 +1,11 @@
-<!--<div *ngFor="let fieldValueObj of fieldValueObjects" style="margin-bottom: 10px;">-->
+<div *ngFor="let fieldValueObj of fieldValueObjects" style="margin-bottom: 10px;">
   <audio controls preload="auto"
-         src="/api/audio/eform-audio?fileName=">
+         *ngIf="fieldValueObj.uploadedDataObj && fieldValueObj.uploadedDataObj.fileName"
+         src="/api/audio/eform-audio?fileName={{fieldValueObj.uploadedDataObj.fileName}}">
     This text displays if the audio tag isn't supported.
   </audio>
-  <!--<trumbowyg-editor [(content)]="fieldValueObj.value"></trumbowyg-editor>-->
-<!--</div>-->
-
+  <pell-editor [(ngModel)]="fieldValueObj.value"></pell-editor>
+</div>
 
 
 

@@ -79,16 +79,16 @@ export class EformsPageComponent implements OnInit {
     this.modalRemoveEform.show(templateDto);
   }
 
-  uploadZipFile() {
-    this.modalUploadZip.show();
+  uploadZipFile(templateDto: TemplateDto) {
+    this.modalUploadZip.show(templateDto);
   }
 
-  downloadXML() {
-
-  }
-
-  downloadCSV() {
-
+  downloadItem(itemName: string, templateId: number) {
+    if (itemName == 'XML') {
+      window.open('/api/template-files/download-eform-xml/' + templateId, '_blank');
+    } else {
+      window.open('/api/template-files/csv/' + templateId, '_blank');
+    }
   }
 
   openPairingModal(templateDto: TemplateDto) {

@@ -1,19 +1,47 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {CaseFieldValue} from 'src/app/common/models/cases';
 
 @Component({
   selector: 'element-checkbox',
   templateUrl: './element-checkbox.component.html',
   styleUrls: ['./element-checkbox.component.scss']
 })
-export class ElementCheckboxComponent implements OnInit {
-  test = false;
-  constructor() { }
+export class ElementCheckboxComponent {
+  fieldValueObj: CaseFieldValue = new CaseFieldValue();
+  isChecked: boolean;
 
-  ngOnInit() {
+  @Input()
+  get fieldValue() {
+    return this.fieldValueObj;
   }
 
-  checked(e: any) {
-    this.test = !this.test;
+  set fieldValue(val) {
+    this.fieldValueObj = val;
+    if (val) {
+      if (val.value == 'checked' || val.value == '1') {
+        this.isChecked = true;
+      } else {
+        this.isChecked = false;
+      }
+    } else {
+      this.isChecked = false;
+    }
+  }
+
+  constructor() {
+  }
+
+  checkBoxChanged(e: any) {
+    if (e.target && e.target.checked) {
+      this.isChecked = true;
+      this.fieldValueObj.value = '1';
+    } else if (e.target && !e.target.checked) {
+      this.isChecked = false;
+      this.fieldValueObj.value = '0';
+    } else {
+      return;
+    }
+    this.fieldValue = this.fieldValueObj;
   }
 
 }

@@ -1,3 +1,13 @@
-<p>
-  element-container works!
-</p>
+<div class="card z-depth-3 mb-4 mt-4" style="width: 100%">
+
+  <div class="card-header" style="cursor: pointer" (click)="collapse.toggle()">
+    <h6>{{dataItemLabel}}</h6>
+  </div>
+
+  <div mdbCollapse #collapse="bs-collapse">
+    <div class="card-body">
+      <app-case-edit-switch [dataItemList]="dataItemList"></app-case-edit-switch>
+    </div>
+  </div>
+
+</div>

@@ -27,6 +27,9 @@ export class EformCreateModalComponent implements OnInit {
 
   createTemplate() {
     this.spinnerStatus = true;
+    if (!this.eFormCreateModel.newTag) {
+      delete this.eFormCreateModel.newTag;
+    }
     this.eFormService.createSingle(this.eFormCreateModel).subscribe((operation => {
       if (operation && operation.success) {
         this.onEformCreated.emit();

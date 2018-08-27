@@ -2,6 +2,7 @@
   <div class="p-3">
     <button
       class="btn btn-success"
+      id="applicationSettingsSaveBtn"
       [disabled]="!settingsForm.form.valid"
       (click)="updateAdminSettings()"
       mdbTooltip="Save settings">{{ 'Save' | translate }}
@@ -15,6 +16,7 @@
       <div class="col-md-6 col-xs-12 control-block">
         <eform-page-subheader [title]="'Login Page' | translate" [heandingSizeRem]="1">
           <button class="btn btn-neutral btn-icon"
+                  id="loginPageReset"
                   (click)="resetLoginPageSettings()"
                   mdbTooltip="{{ 'Reset' | translate }}" id="loginPageReset">
             <i class="material-icons">
@@ -34,6 +36,7 @@
             <div class="input-group-btn">
               <button
                 class="btn btn-icon waves-light m-0"
+                id="loginPageMainTextVisibilityToggler"
                 [class.btn-success]="adminSettingsModel.loginPageSettingsModel.mainTextVisible"
                 [class.btn-danger]="!adminSettingsModel.loginPageSettingsModel.mainTextVisible"
                 (click)="adminSettingsModel.loginPageSettingsModel.mainTextVisible
@@ -55,6 +58,7 @@
             <label>{{ 'Secondary Text' | translate }}</label>
             <div class="input-group-btn">
               <button
+                id="loginPageSecondaryTextVisibilityToggler"
                 class="btn btn-icon waves-light m-0"
                 [class.btn-success]="adminSettingsModel.loginPageSettingsModel.secondaryTextVisible"
                 [class.btn-danger]="!adminSettingsModel.loginPageSettingsModel.secondaryTextVisible"
@@ -82,7 +86,7 @@
               <p>{{ 'Proportions' | translate }} - 1:1.5</p>
             </div>
             <div class="align-self-center align-self-end mb-3">
-              <button class="btn btn-primary" *ngIf="loginPageImageUploader?.queue?.length == 0"
+              <button class="btn btn-primary" *ngIf="loginPageImageUploader?.queue?.length == 0" id="loginPageImageUploadBtn"
                       (click)="loginPagefileInput.click()">{{'Upload' | translate}}</button>
               <button class="btn btn-warning" *ngIf="loginPageImageUploader?.queue?.length > 0"
                       (click)="loginPagefileInput.click()">{{'Pending' | translate}}</button>
@@ -92,6 +96,7 @@
                      id="loginPageFileInput"/>
               <button
                 class="btn btn-icon waves-light m-0"
+                id="loginPageImageVisibilityToggler"
                 [class.btn-success]="adminSettingsModel.loginPageSettingsModel.imageLinkVisible"
                 [class.btn-danger]="!adminSettingsModel.loginPageSettingsModel.imageLinkVisible"
                 (click)="adminSettingsModel.loginPageSettingsModel.imageLinkVisible
@@ -127,6 +132,7 @@
             <label for="headerSettingsMainText">{{ 'Main Text' | translate }}</label>
             <div class="input-group-btn">
               <button
+                id="siteHeaderMainTextToggler"
                 class="btn btn-icon waves-light m-0"
                 [class.btn-success]="adminSettingsModel.headerSettingsModel.mainTextVisible"
                 [class.btn-danger]="!adminSettingsModel.headerSettingsModel.mainTextVisible"
@@ -148,6 +154,7 @@
             <label for="headerSettingsSecondaryText">{{ 'Secondary Text' | translate }}</label>
             <div class="input-group-btn">
               <button
+                id="siteHeaderSecondaryTextToggler"
                 class="btn btn-icon waves-light m-0"
                 [class.btn-success]="adminSettingsModel.headerSettingsModel.secondaryTextVisible"
                 [class.btn-danger]="!adminSettingsModel.headerSettingsModel.secondaryTextVisible"
@@ -174,7 +181,7 @@
               <p>{{ 'Proportions' | translate }} - 2:1</p>
             </div>
             <div class="align-self-center align-self-end">
-              <button class="btn btn-primary" *ngIf="headerImageUploader?.queue?.length == 0"
+              <button class="btn btn-primary" *ngIf="headerImageUploader?.queue?.length == 0" id="siteHeaderUploadBtn"
                       (click)="headerImageUploaderInput.click()">{{'Upload' | translate}}</button>
               <button class="btn btn-warning" *ngIf="headerImageUploader?.queue?.length > 0"
                       (click)="headerImageUploaderInput.click()">{{'Pending' | translate}}</button>
@@ -183,6 +190,7 @@
                      id="siteHeaderFileInput"/>
               <button
                 class="btn btn-icon waves-light m-0"
+                id="siteHeaderImageVisibilityToggler"
                 [class.btn-success]="adminSettingsModel.headerSettingsModel.imageLinkVisible"
                 [class.btn-danger]="!adminSettingsModel.headerSettingsModel.imageLinkVisible"
                 (click)="adminSettingsModel.headerSettingsModel.imageLinkVisible

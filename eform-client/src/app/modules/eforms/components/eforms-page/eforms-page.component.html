@@ -19,7 +19,7 @@
         <label for="labelInput">{{'Label' | translate}}</label>
       </div>
     </div>
-    <div class="col-md-4 p-1">
+    <div class="col-md-4 ng-select-wrapper">
       <ng-select
         class="custom"
         dropdownPosition="'bottom'"
@@ -132,14 +132,14 @@
           </div>
           <div class="d-flex flex-row justify-content-center">
             <button class="btn btn-accent text-black-50 btn-icon mb-2" *ngIf="templateDto.hasCases"
-                    (click)="downloadCSV()"
-                    mdbTooltip="{{ 'Download CSV' | translate }}">
+                    (click)="downloadItem('CSV', templateDto.id)"
+                    mdbTooltip="{{ 'Download' | translate }} CSV">
               <i class="material-icons">
                 insert_drive_file
               </i>
             </button>
             <button class="btn btn-accent text-black-50 btn-icon mb-2" *ngIf="templateDto.hasCases"
-                    (click)="downloadXML()"
+                    (click)="downloadItem('XML', templateDto.id)"
                     mdbTooltip="{{ 'Download' | translate }} XML">
               <i class="material-icons">
                 code

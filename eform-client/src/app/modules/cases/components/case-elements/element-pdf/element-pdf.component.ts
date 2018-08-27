@@ -1,15 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {CaseDataItem} from 'src/app/common/models/cases';
 
 @Component({
   selector: 'element-pdf',
   templateUrl: './element-pdf.component.html',
   styleUrls: ['./element-pdf.component.scss']
 })
-export class ElementPdfComponent implements OnInit {
+export class ElementPdfComponent {
+  dataItemObj: CaseDataItem = new CaseDataItem();
 
-  constructor() { }
-
-  ngOnInit() {
+  @Input()
+  get dataItem() {
+    return this.dataItem;
   }
 
+  set dataItem(val) {
+    this.dataItemObj = val;
+  }
+
+  constructor() {
+  }
 }

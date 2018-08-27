@@ -9,7 +9,8 @@ import {AuthService} from 'src/app/common/services/auth';
 })
 export class SignOutComponent implements OnInit, AfterViewChecked {
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) {
+  }
 
   ngOnInit() {
 
@@ -17,10 +18,8 @@ export class SignOutComponent implements OnInit, AfterViewChecked {
 
 
   signOut() {
-    this.authService.logout().subscribe(() => {
-      localStorage.removeItem('currentAuth');
-      this.router.navigate(['/auth']).then();
-    });
+    localStorage.removeItem('currentAuth');
+    this.router.navigate(['/auth']).then();
   }
 
   ngAfterViewChecked(): void {

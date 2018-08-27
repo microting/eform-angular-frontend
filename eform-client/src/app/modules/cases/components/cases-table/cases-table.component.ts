@@ -1,6 +1,6 @@
 import {ActivatedRoute, Router} from '@angular/router';
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {CaseListModel, CasesRequestModel} from 'src/app/common/models/cases';
+import {CaseListModel, CaseModel, CasesRequestModel} from 'src/app/common/models/cases';
 import {TemplateDto} from 'src/app/common/models/dto';
 import {CasesService} from 'src/app/common/services/cases';
 import {EFormService} from 'src/app/common/services/eform';
@@ -31,8 +31,13 @@ export class CasesTableComponent implements OnInit {
     this.loadTemplateData();
   }
 
-  onDeleteClicked() {
-    this.modalRemoveCase.show();
+  onLabelInputChanged(label: string) {
+    this.casesRequestModel.nameFilter = label;
+    this.loadAllCases();
+  }
+
+  onDeleteClicked(caseModel: CaseModel) {
+    this.modalRemoveCase.show(caseModel);
   }
 
   sortByColumn(columnName: string, sortedByDsc: boolean) {
@@ -60,5 +65,10 @@ export class CasesTableComponent implements OnInit {
       }
       this.spinnerStatus = false;
     });
+  }
+
+  downloadPDF(caseId: number) {
+    window.open('/api/template-files/download-case-pdf/' +
+      this.currentTemplate.id + '?caseId=' + caseId, '_blank');
   }
 }
