@@ -11,7 +11,7 @@ import {
 } from 'src/app/common/services/advanced';
 import {AppSettingsService} from 'src/app/common/services/app-settings';
 import {AuthService, LocaleService, UserSettingsService} from 'src/app/common/services/auth';
-import {CasesService} from 'src/app/common/services/cases';
+import {CasesService, ImageService} from 'src/app/common/services/cases';
 import {DeviceUserService} from 'src/app/common/services/device-users';
 import {EFormService, EFormTagService} from 'src/app/common/services/eform';
 import {AdminService} from 'src/app/common/services/users';
@@ -37,6 +37,7 @@ export let providers = [
   EFormService,
   EFormTagService,
   CasesService,
+  ImageService,
   // Helpers
   EventBrokerService,
   DatePipe,

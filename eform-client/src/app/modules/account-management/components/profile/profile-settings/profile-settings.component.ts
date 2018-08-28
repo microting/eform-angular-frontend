@@ -63,10 +63,8 @@ export class ProfileSettingsComponent implements OnInit {
     this.spinnerStatus = true;
     this.authService.updateGoogleAuthenticatorInfo(this.googleAuthInfoModel).subscribe((data) => {
       if (data.success) {
-        this.authService.logout().subscribe(() => {
-          localStorage.removeItem('currentAuth');
-          this.router.navigate(['/login']).then();
-        });
+        localStorage.removeItem('currentAuth');
+        this.router.navigate(['/login']).then();
       }
       this.spinnerStatus = false;
     });

@@ -38,7 +38,6 @@ export class EformEditParingModalComponent implements OnInit {
   }
 
   show(templateDto: TemplateDto) {
-    debugger;
     this.selectedTemplateDto = templateDto;
     this.deployModel = new DeployModel();
     this.deployViewModel = new DeployModel();
@@ -53,7 +52,7 @@ export class EformEditParingModalComponent implements OnInit {
       deployObject.isChecked = true;
       this.deployModel.deployCheckboxes.push(deployObject);
     } else {
-      this.deployModel.deployCheckboxes = this.deployModel.deployCheckboxes.filter(x => x.id != e.target.value);
+      this.deployModel.deployCheckboxes = this.deployModel.deployCheckboxes.filter(x => x.id != deployId);
     }
   }
 
@@ -72,13 +71,13 @@ export class EformEditParingModalComponent implements OnInit {
       deployObject.id = siteDto.siteUId;
       deployObject.isChecked = this.matchFound == true;
       this.matchFound = false;
-
       this.deployViewModel.deployCheckboxes.push(deployObject);
     }
   }
 
   submitDeployment() {
     this.spinnerStatus = true;
+    this.deployModel.id = this.selectedTemplateDto.id;
     this.eFormService.deploySingle(this.deployModel).subscribe(operation => {
       if (operation && operation.success) {
         this.frame.hide();

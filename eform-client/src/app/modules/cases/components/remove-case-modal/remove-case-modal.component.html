@@ -2,52 +2,53 @@
   <div class="modal-dialog modal-md">
     <div class="modal-content">
       <div class="modal-header">
-        <h3>{{'Are you sure you want to delete this case?' | translate}}</h3>
+        <h3>{{'Are you sure you want to delete this case' | translate}}?</h3>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-6">
-              #
+              <h6>ID</h6>
             </div>
             <div class="col-md-6">
-              1
+              <h6><strong>{{selectedCaseModel.id}}</strong></h6>
             </div>
           </div>
 
           <div class="row">
             <div class="col-md-6">
-              Accessible at
+              <h6>{{'Accessible at' | translate}}</h6>
             </div>
             <div class="col-md-6">
-              05.07.2018 13:31:23
+              <h6><strong>{{selectedCaseModel.createdAt | date:'dd.MM.y HH:mm:ss'}}</strong></h6>
             </div>
           </div>
 
           <div class="row">
             <div class="col-md-6">
-              Finished at
+              <h6>{{'Finished at' | translate}}</h6>
             </div>
             <div class="col-md-6">
-              05.07.2018 14:17:29
+              <h6><strong>{{selectedCaseModel.doneAt | date:'dd.MM.y HH:mm:ss'}}</strong></h6>
             </div>
           </div>
 
           <div class="row">
             <div class="col-md-6">
-              Done by
+              <h6>{{'Done by' | translate}}</h6>
             </div>
             <div class="col-md-6">
-              Jeff Clency
+              <h6><strong>{{selectedCaseModel.workerName}}</strong></h6>
             </div>
           </div>
-
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-danger">OK</button>
-        <button class="btn btn-accent text-black-50" (click)="frame.hide()">Close</button>
+        <button class="btn btn-danger" (click)="submitCaseDelete()">{{'Delete' | translate}}</button>
+        <button class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Cancel' | translate}}</button>
       </div>
     </div>
   </div>
 </div>
+
+<eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>

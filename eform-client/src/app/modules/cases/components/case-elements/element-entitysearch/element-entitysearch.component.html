@@ -1,3 +1,7 @@
 <ng-select
-  [placeholder]="'Column 1'"
-  [items]="['English', 'Danish']"></ng-select>
+  bindValue="id"
+  bindLabel="text"
+  [placeholder]="fieldValueObj.valueReadable"
+  [typeahead]="typeahead"
+  (change)="onSelectedChanged($event)"
+  [items]="items"></ng-select>

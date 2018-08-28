@@ -8,12 +8,21 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-xs-12 col-md-12">
-              <input class="input-wrapper" type="file">
-              <div>
-                <div>
+              <div class="d-flex">
+                <div class="mr-2">
+                  <button class="btn btn-primary" *ngIf="zipFileUploader?.queue?.length == 0"
+                          (click)="zipInput.click()">{{'Upload' | translate}}</button>
+                  <button class="btn btn-warning" *ngIf="zipFileUploader?.queue?.length > 0"
+                          (click)="zipInput.click()">{{'Pending' | translate}}</button>
+                  <input class="input-invisible"
+                         type="file" ng2FileSelect [uploader]="zipFileUploader" #zipInput
+                         id="zipInput"/>
+                </div>
+                <div style="width: 100%">
                   {{'Uploading progress:' | translate }}
-                  <div class="progress" style="">
-                    <div class="progress-bar" role="progressbar" style="width: 0%;"></div>
+                  <div class="progress">
+                    <div class="progress-bar" role="progressbar"
+                         [ngStyle]="{ 'width': zipFileUploader.progress + '%' }"></div>
                   </div>
                 </div>
               </div>
@@ -22,8 +31,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-success">OK</button>
-        <button class="btn btn-accent text-black-50" (click)="frame.hide()">Close</button>
+        <button class="btn btn-danger" (click)="uploadTemplateZIP()">{{'Upload' | translate}}</button>
+        <button class="btn btn-accent text-black-50" (click)="hideZipModal()">{{'Close' | translate}}</button>
       </div>
     </div>
   </div>

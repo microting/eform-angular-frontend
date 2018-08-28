@@ -41,7 +41,6 @@ export class GoogleAuthenticatorComponent implements OnInit{
 
   submitGoogleAuthForm() {
     this.spinnerStatus = true;
-    debugger;
     this.loginRequestModel.code = this.code.value;
     this.authService.login(this.loginRequestModel)
       .subscribe((result: AuthResponseModel) => {
@@ -51,7 +50,7 @@ export class GoogleAuthenticatorComponent implements OnInit{
         },
         (error) => {
           this.spinnerStatus = false;
-          this.toastrService.error(error.error);
+          this.toastrService.error(error.error.error);
         },
       );
   }

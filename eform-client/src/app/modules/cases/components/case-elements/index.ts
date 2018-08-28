@@ -12,3 +12,5 @@ export * from './element-pdf/element-pdf.component';
 export * from './element-singleselect/element-singleselect.component';
 export * from './element-text/element-text.component';
 export * from './element-timer/element-timer.component';
+export * from './element-picture/element-picture.component';
+export * from './element-signature/element-signature.component';

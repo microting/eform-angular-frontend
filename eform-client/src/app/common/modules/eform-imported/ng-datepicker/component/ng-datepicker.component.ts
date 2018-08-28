@@ -130,7 +130,8 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
   }
 
   set value(val: Date) {
-    this.innerValue = val;
+    val = new Date(val.setHours(val.getHours() + 4));
+    this.innerValue =  val;
     this.onChangeCallback(this.innerValue);
   }
 
@@ -277,7 +278,6 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
         isSelectable: this.isDateSelectable(date)
       });
     }
-
     if (this.innerValue) {
       this.displayValue = format(this.innerValue, this.displayFormat, this.locale);
       this.barTitle = format(start, this.barTitleFormat, this.locale);
@@ -339,6 +339,9 @@ export class NgDatepickerComponent implements ControlValueAccessor, OnInit, OnCh
       this.init();
       this.displayValue = format(this.innerValue, this.displayFormat, this.locale);
       this.barTitle = format(startOfMonth(val), this.barTitleFormat, this.locale);
+    } else {
+      this.innerValue = null;
+      this.displayValue = null;
     }
   }
 

@@ -164,20 +164,22 @@
         <td>
           <div class="d-flex flex-row justify-content-center">
             <button class="btn btn-success btn-icon mb-2"
-                    [routerLink]="['/cases/edit/1/1']"
+                    [routerLink]="['/cases/edit/' + caseModel.id + '/' + currentTemplate.id]"
                     mdbTooltip="{{ 'Edit Case' | translate }}">
               <i class="material-icons">
                 edit
               </i>
             </button>
-            <button class="btn btn-success btn-icon mb-2 " mdbTooltip="{{ 'Download PDF' | translate }}">
+            <button class="btn btn-success btn-icon mb-2"
+                    (click)="downloadPDF(caseModel.id)"
+                    mdbTooltip="{{ 'Download PDF' | translate }}">
               <i class="material-icons">
                 picture_as_pdf
               </i>
             </button>
             <button class="btn btn-danger btn-icon mb-2 "
                     mdbTooltip="{{ 'Delete Case' | translate }}"
-                    (click)="onDeleteClicked()">
+                    (click)="onDeleteClicked(caseModel)">
               <i class="material-icons" >
                 delete_forever
               </i>
@@ -188,9 +190,8 @@
       </tbody>
     </table>
   </div>
-
-  <!--pagination(if required)-->
-  <eform-pagination></eform-pagination>
 </div>
+
+<eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>
 
 <app-remove-case-modal #modalRemoveCase></app-remove-case-modal>

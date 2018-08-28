@@ -1,12 +1,64 @@
-<div class="card z-depth-3 mb-4 mt-4" style="width: 100%">
-  <div class="card-header">
-    <h5>Case name</h5>
+<section id="section{{element.id}}" *ngIf="element.dataItemList">
+  <div class="card z-depth-3 mb-4 mt-4" style="width: 100%">
+    <div class="card-header">
+      <h5>{{element.label}}</h5>
+    </div>
+    <div class="card-body">
+      <!--<div>-->
+        <!--<div *ngIf="element.approvalEnabled" (click)="element.status = 'approved'">-->
+          <!--<label class="md-radio block">-->
+            <!--<input type="radio" checked="{{element.status == 'approved'}}" value="approved" name="{{element.label}}{{element.id}}">-->
+            <!--<span class="md-radio&#45;&#45;fake"><span></span></span>-->
+            <!--<div>{{ 'Approved' | translate }}</div>-->
+          <!--</label>-->
+        <!--</div>-->
+        <!--<div *ngIf="(element.reviewEnabled) && (element.approvalEnabled)" (click)="element.status = 'review'">-->
+          <!--<label class="md-radio block">-->
+            <!--<input type="radio" checked="{{element.status == 'review'}}" value="review" name="{{element.label}}{{element.id}}">-->
+            <!--<span class="md-radio&#45;&#45;fake"><span></span></span>-->
+            <!--<div>{{ 'Review' | translate }}</div>-->
+          <!--</label>-->
+        <!--</div>-->
+        <!--<div *ngIf="element.approvalEnabled" class="radio" (click)="element.status = 'not_approved'">-->
+          <!--<label class="md-radio block">-->
+            <!--<input type="radio" checked="{{element.status == 'not_approved'}}" value="not_approved"-->
+                   <!--name="{{element.label}}{{element.id}}">-->
+            <!--<span class="md-radio&#45;&#45;fake"><span></span></span>-->
+            <!--<div>{{ 'Not approved' | translate }}</div>-->
+          <!--</label>-->
+        <!--</div>-->
+      <!--</div>-->
+      <div>
+        <div *ngIf="element.approvalEnabled" (click)="element.status = 'approved'">
+          <label class="md-radio block">
+            <input type="radio" [(ngModel)]="element.status" checked="{{element.status == 'approved'}}" value="approved" name="{{element.label}}{{element.id}}">
+            <span class="md-radio--fake"><span></span></span>
+            <div>{{ 'Approved' | translate }}</div>
+          </label>
+        </div>
+        <div *ngIf="(element.reviewEnabled) && (element.approvalEnabled)" (click)="element.status = 'review'">
+          <label class="md-radio block">
+            <input type="radio" [(ngModel)]="element.status" checked="{{element.status == 'review'}}" value="review" name="{{element.label}}{{element.id}}">
+            <span class="md-radio--fake"><span></span></span>
+            <div>{{ 'Review' | translate }}</div>
+          </label>
+        </div>
+        <div *ngIf="element.approvalEnabled" class="radio" (click)="element.status = 'not_approved'">
+          <label class="md-radio block">
+            <input type="radio" [(ngModel)]="element.status" checked="{{element.status == 'not_approved'}}" value="not_approved"
+                   name="{{element.label}}{{element.id}}">
+            <span class="md-radio--fake"><span></span></span>
+            <div>{{ 'Not approved' | translate }}</div>
+          </label>
+        </div>
+      </div>
+      <app-case-edit-switch [dataItemList]="element.dataItemList"></app-case-edit-switch>
+      <div class="mt-1 mb-1" *ngIf="element.extraFieldsEnabled"> ExtraFieldsEnabled</div>
+    </div>
   </div>
-  <div class="card-body">
-    <app-case-edit-switch></app-case-edit-switch>
-  </div>
-
-
-</div>
+</section>
+<ng-container *ngIf="element.elementList">
+  <app-case-edit-element [element]="elem" *ngFor="let elem of element.elementList"></app-case-edit-element>
+</ng-container>
 
 

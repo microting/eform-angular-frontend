@@ -1,62 +1,63 @@
-<div class="card z-depth-2 mb-3" style="width: 100%">
-  <div class="card-header">
-    Test case element
-  </div>
-  <div class="card-body">
-    <ng-container>
-      <!--<div *ngSwitchCase="'Picture'">-->
-        <!--<element-picture [fieldValues]="dataItem.fieldValues"></element-picture>-->
-      <!--</div>-->
-      <ng-container *ngIf="false">
-        <element-checkbox></element-checkbox>
-      </ng-container>
-      <ng-container *ngIf="false">
-        <element-number></element-number>
-      </ng-container>
-      <ng-container *ngIf="false">
-        <element-comment></element-comment>
-      </ng-container>
-      <ng-container *ngIf="false">
-        <element-text></element-text>
-      </ng-container>
-      <ng-container *ngIf="false">
-        <element-date></element-date>
-      </ng-container>
-      <ng-container *ngIf="false">
-        <element-singleselect></element-singleselect>
-      </ng-container>
-      <ng-container *ngIf="false">
-        <element-multiselect></element-multiselect>
-      </ng-container>
-      <ng-container *ngIf="false">
-        <element-pdf></element-pdf>
-      </ng-container>
-      <ng-container *ngIf="false">
-        <element-infobox></element-infobox>
-      </ng-container>
-      <ng-container *ngIf="false">
-        <element-timer></element-timer>
-      </ng-container>
-      <!--<div *ngSwitchCase="'Signature'">-->
-        <!--<element-signature [fieldValues]="dataItem.fieldValues"></element-signature>-->
-      <!--</div>-->
-      <ng-container>
-        <element-container></element-container>
-      </ng-container>
-      <ng-container *ngIf="false">
-        <element-entitysearch></element-entitysearch>
-      </ng-container>
-      <ng-container *ngIf="false">
-        <element-entityselect></element-entityselect>
-      </ng-container>
-      <ng-container *ngIf="false">
-        <element-audio></element-audio>
-      </ng-container>
-      <!--<div *ngSwitchDefault></div>-->
-    </ng-container>
-  </div>
-
-
-</div>
-
+<ng-container *ngIf="dataItemList">
+  <ng-container *ngFor="let dataItem of dataItemList; let i = index">
+    <div class="card z-depth-2 mb-3" style="width: 100%" *ngIf="dataItem.fieldType != 'SaveButton'">
+      <div class="card-header" *ngIf="dataItem.fieldType != 'FieldContainer' && dataItem.fieldType != 'SaveButton'">
+        {{dataItem.label}}
+      </div>
+      <div class="card-body">
+        <ng-container [ngSwitch]="dataItem.fieldType">
+          <ng-container *ngSwitchCase="'Picture'">
+            <element-picture [fieldValues]="dataItem.fieldValues"></element-picture>
+          </ng-container>
+          <ng-container *ngSwitchCase="'CheckBox'">
+            <element-checkbox [(fieldValue)]="dataItem.fieldValues[0]"></element-checkbox>
+          </ng-container>
+          <ng-container *ngSwitchCase="'Number'">
+            <element-number [(fieldValue)]="dataItem.fieldValues[0]"></element-number>
+          </ng-container>
+          <ng-container *ngSwitchCase="'Comment'">
+            <element-comment [(fieldValue)]="dataItem.fieldValues[0]">></element-comment>
+          </ng-container>
+          <ng-container *ngSwitchCase="'Text'">
+            <element-text [(fieldValue)]="dataItem.fieldValues[0]"></element-text>
+          </ng-container>
+          <ng-container *ngSwitchCase="'Date'">
+            <element-date [(fieldValue)]="dataItem.fieldValues[0]"></element-date>
+          </ng-container>
+          <ng-container *ngSwitchCase="'SingleSelect'">
+            <element-singleselect [(fieldValue)]="dataItem.fieldValues[0]"></element-singleselect>
+          </ng-container>
+          <ng-container *ngSwitchCase="'MultiSelect'">
+            <element-multiselect [(fieldValue)]="dataItem.fieldValues[0]"></element-multiselect>
+          </ng-container>
+          <ng-container *ngSwitchCase="'ShowPdf'">
+            <element-pdf [dataItem]="dataItem"></element-pdf>
+          </ng-container>
+          <ng-container *ngSwitchCase="'None'">
+            <element-infobox [(fieldValue)]="dataItem.fieldValues[0]"></element-infobox>
+          </ng-container>
+          <ng-container *ngSwitchCase="'Timer'">
+            <element-timer [(fieldValue)]="dataItem.fieldValues[0]"></element-timer>
+          </ng-container>
+          <ng-container *ngSwitchCase="'Signature'">
+            <element-signature [fieldValues]="dataItem.fieldValues"></element-signature>
+          </ng-container>
+          <ng-container *ngSwitchCase="'FieldContainer'">
+            <element-container [(fieldValue)]="dataItem.dataItemList" [dataItemLabel]="dataItem.label"></element-container>
+          </ng-container>
+          <ng-container *ngSwitchCase="'EntitySearch'">
+            <element-entitysearch [(fieldValue)]="dataItem.fieldValues[0]" [entityGroupUid]="dataItem.entityGroupId"></element-entitysearch>
+          </ng-container>
+          <ng-container *ngSwitchCase="'EntitySelect'">
+            <element-entityselect [(fieldValue)]="dataItem.fieldValues[0]" [entityGroupUid]="dataItem.entityGroupId"></element-entityselect>
+          </ng-container>
+          <ng-container *ngSwitchCase="'Audio'">
+            <element-audio [(fieldValues)]="dataItem.fieldValues"></element-audio>
+          </ng-container>
+          <div *ngSwitchDefault></div>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
 

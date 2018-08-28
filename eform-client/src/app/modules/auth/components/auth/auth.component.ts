@@ -23,7 +23,6 @@ export class AuthComponent implements OnInit {
 
 
   ngOnInit() {
-    debugger;
     this.localeService.initLocale();
     this.spinnerStatus = true;
     this.settingsService.connectionStringExist().subscribe((result) => {

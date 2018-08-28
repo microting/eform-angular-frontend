@@ -42,7 +42,6 @@ export class EformColumnsModalComponent implements OnInit {
   }
 
   updateColumns() {
-    debugger;
     this.spinnerStatus = true;
     this.columnEditModel.templateId = this.selectedTemplateDto.id;
     this.eFormService.updateTemplateColumns(this.columnEditModel).subscribe((data => {

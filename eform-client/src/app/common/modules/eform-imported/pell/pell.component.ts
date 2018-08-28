@@ -1,25 +1,61 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
+import { ElementRef, Renderer2, ViewChild, ViewEncapsulation } from '@angular/core';
 import * as pell from './pell';
 
 
 @Component({
   selector: 'pell-editor',
-  templateUrl: './pell.component.html'
+  templateUrl: './pell.component.html',
+  encapsulation: ViewEncapsulation.None
 })
-export class PellComponent implements OnInit {
-  actions = Object.keys(pell.actions).map(action => pell.actions[action]);
-  actionBarClass = 'pell-actionbar';
-  actionButtonClass = 'pell-button';
-  contentClass = 'pell-content';
+export class PellComponent implements OnInit, AfterViewInit, OnChanges {
+  @Input() actions: Array<Object> = [];
+  @Input() value: String = '';
+  @Output() valueChange = new EventEmitter();
+  pell = pell;
+  html;
+  editor;
 
-  @Output()
-  onChange = new EventEmitter<string>()
-  constructor() { }
+  constructor(
+    private rd: Renderer2
+
+  ) { }
 
   ngOnInit() {
   }
 
-  onInput(event: any) {
-    this.onChange.emit(event.target.innerHTML);
+  @ViewChild('wysiwyg') wysiwyg: ElementRef;
+
+  ngAfterViewInit() {
+    this.wysiwygInit(this.wysiwyg.nativeElement, this.actions);
+    this.editor.content.innerHTML = this.value;
+  }
+
+  ngOnChanges(changes: any) {
+    try {
+      if (this.editor.content.innerHTML != this.value) {
+        this.editor.content.innerHTML = this.value;
+      }
+    } catch (err) {
+
+    }
+  }
+
+  wysiwygInit(elm, actions) {
+    this.editor = pell.init({
+      element: elm,
+      onChange: html => {
+        this.html = html;
+        this.valueChange.emit(this.html);
+      },
+      styleWithCSS: true,
+      actions: [
+        'bold',
+        'underline',
+        'italic',
+        'strikethrough',
+      ].concat(actions),
+      classes: {}
+    });
   }
 }

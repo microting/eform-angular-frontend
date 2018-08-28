@@ -1,4 +1,8 @@
 <div class="md-form md-form-case-elem">
-  <input mdbInputDirective type="text" id="textElement" name="textElement" class="form-control">
-  <label for="textElement">{{'Text' | translate}}</label>
+  <input mdbInputDirective
+         [mdbValidate]="false"
+         [(ngModel)]="fieldValueObj.value"
+         type="text" id="textElement{{fieldValueObj.fieldId}}"
+         name="textElement{{fieldValueObj.fieldId}}" class="form-control">
+  <label for="textElement{{fieldValueObj.fieldId}}">{{'Text' | translate}}</label>
 </div>

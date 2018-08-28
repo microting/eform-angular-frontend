@@ -10,13 +10,13 @@
   <div class="row">
     <div class="col-md-3">
       <div class="pt-3">
-        <label class="md-checkbox" (click)="checked($event)">
+        <label class="md-checkbox">
           <input name="isChecked"
                  id="isChecked"
-                 value="{{isChecked}}"
+                 value="{{isChecked}}" (click)="checked($event)"
                  [checked]="isChecked" type="checkbox" />
-          <label class="md-checkbox--fake"></label>
-          <div (click)="checked($event)">{{ 'Force users to use 2-f-auth' | translate }}</div>
+          <span class="md-checkbox--fake"></span>
+          <div>{{ 'Force users to use 2-f-auth' | translate }}</div>
         </label>
       </div>
     </div>
