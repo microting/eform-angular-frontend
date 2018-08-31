@@ -1,30 +1,26 @@
 import {ActivatedRoute, Router} from '@angular/router';
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {TemplateDto, CaseModel, CasesRequestModel, CaseListModel} from 'app/models';
-import {CasesService, NotifyService, EFormService} from 'app/services';
-import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
+import {CaseListModel, CaseModel, CasesRequestModel} from 'src/app/common/models/cases';
+import {TemplateDto} from 'src/app/common/models/dto';
+import {CasesService} from 'src/app/common/services/cases';
+import {EFormService} from 'src/app/common/services/eform';
 
 @Component({
   selector: 'app-cases-table',
-  templateUrl: './cases-table.component.html',
-  styleUrls: ['./cases-table.component.css']
+  templateUrl: './cases-table.component.html'
 })
 export class CasesTableComponent implements OnInit {
-  @ViewChild('deleteCaseModal')
-  deleteCaseModal: ModalComponent;
 
-  id: number;
-  caseListModel: CaseListModel = new CaseListModel();
+  @ViewChild('modalRemoveCase') modalRemoveCase;
   currentTemplate: TemplateDto = new TemplateDto;
   casesRequestModel: CasesRequestModel = new CasesRequestModel();
-  selectedCase: CaseModel = new CaseModel;
-  spinnerStatus: boolean;
+  caseListModel: CaseListModel = new CaseListModel();
+  id: number;
+  spinnerStatus = false;
 
   constructor(private activateRoute: ActivatedRoute,
-              private router: Router,
               private casesService: CasesService,
-              private eFormService: EFormService,
-              private notifyService: NotifyService) {
+              private eFormService: EFormService) {
     this.activateRoute.params.subscribe(params => {
       this.id = +params['id'];
     });
@@ -35,10 +31,25 @@ export class CasesTableComponent implements OnInit {
     this.loadTemplateData();
   }
 
+  onLabelInputChanged(label: string) {
+    this.casesRequestModel.nameFilter = label;
+    this.loadAllCases();
+  }
+
+  onDeleteClicked(caseModel: CaseModel) {
+    this.modalRemoveCase.show(caseModel);
+  }
+
+  sortByColumn(columnName: string, sortedByDsc: boolean) {
+    this.casesRequestModel.sort = columnName;
+    this.casesRequestModel.isSortDsc = sortedByDsc;
+    this.loadAllCases();
+  }
+
   loadAllCases() {
+    this.spinnerStatus = true;
     this.casesRequestModel.templateId = this.id;
     this.casesService.getCases(this.casesRequestModel).subscribe(operation => {
-      this.spinnerStatus = true;
       if (operation && operation.success) {
         this.caseListModel = operation.model;
       }
@@ -56,43 +67,8 @@ export class CasesTableComponent implements OnInit {
     });
   }
 
-  submitCaseDelete(id: number) {
-    this.casesService.deleteCase(id).subscribe((data => {
-      if (data && data.success) {
-        this.loadAllCases();
-        this.notifyService.success({text: data.message || 'Error'});
-      } else {
-        this.notifyService.error({text: data.message || 'Error'});
-      }
-      this.deleteCaseModal.close();
-    }));
-  }
-
-  changePage(e: any) {
-    if (e || e === 0) {
-      this.casesRequestModel.offset = e;
-      if (e === 0) {
-        this.casesRequestModel.pageIndex = 0;
-      } else {
-        this.casesRequestModel.pageIndex = Math.floor(e / this.casesRequestModel.pageSize);
-      }
-      this.loadAllCases();
-    }
-  }
-
-  sortByColumn(columnName: string, sortedByDsc: boolean) {
-    this.casesRequestModel.sort = columnName;
-    this.casesRequestModel.isSortDsc = sortedByDsc;
-    this.loadAllCases();
-  }
-
-  onLabelInputChanged(label: string) {
-    this.casesRequestModel.nameFilter = label;
-    this.loadAllCases();
-  }
-
-  showCaseDeleteModal(model: CaseModel) {
-    this.selectedCase = model;
-    this.deleteCaseModal.open();
+  downloadPDF(caseId: number) {
+    window.open('/api/template-files/download-case-pdf/' +
+      this.currentTemplate.id + '?caseId=' + caseId, '_blank');
   }
 }

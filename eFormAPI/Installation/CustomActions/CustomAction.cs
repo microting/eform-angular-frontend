@@ -340,6 +340,11 @@ namespace CustomActions
                 } catch { }
                 try
                 {
+                    File.Delete("package-lock.json");
+                } catch { }
+
+                try
+                {
                     DeleteDirectory(Path.Combine(uiIisDir, "dist"));
                 } catch { }
                 try

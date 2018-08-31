@@ -1,3 +1,6 @@
-<ngx-select [items]="items"
-            [formControl]="selectControl"
-            [placeholder]="fieldValueObj.valueReadable">
+<ng-select
+  bindValue="key"
+  bindLabel="value"
+  [placeholder]="fieldValueObj.valueReadable"
+  (change)="onSelectedChanged($event)"
+  [items]="fieldValueObj.keyValuePairList"></ng-select>

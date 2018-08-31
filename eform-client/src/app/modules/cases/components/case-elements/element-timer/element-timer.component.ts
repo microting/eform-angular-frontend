@@ -1,10 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CaseFieldValue} from 'app/models';
-import * as moment from 'moment';
+import {differenceInMinutes, format} from 'date-fns';
+import {CaseFieldValue} from 'src/app/common/models/cases';
 
 @Component({
   selector: 'element-timer',
   templateUrl: './element-timer.component.html',
+  styleUrls: ['./element-timer.component.scss']
 })
 export class ElementTimerComponent implements OnInit {
   fieldValueObj: CaseFieldValue = new CaseFieldValue();
@@ -30,9 +31,8 @@ export class ElementTimerComponent implements OnInit {
     if (this.dateArray.length > 1) {
       this.startDate = this.dateArray[0];
       this.endDate = this.dateArray[1];
-      const duration = moment(new Date(this.startDate)).diff(moment(new Date(this.endDate)));
-      this.duration = moment.utc(Math.abs(duration)).format('HH:mm:ss');
+      const duration = differenceInMinutes(new Date(this.startDate), new Date(this.endDate));
+      this.duration = format(Math.abs(duration), 'HH:mm:ss');
     }
   }
-
 }

@@ -1,9 +1,10 @@
-import {Component, Input} from '@angular/core';
-import {CaseFieldValue} from 'app/models';
+import {Component, Input, OnInit} from '@angular/core';
+import {CaseFieldValue} from 'src/app/common/models/cases';
 
 @Component({
   selector: 'element-checkbox',
-  templateUrl: './element-checkbox.component.html'
+  templateUrl: './element-checkbox.component.html',
+  styleUrls: ['./element-checkbox.component.scss']
 })
 export class ElementCheckboxComponent {
   fieldValueObj: CaseFieldValue = new CaseFieldValue();

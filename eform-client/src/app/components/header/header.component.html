@@ -1,20 +1,18 @@
-<header class="hidden-xs header-full" id="header_full_top" *ngIf="
+<header class="hidden-xs" *ngIf="
 headerSettingsModel.imageLinkVisible ||
 headerSettingsModel.mainTextVisible ||
 headerSettingsModel.secondaryTextVisible">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="logo-container" *ngIf="headerSettingsModel.imageLinkVisible">
-        <img height="60px" [src]="logoImage">
-      </div>
-      <div class="header-product-title-description">
-        <h4 class="text-right h4-wrapper" *ngIf="headerSettingsModel.mainTextVisible">
-          <strong id="main-header-text">{{headerSettingsModel.mainText}}</strong>
-        </h4>
-        <h5 id="secondary-header-text" class="text-right h5-wrapper" *ngIf="headerSettingsModel.secondaryTextVisible">
-          {{headerSettingsModel.secondaryText}}
-        </h5>
-      </div>
+  <div class="d-flex">
+    <div class="logo-container mr-auto ml-2 pt-1">
+      <img height="60px" id="site-header-image" [src]="logoImage" *ngIf="headerSettingsModel.imageLinkVisible">
+    </div>
+    <div class="mr-2 mt-2 text-right">
+      <h4 *ngIf="headerSettingsModel.mainTextVisible">
+        <strong id="main-header-text">{{headerSettingsModel.mainText}}</strong>
+      </h4>
+      <h5 id="secondary-header-text" *ngIf="headerSettingsModel.secondaryTextVisible">
+        {{headerSettingsModel.secondaryText}}
+      </h5>
     </div>
   </div>
 </header>

@@ -1,0 +1,70 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{ 'Select tags for template' | translate }}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <ng-select
+                class="custom"
+                dropdownPosition="'bottom'"
+                [placeholder]="'Current tags' | translate"
+                [(ngModel)]="selectedTemplateTagsIds"
+                [bindValue]="'id'"
+                [bindLabel]="'name'"
+                [items]="availableTags"
+                id="tagSelector"
+                [multiple]="true"></ng-select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="md-form input-group">
+                <input mdbInputDirective
+                       [mdbValidate]="false"
+                       #newTagInput
+                       id="newTag" type="text" class="form-control">
+                <label for="newTag">{{ 'New tag' | translate }}</label>
+                  <button  class="btn btn-success btn-icon m-0"
+                           (click)="createNewTag(newTagInput.value); newTagInput.value=''"
+                           type="button" [disabled]="!newTagInput.value">
+                    <i class="material-icons">add</i>
+                  </button>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="d-flex align-items-center">
+                <ng-select
+                  class="input-group"
+                  dropdownPosition="'bottom'"
+                  [bindValue]="'id'"
+                  [bindLabel]="'name'"
+                  [(ngModel)]="tagForRemoval"
+                  [placeholder]="'Tag for removal' | translate"
+                  [items]="availableTags"></ng-select>
+                <button  class="btn btn-danger btn-icon m-0 mb-1"
+                         (click)="removeTemplateTag()"
+                         [disabled]="!  tagForRemoval"
+                         type="button">
+                  <i class="material-icons">add</i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger"
+                (click)="updateTemplateTags()">{{'Save' | translate}}</button>
+        <button class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Cancel' | translate}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>

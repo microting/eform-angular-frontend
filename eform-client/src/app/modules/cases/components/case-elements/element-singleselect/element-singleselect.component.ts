@@ -1,19 +1,14 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {CaseFieldValue, CommonDictionaryTextModel} from 'app/models';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {ISubscription} from 'rxjs/Subscription';
+import {CaseFieldValue} from 'src/app/common/models/cases';
+import {CommonDictionaryTextModel} from 'src/app/common/models/common';
 
 @Component({
   selector: 'element-singleselect',
   templateUrl: './element-singleselect.component.html',
-  styleUrls: ['./element-singleselect.component.css']
+  styleUrls: ['./element-singleselect.component.scss']
 })
-export class ElementSingleselectComponent implements OnInit, OnDestroy {
-  sub:  ISubscription;
-  fieldValueObj: CaseFieldValue = new CaseFieldValue();
-  selectControl = new FormControl();
-  items: Array<CommonDictionaryTextModel> = [];
-
+export class ElementSingleselectComponent {
   @Input()
   get fieldValue() {
     return this.fieldValueObj;
@@ -22,28 +17,11 @@ export class ElementSingleselectComponent implements OnInit, OnDestroy {
   set fieldValue(val) {
     this.fieldValueObj = val;
   }
+  fieldValueObj: CaseFieldValue = new CaseFieldValue();
+  constructor() { }
 
-  constructor() {
-  }
-
-  ngOnInit() {
-    this.sub = this.selectControl.valueChanges.subscribe(value => this.onSelectedChanged(value));
-
-    this.fieldValueObj.keyValuePairList.forEach(function(key, value) {
-      let kvp = new CommonDictionaryTextModel();
-      kvp.id = key.key;
-      kvp.text = key.value;
-      this.push(kvp);
-    }, this.items);
-  }
-
-
-  ngOnDestroy(): void {
-    this.sub.unsubscribe();
-  }
-
-  onSelectedChanged(value: string) {
-    this.fieldValue.value = value;
+  onSelectedChanged(e: any) {
+    this.fieldValue.value = e.key;
   }
 
 }

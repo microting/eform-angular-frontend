@@ -1,0 +1,38 @@
+/* You can add global styles to this file, and also import other style files */
+//ng-select
+@import "components/index";
+@import "utilities/colors";
+@import "libs/index";
+
+// h-100 for base elements
+html {
+  height: 100%;
+}
+body {
+  height: 100%;
+}
+
+// Modal y fix
+.modal-open .modal {
+  overflow-y: auto;
+  -ms-overflow-style: none;  // IE 10+
+  overflow: -moz-scrollbars-none;  // Firefox
+  &::-webkit-scrollbar {
+    display: none;  // Safari and Chrome
+  }
+}
+
+.table > tbody > tr > td {
+  vertical-align: middle;
+}
+
+.md-form {
+  &.md-form-case-elem {
+    margin-top: 0.3rem;
+    margin-bottom: 0;
+  }
+}
+
+
+
+

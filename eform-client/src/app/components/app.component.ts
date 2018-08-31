@@ -1,9 +1,14 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'eform-root',
-  template: '<router-outlet></router-outlet>',
-  styleUrls: ['./app.component.scss']
+  selector: 'app-root',
+  templateUrl: './app.component.html'
 })
 export class AppComponent {
+  title = 'eForm Basic';
 }
+
+
+
+
+

@@ -1,0 +1,152 @@
+<eform-page-subheader [title]="'Database connection setup'" [heandingSizeRem]="1.7">
+  <div class="p-2">
+    <button
+      class="btn btn-success"
+      id="save"
+      mdbTooltip="Save settings"
+      [disabled]="!settingsForm.form.valid"
+      (click)="updateConnectionString()">Save
+    </button>
+  </div>
+</eform-page-subheader>
+
+<div class="container-fluid mb-3">
+  <form #settingsForm="ngForm">
+    <div class="row">
+      <div class="col-md-12 mt-3">
+        <eform-page-subheader [title]="'Admin information'" [heandingSizeRem]="1"></eform-page-subheader>
+        <!--Admin block-->
+        <div class="row">
+          <div class="col-md-6">
+            <div class="md-form input-group">
+              <input mdbInputDirective
+                     [mdbValidate]="false"
+                     [(ngModel)]="settingsModel.adminSetupModel.userName"
+                     #userName="ngModel"
+                     type="text" value="" name="userName" id="userName" class="form-control">
+              <label for="userName">Username<span class="text-danger">*</span> </label>
+            </div>
+            <div class="md-form input-group">
+              <input mdbInputDirective
+                     [mdbValidate]="false"
+                     [(ngModel)]="settingsModel.adminSetupModel.password"
+                     required type="text" name="password" #password="ngModel"
+                     id="password" class="form-control">
+              <label for="password">Password<span class="text-danger">*</span> </label>
+            </div>
+            <div class="md-form input-group">
+              <input mdbInputDirective
+                     [(ngModel)]="settingsModel.adminSetupModel.email"
+                     [mdbValidate]="false"
+                     type="email" name="email" id="email" #email="ngModel" class="form-control">
+              <label for="email">Email</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="md-form input-group">
+              <input mdbInputDirective
+                     [mdbValidate]="false" [(ngModel)]="settingsModel.adminSetupModel.firstName"
+                     type="text" name="firstName" #firstName="ngModel"
+                     id="firstName" class="form-control">
+              <label for="firstName">First Name</label>
+            </div>
+            <div class="md-form input-group">
+              <input mdbInputDirective
+                     [mdbValidate]="false"
+                     [(ngModel)]="settingsModel.adminSetupModel.lastName"
+                     type="text" name="lastName" #lastName="ngModel"
+                     id="lastName" class="form-control">
+              <label for="lastName">Last Name</label>
+            </div>
+          </div>
+        </div>
+        <!--SDK Connection-->
+        <div class="row">
+          <div class="col-md-6 mt-3">
+            <eform-page-subheader [title]="'SDK database connection information'"
+                                  [heandingSizeRem]="1"></eform-page-subheader>
+            <div class="md-form input-group">
+              <input mdbInputDirective
+                     [(ngModel)]="settingsModel.connectionStringSDK.source"
+                     [mdbValidate]="false"
+                     placeholder="Data Source=COMPUTER_NAME\SQLEXPRESS" type="text"
+                     #sourceSdk="ngModel" required name="source" id="sourceSDK" class="form-control">
+              <label for="sourceSDK">Data Source<span class="text-danger">*</span></label>
+            </div>
+            <div class="md-form input-group">
+              <input mdbInputDirective
+                     [mdbValidate]="false"
+                     [(ngModel)]="settingsModel.connectionStringSDK.catalogue"
+                     placeholder="DATABASE_NAME"
+                     type="text" name="catalogue" required #catalogueSdk="ngModel"
+                     id="catalogueSDK" class="form-control">
+              <label>Initial Catalog<span class="text-danger">*</span></label>
+            </div>
+            <div class="md-form input-group">
+              <input mdbInputDirective
+                     [mdbValidate]="false"
+                     [(ngModel)]="settingsModel.connectionStringSDK.auth"
+                     placeholder="Integrated Security=True"
+                     #authTypeSdk="ngModel" type="text" name="auth" id="authSDK" class="form-control">
+              <label for="authSDK">Authentication type<span class="text-danger">*</span></label>
+            </div>
+            <div class="md-form input-group">
+              <input mdbInputDirective
+                     [mdbValidate]="false"
+                     [(ngModel)]="settingsModel.connectionStringSDK.token"
+                     placeholder="12345678909876543210adfecdfefdae"
+                     #tokenSdk="ngModel" required type="text" value="" name="token" id="token" class="form-control">
+              <label for="token">Token<span class="text-danger">*</span></label>
+            </div>
+          </div>
+          <div class="col-md-6 mt-3">
+            <eform-page-subheader [title]="'Main database connection information'"
+                                  [heandingSizeRem]="1"></eform-page-subheader>
+            <div class="md-form input-group">
+              <input mdbInputDirective
+                     [mdbValidate]="false"
+                     [(ngModel)]="settingsModel.connectionStringMain.source"
+                     placeholder="COMPUTER_NAME\SQLEXPRESS" type="text"
+                     required #sourceAuth="ngModel" value="" name="source" id="sourceMain" class="form-control">
+              <label for="sourceMain">Data Source<span class="text-danger">*</span></label>
+            </div>
+            <div class="md-form input-group">
+              <input mdbInputDirective
+                     [mdbValidate]="false"
+                     [(ngModel)]="settingsModel.connectionStringMain.catalogue"
+                     type="text" name="catalogue"
+                     required #catalogueAuth="ngModel" id="catalogueMain" class="form-control">
+              <label for="catalogueMain">Initial Catalog<span class="text-danger">*</span></label>
+            </div>
+            <div class="md-form input-group">
+              <input mdbInputDirective
+                     [mdbValidate]="false"
+                     [(ngModel)]="settingsModel.connectionStringMain.auth"
+                     placeholder="Integrated Security=True" type="text"
+                     required #typeAuth="ngModel" value="" name="auth" id="authMain" class="form-control">
+              <label>Authentication type<span class="text-danger">*</span></label>
+            </div>
+          </div>
+        </div>
+        <!--language-->
+        <div class="row">
+          <div class="col-md-6 mt-3">
+            <eform-page-subheader
+              [title]="'Default Language'" [heandingSizeRem]="1"></eform-page-subheader>
+            <ng-select
+              id="languageSelector"
+              [placeholder]="'Language'"
+              name="default-language" #defaultLanguage="ngModel"
+              [bindValue]="'id'"
+              [bindLabel]="'text'"
+              [(ngModel)]="settingsModel.generalAppSetupSettingsModel.defaultLocale"
+              [items]="languages"></ng-select>
+          </div>
+        </div>
+        <!--(´・ω・｀) end here probably-->
+      </div>
+    </div>
+  </form>
+</div>
+
+<eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>

@@ -1,0 +1,88 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{'Create selectable list' | translate}}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="md-form">
+                <input mdbInputDirective
+                       [mdbValidate]="false" required
+                       [(ngModel)]="advEntitySelectableGroupCreateModel.name"
+                       id="createName" type="text" class="form-control">
+                <label for="createName">{{'Name' | translate}}</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row d-flex">
+            <div class="mr-auto">
+            </div>
+            <div class="d-inline-flex">
+              <button class="btn btn-success btn-icon" (click)="modalSelectImportList.show()">
+                <i class="material-icons">format_list_bulleted</i>
+              </button>
+              <button class="btn btn-success btn-icon" (click)="addNewAdvEntitySelectableItem()">
+                <i class="material-icons">add</i>
+              </button>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="panel panel-default w-100 pt-2">
+              <div class="panel-body">
+                <ul class="list-group" dragula="ITEMS"
+                    [(dragulaModel)]="advEntitySelectableGroupCreateModel.advEntitySelectableItemModels"
+                    (dragulaModelChange)="dragulaPositionChanged()">
+                  <!--list item-->
+                  <li class="list-group-item"
+                      *ngFor="let entityItem of advEntitySelectableGroupCreateModel.advEntitySelectableItemModels">
+                    <div class="d-flex justify-content-between">
+                      <div>
+                        <a>
+                          <i class="material-icons text-black-50"> drag_handle </i>
+                        </a>
+                      </div>
+                      <div>{{entityItem.name}}</div>
+                      <div>
+                        <i class="material-icons material-icon-red mr-3" *ngIf="!entityItem.name"
+                           mdbTooltip="{{'Name is required' | translate}}!">
+                          warning
+                        </i>
+                        <a>
+                          <i class="material-icons text-black-50" (click)="openModalSelectEditName(entityItem)"> edit </i>
+                        </a>
+                        <a>
+                          <i class="material-icons text-black-50"
+                             (click)="deleteAdvEntitySelectableItem(entityItem.entityItemUId)"> delete </i>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" (click)="createEntitySelectableGroup()">{{'Create' | translate}}</button>
+        <button class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Close' | translate}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>
+
+<app-entity-select-import-list
+  (onImportSubmitted)="importAdvEntitySelectableGroup($event)"
+  #modalSelectImportList></app-entity-select-import-list>
+<app-entity-select-edit-name [selectedAdvEntitySelectableItemModel]="seletctedItem"
+                             (onItemUpdated)="updateItem($event)" #modalSelectEditName></app-entity-select-edit-name>

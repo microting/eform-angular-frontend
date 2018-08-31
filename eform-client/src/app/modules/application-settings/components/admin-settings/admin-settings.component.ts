@@ -1,14 +1,16 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostBinding, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AdminSettingsModel} from 'app/models';
-import {NotifyService, AuthService, AppSettingsService} from 'app/services';
-import {FileItem, FileUploader} from 'ng2-file-upload';
 import {UUID} from 'angular2-uuid';
+import {FileItem, FileUploader} from 'ng2-file-upload';
+import {EventBrokerService} from 'src/app/common/helpers';
+import {AdminSettingsModel} from 'src/app/common/models/settings';
+import {AppSettingsService} from 'src/app/common/services/app-settings';
+import {AuthService} from 'src/app/common/services/auth';
 
 @Component({
   selector: 'app-admin-settings',
   templateUrl: './admin-settings.component.html',
-  styleUrls: ['./admin-settings.component.css']
+  styleUrls: ['./admin-settings.component.scss']
 })
 export class AdminSettingsComponent implements OnInit {
   loginPageImageUploader: FileUploader = new FileUploader({url: '/api/images/login-page-images'});
@@ -20,9 +22,7 @@ export class AdminSettingsComponent implements OnInit {
 
   constructor(private settingsService: AppSettingsService,
               private authService: AuthService,
-              private router: Router,
-              private activatedRoute: ActivatedRoute,
-              private notifyService: NotifyService) {
+              private eventBrokerService: EventBrokerService) {
   }
 
   get currentRole(): string {
@@ -82,7 +82,6 @@ export class AdminSettingsComponent implements OnInit {
 
         this.spinnerStatus = false;
       } else {
-        this.notifyService.error({text: operation.message});
         this.spinnerStatus = false;
       }
     });
@@ -100,11 +99,12 @@ export class AdminSettingsComponent implements OnInit {
 
     this.settingsService.updateAdminSettings(this.adminSettingsModel).subscribe(operation => {
       if (operation && operation.success) {
-        this.notifyService.success({text: operation.message});
         this.getAdminSettings();
+        this.headerImageUploader.clearQueue();
+        this.loginPageImageUploader.clearQueue();
+        this.eventBrokerService.emit<void>('get-header-settings', null);
       } else {
-        this.notifyService.error({text: operation.message});
-        this.getAdminSettings();
+        this.spinnerStatus = false;
       }
     });
   }
@@ -113,10 +113,8 @@ export class AdminSettingsComponent implements OnInit {
     this.spinnerStatus = true;
     this.settingsService.resetLoginPageSettings().subscribe(operation => {
       if (operation && operation.success) {
-        this.notifyService.success({text: operation.message});
         this.getAdminSettings();
       } else {
-        this.notifyService.error({text: operation.message});
         this.spinnerStatus = false;
       }
     });
@@ -126,10 +124,9 @@ export class AdminSettingsComponent implements OnInit {
     this.spinnerStatus = true;
     this.settingsService.resetHeaderSettings().subscribe(operation => {
       if (operation && operation.success) {
-        this.notifyService.success({text: operation.message});
         this.getAdminSettings();
       } else {
-        this.notifyService.error({text: operation.message});
+        this.spinnerStatus = false;
       }
     });
   }

@@ -1,5 +1,7 @@
-<ngx-select [items]="items"
-            (typed)="onSelectInputChanged($event)"
-            [formControl]="selectControl"
-            [(ngModel)]="fieldValueObj.microtingUuid"
-            [placeholder]="fieldValueObj.valueReadable">
+<ng-select
+  bindValue="id"
+  bindLabel="text"
+  [placeholder]="fieldValueObj.valueReadable"
+  [typeahead]="typeahead"
+  (change)="onSelectedChanged($event)"
+  [items]="items"></ng-select>

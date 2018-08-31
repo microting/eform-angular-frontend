@@ -1,12 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CaseFieldValue} from 'app/models';
+import {CaseFieldValue} from 'src/app/common/models/cases';
 
 @Component({
   selector: 'element-text',
   templateUrl: './element-text.component.html',
-  styleUrls: ['./element-text.component.css']
+  styleUrls: ['./element-text.component.scss']
 })
-export class ElementTextComponent implements OnInit {
+export class ElementTextComponent  {
   fieldValueObj: CaseFieldValue = new CaseFieldValue();
 
   @Input()
@@ -19,9 +19,6 @@ export class ElementTextComponent implements OnInit {
   }
 
   constructor() {
-  }
-
-  ngOnInit() {
   }
 
 }
