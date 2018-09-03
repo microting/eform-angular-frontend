@@ -340,7 +340,7 @@ namespace CustomActions
                 } catch { }
                 try
                 {
-                    File.Delete(uiIisDir + "\\package-lock.json"));
+                    File.Delete(uiIisDir + "\\package-lock.json");
                 } catch { }
 
                 try
