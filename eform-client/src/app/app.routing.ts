@@ -38,7 +38,6 @@ export const routes: Routes = [
       },
       {
         path: 'application-settings',
-        canActivate: [AdminGuard],
         loadChildren: './modules/application-settings/application-settings.module#ApplicationSettingsModule'
       },
       {

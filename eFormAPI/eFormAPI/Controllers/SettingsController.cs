@@ -34,7 +34,7 @@ namespace eFormAPI.Web.Controllers
             {
                 return new OperationResult(true);
             }
-            return new OperationResult(false);
+            return new OperationResult(false, "Connection string does not exist");
         }
 
         [AllowAnonymous]

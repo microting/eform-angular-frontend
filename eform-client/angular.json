@@ -24,7 +24,7 @@
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
               { "glob": "**/*", "input": "src/assets/", "output": "/assets/" },
-              { "glob": "**/assets/**", "input": "src/app/plugins/modules", "output": "/assets/plugins/" },
+              { "glob": "**/assets/**", "input": "src/app/plugins/modules", "output": "/assets/" },
               { "glob": "favicon.ico", "input": "/src", "output": "/" }
             ],
             "styles": [

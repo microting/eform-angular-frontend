@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "wt":"./node_modules/.bin/wdio wdio.conf.js"
+    "wt": "./node_modules/.bin/wdio wdio.conf.js"
   },
   "private": true,
   "dependencies": {
@@ -33,11 +33,13 @@
     "chart.js": "^2.5.0",
     "core-js": "^2.5.4",
     "date-fns": "^1.29.0",
+    "glob": "^7.1.3",
     "hammerjs": "^2.0.8",
     "ng2-dragula": "^2.0.2",
     "ng2-file-upload": "^1.3.0",
     "ngx-slimscroll": "^5.2.2",
     "ngx-toastr": "^8.10.0",
+    "ngx-translate-multi-http-loader": "^2.0.2",
     "npm": "^6.4.1",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"

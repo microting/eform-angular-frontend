@@ -1,6 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import {MissingTranslationHandler, MissingTranslationHandlerParams, TranslateLoader} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {MultiTranslateHttpLoader} from 'ngx-translate-multi-http-loader';
 
 // Missing translation
 export class EformMissingTranslationHandler implements MissingTranslationHandler {
@@ -28,7 +28,10 @@ export class EformMissingTranslationHandler implements MissingTranslationHandler
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+  return new MultiTranslateHttpLoader(http, [
+    {prefix: './assets/i18n/', suffix: '.json'},
+    // {prefix: './assets/plugins/customers-pn/assets/i18n/', suffix: '.json'}
+  ]);
 }
 
 export let translateConfig = {
