@@ -6,11 +6,11 @@
                  || loginPageSettings.secondaryTextVisible
                  || loginPageSettings.imageLinkVisible">
         <div class="col-md-8 col-xs-12">
-          <h4 *ngIf="loginPageSettings.mainTextVisible">{{loginPageSettings.mainText}}</h4>
-          <p *ngIf="loginPageSettings.secondaryTextVisible">{{loginPageSettings.secondaryText}}</p>
+          <h4 id="loginMainText" *ngIf="loginPageSettings.mainTextVisible">{{loginPageSettings.mainText}}</h4>
+          <p id="loginSecondaryText" *ngIf="loginPageSettings.secondaryTextVisible">{{loginPageSettings.secondaryText}}</p>
         </div>
         <div class="col-md-4 col-xs-12" align="center" *ngIf="loginPageSettings.imageLinkVisible">
-          <img class="img-fluid" [src]="loginImage" style="max-width: 110px" />
+          <img id="loginImage" class="img-fluid" [src]="loginImage" style="max-width: 110px" />
         </div>
       </div>
       <router-outlet></router-outlet>

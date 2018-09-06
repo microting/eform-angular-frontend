@@ -1,7 +1,7 @@
 <eform-page-subheader [title]="'Device Users' | translate">
   <div class="p-3">
     <button
-      class="btn btn-success"
+      class="btn btn-success" id="newDeviceUserBtn"
       mdbTooltip="{{'Create Device User' | translate}}"
       (click)="createNewUserModal.show()">{{'New Device User' | translate}}
     </button>
@@ -24,14 +24,14 @@
       </thead>
       <tbody id="tableBody">
       <tr *ngFor="let siteDto of sitesDto">
-        <td scope="row">{{siteDto.siteId}}</td>
-        <td>
+        <td id="deviceUserId" scope="row">{{siteDto.siteId}}</td>
+        <td id="deviceUserFirstName">
           {{siteDto.firstName}}
           <ng-container *ngIf="!siteDto.firstName">
             N/A
           </ng-container>
         </td>
-        <td>
+        <td id="deviceUserLastName">
           {{siteDto.lastName}}
           <ng-container *ngIf="!siteDto.lastName">
             N/A
@@ -66,13 +66,14 @@
 
           <div class="d-flex flex-row justify-content-center">
             <button class="btn btn-accent text-black-50 btn-icon mb-2 " mdbTooltip="{{'Edit Device User' | translate}}"
-                    mdbWavesEffect
+                    mdbWavesEffect id="editDeviceUserBtn"
                     (click)="openEditModal(siteDto)">
               <i class="material-icons">
                 edit
               </i>
             </button>
             <button class="btn btn-danger btn-icon mb-2 " mdbTooltip="{{'Delete Device User' | translate}}"
+                    id="deleteDeviceUserBtn"
                     (click)="openDeleteDeviceUserModal(siteDto)">
               <i class="material-icons">
                 delete_forever
