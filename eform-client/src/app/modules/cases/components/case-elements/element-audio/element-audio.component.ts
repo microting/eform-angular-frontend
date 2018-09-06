@@ -1,12 +1,12 @@
-import {Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
-import {CaseFieldValue} from 'app/models';
+import {Component, Input, OnInit} from '@angular/core';
+import {CaseFieldValue} from 'src/app/common/models/cases';
 
 @Component({
   selector: 'element-audio',
   templateUrl: './element-audio.component.html',
-  styleUrls: ['./element-audio.component.css']
+  styleUrls: ['./element-audio.component.scss']
 })
-export class ElementAudioComponent implements OnInit {
+export class ElementAudioComponent {
   fieldValueObjects: Array<CaseFieldValue> = [];
 
   @Input()
@@ -19,9 +19,6 @@ export class ElementAudioComponent implements OnInit {
   }
 
   constructor() {
-  }
-
-  ngOnInit() {
   }
 
 }

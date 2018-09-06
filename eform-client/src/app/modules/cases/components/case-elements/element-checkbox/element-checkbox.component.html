@@ -1,8 +1,5 @@
-<div class="checkbox">
-  <input value="{{isChecked}}" [checked]="isChecked" (change)="checkBoxChanged($event)" name="isChecked"
-         type="checkbox">
-  <label for="isChecked"></label>
-  <br>
-</div>
-
-
+<label class="md-checkbox">
+  <input (click)="checkBoxChanged($event)" [checked]="isChecked" value="{{isChecked}}" type="checkbox"/>
+  <span class="md-checkbox--fake"></span>
+  <div></div>
+</label>

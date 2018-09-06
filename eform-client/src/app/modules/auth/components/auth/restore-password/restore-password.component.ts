@@ -1,0 +1,42 @@
+import {Component, OnInit} from '@angular/core';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
+import {AppSettingsService} from 'src/app/common/services/app-settings/index';
+import {AuthService} from 'src/app/common/services/auth/index';
+
+@Component({
+  selector: 'app-restore-password',
+  templateUrl: './restore-password.component.html'
+})
+export class RestorePasswordComponent implements OnInit{
+  formRestore: FormGroup;
+  email: AbstractControl;
+  spinnerStatus = false;
+
+  constructor(private router: Router,
+              private authService: AuthService,
+              private settingsService: AppSettingsService,
+              private fb: FormBuilder,
+              private toastrService: ToastrService) {}
+
+  ngOnInit() {
+    this.formRestore = this.fb.group({
+      email: [
+        '',
+        [Validators.required, Validators.email]
+      ]
+    });
+    this.email = this.formRestore.get('email');
+  }
+
+  submitRestoreForm(): void {
+    this.authService.sendEmailRecoveryLink(this.formRestore.getRawValue()).subscribe((result) => {
+        if (result && result.success) {
+          this.formRestore.patchValue({email: ''});
+          this.toastrService.success('Successfully, check your email for instructions');
+        }
+      }
+    );
+  }
+}

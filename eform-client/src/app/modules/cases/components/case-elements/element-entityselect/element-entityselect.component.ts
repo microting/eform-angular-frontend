@@ -1,19 +1,16 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {CaseFieldValue, CommonDictionaryTextModel} from 'app/models';
-import {EntitySearchService, EntitySelectService} from 'app/services';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {ISubscription} from 'rxjs/Subscription';
+import {CaseFieldValue} from 'src/app/common/models/cases';
+import {CommonDictionaryTextModel} from 'src/app/common/models/common';
+import {EntitySelectService} from 'src/app/common/services/advanced';
 
 @Component({
   selector: 'element-entityselect',
   templateUrl: './element-entityselect.component.html',
-  styleUrls: ['./element-entityselect.component.css']
+  styleUrls: ['./element-entityselect.component.scss']
 })
-export class ElementEntityselectComponent implements OnInit, OnDestroy {
-  sub:  ISubscription;
-  selectControl = new FormControl();
+export class ElementEntityselectComponent implements OnInit {
   items: Array<CommonDictionaryTextModel> = [];
-
   fieldValueObj: CaseFieldValue = new CaseFieldValue();
   @Input() entityGroupUid: string;
 
@@ -30,8 +27,6 @@ export class ElementEntityselectComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.sub = this.selectControl.valueChanges.subscribe(value => this.onSelectedChanged(value));
-
     this.entitySelectService.getEntitySelectableGroupDictionary(this.entityGroupUid).subscribe((operation => {
       if (operation && operation.success) {
         this.items  = operation.model;
@@ -39,11 +34,7 @@ export class ElementEntityselectComponent implements OnInit, OnDestroy {
     }));
   }
 
-  ngOnDestroy(): void {
-    this.sub.unsubscribe();
-  }
-
-  onSelectedChanged(value: string) {
-    this.fieldValue.value = value;
+  onSelectedChanged(e: any) {
+    this.fieldValue.value = e.id;
   }
 }

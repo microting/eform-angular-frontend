@@ -1,0 +1,105 @@
+<eform-page-subheader [title]="'Device Users' | translate">
+  <div class="p-3">
+    <button
+      class="btn btn-success" id="newDeviceUserBtn"
+      mdbTooltip="{{'Create Device User' | translate}}"
+      (click)="createNewUserModal.show()">{{'New Device User' | translate}}
+    </button>
+  </div>
+</eform-page-subheader>
+
+<!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
+<div class="container-fluid">
+  <div class="row pt-3 table-responsive no-gutters">
+    <table class="table table-sm table-striped text-center">
+      <thead>
+      <tr>
+        <th scope="col">{{ 'Site ID' | translate }}</th>
+        <th scope="col">{{ 'First Name' | translate }}</th>
+        <th scope="col">{{ 'Last Name' | translate }}</th>
+        <th scope="col">{{ 'Device ID' | translate }}</th>
+        <th scope="col">{{ 'Customer' | translate }} No & OTP</th>
+        <th scope="col">{{ 'Actions' | translate }}</th>
+      </tr>
+      </thead>
+      <tbody id="tableBody">
+      <tr *ngFor="let siteDto of sitesDto">
+        <td id="deviceUserId" scope="row">{{siteDto.siteId}}</td>
+        <td id="deviceUserFirstName">
+          {{siteDto.firstName}}
+          <ng-container *ngIf="!siteDto.firstName">
+            N/A
+          </ng-container>
+        </td>
+        <td id="deviceUserLastName">
+          {{siteDto.lastName}}
+          <ng-container *ngIf="!siteDto.lastName">
+            N/A
+          </ng-container>
+        </td>
+        <td>
+          {{siteDto.unitId}}
+          <ng-container *ngIf="!siteDto.unitId">
+            N/A
+          </ng-container>
+        </td>
+        <td>
+          <div class="d-flex flex-row justify-content-center">
+            <ng-container *ngIf="siteDto.otpCode != 0">
+              {{siteDto.customerNo}} / {{siteDto.otpCode}}
+            </ng-container>
+            <ng-container *ngIf="siteDto.otpCode == 0">
+              <button class="btn btn-danger btn-icon mb-2 "
+                      mdbTooltip="{{'New OTP' | translate}}"
+                      (click)="openOtpModal(siteDto)">
+                <i class="material-icons">
+                  vpn_key
+                </i>
+              </button>
+            </ng-container>
+            <ng-container *ngIf="!siteDto.unitId">
+              N/A
+            </ng-container>
+          </div>
+        </td>
+        <td>
+
+          <div class="d-flex flex-row justify-content-center">
+            <button class="btn btn-accent text-black-50 btn-icon mb-2 " mdbTooltip="{{'Edit Device User' | translate}}"
+                    mdbWavesEffect id="editDeviceUserBtn"
+                    (click)="openEditModal(siteDto)">
+              <i class="material-icons">
+                edit
+              </i>
+            </button>
+            <button class="btn btn-danger btn-icon mb-2 " mdbTooltip="{{'Delete Device User' | translate}}"
+                    id="deleteDeviceUserBtn"
+                    (click)="openDeleteDeviceUserModal(siteDto)">
+              <i class="material-icons">
+                delete_forever
+              </i>
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>
+</div>
+
+<app-new-otp-modal
+  (onNewOtpRequested)="loadAllSimpleSites()"
+  [selectedSimpleSite]="selectedSimpleSiteDto" #newOtpModal></app-new-otp-modal>
+<app-delete-device-user-modal
+  [selectedDeviceUser]="selectedSimpleSiteDto"
+  (onUserDeleted)="loadAllSimpleSites()"
+  #deleteDeviceUserModal></app-delete-device-user-modal>
+<app-create-new-user-modal
+  (onDeviceUserCreated)="loadAllSimpleSites()"
+  #createNewUserModal></app-create-new-user-modal>
+<app-edit-device-user-modal
+  (onUserEdited)="loadAllSimpleSites()"
+  [selectedDeviceUser]="selectedSimpleSite"
+  #editDeviceUserModal></app-edit-device-user-modal>

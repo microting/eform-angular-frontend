@@ -1,75 +1,71 @@
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {TranslateModule} from '@ngx-translate/core';
-import {CasesRoutingModule} from './cases-routing.module';
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {NgxGalleryModule} from 'ngx-gallery';
+import {NgSelectModule} from '@ng-select/ng-select';
+import {GalleryModule} from '@ngx-gallery/core';
+import {GallerizeModule} from '@ngx-gallery/gallerize';
+import {LightboxModule} from '@ngx-gallery/lightbox';
+import {TranslateModule} from '@ngx-translate/core';
+import {MDBBootstrapModule} from 'port/angular-bootstrap-md';
+import {EformImportedModule} from 'src/app/common/modules/eform-imported/eform-imported.module';
 
+import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
+import {CasesRoutingModule} from './cases.routing';
 import {
+  CaseEditComponent,
+  CaseEditElementComponent,
+  CaseEditSwitchComponent,
+  CasesTableComponent,
+  ElementAudioComponent,
   ElementCheckboxComponent,
-  ElementCommentComponent,
+  ElementCommentComponent, ElementContainerComponent,
   ElementDateComponent,
-  ElementMultiselectComponent,
+  ElementEntitysearchComponent,
+  ElementEntityselectComponent, ElementInfoboxComponent, ElementMultiselectComponent,
   ElementNumberComponent,
-  ElementPictureComponent,
   ElementPdfComponent,
   ElementSingleselectComponent,
-  ElementContainerComponent,
   ElementTextComponent,
-  ElementInfoboxComponent,
+  RemoveCaseModalComponent,
   ElementTimerComponent,
-  ElementSignatureComponent,
-  ElementAudioComponent,
-  TrumbowygComponent,
-  ElementEntitysearchComponent,
-  ElementEntityselectComponent,
-  CaseEditSwitchComponent,
-  CaseEditElementComponent,
-  CasesEditComponent,
-  CasesTableComponent,
-  CasesComponent
+  ElementPictureComponent,
+  ElementSignatureComponent
 } from './components';
-import {CollapseModule, TooltipModule} from 'ngx-bootstrap';
-import {Ng2Bs3ModalModule} from 'ng2-bs3-modal/ng2-bs3-modal';
-import {NgxSelectModule} from 'ngx-select-ex';
 
 @NgModule({
   imports: [
-    CommonModule,
-    NgxGalleryModule,
-    FormsModule,
-    ReactiveFormsModule,
+    TranslateModule,
+    MDBBootstrapModule,
+    EformSharedModule,
     CasesRoutingModule,
-    CollapseModule,
-    TranslateModule.forChild(),
-    Ng2Bs3ModalModule,
-    TooltipModule,
-    NgxSelectModule
+    CommonModule,
+    NgSelectModule,
+    EformImportedModule,
+    GallerizeModule,
+    LightboxModule,
+    GalleryModule
   ],
   declarations: [
-    CasesComponent,
-    TrumbowygComponent,
-    CasesEditComponent,
-    CaseEditSwitchComponent,
     CasesTableComponent,
+    CaseEditComponent,
+    CaseEditSwitchComponent,
     CaseEditElementComponent,
-    ElementCommentComponent,
-    ElementMultiselectComponent,
-    ElementPdfComponent,
-    ElementSingleselectComponent,
-    ElementNumberComponent,
     ElementTextComponent,
-    ElementContainerComponent,
-    ElementPictureComponent,
+    ElementNumberComponent,
     ElementCheckboxComponent,
+    ElementSingleselectComponent,
+    ElementPdfComponent,
+    ElementAudioComponent,
     ElementDateComponent,
+    ElementCommentComponent,
+    ElementEntityselectComponent,
+    ElementEntitysearchComponent,
+    ElementMultiselectComponent,
     ElementInfoboxComponent,
     ElementTimerComponent,
-    ElementSignatureComponent,
-    ElementEntitysearchComponent,
-    ElementEntityselectComponent,
-    ElementAudioComponent
-  ]
+    RemoveCaseModalComponent,
+    ElementContainerComponent,
+    ElementPictureComponent,
+    ElementSignatureComponent]
 })
 export class CasesModule {
 }

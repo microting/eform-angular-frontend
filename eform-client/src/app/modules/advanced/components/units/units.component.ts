@@ -1,22 +1,19 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ModalComponent} from 'ng2-bs3-modal/ng2-bs3-modal';
-import {UnitDto} from 'app/models';
-import {NotifyService, UnitsService} from 'app/services';
+import {UnitDto} from 'src/app/common/models/dto';
+import {UnitsService} from 'src/app/common/services/advanced';
 
 @Component({
   selector: 'app-units',
-  templateUrl: './units.component.html',
-  styleUrls: ['./units.component.css']
+  templateUrl: './units.component.html'
 })
 export class UnitsComponent implements OnInit {
-  @ViewChild('unitOtpRequestModal')
-  unitOtpRequestModal: ModalComponent;
-  spinnerStatus = true;
 
+  @ViewChild('modalUnitsOtpCode') modalUnitsOtpCode;
+  spinnerStatus = false;
   unitModels: Array<UnitDto> = [];
   selectedUnitModel: UnitDto = new UnitDto();
 
-  constructor(private unitsService: UnitsService, private notifyService: NotifyService) {
+  constructor(private unitsService: UnitsService) {
   }
 
   ngOnInit() {
@@ -33,29 +30,8 @@ export class UnitsComponent implements OnInit {
     });
   }
 
-  requestOtp(id: number) {
-    this.spinnerStatus = true;
-    this.unitsService.requestOtp(id).subscribe(operation => {
-      this.spinnerStatus = false;
-      if (operation && operation.success) {
-        this.loadAllUnits();
-        this.notifyService.success({text: operation.message});
-      } else {
-        this.notifyService.error({text: operation.message || 'Error'});
-      }
-    });
-  }
-
-  showRequestOtpModal(unitModel: UnitDto) {
-    if (!unitModel.unitUId) {
-      return;
-    }
-    this.selectedUnitModel = unitModel;
-    this.unitOtpRequestModal.open();
-  }
-
-  saveRequestOtpModal() {
-    this.requestOtp(this.selectedUnitModel.unitUId);
-    this.unitOtpRequestModal.close();
+  openModalUnitsOtpCode(selectedUnitDto: UnitDto) {
+    this.selectedUnitModel = selectedUnitDto;
+    this.modalUnitsOtpCode.show();
   }
 }

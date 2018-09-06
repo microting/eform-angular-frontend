@@ -1,67 +1,95 @@
-<nav class="navbar navbar-static-top navbar-default navbar-header-full navbar-dark" id="header" role="navigation">
-  <div class="container-fluid">
-    <div class="pull-right">
-      <ul class="nav navbar-nav">
-        <ng-container *ngFor="let menu of navigationMenu">
-          <li [ngClass]="{'dropdown': menu.submenus.length > 0}"
-              *ngIf="menu.appendLeftStyles && (userInfo.role == menu.guard
-              || userInfo.role == 'admin'
-              || menu.guard == null)">
-            <a class="dropdown-toggle" *ngIf="menu.submenus.length > 0" id="{{menu.e2eId || 'm1'}}"
-               data-toggle="dropdown" href="javascript:void(0);">
-              {{menu.name}}
-            </a>
-            <a *ngIf="menu.submenus.length == 0" routerLink="{{menu.link}}" id="{{menu.e2eId || 'm2'}}">
-              {{menu.name}}
-            </a>
-            <ul class="dropdown-menu dropdown-menu-right" *ngIf="menu.submenus.length > 0">
-              <li *ngFor="let submenu of menu.submenus" id="{{submenu.e2eId || 'm3'}}">
-                <a routerLink="{{submenu.link}}" routerLinkActive="active"
-                   *ngIf="userInfo.role == submenu.guard || userInfo.role == 'admin' || submenu.guard == null">
-                  {{submenu.name}}
-                </a>
-              </li>
-            </ul>
-          </li>
+<div class="w-100 navbar-bg">
+  <nav class="navbar navbar-static-top navbar-expand-lg p-2" id="header" role="navigation">
+    <button
+      class="navbar-toggler"
+      type="button"
+      aria-label="Toggle navigation"
+      (click)="expandMenu()">
+      <i class="material-icons white-text">
+        reorder
+      </i>
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <!--nav items here-->
+    <div class="collapse navbar-collapse" #navigationMenu>
+      <ul class="navbar-nav mr-auto">
+        <ng-container *ngFor="let menu of navMenu">
+          <ng-container *ngIf="menu?.submenus?.length == 0; else dropdown;">
+            <li class="nav-item">
+              <a
+                routerLink="{{menu.link}}"
+                mdbWavesEffect
+                class="nav-link waves-light"
+                id="{{menu.e2eId}}">
+                {{menu.name}}
+              </a>
+            </li>
+          </ng-container>
+          <ng-template #dropdown>
+            <li class="nav-item">
+              <div mdbDropdown class="dropdown">
+                <a
+                  mdbDropdownToggle
+                  mdbWavesEffect
+                  class="nav-link dropdown-toggle waves-light"
+                  id="{{menu.e2eId}}">{{menu.name}}</a>
+                <div class="dropdown-menu" *ngIf="menu?.submenus?.length > 0;">
+                  <a
+                    *ngFor="let subMenu of menu.submenus"
+                    class="dropdown-item waves-light"
+                    routerLink="{{subMenu.link}}"
+                    routerLinkActive="active"
+                    id="{{subMenu.e2eId}}">
+                    {{subMenu.name}}
+                  </a>
+                </div>
+              </div>
+            </li>
+          </ng-template>
         </ng-container>
       </ul>
-    </div>
-    <div class="navbar-header">
-      <button aria-expanded="true" class="navbar-toggle" data-target="#bs-example-navbar-collapse-1"
-              data-toggle="collapse" style="position: absolute; top: -1px;"
-              type="button">
-        <span class="sr-only">Toggle navigation</span>
-        <i class="fa fa-bars"></i>
-      </button>
-      <a class="navbar-brand hidden-lg hidden-md hidden-sm" href="/" id="ar-brand">
-
-      </a>
-    </div>
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <ng-container *ngFor="let menu of navigationMenu">
-          <li [ngClass]="{'dropdown': menu.submenus.length > 0}"
-              *ngIf="!menu.appendLeftStyles && (userInfo.role == menu.guard || userInfo.role == 'admin' || menu.guard == null)">
-            <a class="dropdown-toggle" *ngIf="menu.submenus.length > 0"
-               id="{{menu.e2eId || 'm4'}}"
-               data-toggle="dropdown" href="javascript:void(0);">
-              {{menu.name}}
-            </a>
-            <a class="dropdown-toggle" *ngIf="menu.submenus.length == 0" routerLink="{{menu.link}}" id="{{menu.e2eId || 'm5'}}"
-               routerLinkActive="active">
-              {{menu.name}}
-            </a>
-            <ul class="dropdown-menu dropdown-menu-right" *ngIf="menu.submenus.length > 0">
-              <li *ngFor="let submenu of menu.submenus" id="{{submenu.e2eId || 'm6'}}">
-                <a routerLink="{{submenu.link}}" routerLinkActive="active"
-                   *ngIf="userInfo.role == submenu.guard || userInfo.role == 'admin' || submenu.guard == null">
-                  {{submenu.name}}
-                </a>
-              </li>
-            </ul>
-          </li>
-        </ng-container>
+      <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <div mdbDropdown class="dropdown">
+                <a *ngIf="userMenu?.name"
+                  mdbDropdownToggle
+                  mdbWavesEffect
+                  class="nav-link dropdown-toggle waves-light"
+                   id="userDropdown">{{userMenu.name}}</a>
+                <div class="dropdown-menu outbounds-fix" *ngIf="userMenu?.submenus?.length">
+                  <a
+                    *ngFor="let subMenu of userMenu.submenus"
+                    id="{{subMenu.e2eId}}"
+                    class="dropdown-item waves-light"
+                    routerLink="{{subMenu.link}}"
+                    routerLinkActive="active">
+                    {{subMenu.name}}
+                  </a>
+                </div>
+              </div>
+            </li>
       </ul>
     </div>
-  </div>
-</nav>
+    <!--right menu-->
+    <!--<div class="pull-right ml-auto">-->
+      <!--<div mdbDropdown class="nav-item dropdown">-->
+        <!--<a-->
+          <!--mdbDropdownToggle-->
+          <!--mdbWavesEffect-->
+          <!--id="userDropdown"-->
+          <!--class="nav-link dropdown-toggle waves-light" *ngIf="userMenu?.name">{{userMenu.name}}</a>-->
+        <!--&lt;!&ndash;dropdown-menu-right doesn't work at navbar, bootstrap bug?&ndash;&gt;-->
+        <!--<div class="dropdown-menu outbounds-fix" *ngIf="userMenu?.submenus?.length">-->
+          <!--<a-->
+            <!--*ngFor="let subMenu of userMenu.submenus"-->
+            <!--id="{{subMenu.e2eId}}"-->
+            <!--class="dropdown-item waves-light"-->
+            <!--routerLink="{{subMenu.link}}"-->
+            <!--routerLinkActive="active">-->
+            <!--{{subMenu.name}}-->
+          <!--</a>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+  </nav>
+</div>

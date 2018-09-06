@@ -1,31 +1,23 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
-import {CaseFieldValue} from 'app/models';
-import {ImageService, NotifyService} from 'app/services';
-import {NgxGalleryComponent, NgxGalleryImage, NgxGalleryOptions} from 'ngx-gallery';
-
+import {Gallery, GalleryItem, ImageItem} from '@ngx-gallery/core';
+import {Lightbox} from '@ngx-gallery/lightbox';
+import {CaseFieldValue} from 'src/app/common/models/cases';
+import {ImageService} from 'src/app/common/services/cases';
 
 @Component({
   selector: 'element-picture',
   templateUrl: './element-picture.component.html',
-  styleUrls: ['./element-picture.component.css']
+  styleUrls: ['./element-picture.component.scss']
 })
-export class ElementPictureComponent implements OnChanges, OnInit {
+export class ElementPictureComponent implements OnChanges {
   @Input() fieldValues: Array<CaseFieldValue> = [];
-  isRotateLocked = false;
+  buttonsLocked = false;
   geoObjects = [];
   images = [];
-  galleryImages: NgxGalleryImage[] = [];
-  galleryOptions: NgxGalleryOptions[] = [];
-  @ViewChild(NgxGalleryComponent) ngxGalleryComponent: NgxGalleryComponent;
+  galleryImages: GalleryItem[] = [];
+  spinnerStatus = false;
 
-  constructor(private imageService: ImageService, private notifyService: NotifyService) {
-  }
-
-  ngOnInit() {
-    this.galleryOptions = [
-      { image: false, thumbnails: false, width: '0px', height: '0px' },
-      {breakpoint: 500, width: '100%'}
-    ];
+  constructor(private imageService: ImageService, public gallery: Gallery, public lightbox: Lightbox) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -58,17 +50,8 @@ export class ElementPictureComponent implements OnChanges, OnInit {
   updateGallery() {
     this.galleryImages = [];
     this.images.forEach(value => {
-      this.galleryImages.push({
-        small: value.thumbnail,
-        medium: value.src,
-        big: value.src
-      });
+      this.galleryImages.push( new ImageItem({ src: value.src, thumb: value.thumbnail }));
     });
-  }
-
-  openPicture(i: any) {
-    this.updateGallery();
-    this.ngxGalleryComponent.openPreview(i);
   }
 
   openGpsWindow(url: string) {
@@ -76,27 +59,32 @@ export class ElementPictureComponent implements OnChanges, OnInit {
   }
 
   deletePicture(image: any) {
+    this.buttonsLocked = true;
     this.imageService.deleteImage(image.fileName, image.fieldId, image.uploadedObjId).subscribe((data) => {
       if (data.success) {
         this.images = this.images.filter(x => x.fileName !== image.fileName);
-      }
+      } this.buttonsLocked = false;
     });
   }
 
   rotatePicture(image: any) {
-    this.isRotateLocked = true;
+    this.buttonsLocked = true;
     this.imageService.rotateImage(image.fileName).subscribe((operation) => {
       if (operation && operation.success) {
-        this.notifyService.success({text: operation.message});
         this.images = this.images.filter(x => x.fileName !== image.fileName);
         image.src = image.src + '?noCache=' + Math.floor(Math.random() * 1000).toString();
         image.thumbnail = image.src;
         this.images.push(image);
         this.updateGallery();
-      } else {
-        this.notifyService.error({text: operation.message || 'Error'});
       }
-      this.isRotateLocked = false;
-    }, () => this.isRotateLocked = false);
+      this.buttonsLocked = false;
+    }, () => this.buttonsLocked = false);
   }
+
+  openPicture(i: any) {
+    this.updateGallery();
+    this.gallery.ref('lightbox').load(this.galleryImages);
+    this.lightbox.open(i);
+  }
+
 }

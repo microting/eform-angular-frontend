@@ -1,11 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CaseFieldValue} from 'app/models';
+import {CaseFieldValue} from 'src/app/common/models/cases';
 
 @Component({
   selector: 'element-infobox',
   templateUrl: './element-infobox.component.html',
+  styleUrls: ['./element-infobox.component.scss']
 })
-export class ElementInfoboxComponent implements OnInit {
+export class ElementInfoboxComponent {
   fieldValueObj: CaseFieldValue = new CaseFieldValue();
 
   @Input()
@@ -19,9 +20,5 @@ export class ElementInfoboxComponent implements OnInit {
 
   constructor() {
   }
-
-  ngOnInit() {
-  }
-
 
 }

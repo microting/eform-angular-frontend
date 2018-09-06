@@ -1,0 +1,47 @@
+<div class="d-flex justify-content-center align-items-center p-5">
+  <div class="card z-depth-2" style="width: 27rem;">
+    <div class="card-body">
+      <div class="mb-2">
+        <div class="d-flex justify-content-center mb-3">
+          <img class="img-fluid" *ngIf="!googleAuthenticatorModel.barcodeUrl"
+               src="../../../../../assets/google-auth-image.jpg"/>
+          <img class="img-fluid" *ngIf="googleAuthenticatorModel.barcodeUrl"
+               src="http://qrcode.kaywa.com/img.php?s=4&d={{googleAuthenticatorModel.barcodeUrl}}"/>
+        </div>
+        <ng-container *ngIf="googleAuthenticatorModel.psk">
+          <p>
+            {{ 'Open Google Authenticator and add Eform application by scanning the QR Code to the right' | translate
+            }}.
+          </p>
+        </ng-container>
+        <p>{{ 'Enter the 6 digit code that Google Authenticator generates' | translate }}</p>
+        <p *ngIf="googleAuthenticatorModel.psk">
+          {{'Your PSK' | translate}}: <strong>{{googleAuthenticatorModel.psk}}</strong>
+        </p>
+      </div>
+
+
+      <div class="mb-2">
+        <form [formGroup]="formGoogleAuth">
+          <div class="md-form">
+            <i class="material-icons prefix">
+              lock_open
+            </i>
+            <input mdbInputDirective [mdbValidate]="false"
+                   formControlName="code" type="text" name="code" id="code" class="form-control">
+            <label for="code">{{'Code' | translate}}</label>
+          </div>
+          <button [disabled]="!code.valid"
+                  type="button" (click)="submitGoogleAuthForm()"
+                  class="btn btn-success btn-lg btn-block">{{'Send' | translate}}</button>
+        </form>
+      </div>
+      <a class="link-primary" [routerLink]="['/auth']">< {{'Back to login' | translate}}</a>
+    </div>
+
+
+  </div>
+
+</div>
+
+<eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>

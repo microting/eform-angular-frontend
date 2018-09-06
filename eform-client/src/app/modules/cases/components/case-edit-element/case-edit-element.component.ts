@@ -1,24 +1,25 @@
-import {Component, Input, QueryList, ViewChildren} from '@angular/core';
+import {Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {
+  CaseDataItem,
   CaseEditRequest,
   CaseEditRequestField,
   CaseEditRequestFieldValue,
-  CaseElement,
-  CaseDataItem
-} from 'app/models';
+  CaseElement
+} from 'src/app/common/models/cases';
 
 @Component({
-  selector: 'case-edit-element',
-  templateUrl: './case-edit-element.component.html'
+  selector: 'app-case-edit-element',
+  templateUrl: './case-edit-element.component.html',
+  styleUrls: ['./case-edit-element.component.scss']
 })
-
-export class CaseEditElementComponent {
+export class CaseEditElementComponent implements OnInit {
   @ViewChildren(CaseEditElementComponent) editElements: QueryList<CaseEditElementComponent>;
   @Input() element: CaseElement = new CaseElement();
   requestModel: CaseEditRequest = new CaseEditRequest();
   requestModels: Array<CaseEditRequest> = [];
+  constructor() { }
 
-  constructor() {
+  ngOnInit() {
   }
 
   clearRequestModel() {
@@ -62,4 +63,5 @@ export class CaseEditElementComponent {
     });
     this.requestModel.elementList = this.requestModels;
   }
+
 }

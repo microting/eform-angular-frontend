@@ -1,10 +1,12 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-import {PreloadResolverConfig} from 'app/configs';
-import {FullLayoutComponent, SimpleLayoutComponent} from 'app/layouts';
-import {RestorePasswordComponent, AuthComponent, SignOutComponent} from 'app/components';
-import {AuthGuard} from 'app/guards';
+import {AdminGuard, AuthGuard} from 'src/app/common/guards';
+import {
+  FullLayoutComponent,
+  SimpleLayoutComponent
+} from './components';
+
 
 export const routes: Routes = [
   {
@@ -17,7 +19,7 @@ export const routes: Routes = [
       {
         path: '',
         canActivate: [AuthGuard],
-        loadChildren: './modules/eform/eform.module#EFormModule'
+        loadChildren: './modules/eforms/eforms.module#EFormsModule'
       },
       {
         path: 'advanced',
@@ -27,7 +29,7 @@ export const routes: Routes = [
       {
         path: 'simplesites',
         canActivate: [AuthGuard],
-        loadChildren: './modules/simple-sites/simple-sites.module#SimpleSitesModule'
+        loadChildren: './modules/device-users/device-users.module#DeviceUsersModule'
       },
       {
         path: 'cases',
@@ -36,6 +38,7 @@ export const routes: Routes = [
       },
       {
         path: 'application-settings',
+        canActivate: [AdminGuard],
         loadChildren: './modules/application-settings/application-settings.module#ApplicationSettingsModule'
       },
       {
@@ -46,38 +49,24 @@ export const routes: Routes = [
       {
         path: 'plugins',
         canActivate: [AuthGuard],
-        loadChildren: './plugins/plugins.module#PluginsModule',
-        data: { preload: true }
+        loadChildren: './plugins/plugins.module#PluginsModule'
       },
     ]
   },
   {
-    path: 'login',
+    path: 'auth',
     component: SimpleLayoutComponent,
     data: {
-      title: 'Login'
+      title: 'Auth'
     },
-    children: [
-      {
-        path: '',
-        component: AuthComponent,
-      },
-      {
-        path: 'restore-password',
-        component: RestorePasswordComponent
-      },
-      {
-        path: 'sign-out',
-        component: SignOutComponent
-      }
-    ]
+    loadChildren: './modules/auth/auth.module#AuthModule'
   },
   // otherwise redirect to home
   {path: '**', redirectTo: ''}
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {useHash: false, preloadingStrategy: PreloadResolverConfig })],
+  imports: [RouterModule.forRoot(routes, {useHash: false})],
   exports: [RouterModule]
 })
 export class AppRoutingModule {

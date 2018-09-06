@@ -1,0 +1,45 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{'New Device User' | translate}}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="md-form">
+                <input mdbInputDirective
+                       [(ngModel)]="simpleSiteModel.userLastName"
+                       [mdbValidate]="false"
+                       required type="text" name="userName" id="firstName" class="form-control">
+                <label for="firstName">{{'First Name' | translate }} </label>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="md-form">
+                <input mdbInputDirective
+                       [(ngModel)]="simpleSiteModel.userFirstName"
+                       [mdbValidate]="false"
+                       required type="text" name="email" id="lastName" class="form-control">
+                <label for="lastName">{{'Last Name' | translate }} </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" id="saveCreateBtn"
+                [disabled]="!simpleSiteModel.userFirstName || !simpleSiteModel.userLastName"
+                (click)="createDeviceUser()">{{ 'Create' | translate }}</button>
+        <button class="btn btn-neutral text-black-50" id="cancelCreateBtn" (click)="frame.hide()">
+          {{ 'Cancel' | translate }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>
+
+
+

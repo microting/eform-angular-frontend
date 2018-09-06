@@ -1,26 +1,13 @@
-<div class="panel panel-default">
-  <div class="panel-heading" (click)="isCollapsed = !isCollapsed" style="cursor: pointer">
-<ng-container *ngIf="isCollapsed">
-  <strong>{{dataItemLabel}}</strong>
-  <div class="pull-right">
-      <i style="color: red;" class="glyphicon glyphicon-chevron-left"></i>
+<div class="card z-depth-3 mb-4 mt-4" style="width: 100%">
+
+  <div class="card-header" style="cursor: pointer" (click)="collapse.toggle()">
+    <h6>{{dataItemLabel}}</h6>
   </div>
 
-</ng-container>
-<ng-container *ngIf="!isCollapsed">
-  <strong>{{dataItemLabel}}</strong>
-  <div class="pull-right">
-      <i style="color: red;" class="glyphicon glyphicon-chevron-down"></i>
+  <div mdbCollapse #collapse="bs-collapse">
+    <div class="card-body">
+      <app-case-edit-switch [dataItemList]="dataItemList"></app-case-edit-switch>
+    </div>
   </div>
-</ng-container>
 
-
-  </div>
-  <div [collapse]="isCollapsed" class="panel-body" >
-    <ng-container *ngIf="dataItemList">
-      <table class="table">
-        <tbody case-edit-switch [dataItemList]="dataItemList"></tbody>
-      </table>
-    </ng-container>
-  </div>
 </div>

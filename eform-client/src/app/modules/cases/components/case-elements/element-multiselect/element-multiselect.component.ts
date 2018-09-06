@@ -1,10 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CaseFieldValue} from 'app/models';
+import {CaseFieldValue} from 'src/app/common/models/cases';
 
 @Component({
   selector: 'element-multiselect',
   templateUrl: './element-multiselect.component.html',
-  styleUrls: ['./element-multiselect.component.css']
+  styleUrls: ['./element-multiselect.component.scss']
 })
 export class ElementMultiselectComponent implements OnInit {
   fieldValueObj: CaseFieldValue = new CaseFieldValue();
@@ -38,7 +38,7 @@ export class ElementMultiselectComponent implements OnInit {
   }
 
   initCheckBoxes() {
-    var str = this.fieldValueObj.value
+    var str = this.fieldValueObj.value;
     var res = str.split('|');
     this.fieldValueObj.keyValuePairList.forEach(x => {
       if (this.arrayContains(x.key.toString(), res)) {

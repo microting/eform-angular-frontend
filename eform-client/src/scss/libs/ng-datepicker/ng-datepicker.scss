@@ -1,0 +1,132 @@
+@import "../../utilities/colors";
+
+.ngx-datepicker-position-bottom-left {
+  top: 40px;
+  right: 0;
+}
+
+.ngx-datepicker-position-bottom-right {
+  top: 40px;
+  left: 0;
+}
+
+.ngx-datepicker-position-top-left {
+  bottom: 40px;
+  right: 0;
+}
+
+.ngx-datepicker-position-top-right {
+  bottom: 40px;
+  left: 0;
+}
+
+.ngx-datepicker-container {
+  position: relative;
+}
+.ngx-datepicker-container .ngx-datepicker-input {
+  padding: 5px 10px;
+  font-size: 15px !important;
+  font-weight: 300 !important;
+  width: 200px;
+  outline: none;
+  border: 1px solid #dfe3e9;
+}
+.ngx-datepicker-container > .md-form > input {
+  font-size: 15px !important;
+  font-weight: 400 !important;
+}
+.ngx-datepicker-container .ngx-datepicker-calendar-container {
+  z-index: 99;
+  position: absolute;
+  width: 300px;
+  background: white;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.08);
+  border: 1px solid #dfe3e9;
+  border-radius: 4px;
+}
+.ngx-datepicker-container .ngx-datepicker-calendar-container .topbar-container {
+  width: 100%;
+  height: 50px;
+  padding: 15px;
+  border-bottom: 1px solid #dfe3e9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+.ngx-datepicker-container .ngx-datepicker-calendar-container .topbar-container svg {
+  cursor: pointer;
+}
+.ngx-datepicker-container .ngx-datepicker-calendar-container .topbar-container svg g {
+  fill: #ced0da;
+}
+.ngx-datepicker-container .ngx-datepicker-calendar-container .topbar-container .topbar-title {
+  color: #3d495c;
+  font-size: 12px;
+  font-weight: 400;
+  cursor: pointer;
+}
+.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container {
+  width: 100%;
+  height: 100%;
+  padding: 15px 10px 0;
+  font-size: 12px;
+  font-weight: 400;
+}
+.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-day-names {
+  color: #a4a9b1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-day-names .day-name-unit {
+  width: calc(100% / 7);
+  text-transform: uppercase;
+  text-align: center;
+}
+.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days, .ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years {
+  padding: 15px 0;
+  width: 100%;
+  display: inline-block;
+  max-height: 275px;
+  overflow: hidden;
+}
+.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days .day-unit, .ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days .year-unit, .ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years .day-unit, .ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years .year-unit {
+  width: calc(100% / 7);
+  height: 40px;
+  display: inline-flex;
+  float: left;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 50%;
+  color: #3d495c;
+}
+.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days .day-unit.is-prev-month, .ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days .year-unit.is-prev-month, .ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years .day-unit.is-prev-month, .ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years .year-unit.is-prev-month {
+  color: #a4a9b1;
+}
+.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days .day-unit:hover, .ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days .day-unit.is-today, .ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days .year-unit:hover, .ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days .year-unit.is-today, .ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years .day-unit:hover, .ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years .day-unit.is-today, .ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years .year-unit:hover, .ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years .year-unit.is-today {
+  background: #a4a9b1;
+  color: white;
+}
+.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days .day-unit.is-selected, .ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days .year-unit.is-selected, .ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years .day-unit.is-selected, .ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years .year-unit.is-selected {
+  background: $eform-red-dark !important;
+  color: white !important;
+}
+.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days .day-unit.is-disabled, .ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days .year-unit.is-disabled, .ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years .day-unit.is-disabled, .ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years .year-unit.is-disabled {
+  cursor: not-allowed;
+  color: #a4a9b1;
+}
+.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days .day-unit.is-disabled:hover, .ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days .year-unit.is-disabled:hover, .ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years .day-unit.is-disabled:hover, .ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years .year-unit.is-disabled:hover {
+  background: transparent;
+}
+.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years {
+  height: 210px;
+  display: block;
+  padding: 0;
+}
+.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years .year-unit {
+  width: calc(100% / 3);
+  border-radius: 10px;
+}

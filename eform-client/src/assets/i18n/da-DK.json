@@ -1,7 +1,7 @@
 {
   "Settings": "Indstillinger",
   "Save": "Gem",
-  "Login Page": "Login Page",
+  "Login Page": "Login side",
   "Reset": "Nulstil",
   "Main Text": "Hovedtekst",
   "Secondary Text": "Sekundær tekst",
@@ -9,7 +9,7 @@
   "Recommended parameters": "Anbefalede parametre",
   "Resolution": "Påløsning",
   "Proportions": "Proportioner",
-  "Site Header": "Site Header",
+  "Site header": "Webstedoverskrift",
   "Logo": "Logo",
   "SMTP Information": "SMTP-oplysninger",
   "Host": "Vært",
@@ -162,5 +162,23 @@
   "All selected": "Alle markerede",
 
   "Showing to of records": "Viser {{currentPageAmount}} til {{currentPage}} ud af {{total}} poster",
-  "Google Authenticator description": "<p>Hemmelig nøgle mellem <strong>Eform</strong> applikation og  <strong>Google Authenticator</strong>. Hold det sikkert og fortæl ikke nogen.</p><p>Du bør fjerne denne nøgle, hvis <strong>Google Authenticator</strong> geninstalleres eller nøglen er fjernet</p>"
+  "Google Authenticator description": "<p>Hemmelig nøgle mellem <strong>Eform</strong> applikation og  <strong>Google Authenticator</strong>. Hold det sikkert og fortæl ikke nogen.</p><p>Du bør fjerne denne nøgle, hvis <strong>Google Authenticator</strong> geninstalleres eller nøglen er fjernet</p>",
+
+  "New OTP for": "Ny OTP til",
+  "Loading": "Indlæser",
+  "Pending": "Verserende",
+  "Upload": "Overfør",
+  "Role": "Rolle",
+  "New list": "Ny liste",
+  "Name is required": "Ikke færdigudfyldt",
+  "Edit searchable list": "Rediger søgbar liste",
+  "eForm Pairing": "eForm Parring",
+  "Tag for removal": "Tag til fjernelse",
+  "New tags": "Nye tags",
+  "Rotate on 90": "Drej på 90",
+  "Delete picture": "Slet billede",
+  "Open location": "Åben beliggenhed",
+  "File has been uploaded successfully": "Filen er blevet uploadet korrekt",
+  "Error while uploading file": "Der opstod en fejl under upload af filen",
+  "Customers": "Kunder"
 }

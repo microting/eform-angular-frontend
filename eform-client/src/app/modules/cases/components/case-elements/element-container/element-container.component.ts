@@ -1,13 +1,12 @@
-import {Component, Input} from '@angular/core';
-import {CaseDataItem} from 'app/models';
+import {Component, Input, OnInit} from '@angular/core';
+import {CaseDataItem} from 'src/app/common/models';
 
 @Component({
   selector: 'element-container',
   templateUrl: './element-container.component.html',
-  styleUrls: ['./element-container.component.css']
+  styleUrls: ['./element-container.component.scss']
 })
-export class ElementContainerComponent {
-  isCollapsed = true;
+export class ElementContainerComponent  {
   dataItemList: Array<CaseDataItem> = [];
   @Input() dataItemLabel: string;
   @Input()
@@ -20,4 +19,5 @@ export class ElementContainerComponent {
 
   constructor() {
   }
+
 }

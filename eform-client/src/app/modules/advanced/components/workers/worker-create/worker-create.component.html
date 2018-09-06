@@ -1,0 +1,54 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{'Create Worker' | translate}}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <ng-select
+                class="custom"
+                dropdownPosition="'bottom'"
+                [bindValue]="'siteId'"
+                [bindLabel]="'fullName'"
+                [(ngModel)]="newWorkerModel.siteId"
+                [placeholder]="'Select Worker' | translate"
+                [items]="simpleSites"
+                id="workerSelector"
+                [multiple]="false"></ng-select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="md-form">
+                <input mdbInputDirective
+                       name="firstName" [(ngModel)]="newWorkerModel.firstName"
+                       id="firstName" type="text" class="form-control">
+                <label for="firstName">{{'First Name: ' | translate}}</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="md-form">
+                <input mdbInputDirective
+                       name="lastName"
+                       [(ngModel)]="newWorkerModel.lastName"
+                       id="lastName" type="text" class="form-control">
+                <label for="lastName">{{'Last Name: ' | translate}}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success" (click)="createWorker()">{{'Create' | translate}}</button>
+        <button class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Cancel' | translate}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>
