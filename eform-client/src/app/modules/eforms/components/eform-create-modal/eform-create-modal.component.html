@@ -48,9 +48,13 @@
       </div>
       <div class="modal-footer">
         <button class="btn btn-danger"
+                id="createEformBtn"
                 [disabled]="!eFormCreateModel.eFormXml"
-                (click)="createTemplate()">{{'Create' | translate}}</button>
-        <button class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Close' | translate}}</button>
+                (click)="createTemplate()">{{'Create' | translate}}
+        </button>
+        <button id="cancelCreateEformBtn" class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Close' |
+          translate}}
+        </button>
       </div>
     </div>
   </div>
