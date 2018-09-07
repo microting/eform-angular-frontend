@@ -1,10 +1,12 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import {AdminGuard} from 'src/app/common/guards';
 import {ChangePasswordComponent, ProfileSettingsComponent, UsersPageComponent} from './components';
 
 const routes: Routes = [
   {
     path: 'users',
+    canActivate: [AdminGuard],
     component: UsersPageComponent,
   },
   {

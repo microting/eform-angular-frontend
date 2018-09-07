@@ -179,5 +179,6 @@
   "Delete picture": "Slet billede",
   "Open location": "Åben beliggenhed",
   "File has been uploaded successfully": "Filen er blevet uploadet korrekt",
-  "Error while uploading file": "Der opstod en fejl under upload af filen"
+  "Error while uploading file": "Der opstod en fejl under upload af filen",
+  "Customers": "Kunder"
 }
