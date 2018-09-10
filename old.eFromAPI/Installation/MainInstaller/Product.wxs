@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <!--<?define MicrotingService_TargetDir=$(var.eFormAPI.Web.TargetDir)?>-->
+  <?define ProductName="Microting eForm API" ?>
+
+  <Product Id="*" Name="$(var.ProductName)" Language="1033" Version="1.1.2.17" Manufacturer="Microting A/S">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" InstallPrivileges="elevated" AdminImage="yes" />
+
+    <UIRef Id="WixUI_InstallDirModified" />
+
+    <MediaTemplate EmbedCab="yes" />
+
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)\MicrotingEULA.rtf" />
+
+    <Feature Id="ProductFeature" Title="Microting Service" Level="1">
+      <ComponentGroupRef Id="ClientFiles" />
+      <ComponentGroupRef Id="ApiFiles" />
+      <ComponentGroupRef Id="LetsEncryptFiles" />
+    </Feature>
+  </Product>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="INSTALLFOLDER" Name="$(var.ProductName)">
+        <Directory Id="eform_api" Name="eform-api"/>
+        <Directory Id="eform_client" Name="eform-client"/>
+        <Directory Id="letsencrypt" Name="letsencrypt"/>
+      </Directory>
+    </Directory>
+
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <Property Id="MSIUSEREALADMINDETECTION" Value="1" />
+    <Property Id="MSIINSTALLPERUSER" Value="{}" />
+
+    <SetProperty Id="ARPNOMODIFY" Value="1" After="InstallValidate" Sequence="execute" />
+    
+    <Property Id="INSTMODE" Value="{}" Secure="yes" />
+    <Property Id="DOMAINNAME" Value="{}" Secure="yes" />
+    <Property Id="CUSTOMERNUMBER" Value="{}" Secure="yes" />
+    <Property Id="GENERATESSL" Value="{}" Secure="yes" />
+    <Property Id="EMAIL" Value="{}" Secure="yes" />
+    <Property Id="INSTALLFOLDER" Value="C:\inetpub\wwwroot" Secure="yes" />
+    <Property Id="KEEPFOLDERS" Value="eform-api\output" Secure="yes"/>
+    <Property Id="KEEPSETTINGS" Value="1" Secure="yes"/>
+    <Property Id="KEEPFILES" Value="eform-api\input.txt,eform-api\Web.config" Secure="yes"/>
+    <Property Id="USEEXISTINGCONFIGURATION" Value="{}" Secure="yes"/>
+    <Property Id="CONFIGURATIONEXISTS" Value="{}" Secure="yes"/>
+    
+    <WixVariable Id="WixUIBannerBmp" Value="TopBanner.bmp" />
+    <WixVariable Id="WixUIDialogBmp" Value="WelcomeBanner.bmp" />
+    
+    <InstallExecuteSequence>
+      <Custom Action="SetProductName" After="InstallInitialize" />
+      <Custom Action="SetInstalValues" After="InstallInitialize" />
+      <Custom Action="SetRemoveValues" After="InstallInitialize" />
+      <Custom Action="SetUpdateServiceValues" After="InstallInitialize" />
+
+      <Custom Action="Install" Before="InstallFinalize">1</Custom>
+      <Custom Action="UpdateService" Before="InstallFinalize">1</Custom>
+      <Custom Action="RemoveService" Before="InstallFinalize">1</Custom>
+    </InstallExecuteSequence>
+  </Fragment>
+
+  <Fragment>
+    <CustomAction Id="GetAPIsList" BinaryKey="BinaryCA" DllEntry="GetAPIsListCA" Execute="immediate" />
+    <CustomAction Id="TryFindConfigs" BinaryKey="BinaryCA" DllEntry="TryFindConfigs" Execute="immediate"/>
+    <CustomAction Id="RestartInstaller" BinaryKey="BinaryCA" DllEntry="RestartInstallerCA" Execute="immediate" />
+    
+    <CustomAction Id="Install" BinaryKey="BinaryCA" DllEntry="InstallCA" Execute="deferred" Impersonate="no" />
+    <CustomAction Id="UpdateService" BinaryKey="BinaryCA" DllEntry="UpdateCA" Execute="deferred" Impersonate="no" />
+    <CustomAction Id="RemoveService" BinaryKey="BinaryCA" DllEntry="RemoveCA" Execute="deferred" Impersonate="no" />
+    
+    <Binary Id="BinaryCA" SourceFile="BuildedCustomActions\CustomActions.CA.dll" />
+
+    <CustomAction Id="SetInstalValues" Property="Install" Value="INSTMODE=[INSTMODE];DOMAINNAME=[DOMAINNAME];CUSTOMERNUMBER=[CUSTOMERNUMBER];GENERATESSL=[GENERATESSL];INSTALLFOLDER=[INSTALLFOLDER];USEEXISTINGCONFIGURATION=[USEEXISTINGCONFIGURATION];CONFIGURATIONEXISTS=[CONFIGURATIONEXISTS];KEEPFOLDERS=[KEEPFOLDERS];KEEPFILES=[KEEPFILES];EMAIL=[EMAIL]"/>
+    <CustomAction Id="SetRemoveValues" Property="RemoveService" Value="INSTMODE=[INSTMODE];DOMAINNAME=[DOMAINNAME];KEEPFOLDERS=[KEEPFOLDERS];KEEPSETTINGS=[KEEPSETTINGS];KEEPFILES=[KEEPFILES]" />
+    <CustomAction Id="SetUpdateServiceValues" Property="UpdateService" Value="INSTMODE=[INSTMODE];DOMAINNAME=[DOMAINNAME];INSTALLFOLDER=[INSTALLFOLDER]" />
+
+    <CustomAction Id="SetProductName" Property="ProductName" Value="[ProductName] - [DOMAINNAME]" />
+  </Fragment>
+</Wix>
