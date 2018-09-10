@@ -4,8 +4,6 @@ using System.Linq;
 using System.Web.Configuration;
 using eFormAPI.Web.Infrastructure.Identity;
 using eFormAPI.Web.Infrastructure.Models.Settings.Initial;
-using eFormApi.BasePn.Infrastructure.Data;
-using eFormApi.BasePn.Infrastructure.Data.Entities;
 using Microsoft.AspNet.Identity;
 using NLog;
 

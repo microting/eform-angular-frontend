@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace eFormAPI.Common
+﻿namespace eFormAPI.Common
 {
     public class Class1
     {

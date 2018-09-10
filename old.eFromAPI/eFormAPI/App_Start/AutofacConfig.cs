@@ -3,7 +3,6 @@ using System.Web.Http;
 using Autofac;
 using Autofac.Integration.WebApi;
 using eFormAPI.Web.Infrastructure.Identity;
-using eFormApi.BasePn.Infrastructure.Data;
 
 namespace eFormAPI.Web
 {

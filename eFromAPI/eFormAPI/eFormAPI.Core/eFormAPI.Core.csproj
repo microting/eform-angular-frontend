@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\eFormAPI.Common\eFormAPI.Common.csproj" />
+    <ProjectReference Include="..\eFormAPI.Database\eFormAPI.Database.csproj" />
+  </ItemGroup>
+
 </Project>

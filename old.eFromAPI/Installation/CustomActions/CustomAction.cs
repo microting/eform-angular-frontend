@@ -7,11 +7,8 @@ using System.Diagnostics;
 using System.Linq;
 using Microsoft.Web.Administration;
 using System.Collections.Generic;
-using System.Management;
 using System.Security.AccessControl;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Security.Principal;
 using System.Management.Automation;
 using System.Net.NetworkInformation;
 

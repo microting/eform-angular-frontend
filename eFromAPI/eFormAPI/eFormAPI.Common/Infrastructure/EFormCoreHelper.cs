@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Net;
-using Amazon.Runtime.Internal.Util;
-using Castle.Windsor;
 using eFormCore;
 using Rebus.Bus;
 
@@ -12,7 +9,7 @@ namespace eFormAPI.Common.Infrastructure
     {
         private Core _core;
    //     private readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private IWindsorContainer container;
+     //   private IWindsorContainer container;
         public IBus bus;
 
         public Core GetCore()
@@ -57,7 +54,7 @@ namespace eFormAPI.Common.Infrastructure
          //       container = new WindsorContainer();
           //      container.Register(Component.For<Core>().Instance(_core));
           //      container.Install(new RebusHandlerInstaller(), new RebusInstaller(System.Configuration.ConfigurationManager.ConnectionStrings["eFormMainConnection"].ConnectionString));
-                this.bus = container.Resolve<IBus>();
+         //       this.bus = container.Resolve<IBus>();
                 return _core;
             }
        //     Logger.Error("Core is not running");

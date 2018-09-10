@@ -8,4 +8,13 @@
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\eFormAPI.Common\eFormAPI.Common.csproj" />
+    <ProjectReference Include="..\eFormAPI.Core\eFormAPI.Core.csproj" />
+    <ProjectReference Include="..\eFormAPI.Database\eFormAPI.Database.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+   <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0" />
+  </ItemGroup>
 </Project>

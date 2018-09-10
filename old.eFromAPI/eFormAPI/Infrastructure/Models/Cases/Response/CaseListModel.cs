@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using eFormShared;
 
 namespace eFormAPI.Web.Infrastructure.Models.Cases.Response
 {

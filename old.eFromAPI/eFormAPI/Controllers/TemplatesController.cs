@@ -6,11 +6,6 @@ using System.Net;
 using System.Web.Http;
 using eFormAPI.Web.Infrastructure.Models;
 using eFormAPI.Web.Infrastructure.Models.Templates;
-using eFormCore;
-using eFormShared;
-using eFormApi.BasePn.Infrastructure;
-using eFormApi.BasePn.Infrastructure.Helpers;
-using eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Controllers
 {

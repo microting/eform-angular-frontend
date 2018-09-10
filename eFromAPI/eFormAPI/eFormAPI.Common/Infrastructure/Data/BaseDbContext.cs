@@ -1,7 +1,4 @@
-﻿using System.Configuration;
-using eFormAPI.Common.Infrastructure.Data.Entities;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace eFormAPI.Common.Infrastructure.Data
 {

@@ -1,20 +1,13 @@
 ﻿using System.Configuration;
-using System.Data.Entity;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Configuration;
 using System.Web.Http;
-using Castle.Core.Internal;
 using eFormAPI.Web.Infrastructure.Identity;
 using eFormAPI.Web.Infrastructure.Models.Auth;
 using eFormAPI.Web.Infrastructure.Models.Settings.User;
 using eFormAPI.Web.Infrastructure.Models.User;
-using eFormApi.BasePn.Consts;
-using eFormApi.BasePn.Infrastructure.Data;
-using eFormApi.BasePn.Infrastructure.Data.Entities;
-using eFormApi.BasePn.Infrastructure.Helpers;
-using eFormApi.BasePn.Infrastructure.Models.API;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 

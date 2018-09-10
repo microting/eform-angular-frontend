@@ -4,11 +4,6 @@ using System.Web.Http;
 using eFormAPI.Web.Infrastructure.Helpers;
 using eFormAPI.Web.Infrastructure.Models.Cases.Request;
 using eFormAPI.Web.Infrastructure.Models.Cases.Response;
-using eFormShared;
-using eFormData;
-using eFormApi.BasePn.Infrastructure;
-using eFormApi.BasePn.Infrastructure.Helpers;
-using eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Controllers
 {
