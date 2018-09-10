@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -9,15 +10,17 @@ namespace eFormAPI.Web
 {
     public static class SwaggerConfig
     {
-        public static void Register(HttpConfiguration _configuration)
+        public static void Register(HttpConfiguration configuration)
         {
-            _configuration.EnableSwagger(c =>
+            configuration.EnableSwagger(c =>
                 {
                     c.SingleApiVersion("v1", "Eform API");
                     c.IncludeXmlComments($@"{System.AppDomain.CurrentDomain.BaseDirectory}\bin\API.docs.xml");
                     c.DescribeAllEnumsAsStrings();
                     c.DocumentFilter<AuthTokenOperation>();
                     c.OperationFilter<AddAuthorizationHeader>();
+                    c.UseFullTypeNameInSchemaIds();
+                    c.SchemaId(x => x.FullName + Guid.NewGuid());
                 }).EnableSwaggerUi();
         }
     }
