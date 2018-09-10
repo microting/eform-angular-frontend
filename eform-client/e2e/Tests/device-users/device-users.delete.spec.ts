@@ -17,7 +17,7 @@ describe('Device users page', function () {
     lastDeviceUser.deleteBtn.leftClick();
     browser.pause(6000);
     deviceUsersPage.saveDeleteBtn.leftClick();
-    browser.pause(24000);
+    browser.pause(6000);
     const rowNumAfterDelete = deviceUsersPage.rowNum;
     expect(rowNumBeforeDelete, 'User deleted incorrectly').equal(rowNumAfterDelete + 1);
   });
@@ -26,9 +26,9 @@ describe('Device users page', function () {
     const lastDeviceUser = deviceUsersPage.getDeviceUser(rowNumBeforeDelete);
     lastDeviceUser.deleteBtn.waitForVisible(5000);
     lastDeviceUser.deleteBtn.leftClick();
-    browser.pause(16000);
+    browser.pause(8000);
     deviceUsersPage.cancelDeleteBtn.leftClick();
-    browser.pause(12000);
+    browser.pause(8000);
     const rowNumAfterCancelDelete = deviceUsersPage.rowNum;
     expect(rowNumBeforeDelete).equal(rowNumAfterCancelDelete);
   });

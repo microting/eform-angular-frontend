@@ -159,10 +159,8 @@
   "Type in search box to see results": "Type in search box to see results",
   "Select tags for filter": "Select tags for filter",
   "All selected": "All selected",
-
   "Showing to of records": "Showing {{currentPageAmount}} to {{currentPage}} of {{total}} records",
   "Google Authenticator description": "<p>Secret key between <strong>Eform</strong> application and <strong>Google Authenticator</strong>. Keep it safe and do not tell anyone.</p><p>You should remove this key, if <strong>Google Authenticator</strong> is reinstalled or key was removed</p>",
-
   "New OTP for": "New OTP for",
   "Loading": "Loading",
   "Pending": "Pending",
@@ -170,7 +168,7 @@
   "Role": "Role",
   "Status": "Status",
   "New list": "New list",
-  "Name is required": "Ikke færdigudfyldt",
+  "Name is required": "Name is required",
   "Edit searchable list": "Edit searchable list",
   "eForm Pairing": "eForm Pairing",
   "Tag for removal": "Tag for removal",
@@ -180,7 +178,10 @@
   "Open location": "Open location",
   "File has been uploaded successfully": "File has been uploaded successfully",
   "Error while uploading file": "Error while uploading file",
-  "Customers": "Customers"
+  "Customers": "Customers",
+  "Do you want to leave this page": "Do you want to leave this page",
+  "If you leave before saving your changes will be lost": "If you leave before saving your changes will be lost",
+  "Save & Leave": "Save & Leave"
 
 }
 

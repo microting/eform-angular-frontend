@@ -10,7 +10,7 @@
             <div class="col-md-12">
               <div class="md-form">
                 <input mdbInputDirective
-                       [(ngModel)]="simpleSiteModel.userLastName"
+                       [(ngModel)]="simpleSiteModel.userFirstName"
                        [mdbValidate]="false"
                        required type="text" name="userName" id="firstName" class="form-control">
                 <label for="firstName">{{'First Name' | translate }} </label>
@@ -19,7 +19,7 @@
             <div class="col-md-12">
               <div class="md-form">
                 <input mdbInputDirective
-                       [(ngModel)]="simpleSiteModel.userFirstName"
+                       [(ngModel)]="simpleSiteModel.userLastName"
                        [mdbValidate]="false"
                        required type="text" name="email" id="lastName" class="form-control">
                 <label for="lastName">{{'Last Name' | translate }} </label>

@@ -8,6 +8,7 @@ import {CaseDataItem} from 'src/app/common/models';
 })
 export class ElementContainerComponent  {
   dataItemList: Array<CaseDataItem> = [];
+  isCollapsed = true;
   @Input() dataItemLabel: string;
   @Input()
   get fieldValue() {
