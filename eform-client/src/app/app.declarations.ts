@@ -1,6 +1,6 @@
 import {DatePipe, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import {ToastrService} from 'ngx-toastr';
-import {AdminGuard, AuthGuard} from 'src/app/common/guards';
+import {AdminGuard, AuthGuard, CanDeactivateGuard} from 'src/app/common/guards';
 import {EventBrokerService} from 'src/app/common/helpers';
 import {
   EntitySearchService,
@@ -21,6 +21,7 @@ export let providers = [
   // Guards
   AuthGuard,
   AdminGuard,
+  CanDeactivateGuard,
   // Libs services
   ToastrService,
   // Services

@@ -1,5 +1,7 @@
-import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Component, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {ActivatedRoute, NavigationStart, Router} from '@angular/router';
+import {RouteConfigLoadEnd} from '@angular/router';
+import {Subscription} from 'rxjs';
 import {CaseEditRequest, ReplyElement, ReplyRequest} from 'src/app/common/models/cases';
 import {TemplateDto} from 'src/app/common/models/dto';
 import {CasesService} from 'src/app/common/services/cases';
@@ -11,8 +13,10 @@ import {CaseEditElementComponent} from '../case-edit-element/case-edit-element.c
   templateUrl: './case-edit.component.html',
   styleUrls: ['./case-edit.component.scss']
 })
-export class CaseEditComponent implements OnInit {
+export class CaseEditComponent implements OnInit, OnDestroy {
   @ViewChildren(CaseEditElementComponent) editElements: QueryList<CaseEditElementComponent>;
+  @ViewChild('caseConfirmation') caseConfirmation;
+  activatedRouteSub: Subscription;
   id: number;
   templateId: number;
   currentTemplate: TemplateDto = new TemplateDto;
@@ -21,13 +25,15 @@ export class CaseEditComponent implements OnInit {
   requestModels: Array<CaseEditRequest> = [];
   replyRequest: ReplyRequest = new ReplyRequest();
 
+  isNoSaveExitAllowed = false;
+
   spinnerStatus = false;
 
   constructor(private activateRoute: ActivatedRoute,
               private casesService: CasesService,
               private eFormService: EFormService,
               private router: Router) {
-    this.activateRoute.params.subscribe(params => {
+    const activatedRouteSub = this.activateRoute.params.subscribe(params => {
       this.id = +params['id'];
       this.templateId = +params['templateId'];
     });
@@ -36,6 +42,10 @@ export class CaseEditComponent implements OnInit {
   ngOnInit() {
     this.loadCase();
     this.loadTemplateInfo();
+  }
+
+  ngOnDestroy() {
+
   }
 
   loadCase() {
@@ -63,6 +73,7 @@ export class CaseEditComponent implements OnInit {
       if (operation && operation.success) {
         this.replyElement = new ReplyElement();
         this.spinnerStatus = false;
+        this.isNoSaveExitAllowed = true;
         this.router.navigate(['/cases/', this.currentTemplate.id]).then();
       } this.spinnerStatus = false;
     });
@@ -85,4 +96,19 @@ export class CaseEditComponent implements OnInit {
     });
   }
 
+  confirmExit(keepData: boolean) {
+    if (keepData) {
+      this.saveCase();
+    } else {
+      this.isNoSaveExitAllowed = true;
+      this.router.navigate(['/cases/', this.currentTemplate.id]).then();
+    }
+  }
+
+  canDeactivate() {
+    if (!this.isNoSaveExitAllowed) {
+      return this.caseConfirmation.show();
+    }
+    return true;
+  }
 }
