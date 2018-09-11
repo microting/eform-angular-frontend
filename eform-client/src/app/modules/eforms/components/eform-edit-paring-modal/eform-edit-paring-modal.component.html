@@ -19,10 +19,11 @@
             <td class="align-middle">{{siteDto.siteName}}</td>
             <td class="align-middle">
               <div *ngFor="let checkboxModel of deployViewModel.deployCheckboxes">
+                <label *ngIf="checkboxModel.id == siteDto.siteUId">
                    <mat-checkbox (click)="addToArray($event, checkboxModel.id)"
-                                 [checked]="checkboxModel.isChecked" [value]="checkboxModel.isChecked" color="primary">
-
+                                 [checked]="checkboxModel.isChecked" [value]="checkboxModel.isChecked" color="primary" type="checkbox">
                    </mat-checkbox>
+                </label>
               </div>
             </td>
           </tr>
