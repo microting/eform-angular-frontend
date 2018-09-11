@@ -1,0 +1,21 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{ 'Do you want to leave this page' | translate }}?</h3>
+      </div>
+      <div class="modal-body">
+        <h4>{{'If you leave before saving your changes will be lost'}}.</h4>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button class="btn btn-success" (click)="confirmationClicked(true)">
+          {{ 'Save & Leave' | translate }}
+        </button>
+        <button class="btn btn-danger" (click)="confirmationClicked(false)">
+          {{ 'Leave' | translate }}
+        </button>
+        <button class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Cancel' | translate}}</button>
+      </div>
+    </div>
+  </div>
+</div>

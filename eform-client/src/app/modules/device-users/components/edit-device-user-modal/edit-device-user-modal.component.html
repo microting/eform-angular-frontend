@@ -9,28 +9,29 @@
           <div class="row">
             <div class="col-md-12">
               <div class="md-form">
-                <input mdbInputDirective
+                <input mdbInputDirective id="editFirstNameInput"
                        [(ngModel)]="selectedDeviceUser.userFirstName"
-                       [mdbValidate]="false" type="text" name="userName" id="firstName" class="form-control">
-                <label for="firstName">{{'First Name' | translate }} </label>
+                       [mdbValidate]="false" type="text" name="userName" class="form-control">
+                <label for="editFirstNameInput">{{'First Name' | translate }} </label>
               </div>
             </div>
             <div class="col-md-12">
               <div class="md-form">
                 <input mdbInputDirective
                        [(ngModel)]="selectedDeviceUser.userLastName"
-                       [mdbValidate]="false" type="text" name="email" id="lastName" class="form-control">
-                <label for="lastName">{{'Last Name' | translate }} </label>
+                       [mdbValidate]="false" type="text" name="email" id="editLastNameInput" class="form-control">
+                <label for="editLastNameInput">{{'Last Name' | translate }} </label>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-danger"
+        <button class="btn btn-danger" id="saveEditBtn"
                 [disabled]="!selectedDeviceUser.userFirstName || !selectedDeviceUser.userLastName"
                 (click)="updateSingle()">{{'Save' | translate}}</button>
-        <button class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Cancel' | translate}}</button>
+        <button id="cancelEditBtn" class="btn btn-accent text-black-50" (click)="frame.hide()">
+          {{'Cancel' | translate}}</button>
       </div>
     </div>
   </div>

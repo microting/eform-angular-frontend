@@ -33,8 +33,9 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-danger" (click)="deleteSingle()">{{'Delete' | translate}}</button>
-        <button class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Cancel' | translate}}</button>
+        <button class="btn btn-danger" id="saveDeleteBtn" (click)="deleteSingle()">{{'Delete' | translate}}</button>
+        <button class="btn btn-accent text-black-50" id="cancelDeleteBtn" (click)="frame.hide()">
+          {{'Cancel' | translate}}</button>
       </div>
     </div>
   </div>

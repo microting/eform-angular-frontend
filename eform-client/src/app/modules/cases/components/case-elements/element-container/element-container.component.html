@@ -1,7 +1,12 @@
 <div class="card z-depth-3 mb-4 mt-4" style="width: 100%">
 
-  <div class="card-header" style="cursor: pointer" (click)="collapse.toggle()">
-    <h6>{{dataItemLabel}}</h6>
+  <div class="card-header" style="cursor: pointer" (click)="collapse.toggle(); isCollapsed = !isCollapsed">
+    <div class="d-flex justify-content-between">
+      <h6>{{dataItemLabel}}</h6>
+      <i class="material-icons material-icon-red" *ngIf="isCollapsed"> keyboard_arrow_right </i>
+      <i class="material-icons material-icon-red" *ngIf="!isCollapsed"> keyboard_arrow_down </i>
+    </div>
+
   </div>
 
   <div mdbCollapse #collapse="bs-collapse">
