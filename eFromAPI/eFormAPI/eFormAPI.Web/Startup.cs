@@ -49,7 +49,7 @@ namespace eFormAPI.Web
             // Entity framework PostgreSQL
             services.AddEntityFrameworkSqlServer()
                 .AddDbContext<BaseDbContext>(o => o.UseSqlServer(Configuration.MyConnectionString(),
-                    b => b.MigrationsAssembly("HrDb.Web")));
+                    b => b.MigrationsAssembly("eFormAPI.Web")));
             // Identity services
             //services.AddIdentity<PbUser, PbRole>()
             //    .AddEntityFrameworkStores<BaseDbContext>()

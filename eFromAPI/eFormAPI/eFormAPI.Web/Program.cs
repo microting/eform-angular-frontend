@@ -11,7 +11,7 @@ namespace eFormAPI.Web
 {
     public class Program
     {
-   public static void Main(string[] args)
+        public static void Main(string[] args)
         {
             var host = BuildWebHost(args);
             // Database Seed
@@ -20,10 +20,10 @@ namespace eFormAPI.Web
             {
                 try
                 {
-                //    dbContext.Database.Migrate();
-                //    var config = scope.ServiceProvider.GetRequiredService<IConfiguration>();
-                //    DbInitializer.Initialize(dbContext,
-                //        scope.ServiceProvider.GetRequiredService<UserManager<PbUser>>(), config.MyConnectionString());
+                    //    dbContext.Database.Migrate();
+                    //    var config = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+                    //    DbInitializer.Initialize(dbContext,
+                    //        scope.ServiceProvider.GetRequiredService<UserManager<PbUser>>(), config.MyConnectionString());
                 }
                 catch (Exception ex)
                 {
@@ -31,6 +31,7 @@ namespace eFormAPI.Web
                     logger.LogError(ex, "An error occurred seeding the DB.");
                 }
             }
+
             host.Run();
         }
 
@@ -50,10 +51,14 @@ namespace eFormAPI.Web
                     // delete all default configuration providers
                     config.Sources.Clear();
                     config.SetBasePath(hostContext.HostingEnvironment.ContentRootPath);
+                    //config.AddJsonFile(
+                    //    Path.Combine("Settings",
+                    //        $"appsettings.{hostContext.HostingEnvironment.EnvironmentName.ToLower()}.json"),
+                    //    optional: true, reloadOnChange: true);
                     config.AddJsonFile(
-                        Path.Combine("Settings",
-                            $"appsettings.{hostContext.HostingEnvironment.EnvironmentName.ToLower()}.json"),
-                        optional: true, reloadOnChange: true);
+                        Path.Combine("Settings", "appsettings.json"),
+                        optional: true, 
+                        reloadOnChange: true);
                     config.AddEnvironmentVariables();
                 })
                 .UseStartup<Startup>()

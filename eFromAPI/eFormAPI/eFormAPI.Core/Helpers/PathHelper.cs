@@ -25,6 +25,56 @@ namespace eFormAPI.Core.Helpers
         }
 
         /// <summary>
+        /// Get eform settings images for login-page file
+        /// </summary>
+        /// <returns></returns>
+        public static string GetEformLoginPageSettingsImagesPath(string fileName)
+        {
+            var eformDir = GetEformLoginPageSettingsImagesPath();
+            return Path.Combine(eformDir, fileName);
+        }
+
+        /// <summary>
+        /// Get eform settings images for login-page directory
+        /// </summary>
+        /// <returns></returns>
+        public static string GetEformLoginPageSettingsImagesPath()
+        {
+            var storagePath = GetStoragePath();
+            var eformDir = Path.Combine(storagePath, "picture", "settings", "login-page");
+            if (!Directory.Exists(eformDir))
+            {
+                Directory.CreateDirectory(eformDir);
+            }
+            return eformDir;
+        }
+
+        /// <summary>
+        /// Get eform settings images file
+        /// </summary>
+        /// <returns></returns>
+        public static string GetEformSettingsImagesPath(string fileName)
+        {
+            var eformDir = GetEformSettingsImagesPath();
+            return Path.Combine(eformDir, fileName);
+        }
+
+        /// <summary>
+        /// Get eform settings images directory
+        /// </summary>
+        /// <returns></returns>
+        public static string GetEformSettingsImagesPath()
+        {
+            var storagePath = GetStoragePath();
+            var eformDir = Path.Combine(storagePath, "picture", "settings");
+            if (!Directory.Exists(eformDir))
+            {
+                Directory.CreateDirectory(eformDir);
+            }
+            return eformDir;
+        }
+
+        /// <summary>
         /// Get audio file for current application for OS platform
         /// </summary>
         /// <returns></returns>

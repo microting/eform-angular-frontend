@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using eFormAPI.Common.Consts;
-using eFormAPI.Common.Infrastructure.Helpers;
+using eFormAPI.Core.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +24,7 @@ namespace eFormAPI.Web.Controllers
         [Route("api/images/eform-images")]
         public HttpResponseMessage GetImage(string fileName)
         {
-            var filePath = HttpContext.Current.Server.MapPath($"~/output/datafolder/picture/settings/{fileName}");
+            var filePath = PathHelper.GetEformSettingsImagesPath(fileName);
             if (!System.IO.File.Exists(filePath))
             {
                 return new HttpResponseMessage(HttpStatusCode.NotFound);
@@ -51,8 +51,7 @@ namespace eFormAPI.Web.Controllers
         [Route("api/images/login-page-images")]
         public HttpResponseMessage GetLoginPageImage(string fileName)
         {
-            var filePath =
-                HttpContext.Current.Server.MapPath($"~/output/datafolder/picture/settings/login-page/{fileName}");
+            var filePath = PathHelper.GetEformLoginPageSettingsImagesPath(fileName);
             if (!System.IO.File.Exists(filePath))
             {
                 return new HttpResponseMessage(HttpStatusCode.NotFound);
@@ -80,35 +79,35 @@ namespace eFormAPI.Web.Controllers
         public HttpResponseMessage PostLoginPageImages()
         {
             var iUploadedCnt = 0;
-            var saveFolder =
-                System.Web.Hosting.HostingEnvironment.MapPath("~/output/datafolder/picture/settings/login-page");
+            var saveFolder = PathHelper.GetEformLoginPageSettingsImagesPath();
             if (string.IsNullOrEmpty(saveFolder))
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, LocaleHelper.GetString("FolderError"));
+  //////////              return CreateResponse(HttpStatusCode.BadRequest, LocaleHelper.GetString("FolderError"));
             }
             if (!Directory.Exists(saveFolder))
             {
                 Directory.CreateDirectory(saveFolder);
             }
-            var files = HttpContext.Current.Request.Files;
+            var files = _httpContextAccessor.HttpContext.Request.Form.Files;
             for (var i = 0; i <= files.Count - 1; i++)
             {
                 var hpf = files[i];
-                if (hpf.ContentLength > 0)
+                if (hpf.Length > 0)
                 {
                     var filePath = Path.Combine(saveFolder, Path.GetFileName(hpf.FileName));
-                    if (!File.Exists(filePath))
+                    if (!System.IO.File.Exists(filePath))
                     {
-                        hpf.SaveAs(filePath);
+  //////////////////                      hpf..SaveAs(filePath);
                         iUploadedCnt++;
                     }
                 }
             }
             if (iUploadedCnt > 0)
             {
-                return Request.CreateResponse(HttpStatusCode.OK);
+ ///////               return Request.CreateResponse(HttpStatusCode.OK);
             }
-            return Request.CreateResponse(HttpStatusCode.BadRequest, LocaleHelper.GetString("InvalidRequest"));
+ //////           return Request.CreateResponse(HttpStatusCode.BadRequest, LocaleHelper.GetString("InvalidRequest"));
+            return null;
         }
 
         [HttpPost]
@@ -117,34 +116,35 @@ namespace eFormAPI.Web.Controllers
         public HttpResponseMessage PostEformImages()
         {
             var iUploadedCnt = 0;
-            var saveFolder = System.Web.Hosting.HostingEnvironment.MapPath("~/output/datafolder/picture/settings");
+            var saveFolder = PathHelper.GetEformSettingsImagesPath();
             if (string.IsNullOrEmpty(saveFolder))
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, LocaleHelper.GetString("FolderError"));
+ ////////////////////               return Request.CreateResponse(HttpStatusCode.BadRequest, LocaleHelper.GetString("FolderError"));
             }
             if (!Directory.Exists(saveFolder))
             {
                 Directory.CreateDirectory(saveFolder);
             }
-            var files = HttpContext.Current.Request.Files;
+            var files = _httpContextAccessor.HttpContext.Request.Form.Files;
             for (var i = 0; i <= files.Count - 1; i++)
             {
                 var hpf = files[i];
-                if (hpf.ContentLength > 0)
+                if (hpf.Length > 0)
                 {
                     var filePath = Path.Combine(saveFolder, Path.GetFileName(hpf.FileName));
-                    if (!File.Exists(filePath))
+                    if (!System.IO.File.Exists(filePath))
                     {
-                        hpf.SaveAs(filePath);
+ /////////////                       hpf.SaveAs(filePath);
                         iUploadedCnt++;
                     }
                 }
             }
             if (iUploadedCnt > 0)
             {
-                return Request.CreateResponse(HttpStatusCode.OK);
+ //////////               return Request.CreateResponse(HttpStatusCode.OK);
             }
-            return Request.CreateResponse(HttpStatusCode.BadRequest, LocaleHelper.GetString("InvalidRequest"));
+  //////////          return Request.CreateResponse(HttpStatusCode.BadRequest, LocaleHelper.GetString("InvalidRequest"));
+            return null;
         }
     }
 }

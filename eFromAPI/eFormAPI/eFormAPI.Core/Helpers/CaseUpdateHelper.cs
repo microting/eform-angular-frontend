@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using eFormAPI.Common.Models.Cases.Request;
 
-namespace eFormAPI.Web.Infrastructure.Helpers
+namespace eFormAPI.Core.Helpers
 {
     public static class CaseUpdateHelper
     {

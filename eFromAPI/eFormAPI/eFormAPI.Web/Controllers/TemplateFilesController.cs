@@ -4,12 +4,20 @@
 //using System.Net;
 //using System.Net.Http;
 //using System.Net.Http.Headers;
+//using System.Net.Mime;
+//using eFormAPI.Common.Infrastructure;
+//using eFormAPI.Common.Infrastructure.Helpers;
+//using eFormAPI.Common.Infrastructure.Messages;
+//using eFormAPI.Common.Infrastructure.Models.API;
 //using eFormAPI.Web.Infrastructure.Helpers;
+//using Microsoft.AspNetCore.Authorization;
+//using Microsoft.AspNetCore.Http;
+//using Microsoft.AspNetCore.Mvc;
 
 //namespace eFormAPI.Web.Controllers
 //{
 
-//    public class TemplateFilesController : ApiController
+//    public class TemplateFilesController : Controller
 //    {
 //        private readonly EFormCoreHelper _coreHelper = new EFormCoreHelper();
 
@@ -77,7 +85,7 @@
 //            }
 //            try
 //            {
-//                var img = Image.FromFile(filePath);
+//                var img = MediaTypeNames.Image.FromFile(filePath);
 //                img.RotateFlip(RotateFlipType.Rotate90FlipNone);
 //                img.Save(filePath);
 //                img.Dispose();
