@@ -3,6 +3,7 @@
 @import "components/index";
 @import "utilities/colors";
 @import "libs/index";
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
 // h-100 for base elements
 html {
@@ -40,7 +41,3 @@ gallery {
 .g-backdrop {
   background-color: #e2e2e2;
 }
-
-
-
-

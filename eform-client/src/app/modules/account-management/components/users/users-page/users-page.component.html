@@ -1,9 +1,9 @@
 <eform-page-subheader [title]="'User Management' | translate">
-  <div class="p-3">
-    <button
-      class="btn btn-success" (click)="openNewUserModal()"
-      mdbTooltip="{{'Create user' | translate}}">{{'New User' | translate}}</button>
-  </div>
+<div class="p-3">
+  <button
+    class="btn btn-success" (click)="openNewUserModal()"
+    mdbTooltip="{{'Create user' | translate}}">{{'New User' | translate}}</button>
+</div>
 </eform-page-subheader>
 
 <div class="container-fluid">
@@ -22,7 +22,7 @@
     </div>
   </div>
   <div class="row p-1 table-responsive no-gutters">
-    <table class="table table-striped text-center">
+    <table class="table table-striped text-center mat-elevation-z8">
       <thead>
       <tr>
         <th scope="col">ID</th>
@@ -83,4 +83,3 @@
                        (onUserDeleted)="getUserInfoList()" #removeUserModal></app-remove-user-modal>
 <!--<app-create-eform-modal #modalNewEform></app-create-eform-modal>-->
 <!--<app-cases-column-modal #modalCasesColumns></app-cases-column-modal>-->
-

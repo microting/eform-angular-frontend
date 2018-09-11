@@ -17,6 +17,7 @@ import {
   EformEditTagsModalComponent,
   EformRemoveEformModalComponent, EformUploadZipModalComponent
 } from './components';
+import {MatCheckboxModule} from '@angular/material';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import {
     MDBBootstrapModule,
     EformSharedModule,
     FileUploadModule,
-    FormsModule
+    FormsModule,
+    MatCheckboxModule
   ],
   declarations: [
     EformsPageComponent,
