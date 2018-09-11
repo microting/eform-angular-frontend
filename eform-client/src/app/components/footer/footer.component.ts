@@ -13,7 +13,7 @@ export class FooterComponent implements OnInit, AfterViewInit {
   constructor(private settingsService: AppSettingsService) {
   }
   ngOnInit() {
-  this.getAssemblyVersion('AssemblyVersion');
+  // this.getAssemblyVersion('AssemblyVersion');
   }
   ngAfterViewInit() {
   }
