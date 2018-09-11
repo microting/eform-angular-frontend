@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using Dapper;
 using eFormAPI.Common.Infrastructure.Data;
+using eFormAPI.Core.Abstractions;
 using eFormAPI.Core.Services;
 using eFormAPI.Web.Hosting.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -163,7 +164,7 @@ namespace eFormAPI.Web
             {
                 loggerFactory.AddConsole(Configuration.GetSection("Logging"));
                 loggerFactory.AddDebug();
-                //              loggerFactory.AddContext(LogLevel.Warning, Configuration.MyConnectionString());
+            //              loggerFactory.AddContext(LogLevel.Warning, Configuration.MyConnectionString());
             }
 
 //     if (env.IsStaging() || env.IsTesting())
@@ -238,6 +239,12 @@ namespace eFormAPI.Web
             services.AddScoped<ITemplateColumnsService, TemplateColumnsService>();
             services.AddScoped<IUnitsService, UnitsService>();
             services.AddScoped<IWorkersService, WorkersService>();
+            services.AddScoped<ISitesService, SitesService>();
+            services.AddScoped<ISimpleSitesService, SimpleSitesService>();
+            services.AddScoped<IEntitySearchService, EntitySearchService>();
+            services.AddScoped<IEntitySelectService, EntitySelectService>();
+            services.AddScoped<ICasesService, CasesService>();
+
         }
     }
 }

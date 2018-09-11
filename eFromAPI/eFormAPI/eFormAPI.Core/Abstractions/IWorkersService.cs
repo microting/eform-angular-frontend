@@ -3,7 +3,7 @@ using eFormAPI.Common.Infrastructure.Models.API;
 using eFormAPI.Common.Models;
 using eFormShared;
 
-namespace eFormAPI.Core.Services
+namespace eFormAPI.Core.Abstractions
 {
     public interface IWorkersService
     {

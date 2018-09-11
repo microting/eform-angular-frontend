@@ -3,7 +3,7 @@ using eFormAPI.Common.Infrastructure.Models.API;
 using eFormAPI.Common.Models.Common;
 using eFormAPI.Common.Models.Tags;
 
-namespace eFormAPI.Core.Services
+namespace eFormAPI.Core.Abstractions
 {
     public interface ITagsService
     {

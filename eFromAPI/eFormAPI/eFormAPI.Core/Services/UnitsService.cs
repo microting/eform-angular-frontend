@@ -3,16 +3,11 @@ using System.Collections.Generic;
 using eFormAPI.Common.Infrastructure;
 using eFormAPI.Common.Infrastructure.Helpers;
 using eFormAPI.Common.Infrastructure.Models.API;
+using eFormAPI.Core.Abstractions;
 using eFormShared;
 
 namespace eFormAPI.Core.Services
 {
-    public interface IUnitsService
-    {
-        OperationDataResult<List<Unit_Dto>> Index();
-        OperationDataResult<Unit_Dto> RequestOtp(int id);
-    }
-
     public class UnitsService : IUnitsService
     {
         private readonly EFormCoreHelper _coreHelper = new EFormCoreHelper();

@@ -1,8 +1,16 @@
 ﻿//using System;
 //using System.Web;
+//using eFormAPI.Common.Infrastructure.Helpers;
+//using eFormAPI.Common.Infrastructure.Models.API;
+//using eFormAPI.Common.Models.Auth;
 //using eFormAPI.Web.Infrastructure.Helpers;
 //using eFormAPI.Web.Infrastructure.Identity;
 //using eFormAPI.Web.Infrastructure.Models.Auth;
+//using Microsoft.AspNetCore.Authentication;
+//using Microsoft.AspNetCore.Authentication.Cookies;
+//using Microsoft.AspNetCore.Authentication.OAuth;
+//using Microsoft.AspNetCore.Authorization;
+//using Microsoft.AspNetCore.Mvc;
 
 //namespace eFormAPI.Web.Controllers
 //{

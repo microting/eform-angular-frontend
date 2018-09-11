@@ -2,7 +2,7 @@
 using eFormAPI.Common.Infrastructure.Models.API;
 using eFormAPI.Common.Models.Templates;
 
-namespace eFormAPI.Core.Services
+namespace eFormAPI.Core.Abstractions
 {
     public interface ITemplateColumnsService
     {

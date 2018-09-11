@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using eFormAPI.Common.Infrastructure.Models.API;
-using eFormAPI.Core.Services;
+using eFormAPI.Core.Abstractions;
 using eFormShared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +26,7 @@ namespace eFormAPI.Web.Controllers
         [HttpGet]
         public OperationDataResult<Unit_Dto> RequestOtp(int id)
         {
-            return _unitsService.RequestOtp();
+            return _unitsService.RequestOtp(id);
         }
     }
 }

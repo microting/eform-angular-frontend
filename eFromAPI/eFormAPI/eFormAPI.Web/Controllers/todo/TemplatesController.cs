@@ -1,13 +1,14 @@
-﻿//using System;
+﻿
+
+//using System;
 //using System.Collections.Generic;
-//using System.IO;
 //using System.Linq;
 //using System.Net;
 //using eFormAPI.Common.Infrastructure;
 //using eFormAPI.Common.Infrastructure.Helpers;
 //using eFormAPI.Common.Infrastructure.Models.API;
-//using eFormAPI.Web.Infrastructure.Models;
-//using eFormAPI.Web.Infrastructure.Models.Templates;
+//using eFormAPI.Common.Models;
+//using eFormAPI.Common.Models.Templates;
 //using eFormCore;
 //using eFormShared;
 //using Microsoft.AspNetCore.Authorization;
@@ -16,7 +17,7 @@
 //namespace eFormAPI.Web.Controllers
 //{
 //    [Authorize]
-//    public class TemplatesController : ApiController
+//    public class TemplatesController : Controller
 //    {
 //        private readonly EFormCoreHelper _coreHelper = new EFormCoreHelper();
 

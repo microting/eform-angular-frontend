@@ -5,6 +5,7 @@ using eFormAPI.Common.Infrastructure.Helpers;
 using eFormAPI.Common.Infrastructure.Models.API;
 using eFormAPI.Common.Models.Common;
 using eFormAPI.Common.Models.Tags;
+using eFormAPI.Core.Abstractions;
 using Microsoft.Extensions.Logging;
 
 namespace eFormAPI.Core.Services
