@@ -5,7 +5,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {GalleryModule} from '@ngx-gallery/core';
 import {GallerizeModule} from '@ngx-gallery/gallerize';
 import {TranslateModule} from '@ngx-translate/core';
-import { LightboxModule } from  '@ngx-gallery/lightbox';
+import { LightboxModule } from '@ngx-gallery/lightbox';
 import {DragulaModule} from 'ng2-dragula';
 import {ToastrModule} from 'ngx-toastr';
 

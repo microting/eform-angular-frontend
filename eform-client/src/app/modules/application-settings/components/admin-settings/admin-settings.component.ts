@@ -1,4 +1,4 @@
-import {Component, HostBinding, OnInit} from '@angular/core';
+import {Component, HostBinding, OnInit, ViewChild, AfterViewInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UUID} from 'angular2-uuid';
 import {FileItem, FileUploader} from 'ng2-file-upload';
@@ -12,14 +12,13 @@ import {AuthService} from 'src/app/common/services/auth';
   templateUrl: './admin-settings.component.html',
   styleUrls: ['./admin-settings.component.scss']
 })
-export class AdminSettingsComponent implements OnInit {
+export class AdminSettingsComponent implements OnInit, AfterViewInit {
   loginPageImageUploader: FileUploader = new FileUploader({url: '/api/images/login-page-images'});
   headerImageUploader: FileUploader = new FileUploader({url: '/api/images/eform-images'});
   headerImageLink: string;
   loginPageImageLink: string;
   spinnerStatus: boolean;
-  adminSettingsModel: AdminSettingsModel = new AdminSettingsModel;
-
+  adminSettingsModel: AdminSettingsModel = new AdminSettingsModel();
   constructor(private settingsService: AppSettingsService,
               private authService: AuthService,
               private eventBrokerService: EventBrokerService) {
@@ -27,13 +26,15 @@ export class AdminSettingsComponent implements OnInit {
 
   get currentRole(): string {
     return this.authService.currentRole;
-  };
-
+  }
+  ngAfterViewInit() {
+  }
   ngOnInit() {
     if (this.currentRole === 'admin') {
       this.getAdminSettings();
       this.initializeUploaders();
     }
+
   }
 
   initializeUploaders() {
@@ -85,6 +86,7 @@ export class AdminSettingsComponent implements OnInit {
         this.spinnerStatus = false;
       }
     });
+
   }
 
   updateAdminSettings() {
