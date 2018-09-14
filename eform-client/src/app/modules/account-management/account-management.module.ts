@@ -4,7 +4,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {MDBBootstrapModule} from 'port/angular-bootstrap-md';
 import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
-import {MatTableModule} from '@angular/material';
 
 import {
   ChangePasswordComponent,
@@ -26,8 +25,7 @@ import {TranslateModule} from '@ngx-translate/core';
     EformSharedModule,
     TranslateModule,
     ReactiveFormsModule,
-    FormsModule,
-    MatTableModule
+    FormsModule
   ],
   declarations: [
     ChangePasswordComponent,

@@ -5,7 +5,7 @@
         <h3>{{'eForm Pairing'}}</h3>
       </div>
       <div class="modal-body table-responsive">
-        <table mat-table class="table table-xs table-bordered text-center mat-elevation-z8">
+        <table class="table table-xs table-bordered text-center z-depth-1">
           <thead>
           <tr>
             <th>Microting ID</th>
@@ -18,13 +18,13 @@
             <td class="align-middle">{{siteDto.siteUId}}</td>
             <td class="align-middle">{{siteDto.siteName}}</td>
             <td class="align-middle">
-              <div *ngFor="let checkboxModel of deployViewModel.deployCheckboxes">
-                <label *ngIf="checkboxModel.id == siteDto.siteUId">
-                   <mat-checkbox (change)="addToArray($event, checkboxModel.id)"
-                                 [checked]="checkboxModel.isChecked" [value]="checkboxModel.isChecked" color="primary" type="checkbox">
-                   </mat-checkbox>
-                </label>
-              </div>
+              <ng-container *ngFor="let checkboxModel of deployViewModel.deployCheckboxes">
+                <div class="mat-checkbox" *ngIf="checkboxModel.id == siteDto.siteUId">
+                  <input id="checkbox{{checkboxModel.id}}" (change)="addToArray($event, checkboxModel.id)"
+                         [checked]="checkboxModel.isChecked" [value]="checkboxModel.isChecked" color="primary" type="checkbox">
+                  <label for="checkbox{{checkboxModel.id}}"></label>
+                </div>
+              </ng-container>
             </td>
           </tr>
           </tbody>
