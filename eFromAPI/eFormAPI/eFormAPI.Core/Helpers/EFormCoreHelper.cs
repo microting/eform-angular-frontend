@@ -1,5 +1,5 @@
 ﻿
-namespace eFormAPI.Web.Infrastructure.Helpers
+namespace eFormAPI.Core.Helpers
 {
     //public class EFormCoreHelper
     //{

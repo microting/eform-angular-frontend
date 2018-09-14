@@ -2,7 +2,6 @@
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using eFormAPI.Common.Consts;
 using eFormAPI.Core.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -74,7 +73,7 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = EformRoles.Admin)]
+        [Authorize(Roles = EformRole.Admin)]
         [Route("api/images/login-page-images")]
         public HttpResponseMessage PostLoginPageImages()
         {
@@ -111,7 +110,7 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = EformRoles.Admin)]
+        [Authorize(Roles = EformRole.Admin)]
         [Route("api/images/eform-images")]
         public HttpResponseMessage PostEformImages()
         {

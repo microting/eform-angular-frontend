@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using eFormAPI.Common.Infrastructure.Data;
+using eFormAPI.Database;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -56,8 +56,8 @@ namespace eFormAPI.Web
                     //        $"appsettings.{hostContext.HostingEnvironment.EnvironmentName.ToLower()}.json"),
                     //    optional: true, reloadOnChange: true);
                     config.AddJsonFile(
-                        Path.Combine("Settings", "appsettings.json"),
-                        optional: true, 
+                        "appsettings.json",
+                        optional: true,
                         reloadOnChange: true);
                     config.AddEnvironmentVariables();
                 })

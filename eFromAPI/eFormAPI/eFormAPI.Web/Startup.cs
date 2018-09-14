@@ -5,9 +5,12 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Dapper;
-using eFormAPI.Common.Infrastructure.Data;
 using eFormAPI.Core.Abstractions;
+using eFormAPI.Core.Helpers;
 using eFormAPI.Core.Services;
+using eFormAPI.Core.Services.Identity;
+using eFormAPI.Database;
+using eFormAPI.Database.Entities;
 using eFormAPI.Web.Hosting.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -26,6 +29,7 @@ using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
+using ApplicationSettings = Amazon.Util.Internal.PlatformServices.ApplicationSettings;
 
 namespace eFormAPI.Web
 {
@@ -51,10 +55,9 @@ namespace eFormAPI.Web
                 .AddDbContext<BaseDbContext>(o => o.UseSqlServer(Configuration.MyConnectionString(),
                     b => b.MigrationsAssembly("eFormAPI.Web")));
             // Identity services
-            //services.AddIdentity<PbUser, PbRole>()
-            //    .AddEntityFrameworkStores<BaseDbContext>()
-            //    .AddDefaultTokenProviders()
-            //    .AddErrorDescriber<CustomIdentityErrorDescriber>();
+            services.AddIdentity<EformUser, EformRole>()
+                .AddEntityFrameworkStores<BaseDbContext>()
+                .AddDefaultTokenProviders();
             // Identity configuration
             services.Configure<IdentityOptions>(options =>
             {
@@ -103,8 +106,12 @@ namespace eFormAPI.Web
                 .AddJsonOptions(options => options.SerializerSettings.ContractResolver =
                     new CamelCasePropertyNamesContractResolver())
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            // Enable node.js services
-            services.AddNodeServices();
+            // Writable options
+            services.ConfigureWritable<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
+            services.ConfigureWritable<EmailSettings>(Configuration.GetSection("EmailSettings"));
+            services.ConfigureWritable<LoginPageSettings>(Configuration.GetSection("LoginPageSettings"));
+            services.ConfigureWritable<HeaderSettings>(Configuration.GetSection("HeaderSettings"));
+            services.ConfigureWritable<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
             // Form options
             services.Configure<FormOptions>(x =>
             {
@@ -164,7 +171,7 @@ namespace eFormAPI.Web
             {
                 loggerFactory.AddConsole(Configuration.GetSection("Logging"));
                 loggerFactory.AddDebug();
-            //              loggerFactory.AddContext(LogLevel.Warning, Configuration.MyConnectionString());
+                //              loggerFactory.AddContext(LogLevel.Warning, Configuration.MyConnectionString());
             }
 
 //     if (env.IsStaging() || env.IsTesting())
@@ -244,7 +251,12 @@ namespace eFormAPI.Web
             services.AddScoped<IEntitySearchService, EntitySearchService>();
             services.AddScoped<IEntitySelectService, EntitySelectService>();
             services.AddScoped<ICasesService, CasesService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IAdminService, AdminService>();
 
+            
         }
     }
 }

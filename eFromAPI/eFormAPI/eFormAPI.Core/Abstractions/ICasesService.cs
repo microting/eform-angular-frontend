@@ -3,7 +3,7 @@ using eFormAPI.Common.Models.Cases.Request;
 using eFormAPI.Common.Models.Cases.Response;
 using eFormData;
 
-namespace eFormAPI.Core.Services
+namespace eFormAPI.Core.Abstractions
 {
     public interface ICasesService
     {

@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace eFormAPI.Web.Infrastructure.Helpers
+namespace eFormAPI.Core.Helpers
 {
     public class FoldersHelper
     {

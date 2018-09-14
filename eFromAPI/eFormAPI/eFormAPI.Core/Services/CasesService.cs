@@ -5,6 +5,7 @@ using eFormAPI.Common.Infrastructure.Helpers;
 using eFormAPI.Common.Infrastructure.Models.API;
 using eFormAPI.Common.Models.Cases.Request;
 using eFormAPI.Common.Models.Cases.Response;
+using eFormAPI.Core.Abstractions;
 using eFormAPI.Core.Helpers;
 using eFormData;
 using eFormShared;

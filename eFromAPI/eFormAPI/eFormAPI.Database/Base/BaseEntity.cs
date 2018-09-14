@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace eFormAPI.Common.Infrastructure.Data.Base
+namespace eFormAPI.Database.Base
 {
     public class BaseEntity
     {

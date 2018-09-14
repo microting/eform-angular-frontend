@@ -14,4 +14,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Consts\" />
+  </ItemGroup>
+
 </Project>

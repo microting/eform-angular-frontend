@@ -1,26 +1,15 @@
-﻿//using System.Collections.Generic;
+﻿//using System;
+//using System.Collections.Generic;
 //using System.Linq;
-//using System.Web.Http;
-//using System.Web.Http.Description;
-//using Swashbuckle.Application;
-//using Swashbuckle.Swagger;
+//using System.Threading.Tasks;
+//using Castle.MicroKernel.Registration;
+//using Microsoft.AspNetCore.Authorization;
+//using Microsoft.AspNetCore.Mvc.ApiExplorer;
+//using Swashbuckle.AspNetCore.Swagger;
+//using Swashbuckle.AspNetCore.SwaggerGen;
 
-//namespace eFormAPI.Web
+//namespace eFormAPI.Web.Hosting.Swagger
 //{
-//    public static class SwaggerConfig
-//    {
-//        public static void Register(HttpConfiguration _configuration)
-//        {
-//            _configuration.EnableSwagger(c =>
-//                {
-//                    c.SingleApiVersion("v1", "Eform API");
-//                    c.IncludeXmlComments($@"{System.AppDomain.CurrentDomain.BaseDirectory}\bin\API.docs.xml");
-//                    c.DescribeAllEnumsAsStrings();
-//                    c.DocumentFilter<AuthTokenOperation>();
-//                    c.OperationFilter<AddAuthorizationHeader>();
-//                }).EnableSwaggerUi();
-//        }
-//    }
 
 //    public class AuthTokenOperation : IDocumentFilter
 //    {
