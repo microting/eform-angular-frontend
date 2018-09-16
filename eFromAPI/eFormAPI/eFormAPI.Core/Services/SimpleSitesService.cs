@@ -11,8 +11,13 @@ namespace eFormAPI.Core.Services
 {
     public class SimpleSitesService : ISimpleSitesService
     {
-        private readonly EFormCoreHelper _coreHelper = new EFormCoreHelper();
-        
+        private readonly IEFormCoreService _coreHelper;
+
+        public SimpleSitesService(IEFormCoreService coreHelper)
+        {
+            _coreHelper = coreHelper;
+        }
+
         public OperationDataResult<List<Site_Dto>> Index()
         {
             var core = _coreHelper.GetCore();

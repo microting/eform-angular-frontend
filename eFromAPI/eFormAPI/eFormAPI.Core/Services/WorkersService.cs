@@ -12,7 +12,12 @@ namespace eFormAPI.Core.Services
 {
     public class WorkersService : IWorkersService
     {
-        private readonly EFormCoreHelper _coreHelper = new EFormCoreHelper();
+        private readonly IEFormCoreService _coreHelper;
+
+        public WorkersService(IEFormCoreService coreHelper)
+        {
+            _coreHelper = coreHelper;
+        }
 
         public OperationDataResult<List<Worker_Dto>> Index()
         {

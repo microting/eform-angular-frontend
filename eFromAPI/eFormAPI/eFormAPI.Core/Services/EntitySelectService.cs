@@ -14,8 +14,13 @@ namespace eFormAPI.Core.Services
 {
     public class EntitySelectService : IEntitySelectService
     {
-        private readonly EFormCoreHelper _coreHelper = new EFormCoreHelper();
-        
+        private readonly IEFormCoreService _coreHelper;
+
+        public EntitySelectService(IEFormCoreService coreHelper)
+        {
+            _coreHelper = coreHelper;
+        }
+
         public OperationDataResult<EntityGroupList> GetEntityGroupList(
             AdvEntitySelectableGroupListRequestModel requestModel)
         {

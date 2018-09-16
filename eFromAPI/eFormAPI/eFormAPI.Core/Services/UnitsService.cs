@@ -10,7 +10,12 @@ namespace eFormAPI.Core.Services
 {
     public class UnitsService : IUnitsService
     {
-        private readonly EFormCoreHelper _coreHelper = new EFormCoreHelper();
+        private readonly IEFormCoreService _coreHelper;
+
+        public UnitsService(IEFormCoreService coreHelper)
+        {
+            _coreHelper = coreHelper;
+        }
 
         public OperationDataResult<List<Unit_Dto>> Index()
         {

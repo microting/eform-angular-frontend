@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using eFormAPI.Common.Infrastructure;
 using eFormAPI.Common.Infrastructure.Helpers;
 using eFormAPI.Common.Infrastructure.Models.API;
 using eFormAPI.Common.Models.Cases.Request;
@@ -14,8 +13,13 @@ namespace eFormAPI.Core.Services
 {
     public class CasesService : ICasesService
     {
-         private readonly EFormCoreHelper _coreHelper = new EFormCoreHelper();
-        
+        private readonly IEFormCoreService _coreHelper;
+
+        public CasesService(IEFormCoreService coreHelper)
+        {
+            _coreHelper = coreHelper;
+        }
+
         public OperationDataResult<CaseListModel> Index(CaseRequestModel requestModel)
         {
             try

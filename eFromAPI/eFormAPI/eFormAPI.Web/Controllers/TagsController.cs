@@ -41,7 +41,7 @@ namespace eFormAPI.Web.Controllers
 
         [HttpPost]
         [Route("api/tags/template")]
-        public OperationResult UpdateTemplateTags(UpdateTemplateTagsModel requestModel)
+        public OperationResult UpdateTemplateTags([FromBody] UpdateTemplateTagsModel requestModel)
         {
             return _tagsService.UpdateTemplateTags(requestModel);
         }

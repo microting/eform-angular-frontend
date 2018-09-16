@@ -26,7 +26,7 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpPost]
-        public OperationResult Create(SimpleSiteModel simpleSiteModel)
+        public OperationResult Create([FromBody] SimpleSiteModel simpleSiteModel)
         {
             if (!ModelState.IsValid)
                 return new OperationResult(false,
@@ -42,7 +42,7 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpPost]
-        public OperationResult Update(SimpleSiteModel simpleSiteModel)
+        public OperationResult Update([FromBody] SimpleSiteModel simpleSiteModel)
         {
             return _simpleSitesService.Update(simpleSiteModel);
         }

@@ -31,7 +31,7 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpPost]
-        public OperationResult Update(SiteNameModel siteNameModel)
+        public OperationResult Update([FromBody] SiteNameModel siteNameModel)
         {
             return _sitesService.Update(siteNameModel);
         }

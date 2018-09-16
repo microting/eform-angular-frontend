@@ -11,7 +11,12 @@ namespace eFormAPI.Core.Services
 {
     public class TemplateColumnsService : ITemplateColumnsService
     {
-        private readonly EFormCoreHelper _coreHelper = new EFormCoreHelper();
+        private readonly EFormCoreService _coreHelper;
+
+        public TemplateColumnsService(EFormCoreService coreHelper)
+        {
+            _coreHelper = coreHelper;
+        }
 
 
         public OperationDataResult<List<TemplateColumnModel>> GetAvailableColumns(int templateId)

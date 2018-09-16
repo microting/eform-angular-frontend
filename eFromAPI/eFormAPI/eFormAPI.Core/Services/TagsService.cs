@@ -12,12 +12,14 @@ namespace eFormAPI.Core.Services
 {
     public class TagsService : ITagsService
     {
-        private readonly EFormCoreHelper _coreHelper = new EFormCoreHelper();
+        private readonly IEFormCoreService _coreHelper;
         private readonly ILogger<TagsService> _logger;
 
-        public TagsService(ILogger<TagsService> logger)
+        public TagsService(ILogger<TagsService> logger, 
+            IEFormCoreService coreHelper)
         {
             _logger = logger;
+            _coreHelper = coreHelper;
         }
 
         public OperationDataResult<List<CommonDictionaryModel>> GetAllTags()

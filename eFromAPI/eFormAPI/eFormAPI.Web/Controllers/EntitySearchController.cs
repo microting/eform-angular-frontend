@@ -21,7 +21,7 @@ namespace eFormAPI.Web.Controllers
 
         [HttpPost]
         [Route("api/searchable-groups")]
-        public OperationDataResult<EntityGroupList> GetEntityGroupList(
+        public OperationDataResult<EntityGroupList> GetEntityGroupList([FromBody] 
             AdvEntitySearchableGroupListRequestModel requestModel)
         {
             return _entitySearchService.GetEntityGroupList(requestModel);
@@ -29,14 +29,14 @@ namespace eFormAPI.Web.Controllers
 
         [HttpPost]
         [Route("api/searchable-groups/create")]
-        public OperationResult CreateEntityGroup(AdvEntitySearchableGroupEditModel editModel)
+        public OperationResult CreateEntityGroup([FromBody] AdvEntitySearchableGroupEditModel editModel)
         {
             return _entitySearchService.CreateEntityGroup(editModel);
         }
 
         [HttpPost]
         [Route("api/searchable-groups/update")]
-        public OperationResult UpdateEntityGroup(AdvEntitySearchableGroupEditModel editModel)
+        public OperationResult UpdateEntityGroup([FromBody] AdvEntitySearchableGroupEditModel editModel)
         {
             return _entitySearchService.UpdateEntityGroup(editModel);
         }

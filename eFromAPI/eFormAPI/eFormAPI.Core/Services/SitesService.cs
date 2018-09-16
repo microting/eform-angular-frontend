@@ -12,7 +12,12 @@ namespace eFormAPI.Core.Services
 {
     public class SitesService : ISitesService
     {
-        private readonly EFormCoreHelper _coreHelper = new EFormCoreHelper();
+        private readonly IEFormCoreService _coreHelper;
+
+        public SitesService(IEFormCoreService coreHelper)
+        {
+            _coreHelper = coreHelper;
+        }
 
         public OperationDataResult<List<SiteName_Dto>> Index()
         {

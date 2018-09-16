@@ -19,7 +19,7 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpPost]
-        public OperationDataResult<CaseListModel> Index(CaseRequestModel requestModel)
+        public OperationDataResult<CaseListModel> Index([FromBody] CaseRequestModel requestModel)
         {
             return _casesService.Index(requestModel);
         }
@@ -37,7 +37,7 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpPost]
-        public OperationResult Update(ReplyRequest model)
+        public OperationResult Update([FromBody] ReplyRequest model)
         {
             return _casesService.Update(model);
         }

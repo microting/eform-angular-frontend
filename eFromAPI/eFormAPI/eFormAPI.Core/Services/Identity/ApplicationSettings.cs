@@ -1,4 +1,6 @@
-﻿namespace eFormAPI.Core.Services.Identity
+﻿using System;
+
+namespace eFormAPI.Core.Services.Identity
 {
     public class ApplicationSettings
     {
@@ -7,6 +9,14 @@
         public string SecurityCode { get; set; }
         public string DefaultPassword { get; set; }
         public bool IsTwoFactorForced { get; set; }
+    }
+    public class EformTokenOptions
+    {
+        public string Issuer { get; set; }
+        public string Audience { get; set; }
+        public TimeSpan Expiration { get; set; } = TimeSpan.FromMinutes(30);
+        public string SigningKey { get; set; }
+        public string CookieName { get; set; }
     }
 
     public class EmailSettings

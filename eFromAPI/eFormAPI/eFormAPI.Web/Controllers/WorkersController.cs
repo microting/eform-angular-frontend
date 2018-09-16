@@ -31,14 +31,14 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpPost]
-        public OperationResult Update(WorkerModel workerModel)
+        public OperationResult Update([FromBody] WorkerModel workerModel)
         {
             return _workersService.Update(workerModel);
         }
 
         [HttpPost]
         [Route("api/workers/create")]
-        public OperationResult Сreate(WorkerCreateModel model)
+        public OperationResult Сreate([FromBody] WorkerCreateModel model)
         {
             return _workersService.Сreate(model);
         }

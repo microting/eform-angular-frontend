@@ -21,7 +21,7 @@ namespace eFormAPI.Web.Controllers
 
         [HttpPost]
         [Route("api/selectable-groups")]
-        public OperationDataResult<EntityGroupList> GetEntityGroupList(
+        public OperationDataResult<EntityGroupList> GetEntityGroupList([FromBody] 
             AdvEntitySelectableGroupListRequestModel requestModel)
         {
             return _entitySelectService.GetEntityGroupList(requestModel);
@@ -29,14 +29,14 @@ namespace eFormAPI.Web.Controllers
 
         [HttpPost]
         [Route("api/selectable-groups/create")]
-        public OperationResult CreateEntityGroup(AdvEntitySelectableGroupEditModel editModel)
+        public OperationResult CreateEntityGroup([FromBody] AdvEntitySelectableGroupEditModel editModel)
         {
             return _entitySelectService.CreateEntityGroup(editModel);
         }
 
         [HttpPost]
         [Route("api/selectable-groups/update")]
-        public OperationResult UpdateEntityGroup(AdvEntitySelectableGroupEditModel editModel)
+        public OperationResult UpdateEntityGroup([FromBody] AdvEntitySelectableGroupEditModel editModel)
         {
             return _entitySelectService.UpdateEntityGroup(editModel);
         }

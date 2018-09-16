@@ -1,23 +1,26 @@
 ﻿using System;
-using System.Configuration;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
-using eFormAPI.Common.Infrastructure;
+using System.Threading.Tasks;
 using eFormAPI.Common.Infrastructure.Helpers;
 using eFormAPI.Common.Infrastructure.Models.API;
 using eFormAPI.Common.Models.Settings.Admin;
 using eFormAPI.Common.Models.Settings.Initial;
-using eFormAPI.Core.Helpers;
+using eFormAPI.Core.Abstractions;
 using eFormAPI.Core.Helpers.WritableOptions;
 using eFormAPI.Core.Services.Identity;
+using eFormAPI.Database;
+using eFormAPI.Database.Entities;
 using eFormCore;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace eFormAPI.Core.Services
 {
-    public class SettingsService
+    public class SettingsService : ISettingsService
     {
         private readonly ILogger<SettingsService> _logger;
         private readonly IWritableOptions<ConnectionStrings> _connectionStrings;
@@ -25,15 +28,15 @@ namespace eFormAPI.Core.Services
         private readonly IWritableOptions<LoginPageSettings> _loginPageSettings;
         private readonly IWritableOptions<HeaderSettings> _headerSettings;
         private readonly IWritableOptions<EmailSettings> _emailSettings;
-
-        private readonly EFormCoreHelper _coreHelper = new EFormCoreHelper();
+        private readonly IEFormCoreService _coreHelper;
 
         public SettingsService(ILogger<SettingsService> logger,
             IWritableOptions<ConnectionStrings> connectionStrings,
             IWritableOptions<ApplicationSettings> applicationSettings,
             IWritableOptions<LoginPageSettings> loginPageSettings,
             IWritableOptions<HeaderSettings> headerSettings,
-            IWritableOptions<EmailSettings> emailSettings)
+            IWritableOptions<EmailSettings> emailSettings,
+            IEFormCoreService coreHelper)
         {
             _logger = logger;
             _connectionStrings = connectionStrings;
@@ -41,6 +44,7 @@ namespace eFormAPI.Core.Services
             _loginPageSettings = loginPageSettings;
             _headerSettings = headerSettings;
             _emailSettings = emailSettings;
+            _coreHelper = coreHelper;
         }
 
         public OperationResult ConnectionStringExist()
@@ -74,7 +78,7 @@ namespace eFormAPI.Core.Services
             }
         }
 
-        public OperationResult UpdateConnectionString(InitialSettingsModel initialSettingsModel)
+        public async Task<OperationResult> UpdateConnectionString(InitialSettingsModel initialSettingsModel)
         {
             var sdkConnectionString = initialSettingsModel.ConnectionStringSdk.Source + ";Initial Catalog="
                                                                                       + initialSettingsModel
@@ -89,15 +93,103 @@ namespace eFormAPI.Core.Services
                                                                                             .Catalogue + ";"
                                                                                         + initialSettingsModel
                                                                                             .ConnectionStringMain.Auth;
+            if (!string.IsNullOrEmpty(_connectionStrings.Value.SdkConnection))
+            {
+                return new OperationResult(false, LocaleHelper.GetString("ConnectionStringAlreadyExist"));
+            }
 
             AdminTools adminTools;
             try
             {
-                if (!string.IsNullOrEmpty(_connectionStrings.Value.SdkConnection))
-                {
-                    return new OperationResult(false, LocaleHelper.GetString("ConnectionStringAlreadyExist"));
-                }
+                adminTools = new AdminTools(sdkConnectionString);
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(exception.Message);
+                return new OperationResult(false, LocaleHelper.GetString("SDKConnectionStringIsInvalid"));
+            }
 
+            // Migrate DB
+            try
+            {
+                var dbContextOptionsBuilder = new DbContextOptionsBuilder<BaseDbContext>();
+                dbContextOptionsBuilder.UseSqlServer(mainConnectionString, b => b.MigrationsAssembly("eFormAPI.Web"));
+                using (var dbContext = new BaseDbContext(dbContextOptionsBuilder.Options))
+                {
+                    dbContext.Database.Migrate();
+                    var userStore = new UserStore<EformUser,
+                        EformRole,
+                        BaseDbContext,
+                        int,
+                        IdentityUserClaim<int>,
+                        EformUserRole,
+                        IdentityUserLogin<int>,
+                        IdentityUserToken<int>, IdentityRoleClaim<int>>(dbContext);
+
+
+                    IPasswordHasher<EformUser> hasher = new PasswordHasher<EformUser>();
+                    var validator = new UserValidator<EformUser>();
+                    var validators = new List<UserValidator<EformUser>> {validator};
+                    var userManager = new UserManager<EformUser>(userStore, null, hasher, validators, null, null, null,
+                        null, null);
+
+// Set-up token providers.
+                    IUserTwoFactorTokenProvider<EformUser> tokenProvider = new EmailTokenProvider<EformUser>();
+                    userManager.RegisterTokenProvider("Default", tokenProvider);
+                    IUserTwoFactorTokenProvider<EformUser> phoneTokenProvider =
+                        new PhoneNumberTokenProvider<EformUser>();
+                    userManager.RegisterTokenProvider("PhoneTokenProvider", phoneTokenProvider);
+                    // Roles
+                    var roleStore = new RoleStore<EformRole, BaseDbContext, int>(dbContext);
+                    var roleManager = new RoleManager<EformRole>(roleStore, null, null, null, null);
+                    if (!await roleManager.RoleExistsAsync(EformRole.Admin))
+                    {
+                        await roleManager.CreateAsync(new EformRole() {Name = EformRole.Admin});
+                    }
+
+                    if (!await roleManager.RoleExistsAsync(EformRole.User))
+                    {
+                        await roleManager.CreateAsync(new EformRole() {Name = EformRole.User});
+                    }
+
+                    // Seed admin and demo users
+                    var adminUser = new EformUser()
+                    {
+                        UserName = initialSettingsModel.AdminSetupModel.UserName,
+                        Email = initialSettingsModel.AdminSetupModel.Email,
+                        FirstName = initialSettingsModel.AdminSetupModel.FirstName,
+                        LastName = initialSettingsModel.AdminSetupModel.LastName,
+                        EmailConfirmed = true,
+                        TwoFactorEnabled = false,
+                        IsGoogleAuthenticatorEnabled = false
+                    };
+                    if (!userManager.Users.Any(x => x.Email.Equals(adminUser.Email)))
+                    {
+                        var createResult = await userManager.CreateAsync(adminUser,
+                            initialSettingsModel.AdminSetupModel.Password);
+                        if (!createResult.Succeeded)
+                        {
+                            return new OperationResult(false, LocaleHelper.GetString("Could not create the user"));
+                        }
+                    }
+
+                    var user = userManager.Users.FirstOrDefault(x => x.Email.Equals(adminUser.Email));
+                    if (!await userManager.IsInRoleAsync(user, EformRole.Admin))
+                    {
+                        await userManager.AddToRoleAsync(user, EformRole.Admin);
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(exception.Message);
+                return new OperationResult(false, LocaleHelper.GetString("MainConnectionStringIsInvalid"));
+            }
+
+            // Setup SDK DB
+            adminTools.DbSetup(initialSettingsModel.ConnectionStringSdk.Token);
+            try
+            {
                 _connectionStrings.Update((options) =>
                 {
                     options.SdkConnection = sdkConnectionString;
@@ -114,41 +206,6 @@ namespace eFormAPI.Core.Services
                 return new OperationResult(false, LocaleHelper.GetString("CouldNotWriteConnectionString"));
             }
 
-            try
-            {
-                adminTools = new AdminTools(sdkConnectionString);
-            }
-            catch (Exception exception)
-            {
-                _logger.LogError(exception.Message);
-                return new OperationResult(false, LocaleHelper.GetString("SDKConnectionStringIsInvalid"));
-            }
-
-            // Migrate DB
-            try
-            {
-                var dd = new DbContextOptionsBuilder();
-                dd.UseSqlServer(mainConnectionString);
-                var ss = new DbContext(dd.Options);
-                ss.Database.Migrate();
-
-                var migrationConfiguration = new EformMigrationsConfiguration(mainConnectionString)
-                {
-                    TargetDatabase = new DbConnectionInfo(mainConnectionString, "System.Data.SqlClient")
-                };
-                var migrator = new DbMigrator(migrationConfiguration);
-                migrator.Update();
-                var settingsHelper = new SettingsHelper(mainConnectionString);
-                settingsHelper.CreateAdminUser(initialSettingsModel.AdminSetupModel);
-            }
-            catch (Exception exception)
-            {
-                _logger.LogError(exception.Message);
-                return new OperationResult(false, LocaleHelper.GetString("MainConnectionStringIsInvalid"));
-            }
-
-            // Setup SDK DB
-            adminTools.DbSetup(initialSettingsModel.ConnectionStringSdk.Token);
             return new OperationResult(true);
         }
 
@@ -248,109 +305,87 @@ namespace eFormAPI.Core.Services
             try
             {
                 var core = _coreHelper.GetCore();
-                var configuration = WebConfigurationManager.OpenWebConfiguration("~");
-                var section = (AppSettingsSection) configuration.GetSection("appSettings");
-
-                section.Settings["email:smtpHost"].Value = adminSettingsModel.SMTPSettingsModel.Host;
-                section.Settings["email:smtpPort"].Value = adminSettingsModel.SMTPSettingsModel.Port;
-                section.Settings["email:login"].Value = adminSettingsModel.SMTPSettingsModel.Login;
-                section.Settings["email:password"].Value = adminSettingsModel.SMTPSettingsModel.Password;
-
-                section.Settings["header:imageLink"].Value = adminSettingsModel.HeaderSettingsModel.ImageLink;
-                section.Settings["header:imageLinkVisible"].Value =
-                    adminSettingsModel.HeaderSettingsModel.ImageLinkVisible.ToString();
-                section.Settings["header:mainText"].Value = adminSettingsModel.HeaderSettingsModel.MainText;
-                section.Settings["header:mainTextVisible"].Value =
-                    adminSettingsModel.HeaderSettingsModel.MainTextVisible.ToString();
-                section.Settings["header:secondaryText"].Value = adminSettingsModel.HeaderSettingsModel.SecondaryText;
-                section.Settings["header:secondaryTextVisible"].Value =
-                    adminSettingsModel.HeaderSettingsModel.SecondaryTextVisible.ToString();
-
-                section.Settings["loginPage:imageLink"].Value = adminSettingsModel.LoginPageSettingsModel.ImageLink;
-                section.Settings["loginPage:imageLinkVisible"].Value =
-                    adminSettingsModel.LoginPageSettingsModel.ImageLinkVisible.ToString();
-                section.Settings["loginPage:mainText"].Value = adminSettingsModel.LoginPageSettingsModel.MainText;
-                section.Settings["loginPage:mainTextVisible"].Value =
-                    adminSettingsModel.LoginPageSettingsModel.MainTextVisible.ToString();
-                section.Settings["loginPage:secondaryText"].Value =
-                    adminSettingsModel.LoginPageSettingsModel.SecondaryText;
-                section.Settings["loginPage:secondaryTextVisible"].Value = adminSettingsModel.LoginPageSettingsModel
-                    .SecondaryTextVisible.ToString();
-
-
-                configuration.Save();
-                ConfigurationManager.RefreshSection("appSettings");
-
+                _emailSettings.Update((option) =>
+                {
+                    option.SmtpHost = adminSettingsModel.SMTPSettingsModel.Host;
+                    option.SmtpPort = int.Parse(adminSettingsModel.SMTPSettingsModel.Port);
+                    option.Login = adminSettingsModel.SMTPSettingsModel.Login;
+                    option.Password = adminSettingsModel.SMTPSettingsModel.Password;
+                });
+                _headerSettings.Update((option) =>
+                {
+                    option.ImageLink = adminSettingsModel.HeaderSettingsModel.ImageLink;
+                    option.ImageLinkVisible = adminSettingsModel.HeaderSettingsModel.ImageLinkVisible;
+                    option.MainText = adminSettingsModel.HeaderSettingsModel.MainText;
+                    option.MainTextVisible = adminSettingsModel.HeaderSettingsModel.MainTextVisible;
+                    option.SecondaryText = adminSettingsModel.HeaderSettingsModel.SecondaryText;
+                    option.SecondaryTextVisible = adminSettingsModel.HeaderSettingsModel.SecondaryTextVisible;
+                });
+                _loginPageSettings.Update((option) =>
+                {
+                    option.ImageLink = adminSettingsModel.LoginPageSettingsModel.ImageLink;
+                    option.ImageLinkVisible = adminSettingsModel.LoginPageSettingsModel.ImageLinkVisible;
+                    option.MainText = adminSettingsModel.LoginPageSettingsModel.MainText;
+                    option.MainTextVisible = adminSettingsModel.LoginPageSettingsModel.MainTextVisible;
+                    option.SecondaryText = adminSettingsModel.LoginPageSettingsModel.SecondaryText;
+                    option.SecondaryTextVisible = adminSettingsModel.LoginPageSettingsModel.SecondaryTextVisible;
+                });
                 core.SetHttpServerAddress(adminSettingsModel.SiteLink);
                 return new OperationResult(true, LocaleHelper.GetString("SettingsUpdatedSuccessfully"));
             }
             catch (Exception e)
             {
-                Logger.Error(e.Message);
+                _logger.LogError(e.Message);
                 return new OperationResult(false, LocaleHelper.GetString("CantUpdateSettingsInWebConfig"));
             }
         }
 
         #region ResetSettingsSection
 
-        [HttpGet]
-        [Authorize(Roles = EformRoles.Admin)]
-        [Route("api/settings/reset-login-page")]
         public OperationResult ResetLoginPageSettings()
         {
             try
             {
-                var configuration = WebConfigurationManager.OpenWebConfiguration("~");
-                var section = (AppSettingsSection) configuration.GetSection("appSettings");
-
-                section.Settings["loginPage:imageLink"].Value = "";
-                section.Settings["loginPage:imageLinkVisible"].Value = "True";
-                section.Settings["loginPage:mainText"].Value = "Microting eForm";
-                section.Settings["loginPage:mainTextVisible"].Value = "True";
-                section.Settings["loginPage:secondaryText"].Value = "No more paper-forms and back-office data entry";
-                section.Settings["loginPage:secondaryTextVisible"].Value = "True";
-
-                configuration.Save();
-                ConfigurationManager.RefreshSection("appSettings");
+                _loginPageSettings.Update((option) =>
+                {
+                    option.ImageLink = "";
+                    option.ImageLinkVisible = true;
+                    option.MainText = "Microting eForm";
+                    option.MainTextVisible = true;
+                    option.SecondaryText = "No more paper-forms and back-office data entry";
+                    option.SecondaryTextVisible = true;
+                });
                 return new OperationResult(true, "Login page settings have been reseted successfully");
             }
             catch (Exception e)
             {
-                Logger.Error(e.Message);
+                _logger.LogError(e.Message);
                 return new OperationResult(false, "Can't update settings in web.config");
             }
         }
 
-        [HttpGet]
-        [Authorize(Roles = EformRoles.Admin)]
-        [Route("api/settings/reset-page-header")]
         public OperationResult ResetPageHeaderSettings()
         {
             try
             {
-                var configuration = WebConfigurationManager.OpenWebConfiguration("~");
-                var section = (AppSettingsSection) configuration.GetSection("appSettings");
-
-                section.Settings["header:imageLink"].Value = "";
-                section.Settings["header:imageLinkVisible"].Value = "True";
-                section.Settings["header:mainText"].Value = "Microting eForm";
-                section.Settings["header:mainTextVisible"].Value = "True";
-                section.Settings["header:secondaryText"].Value = "No more paper-forms and back-office data entry";
-                section.Settings["header:secondaryTextVisible"].Value = "True";
-
-                configuration.Save();
-                ConfigurationManager.RefreshSection("appSettings");
+                _headerSettings.Update((option) =>
+                {
+                    option.ImageLink = "";
+                    option.ImageLinkVisible = true;
+                    option.MainText = "Microting eForm";
+                    option.MainTextVisible = true;
+                    option.SecondaryText = "No more paper-forms and back-office data entry";
+                    option.SecondaryTextVisible = true;
+                });
                 return new OperationResult(true, "Header settings have been reseted successfully");
             }
             catch (Exception e)
             {
-                Logger.Error(e.Message);
+                _logger.LogError(e.Message);
                 return new OperationResult(false, "Can't update settings in web.config");
             }
         }
 
         #endregion
     }
-}
-
 }

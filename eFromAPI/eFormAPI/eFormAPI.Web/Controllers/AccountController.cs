@@ -38,7 +38,7 @@ namespace eFormAPI.Web.Controllers
         // POST api/account/user-settings
         [HttpPost]
         [Route("api/account/user-settings")]
-        public Task<OperationResult> UpdateUserSettings(UserSettingsModel model)
+        public Task<OperationResult> UpdateUserSettings([FromBody] UserSettingsModel model)
         {
             return _accountService.UpdateUserSettings(model);
         }
@@ -46,7 +46,7 @@ namespace eFormAPI.Web.Controllers
 
         [HttpPost]
         [Route("api/account/change-password")]
-        public async Task<OperationResult> ChangePassword(ChangePasswordModel model)
+        public async Task<OperationResult> ChangePassword([FromBody] ChangePasswordModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -61,7 +61,7 @@ namespace eFormAPI.Web.Controllers
         [HttpPost]
         [Route("api/account/forgot-password")]
         [AllowAnonymous]
-        public async Task<OperationResult> ForgotPassword(ForgotPasswordModel model)
+        public async Task<OperationResult> ForgotPassword([FromBody] ForgotPasswordModel model)
         {
             if (ModelState.IsValid)
             {
@@ -84,7 +84,7 @@ namespace eFormAPI.Web.Controllers
         [HttpPost]
         [Route("api/account/reset-password")]
         [AllowAnonymous]
-        public async Task<OperationResult> ResetPassword(ResetPasswordModel model)
+        public async Task<OperationResult> ResetPassword([FromBody] ResetPasswordModel model)
         {
             if (!ModelState.IsValid)
             {

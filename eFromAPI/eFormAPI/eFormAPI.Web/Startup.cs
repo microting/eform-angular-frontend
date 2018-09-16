@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -6,7 +8,6 @@ using System.Linq;
 using System.Text;
 using Dapper;
 using eFormAPI.Core.Abstractions;
-using eFormAPI.Core.Helpers;
 using eFormAPI.Core.Services;
 using eFormAPI.Core.Services.Identity;
 using eFormAPI.Database;
@@ -29,7 +30,6 @@ using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
-using ApplicationSettings = Amazon.Util.Internal.PlatformServices.ApplicationSettings;
 
 namespace eFormAPI.Web
 {
@@ -48,8 +48,7 @@ namespace eFormAPI.Web
             // Configuration
             services.AddSingleton(Configuration);
             services.AddOptions();
-            services.Configure<TokenOptions>(Configuration.GetSection("TokenOptions"));
-            //     services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            services.Configure<EformTokenOptions>(Configuration.GetSection("EformTokenOptions"));
             // Entity framework PostgreSQL
             services.AddEntityFrameworkSqlServer()
                 .AddDbContext<BaseDbContext>(o => o.UseSqlServer(Configuration.MyConnectionString(),
@@ -89,10 +88,10 @@ namespace eFormAPI.Web
                     cfg.SaveToken = true;
                     cfg.TokenValidationParameters = new TokenValidationParameters()
                     {
-                        ValidIssuer = Configuration["TokenOptions:Issuer"],
-                        ValidAudience = Configuration["TokenOptions:Issuer"],
+                        ValidIssuer = Configuration["EformTokenOptions:Issuer"],
+                        ValidAudience = Configuration["EformTokenOptions:Issuer"],
                         IssuerSigningKey =
-                            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenOptions:SigningKey"]))
+                            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["EformTokenOptions:SigningKey"]))
                     };
                 });
             // Localiation
@@ -255,6 +254,10 @@ namespace eFormAPI.Web
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IAdminService, AdminService>();
+            services.AddScoped<ISettingsService, SettingsService>();
+            services.AddScoped<ITemplatesService, TemplatesService>();
+            services.AddScoped<IEFormCoreService, EFormCoreService>();
+
 
             
         }

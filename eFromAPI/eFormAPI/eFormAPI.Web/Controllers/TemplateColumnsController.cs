@@ -33,7 +33,7 @@ namespace eFormAPI.Web.Controllers
 
         [HttpPost]
         [Route("api/template-columns")]
-        public OperationResult UpdateColumns(UpdateTemplateColumnsModel model)
+        public OperationResult UpdateColumns([FromBody] UpdateTemplateColumnsModel model)
         {
             return _templateColumnsService.UpdateColumns(model);
         }

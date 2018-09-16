@@ -28,21 +28,21 @@ namespace eFormAPI.Web.Controllers
 
         [HttpPost]
         [Route("api/admin/get-users")]
-        public OperationDataResult<UserInfoModelList> GetAllUsers(PaginationModel paginationModel)
+        public OperationDataResult<UserInfoModelList> GetAllUsers([FromBody] PaginationModel paginationModel)
         {
             return _adminService.GetAllUsers(paginationModel);
         }
 
         [HttpPost]
         [Route("api/admin/update-user")]
-        public Task<OperationResult> UpdateUser(UserRegisterModel userRegisterModel)
+        public Task<OperationResult> UpdateUser([FromBody] UserRegisterModel userRegisterModel)
         {
             return _adminService.UpdateUser(userRegisterModel);
         }
 
         [HttpPost]
         [Route("api/admin/create-user")]
-        public Task<OperationResult> CreateUser(UserRegisterModel userRegisterModel)
+        public Task<OperationResult> CreateUser([FromBody] UserRegisterModel userRegisterModel)
         {
             return _adminService.CreateUser(userRegisterModel);
         }
