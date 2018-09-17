@@ -6,12 +6,11 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Dapper;
-using eFormAPI.Core.Abstractions;
-using eFormAPI.Core.Services;
-using eFormAPI.Core.Services.Identity;
-using eFormAPI.Database;
-using eFormAPI.Database.Entities;
+using eFormAPI.BasePn.Abstractions;
+using eFormAPI.BasePn.Database;
+using eFormAPI.BasePn.Database.Entities;
+using eFormAPI.BasePn.Models.Application;
+using eFormAPI.BasePn.Services;
 using eFormAPI.Web.Hosting.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -199,7 +198,6 @@ namespace eFormAPI.Web
             app.UseAuthentication();
             // Automapper configuration
             //          MapConfig.AutoMapperConfig();
-            DefaultTypeMap.MatchNamesWithUnderscores = true;
 
             IList<CultureInfo> supportedCultures = new List<CultureInfo>
             {

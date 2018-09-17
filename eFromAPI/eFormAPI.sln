@@ -3,13 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2019
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eFormAPI.Web", "eFormAPI\eFormAPI.Web\eFormAPI.Web.csproj", "{701DF5E7-71CC-4187-835F-2C9E8056956B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eFormAPI.Web", "eFormAPI\eFormAPI.Web\eFormAPI.Web.csproj", "{701DF5E7-71CC-4187-835F-2C9E8056956B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eFormAPI.Core", "eFormAPI\eFormAPI.Core\eFormAPI.Core.csproj", "{6D4CD09B-4493-4187-91D9-92295E1E9801}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eFormAPI.Database", "eFormAPI\eFormAPI.Database\eFormAPI.Database.csproj", "{6B851CB5-EEBC-4923-9AEE-27408BCDBB5B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eFormAPI.Common", "eFormAPI\eFormAPI.Common\eFormAPI.Common.csproj", "{CBC9C4DD-ADC8-4292-A637-FA570B5C1D1F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eFormAPI.BasePn", "eFormAPI\eFormAPI.BasePn\eFormAPI.BasePn.csproj", "{AC747572-F6C2-4599-AC22-EA9CDA80D8EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,18 +17,10 @@ Global
 		{701DF5E7-71CC-4187-835F-2C9E8056956B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{701DF5E7-71CC-4187-835F-2C9E8056956B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{701DF5E7-71CC-4187-835F-2C9E8056956B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6D4CD09B-4493-4187-91D9-92295E1E9801}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6D4CD09B-4493-4187-91D9-92295E1E9801}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6D4CD09B-4493-4187-91D9-92295E1E9801}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6D4CD09B-4493-4187-91D9-92295E1E9801}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6B851CB5-EEBC-4923-9AEE-27408BCDBB5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6B851CB5-EEBC-4923-9AEE-27408BCDBB5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6B851CB5-EEBC-4923-9AEE-27408BCDBB5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6B851CB5-EEBC-4923-9AEE-27408BCDBB5B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CBC9C4DD-ADC8-4292-A637-FA570B5C1D1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CBC9C4DD-ADC8-4292-A637-FA570B5C1D1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CBC9C4DD-ADC8-4292-A637-FA570B5C1D1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CBC9C4DD-ADC8-4292-A637-FA570B5C1D1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC747572-F6C2-4599-AC22-EA9CDA80D8EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC747572-F6C2-4599-AC22-EA9CDA80D8EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC747572-F6C2-4599-AC22-EA9CDA80D8EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC747572-F6C2-4599-AC22-EA9CDA80D8EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

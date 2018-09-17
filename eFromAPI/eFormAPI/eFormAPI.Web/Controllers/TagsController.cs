@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using eFormAPI.Common.Infrastructure.Models.API;
-using eFormAPI.Common.Models.Common;
-using eFormAPI.Common.Models.Tags;
-using eFormAPI.Core.Abstractions;
+using eFormAPI.BasePn.Abstractions;
+using eFormAPI.BasePn.Infrastructure.Models.API;
+using eFormAPI.BasePn.Models.Common;
+using eFormAPI.BasePn.Models.Tags;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

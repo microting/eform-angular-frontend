@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using eFormAPI.Common.Infrastructure.Models.API;
-using eFormAPI.Common.Models.Auth;
-using eFormAPI.Common.Models.Settings.User;
-using eFormAPI.Common.Models.User;
-using eFormAPI.Core.Abstractions;
+using eFormAPI.BasePn.Abstractions;
+using eFormAPI.BasePn.Infrastructure.Models.API;
+using eFormAPI.BasePn.Models.Auth;
+using eFormAPI.BasePn.Models.Settings.User;
+using eFormAPI.BasePn.Models.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

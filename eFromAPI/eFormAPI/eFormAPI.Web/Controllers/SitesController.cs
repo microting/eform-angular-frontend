@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using eFormAPI.Common.Infrastructure.Models.API;
-using eFormAPI.Common.Models;
-using eFormAPI.Core.Abstractions;
+using eFormAPI.BasePn.Abstractions;
+using eFormAPI.BasePn.Infrastructure.Models.API;
+using eFormAPI.BasePn.Models;
 using eFormShared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

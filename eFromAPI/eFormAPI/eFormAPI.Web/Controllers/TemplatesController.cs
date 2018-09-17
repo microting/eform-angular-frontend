@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using eFormAPI.Common.Infrastructure;
-using eFormAPI.Common.Infrastructure.Helpers;
-using eFormAPI.Common.Infrastructure.Models.API;
-using eFormAPI.Common.Models;
-using eFormAPI.Common.Models.Templates;
-using eFormAPI.Core.Abstractions;
-using eFormCore;
-using eFormShared;
+using eFormAPI.BasePn.Abstractions;
+using eFormAPI.BasePn.Infrastructure.Models.API;
+using eFormAPI.BasePn.Models;
+using eFormAPI.BasePn.Models.Templates;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

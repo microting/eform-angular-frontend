@@ -5,13 +5,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Net.Mime;
 using System.Threading.Tasks;
-using eFormAPI.Common.Infrastructure.Helpers;
-using eFormAPI.Common.Infrastructure.Messages;
-using eFormAPI.Common.Infrastructure.Models.API;
-using eFormAPI.Core.Helpers;
-using eFormAPI.Core.Services;
+using eFormAPI.BasePn.Helpers;
+using eFormAPI.BasePn.Infrastructure.Helpers;
+using eFormAPI.BasePn.Infrastructure.Messages;
+using eFormAPI.BasePn.Infrastructure.Models.API;
+using eFormAPI.BasePn.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -282,8 +281,10 @@ namespace eFormAPI.Web.Controllers
                         var extractPath = Path.Combine(saveFolder);
                         if (!System.IO.File.Exists(filePath))
                         {
-                            if (httpPostedFile.Length > 0) {
-                                using (var fileStream = new FileStream(filePath, FileMode.Create)) {
+                            if (httpPostedFile.Length > 0)
+                            {
+                                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                                {
                                     await httpPostedFile.CopyToAsync(fileStream);
                                 }
                             }

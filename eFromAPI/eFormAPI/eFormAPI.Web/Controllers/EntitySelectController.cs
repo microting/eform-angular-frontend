@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using eFormAPI.Common.Infrastructure.Models.API;
-using eFormAPI.Common.Models.Common;
-using eFormAPI.Common.Models.SelectableList;
-using eFormAPI.Core.Abstractions;
+using eFormAPI.BasePn.Abstractions;
+using eFormAPI.BasePn.Infrastructure.Models.API;
+using eFormAPI.BasePn.Models.Common;
+using eFormAPI.BasePn.Models.SelectableList;
 using eFormData;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,8 +21,8 @@ namespace eFormAPI.Web.Controllers
 
         [HttpPost]
         [Route("api/selectable-groups")]
-        public OperationDataResult<EntityGroupList> GetEntityGroupList([FromBody] 
-            AdvEntitySelectableGroupListRequestModel requestModel)
+        public OperationDataResult<EntityGroupList> GetEntityGroupList(
+            [FromBody] AdvEntitySelectableGroupListRequestModel requestModel)
         {
             return _entitySelectService.GetEntityGroupList(requestModel);
         }

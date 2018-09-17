@@ -1,7 +1,7 @@
-﻿using eFormAPI.Common.Infrastructure.Models.API;
-using eFormAPI.Common.Models.Cases.Request;
-using eFormAPI.Common.Models.Cases.Response;
-using eFormAPI.Core.Abstractions;
+﻿using eFormAPI.BasePn.Abstractions;
+using eFormAPI.BasePn.Infrastructure.Models.API;
+using eFormAPI.BasePn.Models.Cases.Request;
+using eFormAPI.BasePn.Models.Cases.Response;
 using eFormData;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

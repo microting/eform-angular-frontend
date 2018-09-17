@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
-using eFormAPI.Common.Infrastructure.Models.API;
-using eFormAPI.Common.Models.Common;
-using eFormAPI.Common.Models.User;
-using eFormAPI.Core.Abstractions;
-using eFormAPI.Database.Entities;
+using eFormAPI.BasePn.Abstractions;
+using eFormAPI.BasePn.Database.Entities;
+using eFormAPI.BasePn.Infrastructure.Models.API;
+using eFormAPI.BasePn.Models.Common;
+using eFormAPI.BasePn.Models.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
