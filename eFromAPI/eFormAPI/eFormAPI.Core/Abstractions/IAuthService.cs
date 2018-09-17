@@ -7,7 +7,7 @@ namespace eFormAPI.Core.Abstractions
 {
     public interface IAuthService
     {
-        Task<OperationDataResult<AuthorizeResult>> AuthenticateUser(string username, string password);
+        Task<OperationDataResult<AuthorizeResult>> AuthenticateUser(LoginModel model);
         Task<OperationResult> DeleteGoogleAuthenticatorInfo();
         Task<OperationDataResult<GoogleAuthenticatorModel>> GetGoogleAuthenticator(LoginModel loginModel);
         Task<OperationDataResult<GoogleAuthInfoModel>> GetGoogleAuthenticatorInfo();

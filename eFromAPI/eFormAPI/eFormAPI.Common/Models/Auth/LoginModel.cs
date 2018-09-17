@@ -8,5 +8,7 @@ namespace eFormAPI.Common.Models.Auth
         public string Username { get; set; }
         [Required]
         public string Password { get; set; }
+
+        public string Code { get; set; }
     }
 }

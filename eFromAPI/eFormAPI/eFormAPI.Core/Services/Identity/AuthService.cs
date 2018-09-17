@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using AspNetCore.Totp;
 using eFormAPI.Common.Infrastructure.Helpers;
 using eFormAPI.Common.Infrastructure.Models.API;
 using eFormAPI.Common.Models.Auth;
@@ -53,15 +54,15 @@ namespace eFormAPI.Core.Services.Identity
             _userService = userService;
         }
 
-        public async Task<OperationDataResult<AuthorizeResult>> AuthenticateUser(string username, string password)
+        public async Task<OperationDataResult<AuthorizeResult>> AuthenticateUser(LoginModel model)
         {
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(model.Username) || string.IsNullOrEmpty(model.Password))
                 return new OperationDataResult<AuthorizeResult>(false, "Empty username or password");
 
             var signInResult =
-                await _signInManager.PasswordSignInAsync(username, password, false, lockoutOnFailure: true);
+                await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, lockoutOnFailure: true);
 
-            if (!signInResult.Succeeded)
+            if (!signInResult.Succeeded && !signInResult.RequiresTwoFactor)
             {
                 if (signInResult.IsLockedOut)
                 {
@@ -73,9 +74,10 @@ namespace eFormAPI.Core.Services.Identity
                 return new OperationDataResult<AuthorizeResult>(false, "Incorrect password.");
             }
 
-            var user = await _userService.GetByUsernameAsync(username);
+            var user = await _userService.GetByUsernameAsync(model.Username);
             if (user == null)
-                return new OperationDataResult<AuthorizeResult>(false, "User with username {username} not found");
+                return new OperationDataResult<AuthorizeResult>(false,
+                    $"User with username {model.Username} not found");
 
             // Confirmed email check
             if (!user.EmailConfirmed)
@@ -83,11 +85,49 @@ namespace eFormAPI.Core.Services.Identity
                 return new OperationDataResult<AuthorizeResult>(false, $"Email {user.Email} not confirmed");
             }
 
+            // TwoFactor check
+            var psk = user.GoogleAuthenticatorSecretKey;
+            var code = model.Code;
+            var isTwoFactorAuthForced = _appSettings.Value.IsTwoFactorForced;
+            if (user.TwoFactorEnabled || isTwoFactorAuthForced)
+            {
+                // check input params
+                if (string.IsNullOrEmpty(psk) || string.IsNullOrEmpty(code))
+                {
+                    return new OperationDataResult<AuthorizeResult>(false, "PSK or code is empty");
+                }
+
+                if (psk != user.GoogleAuthenticatorSecretKey)
+                {
+                    return new OperationDataResult<AuthorizeResult>(false, "PSK is invalid");
+                }
+
+                // check code
+                
+                var otp = new Totp(Base32.FromBase32String(user.GoogleAuthenticatorSecretKey));
+                var isCodeValid = otp.VerifyTotp(code, out long timeStepMatched, new VerificationWindow(300, 300));
+                if (!isCodeValid)
+                {
+                    return new OperationDataResult<AuthorizeResult>(false, "Invalid code");
+                }
+
+                // update user entity
+                if (!user.IsGoogleAuthenticatorEnabled)
+                {
+                    user.IsGoogleAuthenticatorEnabled = true;
+                    var updateResult = _userManager.UpdateAsync(user).Result;
+                    if (!updateResult.Succeeded)
+                    {
+                        return new OperationDataResult<AuthorizeResult>(false, "PSK or code is empty");
+                    }
+                }
+            }
+
             var token = GenerateToken(user);
             var roleList = _userManager.GetRolesAsync(user).Result;
             if (!roleList.Any())
             {
-                return new OperationDataResult<AuthorizeResult>(false, $"Role for user {username} not found");
+                return new OperationDataResult<AuthorizeResult>(false, $"Role for user {model.Username} not found");
             }
 
             // update last sign in date
@@ -100,6 +140,7 @@ namespace eFormAPI.Core.Services.Identity
             });
         }
 
+
         public string GenerateToken(EformUser user)
         {
             if (user != null)
@@ -109,6 +150,10 @@ namespace eFormAPI.Core.Services.Identity
                     new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 };
+                if (!string.IsNullOrEmpty(user.Locale))
+                {
+                    claims.Add(new Claim("locale", user.Locale));
+                }
 
                 // Add user and roles claims
                 var userClaims = _userManager.GetClaimsAsync(user).Result;
@@ -141,6 +186,7 @@ namespace eFormAPI.Core.Services.Identity
 
             return null;
         }
+
 
         public async Task<OperationResult> LogOut()
         {
@@ -252,7 +298,7 @@ namespace eFormAPI.Core.Services.Identity
             }
 
             var signInResult =
-                await _signInManager.PasswordSignInAsync(loginModel.Username, loginModel.Password, false, lockoutOnFailure: true);
+                await _signInManager.CheckPasswordSignInAsync(user, loginModel.Password, true);
 
             if (!signInResult.Succeeded)
             {
@@ -263,15 +309,9 @@ namespace eFormAPI.Core.Services.Identity
                 }
 
                 // Credentials are invalid, or account doesn't exist
-                return new OperationDataResult<GoogleAuthenticatorModel>(false, 
+                return new OperationDataResult<GoogleAuthenticatorModel>(false,
                     LocaleHelper.GetString("UserNameOrPasswordIncorrect"));
             }
-
-            //if (await _userManager.CheckPasswordAsync(user, loginModel.Password))
-            //{
-            //    return new OperationDataResult<GoogleAuthenticatorModel>(false,
-            //        LocaleHelper.GetString("UserNameOrPasswordIncorrect"));
-            //}
 
             // check if two factor is enabled
             var isTwoFactorAuthForced = _appSettings.Value.IsTwoFactorForced;
@@ -290,7 +330,7 @@ namespace eFormAPI.Core.Services.Identity
             var barcodeUrl = KeyUrl.GetTotpUrl(psk, user.UserName) + "&issuer=EformApplication";
             var model = new GoogleAuthenticatorModel
             {
-                PSK = Base32Helper.ToBase32String(psk),
+                PSK = Base32.ToBase32String(psk),
                 BarcodeUrl = HttpUtility.UrlEncode(barcodeUrl)
             };
             // write PSK to the user entity

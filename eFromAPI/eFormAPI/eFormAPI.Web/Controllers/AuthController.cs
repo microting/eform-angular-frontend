@@ -27,7 +27,7 @@ namespace eFormAPI.Web.Controllers
         [Route("api/auth/token")]
         public async Task<OperationResult> AuthenticateUser(LoginModel model)
         {
-            return await _authService.AuthenticateUser(model.Username, model.Password);
+            return await _authService.AuthenticateUser(model);
         }
 
         [HttpGet]

@@ -19,7 +19,7 @@ namespace eFormAPI.Core.Services
         private eFormCore.Core _core;
         private readonly ILogger<EFormCoreService> _logger;
         private IWindsorContainer _container;
-        public IBus Bus;
+        public IBus Bus { get; private set; }
 
         public EFormCoreService(IWritableOptions<ConnectionStrings> connectionStrings,
             ILogger<EFormCoreService> logger,

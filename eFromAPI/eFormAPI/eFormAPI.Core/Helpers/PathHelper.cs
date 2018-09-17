@@ -120,6 +120,31 @@ namespace eFormAPI.Core.Helpers
         /// <returns></returns>
         public static string GetStoragePath()
         {
+            var outputPath = GetOutputPath();
+            var storagePath = Path.Combine(outputPath, "datafolder");
+            if (!Directory.Exists(storagePath))
+            {
+                Directory.CreateDirectory(storagePath);
+            }
+            return storagePath;
+        }
+
+        /// <summary>
+        /// Get output file for current application for OS platform
+        /// </summary>
+        /// <returns></returns>
+        public static string GetOutputPath(string fileName)
+        {
+            var audioPath = GetOutputPath();
+            return Path.Combine(audioPath, fileName);
+        }
+
+        /// <summary>
+        /// Get output directory for current application for OS platform
+        /// </summary>
+        /// <returns></returns>
+        public static string GetOutputPath()
+        {
             var os = GetOsVersion();
             string homePath;
             switch (os)
@@ -136,7 +161,7 @@ namespace eFormAPI.Core.Helpers
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            var storageDir = Path.Combine(homePath, "output", "datafolder");
+            var storageDir = Path.Combine(homePath, "output");
             if (!Directory.Exists(storageDir))
             {
                 Directory.CreateDirectory(storageDir);

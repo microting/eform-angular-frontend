@@ -20,6 +20,7 @@
   </ItemGroup>
   
   <ItemGroup>
+   <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0005" />
    <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0" />
   </ItemGroup>
 </Project>

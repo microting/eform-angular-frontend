@@ -113,7 +113,8 @@ namespace eFormAPI.Core.Services
             try
             {
                 var dbContextOptionsBuilder = new DbContextOptionsBuilder<BaseDbContext>();
-                dbContextOptionsBuilder.UseSqlServer(mainConnectionString, b => b.MigrationsAssembly("eFormAPI.Web"));
+                dbContextOptionsBuilder.UseSqlServer(mainConnectionString, b => 
+                    b.MigrationsAssembly("eFormAPI.Web"));
                 using (var dbContext = new BaseDbContext(dbContextOptionsBuilder.Options))
                 {
                     dbContext.Database.Migrate();
@@ -124,7 +125,8 @@ namespace eFormAPI.Core.Services
                         IdentityUserClaim<int>,
                         EformUserRole,
                         IdentityUserLogin<int>,
-                        IdentityUserToken<int>, IdentityRoleClaim<int>>(dbContext);
+                        IdentityUserToken<int>, 
+                        IdentityRoleClaim<int>>(dbContext);
 
 
                     IPasswordHasher<EformUser> hasher = new PasswordHasher<EformUser>();
@@ -132,8 +134,8 @@ namespace eFormAPI.Core.Services
                     var validators = new List<UserValidator<EformUser>> {validator};
                     var userManager = new UserManager<EformUser>(userStore, null, hasher, validators, null, null, null,
                         null, null);
-
-// Set-up token providers.
+                    
+                    // Set-up token providers.
                     IUserTwoFactorTokenProvider<EformUser> tokenProvider = new EmailTokenProvider<EformUser>();
                     userManager.RegisterTokenProvider("Default", tokenProvider);
                     IUserTwoFactorTokenProvider<EformUser> phoneTokenProvider =
