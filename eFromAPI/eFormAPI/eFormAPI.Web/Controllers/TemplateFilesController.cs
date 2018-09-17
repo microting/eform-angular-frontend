@@ -5,21 +5,24 @@
 //using System.Net.Http;
 //using System.Net.Http.Headers;
 //using System.Net.Mime;
-//using eFormAPI.Common.Infrastructure;
 //using eFormAPI.Common.Infrastructure.Helpers;
 //using eFormAPI.Common.Infrastructure.Messages;
 //using eFormAPI.Common.Infrastructure.Models.API;
-//using eFormAPI.Web.Infrastructure.Helpers;
+//using eFormAPI.Core.Helpers;
+//using eFormAPI.Core.Services;
 //using Microsoft.AspNetCore.Authorization;
-//using Microsoft.AspNetCore.Http;
 //using Microsoft.AspNetCore.Mvc;
 
 //namespace eFormAPI.Web.Controllers
 //{
-
 //    public class TemplateFilesController : Controller
 //    {
-//        private readonly EFormCoreHelper _coreHelper = new EFormCoreHelper();
+//        private readonly IEFormCoreService _coreHelper;
+
+//        public TemplateFilesController(IEFormCoreService coreHelper)
+//        {
+//            _coreHelper = coreHelper;
+//        }
 
 //        [HttpGet]
 //        [Authorize]
@@ -29,6 +32,7 @@
 //            var core = _coreHelper.GetCore();
 
 //            var fileName = $"{id}_{DateTime.Now.Ticks}.csv";
+//            PathHelper.GetStoragePath()
 //            Directory.CreateDirectory(System.Web.Hosting.HostingEnvironment.MapPath("~/bin/output/"));
 //            var filePath = System.Web.Hosting.HostingEnvironment.MapPath($"~/bin/output/{fileName}");
 //            var fullPath = core.CasesToCsv(id, null, null, filePath,
@@ -52,7 +56,7 @@
 //            var core = _coreHelper.GetCore();
 
 //            var filePath = $"{core.GetPicturePath()}\\{fileName}.{ext}";
-//            if (!File.Exists(filePath))
+//            if (!System.IO.File.Exists(filePath))
 //            {
 //                var resultNotFound = new HttpResponseMessage(HttpStatusCode.NotFound);
 //                resultNotFound.Content = new StringContent($"Trying to find file at location: {filePath}");
@@ -79,7 +83,7 @@
 //            var core = _coreHelper.GetCore();
 
 //            var filePath = $"{core.GetPicturePath()}\\{fileName}";
-//            if (!File.Exists(filePath))
+//            if (!System.IO.File.Exists(filePath))
 //            {
 //                return new OperationResult(false, LocaleHelper.GetString("FileNotFound"));
 //            }
@@ -132,7 +136,7 @@
 //            var core = _coreHelper.GetCore();
 
 //            var filePath = $"{core.GetPdfPath()}\\{fileName}.pdf";
-//            if (!File.Exists(filePath))
+//            if (!System.IO.File.Exists(filePath))
 //            {
 //                return new HttpResponseMessage(HttpStatusCode.NotFound);
 //            }
@@ -159,7 +163,7 @@
 //                var filePath = core.CaseToPdf(caseId, templateId.ToString(),
 //                    DateTime.Now.ToString("yyyyMMddHHmmssffff"), $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image/");
 //                //DateTime.Now.ToString("yyyyMMddHHmmssffff"), $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image?&filename=");
-//                if (!File.Exists(filePath))
+//                if (!System.IO.File.Exists(filePath))
 //                {
 //                    return new HttpResponseMessage(HttpStatusCode.NotFound);
 //                }
@@ -190,7 +194,7 @@
 //                var core = _coreHelper.GetCore();
 //                int? caseId = core.CaseReadFirstId(templateId, "not_revmoed");
 //                var filePath = core.CaseToJasperXml((int)caseId, DateTime.Now.ToString("yyyyMMddHHmmssffff"), $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image/");
-//                if (!File.Exists(filePath))
+//                if (!System.IO.File.Exists(filePath))
 //                {
 //                    return new HttpResponseMessage(HttpStatusCode.NotFound);
 //                }
@@ -254,11 +258,11 @@
 //                    {
 //                        var filePath = Path.Combine(zipArchiveFolder, Path.GetFileName(httpPostedFile.FileName));
 //                        var extractPath = Path.Combine(saveFolder);
-//                        if (!File.Exists(filePath))
+//                        if (!System.IO.File.Exists(filePath))
 //                        {
 //                            httpPostedFile.SaveAs(filePath);
 //                        }
-//                        if (File.Exists(filePath))
+//                        if (System.IO.File.Exists(filePath))
 //                        {
 //                            if (!Directory.Exists(extractPath))
 //                            {
@@ -270,7 +274,7 @@
 //                            }
 
 //                            ZipFile.ExtractToDirectory(filePath, extractPath);
-//                            File.Delete(filePath);
+//                            System.IO.File.Delete(filePath);
 //                            _coreHelper.bus.SendLocal(new GenerateJasperFiles(templateId));
 
 //                            return Request.CreateResponse(HttpStatusCode.OK);
