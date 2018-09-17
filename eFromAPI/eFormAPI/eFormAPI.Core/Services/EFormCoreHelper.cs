@@ -1,6 +1,4 @@
-﻿
-
-using System;
+﻿using System;
 using System.Net;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
@@ -34,25 +32,14 @@ namespace eFormAPI.Core.Services
 
         public eFormCore.Core GetCore()
         {
-            try
+            var connectionString = _connectionStrings.Value.SdkConnection;
+            if (string.IsNullOrEmpty(connectionString))
             {
-                var connectionString = _connectionStrings.Value.SdkConnection;
-                if (string.IsNullOrEmpty(connectionString))
-                {
-                    throw new Exception();
-                }
-            }
-            catch (Exception)
-            {
-                // 
-
-
                 _httpContextAccessor.HttpContext.Response.OnStarting(async () =>
                 {
                     _httpContextAccessor.HttpContext.Response.StatusCode = (int) HttpStatusCode.Unauthorized;
                     await _httpContextAccessor.HttpContext.Response.Body.FlushAsync();
                 });
-                //  throw new HttpResponseException(HttpStatusCode.Unauthorized);
             }
 
             _core = new eFormCore.Core();
@@ -78,7 +65,7 @@ namespace eFormAPI.Core.Services
                 _container.Register(Component.For<eFormCore.Core>().Instance(_core));
                 _container.Install(new RebusHandlerInstaller(),
                     new RebusInstaller(_connectionStrings.Value.DefaultConnection, 5, 5)); // TODO 1,1 parameters
-                this.Bus = _container.Resolve<IBus>();
+                Bus = _container.Resolve<IBus>();
                 return _core;
             }
 
