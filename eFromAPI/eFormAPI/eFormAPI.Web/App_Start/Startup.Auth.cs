@@ -4,10 +4,14 @@
 //using System.Data.Entity.Migrations;
 //using System.Linq;
 //using Castle.Core.Internal;
+//using eFormAPI.Database;
 //using eFormAPI.Web.Infrastructure.Attributes;
 //using eFormAPI.Web.Infrastructure.Helpers;
 //using eFormAPI.Web.Infrastructure.Identity;
 //using eFormAPI.Web.Infrastructure.Identity.Providers;
+//using Microsoft.AspNetCore.Authentication.Cookies;
+//using Microsoft.AspNetCore.Http;
+//using Microsoft.EntityFrameworkCore;
 //using Microsoft.Owin;
 //using Microsoft.Owin.Security.Cookies;
 //using Microsoft.Owin.Security.OAuth;

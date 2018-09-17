@@ -68,7 +68,7 @@ export class BaseService {
     } else {
       headers = headers.set('Content-Type', 'application/json');
     }
-    const user: AuthResponseModel = JSON.parse(localStorage.getItem('currentUser'));
+    const user: AuthResponseModel = JSON.parse(localStorage.getItem('currentAuth'));
     // check user
     if (user && user.access_token) {
       headers = headers.append('Authorization', 'Bearer ' + user.access_token);

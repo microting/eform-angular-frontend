@@ -1,4 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using eFormAPI.Common.Infrastructure.Helpers;
@@ -10,10 +15,21 @@ using eFormAPI.Database.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using OtpSharp;
 
 namespace eFormAPI.Core.Services.Identity
 {
+    public class AuthorizeResult
+    {
+        public int Id { get; set; }
+        public string role { get; set; }
+        public string access_token { get; set; }
+        public string token_type { get; set; }
+        public string expires_in { get; set; }
+        public string userName { get; set; }
+    }
+
     public class AuthService : IAuthService
     {
         private readonly IOptions<EformTokenOptions> _tokenOptions;
@@ -37,6 +53,94 @@ namespace eFormAPI.Core.Services.Identity
             _userService = userService;
         }
 
+        public async Task<OperationDataResult<AuthorizeResult>> AuthenticateUser(string username, string password)
+        {
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+                return new OperationDataResult<AuthorizeResult>(false, "Empty username or password");
+
+            var signInResult =
+                await _signInManager.PasswordSignInAsync(username, password, false, lockoutOnFailure: true);
+
+            if (!signInResult.Succeeded)
+            {
+                if (signInResult.IsLockedOut)
+                {
+                    return new OperationDataResult<AuthorizeResult>(false,
+                        "Locked Out. Please, try again after 10 mins");
+                }
+
+                // Credentials are invalid, or account doesn't exist
+                return new OperationDataResult<AuthorizeResult>(false, "Incorrect password.");
+            }
+
+            var user = await _userService.GetByUsernameAsync(username);
+            if (user == null)
+                return new OperationDataResult<AuthorizeResult>(false, "User with username {username} not found");
+
+            // Confirmed email check
+            if (!user.EmailConfirmed)
+            {
+                return new OperationDataResult<AuthorizeResult>(false, $"Email {user.Email} not confirmed");
+            }
+
+            var token = GenerateToken(user);
+            var roleList = _userManager.GetRolesAsync(user).Result;
+            if (!roleList.Any())
+            {
+                return new OperationDataResult<AuthorizeResult>(false, $"Role for user {username} not found");
+            }
+
+            // update last sign in date
+            return new OperationDataResult<AuthorizeResult>(true, new AuthorizeResult
+            {
+                Id = user.Id,
+                access_token = token,
+                userName = user.UserName,
+                role = roleList.FirstOrDefault()
+            });
+        }
+
+        public string GenerateToken(EformUser user)
+        {
+            if (user != null)
+            {
+                var claims = new List<Claim>
+                {
+                    new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                };
+
+                // Add user and roles claims
+                var userClaims = _userManager.GetClaimsAsync(user).Result;
+                var userRoles = _userManager.GetRolesAsync(user).Result;
+                claims.AddRange(userClaims);
+                foreach (var userRole in userRoles)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, userRole));
+                    var role = _roleManager.FindByNameAsync(userRole).Result;
+                    if (role != null)
+                    {
+                        var roleClaims = _roleManager.GetClaimsAsync(role).Result;
+                        foreach (var roleClaim in roleClaims)
+                        {
+                            claims.Add(roleClaim);
+                        }
+                    }
+                }
+
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenOptions.Value.SigningKey));
+                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                var token = new JwtSecurityToken(_tokenOptions.Value.Issuer,
+                    _tokenOptions.Value.Issuer,
+                    claims.ToArray(),
+                    expires: DateTime.Now.AddMinutes(600),
+                    signingCredentials: creds);
+
+                return new JwtSecurityTokenHandler().WriteToken(token);
+            }
+
+            return null;
+        }
 
         public async Task<OperationResult> LogOut()
         {
@@ -147,11 +251,27 @@ namespace eFormAPI.Core.Services.Identity
                     LocaleHelper.GetString("UserNameOrPasswordIncorrect"));
             }
 
-            if (await _userManager.CheckPasswordAsync(user, loginModel.Password))
+            var signInResult =
+                await _signInManager.PasswordSignInAsync(loginModel.Username, loginModel.Password, false, lockoutOnFailure: true);
+
+            if (!signInResult.Succeeded)
             {
-                return new OperationDataResult<GoogleAuthenticatorModel>(false,
+                if (signInResult.IsLockedOut)
+                {
+                    return new OperationDataResult<GoogleAuthenticatorModel>(false,
+                        "Locked Out. Please, try again after 10 mins");
+                }
+
+                // Credentials are invalid, or account doesn't exist
+                return new OperationDataResult<GoogleAuthenticatorModel>(false, 
                     LocaleHelper.GetString("UserNameOrPasswordIncorrect"));
             }
+
+            //if (await _userManager.CheckPasswordAsync(user, loginModel.Password))
+            //{
+            //    return new OperationDataResult<GoogleAuthenticatorModel>(false,
+            //        LocaleHelper.GetString("UserNameOrPasswordIncorrect"));
+            //}
 
             // check if two factor is enabled
             var isTwoFactorAuthForced = _appSettings.Value.IsTwoFactorForced;

@@ -1,6 +1,6 @@
-﻿using System;
-using System.Configuration;
-using System.Linq;
+﻿
+
+using System;
 using System.Net;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
@@ -8,7 +8,6 @@ using eFormAPI.Core.Helpers.WritableOptions;
 using eFormAPI.Core.Services.Identity;
 using eFormCore;
 using eFormCore.Installers;
-using eFormData;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Rebus.Bus;
@@ -64,9 +63,10 @@ namespace eFormAPI.Core.Services
             {
                 running = _core.StartSqlOnly(connectionStr);
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-                AdminTools adminTools = new AdminTools(connectionStr);
+                _logger.LogError(exception.Message);
+                var adminTools = new AdminTools(connectionStr);
                 adminTools.MigrateDb();
                 adminTools.DbSettingsReloadRemote();
                 running = _core.StartSqlOnly(connectionStr);
@@ -77,7 +77,7 @@ namespace eFormAPI.Core.Services
                 _container = new WindsorContainer();
                 _container.Register(Component.For<eFormCore.Core>().Instance(_core));
                 _container.Install(new RebusHandlerInstaller(),
-                    new RebusInstaller(_connectionStrings.Value.DefaultConnection, 1, 1)); // TODO 1,1 parameters
+                    new RebusInstaller(_connectionStrings.Value.DefaultConnection, 5, 5)); // TODO 1,1 parameters
                 this.Bus = _container.Resolve<IBus>();
                 return _core;
             }

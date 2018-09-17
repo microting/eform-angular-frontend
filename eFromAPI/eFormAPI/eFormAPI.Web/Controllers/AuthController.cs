@@ -22,6 +22,13 @@ namespace eFormAPI.Web.Controllers
             _authService = authService;
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("api/auth/token")]
+        public async Task<OperationResult> AuthenticateUser(LoginModel model)
+        {
+            return await _authService.AuthenticateUser(model.Username, model.Password);
+        }
 
         [HttpGet]
         [Route("api/auth/logout")]
@@ -69,7 +76,8 @@ namespace eFormAPI.Web.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("api/auth/google-auth-key")]
-        public async Task<OperationDataResult<GoogleAuthenticatorModel>> GetGoogleAuthenticator([FromBody] LoginModel loginModel)
+        public async Task<OperationDataResult<GoogleAuthenticatorModel>> GetGoogleAuthenticator(
+            [FromBody] LoginModel loginModel)
         {
             // check model
             if (!ModelState.IsValid)
