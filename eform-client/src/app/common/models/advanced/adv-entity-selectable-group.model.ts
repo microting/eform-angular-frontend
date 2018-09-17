@@ -2,7 +2,7 @@ import {AdvEntitySelectableItemModel} from './adv-entity-selectable-item.model';
 export class AdvEntitySelectableGroupModel {
   name: string;
   type: string;
-  entityGroupMUId: string;
+  MicrotingUUID: string;
   workflowState: string;
   status = true;
   createdAt: Date;

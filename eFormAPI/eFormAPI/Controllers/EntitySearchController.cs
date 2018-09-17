@@ -47,7 +47,7 @@ namespace eFormAPI.Web.Controllers
                 var groupCreate = core.EntityGroupCreate(Constants.FieldTypes.EntitySearch, editModel.Name);
                 if (editModel.AdvEntitySearchableItemModels.Any())
                 {
-                    var entityGroup = core.EntityGroupRead(groupCreate.EntityGroupMUId);
+                    var entityGroup = core.EntityGroupRead(groupCreate.MicrotingUUID);
                     var nextItemUid = entityGroup.EntityGroupItemLst.Count;
                     foreach (var entityItem in editModel.AdvEntitySearchableItemModels)
                     {
@@ -57,7 +57,7 @@ namespace eFormAPI.Web.Controllers
                     }
                     core.EntityGroupUpdate(entityGroup);
                 }
-                return new OperationResult(true, LocaleHelper.GetString("ParamCreatedSuccessfully", groupCreate.EntityGroupMUId));
+                return new OperationResult(true, LocaleHelper.GetString("ParamCreatedSuccessfully", groupCreate.MicrotingUUID));
             }
             catch (Exception)
             {
@@ -119,7 +119,7 @@ namespace eFormAPI.Web.Controllers
                 {
                     mappedEntityGroupDict.Add(new CommonDictionaryTextModel()
                     {
-                        Id = entityGroupItem.MicrotingUId,
+                        Id = entityGroupItem.MicrotingUUID,
                         Text = entityGroupItem.Name
                     });
                 }
