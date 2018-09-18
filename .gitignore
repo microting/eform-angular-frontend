@@ -361,20 +361,10 @@ eFormAPI/eFormAPI/expection\.txt
 
 \.DS_Store
 
-eFormAPI/eFormAPI/Plugins/
-
-eFormAPI/EformBase\.Pn/Plugins/EformBase/
-
-eFormAPI/Plugins/Vehicles\.Pn/Vehicles/
-
-
-eFormAPI/Plugins/
-eFormAPI/eFormAPI/Areas/HelpPage/HelpPage.css
-
-eFormAPI/eFormAPI/output/
-eFormAPI/eFormAPI/dataFolder/
-
-eform-client/src/app/plugins/modules/customers-pn/
-
+eform-client/src/app/plugins/
 
 eFromAPI/eFormAPI/eFormAPI\.Web/API\.doc\.xml
+
+eFromAPI/eFormAPI/eFormAPI\.Web/Plugins/
+eFromAPI/eFormAPI/eFormAPI\.Web/output/
+eFromAPI/eFormAPI/eFormAPI\.Web/dataFolder/

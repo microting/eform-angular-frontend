@@ -1,12 +1,12 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using eFormAPI.BasePn.Abstractions;
-using eFormAPI.BasePn.Infrastructure.Models.API;
-using eFormAPI.BasePn.Models.Auth;
-using eFormAPI.BasePn.Models.Settings.User;
-using eFormAPI.BasePn.Models.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microting.eFormApi.BasePn.Abstractions;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.eFormApi.BasePn.Models.Auth;
+using Microting.eFormApi.BasePn.Models.Settings.User;
+using Microting.eFormApi.BasePn.Models.User;
 
 namespace eFormAPI.Web.Controllers
 {
@@ -21,6 +21,7 @@ namespace eFormAPI.Web.Controllers
         }
 
         // GET api/account/user-info
+        [HttpGet]
         [Route("api/account/user-info")]
         public Task<UserInfoViewModel> GetUserInfo()
         {

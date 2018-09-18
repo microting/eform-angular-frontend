@@ -1,11 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using eFormAPI.BasePn.Database;
+using System.Linq;
+using System.Reflection;
+using McMaster.NETCore.Plugins;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microting.eFormApi.BasePn;
+using Microting.eFormApi.BasePn.Database;
 
 namespace eFormAPI.Web
 {
@@ -13,6 +18,9 @@ namespace eFormAPI.Web
     {
         public static void Main(string[] args)
         {
+
+        
+
             var host = BuildWebHost(args);
             // Database Seed
             using (var scope = host.Services.GetService<IServiceScopeFactory>().CreateScope())
