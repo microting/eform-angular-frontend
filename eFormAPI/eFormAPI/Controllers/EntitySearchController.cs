@@ -75,12 +75,9 @@ namespace eFormAPI.Web.Controllers
             {
                 var core = _coreHelper.GetCore();
                 var entityGroup = core.EntityGroupRead(editModel.GroupUid);
-                //entityGroup.EntityGroupItemLst = editModel.AdvEntitySearchableItemModels;
-                //entityGroup.Name = editModel.Name;
-                //core.EntityGroupUpdate(entityGroup);
+
                 if (editModel.AdvEntitySearchableItemModels.Any())
                 {
-                    //var entityGroup = core.EntityGroupRead(groupCreate.MicrotingUUID);
                     var nextItemUid = entityGroup.EntityGroupItemLst.Count;
                     List<int> currentIds = new List<int>();
 
@@ -96,8 +93,6 @@ namespace eFormAPI.Web.Controllers
                             core.EntityItemUpdate(entityItem.Id, entityItem.Name, entityItem.Description, entityItem.EntityItemUId, entityItem.DisplayIndex);
                             currentIds.Add(entityItem.Id);
                         }
-                        //entityGroup.EntityGroupItemLst.Add(new EntityItem(entityItem.Name,
-                        //    entityItem.Description, nextItemUid.ToString(), Constants.WorkflowStates.Created));
                         nextItemUid++;
                     }
                     foreach (EntityItem entityItem in entityGroup.EntityGroupItemLst)
@@ -107,7 +102,6 @@ namespace eFormAPI.Web.Controllers
                             core.EntityItemDelete(entityItem.Id);
                         }
                     }
-                    //core.EntityGroupUpdate(entityGroup);
                 }
                 return new OperationResult(true, LocaleHelper.GetString("ParamUpdatedSuccessfully", editModel.GroupUid));
             }
