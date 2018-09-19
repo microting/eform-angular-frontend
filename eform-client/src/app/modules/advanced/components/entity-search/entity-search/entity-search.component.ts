@@ -42,7 +42,7 @@ export class EntitySearchComponent implements OnInit {
 
   openModalSearchEdit(selectedSearchModel: AdvEntitySelectableGroupModel) {
     this.selectedAdvGroup = selectedSearchModel;
-    this.modalSearchEdit.show(this.selectedAdvGroup.entityGroupMUId);
+    this.modalSearchEdit.show(this.selectedAdvGroup.microtingUUID);
   }
 
 

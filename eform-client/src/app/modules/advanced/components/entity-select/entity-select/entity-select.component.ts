@@ -42,7 +42,7 @@ export class EntitySelectComponent implements OnInit {
 
   openModalSelectEdit(selectedSelectModel: AdvEntitySelectableGroupModel) {
     this.selectedAdvGroup = selectedSelectModel;
-    this.modalSelectEdit.show(this.selectedAdvGroup.entityGroupMUId);
+    this.modalSelectEdit.show(this.selectedAdvGroup.microtingUUID);
   }
 
 

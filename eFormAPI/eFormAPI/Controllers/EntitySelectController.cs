@@ -51,7 +51,7 @@ namespace eFormAPI.Web.Controllers
                     var nextItemUid = entityGroup.EntityGroupItemLst.Count;
                     foreach (var entityItem in editModel.AdvEntitySelectableItemModels)
                     {
-                        core.EntitySelectItemCreate(entityGroup.Id.ToString(), entityItem.Name, entityItem.DisplayIndex, nextItemUid.ToString());
+                        core.EntitySelectItemCreate(entityGroup.Id, entityItem.Name, entityItem.DisplayIndex, nextItemUid.ToString());
                         //entityGroup.EntityGroupItemLst.Add(new EntityItem(entityItem.Name,
                         //    entityItem.Description, nextItemUid.ToString(), Constants.WorkflowStates.Created));
                         nextItemUid++;
@@ -75,28 +75,31 @@ namespace eFormAPI.Web.Controllers
                 var core = _coreHelper.GetCore();
                 var entityGroup = core.EntityGroupRead(editModel.GroupUid);
 
-                //entityGroup.EntityGroupItemLst = editModel.AdvEntitySelectableItemModels;
-                //entityGroup.Name = editModel.Name;
-                //core.EntityGroupUpdate(entityGroup);
                 if (editModel.AdvEntitySelectableItemModels.Any())
                 {
-                    //var entityGroup = core.EntityGroupRead(groupCreate.MicrotingUUID);
                     var nextItemUid = entityGroup.EntityGroupItemLst.Count;
-                    foreach (var entityItem in editModel.AdvEntitySelectableItemModels)
+                    List<int> currentIds = new List<int>();
+                    foreach (EntityItem entityItem in editModel.AdvEntitySelectableItemModels)
                     {
-                        if (entityItem.MicrotingUUID != null)
+                        if (string.IsNullOrEmpty(entityItem.MicrotingUUID))
                         {
-                            core.EntityItemUpdate(entityItem.Id, entityItem.Name, entityItem.Description, entityItem.EntityItemUId, entityItem.DisplayIndex);
+                            EntityItem et = core.EntitySelectItemCreate(entityGroup.Id, entityItem.Name, entityItem.DisplayIndex, nextItemUid.ToString());
+                            currentIds.Add(et.Id);
                         }
                         else
                         {
-                            core.EntitySelectItemCreate(entityGroup.Id.ToString(), entityItem.Name, entityItem.DisplayIndex, nextItemUid.ToString());
+                            core.EntityItemUpdate(entityItem.Id, entityItem.Name, entityItem.Description, entityItem.EntityItemUId, entityItem.DisplayIndex);
+                            currentIds.Add(entityItem.Id);
                         }
-                        //entityGroup.EntityGroupItemLst.Add(new EntityItem(entityItem.Name,
-                        //    entityItem.Description, nextItemUid.ToString(), Constants.WorkflowStates.Created));
                         nextItemUid++;
                     }
-                    //core.EntityGroupUpdate(entityGroup);
+                    foreach (EntityItem entityItem in entityGroup.EntityGroupItemLst)
+                    {
+                        if (!currentIds.Contains(entityItem.Id))
+                        {
+                            core.EntityItemDelete(entityItem.Id);
+                        }
+                    }
                 }
                 return new OperationResult(true, LocaleHelper.GetString("ParamUpdatedSuccessfully", editModel.GroupUid));
             }

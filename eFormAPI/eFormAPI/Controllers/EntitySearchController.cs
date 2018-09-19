@@ -51,7 +51,7 @@ namespace eFormAPI.Web.Controllers
                     var nextItemUid = entityGroup.EntityGroupItemLst.Count;
                     foreach (var entityItem in editModel.AdvEntitySearchableItemModels)
                     {
-                        core.EntitySearchItemCreate(entityGroup.Id.ToString(), entityItem.Name, entityItem.Description, nextItemUid.ToString());
+                        core.EntitySearchItemCreate(entityGroup.Id, entityItem.Name, entityItem.Description, nextItemUid.ToString());
 
                         //entityGroup.EntityGroupItemLst.Add(new EntityItem(entityItem.Name,
                         //    entityItem.Description, nextItemUid.ToString(), Constants.WorkflowStates.Created));
@@ -82,19 +82,30 @@ namespace eFormAPI.Web.Controllers
                 {
                     //var entityGroup = core.EntityGroupRead(groupCreate.MicrotingUUID);
                     var nextItemUid = entityGroup.EntityGroupItemLst.Count;
+                    List<int> currentIds = new List<int>();
+
                     foreach (var entityItem in editModel.AdvEntitySearchableItemModels)
                     {
-                        if (entityItem.MicrotingUUID != null)
+                        if (string.IsNullOrEmpty(entityItem.MicrotingUUID))
                         {
-                            core.EntityItemUpdate(entityItem.Id, entityItem.Name, entityItem.Description, entityItem.EntityItemUId, entityItem.DisplayIndex);
+                            EntityItem et = core.EntitySearchItemCreate(entityGroup.Id, entityItem.Name, entityItem.Description, nextItemUid.ToString());
+                            currentIds.Add(et.Id);
                         }
                         else
                         {
-                            core.EntitySearchItemCreate(entityGroup.Id.ToString(), entityItem.Name, entityItem.Description, nextItemUid.ToString());
+                            core.EntityItemUpdate(entityItem.Id, entityItem.Name, entityItem.Description, entityItem.EntityItemUId, entityItem.DisplayIndex);
+                            currentIds.Add(entityItem.Id);
                         }
                         //entityGroup.EntityGroupItemLst.Add(new EntityItem(entityItem.Name,
                         //    entityItem.Description, nextItemUid.ToString(), Constants.WorkflowStates.Created));
                         nextItemUid++;
+                    }
+                    foreach (EntityItem entityItem in entityGroup.EntityGroupItemLst)
+                    {
+                        if (!currentIds.Contains(entityItem.Id))
+                        {
+                            core.EntityItemDelete(entityItem.Id);
+                        }
                     }
                     //core.EntityGroupUpdate(entityGroup);
                 }
