@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
+import {EventBrokerService} from 'src/app/common/helpers';
 import {AuthResponseModel, GoogleAuthenticatorModel, LoginRequestModel} from 'src/app/common/models/auth';
 import {AuthService} from 'src/app/common/services/auth';
 
@@ -9,7 +10,7 @@ import {AuthService} from 'src/app/common/services/auth';
   selector: 'app-google-authenticator',
   templateUrl: './google-authenticator.component.html'
 })
-export class GoogleAuthenticatorComponent implements OnInit {
+export class GoogleAuthenticatorComponent implements OnInit{
   googleAuthenticatorModel: GoogleAuthenticatorModel;
   loginRequestModel: LoginRequestModel;
   formGoogleAuth: FormGroup;
