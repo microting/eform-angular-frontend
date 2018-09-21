@@ -1,6 +1,11 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Localization;
+using Microting.eFormApi.BasePn;
 
 namespace eFormAPI.Web.Hosting.Extensions
 {
@@ -32,10 +37,44 @@ namespace eFormAPI.Web.Hosting.Extensions
                             }
                         }
                     }
+
                     return;
                 }
+
                 await next();
             });
+        }
+
+        public static void UseEFormPlugins(this IApplicationBuilder app, 
+            List<IEformPlugin> plugins)
+        {
+            foreach (var plugin in plugins)
+            {
+                plugin.Configure(app);
+            }
+        }
+
+        public static void UseEFormLocalization(this IApplicationBuilder app)
+        {
+
+            IList<CultureInfo> supportedCultures = new List<CultureInfo>
+            {
+                new CultureInfo("en-US"),
+                new CultureInfo("da-DK"),
+            };
+            var localizationOptions = new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("en-US"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures,
+            };
+            // Find the cookie provider with LINQ
+            var cookieProvider = localizationOptions.RequestCultureProviders
+                .OfType<CookieRequestCultureProvider>()
+                .First();
+            // Set the new cookie name
+            cookieProvider.CookieName = "culture";
+            app.UseRequestLocalization(localizationOptions);
         }
     }
 }

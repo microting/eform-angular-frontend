@@ -52,7 +52,7 @@ namespace eFormAPI.Web.Controllers
         [AllowAnonymous]
         [Route("api/images/login-page-images")]
         public HttpResponseMessage GetLoginPageImage(string fileName)
-        {
+         {
             var filePath = PathHelper.GetEformLoginPageSettingsImagesPath(fileName);
             if (!System.IO.File.Exists(filePath))
             {
