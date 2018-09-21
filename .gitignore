@@ -363,8 +363,10 @@ eFormAPI/eFormAPI/expection\.txt
 
 eform-client/src/app/plugins/
 
-eFromAPI/eFormAPI/eFormAPI\.Web/API\.doc\.xml
 
-eFromAPI/eFormAPI/eFormAPI\.Web/Plugins/
-eFromAPI/eFormAPI/eFormAPI\.Web/output/
-eFromAPI/eFormAPI/eFormAPI\.Web/dataFolder/
+eFormAPI/eFormAPI\.Web/API\.doc\.xml
+eFromAPI/eFormAPI\.Web/Plugins/
+eFromAPI/eFormAPI\.Web/output/
+eFromAPI/eFormAPI\.Web/dataFolder/
+
+
