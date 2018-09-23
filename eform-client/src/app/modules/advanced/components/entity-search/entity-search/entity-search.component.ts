@@ -42,7 +42,7 @@ export class EntitySearchComponent implements OnInit {
 
   openModalSearchEdit(selectedSearchModel: AdvEntitySelectableGroupModel) {
     this.selectedAdvGroup = selectedSearchModel;
-    this.modalSearchEdit.show(this.selectedAdvGroup.entityGroupMUId);
+    this.modalSearchEdit.show(this.selectedAdvGroup.microtingUUID);
   }
 
 
@@ -60,6 +60,7 @@ export class EntitySearchComponent implements OnInit {
     this.spinnerStatus = true;
     this.entitySearchService.getEntitySearchableGroupList(this.advEntitySearchableGroupListRequestModel).subscribe((data) => {
       if (data && data.model) {
+        debugger;
         this.advEntitySearchableGroupListModel = data.model;
       } this.spinnerStatus = false;
     });

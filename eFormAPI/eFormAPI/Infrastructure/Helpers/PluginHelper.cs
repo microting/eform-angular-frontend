@@ -37,7 +37,11 @@ namespace eFormAPI.Web.Infrastructure.Helpers
 
                 foreach (var plugin in pluginList)
                 {
-                    assemblies.Add(Assembly.LoadFrom(Path.Combine(plugin)));
+                    Assembly asm = Assembly.LoadFrom(Path.Combine(plugin));
+                    if (assemblies.SingleOrDefault(x => x.FullName == asm.FullName) == null)
+                    {
+                        assemblies.Add(Assembly.LoadFrom(Path.Combine(plugin)));
+                    }
                 }
             }
             return assemblies;

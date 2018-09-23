@@ -24,7 +24,7 @@ export class EntitySearchRemoveComponent implements OnInit {
 
   deleteSelectedAdvEntitySearchableGroup() {
     this.spinnerStatus = true;
-    this.entitySearchService.deleteEntitySearchableGroup(this.selectedGroupModel.entityGroupMUId).subscribe((data) => {
+    this.entitySearchService.deleteEntitySearchableGroup(this.selectedGroupModel.microtingUUID).subscribe((data) => {
       if (data && data.success) {
         this.frame.hide();
         this.onEntityRemoved.emit();
