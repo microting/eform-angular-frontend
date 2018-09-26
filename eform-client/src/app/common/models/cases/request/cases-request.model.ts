@@ -11,7 +11,7 @@ export class CasesRequestModel {
     this.sort = 'id';
     this.nameFilter = '';
     this.isSortDsc = true;
-    this.pageSize = 10;
+    this.pageSize = 1000;
     this.pageIndex = 0;
     this.offset = 0;
   }
