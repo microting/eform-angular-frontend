@@ -181,8 +181,10 @@
   "File has been uploaded successfully": "Filen er blevet uploadet korrekt",
   "Error while uploading file": "Der opstod en fejl under upload af filen",
   "Customers": "Kunder",
-
   "Do you want to leave this page": "Vil du forlade denne side",
   "If you leave before saving your changes will be lost": "Hvis du forlader, før du gemmer, vil dine ændringer gå tabt",
-  "Save & Leave": "Gem & Efterlad"
+  "Save & Leave": "Gem & Efterlad",
+  "Cases": "Sager",
+  "Calendar": "Kalender",
+  "Case Management": "Sagsbehandling"
 }

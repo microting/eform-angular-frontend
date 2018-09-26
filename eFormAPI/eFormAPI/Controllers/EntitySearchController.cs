@@ -33,7 +33,8 @@ namespace eFormAPI.Web.Controllers
             }
             catch (Exception)
             {
-                return new OperationDataResult<EntityGroupList>(false, LocaleHelper.GetString("SearchableListLoadingFailed"));
+                return new OperationDataResult<EntityGroupList>(false,
+                    LocaleHelper.GetString("SearchableListLoadingFailed"));
             }
         }
 
@@ -51,15 +52,19 @@ namespace eFormAPI.Web.Controllers
                     var nextItemUid = entityGroup.EntityGroupItemLst.Count;
                     foreach (var entityItem in editModel.AdvEntitySearchableItemModels)
                     {
-                        core.EntitySearchItemCreate(entityGroup.Id, entityItem.Name, entityItem.Description, nextItemUid.ToString());
+                        core.EntitySearchItemCreate(entityGroup.Id, entityItem.Name, entityItem.Description,
+                            nextItemUid.ToString());
 
                         //entityGroup.EntityGroupItemLst.Add(new EntityItem(entityItem.Name,
                         //    entityItem.Description, nextItemUid.ToString(), Constants.WorkflowStates.Created));
                         nextItemUid++;
                     }
+
                     //core.EntityGroupUpdate(entityGroup);
                 }
-                return new OperationResult(true, LocaleHelper.GetString("ParamCreatedSuccessfully", groupCreate.MicrotingUUID));
+
+                return new OperationResult(true,
+                    LocaleHelper.GetString("ParamCreatedSuccessfully", groupCreate.MicrotingUUID));
             }
             catch (Exception)
             {
@@ -76,34 +81,37 @@ namespace eFormAPI.Web.Controllers
                 var core = _coreHelper.GetCore();
                 var entityGroup = core.EntityGroupRead(editModel.GroupUid);
 
-                if (editModel.AdvEntitySearchableItemModels.Any())
-                {
-                    var nextItemUid = entityGroup.EntityGroupItemLst.Count;
-                    List<int> currentIds = new List<int>();
+                var nextItemUid = entityGroup.EntityGroupItemLst.Count;
+                List<int> currentIds = new List<int>();
 
-                    foreach (var entityItem in editModel.AdvEntitySearchableItemModels)
+                foreach (var entityItem in editModel.AdvEntitySearchableItemModels)
+                {
+                    if (string.IsNullOrEmpty(entityItem.MicrotingUUID))
                     {
-                        if (string.IsNullOrEmpty(entityItem.MicrotingUUID))
-                        {
-                            EntityItem et = core.EntitySearchItemCreate(entityGroup.Id, entityItem.Name, entityItem.Description, nextItemUid.ToString());
-                            currentIds.Add(et.Id);
-                        }
-                        else
-                        {
-                            core.EntityItemUpdate(entityItem.Id, entityItem.Name, entityItem.Description, entityItem.EntityItemUId, entityItem.DisplayIndex);
-                            currentIds.Add(entityItem.Id);
-                        }
-                        nextItemUid++;
+                        EntityItem et = core.EntitySearchItemCreate(entityGroup.Id, entityItem.Name,
+                            entityItem.Description, nextItemUid.ToString());
+                        currentIds.Add(et.Id);
                     }
-                    foreach (EntityItem entityItem in entityGroup.EntityGroupItemLst)
+                    else
                     {
-                        if (!currentIds.Contains(entityItem.Id))
-                        {
-                            core.EntityItemDelete(entityItem.Id);
-                        }
+                        core.EntityItemUpdate(entityItem.Id, entityItem.Name, entityItem.Description,
+                            entityItem.EntityItemUId, entityItem.DisplayIndex);
+                        currentIds.Add(entityItem.Id);
+                    }
+
+                    nextItemUid++;
+                }
+
+                foreach (EntityItem entityItem in entityGroup.EntityGroupItemLst)
+                {
+                    if (!currentIds.Contains(entityItem.Id))
+                    {
+                        core.EntityItemDelete(entityItem.Id);
                     }
                 }
-                return new OperationResult(true, LocaleHelper.GetString("ParamUpdatedSuccessfully", editModel.GroupUid));
+
+                return new OperationResult(true,
+                    LocaleHelper.GetString("ParamUpdatedSuccessfully", editModel.GroupUid));
             }
             catch (Exception)
             {
@@ -125,7 +133,8 @@ namespace eFormAPI.Web.Controllers
             }
             catch (Exception)
             {
-                return new OperationDataResult<EntityGroup>(false, LocaleHelper.GetString("ErrorWhenObtainingSearchableList"));
+                return new OperationDataResult<EntityGroup>(false,
+                    LocaleHelper.GetString("ErrorWhenObtainingSearchableList"));
             }
         }
 
