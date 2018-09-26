@@ -1,10 +1,12 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {GalleryModule} from '@ngx-gallery/core';
 import {GallerizeModule} from '@ngx-gallery/gallerize';
 import {LightboxModule} from '@ngx-gallery/lightbox';
 import {TranslateModule} from '@ngx-translate/core';
+import {OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime';
 import {MDBBootstrapModule} from 'port/angular-bootstrap-md';
 import {EformImportedModule} from 'src/app/common/modules/eform-imported/eform-imported.module';
 
@@ -43,7 +45,10 @@ import {
     EformImportedModule,
     GallerizeModule,
     LightboxModule,
-    GalleryModule
+    GalleryModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
+    FormsModule
   ],
   declarations: [
     CasesTableComponent,
