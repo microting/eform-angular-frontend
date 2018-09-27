@@ -21,6 +21,7 @@ const AdvSearchableEntityMethods = {
   ImportGroup: '/api/searchable-groups/import'
 };
 
+
 @Injectable()
 export class EntitySearchService extends BaseService {
   constructor(private _http: HttpClient, router: Router, toastrService: ToastrService) {

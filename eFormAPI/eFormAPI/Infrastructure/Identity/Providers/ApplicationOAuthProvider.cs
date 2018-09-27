@@ -77,15 +77,15 @@ namespace eFormAPI.Web.Infrastructure.Identity.Providers
             var oAuthIdentity = await user.GenerateUserIdentityAsync(userManager,
                 OAuthDefaults.AuthenticationType);
 
+            var cookiesIdentity = await user.GenerateUserIdentityAsync(userManager,
+                CookieAuthenticationDefaults.AuthenticationType);
+
             // Add custom claims
             if (!user.Locale.IsNullOrEmpty())
             {
                 oAuthIdentity.AddClaim(new Claim("locale", user.Locale));
+                cookiesIdentity.AddClaim(new Claim("locale", user.Locale));
             }
-            
-
-            var cookiesIdentity = await user.GenerateUserIdentityAsync(userManager,
-                CookieAuthenticationDefaults.AuthenticationType);
 
             var properties = CreateProperties(user, role);
             var ticket = new AuthenticationTicket(oAuthIdentity, properties);

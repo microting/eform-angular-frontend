@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using eFormAPI.Web.Infrastructure.Models.Cases.Request;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Database;
 
 namespace eFormAPI.Web.Infrastructure.Helpers
 {
@@ -22,6 +24,7 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                     list.Add($"{editRequest.Id}|review");
                     break;
             }
+
             return list;
         }
 
@@ -47,6 +50,7 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                         string val = $"{checkBoxfirst.FieldId}|{checkBoxfirst.Value.ToString()}";
                         list.Add(val);
                     }
+
                     break;
                 case "Comment":
                     var commentFirst = editRequestField?.FieldValues?.First();
@@ -55,6 +59,7 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                         string val = $"{commentFirst.FieldId}|{commentFirst.Value.ToString()}";
                         list.Add(val);
                     }
+
                     break;
                 case "Number":
                     var numberFirst = editRequestField?.FieldValues?.First();
@@ -63,6 +68,7 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                         string val = $"{numberFirst.FieldId}|{numberFirst.Value.ToString()}";
                         list.Add(val);
                     }
+
                     break;
                 case "Text":
                     var textFirst = editRequestField?.FieldValues?.First();
@@ -71,6 +77,7 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                         string val = $"{textFirst.FieldId}|{textFirst.Value.ToString()}";
                         list.Add(val);
                     }
+
                     break;
                 case "Date":
                     var dateFirst = editRequestField?.FieldValues?.First();
@@ -78,18 +85,24 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                     {
                         try
                         {
-                            DateTime currentDate = (DateTime)dateFirst.Value;
-                            if (currentDate != null)
+                            var dateResult =
+                                DateTime.TryParseExact(dateFirst.Value.ToString(),
+                                    "yyyy-MM-dd",
+                                    null,
+                                    DateTimeStyles.None,
+                                    out DateTime date);
+                            if (dateResult)
                             {
-                                string val = $"{dateFirst.FieldId}|{currentDate:yyyy-MM-dd}";
+                                var val = $"{dateFirst.FieldId}|{date:yyyy-MM-dd}";
                                 list.Add(val);
                             }
                         }
-                        catch
+                        catch (Exception e)
                         {
-                            // ignored
+                            Console.WriteLine(e);
                         }
                     }
+
                     break;
                 case "SingleSelect":
                     var singleSelect = editRequestField?.FieldValues?.First();
@@ -98,6 +111,7 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                         string val = $"{singleSelect.FieldId}|{singleSelect.Value.ToString()}";
                         list.Add(val);
                     }
+
                     break;
                 case "EntitySearch":
                     var entitySearch = editRequestField?.FieldValues?.First();
@@ -106,6 +120,7 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                         string val = $"{entitySearch.FieldId}|{entitySearch.Value.ToString()}";
                         list.Add(val);
                     }
+
                     break;
                 case "EntitySelect":
                     var entitySelect = editRequestField?.FieldValues?.First();
@@ -114,6 +129,7 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                         string val = $"{entitySelect.FieldId}|{entitySelect.Value.ToString()}";
                         list.Add(val);
                     }
+
                     break;
                 case "MultiSelect":
                     var multiFirst = editRequestField?.FieldValues?.First();
@@ -122,6 +138,7 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                         string val = $"{multiFirst.FieldId}|{multiFirst.Value.ToString()}";
                         list.Add(val);
                     }
+
                     break;
                 case "Audio":
                     var audioFirst = editRequestField?.FieldValues?.First();
@@ -130,8 +147,10 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                         string val = $"{audioFirst.FieldId}|{audioFirst.Value.ToString()}";
                         list.Add(val);
                     }
+
                     break;
             }
+
             return list;
         }
 
