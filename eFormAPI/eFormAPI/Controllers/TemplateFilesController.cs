@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
-using System.IO.Compression;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -12,6 +11,7 @@ using eFormApi.BasePn.Infrastructure;
 using eFormApi.BasePn.Infrastructure.Helpers;
 using eFormApi.BasePn.Infrastructure.Messages;
 using eFormApi.BasePn.Infrastructure.Models.API;
+using Ionic.Zip;
 
 namespace eFormAPI.Web.Controllers
 {
@@ -237,14 +237,11 @@ namespace eFormAPI.Web.Controllers
                 {
                     return Request.CreateResponse(HttpStatusCode.BadRequest, "Folder error");
                 }
-                if (!Directory.Exists(saveFolder))
-                {
-                    Directory.CreateDirectory(saveFolder);
-                }
-                if (!Directory.Exists(zipArchiveFolder))
-                {
-                    Directory.CreateDirectory(zipArchiveFolder);
-                }
+
+                Directory.CreateDirectory(saveFolder);
+
+                Directory.CreateDirectory(zipArchiveFolder);
+
                 var files = HttpContext.Current.Request.Files;
                 if (files.Count > 0)
                 {
@@ -253,22 +250,26 @@ namespace eFormAPI.Web.Controllers
                     {
                         var filePath = Path.Combine(zipArchiveFolder, Path.GetFileName(httpPostedFile.FileName));
                         var extractPath = Path.Combine(saveFolder);
-                        if (!File.Exists(filePath))
-                        {
-                            httpPostedFile.SaveAs(filePath);
-                        }
                         if (File.Exists(filePath))
                         {
-                            if (!Directory.Exists(extractPath))
-                            {
-                                Directory.CreateDirectory(extractPath);
-                            }
-                            else
-                            {
-                                FoldersHelper.ClearFolder(extractPath);
-                            }
+                            File.Delete(filePath);
+                        }
+                        httpPostedFile.SaveAs(filePath);
+                        if (File.Exists(filePath))
+                        {
+                            Directory.CreateDirectory(extractPath);
+                            FoldersHelper.ClearFolder(extractPath);
 
-                            ZipFile.ExtractToDirectory(filePath, extractPath);
+                            using (var zip = ZipFile.Read(filePath))
+                            {
+                                foreach (var entry in zip.Entries)
+                                {
+                                    if (entry.FileName.Contains(".png") || entry.FileName.Contains("jrxml"))
+                                    {
+                                        entry.Extract(extractPath);
+                                    }
+                                }
+                            }
                             File.Delete(filePath);
                             _coreHelper.bus.SendLocal(new GenerateJasperFiles(templateId));
 
@@ -278,10 +279,12 @@ namespace eFormAPI.Web.Controllers
                 }
                 return Request.CreateResponse(HttpStatusCode.BadRequest, LocaleHelper.GetString("InvalidRequest"));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
         }
     }
+
+
 }
