@@ -21,10 +21,10 @@ namespace eFormAPI.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 
             // Enable swagger
-            if (Debugger.IsAttached)
-            {
+            //if (Debugger.IsAttached)
+            //{
                 SwaggerConfig.Register(GlobalConfiguration.Configuration);
-            }
+            //}
 
             // Migrations
             try
