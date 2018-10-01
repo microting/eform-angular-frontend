@@ -267,6 +267,36 @@ namespace CustomActions
             }
         }
 
+        private static void BackupPluginSettings(Session session, string installFolder)
+        {
+            var tmpConfigs = Path.Combine("c:\\", "MicrotingTemp");
+
+            // plugins.routing.ts
+            var src = Path.Combine(installFolder, "eform-client\\src\\app\\plugins\\plugins.routing.ts");
+            session.Log("BackupPluginSettings src is : " + src.ToString());
+            File.Copy(src, Path.Combine(tmpConfigs, "plugins.routing.ts"));
+
+            // navigation.component.ts
+            src = Path.Combine(installFolder, "eform-client\\src\\app\\components\\navigation\\navigation.componene.ts");
+            session.Log("BackupPluginSettings src is : " + src.ToString());
+            File.Copy(src, Path.Combine(tmpConfigs, "navigation.component.ts"));
+        }
+
+        private static void RestorePluginSettings(Session session, string installFolder)
+        {
+            var tmpConfigs = Path.Combine("c:\\", "MicrotingTemp");
+
+            // plugins.routing.ts
+            var dst = Path.Combine(installFolder, "eform-client\\src\\app\\plugins\\plugins.routing.ts");
+            session.Log("BackupPluginSettings src is : " + dst.ToString());
+            File.Copy(Path.Combine(tmpConfigs, "plugins.routing.ts"), dst);
+
+            // navigation.component.ts
+            dst = Path.Combine(installFolder, "eform-client\\src\\app\\components\\navigation\\navigation.componene.ts");
+            session.Log("BackupPluginSettings src is : " + dst.ToString());
+            File.Copy(Path.Combine(tmpConfigs, "navigation.component.ts"), dst);
+        }
+
         private static void HandlePreviousConfigs(Session session, string installFolder)
         {
             var keepFiles = session.CustomActionData["KEEPFILES"].Split(',');
@@ -349,6 +379,7 @@ namespace CustomActions
                 } catch { }
                 try
                 {
+                    BackupPluginSettings(session, uiIisDir);
                     DeleteDirectory(Path.Combine(uiIisDir, "src"));
                 } catch { }
 
@@ -360,6 +391,7 @@ namespace CustomActions
                 IncrementProgressBar(session);
 
                 session.Log("Build Angullar app task started");
+                RestorePluginSettings(session, uiIisDir);
                 BuildAngularApp(uiIisDir);
                 IncrementProgressBar(session);
 
