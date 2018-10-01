@@ -272,14 +272,22 @@ namespace CustomActions
             var tmpConfigs = Path.Combine("c:\\", "MicrotingTemp");
 
             // plugins.routing.ts
-            var src = Path.Combine(installFolder, "eform-client\\src\\app\\plugins\\plugins.routing.ts");
+            var src = Path.Combine(installFolder, "src\\app\\plugins\\plugins.routing.ts");
             session.Log("BackupPluginSettings src is : " + src.ToString());
             File.Copy(src, Path.Combine(tmpConfigs, "plugins.routing.ts"));
 
+            foreach (string dir in Directory.GetDirectories(Path.Combine(installFolder, "src\\app\\plugins\\modules\\")))
+            {
+                DirectoryCopy(dir, Path.Combine(tmpConfigs, "plugin_modules"), true);
+            }
+
             // navigation.component.ts
-            src = Path.Combine(installFolder, "eform-client\\src\\app\\components\\navigation\\navigation.componene.ts");
+            src = Path.Combine(installFolder, "src\\app\\components\\navigation\\navigation.componene.ts");
             session.Log("BackupPluginSettings src is : " + src.ToString());
             File.Copy(src, Path.Combine(tmpConfigs, "navigation.component.ts"));
+
+
+
         }
 
         private static void RestorePluginSettings(Session session, string installFolder)
@@ -287,12 +295,12 @@ namespace CustomActions
             var tmpConfigs = Path.Combine("c:\\", "MicrotingTemp");
 
             // plugins.routing.ts
-            var dst = Path.Combine(installFolder, "eform-client\\src\\app\\plugins\\plugins.routing.ts");
+            var dst = Path.Combine(installFolder, "src\\app\\plugins\\plugins.routing.ts");
             session.Log("BackupPluginSettings src is : " + dst.ToString());
             File.Copy(Path.Combine(tmpConfigs, "plugins.routing.ts"), dst);
 
             // navigation.component.ts
-            dst = Path.Combine(installFolder, "eform-client\\src\\app\\components\\navigation\\navigation.componene.ts");
+            dst = Path.Combine(installFolder, "src\\app\\components\\navigation\\navigation.componene.ts");
             session.Log("BackupPluginSettings src is : " + dst.ToString());
             File.Copy(Path.Combine(tmpConfigs, "navigation.component.ts"), dst);
         }
