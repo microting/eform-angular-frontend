@@ -27,6 +27,7 @@ export class CaseEditComponent implements OnInit, OnDestroy {
   replyRequest: ReplyRequest = new ReplyRequest();
 
   isNoSaveExitAllowed = false;
+  isSaveClicked = false;
 
   spinnerStatus = false;
 
@@ -75,7 +76,9 @@ export class CaseEditComponent implements OnInit, OnDestroy {
         this.replyElement = new ReplyElement();
         this.spinnerStatus = false;
         this.isNoSaveExitAllowed = true;
-        this.router.navigate(['/cases/', this.currentTemplate.id]).then();
+        if (this.isSaveClicked) {
+          this.router.navigate(['/cases/', this.currentTemplate.id]).then();
+        }
       }
       this.spinnerStatus = false;
     });
@@ -99,16 +102,19 @@ export class CaseEditComponent implements OnInit, OnDestroy {
   }
 
   confirmExit(keepData: boolean): void {
-    debugger;
+    this.caseConfirmation.navigateAwaySelection$.next(true);
     if (keepData) {
       this.saveCase();
+    } else {
+      this.isNoSaveExitAllowed = true;
     }
-    this.caseConfirmation.navigateAwaySelection$.next(true);
   }
 
-  canDeactivate(): Observable<boolean> {
-    debugger;
-    this.caseConfirmation.show();
-    return this.caseConfirmation.navigateAwaySelection$;
+  canDeactivate(): Observable<boolean> | boolean {
+    if (!this.isNoSaveExitAllowed) {
+      this.caseConfirmation.show();
+      return this.caseConfirmation.navigateAwaySelection$;
+    }
+    return true;
   }
 }
