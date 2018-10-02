@@ -274,19 +274,20 @@ namespace CustomActions
             // plugins.routing.ts
             var src = Path.Combine(installFolder, "src\\app\\plugins\\plugins.routing.ts");
             session.Log("BackupPluginSettings src is : " + src.ToString());
-            File.Copy(src, Path.Combine(tmpConfigs, "plugins.routing.ts"));
+            File.Copy(src, Path.Combine(tmpConfigs, "plugins.routing.ts"), true);
 
-            foreach (string dir in Directory.GetDirectories(Path.Combine(installFolder, "src\\app\\plugins\\modules\\")))
+            string[] dirs = Directory.GetDirectories(Path.Combine(installFolder, "src\\app\\plugins\\modules\\"));
+
+            foreach (string dir in dirs)
             {
-                DirectoryCopy(dir, Path.Combine(tmpConfigs, "plugin_modules"), true);
+                string folder = dir.Split(Path.DirectorySeparatorChar).Last();
+                DirectoryCopy(dir, Path.Combine(tmpConfigs, "plugin_modules", folder), true);
             }
 
             // navigation.component.ts
             src = Path.Combine(installFolder, "src\\app\\components\\navigation\\navigation.componene.ts");
             session.Log("BackupPluginSettings src is : " + src.ToString());
-            File.Copy(src, Path.Combine(tmpConfigs, "navigation.component.ts"));
-
-
+            File.Copy(src, Path.Combine(tmpConfigs, "navigation.component.ts"), true);
 
         }
 
@@ -296,13 +297,22 @@ namespace CustomActions
 
             // plugins.routing.ts
             var dst = Path.Combine(installFolder, "src\\app\\plugins\\plugins.routing.ts");
-            session.Log("BackupPluginSettings src is : " + dst.ToString());
-            File.Copy(Path.Combine(tmpConfigs, "plugins.routing.ts"), dst);
+            session.Log("RestorePluginSettings src is : " + dst.ToString());
+            File.Copy(Path.Combine(tmpConfigs, "plugins.routing.ts"), dst, true);
+
+
+            string[] dirs = Directory.GetDirectories(tmpConfigs);
+
+            foreach (string dir in dirs)
+            {
+                string folder = dir.Split(Path.DirectorySeparatorChar).Last();
+                DirectoryCopy(dir, Path.Combine(installFolder, "src\\app\\plugins\\modules\\", folder), true);
+            }
 
             // navigation.component.ts
             dst = Path.Combine(installFolder, "src\\app\\components\\navigation\\navigation.componene.ts");
-            session.Log("BackupPluginSettings src is : " + dst.ToString());
-            File.Copy(Path.Combine(tmpConfigs, "navigation.component.ts"), dst);
+            session.Log("RestorePluginSettings src is : " + dst.ToString());
+            File.Copy(Path.Combine(tmpConfigs, "navigation.component.ts"), dst, true);
         }
 
         private static void HandlePreviousConfigs(Session session, string installFolder)
