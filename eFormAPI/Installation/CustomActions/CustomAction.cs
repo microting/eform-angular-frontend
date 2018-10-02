@@ -310,7 +310,7 @@ namespace CustomActions
             }
 
             // navigation.component.ts
-            dst = Path.Combine(installFolder, "src\\app\\components\\navigation\\navigation.componene.ts");
+            dst = Path.Combine(installFolder, "src\\app\\components\\navigation\\navigation.component.ts");
             session.Log("RestorePluginSettings src is : " + dst.ToString());
             File.Copy(Path.Combine(tmpConfigs, "navigation.component.ts"), dst, true);
         }
