@@ -190,7 +190,7 @@ namespace CustomActions
                 if (session.CustomActionData["INSTMODE"] != "Install")
                     return ActionResult.Success;
 
-                ResetProgressBar(session, 10);
+                ResetProgressBar(session, 11);
 
                 var configurationExists = session.CustomActionData["CONFIGURATIONEXISTS"] == "1";
                 var useExistingConfiguration = session.CustomActionData["USEEXISTINGCONFIGURATION"] == "1";
@@ -281,7 +281,10 @@ namespace CustomActions
             foreach (string dir in dirs)
             {
                 string folder = dir.Split(Path.DirectorySeparatorChar).Last();
-                DirectoryCopy(dir, Path.Combine(tmpConfigs, "plugin_modules", folder), true);
+                if (folder != "example-pn" && folder != "shared")
+                {
+                    DirectoryCopy(dir, Path.Combine(tmpConfigs, "plugin_modules", folder), true);
+                }                
             }
 
             // navigation.component.ts
@@ -301,7 +304,7 @@ namespace CustomActions
             File.Copy(Path.Combine(tmpConfigs, "plugins.routing.ts"), dst, true);
 
 
-            string[] dirs = Directory.GetDirectories(tmpConfigs);
+            string[] dirs = Directory.GetDirectories(Path.Combine(tmpConfigs, "plugin_modules"));
 
             foreach (string dir in dirs)
             {
