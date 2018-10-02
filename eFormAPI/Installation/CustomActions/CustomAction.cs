@@ -285,7 +285,7 @@ namespace CustomActions
             }
 
             // navigation.component.ts
-            src = Path.Combine(installFolder, "src\\app\\components\\navigation\\navigation.componene.ts");
+            src = Path.Combine(installFolder, "src\\app\\components\\navigation\\navigation.component.ts");
             session.Log("BackupPluginSettings src is : " + src.ToString());
             File.Copy(src, Path.Combine(tmpConfigs, "navigation.component.ts"), true);
 
