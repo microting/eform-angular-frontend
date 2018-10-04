@@ -1,0 +1,7 @@
+<div class="md-form md-form-case-elem">
+  <input mdbInputDirective type="number"
+         [(ngModel)]="fieldValueObj.value"
+         [mdbValidate]="false"
+         id="numberStepperElement{{fieldValueObj.fieldId}}" name="numberElement" class="form-control">
+  <label for="numberStepperElement{{fieldValueObj.fieldId}}">{{'Value' | translate}}</label>
+</div>
