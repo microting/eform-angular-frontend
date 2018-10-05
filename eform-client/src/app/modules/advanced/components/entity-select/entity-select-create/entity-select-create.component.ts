@@ -81,4 +81,7 @@ export class EntitySelectCreateComponent implements OnInit {
       }
     }
   }
+  closeFrame() {
+    this.frame.hide();
+  }
 }

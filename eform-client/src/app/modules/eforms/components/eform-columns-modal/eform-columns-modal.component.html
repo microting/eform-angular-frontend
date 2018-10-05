@@ -12,7 +12,7 @@
                 bindLabel="label"
                 bindValue="id"
                 [(ngModel)]="columnEditModel.fieldId1"
-                [placeholder]="'Column 1'"
+                [placeholder]="'Column 1' | translate"
                 [items]="columnModels"></ng-select>
             </div>
             <div class="col-md-6">
@@ -20,7 +20,7 @@
                 bindLabel="label"
                 bindValue="id"
                 [(ngModel)]="columnEditModel.fieldId2"
-                [placeholder]="'Column 2'"
+                [placeholder]="'Column 2' | translate"
                 [items]="columnModels"></ng-select>
             </div>
             <div class="col-md-6">
@@ -28,7 +28,7 @@
                 bindLabel="label"
                 bindValue="id"
                 [(ngModel)]="columnEditModel.fieldId3"
-                [placeholder]="'Column 3'"
+                [placeholder]="'Column 3' | translate"
                 [items]="columnModels"></ng-select>
             </div>
             <div class="col-md-6">
@@ -36,7 +36,7 @@
                 bindLabel="label"
                 bindValue="id"
                 [(ngModel)]="columnEditModel.fieldId4"
-                [placeholder]="'Column 4'"
+                [placeholder]="'Column 4' | translate"
                 [items]="columnModels"></ng-select>
             </div>
             <div class="col-md-6">
@@ -44,7 +44,7 @@
                 bindLabel="label"
                 bindValue="id"
                 [(ngModel)]="columnEditModel.fieldId5"
-                [placeholder]="'Column 5'"
+                [placeholder]="'Column 5' | translate"
                 [items]="columnModels"></ng-select>
             </div>
             <div class="col-md-6">
@@ -52,7 +52,7 @@
                 bindLabel="label"
                 bindValue="id"
                 [(ngModel)]="columnEditModel.fieldId6"
-                [placeholder]="'Column 6'"
+                [placeholder]="'Column 6' | translate"
                 [items]="columnModels"></ng-select>
             </div>
             <div class="col-md-6">
@@ -60,7 +60,7 @@
                 bindLabel="label"
                 bindValue="id"
                 [(ngModel)]="columnEditModel.fieldId7"
-                [placeholder]="'Column 7'"
+                [placeholder]="'Column 7' | translate"
                 [items]="columnModels"></ng-select>
             </div>
             <div class="col-md-6">
@@ -68,7 +68,7 @@
                 bindLabel="label"
                 bindValue="id"
                 [(ngModel)]="columnEditModel.fieldId8"
-                [placeholder]="'Column 8'"
+                [placeholder]="'Column 8' | translate"
                 [items]="columnModels"></ng-select>
             </div>
             <div class="col-md-12">
@@ -76,14 +76,14 @@
                 bindLabel="label"
                 bindValue="id"
                 [(ngModel)]="columnEditModel.fieldId9"
-                [placeholder]="'Column 9'"
+                [placeholder]="'Column 9' | translate"
                 [items]="columnModels"></ng-select>
             </div>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-danger" (click)="updateColumns()">{{ 'Save' | translate }}</button>
+        <button class="btn btn-success" (click)="updateColumns()">{{ 'Save' | translate }}</button>
         <button class="btn btn-accent text-black-50" (click)="frame.hide()">{{ 'Cancel' | translate }}</button>
       </div>
     </div>

@@ -29,7 +29,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-danger" id="saveCreateBtn"
+        <button class="btn btn-success" id="saveCreateBtn"
                 [disabled]="!simpleSiteModel.userFirstName || !simpleSiteModel.userLastName"
                 (click)="createDeviceUser()">{{ 'Create' | translate }}</button>
         <button class="btn btn-neutral text-black-50" id="cancelCreateBtn" (click)="frame.hide()">
