@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {CaseFieldValue} from 'src/app/common/models/cases';
 
 @Component({
-  selector: 'element-number',
+  selector: 'element-number-stepper',
   templateUrl: './element-number-stepper.component.html',
   styleUrls: ['./element-number-stepper.component.scss']
 })
