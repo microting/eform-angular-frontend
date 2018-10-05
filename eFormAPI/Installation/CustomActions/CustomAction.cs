@@ -270,6 +270,8 @@ namespace CustomActions
         private static void BackupPluginSettings(Session session, string installFolder)
         {
             var tmpConfigs = Path.Combine("c:\\", "MicrotingTemp");
+            Directory.CreateDirectory(tmpConfigs);
+            Directory.CreateDirectory(Path.Combine(tmpConfigs, "plugin_modules"));
 
             // plugins.routing.ts
             var src = Path.Combine(installFolder, "src\\app\\plugins\\plugins.routing.ts");

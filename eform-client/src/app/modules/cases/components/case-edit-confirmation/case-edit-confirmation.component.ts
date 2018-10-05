@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-case-edit-confirmation',
@@ -7,6 +8,7 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angula
 })
 export class CaseEditConfirmationComponent implements OnInit {
   @ViewChild('frame') frame;
+  navigateAwaySelection$: Subject<boolean> = new Subject<boolean>();
   @Output() onConfirmationPressed: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor() { }

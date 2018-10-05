@@ -8,6 +8,7 @@ export * from './element-entityselect/element-entityselect.component';
 export * from './element-infobox/element-infobox.component';
 export * from './element-multiselect/element-multiselect.component';
 export * from './element-number/element-number.component';
+export * from './element-number-stepper/element-number-stepper.component';
 export * from './element-pdf/element-pdf.component';
 export * from './element-singleselect/element-singleselect.component';
 export * from './element-text/element-text.component';
