@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren} from '
 import {ActivatedRoute, NavigationStart, Router} from '@angular/router';
 import {RouteConfigLoadEnd} from '@angular/router';
 import {Subscription} from 'rxjs';
+import {Observable} from 'rxjs';
 import {CaseEditRequest, ReplyElement, ReplyRequest} from 'src/app/common/models/cases';
 import {TemplateDto} from 'src/app/common/models/dto';
 import {CasesService} from 'src/app/common/services/cases';
@@ -26,6 +27,7 @@ export class CaseEditComponent implements OnInit, OnDestroy {
   replyRequest: ReplyRequest = new ReplyRequest();
 
   isNoSaveExitAllowed = false;
+  isSaveClicked = false;
 
   spinnerStatus = false;
 
@@ -74,8 +76,11 @@ export class CaseEditComponent implements OnInit, OnDestroy {
         this.replyElement = new ReplyElement();
         this.spinnerStatus = false;
         this.isNoSaveExitAllowed = true;
-        this.router.navigate(['/cases/', this.currentTemplate.id]).then();
-      } this.spinnerStatus = false;
+        if (this.isSaveClicked) {
+          this.router.navigate(['/cases/', this.currentTemplate.id]).then();
+        }
+      }
+      this.spinnerStatus = false;
     });
   }
 
@@ -96,18 +101,19 @@ export class CaseEditComponent implements OnInit, OnDestroy {
     });
   }
 
-  confirmExit(keepData: boolean) {
+  confirmExit(keepData: boolean): void {
+    this.caseConfirmation.navigateAwaySelection$.next(true);
     if (keepData) {
       this.saveCase();
     } else {
       this.isNoSaveExitAllowed = true;
-      this.router.navigate(['/cases/', this.currentTemplate.id]).then();
     }
   }
 
-  canDeactivate() {
+  canDeactivate(): Observable<boolean> | boolean {
     if (!this.isNoSaveExitAllowed) {
-      return this.caseConfirmation.show();
+      this.caseConfirmation.show();
+      return this.caseConfirmation.navigateAwaySelection$;
     }
     return true;
   }

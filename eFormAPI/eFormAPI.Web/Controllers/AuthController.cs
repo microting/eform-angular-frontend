@@ -24,15 +24,6 @@ namespace eFormAPI.Web.Controllers
             _localizationService = localizationService;
         }
 
-        [HttpGet]
-        [AllowAnonymous]
-        [Route("api/auth/token")]
-        public async Task<OperationResult> AuthenticateUserqssq()
-        {
-            return new OperationDataResult<AuthorizeResult>(false,
-                _localizationService.GetString("CantObtainSettingsFromWebConfig"));
-        }
-
         [HttpPost]
         [AllowAnonymous]
         [Route("api/auth/token")]

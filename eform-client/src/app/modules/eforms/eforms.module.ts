@@ -6,8 +6,6 @@ import {TranslateModule} from '@ngx-translate/core';
 import {FileUploadModule} from 'ng2-file-upload';
 import {MDBBootstrapModule} from 'port/angular-bootstrap-md';
 import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
-import {} from 'src/app/modules/eforms/components/eform-columns-modal/eform-columns-modal.component';
-
 import {EformsRouting} from './eforms.routing';
 import {
   EformCreateModalComponent,
