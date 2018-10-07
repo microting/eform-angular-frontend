@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Hosting.Extensions;
 using eFormAPI.Web.Hosting.Helpers;
+using eFormAPI.Web.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -19,9 +21,9 @@ using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.IdentityModel.Tokens;
 using Microting.eFormApi.BasePn;
 using Microting.eFormApi.BasePn.Abstractions;
-using Microting.eFormApi.BasePn.Database;
-using Microting.eFormApi.BasePn.Database.Entities;
-using Microting.eFormApi.BasePn.Models.Application;
+using Microting.eFormApi.BasePn.Infrastructure.Database;
+using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Services;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -36,7 +38,6 @@ namespace eFormAPI.Web
             Configuration = configuration;
             _plugins = PluginHelper.GetPlugins();
         }
-
 
         public IConfiguration Configuration { get; }
 
@@ -74,8 +75,7 @@ namespace eFormAPI.Web
                 // User settings
                 options.User.RequireUniqueEmail = true;
             });
-
-
+            
             // Authentication
             services.AddAuthentication(o =>
                 {
@@ -98,11 +98,7 @@ namespace eFormAPI.Web
                     };
                 });
             // Localiation
-            services.AddLocalization(o =>
-            {
-                // We will put our translations in a folder called Resources
-                o.ResourcesPath = "Resources";
-            });
+            services.AddLocalization(options => { options.ResourcesPath = "Resources";});
             // MVC and API services with Plugins
             services.AddEFormMvc(_plugins);
             // Writable options
@@ -172,28 +168,7 @@ namespace eFormAPI.Web
             {
                 loggerFactory.AddConsole(Configuration.GetSection("Logging"));
                 loggerFactory.AddDebug();
-                //              loggerFactory.AddContext(LogLevel.Warning, Configuration.MyConnectionString());
             }
-
-//     if (env.IsStaging() || env.IsTesting())
-            //        {
-            //  /   //         loggerFactory.AddContext(LogLevel.Warning, Configuration.MyConnectionString());
-            //         }
-            //     if (env.IsProduction())
-            //      {
-            //           loggerFactory.AddContext(LogLevel.Warning, Configuration.MyConnectionString());
-            //      }
-
-            //if (env.IsDevelopment() || env.IsTesting())
-            //{
-            //    app.UseDeveloperExceptionPage();
-            //    app.UseDatabaseErrorPage();
-            //    app.UseBrowserLink();
-            //}
-            //else
-            //{
-            //    app.UseExceptionHandler("/Home/Error");
-            //}
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
@@ -224,6 +199,7 @@ namespace eFormAPI.Web
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient(provider => provider.GetService<IHttpContextAccessor>().HttpContext.User);
+            services.AddSingleton<ILocalizationService, LocalizationService>();
             services.AddScoped<ITagsService, TagsService>();
             services.AddScoped<ITemplateColumnsService, TemplateColumnsService>();
             services.AddScoped<IUnitsService, UnitsService>();

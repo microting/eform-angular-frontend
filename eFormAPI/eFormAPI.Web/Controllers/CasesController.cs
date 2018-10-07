@@ -1,10 +1,10 @@
-﻿using eFormData;
+﻿using eFormAPI.Web.Abstractions;
+using eFormData;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.eFormApi.BasePn.Models.Cases.Request;
-using Microting.eFormApi.BasePn.Models.Cases.Response;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Cases.Request;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Cases.Response;
 
 namespace eFormAPI.Web.Controllers
 {

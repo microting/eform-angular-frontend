@@ -3,7 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microting.eFormApi.BasePn.Database;
+using Microting.eFormApi.BasePn.Infrastructure.Database;
 
 namespace eFormAPI.Web.Migrations
 {

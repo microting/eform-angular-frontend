@@ -6,15 +6,14 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using eFormAPI.Web.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Abstractions;
-using Microting.eFormApi.BasePn.Helpers;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using Microting.eFormApi.BasePn.Infrastructure.Messages;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.eFormApi.BasePn.Services;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
 
@@ -25,12 +24,15 @@ namespace eFormAPI.Web.Controllers
     {
         private readonly IEFormCoreService _coreHelper;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ILocalizationService _localizationService;
 
         public TemplateFilesController(IEFormCoreService coreHelper,
-            IHttpContextAccessor httpContextAccessor)
+            IHttpContextAccessor httpContextAccessor, 
+            ILocalizationService localizationService)
         {
             _coreHelper = coreHelper;
             _httpContextAccessor = httpContextAccessor;
+            _localizationService = localizationService;
         }
 
         [HttpGet]
@@ -93,7 +95,7 @@ namespace eFormAPI.Web.Controllers
             var filePath = $"{core.GetPicturePath()}\\{fileName}";
             if (!System.IO.File.Exists(filePath))
             {
-                return new OperationResult(false, LocaleHelper.GetString("FileNotFound"));
+                return new OperationResult(false, _localizationService.GetString("FileNotFound"));
             }
 
             try
@@ -113,10 +115,10 @@ namespace eFormAPI.Web.Controllers
                     return new OperationResult(true);
                 }
 
-                return new OperationResult(false, LocaleHelper.GetString("ErrorWhileRotateImage"));
+                return new OperationResult(false, _localizationService.GetString("ErrorWhileRotateImage"));
             }
 
-            return new OperationResult(true, LocaleHelper.GetString("ImageRotatedSuccessfully"));
+            return new OperationResult(true, _localizationService.GetString("ImageRotatedSuccessfully"));
         }
 
         [HttpGet]
@@ -129,17 +131,17 @@ namespace eFormAPI.Web.Controllers
                 var core = _coreHelper.GetCore();
                 if (!core.Advanced_DeleteUploadedData(fieldId, uploadedObjId))
                 {
-                    return new OperationResult(false, LocaleHelper.GetString("ImageNotDeleted"));
+                    return new OperationResult(false, _localizationService.GetString("ImageNotDeleted"));
                 }
             }
 
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                return new OperationResult(false, LocaleHelper.GetString("ImageNotDeleted"));
+                return new OperationResult(false, _localizationService.GetString("ImageNotDeleted"));
             }
 
-            return new OperationResult(true, LocaleHelper.GetString("ImageDeletedSuccessfully"));
+            return new OperationResult(true, _localizationService.GetString("ImageDeletedSuccessfully"));
         }
 
 
@@ -239,11 +241,11 @@ namespace eFormAPI.Web.Controllers
         [Route("api/template-files/upload-eform-zip")]
         public async Task<IActionResult> UploadEformZip()
         {
-            try
+
+             try
             {
                 var core = _coreHelper.GetCore();
-                int.TryParse(_httpContextAccessor.HttpContext.Request.Form.Keys.FirstOrDefault(x => x == "templateId"),
-                    out int templateId);
+                int.TryParse(_httpContextAccessor.HttpContext.Request.Form.Keys.FirstOrDefault(x => x == "templateId"), out int templateId);
                 if (templateId <= 0)
                 {
                     return BadRequest("Invalid Request!");
@@ -262,15 +264,9 @@ namespace eFormAPI.Web.Controllers
                     return BadRequest("Folder error");
                 }
 
-                if (!Directory.Exists(saveFolder))
-                {
-                    Directory.CreateDirectory(saveFolder);
-                }
+                Directory.CreateDirectory(saveFolder);
+                Directory.CreateDirectory(zipArchiveFolder);
 
-                if (!Directory.Exists(zipArchiveFolder))
-                {
-                    Directory.CreateDirectory(zipArchiveFolder);
-                }
 
                 var files = _httpContextAccessor.HttpContext.Request.Form.Files;
                 if (files.Count > 0)
@@ -310,9 +306,45 @@ namespace eFormAPI.Web.Controllers
                     }
                 }
 
-                return BadRequest(LocaleHelper.GetString("InvalidRequest"));
+
+                //var files = _httpContextAccessor.HttpContext.Request.Form.Files;
+                //if (files.Count > 0)
+                //{
+                //    var httpPostedFile = files[0];
+                //    if (httpPostedFile.Length > 0)
+                //    {
+                //        var filePath = Path.Combine(zipArchiveFolder, Path.GetFileName(httpPostedFile.FileName));
+                //        var extractPath = Path.Combine(saveFolder);
+                //        if (System.IO.File.Exists(filePath))
+                //        {
+                //            System.IO.File.Delete(filePath);
+                //        }
+                //        httpPostedFile.SaveAs(filePath);
+                //        if (System.IO.File.Exists(filePath))
+                //        {
+                //            Directory.CreateDirectory(extractPath);
+                //            FoldersHelper.ClearFolder(extractPath);
+
+                //            using (var zip = ZipFile.Read(filePath))
+                //            {
+                //                foreach (var entry in zip.Entries)
+                //                {
+                //                    if (entry.FileName.Contains(".png") || entry.FileName.Contains("jrxml"))
+                //                    {
+                //                        entry.Extract(extractPath);
+                //                    }
+                //                }
+                //            }
+                //            System.IO.File.Delete(filePath);
+                //            await _coreHelper.Bus.SendLocal(new GenerateJasperFiles(templateId));
+
+                //            return Ok();
+                //        }
+                //    }
+                //}
+                return BadRequest(_localizationService.GetString("InvalidRequest"));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return BadRequest("Invalid Request!");
             }

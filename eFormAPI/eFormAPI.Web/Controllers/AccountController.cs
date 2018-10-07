@@ -1,12 +1,12 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using eFormAPI.Web.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.eFormApi.BasePn.Models.Auth;
-using Microting.eFormApi.BasePn.Models.Settings.User;
-using Microting.eFormApi.BasePn.Models.User;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Settings.User;
+using Microting.eFormApi.BasePn.Infrastructure.Models.User;
 
 namespace eFormAPI.Web.Controllers
 {

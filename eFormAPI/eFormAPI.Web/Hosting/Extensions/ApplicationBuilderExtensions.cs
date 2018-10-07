@@ -60,7 +60,7 @@ namespace eFormAPI.Web.Hosting.Extensions
             IList<CultureInfo> supportedCultures = new List<CultureInfo>
             {
                 new CultureInfo("en-US"),
-                new CultureInfo("da-DK"),
+                new CultureInfo("da"),
             };
             var localizationOptions = new RequestLocalizationOptions
             {

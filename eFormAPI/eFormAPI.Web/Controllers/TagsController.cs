@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
+using eFormAPI.Web.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.eFormApi.BasePn.Models.Common;
-using Microting.eFormApi.BasePn.Models.Tags;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Tags;
 
 namespace eFormAPI.Web.Controllers
 {

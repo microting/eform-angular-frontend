@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
+using eFormAPI.Web.Abstractions;
 using eFormShared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microting.eFormApi.BasePn.Abstractions;
-using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+using Microting.eFormApi.BasePn.Infrastructure.Models;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.eFormApi.BasePn.Models;
 
 namespace eFormAPI.Web.Controllers
 {
@@ -13,10 +12,13 @@ namespace eFormAPI.Web.Controllers
     public class SimpleSitesController : Controller
     {
         private readonly ISimpleSitesService _simpleSitesService;
+        private readonly ILocalizationService _localizationService;
 
-        public SimpleSitesController(ISimpleSitesService simpleSitesService)
+        public SimpleSitesController(ISimpleSitesService simpleSitesService, 
+            ILocalizationService localizationService)
         {
             _simpleSitesService = simpleSitesService;
+            _localizationService = localizationService;
         }
 
         [HttpGet]
@@ -30,7 +32,7 @@ namespace eFormAPI.Web.Controllers
         {
             if (!ModelState.IsValid)
                 return new OperationResult(false,
-                    LocaleHelper.GetString("DeviceUserCouldNotBeCreated"));
+                    _localizationService.GetString("DeviceUserCouldNotBeCreated"));
 
             return _simpleSitesService.Create(simpleSiteModel);
         }

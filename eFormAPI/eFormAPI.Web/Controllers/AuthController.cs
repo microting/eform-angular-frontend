@@ -1,13 +1,11 @@
 ﻿using System.Threading.Tasks;
+using eFormAPI.Web.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microting.eFormApi.BasePn.Abstractions;
-using Microting.eFormApi.BasePn.Database.Entities;
-using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.eFormApi.BasePn.Models.Auth;
-using Swashbuckle.AspNetCore.Swagger;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
 
 namespace eFormAPI.Web.Controllers
 {
@@ -15,12 +13,24 @@ namespace eFormAPI.Web.Controllers
     public class AuthController : Controller
     {
         private readonly IAuthService _authService;
+        private readonly ILocalizationService _localizationService;
 
         public AuthController(IUserService userService,
             UserManager<EformUser> userManager,
-            IAuthService authService)
+            IAuthService authService,
+            ILocalizationService localizationService)
         {
             _authService = authService;
+            _localizationService = localizationService;
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("api/auth/token")]
+        public async Task<OperationResult> AuthenticateUserqssq()
+        {
+            return new OperationDataResult<AuthorizeResult>(false,
+                _localizationService.GetString("CantObtainSettingsFromWebConfig"));
         }
 
         [HttpPost]
@@ -84,7 +94,7 @@ namespace eFormAPI.Web.Controllers
             if (!ModelState.IsValid)
             {
                 return new OperationDataResult<GoogleAuthenticatorModel>(false,
-                    LocaleHelper.GetString("InvalidUserNameOrPassword"));
+                    _localizationService.GetString("InvalidUserNameOrPassword"));
             }
 
             return await _authService.GetGoogleAuthenticator(loginModel);

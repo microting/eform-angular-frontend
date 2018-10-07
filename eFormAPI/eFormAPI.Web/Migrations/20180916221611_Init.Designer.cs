@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microting.eFormApi.BasePn.Database;
+using Microting.eFormApi.BasePn.Infrastructure.Database;
 
 namespace eFormAPI.Web.Migrations
 {

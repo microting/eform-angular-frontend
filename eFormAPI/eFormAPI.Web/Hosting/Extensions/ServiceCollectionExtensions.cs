@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Configuration;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microting.eFormApi.BasePn;
-using Microting.eFormApi.BasePn.Helpers.WritableOptions;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers.WritableOptions;
 using Newtonsoft.Json.Serialization;
 
 namespace eFormAPI.Web.Hosting.Extensions

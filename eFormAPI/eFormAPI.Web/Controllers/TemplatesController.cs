@@ -1,10 +1,10 @@
 ﻿using System;
+using eFormAPI.Web.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microting.eFormApi.BasePn.Abstractions;
+using Microting.eFormApi.BasePn.Infrastructure.Models;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.eFormApi.BasePn.Models;
-using Microting.eFormApi.BasePn.Models.Templates;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Templates;
 
 namespace eFormAPI.Web.Controllers
 {

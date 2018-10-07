@@ -5,8 +5,8 @@ using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microting.eFormApi.BasePn.Database.Entities;
-using Microting.eFormApi.BasePn.Helpers;
+using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 
 namespace eFormAPI.Web.Controllers
 {
