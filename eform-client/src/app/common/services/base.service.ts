@@ -74,7 +74,6 @@ export class BaseService {
       headers = headers.append('Authorization', 'Bearer ' + user.access_token);
     }
     // add localization
-    headers = headers.append('Locale', localStorage.getItem('locale'));
     return headers;
   }
 
