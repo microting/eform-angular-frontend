@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using eFormCore;
 using McMaster.NETCore.Plugins;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microting.eFormApi.BasePn;
+using Microting.eFormApi.BasePn.Abstractions;
+using Microting.eFormApi.BasePn.Services;
 
 namespace eFormAPI.Web.Hosting.Helpers
 {
@@ -48,6 +51,9 @@ namespace eFormAPI.Web.Hosting.Helpers
                             typeof(IApplicationBuilder),
                             typeof(IEformPlugin),
                             typeof(IServiceCollection),
+                            typeof(IEFormCoreService),
+                            typeof(EFormCoreService),
+                            typeof(Core)
                         });
                     foreach (var type in loader.LoadDefaultAssembly()
                         .GetTypes()
@@ -82,7 +88,5 @@ namespace eFormAPI.Web.Hosting.Helpers
             //}
             return plugins;
         }
-
     }
 }
-

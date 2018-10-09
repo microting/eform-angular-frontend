@@ -7,6 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using eFormAPI.Web.Abstractions;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -25,6 +28,7 @@ namespace eFormAPI.Web.Services
         private readonly IOptions<EformTokenOptions> _tokenOptions;
         private readonly IUserService _userService;
         private readonly IOptions<ApplicationSettings> _appSettings;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ILocalizationService _localizationService;
         private readonly ILogger<AuthService> _logger;
         private readonly UserManager<EformUser> _userManager;
@@ -38,7 +42,7 @@ namespace eFormAPI.Web.Services
             SignInManager<EformUser> signInManager,
             UserManager<EformUser> userManager,
             IUserService userService,
-            ILocalizationService localizationService)
+            ILocalizationService localizationService, IHttpContextAccessor httpContextAccessor)
         {
             _tokenOptions = tokenOptions;
             _logger = logger;
@@ -48,6 +52,7 @@ namespace eFormAPI.Web.Services
             _userManager = userManager;
             _userService = userService;
             _localizationService = localizationService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<OperationDataResult<AuthorizeResult>> AuthenticateUser(LoginModel model)
@@ -118,13 +123,19 @@ namespace eFormAPI.Web.Services
                     }
                 }
             }
-
             var token = GenerateToken(user);
             var roleList = _userManager.GetRolesAsync(user).Result;
             if (!roleList.Any())
             {
                 return new OperationDataResult<AuthorizeResult>(false, $"Role for user {model.Username} not found");
             }
+            //await _httpContextAccessor.HttpContext.SignInAsync(
+            //    CookieAuthenticationDefaults.AuthenticationScheme, 
+            //    new ClaimsPrincipal(claimsIdentity), 
+            //    authProperties);
+
+          //  https://dotnetcoretutorials.com/2017/09/16/cookie-authentication-asp-net-core-2-0/
+          //  https://docs.microsoft.com/en-us/aspnet/core/security/authentication/cookie?view=aspnetcore-2.1&tabs=aspnetcore2x
 
             // update last sign in date
             return new OperationDataResult<AuthorizeResult>(true, new AuthorizeResult
