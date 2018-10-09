@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Hosting.Extensions;
 using eFormAPI.Web.Hosting.Helpers;
 using eFormAPI.Web.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -18,7 +16,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
-using Microsoft.IdentityModel.Tokens;
 using Microting.eFormApi.BasePn;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Database;
@@ -75,30 +72,10 @@ namespace eFormAPI.Web
                 // User settings
                 options.User.RequireUniqueEmail = true;
             });
-            
             // Authentication
-            services.AddAuthentication(o =>
-                {
-                    o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                    o.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
-                .AddJwtBearer(cfg =>
-                {
-                    // JWT Bearer
-                    cfg.RequireHttpsMetadata = false;
-                    cfg.SaveToken = true;
-                    cfg.TokenValidationParameters = new TokenValidationParameters()
-                    {
-                        ValidIssuer = Configuration["EformTokenOptions:Issuer"],
-                        ValidAudience = Configuration["EformTokenOptions:Issuer"],
-                        IssuerSigningKey =
-                            new SymmetricSecurityKey(
-                                Encoding.UTF8.GetBytes(Configuration["EformTokenOptions:SigningKey"]))
-                    };
-                });
+            services.AddEFormAuth(Configuration);
             // Localiation
-            services.AddLocalization(options => { options.ResourcesPath = "Resources";});
+            services.AddLocalization(options => { options.ResourcesPath = "Resources"; });
             // MVC and API services with Plugins
             services.AddEFormMvc(_plugins);
             // Writable options
@@ -200,6 +177,7 @@ namespace eFormAPI.Web
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient(provider => provider.GetService<IHttpContextAccessor>().HttpContext.User);
             services.AddSingleton<ILocalizationService, LocalizationService>();
+            services.AddScoped<IEFormCoreService, EFormCoreService>();
             services.AddScoped<ITagsService, TagsService>();
             services.AddScoped<ITemplateColumnsService, TemplateColumnsService>();
             services.AddScoped<IUnitsService, UnitsService>();
@@ -215,7 +193,6 @@ namespace eFormAPI.Web
             services.AddScoped<IAdminService, AdminService>();
             services.AddScoped<ISettingsService, SettingsService>();
             services.AddScoped<ITemplatesService, TemplatesService>();
-            services.AddScoped<IEFormCoreService, EFormCoreService>();
         }
     }
 }

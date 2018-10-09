@@ -13,22 +13,22 @@ namespace eFormAPI.Web.Controllers
     {
         [HttpGet]
         [Route("api/audio/eform-audio")]
-        public HttpResponseMessage GetAudio(string fileName)
+        public IActionResult GetAudio(string fileName)
         {
             var filePath = PathHelper.GetAudioPath(fileName);
             if (!System.IO.File.Exists(filePath))
             {
-                return new HttpResponseMessage(HttpStatusCode.NotFound);
+                return NotFound();
             }
-
-            var result = new HttpResponseMessage(HttpStatusCode.OK);
             var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            result.Content = new StreamContent(stream);
-            result.Content.Headers.ContentType =
-                new MediaTypeHeaderValue("application/octet-stream");
-            result.Content.Headers.ContentLength = stream.Length;
-            result.Content.Headers.ContentRange = new ContentRangeHeaderValue(0, stream.Length);
-            return result;
+            //result.Content = new StreamContent(stream);
+            //result.Content.Headers.ContentType =
+            //    new MediaTypeHeaderValue("application/octet-stream");
+            //result.Content.Headers.ContentLength = stream.Length;
+            //result.Content.Headers.ContentRange = new ContentRangeHeaderValue(0, stream.Length);
+            Response.Headers.Add("Accept-Ranges", "bytes");
+            Response.Headers.Remove("Cache-Control");
+            return File(stream, "audio/wav");
         }
     }
 }

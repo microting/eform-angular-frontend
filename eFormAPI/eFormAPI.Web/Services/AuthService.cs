@@ -7,8 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using eFormAPI.Web.Abstractions;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
@@ -129,14 +127,7 @@ namespace eFormAPI.Web.Services
             {
                 return new OperationDataResult<AuthorizeResult>(false, $"Role for user {model.Username} not found");
             }
-            //await _httpContextAccessor.HttpContext.SignInAsync(
-            //    CookieAuthenticationDefaults.AuthenticationScheme, 
-            //    new ClaimsPrincipal(claimsIdentity), 
-            //    authProperties);
-
-          //  https://dotnetcoretutorials.com/2017/09/16/cookie-authentication-asp-net-core-2-0/
-          //  https://docs.microsoft.com/en-us/aspnet/core/security/authentication/cookie?view=aspnetcore-2.1&tabs=aspnetcore2x
-
+            await _signInManager.SignInAsync(user, false);
             // update last sign in date
             return new OperationDataResult<AuthorizeResult>(true, new AuthorizeResult
             {
@@ -146,7 +137,6 @@ namespace eFormAPI.Web.Services
                 role = roleList.FirstOrDefault()
             });
         }
-
 
         public string GenerateToken(EformUser user)
         {
@@ -185,7 +175,7 @@ namespace eFormAPI.Web.Services
                 var token = new JwtSecurityToken(_tokenOptions.Value.Issuer,
                     _tokenOptions.Value.Issuer,
                     claims.ToArray(),
-                    expires: DateTime.Now.AddMinutes(600),
+                    expires: DateTime.Now.AddHours(10),
                     signingCredentials: creds);
 
                 return new JwtSecurityTokenHandler().WriteToken(token);

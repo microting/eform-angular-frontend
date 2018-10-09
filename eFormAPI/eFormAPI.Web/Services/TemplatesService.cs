@@ -20,7 +20,8 @@ namespace eFormAPI.Web.Services
         private readonly IEFormCoreService _coreHelper;
         private readonly ILocalizationService _localizationService;
 
-        public TemplatesService(IWritableOptions<ConnectionStrings> connectionStrings, IEFormCoreService coreHelper, ILocalizationService localizationService)
+        public TemplatesService(IWritableOptions<ConnectionStrings> connectionStrings, IEFormCoreService coreHelper,
+            ILocalizationService localizationService)
         {
             _connectionStrings = connectionStrings;
             _coreHelper = coreHelper;
@@ -264,7 +265,8 @@ namespace eFormAPI.Web.Services
                 core.CaseDelete(deployModel.Id, siteUId);
             }
 
-            return new OperationResult(true, _localizationService.GetString("ParamPairedSuccessfully", templateDto.Label));
+            return new OperationResult(true,
+                _localizationService.GetString("ParamPairedSuccessfully", templateDto.Label));
         }
 
         //[HttpGet]

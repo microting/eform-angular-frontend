@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Microting.eFormApi.BasePn;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers.WritableOptions;
 using Newtonsoft.Json.Serialization;
@@ -35,6 +38,30 @@ namespace eFormAPI.Web.Hosting.Extensions
             }
         }
 
+        public static void AddEFormAuth(this IServiceCollection services, IConfiguration configuration)
+        {
+            var tokenValidationParameters = new TokenValidationParameters()
+            {
+                ValidIssuer = configuration["EformTokenOptions:Issuer"],
+                ValidAudience = configuration["EformTokenOptions:Issuer"],
+                IssuerSigningKey =
+                    new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(configuration["EformTokenOptions:SigningKey"]))
+            };
+            services.AddAuthentication()
+                .AddCookie(cfg =>
+                {
+                    cfg.SlidingExpiration = true;
+                    cfg.ExpireTimeSpan = TimeSpan.FromHours(10);
+                })
+                .AddJwtBearer(cfg =>
+                {
+                    // JWT Bearer
+                    cfg.RequireHttpsMetadata = false;
+                    cfg.SaveToken = true;
+                    cfg.TokenValidationParameters = tokenValidationParameters;
+                });
+        }
         public static void AddEFormMvc(this IServiceCollection services,
             List<IEformPlugin> plugins)
         {

@@ -1,7 +1,7 @@
 ﻿using System.IO;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
+using System.Threading.Tasks;
+using eFormAPI.Web.Abstractions;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,21 +13,21 @@ namespace eFormAPI.Web.Controllers
     [Authorize]
     public class ImagesController : Controller
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ILocalizationService _localizationService;
 
-        public ImagesController(IHttpContextAccessor httpContextAccessor)
+        public ImagesController(ILocalizationService localizationService)
         {
-            _httpContextAccessor = httpContextAccessor;
+            _localizationService = localizationService;
         }
 
         [HttpGet]
         [Route("api/images/eform-images")]
-        public HttpResponseMessage GetImage(string fileName)
+        public IActionResult GetImage(string fileName)
         {
             var filePath = PathHelper.GetEformSettingsImagesPath(fileName);
             if (!System.IO.File.Exists(filePath))
             {
-                return new HttpResponseMessage(HttpStatusCode.NotFound);
+                return NotFound();
             }
 
             var extention = Path.GetExtension(filePath).Replace(".", "");
@@ -35,28 +35,19 @@ namespace eFormAPI.Web.Controllers
             {
                 extention = "jpeg";
             }
-
             var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            var result = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StreamContent(fileStream)
-            };
-            result.Content.Headers.ContentDisposition =
-                new ContentDispositionHeaderValue("attachment") {FileName = fileName};
-            result.Content.Headers.ContentType =
-                new MediaTypeHeaderValue($"image/{extention}");
-            return result;
+            return File(fileStream, $"image/{extention}");
         }
 
         [HttpGet]
         [AllowAnonymous]
         [Route("api/images/login-page-images")]
-        public HttpResponseMessage GetLoginPageImage(string fileName)
-         {
+        public IActionResult GetLoginPageImage(string fileName)
+        {
             var filePath = PathHelper.GetEformLoginPageSettingsImagesPath(fileName);
             if (!System.IO.File.Exists(filePath))
             {
-                return new HttpResponseMessage(HttpStatusCode.NotFound);
+                return NotFound();
             }
 
             var extention = Path.GetExtension(filePath).Replace(".", "");
@@ -64,29 +55,20 @@ namespace eFormAPI.Web.Controllers
             {
                 extention = "jpeg";
             }
-
             var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            var result = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StreamContent(fileStream)
-            };
-            result.Content.Headers.ContentDisposition =
-                new ContentDispositionHeaderValue("attachment") {FileName = fileName};
-            result.Content.Headers.ContentType =
-                new MediaTypeHeaderValue($"image/{extention}");
-            return result;
+            return File(fileStream, $"image/{extention}");
         }
 
         [HttpPost]
-        [Authorize(Roles = EformRole.Admin)]
+        [Authorize(Roles = EformRole.Admin, AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
         [Route("api/images/login-page-images")]
-        public HttpResponseMessage PostLoginPageImages()
+        public async Task<IActionResult> PostLoginPageImages(IFormFile file)
         {
             var iUploadedCnt = 0;
             var saveFolder = PathHelper.GetEformLoginPageSettingsImagesPath();
             if (string.IsNullOrEmpty(saveFolder))
             {
-                //////////              return CreateResponse(HttpStatusCode.BadRequest, LocaleHelper.GetString("FolderError"));
+                return BadRequest(_localizationService.GetString("FolderError"));
             }
 
             if (!Directory.Exists(saveFolder))
@@ -94,40 +76,36 @@ namespace eFormAPI.Web.Controllers
                 Directory.CreateDirectory(saveFolder);
             }
 
-            var files = _httpContextAccessor.HttpContext.Request.Form.Files;
-            for (var i = 0; i <= files.Count - 1; i++)
+            if (file.Length > 0)
             {
-                var hpf = files[i];
-                if (hpf.Length > 0)
+                var filePath = Path.Combine(saveFolder, Path.GetFileName(file.FileName));
+                if (!System.IO.File.Exists(filePath))
                 {
-                    var filePath = Path.Combine(saveFolder, Path.GetFileName(hpf.FileName));
-                    if (!System.IO.File.Exists(filePath))
+                    using (var stream = new FileStream(filePath, FileMode.Create))
                     {
-                        //////////////////                      hpf..SaveAs(filePath);
-                        iUploadedCnt++;
+                        await file.CopyToAsync(stream);
                     }
+                    iUploadedCnt++;
                 }
             }
 
             if (iUploadedCnt > 0)
             {
-                ///////               return Request.CreateResponse(HttpStatusCode.OK);
+                return Ok();
             }
-
-            //////           return Request.CreateResponse(HttpStatusCode.BadRequest, LocaleHelper.GetString("InvalidRequest"));
-            return null;
+            return BadRequest(_localizationService.GetString("InvalidRequest"));
         }
 
         [HttpPost]
-        [Authorize(Roles = EformRole.Admin)]
+        [Authorize(Roles = EformRole.Admin, AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
         [Route("api/images/eform-images")]
-        public HttpResponseMessage PostEformImages()
+        public async Task<IActionResult> PostEformImages(IFormFile file)
         {
             var iUploadedCnt = 0;
             var saveFolder = PathHelper.GetEformSettingsImagesPath();
             if (string.IsNullOrEmpty(saveFolder))
             {
-                ////////////////////               return Request.CreateResponse(HttpStatusCode.BadRequest, LocaleHelper.GetString("FolderError"));
+                return BadRequest(_localizationService.GetString("FolderError"));
             }
 
             if (!Directory.Exists(saveFolder))
@@ -135,28 +113,24 @@ namespace eFormAPI.Web.Controllers
                 Directory.CreateDirectory(saveFolder);
             }
 
-            var files = _httpContextAccessor.HttpContext.Request.Form.Files;
-            for (var i = 0; i <= files.Count - 1; i++)
+            if (file.Length > 0)
             {
-                var hpf = files[i];
-                if (hpf.Length > 0)
+                var filePath = Path.Combine(saveFolder, Path.GetFileName(file.FileName));
+                if (!System.IO.File.Exists(filePath))
                 {
-                    var filePath = Path.Combine(saveFolder, Path.GetFileName(hpf.FileName));
-                    if (!System.IO.File.Exists(filePath))
+                    using (var stream = new FileStream(filePath, FileMode.Create))
                     {
-                        /////////////                       hpf.SaveAs(filePath);
-                        iUploadedCnt++;
+                        await file.CopyToAsync(stream);
                     }
+                    iUploadedCnt++;
                 }
             }
 
             if (iUploadedCnt > 0)
             {
-                //////////               return Request.CreateResponse(HttpStatusCode.OK);
+                return Ok();
             }
-
-            //////////          return Request.CreateResponse(HttpStatusCode.BadRequest, LocaleHelper.GetString("InvalidRequest"));
-            return null;
+            return BadRequest(_localizationService.GetString("InvalidRequest"));
         }
     }
 }

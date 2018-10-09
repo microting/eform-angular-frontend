@@ -8,6 +8,13 @@
     <DocumentationFile>API.doc.xml</DocumentationFile>
     <NoWarn>1701;1702;1591;</NoWarn>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="output\**" />
+    <Content Remove="output\**" />
+    <EmbeddedResource Remove="output\**" />
+    <None Remove="output\**" />
+  </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="Automapper" Version="6.1.0" />
