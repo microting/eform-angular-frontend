@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormCore;
@@ -30,6 +31,7 @@ namespace eFormAPI.Web.Services
         private readonly IWritableOptions<LoginPageSettings> _loginPageSettings;
         private readonly IWritableOptions<HeaderSettings> _headerSettings;
         private readonly IWritableOptions<EmailSettings> _emailSettings;
+        private readonly IWritableOptions<EformTokenOptions> _tokenOptions;
         private readonly IEFormCoreService _coreHelper;
 
         public SettingsService(ILogger<SettingsService> logger,
@@ -39,7 +41,8 @@ namespace eFormAPI.Web.Services
             IWritableOptions<HeaderSettings> headerSettings,
             IWritableOptions<EmailSettings> emailSettings,
             IEFormCoreService coreHelper,
-            ILocalizationService localizationService)
+            ILocalizationService localizationService, 
+            IWritableOptions<EformTokenOptions> tokenOptions)
         {
             _logger = logger;
             _connectionStrings = connectionStrings;
@@ -49,6 +52,7 @@ namespace eFormAPI.Web.Services
             _emailSettings = emailSettings;
             _coreHelper = coreHelper;
             _localizationService = localizationService;
+            _tokenOptions = tokenOptions;
         }
 
         public OperationResult ConnectionStringExist()
@@ -196,6 +200,14 @@ namespace eFormAPI.Web.Services
             adminTools.DbSetup(initialSettingsModel.ConnectionStringSdk.Token);
             try
             {
+                // Generate SigningKey
+                var key = new byte[32];
+                RandomNumberGenerator.Create().GetBytes(key);
+                var signingKey = Convert.ToBase64String(key);
+                _tokenOptions.Update((options) =>
+                {
+                    options.SigningKey = signingKey;
+                });
                 _connectionStrings.Update((options) =>
                 {
                     options.SdkConnection = sdkConnectionString;

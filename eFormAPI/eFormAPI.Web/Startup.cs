@@ -44,7 +44,6 @@ namespace eFormAPI.Web
             // Configuration
             services.AddSingleton(Configuration);
             services.AddOptions();
-            services.Configure<EformTokenOptions>(Configuration.GetSection("EformTokenOptions"));
             // Entity framework
             services.AddEntityFrameworkSqlServer()
                 .AddDbContext<BaseDbContext>(o => o.UseSqlServer(Configuration.MyConnectionString(),
@@ -84,6 +83,7 @@ namespace eFormAPI.Web
             services.ConfigureWritable<LoginPageSettings>(Configuration.GetSection("LoginPageSettings"));
             services.ConfigureWritable<HeaderSettings>(Configuration.GetSection("HeaderSettings"));
             services.ConfigureWritable<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
+            services.ConfigureWritable<EformTokenOptions>(Configuration.GetSection("EformTokenOptions"));
             // Form options
             services.Configure<FormOptions>(x =>
             {
