@@ -41,22 +41,22 @@
                   <!--list item-->
                   <li class="list-group-item"
                       *ngFor="let entityItem of advEntitySelectableGroupEditModel.advEntitySelectableItemModels">
-                    <div class="d-flex justify-content-between">
-                      <div>
+                    <div class="row">
+                      <div class="col-md-1">
                         <a>
                           <i class="material-icons text-black-50"> drag_handle </i>
                         </a>
                       </div>
-                      <div>{{entityItem.name}}</div>
-                      <div>
+                      <div class="col-md-9">{{entityItem.name}}</div>
+                      <div class="col-md-2">
                         <i class="material-icons material-icon-red mr-3" *ngIf="!entityItem.name"
                            mdbTooltip="{{'Name is required' | translate}}!">
                           warning
                         </i>
-                        <a>
+                        <a class="pull-right">
                           <i class="material-icons text-black-50" (click)="openModalSelectEditName(entityItem)"> edit </i>
                         </a>
-                        <a>
+                        <a class="pull-right">
                           <i class="material-icons text-black-50"
                              (click)="deleteAdvEntitySelectableItem(entityItem.entityItemUId)"> delete </i>
                         </a>
