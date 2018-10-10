@@ -47,7 +47,7 @@ export class AuthService extends BaseService {
       body = body.append('code', loginInfo.code);
     }
     return this.postUrlEncoded(AuthMethods.Login, body).pipe(map((result) => {
-      return result;
+      return result.model;
     }));
   }
 

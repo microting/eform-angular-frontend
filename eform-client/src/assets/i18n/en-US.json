@@ -181,8 +181,11 @@
   "Customers": "Customers",
   "Do you want to leave this page": "Do you want to leave this page",
   "If you leave before saving your changes will be lost": "If you leave before saving your changes will be lost",
-  "Save & Leave": "Save & Leave"
-
+  "Save & Leave": "Save & Leave",
+  "Cases": "Cases",
+  "Vehicles": "Vehicles",
+  "Calendar": "Calendar",
+  "Case Management": "Case Management"
 }
 
 

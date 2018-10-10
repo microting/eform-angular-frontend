@@ -1,0 +1,411 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AdminUserNotFound" xml:space="preserve">
+    <value>Admin bruger ikke fundet</value>
+  </data>
+  <data name="CannotOpenDatabes" xml:space="preserve">
+    <value>Kan ikke åbne database</value>
+  </data>
+  <data name="CantDeletePrimaryAdminUser" xml:space="preserve">
+    <value>Kan ikke slette primær admin bruger</value>
+  </data>
+  <data name="CantObtainSettingsFromWebConfig" xml:space="preserve">
+    <value>Kan ikke hente indstillinger fra web.config</value>
+  </data>
+  <data name="CantUpdateSettingsInWebConfig" xml:space="preserve">
+    <value>Kan ikke opdatere indstillinger i web.config</value>
+  </data>
+  <data name="CaseCouldNotBeRemoved" xml:space="preserve">
+    <value>Case kunne ikke fjernes</value>
+  </data>
+  <data name="CaseCouldNotBeUpdated" xml:space="preserve">
+    <value>Sag kunne ikke opdateres</value>
+  </data>
+  <data name="CaseHasBeenUpdated" xml:space="preserve">
+    <value>Sag er blevet opdateret</value>
+  </data>
+  <data name="CaseLoadingFailed" xml:space="preserve">
+    <value>Case loading mislykkedes</value>
+  </data>
+  <data name="CaseParamDeletedSuccessfully" xml:space="preserve">
+    <value>Sag nr. {0} er slettet korrekt</value>
+  </data>
+  <data name="CheckConnectionString" xml:space="preserve">
+    <value>Kontroller forbindelsesstrengen</value>
+  </data>
+  <data name="CheckSettingsBeforeProceed" xml:space="preserve">
+    <value>Kontrollér indstillingerne, før du fortsætter</value>
+  </data>
+  <data name="ColumnsWereUpdated" xml:space="preserve">
+    <value>Kolonner blev opdateret</value>
+  </data>
+  <data name="ConnectionStringAlreadyExist" xml:space="preserve">
+    <value>Forbindelsesstrengen eksisterer allerede</value>
+  </data>
+  <data name="CoreIsNotStarted" xml:space="preserve">
+    <value>Kernen er ikke startet</value>
+  </data>
+  <data name="CouldNotWriteConnectionString" xml:space="preserve">
+    <value>Kunne ikke skrive forbindelsesstreng i /bin/Input.txt</value>
+  </data>
+  <data name="DeviceUserCouldNotBeCreated" xml:space="preserve">
+    <value>Enhedsbruger kunne ikke oprettes</value>
+  </data>
+  <data name="DeviceUserCouldNotBeObtained" xml:space="preserve">
+    <value>Enhedsbruger med sådan UId kunne ikke opnås</value>
+  </data>
+  <data name="DeviceUserCouldNotBeUpdated" xml:space="preserve">
+    <value>Enhedsbruger kunne ikke opdateres</value>
+  </data>
+  <data name="DeviceUserNotFound" xml:space="preserve">
+    <value>Enhedsbruger UId blev ikke fundet</value>
+  </data>
+  <data name="DeviceUserPa" xml:space="preserve">
+    <value>Enhedsbruger med id "{0}" kunne ikke slettes</value>
+  </data>
+  <data name="DeviceUserParamCouldNotBeDeleted" xml:space="preserve">
+    <value>Enhedsbruger "{0}" kunne ikke slettes</value>
+  </data>
+  <data name="DeviceUserParamCouldNotBeEdited" xml:space="preserve">
+    <value>Enhedsbruger med id {0} kunne ikke redigeres</value>
+  </data>
+  <data name="DeviceUserParamCouldNotBeUpdated" xml:space="preserve">
+    <value>Enhedsbruger med id {0} kunne ikke opdateres</value>
+  </data>
+  <data name="DeviceUserParamCreatedSuccessfully" xml:space="preserve">
+    <value>Enhedsbruger "{0}" blev oprettet med succes</value>
+  </data>
+  <data name="DeviceUserParamDeletedSuccessfully" xml:space="preserve">
+    <value>Enhedsbruger "{0}" slettes korrekt</value>
+  </data>
+  <data name="DeviceUserUpdatedSuccessfully" xml:space="preserve">
+    <value>Enhedsbruger opdateret med succes</value>
+  </data>
+  <data name="eFormCouldNotBeCreated" xml:space="preserve">
+    <value>eForm kunne ikke oprettes</value>
+  </data>
+  <data name="eFormParamCouldNotBeDeleted" xml:space="preserve">
+    <value>eForm "{0}" kunne ikke slettes</value>
+  </data>
+  <data name="eFormParamCreatedSuccessfully" xml:space="preserve">
+    <value>eForm "{0}" blev oprettet med succes</value>
+  </data>
+  <data name="eFormParamDeletedSuccessfully" xml:space="preserve">
+    <value>eForm "{0}" slettes med succes</value>
+  </data>
+  <data name="ErrorWhenDeletingSearchableList" xml:space="preserve">
+    <value>Fejl ved sletning af søgbar liste</value>
+  </data>
+  <data name="ErrorWhenObtainingSearchableList" xml:space="preserve">
+    <value>Fejl ved opnåelse af søgbar liste</value>
+  </data>
+  <data name="ErrorWhileAddNewPassword" xml:space="preserve">
+    <value>Fejl mens tilføj ny adgangskode</value>
+  </data>
+  <data name="ErrorWhileCreatingFileForSDK" xml:space="preserve">
+    <value>Fejl under oprettelse af fil til SDK</value>
+  </data>
+  <data name="ErrorWhileCreatingParamTag" xml:space="preserve">
+    <value>Fejl under oprettelse af "{0}" tag</value>
+  </data>
+  <data name="ErrorWhileCreatingUser" xml:space="preserve">
+    <value>Fejl ved oprettelse af bruger</value>
+  </data>
+  <data name="ErrorWhileCreatingWorker" xml:space="preserve">
+    <value>Fejl under oprettelse af medarbejder</value>
+  </data>
+  <data name="ErrorWhileDeletingSelectableList" xml:space="preserve">
+    <value>Fejl ved sletning af valgbar liste</value>
+  </data>
+  <data name="ErrorWhileDeletingTag" xml:space="preserve">
+    <value>Fejl under sletning af tag</value>
+  </data>
+  <data name="ErrorWhileDeletingUser" xml:space="preserve">
+    <value>Fejl under sletning af bruger</value>
+  </data>
+  <data name="ErrorWhileObtainColumns" xml:space="preserve">
+    <value>Fejl under opnåelse af kolonner</value>
+  </data>
+  <data name="ErrorWhileObtainSelectableList" xml:space="preserve">
+    <value>Fejl ved opnåelse af valgbar liste</value>
+  </data>
+  <data name="ErrorWhileObtainTags" xml:space="preserve">
+    <value>Der opstod en fejl under opnåelse af tags</value>
+  </data>
+  <data name="ErrorWhileObtainUsers" xml:space="preserve">
+    <value>Fejl ved brug af brugere</value>
+  </data>
+  <data name="ErrorWhileRemovingOldPassword" xml:space="preserve">
+    <value>Fejl under fjernelse af gammel adgangskode</value>
+  </data>
+  <data name="ErrorWhileRotateImage" xml:space="preserve">
+    <value>Der opstod en fejl under rotationen af ​​billedet</value>
+  </data>
+  <data name="ErrorWhileUpdatingColumns" xml:space="preserve">
+    <value>Fejl under opdatering af kolonner</value>
+  </data>
+  <data name="ErrorWhileUpdatingPSK" xml:space="preserve">
+    <value>Fejl under opdatering af brugerens PSK</value>
+  </data>
+  <data name="ErrorWhileUpdatingTemplateTags" xml:space="preserve">
+    <value>Fejl under opdatering af skabelonmærker</value>
+  </data>
+  <data name="ErrorWhileUpdatingUser" xml:space="preserve">
+    <value>Fejl ved opdatering af bruger</value>
+  </data>
+  <data name="FileNotFound" xml:space="preserve">
+    <value>Fil ikke fundet</value>
+  </data>
+  <data name="FolderError" xml:space="preserve">
+    <value>Mappefejl</value>
+  </data>
+  <data name="ImageDeletedSuccessfully" xml:space="preserve">
+    <value>Billede slettet korrekt</value>
+  </data>
+  <data name="ImageNotDeleted" xml:space="preserve">
+    <value>Billedet blev ikke slettet</value>
+  </data>
+  <data name="ImageRotatedSuccessfully" xml:space="preserve">
+    <value>Billedet roteres med succes</value>
+  </data>
+  <data name="InvalidRequest" xml:space="preserve">
+    <value>Ugyldig forespørgsel</value>
+  </data>
+  <data name="InvalidSecurityCode" xml:space="preserve">
+    <value>Ugyldig sikkerhedskode</value>
+  </data>
+  <data name="InvalidUserNameOrPassword" xml:space="preserve">
+    <value>Ugyldigt brugernavn eller kodeord</value>
+  </data>
+  <data name="MainConnectionStringIsInvalid" xml:space="preserve">
+    <value>Hovedforbindelsestrengen er ugyldig</value>
+  </data>
+  <data name="NewOTPCreatedSuccessfully" xml:space="preserve">
+    <value>Ny OTP oprettet med succes</value>
+  </data>
+  <data name="ParamCreatedSuccessfully" xml:space="preserve">
+    <value>{0} oprettet med succes</value>
+  </data>
+  <data name="ParamDeletedSuccessfully" xml:space="preserve">
+    <value>{0} slettet korrekt</value>
+  </data>
+  <data name="ParamPairedSuccessfully" xml:space="preserve">
+    <value>{0} parret med succes</value>
+  </data>
+  <data name="ParamUpdatedSuccessfully" xml:space="preserve">
+    <value>{0} opdateret med succes</value>
+  </data>
+  <data name="PleaseSetupSecurityCode" xml:space="preserve">
+    <value>Indstil venligst sikkerhedskoden på serveren</value>
+  </data>
+  <data name="RequestFieldsAreNotFilled" xml:space="preserve">
+    <value>Påkrævede felter er ikke udfyldt</value>
+  </data>
+  <data name="RoleIsRequired" xml:space="preserve">
+    <value>Rolle er påkrævet</value>
+  </data>
+  <data name="SDKConnectionStringIsInvalid" xml:space="preserve">
+    <value>SDK-forbindelsesstrengen er ugyldig</value>
+  </data>
+  <data name="SearchableListCreationFailed" xml:space="preserve">
+    <value>Søgbar liste oprettelse mislykkedes</value>
+  </data>
+  <data name="SearchableListLoadingFailed" xml:space="preserve">
+    <value>Søgbar liste loading mislykkedes</value>
+  </data>
+  <data name="SelectableGroupLoadingFailed" xml:space="preserve">
+    <value>Valgbar gruppeindlæsning mislykkedes</value>
+  </data>
+  <data name="SelectableListCreationFailed" xml:space="preserve">
+    <value>Valgbar liste oprettelse mislykkedes</value>
+  </data>
+  <data name="SettingsUpdatedSuccessfully" xml:space="preserve">
+    <value>Indstillinger opdateret med succes</value>
+  </data>
+  <data name="SiteParamCouldNotBeDeleted" xml:space="preserve">
+    <value>Webstedet "{0}" kunne ikke slettes</value>
+  </data>
+  <data name="SiteParamCouldNotBeUpdated" xml:space="preserve">
+    <value>Websted med id {0} kunne ikke opdateres</value>
+  </data>
+  <data name="SiteParamDeletedSuccessfully" xml:space="preserve">
+    <value>Site "{0}" slettes med succes</value>
+  </data>
+  <data name="SiteParamNotFound" xml:space="preserve">
+    <value>Websted med id {0} ikke fundet</value>
+  </data>
+  <data name="SiteWithIdCouldNotBeDeleted" xml:space="preserve">
+    <value>Arbejdsgiver med id {0} kunne ikke slettes</value>
+  </data>
+  <data name="TagDeletedSuccessfully" xml:space="preserve">
+    <value>Tag slettet korrekt</value>
+  </data>
+  <data name="TagParamCreatedSuccessfully" xml:space="preserve">
+    <value>Tag "{0}" oprettet med succes</value>
+  </data>
+  <data name="TemplateTagUpdatedSuccessfully" xml:space="preserve">
+    <value>Skabelonetiketter blev opdateret med succes</value>
+  </data>
+  <data name="UnitParamOTPCouldNotCompleted" xml:space="preserve">
+    <value>Enhed "{0}" OTP-anmodning kunne ikke udfyldes</value>
+  </data>
+  <data name="UserNameOrPasswordIncorrect" xml:space="preserve">
+    <value>Brugernavn eller adgangskode er forkert</value>
+  </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>Bruger ikke fundet</value>
+  </data>
+  <data name="UserNotFoundUserName" xml:space="preserve">
+    <value>Bruger {0} ikke fundet</value>
+  </data>
+  <data name="UserParamWasDeleted" xml:space="preserve">
+    <value>Bruger {0} blev slettet</value>
+  </data>
+  <data name="UserUserNameAlreadyExist" xml:space="preserve">
+    <value>Bruger {0} eksisterer allerede</value>
+  </data>
+  <data name="UserUserNameWasCreated" xml:space="preserve">
+    <value>Bruger {0} blev oprettet</value>
+  </data>
+  <data name="UserUserNameWasUpdated" xml:space="preserve">
+    <value>Bruger {0} blev opdateret</value>
+  </data>
+  <data name="WorkerParamCantBeDeted" xml:space="preserve">
+    <value>Arbejder "{0 {1}" kan ikke slettes</value>
+  </data>
+  <data name="WorkerParamCantBeUpdated" xml:space="preserve">
+    <value>Arbejder med id {0} kan ikke opdateres</value>
+  </data>
+  <data name="WorkerParamDeletedSuccessfully" xml:space="preserve">
+    <value>Arbejder "{0} {1}" slettes med succes</value>
+  </data>
+  <data name="WorkerParamWasUpdated" xml:space="preserve">
+    <value>Arbejdsgiver med id {0} blev opdateret</value>
+  </data>
+  <data name="WorkerWasSuccessfullyCreated" xml:space="preserve">
+    <value>Arbejderen blev oprettet med succes</value>
+  </data>
+  <data name="YouNeedToBuyMoreLicenses" xml:space="preserve">
+    <value>Du skal købe flere licenser til yderligere enheder, der skal tilføjes.</value>
+  </data>
+  <data name="YourEmailPasswordHasBeenReset" xml:space="preserve">
+    <value>Din email: {0}. Adgangskoden er blevet nulstillet.</value>
+  </data>
+</root>

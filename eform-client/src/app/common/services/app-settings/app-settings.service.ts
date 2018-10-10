@@ -59,4 +59,7 @@ export class AppSettingsService extends BaseService {
   resetHeaderSettings(): Observable<OperationResult> {
     return this.get(SettingsMethods.ResetHeaderSettings);
   }
+  getOneAdminSetting(attribute: string): Observable<OperationDataResult<AdminSettingsModel>> {
+    return this.get<AdminSettingsModel>(SettingsMethods.GetAdminSettings, attribute);
+  }
 }
