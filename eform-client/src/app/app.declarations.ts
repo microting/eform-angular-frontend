@@ -1,4 +1,5 @@
 import {DatePipe, LocationStrategy, PathLocationStrategy} from '@angular/common';
+import {CookieService} from 'ngx-cookie-service';
 import {ToastrService} from 'ngx-toastr';
 import {AdminGuard, AuthGuard, CanDeactivateGuard} from 'src/app/common/guards';
 import {EventBrokerService} from 'src/app/common/helpers';
@@ -24,6 +25,7 @@ export let providers = [
   CanDeactivateGuard,
   // Libs services
   ToastrService,
+  CookieService,
   // Services
   AuthService,
   LocaleService,

@@ -1,1 +1,16 @@
-<ng-datepicker [(ngModel)]="fieldValueObj.value"></ng-datepicker>
+<div class="md-form md-form-case-elem" [owlDateTimeTrigger]="dt1">
+  <i class="material-icons prefix">
+    calendar_today
+  </i>
+  <input mdbInputDirective
+         [owlDateTime]="dt1"
+         [mdbValidate]="false"
+         [(ngModel)]="fieldValueObj.value"
+         (dateTimeChange)="onDateSelected($event)"
+         type="text" id="dateElement{{fieldValueObj.fieldId}}"
+         name="dateElement{{fieldValueObj.fieldId}}" class="form-control">
+  <label for="dateElement{{fieldValueObj.fieldId}}">{{'Selected date' | translate}}</label>
+</div>
+
+<owl-date-time
+  [pickerType]="'calendar'" #dt1></owl-date-time>

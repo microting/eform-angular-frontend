@@ -10,6 +10,7 @@ import {AdminService} from 'src/app/common/services/users';
   templateUrl: './users-page.component.html',
 })
 export class UsersPageComponent implements OnInit {
+
   isChecked = true;
   @ViewChild('userEditModal') userEditModal;
   @ViewChild('removeUserModal') removeUserModal;
