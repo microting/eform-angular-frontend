@@ -2,16 +2,16 @@
 @import "lib/lightbox";
 
 gallery {
-  background: #e2e2e2;
+  background: #e2e2e2 !important;
 }
 
 .g-backdrop {
-  background-color: #e2e2e2;
+  background-color: #e2e2e2 !important;
 }
 
 
-  gallery-image .g-image-item {
-    background-size: contain;
-    background-repeat: no-repeat;
-  }
+gallery-image .g-image-item {
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+}
 
