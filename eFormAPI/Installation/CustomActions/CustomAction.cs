@@ -190,7 +190,7 @@ namespace CustomActions
                 if (session.CustomActionData["INSTMODE"] != "Install")
                     return ActionResult.Success;
 
-                ResetProgressBar(session, 10);
+                ResetProgressBar(session, 11);
 
                 var configurationExists = session.CustomActionData["CONFIGURATIONEXISTS"] == "1";
                 var useExistingConfiguration = session.CustomActionData["USEEXISTINGCONFIGURATION"] == "1";
@@ -265,6 +265,59 @@ namespace CustomActions
                 MessageBox.Show(ex.Message + " " + ex.StackTrace);
                 return ActionResult.Failure;
             }
+        }
+
+        private static void BackupPluginSettings(Session session, string installFolder)
+        {
+            var tmpConfigs = Path.Combine("c:\\", "MicrotingTemp");
+            Directory.CreateDirectory(tmpConfigs);
+            Directory.CreateDirectory(Path.Combine(tmpConfigs, "plugin_modules"));
+
+            // plugins.routing.ts
+            var src = Path.Combine(installFolder, "src\\app\\plugins\\plugins.routing.ts");
+            session.Log("BackupPluginSettings src is : " + src.ToString());
+            File.Copy(src, Path.Combine(tmpConfigs, "plugins.routing.ts"), true);
+
+            string[] dirs = Directory.GetDirectories(Path.Combine(installFolder, "src\\app\\plugins\\modules\\"));
+
+            foreach (string dir in dirs)
+            {
+                string folder = dir.Split(Path.DirectorySeparatorChar).Last();
+                if (folder != "example-pn" && folder != "shared")
+                {
+                    DirectoryCopy(dir, Path.Combine(tmpConfigs, "plugin_modules", folder), true);
+                }                
+            }
+
+            // navigation.component.ts
+            src = Path.Combine(installFolder, "src\\app\\components\\navigation\\navigation.component.ts");
+            session.Log("BackupPluginSettings src is : " + src.ToString());
+            File.Copy(src, Path.Combine(tmpConfigs, "navigation.component.ts"), true);
+
+        }
+
+        private static void RestorePluginSettings(Session session, string installFolder)
+        {
+            var tmpConfigs = Path.Combine("c:\\", "MicrotingTemp");
+
+            // plugins.routing.ts
+            var dst = Path.Combine(installFolder, "src\\app\\plugins\\plugins.routing.ts");
+            session.Log("RestorePluginSettings src is : " + dst.ToString());
+            File.Copy(Path.Combine(tmpConfigs, "plugins.routing.ts"), dst, true);
+
+
+            string[] dirs = Directory.GetDirectories(Path.Combine(tmpConfigs, "plugin_modules"));
+
+            foreach (string dir in dirs)
+            {
+                string folder = dir.Split(Path.DirectorySeparatorChar).Last();
+                DirectoryCopy(dir, Path.Combine(installFolder, "src\\app\\plugins\\modules\\", folder), true);
+            }
+
+            // navigation.component.ts
+            dst = Path.Combine(installFolder, "src\\app\\components\\navigation\\navigation.component.ts");
+            session.Log("RestorePluginSettings src is : " + dst.ToString());
+            File.Copy(Path.Combine(tmpConfigs, "navigation.component.ts"), dst, true);
         }
 
         private static void HandlePreviousConfigs(Session session, string installFolder)
@@ -349,6 +402,7 @@ namespace CustomActions
                 } catch { }
                 try
                 {
+                    BackupPluginSettings(session, uiIisDir);
                     DeleteDirectory(Path.Combine(uiIisDir, "src"));
                 } catch { }
 
@@ -360,6 +414,7 @@ namespace CustomActions
                 IncrementProgressBar(session);
 
                 session.Log("Build Angullar app task started");
+                RestorePluginSettings(session, uiIisDir);
                 BuildAngularApp(uiIisDir);
                 IncrementProgressBar(session);
 

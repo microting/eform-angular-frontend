@@ -27,7 +27,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-danger" id="saveEditBtn"
+        <button class="btn btn-success" id="saveEditBtn"
                 [disabled]="!selectedDeviceUser.userFirstName || !selectedDeviceUser.userLastName"
                 (click)="updateSingle()">{{'Save' | translate}}</button>
         <button id="cancelEditBtn" class="btn btn-accent text-black-50" (click)="frame.hide()">

@@ -15,6 +15,9 @@
           <ng-container *ngSwitchCase="'Number'">
             <element-number [(fieldValue)]="dataItem.fieldValues[0]"></element-number>
           </ng-container>
+          <ng-container *ngSwitchCase="'NumberStepper'">
+            <element-number-stepper [(fieldValue)]="dataItem.fieldValues[0]"></element-number-stepper>
+          </ng-container>
           <ng-container *ngSwitchCase="'Comment'">
             <element-comment [(fieldValue)]="dataItem.fieldValues[0]">></element-comment>
           </ng-container>
