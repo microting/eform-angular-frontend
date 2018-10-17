@@ -30,6 +30,7 @@ export class CaseEditComponent implements OnInit, OnDestroy {
   isSaveClicked = false;
 
   spinnerStatus = false;
+  reverseRoute: string;
 
   constructor(private activateRoute: ActivatedRoute,
               private casesService: CasesService,
@@ -38,6 +39,9 @@ export class CaseEditComponent implements OnInit, OnDestroy {
     const activatedRouteSub = this.activateRoute.params.subscribe(params => {
       this.id = +params['id'];
       this.templateId = +params['templateId'];
+    });
+    this.activateRoute.queryParams.subscribe(params => {
+      this.reverseRoute = params['reverseRoute'];
     });
   }
 
@@ -77,7 +81,11 @@ export class CaseEditComponent implements OnInit, OnDestroy {
         this.spinnerStatus = false;
         this.isNoSaveExitAllowed = true;
         if (this.isSaveClicked) {
-          this.router.navigate(['/cases/', this.currentTemplate.id]).then();
+          if (!this.reverseRoute) {
+            this.router.navigate(['/cases/', this.currentTemplate.id]).then();
+          } else {
+            this.router.navigate([this.reverseRoute]);
+          }
         }
       }
       this.spinnerStatus = false;
@@ -107,6 +115,7 @@ export class CaseEditComponent implements OnInit, OnDestroy {
       this.saveCase();
     } else {
       this.isNoSaveExitAllowed = true;
+      this.router.navigate([this.reverseRoute]).then();
     }
   }
 
