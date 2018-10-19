@@ -143,7 +143,7 @@ namespace eFormAPI.Web.Controllers
                 {
                     mappedEntityGroupDict.Add(new CommonDictionaryTextModel()
                     {
-                        Id = entityGroupItem.MicrotingUUID,
+                        Id = entityGroupItem.Id.ToString(),
                         Text = entityGroupItem.Name
                     });
                 }
