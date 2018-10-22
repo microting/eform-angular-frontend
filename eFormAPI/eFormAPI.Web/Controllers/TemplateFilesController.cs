@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
-using System.IO.Compression;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
+using ICSharpCode.SharpZipLib.Zip;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -214,7 +214,7 @@ namespace eFormAPI.Web.Controllers
                 Directory.CreateDirectory(zipArchiveFolder);
                 if (uploadModel.File.Length > 0)
                 {
-                    var filePath = Path.Combine(saveFolder, Path.GetFileName(uploadModel.File.FileName));
+                    var filePath = Path.Combine(zipArchiveFolder, Path.GetFileName(uploadModel.File.FileName));
                     if (!System.IO.File.Exists(filePath))
                     {
                         using (var stream = new FileStream(filePath, FileMode.Create))
@@ -234,51 +234,16 @@ namespace eFormAPI.Web.Controllers
                         {
                             FoldersHelper.ClearFolder(extractPath);
                         }
-
-                        ZipFile.ExtractToDirectory(filePath, extractPath);
+                        // extract
+                        var fastZip = new FastZip();
+                        // Will always overwrite if target filenames already exist
+                        fastZip.ExtractZip(filePath, extractPath, null);
+                        //ZipFile.ExtractToDirectory(filePath, extractPath);
                         System.IO.File.Delete(filePath);
                         await _coreHelper.Bus.SendLocal(new GenerateJasperFiles(templateId));
                         return Ok();
                     }
                 }
-
-
-
-                //var files = _httpContextAccessor.HttpContext.Request.Form.Files;
-                //if (files.Count > 0)
-                //{
-                //    var httpPostedFile = files[0];
-                //    if (httpPostedFile.Length > 0)
-                //    {
-                //        var filePath = Path.Combine(zipArchiveFolder, Path.GetFileName(httpPostedFile.FileName));
-                //        
-                //        if (System.IO.File.Exists(filePath))
-                //        {
-                //            System.IO.File.Delete(filePath);
-                //        }
-                //        httpPostedFile.SaveAs(filePath);
-                //        if (System.IO.File.Exists(filePath))
-                //        {
-                //            Directory.CreateDirectory(extractPath);
-                //            FoldersHelper.ClearFolder(extractPath);
-
-                //            using (var zip = ZipFile.Read(filePath))
-                //            {
-                //                foreach (var entry in zip.Entries)
-                //                {
-                //                    if (entry.FileName.Contains(".png") || entry.FileName.Contains("jrxml"))
-                //                    {
-                //                        entry.Extract(extractPath);
-                //                    }
-                //                }
-                //            }
-                //            System.IO.File.Delete(filePath);
-                //            await _coreHelper.Bus.SendLocal(new GenerateJasperFiles(templateId));
-
-                //            return Ok();
-                //        }
-                //    }
-                //}
                 return BadRequest(_localizationService.GetString("InvalidRequest"));
             }
             catch (Exception)
