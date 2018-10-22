@@ -19,6 +19,7 @@
   <ItemGroup>
     <PackageReference Include="Automapper" Version="6.1.0" />
     <PackageReference Include="Microting.eFormApi.BasePn" Version="1.1.36" />
+    <PackageReference Include="SharpZipLib.NETStandard" Version="1.0.7" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0005" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0" />
     <PackageReference Include="McMaster.NETCore.Plugins" Version="0.1.1" />
