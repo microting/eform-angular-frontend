@@ -19,7 +19,9 @@ namespace eFormAPI.Web.Hosting.Helpers
             var loaders = new List<PluginLoader>();
             var plugins = new List<IEformPlugin>();
             // create plugin loaders
-            var pluginsDir = Path.Combine(Directory.GetCurrentDirectory(), "Plugins");
+            Console.ForegroundColor = ConsoleColor.Green;
+            string pluginsDir = Path.Combine(Directory.GetCurrentDirectory(), "Plugins");
+            Console.WriteLine($"Trying to discover plugins in folder : {pluginsDir}");
             if (!Directory.Exists(pluginsDir))
             {
                 try
@@ -35,13 +37,15 @@ namespace eFormAPI.Web.Hosting.Helpers
             //   var assemblies = new List<Assembly>();
             var directories = Directory.EnumerateDirectories(pluginsDir);
 
-            foreach (var directory in directories)
+            foreach (string directory in directories)
             {
-                var pluginList = Directory.GetFiles(directory)
+                List<string> pluginList = Directory.GetFiles(Path.Combine(directory, "netcoreapp2.1"))
                     .Where(x => x.EndsWith("Pn.dll") && Path.GetFileName(x) != "eFormApi.BasePn.dll")
                     .ToList();
 
-                foreach (var pluginFile in pluginList)
+                Console.WriteLine($"{pluginList.Count} number of plugins found");
+
+                foreach (string pluginFile in pluginList)
                 {
                     var loader = PluginLoader.CreateFromAssemblyFile(pluginFile,
                         // this ensures that the plugin resolves to the same version of DependencyInjection
@@ -59,7 +63,7 @@ namespace eFormAPI.Web.Hosting.Helpers
                         .GetTypes()
                         .Where(t => typeof(IEformPlugin).IsAssignableFrom(t) && !t.IsAbstract))
                     {
-                        Console.WriteLine("Found plugin " + type.Name);
+                        Console.WriteLine("Found plugin : " + type.Name);
                         var plugin = (IEformPlugin) Activator.CreateInstance(type);
                         plugins.Add(plugin);
                     }
@@ -70,6 +74,7 @@ namespace eFormAPI.Web.Hosting.Helpers
                     loaders.Add(loader);
                 }
             }
+            Console.ForegroundColor = ConsoleColor.Gray;
 
 
             //// Create an instance of plugin types

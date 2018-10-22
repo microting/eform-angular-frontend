@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -45,13 +46,16 @@ namespace eFormAPI.Web.Hosting.Extensions
             });
         }
 
-        public static void UseEFormPlugins(this IApplicationBuilder app, 
-            List<IEformPlugin> plugins)
+        public static void UseEFormPlugins(this IApplicationBuilder app, List<IEformPlugin> plugins)
         {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"Trying to load plugins, found : {plugins.Count}");
             foreach (var plugin in plugins)
             {
+                Console.WriteLine($"Loading plugin : {plugin.GetName()}");
                 plugin.Configure(app);
             }
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
 
         public static void UseEFormLocalization(this IApplicationBuilder app)
