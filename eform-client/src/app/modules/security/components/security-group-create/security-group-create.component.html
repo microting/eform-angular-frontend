@@ -1,7 +1,7 @@
 <eform-page-subheader [title]="'Create Security Group' | translate">
   <div class="p-3">
     <button
-      class="btn btn-success" [disabled]="!securityGroupUpdateModel.name"
+      class="btn btn-success" [disabled]="!securityGroupCreateModel.name"
       (click)="createSecurityGroup()"
       mdbTooltip="{{ 'Create Group' | translate }}" id="newSecurityGroupBtn">{{ 'Create' | translate }}
     </button>
@@ -13,7 +13,7 @@
     <div class="col-md-2 col-xs-12">
       <div class="md-form">
         <input mdbInputDirective [mdbValidate]="false"
-               type="text" [(ngModel)]="securityGroupUpdateModel.name"
+               type="text" [(ngModel)]="securityGroupCreateModel.name"
                class="form-control input-sm" id="groupNameCreateInput">
         <label for="groupNameCreateInput">{{'Group Name' | translate}}</label>
       </div>
