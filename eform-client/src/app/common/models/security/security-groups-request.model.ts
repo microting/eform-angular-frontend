@@ -4,4 +4,12 @@ export class SecurityGroupsRequestModel {
   pageSize: number;
   isSortDsc: boolean;
   offset: number;
+
+  constructor() {
+    this.nameFilter = '';
+    this.pageIndex = 1;
+    this.pageSize = 10;
+    this.isSortDsc = false;
+    this.offset = 0;
+  }
 }
