@@ -8,7 +8,7 @@ export class SecurityGroupsRequestModel {
   constructor() {
     this.nameFilter = '';
     this.pageIndex = 1;
-    this.pageSize = 10;
+    this.pageSize = 5;
     this.isSortDsc = false;
     this.offset = 0;
   }
