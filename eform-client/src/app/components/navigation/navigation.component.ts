@@ -75,6 +75,11 @@ export class NavigationComponent implements OnInit {
             link: '/account-management/settings'
           },
           {
+            name: this.translateService.instant('Security'),
+            e2eId: 'security',
+            link: '/security'
+          },
+          {
             name: this.translateService.instant('Change password'),
             e2eId: 'change-password',
             link: '/account-management/change-password'

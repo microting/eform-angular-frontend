@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
 import {EventBrokerService} from 'src/app/common/helpers';
 import {HeaderSettingsModel} from 'src/app/common/models/settings';
 import {AppSettingsService} from 'src/app/common/services/app-settings';
@@ -13,7 +14,9 @@ export class HeaderComponent implements OnInit {
   logoImage: any;
 
   private brokerListener: any;
-  constructor(private eventBrokerService: EventBrokerService, private settingsService: AppSettingsService) {
+  constructor(private eventBrokerService: EventBrokerService,
+              private settingsService: AppSettingsService,
+              private router: Router) {
     this.brokerListener = eventBrokerService.listen<void>('get-header-settings',
       () => {
         this.getSettings();
@@ -44,6 +47,7 @@ export class HeaderComponent implements OnInit {
         this.headerSettingsModel.secondaryTextVisible = true;
         this.headerSettingsModel.mainText = 'Microting eForm';
         this.headerSettingsModel.secondaryText = 'No more paper-forms and back-office data entry';
+        this.router.navigate(['/application-settings/connection-string']).then();
       }
     });
   }

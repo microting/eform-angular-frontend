@@ -185,7 +185,16 @@
   "Cases": "Cases",
   "Vehicles": "Vehicles",
   "Calendar": "Calendar",
-  "Case Management": "Case Management"
+  "Case Management": "Case Management",
+
+  "Security": "Security",
+  "Security Groups": "Security Groups",
+  "Group name": "Group name",
+  "Users amount": "Users amount",
+  "Edit Group": "Edit Group",
+  "Permissions": "Permissions",
+  "Delete Group": "Delete Group"
+
 }
 
 
