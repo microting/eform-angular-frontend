@@ -8,17 +8,17 @@
 </eform-page-subheader>
 
 <div class="container-fluid">
-  <div class="row p-1 mt-2 table-responsive no-gutters">
-    <div class="row pl-1">
-      <div class="col-md-2">
-        <div class="md-form">
-          <input mdbInputDirective [mdbValidate]="false"
-                 type="text" (input)="onLabelInputChanged($event.target.value)"
-                 class="form-control input-sm" id="searchInput">
-          <label for="searchInput">{{'Search' | translate}}</label>
-        </div>
+  <div class="row pl-1">
+    <div class="col-md-2">
+      <div class="md-form">
+        <input mdbInputDirective [mdbValidate]="false"
+               type="text" (input)="onLabelInputChanged($event.target.value)"
+               class="form-control input-sm" id="searchInput">
+        <label for="searchInput">{{'Search' | translate}}</label>
       </div>
     </div>
+  </div>
+  <div class="row p-1 mt-2 table-responsive no-gutters">
     <table class="table table-sm table-striped text-center z-depth-1">
       <thead>
       <tr>
@@ -29,7 +29,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let securityGroup of securityGroups">
+      <tr *ngFor="let securityGroup of securityGroups.securityGroupList">
         <td scope="row">
           {{securityGroup.id}}
         </td>
@@ -37,11 +37,13 @@
           {{securityGroup.name}}
         </td>
         <td>
-          {{securityGroup.usersAmount}}
+          {{securityGroup.userAmount}}
         </td>
         <td>
           <div class="d-flex flex-row justify-content-center">
-            <button class="btn btn-accent text-black-50 btn-icon mb-2 " mdbTooltip="{{'Edit Group' | translate}}">
+            <button class="btn btn-accent text-black-50 btn-icon mb-2"
+                    [routerLink]="['update-group', securityGroup.id]"
+                    mdbTooltip="{{'Edit Group' | translate}}">
               <i class="material-icons">
                 edit
               </i>

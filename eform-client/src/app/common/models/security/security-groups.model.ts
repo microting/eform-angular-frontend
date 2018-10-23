@@ -8,6 +8,6 @@ export class SecurityGroupsModel {
 export class SecurityGroupModel {
   id: number;
   name: string;
-  usersAmount: number;
+  userAmount: number;
   usersList: Array<SecurityGroupUserModel> = [];
 }

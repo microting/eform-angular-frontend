@@ -10,13 +10,14 @@ import {
 import {SecurityGroupsService, AdminService} from 'src/app/common/services';
 
 @Component({
-  selector: 'app-security-group-create',
+  selector: 'app-security-group-update',
   templateUrl: './security-group-update.component.html',
   styleUrls: ['./security-group-update.component.scss']
 })
 export class SecurityGroupUpdateComponent implements OnInit {
   securityGroupModel: SecurityGroupModel = new SecurityGroupModel();
   securityGroupUpdateModel: SecurityGroupUpdateModel = new SecurityGroupUpdateModel();
+  selectedGroupId: number;
   spinnerStatus = false;
   paginationModel = new PaginationModel(1, 1000, 0);
   users: UserInfoModelList = new UserInfoModelList();
@@ -27,12 +28,13 @@ export class SecurityGroupUpdateComponent implements OnInit {
               private route: ActivatedRoute
   ) {
     this.route.params.subscribe(params => {
-      this.getSecurityGroup(params['id']);
+      this.selectedGroupId = params['id'];
+      this.getSecurityGroup(this.selectedGroupId);
     });
   }
 
   ngOnInit() {
-    this.getUsers();
+
   }
 
   getSecurityGroup(id: number) {
@@ -40,6 +42,7 @@ export class SecurityGroupUpdateComponent implements OnInit {
     this.securityGroupsService.getSecurityGroup(id).subscribe((data) => {
       if (data && data.success) {
         this.securityGroupModel = data.model;
+        this.getUsers();
       }
       this.spinnerStatus = false;
     });
@@ -50,9 +53,12 @@ export class SecurityGroupUpdateComponent implements OnInit {
     this.adminService.getAllUsers(this.paginationModel).subscribe((data) => {
       if (data && data.success) {
         this.users = data.model;
+        this.users.userList =
+          this.users.userList.filter(y => !this.securityGroupModel.usersList.some(x => x.id === y.id));
       }
       this.spinnerStatus = false;
     });
+
   }
 
   addUserToGroup(usersSelector: NgSelectComponent) {
@@ -77,6 +83,8 @@ export class SecurityGroupUpdateComponent implements OnInit {
   updateSecurityGroup() {
     this.spinnerStatus = true;
     this.securityGroupUpdateModel.userIds = this.securityGroupModel.usersList.map(x => x.id);
+    this.securityGroupUpdateModel.id = this.selectedGroupId;
+    this.securityGroupUpdateModel.name = this.securityGroupModel.name;
     this.securityGroupsService.updateSecurityGroup(this.securityGroupUpdateModel).subscribe(() => {
       this.spinnerStatus = false;
       this.router.navigate(['/security']);
