@@ -4,7 +4,9 @@ using System.IO;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Hosting.Extensions;
 using eFormAPI.Web.Hosting.Helpers;
+using eFormAPI.Web.Infrastructure.Database;
 using eFormAPI.Web.Services;
+using eFormAPI.Web.Services.Security;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -193,6 +195,9 @@ namespace eFormAPI.Web
             services.AddScoped<IAdminService, AdminService>();
             services.AddScoped<ISettingsService, SettingsService>();
             services.AddScoped<ITemplatesService, TemplatesService>();
+            services.AddScoped<ISecurityGroupService, SecurityGroupService>();
+
+            
         }
     }
 }

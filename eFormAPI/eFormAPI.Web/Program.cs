@@ -1,6 +1,12 @@
-﻿using Microsoft.AspNetCore;
+﻿using System;
+using eFormAPI.Web.Infrastructure.Database;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace eFormAPI.Web
 {
@@ -9,6 +15,19 @@ namespace eFormAPI.Web
         public static void Main(string[] args)
         {
             var host = BuildWebHost(args);
+            using (var scope = host.Services.GetService<IServiceScopeFactory>().CreateScope())
+            using (var dbContext = scope.ServiceProvider.GetRequiredService<BaseDbContext>())
+            {
+                try
+                {
+                    dbContext.Database.Migrate();
+                }
+                catch (Exception e)
+                {
+                    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(e, "Error while migrating db");
+                }
+            }
             host.Run();
         }
 
