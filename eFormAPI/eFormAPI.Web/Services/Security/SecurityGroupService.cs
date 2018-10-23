@@ -49,6 +49,11 @@ namespace eFormAPI.Web.Services.Security
                         .OrderBy(x => x.Id);
                 }
 
+                if (!string.IsNullOrEmpty(requestModel.NameFilter))
+                {
+                    securityGroupsQuery = securityGroupsQuery.Where(x => x.Name.Contains(requestModel.NameFilter));
+                }
+
                 securityGroupsQuery = securityGroupsQuery
                     .Skip(requestModel.Offset)
                     .Take(requestModel.PageSize);
