@@ -23,28 +23,6 @@ import {
   FullLayoutComponent,
 } from './components';
 
-
-
-// const routes = [{
-//   path: '',
-//   component: FullLayoutComponent,
-//   children: [
-//     {path: '', component: BareboneComponent},
-//     {path: 'application-settings', component: SettingsComponent},
-//     {path: 'account-management/settings', component: ProfileSettingsComponent},
-//     {path: 'account-management/change-password', component: ChangePasswordComponent},
-//     {path: 'account-management/users', component: UsersPageComponent},
-//     {path: 'simplesites', component: DeviceUsersPageComponent},
-//     {path: 'dbsetup', component: DatabaseSetupComponent}
-//     ]},
-//   {
-//     path: '',
-//     component: SimpleLayoutComponent,
-//     children: [
-//       {path: 'auth', component: AuthComponent}]
-//   }];
-
-
 @NgModule({
   declarations: [
     // Layouts

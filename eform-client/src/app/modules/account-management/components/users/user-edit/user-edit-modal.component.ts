@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {SecurityGroupsModel} from 'src/app/common/models/security';
 import {UserRegisterModel} from 'src/app/common/models/user';
 import {AdminService} from 'src/app/common/services/users';
 
@@ -9,6 +10,7 @@ import {AdminService} from 'src/app/common/services/users';
 })
 export class UserEditModalComponent implements OnInit {
   @ViewChild('frame') frame;
+  @Input() availableGroups: SecurityGroupsModel = new SecurityGroupsModel();
   @Output() onUserUpdated: EventEmitter<void> = new EventEmitter<void>();
   selectedUserModel: UserRegisterModel = new UserRegisterModel;
   newUserModel: UserRegisterModel = new UserRegisterModel;
