@@ -128,6 +128,35 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
+        [Route("api/selectable-groups/get/{entityGroupUid}/token={token}")]
+        public OperationDataResult<EntityGroup> GetEntityGroupExternally(string entityGroupUid, string token)
+        {
+            // Do some validation of the token. For now token is not valid
+            bool tokenIsValid = false;
+            if (tokenIsValid)
+            {
+                try
+                {
+                    var core = _coreHelper.GetCore();
+
+                    var entityGroup = core.EntityGroupRead(entityGroupUid);
+
+                    return new OperationDataResult<EntityGroup>(true, entityGroup);
+                }
+                catch (Exception)
+                {
+                    return new OperationDataResult<EntityGroup>(false,
+                        LocaleHelper.GetString("ErrorWhileObtainSelectableList"));
+                }
+            } else
+            {
+                return new OperationDataResult<EntityGroup>(false,
+                    LocaleHelper.GetString("ErrorWhileObtainSelectableList"));
+            }            
+        }
+
+        [HttpGet]
         [Route("api/selectable-groups/dict/{entityGroupUid}")]
         public OperationDataResult<List<CommonDictionaryTextModel>> GetEntityGroupDictionary(string entityGroupUid)
         {
