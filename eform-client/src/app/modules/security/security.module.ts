@@ -33,8 +33,7 @@ import {
     SecurityGroupUpdateComponent,
     SecurityGroupGeneralPermissionsComponent,
     SecurityGroupEformsPermissionsComponent
-  ],
-  providers: [SecurityGroupsService]
+  ]
 })
 export class SecurityModule {
 }

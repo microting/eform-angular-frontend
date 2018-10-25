@@ -77,8 +77,12 @@
 
 <eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>
 
-<app-user-edit-modal (onUserUpdated)="getUserInfoList()" #userEditModal></app-user-edit-modal>
-<app-new-user-modal (onUserCreated)="getUserInfoList()" #newUserModal></app-new-user-modal>
+<app-user-edit-modal (onUserUpdated)="getUserInfoList()"
+                     [availableGroups]="securityGroups"
+                     #userEditModal></app-user-edit-modal>
+<app-new-user-modal (onUserCreated)="getUserInfoList()"
+                    [availableGroups]="securityGroups"
+                    #newUserModal></app-new-user-modal>
 <app-remove-user-modal [selectedUser]="selectedUser"
                        (onUserDeleted)="getUserInfoList()" #removeUserModal></app-remove-user-modal>
 <!--<app-create-eform-modal #modalNewEform></app-create-eform-modal>-->

@@ -4,6 +4,6 @@ export class UserRegisterModel {
   lastName: string;
   email: string;
   password: string;
-  role: string;
+  groupId: number;
   userName: string;
 }

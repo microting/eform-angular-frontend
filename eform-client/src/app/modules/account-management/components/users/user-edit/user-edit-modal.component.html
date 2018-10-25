@@ -9,27 +9,6 @@
           <form #editForm="ngForm">
             <div class="row">
               <div class="col-md-6">
-                <ng-select required
-                           bindLabel="value"
-                           bindValue="id"
-                           [(ngModel)]="selectedUserModel.role" name="editRole"
-                           [placeholder]="'Role' | translate"
-                           [items]="[{id: 'admin', value: 'Admin'}, {id: 'user', value: 'User'}]"></ng-select>
-              </div>
-              <div class="col-md-6">
-                <div class="md-form">
-                  <input mdbInputDirective
-                         [mdbValidate]="false"
-                         class="form-control"
-                         #createPassword="ngModel" type="text"
-                         [(ngModel)]="selectedUserModel.password" id="editPassword"
-                         name="editPassword">
-                  <label for="editPassword">{{'Password' | translate}}</label>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
                 <div class="md-form">
                   <input mdbInputDirective
                          [mdbValidate]="false"
@@ -70,6 +49,27 @@
                          [(ngModel)]="selectedUserModel.lastName"
                          name="editLastName" id="editLastName">
                   <label for="editLastName">{{ 'Last Name' | translate }}</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 ng-select-wrapper">
+                <ng-select required
+                           bindLabel="name"
+                           bindValue="id"
+                           [(ngModel)]="selectedUserModel.groupId" name="editGroup"
+                           [placeholder]="'Group' | translate"
+                           [items]="availableGroups.securityGroupList"></ng-select>
+              </div>
+              <div class="col-md-6">
+                <div class="md-form">
+                  <input mdbInputDirective
+                         [mdbValidate]="false"
+                         class="form-control"
+                         #createPassword="ngModel" type="text"
+                         [(ngModel)]="selectedUserModel.password" id="editPassword"
+                         name="editPassword">
+                  <label for="editPassword">{{'Password' | translate}}</label>
                 </div>
               </div>
             </div>
