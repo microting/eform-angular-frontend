@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -48,11 +51,32 @@ namespace eFormAPI.Web.Hosting.Extensions
                     new SymmetricSecurityKey(
                         Encoding.UTF8.GetBytes(configuration["EformTokenOptions:SigningKey"]))
             };
-            services.AddAuthentication()
+            services.AddAuthentication((cfg =>
+                {
+                    cfg.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    cfg.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    cfg.DefaultForbidScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+
+                }))
                 .AddCookie(cfg =>
                 {
                     cfg.SlidingExpiration = true;
                     cfg.ExpireTimeSpan = TimeSpan.FromHours(10);
+                    cfg.Events.OnRedirectToLogin = context =>
+                    {
+                        context.Response.StatusCode = 401;
+                        return Task.CompletedTask;
+                    };
+                    cfg.Events.OnRedirectToAccessDenied = context =>
+                    {
+                        context.Response.StatusCode = 403;
+                        return Task.CompletedTask;
+                    };
+                    cfg.Events.OnRedirectToReturnUrl = context =>
+                    {
+                        context.Response.StatusCode = 403;
+                        return Task.CompletedTask;
+                    };
                 })
                 .AddJwtBearer(cfg =>
                 {

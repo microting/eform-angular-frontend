@@ -72,6 +72,7 @@ namespace eFormAPI.Web
                 // User settings
                 options.User.RequireUniqueEmail = true;
             });
+
             // Authentication
             services.AddEFormAuth(Configuration);
             // Localiation
