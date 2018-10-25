@@ -10,7 +10,7 @@ import {
   LoginComponent,
   ResetAdminPasswordComponent,
   RestorePasswordComponent, SignOutComponent,
-  AuthComponent
+  AuthComponent, RestorePasswordConfirmationComponent
 } from './components';
 
 @NgModule({
@@ -26,6 +26,7 @@ import {
   declarations: [
     LoginComponent,
     RestorePasswordComponent,
+    RestorePasswordConfirmationComponent,
     GoogleAuthenticatorComponent,
     ResetAdminPasswordComponent,
     SignOutComponent,
