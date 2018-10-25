@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using eFormAPI.Web.Infrastructure;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -9,7 +12,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microting.eFormApi.BasePn;
-using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers.WritableOptions;
 using Newtonsoft.Json.Serialization;
 
@@ -50,11 +52,31 @@ namespace eFormAPI.Web.Hosting.Extensions
                     new SymmetricSecurityKey(
                         Encoding.UTF8.GetBytes(configuration["EformTokenOptions:SigningKey"]))
             };
-            services.AddAuthentication()
+            services.AddAuthentication((cfg =>
+                {
+                    cfg.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    cfg.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    cfg.DefaultForbidScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                }))
                 .AddCookie(cfg =>
                 {
                     cfg.SlidingExpiration = true;
                     cfg.ExpireTimeSpan = TimeSpan.FromHours(10);
+                    cfg.Events.OnRedirectToLogin = context =>
+                    {
+                        context.Response.StatusCode = 401;
+                        return Task.CompletedTask;
+                    };
+                    cfg.Events.OnRedirectToAccessDenied = context =>
+                    {
+                        context.Response.StatusCode = 403;
+                        return Task.CompletedTask;
+                    };
+                    cfg.Events.OnRedirectToReturnUrl = context =>
+                    {
+                        context.Response.StatusCode = 403;
+                        return Task.CompletedTask;
+                    };
                 })
                 .AddJwtBearer(cfg =>
                 {
@@ -67,44 +89,72 @@ namespace eFormAPI.Web.Hosting.Extensions
             {
                 // Workers
                 options.AddPolicy(AuthConsts.EformPolicies.Workers.Create,
-                    policy => policy.RequireClaim(AuthConsts.EformClaims.WorkersClaims.Create));
-                options.AddPolicy(AuthConsts.EformPolicies.Workers.Read, 
-                    policy => policy.RequireClaim(AuthConsts.EformClaims.WorkersClaims.Read));
-                options.AddPolicy(AuthConsts.EformPolicies.Workers.Update, 
-                    policy => policy.RequireClaim(AuthConsts.EformClaims.WorkersClaims.Update));
-                options.AddPolicy(AuthConsts.EformPolicies.Workers.Delete, 
-                    policy => policy.RequireClaim(AuthConsts.EformClaims.WorkersClaims.Delete));
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.WorkersClaims.Create,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.Workers.Read,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.WorkersClaims.Read,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.Workers.Update,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.WorkersClaims.Update,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.Workers.Delete,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.WorkersClaims.Delete,
+                        AuthConsts.ClaimDefaultValue));
                 // Sites
-                options.AddPolicy(AuthConsts.EformPolicies.Sites.Create, 
-                    policy => policy.RequireClaim(AuthConsts.EformClaims.SitesClaims.Create));
-                options.AddPolicy(AuthConsts.EformPolicies.Sites.Read, 
-                    policy => policy.RequireClaim(AuthConsts.EformClaims.SitesClaims.Read));
-                options.AddPolicy(AuthConsts.EformPolicies.Sites.Update, 
-                    policy => policy.RequireClaim(AuthConsts.EformClaims.SitesClaims.Update));
-                options.AddPolicy(AuthConsts.EformPolicies.Sites.Delete, 
-                    policy => policy.RequireClaim(AuthConsts.EformClaims.SitesClaims.Delete));
+                options.AddPolicy(AuthConsts.EformPolicies.Sites.Create,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.SitesClaims.Create,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.Sites.Read,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.SitesClaims.Read,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.Sites.Update,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.SitesClaims.Update,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.Sites.Delete,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.SitesClaims.Delete,
+                        AuthConsts.ClaimDefaultValue));
                 // Entity Search
-                options.AddPolicy(AuthConsts.EformPolicies.EntitySearch.Create, 
-                    policy => policy.RequireClaim(AuthConsts.EformClaims.EntitySearchClaims.Create));
-                options.AddPolicy(AuthConsts.EformPolicies.EntitySearch.Read, 
-                    policy => policy.RequireClaim(AuthConsts.EformClaims.EntitySearchClaims.Read));
-                options.AddPolicy(AuthConsts.EformPolicies.EntitySearch.Update, 
-                    policy => policy.RequireClaim(AuthConsts.EformClaims.EntitySearchClaims.Update));
-                options.AddPolicy(AuthConsts.EformPolicies.EntitySearch.Delete, 
-                    policy => policy.RequireClaim(AuthConsts.EformClaims.EntitySearchClaims.Delete));
+                options.AddPolicy(AuthConsts.EformPolicies.EntitySearch.Create,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.EntitySearchClaims.Create,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.EntitySearch.Read,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.EntitySearchClaims.Read,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.EntitySearch.Update,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.EntitySearchClaims.Update,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.EntitySearch.Delete,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.EntitySearchClaims.Delete,
+                        AuthConsts.ClaimDefaultValue));
                 // Entity Select
-                options.AddPolicy(AuthConsts.EformPolicies.EntitySelect.Create, 
-                    policy => policy.RequireClaim(AuthConsts.EformClaims.EntitySelectClaims.Create));
-                options.AddPolicy(AuthConsts.EformPolicies.EntitySelect.Read, 
-                    policy => policy.RequireClaim(AuthConsts.EformClaims.EntitySelectClaims.Read));
-                options.AddPolicy(AuthConsts.EformPolicies.EntitySelect.Update, 
-                    policy => policy.RequireClaim(AuthConsts.EformClaims.EntitySelectClaims.Update));
-                options.AddPolicy(AuthConsts.EformPolicies.EntitySelect.Delete, 
-                    policy => policy.RequireClaim(AuthConsts.EformClaims.EntitySelectClaims.Delete));
-
-
+                options.AddPolicy(AuthConsts.EformPolicies.EntitySelect.Create,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.EntitySelectClaims.Create,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.EntitySelect.Read,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.EntitySelectClaims.Read,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.EntitySelect.Update,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.EntitySelectClaims.Update,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.EntitySelect.Delete,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.EntitySelectClaims.Delete,
+                        AuthConsts.ClaimDefaultValue));
+                // Entity Select
+                options.AddPolicy(AuthConsts.EformPolicies.UserManagement.Create,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.UserManagementClaims.Create,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.UserManagement.Read,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.UserManagementClaims.Read,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.UserManagement.Update,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.UserManagementClaims.Update,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.UserManagement.Delete,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.UserManagementClaims.Delete,
+                        AuthConsts.ClaimDefaultValue));
             });
         }
+
         public static void AddEFormMvc(this IServiceCollection services,
             List<IEformPlugin> plugins)
         {

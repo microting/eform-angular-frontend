@@ -2,6 +2,8 @@
 {
     public static class AuthConsts
     {
+        public const string ClaimDefaultValue = "True";
+
         public static class EformClaims
         {
             public static class WorkersClaims

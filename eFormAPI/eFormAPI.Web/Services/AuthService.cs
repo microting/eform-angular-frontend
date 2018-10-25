@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Hosting.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
@@ -127,6 +128,7 @@ namespace eFormAPI.Web.Services
             {
                 return new OperationDataResult<AuthorizeResult>(false, $"Role for user {model.Username} not found");
             }
+
             await _signInManager.SignInAsync(user, false);
             // update last sign in date
             return new OperationDataResult<AuthorizeResult>(true, new AuthorizeResult
@@ -151,7 +153,6 @@ namespace eFormAPI.Web.Services
                 {
                     claims.Add(new Claim("locale", user.Locale));
                 }
-
                 // Add user and roles claims
                 var userClaims = _userManager.GetClaimsAsync(user).Result;
                 var userRoles = _userManager.GetRolesAsync(user).Result;
@@ -169,7 +170,15 @@ namespace eFormAPI.Web.Services
                         }
                     }
                 }
-
+                // Permissions
+                if (userRoles.Contains(EformRole.Admin))
+                {
+                    claims.AddRange(ClaimsHelper.GetAllAuthClaims());
+                }
+                else
+                {
+                    
+                }
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenOptions.Value.SigningKey));
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
                 var token = new JwtSecurityToken(_tokenOptions.Value.Issuer,
