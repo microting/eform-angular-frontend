@@ -40,7 +40,8 @@ namespace eFormAPI.Web.Services
             SignInManager<EformUser> signInManager,
             UserManager<EformUser> userManager,
             IUserService userService,
-            ILocalizationService localizationService, IHttpContextAccessor httpContextAccessor)
+            ILocalizationService localizationService,
+            IHttpContextAccessor httpContextAccessor)
         {
             _tokenOptions = tokenOptions;
             _logger = logger;
@@ -102,7 +103,6 @@ namespace eFormAPI.Web.Services
                 }
 
                 // check code
-
                 var otp = new Totp(Base32.FromBase32String(user.GoogleAuthenticatorSecretKey));
                 var isCodeValid = otp.VerifyTotp(code, out long timeStepMatched, new VerificationWindow(300, 300));
                 if (!isCodeValid)

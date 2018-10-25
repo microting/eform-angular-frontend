@@ -11,6 +11,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Services.Security
 {
+    
     public class SecurityGroupService : ISecurityGroupService
     {
         private readonly ILogger<SecurityGroupService> _logger;

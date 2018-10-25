@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Infrastructure;
 using eFormShared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,18 +20,21 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = AuthConsts.EformPolicies.Workers.Read)]
         public OperationDataResult<List<Worker_Dto>> Index()
         {
             return _workersService.Index();
         }
 
         [HttpGet]
+        [Authorize(Policy = AuthConsts.EformPolicies.Workers.Update)]
         public OperationDataResult<Worker_Dto> Edit(int id)
         {
             return _workersService.Edit(id);
         }
 
         [HttpPost]
+        [Authorize(Policy = AuthConsts.EformPolicies.Workers.Update)]
         public OperationResult Update([FromBody] WorkerModel workerModel)
         {
             return _workersService.Update(workerModel);
@@ -38,12 +42,14 @@ namespace eFormAPI.Web.Controllers
 
         [HttpPost]
         [Route("api/workers/create")]
+        [Authorize(Policy = AuthConsts.EformPolicies.Workers.Create)]
         public OperationResult Сreate([FromBody] WorkerCreateModel model)
         {
             return _workersService.Сreate(model);
         }
 
         [HttpGet]
+        [Authorize(Policy = AuthConsts.EformPolicies.Workers.Delete)]
         public OperationResult Delete(int id)
         {
             return _workersService.Delete(id);

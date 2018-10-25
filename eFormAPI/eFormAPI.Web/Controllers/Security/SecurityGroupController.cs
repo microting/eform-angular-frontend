@@ -1,10 +1,14 @@
 ﻿using System.Threading.Tasks;
+using eFormAPI.Web.Infrastructure;
 using eFormAPI.Web.Services.Security;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Controllers.Security
 {
+    [Authorize(Roles = EformRole.Admin)]
     public class SecurityGroupController : Controller
     {
         private readonly ISecurityGroupService _securityGroupService;

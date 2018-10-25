@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Infrastructure;
 using eFormData;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,7 @@ namespace eFormAPI.Web.Controllers
 
         [HttpPost]
         [Route("api/selectable-groups")]
+        [Authorize(Policy = AuthConsts.EformPolicies.EntitySelect.Read)]
         public OperationDataResult<EntityGroupList> GetEntityGroupList(
             [FromBody] AdvEntitySelectableGroupListRequestModel requestModel)
         {
@@ -29,6 +31,7 @@ namespace eFormAPI.Web.Controllers
 
         [HttpPost]
         [Route("api/selectable-groups/create")]
+        [Authorize(Policy = AuthConsts.EformPolicies.EntitySelect.Create)]
         public OperationResult CreateEntityGroup([FromBody] AdvEntitySelectableGroupEditModel editModel)
         {
             return _entitySelectService.CreateEntityGroup(editModel);
@@ -36,6 +39,7 @@ namespace eFormAPI.Web.Controllers
 
         [HttpPost]
         [Route("api/selectable-groups/update")]
+        [Authorize(Policy = AuthConsts.EformPolicies.EntitySelect.Update)]
         public OperationResult UpdateEntityGroup([FromBody] AdvEntitySelectableGroupEditModel editModel)
         {
             return _entitySelectService.UpdateEntityGroup(editModel);
@@ -43,6 +47,7 @@ namespace eFormAPI.Web.Controllers
 
         [HttpGet]
         [Route("api/selectable-groups/get/{entityGroupUid}")]
+        [Authorize(Policy = AuthConsts.EformPolicies.EntitySelect.Read)]
         public OperationDataResult<EntityGroup> GetEntityGroup(string entityGroupUid)
         {
             return _entitySelectService.GetEntityGroup(entityGroupUid);
@@ -50,6 +55,7 @@ namespace eFormAPI.Web.Controllers
 
         [HttpGet]
         [Route("api/selectable-groups/dict/{entityGroupUid}")]
+        [Authorize(Policy = AuthConsts.EformPolicies.EntitySelect.Read)]
         public OperationDataResult<List<CommonDictionaryTextModel>> GetEntityGroupDictionary(string entityGroupUid)
         {
             return _entitySelectService.GetEntityGroupDictionary(entityGroupUid);
@@ -57,6 +63,7 @@ namespace eFormAPI.Web.Controllers
 
         [HttpGet]
         [Route("api/selectable-groups/delete/{entityGroupUid}")]
+        [Authorize(Policy = AuthConsts.EformPolicies.EntitySelect.Delete)]
         public OperationResult DeleteEntityGroup(string entityGroupUid)
         {
             return _entitySelectService.DeleteEntityGroup(entityGroupUid);
