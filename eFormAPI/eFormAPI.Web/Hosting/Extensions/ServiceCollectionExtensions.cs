@@ -53,10 +53,9 @@ namespace eFormAPI.Web.Hosting.Extensions
             };
             services.AddAuthentication((cfg =>
                 {
-                    cfg.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    cfg.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                     cfg.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                     cfg.DefaultForbidScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-
                 }))
                 .AddCookie(cfg =>
                 {
