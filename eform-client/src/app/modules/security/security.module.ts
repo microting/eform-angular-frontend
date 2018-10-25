@@ -15,6 +15,7 @@ import {
   SecurityGroupGeneralPermissionsComponent,
   SecurityGroupEformsPermissionsComponent
 } from './components';
+import { SecurityGroupEformsAddComponent } from './components/security-group-permissions/security-group-eforms-add/security-group-eforms-add.component';
 
 @NgModule({
   imports: [
@@ -32,7 +33,8 @@ import {
     SecurityGroupRemoveComponent,
     SecurityGroupUpdateComponent,
     SecurityGroupGeneralPermissionsComponent,
-    SecurityGroupEformsPermissionsComponent
+    SecurityGroupEformsPermissionsComponent,
+    SecurityGroupEformsAddComponent
   ]
 })
 export class SecurityModule {

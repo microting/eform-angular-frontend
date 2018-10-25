@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {
-  SecurityGroupCreateComponent, SecurityGroupGeneralPermissionsComponent,
+  SecurityGroupCreateComponent, SecurityGroupEformsPermissionsComponent, SecurityGroupGeneralPermissionsComponent,
   SecurityGroupUpdateComponent,
   SecurityPageComponent
 } from './components';
@@ -10,6 +10,10 @@ const routes: Routes = [
   {
     path: '',
     component: SecurityPageComponent,
+  },
+  {
+    path: 'group/eforms-permissions',
+    component: SecurityGroupEformsPermissionsComponent,
   },
   {
     path: 'group/general-permissions',

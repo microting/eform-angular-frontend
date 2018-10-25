@@ -1,0 +1,51 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{ 'Bind Eform' | translate }}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="md-form">
+              <input mdbInputDirective [mdbValidate]="false"
+                     type="text"
+                     class="form-control input-sm" id="labelInput">
+              <label for="labelInput">{{'Search' | translate}}</label>
+            </div>
+          </div>
+        </div>
+        <div class="row p-1 table-responsive no-gutters">
+          <table class="table table-sm text-center z-depth-1">
+            <thead>
+            <tr>
+              <th>ID</th>
+              <th>{{ 'Created at' | translate }}</th>
+              <th>{{ 'eForm Name' | translate }}</th>
+            </tr>
+            </thead>
+            <tbody id="mainPageEFormsTableBody">
+            <tr class="hoverable" style="cursor: pointer"
+                *ngFor="let template of templateListModel.templates"
+                (click)="addEformToGroup(template.id)">
+              <!--<td scope="row" id="eform-id">{{templateDto.id}}</td>-->
+              <td scope="row" id="eform-id">1</td>
+              <!--<td id="eform-created-at">{{templateDto.createdAt | date:'dd.MM.y HH:mm:ss'}}</td>-->
+              <td id="eform-created-at">12/20/2019</td>
+              <!--<td id="eform-label">{{templateDto.label}}</td>-->
+              <td id="eform-label">Test label</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="cancelCreateEformBtn" class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Close' |
+          translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>
