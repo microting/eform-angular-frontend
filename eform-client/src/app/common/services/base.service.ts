@@ -124,7 +124,7 @@ export class BaseService {
 
   private logOutWhenTokenFalse() {
     localStorage.clear();
-    this.router.navigate(['/auth/login']).then();
+    this.router.navigate(['/auth']).then();
   }
 
 
