@@ -408,4 +408,10 @@
   <data name="YourEmailPasswordHasBeenReset" xml:space="preserve">
     <value>Din email: {0}. Adgangskoden er blevet nulstillet.</value>
   </data>
+  <data name="SecurityGroupNotFound" xml:space="preserve">
+    <value>Sikkerhedsgruppe ikke fundet</value>
+  </data>
+  <data name="YouCantViewChangeOrDeleteAdmin" xml:space="preserve">
+    <value>Du kan ikke se, ændre eller slette admin</value>
+  </data>
 </root>

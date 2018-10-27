@@ -53,11 +53,12 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6 ng-select-wrapper">
+              <div class="col-md-6 ng-select-wrapper" *ngIf="selectedUserModel.role != 'admin'">
                 <ng-select required
                            bindLabel="name"
                            bindValue="id"
-                           [(ngModel)]="selectedUserModel.groupId" name="editGroup"
+                           [(ngModel)]="selectedUserModel.groupId"
+                           name="editGroup"
                            [placeholder]="'Group' | translate"
                            [items]="availableGroups.securityGroupList"></ng-select>
               </div>

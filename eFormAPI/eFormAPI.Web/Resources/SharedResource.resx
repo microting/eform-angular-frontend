@@ -408,4 +408,10 @@
   <data name="YourEmailPasswordHasBeenReset" xml:space="preserve">
     <value>Your email: {0}. Password has been reset.</value>
   </data>
+  <data name="SecurityGroupNotFound" xml:space="preserve">
+    <value>Security group not found</value>
+  </data>
+  <data name="YouCantViewChangeOrDeleteAdmin" xml:space="preserve">
+    <value>You can't view, change or delete admin</value>
+  </data>
 </root>
