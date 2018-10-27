@@ -95,5 +95,73 @@
                 public const string Delete = EformClaims.UserManagementClaims.Delete;
             }
         }
+
+        public static class DbIds
+        {
+            public static class SecurityGroups
+            {
+                public const int EformAdmins = 1;
+                public const int EformUsers = 2;
+            }
+
+            public static class PermissionTypes
+            {
+                public const int Workers = 1;
+                public const int Sites = 2;
+                public const int EntitySearch = 3;
+                public const int EntitySelect = 4;
+                public const int UserManagement = 5;
+                public const int Eforms = 6;
+            }
+
+            public static class Permissions
+            {
+                public static class WorkersClaims
+                {
+                    public const int Create = 1;
+                    public const int Read = 2;
+                    public const int Update = 3;
+                    public const int Delete = 4;
+                }
+
+                public static class SitesClaims
+                {
+                    public const int Create = 5;
+                    public const int Read = 6;
+                    public const int Update = 7;
+                    public const int Delete = 8;
+                }
+
+                public static class EntitySearchClaims
+                {
+                    public const int Create = 9;
+                    public const int Read = 10;
+                    public const int Update = 11;
+                    public const int Delete = 12;
+                }
+
+                public static class EntitySelectClaims
+                {
+                    public const int Create = 13;
+                    public const int Read = 14;
+                    public const int Update = 15;
+                    public const int Delete = 16;
+                }
+
+                public static class UserManagementClaims
+                {
+                    public const int Create = 17;
+                    public const int Read = 18;
+                    public const int Update = 19;
+                    public const int Delete = 20;
+                }
+
+                public static class EformsClaims
+                {
+                    public const int Create = 21;
+                    public const int Delete = 22;
+                }
+            }
+        }
     }
 }

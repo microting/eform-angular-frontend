@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eFormAPI.Web.Infrastructure.Database;
 
 namespace eFormAPI.Web.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    partial class BaseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181026150448_AddPermissionsTables")]
+    partial class AddPermissionsTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,6 +28,8 @@ namespace eFormAPI.Web.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("PermissionId");
+
+                    b.Property<int>("PermissionState");
 
                     b.Property<int>("SecurityGroupId");
 
@@ -62,31 +66,6 @@ namespace eFormAPI.Web.Migrations
                     b.HasIndex("PermissionTypeId");
 
                     b.ToTable("Permissions");
-
-                    b.HasData(
-                        new { Id = 2, ClaimName = "workers_read", PermissionName = "Read", PermissionTypeId = 1 },
-                        new { Id = 1, ClaimName = "workers_create", PermissionName = "Create", PermissionTypeId = 1 },
-                        new { Id = 4, ClaimName = "workers_delete", PermissionName = "Delete", PermissionTypeId = 1 },
-                        new { Id = 3, ClaimName = "workers_update", PermissionName = "Update", PermissionTypeId = 1 },
-                        new { Id = 6, ClaimName = "sites_read", PermissionName = "Read", PermissionTypeId = 2 },
-                        new { Id = 5, ClaimName = "sites_create", PermissionName = "Create", PermissionTypeId = 2 },
-                        new { Id = 8, ClaimName = "sites_delete", PermissionName = "Delete", PermissionTypeId = 2 },
-                        new { Id = 7, ClaimName = "sites_update", PermissionName = "Update", PermissionTypeId = 2 },
-                        new { Id = 10, ClaimName = "entity_search_read", PermissionName = "Read", PermissionTypeId = 3 },
-                        new { Id = 9, ClaimName = "entity_search_create", PermissionName = "Create", PermissionTypeId = 3 },
-                        new { Id = 12, ClaimName = "entity_search_delete", PermissionName = "Delete", PermissionTypeId = 3 },
-                        new { Id = 11, ClaimName = "entity_search_update", PermissionName = "Update", PermissionTypeId = 3 },
-                        new { Id = 14, ClaimName = "entity_select_read", PermissionName = "Read", PermissionTypeId = 4 },
-                        new { Id = 13, ClaimName = "entity_select_create", PermissionName = "Create", PermissionTypeId = 4 },
-                        new { Id = 16, ClaimName = "entity_select_delete", PermissionName = "Delete", PermissionTypeId = 4 },
-                        new { Id = 15, ClaimName = "entity_select_update", PermissionName = "Update", PermissionTypeId = 4 },
-                        new { Id = 18, ClaimName = "users_read", PermissionName = "Read", PermissionTypeId = 5 },
-                        new { Id = 17, ClaimName = "users_create", PermissionName = "Create", PermissionTypeId = 5 },
-                        new { Id = 20, ClaimName = "users_delete", PermissionName = "Delete", PermissionTypeId = 5 },
-                        new { Id = 19, ClaimName = "users_update", PermissionName = "Update", PermissionTypeId = 5 },
-                        new { Id = 21, ClaimName = "eforms_create", PermissionName = "Create", PermissionTypeId = 6 },
-                        new { Id = 22, ClaimName = "eforms_delete", PermissionName = "Delete", PermissionTypeId = 6 }
-                    );
                 });
 
             modelBuilder.Entity("eFormAPI.Web.Infrastructure.Database.Entities.PermissionType", b =>
@@ -105,15 +84,6 @@ namespace eFormAPI.Web.Migrations
                         .HasFilter("[Name] IS NOT NULL");
 
                     b.ToTable("PermissionTypes");
-
-                    b.HasData(
-                        new { Id = 1, Name = "Workers" },
-                        new { Id = 2, Name = "Sites" },
-                        new { Id = 3, Name = "EntitySearch" },
-                        new { Id = 4, Name = "EntitySelect" },
-                        new { Id = 5, Name = "UserManagement" },
-                        new { Id = 6, Name = "Eforms" }
-                    );
                 });
 
             modelBuilder.Entity("eFormAPI.Web.Infrastructure.Database.Entities.SecurityGroup", b =>
@@ -128,11 +98,6 @@ namespace eFormAPI.Web.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SecurityGroups");
-
-                    b.HasData(
-                        new { Id = 1, Name = "eForm admins" },
-                        new { Id = 2, Name = "eForm users" }
-                    );
                 });
 
             modelBuilder.Entity("eFormAPI.Web.Infrastructure.Database.Entities.SecurityGroupUser", b =>

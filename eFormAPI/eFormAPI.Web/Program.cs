@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Runtime.InteropServices.ComTypes;
 using eFormAPI.Web.Infrastructure.Database;
+using eFormAPI.Web.Infrastructure.Seed;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -20,7 +22,10 @@ namespace eFormAPI.Web
             {
                 try
                 {
-                    dbContext.Database.Migrate();
+                    if (dbContext.Database.GetDbConnection().ConnectionString != "...")
+                    {
+                        dbContext.Database.Migrate();
+                    }
                 }
                 catch (Exception e)
                 {
