@@ -1,12 +1,53 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
+using eFormAPI.Web.Abstractions.Security;
 using eFormAPI.Web.Infrastructure;
+using eFormAPI.Web.Infrastructure.Database;
 
-namespace eFormAPI.Web.Hosting.Helpers
+namespace eFormAPI.Web.Services.Security
 {
-    public static class ClaimsHelper
+    public class ClaimsService : IClaimsService
     {
-        public static List<Claim> GetAllAuthClaims()
+        private readonly BaseDbContext _dbContext;
+
+        public ClaimsService(BaseDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
+        public List<Claim> GetUserClaims(int userId)
+        {
+            try
+            {
+                var claims = new List<Claim>();
+                var groups = _dbContext.SecurityGroupUsers
+                    .Where(x => x.EformUserId == userId)
+                    .Select(x => x.SecurityGroupId)
+                    .ToList();
+                if (groups.Any())
+                {
+                    var claimNames = _dbContext.GroupPermissions
+                        .Where(x => groups.Contains(x.SecurityGroupId))
+                        .Select(x => x.Permission.ClaimName)
+                        .ToList();
+                    claimNames.ForEach(claimName =>
+                    {
+                        claims.Add(new Claim(claimName, AuthConsts.ClaimDefaultValue));
+                    });
+                }
+
+                return claims;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public List<Claim> GetAllAuthClaims()
         {
             return new List<Claim>()
             {

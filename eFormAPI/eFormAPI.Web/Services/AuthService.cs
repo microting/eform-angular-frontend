@@ -7,8 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using eFormAPI.Web.Abstractions;
-using eFormAPI.Web.Hosting.Helpers;
-using Microsoft.AspNetCore.Http;
+using eFormAPI.Web.Abstractions.Security;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -27,7 +26,7 @@ namespace eFormAPI.Web.Services
         private readonly IOptions<EformTokenOptions> _tokenOptions;
         private readonly IUserService _userService;
         private readonly IOptions<ApplicationSettings> _appSettings;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IClaimsService _claimsService;
         private readonly ILocalizationService _localizationService;
         private readonly ILogger<AuthService> _logger;
         private readonly UserManager<EformUser> _userManager;
@@ -42,7 +41,7 @@ namespace eFormAPI.Web.Services
             UserManager<EformUser> userManager,
             IUserService userService,
             ILocalizationService localizationService,
-            IHttpContextAccessor httpContextAccessor)
+            IClaimsService claimsService)
         {
             _tokenOptions = tokenOptions;
             _logger = logger;
@@ -52,7 +51,7 @@ namespace eFormAPI.Web.Services
             _userManager = userManager;
             _userService = userService;
             _localizationService = localizationService;
-            _httpContextAccessor = httpContextAccessor;
+            _claimsService = claimsService;
         }
 
         public async Task<OperationDataResult<AuthorizeResult>> AuthenticateUser(LoginModel model)
@@ -173,11 +172,11 @@ namespace eFormAPI.Web.Services
                 // Permissions
                 if (userRoles.Contains(EformRole.Admin))
                 {
-                    claims.AddRange(ClaimsHelper.GetAllAuthClaims());
+                    claims.AddRange(_claimsService.GetAllAuthClaims());
                 }
                 else
                 {
-                    
+                    claims.AddRange(_claimsService.GetUserClaims(user.Id));
                 }
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenOptions.Value.SigningKey));
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

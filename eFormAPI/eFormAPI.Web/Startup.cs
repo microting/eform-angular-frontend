@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Abstractions.Security;
 using eFormAPI.Web.Hosting.Extensions;
 using eFormAPI.Web.Hosting.Helpers;
 using eFormAPI.Web.Infrastructure.Database;
@@ -196,6 +197,7 @@ namespace eFormAPI.Web
             services.AddScoped<ISettingsService, SettingsService>();
             services.AddScoped<ITemplatesService, TemplatesService>();
             services.AddScoped<ISecurityGroupService, SecurityGroupService>();
+            services.AddScoped<IClaimsService, ClaimsService>();
 
             
         }
