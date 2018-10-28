@@ -198,8 +198,7 @@ namespace eFormAPI.Web
             services.AddScoped<ITemplatesService, TemplatesService>();
             services.AddScoped<ISecurityGroupService, SecurityGroupService>();
             services.AddScoped<IClaimsService, ClaimsService>();
-
-            
+            services.AddScoped<IPermissionsService, PermissionsService>();
         }
     }
 }

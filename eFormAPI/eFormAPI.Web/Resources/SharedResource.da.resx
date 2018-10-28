@@ -414,4 +414,13 @@
   <data name="YouCantViewChangeOrDeleteAdmin" xml:space="preserve">
     <value>Du kan ikke se, ændre eller slette admin</value>
   </data>
+  <data name="ErrorWhileObtainingPermissions" xml:space="preserve">
+    <value>Fejl under opnåelse af tilladelser</value>
+  </data>
+  <data name="ErrorWhileUpdatingPermissions" xml:space="preserve">
+    <value>Fejl under opdatering af tilladelser</value>
+  </data>
+  <data name="PermissionsUpdatedSuccessfully" xml:space="preserve">
+    <value>Tilladelser opdateret med succes</value>
+  </data>
 </root>

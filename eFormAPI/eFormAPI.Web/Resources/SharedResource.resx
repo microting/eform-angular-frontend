@@ -414,4 +414,13 @@
   <data name="YouCantViewChangeOrDeleteAdmin" xml:space="preserve">
     <value>You can't view, change or delete admin</value>
   </data>
+  <data name="ErrorWhileObtainingPermissions" xml:space="preserve">
+    <value>Error while obtaining permissions</value>
+  </data>
+  <data name="ErrorWhileUpdatingPermissions" xml:space="preserve">
+    <value>Error while updating permissions</value>
+  </data>
+  <data name="PermissionsUpdatedSuccessfully" xml:space="preserve">
+    <value>Permissions updated successfully</value>
+  </data>
 </root>

@@ -14,7 +14,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities
         public int PermissionTypeId { get; set; }
         public PermissionType PermissionType { get; set; }
 
-        public ICollection<GroupPermission> GroupPermissions
+        public List<GroupPermission> GroupPermissions
             = new List<GroupPermission>();
     }
 }
