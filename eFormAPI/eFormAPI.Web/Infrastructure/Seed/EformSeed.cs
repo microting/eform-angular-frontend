@@ -97,13 +97,6 @@ namespace eFormAPI.Web.Infrastructure.Seed
                 },
                 new Permission()
                 {
-                    Id = AuthConsts.DbIds.Permissions.SitesClaims.Create,
-                    ClaimName = AuthConsts.EformClaims.SitesClaims.Create,
-                    PermissionName = "Create",
-                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Sites
-                },
-                new Permission()
-                {
                     Id = AuthConsts.DbIds.Permissions.SitesClaims.Delete,
                     ClaimName = AuthConsts.EformClaims.SitesClaims.Delete,
                     PermissionName = "Delete",

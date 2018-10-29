@@ -21,13 +21,16 @@ namespace eFormAPI.Web.Infrastructure.Database
         {
         }
 
+        // Common
+        public DbSet<MenuItem> MenuItems { get; set; }
+
         // Security
         public DbSet<SecurityGroup> SecurityGroups { get; set; }
         public DbSet<SecurityGroupUser> SecurityGroupUsers { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<GroupPermission> GroupPermissions { get; set; }
         public DbSet<PermissionType> PermissionTypes { get; set; }
-
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

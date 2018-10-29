@@ -126,7 +126,6 @@
 
                 public static class SitesClaims
                 {
-                    public const int Create = 5;
                     public const int Read = 6;
                     public const int Update = 7;
                     public const int Delete = 8;

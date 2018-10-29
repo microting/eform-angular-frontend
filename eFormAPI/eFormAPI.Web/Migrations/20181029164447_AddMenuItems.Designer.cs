@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eFormAPI.Web.Infrastructure.Database;
 
 namespace eFormAPI.Web.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    partial class BaseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181029164447_AddMenuItems")]
+    partial class AddMenuItems
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -89,6 +91,7 @@ namespace eFormAPI.Web.Migrations
                         new { Id = 4, ClaimName = "workers_delete", PermissionName = "Delete", PermissionTypeId = 1 },
                         new { Id = 3, ClaimName = "workers_update", PermissionName = "Update", PermissionTypeId = 1 },
                         new { Id = 6, ClaimName = "sites_read", PermissionName = "Read", PermissionTypeId = 2 },
+                        new { Id = 5, ClaimName = "sites_create", PermissionName = "Create", PermissionTypeId = 2 },
                         new { Id = 8, ClaimName = "sites_delete", PermissionName = "Delete", PermissionTypeId = 2 },
                         new { Id = 7, ClaimName = "sites_update", PermissionName = "Update", PermissionTypeId = 2 },
                         new { Id = 10, ClaimName = "entity_search_read", PermissionName = "Read", PermissionTypeId = 3 },
