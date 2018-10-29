@@ -206,7 +206,9 @@
   "UserManagement": "User Management",
   "Update": "Update",
   "Read": "Read",
-  "General Permissions": "General Permissions"
+  "General Permissions": "General Permissions",
+
+  "Eforms Permissions": "Eforms Permissions"
 
 }
 

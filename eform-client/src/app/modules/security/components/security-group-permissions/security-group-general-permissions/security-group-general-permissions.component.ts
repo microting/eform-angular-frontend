@@ -1,6 +1,6 @@
 import {flatten} from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {
   SecurityGroupGeneralPermissionsModel,
   SecurityGroupGeneralPermissionsUpdateModel
@@ -19,7 +19,8 @@ export class SecurityGroupGeneralPermissionsComponent implements OnInit {
   spinnerStatus = false;
   constructor(
     private securityGroupGeneralPermissionsService: SecurityGroupGeneralPermissionsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -41,13 +42,16 @@ export class SecurityGroupGeneralPermissionsComponent implements OnInit {
   }
 
   updateSecurityGroupGeneralPermissions() {
-    debugger;
     this.spinnerStatus = true;
     this.securityGroupGeneralPermissionsUpdateModel.groupId = this.selectedGroupId;
     this.securityGroupGeneralPermissionsUpdateModel.permissions = flatten(this.securityGroupGeneralPermissionsModel.permissionTypes
       .map(x => x.permissions));
     this.securityGroupGeneralPermissionsService.updateGeneralPermissions(this.securityGroupGeneralPermissionsUpdateModel).subscribe((data) => {
+      if (data && data.success) {
+        this.router.navigate(['/security']).then();
+      }
        this.spinnerStatus = false;
+
     });
   }
 

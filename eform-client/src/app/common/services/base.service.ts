@@ -146,11 +146,17 @@ export class BaseService {
       return throwError(error);
     }
     // Handle 401 - Unauthorized
-    if (error.status === 401 || error.status === 403) {
-      this.toastrService.warning('401(403) - Invalid token');
-      console.error('401(403) - Invalid token');
+    if (error.status === 401) {
+      this.toastrService.warning('401 - Invalid token');
+      console.error('401 - Invalid token');
       this.logOutWhenTokenFalse();
       console.error(error);
+      return throwError(errorMessage);
+    } else if (error.status === 403) {
+      this.toastrService.warning('403 - Forbidden');
+      console.error('403 - Forbidden');
+      console.error(error);
+      this.router.navigate(['/']).then();
       return throwError(errorMessage);
     }
     const body = error._body || '';

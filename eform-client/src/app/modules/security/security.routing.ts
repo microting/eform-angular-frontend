@@ -12,7 +12,7 @@ const routes: Routes = [
     component: SecurityPageComponent,
   },
   {
-    path: 'group/:id/forms-permissions',
+    path: 'group/:groupId/eforms-permissions',
     component: SecurityGroupEformsPermissionsComponent,
   },
   {
