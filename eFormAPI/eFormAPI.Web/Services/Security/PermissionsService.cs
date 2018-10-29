@@ -32,7 +32,8 @@ namespace eFormAPI.Web.Services.Security
         {
             try
             {
-                if (!await _dbContext.SecurityGroups.AnyAsync(x => x.Id == groupId))
+                var group = await _dbContext.SecurityGroups.FirstOrDefaultAsync(x => x.Id == groupId);
+                if (group == null)
                 {
                     return new OperationDataResult<PermissionsModel>(false,
                         _localizationService.GetString("SecurityGroupNotFound"));
@@ -63,6 +64,7 @@ namespace eFormAPI.Web.Services.Security
                 var result = new PermissionsModel
                 {
                     GroupId = groupId,
+                    GroupName = group.Name,
                     PermissionTypes = permissionTypes
                 };
                 return new OperationDataResult<PermissionsModel>(true, result);
