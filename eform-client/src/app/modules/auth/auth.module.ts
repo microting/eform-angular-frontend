@@ -10,7 +10,8 @@ import {
   LoginComponent,
   ResetAdminPasswordComponent,
   RestorePasswordComponent, SignOutComponent,
-  AuthComponent
+  AuthComponent,
+  RestorePasswordConfirmationComponent
 } from './components';
 
 @NgModule({
@@ -29,7 +30,8 @@ import {
     GoogleAuthenticatorComponent,
     ResetAdminPasswordComponent,
     SignOutComponent,
-    AuthComponent
+    AuthComponent,
+    RestorePasswordConfirmationComponent
   ]
 })
 export class AuthModule {

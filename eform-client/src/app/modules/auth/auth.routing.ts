@@ -4,7 +4,7 @@ import {
   LoginComponent,
   RestorePasswordComponent,
   GoogleAuthenticatorComponent,
-  ResetAdminPasswordComponent, SignOutComponent, AuthComponent
+  ResetAdminPasswordComponent, SignOutComponent, AuthComponent, RestorePasswordConfirmationComponent
 } from './components';
 
 const routes: Routes = [
@@ -22,6 +22,10 @@ const routes: Routes = [
       {
         path: 'restore-password',
         component: RestorePasswordComponent
+      },
+      {
+        path: 'restore-password-confirmation',
+        component: RestorePasswordConfirmationComponent
       },
       {
         path: 'reset-admin-password',

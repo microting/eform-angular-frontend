@@ -144,7 +144,7 @@ namespace eFormAPI.Web.Controllers
                 }
                 var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 var link = ConfigurationManager.AppSettings["app:siteLink"];
-                link = $"{link}/login/restore-password?userId={user.Id}&code={code}";
+                link = $"{link}/restore-password-confirmation?userId={user.Id}&code={code}";
                 await UserManager.SendEmailAsync(user.Id, "Reset Password",
                     "Please reset your password by clicking <a href=\"" + link + "\">here</a>");
                 return new OperationResult(true);
