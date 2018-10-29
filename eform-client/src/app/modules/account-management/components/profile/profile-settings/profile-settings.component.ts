@@ -53,6 +53,7 @@ export class ProfileSettingsComponent implements OnInit {
   }
 
   isTwoFactorEnabledCheckBoxChanged(e) {
+    debugger;
     if (e.target && e.target.checked) {
       this.googleAuthInfoModel.isTwoFactorEnabled = true;
     } else if (e.target && !e.target.checked) {

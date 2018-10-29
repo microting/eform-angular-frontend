@@ -9,15 +9,12 @@
 <div class="container-fluid">
   <div class="row" *ngIf="userRole == 'admin'">
     <div class="col-md-3">
-      <div class="pt-3">
-        <label class="md-checkbox">
-          <input name="isChecked"
-                 id="isChecked"
-                 value="{{isChecked}}" (click)="checked($event)"
-                 [checked]="isChecked" type="checkbox" />
-          <span class="md-checkbox--fake"></span>
-          <div>{{ 'Force users to use 2-f-auth' | translate }}</div>
-        </label>
+      <div class="p-3">
+        <div class="mat-checkbox">
+          <input id="isChecked" (click)="checked($event)"
+                 [checked]="isChecked" [value]="isChecked" color="primary" type="checkbox">
+          <label for="isChecked">{{ 'Force users to use 2-f-auth' | translate }}</label>
+        </div>
       </div>
     </div>
   </div>
