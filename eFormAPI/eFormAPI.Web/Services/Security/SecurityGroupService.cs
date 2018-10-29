@@ -145,7 +145,7 @@ namespace eFormAPI.Web.Services.Security
                     transaction.Commit();
                 }
 
-                return new OperationResult(true, "Security group created");
+                return new OperationResult(true, "Security group created successfully");
             }
             catch (Exception e)
             {
@@ -195,7 +195,7 @@ namespace eFormAPI.Web.Services.Security
                     transaction.Commit();
                 }
 
-                return new OperationResult(true, "Security group updated");
+                return new OperationResult(true, "Security group updated successfully");
             }
             catch (Exception e)
             {
@@ -217,7 +217,7 @@ namespace eFormAPI.Web.Services.Security
 
                 _dbContext.SecurityGroups.Remove(securityGroup);
                 await _dbContext.SaveChangesAsync();
-                return new OperationResult(true);
+                return new OperationResult(true, "Security group removed successfully");
             }
             catch (Exception e)
             {

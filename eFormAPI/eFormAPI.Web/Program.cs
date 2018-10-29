@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers.WritableOptions;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 
 namespace eFormAPI.Web
 {
@@ -22,7 +24,9 @@ namespace eFormAPI.Web
             {
                 try
                 {
-                    if (dbContext.Database.GetDbConnection().ConnectionString != "...")
+                    var connectionStrings =
+                        scope.ServiceProvider.GetRequiredService<IWritableOptions<ConnectionStrings>>();
+                    if (connectionStrings.Value.DefaultConnection != "...")
                     {
                         dbContext.Database.Migrate();
                     }

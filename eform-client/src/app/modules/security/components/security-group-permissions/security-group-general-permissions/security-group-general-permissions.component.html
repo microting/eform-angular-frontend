@@ -1,7 +1,7 @@
-<eform-page-subheader [title]="'Test Group Permissions' | translate">
+<eform-page-subheader [title]="securityGroupGeneralPermissionsModel.groupName + ' ' + ('General Permissions' | translate)">
   <div class="p-3">
     <button
-      class="btn btn-success"
+      class="btn btn-success" (click)="updateSecurityGroupGeneralPermissions()"
       mdbTooltip="{{ 'Update Permissions' | translate }}" id="newSecurityGroupBtn">{{ 'Save' | translate }}
     </button>
   </div>
@@ -9,62 +9,19 @@
 
 <div class="container-fluid mt-4">
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-3 mb-4" *ngFor="let permissionType of securityGroupGeneralPermissionsModel.permissionTypes">
       <div class="card">
         <div class="card-header">
-          Sites
+          {{permissionType.name | translate}}
         </div>
         <div class="card-body">
-            <div class="mat-checkbox mb-2" style="display: block;">
-              <input id="checkboxSitesRead"
+            <div class="mat-checkbox mb-2" style="display: block;" *ngFor="let permission of permissionType.permissions">
+              <input id="{{permissionType.name}}_{{permission.claimName}}"
+                     [checked]="permission.isEnabled" [value]="permission.isEnabled"
+                     [(ngModel)]="permission.isEnabled"
                      color="primary" type="checkbox">
-              <label for="checkboxSitesRead">Read</label>
+              <label for="{{permissionType.name}}_{{permission.claimName}}">{{permission.permissionName | translate}}</label>
             </div>
-          <div class="mat-checkbox mb-2" style="display: block;">
-            <input id="checkboxSitesCreate"
-                   color="primary" type="checkbox">
-            <label for="checkboxSitesCreate">Create</label>
-          </div>
-          <div class="mat-checkbox mb-2" style="display: block;">
-            <input id="checkboxSitesUpdate"
-                   color="primary" type="checkbox">
-            <label for="checkboxSitesUpdate">Update</label>
-          </div>
-          <div class="mat-checkbox mb-2" style="display: block;">
-            <input id="checkboxSitesDelete"
-                   color="primary" type="checkbox">
-            <label for="checkboxSitesDelete">Delete</label>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="card">
-        <div class="card-header">
-          Workers
-        </div>
-        <div class="card-body">
-
-        </div>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="card">
-        <div class="card-header">
-          Searchable Lists
-        </div>
-        <div class="card-body">
-
-        </div>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="card">
-        <div class="card-header">
-          Selectable Lists
-        </div>
-        <div class="card-body">
-
         </div>
       </div>
     </div>

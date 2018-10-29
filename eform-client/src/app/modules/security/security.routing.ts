@@ -12,11 +12,11 @@ const routes: Routes = [
     component: SecurityPageComponent,
   },
   {
-    path: 'group/eforms-permissions',
+    path: 'group/:id/forms-permissions',
     component: SecurityGroupEformsPermissionsComponent,
   },
   {
-    path: 'group/general-permissions',
+    path: 'group/:groupId/general-permissions',
     component: SecurityGroupGeneralPermissionsComponent,
   },
   {

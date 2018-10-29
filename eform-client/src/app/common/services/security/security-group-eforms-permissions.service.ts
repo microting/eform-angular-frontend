@@ -3,7 +3,13 @@ import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {Observable} from 'rxjs';
-import {OperationDataResult, OperationResult} from 'src/app/common/models';
+import {
+  EformsPermissionsRequestModel,
+  EformsPermissionsModel,
+  OperationDataResult,
+  OperationResult,
+  TemplateListModel, TemplateRequestModel
+} from 'src/app/common/models';
 import {BaseService} from 'src/app/common/services/base.service';
 
 const SecurityGroupEformsPermissionsMethods = {
@@ -16,15 +22,15 @@ export class SecurityGroupEformsPermissionsService extends BaseService {
     super(_http, router, toastrService);
   }
 
-  getAvailableEformsForGroup(groupId: number): Observable<OperationDataResult<any>> {
-    return this.get<any>(SecurityGroupEformsPermissionsMethods.SecurityGroupEformsPermissions + '/' + groupId);
+  getAvailableEformsForGroup(model: TemplateRequestModel): Observable<OperationDataResult<TemplateListModel>> {
+    return this.get(SecurityGroupEformsPermissionsMethods.SecurityGroupEformsPermissions, model);
   }
 
-  getGroupEforms(groupId: number): Observable<OperationDataResult<any>> {
-    return this.get<any>(SecurityGroupEformsPermissionsMethods.SecurityGroupEformsPermissions + '/' + groupId);
+  getGroupEforms(groupId: number): Observable<OperationDataResult<EformsPermissionsModel>> {
+    return this.get(SecurityGroupEformsPermissionsMethods.SecurityGroupEformsPermissions + '/' + groupId);
   }
 
   addEformToGroup(eformId: number): Observable<OperationResult> {
-    return this.post<any>(SecurityGroupEformsPermissionsMethods.SecurityGroupEformsPermissions, eformId);
+    return this.post(SecurityGroupEformsPermissionsMethods.SecurityGroupEformsPermissions, eformId);
   }
 }

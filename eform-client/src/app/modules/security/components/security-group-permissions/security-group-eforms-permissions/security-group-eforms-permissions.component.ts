@@ -1,5 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {TemplateListModel, TemplateRequestModel} from 'src/app/common/models';
+import {ActivatedRoute} from '@angular/router';
+import {
+  EformsPermissionsModel,
+  EformsPermissionsRequestModel,
+  TemplateListModel,
+  TemplateRequestModel
+} from 'src/app/common/models';
 import {SecurityGroupEformsPermissionsService} from 'src/app/common/services/security';
 
 @Component({
@@ -11,14 +17,43 @@ export class SecurityGroupEformsPermissionsComponent implements OnInit {
   @ViewChild('eformBindModal') eformBindModal;
   templateRequestModel: TemplateRequestModel = new TemplateRequestModel;
   templateListModel: TemplateListModel = new TemplateListModel();
+  eformSecurityModel: EformsPermissionsModel = new EformsPermissionsModel();
+  eformsSecurityRequestModel: EformsPermissionsRequestModel = new EformsPermissionsRequestModel();
+  selectedGroupId: number;
+  spinnerStatus = false;
 
-  constructor(private securityGroupEformsService: SecurityGroupEformsPermissionsService) { }
+  constructor(
+    private securityGroupEformsService: SecurityGroupEformsPermissionsService,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.selectedGroupId = params['groupId'];
+      if (this.selectedGroupId) {
+        this.getAvailableEforms();
+        this.getSecurityGroupEfroms();
+      }
+    });
   }
 
   getAvailableEforms() {
+    this.spinnerStatus = true;
+    this.securityGroupEformsService.getAvailableEformsForGroup(this.templateRequestModel).subscribe((data) => {
+      if (data && data.success) {
+        this.templateListModel = data.model;
+      } this.spinnerStatus = false;
+    });
+  }
 
+  getSecurityGroupEfroms() {
+    this.spinnerStatus = true;
+    this.eformsSecurityRequestModel = this.selectedGroupId;
+    this.securityGroupEformsService.getGroupEforms(this.selectedGroupId).subscribe((data) => {
+      if (data && data.success) {
+        this.eformSecurityModel = data.model;
+      } this.spinnerStatus = false;
+    });
   }
 
   openEformBindModal() {

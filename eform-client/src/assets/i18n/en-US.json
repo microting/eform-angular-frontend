@@ -186,14 +186,27 @@
   "Vehicles": "Vehicles",
   "Calendar": "Calendar",
   "Case Management": "Case Management",
-
   "Security": "Security",
   "Security Groups": "Security Groups",
   "Group name": "Group name",
   "Users amount": "Users amount",
   "Edit Group": "Edit Group",
   "Permissions": "Permissions",
-  "Delete Group": "Delete Group"
+  "Delete Group": "Delete Group",
+  "New Group": "New Group",
+  "Create Group": "Create Group",
+  "Create Security Group": "Create Security Group",
+  "Group Name": "Group Name",
+  "Select User": "Select User",
+  "Bind to Group": "Bind to Group",
+  "Create": "Create",
+  "Remove user from group": "Remove user from group",
+  "EntitySearch": "Entity Search",
+  "EntitySelect": "Entity Select",
+  "UserManagement": "User Management",
+  "Update": "Update",
+  "Read": "Read",
+  "General Permissions": "General Permissions"
 
 }
 
