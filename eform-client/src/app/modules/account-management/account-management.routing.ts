@@ -6,7 +6,6 @@ import {ChangePasswordComponent, ProfileSettingsComponent, UsersPageComponent} f
 const routes: Routes = [
   {
     path: 'users',
-    canActivate: [AdminGuard],
     component: UsersPageComponent,
   },
   {

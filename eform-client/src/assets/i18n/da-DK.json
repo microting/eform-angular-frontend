@@ -205,5 +205,8 @@
   "UserManagement": "Brugeradministration",
   "Update": "Opdatering",
   "Read": "Læs",
-  "General Permissions": "Generelle Tilladelser"
+  "General Permissions": "Generelle Tilladelser",
+
+  "Eforms Permissions": "Eforms Tilladelser",
+  "Forbidden": "Forbudt"
 }

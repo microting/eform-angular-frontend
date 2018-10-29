@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {CommonDictionaryModel} from 'src/app/common/models/common';
 import {TemplateDto} from 'src/app/common/models/dto';
 import {TemplateListModel, TemplateRequestModel} from 'src/app/common/models/eforms';
+import {AuthService} from 'src/app/common/services/auth';
 import {EFormService, EFormTagService} from 'src/app/common/services/eform';
 
 @Component({
@@ -23,13 +24,15 @@ export class EformsPageComponent implements OnInit {
   templateListModel: TemplateListModel = new TemplateListModel();
   availableTags: Array<CommonDictionaryModel> = [];
 
+  get userClaims() { return this.authService.userClaims; }
+
   items = [
     'New',
     'Legacy',
     'Test1'
   ];
 
-  constructor(private eFormService: EFormService, private eFormTagService: EFormTagService) { }
+  constructor(private eFormService: EFormService, private eFormTagService: EFormTagService, private authService: AuthService) { }
 
   ngOnInit() {
     this.loadAllTemplates();

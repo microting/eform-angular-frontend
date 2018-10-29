@@ -1,5 +1,6 @@
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
 
 import {ToastrService} from 'ngx-toastr';
 import {Observable, throwError} from 'rxjs';
@@ -7,7 +8,7 @@ import {catchError, map} from 'rxjs/operators';
 import {AuthResponseModel} from 'src/app/common/models/auth';
 
 export class BaseService {
-  constructor(private http: HttpClient, private router: Router, private toastrService: ToastrService) {
+  constructor(private http: HttpClient, private router: Router, private toastrService: ToastrService, private translateService: TranslateService) {
   }
 
   protected get<T>(method: string, params?: any): Observable<any> {
@@ -147,8 +148,8 @@ export class BaseService {
     }
     // Handle 401 - Unauthorized
     if (error.status === 401) {
-      this.toastrService.warning('401 - Invalid token');
-      console.error('401 - Invalid token');
+      this.toastrService.warning('401 - Unauthorized');
+      console.error('401 - Unauthorized');
       this.logOutWhenTokenFalse();
       console.error(error);
       return throwError(errorMessage);

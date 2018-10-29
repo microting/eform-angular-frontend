@@ -4,6 +4,7 @@ import {
   AdvEntitySearchableGroupListRequestModel, AdvEntitySelectableGroupModel
 } from 'src/app/common/models/advanced';
 import {EntitySearchService} from 'src/app/common/services/advanced';
+import {AuthService} from 'src/app/common/services/auth';
 
 @Component({
   selector: 'app-searchable-list',
@@ -24,7 +25,9 @@ export class EntitySearchComponent implements OnInit {
   isSortedByNameAsc = false;
   isSortedByNameDsc = false;
 
-  constructor(private entitySearchService: EntitySearchService) {
+  get userClaims() { return this.authService.userClaims; }
+
+  constructor(private entitySearchService: EntitySearchService, private authService: AuthService) {
   }
 
   ngOnInit() {
@@ -60,7 +63,6 @@ export class EntitySearchComponent implements OnInit {
     this.spinnerStatus = true;
     this.entitySearchService.getEntitySearchableGroupList(this.advEntitySearchableGroupListRequestModel).subscribe((data) => {
       if (data && data.model) {
-        debugger;
         this.advEntitySearchableGroupListModel = data.model;
       } this.spinnerStatus = false;
     });

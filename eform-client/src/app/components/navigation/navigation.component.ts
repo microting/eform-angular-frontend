@@ -66,8 +66,7 @@ export class NavigationComponent implements OnInit {
           {
             name: this.translateService.instant('User Management'),
             e2eId: 'user-management-menu',
-            link: '/account-management/users',
-            guard: 'admin'
+            link: '/account-management/users'
           },
           {
             name: this.translateService.instant('Settings'),

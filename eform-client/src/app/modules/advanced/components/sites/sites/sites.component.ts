@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {SiteNameDto} from 'src/app/common/models/dto';
 import {SitesService} from 'src/app/common/services/advanced';
+import {AuthService} from 'src/app/common/services/auth';
 
 @Component({
   selector: 'app-sites',
@@ -14,7 +15,9 @@ export class SitesComponent implements OnInit {
   sitesDto: Array<SiteNameDto> = [];
   selectedSiteDto: SiteNameDto = new SiteNameDto();
 
-  constructor(private sitesService: SitesService, private router: Router) {
+  get userClaims() { return this.authService.userClaims; }
+
+  constructor(private sitesService: SitesService, private router: Router, private authService: AuthService) {
 
   }
 

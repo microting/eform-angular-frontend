@@ -2,7 +2,7 @@
   <div class="p-3">
     <button
       class="btn btn-success"
-      mdbTooltip="{{ 'Create eForm' | translate }}" id="newEFormBtn"
+      mdbTooltip="{{ 'Create eForm' | translate }}" id="newEFormBtn" *ngIf="userClaims.eFormsCreate"
       (click)="openNewEformModal()">{{ 'New eForm' | translate }}
     </button>
   </div>
@@ -128,7 +128,7 @@
               </i>
             </button>
             <button class="btn btn-danger btn-icon mb-2 " id="delete-eform-btn"
-                    (click)="openEformDeleteModal(templateDto)"
+                    (click)="openEformDeleteModal(templateDto)" *ngIf="userClaims.eFormsDelete"
                     mdbTooltip="{{ 'Delete eForm' | translate }}">
               <i class="material-icons">
                 delete_forever

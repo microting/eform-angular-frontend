@@ -13,7 +13,6 @@ export class ClaimsGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot,
               state: RouterStateSnapshot): boolean {
-    debugger;
       const claim = UserClaimsEnum[route.data['requiredClaim']] as string;
       const userClaims = this.authService.userClaims;
       return userClaims[claim];
