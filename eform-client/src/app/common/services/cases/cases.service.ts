@@ -14,7 +14,7 @@ import {
 import {BaseService} from 'src/app/common/services/base.service';
 
 const CasesMethods = {
-  EditById: '/api/cases/edit',
+  EditById: '/api/cases/getcase',
   GetCases: '/api/cases/index',
   UpdateCase: '/api/cases/update',
   DeleteCase: '/api/cases/delete'

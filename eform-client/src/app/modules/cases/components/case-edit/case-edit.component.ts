@@ -5,6 +5,7 @@ import {Subscription} from 'rxjs';
 import {Observable} from 'rxjs';
 import {CaseEditRequest, ReplyElement, ReplyRequest} from 'src/app/common/models/cases';
 import {TemplateDto} from 'src/app/common/models/dto';
+import {AuthService} from 'src/app/common/services/auth';
 import {CasesService} from 'src/app/common/services/cases';
 import {EFormService} from 'src/app/common/services/eform';
 import {CaseEditElementComponent} from '../case-edit-element/case-edit-element.component';
@@ -32,10 +33,13 @@ export class CaseEditComponent implements OnInit, OnDestroy {
   spinnerStatus = false;
   reverseRoute: string;
 
+  get userClaims() { return this.authService.userClaims; }
+
   constructor(private activateRoute: ActivatedRoute,
               private casesService: CasesService,
               private eFormService: EFormService,
-              private router: Router) {
+              private router: Router,
+              private authService: AuthService) {
     const activatedRouteSub = this.activateRoute.params.subscribe(params => {
       this.id = +params['id'];
       this.templateId = +params['templateId'];
@@ -120,7 +124,8 @@ export class CaseEditComponent implements OnInit, OnDestroy {
   }
 
   canDeactivate(): Observable<boolean> | boolean {
-    if (!this.isNoSaveExitAllowed) {
+    debugger;
+    if (!this.isNoSaveExitAllowed && this.userClaims.eFormsCasesUpdate) {
       this.caseConfirmation.show();
       return this.caseConfirmation.navigateAwaySelection$;
     }

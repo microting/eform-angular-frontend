@@ -2,6 +2,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {CaseListModel, CaseModel, CasesRequestModel} from 'src/app/common/models/cases';
 import {TemplateDto} from 'src/app/common/models/dto';
+import {AuthService} from 'src/app/common/services/auth';
 import {CasesService} from 'src/app/common/services/cases';
 import {EFormService} from 'src/app/common/services/eform';
 
@@ -18,9 +19,12 @@ export class CasesTableComponent implements OnInit {
   id: number;
   spinnerStatus = false;
 
+  get userClaims() { return this.authService.userClaims; }
+
   constructor(private activateRoute: ActivatedRoute,
               private casesService: CasesService,
-              private eFormService: EFormService) {
+              private eFormService: EFormService,
+              private authService: AuthService) {
     this.activateRoute.params.subscribe(params => {
       this.id = +params['id'];
     });

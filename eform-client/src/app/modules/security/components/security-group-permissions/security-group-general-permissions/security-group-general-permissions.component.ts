@@ -37,6 +37,9 @@ export class SecurityGroupGeneralPermissionsComponent implements OnInit {
     this.securityGroupGeneralPermissionsService.getGeneralPermissions(this.selectedGroupId).subscribe((data) => {
       if (data && data.success) {
         this.securityGroupGeneralPermissionsModel = data.model;
+        this.securityGroupGeneralPermissionsModel.permissionTypes.sort(function (a, b) {
+          return b.permissions.length - a.permissions.length;
+        });
       } this.spinnerStatus = false;
     });
   }
