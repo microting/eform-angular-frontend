@@ -19,12 +19,14 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = AuthConsts.EformPolicies.Units.Read)]
         public OperationDataResult<List<Unit_Dto>> Index()
         {
             return _unitsService.Index();
         }
 
         [HttpGet]
+        [Authorize(Policy = AuthConsts.EformPolicies.Units.Update)]
         public OperationDataResult<Unit_Dto> RequestOtp(int id)
         {
             return _unitsService.RequestOtp(id);

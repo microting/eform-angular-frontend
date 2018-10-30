@@ -4,7 +4,6 @@ using System.Linq;
 using eFormAPI.Web.Abstractions;
 using eFormCore;
 using eFormShared;
-using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers.WritableOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models;
@@ -28,8 +27,6 @@ namespace eFormAPI.Web.Services
             _localizationService = localizationService;
         }
 
-
-        [HttpPost]
         public OperationDataResult<TemplateListModel> Index(TemplateRequestModel templateRequestModel)
         {
             try
@@ -84,7 +81,6 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        [HttpGet]
         public OperationDataResult<Template_Dto> Get(int id)
         {
             try
@@ -124,6 +120,7 @@ namespace eFormAPI.Web.Services
                     _localizationService.GetString("CheckSettingsBeforeProceed"));
             }
         }
+
 
         public OperationResult Create(EFormXmlModel eFormXmlModel)
         {

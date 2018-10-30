@@ -101,9 +101,6 @@ namespace eFormAPI.Web.Hosting.Extensions
                     policy => policy.RequireClaim(AuthConsts.EformClaims.WorkersClaims.Delete,
                         AuthConsts.ClaimDefaultValue));
                 // Sites
-                options.AddPolicy(AuthConsts.EformPolicies.Sites.Create,
-                    policy => policy.RequireClaim(AuthConsts.EformClaims.SitesClaims.Create,
-                        AuthConsts.ClaimDefaultValue));
                 options.AddPolicy(AuthConsts.EformPolicies.Sites.Read,
                     policy => policy.RequireClaim(AuthConsts.EformClaims.SitesClaims.Read,
                         AuthConsts.ClaimDefaultValue));
@@ -139,7 +136,7 @@ namespace eFormAPI.Web.Hosting.Extensions
                 options.AddPolicy(AuthConsts.EformPolicies.EntitySelect.Delete,
                     policy => policy.RequireClaim(AuthConsts.EformClaims.EntitySelectClaims.Delete,
                         AuthConsts.ClaimDefaultValue));
-                // Entity Select
+                // User management
                 options.AddPolicy(AuthConsts.EformPolicies.UserManagement.Create,
                     policy => policy.RequireClaim(AuthConsts.EformClaims.UserManagementClaims.Create,
                         AuthConsts.ClaimDefaultValue));
@@ -151,6 +148,33 @@ namespace eFormAPI.Web.Hosting.Extensions
                         AuthConsts.ClaimDefaultValue));
                 options.AddPolicy(AuthConsts.EformPolicies.UserManagement.Delete,
                     policy => policy.RequireClaim(AuthConsts.EformClaims.UserManagementClaims.Delete,
+                        AuthConsts.ClaimDefaultValue));
+                // Entity Select
+                options.AddPolicy(AuthConsts.EformPolicies.Units.Update,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.UnitsClaims.Update,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.Units.Read,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.UnitsClaims.Read,
+                        AuthConsts.ClaimDefaultValue));
+                // Entity Select
+                options.AddPolicy(AuthConsts.EformPolicies.DeviceUsers.Create,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.DeviceUsersClaims.Create,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.DeviceUsers.Read,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.DeviceUsersClaims.Read,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.DeviceUsers.Update,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.DeviceUsersClaims.Update,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.DeviceUsers.Delete,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.DeviceUsersClaims.Delete,
+                        AuthConsts.ClaimDefaultValue));
+                // Eforms
+                options.AddPolicy(AuthConsts.EformPolicies.Eforms.Create,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.EformsClaims.Create,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.Eforms.Delete,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.EformsClaims.Delete,
                         AuthConsts.ClaimDefaultValue));
             });
         }

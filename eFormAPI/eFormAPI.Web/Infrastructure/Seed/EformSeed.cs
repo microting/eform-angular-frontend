@@ -21,17 +21,27 @@ namespace eFormAPI.Web.Infrastructure.Seed
                 new PermissionType
                 {
                     Id = AuthConsts.DbIds.PermissionTypes.EntitySearch,
-                    Name = "EntitySearch"
+                    Name = "Entity search"
                 },
                 new PermissionType
                 {
                     Id = AuthConsts.DbIds.PermissionTypes.EntitySelect,
-                    Name = "EntitySelect"
+                    Name = "Entity select"
                 },
                 new PermissionType
                 {
                     Id = AuthConsts.DbIds.PermissionTypes.UserManagement,
-                    Name = "UserManagement"
+                    Name = "User management"
+                },
+                new PermissionType
+                {
+                    Id = AuthConsts.DbIds.PermissionTypes.Units,
+                    Name = "Units"
+                },
+                new PermissionType
+                {
+                    Id = AuthConsts.DbIds.PermissionTypes.DeviceUsers,
+                    Name = "Device users"
                 },
                 new PermissionType
                 {
@@ -165,6 +175,7 @@ namespace eFormAPI.Web.Infrastructure.Seed
                     PermissionName = "Update",
                     PermissionTypeId = AuthConsts.DbIds.PermissionTypes.EntitySelect
                 },
+                // User management
                 new Permission()
                 {
                     Id = AuthConsts.DbIds.Permissions.UserManagementClaims.Read,
@@ -193,6 +204,51 @@ namespace eFormAPI.Web.Infrastructure.Seed
                     PermissionName = "Update",
                     PermissionTypeId = AuthConsts.DbIds.PermissionTypes.UserManagement,
                 },
+                // Units
+                new Permission()
+                {
+                    Id = AuthConsts.DbIds.Permissions.Units.Read,
+                    ClaimName = AuthConsts.EformClaims.UnitsClaims.Read,
+                    PermissionName = "Read",
+                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Units
+                },
+                new Permission()
+                {
+                    Id = AuthConsts.DbIds.Permissions.Units.Update,
+                    ClaimName = AuthConsts.EformClaims.UnitsClaims.Update,
+                    PermissionName = "Update",
+                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Units
+                },
+                // Device users
+                new Permission()
+                {
+                    Id = AuthConsts.DbIds.Permissions.DeviceUsers.Read,
+                    ClaimName = AuthConsts.EformClaims.DeviceUsersClaims.Read,
+                    PermissionName = "Read",
+                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.DeviceUsers
+                },
+                new Permission()
+                {
+                    Id = AuthConsts.DbIds.Permissions.DeviceUsers.Create,
+                    ClaimName = AuthConsts.EformClaims.DeviceUsersClaims.Create,
+                    PermissionName = "Create",
+                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.DeviceUsers
+                },
+                new Permission()
+                {
+                    Id = AuthConsts.DbIds.Permissions.DeviceUsers.Delete,
+                    ClaimName = AuthConsts.EformClaims.DeviceUsersClaims.Delete,
+                    PermissionName = "Delete",
+                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.DeviceUsers
+                },
+                new Permission()
+                {
+                    Id = AuthConsts.DbIds.Permissions.DeviceUsers.Update,
+                    ClaimName = AuthConsts.EformClaims.DeviceUsersClaims.Update,
+                    PermissionName = "Update",
+                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.DeviceUsers,
+                },
+                // Eforms
                 new Permission()
                 {
                     Id = AuthConsts.DbIds.Permissions.EformsClaims.Create,

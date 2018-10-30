@@ -58,7 +58,6 @@ namespace eFormAPI.Web.Services.Security
                 new Claim(AuthConsts.EformClaims.WorkersClaims.Update, AuthConsts.ClaimDefaultValue),
                 // Sites
                 new Claim(AuthConsts.EformClaims.SitesClaims.Read, AuthConsts.ClaimDefaultValue),
-                new Claim(AuthConsts.EformClaims.SitesClaims.Create, AuthConsts.ClaimDefaultValue),
                 new Claim(AuthConsts.EformClaims.SitesClaims.Delete, AuthConsts.ClaimDefaultValue),
                 new Claim(AuthConsts.EformClaims.SitesClaims.Update, AuthConsts.ClaimDefaultValue),
                 // Entity Search
@@ -76,6 +75,14 @@ namespace eFormAPI.Web.Services.Security
                 new Claim(AuthConsts.EformClaims.UserManagementClaims.Create, AuthConsts.ClaimDefaultValue),
                 new Claim(AuthConsts.EformClaims.UserManagementClaims.Delete, AuthConsts.ClaimDefaultValue),
                 new Claim(AuthConsts.EformClaims.UserManagementClaims.Update, AuthConsts.ClaimDefaultValue),
+                // Units
+                new Claim(AuthConsts.EformClaims.UnitsClaims.Read, AuthConsts.ClaimDefaultValue),
+                new Claim(AuthConsts.EformClaims.UnitsClaims.Update, AuthConsts.ClaimDefaultValue),
+                // Device users
+                new Claim(AuthConsts.EformClaims.DeviceUsersClaims.Read, AuthConsts.ClaimDefaultValue),
+                new Claim(AuthConsts.EformClaims.DeviceUsersClaims.Create, AuthConsts.ClaimDefaultValue),
+                new Claim(AuthConsts.EformClaims.DeviceUsersClaims.Delete, AuthConsts.ClaimDefaultValue),
+                new Claim(AuthConsts.EformClaims.DeviceUsersClaims.Update, AuthConsts.ClaimDefaultValue),
                 // Eform
                 new Claim(AuthConsts.EformClaims.EformsClaims.Delete, AuthConsts.ClaimDefaultValue),
                 new Claim(AuthConsts.EformClaims.EformsClaims.Create, AuthConsts.ClaimDefaultValue)

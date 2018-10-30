@@ -8,7 +8,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 using Microting.eFormApi.BasePn.Infrastructure.Models.SelectableList;
 
-namespace eFormAPI.Web.Controllers
+namespace eFormAPI.Web.Controllers.Advanced
 {
     [Authorize]
     public class EntitySelectController : Controller

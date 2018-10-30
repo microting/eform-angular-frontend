@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Infrastructure;
 using eFormShared;
@@ -8,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Infrastructure.Models;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
-namespace eFormAPI.Web.Controllers
+namespace eFormAPI.Web.Controllers.Advanced
 {
     [Authorize]
     public class SitesController : Controller

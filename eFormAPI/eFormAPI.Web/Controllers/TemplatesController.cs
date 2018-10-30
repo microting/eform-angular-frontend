@@ -1,5 +1,6 @@
 ﻿using System;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Infrastructure.Models;
@@ -45,12 +46,14 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Create)]
         public OperationResult Create([FromBody] EFormXmlModel eFormXmlModel)
         {
             return _templatesService.Create(eFormXmlModel);
         }
 
         [HttpGet]
+        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Delete)]
         public OperationResult Delete(int id)
         {
             return _templatesService.Delete(id);
