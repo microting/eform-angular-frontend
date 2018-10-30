@@ -13,8 +13,8 @@
     <!--nav items here-->
     <div class="collapse navbar-collapse" #navigationMenu>
       <ul class="navbar-nav mr-auto">
-        <ng-container *ngFor="let menu of navMenu">
-          <ng-container *ngIf="menu?.submenus?.length == 0; else dropdown;">
+        <ng-container *ngFor="let menu of appMenu.leftMenu">
+          <ng-container *ngIf="menu?.menuItems?.length == 0; else dropdown;">
             <li class="nav-item">
               <a
                 routerLink="{{menu.link}}"
@@ -33,9 +33,9 @@
                   mdbWavesEffect
                   class="nav-link dropdown-toggle waves-light"
                   id="{{menu.e2eId}}">{{menu.name}}</a>
-                <div class="dropdown-menu" *ngIf="menu?.submenus?.length > 0;">
+                <div class="dropdown-menu" *ngIf="menu?.menuItems?.length > 0;">
                   <a
-                    *ngFor="let subMenu of menu.submenus"
+                    *ngFor="let subMenu of menu.menuItems"
                     class="dropdown-item waves-light"
                     routerLink="{{subMenu.link}}"
                     routerLinkActive="active"
@@ -50,15 +50,15 @@
       </ul>
       <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <div mdbDropdown class="dropdown">
-                <a *ngIf="userMenu?.name"
+              <div mdbDropdown class="dropdown" *ngFor="let menu of appMenu.rightMenu">
+                <a
                   mdbDropdownToggle
                   mdbWavesEffect
                   class="nav-link dropdown-toggle waves-light"
-                   id="userDropdown">{{userMenu.name}}</a>
-                <div class="dropdown-menu outbounds-fix" *ngIf="userMenu?.submenus?.length">
+                   id="userDropdown">{{menu.name}}</a>
+                <div class="dropdown-menu outbounds-fix" *ngIf="menu?.menuItems?.length">
                   <a
-                    *ngFor="let subMenu of userMenu.submenus"
+                    *ngFor="let subMenu of menu.menuItems"
                     id="{{subMenu.e2eId}}"
                     class="dropdown-item waves-light"
                     routerLink="{{subMenu.link}}"

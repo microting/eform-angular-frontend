@@ -1,7 +1,8 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {EventBrokerService} from 'src/app/common/helpers';
-import {UserInfoModel} from 'src/app/common/models/user';
+import {UserInfoModel, UserMenuModel} from 'src/app/common/models/user';
+import {AppMenuService} from 'src/app/common/services/app-settings';
 import {AuthService, LocaleService, UserSettingsService} from 'src/app/common/services/auth';
 import {AdminService} from 'src/app/common/services/users';
 
@@ -16,6 +17,7 @@ export class NavigationComponent implements OnInit {
   userInfo: UserInfoModel = new UserInfoModel;
   userMenu: any;
   navMenu: any;
+  appMenu: UserMenuModel = new UserMenuModel();
   brokerListener: any;
 
   constructor(private authService: AuthService,
@@ -23,7 +25,8 @@ export class NavigationComponent implements OnInit {
               private userSettingsService: UserSettingsService,
               private localeService: LocaleService,
               private translateService: TranslateService,
-              private eventBrokerService: EventBrokerService) {
+              private eventBrokerService: EventBrokerService,
+              private appMenuService: AppMenuService) {
     this.brokerListener = eventBrokerService.listen<void>('get-navigation-menu',
       () => {
         this.initLocaleAsync().then();
@@ -38,7 +41,8 @@ export class NavigationComponent implements OnInit {
         this.userSettingsService.getUserSettings().subscribe(((data) => {
           localStorage.setItem('locale', data.model.locale);
           this.initLocaleAsync().then(() => {
-            this.initNavigationMenu();
+            debugger;
+            this.getNavigationMenu();
           });
         }));
       });
@@ -54,6 +58,14 @@ export class NavigationComponent implements OnInit {
       this.menuElement.nativeElement.classList.remove('show') :
       this.menuElement.nativeElement.classList.add('show');
     this._menuFlag = !this._menuFlag;
+  }
+
+  getNavigationMenu() {
+    this.appMenuService.getAppMenu().subscribe((data) => {
+      if (data && data.success) {
+        this.appMenu = data.model;
+      }
+    });
   }
 
   initNavigationMenu() {
