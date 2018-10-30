@@ -17,7 +17,7 @@
         </div>
         <div class="card-body">
 
-            <div class="mat-checkbox mb-2">
+            <div class="mat-checkbox mb-1">
               <input id="2fauthForsed" (change)="isTwoFactorEnabledCheckBoxChanged($event)"
                      [checked]="googleAuthInfoModel.isTwoFactorEnabled" [value]="googleAuthInfoModel.isTwoFactorEnabled"
                      color="primary" type="checkbox">
@@ -47,8 +47,8 @@
         <div class="card-header card-header-simple">
           {{ 'General' | translate}}
         </div>
-        <div class="card-body mb-1">
-          <div class="container-fluid p-2 ">
+        <div class="card-body">
+          <div class="container-fluid">
             <ng-select
               [placeholder]="'Language' | translate"
               [bindLabel]="'text'"

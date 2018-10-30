@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {SimpleSiteModel} from 'src/app/common/models/device-users';
 import {SiteDto} from 'src/app/common/models/dto';
 import {UnitsService} from 'src/app/common/services/advanced';
+import {AuthService} from 'src/app/common/services/auth';
 import {DeviceUserService} from 'src/app/common/services/device-users';
 
 @Component({
@@ -19,9 +20,12 @@ export class DeviceUsersPageComponent implements OnInit {
   spinnerStatus = true;
   sitesDto: Array<SiteDto>;
 
+  get userClaims() { return this.authService.userClaims; }
+
   constructor(
     private deviceUsersService: DeviceUserService,
-    private router: Router) {
+    private router: Router,
+    private authService: AuthService) {
   }
 
   ngOnInit() {
