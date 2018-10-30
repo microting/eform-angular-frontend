@@ -14,6 +14,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers.WritableOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
@@ -25,7 +26,7 @@ namespace eFormAPI.Web.Services
     {
         private readonly IOptions<EformTokenOptions> _tokenOptions;
         private readonly IUserService _userService;
-        private readonly IOptions<ApplicationSettings> _appSettings;
+        private readonly IWritableOptions<ApplicationSettings> _appSettings;
         private readonly IClaimsService _claimsService;
         private readonly ILocalizationService _localizationService;
         private readonly ILogger<AuthService> _logger;
@@ -35,7 +36,7 @@ namespace eFormAPI.Web.Services
 
         public AuthService(IOptions<EformTokenOptions> tokenOptions,
             ILogger<AuthService> logger,
-            IOptions<ApplicationSettings> appSettings,
+            IWritableOptions<ApplicationSettings> appSettings,
             RoleManager<EformRole> roleManager,
             SignInManager<EformUser> signInManager,
             UserManager<EformUser> userManager,
