@@ -47,6 +47,25 @@ namespace eFormAPI.Web.Services.Security
             }
         }
 
+        public List<string> GetUserClaimsNames(int userId)
+        {
+            try
+            {
+                var claims = GetUserClaims(userId);
+                var result = new List<string>();
+                if (claims.Any())
+                {
+                    result = claims.Select(x => x.Type).ToList();
+                }
+                return result;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
         public List<Claim> GetAllAuthClaims()
         {
             return new List<Claim>()

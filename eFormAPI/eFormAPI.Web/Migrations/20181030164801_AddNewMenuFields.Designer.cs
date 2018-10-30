@@ -3,14 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eFormAPI.Web.Infrastructure.Database;
 
 namespace eFormAPI.Web.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    partial class BaseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181030164801_AddNewMenuFields")]
+    partial class AddNewMenuFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -127,20 +130,20 @@ namespace eFormAPI.Web.Migrations
                     b.ToTable("MenuItems");
 
                     b.HasData(
-                        new { Id = 1, E2EId = "my-eforms", Link = "/", MenuPosition = 1, Name = "My eForms", Position = 0 },
-                        new { Id = 2, E2EId = "device-users", Link = "/simplesites", MenuPosition = 1, Name = "Device Users", Position = 1 },
-                        new { Id = 3, E2EId = "advanced", Link = "", MenuPosition = 1, Name = "Advanced", Position = 2 },
-                        new { Id = 4, E2EId = "sites", Link = "/advanced/sites", MenuPosition = 1, Name = "Sites", ParentId = 3, Position = 0 },
-                        new { Id = 5, E2EId = "workers", Link = "/advanced/workers", MenuPosition = 1, Name = "Workers", ParentId = 3, Position = 1 },
-                        new { Id = 6, E2EId = "units", Link = "/advanced/units", MenuPosition = 1, Name = "Units", ParentId = 3, Position = 2 },
-                        new { Id = 7, E2EId = "search", Link = "/advanced/entity-search", MenuPosition = 1, Name = "Searchable list", ParentId = 3, Position = 3 },
-                        new { Id = 8, E2EId = "selectable-list", Link = "/advanced/entity-select", MenuPosition = 1, Name = "Selectable list", ParentId = 3, Position = 4 },
-                        new { Id = 9, E2EId = "application-settings", Link = "/application-settings", MenuPosition = 1, Name = "Application Settings", ParentId = 3, Position = 5 },
-                        new { Id = 10, E2EId = "user-management-menu", Link = "/account-management/users", MenuPosition = 2, Name = "User Management", Position = 0 },
-                        new { Id = 11, E2EId = "settings", Link = "/account-management/settings", MenuPosition = 2, Name = "Settings", Position = 1 },
-                        new { Id = 12, E2EId = "security", Link = "/security", MenuPosition = 2, Name = "Security", Position = 2 },
-                        new { Id = 13, E2EId = "change-password", Link = "/account-management/change-password", MenuPosition = 2, Name = "Change password", Position = 3 },
-                        new { Id = 14, E2EId = "sign-out", Link = "/auth/sign-out", MenuPosition = 2, Name = "Logout", Position = 4 }
+                        new { Id = 1, MenuPosition = 1, Name = "My eForms", Position = 0 },
+                        new { Id = 2, MenuPosition = 1, Name = "Device Users", Position = 1 },
+                        new { Id = 3, MenuPosition = 1, Name = "Advanced", Position = 2 },
+                        new { Id = 4, MenuPosition = 1, Name = "Sites", ParentId = 3, Position = 0 },
+                        new { Id = 5, MenuPosition = 1, Name = "Workers", ParentId = 3, Position = 1 },
+                        new { Id = 6, MenuPosition = 1, Name = "Units", ParentId = 3, Position = 2 },
+                        new { Id = 7, MenuPosition = 1, Name = "Searchable list", ParentId = 3, Position = 3 },
+                        new { Id = 8, MenuPosition = 1, Name = "Selectable list", ParentId = 3, Position = 4 },
+                        new { Id = 9, MenuPosition = 1, Name = "Application Settings", ParentId = 3, Position = 5 },
+                        new { Id = 10, MenuPosition = 2, Name = "User Management", Position = 0 },
+                        new { Id = 11, MenuPosition = 2, Name = "Settings", Position = 1 },
+                        new { Id = 12, MenuPosition = 2, Name = "Security", Position = 2 },
+                        new { Id = 13, MenuPosition = 2, Name = "Change password", Position = 3 },
+                        new { Id = 14, MenuPosition = 2, Name = "Logout", Position = 4 }
                     );
                 });
 

@@ -7,5 +7,6 @@ namespace eFormAPI.Web.Abstractions.Security
     {
         List<Claim> GetAllAuthClaims();
         List<Claim> GetUserClaims(int userId);
+        List<string> GetUserClaimsNames(int userId);
     }
 }

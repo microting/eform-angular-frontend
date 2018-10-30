@@ -8,8 +8,11 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities
     {
         [StringLength(250)] 
         public string Name { get; set; }
+        public string Link { get; set; }
+        public string E2EId { get; set; }
 
         public int Position { get; set; }
+        public MenuPosition MenuPosition { get; set; }
 
         public int? ParentId { get; set; }
         public MenuItem Parent { get; set; }

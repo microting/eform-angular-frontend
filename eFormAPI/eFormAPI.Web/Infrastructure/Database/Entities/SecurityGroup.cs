@@ -12,20 +12,4 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities
         public ICollection<SecurityGroupUser> SecurityGroupUsers { get; set; }
             = new List<SecurityGroupUser>();
     }
-
-
-    public class EformPermission : BaseEntity
-    {
-        public int EformInGroupId { get; set; }
-    }
-
-    public class EformInGroup : BaseEntity
-    {
-        public int TemplateId { get; set; }
-
-        public int SecurityGroupId { get; set; }
-        public SecurityGroup SecurityGroup { get; set; }
-    }
-
-
 }

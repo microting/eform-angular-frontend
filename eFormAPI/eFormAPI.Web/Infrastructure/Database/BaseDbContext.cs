@@ -22,7 +22,7 @@ namespace eFormAPI.Web.Infrastructure.Database
         }
 
         // Common
-     //   public DbSet<MenuItem> MenuItems { get; set; }
+        public DbSet<MenuItem> MenuItems { get; set; }
 
         // Security
         public DbSet<SecurityGroup> SecurityGroups { get; set; }
@@ -30,7 +30,9 @@ namespace eFormAPI.Web.Infrastructure.Database
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<GroupPermission> GroupPermissions { get; set; }
         public DbSet<PermissionType> PermissionTypes { get; set; }
-        
+        public DbSet<EformInGroup> EformInGroups { get; set; }
+        public DbSet<EformPermission> EformPermissions { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -57,6 +59,24 @@ namespace eFormAPI.Web.Infrastructure.Database
             modelBuilder.Entity<Permission>()
                 .HasIndex(p => p.ClaimName)
                 .IsUnique();
+
+            modelBuilder.Entity<EformPermission>()
+                .HasIndex(p => new
+                {
+                    p.PermissionId,
+                    p.EformInGroupId,
+                }).IsUnique();
+
+            modelBuilder.Entity<EformInGroup>()
+                .HasIndex(p => new
+                {
+                    p.TemplateId,
+                    p.SecurityGroupId,
+                }).IsUnique();
+
+            modelBuilder.Entity<EformInGroup>()
+                .HasIndex(p => p.TemplateId);
+
 
             // Seed
             modelBuilder.SeedLatest();
