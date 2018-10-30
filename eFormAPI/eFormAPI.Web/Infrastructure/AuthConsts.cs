@@ -63,8 +63,23 @@
             {
                 public const string Create = "eforms_create";
                 public const string Delete = "eforms_delete";
+                public const string Read = "eforms_read";
+                public const string UpdateColumns = "eforms_update_columns";
+                public const string DownloadXml = "eforms_download_xml";
+                public const string UploadZip = "eforms_upload_zip";
+                public const string CaseRead = "eforms_case_read";
+                public const string CasesRead = "eforms_cases_read";
+                public const string CasesUpdate = "eforms_cases_update";
+                public const string CasesDelete = "eforms_cases_delete";
+                public const string GetPdf = "eforms_get_pdf";
+                public const string PairingRead = "eforms_pairing_read";
+                public const string PairingUpdate = "eforms_pairing_update";
+                public const string ReadTags = "eforms_read_tags";
+                public const string UpdateTags = "eforms_update_tags";
+                public const string GetCsv = "eforms_get_csv";
             }
         }
+
 
         public static class EformPolicies
         {
@@ -125,6 +140,20 @@
             {
                 public const string Create = EformClaims.EformsClaims.Create;
                 public const string Delete = EformClaims.EformsClaims.Delete;
+                public const string Read = EformClaims.EformsClaims.Read;
+                public const string UpdateColumns = EformClaims.EformsClaims.UpdateColumns;
+                public const string DownloadXml = EformClaims.EformsClaims.DownloadXml;
+                public const string UploadZip = EformClaims.EformsClaims.UploadZip;
+                public const string CaseRead = EformClaims.EformsClaims.CaseRead;
+                public const string CasesRead = EformClaims.EformsClaims.CasesRead;
+                public const string CasesUpdate = EformClaims.EformsClaims.CasesUpdate;
+                public const string CasesDelete = EformClaims.EformsClaims.CasesDelete;
+                public const string GetPdf = EformClaims.EformsClaims.GetPdf;
+                public const string PairingRead = EformClaims.EformsClaims.PairingRead;
+                public const string PairingUpdate = EformClaims.EformsClaims.PairingUpdate;
+                public const string ReadTags = EformClaims.EformsClaims.ReadTags;
+                public const string UpdateTags = EformClaims.EformsClaims.UpdateTags;
+                public const string GetCsv = EformClaims.EformsClaims.GetCsv;
             }
         }
 
@@ -203,10 +232,24 @@
                     public const int Delete = 26;
                 }
 
-                public static class EformsClaims
+                public static class Eforms
                 {
                     public const int Create = 27;
                     public const int Delete = 28;
+                    public const int Read = 29;
+                    public const int UpdateColumns = 30;
+                    public const int DownloadXml = 31;
+                    public const int UploadZip = 32;
+                    public const int CaseRead = 33;
+                    public const int CasesRead = 34;
+                    public const int CasesUpdate = 35;
+                    public const int CasesDelete = 36;
+                    public const int GetPdf = 37;
+                    public const int PairingRead = 38;
+                    public const int PairingUpdate = 39;
+                    public const int ReadTags = 40;
+                    public const int UpdateTags = 41;
+                    public const int GetCsv = 42;
                 }
             }
         }

@@ -251,36 +251,239 @@ namespace eFormAPI.Web.Infrastructure.Seed
                 // Eforms
                 new Permission()
                 {
-                    Id = AuthConsts.DbIds.Permissions.EformsClaims.Create,
+                    Id = AuthConsts.DbIds.Permissions.Eforms.Create,
                     ClaimName = AuthConsts.EformClaims.EformsClaims.Create,
                     PermissionName = "Create",
                     PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Eforms,
                 },
                 new Permission()
                 {
-                    Id = AuthConsts.DbIds.Permissions.EformsClaims.Delete,
+                    Id = AuthConsts.DbIds.Permissions.Eforms.Delete,
                     ClaimName = AuthConsts.EformClaims.EformsClaims.Delete,
                     PermissionName = "Delete",
+                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Eforms,
+                },
+                new Permission()
+                {
+                    Id = AuthConsts.DbIds.Permissions.Eforms.Read,
+                    ClaimName = AuthConsts.EformClaims.EformsClaims.Read,
+                    PermissionName = "Read",
+                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Eforms,
+                },
+                new Permission()
+                {
+                    Id = AuthConsts.DbIds.Permissions.Eforms.UpdateColumns,
+                    ClaimName = AuthConsts.EformClaims.EformsClaims.UpdateColumns,
+                    PermissionName = "Update columns",
+                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Eforms,
+                },
+                new Permission()
+                {
+                    Id = AuthConsts.DbIds.Permissions.Eforms.DownloadXml,
+                    ClaimName = AuthConsts.EformClaims.EformsClaims.DownloadXml,
+                    PermissionName = "Download XML",
+                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Eforms,
+                },
+                new Permission()
+                {
+                    Id = AuthConsts.DbIds.Permissions.Eforms.UploadZip,
+                    ClaimName = AuthConsts.EformClaims.EformsClaims.UploadZip,
+                    PermissionName = "Upload ZIP",
+                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Eforms,
+                },
+                new Permission()
+                {
+                    Id = AuthConsts.DbIds.Permissions.Eforms.CaseRead,
+                    ClaimName = AuthConsts.EformClaims.EformsClaims.CaseRead,
+                    PermissionName = "Case read",
+                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Eforms,
+                },
+                new Permission()
+                {
+                    Id = AuthConsts.DbIds.Permissions.Eforms.CasesRead,
+                    ClaimName = AuthConsts.EformClaims.EformsClaims.CasesRead,
+                    PermissionName = "Cases read",
+                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Eforms,
+                },
+                new Permission()
+                {
+                    Id = AuthConsts.DbIds.Permissions.Eforms.CasesUpdate,
+                    ClaimName = AuthConsts.EformClaims.EformsClaims.CasesUpdate,
+                    PermissionName = "Cases update",
+                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Eforms,
+                },
+                new Permission()
+                {
+                    Id = AuthConsts.DbIds.Permissions.Eforms.CasesDelete,
+                    ClaimName = AuthConsts.EformClaims.EformsClaims.CasesDelete,
+                    PermissionName = "Cases delete",
+                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Eforms,
+                },
+                new Permission()
+                {
+                    Id = AuthConsts.DbIds.Permissions.Eforms.GetPdf,
+                    ClaimName = AuthConsts.EformClaims.EformsClaims.GetPdf,
+                    PermissionName = "Get PDF",
+                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Eforms,
+                },
+                new Permission()
+                {
+                    Id = AuthConsts.DbIds.Permissions.Eforms.PairingRead,
+                    ClaimName = AuthConsts.EformClaims.EformsClaims.PairingRead,
+                    PermissionName = "Pairing read",
+                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Eforms,
+                },
+                new Permission()
+                {
+                    Id = AuthConsts.DbIds.Permissions.Eforms.PairingUpdate,
+                    ClaimName = AuthConsts.EformClaims.EformsClaims.PairingUpdate,
+                    PermissionName = "Pairing update",
+                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Eforms,
+                },
+                new Permission()
+                {
+                    Id = AuthConsts.DbIds.Permissions.Eforms.ReadTags,
+                    ClaimName = AuthConsts.EformClaims.EformsClaims.ReadTags,
+                    PermissionName = "Read tags",
+                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Eforms,
+                },
+                new Permission()
+                {
+                    Id = AuthConsts.DbIds.Permissions.Eforms.UpdateTags,
+                    ClaimName = AuthConsts.EformClaims.EformsClaims.UpdateTags,
+                    PermissionName = "Update tags",
+                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Eforms,
+                },
+                new Permission()
+                {
+                    Id = AuthConsts.DbIds.Permissions.Eforms.GetCsv,
+                    ClaimName = AuthConsts.EformClaims.EformsClaims.GetCsv,
+                    PermissionName = "Get CSV",
                     PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Eforms,
                 }
             );
             return modelBuilder;
         }
 
+
         public static ModelBuilder AddDefaultGroupPermission(this ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<GroupPermission>().HasData(
-            //    new GroupPermission()
-            //    {
-            //        Id = 1,
-            //        PermissionId = AuthConsts.DbIds.Permissions.WorkersClaims.Read,
-            //        SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins
-            //    });
+            modelBuilder.Entity<GroupPermission>().HasData(
+                // eForm admin group
+                new GroupPermission()
+                {
+                    Id = 1,
+                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.Read,
+                    SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins
+                },
+                new GroupPermission()
+                {
+                    Id = 2,
+                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.Create,
+                    SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins
+                },
+                new GroupPermission()
+                {
+                    Id = 3,
+                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.Delete,
+                    SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins
+                },
+                new GroupPermission()
+                {
+                    Id = 4,
+                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.UpdateColumns,
+                    SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins
+                },
+                new GroupPermission()
+                {
+                    Id = 5,
+                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.DownloadXml,
+                    SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins
+                },
+                new GroupPermission()
+                {
+                    Id = 6,
+                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.UploadZip,
+                    SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins
+                },
+                new GroupPermission()
+                {
+                    Id = 7,
+                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.CaseRead,
+                    SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins
+                },
+                new GroupPermission()
+                {
+                    Id = 8,
+                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.CasesRead,
+                    SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins
+                },
+
+                new GroupPermission()
+                {
+                    Id = 9,
+                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.CasesUpdate,
+                    SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins
+                },
+                new GroupPermission()
+                {
+                    Id = 10,
+                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.CasesDelete,
+                    SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins
+                },
+                new GroupPermission()
+                {
+                    Id = 11,
+                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.GetCsv,
+                    SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins
+                },
+                new GroupPermission()
+                {
+                    Id = 12,
+                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.GetPdf,
+                    SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins
+                },
+                // eForm user group
+                new GroupPermission()
+                {
+                    Id = 13,
+                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.Read,
+                    SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformUsers
+                },
+                new GroupPermission()
+                {
+                    Id = 14,
+                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.GetCsv,
+                    SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformUsers
+                },
+                new GroupPermission()
+                {
+                    Id = 15,
+                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.CaseRead,
+                    SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformUsers
+                },
+                new GroupPermission()
+                {
+                    Id = 16,
+                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.CasesRead,
+                    SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformUsers
+                },
+                new GroupPermission()
+                {
+                    Id = 17,
+                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.CasesUpdate,
+                    SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformUsers
+                },
+                new GroupPermission()
+                {
+                    Id = 18,
+                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.GetPdf,
+                    SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformUsers
+                }
+            );
             return modelBuilder;
         }
 
-//eForm user - view eForms, get CSV, list cases, view cases, edit cases, get pdf.
-//eForm admin - view eForms, create eForms, delete eForms, change eForm columns, download XML, upload ZIP, view cases, edit cases, delete cases, get CSV, get PDF.
         public static ModelBuilder SeedLatest(this ModelBuilder modelBuilder)
         {
             modelBuilder.AddPermissionTypes()

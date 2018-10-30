@@ -22,7 +22,7 @@ namespace eFormAPI.Web.Infrastructure.Database
         }
 
         // Common
-        public DbSet<MenuItem> MenuItems { get; set; }
+     //   public DbSet<MenuItem> MenuItems { get; set; }
 
         // Security
         public DbSet<SecurityGroup> SecurityGroups { get; set; }

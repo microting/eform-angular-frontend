@@ -176,6 +176,48 @@ namespace eFormAPI.Web.Hosting.Extensions
                 options.AddPolicy(AuthConsts.EformPolicies.Eforms.Delete,
                     policy => policy.RequireClaim(AuthConsts.EformClaims.EformsClaims.Delete,
                         AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.Eforms.Read,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.EformsClaims.Read,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.Eforms.UpdateColumns,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.EformsClaims.UpdateColumns,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.Eforms.DownloadXml,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.EformsClaims.DownloadXml,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.Eforms.UploadZip,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.EformsClaims.UploadZip,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.Eforms.CaseRead,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.EformsClaims.CaseRead,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.Eforms.CasesRead,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.EformsClaims.CasesRead,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.Eforms.CasesUpdate,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.EformsClaims.CasesUpdate,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.Eforms.CasesDelete,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.EformsClaims.CasesDelete,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.Eforms.GetPdf,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.EformsClaims.GetPdf,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.Eforms.PairingRead,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.EformsClaims.PairingRead,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.Eforms.PairingUpdate,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.EformsClaims.PairingUpdate,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.Eforms.ReadTags,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.EformsClaims.ReadTags,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.Eforms.UpdateTags,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.EformsClaims.UpdateTags,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.Eforms.GetCsv,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.EformsClaims.GetCsv,
+                        AuthConsts.ClaimDefaultValue));
             });
         }
 
