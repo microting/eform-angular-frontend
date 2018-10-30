@@ -46,7 +46,7 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public OperationDataResult<ReplyElement> Edit(int id)
+        public OperationDataResult<ReplyElement> GetCase(int id)
         {
             try
             {

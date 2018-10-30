@@ -85,7 +85,21 @@ namespace eFormAPI.Web.Services.Security
                 new Claim(AuthConsts.EformClaims.DeviceUsersClaims.Update, AuthConsts.ClaimDefaultValue),
                 // Eform
                 new Claim(AuthConsts.EformClaims.EformsClaims.Delete, AuthConsts.ClaimDefaultValue),
-                new Claim(AuthConsts.EformClaims.EformsClaims.Create, AuthConsts.ClaimDefaultValue)
+                new Claim(AuthConsts.EformClaims.EformsClaims.Create, AuthConsts.ClaimDefaultValue),
+                new Claim(AuthConsts.EformClaims.EformsClaims.Read, AuthConsts.ClaimDefaultValue),
+                new Claim(AuthConsts.EformClaims.EformsClaims.UpdateColumns, AuthConsts.ClaimDefaultValue),
+                new Claim(AuthConsts.EformClaims.EformsClaims.DownloadXml, AuthConsts.ClaimDefaultValue),
+                new Claim(AuthConsts.EformClaims.EformsClaims.UploadZip, AuthConsts.ClaimDefaultValue),
+                new Claim(AuthConsts.EformClaims.EformsClaims.CaseRead, AuthConsts.ClaimDefaultValue),
+                new Claim(AuthConsts.EformClaims.EformsClaims.CasesRead, AuthConsts.ClaimDefaultValue),
+                new Claim(AuthConsts.EformClaims.EformsClaims.CasesUpdate, AuthConsts.ClaimDefaultValue),
+                new Claim(AuthConsts.EformClaims.EformsClaims.CasesDelete, AuthConsts.ClaimDefaultValue),
+                new Claim(AuthConsts.EformClaims.EformsClaims.GetPdf, AuthConsts.ClaimDefaultValue),
+                new Claim(AuthConsts.EformClaims.EformsClaims.PairingRead, AuthConsts.ClaimDefaultValue),
+                new Claim(AuthConsts.EformClaims.EformsClaims.PairingUpdate, AuthConsts.ClaimDefaultValue),
+                new Claim(AuthConsts.EformClaims.EformsClaims.ReadTags, AuthConsts.ClaimDefaultValue),
+                new Claim(AuthConsts.EformClaims.EformsClaims.UpdateTags, AuthConsts.ClaimDefaultValue),
+                new Claim(AuthConsts.EformClaims.EformsClaims.GetCsv, AuthConsts.ClaimDefaultValue)
             };
         }
     }

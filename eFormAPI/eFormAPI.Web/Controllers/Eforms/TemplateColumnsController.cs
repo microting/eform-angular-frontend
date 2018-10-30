@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Templates;
 
-namespace eFormAPI.Web.Controllers
+namespace eFormAPI.Web.Controllers.Eforms
 {
     [Authorize]
     public class TemplateColumnsController : Controller
@@ -33,6 +34,7 @@ namespace eFormAPI.Web.Controllers
 
         [HttpPost]
         [Route("api/template-columns")]
+        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UpdateColumns)]
         public OperationResult UpdateColumns([FromBody] UpdateTemplateColumnsModel model)
         {
             return _templateColumnsService.UpdateColumns(model);

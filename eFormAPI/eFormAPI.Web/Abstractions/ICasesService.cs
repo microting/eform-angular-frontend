@@ -8,7 +8,7 @@ namespace eFormAPI.Web.Abstractions
     public interface ICasesService
     {
         OperationDataResult<CaseListModel> Index(CaseRequestModel requestModel);
-        OperationDataResult<ReplyElement> Edit(int id);
+        OperationDataResult<ReplyElement> GetCase(int id);
         OperationResult Delete(int id);
         OperationResult Update(ReplyRequest model);
     }

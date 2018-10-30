@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Infrastructure;
 using ICSharpCode.SharpZipLib.Zip;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -13,7 +14,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
 
-namespace eFormAPI.Web.Controllers
+namespace eFormAPI.Web.Controllers.Eforms
 {
     public class TemplateFilesController : Controller
     {
@@ -33,6 +34,7 @@ namespace eFormAPI.Web.Controllers
         [HttpGet]
         [Authorize]
         [Route("api/template-files/csv/{id}")]
+        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.GetCsv)]
         public IActionResult Csv(int id)
         {
             var core = _coreHelper.GetCore();
@@ -46,6 +48,7 @@ namespace eFormAPI.Web.Controllers
 
         [HttpGet]
         [Route("api/template-files/get-image/{fileName}.{ext}")]
+        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.CasesRead)]
         public IActionResult GetImage(string fileName, string ext, string noCache = "noCache")
         {
             var core = _coreHelper.GetCore();
@@ -63,6 +66,7 @@ namespace eFormAPI.Web.Controllers
         [HttpGet]
         [Authorize]
         [Route("api/template-files/rotate-image")]
+        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.CasesUpdate)]
         public OperationResult RotateImage(string fileName)
         {
             var core = _coreHelper.GetCore();
@@ -75,9 +79,7 @@ namespace eFormAPI.Web.Controllers
             try
             {
                 var img = Image.Load(filePath);
-                img.Mutate(x => x
-                    .Rotate(RotateMode.Rotate90)); // TODO RotateFlip???
-                // img.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                img.Mutate(x => x.Rotate(RotateMode.Rotate90));
                 img.Save(filePath);
                 img.Dispose();
             }
@@ -97,6 +99,7 @@ namespace eFormAPI.Web.Controllers
         [HttpGet]
         [Authorize]
         [Route("api/template-files/delete-image")]
+        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.CasesUpdate)]
         public OperationResult DeleteImage(string fileName, int fieldId, int uploadedObjId)
         {
             try
@@ -121,6 +124,7 @@ namespace eFormAPI.Web.Controllers
         [HttpGet]
         [Authorize]
         [Route("api/template-files/get-pdf-file")]
+        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.GetPdf)]
         public IActionResult GetPdfFile(string fileName)
         {
             var core = _coreHelper.GetCore();
@@ -137,6 +141,7 @@ namespace eFormAPI.Web.Controllers
         [HttpGet]
         [Authorize]
         [Route("api/template-files/download-case-pdf/{templateId}")]
+        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.GetPdf)]
         public IActionResult DownloadEFormPdf(int templateId, int caseId)
         {
             try
@@ -163,6 +168,7 @@ namespace eFormAPI.Web.Controllers
         [HttpGet]
         [Authorize]
         [Route("api/template-files/download-eform-xml/{templateId}")]
+        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.DownloadXml)]
         public IActionResult DownloadEFormXml(int templateId)
         {
             try
@@ -188,6 +194,7 @@ namespace eFormAPI.Web.Controllers
         [HttpPost]
         [Authorize]
         [Route("api/template-files/upload-eform-zip")]
+        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UploadZip)]
         public async Task<IActionResult> UploadEformZip(EformZipUploadModel uploadModel)
         {
             try

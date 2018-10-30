@@ -7,7 +7,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Models;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Templates;
 
-namespace eFormAPI.Web.Controllers
+namespace eFormAPI.Web.Controllers.Eforms
 {
     [Authorize]
     public class TemplatesController : Controller
@@ -20,6 +20,7 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Read)]
         public IActionResult Index([FromBody] TemplateRequestModel templateRequestModel)
         {
             try
@@ -33,6 +34,7 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Read)]
         public IActionResult Get(int id)
         {
             try
@@ -60,12 +62,14 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.PairingRead)]
         public OperationDataResult<DeployToModel> DeployTo(int id)
         {
             return _templatesService.DeployTo(id);
         }
 
         [HttpPost]
+        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.PairingUpdate)]
         public OperationResult Deploy([FromBody] DeployModel deployModel)
         {
             return _templatesService.Deploy(deployModel);
