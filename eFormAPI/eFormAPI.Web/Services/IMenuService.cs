@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using eFormAPI.Web.Infrastructure.Models.Menu;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Services

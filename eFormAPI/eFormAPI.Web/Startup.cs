@@ -30,12 +30,12 @@ namespace eFormAPI.Web
 {
     public class Startup
     {
-        private readonly List<IEformPlugin> _plugins;
+        public static List<IEformPlugin> Plugins;
 
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            _plugins = PluginHelper.GetPlugins();
+            Plugins = PluginHelper.GetPlugins();
         }
 
         public IConfiguration Configuration { get; }
@@ -52,7 +52,7 @@ namespace eFormAPI.Web
                     b => b.MigrationsAssembly("eFormAPI.Web")));
 
             // plugins
-            services.AddEFormPluginsDbContext(Configuration, _plugins);
+            services.AddEFormPluginsDbContext(Configuration, Plugins);
             // Identity services
             services.AddIdentity<EformUser, EformRole>()
                 .AddEntityFrameworkStores<BaseDbContext>()
@@ -78,7 +78,7 @@ namespace eFormAPI.Web
             // Localiation
             services.AddLocalization(options => { options.ResourcesPath = "Resources"; });
             // MVC and API services with Plugins
-            services.AddEFormMvc(_plugins);
+            services.AddEFormMvc(Plugins);
             // Writable options
             services.ConfigureWritable<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
             services.ConfigureWritable<EmailSettings>(Configuration.GetSection("EmailSettings"));
@@ -115,7 +115,7 @@ namespace eFormAPI.Web
                 });
             });
             // plugins
-            services.AddEFormPlugins(_plugins);
+            services.AddEFormPlugins(Plugins);
             ConnectServices(services);
         }
 
@@ -168,7 +168,7 @@ namespace eFormAPI.Web
             }
 
             // Plugins
-            app.UseEFormPlugins(_plugins);
+            app.UseEFormPlugins(Plugins);
             // Route all unknown requests to app root
             app.UseAngularMiddleware(env);
         }

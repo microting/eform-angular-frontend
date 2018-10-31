@@ -95,49 +95,64 @@ namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
                     ParentId = 3,
                     MenuPosition = MenuPosition.Left,
                 },
+
                 new MenuItem
                 {
                     Id = 10,
-                    Name = "User Management",
-                    E2EId = "user-management-menu",
-                    Link = "/account-management/users",
+                    Name = "user",
+                    E2EId = "sign-out-dropdown",
+                    Link = "",
                     Position = 0,
                     MenuPosition = MenuPosition.Right,
                 },
                 new MenuItem
                 {
                     Id = 11,
-                    Name = "Settings",
-                    E2EId = "settings",
-                    Link = "/account-management/settings",
-                    Position = 1,
+                    Name = "User Management",
+                    E2EId = "user-management-menu",
+                    Link = "/account-management/users",
+                    Position = 0,
+                    ParentId = 10,
                     MenuPosition = MenuPosition.Right,
                 },
                 new MenuItem
                 {
                     Id = 12,
-                    Name = "Security",
-                    E2EId = "security",
-                    Link = "/security",
-                    Position = 2,
+                    Name = "Settings",
+                    E2EId = "settings",
+                    Link = "/account-management/settings",
+                    Position = 1,
+                    ParentId = 10,
                     MenuPosition = MenuPosition.Right,
                 },
                 new MenuItem
                 {
                     Id = 13,
-                    Name = "Change password",
-                    E2EId = "change-password",
-                    Link = "/account-management/change-password",
-                    Position = 3,
+                    Name = "Security",
+                    E2EId = "security",
+                    Link = "/security",
+                    Position = 2,
+                    ParentId = 10,
                     MenuPosition = MenuPosition.Right,
                 },
                 new MenuItem
                 {
                     Id = 14,
+                    Name = "Change password",
+                    E2EId = "change-password",
+                    Link = "/account-management/change-password",
+                    Position = 3,
+                    ParentId = 10,
+                    MenuPosition = MenuPosition.Right,
+                },
+                new MenuItem
+                {
+                    Id = 15,
                     Name = "Logout",
                     E2EId = "sign-out",
                     Link = "/auth/sign-out",
                     Position = 4,
+                    ParentId = 10,
                     MenuPosition = MenuPosition.Right,
                 }
             );
