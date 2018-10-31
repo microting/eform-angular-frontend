@@ -20,7 +20,7 @@ namespace eFormAPI.Web.Controllers.Security
 
         [HttpGet]
         [Route("api/security/eforms/{groupId}")]
-        public async Task<OperationDataResult<EformsPermissionsModel>> GetAvailableEforms(TemplateRequestModel model, int groupId)
+        public async Task<OperationDataResult<TemplateListModel>> GetAvailableEforms(TemplateRequestModel model, int groupId)
         {
             return await _eformGroupService.GetAvailableEforms(model, groupId);
         }
@@ -30,6 +30,13 @@ namespace eFormAPI.Web.Controllers.Security
         public async Task<OperationResult> AddEformToGroup([FromBody] EformBindGroupModel model)
         {
             return await _eformGroupService.AddEformToGroup(model);
+        }
+
+        [HttpGet]
+        [Route("api/security/eforms-permissions/{groupId}")]
+        public async Task<OperationDataResult<EformsPermissionsModel>> GetGroupEforms(int groupId)
+        {
+            return await _eformGroupService.GetGroupEforms(groupId);
         }
     }
 }

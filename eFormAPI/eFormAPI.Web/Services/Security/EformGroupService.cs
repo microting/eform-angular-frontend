@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Infrastructure;
 using eFormAPI.Web.Infrastructure.Database;
 using eFormAPI.Web.Infrastructure.Database.Entities;
+using eFormAPI.Web.Infrastructure.Models.Permissions;
+using eFormShared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Abstractions;
@@ -33,6 +36,9 @@ namespace eFormAPI.Web.Services.Security
         public int Id { get; set; }
         public string Label { get; set; }
         public DateTime? CreatedAt { get; set; }
+
+        public List<PermissionModel> Permissions { get; set; }
+            = new List<PermissionModel>();
     }
 
     public class EformGroupService : IEformGroupService
@@ -53,13 +59,16 @@ namespace eFormAPI.Web.Services.Security
             _coreHelper = coreHelper;
         }
 
-        public async Task<OperationDataResult<EformsPermissionsModel>> GetAvailableEforms(
+        public async Task<OperationDataResult<TemplateListModel>> GetAvailableEforms(
             TemplateRequestModel templateRequestModel,
             int groupId)
         {
             try
             {
-                var result = new EformsPermissionsModel();
+                var result = new TemplateListModel
+                {
+                    Templates = new List<Template_Dto>()
+                };
                 var core = _coreHelper.GetCore();
                 var templatesDto = core.TemplateItemReadAll(false,
                     "",
@@ -79,25 +88,21 @@ namespace eFormAPI.Web.Services.Security
                     {
                         if (!eformsInGroup.Contains(templateDto.Id))
                         {
-                            result.EformsList.Add(new EformPermissionsModel()
-                            {
-                                Id = templateDto.Id,
-                                Label = templateDto.Label,
-                                CreatedAt = templateDto.CreatedAt,
-                            });
+                            result.Templates.Add(templateDto);
                         }
                     }
 
-                    result.Total = templatesDto.Count;
+                    result.NumOfElements = templatesDto.Count;
+                    result.PageNum = 1;
                 }
 
-                return new OperationDataResult<EformsPermissionsModel>(true, result);
+                return new OperationDataResult<TemplateListModel>(true, result);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 _logger.LogError(e.Message);
-                return new OperationDataResult<EformsPermissionsModel>(false,
+                return new OperationDataResult<TemplateListModel>(false,
                     "Error while obtaining available eForms");
             }
         }
@@ -131,6 +136,77 @@ namespace eFormAPI.Web.Services.Security
                 Console.WriteLine(e);
                 _logger.LogError(e.Message);
                 return new OperationResult(true, "Error while binding eform to group");
+            }
+        }
+
+        public async Task<OperationDataResult<EformsPermissionsModel>> GetGroupEforms(int groupId)
+        {
+            try
+            {
+                var result = new EformsPermissionsModel();
+
+                var eformClaims = new[]
+                {
+                    AuthConsts.EformClaims.EformsClaims.UpdateColumns,
+                    AuthConsts.EformClaims.EformsClaims.DownloadXml,
+                    AuthConsts.EformClaims.EformsClaims.UploadZip,
+                    AuthConsts.EformClaims.EformsClaims.CaseRead,
+                    AuthConsts.EformClaims.EformsClaims.CasesRead,
+                    AuthConsts.EformClaims.EformsClaims.CasesUpdate,
+                    AuthConsts.EformClaims.EformsClaims.CasesDelete,
+                    AuthConsts.EformClaims.EformsClaims.GetPdf,
+                    AuthConsts.EformClaims.EformsClaims.PairingRead,
+                    AuthConsts.EformClaims.EformsClaims.PairingUpdate,
+                    AuthConsts.EformClaims.EformsClaims.ReadTags,
+                    AuthConsts.EformClaims.EformsClaims.UpdateTags,
+                    AuthConsts.EformClaims.EformsClaims.GetCsv
+                };
+
+                var eformsInGroup = await _dbContext.EformInGroups
+                    .Where(x => x.SecurityGroupId == groupId)
+                    .Select(e => new EformPermissionsModel()
+                    {
+                        Id = e.TemplateId,
+                        Permissions = _dbContext.Permissions
+                            .Where(x => eformClaims.Contains(x.ClaimName))
+                            .Select(x => new PermissionModel()
+                            {
+                                Id = x.Id,
+                                ClaimName = x.ClaimName,
+                                PermissionName = x.PermissionName,
+                                PermissionType = x.PermissionType.Name,
+                                PermissionTypeId = x.PermissionTypeId,
+                                IsEnabled = _dbContext.EformPermissions.Any(g =>
+                                    g.EformInGroup.SecurityGroupId == groupId
+                                    && g.PermissionId == x.Id)
+                            }).ToList()
+                    })
+                    .ToListAsync();
+                var core = _coreHelper.GetCore();
+                var templatesDto = core.TemplateItemReadAll(false);
+                foreach (var eformInGroups in eformsInGroup)
+                {
+                    var template = templatesDto.FirstOrDefault(x => x.Id == eformInGroups.Id);
+                    if (template != null)
+                    {
+                        eformInGroups.Label = template.Label;
+                        eformInGroups.CreatedAt = template.CreatedAt;
+                    }
+                }
+
+                result.EformsList = eformsInGroup;
+                result.Total = _dbContext.EformInGroups
+                    .Where(x => x.SecurityGroupId == groupId)
+                    .Select(x => x.Id)
+                    .Count();
+
+                return new OperationDataResult<EformsPermissionsModel>(true, result);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new OperationDataResult<EformsPermissionsModel>(false,
+                    "Error while obtaining eform info");
             }
         }
     }

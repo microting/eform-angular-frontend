@@ -7,7 +7,9 @@ namespace eFormAPI.Web.Services.Security
     public interface IEformGroupService
     {
         Task<OperationResult> AddEformToGroup(EformBindGroupModel requestModel);
-        Task<OperationDataResult<EformsPermissionsModel>> GetAvailableEforms(TemplateRequestModel templateRequestModel,
+        Task<OperationDataResult<TemplateListModel>> GetAvailableEforms(TemplateRequestModel templateRequestModel,
             int groupId);
+
+        Task<OperationDataResult<EformsPermissionsModel>> GetGroupEforms(int groupId);
     }
 }
