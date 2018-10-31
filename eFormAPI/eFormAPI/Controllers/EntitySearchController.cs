@@ -24,8 +24,8 @@ namespace eFormAPI.Web.Controllers
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var model = core.Advanced_EntityGroupAll(requestModel.Sort, requestModel.NameFilter,
+                eFormCore.Core core = _coreHelper.GetCore();
+                EntityGroupList model = core.Advanced_EntityGroupAll(requestModel.Sort, requestModel.NameFilter,
                     requestModel.PageIndex, requestModel.PageSize, Constants.FieldTypes.EntitySearch,
                     requestModel.IsSortDsc,
                     Constants.WorkflowStates.NotRemoved);
@@ -44,13 +44,13 @@ namespace eFormAPI.Web.Controllers
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var groupCreate = core.EntityGroupCreate(Constants.FieldTypes.EntitySearch, editModel.Name);
+                eFormCore.Core core = _coreHelper.GetCore();
+                EntityGroup groupCreate = core.EntityGroupCreate(Constants.FieldTypes.EntitySearch, editModel.Name);
                 if (editModel.AdvEntitySearchableItemModels.Any())
                 {
-                    var entityGroup = core.EntityGroupRead(groupCreate.MicrotingUUID);
-                    var nextItemUid = entityGroup.EntityGroupItemLst.Count;
-                    foreach (var entityItem in editModel.AdvEntitySearchableItemModels)
+                    EntityGroup entityGroup = core.EntityGroupRead(groupCreate.MicrotingUUID);
+                    int nextItemUid = entityGroup.EntityGroupItemLst.Count;
+                    foreach (EntityItem entityItem in editModel.AdvEntitySearchableItemModels)
                     {
                         core.EntitySearchItemCreate(entityGroup.Id, entityItem.Name, entityItem.Description,
                             nextItemUid.ToString());
@@ -78,10 +78,10 @@ namespace eFormAPI.Web.Controllers
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var entityGroup = core.EntityGroupRead(editModel.GroupUid);
+                eFormCore.Core core = _coreHelper.GetCore();
+                EntityGroup entityGroup = core.EntityGroupRead(editModel.GroupUid);
 
-                var nextItemUid = entityGroup.EntityGroupItemLst.Count;
+                int nextItemUid = entityGroup.EntityGroupItemLst.Count;
                 List<int> currentIds = new List<int>();
 
                 foreach (var entityItem in editModel.AdvEntitySearchableItemModels)
@@ -125,9 +125,9 @@ namespace eFormAPI.Web.Controllers
         {
             try
             {
-                var core = _coreHelper.GetCore();
+                eFormCore.Core core = _coreHelper.GetCore();
 
-                var entityGroup = core.EntityGroupRead(entityGroupUid);
+                EntityGroup entityGroup = core.EntityGroupRead(entityGroupUid);
 
                 return new OperationDataResult<EntityGroup>(true, entityGroup);
             }
@@ -145,13 +145,13 @@ namespace eFormAPI.Web.Controllers
         {
             try
             {
-                var core = _coreHelper.GetCore();
+                eFormCore.Core core = _coreHelper.GetCore();
 
-                var entityGroup = core.EntityGroupRead(entityGroupUid, null, searchString);
+                EntityGroup entityGroup = core.EntityGroupRead(entityGroupUid, null, searchString);
 
-                var mappedEntityGroupDict = new List<CommonDictionaryTextModel>();
+                List<CommonDictionaryTextModel> mappedEntityGroupDict = new List<CommonDictionaryTextModel>();
 
-                foreach (var entityGroupItem in entityGroup.EntityGroupItemLst)
+                foreach (EntityItem entityGroupItem in entityGroup.EntityGroupItemLst)
                 {
                     mappedEntityGroupDict.Add(new CommonDictionaryTextModel()
                     {
@@ -175,8 +175,7 @@ namespace eFormAPI.Web.Controllers
         {
             try
             {
-                var core = _coreHelper.GetCore();
-
+                eFormCore.Core core = _coreHelper.GetCore();
 
                 return core.EntityGroupDelete(entityGroupUid)
                     ? new OperationResult(true, LocaleHelper.GetString("ParamDeletedSuccessfully", entityGroupUid))
@@ -195,8 +194,7 @@ namespace eFormAPI.Web.Controllers
         {
             try
             {
-                var core = _coreHelper.GetCore();
-
+                eFormCore.Core core = _coreHelper.GetCore();
 
                 return new OperationResult(true, LocaleHelper.GetString("ParamDeletedSuccessfully", entityGroupUid));
             }

@@ -282,6 +282,11 @@
     <Compile Include="Infrastructure\Attributes\LocaleMiddleware.cs" />
     <Compile Include="Infrastructure\Helpers\CaseUpdateHelper.cs" />
     <Compile Include="Infrastructure\Helpers\EFormCoreHelper.cs" />
+    <Compile Include="Infrastructure\Helpers\ExchangeTokenValidation\ExchangeAppContext.cs" />
+    <Compile Include="Infrastructure\Helpers\ExchangeTokenValidation\ExchangeAuthMetadata.cs" />
+    <Compile Include="Infrastructure\Helpers\ExchangeTokenValidation\ExchangeIdToken.cs" />
+    <Compile Include="Infrastructure\Helpers\ExchangeTokenValidation\ExchangeKey.cs" />
+    <Compile Include="Infrastructure\Helpers\ExchangeTokenValidation\IdTokenValidationResult.cs" />
     <Compile Include="Infrastructure\Helpers\FoldersHelper.cs" />
     <Compile Include="Infrastructure\Helpers\PluginHelper.cs" />
     <Compile Include="Infrastructure\Helpers\SettingsHelper.cs" />
