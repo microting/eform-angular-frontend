@@ -27,7 +27,9 @@ export class SecurityGroupEformsEditComponent implements OnInit {
     this.securityGroupEformsService.updateGroupEformPermissions(this.eformSecurityModel).subscribe((data) => {
       if (data && data.success) {
         this.onEformUpdated.emit();
-      } this.spinnerStatus = false;
+      }
+      this.spinnerStatus = false;
+      this.frame.hide();
     });
   }
 

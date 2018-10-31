@@ -11,23 +11,32 @@ export class SecurityGroupEformsDeleteComponent implements OnInit {
   @ViewChild('frame') frame;
   @Output() onEformDeleted: EventEmitter<void> = new EventEmitter<void>();
   eformSecurityModel: EformPermissionsModel = new EformPermissionsModel();
+  groupId: number;
   spinnerStatus = false;
   constructor(private securityGroupEformsService: SecurityGroupEformsPermissionsService) { }
 
   ngOnInit() {
   }
 
-  show(model: EformPermissionsModel) {
+  show(model: EformPermissionsModel, groupId: number) {
     this.eformSecurityModel = model;
+    this.groupId = groupId;
     this.frame.show();
   }
 
   deleteEformFromSecurityGroup() {
     this.spinnerStatus = true;
-    this.securityGroupEformsService.deleteEformFromGroup(this.eformSecurityModel.templateId).subscribe((data) => {
+    this.securityGroupEformsService.deleteEformFromGroup(
+      {
+        eformId : this.eformSecurityModel.templateId,
+        groupId: this.groupId
+
+      }).subscribe((data) => {
       if (data && data.success) {
         this.onEformDeleted.emit();
-      } this.spinnerStatus = false;
+      }
+      this.spinnerStatus = false;
+      this.frame.hide();
     });
   }
 

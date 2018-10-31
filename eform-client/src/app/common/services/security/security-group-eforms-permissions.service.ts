@@ -36,11 +36,11 @@ export class SecurityGroupEformsPermissionsService extends BaseService {
   }
 
   updateGroupEformPermissions(model: EformPermissionsModel): Observable<OperationDataResult<EformsPermissionsModel>> {
-    return this.post(SecurityGroupEformsPermissionsMethods.SecurityGroupEforms, model);
+    return this.post(SecurityGroupEformsPermissionsMethods.SecurityGroupEformsPermissions, model);
   }
 
   deleteEformFromGroup(model: any): Observable<OperationResult> {
     return this.delete(SecurityGroupEformsPermissionsMethods.SecurityGroupEforms +
-      '?eformId=' + model.eformId + '&groupId=' + model.groupId);
+      '/' + model.eformId + '/' + model.groupId);
   }
 }

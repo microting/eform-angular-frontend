@@ -20,7 +20,8 @@ namespace eFormAPI.Web.Controllers.Security
 
         [HttpGet]
         [Route("api/security/eforms/{groupId}")]
-        public async Task<OperationDataResult<TemplateListModel>> GetAvailableEforms(TemplateRequestModel model, int groupId)
+        public async Task<OperationDataResult<TemplateListModel>> GetAvailableEforms(TemplateRequestModel model,
+            int groupId)
         {
             return await _eformGroupService.GetAvailableEforms(model, groupId);
         }
@@ -37,6 +38,21 @@ namespace eFormAPI.Web.Controllers.Security
         public async Task<OperationDataResult<EformsPermissionsModel>> GetGroupEforms(int groupId)
         {
             return await _eformGroupService.GetGroupEforms(groupId);
+        }
+
+        [HttpPost]
+        [Route("api/security/eforms-permissions")]
+        public async Task<OperationResult> UpdateGroupEformPermissions([FromBody] EformPermissionsModel model)
+        {
+            return await _eformGroupService.UpdateGroupEformPermissions(model);
+        }
+
+
+        [HttpDelete]
+        [Route("api/security/eforms/{eformId}/{groupId}")]
+        public async Task<OperationResult> DeleteEformFromGroup(int eformId, int groupId)
+        {
+            return await _eformGroupService.DeleteEformFromGroup(eformId, groupId);
         }
     }
 }

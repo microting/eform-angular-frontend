@@ -1,4 +1,3 @@
-import {PermissionModel} from 'src/app/common/models/security/group-permissions/permission.model';
 
 export class EformsPermissionsModel {
   total: number;
@@ -10,5 +9,15 @@ export class EformPermissionsModel {
   templateId: number;
   label: string;
   createdAt: Date;
-  permissions: Array<PermissionModel> = [];
+  permissions: Array<EformPermissionModel> = [];
+}
+
+export class EformPermissionModel {
+  id: number;
+  eformPermissionId: number;
+  permissionName: string;
+  claimName: string;
+  permissionTypeId: number;
+  permissionType: string;
+  isEnabled: boolean;
 }

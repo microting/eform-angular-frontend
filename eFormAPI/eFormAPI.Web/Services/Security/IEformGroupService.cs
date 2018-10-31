@@ -10,6 +10,8 @@ namespace eFormAPI.Web.Services.Security
         Task<OperationDataResult<TemplateListModel>> GetAvailableEforms(TemplateRequestModel templateRequestModel,
             int groupId);
 
+        Task<OperationResult> UpdateGroupEformPermissions(EformPermissionsModel requestModel);
         Task<OperationDataResult<EformsPermissionsModel>> GetGroupEforms(int groupId);
+        Task<OperationResult> DeleteEformFromGroup(int templateId, int groupId);
     }
 }

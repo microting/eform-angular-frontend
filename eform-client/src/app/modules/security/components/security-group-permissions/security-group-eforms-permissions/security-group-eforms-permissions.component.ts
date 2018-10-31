@@ -77,6 +77,6 @@ export class SecurityGroupEformsPermissionsComponent implements OnInit {
   }
 
   openEformDeleteFromGroupModal(model: EformPermissionsModel) {
-    this.eformDeleteFromGroupModal.show(model);
+    this.eformDeleteFromGroupModal.show(model, this.selectedGroupId);
   }
 }

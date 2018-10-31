@@ -1,4 +1,5 @@
-﻿using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
+﻿using System.Collections.Generic;
+using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
 
 namespace eFormAPI.Web.Infrastructure.Database.Entities
 {
@@ -8,5 +9,8 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities
 
         public int SecurityGroupId { get; set; }
         public SecurityGroup SecurityGroup { get; set; }
+
+        public List<EformPermission> EformPermissions { get; set; } 
+            = new List<EformPermission>();
     }
 }
