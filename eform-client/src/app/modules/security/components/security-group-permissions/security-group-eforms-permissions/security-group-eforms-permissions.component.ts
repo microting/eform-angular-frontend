@@ -35,7 +35,7 @@ export class SecurityGroupEformsPermissionsComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.selectedGroupId = params['groupId'];
       if (this.selectedGroupId) {
-        this.getAvailableEforms('');
+        this.getAvailableEforms();
         this.getSecurityGroupEfroms();
       }
     });

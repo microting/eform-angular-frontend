@@ -24,7 +24,7 @@ export class SecurityGroupEformsDeleteComponent implements OnInit {
 
   deleteEformFromSecurityGroup() {
     this.spinnerStatus = true;
-    this.securityGroupEformsService.deleteEformFromGroup(this.eformSecurityModel.id).subscribe((data) => {
+    this.securityGroupEformsService.deleteEformFromGroup(this.eformSecurityModel.templateId).subscribe((data) => {
       if (data && data.success) {
         this.onEformDeleted.emit();
       } this.spinnerStatus = false;

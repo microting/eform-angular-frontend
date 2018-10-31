@@ -35,7 +35,7 @@
       <tr *ngFor="let eform of eformSecurityModel.eformsList">
         <td scope="row" id="eform-id">{{eform.templateId}}</td>
         <td id="eform-created-at">{{eform.createdAt | date:'dd.MM.y HH:mm:ss'}}</td>
-        <td id="eform-label">{{eform.label}}</td>  
+        <td id="eform-label">{{eform.label}}</td>
         <td>
           <div class="d-flex flex-row justify-content-center">
             <button class="btn btn-success btn-icon mb-2" (click)="openEformEditPermissionsModal(eform)"
