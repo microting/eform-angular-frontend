@@ -49,25 +49,40 @@
         </ng-container>
       </ul>
       <ul class="navbar-nav ml-auto">
+        <ng-container *ngFor="let menu of appMenu.rightMenu">
+          <ng-container *ngIf="menu?.menuItems?.length == 0; else dropdown;">
             <li class="nav-item">
-              <div mdbDropdown class="dropdown" *ngFor="let menu of appMenu.rightMenu">
+              <a
+                routerLink="{{menu.link}}"
+                mdbWavesEffect
+                class="nav-link waves-light"
+                id="{{menu.e2eId}}">
+                {{menu.name}}
+              </a>
+            </li>
+          </ng-container>
+          <ng-template #dropdown>
+            <li class="nav-item">
+              <div mdbDropdown class="dropdown">
                 <a
                   mdbDropdownToggle
                   mdbWavesEffect
                   class="nav-link dropdown-toggle waves-light"
-                   id="userDropdown">{{menu.name}}</a>
-                <div class="dropdown-menu outbounds-fix" *ngIf="menu?.menuItems?.length">
+                  id="{{menu.e2eId}}">{{menu.name}}</a>
+                <div class="dropdown-menu outbounds-fix" *ngIf="menu?.menuItems?.length > 0;">
                   <a
                     *ngFor="let subMenu of menu.menuItems"
-                    id="{{subMenu.e2eId}}"
                     class="dropdown-item waves-light"
                     routerLink="{{subMenu.link}}"
-                    routerLinkActive="active">
+                    routerLinkActive="active"
+                    id="{{subMenu.e2eId}}">
                     {{subMenu.name}}
                   </a>
                 </div>
               </div>
             </li>
+          </ng-template>
+        </ng-container>
       </ul>
     </div>
     <!--right menu-->

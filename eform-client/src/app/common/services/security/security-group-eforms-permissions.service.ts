@@ -8,12 +8,13 @@ import {
   EformsPermissionsModel,
   OperationDataResult,
   OperationResult,
-  TemplateListModel, TemplateRequestModel
+  TemplateListModel, TemplateRequestModel, EformPermissionsModel, EformBindGroupModel
 } from 'src/app/common/models';
 import {BaseService} from 'src/app/common/services/base.service';
 
 const SecurityGroupEformsPermissionsMethods = {
-  SecurityGroupEformsPermissions: '/api/security/group/general-permissions'
+  SecurityGroupEforms: 'api/security/eforms',
+  SecurityGroupEformsPermissions: 'api/security/eforms-permissions'
 };
 
 @Injectable()
@@ -22,15 +23,24 @@ export class SecurityGroupEformsPermissionsService extends BaseService {
     super(_http, router, toastrService);
   }
 
-  getAvailableEformsForGroup(model: TemplateRequestModel): Observable<OperationDataResult<TemplateListModel>> {
-    return this.get(SecurityGroupEformsPermissionsMethods.SecurityGroupEformsPermissions, model);
+  getAvailableEformsForGroup(model: TemplateRequestModel, groupId: number): Observable<OperationDataResult<TemplateListModel>> {
+    return this.get(SecurityGroupEformsPermissionsMethods.SecurityGroupEforms + '/' + groupId, model);
   }
 
   getGroupEforms(groupId: number): Observable<OperationDataResult<EformsPermissionsModel>> {
     return this.get(SecurityGroupEformsPermissionsMethods.SecurityGroupEformsPermissions + '/' + groupId);
   }
 
-  addEformToGroup(eformId: number): Observable<OperationResult> {
-    return this.post(SecurityGroupEformsPermissionsMethods.SecurityGroupEformsPermissions, eformId);
+  addEformToGroup(model: EformBindGroupModel): Observable<OperationResult> {
+    return this.put(SecurityGroupEformsPermissionsMethods.SecurityGroupEforms, model);
+  }
+
+  updateGroupEformPermissions(model: EformPermissionsModel): Observable<OperationDataResult<EformsPermissionsModel>> {
+    return this.post(SecurityGroupEformsPermissionsMethods.SecurityGroupEforms, model);
+  }
+
+  deleteEformFromGroup(model: any): Observable<OperationResult> {
+    return this.delete(SecurityGroupEformsPermissionsMethods.SecurityGroupEforms +
+      '?eformId=' + model.eformId + '&groupId=' + model.groupId);
   }
 }

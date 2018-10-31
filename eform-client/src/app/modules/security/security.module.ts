@@ -17,8 +17,10 @@ import {
   SecurityGroupUpdateComponent,
   SecurityGroupGeneralPermissionsComponent,
   SecurityGroupEformsPermissionsComponent,
-  SecurityGroupEformsAddComponent
+  SecurityGroupEformsAddComponent,
+  SecurityGroupEformsEditComponent, SecurityGroupEformsDeleteComponent
 } from './components';
+
 
 @NgModule({
   imports: [
@@ -37,7 +39,9 @@ import {
     SecurityGroupUpdateComponent,
     SecurityGroupGeneralPermissionsComponent,
     SecurityGroupEformsPermissionsComponent,
-    SecurityGroupEformsAddComponent
+    SecurityGroupEformsAddComponent,
+    SecurityGroupEformsEditComponent,
+    SecurityGroupEformsDeleteComponent
   ],
   providers: [SecurityGroupEformsPermissionsService,
     SecurityGroupGeneralPermissionsService]

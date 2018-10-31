@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {
+  EformPermissionsModel,
   EformsPermissionsModel,
   EformsPermissionsRequestModel,
   TemplateListModel,
@@ -15,6 +16,8 @@ import {SecurityGroupEformsPermissionsService} from 'src/app/common/services/sec
 })
 export class SecurityGroupEformsPermissionsComponent implements OnInit {
   @ViewChild('eformBindModal') eformBindModal;
+  @ViewChild('eformEditPermissionsModal') eformEditPermissionsModal;
+  @ViewChild('eformDeleteFromGroupModal') eformDeleteFromGroupModal;
   templateRequestModel: TemplateRequestModel = new TemplateRequestModel;
   templateListModel: TemplateListModel = new TemplateListModel();
   eformSecurityModel: EformsPermissionsModel = new EformsPermissionsModel();
@@ -25,13 +28,14 @@ export class SecurityGroupEformsPermissionsComponent implements OnInit {
   constructor(
     private securityGroupEformsService: SecurityGroupEformsPermissionsService,
     private route: ActivatedRoute
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.selectedGroupId = params['groupId'];
       if (this.selectedGroupId) {
-        this.getAvailableEforms();
+        this.getAvailableEforms('');
         this.getSecurityGroupEfroms();
       }
     });
@@ -39,11 +43,18 @@ export class SecurityGroupEformsPermissionsComponent implements OnInit {
 
   getAvailableEforms() {
     this.spinnerStatus = true;
-    this.securityGroupEformsService.getAvailableEformsForGroup(this.templateRequestModel).subscribe((data) => {
-      if (data && data.success) {
-        this.templateListModel = data.model;
-      } this.spinnerStatus = false;
-    });
+    this.securityGroupEformsService.getAvailableEformsForGroup(this.templateRequestModel, this.selectedGroupId)
+      .subscribe((data) => {
+        if (data && data.success) {
+          this.templateListModel = data.model;
+        }
+        this.spinnerStatus = false;
+      });
+  }
+
+  getAvailableEformsWithNameFilter(label: string) {
+    this.templateRequestModel.nameFilter = label;
+    this.getAvailableEforms();
   }
 
   getSecurityGroupEfroms() {
@@ -52,12 +63,20 @@ export class SecurityGroupEformsPermissionsComponent implements OnInit {
     this.securityGroupEformsService.getGroupEforms(this.selectedGroupId).subscribe((data) => {
       if (data && data.success) {
         this.eformSecurityModel = data.model;
-      } this.spinnerStatus = false;
+      }
+      this.spinnerStatus = false;
     });
   }
 
   openEformBindModal() {
-    this.eformBindModal.show();
+    this.eformBindModal.show(this.selectedGroupId);
   }
 
+  openEformEditPermissionsModal(model: EformPermissionsModel) {
+    this.eformEditPermissionsModal.show(model);
+  }
+
+  openEformDeleteFromGroupModal(model: EformPermissionsModel) {
+    this.eformDeleteFromGroupModal.show(model);
+  }
 }

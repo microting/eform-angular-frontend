@@ -9,7 +9,7 @@
           <div class="col-md-6">
             <div class="md-form">
               <input mdbInputDirective [mdbValidate]="false"
-                     type="text"
+                     type="text" (input)="onLabelInputChanged($event.target.value)"
                      class="form-control input-sm" id="labelInput">
               <label for="labelInput">{{'Search' | translate}}</label>
             </div>
@@ -29,11 +29,11 @@
                 *ngFor="let template of templateListModel.templates"
                 (click)="addEformToGroup(template.id)">
               <!--<td scope="row" id="eform-id">{{templateDto.id}}</td>-->
-              <td scope="row" id="eform-id">1</td>
+              <td scope="row" id="eform-id">{{template.id}}</td>
               <!--<td id="eform-created-at">{{templateDto.createdAt | date:'dd.MM.y HH:mm:ss'}}</td>-->
-              <td id="eform-created-at">12/20/2019</td>
+              <td id="eform-created-at">{{template.createdAt | date:'dd.MM.y HH:mm:ss'}}</td>
               <!--<td id="eform-label">{{templateDto.label}}</td>-->
-              <td id="eform-label">Test label</td>
+              <td id="eform-label">{{template.label}}</td>
             </tr>
             </tbody>
           </table>

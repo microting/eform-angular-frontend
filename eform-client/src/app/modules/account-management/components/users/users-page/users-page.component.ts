@@ -45,7 +45,6 @@ export class UsersPageComponent implements OnInit {
   }
 
   checked(e: any) {
-    debugger;
     this.spinnerStatus = true;
     if (e.target && e.target.checked) {
       this.adminService.enableTwoFactorAuth().subscribe(() => {

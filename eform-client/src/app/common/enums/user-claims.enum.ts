@@ -34,14 +34,14 @@ export enum UserClaimsEnum {
   eformsDownloadXml,
   eformsUploadZip,
   eformsCaseRead,
-  eFormsCasesRead,
-  eFormsCasesUpdate,
-  eFormsCasesDelete,
-  eFormsGetPdf,
-  eFormsPairingRead,
-  eFormsPairingUpdate,
-  eFormsReadTags,
-  eFormsUpdateTags,
-  eForsmGetCsv
+  eformsCasesRead,
+  eformsCasesUpdate,
+  eformsCasesDelete,
+  eformsGetPdf,
+  eformsPairingRead,
+  eformsPairingUpdate,
+  eformsReadTags,
+  eformsUpdateTags,
+  eforsmGetCsv
 }
 

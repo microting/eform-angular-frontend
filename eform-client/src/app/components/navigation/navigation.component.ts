@@ -41,7 +41,6 @@ export class NavigationComponent implements OnInit {
         this.userSettingsService.getUserSettings().subscribe(((data) => {
           localStorage.setItem('locale', data.model.locale);
           this.initLocaleAsync().then(() => {
-            debugger;
             this.getNavigationMenu();
           });
         }));

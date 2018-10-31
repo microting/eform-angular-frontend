@@ -1,5 +1,5 @@
 import {flatten} from '@angular/compiler';
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {
   SecurityGroupGeneralPermissionsModel,
@@ -17,11 +17,13 @@ export class SecurityGroupGeneralPermissionsComponent implements OnInit {
   securityGroupGeneralPermissionsModel: SecurityGroupGeneralPermissionsModel = new SecurityGroupGeneralPermissionsModel();
   securityGroupGeneralPermissionsUpdateModel: SecurityGroupGeneralPermissionsUpdateModel = new SecurityGroupGeneralPermissionsUpdateModel();
   spinnerStatus = false;
+
   constructor(
     private securityGroupGeneralPermissionsService: SecurityGroupGeneralPermissionsService,
     private route: ActivatedRoute,
     private router: Router
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -40,7 +42,8 @@ export class SecurityGroupGeneralPermissionsComponent implements OnInit {
         this.securityGroupGeneralPermissionsModel.permissionTypes.sort(function (a, b) {
           return b.permissions.length - a.permissions.length;
         });
-      } this.spinnerStatus = false;
+      }
+      this.spinnerStatus = false;
     });
   }
 
@@ -53,8 +56,7 @@ export class SecurityGroupGeneralPermissionsComponent implements OnInit {
       if (data && data.success) {
         this.router.navigate(['/security']).then();
       }
-       this.spinnerStatus = false;
-
+      this.spinnerStatus = false;
     });
   }
 

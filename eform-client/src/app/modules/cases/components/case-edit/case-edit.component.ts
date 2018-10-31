@@ -124,7 +124,6 @@ export class CaseEditComponent implements OnInit, OnDestroy {
   }
 
   canDeactivate(): Observable<boolean> | boolean {
-    debugger;
     if (!this.isNoSaveExitAllowed && this.userClaims.eFormsCasesUpdate) {
       this.caseConfirmation.show();
       return this.caseConfirmation.navigateAwaySelection$;
