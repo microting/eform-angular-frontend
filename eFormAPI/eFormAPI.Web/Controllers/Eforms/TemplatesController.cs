@@ -1,5 +1,6 @@
 ﻿using System;
-using eFormAPI.Web.Abstractions;
+using System.Threading.Tasks;
+using eFormAPI.Web.Abstractions.Eforms;
 using eFormAPI.Web.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,11 +22,11 @@ namespace eFormAPI.Web.Controllers.Eforms
 
         [HttpPost]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Read)]
-        public IActionResult Index([FromBody] TemplateRequestModel templateRequestModel)
+        public async Task<IActionResult> Index([FromBody] TemplateRequestModel templateRequestModel)
         {
             try
             {
-                return Ok(_templatesService.Index(templateRequestModel));
+                return Ok(await _templatesService.Index(templateRequestModel));
             }
             catch (Exception)
             {

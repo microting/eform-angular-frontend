@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace eFormAPI.Web.Services.Security
+namespace eFormAPI.Web.Abstractions.Security
 {
     public interface IEformPermissionsService
     {

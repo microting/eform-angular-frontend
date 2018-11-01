@@ -2,7 +2,7 @@
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Templates;
 
-namespace eFormAPI.Web.Abstractions
+namespace eFormAPI.Web.Abstractions.Eforms
 {
     public interface ITemplateColumnsService
     {

@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 using System.Web;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Security;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -28,7 +31,9 @@ namespace eFormAPI.Web.Services
         private readonly IUserService _userService;
         private readonly IWritableOptions<ApplicationSettings> _appSettings;
         private readonly IClaimsService _claimsService;
+        private readonly IUserClaimsPrincipalFactory<EformUser> _userClaimsPrincipalFactory;
         private readonly ILocalizationService _localizationService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ILogger<AuthService> _logger;
         private readonly UserManager<EformUser> _userManager;
         private readonly RoleManager<EformRole> _roleManager;
@@ -42,7 +47,8 @@ namespace eFormAPI.Web.Services
             UserManager<EformUser> userManager,
             IUserService userService,
             ILocalizationService localizationService,
-            IClaimsService claimsService)
+            IClaimsService claimsService,
+            IUserClaimsPrincipalFactory<EformUser> userClaimsPrincipalFactory, IHttpContextAccessor httpContextAccessor)
         {
             _tokenOptions = tokenOptions;
             _logger = logger;
@@ -53,6 +59,8 @@ namespace eFormAPI.Web.Services
             _userService = userService;
             _localizationService = localizationService;
             _claimsService = claimsService;
+            _userClaimsPrincipalFactory = userClaimsPrincipalFactory;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<OperationDataResult<AuthorizeResult>> AuthenticateUser(LoginModel model)
@@ -122,15 +130,14 @@ namespace eFormAPI.Web.Services
                     }
                 }
             }
-            var token = GenerateToken(user);
+
+            var token = await GenerateToken(user);
             var roleList = _userManager.GetRolesAsync(user).Result;
             if (!roleList.Any())
             {
                 return new OperationDataResult<AuthorizeResult>(false, $"Role for user {model.Username} not found");
             }
 
-            await _signInManager.SignInAsync(user, false);
-            // update last sign in date
             return new OperationDataResult<AuthorizeResult>(true, new AuthorizeResult
             {
                 Id = user.Id,
@@ -140,7 +147,7 @@ namespace eFormAPI.Web.Services
             });
         }
 
-        public string GenerateToken(EformUser user)
+        public async Task<string> GenerateToken(EformUser user)
         {
             if (user != null)
             {
@@ -153,6 +160,7 @@ namespace eFormAPI.Web.Services
                 {
                     claims.Add(new Claim("locale", user.Locale));
                 }
+
                 // Add user and roles claims
                 var userClaims = _userManager.GetClaimsAsync(user).Result;
                 var userRoles = _userManager.GetRolesAsync(user).Result;
@@ -170,6 +178,7 @@ namespace eFormAPI.Web.Services
                         }
                     }
                 }
+
                 // Permissions
                 if (userRoles.Contains(EformRole.Admin))
                 {
@@ -179,6 +188,20 @@ namespace eFormAPI.Web.Services
                 {
                     claims.AddRange(_claimsService.GetUserClaims(user.Id));
                 }
+
+                var principal = await _userClaimsPrincipalFactory.CreateAsync(user);
+                foreach (var claim in claims)
+                {
+                    ((ClaimsIdentity) principal.Identity).AddClaim(claim);
+                }
+
+                await _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                    principal, new AuthenticationProperties
+                    {
+                        IsPersistent = false
+                    });
+
+
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenOptions.Value.SigningKey));
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
                 var token = new JwtSecurityToken(_tokenOptions.Value.Issuer,

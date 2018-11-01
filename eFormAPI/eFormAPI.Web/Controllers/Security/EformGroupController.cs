@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
-using eFormAPI.Web.Services.Security;
+using eFormAPI.Web.Abstractions.Security;
+using eFormAPI.Web.Infrastructure.Models.EformPermissions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;

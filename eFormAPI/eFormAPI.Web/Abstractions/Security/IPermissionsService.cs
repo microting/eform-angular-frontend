@@ -2,7 +2,7 @@
 using eFormAPI.Web.Infrastructure.Models.Permissions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
-namespace eFormAPI.Web.Services.Security
+namespace eFormAPI.Web.Abstractions.Security
 {
     public interface IPermissionsService
     {

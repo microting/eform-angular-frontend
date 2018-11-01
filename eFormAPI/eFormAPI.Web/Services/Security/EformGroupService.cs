@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Abstractions.Security;
 using eFormAPI.Web.Infrastructure;
 using eFormAPI.Web.Infrastructure.Database;
 using eFormAPI.Web.Infrastructure.Database.Entities;
+using eFormAPI.Web.Infrastructure.Models.EformPermissions;
 using eFormShared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -15,57 +17,6 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Templates;
 
 namespace eFormAPI.Web.Services.Security
 {
-    public class EformBindGroupModel
-    {
-        public int EformId { get; set; }
-        public int GroupId { get; set; }
-    }
-
-    public class EformsPermissionsModel
-    {
-        public int Total { get; set; }
-        public int GroupId { get; set; }
-        public string GroupName { get; set; }
-
-        public List<EformPermissionsModel> EformsList { get; set; }
-            = new List<EformPermissionsModel>();
-    }
-
-    public class EformPermissionTypeModel
-    {
-        public string Name { get; set; }
-
-        public List<EformPermissionModel> Permissions { get; set; }
-            = new List<EformPermissionModel>();
-    }
-
-    public class EformPermissionsModel
-    {
-        public string GroupName { get; set; }
-        public int EformInGroupId { get; set; }
-        public int TemplateId { get; set; }
-        public string Label { get; set; }
-        public DateTime? CreatedAt { get; set; }
-
-        public List<EformPermissionModel> Permissions { get; set; }
-            = new List<EformPermissionModel>();
-
-        public List<EformPermissionTypeModel> PermissionTypes { get; set; }
-            = new List<EformPermissionTypeModel>();
-    }
-
-
-    public class EformPermissionModel
-    {
-        public int Id { get; set; }
-        public int EformPermissionId { get; set; }
-        public string PermissionName { get; set; }
-        public string ClaimName { get; set; }
-        public int PermissionTypeId { get; set; }
-        public string PermissionType { get; set; }
-        public bool IsEnabled { get; set; }
-    }
-
     public class EformGroupService : IEformGroupService
     {
         private readonly ILogger<EformGroupService> _logger;

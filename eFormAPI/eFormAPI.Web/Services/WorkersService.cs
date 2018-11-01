@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Abstractions.Advanced;
 using eFormAPI.Web.Infrastructure;
 using eFormShared;
 using Microsoft.AspNetCore.Authorization;

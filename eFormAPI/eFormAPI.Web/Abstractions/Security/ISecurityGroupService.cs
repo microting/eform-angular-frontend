@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using eFormAPI.Web.Services.Security;
+using eFormAPI.Web.Infrastructure.Models.Permissions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Abstractions.Security

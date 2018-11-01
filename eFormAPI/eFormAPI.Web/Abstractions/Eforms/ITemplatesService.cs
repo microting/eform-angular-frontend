@@ -1,9 +1,10 @@
-﻿using eFormShared;
+﻿using System.Threading.Tasks;
+using eFormShared;
 using Microting.eFormApi.BasePn.Infrastructure.Models;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Templates;
 
-namespace eFormAPI.Web.Abstractions
+namespace eFormAPI.Web.Abstractions.Eforms
 {
     public interface ITemplatesService
     {
@@ -12,6 +13,6 @@ namespace eFormAPI.Web.Abstractions
         OperationResult Deploy(DeployModel deployModel);
         OperationDataResult<DeployToModel> DeployTo(int id);
         OperationDataResult<Template_Dto> Get(int id);
-        OperationDataResult<TemplateListModel> Index(TemplateRequestModel templateRequestModel);
+        Task<OperationDataResult<TemplateListModel>> Index(TemplateRequestModel templateRequestModel);
     }
 }

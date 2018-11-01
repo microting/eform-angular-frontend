@@ -4,7 +4,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 using Microting.eFormApi.BasePn.Infrastructure.Models.SelectableList;
 
-namespace eFormAPI.Web.Abstractions
+namespace eFormAPI.Web.Abstractions.Advanced
 {
     public interface IEntitySelectService
     {

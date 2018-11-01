@@ -2,7 +2,7 @@
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
-namespace eFormAPI.Web.Services
+namespace eFormAPI.Web.Abstractions
 {
     public interface IMenuService
     {

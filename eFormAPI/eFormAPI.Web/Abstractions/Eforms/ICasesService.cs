@@ -3,7 +3,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Cases.Request;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Cases.Response;
 
-namespace eFormAPI.Web.Abstractions
+namespace eFormAPI.Web.Abstractions.Eforms
 {
     public interface ICasesService
     {

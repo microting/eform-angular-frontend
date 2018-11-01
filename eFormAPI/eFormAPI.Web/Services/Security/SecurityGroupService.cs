@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions.Security;
 using eFormAPI.Web.Infrastructure.Database;
 using eFormAPI.Web.Infrastructure.Database.Entities;
+using eFormAPI.Web.Infrastructure.Models.Permissions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Infrastructure.Extensions;
@@ -12,7 +12,6 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Services.Security
 {
-    
     public class SecurityGroupService : ISecurityGroupService
     {
         private readonly ILogger<SecurityGroupService> _logger;
@@ -227,56 +226,4 @@ namespace eFormAPI.Web.Services.Security
         }
     }
 
-    public class SecurityGroupRequestModel
-    {
-        public string Sort { get; set; }
-        public string NameFilter { get; set; }
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
-        public bool IsSortDsc { get; set; }
-        public int Offset { get; set; }
-    }
-
-    public class SecurityGroupModel
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int UserAmount { get; set; }
-
-        public List<SecurityGroupUserModel> UsersList { get; set; }
-            = new List<SecurityGroupUserModel>();
-    }
-
-    public class SecurityGroupCreateModel
-    {
-        public string Name { get; set; }
-
-        public List<int> UserIds { get; set; }
-            = new List<int>();
-    }
-
-    public class SecurityGroupUpdateModel
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-
-        public List<int> UserIds { get; set; }
-            = new List<int>();
-    }
-
-    public class SecurityGroupUserModel
-    {
-        public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-    }
-
-    public class SecurityGroupsModel
-    {
-        public int? Total { get; set; }
-
-        public List<SecurityGroupModel> SecurityGroupList { get; set; }
-            = new List<SecurityGroupModel>();
-    }
 }

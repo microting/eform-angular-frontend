@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Abstractions.Eforms;
+using eFormAPI.Web.Abstractions.Security;
 using eFormAPI.Web.Infrastructure;
-using eFormAPI.Web.Services.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
