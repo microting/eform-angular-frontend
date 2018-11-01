@@ -63,7 +63,8 @@ namespace eFormAPI.Web.Services
                 return new OperationResult(true);
             }
 
-            return new OperationResult(false, "Connection string does not exist");
+            return new OperationResult(false, 
+                _localizationService.GetString("ConnectionStringDoesNotExist"));
         }
 
         public OperationDataResult<string> GetDefaultLocale()
@@ -103,7 +104,8 @@ namespace eFormAPI.Web.Services
                                                                                             .ConnectionStringMain.Auth;
             if (!string.IsNullOrEmpty(_connectionStrings.Value.SdkConnection))
             {
-                return new OperationResult(false, _localizationService.GetString("ConnectionStringAlreadyExist"));
+                return new OperationResult(false, 
+                    _localizationService.GetString("ConnectionStringAlreadyExist"));
             }
 
             AdminTools adminTools;
@@ -114,7 +116,8 @@ namespace eFormAPI.Web.Services
             catch (Exception exception)
             {
                 _logger.LogError(exception.Message);
-                return new OperationResult(false, _localizationService.GetString("SDKConnectionStringIsInvalid"));
+                return new OperationResult(false, 
+                    _localizationService.GetString("SDKConnectionStringIsInvalid"));
             }
 
             // Migrate DB
@@ -179,7 +182,8 @@ namespace eFormAPI.Web.Services
                             initialSettingsModel.AdminSetupModel.Password);
                         if (!createResult.Succeeded)
                         {
-                            return new OperationResult(false, _localizationService.GetString("Could not create the user"));
+                            return new OperationResult(false, 
+                                _localizationService.GetString("Could not create the user"));
                         }
                     }
 
@@ -193,7 +197,8 @@ namespace eFormAPI.Web.Services
             catch (Exception exception)
             {
                 _logger.LogError(exception.Message);
-                return new OperationResult(false, _localizationService.GetString("MainConnectionStringIsInvalid"));
+                return new OperationResult(false, 
+                    _localizationService.GetString("MainConnectionStringIsInvalid"));
             }
 
             // Setup SDK DB
@@ -221,7 +226,8 @@ namespace eFormAPI.Web.Services
             catch (Exception exception)
             {
                 _logger.LogError(exception.Message);
-                return new OperationResult(false, _localizationService.GetString("CouldNotWriteConnectionString"));
+                return new OperationResult(false, 
+                    _localizationService.GetString("CouldNotWriteConnectionString"));
             }
 
             return new OperationResult(true);

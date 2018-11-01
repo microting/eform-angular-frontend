@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Security;
 using eFormAPI.Web.Infrastructure.Database;
 using eFormAPI.Web.Infrastructure.Database.Entities;
@@ -15,13 +16,16 @@ namespace eFormAPI.Web.Services.Security
     public class SecurityGroupService : ISecurityGroupService
     {
         private readonly ILogger<SecurityGroupService> _logger;
+        private readonly ILocalizationService _localizationService;
         private readonly BaseDbContext _dbContext;
 
         public SecurityGroupService(BaseDbContext dbContext,
-            ILogger<SecurityGroupService> logger)
+            ILogger<SecurityGroupService> logger, 
+            ILocalizationService localizationService)
         {
             _dbContext = dbContext;
             _logger = logger;
+            _localizationService = localizationService;
         }
 
         public async Task<OperationDataResult<SecurityGroupsModel>> GetSecurityGroups(
@@ -79,7 +83,8 @@ namespace eFormAPI.Web.Services.Security
             catch (Exception e)
             {
                 _logger.LogError(e.Message);
-                return new OperationDataResult<SecurityGroupsModel>(false, "Error while obtaining security groups");
+                return new OperationDataResult<SecurityGroupsModel>(false, 
+                    _localizationService.GetString("ErrorWhileObtainingSecurityGroups"));
             }
         }
 
@@ -104,7 +109,8 @@ namespace eFormAPI.Web.Services.Security
                     }).FirstOrDefaultAsync();
                 if (securityGroupModel == null)
                 {
-                    return new OperationDataResult<SecurityGroupModel>(false, "Security group not found");
+                    return new OperationDataResult<SecurityGroupModel>(false, 
+                        _localizationService.GetString("SecurityGroupNotFound"));
                 }
 
                 return new OperationDataResult<SecurityGroupModel>(true, securityGroupModel);
@@ -112,7 +118,8 @@ namespace eFormAPI.Web.Services.Security
             catch (Exception e)
             {
                 _logger.LogError(e.Message);
-                return new OperationDataResult<SecurityGroupModel>(false, "Error while obtaining security group");
+                return new OperationDataResult<SecurityGroupModel>(false, 
+                    _localizationService.GetString("ErrorWhileObtainingSecurityGroup"));
             }
         }
 
@@ -122,7 +129,8 @@ namespace eFormAPI.Web.Services.Security
             {
                 if (string.IsNullOrEmpty(requestModel.Name))
                 {
-                    return new OperationDataResult<SecurityGroupsModel>(false, "Security group name is empty");
+                    return new OperationDataResult<SecurityGroupsModel>(false,
+                        _localizationService.GetString("SecurityGroupNameIsEmpty"));
                 }
 
                 using (var transaction = await _dbContext.Database.BeginTransactionAsync())
@@ -144,12 +152,14 @@ namespace eFormAPI.Web.Services.Security
                     transaction.Commit();
                 }
 
-                return new OperationResult(true, "Security group created successfully");
+                return new OperationResult(true, 
+                    _localizationService.GetString("SecurityGroupCreatedSuccessfully"));
             }
             catch (Exception e)
             {
                 _logger.LogError(e.Message);
-                return new OperationDataResult<SecurityGroupsModel>(false, "Error while creating security group");
+                return new OperationDataResult<SecurityGroupsModel>(false, 
+                    _localizationService.GetString("ErrorWhileCreatingSecurityGroup"));
             }
         }
 
@@ -167,7 +177,7 @@ namespace eFormAPI.Web.Services.Security
                     {
                         transaction.Rollback();
                         return new OperationDataResult<SecurityGroupsModel>(false,
-                            "Security group not found");
+                            _localizationService.GetString("SecurityGroupNotFound"));
                     }
 
                     securityGroup.Name = requestModel.Name;
@@ -194,12 +204,14 @@ namespace eFormAPI.Web.Services.Security
                     transaction.Commit();
                 }
 
-                return new OperationResult(true, "Security group updated successfully");
+                return new OperationResult(true, 
+                    _localizationService.GetString("SecurityGroupUpdatedSuccessfully"));
             }
             catch (Exception e)
             {
                 _logger.LogError(e.Message);
-                return new OperationDataResult<SecurityGroupsModel>(false, "Error while updating security group");
+                return new OperationDataResult<SecurityGroupsModel>(false, 
+                    _localizationService.GetString("ErrorWhileUpdatingSecurityGroup"));
             }
         }
 
@@ -211,17 +223,20 @@ namespace eFormAPI.Web.Services.Security
                 var securityGroup = await _dbContext.SecurityGroups.FirstOrDefaultAsync(x => x.Id == id);
                 if (securityGroup == null)
                 {
-                    return new OperationResult(false, "Security group not found");
+                    return new OperationResult(false, 
+                        _localizationService.GetString("SecurityGroupNotFound"));
                 }
 
                 _dbContext.SecurityGroups.Remove(securityGroup);
                 await _dbContext.SaveChangesAsync();
-                return new OperationResult(true, "Security group removed successfully");
+                return new OperationResult(true, 
+                    _localizationService.GetString("SecurityGroupRemovedSuccessfully"));
             }
             catch (Exception e)
             {
                 _logger.LogError(e.Message);
-                return new OperationDataResult<SecurityGroupModel>(false, "Error while deleting security group");
+                return new OperationDataResult<SecurityGroupModel>(false, 
+                    _localizationService.GetString("ErrorWhileDeletingSecurityGroup"));
             }
         }
     }

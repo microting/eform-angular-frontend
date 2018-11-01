@@ -145,7 +145,7 @@ namespace eFormAPI.Web.Services
             var defaultPassword = _appSettings.Value.DefaultPassword;
             if (code != securityCode)
             {
-                return new OperationResult(false, "InvalidSecurityCode");
+                return new OperationResult(false, _localizationService.GetString("InvalidSecurityCode"));
             }
 
             var users = await _userManager.GetUsersInRoleAsync(EformRole.Admin);

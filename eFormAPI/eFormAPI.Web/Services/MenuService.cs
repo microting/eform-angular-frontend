@@ -21,17 +21,20 @@ namespace eFormAPI.Web.Services
         private readonly ILogger<MenuService> _logger;
         private readonly IClaimsService _claimsService;
         private readonly IUserService _userService;
+        private readonly ILocalizationService _localizationService;
         private readonly BaseDbContext _dbContext;
 
         public MenuService(ILogger<MenuService> logger,
             BaseDbContext dbContext,
             IClaimsService claimsService,
-            IUserService userService)
+            IUserService userService, 
+            ILocalizationService localizationService)
         {
             _logger = logger;
             _dbContext = dbContext;
             _claimsService = claimsService;
             _userService = userService;
+            _localizationService = localizationService;
         }
 
         public async Task<OperationDataResult<MenuModel>> GetCurrentUserMenu()
@@ -118,10 +121,10 @@ namespace eFormAPI.Web.Services
             {
                 Console.WriteLine(e);
                 _logger.LogError(e.Message);
-                return new OperationDataResult<MenuModel>(false, "Error while obtaining user menu");
+                return new OperationDataResult<MenuModel>(false, 
+                    _localizationService.GetString("ErrorWhileObtainingUserMenu"));
             }
         }
-
 
         private List<MenuItem> FilterMenuForUser(IEnumerable<MenuItem> items, ICollection<string> claims)
         {

@@ -79,7 +79,7 @@ namespace eFormAPI.Web.Services.Security
                 Console.WriteLine(e);
                 _logger.LogError(e.Message);
                 return new OperationDataResult<TemplateListModel>(false,
-                    "Error while obtaining available eForms");
+                    _localizationService.GetString("ErrorWhileObtainingAvailableEForms"));
             }
         }
 
@@ -89,13 +89,13 @@ namespace eFormAPI.Web.Services.Security
             {
                 if (!await _dbContext.SecurityGroups.AnyAsync(x => x.Id == requestModel.GroupId))
                 {
-                    return new OperationResult(false, "Security group not found");
+                    return new OperationResult(false, _localizationService.GetString("SecurityGroupNotFound"));
                 }
 
                 if (await _dbContext.EformInGroups.AnyAsync(x => x.TemplateId == requestModel.EformId
                                                                  && x.SecurityGroupId == requestModel.GroupId))
                 {
-                    return new OperationResult(false, "eForm already in group");
+                    return new OperationResult(false, _localizationService.GetString("eFormAlreadyInGroup"));
                 }
 
                 var newEformInGroup = new EformInGroup()
@@ -111,7 +111,8 @@ namespace eFormAPI.Web.Services.Security
             {
                 Console.WriteLine(e);
                 _logger.LogError(e.Message);
-                return new OperationResult(true, "Error while binding eform to group");
+                return new OperationResult(true, 
+                    _localizationService.GetString("ErrorWhileBindingEformToGroup"));
             }
         }
 
@@ -120,7 +121,6 @@ namespace eFormAPI.Web.Services.Security
             try
             {
                 var result = new EformsPermissionsModel();
-
                 var eformClaims = new[]
                 {
                     AuthConsts.EformClaims.EformsClaims.UpdateColumns,
@@ -213,7 +213,7 @@ namespace eFormAPI.Web.Services.Security
                 Console.WriteLine(e);
                 _logger.LogError(e.Message);
                 return new OperationDataResult<EformsPermissionsModel>(false,
-                    "Error while obtaining eform info");
+                    _localizationService.GetString("ErrorWhileObtainingEformInfo"));
             }
         }
 
@@ -229,6 +229,7 @@ namespace eFormAPI.Web.Services.Security
                         requestModel.Permissions.Add(permission);
                     }
                 }
+
                 using (var transaction = await _dbContext.Database.BeginTransactionAsync())
                 {
                     var enabledEformPermission = new List<int>();
@@ -284,14 +285,14 @@ namespace eFormAPI.Web.Services.Security
                     transaction.Commit();
                 }
 
-                return new OperationResult(true, "Permission for eform has been updated");
+                return new OperationResult(true, _localizationService.GetString("PermissionForEformHasBeenUpdated"));
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 _logger.LogError(e.Message);
                 return new OperationDataResult<EformsPermissionsModel>(false,
-                    "Error while obtaining eform info");
+                    _localizationService.GetString("ErrorWhileObtainingEformInfo"));
             }
         }
 
@@ -305,19 +306,20 @@ namespace eFormAPI.Web.Services.Security
                 if (eformInGroup == null)
                 {
                     return new OperationDataResult<EformsPermissionsModel>(false,
-                        "eForm not found");
+                        _localizationService.GetString("eFormNotFound"));
                 }
 
                 _dbContext.EformInGroups.Remove(eformInGroup);
                 await _dbContext.SaveChangesAsync();
-                return new OperationResult(true, "eForm has been deleted from group"); 
+                return new OperationResult(true, 
+                    _localizationService.GetString("eFormHasBeenDeletedFromGroup"));
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 _logger.LogError(e.Message);
                 return new OperationDataResult<EformsPermissionsModel>(false,
-                    "Error while deleting eform from group");
+                    _localizationService.GetString("ErrorWhileDeletingEformFromGroup"));
             }
         }
     }

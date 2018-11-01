@@ -423,4 +423,61 @@
   <data name="PermissionsUpdatedSuccessfully" xml:space="preserve">
     <value>Permissions updated successfully</value>
   </data>
+  <data name="ConnectionStringDoesNotExist" xml:space="preserve">
+    <value>Connection string does not exist</value>
+  </data>
+  <data name="eFormAlreadyInGroup" xml:space="preserve">
+    <value>eForm already in group</value>
+  </data>
+  <data name="eFormHasBeenDeletedFromGroup" xml:space="preserve">
+    <value>eForm has been deleted from group</value>
+  </data>
+  <data name="eFormNotFound" xml:space="preserve">
+    <value>eForm not found</value>
+  </data>
+  <data name="ErrorWhileBindingEformToGroup" xml:space="preserve">
+    <value>Error while binding eform to group</value>
+  </data>
+  <data name="ErrorWhileCreatingSecurityGroup" xml:space="preserve">
+    <value>Error while creating security group</value>
+  </data>
+  <data name="ErrorWhileDeletingEformFromGroup" xml:space="preserve">
+    <value>Error while deleting eform from group</value>
+  </data>
+  <data name="ErrorWhileDeletingSecurityGroup" xml:space="preserve">
+    <value>Error while deleting security group</value>
+  </data>
+  <data name="ErrorWhileObtainingAvailableEForms" xml:space="preserve">
+    <value>Error while obtaining available eForms</value>
+  </data>
+  <data name="ErrorWhileObtainingEformInfo" xml:space="preserve">
+    <value>Error while obtaining eform info</value>
+  </data>
+  <data name="ErrorWhileObtainingSecurityGroup" xml:space="preserve">
+    <value>Error while obtaining security group</value>
+  </data>
+  <data name="ErrorWhileObtainingSecurityGroups" xml:space="preserve">
+    <value>Error while obtaining security groups</value>
+  </data>
+  <data name="ErrorWhileObtainingUserMenu" xml:space="preserve">
+    <value>Error while obtaining user menu</value>
+  </data>
+  <data name="ErrorWhileUpdatingSecurityGroup" xml:space="preserve">
+    <value>Error while updating security group</value>
+  </data>
+  <data name="PermissionForEformHasBeenUpdated" xml:space="preserve">
+    <value>Permission for eform has been updated</value>
+  </data>
+  <data name="SecurityGroupCreatedSuccessfully" xml:space="preserve">
+    <value>Security group created successfully</value>
+  </data>
+  <data name="SecurityGroupNameIsEmpty" xml:space="preserve">
+    <value>Security group name is empty</value>
+  </data>
+  <data name="SecurityGroupRemovedSuccessfully" xml:space="preserve">
+    <value>Security group removed successfully</value>
+  </data>
+  <data name="SecurityGroupUpdatedSuccessfully" xml:space="preserve">
+    <value>Security group updated successfully</value>
+  </data>
 </root>

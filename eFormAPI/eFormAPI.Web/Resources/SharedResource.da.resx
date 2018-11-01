@@ -423,4 +423,61 @@
   <data name="PermissionsUpdatedSuccessfully" xml:space="preserve">
     <value>Tilladelser opdateret med succes</value>
   </data>
+  <data name="ConnectionStringDoesNotExist" xml:space="preserve">
+    <value>Forbindelsesstrengen findes ikke</value>
+  </data>
+  <data name="eFormAlreadyInGroup" xml:space="preserve">
+    <value>eForm allerede i gruppe</value>
+  </data>
+  <data name="eFormHasBeenDeletedFromGroup" xml:space="preserve">
+    <value>eForm er blevet slettet fra gruppen</value>
+  </data>
+  <data name="eFormNotFound" xml:space="preserve">
+    <value>eForm ikke fundet</value>
+  </data>
+  <data name="ErrorWhileBindingEformToGroup" xml:space="preserve">
+    <value>Fejl under bindende e-form til gruppe</value>
+  </data>
+  <data name="ErrorWhileCreatingSecurityGroup" xml:space="preserve">
+    <value>Der opstod en fejl under oprettelsen af sikkerhedsgruppen</value>
+  </data>
+  <data name="ErrorWhileDeletingEformFromGroup" xml:space="preserve">
+    <value>Fejl under sletning af e-form fra gruppe</value>
+  </data>
+  <data name="ErrorWhileDeletingSecurityGroup" xml:space="preserve">
+    <value>Der opstod en fejl under sletning af sikkerhedsgruppen</value>
+  </data>
+  <data name="ErrorWhileObtainingAvailableEForms" xml:space="preserve">
+    <value>Fejl under opnåelse af tilgængelige eForms</value>
+  </data>
+  <data name="ErrorWhileObtainingEformInfo" xml:space="preserve">
+    <value>Fejl under opnåelse af e-mail-info</value>
+  </data>
+  <data name="ErrorWhileObtainingSecurityGroup" xml:space="preserve">
+    <value>Fejl under opnåelse af sikkerhedsgruppe</value>
+  </data>
+  <data name="ErrorWhileObtainingSecurityGroups" xml:space="preserve">
+    <value>Fejl under opnåelse af sikkerhedsgrupper</value>
+  </data>
+  <data name="ErrorWhileObtainingUserMenu" xml:space="preserve">
+    <value>Fejl under opnåelse af brugermenu</value>
+  </data>
+  <data name="ErrorWhileUpdatingSecurityGroup" xml:space="preserve">
+    <value>Der opstod en fejl under opdatering af sikkerhedsgruppen</value>
+  </data>
+  <data name="PermissionForEformHasBeenUpdated" xml:space="preserve">
+    <value>Tilladelse til eform er blevet opdateret</value>
+  </data>
+  <data name="SecurityGroupCreatedSuccessfully" xml:space="preserve">
+    <value>Sikkerhedsgruppe oprettes med succes</value>
+  </data>
+  <data name="SecurityGroupNameIsEmpty" xml:space="preserve">
+    <value>Sikkerhedsgruppens navn er tomt</value>
+  </data>
+  <data name="SecurityGroupRemovedSuccessfully" xml:space="preserve">
+    <value>Sikkerhedsgruppe fjernet med succes</value>
+  </data>
+  <data name="SecurityGroupUpdatedSuccessfully" xml:space="preserve">
+    <value>Sikkerhedsgruppe opdateret med succes</value>
+  </data>
 </root>
