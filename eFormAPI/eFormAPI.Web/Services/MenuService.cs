@@ -27,7 +27,7 @@ namespace eFormAPI.Web.Services
         public MenuService(ILogger<MenuService> logger,
             BaseDbContext dbContext,
             IClaimsService claimsService,
-            IUserService userService, 
+            IUserService userService,
             ILocalizationService localizationService)
         {
             _logger = logger;
@@ -47,6 +47,7 @@ namespace eFormAPI.Web.Services
                 {
                     menuItems = FilterMenuForUser(menuItems, userClaims);
                 }
+
                 // Add user first and last name
                 foreach (var menuItem in menuItems)
                 {
@@ -100,11 +101,30 @@ namespace eFormAPI.Web.Services
                                 }).ToList()
                         }
                     ).ToList();
-                var result = new MenuModel()
+                // Create result
+                var result = new MenuModel();
+                orderedRight.ForEach(menuItem =>
                 {
-                    LeftMenu = orderedLeft,
-                    RightMenu = orderedRight,
-                };
+                    if (menuItem.MenuItems.Any())
+                    {
+                        result.RightMenu.Add(menuItem);
+                    }
+                    else if (!string.IsNullOrEmpty(menuItem.Link))
+                    {
+                        result.RightMenu.Add(menuItem);
+                    }
+                });
+                orderedLeft.ForEach(menuItem =>
+                {
+                    if (menuItem.MenuItems.Any())
+                    {
+                        result.LeftMenu.Add(menuItem);
+                    }
+                    else if (!string.IsNullOrEmpty(menuItem.Link))
+                    {
+                        result.LeftMenu.Add(menuItem);
+                    }
+                });
                 // Add menu from plugins
                 if (Startup.Plugins.Any())
                 {
@@ -115,13 +135,14 @@ namespace eFormAPI.Web.Services
                         result.RightMenu.AddRange(pluginMenu.RightMenu);
                     }
                 }
+
                 return new OperationDataResult<MenuModel>(true, result);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 _logger.LogError(e.Message);
-                return new OperationDataResult<MenuModel>(false, 
+                return new OperationDataResult<MenuModel>(false,
                     _localizationService.GetString("ErrorWhileObtainingUserMenu"));
             }
         }
@@ -186,7 +207,6 @@ namespace eFormAPI.Web.Services
                         break;
                     case "Application Settings":
                         break;
-
                     default:
                         newList.Add(menuItem);
                         break;
