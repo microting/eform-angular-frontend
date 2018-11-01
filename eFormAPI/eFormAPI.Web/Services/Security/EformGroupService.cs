@@ -21,18 +21,20 @@ namespace eFormAPI.Web.Services.Security
     {
         private readonly ILogger<EformGroupService> _logger;
         private readonly BaseDbContext _dbContext;
+        private readonly IUserService _userService;
         private readonly IEFormCoreService _coreHelper;
         private readonly ILocalizationService _localizationService;
 
         public EformGroupService(ILogger<EformGroupService> logger,
             BaseDbContext dbContext,
             ILocalizationService localizationService,
-            IEFormCoreService coreHelper)
+            IEFormCoreService coreHelper, IUserService userService)
         {
             _logger = logger;
             _dbContext = dbContext;
             _localizationService = localizationService;
             _coreHelper = coreHelper;
+            _userService = userService;
         }
 
         public async Task<OperationDataResult<TemplateListModel>> GetAvailableEforms(
@@ -158,7 +160,7 @@ namespace eFormAPI.Web.Services.Security
                                 PermissionTypeId = x.PermissionTypeId,
                                 IsEnabled = _dbContext.EformPermissions.Any(g =>
                                     g.EformInGroup.SecurityGroupId == groupId
-                                    && g.PermissionId == x.Id)
+                                    && g.PermissionId == x.Id && g.EformInGroupId == e.Id)
                             }).ToList()
                     })
                     .ToListAsync();
@@ -213,6 +215,31 @@ namespace eFormAPI.Web.Services.Security
                 Console.WriteLine(e);
                 _logger.LogError(e.Message);
                 return new OperationDataResult<EformsPermissionsModel>(false,
+                    _localizationService.GetString("ErrorWhileObtainingEformInfo"));
+            }
+        }
+
+
+        public async Task<OperationDataResult<List<EformPermissionsSimpleModel>>> GetEformSimpleInfo()
+        {
+            try
+            {
+                var result = await _dbContext.EformInGroups
+                    .Where(x => x.SecurityGroup.SecurityGroupUsers.Any(y =>
+                        y.EformUserId == _userService.UserId))
+                    .Select(x => new EformPermissionsSimpleModel()
+                    {
+                        TemplateId = x.TemplateId,
+                        PermissionsSimpleList = x.EformPermissions.Select(y => y.Permission.ClaimName).ToList()
+                    })
+                    .ToListAsync();
+                return new OperationDataResult<List<EformPermissionsSimpleModel>>(true, result);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                _logger.LogError(e.Message);
+                return new OperationDataResult<List<EformPermissionsSimpleModel>>(false,
                     _localizationService.GetString("ErrorWhileObtainingEformInfo"));
             }
         }

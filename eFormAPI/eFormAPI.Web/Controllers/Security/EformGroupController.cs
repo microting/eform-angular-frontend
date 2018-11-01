@@ -9,7 +9,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Templates;
 
 namespace eFormAPI.Web.Controllers.Security
 {
-    [Authorize(Roles = EformRole.Admin)]
+    [Authorize]
     public class EformGroupController : Controller
     {
         private readonly IEformGroupService _eformGroupService;
@@ -20,6 +20,7 @@ namespace eFormAPI.Web.Controllers.Security
         }
 
         [HttpGet]
+        [Authorize(Roles = EformRole.Admin)]
         [Route("api/security/eforms/{groupId}")]
         public async Task<OperationDataResult<TemplateListModel>> GetAvailableEforms(TemplateRequestModel model,
             int groupId)
@@ -29,12 +30,14 @@ namespace eFormAPI.Web.Controllers.Security
 
         [HttpPut]
         [Route("api/security/eforms")]
+        [Authorize(Roles = EformRole.Admin)]
         public async Task<OperationResult> AddEformToGroup([FromBody] EformBindGroupModel model)
         {
             return await _eformGroupService.AddEformToGroup(model);
         }
 
         [HttpGet]
+        [Authorize(Roles = EformRole.Admin)]
         [Route("api/security/eforms-permissions/{groupId}")]
         public async Task<OperationDataResult<EformsPermissionsModel>> GetGroupEforms(int groupId)
         {
@@ -42,14 +45,22 @@ namespace eFormAPI.Web.Controllers.Security
         }
 
         [HttpPost]
+        [Authorize(Roles = EformRole.Admin)]
         [Route("api/security/eforms-permissions")]
         public async Task<OperationResult> UpdateGroupEformPermissions([FromBody] EformPermissionsModel model)
         {
             return await _eformGroupService.UpdateGroupEformPermissions(model);
         }
 
+        [HttpGet]
+        [Route("api/security/eforms-permissions/simple")]
+        public async Task<IActionResult> GetEformSimpleInfo()
+        {
+            return Ok(await _eformGroupService.GetEformSimpleInfo());
+        }
 
         [HttpDelete]
+        [Authorize(Roles = EformRole.Admin)]
         [Route("api/security/eforms/{eformId}/{groupId}")]
         public async Task<OperationResult> DeleteEformFromGroup(int eformId, int groupId)
         {
