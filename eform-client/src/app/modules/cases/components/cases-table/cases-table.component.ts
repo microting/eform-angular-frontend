@@ -78,6 +78,11 @@ export class CasesTableComponent implements OnInit {
     });
   }
 
+  downloadPDF(caseId: number) {
+    window.open('/api/template-files/download-case-pdf/' +
+      this.currentTemplate.id + '?caseId=' + caseId, '_blank');
+  }
+
   loadEformPermissions(templateId: number) {
     if (this.securityGroupEformsService.mappedPermissions.length) {
       this.eformPermissionsSimpleModel = this.securityGroupEformsService.mappedPermissions.find(x => x.templateId == templateId);
@@ -101,10 +106,5 @@ export class CasesTableComponent implements OnInit {
     } else {
       return this.userClaims[UserClaimsEnum[permissionIndex].toString()];
     }
-  }
-
-  downloadPDF(caseId: number) {
-    window.open('/api/template-files/download-case-pdf/' +
-      this.currentTemplate.id + '?caseId=' + caseId, '_blank');
   }
 }

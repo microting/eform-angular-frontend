@@ -24,7 +24,7 @@
                 </a>
               </li>
           </ul>
-          <div class="text-center mt-2" *ngIf="userClaims.caseUpdate">
+          <div class="text-center mt-2" *ngIf="checkEformPermissions(userClaimsEnum.caseUpdate)">
             <button class="btn btn-ar btn-danger" (click)="saveCase(); this.isSaveClicked = true;" id="submit_form">
               {{ 'Save' | translate }} <i class="fa fa-spinner fa-spin"></i>
             </button>
