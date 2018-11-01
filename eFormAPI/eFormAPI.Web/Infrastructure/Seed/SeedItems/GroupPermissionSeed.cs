@@ -48,25 +48,25 @@ namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
                 new GroupPermission()
                 {
                     Id = 7,
-                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.CaseRead,
+                    PermissionId = AuthConsts.DbIds.Permissions.Cases.CaseRead,
                     SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins
                 },
                 new GroupPermission()
                 {
                     Id = 8,
-                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.CasesRead,
+                    PermissionId = AuthConsts.DbIds.Permissions.Cases.CasesRead,
                     SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins
                 },
                 new GroupPermission()
                 {
                     Id = 9,
-                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.CaseUpdate,
+                    PermissionId = AuthConsts.DbIds.Permissions.Cases.CaseUpdate,
                     SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins
                 },
                 new GroupPermission()
                 {
                     Id = 10,
-                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.CaseDelete,
+                    PermissionId = AuthConsts.DbIds.Permissions.Cases.CaseDelete,
                     SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins
                 },
                 new GroupPermission()
@@ -78,7 +78,7 @@ namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
                 new GroupPermission()
                 {
                     Id = 12,
-                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.GetPdf,
+                    PermissionId = AuthConsts.DbIds.Permissions.Cases.CaseGetPdf,
                     SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins
                 },
                 // eForm user group
@@ -97,25 +97,25 @@ namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
                 new GroupPermission()
                 {
                     Id = 15,
-                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.CaseRead,
+                    PermissionId = AuthConsts.DbIds.Permissions.Cases.CaseRead,
                     SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformUsers
                 },
                 new GroupPermission()
                 {
                     Id = 16,
-                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.CasesRead,
+                    PermissionId = AuthConsts.DbIds.Permissions.Cases.CasesRead,
                     SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformUsers
                 },
                 new GroupPermission()
                 {
                     Id = 17,
-                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.CaseUpdate,
+                    PermissionId = AuthConsts.DbIds.Permissions.Cases.CaseUpdate,
                     SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformUsers
                 },
                 new GroupPermission()
                 {
                     Id = 18,
-                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.GetPdf,
+                    PermissionId = AuthConsts.DbIds.Permissions.Cases.CaseGetPdf,
                     SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformUsers
                 }
             );

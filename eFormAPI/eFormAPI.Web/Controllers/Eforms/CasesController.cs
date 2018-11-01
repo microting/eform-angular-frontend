@@ -22,12 +22,12 @@ namespace eFormAPI.Web.Controllers.Eforms
         }
 
         [HttpPost]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.CasesRead)]
+        [Authorize(Policy = AuthConsts.EformPolicies.Cases.CasesRead)]
         public async Task<IActionResult> Index([FromBody] CaseRequestModel requestModel)
         {
             if (requestModel.TemplateId != null
                 && ! await _permissionsService.CheckEform((int) requestModel.TemplateId,
-                    AuthConsts.EformClaims.EformsClaims.CasesRead))
+                    AuthConsts.EformClaims.CasesClaims.CasesRead))
             {
                 return Forbid();
             }
@@ -37,11 +37,11 @@ namespace eFormAPI.Web.Controllers.Eforms
 
         [HttpGet]
         [Route("api/cases/getcase")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.CaseRead)]
+        [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseRead)]
         public async Task<IActionResult> GetCase(int id, int templateId)
         {
             if (! await _permissionsService.CheckEform(templateId, 
-                AuthConsts.EformClaims.EformsClaims.CaseRead))
+                AuthConsts.EformClaims.CasesClaims.CaseRead))
             {
                 return Forbid();
             }
@@ -51,11 +51,11 @@ namespace eFormAPI.Web.Controllers.Eforms
 
         [HttpGet]
         [Route("/api/cases/delete")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.CaseDelete)]
+        [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseDelete)]
         public async Task<IActionResult> Delete(int id, int templateId)
         {
             if (! await _permissionsService.CheckEform(templateId,
-                AuthConsts.EformClaims.EformsClaims.CaseDelete))
+                AuthConsts.EformClaims.CasesClaims.CaseDelete))
             {
                 return Forbid();
             }
@@ -65,11 +65,11 @@ namespace eFormAPI.Web.Controllers.Eforms
 
         [HttpPost]
         [Route("/api/cases/update/{templateId}")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.CaseUpdate)]
+        [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseUpdate)]
         public async Task<IActionResult> Update([FromBody] ReplyRequest model, int templateId)
         {
             if (!await _permissionsService.CheckEform(templateId,
-                AuthConsts.EformClaims.EformsClaims.CaseUpdate))
+                AuthConsts.EformClaims.CasesClaims.CaseUpdate))
             {
                 return Forbid();
             }

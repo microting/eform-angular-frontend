@@ -45,6 +45,11 @@ namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
                 },
                 new PermissionType
                 {
+                    Id = AuthConsts.DbIds.PermissionTypes.Cases,
+                    Name = "Cases"
+                },
+                new PermissionType
+                {
                     Id = AuthConsts.DbIds.PermissionTypes.Eforms,
                     Name = "Eforms"
                 });

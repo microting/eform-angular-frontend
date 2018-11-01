@@ -196,22 +196,22 @@ namespace eFormAPI.Web.Migrations
                         new { Id = 23, ClaimName = "device_users_create", PermissionName = "Create", PermissionTypeId = 7 },
                         new { Id = 26, ClaimName = "device_users_delete", PermissionName = "Delete", PermissionTypeId = 7 },
                         new { Id = 25, ClaimName = "device_users_update", PermissionName = "Update", PermissionTypeId = 7 },
-                        new { Id = 27, ClaimName = "eforms_create", PermissionName = "Create", PermissionTypeId = 8 },
-                        new { Id = 28, ClaimName = "eforms_delete", PermissionName = "Delete", PermissionTypeId = 8 },
-                        new { Id = 29, ClaimName = "eforms_read", PermissionName = "Read", PermissionTypeId = 8 },
-                        new { Id = 30, ClaimName = "eforms_update_columns", PermissionName = "Update columns", PermissionTypeId = 8 },
-                        new { Id = 31, ClaimName = "eforms_download_xml", PermissionName = "Download XML", PermissionTypeId = 8 },
-                        new { Id = 32, ClaimName = "eforms_upload_zip", PermissionName = "Upload ZIP", PermissionTypeId = 8 },
-                        new { Id = 33, ClaimName = "eforms_cases_read", PermissionName = "Cases read", PermissionTypeId = 8 },
-                        new { Id = 34, ClaimName = "eforms_case_read", PermissionName = "Case read", PermissionTypeId = 8 },
-                        new { Id = 35, ClaimName = "eforms_case_update", PermissionName = "Case update", PermissionTypeId = 8 },
-                        new { Id = 36, ClaimName = "eforms_case_delete", PermissionName = "Case delete", PermissionTypeId = 8 },
-                        new { Id = 37, ClaimName = "eforms_get_pdf", PermissionName = "Get PDF", PermissionTypeId = 8 },
-                        new { Id = 38, ClaimName = "eforms_pairing_read", PermissionName = "Pairing read", PermissionTypeId = 8 },
-                        new { Id = 39, ClaimName = "eforms_pairing_update", PermissionName = "Pairing update", PermissionTypeId = 8 },
-                        new { Id = 40, ClaimName = "eforms_read_tags", PermissionName = "Read tags", PermissionTypeId = 8 },
-                        new { Id = 41, ClaimName = "eforms_update_tags", PermissionName = "Update tags", PermissionTypeId = 8 },
-                        new { Id = 42, ClaimName = "eforms_get_csv", PermissionName = "Get CSV", PermissionTypeId = 8 }
+                        new { Id = 27, ClaimName = "eforms_create", PermissionName = "Create", PermissionTypeId = 9 },
+                        new { Id = 28, ClaimName = "eforms_delete", PermissionName = "Delete", PermissionTypeId = 9 },
+                        new { Id = 29, ClaimName = "eforms_read", PermissionName = "Read", PermissionTypeId = 9 },
+                        new { Id = 30, ClaimName = "eforms_update_columns", PermissionName = "Update columns", PermissionTypeId = 9 },
+                        new { Id = 31, ClaimName = "eforms_download_xml", PermissionName = "Download XML", PermissionTypeId = 9 },
+                        new { Id = 32, ClaimName = "eforms_upload_zip", PermissionName = "Upload ZIP", PermissionTypeId = 9 },
+                        new { Id = 33, ClaimName = "cases_read", PermissionName = "Cases read", PermissionTypeId = 8 },
+                        new { Id = 34, ClaimName = "case_read", PermissionName = "Case read", PermissionTypeId = 8 },
+                        new { Id = 35, ClaimName = "case_update", PermissionName = "Case update", PermissionTypeId = 8 },
+                        new { Id = 36, ClaimName = "case_delete", PermissionName = "Case delete", PermissionTypeId = 8 },
+                        new { Id = 37, ClaimName = "case_get_pdf", PermissionName = "Get PDF", PermissionTypeId = 8 },
+                        new { Id = 38, ClaimName = "eforms_pairing_read", PermissionName = "Pairing read", PermissionTypeId = 9 },
+                        new { Id = 39, ClaimName = "eforms_pairing_update", PermissionName = "Pairing update", PermissionTypeId = 9 },
+                        new { Id = 40, ClaimName = "eforms_read_tags", PermissionName = "Read tags", PermissionTypeId = 9 },
+                        new { Id = 41, ClaimName = "eforms_update_tags", PermissionName = "Update tags", PermissionTypeId = 9 },
+                        new { Id = 42, ClaimName = "eforms_get_csv", PermissionName = "Get CSV", PermissionTypeId = 9 }
                     );
                 });
 
@@ -240,7 +240,8 @@ namespace eFormAPI.Web.Migrations
                         new { Id = 5, Name = "User management" },
                         new { Id = 6, Name = "Units" },
                         new { Id = 7, Name = "Device users" },
-                        new { Id = 8, Name = "Eforms" }
+                        new { Id = 8, Name = "Cases" },
+                        new { Id = 9, Name = "Eforms" }
                     );
                 });
 

@@ -58,7 +58,7 @@ namespace eFormAPI.Web.Controllers.Eforms
 
         [HttpGet]
         [Route("api/template-files/get-image/{fileName}.{ext}")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.CasesRead)]
+        [Authorize(Policy = AuthConsts.EformPolicies.Cases.CasesRead)]
         public IActionResult GetImage(string fileName, string ext, string noCache = "noCache")
         {
 
@@ -84,7 +84,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         [HttpGet]
         [Authorize]
         [Route("api/template-files/rotate-image")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.CaseUpdate)]
+        [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseUpdate)]
         public OperationResult RotateImage(string fileName)
         {
             var core = _coreHelper.GetCore();
@@ -117,7 +117,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         [HttpGet]
         [Authorize]
         [Route("api/template-files/delete-image")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.CaseUpdate)]
+        [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseUpdate)]
         public OperationResult DeleteImage(string fileName, int fieldId, int uploadedObjId)
         {
             try
@@ -142,7 +142,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         [HttpGet]
         [Authorize]
         [Route("api/template-files/get-pdf-file")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.GetPdf)]
+        [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseGetPdf)]
         public IActionResult GetPdfFile(string fileName)
         {
             var core = _coreHelper.GetCore();
@@ -159,7 +159,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         [HttpGet]
         [Authorize]
         [Route("api/template-files/download-case-pdf/{templateId}")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.GetPdf)]
+        [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseGetPdf)]
         public IActionResult DownloadEFormPdf(int templateId, int caseId)
         {
             try

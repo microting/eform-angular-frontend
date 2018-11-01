@@ -59,6 +59,15 @@
                 public const string Delete = "device_users_delete";
             }
 
+            public static class CasesClaims
+            {
+                public const string CasesRead = "cases_read";
+                public const string CaseRead = "case_read";
+                public const string CaseUpdate = "case_update";
+                public const string CaseDelete = "case_delete";
+                public const string CaseGetPdf = "case_get_pdf";
+            }
+
             public static class EformsClaims
             {
                 public const string Create = "eforms_create";
@@ -67,11 +76,6 @@
                 public const string UpdateColumns = "eforms_update_columns";
                 public const string DownloadXml = "eforms_download_xml";
                 public const string UploadZip = "eforms_upload_zip";
-                public const string CasesRead = "eforms_cases_read";
-                public const string CaseRead = "eforms_case_read";
-                public const string CaseUpdate = "eforms_case_update";
-                public const string CaseDelete = "eforms_case_delete";
-                public const string GetPdf = "eforms_get_pdf";
                 public const string PairingRead = "eforms_pairing_read";
                 public const string PairingUpdate = "eforms_pairing_update";
                 public const string ReadTags = "eforms_read_tags";
@@ -136,6 +140,15 @@
                 public const string Delete = EformClaims.DeviceUsersClaims.Delete;
             }
 
+            public static class Cases
+            {
+                public const string CasesRead = EformClaims.CasesClaims.CasesRead;
+                public const string CaseRead = EformClaims.CasesClaims.CaseRead;
+                public const string CaseUpdate = EformClaims.CasesClaims.CaseUpdate;
+                public const string CaseDelete = EformClaims.CasesClaims.CaseDelete;
+                public const string CaseGetPdf = EformClaims.CasesClaims.CaseGetPdf;
+            }
+
             public static class Eforms
             {
                 public const string Create = EformClaims.EformsClaims.Create;
@@ -144,11 +157,6 @@
                 public const string UpdateColumns = EformClaims.EformsClaims.UpdateColumns;
                 public const string DownloadXml = EformClaims.EformsClaims.DownloadXml;
                 public const string UploadZip = EformClaims.EformsClaims.UploadZip;
-                public const string CasesRead = EformClaims.EformsClaims.CasesRead;
-                public const string CaseRead = EformClaims.EformsClaims.CaseRead;
-                public const string CaseUpdate = EformClaims.EformsClaims.CaseUpdate;
-                public const string CaseDelete = EformClaims.EformsClaims.CaseDelete;
-                public const string GetPdf = EformClaims.EformsClaims.GetPdf;
                 public const string PairingRead = EformClaims.EformsClaims.PairingRead;
                 public const string PairingUpdate = EformClaims.EformsClaims.PairingUpdate;
                 public const string ReadTags = EformClaims.EformsClaims.ReadTags;
@@ -174,7 +182,8 @@
                 public const int UserManagement = 5;
                 public const int Units = 6;
                 public const int DeviceUsers = 7;
-                public const int Eforms = 8;
+                public const int Cases = 8;
+                public const int Eforms = 9;
             }
 
             public static class Permissions
@@ -232,6 +241,15 @@
                     public const int Delete = 26;
                 }
 
+                public static class Cases
+                {
+                    public const int CasesRead = 33;
+                    public const int CaseRead = 34;
+                    public const int CaseUpdate = 35;
+                    public const int CaseDelete = 36;
+                    public const int CaseGetPdf = 37;
+                }
+
                 public static class Eforms
                 {
                     public const int Create = 27;
@@ -240,11 +258,6 @@
                     public const int UpdateColumns = 30;
                     public const int DownloadXml = 31;
                     public const int UploadZip = 32;
-                    public const int CasesRead = 33;
-                    public const int CaseRead = 34;
-                    public const int CaseUpdate = 35;
-                    public const int CaseDelete = 36;
-                    public const int GetPdf = 37;
                     public const int PairingRead = 38;
                     public const int PairingUpdate = 39;
                     public const int ReadTags = 40;

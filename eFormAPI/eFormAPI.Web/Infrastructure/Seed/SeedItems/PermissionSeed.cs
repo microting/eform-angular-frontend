@@ -231,38 +231,38 @@ namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
                 },
                 new Permission()
                 {
-                    Id = AuthConsts.DbIds.Permissions.Eforms.CasesRead,
-                    ClaimName = AuthConsts.EformClaims.EformsClaims.CasesRead,
+                    Id = AuthConsts.DbIds.Permissions.Cases.CasesRead,
+                    ClaimName = AuthConsts.EformClaims.CasesClaims.CasesRead,
                     PermissionName = "Cases read",
-                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Eforms,
+                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Cases,
                 },
                 new Permission()
                 {
-                    Id = AuthConsts.DbIds.Permissions.Eforms.CaseRead,
-                    ClaimName = AuthConsts.EformClaims.EformsClaims.CaseRead,
+                    Id = AuthConsts.DbIds.Permissions.Cases.CaseRead,
+                    ClaimName = AuthConsts.EformClaims.CasesClaims.CaseRead,
                     PermissionName = "Case read",
-                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Eforms,
+                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Cases,
                 },
                 new Permission()
                 {
-                    Id = AuthConsts.DbIds.Permissions.Eforms.CaseUpdate,
-                    ClaimName = AuthConsts.EformClaims.EformsClaims.CaseUpdate,
+                    Id = AuthConsts.DbIds.Permissions.Cases.CaseUpdate,
+                    ClaimName = AuthConsts.EformClaims.CasesClaims.CaseUpdate,
                     PermissionName = "Case update",
-                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Eforms,
+                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Cases,
                 },
                 new Permission()
                 {
-                    Id = AuthConsts.DbIds.Permissions.Eforms.CaseDelete,
-                    ClaimName = AuthConsts.EformClaims.EformsClaims.CaseDelete,
+                    Id = AuthConsts.DbIds.Permissions.Cases.CaseDelete,
+                    ClaimName = AuthConsts.EformClaims.CasesClaims.CaseDelete,
                     PermissionName = "Case delete",
-                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Eforms,
+                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Cases,
                 },
                 new Permission()
                 {
-                    Id = AuthConsts.DbIds.Permissions.Eforms.GetPdf,
-                    ClaimName = AuthConsts.EformClaims.EformsClaims.GetPdf,
+                    Id = AuthConsts.DbIds.Permissions.Cases.CaseGetPdf,
+                    ClaimName = AuthConsts.EformClaims.CasesClaims.CaseGetPdf,
                     PermissionName = "Get PDF",
-                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Eforms,
+                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Cases,
                 },
                 new Permission()
                 {
