@@ -26,19 +26,19 @@ export class CasesService extends BaseService {
     super(_http, router, toastrService);
   }
 
-  getById(id: number): Observable<OperationDataResult<ReplyElement>> {
-    return this.get<ReplyElement>(CasesMethods.EditById + '/' + id);
+  getById(id: number, templateId: number): Observable<OperationDataResult<ReplyElement>> {
+    return this.get<ReplyElement>(CasesMethods.EditById + '?id=' + id + '&templateId=' + templateId);
   }
 
   getCases(model: CasesRequestModel): Observable<OperationDataResult<CaseListModel>> {
     return this.post(CasesMethods.GetCases, model);
   }
 
-  updateCase(model: ReplyRequest): Observable<OperationResult> {
-    return this.post<ReplyRequest>(CasesMethods.UpdateCase, model);
+  updateCase(model: ReplyRequest, templateId: number): Observable<OperationResult> {
+    return this.post<ReplyRequest>(CasesMethods.UpdateCase + '/' + templateId, model);
   }
 
-  deleteCase(id: number): Observable<OperationResult> {
-    return this.get(CasesMethods.DeleteCase + '/' + id);
+  deleteCase(id: number, templateId: number): Observable<OperationResult> {
+    return this.get(CasesMethods.DeleteCase + '?id=' + id + '&templateId=' + templateId);
   }
 }

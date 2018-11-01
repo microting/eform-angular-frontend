@@ -10,6 +10,7 @@ import {CasesService} from 'src/app/common/services/cases';
 export class RemoveCaseModalComponent implements OnInit {
   @ViewChild('frame') frame;
   @Output() onCaseDeleted: EventEmitter<void> = new EventEmitter<void>();
+  selectedTemplateId: number;
   selectedCaseModel: CaseModel = new CaseModel();
   spinnerStatus = false;
 
@@ -18,14 +19,15 @@ export class RemoveCaseModalComponent implements OnInit {
   ngOnInit() {
   }
 
-  show(caseModel: CaseModel) {
+  show(caseModel: CaseModel, templateId: number) {
     this.selectedCaseModel = caseModel;
+    this.selectedTemplateId = templateId;
     this.frame.show();
   }
 
   submitCaseDelete() {
     this.spinnerStatus = true;
-    this.casesService.deleteCase(this.selectedCaseModel.id).subscribe((data => {
+    this.casesService.deleteCase(this.selectedCaseModel.id, this.selectedTemplateId).subscribe((data => {
       if (data && data.success) {
         this.onCaseDeleted.emit();
         this.frame.hide();

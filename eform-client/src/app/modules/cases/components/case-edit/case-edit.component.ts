@@ -62,7 +62,7 @@ export class CaseEditComponent implements OnInit, OnDestroy {
     if (!this.id || this.id == 0) {
       return;
     }
-    this.casesService.getById(this.id).subscribe(operation => {
+    this.casesService.getById(this.id, this.currentTemplate.id).subscribe(operation => {
       if (operation && operation.success) {
         this.replyElement = operation.model;
       }
@@ -79,7 +79,7 @@ export class CaseEditComponent implements OnInit, OnDestroy {
     this.replyRequest.id = this.replyElement.id;
     this.replyRequest.label = this.replyElement.label;
     this.replyRequest.elementList = this.requestModels;
-    this.casesService.updateCase(this.replyRequest).subscribe(operation => {
+    this.casesService.updateCase(this.replyRequest, this.currentTemplate.id).subscribe(operation => {
       if (operation && operation.success) {
         this.replyElement = new ReplyElement();
         this.spinnerStatus = false;

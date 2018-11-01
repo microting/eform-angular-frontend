@@ -41,7 +41,7 @@ export class CasesTableComponent implements OnInit {
   }
 
   onDeleteClicked(caseModel: CaseModel) {
-    this.modalRemoveCase.show(caseModel);
+    this.modalRemoveCase.show(caseModel, this.currentTemplate.id);
   }
 
   sortByColumn(columnName: string, sortedByDsc: boolean) {
