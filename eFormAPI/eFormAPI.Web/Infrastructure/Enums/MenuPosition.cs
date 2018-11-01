@@ -1,4 +1,4 @@
-﻿namespace eFormAPI.Web.Infrastructure.Database.Entities
+﻿namespace eFormAPI.Web.Infrastructure.Enums
 {
     public enum MenuPosition
     {

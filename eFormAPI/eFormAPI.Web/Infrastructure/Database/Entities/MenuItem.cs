@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using eFormAPI.Web.Infrastructure.Enums;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
 
 namespace eFormAPI.Web.Infrastructure.Database.Entities

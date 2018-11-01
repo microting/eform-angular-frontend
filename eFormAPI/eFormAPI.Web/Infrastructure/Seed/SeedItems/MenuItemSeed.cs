@@ -1,4 +1,5 @@
 ﻿using eFormAPI.Web.Infrastructure.Database.Entities;
+using eFormAPI.Web.Infrastructure.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace eFormAPI.Web.Infrastructure.Seed.SeedItems

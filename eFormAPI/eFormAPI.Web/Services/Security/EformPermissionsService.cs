@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using eFormAPI.Web.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,8 +16,11 @@ namespace eFormAPI.Web.Services.Security
 
         public async Task<bool> CheckEform(int eformId, string claimName)
         {
-            var x = await _dbContext.SecurityGroups.ToListAsync();
-            return true;
+            var result = await _dbContext.EformPermissions
+                .Where(x => x.EformInGroup.TemplateId == eformId)
+                .Where(x => x.Permission.ClaimName == claimName)
+                .AnyAsync();
+            return result;
         }
     }
 }

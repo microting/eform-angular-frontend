@@ -21,16 +21,13 @@ namespace eFormAPI.Web.Controllers.Eforms
     {
         private readonly IEFormCoreService _coreHelper;
         private readonly IEformPermissionsService _permissionsService;
-        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ILocalizationService _localizationService;
 
         public TemplateFilesController(IEFormCoreService coreHelper,
-            IHttpContextAccessor httpContextAccessor,
-            ILocalizationService localizationService, 
+            ILocalizationService localizationService,
             IEformPermissionsService permissionsService)
         {
             _coreHelper = coreHelper;
-            _httpContextAccessor = httpContextAccessor;
             _localizationService = localizationService;
             _permissionsService = permissionsService;
         }
@@ -41,7 +38,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.GetCsv)]
         public async Task<IActionResult> Csv(int id)
         {
-            if (! await _permissionsService.CheckEform(id, 
+            if (!await _permissionsService.CheckEform(id,
                 AuthConsts.EformClaims.EformsClaims.GetCsv))
             {
                 return Forbid();
@@ -61,14 +58,6 @@ namespace eFormAPI.Web.Controllers.Eforms
         [Authorize(Policy = AuthConsts.EformPolicies.Cases.CasesRead)]
         public IActionResult GetImage(string fileName, string ext, string noCache = "noCache")
         {
-
-            //if (!await _permissionsService.CheckEform(id,
-            //    AuthConsts.EformClaims.EformsClaims.GetCsv))
-            //{
-            //    return Forbid();
-            //}
-
-
             var core = _coreHelper.GetCore();
             var filePath = $"{core.GetPicturePath()}\\{fileName}.{ext}";
             if (!System.IO.File.Exists(filePath))
@@ -160,8 +149,14 @@ namespace eFormAPI.Web.Controllers.Eforms
         [Authorize]
         [Route("api/template-files/download-case-pdf/{templateId}")]
         [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseGetPdf)]
-        public IActionResult DownloadEFormPdf(int templateId, int caseId)
+        public async Task<IActionResult> DownloadEFormPdf(int templateId, int caseId)
         {
+            if (!await _permissionsService.CheckEform(templateId,
+                AuthConsts.EformClaims.CasesClaims.CaseGetPdf))
+            {
+                return Forbid();
+            }
+
             try
             {
                 var core = _coreHelper.GetCore();
@@ -187,8 +182,14 @@ namespace eFormAPI.Web.Controllers.Eforms
         [Authorize]
         [Route("api/template-files/download-eform-xml/{templateId}")]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.DownloadXml)]
-        public IActionResult DownloadEFormXml(int templateId)
+        public async Task<IActionResult> DownloadEFormXml(int templateId)
         {
+            if (!await _permissionsService.CheckEform(templateId,
+                AuthConsts.EformClaims.EformsClaims.DownloadXml))
+            {
+                return Forbid();
+            }
+
             try
             {
                 var core = _coreHelper.GetCore();
@@ -215,6 +216,12 @@ namespace eFormAPI.Web.Controllers.Eforms
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UploadZip)]
         public async Task<IActionResult> UploadEformZip(EformZipUploadModel uploadModel)
         {
+            if (!await _permissionsService.CheckEform(uploadModel.TemplateId,
+                AuthConsts.EformClaims.EformsClaims.UploadZip))
+            {
+                return Forbid();
+            }
+
             try
             {
                 var core = _coreHelper.GetCore();
@@ -223,6 +230,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                 {
                     return BadRequest("Invalid Request!");
                 }
+
                 var saveFolder =
                     Path.Combine(core.GetJasperPath(),
                         Path.Combine("templates", templateId.ToString()));
@@ -235,6 +243,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                 {
                     return BadRequest("Folder error");
                 }
+
                 Directory.CreateDirectory(saveFolder);
                 Directory.CreateDirectory(zipArchiveFolder);
                 if (uploadModel.File.Length > 0)
@@ -259,6 +268,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                         {
                             FoldersHelper.ClearFolder(extractPath);
                         }
+
                         // extract
                         var fastZip = new FastZip();
                         // Will always overwrite if target filenames already exist
@@ -269,6 +279,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                         return Ok();
                     }
                 }
+
                 return BadRequest(_localizationService.GetString("InvalidRequest"));
             }
             catch (Exception)

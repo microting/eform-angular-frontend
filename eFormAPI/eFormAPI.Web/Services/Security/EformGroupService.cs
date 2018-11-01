@@ -270,6 +270,14 @@ namespace eFormAPI.Web.Services.Security
         {
             try
             {
+                requestModel.Permissions.Clear();
+                foreach (var permissionType in requestModel.PermissionTypes)
+                {
+                    foreach (var permission in permissionType.Permissions)
+                    {
+                        requestModel.Permissions.Add(permission);
+                    }
+                }
                 using (var transaction = await _dbContext.Database.BeginTransactionAsync())
                 {
                     var enabledEformPermission = new List<int>();

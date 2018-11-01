@@ -8,7 +8,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 using Microting.eFormApi.BasePn.Infrastructure.Models.SearchableList;
 
-namespace eFormAPI.Web.Controllers
+namespace eFormAPI.Web.Controllers.Advanced
 {
     [Authorize]
     public class EntitySearchController : Controller
