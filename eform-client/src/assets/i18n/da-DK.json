@@ -208,6 +208,21 @@
   "General Permissions": "Generelle Tilladelser",
   "Column": "Kolonne",
 
-  "Eforms Permissions": "Eforms Tilladelser",
-  "Forbidden": "Forbudt"
+  "Eform Permissions": "Eform Tilladelser",
+  "Forbidden": "Forbudt",
+  "Add Eform to Group": "Tilføj Eform til Gruppe",
+  "Add user to group": "Tilføj bruger til gruppe",
+  "Update columns": "Opdater kolonner",
+  "Download XML": "Download XML",
+  "Upload ZIP": "Upload ZIP",
+  "Pairing read": "Parring læses",
+  "Pairing update": "Parring opdatering",
+  "Read tags": "Læs tags",
+  "Update tags": "Opdater tags",
+  "Get CSV": "Få CSV",
+  "Cases read": "Tilfælde læst",
+  "Case read": "Sagen læst",
+  "Case update": "Sag opdatering",
+  "Case delete": "Slet slette",
+  "Get PDF": "Få PDF"
 }

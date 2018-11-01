@@ -66,19 +66,28 @@ namespace eFormAPI.Web.Services
                         .AnyAsync();
                     if (isEformsInGroups)
                     {
-                         eformIds = _dbContext.EformInGroups
+                        eformIds = _dbContext.EformInGroups
                             .Where(x =>
                                 x.SecurityGroup.SecurityGroupUsers.Any(y => y.EformUserId == _userService.UserId))
                             .Select(x => x.TemplateId)
                             .ToList();
+
+                        foreach (var templateDto in templatesDto)
+                        {
+                            if (eformIds.Contains(templateDto.Id))
+                            {
+                                model.Templates.Add(templateDto);
+                            }
+                        }
                     }
-                    foreach (var templateDto in templatesDto)
+                    else
                     {
-                        if (eformIds.Contains(templateDto.Id))
+                        foreach (var templateDto in templatesDto)
                         {
                             model.Templates.Add(templateDto);
                         }
                     }
+
                 }
                 else
                 {

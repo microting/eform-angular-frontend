@@ -66,8 +66,8 @@
             <i class="material-icons" *ngIf="templateRequestModel.sort == 'label' && templateRequestModel.isSortDsc">expand_more</i>
           </div>
         </th>
-        <th *ngIf="userClaims.eFormsReadTags || userClaims.eFormsUpdateTags">{{ 'Tags' | translate }}</th>
-        <th *ngIf="userClaims.eFormsPairingRead || userClaims.eFormsPairingUpdate">{{ 'Pairing' | translate }}</th>
+        <th>{{ 'Tags' | translate }}</th>
+        <th>{{ 'Pairing' | translate }}</th>
         <th>{{ 'Actions' | translate }}</th>
       </tr>
       </thead>
@@ -76,15 +76,15 @@
         <td scope="row" id="eform-id">{{templateDto.id}}</td>
         <td id="eform-created-at">{{templateDto.createdAt | date:'dd.MM.y HH:mm:ss'}}</td>
         <td id="eform-label">{{templateDto.label}}</td>
-        <td *ngIf="userClaims.eFormsReadTags || userClaims.eFormsUpdateTags">
+        <td>
           <div class="d-flex justify-content-center">
             <div>
-              <a class="btn btn-sm btn-success p-1 mb-2" *ngIf="userClaims.eFormsUpdateTags"
+              <a class="btn btn-sm btn-success p-1 mb-2" *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eFormsUpdateTags)"
                  id="eform-edit-btn"
                  mdbTooltip="{{ 'Edit tags' | translate }}" (click)="openEditTagsModal(templateDto)">
                 {{ 'Edit tags' | translate }}
               </a>
-              <ng-container *ngIf="userClaims.eFormsReadTags">
+              <ng-container *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eFormsReadTags)">
                 <p class="paragraph-sm" id="eform-tag" *ngFor="let tag of templateDto.tags">
                   {{tag.value}}
                 </p>
@@ -92,22 +92,23 @@
             </div>
           </div>
         </td>
-        <td *ngIf="userClaims.eFormsPairingRead || userClaims.eFormsPairingUpdate">
+        <td>
           <div class="d-flex justify-content-center">
             <div>
-              <button *ngIf="templateDto.deployedSites.length > 0 && userClaims.eFormsPairingUpdate"
+              <button *ngIf="templateDto.deployedSites.length > 0
+              && checkEformPermissions(templateDto.id, userClaimsEnum.eFormsPairingUpdate)"
                       id="eform-pairing-btn"
                       class="btn btn-success btn-sm p-1 mb-2" (click)="openPairingModal(templateDto)"
                       mdbTooltip="{{ 'Click to edit eForm pairing with user(s)' | translate }}">
                 {{ 'Edit pairing' | translate }}
               </button>
-              <button *ngIf="templateDto.deployedSites.length == 0 && userClaims.eFormsPairingUpdate"
+              <button *ngIf="templateDto.deployedSites.length == 0 && checkEformPermissions(templateDto.id, userClaimsEnum.eFormsPairingUpdate)"
                       id="eform-add-btn"
                       class="btn btn-success btn-sm p-1 mb-2" (click)="openPairingModal(templateDto)"
                       mdbTooltip="{{ 'Click to pair eForm with user(s)' | translate }}">
                 {{ 'Pair eForm' | translate }}
               </button>
-              <ng-container *ngIf="userClaims.eFormsPairingRead">
+              <ng-container *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eFormsPairingRead)">
                 <p class="paragraph-sm" id="eform-paired-username" *ngFor="let deployedSite of templateDto.deployedSites">
                   {{deployedSite.siteName}}
                 </p>
@@ -117,7 +118,7 @@
         </td>
         <td>
           <div class="d-flex flex-row justify-content-center">
-            <button class="btn btn-success btn-icon  mb-2" *ngIf="templateDto.hasCases && userClaims.casesRead"
+            <button class="btn btn-success btn-icon  mb-2" *ngIf="templateDto.hasCases && checkEformPermissions(templateDto.id, userClaimsEnum.casesRead)"
                     id="eform-cases-btn"
                     [routerLink]="['/cases', templateDto.id]"
                     mdbTooltip="{{ 'Show cases' | translate }}">
@@ -125,7 +126,8 @@
                 work
               </i>
             </button>
-            <button class="btn btn-success btn-icon mb-2 " id="edit-columnts-btn" *ngIf="userClaims.eFormsUpdateColumns"
+            <button class="btn btn-success btn-icon mb-2 " id="edit-columnts-btn"
+                    *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eFormsUpdateColumns)"
                     (click)="openEditColumnsModal(templateDto)"
                     mdbTooltip="{{ 'Edit columns' | translate }}">
               <i class="material-icons">
@@ -133,7 +135,8 @@
               </i>
             </button>
             <button class="btn btn-danger btn-icon mb-2 " id="delete-eform-btn"
-                    (click)="openEformDeleteModal(templateDto)" *ngIf="userClaims.eFormsDelete"
+                    (click)="openEformDeleteModal(templateDto)"
+                    *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eFormsDelete)"
                     mdbTooltip="{{ 'Delete eForm' | translate }}">
               <i class="material-icons">
                 delete_forever
@@ -142,7 +145,7 @@
           </div>
           <div class="d-flex flex-row justify-content-center">
             <button class="btn btn-accent text-black-50 btn-icon mb-2"
-                    *ngIf="templateDto.hasCases && userClaims.eFormsGetCsv"
+                    *ngIf="templateDto.hasCases && checkEformPermissions(templateDto.id, userClaimsEnum.eFormsGetCsv)"
                     id="download-csv-btn"
                     (click)="downloadItem('CSV', templateDto.id)"
                     mdbTooltip="{{ 'Download' | translate }} CSV">
@@ -151,7 +154,7 @@
               </i>
             </button>
             <button class="btn btn-accent text-black-50 btn-icon mb-2"
-                    *ngIf="templateDto.hasCases && userClaims.eFormsDownloadXml"
+                    *ngIf="templateDto.hasCases && checkEformPermissions(templateDto.id, userClaimsEnum.eFormsDownloadXml)"
                     id="download-xml-btn"
                     (click)="downloadItem('XML', templateDto.id)"
                     mdbTooltip="{{ 'Download' | translate }} XML">
@@ -160,7 +163,7 @@
               </i>
             </button>
             <button class="btn btn-accent text-black-50 btn-icon mb-2" id="upload-zip-btn"
-                    (click)="uploadZipFile(templateDto)" *ngIf="userClaims.eFormsUploadZip"
+                    (click)="uploadZipFile(templateDto)" *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eFormsUploadZip)"
                     mdbTooltip="{{ 'Upload ZIP archive' | translate }}">
               <i class="material-icons">
                 unarchive

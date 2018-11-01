@@ -50,7 +50,6 @@ export class CaseEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.loadCase();
     this.loadTemplateInfo();
   }
 
@@ -101,6 +100,7 @@ export class CaseEditComponent implements OnInit, OnDestroy {
       this.eFormService.getSingle(this.templateId).subscribe(operation => {
         if (operation && operation.success) {
           this.currentTemplate = operation.model;
+          this.loadCase();
         }
       });
     }

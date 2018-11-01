@@ -29,7 +29,7 @@ export class NavigationComponent implements OnInit {
               private appMenuService: AppMenuService) {
     this.brokerListener = eventBrokerService.listen<void>('get-navigation-menu',
       () => {
-        this.initLocaleAsync().then();
+        this.getNavigationMenu();
       });
   }
 

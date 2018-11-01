@@ -1,9 +1,12 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
+import {UserClaimsEnum} from 'src/app/common/enums';
 import {CommonDictionaryModel} from 'src/app/common/models/common';
 import {TemplateDto} from 'src/app/common/models/dto';
 import {TemplateListModel, TemplateRequestModel} from 'src/app/common/models/eforms';
+import {EformPermissionsSimpleModel} from 'src/app/common/models/security/group-permissions/eform';
 import {AuthService} from 'src/app/common/services/auth';
 import {EFormService, EFormTagService} from 'src/app/common/services/eform';
+import {SecurityGroupEformsPermissionsService} from 'src/app/common/services/security';
 
 @Component({
   selector: 'app-eform-page',
@@ -22,10 +25,15 @@ export class EformsPageComponent implements OnInit {
   spinnerStatus = false;
   templateRequestModel: TemplateRequestModel = new TemplateRequestModel;
   templateListModel: TemplateListModel = new TemplateListModel();
+  eformPermissionsSimpleModel: Array<EformPermissionsSimpleModel> = [];
   availableTags: Array<CommonDictionaryModel> = [];
 
   get userClaims() {
     return this.authService.userClaims;
+  }
+
+  get userClaimsEnum() {
+    return UserClaimsEnum;
   }
 
   items = [
@@ -34,10 +42,15 @@ export class EformsPageComponent implements OnInit {
     'Test1'
   ];
 
-  constructor(private eFormService: EFormService, private eFormTagService: EFormTagService, private authService: AuthService) {
+  constructor(private eFormService: EFormService,
+              private eFormTagService: EFormTagService,
+              private authService: AuthService,
+              private securityGroupEformsService: SecurityGroupEformsPermissionsService
+  ) {
   }
 
   ngOnInit() {
+    this.loadEformsPermissions();
     this.loadAllTemplates();
     this.loadAllTags();
   }
@@ -62,6 +75,14 @@ export class EformsPageComponent implements OnInit {
     }
   }
 
+  loadEformsPermissions() {
+    this.securityGroupEformsService.getEformsSimplePermissions().subscribe((data => {
+      if (data && data.success) {
+        this.eformPermissionsSimpleModel = this.securityGroupEformsService.mapEformsSimplePermissions(data.model);
+      }
+    }));
+  }
+
   onLabelInputChanged(label: string) {
     this.templateRequestModel.nameFilter = label;
     this.loadAllTemplates();
@@ -72,7 +93,6 @@ export class EformsPageComponent implements OnInit {
     this.templateRequestModel.isSortDsc = sortedByDsc;
     this.loadAllTemplates();
   }
-
 
   openNewEformModal() {
     this.newEformModal.show();
@@ -104,5 +124,14 @@ export class EformsPageComponent implements OnInit {
 
   openEditTagsModal(templateDto: TemplateDto) {
     this.modalEditTags.show(templateDto);
+  }
+
+  checkEformPermissions(templateId: number, permissionIndex: number) {
+    const foundEform = this.eformPermissionsSimpleModel.find(x => x.templateId === templateId);
+    if (foundEform) {
+      return foundEform.permissionsSimpleList.find(x => x == UserClaimsEnum[permissionIndex].toString());
+    } else {
+      return this.userClaims[UserClaimsEnum[permissionIndex].toString()];
+    }
   }
 }

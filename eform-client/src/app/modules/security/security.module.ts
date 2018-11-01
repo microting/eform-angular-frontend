@@ -5,7 +5,7 @@ import {NgSelectModule} from '@ng-select/ng-select';
 import {TranslateModule} from '@ngx-translate/core';
 import {MDBBootstrapModule} from 'port/angular-bootstrap-md';
 import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
-import {SecurityGroupEformsPermissionsService,
+import {
   SecurityGroupGeneralPermissionsService} from 'src/app/common/services';
 import {
 } from 'src/app/common/services/security';
@@ -43,8 +43,7 @@ import {
     SecurityGroupEformsEditComponent,
     SecurityGroupEformsDeleteComponent
   ],
-  providers: [SecurityGroupEformsPermissionsService,
-    SecurityGroupGeneralPermissionsService]
+  providers: [SecurityGroupGeneralPermissionsService]
 })
 export class SecurityModule {
 }

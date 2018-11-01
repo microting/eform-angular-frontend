@@ -208,9 +208,24 @@
   "Read": "Read",
   "General Permissions": "General Permissions",
   "Column": "Column",
-
-  "Eforms Permissions": "Eforms Permissions",
-  "Forbidden": "Forbidden"
+  "Eform Permissions": "Eform Permissions",
+  "Add Eform to Group": "Add Eform to Group",
+  "Forbidden": "Forbidden",
+  "Add user to group": "Add user to group",
+  "Update columns": "Update columns",
+  "Download XML": "Download XML",
+  "Upload ZIP": "Upload ZIP",
+  "Pairing read": "Pairing read",
+  "Pairing update": "Pairing update",
+  "Read tags": "Read tags",
+  "Update tags": "Update tags",
+  "Get CSV": "Get CSV",
+  "Cases read": "Cases read",
+  "Case read": "Case read",
+  "Case update": "Case update",
+  "Case delete": "Case delete",
+  "Get PDF": "Get PDF",
+  "Bind Eform": "Binde Eform"
 
 }
 

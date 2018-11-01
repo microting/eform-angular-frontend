@@ -33,7 +33,7 @@ namespace eFormAPI.Web.Services.Security
                         iss = x.EformPermissions.Any(y => y.Permission.ClaimName == claimName)
                     })
                     .FirstOrDefaultAsync();
-                if (result != null && result.iss)
+                if (result != null)
                 {
                     return result.iss;
                 }
