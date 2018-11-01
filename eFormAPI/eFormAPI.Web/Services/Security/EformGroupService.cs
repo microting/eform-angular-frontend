@@ -24,6 +24,8 @@ namespace eFormAPI.Web.Services.Security
     public class EformsPermissionsModel
     {
         public int Total { get; set; }
+        public int GroupId { get; set; }
+        public string GroupName { get; set; }
 
         public List<EformPermissionsModel> EformsList { get; set; }
             = new List<EformPermissionsModel>();
@@ -39,6 +41,7 @@ namespace eFormAPI.Web.Services.Security
 
     public class EformPermissionsModel
     {
+        public string GroupName { get; set; }
         public int EformInGroupId { get; set; }
         public int TemplateId { get; set; }
         public string Label { get; set; }
@@ -185,6 +188,7 @@ namespace eFormAPI.Web.Services.Security
                     .Where(x => x.SecurityGroupId == groupId)
                     .Select(e => new EformPermissionsModel()
                     {
+                        GroupName = e.SecurityGroup.Name,
                         EformInGroupId = e.Id,
                         TemplateId = e.TemplateId,
                         Permissions = _dbContext.Permissions
@@ -232,6 +236,19 @@ namespace eFormAPI.Web.Services.Security
                     eformInGroup.PermissionTypes = permissionTypes;
                 }
 
+                if (eformsInGroup.Any())
+                {
+                    result.GroupName = eformsInGroup.First().GroupName;
+                }
+                else
+                {
+                    result.GroupName = _dbContext.SecurityGroups
+                        .Where(x => x.Id == groupId)
+                        .Select(x => x.Name)
+                        .FirstOrDefault();
+                }
+
+                result.GroupId = groupId;
                 result.EformsList = eformsInGroup;
                 result.Total = _dbContext.EformInGroups
                     .Where(x => x.SecurityGroupId == groupId)
