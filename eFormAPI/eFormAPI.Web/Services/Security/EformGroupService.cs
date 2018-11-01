@@ -29,6 +29,14 @@ namespace eFormAPI.Web.Services.Security
             = new List<EformPermissionsModel>();
     }
 
+    public class EformPermissionTypeModel
+    {
+        public string Name { get; set; }
+
+        public List<EformPermissionModel> Permissions { get; set; }
+            = new List<EformPermissionModel>();
+    }
+
     public class EformPermissionsModel
     {
         public int EformInGroupId { get; set; }
@@ -38,6 +46,9 @@ namespace eFormAPI.Web.Services.Security
 
         public List<EformPermissionModel> Permissions { get; set; }
             = new List<EformPermissionModel>();
+
+        public List<EformPermissionTypeModel> PermissionTypes { get; set; }
+            = new List<EformPermissionTypeModel>();
     }
 
 
@@ -206,6 +217,19 @@ namespace eFormAPI.Web.Services.Security
                         eformInGroups.Label = template.Label;
                         eformInGroups.CreatedAt = template.CreatedAt;
                     }
+                }
+
+                foreach (var eformInGroup in eformsInGroup)
+                {
+                    var permissionTypes = eformInGroup.Permissions
+                        .OrderBy(x => x.PermissionType)
+                        .GroupBy(x => x.PermissionType)
+                        .Select(g => new EformPermissionTypeModel()
+                        {
+                            Name = g.Key,
+                            Permissions = g.Select(permission => permission).ToList()
+                        }).ToList();
+                    eformInGroup.PermissionTypes = permissionTypes;
                 }
 
                 result.EformsList = eformsInGroup;
