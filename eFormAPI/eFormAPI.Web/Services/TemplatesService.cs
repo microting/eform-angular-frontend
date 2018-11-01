@@ -49,6 +49,14 @@ namespace eFormAPI.Web.Services
                     templateRequestModel.IsSortDsc,
                     templateRequestModel.Sort,
                     templateRequestModel.TagIds);
+
+                var model = new TemplateListModel
+                {
+                    NumOfElements = 40,
+                    PageNum = templateRequestModel.PageIndex,
+                    Templates = new List<Template_Dto>()
+                };
+
                 var eformIds = new List<int>();
                 if (!_userService.IsInRole(EformRole.Admin))
                 {
@@ -64,20 +72,17 @@ namespace eFormAPI.Web.Services
                             .Select(x => x.TemplateId)
                             .ToList();
                     }
-                }
-                
-                var model = new TemplateListModel
-                {
-                    NumOfElements = 40,
-                    PageNum = templateRequestModel.PageIndex,
-                    Templates = new List<Template_Dto>()
-                };
-                foreach (var templateDto in templatesDto)
-                {
-                    if (eformIds.Contains(templateDto.Id))
+                    foreach (var templateDto in templatesDto)
                     {
-                        model.Templates.Add(templateDto);
+                        if (eformIds.Contains(templateDto.Id))
+                        {
+                            model.Templates.Add(templateDto);
+                        }
                     }
+                }
+                else
+                {
+                    model.Templates = templatesDto;
                 }
                 return new OperationDataResult<TemplateListModel>(true, model);
             }
