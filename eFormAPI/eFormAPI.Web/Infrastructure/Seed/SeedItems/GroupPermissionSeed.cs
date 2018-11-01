@@ -81,40 +81,64 @@ namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
                     PermissionId = AuthConsts.DbIds.Permissions.Cases.CaseGetPdf,
                     SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins
                 },
-                // eForm user group
                 new GroupPermission()
                 {
                     Id = 13,
+                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.PairingRead,
+                    SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins
+                },
+                new GroupPermission()
+                {
+                    Id = 14,
+                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.PairingUpdate,
+                    SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins
+                },
+                new GroupPermission()
+                {
+                    Id = 15,
+                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.UpdateTags,
+                    SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins
+                },
+                new GroupPermission()
+                {
+                    Id = 16,
+                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.ReadTags,
+                    SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins
+                },
+                // eForm user group
+                new GroupPermission()
+                {
+                    Id = 17,
                     PermissionId = AuthConsts.DbIds.Permissions.Eforms.Read,
                     SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformUsers
                 },
                 new GroupPermission()
                 {
-                    Id = 14,
+                    Id = 18,
                     PermissionId = AuthConsts.DbIds.Permissions.Eforms.GetCsv,
                     SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformUsers
                 },
                 new GroupPermission()
                 {
-                    Id = 15,
+                    Id = 19,
                     PermissionId = AuthConsts.DbIds.Permissions.Cases.CaseRead,
                     SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformUsers
                 },
                 new GroupPermission()
                 {
-                    Id = 16,
+                    Id = 20,
                     PermissionId = AuthConsts.DbIds.Permissions.Cases.CasesRead,
                     SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformUsers
                 },
                 new GroupPermission()
                 {
-                    Id = 17,
+                    Id = 21,
                     PermissionId = AuthConsts.DbIds.Permissions.Cases.CaseUpdate,
                     SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformUsers
                 },
                 new GroupPermission()
                 {
-                    Id = 18,
+                    Id = 22,
                     PermissionId = AuthConsts.DbIds.Permissions.Cases.CaseGetPdf,
                     SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformUsers
                 }
