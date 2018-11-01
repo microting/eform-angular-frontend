@@ -111,7 +111,7 @@ namespace eFormAPI.Web.Services.Security
             {
                 Console.WriteLine(e);
                 _logger.LogError(e.Message);
-                return new OperationResult(true, 
+                return new OperationResult(true,
                     _localizationService.GetString("ErrorWhileBindingEformToGroup"));
             }
         }
@@ -243,7 +243,8 @@ namespace eFormAPI.Web.Services.Security
 
                     // for delete
                     var forDelete = _dbContext.EformPermissions
-                        .Where(x => !enabledEformPermission.Contains(x.Id))
+                        .Where(x => !enabledEformPermission.Contains(x.Id)
+                                    && x.EformInGroupId == requestModel.EformInGroupId)
                         .ToList();
 
                     _dbContext.EformPermissions.RemoveRange(forDelete);
@@ -311,7 +312,7 @@ namespace eFormAPI.Web.Services.Security
 
                 _dbContext.EformInGroups.Remove(eformInGroup);
                 await _dbContext.SaveChangesAsync();
-                return new OperationResult(true, 
+                return new OperationResult(true,
                     _localizationService.GetString("eFormHasBeenDeletedFromGroup"));
             }
             catch (Exception e)
