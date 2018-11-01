@@ -46,7 +46,6 @@ namespace eFormAPI.Web.Services
                     Templates = templatesDto
                 };
 
-
                 return new OperationDataResult<TemplateListModel>(true, model);
             }
             catch (Exception ex)

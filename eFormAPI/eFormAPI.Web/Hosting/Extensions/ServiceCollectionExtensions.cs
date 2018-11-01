@@ -188,17 +188,17 @@ namespace eFormAPI.Web.Hosting.Extensions
                 options.AddPolicy(AuthConsts.EformPolicies.Eforms.UploadZip,
                     policy => policy.RequireClaim(AuthConsts.EformClaims.EformsClaims.UploadZip,
                         AuthConsts.ClaimDefaultValue));
-                options.AddPolicy(AuthConsts.EformPolicies.Eforms.CaseRead,
-                    policy => policy.RequireClaim(AuthConsts.EformClaims.EformsClaims.CaseRead,
-                        AuthConsts.ClaimDefaultValue));
                 options.AddPolicy(AuthConsts.EformPolicies.Eforms.CasesRead,
                     policy => policy.RequireClaim(AuthConsts.EformClaims.EformsClaims.CasesRead,
                         AuthConsts.ClaimDefaultValue));
-                options.AddPolicy(AuthConsts.EformPolicies.Eforms.CasesUpdate,
-                    policy => policy.RequireClaim(AuthConsts.EformClaims.EformsClaims.CasesUpdate,
+                options.AddPolicy(AuthConsts.EformPolicies.Eforms.CaseRead,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.EformsClaims.CaseRead,
                         AuthConsts.ClaimDefaultValue));
-                options.AddPolicy(AuthConsts.EformPolicies.Eforms.CasesDelete,
-                    policy => policy.RequireClaim(AuthConsts.EformClaims.EformsClaims.CasesDelete,
+                options.AddPolicy(AuthConsts.EformPolicies.Eforms.CaseUpdate,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.EformsClaims.CaseUpdate,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.Eforms.CaseDelete,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.EformsClaims.CaseDelete,
                         AuthConsts.ClaimDefaultValue));
                 options.AddPolicy(AuthConsts.EformPolicies.Eforms.GetPdf,
                     policy => policy.RequireClaim(AuthConsts.EformClaims.EformsClaims.GetPdf,

@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Infrastructure;
+using eFormAPI.Web.Services.Security;
 using ICSharpCode.SharpZipLib.Zip;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -19,24 +20,33 @@ namespace eFormAPI.Web.Controllers.Eforms
     public class TemplateFilesController : Controller
     {
         private readonly IEFormCoreService _coreHelper;
+        private readonly IEformPermissionsService _permissionsService;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ILocalizationService _localizationService;
 
         public TemplateFilesController(IEFormCoreService coreHelper,
             IHttpContextAccessor httpContextAccessor,
-            ILocalizationService localizationService)
+            ILocalizationService localizationService, 
+            IEformPermissionsService permissionsService)
         {
             _coreHelper = coreHelper;
             _httpContextAccessor = httpContextAccessor;
             _localizationService = localizationService;
+            _permissionsService = permissionsService;
         }
 
         [HttpGet]
         [Authorize]
         [Route("api/template-files/csv/{id}")]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.GetCsv)]
-        public IActionResult Csv(int id)
+        public async Task<IActionResult> Csv(int id)
         {
+            if (! await _permissionsService.CheckEform(id, 
+                AuthConsts.EformClaims.EformsClaims.GetCsv))
+            {
+                return Forbid();
+            }
+
             var core = _coreHelper.GetCore();
             var fileName = $"{id}_{DateTime.Now.Ticks}.csv";
             var filePath = PathHelper.GetOutputPath(fileName);
@@ -51,6 +61,14 @@ namespace eFormAPI.Web.Controllers.Eforms
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.CasesRead)]
         public IActionResult GetImage(string fileName, string ext, string noCache = "noCache")
         {
+
+            //if (!await _permissionsService.CheckEform(id,
+            //    AuthConsts.EformClaims.EformsClaims.GetCsv))
+            //{
+            //    return Forbid();
+            //}
+
+
             var core = _coreHelper.GetCore();
             var filePath = $"{core.GetPicturePath()}\\{fileName}.{ext}";
             if (!System.IO.File.Exists(filePath))
@@ -66,7 +84,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         [HttpGet]
         [Authorize]
         [Route("api/template-files/rotate-image")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.CasesUpdate)]
+        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.CaseUpdate)]
         public OperationResult RotateImage(string fileName)
         {
             var core = _coreHelper.GetCore();
@@ -99,7 +117,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         [HttpGet]
         [Authorize]
         [Route("api/template-files/delete-image")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.CasesUpdate)]
+        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.CaseUpdate)]
         public OperationResult DeleteImage(string fileName, int fieldId, int uploadedObjId)
         {
             try

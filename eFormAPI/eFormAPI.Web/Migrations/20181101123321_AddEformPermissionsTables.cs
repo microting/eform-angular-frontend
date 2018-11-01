@@ -3,10 +3,14 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace eFormAPI.Web.Migrations
 {
-    public partial class EformSecurityTables : Migration
+    public partial class AddEformPermissionsTables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropColumn(
+                name: "PermissionState",
+                table: "GroupPermissions");
+
             migrationBuilder.CreateTable(
                 name: "EformInGroups",
                 columns: table => new
@@ -34,7 +38,10 @@ namespace eFormAPI.Web.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(maxLength: 250, nullable: true),
+                    Link = table.Column<string>(nullable: true),
+                    E2EId = table.Column<string>(nullable: true),
                     Position = table.Column<int>(nullable: false),
+                    MenuPosition = table.Column<int>(nullable: false),
                     ParentId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -117,6 +124,12 @@ namespace eFormAPI.Web.Migrations
 
             migrationBuilder.DropTable(
                 name: "EformInGroups");
+
+            migrationBuilder.AddColumn<int>(
+                name: "PermissionState",
+                table: "GroupPermissions",
+                nullable: false,
+                defaultValue: 0);
         }
     }
 }

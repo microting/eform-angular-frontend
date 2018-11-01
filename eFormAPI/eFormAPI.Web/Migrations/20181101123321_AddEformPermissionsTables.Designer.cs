@@ -10,8 +10,8 @@ using eFormAPI.Web.Infrastructure.Database;
 namespace eFormAPI.Web.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    [Migration("20181030131546_AddSeedData")]
-    partial class AddSeedData
+    [Migration("20181101123321_AddEformPermissionsTables")]
+    partial class AddEformPermissionsTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,48 @@ namespace eFormAPI.Web.Migrations
                 .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("eFormAPI.Web.Infrastructure.Database.Entities.EformInGroup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("SecurityGroupId");
+
+                    b.Property<int>("TemplateId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SecurityGroupId");
+
+                    b.HasIndex("TemplateId");
+
+                    b.HasIndex("TemplateId", "SecurityGroupId")
+                        .IsUnique();
+
+                    b.ToTable("EformInGroups");
+                });
+
+            modelBuilder.Entity("eFormAPI.Web.Infrastructure.Database.Entities.EformPermission", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("EformInGroupId");
+
+                    b.Property<int>("PermissionId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EformInGroupId");
+
+                    b.HasIndex("PermissionId", "EformInGroupId")
+                        .IsUnique();
+
+                    b.ToTable("EformPermissions");
+                });
 
             modelBuilder.Entity("eFormAPI.Web.Infrastructure.Database.Entities.GroupPermission", b =>
                 {
@@ -39,27 +81,32 @@ namespace eFormAPI.Web.Migrations
                         .IsUnique();
 
                     b.ToTable("GroupPermissions");
+                });
 
-                    b.HasData(
-                        new { Id = 1, PermissionId = 29, SecurityGroupId = 1 },
-                        new { Id = 2, PermissionId = 27, SecurityGroupId = 1 },
-                        new { Id = 3, PermissionId = 28, SecurityGroupId = 1 },
-                        new { Id = 4, PermissionId = 30, SecurityGroupId = 1 },
-                        new { Id = 5, PermissionId = 31, SecurityGroupId = 1 },
-                        new { Id = 6, PermissionId = 32, SecurityGroupId = 1 },
-                        new { Id = 7, PermissionId = 33, SecurityGroupId = 1 },
-                        new { Id = 8, PermissionId = 34, SecurityGroupId = 1 },
-                        new { Id = 9, PermissionId = 35, SecurityGroupId = 1 },
-                        new { Id = 10, PermissionId = 36, SecurityGroupId = 1 },
-                        new { Id = 11, PermissionId = 42, SecurityGroupId = 1 },
-                        new { Id = 12, PermissionId = 37, SecurityGroupId = 1 },
-                        new { Id = 13, PermissionId = 29, SecurityGroupId = 2 },
-                        new { Id = 14, PermissionId = 42, SecurityGroupId = 2 },
-                        new { Id = 15, PermissionId = 33, SecurityGroupId = 2 },
-                        new { Id = 16, PermissionId = 34, SecurityGroupId = 2 },
-                        new { Id = 17, PermissionId = 35, SecurityGroupId = 2 },
-                        new { Id = 18, PermissionId = 37, SecurityGroupId = 2 }
-                    );
+            modelBuilder.Entity("eFormAPI.Web.Infrastructure.Database.Entities.MenuItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("E2EId");
+
+                    b.Property<string>("Link");
+
+                    b.Property<int>("MenuPosition");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(250);
+
+                    b.Property<int?>("ParentId");
+
+                    b.Property<int>("Position");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("MenuItems");
                 });
 
             modelBuilder.Entity("eFormAPI.Web.Infrastructure.Database.Entities.Permission", b =>
@@ -85,50 +132,6 @@ namespace eFormAPI.Web.Migrations
                     b.HasIndex("PermissionTypeId");
 
                     b.ToTable("Permissions");
-
-                    b.HasData(
-                        new { Id = 2, ClaimName = "workers_read", PermissionName = "Read", PermissionTypeId = 1 },
-                        new { Id = 1, ClaimName = "workers_create", PermissionName = "Create", PermissionTypeId = 1 },
-                        new { Id = 4, ClaimName = "workers_delete", PermissionName = "Delete", PermissionTypeId = 1 },
-                        new { Id = 3, ClaimName = "workers_update", PermissionName = "Update", PermissionTypeId = 1 },
-                        new { Id = 6, ClaimName = "sites_read", PermissionName = "Read", PermissionTypeId = 2 },
-                        new { Id = 8, ClaimName = "sites_delete", PermissionName = "Delete", PermissionTypeId = 2 },
-                        new { Id = 7, ClaimName = "sites_update", PermissionName = "Update", PermissionTypeId = 2 },
-                        new { Id = 10, ClaimName = "entity_search_read", PermissionName = "Read", PermissionTypeId = 3 },
-                        new { Id = 9, ClaimName = "entity_search_create", PermissionName = "Create", PermissionTypeId = 3 },
-                        new { Id = 12, ClaimName = "entity_search_delete", PermissionName = "Delete", PermissionTypeId = 3 },
-                        new { Id = 11, ClaimName = "entity_search_update", PermissionName = "Update", PermissionTypeId = 3 },
-                        new { Id = 14, ClaimName = "entity_select_read", PermissionName = "Read", PermissionTypeId = 4 },
-                        new { Id = 13, ClaimName = "entity_select_create", PermissionName = "Create", PermissionTypeId = 4 },
-                        new { Id = 16, ClaimName = "entity_select_delete", PermissionName = "Delete", PermissionTypeId = 4 },
-                        new { Id = 15, ClaimName = "entity_select_update", PermissionName = "Update", PermissionTypeId = 4 },
-                        new { Id = 18, ClaimName = "users_read", PermissionName = "Read", PermissionTypeId = 5 },
-                        new { Id = 17, ClaimName = "users_create", PermissionName = "Create", PermissionTypeId = 5 },
-                        new { Id = 20, ClaimName = "users_delete", PermissionName = "Delete", PermissionTypeId = 5 },
-                        new { Id = 19, ClaimName = "users_update", PermissionName = "Update", PermissionTypeId = 5 },
-                        new { Id = 21, ClaimName = "units_read", PermissionName = "Read", PermissionTypeId = 6 },
-                        new { Id = 22, ClaimName = "units_update", PermissionName = "Update", PermissionTypeId = 6 },
-                        new { Id = 24, ClaimName = "device_users_read", PermissionName = "Read", PermissionTypeId = 7 },
-                        new { Id = 23, ClaimName = "device_users_create", PermissionName = "Create", PermissionTypeId = 7 },
-                        new { Id = 26, ClaimName = "device_users_delete", PermissionName = "Delete", PermissionTypeId = 7 },
-                        new { Id = 25, ClaimName = "device_users_update", PermissionName = "Update", PermissionTypeId = 7 },
-                        new { Id = 27, ClaimName = "eforms_create", PermissionName = "Create", PermissionTypeId = 8 },
-                        new { Id = 28, ClaimName = "eforms_delete", PermissionName = "Delete", PermissionTypeId = 8 },
-                        new { Id = 29, ClaimName = "eforms_read", PermissionName = "Read", PermissionTypeId = 8 },
-                        new { Id = 30, ClaimName = "eforms_update_columns", PermissionName = "Update columns", PermissionTypeId = 8 },
-                        new { Id = 31, ClaimName = "eforms_download_xml", PermissionName = "Download XML", PermissionTypeId = 8 },
-                        new { Id = 32, ClaimName = "eforms_upload_zip", PermissionName = "Upload ZIP", PermissionTypeId = 8 },
-                        new { Id = 33, ClaimName = "eforms_case_read", PermissionName = "Case read", PermissionTypeId = 8 },
-                        new { Id = 34, ClaimName = "eforms_cases_read", PermissionName = "Cases read", PermissionTypeId = 8 },
-                        new { Id = 35, ClaimName = "eforms_cases_update", PermissionName = "Cases update", PermissionTypeId = 8 },
-                        new { Id = 36, ClaimName = "eforms_cases_delete", PermissionName = "Cases delete", PermissionTypeId = 8 },
-                        new { Id = 37, ClaimName = "eforms_get_pdf", PermissionName = "Get PDF", PermissionTypeId = 8 },
-                        new { Id = 38, ClaimName = "eforms_pairing_read", PermissionName = "Pairing read", PermissionTypeId = 8 },
-                        new { Id = 39, ClaimName = "eforms_pairing_update", PermissionName = "Pairing update", PermissionTypeId = 8 },
-                        new { Id = 40, ClaimName = "eforms_read_tags", PermissionName = "Read tags", PermissionTypeId = 8 },
-                        new { Id = 41, ClaimName = "eforms_update_tags", PermissionName = "Update tags", PermissionTypeId = 8 },
-                        new { Id = 42, ClaimName = "eforms_get_csv", PermissionName = "Get CSV", PermissionTypeId = 8 }
-                    );
                 });
 
             modelBuilder.Entity("eFormAPI.Web.Infrastructure.Database.Entities.PermissionType", b =>
@@ -147,17 +150,6 @@ namespace eFormAPI.Web.Migrations
                         .HasFilter("[Name] IS NOT NULL");
 
                     b.ToTable("PermissionTypes");
-
-                    b.HasData(
-                        new { Id = 1, Name = "Workers" },
-                        new { Id = 2, Name = "Sites" },
-                        new { Id = 3, Name = "Entity search" },
-                        new { Id = 4, Name = "Entity select" },
-                        new { Id = 5, Name = "User management" },
-                        new { Id = 6, Name = "Units" },
-                        new { Id = 7, Name = "Device users" },
-                        new { Id = 8, Name = "Eforms" }
-                    );
                 });
 
             modelBuilder.Entity("eFormAPI.Web.Infrastructure.Database.Entities.SecurityGroup", b =>
@@ -172,11 +164,6 @@ namespace eFormAPI.Web.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SecurityGroups");
-
-                    b.HasData(
-                        new { Id = 1, Name = "eForm admins" },
-                        new { Id = 2, Name = "eForm users" }
-                    );
                 });
 
             modelBuilder.Entity("eFormAPI.Web.Infrastructure.Database.Entities.SecurityGroupUser", b =>
@@ -369,6 +356,27 @@ namespace eFormAPI.Web.Migrations
                     b.ToTable("UserRoles");
                 });
 
+            modelBuilder.Entity("eFormAPI.Web.Infrastructure.Database.Entities.EformInGroup", b =>
+                {
+                    b.HasOne("eFormAPI.Web.Infrastructure.Database.Entities.SecurityGroup", "SecurityGroup")
+                        .WithMany()
+                        .HasForeignKey("SecurityGroupId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("eFormAPI.Web.Infrastructure.Database.Entities.EformPermission", b =>
+                {
+                    b.HasOne("eFormAPI.Web.Infrastructure.Database.Entities.EformInGroup", "EformInGroup")
+                        .WithMany("EformPermissions")
+                        .HasForeignKey("EformInGroupId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("eFormAPI.Web.Infrastructure.Database.Entities.Permission", "Permission")
+                        .WithMany()
+                        .HasForeignKey("PermissionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("eFormAPI.Web.Infrastructure.Database.Entities.GroupPermission", b =>
                 {
                     b.HasOne("eFormAPI.Web.Infrastructure.Database.Entities.Permission", "Permission")
@@ -380,6 +388,13 @@ namespace eFormAPI.Web.Migrations
                         .WithMany()
                         .HasForeignKey("SecurityGroupId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("eFormAPI.Web.Infrastructure.Database.Entities.MenuItem", b =>
+                {
+                    b.HasOne("eFormAPI.Web.Infrastructure.Database.Entities.MenuItem", "Parent")
+                        .WithMany()
+                        .HasForeignKey("ParentId");
                 });
 
             modelBuilder.Entity("eFormAPI.Web.Infrastructure.Database.Entities.Permission", b =>

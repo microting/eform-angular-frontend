@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eFormAPI.Web.Infrastructure.Database;
 
 namespace eFormAPI.Web.Migrations
@@ -86,16 +87,16 @@ namespace eFormAPI.Web.Migrations
                         new { Id = 4, PermissionId = 30, SecurityGroupId = 1 },
                         new { Id = 5, PermissionId = 31, SecurityGroupId = 1 },
                         new { Id = 6, PermissionId = 32, SecurityGroupId = 1 },
-                        new { Id = 7, PermissionId = 33, SecurityGroupId = 1 },
-                        new { Id = 8, PermissionId = 34, SecurityGroupId = 1 },
+                        new { Id = 7, PermissionId = 34, SecurityGroupId = 1 },
+                        new { Id = 8, PermissionId = 33, SecurityGroupId = 1 },
                         new { Id = 9, PermissionId = 35, SecurityGroupId = 1 },
                         new { Id = 10, PermissionId = 36, SecurityGroupId = 1 },
                         new { Id = 11, PermissionId = 42, SecurityGroupId = 1 },
                         new { Id = 12, PermissionId = 37, SecurityGroupId = 1 },
                         new { Id = 13, PermissionId = 29, SecurityGroupId = 2 },
                         new { Id = 14, PermissionId = 42, SecurityGroupId = 2 },
-                        new { Id = 15, PermissionId = 33, SecurityGroupId = 2 },
-                        new { Id = 16, PermissionId = 34, SecurityGroupId = 2 },
+                        new { Id = 15, PermissionId = 34, SecurityGroupId = 2 },
+                        new { Id = 16, PermissionId = 33, SecurityGroupId = 2 },
                         new { Id = 17, PermissionId = 35, SecurityGroupId = 2 },
                         new { Id = 18, PermissionId = 37, SecurityGroupId = 2 }
                     );
@@ -201,10 +202,10 @@ namespace eFormAPI.Web.Migrations
                         new { Id = 30, ClaimName = "eforms_update_columns", PermissionName = "Update columns", PermissionTypeId = 8 },
                         new { Id = 31, ClaimName = "eforms_download_xml", PermissionName = "Download XML", PermissionTypeId = 8 },
                         new { Id = 32, ClaimName = "eforms_upload_zip", PermissionName = "Upload ZIP", PermissionTypeId = 8 },
-                        new { Id = 33, ClaimName = "eforms_case_read", PermissionName = "Case read", PermissionTypeId = 8 },
-                        new { Id = 34, ClaimName = "eforms_cases_read", PermissionName = "Cases read", PermissionTypeId = 8 },
-                        new { Id = 35, ClaimName = "eforms_cases_update", PermissionName = "Cases update", PermissionTypeId = 8 },
-                        new { Id = 36, ClaimName = "eforms_cases_delete", PermissionName = "Cases delete", PermissionTypeId = 8 },
+                        new { Id = 33, ClaimName = "eforms_cases_read", PermissionName = "Cases read", PermissionTypeId = 8 },
+                        new { Id = 34, ClaimName = "eforms_case_read", PermissionName = "Case read", PermissionTypeId = 8 },
+                        new { Id = 35, ClaimName = "eforms_case_update", PermissionName = "Case update", PermissionTypeId = 8 },
+                        new { Id = 36, ClaimName = "eforms_case_delete", PermissionName = "Case delete", PermissionTypeId = 8 },
                         new { Id = 37, ClaimName = "eforms_get_pdf", PermissionName = "Get PDF", PermissionTypeId = 8 },
                         new { Id = 38, ClaimName = "eforms_pairing_read", PermissionName = "Pairing read", PermissionTypeId = 8 },
                         new { Id = 39, ClaimName = "eforms_pairing_update", PermissionName = "Pairing update", PermissionTypeId = 8 },
@@ -463,7 +464,7 @@ namespace eFormAPI.Web.Migrations
             modelBuilder.Entity("eFormAPI.Web.Infrastructure.Database.Entities.EformPermission", b =>
                 {
                     b.HasOne("eFormAPI.Web.Infrastructure.Database.Entities.EformInGroup", "EformInGroup")
-                        .WithMany()
+                        .WithMany("EformPermissions")
                         .HasForeignKey("EformInGroupId")
                         .OnDelete(DeleteBehavior.Cascade);
 

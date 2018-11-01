@@ -161,14 +161,12 @@ namespace eFormAPI.Web.Services.Security
                     AuthConsts.EformClaims.EformsClaims.UpdateColumns,
                     AuthConsts.EformClaims.EformsClaims.DownloadXml,
                     AuthConsts.EformClaims.EformsClaims.UploadZip,
-                    AuthConsts.EformClaims.EformsClaims.CaseRead,
                     AuthConsts.EformClaims.EformsClaims.CasesRead,
-                    AuthConsts.EformClaims.EformsClaims.CasesUpdate,
-                    AuthConsts.EformClaims.EformsClaims.CasesDelete,
+                    AuthConsts.EformClaims.EformsClaims.CaseRead,
+                    AuthConsts.EformClaims.EformsClaims.CaseUpdate,
+                    AuthConsts.EformClaims.EformsClaims.CaseDelete,
                     AuthConsts.EformClaims.EformsClaims.GetPdf,
-                    AuthConsts.EformClaims.EformsClaims.PairingRead,
                     AuthConsts.EformClaims.EformsClaims.PairingUpdate,
-                    AuthConsts.EformClaims.EformsClaims.ReadTags,
                     AuthConsts.EformClaims.EformsClaims.UpdateTags,
                     AuthConsts.EformClaims.EformsClaims.GetCsv
                 };

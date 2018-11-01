@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Infrastructure;
+using eFormAPI.Web.Services.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
@@ -13,10 +15,13 @@ namespace eFormAPI.Web.Controllers.Eforms
     public class TagsController : Controller
     {
         private readonly ITagsService _tagsService;
+        private readonly IEformPermissionsService _permissionsService;
 
-        public TagsController(ITagsService tagsService)
+        public TagsController(ITagsService tagsService,
+            IEformPermissionsService permissionsService)
         {
             _tagsService = tagsService;
+            _permissionsService = permissionsService;
         }
 
         [HttpGet]
@@ -46,9 +51,15 @@ namespace eFormAPI.Web.Controllers.Eforms
         [HttpPost]
         [Route("api/tags/template")]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UpdateTags)]
-        public OperationResult UpdateTemplateTags([FromBody] UpdateTemplateTagsModel requestModel)
+        public async Task<IActionResult> UpdateTemplateTags([FromBody] UpdateTemplateTagsModel requestModel)
         {
-            return _tagsService.UpdateTemplateTags(requestModel);
+            if (!await _permissionsService.CheckEform(requestModel.TemplateId,
+                AuthConsts.EformClaims.EformsClaims.UpdateTags))
+            {
+                return Forbid();
+            }
+
+            return Ok(_tagsService.UpdateTemplateTags(requestModel));
         }
     }
 }

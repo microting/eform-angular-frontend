@@ -6,9 +6,16 @@ namespace eFormAPI.Web.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "PermissionState",
-                table: "GroupPermissions");
+            migrationBuilder.InsertData(
+                table: "MenuItems",
+                columns: new[] { "Id", "E2EId", "Link", "MenuPosition", "Name", "ParentId", "Position" },
+                values: new object[,]
+                {
+                    { 1, "my-eforms", "/", 1, "My eForms", null, 0 },
+                    { 2, "device-users", "/simplesites", 1, "Device Users", null, 1 },
+                    { 3, "advanced", "", 1, "Advanced", null, 2 },
+                    { 10, "sign-out-dropdown", "", 2, "user", null, 0 }
+                });
 
             migrationBuilder.InsertData(
                 table: "PermissionTypes",
@@ -35,32 +42,50 @@ namespace eFormAPI.Web.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "MenuItems",
+                columns: new[] { "Id", "E2EId", "Link", "MenuPosition", "Name", "ParentId", "Position" },
+                values: new object[,]
+                {
+                    { 4, "sites", "/advanced/sites", 1, "Sites", 3, 0 },
+                    { 15, "sign-out", "/auth/sign-out", 2, "Logout", 10, 4 },
+                    { 13, "security", "/security", 2, "Security", 10, 2 },
+                    { 12, "settings", "/account-management/settings", 2, "Settings", 10, 1 },
+                    { 11, "user-management-menu", "/account-management/users", 2, "User Management", 10, 0 },
+                    { 14, "change-password", "/account-management/change-password", 2, "Change password", 10, 3 },
+                    { 8, "selectable-list", "/advanced/entity-select", 1, "Selectable list", 3, 4 },
+                    { 7, "search", "/advanced/entity-search", 1, "Searchable list", 3, 3 },
+                    { 6, "units", "/advanced/units", 1, "Units", 3, 2 },
+                    { 5, "workers", "/advanced/workers", 1, "Workers", 3, 1 },
+                    { 9, "application-settings", "/application-settings", 1, "Application Settings", 3, 5 }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Permissions",
                 columns: new[] { "Id", "ClaimName", "PermissionName", "PermissionTypeId" },
                 values: new object[,]
                 {
-                    { 2, "workers_read", "Read", 1 },
+                    { 30, "eforms_update_columns", "Update columns", 8 },
                     { 23, "device_users_create", "Create", 7 },
                     { 26, "device_users_delete", "Delete", 7 },
                     { 25, "device_users_update", "Update", 7 },
                     { 27, "eforms_create", "Create", 8 },
                     { 28, "eforms_delete", "Delete", 8 },
                     { 29, "eforms_read", "Read", 8 },
-                    { 30, "eforms_update_columns", "Update columns", 8 },
                     { 31, "eforms_download_xml", "Download XML", 8 },
-                    { 32, "eforms_upload_zip", "Upload ZIP", 8 },
-                    { 33, "eforms_case_read", "Case read", 8 },
-                    { 34, "eforms_cases_read", "Cases read", 8 },
-                    { 35, "eforms_cases_update", "Cases update", 8 },
-                    { 36, "eforms_cases_delete", "Cases delete", 8 },
                     { 37, "eforms_get_pdf", "Get PDF", 8 },
+                    { 33, "eforms_cases_read", "Cases read", 8 },
+                    { 34, "eforms_case_read", "Case read", 8 },
+                    { 35, "eforms_case_update", "Case update", 8 },
+                    { 36, "eforms_case_delete", "Case delete", 8 },
+                    { 24, "device_users_read", "Read", 7 },
                     { 38, "eforms_pairing_read", "Pairing read", 8 },
                     { 39, "eforms_pairing_update", "Pairing update", 8 },
                     { 40, "eforms_read_tags", "Read tags", 8 },
-                    { 24, "device_users_read", "Read", 7 },
-                    { 41, "eforms_update_tags", "Update tags", 8 },
+                    { 32, "eforms_upload_zip", "Upload ZIP", 8 },
                     { 22, "units_update", "Update", 6 },
+                    { 15, "entity_select_update", "Update", 4 },
                     { 19, "users_update", "Update", 5 },
+                    { 2, "workers_read", "Read", 1 },
                     { 1, "workers_create", "Create", 1 },
                     { 4, "workers_delete", "Delete", 1 },
                     { 3, "workers_update", "Update", 1 },
@@ -68,17 +93,17 @@ namespace eFormAPI.Web.Migrations
                     { 8, "sites_delete", "Delete", 2 },
                     { 7, "sites_update", "Update", 2 },
                     { 10, "entity_search_read", "Read", 3 },
+                    { 21, "units_read", "Read", 6 },
                     { 9, "entity_search_create", "Create", 3 },
-                    { 12, "entity_search_delete", "Delete", 3 },
                     { 11, "entity_search_update", "Update", 3 },
                     { 14, "entity_select_read", "Read", 4 },
                     { 13, "entity_select_create", "Create", 4 },
                     { 16, "entity_select_delete", "Delete", 4 },
-                    { 15, "entity_select_update", "Update", 4 },
+                    { 41, "eforms_update_tags", "Update tags", 8 },
                     { 18, "users_read", "Read", 5 },
                     { 17, "users_create", "Create", 5 },
                     { 20, "users_delete", "Delete", 5 },
-                    { 21, "units_read", "Read", 6 },
+                    { 12, "entity_search_delete", "Delete", 3 },
                     { 42, "eforms_get_csv", "Get CSV", 8 }
                 });
 
@@ -93,10 +118,10 @@ namespace eFormAPI.Web.Migrations
                     { 10, 36, 1 },
                     { 17, 35, 2 },
                     { 9, 35, 1 },
-                    { 16, 34, 2 },
-                    { 8, 34, 1 },
-                    { 15, 33, 2 },
-                    { 7, 33, 1 },
+                    { 15, 34, 2 },
+                    { 7, 34, 1 },
+                    { 16, 33, 2 },
+                    { 8, 33, 1 },
                     { 6, 32, 1 },
                     { 5, 31, 1 },
                     { 4, 30, 1 },
@@ -199,6 +224,71 @@ namespace eFormAPI.Web.Migrations
                 table: "GroupPermissions",
                 keyColumn: "Id",
                 keyValue: 18);
+
+            migrationBuilder.DeleteData(
+                table: "MenuItems",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "MenuItems",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "MenuItems",
+                keyColumn: "Id",
+                keyValue: 4);
+
+            migrationBuilder.DeleteData(
+                table: "MenuItems",
+                keyColumn: "Id",
+                keyValue: 5);
+
+            migrationBuilder.DeleteData(
+                table: "MenuItems",
+                keyColumn: "Id",
+                keyValue: 6);
+
+            migrationBuilder.DeleteData(
+                table: "MenuItems",
+                keyColumn: "Id",
+                keyValue: 7);
+
+            migrationBuilder.DeleteData(
+                table: "MenuItems",
+                keyColumn: "Id",
+                keyValue: 8);
+
+            migrationBuilder.DeleteData(
+                table: "MenuItems",
+                keyColumn: "Id",
+                keyValue: 9);
+
+            migrationBuilder.DeleteData(
+                table: "MenuItems",
+                keyColumn: "Id",
+                keyValue: 11);
+
+            migrationBuilder.DeleteData(
+                table: "MenuItems",
+                keyColumn: "Id",
+                keyValue: 12);
+
+            migrationBuilder.DeleteData(
+                table: "MenuItems",
+                keyColumn: "Id",
+                keyValue: 13);
+
+            migrationBuilder.DeleteData(
+                table: "MenuItems",
+                keyColumn: "Id",
+                keyValue: 14);
+
+            migrationBuilder.DeleteData(
+                table: "MenuItems",
+                keyColumn: "Id",
+                keyValue: 15);
 
             migrationBuilder.DeleteData(
                 table: "Permissions",
@@ -346,6 +436,16 @@ namespace eFormAPI.Web.Migrations
                 keyValue: 41);
 
             migrationBuilder.DeleteData(
+                table: "MenuItems",
+                keyColumn: "Id",
+                keyValue: 3);
+
+            migrationBuilder.DeleteData(
+                table: "MenuItems",
+                keyColumn: "Id",
+                keyValue: 10);
+
+            migrationBuilder.DeleteData(
                 table: "PermissionTypes",
                 keyColumn: "Id",
                 keyValue: 1);
@@ -454,12 +554,6 @@ namespace eFormAPI.Web.Migrations
                 table: "PermissionTypes",
                 keyColumn: "Id",
                 keyValue: 8);
-
-            migrationBuilder.AddColumn<int>(
-                name: "PermissionState",
-                table: "GroupPermissions",
-                nullable: false,
-                defaultValue: 0);
         }
     }
 }

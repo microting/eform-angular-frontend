@@ -60,13 +60,13 @@ namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
                 new GroupPermission()
                 {
                     Id = 9,
-                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.CasesUpdate,
+                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.CaseUpdate,
                     SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins
                 },
                 new GroupPermission()
                 {
                     Id = 10,
-                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.CasesDelete,
+                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.CaseDelete,
                     SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins
                 },
                 new GroupPermission()
@@ -109,7 +109,7 @@ namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
                 new GroupPermission()
                 {
                     Id = 17,
-                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.CasesUpdate,
+                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.CaseUpdate,
                     SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformUsers
                 },
                 new GroupPermission()
