@@ -6,10 +6,13 @@
       </div>
       <div class="modal-body">
         <div class="row">
-          <div class="mb-4 col-md-12">
+          <div class="mb-4 col-md-12" *ngFor="let permissionType of eformSecurityModel.permissionTypes">
             <div class="card">
+              <div class="card-header">
+                {{permissionType.name}}
+              </div>
               <div class="card-body">
-                <div class="mat-checkbox mb-2 col-md-4" *ngFor="let permission of eformSecurityModel.permissions">
+                <div class="mat-checkbox mb-2 col-md-4" *ngFor="let permission of permissionType.permissions">
                   <input id="{{permission.name}}_{{permission.claimName}}"
                          [checked]="permission.isEnabled" [value]="permission.isEnabled"
                          [(ngModel)]="permission.isEnabled"

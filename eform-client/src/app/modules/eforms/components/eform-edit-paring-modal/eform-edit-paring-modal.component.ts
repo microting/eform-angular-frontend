@@ -21,7 +21,9 @@ export class EformEditParingModalComponent implements OnInit {
   spinnerStatus = false;
   matchFound = false;
 
-  get userClaims() { return this.authService.userClaims; }
+  get userClaims() {
+    return this.authService.userClaims;
+  }
 
   constructor(private eFormService: EFormService, private sitesService: SitesService, private authService: AuthService) {
   }
@@ -31,15 +33,13 @@ export class EformEditParingModalComponent implements OnInit {
   }
 
   loadAllSites() {
-    if (this.userClaims.eFormsPairingRead) {
-      this.sitesService.getAllSites().subscribe(operation => {
-        this.spinnerStatus = true;
-        if (operation && operation.success) {
-          this.sitesDto = operation.model;
-        }
-        this.spinnerStatus = false;
-      });
-    }
+    this.sitesService.getAllSites().subscribe(operation => {
+      this.spinnerStatus = true;
+      if (operation && operation.success) {
+        this.sitesDto = operation.model;
+      }
+      this.spinnerStatus = false;
+    });
   }
 
   show(templateDto: TemplateDto) {

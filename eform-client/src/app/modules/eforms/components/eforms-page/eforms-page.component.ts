@@ -24,7 +24,9 @@ export class EformsPageComponent implements OnInit {
   templateListModel: TemplateListModel = new TemplateListModel();
   availableTags: Array<CommonDictionaryModel> = [];
 
-  get userClaims() { return this.authService.userClaims; }
+  get userClaims() {
+    return this.authService.userClaims;
+  }
 
   items = [
     'New',
@@ -32,7 +34,8 @@ export class EformsPageComponent implements OnInit {
     'Test1'
   ];
 
-  constructor(private eFormService: EFormService, private eFormTagService: EFormTagService, private authService: AuthService) { }
+  constructor(private eFormService: EFormService, private eFormTagService: EFormTagService, private authService: AuthService) {
+  }
 
   ngOnInit() {
     this.loadAllTemplates();
@@ -50,13 +53,11 @@ export class EformsPageComponent implements OnInit {
   }
 
   loadAllTags() {
-    if (this.userClaims.eFormsReadTags) {
-      this.eFormTagService.getAvailableTags().subscribe((data => {
-        if (data && data.success) {
-          this.availableTags = data.model;
-        }
-      }));
-    }
+    this.eFormTagService.getAvailableTags().subscribe((data => {
+      if (data && data.success) {
+        this.availableTags = data.model;
+      }
+    }));
   }
 
   onLabelInputChanged(label: string) {
@@ -69,7 +70,6 @@ export class EformsPageComponent implements OnInit {
     this.templateRequestModel.isSortDsc = sortedByDsc;
     this.loadAllTemplates();
   }
-
 
 
   openNewEformModal() {

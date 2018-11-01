@@ -1,6 +1,7 @@
-
 export class EformsPermissionsModel {
   total: number;
+  groupName: string;
+  groupId: number;
   eformsList: Array<EformPermissionsModel> = [];
 }
 
@@ -9,6 +10,11 @@ export class EformPermissionsModel {
   templateId: number;
   label: string;
   createdAt: Date;
+  permissionTypes: Array<EformPermissionsTypeModel> = [];
+}
+
+export class EformPermissionsTypeModel {
+  name: string;
   permissions: Array<EformPermissionModel> = [];
 }
 

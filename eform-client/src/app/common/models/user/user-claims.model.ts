@@ -31,14 +31,12 @@ export class UserClaimsModel {
   eFormsUpdateColumns: boolean;
   eFormsDownloadXml: boolean;
   eFormsUploadZip: boolean;
-  eFormsCaseRead: boolean;
-  eFormsCasesRead: boolean;
-  eFormsCasesUpdate: boolean;
-  eFormsCasesDelete: boolean;
-  eFormsGetPdf: boolean;
-  eFormsPairingRead: boolean;
+  casesRead: boolean;
+  caseRead: boolean;
+  caseUpdate: boolean;
+  caseDelete: boolean;
+  caseGetPdf: boolean;
   eFormsPairingUpdate: boolean;
-  eFormsReadTags: boolean;
   eFormsUpdateTags: boolean;
   eFormsGetCsv: boolean;
 
@@ -76,20 +74,20 @@ export class UserClaimsModel {
     this.usersUpdate = decodedToken.users_update === 'True';
     this.usersDelete = decodedToken.users_delete === 'True';
 
+    this.casesRead = decodedToken.cases_read === 'True';
+    this.caseRead = decodedToken.case_read === 'True';
+    this.caseUpdate = decodedToken.case_update === 'True';
+    this.caseDelete = decodedToken.case_delete === 'True';
+    this.caseGetPdf = decodedToken.case_get_pdf === 'True';
+
     this.eFormsCreate = decodedToken.eforms_create === 'True';
     this.eFormsDelete = decodedToken.eforms_delete === 'True';
     this.eFormsRead = decodedToken.eforms_read === 'True';
     this.eFormsUpdateColumns = decodedToken.eforms_update_columns === 'True';
     this.eFormsDownloadXml = decodedToken.eforms_download_xml === 'True';
     this.eFormsUploadZip = decodedToken.eforms_upload_zip === 'True';
-    this.eFormsCaseRead = decodedToken.eforms_case_read === 'True';
-    this.eFormsCasesRead = decodedToken.eforms_cases_read === 'True';
-    this.eFormsCasesUpdate = decodedToken.eforms_cases_update === 'True';
-    this.eFormsCasesDelete = decodedToken.eforms_cases_delete === 'True';
-    this.eFormsGetPdf = decodedToken.eforms_get_pdf === 'True';
-    this.eFormsPairingRead = decodedToken.eforms_pairing_read === 'True';
+
     this.eFormsPairingUpdate = decodedToken.eforms_pairing_update === 'True';
-    this.eFormsReadTags = decodedToken.eforms_read_tags === 'True';
     this.eFormsUpdateTags = decodedToken.eforms_update_tags === 'True';
     this.eFormsGetCsv = decodedToken.eforms_get_csv === 'True';
   }
