@@ -43,21 +43,23 @@ export class EformsPageComponent implements OnInit {
   }
 
   loadAllTemplates() {
-    this.spinnerStatus = true;
-    this.eFormService.getAll(this.templateRequestModel).subscribe(operation => {
-      this.spinnerStatus = false;
-      if (operation && operation.success) {
-        this.templateListModel = operation.model;
-      }
-    });
+      this.spinnerStatus = true;
+      this.eFormService.getAll(this.templateRequestModel).subscribe(operation => {
+        this.spinnerStatus = false;
+        if (operation && operation.success) {
+          this.templateListModel = operation.model;
+        }
+      });
   }
 
   loadAllTags() {
-    this.eFormTagService.getAvailableTags().subscribe((data => {
-      if (data && data.success) {
-        this.availableTags = data.model;
-      }
-    }));
+    if (this.userClaims.eFormsReadTags) {
+      this.eFormTagService.getAvailableTags().subscribe((data => {
+        if (data && data.success) {
+          this.availableTags = data.model;
+        }
+      }));
+    }
   }
 
   onLabelInputChanged(label: string) {

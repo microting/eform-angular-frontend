@@ -38,7 +38,9 @@ export enum UserClaimsEnum {
   caseUpdate,
   caseDelete,
   caseGetPdf,
+  eformsPairingRead,
   eformsPairingUpdate,
+  eformsPairingTags,
   eformsUpdateTags,
   eforsmGetCsv
 }

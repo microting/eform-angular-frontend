@@ -1,6 +1,6 @@
 export class EformsPermissionsModel {
   total: number;
-  groupName: string;
+  groupName: string = '';
   groupId: number;
   eformsList: Array<EformPermissionsModel> = [];
 }

@@ -33,13 +33,15 @@ export class EformEditParingModalComponent implements OnInit {
   }
 
   loadAllSites() {
-    this.sitesService.getAllSites().subscribe(operation => {
-      this.spinnerStatus = true;
-      if (operation && operation.success) {
-        this.sitesDto = operation.model;
-      }
-      this.spinnerStatus = false;
-    });
+    if (this.userClaims.eFormsPairingRead) {
+      this.sitesService.getAllSitesForPairing().subscribe(operation => {
+        this.spinnerStatus = true;
+        if (operation && operation.success) {
+          this.sitesDto = operation.model;
+        }
+        this.spinnerStatus = false;
+      });
+    }
   }
 
   show(templateDto: TemplateDto) {

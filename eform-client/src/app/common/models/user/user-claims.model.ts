@@ -38,6 +38,8 @@ export class UserClaimsModel {
   caseGetPdf: boolean;
   eFormsPairingUpdate: boolean;
   eFormsUpdateTags: boolean;
+  eFormsPairingRead: boolean;
+  eFormsReadTags: boolean;
   eFormsGetCsv: boolean;
 
   constructor(decodedToken: any) {
@@ -89,6 +91,8 @@ export class UserClaimsModel {
 
     this.eFormsPairingUpdate = decodedToken.eforms_pairing_update === 'True';
     this.eFormsUpdateTags = decodedToken.eforms_update_tags === 'True';
+    this.eFormsPairingRead = decodedToken.eforms_pairing_read === 'True';
+    this.eFormsReadTags = decodedToken.eforms_read_tags === 'True';
     this.eFormsGetCsv = decodedToken.eforms_get_csv === 'True';
   }
 }
