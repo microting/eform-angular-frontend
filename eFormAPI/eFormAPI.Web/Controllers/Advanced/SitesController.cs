@@ -20,13 +20,22 @@ namespace eFormAPI.Web.Controllers.Advanced
         }
 
         [HttpGet]
+        [Route("api/sites/index")]
         [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
         public OperationDataResult<List<SiteName_Dto>> Index()
         {
             return _sitesService.Index();
         }
+        [HttpGet]
+        [Route("api/sites/pairing")]
+        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.PairingRead)]
+        public OperationDataResult<List<SiteName_Dto>> ReadPairing()
+        {
+            return _sitesService.Index();
+        }
 
         [HttpGet]
+        [Route("api/sites/edit")]
         [Authorize(Policy = AuthConsts.EformPolicies.Sites.Update)]
         public OperationDataResult<SiteName_Dto> Edit(int id)
         {
@@ -34,6 +43,7 @@ namespace eFormAPI.Web.Controllers.Advanced
         }
 
         [HttpPost]
+        [Route("api/sites/update")]
         [Authorize(Policy = AuthConsts.EformPolicies.Sites.Update)]
         public OperationResult Update([FromBody] SiteNameModel siteNameModel)
         {
@@ -41,6 +51,7 @@ namespace eFormAPI.Web.Controllers.Advanced
         }
 
         [HttpGet]
+        [Route("api/sites/delete")]
         [Authorize(Policy = AuthConsts.EformPolicies.Sites.Delete)]
         public OperationResult Delete(int id)
         {

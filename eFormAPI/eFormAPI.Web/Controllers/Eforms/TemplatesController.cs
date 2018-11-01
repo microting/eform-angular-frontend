@@ -62,13 +62,6 @@ namespace eFormAPI.Web.Controllers.Eforms
         }
 
         [HttpPost]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.PairingRead)]
-        public OperationDataResult<DeployToModel> DeployTo(int id)
-        {
-            return _templatesService.DeployTo(id);
-        }
-
-        [HttpPost]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.PairingUpdate)]
         public OperationResult Deploy([FromBody] DeployModel deployModel)
         {
