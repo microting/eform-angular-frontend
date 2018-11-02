@@ -18,6 +18,7 @@
   
   <ItemGroup>
     <PackageReference Include="Automapper" Version="6.1.0" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="1.1.44" />
     <PackageReference Include="SharpZipLib.NETStandard" Version="1.0.7" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0005" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0" />
@@ -28,11 +29,5 @@
     <PackageReference Include="Microting.eForm" Version="3.0.31" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.3" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Reference Include="Microting.eFormApi.BasePn">
-      <HintPath>..\..\..\eFormApi.BasePn\eFormApi.BasePn\bin\Debug\netcoreapp2.1\Microting.eFormApi.BasePn.dll</HintPath>
-    </Reference>
   </ItemGroup>
 </Project>
