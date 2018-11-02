@@ -4,6 +4,7 @@ using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Infrastructure.Models.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
@@ -18,6 +19,7 @@ namespace eFormAPI.Web.Services
     public class AccountService : IAccountService
     {
         private readonly IUserService _userService;
+        private readonly IEmailSender _emailSender;
         private readonly IWritableOptions<ApplicationSettings> _appSettings;
         private readonly ILogger<AccountService> _logger;
         private readonly ILocalizationService _localizationService;
@@ -27,13 +29,15 @@ namespace eFormAPI.Web.Services
             IUserService userService,
             IWritableOptions<ApplicationSettings> appSettings, 
             ILogger<AccountService> logger,
-            ILocalizationService localizationService)
+            ILocalizationService localizationService, 
+            IEmailSender emailSender)
         {
             _userManager = userManager;
             _userService = userService;
             _appSettings = appSettings;
             _logger = logger;
             _localizationService = localizationService;
+            _emailSender = emailSender;
         }
 
         public async Task<UserInfoViewModel> GetUserInfo()
@@ -119,13 +123,13 @@ namespace eFormAPI.Web.Services
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
-                return new OperationResult(false);
+                return new OperationResult(false, $"User with {model.Email} not found");
             }
 
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
             var link = _appSettings.Value.SiteLink;
-            link = $"{link}/login/restore-password?userId={user.Id}&code={code}";
-            await _userManager.SetEmailAsync(user,
+            link = $"{link}/auth/restore-password-confirmation?userId={user.Id}&code={code}";
+            await _emailSender.SendEmailAsync(user.Email, "EForm Password Reset",
                 "Please reset your password by clicking <a href=\"" + link + "\">here</a>");
             return new OperationResult(true);
         }
