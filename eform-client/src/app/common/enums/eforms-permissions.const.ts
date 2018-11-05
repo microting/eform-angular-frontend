@@ -15,4 +15,5 @@ export const EformPermissionsNamesSwap =  [
   {originalName: 'eforms_pairing_read', swappedName: 'eFormsPairingRead'},
   {originalName: 'eforms_read_tags', swappedName: 'eFormsReadTags'},
   {originalName: 'eforms_get_csv', swappedName: 'eFormsGetCsv'},
+  {originalName: 'workers_create', swappedName: 'workersCreate'}
 ];
