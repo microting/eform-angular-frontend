@@ -57,7 +57,10 @@ export class SecurityGroupEformsPermissionsService extends BaseService {
       for (const eformSimplePermissionModel of model) {
         const newArrayPermissions: Array<string> = [];
         for (const permissionName of eformSimplePermissionModel.permissionsSimpleList) {
-          newArrayPermissions.push(EformPermissionsNamesSwap.find(x => x.originalName === permissionName).swappedName);
+          const foundPermission = EformPermissionsNamesSwap.find(x => x.originalName === permissionName);
+          if (foundPermission) {
+            newArrayPermissions.push(foundPermission.swappedName);
+          }
         }
         const eformModel = new EformPermissionsSimpleModel();
         eformModel.templateId = eformSimplePermissionModel.templateId;
