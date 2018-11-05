@@ -14,10 +14,10 @@
     <div class="collapse navbar-collapse" #navigationMenu>
       <ul class="navbar-nav mr-auto">
         <ng-container *ngFor="let menu of appMenu.leftMenu">
+          <ng-container *ngIf="checkRole(menu.guards)">
           <ng-container *ngIf="menu?.menuItems?.length == 0; else dropdown;">
             <li class="nav-item">
-              <a
-                routerLink="{{menu.link}}"
+              <a routerLink="{{menu.link}}"
                 mdbWavesEffect
                 class="nav-link waves-light"
                 id="{{menu.e2eId}}">
@@ -34,18 +34,20 @@
                   class="nav-link dropdown-toggle waves-light"
                   id="{{menu.e2eId}}">{{menu.name}}</a>
                 <div class="dropdown-menu" *ngIf="menu?.menuItems?.length > 0;">
-                  <a
-                    *ngFor="let subMenu of menu.menuItems"
+                  <ng-container *ngFor="let subMenu of menu.menuItems">
+                  <a *ngIf="checkRole(subMenu.guards)"
                     class="dropdown-item waves-light"
                     routerLink="{{subMenu.link}}"
                     routerLinkActive="active"
                     id="{{subMenu.e2eId}}">
                     {{subMenu.name}}
                   </a>
+                  </ng-container>
                 </div>
               </div>
             </li>
           </ng-template>
+        </ng-container>
         </ng-container>
       </ul>
       <ul class="navbar-nav ml-auto">
@@ -70,14 +72,15 @@
                   class="nav-link dropdown-toggle waves-light"
                   id="{{menu.e2eId}}">{{menu.name}}</a>
                 <div class="dropdown-menu outbounds-fix" *ngIf="menu?.menuItems?.length > 0;">
-                  <a
-                    *ngFor="let subMenu of menu.menuItems"
-                    class="dropdown-item waves-light"
-                    routerLink="{{subMenu.link}}"
-                    routerLinkActive="active"
-                    id="{{subMenu.e2eId}}">
-                    {{subMenu.name}}
-                  </a>
+                  <ng-container *ngFor="let subMenu of menu.menuItems">
+                    <a *ngIf="checkRole(subMenu.guards)"
+                      class="dropdown-item waves-light"
+                      routerLink="{{subMenu.link}}"
+                      routerLinkActive="active"
+                      id="{{subMenu.e2eId}}">
+                      {{subMenu.name}}
+                    </a>
+                  </ng-container>
                 </div>
               </div>
             </li>

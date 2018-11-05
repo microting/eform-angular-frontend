@@ -51,6 +51,17 @@ export class NavigationComponent implements OnInit {
     await this.localeService.initLocale();
   }
 
+  checkRole(roles: string[]) {
+    if (roles.length === 0) {
+      return true;
+    }
+    const currentRole = this.authService.currentRole;
+    if (roles.includes(currentRole)) {
+      return true;
+    }
+    return false;
+  }
+
   expandMenu() {
     this._menuFlag ?
       this.menuElement.nativeElement.classList.remove('show') :

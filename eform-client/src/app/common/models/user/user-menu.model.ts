@@ -10,4 +10,5 @@ export class MenuItemModel {
   position: number;
 
   menuItems: Array<MenuItemModel> = [];
+  guards: Array<string> = [];
 }
