@@ -9,7 +9,8 @@ addons:
 sudo: required
 language: csharp
 mono: latest
-dotnet: 2.0.0
+dotnet: 2.1.0
+bundler_args: --retry 5
 install: 
 - nvm install 8.0.0
 - nvm use 8.0.0
