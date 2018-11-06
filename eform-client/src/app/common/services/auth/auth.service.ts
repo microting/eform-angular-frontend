@@ -4,17 +4,20 @@ import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {BaseService} from '../base.service';
+import {JwtHelper} from 'src/app/common/helpers';
 
 import {
-  ChangePasswordModel,
-  UserInfoModel,
   AuthResponseModel,
-  LoginRequestModel,
-  PasswordRestoreModel,
+  ChangePasswordModel,
   GoogleAuthenticatorModel,
-  GoogleAuthInfoModel, OperationDataResult, OperationResult
+  GoogleAuthInfoModel,
+  LoginRequestModel,
+  OperationDataResult,
+  OperationResult,
+  PasswordRestoreModel, UserClaimsModel,
+  UserInfoModel
 } from 'src/app/common/models';
+import {BaseService} from '../base.service';
 
 export let AuthMethods = {
   Login: 'api/auth/token',
@@ -79,6 +82,7 @@ export class AuthService extends BaseService {
     } else {
       return false;
     }
+
   }
 
   get currentRole(): string {
@@ -87,6 +91,11 @@ export class AuthService extends BaseService {
       return auth.role;
     }
     return '';
+  }
+
+  get userClaims(): UserClaimsModel {
+    const accessToken = JSON.parse(localStorage.getItem('currentAuth')).access_token;
+    return new UserClaimsModel(new JwtHelper().decodeToken(accessToken));
   }
 
   changePassword(model: ChangePasswordModel): Observable<any> {

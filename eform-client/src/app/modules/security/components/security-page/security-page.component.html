@@ -1,0 +1,86 @@
+<eform-page-subheader [title]="'Security Groups' | translate">
+  <div class="p-3">
+    <button
+      class="btn btn-success" [routerLink]="['create-group']"
+      mdbTooltip="{{ 'Create Group' | translate }}" id="newSecurityGroupBtn">{{ 'New Group' | translate }}
+    </button>
+  </div>
+</eform-page-subheader>
+
+<div class="container-fluid">
+  <div class="row pl-1">
+    <div class="col-md-2">
+      <div class="md-form">
+        <input mdbInputDirective [mdbValidate]="false"
+               type="text" (input)="onLabelInputChanged($event.target.value)"
+               class="form-control input-sm" id="searchInput">
+        <label for="searchInput">{{'Search' | translate}}</label>
+      </div>
+    </div>
+  </div>
+  <div class="row p-1 mt-2 table-responsive no-gutters">
+    <table class="table table-sm table-striped text-center z-depth-1">
+      <thead>
+      <tr>
+        <th scope="col">{{ 'ID' | translate }}</th>
+        <th scope="col">{{ 'Group name' | translate }}</th>
+        <th scope="col"> {{ 'Users amount' | translate }}</th>
+        <th scope="col">{{ 'Actions' | translate }}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let securityGroup of securityGroups.securityGroupList">
+        <td scope="row">
+          {{securityGroup.id}}
+        </td>
+        <td>
+          {{securityGroup.name}}
+        </td>
+        <td>
+          {{securityGroup.userAmount}}
+        </td>
+        <td>
+          <div class="d-flex flex-row justify-content-center">
+            <button class="btn btn-accent text-black-50 btn-icon mb-2"
+                    [routerLink]="['update-group', securityGroup.id]"
+                    mdbTooltip="{{'Edit Group' | translate}}">
+              <i class="material-icons">
+                edit
+              </i>
+            </button>
+            <button class="btn btn-success btn-icon mb-2"
+                    [routerLink]="['group/' + securityGroup.id + '/eforms-permissions']"
+                    mdbTooltip="{{'Eforms Permissions' | translate}}">
+              <i class="material-icons">
+                assignment
+              </i>
+            </button>
+            <button class="btn btn-success btn-icon mb-2 "
+                    [routerLink]="['group/' + securityGroup.id + '/general-permissions']"
+                    mdbTooltip="{{'General Permissions' | translate}}">
+              <i class="material-icons">
+                lock_open
+              </i>
+            </button>
+            <button class="btn btn-danger btn-icon mb-2 "
+                    mdbTooltip="{{'Delete Group' | translate}}" (click)="openDeleteModal(securityGroup)">
+              <i class="material-icons">
+                delete_forever
+              </i>
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <eform-pagination *ngIf="securityGroups.total > securityGroupsRequestModel.pageSize"
+                    [limit]="securityGroupsRequestModel.pageSize"
+                    [size]="securityGroups.total"
+                    [offset]="securityGroupsRequestModel.offset"
+                    (onPageChanged)="changePage($event)"></eform-pagination>
+</div>
+
+<eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>
+
+<app-security-group-remove #modalGroupDelete (onSecurityGroupRemoved)="getSecurityGroups()"></app-security-group-remove>

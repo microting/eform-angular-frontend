@@ -21,9 +21,16 @@ namespace eFormAPI.Web.Services
             var port = _options.Value.SmtpPort;
             var userName = _options.Value.Login;
             var password =  _options.Value.Password;
+            var host = _options.Value.SmtpHost;
+
+            if (string.IsNullOrEmpty(host) || port <= 0)
+            {
+                return Task.CompletedTask;
+            }
+
             var smtp = new SmtpClient
             {
-                Host =  _options.Value.SmtpHost,
+                Host = host,
                 Port = port,
                 EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
@@ -37,7 +44,7 @@ namespace eFormAPI.Web.Services
                 mailMessage.IsBodyHtml = true;
                 smtp.Send(mailMessage);
             }
-            return Task.FromResult(0);
+            return Task.CompletedTask;
         }
     }
 }

@@ -1,0 +1,84 @@
+<eform-page-subheader [title]="'Create Security Group' | translate">
+  <div class="p-3">
+    <button
+      class="btn btn-success" [disabled]="!securityGroupCreateModel.name"
+      (click)="createSecurityGroup()"
+      mdbTooltip="{{ 'Create Group' | translate }}" id="newSecurityGroupBtn">{{ 'Create' | translate }}
+    </button>
+  </div>
+</eform-page-subheader>
+
+<div class="container-fluid">
+  <div class="row pl-1">
+    <div class="col-md-2 col-xs-12">
+      <div class="md-form">
+        <input mdbInputDirective [mdbValidate]="false"
+               type="text" [(ngModel)]="securityGroupCreateModel.name"
+               class="form-control input-sm" id="groupNameCreateInput">
+        <label for="groupNameCreateInput">{{'Group Name' | translate}}</label>
+      </div>
+    </div>
+    <div class="col-md-3 col-xs-8 col-sm-8 ng-select-wrapper">
+      <ng-select
+        #usersSelector
+        class="custom"
+        dropdownPosition="'bottom'"
+        [items]="users.userList"
+        [bindLabel]="'firstName'"
+        [bindValue]="'id'"
+        [placeholder]="'Select User' | translate"
+        id="tagSelector"></ng-select>
+    </div>
+    <div class="col-md-3 col-xs-4 col-sm-4 mt-3 pt-1">
+      <button
+        class="btn btn-success" (click)="addUserToGroup(usersSelector);"
+        mdbTooltip="{{ 'Add user to group' | translate }}">
+        + {{ 'Bind to Group' | translate }}
+      </button>
+    </div>
+  </div>
+  <div class="row p-1 mt-2 table-responsive no-gutters">
+    <table class="table table-sm table-striped text-center z-depth-1">
+      <thead>
+      <tr>
+        <th scope="col">{{ 'ID' | translate }}</th>
+        <th scope="col">{{ 'First Name' | translate }}</th>
+        <th scope="col"> {{ 'Last Name' | translate }}</th>
+        <th scope="col">{{ 'Email' | translate }}</th>
+        <th scope="col">{{ 'Actions' | translate }}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let securityGroupUser of securityGroupUsers">
+        <td scope="row">
+          {{securityGroupUser.id}}
+        </td>
+        <td>
+          {{securityGroupUser.firstName}}
+        </td>
+        <td>
+          {{securityGroupUser.lastName}}
+        </td>
+        <td>
+          {{securityGroupUser.email}}
+        </td>
+        <td>
+          <div class="d-flex flex-row justify-content-center">
+            <button class="btn btn-danger btn-icon mb-2 "
+                    mdbTooltip="{{'Remove user from group' | translate}}"
+                    (click)="deleteUserFromGroup(securityGroupUser)">
+              <i class="material-icons">
+                delete_forever
+              </i>
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>
+
+<app-security-group-remove #modalGroupDelete></app-security-group-remove>

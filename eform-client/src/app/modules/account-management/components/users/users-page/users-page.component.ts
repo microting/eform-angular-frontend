@@ -1,17 +1,20 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
-import {PaginationModel} from 'src/app/common/models/common';
-import {UserInfoModel, UserInfoModelList} from 'src/app/common/models/user';
-import {AuthService} from 'src/app/common/services/auth';
-import {AdminService} from 'src/app/common/services/users';
+import {UserClaimsEnum} from 'src/app/common/enums';
+
+import {
+  SecurityGroupsModel,
+  UserInfoModel,
+  UserInfoModelList,
+  PaginationModel,
+  SecurityGroupsRequestModel
+} from 'src/app/common/models';
+import {AuthService, SecurityGroupsService, AdminService} from 'src/app/common/services';
 
 @Component({
   selector: 'app-users-page',
   templateUrl: './users-page.component.html',
 })
 export class UsersPageComponent implements OnInit {
-
-  isChecked = true;
   @ViewChild('userEditModal') userEditModal;
   @ViewChild('removeUserModal') removeUserModal;
   @ViewChild('newUserModal') newUserModal;
@@ -19,14 +22,26 @@ export class UsersPageComponent implements OnInit {
   paginationModel: PaginationModel = new PaginationModel;
   userInfoModelList: UserInfoModelList = new UserInfoModelList;
   selectedUser: UserInfoModel = new UserInfoModel;
-  spinnerStatus: boolean;
+  securityGroups: SecurityGroupsModel = new SecurityGroupsModel();
 
-  constructor(private adminService: AdminService, private authService: AuthService) {}
+  spinnerStatus: boolean;
+  isChecked = true;
+
+  get userClaims() { return this.authService.userClaims; }
+  get userRole() { return this.authService.currentRole; }
+
+  constructor(
+    private adminService: AdminService,
+    private authService: AuthService,
+    private securityGroupsService: SecurityGroupsService
+  ) {
+  }
 
   ngOnInit() {
     this.paginationModel = new PaginationModel(1, 5, 0);
     this.getUserInfoList();
     this.getTwoFactorInfo();
+    this.getSecurityGroups();
   }
 
   checked(e: any) {
@@ -74,6 +89,17 @@ export class UsersPageComponent implements OnInit {
         this.userInfoModelList = data.model;
       }
       this.spinnerStatus = false;
+    });
+  }
+
+  getSecurityGroups() {
+    const securityGroupRequestModel = new SecurityGroupsRequestModel();
+    securityGroupRequestModel.pageSize = 10000;
+    this.spinnerStatus = true;
+    this.securityGroupsService.getAllSecurityGroups(securityGroupRequestModel).subscribe((data) => {
+      if (data && data.success) {
+        this.securityGroups = data.model;
+      } this.spinnerStatus = false;
     });
   }
 

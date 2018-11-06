@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
+using eFormAPI.Web.Infrastructure.Models.Users;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Settings.User;
-using Microting.eFormApi.BasePn.Infrastructure.Models.User;
 
 namespace eFormAPI.Web.Abstractions
 {

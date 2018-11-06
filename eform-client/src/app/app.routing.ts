@@ -46,6 +46,11 @@ export const routes: Routes = [
         loadChildren: './modules/account-management/account-management.module#AccountManagementModule'
       },
       {
+        path: 'security',
+        canActivate: [AdminGuard],
+        loadChildren: './modules/security/security.module#SecurityModule'
+      },
+      {
         path: 'plugins',
         canActivate: [AuthGuard],
         loadChildren: './plugins/plugins.module#PluginsModule'

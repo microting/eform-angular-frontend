@@ -7,6 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Abstractions.Security;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
@@ -14,6 +17,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers.WritableOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
@@ -25,9 +29,11 @@ namespace eFormAPI.Web.Services
     {
         private readonly IOptions<EformTokenOptions> _tokenOptions;
         private readonly IUserService _userService;
-        private readonly IOptions<ApplicationSettings> _appSettings;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IWritableOptions<ApplicationSettings> _appSettings;
+        private readonly IClaimsService _claimsService;
+        private readonly IUserClaimsPrincipalFactory<EformUser> _userClaimsPrincipalFactory;
         private readonly ILocalizationService _localizationService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ILogger<AuthService> _logger;
         private readonly UserManager<EformUser> _userManager;
         private readonly RoleManager<EformRole> _roleManager;
@@ -35,12 +41,14 @@ namespace eFormAPI.Web.Services
 
         public AuthService(IOptions<EformTokenOptions> tokenOptions,
             ILogger<AuthService> logger,
-            IOptions<ApplicationSettings> appSettings,
+            IWritableOptions<ApplicationSettings> appSettings,
             RoleManager<EformRole> roleManager,
             SignInManager<EformUser> signInManager,
             UserManager<EformUser> userManager,
             IUserService userService,
-            ILocalizationService localizationService, IHttpContextAccessor httpContextAccessor)
+            ILocalizationService localizationService,
+            IClaimsService claimsService,
+            IUserClaimsPrincipalFactory<EformUser> userClaimsPrincipalFactory, IHttpContextAccessor httpContextAccessor)
         {
             _tokenOptions = tokenOptions;
             _logger = logger;
@@ -50,6 +58,8 @@ namespace eFormAPI.Web.Services
             _userManager = userManager;
             _userService = userService;
             _localizationService = localizationService;
+            _claimsService = claimsService;
+            _userClaimsPrincipalFactory = userClaimsPrincipalFactory;
             _httpContextAccessor = httpContextAccessor;
         }
 
@@ -102,7 +112,6 @@ namespace eFormAPI.Web.Services
                 }
 
                 // check code
-
                 var otp = new Totp(Base32.FromBase32String(user.GoogleAuthenticatorSecretKey));
                 var isCodeValid = otp.VerifyTotp(code, out long timeStepMatched, new VerificationWindow(300, 300));
                 if (!isCodeValid)
@@ -121,14 +130,14 @@ namespace eFormAPI.Web.Services
                     }
                 }
             }
-            var token = GenerateToken(user);
+
+            var token = await GenerateToken(user);
             var roleList = _userManager.GetRolesAsync(user).Result;
             if (!roleList.Any())
             {
                 return new OperationDataResult<AuthorizeResult>(false, $"Role for user {model.Username} not found");
             }
-            await _signInManager.SignInAsync(user, false);
-            // update last sign in date
+
             return new OperationDataResult<AuthorizeResult>(true, new AuthorizeResult
             {
                 Id = user.Id,
@@ -138,7 +147,7 @@ namespace eFormAPI.Web.Services
             });
         }
 
-        public string GenerateToken(EformUser user)
+        public async Task<string> GenerateToken(EformUser user)
         {
             if (user != null)
             {
@@ -169,6 +178,29 @@ namespace eFormAPI.Web.Services
                         }
                     }
                 }
+
+                // Permissions
+                if (userRoles.Contains(EformRole.Admin))
+                {
+                    claims.AddRange(_claimsService.GetAllAuthClaims());
+                }
+                else
+                {
+                    claims.AddRange(_claimsService.GetUserClaims(user.Id));
+                }
+
+                var principal = await _userClaimsPrincipalFactory.CreateAsync(user);
+                foreach (var claim in claims)
+                {
+                    ((ClaimsIdentity) principal.Identity).AddClaim(claim);
+                }
+
+                await _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                    principal, new AuthenticationProperties
+                    {
+                        IsPersistent = false
+                    });
+
 
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenOptions.Value.SigningKey));
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

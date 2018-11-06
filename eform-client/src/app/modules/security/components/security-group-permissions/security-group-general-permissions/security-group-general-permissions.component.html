@@ -1,0 +1,36 @@
+<eform-page-subheader [title]="securityGroupGeneralPermissionsModel.groupName + ' ' + ('General Permissions' | translate)">
+  <div class="p-3">
+    <button
+      class="btn btn-success" (click)="updateSecurityGroupGeneralPermissions()"
+      mdbTooltip="{{ 'Update Permissions' | translate }}" id="newSecurityGroupBtn">{{ 'Save' | translate }}
+    </button>
+  </div>
+</eform-page-subheader>
+
+<div class="container-fluid mt-4">
+  <div class="row">
+    <div class="mb-4" [ngClass]="{'col-md-12': permissionType.name == 'Eforms', 'col-md-3': permissionType.name != 'Eforms'}"
+         *ngFor="let permissionType of securityGroupGeneralPermissionsModel.permissionTypes">
+      <div class="card">
+        <div class="card-header">
+          {{permissionType.name | translate}}
+        </div>
+        <div class="card-body">
+          <ng-container *ngFor="let permission of permissionType.permissions">
+            <div class="mat-checkbox mb-2" [ngStyle]="{'display': permissionType.name == 'Eforms' ? 'inline-block' : 'block'}"
+                 [ngClass]="{'col-md-3': permissionType.name == 'Eforms'}">
+              <input id="{{permissionType.name}}_{{permission.claimName}}"
+                     [checked]="permission.isEnabled" [value]="permission.isEnabled"
+                     [(ngModel)]="permission.isEnabled"
+                     color="primary" type="checkbox">
+              <label for="{{permissionType.name}}_{{permission.claimName}}">{{permission.permissionName | translate}}</label>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>

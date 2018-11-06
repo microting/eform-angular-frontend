@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Abstractions.Eforms;
 using eFormData;
 using eFormShared;
 using Microting.eFormApi.BasePn.Abstractions;
@@ -46,7 +47,7 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public OperationDataResult<ReplyElement> Edit(int id)
+        public OperationDataResult<ReplyElement> GetCase(int id)
         {
             try
             {

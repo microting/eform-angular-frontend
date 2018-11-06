@@ -1,10 +1,10 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Infrastructure.Database;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microting.eFormApi.BasePn.Infrastructure.Database;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 
 namespace eFormAPI.Web.Services
@@ -13,18 +13,15 @@ namespace eFormAPI.Web.Services
     {
         private readonly UserManager<EformUser> _userManager;
         private readonly IHttpContextAccessor _httpAccessor;
-        private readonly BaseDbContext _dbContext;   
-        private readonly ILocalizationService _localizationService;
+        private readonly BaseDbContext _dbContext;
 
 
         public UserService(BaseDbContext dbContext,
             UserManager<EformUser> userManager,
-            IHttpContextAccessor httpAccessor, 
-            ILocalizationService localizationService)
+            IHttpContextAccessor httpAccessor)
         {
             _userManager = userManager;
             _httpAccessor = httpAccessor;
-            _localizationService = localizationService;
             _dbContext = dbContext;
         }
 
