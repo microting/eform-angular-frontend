@@ -130,7 +130,7 @@ namespace eFormAPI.Web.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        [Route("api/selectable-groups/get/{entityGroupUid}/exchange")]
+        [Route("api/selectable-groups/get/exchange/{entityGroupUid}")]
         public OperationDataResult<EntityGroup> GetEntityGroupExternally(string entityGroupUid, string token, string callerURL)
         {
             // Do some validation of the token. For now token is not valid
