@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Abstractions.Eforms;
+using eFormAPI.Web.Infrastructure.Database;
 using eFormCore;
 using eFormShared;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microting.eFormApi.BasePn.Abstractions;
+using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers.WritableOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
@@ -19,18 +23,22 @@ namespace eFormAPI.Web.Services
         private readonly IWritableOptions<ConnectionStrings> _connectionStrings;
         private readonly IEFormCoreService _coreHelper;
         private readonly ILocalizationService _localizationService;
+        private readonly IUserService _userService;
+        private readonly BaseDbContext _dbContext;
 
-        public TemplatesService(IWritableOptions<ConnectionStrings> connectionStrings, IEFormCoreService coreHelper,
-            ILocalizationService localizationService)
+        public TemplatesService(IWritableOptions<ConnectionStrings> connectionStrings,
+            IEFormCoreService coreHelper,
+            ILocalizationService localizationService,
+            IUserService userService, BaseDbContext dbContext)
         {
             _connectionStrings = connectionStrings;
             _coreHelper = coreHelper;
             _localizationService = localizationService;
+            _userService = userService;
+            _dbContext = dbContext;
         }
 
-
-        [HttpPost]
-        public OperationDataResult<TemplateListModel> Index(TemplateRequestModel templateRequestModel)
+        public async Task<OperationDataResult<TemplateListModel>> Index(TemplateRequestModel templateRequestModel)
         {
             try
             {
@@ -46,10 +54,45 @@ namespace eFormAPI.Web.Services
                 {
                     NumOfElements = 40,
                     PageNum = templateRequestModel.PageIndex,
-                    Templates = templatesDto
+                    Templates = new List<Template_Dto>()
                 };
 
+                var eformIds = new List<int>();
+                if (!_userService.IsInRole(EformRole.Admin))
+                {
+                    var isEformsInGroups = await _dbContext.SecurityGroupUsers
+                        .Where(x => x.EformUserId == _userService.UserId)
+                        .Where(x => x.SecurityGroup.EformsInGroup.Any())
+                        .AnyAsync();
+                    if (isEformsInGroups)
+                    {
+                        eformIds = _dbContext.EformInGroups
+                            .Where(x =>
+                                x.SecurityGroup.SecurityGroupUsers.Any(y => y.EformUserId == _userService.UserId))
+                            .Select(x => x.TemplateId)
+                            .ToList();
 
+                        foreach (var templateDto in templatesDto)
+                        {
+                            if (eformIds.Contains(templateDto.Id))
+                            {
+                                model.Templates.Add(templateDto);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (var templateDto in templatesDto)
+                        {
+                            model.Templates.Add(templateDto);
+                        }
+                    }
+
+                }
+                else
+                {
+                    model.Templates = templatesDto;
+                }
                 return new OperationDataResult<TemplateListModel>(true, model);
             }
             catch (Exception ex)
@@ -84,7 +127,6 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        [HttpGet]
         public OperationDataResult<Template_Dto> Get(int id)
         {
             try
@@ -124,6 +166,7 @@ namespace eFormAPI.Web.Services
                     _localizationService.GetString("CheckSettingsBeforeProceed"));
             }
         }
+
 
         public OperationResult Create(EFormXmlModel eFormXmlModel)
         {

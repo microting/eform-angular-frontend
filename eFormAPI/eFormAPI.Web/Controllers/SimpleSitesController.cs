@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Abstractions.Advanced;
+using eFormAPI.Web.Infrastructure;
 using eFormShared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,12 +24,14 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = AuthConsts.EformPolicies.DeviceUsers.Read)]
         public OperationDataResult<List<Site_Dto>> Index()
         {
             return _simpleSitesService.Index();
         }
 
         [HttpPost]
+        [Authorize(Policy = AuthConsts.EformPolicies.DeviceUsers.Create)]
         public OperationResult Create([FromBody] SimpleSiteModel simpleSiteModel)
         {
             if (!ModelState.IsValid)
@@ -38,18 +42,21 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = AuthConsts.EformPolicies.DeviceUsers.Update)]
         public OperationDataResult<Site_Dto> Edit(int id)
         {
             return _simpleSitesService.Edit(id);
         }
 
         [HttpPost]
+        [Authorize(Policy = AuthConsts.EformPolicies.DeviceUsers.Update)]
         public OperationResult Update([FromBody] SimpleSiteModel simpleSiteModel)
         {
             return _simpleSitesService.Update(simpleSiteModel);
         }
 
         [HttpGet]
+        [Authorize(Policy = AuthConsts.EformPolicies.DeviceUsers.Delete)]
         public OperationResult Delete(int id)
         {
             return _simpleSitesService.Delete(id);

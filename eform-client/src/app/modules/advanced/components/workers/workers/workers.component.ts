@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {WorkerCreateModel} from 'src/app/common/models/advanced';
 import {SiteDto, WorkerDto} from 'src/app/common/models/dto';
 import {WorkersService} from 'src/app/common/services/advanced';
+import {AuthService} from 'src/app/common/services/auth';
 import {DeviceUserService} from 'src/app/common/services/device-users';
 
 @Component({
@@ -19,8 +20,11 @@ export class WorkersComponent implements OnInit {
   selectedWorkerDto: WorkerDto = new WorkerDto();
   workersDto: Array<WorkerDto> = [];
 
+  get userClaims() { return this.authService.userClaims; }
+
   constructor(private workersService: WorkersService,
-              private router: Router) {
+              private router: Router,
+              private authService: AuthService) {
   }
 
   ngOnInit() {

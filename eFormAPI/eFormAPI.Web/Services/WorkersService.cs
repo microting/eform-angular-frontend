@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Abstractions.Advanced;
+using eFormAPI.Web.Infrastructure;
 using eFormShared;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models;
@@ -21,6 +24,7 @@ namespace eFormAPI.Web.Services
             _localizationService = localizationService;
         }
 
+        [Authorize(Policy = AuthConsts.EformPolicies.Workers.Read)]
         public OperationDataResult<List<Worker_Dto>> Index()
         {
             var core = _coreHelper.GetCore();
