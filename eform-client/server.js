@@ -16,6 +16,9 @@ apiProxy.on('error', function(e) {
 
 // gzip
 // app.use(compression());
+const cors = require('cors');
+app.use(cors);
+
 app.use(express.static(__dirname + '/dist'));
 
 // api handler
