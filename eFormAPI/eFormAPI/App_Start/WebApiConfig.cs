@@ -4,6 +4,7 @@ using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Dispatcher;
 using Autofac.Integration.WebApi;
 using eFormAPI.Web.Infrastructure.Helpers;
@@ -20,7 +21,8 @@ namespace eFormAPI.Web
         {
             // Web API configuration and services
             // Configure Web API to use only bearer token authentication.
-            config.EnableCors();
+            var corsAttr = new EnableCorsAttribute("*", "*", "*");
+            config.EnableCors(corsAttr);
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
             config.Filters.Add(new HostAuthenticationFilter(CookieAuthenticationDefaults.AuthenticationType));
