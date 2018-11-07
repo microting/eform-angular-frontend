@@ -10,6 +10,7 @@ using eFormApi.BasePn.Infrastructure;
 using eFormApi.BasePn.Infrastructure.Helpers;
 using eFormApi.BasePn.Infrastructure.Models.API;
 using eFormAPI.Web.Infrastructure.Helpers.ExchangeTokenValidation;
+using System.Web.Http.Cors;
 
 namespace eFormAPI.Web.Controllers
 {
@@ -131,6 +132,7 @@ namespace eFormAPI.Web.Controllers
         [HttpGet]
         [AllowAnonymous]
         [Route("api/selectable-groups/get/exchange/{entityGroupUid}")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         public OperationDataResult<EntityGroup> GetEntityGroupExternally(string entityGroupUid, string token, string callerURL)
         {
             // Do some validation of the token. For now token is not valid
