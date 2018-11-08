@@ -21,7 +21,7 @@ namespace eFormAPI.Web
         {
             // Web API configuration and services
             // Configure Web API to use only bearer token authentication.
-            var corsAttr = new EnableCorsAttribute("*", "*", "*");
+            var corsAttr = new EnableCorsAttribute("*", "content-type", "GET");
             config.EnableCors(corsAttr);
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
