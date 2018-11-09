@@ -9,6 +9,8 @@ using eFormShared;
 using eFormApi.BasePn.Infrastructure;
 using eFormApi.BasePn.Infrastructure.Helpers;
 using eFormApi.BasePn.Infrastructure.Models.API;
+using eFormAPI.Web.Infrastructure.Helpers.ExchangeTokenValidation;
+using System.Web.Http.Cors;
 
 namespace eFormAPI.Web.Controllers
 {
@@ -24,8 +26,8 @@ namespace eFormAPI.Web.Controllers
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var model = core.Advanced_EntityGroupAll(requestModel.Sort, requestModel.NameFilter,
+                eFormCore.Core core = _coreHelper.GetCore();
+                EntityGroupList model = core.Advanced_EntityGroupAll(requestModel.Sort, requestModel.NameFilter,
                     requestModel.PageIndex, requestModel.PageSize, Constants.FieldTypes.EntitySelect,
                     requestModel.IsSortDsc,
                     Constants.WorkflowStates.NotRemoved);
@@ -43,8 +45,8 @@ namespace eFormAPI.Web.Controllers
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var groupCreate = core.EntityGroupCreate(Constants.FieldTypes.EntitySelect, editModel.Name);
+                eFormCore.Core core = _coreHelper.GetCore();
+                EntityGroup groupCreate = core.EntityGroupCreate(Constants.FieldTypes.EntitySelect, editModel.Name);
                 if (editModel.AdvEntitySelectableItemModels.Any())
                 {
                     var entityGroup = core.EntityGroupRead(groupCreate.MicrotingUUID);
@@ -72,8 +74,8 @@ namespace eFormAPI.Web.Controllers
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var entityGroup = core.EntityGroupRead(editModel.GroupUid);
+                eFormCore.Core core = _coreHelper.GetCore();
+                EntityGroup entityGroup = core.EntityGroupRead(editModel.GroupUid);
 
                 if (editModel.AdvEntitySelectableItemModels.Any())
                 {
@@ -115,9 +117,9 @@ namespace eFormAPI.Web.Controllers
         {
             try
             {
-                var core = _coreHelper.GetCore();
+                eFormCore.Core core = _coreHelper.GetCore();
 
-                var entityGroup = core.EntityGroupRead(entityGroupUid);
+                EntityGroup entityGroup = core.EntityGroupRead(entityGroupUid);
 
                 return new OperationDataResult<EntityGroup>(true, entityGroup);
             }
@@ -128,22 +130,54 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
+        [Route("api/selectable-groups/get/exchange/{entityGroupUid}")]
+        [EnableCors(origins: "*", headers: "content-type", methods: "GET")]
+        public OperationDataResult<EntityGroup> GetEntityGroupExternally(string entityGroupUid, string token, string callerURL)
+        {
+            // Do some validation of the token. For now token is not valid
+            //bool tokenIsValid = false;
+            ExchangeIdToken idToken = new ExchangeIdToken(token);
+            IdTokenValidationResult result = idToken.Validate(callerURL);
+            if (result.IsValid)
+            {
+                try
+                {
+                    eFormCore.Core core = _coreHelper.GetCore();
+
+                    EntityGroup entityGroup = core.EntityGroupRead(entityGroupUid);
+
+                    return new OperationDataResult<EntityGroup>(true, entityGroup);
+                }
+                catch (Exception)
+                {
+                    return new OperationDataResult<EntityGroup>(false,
+                        LocaleHelper.GetString("ErrorWhileObtainSelectableList"));
+                }
+            } else
+            {
+                return new OperationDataResult<EntityGroup>(false,
+                    LocaleHelper.GetString("ErrorWhileObtainSelectableList"));
+            }            
+        }
+
+        [HttpGet]
         [Route("api/selectable-groups/dict/{entityGroupUid}")]
         public OperationDataResult<List<CommonDictionaryTextModel>> GetEntityGroupDictionary(string entityGroupUid)
         {
             try
             {
-                var core = _coreHelper.GetCore();
+                eFormCore.Core core = _coreHelper.GetCore();
 
-                var entityGroup = core.EntityGroupRead(entityGroupUid);
+                EntityGroup entityGroup = core.EntityGroupRead(entityGroupUid);
 
-                var mappedEntityGroupDict = new List<CommonDictionaryTextModel>();
+                List<CommonDictionaryTextModel> mappedEntityGroupDict = new List<CommonDictionaryTextModel>();
 
-                foreach (var entityGroupItem in entityGroup.EntityGroupItemLst)
+                foreach (EntityItem entityGroupItem in entityGroup.EntityGroupItemLst)
                 {
                     mappedEntityGroupDict.Add(new CommonDictionaryTextModel()
                     {
-                        Id = entityGroupItem.MicrotingUUID,
+                        Id = entityGroupItem.Id.ToString(),
                         Text = entityGroupItem.Name
                     });
                 }
@@ -163,8 +197,7 @@ namespace eFormAPI.Web.Controllers
         {
             try
             {
-                var core = _coreHelper.GetCore();
-
+                eFormCore.Core core = _coreHelper.GetCore();
 
                 return core.EntityGroupDelete(entityGroupUid)
                     ? new OperationResult(true, LocaleHelper.GetString("ParamDeletedSuccessfully", entityGroupUid))
@@ -183,8 +216,7 @@ namespace eFormAPI.Web.Controllers
         {
             try
             {
-                var core = _coreHelper.GetCore();
-
+                eFormCore.Core core = _coreHelper.GetCore();
 
                 return new OperationResult(true, LocaleHelper.GetString("ParamDeletedSuccessfully", entityGroupUid));
             }
