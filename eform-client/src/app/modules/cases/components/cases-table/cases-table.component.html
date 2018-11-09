@@ -195,4 +195,4 @@
 
 <eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>
 
-<app-remove-case-modal #modalRemoveCase></app-remove-case-modal>
+<app-remove-case-modal (onCaseDeleted)="loadAllCases()" #modalRemoveCase></app-remove-case-modal>
