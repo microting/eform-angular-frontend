@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.eFormApi.BasePn;
 
 namespace eFormAPI.Web.Services
 {
@@ -41,24 +42,24 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                var menuItems = await _dbContext.MenuItems.ToListAsync();
-                var userClaims = _claimsService.GetUserClaimsNames(_userService.UserId);
+                List<MenuItem> menuItems = await _dbContext.MenuItems.ToListAsync();
+                List<string> userClaims = _claimsService.GetUserClaimsNames(_userService.UserId);
                 if (!_userService.IsInRole(EformRole.Admin))
                 {
                     menuItems = FilterMenuForUser(menuItems, userClaims);
                 }
 
                 // Add user first and last name
-                foreach (var menuItem in menuItems)
+                foreach (MenuItem menuItem in menuItems)
                 {
                     if (menuItem.Name == "user")
                     {
-                        var user = await _userService.GetCurrentUserAsync();
+                        EformUser user = await _userService.GetCurrentUserAsync();
                         menuItem.Name = $"{user.FirstName} {user.LastName}";
                     }
                 }
 
-                var orderedLeft = menuItems
+                List<MenuItemModel> orderedLeft = menuItems
                     .Where(p => p.Parent == null && p.MenuPosition == MenuPosition.Left)
                     .OrderBy(p => p.Position)
                     .Select(p => new MenuItemModel()
@@ -80,7 +81,7 @@ namespace eFormAPI.Web.Services
                         }
                     ).ToList();
 
-                var orderedRight = menuItems
+                List<MenuItemModel> orderedRight = menuItems
                     .Where(p => p.Parent == null && p.MenuPosition == MenuPosition.Right)
                     .OrderBy(p => p.Position)
                     .Select(p => new MenuItemModel()
@@ -102,7 +103,7 @@ namespace eFormAPI.Web.Services
                         }
                     ).ToList();
                 // Create result
-                var result = new MenuModel();
+                MenuModel result = new MenuModel();
                 orderedRight.ForEach(menuItem =>
                 {
                     if (menuItem.MenuItems.Any())
@@ -128,9 +129,9 @@ namespace eFormAPI.Web.Services
                 // Add menu from plugins
                 if (Startup.Plugins.Any())
                 {
-                    foreach (var plugin in Startup.Plugins)
+                    foreach (IEformPlugin plugin in Startup.Plugins)
                     {
-                        var pluginMenu = plugin.HeaderMenu();
+                        MenuModel pluginMenu = plugin.HeaderMenu();
                         result.LeftMenu.AddRange(pluginMenu.LeftMenu);
                         result.RightMenu.AddRange(pluginMenu.RightMenu);
                     }
@@ -149,8 +150,8 @@ namespace eFormAPI.Web.Services
 
         private List<MenuItem> FilterMenuForUser(IEnumerable<MenuItem> items, ICollection<string> claims)
         {
-            var newList = new List<MenuItem>();
-            foreach (var menuItem in items)
+            List<MenuItem> newList = new List<MenuItem>();
+            foreach (MenuItem menuItem in items)
             {
                 switch (menuItem.Name)
                 {

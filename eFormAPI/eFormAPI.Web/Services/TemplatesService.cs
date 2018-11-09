@@ -58,10 +58,10 @@ namespace eFormAPI.Web.Services
                     Templates = new List<Template_Dto>()
                 };
 
-                var eformIds = new List<int>();
+                List<int> eformIds = new List<int>();
                 if (!_userService.IsInRole(EformRole.Admin))
                 {
-                    var isEformsInGroups = await _dbContext.SecurityGroupUsers
+                    bool isEformsInGroups = await _dbContext.SecurityGroupUsers
                         .Where(x => x.EformUserId == _userService.UserId)
                         .Where(x => x.SecurityGroup.EformsInGroup.Any())
                         .AnyAsync();
@@ -73,7 +73,7 @@ namespace eFormAPI.Web.Services
                             .Select(x => x.TemplateId)
                             .ToList();
 
-                        foreach (var templateDto in templatesDto)
+                        foreach (Template_Dto templateDto in templatesDto)
                         {
                             if (eformIds.Contains(templateDto.Id))
                             {
@@ -83,7 +83,7 @@ namespace eFormAPI.Web.Services
                     }
                     else
                     {
-                        foreach (var templateDto in templatesDto)
+                        foreach (Template_Dto templateDto in templatesDto)
                         {
                             model.Templates.Add(templateDto);
                         }

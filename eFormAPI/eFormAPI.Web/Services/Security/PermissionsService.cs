@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
@@ -7,6 +8,7 @@ using eFormAPI.Web.Infrastructure.Database;
 using eFormAPI.Web.Infrastructure.Database.Entities;
 using eFormAPI.Web.Infrastructure.Models.Permissions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
@@ -31,14 +33,14 @@ namespace eFormAPI.Web.Services.Security
         {
             try
             {
-                var group = await _dbContext.SecurityGroups.FirstOrDefaultAsync(x => x.Id == groupId);
+                SecurityGroup group = await _dbContext.SecurityGroups.FirstOrDefaultAsync(x => x.Id == groupId);
                 if (group == null)
                 {
                     return new OperationDataResult<PermissionsModel>(false,
                         _localizationService.GetString("SecurityGroupNotFound"));
                 }
 
-                var permissionModels = await _dbContext.Permissions
+                List<PermissionModel> permissionModels = await _dbContext.Permissions
                     .Select(x => new PermissionModel()
                     {
                         Id = x.Id,
@@ -51,7 +53,7 @@ namespace eFormAPI.Web.Services.Security
                     })
                     .ToListAsync();
 
-                var permissionTypes = permissionModels
+                List<PermissionTypeModel> permissionTypes = permissionModels
                     .OrderBy(x => x.PermissionType)
                     .GroupBy(x => x.PermissionType)
                     .Select(g => new PermissionTypeModel()
@@ -60,7 +62,7 @@ namespace eFormAPI.Web.Services.Security
                         Permissions = g.Select(permission => permission).ToList()
                     }).ToList();
 
-                var result = new PermissionsModel
+                PermissionsModel result = new PermissionsModel
                 {
                     GroupId = groupId,
                     GroupName = group.Name,
@@ -86,28 +88,28 @@ namespace eFormAPI.Web.Services.Security
                         _localizationService.GetString("SecurityGroupNotFound"));
                 }
 
-                using (var transaction = await _dbContext.Database.BeginTransactionAsync())
+                using (IDbContextTransaction transaction = await _dbContext.Database.BeginTransactionAsync())
                 {
-                    var enabledList = requestModel.Permissions
+                    List<int> enabledList = requestModel.Permissions
                         .Where(x => x.IsEnabled)
                         .Select(x => x.Id)
                         .ToList();
 
                     // for delete
-                    var forDelete = _dbContext.GroupPermissions
+                    IQueryable<GroupPermission> forDelete = _dbContext.GroupPermissions
                         .Where(x => x.SecurityGroupId == requestModel.GroupId)
                         .Where(x => !enabledList.Contains(x.Permission.Id));
 
                     _dbContext.GroupPermissions.RemoveRange(forDelete);
                     await _dbContext.SaveChangesAsync();
 
-                    var list = _dbContext.GroupPermissions
+                    List<int> list = _dbContext.GroupPermissions
                         .Where(x => x.SecurityGroupId == requestModel.GroupId)
                         .Where(x => enabledList.Contains(x.Permission.Id))
                         .Select(x => x.Permission.Id)
                         .ToList();
 
-                    foreach (var permissionId in enabledList)
+                    foreach (int permissionId in enabledList)
                     {
                         if (!list.Contains(permissionId))
                         {

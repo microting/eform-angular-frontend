@@ -20,7 +20,7 @@ namespace eFormAPI.Web.Hosting.Helpers
             List<IEformPlugin> plugins = new List<IEformPlugin>();
             // create plugin loaders
             Console.ForegroundColor = ConsoleColor.Green;
-            var pluginsDir = Path.Combine(Directory.GetCurrentDirectory(), "Plugins");
+            string pluginsDir = Path.Combine(Directory.GetCurrentDirectory(), "Plugins");
             Console.WriteLine($"Trying to discover plugins in folder : {pluginsDir}");
             if (!Directory.Exists(pluginsDir))
             {
@@ -37,15 +37,15 @@ namespace eFormAPI.Web.Hosting.Helpers
             //   var assemblies = new List<Assembly>();
             IEnumerable<string> directories = Directory.EnumerateDirectories(pluginsDir);
 
-            foreach (var directory in directories)
+            foreach (string directory in directories)
             {
-                var pluginList = Directory.GetFiles(directory)
+                List<string> pluginList = Directory.GetFiles(directory)
                     .Where(x => x.EndsWith("Pn.dll") && Path.GetFileName(x) != "eFormApi.BasePn.dll")
                     .ToList();
 
                 Console.WriteLine($"{pluginList.Count} number of plugins found");
 
-                foreach (var pluginFile in pluginList)
+                foreach (string pluginFile in pluginList)
                 {
                     PluginLoader loader = PluginLoader.CreateFromAssemblyFile(pluginFile,
                         // this ensures that the plugin resolves to the same version of DependencyInjection

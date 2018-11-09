@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Advanced;
 using eFormAPI.Web.Infrastructure;
+using eFormCore;
 using eFormShared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -27,16 +28,16 @@ namespace eFormAPI.Web.Services
         [Authorize(Policy = AuthConsts.EformPolicies.Workers.Read)]
         public OperationDataResult<List<Worker_Dto>> Index()
         {
-            var core = _coreHelper.GetCore();
-            var workersDto = core.Advanced_WorkerReadAll("not_removed", null, null);
+            Core core = _coreHelper.GetCore();
+            List<Worker_Dto> workersDto = core.Advanced_WorkerReadAll("not_removed", null, null);
 
             return new OperationDataResult<List<Worker_Dto>>(true, workersDto);
         }
 
         public OperationDataResult<Worker_Dto> Edit(int id)
         {
-            var core = _coreHelper.GetCore();
-            var workerDto = core.Advanced_WorkerRead(id);
+            Core core = _coreHelper.GetCore();
+            Worker_Dto workerDto = core.Advanced_WorkerRead(id);
 
             return new OperationDataResult<Worker_Dto>(true, workerDto);
         }
@@ -45,9 +46,9 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var workerDto = core.Advanced_WorkerRead(workerModel.Id);
-                var isUpdated = core.Advanced_WorkerUpdate(workerModel.Id, workerModel.UserFirstName,
+                Core core = _coreHelper.GetCore();
+                Worker_Dto workerDto = core.Advanced_WorkerRead(workerModel.Id);
+                bool isUpdated = core.Advanced_WorkerUpdate(workerModel.Id, workerModel.UserFirstName,
                     workerModel.UserLastName, workerDto.Email);
 
                 return isUpdated
@@ -65,10 +66,10 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var workerDto = core.Advanced_WorkerCreate(model.FirstName, model.LastName,
+                Core core = _coreHelper.GetCore();
+                Worker_Dto workerDto = core.Advanced_WorkerCreate(model.FirstName, model.LastName,
                     model.SiteId + "." + model.CustomerNo + "@invalid.invalid");
-                var createdWorker =
+                Site_Worker_Dto createdWorker =
                     core.Advanced_SiteWorkerCreate(new SiteName_Dto(model.SiteId, "", null, null), workerDto);
 
                 return new OperationResult(true, _localizationService.GetString("WorkerWasSuccessfullyCreated"));
@@ -84,8 +85,8 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var workerDto = core.Advanced_WorkerRead(id);
+                Core core = _coreHelper.GetCore();
+                Worker_Dto workerDto = core.Advanced_WorkerRead(id);
 
                 if (workerDto.Equals(null))
                 {
