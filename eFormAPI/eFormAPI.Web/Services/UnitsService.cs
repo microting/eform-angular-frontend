@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using eFormAPI.Web.Abstractions;
+using eFormCore;
 using eFormShared;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
@@ -21,8 +22,8 @@ namespace eFormAPI.Web.Services
 
         public OperationDataResult<List<Unit_Dto>> Index()
         {
-            var core = _coreHelper.GetCore();
-            var unitsDto = core.Advanced_UnitReadAll();
+            Core core = _coreHelper.GetCore();
+            List<Unit_Dto> unitsDto = core.Advanced_UnitReadAll();
             return new OperationDataResult<List<Unit_Dto>>(true, unitsDto);
         }
 
@@ -30,8 +31,8 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var unitDto = core.Advanced_UnitRequestOtp(id);
+                Core core = _coreHelper.GetCore();
+                Unit_Dto unitDto = core.Advanced_UnitRequestOtp(id);
                 return new OperationDataResult<Unit_Dto>(true, _localizationService.GetString("NewOTPCreatedSuccessfully"),
                     unitDto);
             }

@@ -40,14 +40,14 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                var user = await _userService.GetByIdAsync(userId);
+                EformUser user = await _userService.GetByIdAsync(userId);
                 if (user == null)
                 {
                     return new OperationDataResult<UserRegisterModel>(false,
                         _localizationService.GetString("UserNotFound"));
                 }
 
-                var result = new UserRegisterModel()
+                UserRegisterModel result = new UserRegisterModel()
                 {
                     Email = user.Email,
                     Id = user.Id,
@@ -56,7 +56,7 @@ namespace eFormAPI.Web.Services
                     UserName = user.UserName,
                 };
                 // get role
-                var roles = await _userManager.GetRolesAsync(user);
+                IList<string> roles = await _userManager.GetRolesAsync(user);
                 result.Role = roles.FirstOrDefault();
                 return new OperationDataResult<UserRegisterModel>(true, result);
             }
@@ -72,8 +72,8 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                var userList = new List<UserInfoViewModel>();
-                var userResult = _userManager.Users
+                List<UserInfoViewModel> userList = new List<UserInfoViewModel>();
+                List<EformUser> userResult = _userManager.Users
                     .Include(x => x.UserRoles)
                     .ThenInclude(x => x.Role)
                     .OrderBy(z => z.Id)
@@ -83,8 +83,8 @@ namespace eFormAPI.Web.Services
 
                 userResult.ForEach(userItem =>
                 {
-                    var roleName = userItem.UserRoles.Select(y => y.Role.Name).FirstOrDefault();
-                    var modelItem = new UserInfoViewModel();
+                    string roleName = userItem.UserRoles.Select(y => y.Role.Name).FirstOrDefault();
+                    UserInfoViewModel modelItem = new UserInfoViewModel();
                     if (roleName != null)
                     {
                         modelItem.Role = roleName;
@@ -97,7 +97,7 @@ namespace eFormAPI.Web.Services
                     modelItem.UserName = userItem.UserName;
                     userList.Add(modelItem);
                 });
-                var totalUsers = _userManager.Users.Count();
+                int totalUsers = _userManager.Users.Count();
                 return new OperationDataResult<UserInfoModelList>(true, new UserInfoModelList()
                 {
                     TotalUsers = totalUsers,
@@ -116,7 +116,7 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                var user = await _userService.GetByIdAsync(userRegisterModel.Id);
+                EformUser user = await _userService.GetByIdAsync(userRegisterModel.Id);
                 if (user == null)
                 {
                     return new OperationResult(false,
@@ -132,7 +132,7 @@ namespace eFormAPI.Web.Services
                 user.UserName = userRegisterModel.UserName;
                 user.FirstName = userRegisterModel.FirstName;
                 user.LastName = userRegisterModel.LastName;
-                var result = await _userManager.UpdateAsync(user);
+                IdentityResult result = await _userManager.UpdateAsync(user);
                 if (!result.Succeeded)
                 {
                     return new OperationResult(false, string.Join(" ", result.Errors));
@@ -161,7 +161,7 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                var userResult = await _userManager.FindByNameAsync(userRegisterModel.UserName);
+                EformUser userResult = await _userManager.FindByNameAsync(userRegisterModel.UserName);
                 if (userResult != null)
                 {
                     return new OperationResult(false,
@@ -173,7 +173,7 @@ namespace eFormAPI.Web.Services
                     return new OperationResult(false, _localizationService.GetString("RoleIsRequired"));
                 }
 
-                var user = new EformUser
+                EformUser user = new EformUser
                 {
                     Email = userRegisterModel.Email,
                     UserName = userRegisterModel.UserName,
@@ -183,7 +183,7 @@ namespace eFormAPI.Web.Services
                     IsGoogleAuthenticatorEnabled = false
                 };
 
-                var result = await _userManager.CreateAsync(user, userRegisterModel.Password);
+                IdentityResult result = await _userManager.CreateAsync(user, userRegisterModel.Password);
                 if (!result.Succeeded)
                 {
                     return new OperationResult(false, string.Join(" ", result.Errors));
@@ -209,13 +209,13 @@ namespace eFormAPI.Web.Services
                     return new OperationResult(false, _localizationService.GetString("CantDeletePrimaryAdminUser"));
                 }
 
-                var user = await _userService.GetByIdAsync(userId);
+                EformUser user = await _userService.GetByIdAsync(userId);
                 if (user == null)
                 {
                     return new OperationResult(false, _localizationService.GetString("UserUserNameNotFound", userId));
                 }
 
-                var result = await _userManager.DeleteAsync(user);
+                IdentityResult result = await _userManager.DeleteAsync(user);
                 if (!result.Succeeded)
                 {
                     return new OperationResult(false, string.Join(" ", result.Errors));

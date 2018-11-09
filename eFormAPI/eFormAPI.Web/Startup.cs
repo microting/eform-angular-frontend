@@ -100,8 +100,8 @@ namespace eFormAPI.Web
                     Description = "API documentation"
                 });
                 //Set the comments path for the swagger json and ui.
-                var basePath = PlatformServices.Default.Application.ApplicationBasePath;
-                var xmlPath = Path.Combine(basePath, "API.doc.xml");
+                string basePath = PlatformServices.Default.Application.ApplicationBasePath;
+                string xmlPath = Path.Combine(basePath, "API.doc.xml");
                 c.IncludeXmlComments(xmlPath);
                 c.AddSecurityDefinition("Bearer", new ApiKeyScheme
                 {

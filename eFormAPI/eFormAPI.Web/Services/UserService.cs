@@ -42,7 +42,7 @@ namespace eFormAPI.Web.Services
         {
             get
             {
-                var value = _httpAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+                string value = _httpAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
                 return value == null ? 0 : int.Parse(value);
             }
         }

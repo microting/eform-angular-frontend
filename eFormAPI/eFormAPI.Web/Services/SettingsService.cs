@@ -57,7 +57,7 @@ namespace eFormAPI.Web.Services
 
         public OperationResult ConnectionStringExist()
         {
-            var connectionString = _connectionStrings.Value.SdkConnection;
+            string connectionString = _connectionStrings.Value.SdkConnection;
             if (!string.IsNullOrEmpty(connectionString))
             {
                 return new OperationResult(true);
@@ -70,7 +70,7 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                var locale = _applicationSettings.Value.DefaultLocale;
+                string locale = _applicationSettings.Value.DefaultLocale;
                 if (string.IsNullOrEmpty(locale))
                 {
                     return new OperationDataResult<string>(true, "en-US");
@@ -88,14 +88,14 @@ namespace eFormAPI.Web.Services
 
         public async Task<OperationResult> UpdateConnectionString(InitialSettingsModel initialSettingsModel)
         {
-            var sdkConnectionString = initialSettingsModel.ConnectionStringSdk.Source + ";Initial Catalog="
+            string sdkConnectionString = initialSettingsModel.ConnectionStringSdk.Source + ";Initial Catalog="
                                                                                       + initialSettingsModel
                                                                                           .ConnectionStringSdk
                                                                                           .Catalogue + ";"
                                                                                       + initialSettingsModel
                                                                                           .ConnectionStringSdk.Auth;
 
-            var mainConnectionString = initialSettingsModel.ConnectionStringMain.Source + ";Initial Catalog="
+            string mainConnectionString = initialSettingsModel.ConnectionStringMain.Source + ";Initial Catalog="
                                                                                         + initialSettingsModel
                                                                                             .ConnectionStringMain
                                                                                             .Catalogue + ";"
@@ -120,13 +120,21 @@ namespace eFormAPI.Web.Services
             // Migrate DB
             try
             {
-                var dbContextOptionsBuilder = new DbContextOptionsBuilder<BaseDbContext>();
+                DbContextOptionsBuilder<BaseDbContext> dbContextOptionsBuilder = new DbContextOptionsBuilder<BaseDbContext>();
                 dbContextOptionsBuilder.UseSqlServer(mainConnectionString, b =>
                     b.MigrationsAssembly("eFormAPI.Web"));
-                using (var dbContext = new BaseDbContext(dbContextOptionsBuilder.Options))
+                using (BaseDbContext dbContext = new BaseDbContext(dbContextOptionsBuilder.Options))
                 {
                     dbContext.Database.Migrate();
-                    var userStore = new UserStore<EformUser,
+                    UserStore<EformUser,
+                        EformRole,
+                        BaseDbContext,
+                        int,
+                        IdentityUserClaim<int>,
+                        EformUserRole,
+                        IdentityUserLogin<int>,
+                        IdentityUserToken<int>,
+                        IdentityRoleClaim<int>> userStore = new UserStore<EformUser,
                         EformRole,
                         BaseDbContext,
                         int,
@@ -138,9 +146,9 @@ namespace eFormAPI.Web.Services
 
 
                     IPasswordHasher<EformUser> hasher = new PasswordHasher<EformUser>();
-                    var validator = new UserValidator<EformUser>();
-                    var validators = new List<UserValidator<EformUser>> {validator};
-                    var userManager = new UserManager<EformUser>(userStore, null, hasher, validators, null, null, null,
+                    UserValidator<EformUser> validator = new UserValidator<EformUser>();
+                    List<UserValidator<EformUser>> validators = new List<UserValidator<EformUser>> {validator};
+                    UserManager<EformUser> userManager = new UserManager<EformUser>(userStore, null, hasher, validators, null, null, null,
                         null, null);
 
                     // Set-up token providers.
@@ -150,8 +158,8 @@ namespace eFormAPI.Web.Services
                         new PhoneNumberTokenProvider<EformUser>();
                     userManager.RegisterTokenProvider("PhoneTokenProvider", phoneTokenProvider);
                     // Roles
-                    var roleStore = new RoleStore<EformRole, BaseDbContext, int>(dbContext);
-                    var roleManager = new RoleManager<EformRole>(roleStore, null, null, null, null);
+                    RoleStore<EformRole, BaseDbContext, int> roleStore = new RoleStore<EformRole, BaseDbContext, int>(dbContext);
+                    RoleManager<EformRole> roleManager = new RoleManager<EformRole>(roleStore, null, null, null, null);
                     if (!await roleManager.RoleExistsAsync(EformRole.Admin))
                     {
                         await roleManager.CreateAsync(new EformRole() {Name = EformRole.Admin});
@@ -163,7 +171,7 @@ namespace eFormAPI.Web.Services
                     }
 
                     // Seed admin and demo users
-                    var adminUser = new EformUser()
+                    EformUser adminUser = new EformUser()
                     {
                         UserName = initialSettingsModel.AdminSetupModel.UserName,
                         Email = initialSettingsModel.AdminSetupModel.Email,
@@ -175,7 +183,7 @@ namespace eFormAPI.Web.Services
                     };
                     if (!userManager.Users.Any(x => x.Email.Equals(adminUser.Email)))
                     {
-                        var createResult = await userManager.CreateAsync(adminUser,
+                        IdentityResult createResult = await userManager.CreateAsync(adminUser,
                             initialSettingsModel.AdminSetupModel.Password);
                         if (!createResult.Succeeded)
                         {
@@ -183,7 +191,7 @@ namespace eFormAPI.Web.Services
                         }
                     }
 
-                    var user = userManager.Users.FirstOrDefault(x => x.Email.Equals(adminUser.Email));
+                    EformUser user = userManager.Users.FirstOrDefault(x => x.Email.Equals(adminUser.Email));
                     if (!await userManager.IsInRoleAsync(user, EformRole.Admin))
                     {
                         await userManager.AddToRoleAsync(user, EformRole.Admin);
@@ -201,9 +209,9 @@ namespace eFormAPI.Web.Services
             try
             {
                 // Generate SigningKey
-                var key = new byte[32];
+                byte[] key = new byte[32];
                 RandomNumberGenerator.Create().GetBytes(key);
-                var signingKey = Convert.ToBase64String(key);
+                string signingKey = Convert.ToBase64String(key);
                 _tokenOptions.Update((options) =>
                 {
                     options.SigningKey = signingKey;
@@ -231,7 +239,7 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                var model = new LoginPageSettingsModel()
+                LoginPageSettingsModel model = new LoginPageSettingsModel()
                 {
                     ImageLink = _loginPageSettings.Value.ImageLink,
                     ImageLinkVisible = _loginPageSettings.Value.ImageLinkVisible,
@@ -254,7 +262,7 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                var model = new HeaderSettingsModel()
+                HeaderSettingsModel model = new HeaderSettingsModel()
                 {
                     ImageLink = _headerSettings.Value.ImageLink,
                     ImageLinkVisible = _headerSettings.Value.ImageLinkVisible,
@@ -276,9 +284,9 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                var core = _coreHelper.GetCore();
+                Core core = _coreHelper.GetCore();
 
-                var model = new AdminSettingsModel()
+                AdminSettingsModel model = new AdminSettingsModel()
                 {
                     SMTPSettingsModel = new SMTPSettingsModel()
                     {
@@ -322,7 +330,7 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                var core = _coreHelper.GetCore();
+                Core core = _coreHelper.GetCore();
                 _emailSettings.Update((option) =>
                 {
                     option.SmtpHost = adminSettingsModel.SMTPSettingsModel.Host;

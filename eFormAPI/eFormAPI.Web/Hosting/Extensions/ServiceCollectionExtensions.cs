@@ -23,8 +23,8 @@ namespace eFormAPI.Web.Hosting.Extensions
             services.Configure<T>(section);
             services.AddTransient<IWritableOptions<T>>(provider =>
             {
-                var environment = provider.GetService<IHostingEnvironment>();
-                var options = provider.GetService<IOptionsMonitor<T>>();
+                IHostingEnvironment environment = provider.GetService<IHostingEnvironment>();
+                IOptionsMonitor<T> options = provider.GetService<IOptionsMonitor<T>>();
                 return new WritableOptions<T>(environment, options, section.Key, file);
             });
         }
@@ -32,7 +32,7 @@ namespace eFormAPI.Web.Hosting.Extensions
         public static void AddEFormPlugins(this IServiceCollection services,
             List<IEformPlugin> plugins)
         {
-            foreach (var plugin in plugins)
+            foreach (IEformPlugin plugin in plugins)
             {
                 plugin.ConfigureServices(services);
             }
@@ -40,7 +40,7 @@ namespace eFormAPI.Web.Hosting.Extensions
 
         public static void AddEFormAuth(this IServiceCollection services, IConfiguration configuration)
         {
-            var tokenValidationParameters = new TokenValidationParameters()
+            TokenValidationParameters tokenValidationParameters = new TokenValidationParameters()
             {
                 ValidIssuer = configuration["EformTokenOptions:Issuer"],
                 ValidAudience = configuration["EformTokenOptions:Issuer"],
@@ -65,12 +65,12 @@ namespace eFormAPI.Web.Hosting.Extensions
         public static void AddEFormMvc(this IServiceCollection services,
             List<IEformPlugin> plugins)
         {
-            var mvcBuilder = services.AddMvc()
+            IMvcBuilder mvcBuilder = services.AddMvc()
                 .AddJsonOptions(options => options.SerializerSettings.ContractResolver =
                     new CamelCasePropertyNamesContractResolver())
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            foreach (var plugin in plugins)
+            foreach (IEformPlugin plugin in plugins)
             {
                 mvcBuilder.AddApplicationPart(plugin.PluginAssembly())
                     .AddControllersAsServices();
@@ -81,9 +81,9 @@ namespace eFormAPI.Web.Hosting.Extensions
             IConfiguration configuration,
             List<IEformPlugin> plugins)
         {
-            foreach (var plugin in plugins)
+            foreach (IEformPlugin plugin in plugins)
             {
-                var connectionString = configuration.GetConnectionString(plugin.ConnectionStringName());
+                string connectionString = configuration.GetConnectionString(plugin.ConnectionStringName());
                 plugin.ConfigureDbContext(services, connectionString);
             }
         }

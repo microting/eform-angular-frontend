@@ -15,12 +15,12 @@ namespace eFormAPI.Web.Controllers
         [Route("api/audio/eform-audio")]
         public IActionResult GetAudio(string fileName)
         {
-            var filePath = PathHelper.GetAudioPath(fileName);
+            string filePath = PathHelper.GetAudioPath(fileName);
             if (!System.IO.File.Exists(filePath))
             {
                 return NotFound();
             }
-            var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             //result.Content = new StreamContent(stream);
             //result.Content.Headers.ContentType =
             //    new MediaTypeHeaderValue("application/octet-stream");

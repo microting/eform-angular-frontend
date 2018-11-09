@@ -8,17 +8,17 @@ namespace eFormAPI.Web
     {
         public static void Main(string[] args)
         {
-            var host = BuildWebHost(args);
+            IWebHost host = BuildWebHost(args);
             host.Run();
         }
 
         public static IWebHost BuildWebHost(string[] args)
         {
-            var defaultConfig = new ConfigurationBuilder()
+            IConfigurationRoot defaultConfig = new ConfigurationBuilder()
                 .AddCommandLine(args)
                 .AddEnvironmentVariables(prefix: "ASPNETCORE_")
                 .Build();
-            var port = defaultConfig.GetValue("port", 5000);
+            int port = defaultConfig.GetValue("port", 5000);
             return WebHost.CreateDefaultBuilder(args)
                 .UseUrls($"http://localhost:{port}")
                 .ConfigureAppConfiguration((hostContext, config) =>

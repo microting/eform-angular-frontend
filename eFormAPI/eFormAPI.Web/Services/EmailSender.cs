@@ -18,10 +18,10 @@ namespace eFormAPI.Web.Services
 
         public Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
-            var port = _options.Value.SmtpPort;
-            var userName = _options.Value.Login;
-            var password =  _options.Value.Password;
-            var smtp = new SmtpClient
+            int port = _options.Value.SmtpPort;
+            string userName = _options.Value.Login;
+            string password =  _options.Value.Password;
+            SmtpClient smtp = new SmtpClient
             {
                 Host =  _options.Value.SmtpHost,
                 Port = port,
@@ -30,7 +30,7 @@ namespace eFormAPI.Web.Services
                 UseDefaultCredentials = false,
                 Credentials = new NetworkCredential(userName, password)
             };
-            using (var mailMessage = new MailMessage(userName, email))
+            using (MailMessage mailMessage = new MailMessage(userName, email))
             {
                 mailMessage.Subject = subject;
                 mailMessage.Body = htmlMessage;
