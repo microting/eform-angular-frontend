@@ -1,16 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Abstractions.Eforms;
+using eFormAPI.Web.Infrastructure.Database;
 using eFormCore;
 using eFormShared;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microting.eFormApi.BasePn.Abstractions;
+using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers.WritableOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Templates;
+using eFormData;
 
 namespace eFormAPI.Web.Services
 {
@@ -19,45 +24,84 @@ namespace eFormAPI.Web.Services
         private readonly IWritableOptions<ConnectionStrings> _connectionStrings;
         private readonly IEFormCoreService _coreHelper;
         private readonly ILocalizationService _localizationService;
+        private readonly IUserService _userService;
+        private readonly BaseDbContext _dbContext;
 
-        public TemplatesService(IWritableOptions<ConnectionStrings> connectionStrings, IEFormCoreService coreHelper,
-            ILocalizationService localizationService)
+        public TemplatesService(IWritableOptions<ConnectionStrings> connectionStrings,
+            IEFormCoreService coreHelper,
+            ILocalizationService localizationService,
+            IUserService userService, BaseDbContext dbContext)
         {
             _connectionStrings = connectionStrings;
             _coreHelper = coreHelper;
             _localizationService = localizationService;
+            _userService = userService;
+            _dbContext = dbContext;
         }
 
-
-        [HttpPost]
-        public OperationDataResult<TemplateListModel> Index(TemplateRequestModel templateRequestModel)
+        public async Task<OperationDataResult<TemplateListModel>> Index(TemplateRequestModel templateRequestModel)
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var templatesDto = core.TemplateItemReadAll(false,
+                Core core = _coreHelper.GetCore();
+                List<Template_Dto> templatesDto = core.TemplateItemReadAll(false,
                     "",
                     templateRequestModel.NameFilter,
                     templateRequestModel.IsSortDsc,
                     templateRequestModel.Sort,
                     templateRequestModel.TagIds);
 
-                var model = new TemplateListModel
+                TemplateListModel model = new TemplateListModel
                 {
                     NumOfElements = 40,
                     PageNum = templateRequestModel.PageIndex,
-                    Templates = templatesDto
+                    Templates = new List<Template_Dto>()
                 };
 
+                List<int> eformIds = new List<int>();
+                if (!_userService.IsInRole(EformRole.Admin))
+                {
+                    bool isEformsInGroups = await _dbContext.SecurityGroupUsers
+                        .Where(x => x.EformUserId == _userService.UserId)
+                        .Where(x => x.SecurityGroup.EformsInGroup.Any())
+                        .AnyAsync();
+                    if (isEformsInGroups)
+                    {
+                        eformIds = _dbContext.EformInGroups
+                            .Where(x =>
+                                x.SecurityGroup.SecurityGroupUsers.Any(y => y.EformUserId == _userService.UserId))
+                            .Select(x => x.TemplateId)
+                            .ToList();
 
+                        foreach (Template_Dto templateDto in templatesDto)
+                        {
+                            if (eformIds.Contains(templateDto.Id))
+                            {
+                                model.Templates.Add(templateDto);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (Template_Dto templateDto in templatesDto)
+                        {
+                            model.Templates.Add(templateDto);
+                        }
+                    }
+
+                }
+                else
+                {
+                    model.Templates = templatesDto;
+                }
                 return new OperationDataResult<TemplateListModel>(true, model);
             }
             catch (Exception ex)
             {
                 if (ex.Message.Contains("PrimeDb"))
                 {
-                    var sdkConnectionString = _connectionStrings.Value.SdkConnection;
-                    var adminTool = new AdminTools(sdkConnectionString);
+                    string sdkConnectionString = _connectionStrings.Value.SdkConnection;
+                    AdminTools adminTool = new AdminTools(sdkConnectionString);
                     adminTool.DbSettingsReloadRemote();
                     return new OperationDataResult<TemplateListModel>(false,
                         _localizationService.GetString("CheckConnectionString"));
@@ -67,7 +111,7 @@ namespace eFormAPI.Web.Services
                 {
                     try
                     {
-                        var core = _coreHelper.GetCore();
+                        Core core = _coreHelper.GetCore();
                     }
                     catch (Exception)
                     {
@@ -84,21 +128,20 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        [HttpGet]
         public OperationDataResult<Template_Dto> Get(int id)
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var templateDto = core.TemplateItemRead(id);
+                Core core = _coreHelper.GetCore();
+                Template_Dto templateDto = core.TemplateItemRead(id);
                 return new OperationDataResult<Template_Dto>(true, templateDto);
             }
             catch (Exception ex)
             {
                 if (ex.Message.Contains("PrimeDb"))
                 {
-                    var sdkConnectionString = _connectionStrings.Value.SdkConnection;
-                    var adminTool = new AdminTools(sdkConnectionString);
+                    string sdkConnectionString = _connectionStrings.Value.SdkConnection;
+                    AdminTools adminTool = new AdminTools(sdkConnectionString);
                     adminTool.DbSettingsReloadRemote();
                     return new OperationDataResult<Template_Dto>(false,
                         _localizationService.GetString("CheckConnectionString"));
@@ -108,7 +151,7 @@ namespace eFormAPI.Web.Services
                 {
                     try
                     {
-                        var core = _coreHelper.GetCore();
+                        Core core = _coreHelper.GetCore();
                     }
                     catch (Exception)
                     {
@@ -125,29 +168,30 @@ namespace eFormAPI.Web.Services
             }
         }
 
+
         public OperationResult Create(EFormXmlModel eFormXmlModel)
         {
             try
             {
-                var core = _coreHelper.GetCore();
+                Core core = _coreHelper.GetCore();
                 // Create tags
                 if (eFormXmlModel.NewTag != null)
                 {
-                    var tagList = eFormXmlModel.NewTag.Replace(" ", "").Split(',');
-                    foreach (var tag in tagList)
+                    string[] tagList = eFormXmlModel.NewTag.Replace(" ", "").Split(',');
+                    foreach (string tag in tagList)
                     {
                         eFormXmlModel.TagIds.Add(core.TagCreate(tag));
                     }
                 }
 
                 // Create eform
-                var newTemplate = core.TemplateFromXml(eFormXmlModel.EFormXml);
+                MainElement newTemplate = core.TemplateFromXml(eFormXmlModel.EFormXml);
                 newTemplate = core.TemplateUploadData(newTemplate);
                 // Check errors
-                var errors = core.TemplateValidation(newTemplate);
+                List<string> errors = core.TemplateValidation(newTemplate);
                 if (errors.Any())
                 {
-                    var message = errors.Aggregate("", (current, str) => current + ("<br>" + str));
+                    string message = errors.Aggregate("", (current, str) => current + ("<br>" + str));
                     throw new Exception(_localizationService.GetString("eFormCouldNotBeCreated") + message);
                 }
 
@@ -170,14 +214,14 @@ namespace eFormAPI.Web.Services
 
         public OperationResult Delete(int id)
         {
-            var core = _coreHelper.GetCore();
-            var templateDto = core.TemplateItemRead(id);
-            foreach (var siteUId in templateDto.DeployedSites)
+            Core core = _coreHelper.GetCore();
+            Template_Dto templateDto = core.TemplateItemRead(id);
+            foreach (SiteName_Dto siteUId in templateDto.DeployedSites)
             {
                 core.CaseDelete(templateDto.Id, siteUId.SiteUId);
             }
 
-            var result = core.TemplateDelete(id);
+            bool result = core.TemplateDelete(id);
 
             try
             {
@@ -195,11 +239,11 @@ namespace eFormAPI.Web.Services
 
         public OperationDataResult<DeployToModel> DeployTo(int id)
         {
-            var core = _coreHelper.GetCore();
-            var templateDto = core.TemplateItemRead(id);
-            var siteNamesDto = core.Advanced_SiteItemReadAll();
+            Core core = _coreHelper.GetCore();
+            Template_Dto templateDto = core.TemplateItemRead(id);
+            List<SiteName_Dto> siteNamesDto = core.Advanced_SiteItemReadAll();
 
-            var deployToMode = new DeployToModel()
+            DeployToModel deployToMode = new DeployToModel()
             {
                 SiteNamesDto = siteNamesDto,
                 TemplateDto = templateDto
@@ -209,20 +253,20 @@ namespace eFormAPI.Web.Services
 
         public OperationResult Deploy(DeployModel deployModel)
         {
-            var deployedSiteIds = new List<int>();
+            List<int> deployedSiteIds = new List<int>();
 
-            var sitesToBeRetractedFrom = new List<int>();
-            var sitesToBeDeployedTo = new List<int>();
+            List<int> sitesToBeRetractedFrom = new List<int>();
+            List<int> sitesToBeDeployedTo = new List<int>();
 
-            var core = _coreHelper.GetCore();
-            var templateDto = core.TemplateItemRead(deployModel.Id);
+            Core core = _coreHelper.GetCore();
+            Template_Dto templateDto = core.TemplateItemRead(deployModel.Id);
 
-            foreach (var site in templateDto.DeployedSites)
+            foreach (SiteName_Dto site in templateDto.DeployedSites)
             {
                 deployedSiteIds.Add(site.SiteUId);
             }
 
-            var requestedSiteIds = deployModel
+            List<int> requestedSiteIds = deployModel
                 .DeployCheckboxes
                 .Select(deployCheckbox => deployCheckbox.Id)
                 .ToList();
@@ -238,7 +282,7 @@ namespace eFormAPI.Web.Services
 
             if (deployedSiteIds.Count != 0)
             {
-                foreach (var site in templateDto.DeployedSites)
+                foreach (SiteName_Dto site in templateDto.DeployedSites)
                 {
                     if (!requestedSiteIds.Contains(site.SiteUId))
                     {
@@ -252,7 +296,7 @@ namespace eFormAPI.Web.Services
 
             if (sitesToBeDeployedTo.Any())
             {
-                var mainElement = core.TemplateRead(deployModel.Id);
+                MainElement mainElement = core.TemplateRead(deployModel.Id);
                 mainElement.Repeated =
                     0; // We set this right now hardcoded, this will let the eForm be deployed until end date or we actively retract it.
                 mainElement.EndDate = DateTime.Now.AddYears(10).ToUniversalTime();
@@ -260,7 +304,7 @@ namespace eFormAPI.Web.Services
                 core.CaseCreate(mainElement, "", sitesToBeDeployedTo, "");
             }
 
-            foreach (var siteUId in sitesToBeRetractedFrom)
+            foreach (int siteUId in sitesToBeRetractedFrom)
             {
                 core.CaseDelete(deployModel.Id, siteUId);
             }

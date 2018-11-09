@@ -7,6 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Abstractions.Security;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
@@ -14,6 +17,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers.WritableOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
@@ -25,9 +29,11 @@ namespace eFormAPI.Web.Services
     {
         private readonly IOptions<EformTokenOptions> _tokenOptions;
         private readonly IUserService _userService;
-        private readonly IOptions<ApplicationSettings> _appSettings;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IWritableOptions<ApplicationSettings> _appSettings;
+        private readonly IClaimsService _claimsService;
+        private readonly IUserClaimsPrincipalFactory<EformUser> _userClaimsPrincipalFactory;
         private readonly ILocalizationService _localizationService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ILogger<AuthService> _logger;
         private readonly UserManager<EformUser> _userManager;
         private readonly RoleManager<EformRole> _roleManager;
@@ -35,13 +41,14 @@ namespace eFormAPI.Web.Services
 
         public AuthService(IOptions<EformTokenOptions> tokenOptions,
             ILogger<AuthService> logger,
-            IOptions<ApplicationSettings> appSettings,
+            IWritableOptions<ApplicationSettings> appSettings,
             RoleManager<EformRole> roleManager,
             SignInManager<EformUser> signInManager,
             UserManager<EformUser> userManager,
             IUserService userService,
             ILocalizationService localizationService,
-            IHttpContextAccessor httpContextAccessor)
+            IClaimsService claimsService,
+            IUserClaimsPrincipalFactory<EformUser> userClaimsPrincipalFactory, IHttpContextAccessor httpContextAccessor)
         {
             _tokenOptions = tokenOptions;
             _logger = logger;
@@ -51,6 +58,8 @@ namespace eFormAPI.Web.Services
             _userManager = userManager;
             _userService = userService;
             _localizationService = localizationService;
+            _claimsService = claimsService;
+            _userClaimsPrincipalFactory = userClaimsPrincipalFactory;
             _httpContextAccessor = httpContextAccessor;
         }
 
@@ -59,7 +68,7 @@ namespace eFormAPI.Web.Services
             if (string.IsNullOrEmpty(model.Username) || string.IsNullOrEmpty(model.Password))
                 return new OperationDataResult<AuthorizeResult>(false, "Empty username or password");
 
-            var signInResult =
+            SignInResult signInResult =
                 await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, lockoutOnFailure: true);
 
             if (!signInResult.Succeeded && !signInResult.RequiresTwoFactor)
@@ -74,7 +83,7 @@ namespace eFormAPI.Web.Services
                 return new OperationDataResult<AuthorizeResult>(false, "Incorrect password.");
             }
 
-            var user = await _userService.GetByUsernameAsync(model.Username);
+            EformUser user = await _userService.GetByUsernameAsync(model.Username);
             if (user == null)
                 return new OperationDataResult<AuthorizeResult>(false,
                     $"User with username {model.Username} not found");
@@ -86,9 +95,9 @@ namespace eFormAPI.Web.Services
             }
 
             // TwoFactor check
-            var psk = user.GoogleAuthenticatorSecretKey;
-            var code = model.Code;
-            var isTwoFactorAuthForced = _appSettings.Value.IsTwoFactorForced;
+            string psk = user.GoogleAuthenticatorSecretKey;
+            string code = model.Code;
+            bool isTwoFactorAuthForced = _appSettings.Value.IsTwoFactorForced;
             if (user.TwoFactorEnabled || isTwoFactorAuthForced)
             {
                 // check input params
@@ -103,8 +112,8 @@ namespace eFormAPI.Web.Services
                 }
 
                 // check code
-                var otp = new Totp(Base32.FromBase32String(user.GoogleAuthenticatorSecretKey));
-                var isCodeValid = otp.VerifyTotp(code, out long timeStepMatched, new VerificationWindow(300, 300));
+                Totp otp = new Totp(Base32.FromBase32String(user.GoogleAuthenticatorSecretKey));
+                bool isCodeValid = otp.VerifyTotp(code, out long timeStepMatched, new VerificationWindow(300, 300));
                 if (!isCodeValid)
                 {
                     return new OperationDataResult<AuthorizeResult>(false, "Invalid code");
@@ -114,21 +123,21 @@ namespace eFormAPI.Web.Services
                 if (!user.IsGoogleAuthenticatorEnabled)
                 {
                     user.IsGoogleAuthenticatorEnabled = true;
-                    var updateResult = _userManager.UpdateAsync(user).Result;
+                    IdentityResult updateResult = _userManager.UpdateAsync(user).Result;
                     if (!updateResult.Succeeded)
                     {
                         return new OperationDataResult<AuthorizeResult>(false, "PSK or code is empty");
                     }
                 }
             }
-            var token = GenerateToken(user);
-            var roleList = _userManager.GetRolesAsync(user).Result;
+
+            string token = await GenerateToken(user);
+            IList<string> roleList = _userManager.GetRolesAsync(user).Result;
             if (!roleList.Any())
             {
                 return new OperationDataResult<AuthorizeResult>(false, $"Role for user {model.Username} not found");
             }
-            await _signInManager.SignInAsync(user, false);
-            // update last sign in date
+
             return new OperationDataResult<AuthorizeResult>(true, new AuthorizeResult
             {
                 Id = user.Id,
@@ -138,11 +147,11 @@ namespace eFormAPI.Web.Services
             });
         }
 
-        public string GenerateToken(EformUser user)
+        public async Task<string> GenerateToken(EformUser user)
         {
             if (user != null)
             {
-                var claims = new List<Claim>
+                List<Claim> claims = new List<Claim>
                 {
                     new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
@@ -153,26 +162,49 @@ namespace eFormAPI.Web.Services
                 }
 
                 // Add user and roles claims
-                var userClaims = _userManager.GetClaimsAsync(user).Result;
-                var userRoles = _userManager.GetRolesAsync(user).Result;
+                IList<Claim> userClaims = _userManager.GetClaimsAsync(user).Result;
+                IList<string> userRoles = _userManager.GetRolesAsync(user).Result;
                 claims.AddRange(userClaims);
-                foreach (var userRole in userRoles)
+                foreach (string userRole in userRoles)
                 {
                     claims.Add(new Claim(ClaimTypes.Role, userRole));
-                    var role = _roleManager.FindByNameAsync(userRole).Result;
+                    EformRole role = _roleManager.FindByNameAsync(userRole).Result;
                     if (role != null)
                     {
-                        var roleClaims = _roleManager.GetClaimsAsync(role).Result;
-                        foreach (var roleClaim in roleClaims)
+                        IList<Claim> roleClaims = _roleManager.GetClaimsAsync(role).Result;
+                        foreach (Claim roleClaim in roleClaims)
                         {
                             claims.Add(roleClaim);
                         }
                     }
                 }
 
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenOptions.Value.SigningKey));
-                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-                var token = new JwtSecurityToken(_tokenOptions.Value.Issuer,
+                // Permissions
+                if (userRoles.Contains(EformRole.Admin))
+                {
+                    claims.AddRange(_claimsService.GetAllAuthClaims());
+                }
+                else
+                {
+                    claims.AddRange(_claimsService.GetUserClaims(user.Id));
+                }
+
+                ClaimsPrincipal principal = await _userClaimsPrincipalFactory.CreateAsync(user);
+                foreach (Claim claim in claims)
+                {
+                    ((ClaimsIdentity) principal.Identity).AddClaim(claim);
+                }
+
+                await _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                    principal, new AuthenticationProperties
+                    {
+                        IsPersistent = false
+                    });
+
+
+                SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenOptions.Value.SigningKey));
+                SigningCredentials creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                JwtSecurityToken token = new JwtSecurityToken(_tokenOptions.Value.Issuer,
                     _tokenOptions.Value.Issuer,
                     claims.ToArray(),
                     expires: DateTime.Now.AddHours(10),
@@ -217,10 +249,10 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                var user = await _userService.GetCurrentUserAsync();
+                EformUser user = await _userService.GetCurrentUserAsync();
                 if (user != null)
                 {
-                    var model = new GoogleAuthInfoModel()
+                    GoogleAuthInfoModel model = new GoogleAuthInfoModel()
                     {
                         PSK = user.GoogleAuthenticatorSecretKey,
                         IsTwoFactorEnabled = user.TwoFactorEnabled,
@@ -241,11 +273,11 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                var user = await _userService.GetCurrentUserAsync();
+                EformUser user = await _userService.GetCurrentUserAsync();
                 if (user != null)
                 {
                     user.TwoFactorEnabled = requestModel.IsTwoFactorEnabled;
-                    var updateResult = _userManager.UpdateAsync(user).Result;
+                    IdentityResult updateResult = _userManager.UpdateAsync(user).Result;
                     if (updateResult.Succeeded)
                     {
                         return new OperationResult(true);
@@ -264,12 +296,12 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                var user = await _userService.GetCurrentUserAsync();
+                EformUser user = await _userService.GetCurrentUserAsync();
                 if (user != null)
                 {
                     user.GoogleAuthenticatorSecretKey = null;
                     user.IsGoogleAuthenticatorEnabled = false;
-                    var updateResult = _userManager.UpdateAsync(user).Result;
+                    IdentityResult updateResult = _userManager.UpdateAsync(user).Result;
                     if (updateResult.Succeeded)
                     {
                         return new OperationResult(true);
@@ -287,14 +319,14 @@ namespace eFormAPI.Web.Services
         public async Task<OperationDataResult<GoogleAuthenticatorModel>> GetGoogleAuthenticator(LoginModel loginModel)
         {
             // try to sign in with user creds
-            var user = await _userManager.FindByNameAsync(loginModel.Username);
+            EformUser user = await _userManager.FindByNameAsync(loginModel.Username);
             if (user == null)
             {
                 return new OperationDataResult<GoogleAuthenticatorModel>(false,
                     _localizationService.GetString("UserNameOrPasswordIncorrect"));
             }
 
-            var signInResult =
+            SignInResult signInResult =
                 await _signInManager.CheckPasswordSignInAsync(user, loginModel.Password, true);
 
             if (!signInResult.Succeeded)
@@ -311,7 +343,7 @@ namespace eFormAPI.Web.Services
             }
 
             // check if two factor is enabled
-            var isTwoFactorAuthForced = _appSettings.Value.IsTwoFactorForced;
+            bool isTwoFactorAuthForced = _appSettings.Value.IsTwoFactorForced;
             if (!user.TwoFactorEnabled && !isTwoFactorAuthForced)
             {
                 return new OperationDataResult<GoogleAuthenticatorModel>(true);
@@ -323,16 +355,16 @@ namespace eFormAPI.Web.Services
                 return new OperationDataResult<GoogleAuthenticatorModel>(true, new GoogleAuthenticatorModel());
             }
 
-            var psk = KeyGeneration.GenerateRandomKey(20);
-            var barcodeUrl = KeyUrl.GetTotpUrl(psk, user.UserName) + "&issuer=EformApplication";
-            var model = new GoogleAuthenticatorModel
+            byte[] psk = KeyGeneration.GenerateRandomKey(20);
+            string barcodeUrl = KeyUrl.GetTotpUrl(psk, user.UserName) + "&issuer=EformApplication";
+            GoogleAuthenticatorModel model = new GoogleAuthenticatorModel
             {
                 PSK = Base32.ToBase32String(psk),
                 BarcodeUrl = HttpUtility.UrlEncode(barcodeUrl)
             };
             // write PSK to the user entity
             user.GoogleAuthenticatorSecretKey = model.PSK;
-            var updateResult = _userManager.UpdateAsync(user).Result;
+            IdentityResult updateResult = _userManager.UpdateAsync(user).Result;
             if (!updateResult.Succeeded)
             {
                 return new OperationDataResult<GoogleAuthenticatorModel>(false,

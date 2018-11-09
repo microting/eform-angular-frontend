@@ -2,11 +2,12 @@
 using eFormAPI.Web.Infrastructure.Database;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers.WritableOptions;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 
 namespace eFormAPI.Web
 {
@@ -14,17 +15,22 @@ namespace eFormAPI.Web
     {
         public static void Main(string[] args)
         {
-            var host = BuildWebHost(args);
-            using (var scope = host.Services.GetService<IServiceScopeFactory>().CreateScope())
-            using (var dbContext = scope.ServiceProvider.GetRequiredService<BaseDbContext>())
+            IWebHost host = BuildWebHost(args);
+            using (IServiceScope scope = host.Services.GetService<IServiceScopeFactory>().CreateScope())
+            using (BaseDbContext dbContext = scope.ServiceProvider.GetRequiredService<BaseDbContext>())
             {
                 try
                 {
-                    dbContext.Database.Migrate();
+                    IWritableOptions<ConnectionStrings> connectionStrings =
+                        scope.ServiceProvider.GetRequiredService<IWritableOptions<ConnectionStrings>>();
+                    if (connectionStrings.Value.DefaultConnection != "...")
+                    {
+                        dbContext.Database.Migrate();
+                    }
                 }
                 catch (Exception e)
                 {
-                    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+                    ILogger<Program> logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
                     logger.LogError(e, "Error while migrating db");
                 }
             }
@@ -33,11 +39,11 @@ namespace eFormAPI.Web
 
         public static IWebHost BuildWebHost(string[] args)
         {
-            var defaultConfig = new ConfigurationBuilder()
+            IConfigurationRoot defaultConfig = new ConfigurationBuilder()
                 .AddCommandLine(args)
                 .AddEnvironmentVariables(prefix: "ASPNETCORE_")
                 .Build();
-            var port = defaultConfig.GetValue("port", 5000);
+            int port = defaultConfig.GetValue("port", 5000);
             return WebHost.CreateDefaultBuilder(args)
                 .UseUrls($"http://localhost:{port}")
                 .ConfigureAppConfiguration((hostContext, config) =>

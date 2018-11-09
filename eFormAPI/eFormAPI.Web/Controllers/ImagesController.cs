@@ -24,18 +24,18 @@ namespace eFormAPI.Web.Controllers
         [Route("api/images/eform-images")]
         public IActionResult GetImage(string fileName)
         {
-            var filePath = PathHelper.GetEformSettingsImagesPath(fileName);
+            string filePath = PathHelper.GetEformSettingsImagesPath(fileName);
             if (!System.IO.File.Exists(filePath))
             {
                 return NotFound();
             }
 
-            var extention = Path.GetExtension(filePath).Replace(".", "");
+            string extention = Path.GetExtension(filePath).Replace(".", "");
             if (extention == "jpg")
             {
                 extention = "jpeg";
             }
-            var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             return File(fileStream, $"image/{extention}");
         }
 
@@ -44,18 +44,18 @@ namespace eFormAPI.Web.Controllers
         [Route("api/images/login-page-images")]
         public IActionResult GetLoginPageImage(string fileName)
         {
-            var filePath = PathHelper.GetEformLoginPageSettingsImagesPath(fileName);
+            string filePath = PathHelper.GetEformLoginPageSettingsImagesPath(fileName);
             if (!System.IO.File.Exists(filePath))
             {
                 return NotFound();
             }
 
-            var extention = Path.GetExtension(filePath).Replace(".", "");
+            string extention = Path.GetExtension(filePath).Replace(".", "");
             if (extention == "jpg")
             {
                 extention = "jpeg";
             }
-            var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             return File(fileStream, $"image/{extention}");
         }
 
@@ -64,8 +64,8 @@ namespace eFormAPI.Web.Controllers
         [Route("api/images/login-page-images")]
         public async Task<IActionResult> PostLoginPageImages(IFormFile file)
         {
-            var iUploadedCnt = 0;
-            var saveFolder = PathHelper.GetEformLoginPageSettingsImagesPath();
+            int iUploadedCnt = 0;
+            string saveFolder = PathHelper.GetEformLoginPageSettingsImagesPath();
             if (string.IsNullOrEmpty(saveFolder))
             {
                 return BadRequest(_localizationService.GetString("FolderError"));
@@ -78,10 +78,10 @@ namespace eFormAPI.Web.Controllers
 
             if (file.Length > 0)
             {
-                var filePath = Path.Combine(saveFolder, Path.GetFileName(file.FileName));
+                string filePath = Path.Combine(saveFolder, Path.GetFileName(file.FileName));
                 if (!System.IO.File.Exists(filePath))
                 {
-                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    using (FileStream stream = new FileStream(filePath, FileMode.Create))
                     {
                         await file.CopyToAsync(stream);
                     }
@@ -101,8 +101,8 @@ namespace eFormAPI.Web.Controllers
         [Route("api/images/eform-images")]
         public async Task<IActionResult> PostEformImages(IFormFile file)
         {
-            var iUploadedCnt = 0;
-            var saveFolder = PathHelper.GetEformSettingsImagesPath();
+            int iUploadedCnt = 0;
+            string saveFolder = PathHelper.GetEformSettingsImagesPath();
             if (string.IsNullOrEmpty(saveFolder))
             {
                 return BadRequest(_localizationService.GetString("FolderError"));
@@ -115,10 +115,10 @@ namespace eFormAPI.Web.Controllers
 
             if (file.Length > 0)
             {
-                var filePath = Path.Combine(saveFolder, Path.GetFileName(file.FileName));
+                string filePath = Path.Combine(saveFolder, Path.GetFileName(file.FileName));
                 if (!System.IO.File.Exists(filePath))
                 {
-                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    using (FileStream stream = new FileStream(filePath, FileMode.Create))
                     {
                         await file.CopyToAsync(stream);
                     }

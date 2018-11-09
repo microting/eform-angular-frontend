@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
+using eFormAPI.Web.Abstractions.Security;
 using eFormAPI.Web.Infrastructure;
-using eFormAPI.Web.Services.Security;
+using eFormAPI.Web.Infrastructure.Models.Permissions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
@@ -8,7 +9,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Controllers.Security
 {
-    [Authorize(Roles = EformRole.Admin)]
+    [Authorize]
     public class SecurityGroupController : Controller
     {
         private readonly ISecurityGroupService _securityGroupService;
@@ -20,6 +21,7 @@ namespace eFormAPI.Web.Controllers.Security
 
         [HttpGet]
         [Route("api/security/groups")]
+        [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Read)]
         public async Task<OperationDataResult<SecurityGroupsModel>> GetEntityGroups(SecurityGroupRequestModel requestModel)
         {
             return await _securityGroupService.GetSecurityGroups(requestModel);
@@ -27,6 +29,7 @@ namespace eFormAPI.Web.Controllers.Security
 
         [HttpGet]
         [Route("api/security/groups/{id}")]
+        [Authorize(Roles = EformRole.Admin)]
         public async Task<OperationDataResult<SecurityGroupModel>> GetEntityGroup(int id)
         {
             return await _securityGroupService.GetSecurityGroup(id);
@@ -34,6 +37,7 @@ namespace eFormAPI.Web.Controllers.Security
 
         [HttpPost]
         [Route("api/security/groups")]
+        [Authorize(Roles = EformRole.Admin)]
         public async Task<OperationResult> CreateSecurityGroup([FromBody] SecurityGroupCreateModel model)
         {
             return await _securityGroupService.CreateSecurityGroup(model);
@@ -41,6 +45,7 @@ namespace eFormAPI.Web.Controllers.Security
 
         [HttpPut]
         [Route("api/security/groups")]
+        [Authorize(Roles = EformRole.Admin)]
         public async Task<OperationResult> UpdateSecurityGroup([FromBody] SecurityGroupUpdateModel model)
         {
             return await _securityGroupService.UpdateSecurityGroup(model);
@@ -48,6 +53,7 @@ namespace eFormAPI.Web.Controllers.Security
 
         [HttpDelete]
         [Route("api/security/groups/{id}")]
+        [Authorize(Roles = EformRole.Admin)]
         public async Task<OperationResult> DeleteSecurityGroup(int id)
         {
             return await _securityGroupService.DeleteSecurityGroup(id);

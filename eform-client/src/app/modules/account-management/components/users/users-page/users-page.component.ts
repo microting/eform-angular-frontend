@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {UserClaimsEnum} from 'src/app/common/enums';
 
 import {
   SecurityGroupsModel,
@@ -25,6 +26,9 @@ export class UsersPageComponent implements OnInit {
 
   spinnerStatus: boolean;
   isChecked = true;
+
+  get userClaims() { return this.authService.userClaims; }
+  get userRole() { return this.authService.currentRole; }
 
   constructor(
     private adminService: AdminService,

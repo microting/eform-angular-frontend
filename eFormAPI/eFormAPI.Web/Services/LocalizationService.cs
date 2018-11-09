@@ -16,12 +16,14 @@ namespace eFormAPI.Web.Services
  
         public string GetString(string key)
         {
+            //If changed, weird stuff happens
             var str = _localizer[key];
             return str.Value;
         }
 
         public string GetString(string format, params object[] args)
         {
+            //If changed, weird stuff happens
             var message = _localizer[format];
             if (message?.Value == null)
             {

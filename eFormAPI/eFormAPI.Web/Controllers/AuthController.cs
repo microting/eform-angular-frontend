@@ -36,7 +36,7 @@ namespace eFormAPI.Web.Controllers
         [Route("api/auth/logout")]
         public async Task<OperationResult> Logout()
         {
-            var result = await _authService.LogOut();
+            OperationResult result = await _authService.LogOut();
             if (result.Success)
                 Response.Cookies.Delete("Authorization");
             return new OperationResult(true);

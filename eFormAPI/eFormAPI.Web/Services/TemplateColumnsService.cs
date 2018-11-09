@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Abstractions.Eforms;
+using eFormCore;
+using eFormShared;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Templates;
@@ -25,10 +28,10 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var fields = core.Advanced_TemplateFieldReadAll(templateId);
+                Core core = _coreHelper.GetCore();
+                List<Field_Dto> fields = core.Advanced_TemplateFieldReadAll(templateId);
                 List<TemplateColumnModel> templateColumns = new List<TemplateColumnModel>();
-                foreach (var field in fields)
+                foreach (Field_Dto field in fields)
                 {
                     if (field.FieldType != "Picture"
                         && field.FieldType != "Audio"
@@ -56,9 +59,9 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var template = core.TemplateItemRead(templateId);
-                var model = new DisplayTemplateColumnsModel()
+                Core core = _coreHelper.GetCore();
+                Template_Dto template = core.TemplateItemRead(templateId);
+                DisplayTemplateColumnsModel model = new DisplayTemplateColumnsModel()
                 {
                     TemplateId = template.Id,
                     FieldId1 = template.Field1?.Id,
@@ -86,8 +89,8 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var columnsList = new List<int?>
+                Core core = _coreHelper.GetCore();
+                List<int?> columnsList = new List<int?>
                 {
                     model.FieldId1,
                     model.FieldId2,
@@ -101,12 +104,12 @@ namespace eFormAPI.Web.Services
                     model.FieldId10
                 };
                 columnsList = columnsList.OrderBy(x => x == null).ToList();
-                var columnsUpdateResult = core.Advanced_TemplateUpdateFieldIdsForColumns((int) model.TemplateId,
+                bool columnsUpdateResult = core.Advanced_TemplateUpdateFieldIdsForColumns((int) model.TemplateId,
                     columnsList[0], columnsList[1], columnsList[2], columnsList[3],
                     columnsList[4], columnsList[5], columnsList[6], columnsList[7],
                     columnsList[8], columnsList[9]);
-                var allCases = core.CaseReadAll(model.TemplateId, null, null);
-                foreach (var caseObject in allCases)
+                List<Case> allCases = core.CaseReadAll(model.TemplateId, null, null);
+                foreach (Case caseObject in allCases)
                 {
                     core.CaseUpdateFieldValues(caseObject.Id);
                 }

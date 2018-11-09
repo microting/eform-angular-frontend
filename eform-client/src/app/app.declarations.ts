@@ -2,6 +2,7 @@ import {DatePipe, LocationStrategy, PathLocationStrategy} from '@angular/common'
 import {CookieService} from 'ngx-cookie-service';
 import {ToastrService} from 'ngx-toastr';
 import {AdminGuard, AuthGuard, CanDeactivateGuard} from 'src/app/common/guards';
+import {ClaimsGuard} from 'src/app/common/guards/claims.guard';
 import {EventBrokerService} from 'src/app/common/helpers';
 import {
   EntitySearchService,
@@ -10,12 +11,12 @@ import {
   UnitsService,
   WorkersService
 } from 'src/app/common/services/advanced';
-import {AppSettingsService} from 'src/app/common/services/app-settings';
+import {AppMenuService, AppSettingsService} from 'src/app/common/services/app-settings';
 import {AuthService, LocaleService, UserSettingsService} from 'src/app/common/services/auth';
 import {CasesService, ImageService} from 'src/app/common/services/cases';
 import {DeviceUserService} from 'src/app/common/services/device-users';
 import {EFormService, EFormTagService} from 'src/app/common/services/eform';
-import {SecurityGroupsService} from 'src/app/common/services/security';
+import {SecurityGroupEformsPermissionsService, SecurityGroupsService} from 'src/app/common/services/security';
 import {AdminService} from 'src/app/common/services/users';
 // Guards
 
@@ -24,6 +25,7 @@ export let providers = [
   AuthGuard,
   AdminGuard,
   CanDeactivateGuard,
+  ClaimsGuard,
   // Libs services
   ToastrService,
   CookieService,
@@ -32,6 +34,7 @@ export let providers = [
   LocaleService,
   UserSettingsService,
   AppSettingsService,
+  AppMenuService,
   DeviceUserService,
   UnitsService,
   SitesService,
@@ -44,6 +47,7 @@ export let providers = [
   CasesService,
   ImageService,
   SecurityGroupsService,
+  SecurityGroupEformsPermissionsService,
   // Helpers
   EventBrokerService,
   DatePipe,

@@ -3,7 +3,8 @@ import {
   AdvEntitySelectableGroupListModel,
   AdvEntitySelectableGroupListRequestModel, AdvEntitySelectableGroupModel
 } from 'src/app/common/models/advanced';
-import {EntitySelectService} from 'src/app/common/services/advanced';
+import {EntitySearchService, EntitySelectService} from 'src/app/common/services/advanced';
+import {AuthService} from 'src/app/common/services/auth';
 
 @Component({
   selector: 'app-selectable-list',
@@ -24,7 +25,9 @@ export class EntitySelectComponent implements OnInit {
   isSortedByNameAsc = false;
   isSortedByNameDsc = false;
 
-  constructor(private entitySelectService: EntitySelectService) {
+  get userClaims() { return this.authService.userClaims; }
+
+  constructor(private entitySelectService: EntitySelectService, private authService: AuthService) {
   }
 
   ngOnInit() {

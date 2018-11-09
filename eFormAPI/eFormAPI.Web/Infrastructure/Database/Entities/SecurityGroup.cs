@@ -11,5 +11,8 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities
 
         public ICollection<SecurityGroupUser> SecurityGroupUsers { get; set; }
             = new List<SecurityGroupUser>();
+
+        public ICollection<EformInGroup> EformsInGroup { get; set; }
+            = new List<EformInGroup>();
     }
 }

@@ -16,11 +16,11 @@ namespace eFormAPI.Web.Hosting.Helpers
     {
         public static List<IEformPlugin> GetPlugins()
         {
-            var loaders = new List<PluginLoader>();
-            var plugins = new List<IEformPlugin>();
+            List<PluginLoader> loaders = new List<PluginLoader>();
+            List<IEformPlugin> plugins = new List<IEformPlugin>();
             // create plugin loaders
             Console.ForegroundColor = ConsoleColor.Green;
-            var pluginsDir = Path.Combine(Directory.GetCurrentDirectory(), "Plugins");
+            string pluginsDir = Path.Combine(Directory.GetCurrentDirectory(), "Plugins");
             Console.WriteLine($"Trying to discover plugins in folder : {pluginsDir}");
             if (!Directory.Exists(pluginsDir))
             {
@@ -35,19 +35,19 @@ namespace eFormAPI.Web.Hosting.Helpers
             }
 
             //   var assemblies = new List<Assembly>();
-            var directories = Directory.EnumerateDirectories(pluginsDir);
+            IEnumerable<string> directories = Directory.EnumerateDirectories(pluginsDir);
 
-            foreach (var directory in directories)
+            foreach (string directory in directories)
             {
-                var pluginList = Directory.GetFiles(directory)
+                List<string> pluginList = Directory.GetFiles(directory)
                     .Where(x => x.EndsWith("Pn.dll") && Path.GetFileName(x) != "eFormApi.BasePn.dll")
                     .ToList();
 
                 Console.WriteLine($"{pluginList.Count} number of plugins found");
 
-                foreach (var pluginFile in pluginList)
+                foreach (string pluginFile in pluginList)
                 {
-                    var loader = PluginLoader.CreateFromAssemblyFile(pluginFile,
+                    PluginLoader loader = PluginLoader.CreateFromAssemblyFile(pluginFile,
                         // this ensures that the plugin resolves to the same version of DependencyInjection
                         // and ASP.NET Core that the current app uses
                         new[]
@@ -59,12 +59,12 @@ namespace eFormAPI.Web.Hosting.Helpers
                             typeof(EFormCoreService),
                             typeof(Core)
                         });
-                    foreach (var type in loader.LoadDefaultAssembly()
+                    foreach (Type type in loader.LoadDefaultAssembly()
                         .GetTypes()
                         .Where(t => typeof(IEformPlugin).IsAssignableFrom(t) && !t.IsAbstract))
                     {
                         Console.WriteLine("Found plugin : " + type.Name);
-                        var plugin = (IEformPlugin) Activator.CreateInstance(type);
+                        IEformPlugin plugin = (IEformPlugin) Activator.CreateInstance(type);
                         plugins.Add(plugin);
                     }
 

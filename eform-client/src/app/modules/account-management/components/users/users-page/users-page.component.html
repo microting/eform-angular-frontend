@@ -1,23 +1,20 @@
 <eform-page-subheader [title]="'User Management' | translate">
 <div class="p-3">
   <button
-    class="btn btn-success" (click)="openNewUserModal()"
+    class="btn btn-success" (click)="openNewUserModal()" *ngIf="userClaims.usersCreate"
     mdbTooltip="{{'Create user' | translate}}">{{'New User' | translate}}</button>
 </div>
 </eform-page-subheader>
 
 <div class="container-fluid">
-  <div class="row">
+  <div class="row" *ngIf="userRole == 'admin'">
     <div class="col-md-3">
-      <div class="pt-3">
-        <label class="md-checkbox">
-          <input name="isChecked"
-                 id="isChecked"
-                 value="{{isChecked}}" (click)="checked($event)"
-                 [checked]="isChecked" type="checkbox" />
-          <span class="md-checkbox--fake"></span>
-          <div>{{ 'Force users to use 2-f-auth' | translate }}</div>
-        </label>
+      <div class="p-3">
+        <div class="mat-checkbox">
+          <input id="isChecked" (click)="checked($event)"
+                 [checked]="isChecked" [value]="isChecked" color="primary" type="checkbox">
+          <label for="isChecked">{{ 'Force users to use 2-f-auth' | translate }}</label>
+        </div>
       </div>
     </div>
   </div>
@@ -30,7 +27,7 @@
         <th scope="col">{{ 'Email' | translate }}</th>
         <th scope="col">{{ 'Full Name' | translate }}</th>
         <th scope="col">{{ 'Role' | translate }}</th>
-        <th scope="col">{{'Actions' | translate}}</th>
+        <th scope="col" *ngIf="userClaims.usersUpdate || userClaims.usersDelete">{{'Actions' | translate}}</th>
       </tr>
       </thead>
       <tbody>
@@ -44,16 +41,16 @@
         <td>
           {{userInfoModel.role}}
         </td>
-        <td>
-
+        <td *ngIf="userClaims.usersUpdate || userClaims.usersDelete">
           <div class="d-flex flex-row justify-content-center">
-            <button class="btn btn-accent text-black-50 btn-icon mb-2" mdbTooltip="{{'Edit User' | translate}}"
+            <button class="btn btn-accent text-black-50 btn-icon mb-2" *ngIf="userClaims.usersUpdate"
+                    mdbTooltip="{{'Edit User' | translate}}"
                     (click)="openEditModal(userInfoModel.id)">
               <i class="material-icons">
                 edit
               </i>
             </button>
-            <button class="btn btn-danger btn-icon mb-2 "
+            <button class="btn btn-danger btn-icon mb-2 " *ngIf="userClaims.usersDelete"
                     mdbTooltip="{{'Delete User' | translate}}"
                     (click)="openRemoveUserModal(userInfoModel)">
               <i class="material-icons">

@@ -48,7 +48,16 @@
                 edit
               </i>
             </button>
-            <button class="btn btn-success btn-icon mb-2 " mdbTooltip="{{'Permissions' | translate}}">
+            <button class="btn btn-success btn-icon mb-2"
+                    [routerLink]="['group/' + securityGroup.id + '/eforms-permissions']"
+                    mdbTooltip="{{'Eforms Permissions' | translate}}">
+              <i class="material-icons">
+                assignment
+              </i>
+            </button>
+            <button class="btn btn-success btn-icon mb-2 "
+                    [routerLink]="['group/' + securityGroup.id + '/general-permissions']"
+                    mdbTooltip="{{'General Permissions' | translate}}">
               <i class="material-icons">
                 lock_open
               </i>
@@ -74,4 +83,4 @@
 
 <eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>
 
-<app-security-group-remove #modalGroupDelete></app-security-group-remove>
+<app-security-group-remove #modalGroupDelete (onSecurityGroupRemoved)="getSecurityGroups()"></app-security-group-remove>
