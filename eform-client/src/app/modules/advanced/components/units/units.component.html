@@ -23,7 +23,7 @@
             <div *ngIf="unitModel.otpCode != 0">
               <strong>{{unitModel.customerNo}} / {{unitModel.otpCode}}</strong>
             </div>
-            <button *ngIf="unitModel.otpCode == 0"
+            <button *ngIf="unitModel.otpCode == 0 && userClaims.unitsUpdate"
               class="btn btn-danger btn-icon mb-2 "
               mdbTooltip="{{ 'Get OTP code' | translate }}"
               (click)="openModalUnitsOtpCode(unitModel)">

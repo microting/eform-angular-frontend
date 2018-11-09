@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angula
 import {SiteNameDto, TemplateDto} from 'src/app/common/models/dto';
 import {DeployCheckbox, DeployModel} from 'src/app/common/models/eforms';
 import {SitesService} from 'src/app/common/services/advanced';
+import {AuthService} from 'src/app/common/services/auth';
 import {EFormService} from 'src/app/common/services/eform';
 
 @Component({
@@ -20,7 +21,11 @@ export class EformEditParingModalComponent implements OnInit {
   spinnerStatus = false;
   matchFound = false;
 
-  constructor(private eFormService: EFormService, private sitesService: SitesService) {
+  get userClaims() {
+    return this.authService.userClaims;
+  }
+
+  constructor(private eFormService: EFormService, private sitesService: SitesService, private authService: AuthService) {
   }
 
   ngOnInit() {
@@ -28,13 +33,15 @@ export class EformEditParingModalComponent implements OnInit {
   }
 
   loadAllSites() {
-    this.sitesService.getAllSites().subscribe(operation => {
-      this.spinnerStatus = true;
-      if (operation && operation.success) {
-        this.sitesDto = operation.model;
-      }
-      this.spinnerStatus = false;
-    });
+    if (this.userClaims.eFormsPairingRead) {
+      this.sitesService.getAllSitesForPairing().subscribe(operation => {
+        this.spinnerStatus = true;
+        if (operation && operation.success) {
+          this.sitesDto = operation.model;
+        }
+        this.spinnerStatus = false;
+      });
+    }
   }
 
   show(templateDto: TemplateDto) {
@@ -48,7 +55,6 @@ export class EformEditParingModalComponent implements OnInit {
   addToArray(e: any, deployId: number) {
     const deployObject = new DeployCheckbox();
     deployObject.id = deployId;
-    debugger;
     if (e.target.checked) {
       deployObject.isChecked = true;
       this.deployModel.deployCheckboxes.push(deployObject);

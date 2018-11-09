@@ -29,7 +29,6 @@ const SettingsMethods = {
 
 @Injectable()
 export class AppSettingsService extends BaseService {
-  private headers: Headers;
 
   constructor(private _http: HttpClient, router: Router, toastrService: ToastrService) {
     super(_http, router, toastrService);

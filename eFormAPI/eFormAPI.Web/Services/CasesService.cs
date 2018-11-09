@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using eFormAPI.Web.Abstractions;
-using eFormCore;
+using eFormAPI.Web.Abstractions.Eforms;
 using eFormData;
 using eFormShared;
 using Microting.eFormApi.BasePn.Abstractions;
@@ -28,11 +28,11 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                Core core = _coreHelper.GetCore();
-                List<Case> caseList = core.CaseReadAll(requestModel.TemplateId, null, null,
+                var core = _coreHelper.GetCore();
+                var caseList = core.CaseReadAll(requestModel.TemplateId, null, null,
                     Constants.WorkflowStates.NotRemoved, requestModel.NameFilter,
                     requestModel.IsSortDsc, requestModel.Sort);
-                CaseListModel model = new CaseListModel()
+                var model = new CaseListModel()
                 {
                     NumOfElements = 40,
                     PageNum = requestModel.PageIndex,
@@ -47,15 +47,15 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public OperationDataResult<ReplyElement> Edit(int id)
+        public OperationDataResult<ReplyElement> GetCase(int id)
         {
             try
             {
-                Core core = _coreHelper.GetCore();
-                Case_Dto caseDto = core.CaseReadByCaseId(id);
-                string microtingUId = caseDto.MicrotingUId;
-                string microtingCheckUId = caseDto.CheckUId;
-                ReplyElement theCase = core.CaseRead(microtingUId, microtingCheckUId);
+                var core = _coreHelper.GetCore();
+                var caseDto = core.CaseReadByCaseId(id);
+                var microtingUId = caseDto.MicrotingUId;
+                var microtingCheckUId = caseDto.CheckUId;
+                var theCase = core.CaseRead(microtingUId, microtingCheckUId);
                 theCase.Id = id;
 
                 return !theCase.Equals(null)
@@ -72,7 +72,7 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                Core core = _coreHelper.GetCore();
+                var core = _coreHelper.GetCore();
 
                 return core.CaseDeleteResult(id)
                     ? new OperationResult(true, _localizationService.GetString("CaseParamDeletedSuccessfully", id))
@@ -86,9 +86,9 @@ namespace eFormAPI.Web.Services
 
         public OperationResult Update(ReplyRequest model)
         {
-            List<string> checkListValueList = new List<string>();
-            List<string> fieldValueList = new List<string>();
-            Core core = _coreHelper.GetCore();
+            var checkListValueList = new List<string>();
+            var fieldValueList = new List<string>();
+            var core = _coreHelper.GetCore();
             try
             {
                 model.ElementList.ForEach(element =>

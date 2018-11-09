@@ -1,5 +1,6 @@
 import {AfterViewChecked, AfterViewInit, Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import {CookieService} from 'ngx-cookie-service';
 import {AuthService} from 'src/app/common/services/auth';
 
 
@@ -9,7 +10,7 @@ import {AuthService} from 'src/app/common/services/auth';
 })
 export class SignOutComponent implements OnInit, AfterViewChecked {
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router, private cookieService: CookieService) {
   }
 
   ngOnInit() {
@@ -19,6 +20,7 @@ export class SignOutComponent implements OnInit, AfterViewChecked {
 
   signOut() {
     localStorage.removeItem('currentAuth');
+    // this.cookieService.delete('.AspNetCore.Identity.Application');
     this.router.navigate(['/auth']).then();
   }
 

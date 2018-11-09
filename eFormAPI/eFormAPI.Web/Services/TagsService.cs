@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using eFormAPI.Web.Abstractions;
-using eFormCore;
-using eFormShared;
+using eFormAPI.Web.Abstractions.Eforms;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
@@ -30,9 +29,9 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                Core core = _coreHelper.GetCore();
-                List<Tag> tags = core.GetAllTags(false);
-                List<CommonDictionaryModel> model = new List<CommonDictionaryModel>(tags.Count);
+                var core = _coreHelper.GetCore();
+                var tags = core.GetAllTags(false);
+                var model = new List<CommonDictionaryModel>(tags.Count);
                 tags.ForEach(tag =>
                 {
                     model.Add(new CommonDictionaryModel()
@@ -43,8 +42,9 @@ namespace eFormAPI.Web.Services
                 });
                 return new OperationDataResult<List<CommonDictionaryModel>>(true, model);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                _logger.LogError(e.Message);
                 return new OperationDataResult<List<CommonDictionaryModel>>(false,
                     _localizationService.GetString("ErrorWhileObtainTags"));
             }
@@ -54,13 +54,14 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                bool result = _coreHelper.GetCore().TagDelete(tagId);
+                var result = _coreHelper.GetCore().TagDelete(tagId);
                 return result
                     ? new OperationResult(true, _localizationService.GetString("TagDeletedSuccessfully"))
                     : new OperationResult(false, _localizationService.GetString("ErrorWhileDeletingTag"));
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                _logger.LogError(e.Message);
                 return new OperationResult(false, _localizationService.GetString("ErrorWhileDeletingTag"));
             }
         }
@@ -69,13 +70,14 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                int result = _coreHelper.GetCore().TagCreate(tagName);
+                var result = _coreHelper.GetCore().TagCreate(tagName);
                 return result > 0
                     ? new OperationResult(true, _localizationService.GetString("TagParamCreatedSuccessfully", tagName))
                     : new OperationResult(false, _localizationService.GetString("ErrorWhileCreatingParamTag", tagName));
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                _logger.LogError(e.Message);
                 return new OperationResult(false, _localizationService.GetString("ErrorWhileCreatingParamTag", tagName));
             }
         }
@@ -84,13 +86,14 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                bool result = _coreHelper.GetCore().TemplateSetTags(requestModel.TemplateId, requestModel.TagsIds);
+                var result = _coreHelper.GetCore().TemplateSetTags(requestModel.TemplateId, requestModel.TagsIds);
                 return result
                     ? new OperationResult(true, _localizationService.GetString("TemplateTagUpdatedSuccessfully"))
                     : new OperationResult(false, _localizationService.GetString("ErrorWhileUpdatingTemplateTags"));
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                _logger.LogError(e.Message);
                 return new OperationResult(false, _localizationService.GetString("ErrorWhileUpdatingTemplateTags"));
             }
         }

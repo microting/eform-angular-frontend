@@ -8,6 +8,7 @@ import {BaseService} from '../base.service';
 
 const SitesMethods = {
   GetAll: '/api/sites/index',
+  GetAllSitesForPairing: '/api/sites/pairing',
   GetSingle: '/api/sites/edit',
   UpdateSingle: '/api/sites/update',
   DeleteSingle: '/api/sites/delete'
@@ -21,6 +22,10 @@ export class SitesService extends BaseService {
 
   getAllSites(): Observable<OperationDataResult<Array<SiteNameDto>>> {
     return this.get<Array<SiteNameDto>>(SitesMethods.GetAll);
+  }
+
+  getAllSitesForPairing(): Observable<OperationDataResult<Array<SiteNameDto>>> {
+    return this.get<Array<SiteNameDto>>(SitesMethods.GetAllSitesForPairing);
   }
 
   getSingleSite(id: number): Observable<OperationDataResult<SiteNameDto>> {
