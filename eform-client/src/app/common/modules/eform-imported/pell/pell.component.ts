@@ -48,7 +48,8 @@ export class PellComponent implements OnInit, AfterViewInit, OnChanges {
         this.html = html;
         this.valueChange.emit(this.html);
       },
-      styleWithCSS: true,
+      defaultParagraphSeparator: 'p',
+      styleWithCSS: false,
       actions: [
         'bold',
         'underline',
