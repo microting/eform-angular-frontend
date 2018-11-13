@@ -66,7 +66,9 @@ export const init = settings => {
     actionbar.appendChild(button);
   });
 
+  if (settings.defaultParagraphSeparator) exec('defaultParagraphSeparator', settings.defaultParagraphSeparator)
   if (settings.styleWithCSS) { exec('styleWithCSS'); }
+
 
   return settings.element;
 };
