@@ -6,6 +6,7 @@ using eFormAPI.Web.Infrastructure.Models.Templates;
 using eFormApi.BasePn.Infrastructure;
 using eFormApi.BasePn.Infrastructure.Helpers;
 using eFormApi.BasePn.Infrastructure.Models.API;
+using eFormShared;
 
 namespace eFormAPI.Web.Controllers
 {
@@ -20,8 +21,8 @@ namespace eFormAPI.Web.Controllers
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var fields = core.Advanced_TemplateFieldReadAll(templateId);
+                eFormCore.Core core = _coreHelper.GetCore();
+                List<Field_Dto> fields = core.Advanced_TemplateFieldReadAll(templateId);
                 List<TemplateColumnModel> templateColumns = new List<TemplateColumnModel>();
                 foreach (var field in fields)
                 {
@@ -33,7 +34,7 @@ namespace eFormAPI.Web.Controllers
                         templateColumns.Add(new TemplateColumnModel()
                         {
                             Id = field.Id,
-                            Label = field.Label
+                            Label = field.ParentName + " - " + field.Label
                         });
                 }
                 //List<TemplateColumnModel> templateColumns = fields.Select(field => new TemplateColumnModel()
