@@ -8,8 +8,8 @@ addons:
     - google-chrome-stable fluxbox
 sudo: required
 language: csharp
-mono: latest
-dotnet: 2.1.0
+mono: none
+dotnet: 2.1
 bundler_args: --retry 5
 install: 
 - nvm install 8.0.0
@@ -20,7 +20,12 @@ before_script:
 - sleep 3
 - fluxbox > /dev/null 2>&1 &
 script:
-- cd eform-client && npm install
+script:
+  - cd eFormAPI && dotnet restore
+  - dotnet build eFormAPI/eFormAPI.sln
+  - dotnet test -v n eFormAPI/eFormAPI.Web.Tests/eFormAPI.Web.Tests.csproj
+  - dotnet test -v n eFormAPI/eFormAPI.Web.Integration.Tests/eFormAPI.Web.Integration.Tests.csproj
+  - cd .. && cd eform-client && npm install
 after_success:
 - echo dotnet test and npm test succeeded
 after_faliure:
