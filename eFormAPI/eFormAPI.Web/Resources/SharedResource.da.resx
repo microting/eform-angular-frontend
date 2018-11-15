@@ -480,4 +480,25 @@
   <data name="SecurityGroupUpdatedSuccessfully" xml:space="preserve">
     <value>Sikkerhedsgruppe opdateret med succes</value>
   </data>
+  <data name="ErrorWhileObtainingSavedTags" xml:space="preserve">
+    <value>Fejl under opnåelse af gemte tags</value>
+  </data>
+  <data name="ErrorWhileRemovingSavedTags" xml:space="preserve">
+    <value>Fejl under fjernelse af gemte tags</value>
+  </data>
+  <data name="ErrorWhileSavingTag" xml:space="preserve">
+    <value>Der opstod en fejl under opbevaring af tag</value>
+  </data>
+  <data name="InvalidTagId" xml:space="preserve">
+    <value>Ugyldigt tag-id</value>
+  </data>
+  <data name="InvalidTagName" xml:space="preserve">
+    <value>Ugyldigt tagnavn</value>
+  </data>
+  <data name="SavedTagNotFound" xml:space="preserve">
+    <value>Gemt tag ikke fundet</value>
+  </data>
+  <data name="TagAlreadySaved" xml:space="preserve">
+    <value>Tag allerede gemt</value>
+  </data>
 </root>

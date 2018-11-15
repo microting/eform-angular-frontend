@@ -480,4 +480,25 @@
   <data name="SecurityGroupUpdatedSuccessfully" xml:space="preserve">
     <value>Security group updated successfully</value>
   </data>
+  <data name="ErrorWhileObtainingSavedTags" xml:space="preserve">
+    <value>Error while obtaining saved tags</value>
+  </data>
+  <data name="ErrorWhileRemovingSavedTags" xml:space="preserve">
+    <value>Error while removing saved tags</value>
+  </data>
+  <data name="ErrorWhileSavingTag" xml:space="preserve">
+    <value>Error while saving tag</value>
+  </data>
+  <data name="InvalidTagId" xml:space="preserve">
+    <value>Invalid tag id</value>
+  </data>
+  <data name="InvalidTagName" xml:space="preserve">
+    <value>Ugyldigt tagnavn</value>
+  </data>
+  <data name="SavedTagNotFound" xml:space="preserve">
+    <value>Saved tag not found</value>
+  </data>
+  <data name="TagAlreadySaved" xml:space="preserve">
+    <value>Tag already saved</value>
+  </data>
 </root>
