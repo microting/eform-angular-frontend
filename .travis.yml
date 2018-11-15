@@ -12,8 +12,8 @@ mono: none
 dotnet: 2.1
 bundler_args: --retry 5
 install:
-- nvm install 6.4.1
-- nvm use 6.4.1
+- nvm install 8.0.0
+- nvm use 8.0.0
 - npm install
 before_script:
 - "export DISPLAY=:99.0"
