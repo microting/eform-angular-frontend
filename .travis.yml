@@ -12,7 +12,6 @@ mono: none
 dotnet: 2.1
 bundler_args: --retry 5
 install:
-- dotnet restore
 - nvm install 6.4.1
 - nvm use 6.4.1
 - npm install
@@ -22,6 +21,7 @@ before_script:
 - sleep 3
 - fluxbox > /dev/null 2>&1 &
 script:
+  - cd eFormAPI && dotnet restore
   - cd eFormAPI && dotnet build eFormAPI/eFormAPI.sln
   - cd eFormAPI && dotnet test -v n eFormAPI/eFormAPI.Web.Tests/eFormAPI.Web.Tests.csproj
   - cd eFormAPI && dotnet test -v n eFormAPI/eFormAPI.Web.Integration.Tests/eFormAPI.Web.Integration.Tests.csproj
