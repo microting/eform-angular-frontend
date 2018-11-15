@@ -11,21 +11,22 @@ language: csharp
 mono: none
 dotnet: 2.1
 bundler_args: --retry 5
-install: 
-- nvm install 8.0.0
-- nvm use 8.0.0
+install:
+- dotnet restore
+- nvm install 6.4.1
+- nvm use 6.4.1
+- npm install
 before_script:
 - "export DISPLAY=:99.0"
 - "sh -e /etc/init.d/xvfb start"
 - sleep 3
 - fluxbox > /dev/null 2>&1 &
 script:
-script:
-  - cd eFormAPI && dotnet restore
   - cd eFormAPI && dotnet build eFormAPI/eFormAPI.sln
   - cd eFormAPI && dotnet test -v n eFormAPI/eFormAPI.Web.Tests/eFormAPI.Web.Tests.csproj
   - cd eFormAPI && dotnet test -v n eFormAPI/eFormAPI.Web.Integration.Tests/eFormAPI.Web.Integration.Tests.csproj
   - cd eform-client && npm install
+  - cd eform-client && npm test -v
 after_success:
 - echo dotnet test and npm test succeeded
 after_faliure:
