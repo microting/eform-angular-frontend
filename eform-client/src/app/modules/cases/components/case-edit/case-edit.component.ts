@@ -90,11 +90,7 @@ export class CaseEditComponent implements OnInit, OnDestroy {
         this.spinnerStatus = false;
         this.isNoSaveExitAllowed = true;
         if (this.isSaveClicked) {
-          if (!this.reverseRoute) {
-            this.router.navigate(['/cases/', this.currentTemplate.id]).then();
-          } else {
-            this.router.navigate([this.reverseRoute]);
-          }
+          this.navigateToReverse();
         }
       }
       this.spinnerStatus = false;
@@ -127,7 +123,7 @@ export class CaseEditComponent implements OnInit, OnDestroy {
       this.saveCase();
     } else {
       this.isNoSaveExitAllowed = true;
-      this.router.navigate([this.reverseRoute]).then();
+      this.navigateToReverse();
     }
   }
 
@@ -137,6 +133,14 @@ export class CaseEditComponent implements OnInit, OnDestroy {
       return this.caseConfirmation.navigateAwaySelection$;
     }
     return true;
+  }
+
+  navigateToReverse() {
+    if (!this.reverseRoute) {
+      this.router.navigate(['/cases/', this.currentTemplate.id]).then();
+    } else {
+      this.router.navigate([this.reverseRoute]);
+    }
   }
 
   loadEformPermissions(templateId: number) {
