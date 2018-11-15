@@ -21,12 +21,12 @@ before_script:
 - sleep 3
 - fluxbox > /dev/null 2>&1 &
 script:
-  - cd eFormAPI && dotnet restore
+  - dotnet restore
   - dotnet build eFormAPI/eFormAPI.sln
   - dotnet test -v n eFormAPI/eFormAPI.Web.Tests/eFormAPI.Web.Tests.csproj
   - dotnet test -v n eFormAPI/eFormAPI.Web.Integration.Tests/eFormAPI.Web.Integration.Tests.csproj
   - cd eform-client && npm install
-  - cd eform-client && npm test -v
+  - npm test -v
 after_success:
 - echo dotnet test and npm test succeeded
 after_faliure:
