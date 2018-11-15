@@ -21,7 +21,7 @@ before_script:
 - sleep 3
 - fluxbox > /dev/null 2>&1 &
 script:
-  - dotnet restore
+  - dotnet restore eFormAPI/eFormAPI.sln
   - dotnet build eFormAPI/eFormAPI.sln
   - dotnet test -v n eFormAPI/eFormAPI.Web.Tests/eFormAPI.Web.Tests.csproj
   - dotnet test -v n eFormAPI/eFormAPI.Web.Integration.Tests/eFormAPI.Web.Integration.Tests.csproj
