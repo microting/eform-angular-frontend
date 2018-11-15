@@ -22,9 +22,9 @@ before_script:
 - fluxbox > /dev/null 2>&1 &
 script:
   - cd eFormAPI && dotnet restore
-  - cd eFormAPI && dotnet build eFormAPI/eFormAPI.sln
-  - cd eFormAPI && dotnet test -v n eFormAPI/eFormAPI.Web.Tests/eFormAPI.Web.Tests.csproj
-  - cd eFormAPI && dotnet test -v n eFormAPI/eFormAPI.Web.Integration.Tests/eFormAPI.Web.Integration.Tests.csproj
+  - dotnet build eFormAPI/eFormAPI.sln
+  - dotnet test -v n eFormAPI/eFormAPI.Web.Tests/eFormAPI.Web.Tests.csproj
+  - dotnet test -v n eFormAPI/eFormAPI.Web.Integration.Tests/eFormAPI.Web.Integration.Tests.csproj
   - cd eform-client && npm install
   - cd eform-client && npm test -v
 after_success:
