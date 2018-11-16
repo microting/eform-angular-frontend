@@ -3,7 +3,7 @@
     <div class="card z-depth-2 mb-3" style="width: 100%" *ngIf="dataItem.fieldType != 'SaveButton'">
       <div class="card-header"
            [ngStyle]="{'background-color': dataItem.fieldValues[0].color ? '#' + dataItem.fieldValues[0].color : ''}"
-           *ngIf="dataItem.fieldType != 'FieldContainer' && dataItem.fieldType != 'SaveButton'">
+           *ngIf="dataItem.fieldType != 'SaveButton'">
         {{dataItem.label}}
       </div>
       <div class="card-body">
