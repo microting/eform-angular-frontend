@@ -124,8 +124,15 @@ namespace eFormAPI.Web.Services
             try
             {
                 DbContextOptionsBuilder<BaseDbContext> dbContextOptionsBuilder = new DbContextOptionsBuilder<BaseDbContext>();
-                dbContextOptionsBuilder.UseSqlServer(mainConnectionString, b =>
-                    b.MigrationsAssembly("eFormAPI.Web"));
+                if (mainConnectionString.ToLower().Contains("convert zero datetime"))
+                {
+                    dbContextOptionsBuilder.UseMySql(mainConnectionString, b =>
+                     b.MigrationsAssembly("eFormAPI.Web"));
+                } else {
+                    dbContextOptionsBuilder.UseSqlServer(mainConnectionString, b =>
+                     b.MigrationsAssembly("eFormAPI.Web"));
+                }              
+
                 using (BaseDbContext dbContext = new BaseDbContext(dbContextOptionsBuilder.Options))
                 {
                     dbContext.Database.Migrate();
