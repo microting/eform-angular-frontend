@@ -15,7 +15,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities
         public int MenuPosition { get; set; } // 1 = Left, 0 = Right
 
         public int? ParentId { get; set; }
-        public MenuItem Parent { get; set; }
+        public virtual MenuItem Parent { get; set; }
 
         public List<MenuItem> ChildItems
             = new List<MenuItem>();

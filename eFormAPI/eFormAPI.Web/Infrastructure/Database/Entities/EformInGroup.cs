@@ -8,9 +8,9 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities
         public int TemplateId { get; set; }
 
         public int SecurityGroupId { get; set; }
-        public SecurityGroup SecurityGroup { get; set; }
+        public virtual SecurityGroup SecurityGroup { get; set; }
 
-        public List<EformPermission> EformPermissions { get; set; } 
+        public virtual List<EformPermission> EformPermissions { get; set; } 
             = new List<EformPermission>();
     }
 }

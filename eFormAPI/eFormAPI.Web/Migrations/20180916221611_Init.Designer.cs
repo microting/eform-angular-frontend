@@ -9,7 +9,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Database;
 
 namespace eFormAPI.Web.Migrations
 {
-    [DbContext(typeof(BaseDbContext))]
+    [DbContext(typeof(Infrastructure.Database.BaseDbContext))]
     [Migration("20180916221611_Init")]
     partial class Init
     {

@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eFormAPI.Web", "eFormAPI.We
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{131801C5-16CB-459B-8130-1E87CB8AE316}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eFormAPI.Web.Tests", "eFormAPI.Web.Tests\eFormAPI.Web.Tests.csproj", "{703802AA-5C65-43F0-8DFE-C81954EE7B04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eFormAPI.Web.Tests", "eFormAPI.Web.Tests\eFormAPI.Web.Tests.csproj", "{703802AA-5C65-43F0-8DFE-C81954EE7B04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eFormAPI.Web.Integration.Tests", "eFormAPI.Web.Integration.Tests\eFormAPI.Web.Integration.Tests.csproj", "{608BF97D-0220-4EAC-9BCC-7C3FBC50A7D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eFormAPI.Web.Integration.Tests", "eFormAPI.Web.Integration.Tests\eFormAPI.Web.Integration.Tests.csproj", "{608BF97D-0220-4EAC-9BCC-7C3FBC50A7D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -9,10 +9,10 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities
         [StringLength(250)] 
         public string Name { get; set; }
 
-        public ICollection<SecurityGroupUser> SecurityGroupUsers { get; set; }
+        public virtual ICollection<SecurityGroupUser> SecurityGroupUsers { get; set; }
             = new List<SecurityGroupUser>();
 
-        public ICollection<EformInGroup> EformsInGroup { get; set; }
+        public virtual ICollection<EformInGroup> EformsInGroup { get; set; }
             = new List<EformInGroup>();
     }
 }

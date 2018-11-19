@@ -7,8 +7,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="1.1.47" />
     <PackageReference Include="NUnit" Version="3.10.1" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.10.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\eFormAPI.Web\eFormAPI.Web.csproj" />
   </ItemGroup>
 
 </Project>
