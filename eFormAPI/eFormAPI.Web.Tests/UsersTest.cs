@@ -31,7 +31,7 @@ namespace eFormAPI.Web.Tests
 
             // Act
 
-            EformUser foundeformUser = DbContext.Users.Find(eformUser.Email);
+            EformUser foundeformUser = DbContext.Users.Find(eformUser.Id);
 
             // Assert
             Assert.NotNull(foundeformUser);

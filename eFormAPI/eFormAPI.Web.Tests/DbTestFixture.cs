@@ -14,7 +14,7 @@ namespace eFormAPI.Web.Tests
         protected BaseDbContext DbContext;
         protected string ConnectionString;
 
-        private BaseDbContext GetContext(string connectionStr)
+        private void GetContext(string connectionStr)
         {
 
             DbContextOptionsBuilder<BaseDbContext> dbContextOptionsBuilder = new DbContextOptionsBuilder<BaseDbContext>();
@@ -28,7 +28,10 @@ namespace eFormAPI.Web.Tests
                 dbContextOptionsBuilder.UseSqlServer(connectionStr);
             }
             dbContextOptionsBuilder.UseLazyLoadingProxies(true);
-            return new BaseDbContext(dbContextOptionsBuilder.Options);
+            DbContext = new BaseDbContext(dbContextOptionsBuilder.Options);
+
+            DbContext.Database.Migrate();
+            DbContext.Database.EnsureCreated();
         }
 
         [SetUp]
@@ -43,7 +46,7 @@ namespace eFormAPI.Web.Tests
                 ConnectionString = @"Server = localhost; port = 3306; Database = angular-tests; user = root; Convert Zero Datetime = true;";
             }
 
-            DbContext = GetContext(ConnectionString);
+            GetContext(ConnectionString);
 
 
             DbContext.Database.SetCommandTimeout(300);
@@ -76,12 +79,20 @@ namespace eFormAPI.Web.Tests
 
             Console.WriteLine("ClearDb called.");
             List<string> modelNames = new List<string>();
+            modelNames.Add("UserTokens");
             modelNames.Add("UserRoles");
             modelNames.Add("UserLogins");
             modelNames.Add("UserClaims");
+            modelNames.Add("SecurityGroupUsers");
+            modelNames.Add("SecurityGroups");
             modelNames.Add("Users");
             modelNames.Add("Roles");
-            modelNames.Add("Roles");
+            modelNames.Add("RoleClaims");
+            modelNames.Add("GroupPermissions");
+            modelNames.Add("EformPermissions");
+            modelNames.Add("EformInGroups");
+            modelNames.Add("MenuItems");
+            modelNames.Add("Permissions");
 
 
             foreach (var modelName in modelNames)
