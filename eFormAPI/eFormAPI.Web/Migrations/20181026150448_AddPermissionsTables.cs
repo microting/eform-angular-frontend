@@ -19,9 +19,17 @@ namespace eFormAPI.Web.Migrations
                 autoIDGenStrategy = "MySQL:ValueGeneratedOnAdd";
                 autoIDGenStrategyValue = true;
             }
-            migrationBuilder.DropIndex(
-                name: "IX_SecurityGroupUsers_EformUserId",
-                table: "SecurityGroupUsers");
+
+            // This is commented in current version, since MySQL has trouble with it.
+            //try
+            //{
+            //    migrationBuilder.DropIndex(
+            //    name: "IX_SecurityGroupUsers_EformUserId",
+            //    table: "SecurityGroupUsers");
+
+            //}
+            //catch { }
+
 
             migrationBuilder.CreateTable(
                 name: "PermissionTypes",

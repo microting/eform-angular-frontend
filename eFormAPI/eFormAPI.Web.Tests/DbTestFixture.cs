@@ -83,7 +83,6 @@ namespace eFormAPI.Web.Tests
             modelNames.Add("UserRoles");
             modelNames.Add("UserLogins");
             modelNames.Add("UserClaims");
-            modelNames.Add("SecurityGroupUsers");
             modelNames.Add("SecurityGroups");
             modelNames.Add("Users");
             modelNames.Add("Roles");
@@ -93,6 +92,7 @@ namespace eFormAPI.Web.Tests
             modelNames.Add("EformInGroups");
             modelNames.Add("MenuItems");
             modelNames.Add("Permissions");
+            modelNames.Add("SecurityGroupUsers");
 
 
             foreach (var modelName in modelNames)
