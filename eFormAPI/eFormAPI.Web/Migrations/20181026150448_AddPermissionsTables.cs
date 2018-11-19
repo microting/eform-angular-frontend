@@ -7,6 +7,18 @@ namespace eFormAPI.Web.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            //Setup for SQL Server Provider
+
+            string autoIDGenStrategy = "SqlServer:ValueGenerationStrategy";
+            object autoIDGenStrategyValue = SqlServerValueGenerationStrategy.IdentityColumn;
+
+            // Setup for MySQL Provider
+            if (migrationBuilder.ActiveProvider == "Pomelo.EntityFrameworkCore.MySql")
+            {
+                DbConfig.IsMySQL = true;
+                autoIDGenStrategy = "MySQL:ValueGeneratedOnAdd";
+                autoIDGenStrategyValue = true;
+            }
             migrationBuilder.DropIndex(
                 name: "IX_SecurityGroupUsers_EformUserId",
                 table: "SecurityGroupUsers");
@@ -16,7 +28,7 @@ namespace eFormAPI.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation(autoIDGenStrategy, autoIDGenStrategyValue),
                     Name = table.Column<string>(maxLength: 250, nullable: true)
                 },
                 constraints: table =>
@@ -29,7 +41,7 @@ namespace eFormAPI.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation(autoIDGenStrategy, autoIDGenStrategyValue),
                     PermissionName = table.Column<string>(maxLength: 250, nullable: true),
                     ClaimName = table.Column<string>(maxLength: 250, nullable: true),
                     PermissionTypeId = table.Column<int>(nullable: false)
@@ -50,7 +62,7 @@ namespace eFormAPI.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation(autoIDGenStrategy, autoIDGenStrategyValue),
                     PermissionState = table.Column<int>(nullable: false),
                     PermissionId = table.Column<int>(nullable: false),
                     SecurityGroupId = table.Column<int>(nullable: false)

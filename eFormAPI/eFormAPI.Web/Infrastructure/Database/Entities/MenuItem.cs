@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using eFormAPI.Web.Infrastructure.Enums;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
 
 namespace eFormAPI.Web.Infrastructure.Database.Entities
@@ -13,7 +12,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities
         public string E2EId { get; set; }
 
         public int Position { get; set; }
-        public MenuPosition MenuPosition { get; set; }
+        public int MenuPosition { get; set; } // 1 = Left, 0 = Right
 
         public int? ParentId { get; set; }
         public MenuItem Parent { get; set; }

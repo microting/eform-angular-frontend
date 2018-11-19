@@ -1,5 +1,5 @@
 ﻿using eFormAPI.Web.Infrastructure.Database.Entities;
-using eFormAPI.Web.Infrastructure.Enums;
+//using eFormAPI.Web.Infrastructure.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
@@ -16,7 +16,7 @@ namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
                     E2EId = "my-eforms",
                     Link = "/",
                     Position = 0,
-                    MenuPosition = MenuPosition.Left,
+                    MenuPosition = 1,
                 },
                 new MenuItem
                 {
@@ -25,7 +25,7 @@ namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
                     E2EId = "device-users",
                     Link = "/simplesites",
                     Position = 1,
-                    MenuPosition = MenuPosition.Left,
+                    MenuPosition = 1,
                 },
                 new MenuItem
                 {
@@ -34,7 +34,7 @@ namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
                     E2EId = "advanced",
                     Link = "",
                     Position = 2,
-                    MenuPosition = MenuPosition.Left,
+                    MenuPosition = 1,
                 },
                 new MenuItem
                 {
@@ -44,7 +44,7 @@ namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
                     Link = "/advanced/sites",
                     Position = 0,
                     ParentId = 3,
-                    MenuPosition = MenuPosition.Left,
+                    MenuPosition = 1,
                 },
                 new MenuItem
                 {
@@ -54,7 +54,7 @@ namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
                     Link = "/advanced/workers",
                     Position = 1,
                     ParentId = 3,
-                    MenuPosition = MenuPosition.Left,
+                    MenuPosition = 1,
                 },
                 new MenuItem
                 {
@@ -64,7 +64,7 @@ namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
                     Link = "/advanced/units",
                     Position = 2,
                     ParentId = 3,
-                    MenuPosition = MenuPosition.Left,
+                    MenuPosition = 1,
                 },
                 new MenuItem
                 {
@@ -74,7 +74,7 @@ namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
                     Link = "/advanced/entity-search",
                     Position = 3,
                     ParentId = 3,
-                    MenuPosition = MenuPosition.Left,
+                    MenuPosition = 1,
                 },
                 new MenuItem
                 {
@@ -84,7 +84,7 @@ namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
                     Link = "/advanced/entity-select",
                     Position = 4,
                     ParentId = 3,
-                    MenuPosition = MenuPosition.Left,
+                    MenuPosition = 1,
                 },
                 new MenuItem
                 {
@@ -94,7 +94,7 @@ namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
                     Link = "/application-settings",
                     Position = 5,
                     ParentId = 3,
-                    MenuPosition = MenuPosition.Left,
+                    MenuPosition = 1,
                 },
 
                 new MenuItem
@@ -104,7 +104,7 @@ namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
                     E2EId = "sign-out-dropdown",
                     Link = "",
                     Position = 0,
-                    MenuPosition = MenuPosition.Right,
+                    MenuPosition = 0,
                 },
                 new MenuItem
                 {
@@ -114,7 +114,7 @@ namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
                     Link = "/account-management/users",
                     Position = 0,
                     ParentId = 10,
-                    MenuPosition = MenuPosition.Right,
+                    MenuPosition = 0,
                 },
                 new MenuItem
                 {
@@ -124,7 +124,7 @@ namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
                     Link = "/account-management/settings",
                     Position = 1,
                     ParentId = 10,
-                    MenuPosition = MenuPosition.Right,
+                    MenuPosition = 0,
                 },
                 new MenuItem
                 {
@@ -134,7 +134,7 @@ namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
                     Link = "/security",
                     Position = 2,
                     ParentId = 10,
-                    MenuPosition = MenuPosition.Right,
+                    MenuPosition = 0,
                 },
                 new MenuItem
                 {
@@ -144,7 +144,7 @@ namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
                     Link = "/account-management/change-password",
                     Position = 3,
                     ParentId = 10,
-                    MenuPosition = MenuPosition.Right,
+                    MenuPosition = 0,
                 },
                 new MenuItem
                 {
@@ -154,7 +154,7 @@ namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
                     Link = "/auth/sign-out",
                     Position = 4,
                     ParentId = 10,
-                    MenuPosition = MenuPosition.Right,
+                    MenuPosition = 0,
                 }
             );
             return modelBuilder;
