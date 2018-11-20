@@ -8,6 +8,8 @@ using eFormShared;
 using eFormApi.BasePn.Infrastructure;
 using eFormApi.BasePn.Infrastructure.Helpers;
 using eFormApi.BasePn.Infrastructure.Models.API;
+using System.Web.Http.Cors;
+using eFormAPI.Web.Infrastructure.Helpers.ExchangeTokenValidation;
 
 namespace eFormAPI.Web.Controllers
 {
@@ -23,6 +25,28 @@ namespace eFormAPI.Web.Controllers
             var siteNamesDto = core.Advanced_SiteItemReadAll(false);
 
             return new OperationDataResult<List<SiteName_Dto>>(true, siteNamesDto);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("api/sites/index/exchange/")]
+        [EnableCors(origins: "*", headers: "content-type", methods: "GET")]
+        public OperationDataResult<List<SiteName_Dto>> IndexExternally(string token, string callerURL)
+        {
+            ExchangeIdToken idToken = new ExchangeIdToken(token);
+            IdTokenValidationResult result = idToken.Validate(callerURL);
+            if (result.IsValid)
+            {
+                Core core = _coreHelper.GetCore();
+                var siteNamesDto = core.Advanced_SiteItemReadAll(false);
+
+                return new OperationDataResult<List<SiteName_Dto>>(true, siteNamesDto);
+            }
+            else
+            {
+                return new OperationDataResult<List<SiteName_Dto>> (false,
+                    LocaleHelper.GetString("ErrorWhileObtainSiteList"));
+            }
         }
 
         [HttpGet]
