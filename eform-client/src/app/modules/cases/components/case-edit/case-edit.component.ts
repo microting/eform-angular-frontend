@@ -116,15 +116,12 @@ export class CaseEditComponent implements OnInit, OnDestroy {
   }
 
   navigateToReverse() {
-    if (!this.reverseRoute) {
-      this.router.navigate(['/cases/', this.currentTemplate.id]).then();
-    } else {
+    if (this.reverseRoute) {
       this.router.navigate([this.reverseRoute]);
     }
   }
 
   canDeactivate(): Observable<boolean> | boolean {
-    debugger;
     if (!this.isNoSaveExitAllowed) {
       this.caseConfirmation.show();
       return this.caseConfirmation.navigateAwaySelection$;
