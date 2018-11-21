@@ -1,9 +1,9 @@
 <ng-container *ngIf="dataItemList">
   <ng-container *ngFor="let dataItem of dataItemList; let i = index">
     <div class="card z-depth-2 mb-3" style="width: 100%" *ngIf="dataItem.fieldType != 'SaveButton'">
-      <div class="card-header" 
+      <div class="card-header"
            [ngStyle]="{'background-color': dataItem.color ? '#' + dataItem.color : ''}"
-           *ngIf="dataItem.fieldType != 'FieldContainer' && dataItem.fieldType != 'SaveButton'">
+           *ngIf="dataItem.fieldType != 'SaveButton'">
         {{dataItem.label}}
       </div>
       <div class="card-body">

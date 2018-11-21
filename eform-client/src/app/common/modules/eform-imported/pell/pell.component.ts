@@ -6,7 +6,11 @@ import * as pell from './pell';
 @Component({
   selector: 'pell-editor',
   templateUrl: './pell.component.html',
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  styles: [`div p {
+    margin: 0;
+    padding: 0;
+  }`]
 })
 export class PellComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() actions: Array<Object> = [];
@@ -48,7 +52,7 @@ export class PellComponent implements OnInit, AfterViewInit, OnChanges {
         this.html = html;
         this.valueChange.emit(this.html);
       },
-      defaultParagraphSeparator: 'br',
+      defaultParagraphSeparator: 'p',
       styleWithCSS: false,
       actions: [
         'bold',
