@@ -5,6 +5,12 @@ VisualStudioVersion = 15.0.28010.2019
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eFormAPI.Web", "eFormAPI.Web\eFormAPI.Web.csproj", "{701DF5E7-71CC-4187-835F-2C9E8056956B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{131801C5-16CB-459B-8130-1E87CB8AE316}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eFormAPI.Web.Tests", "eFormAPI.Web.Tests\eFormAPI.Web.Tests.csproj", "{703802AA-5C65-43F0-8DFE-C81954EE7B04}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eFormAPI.Web.Integration.Tests", "eFormAPI.Web.Integration.Tests\eFormAPI.Web.Integration.Tests.csproj", "{608BF97D-0220-4EAC-9BCC-7C3FBC50A7D6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +21,21 @@ Global
 		{701DF5E7-71CC-4187-835F-2C9E8056956B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{701DF5E7-71CC-4187-835F-2C9E8056956B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{701DF5E7-71CC-4187-835F-2C9E8056956B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{703802AA-5C65-43F0-8DFE-C81954EE7B04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{703802AA-5C65-43F0-8DFE-C81954EE7B04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{703802AA-5C65-43F0-8DFE-C81954EE7B04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{703802AA-5C65-43F0-8DFE-C81954EE7B04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{608BF97D-0220-4EAC-9BCC-7C3FBC50A7D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{608BF97D-0220-4EAC-9BCC-7C3FBC50A7D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{608BF97D-0220-4EAC-9BCC-7C3FBC50A7D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{608BF97D-0220-4EAC-9BCC-7C3FBC50A7D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{703802AA-5C65-43F0-8DFE-C81954EE7B04} = {131801C5-16CB-459B-8130-1E87CB8AE316}
+		{608BF97D-0220-4EAC-9BCC-7C3FBC50A7D6} = {131801C5-16CB-459B-8130-1E87CB8AE316}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0F38F222-1D6F-47EB-AAF2-B091C96A93FD}

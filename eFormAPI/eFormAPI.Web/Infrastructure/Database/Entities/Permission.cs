@@ -12,7 +12,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities
         public string ClaimName { get; set; }
 
         public int PermissionTypeId { get; set; }
-        public PermissionType PermissionType { get; set; }
+        public virtual PermissionType PermissionType { get; set; }
 
         public List<GroupPermission> GroupPermissions
             = new List<GroupPermission>();

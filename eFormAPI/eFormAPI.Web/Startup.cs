@@ -50,10 +50,25 @@ namespace eFormAPI.Web
             services.AddSingleton(Configuration);
             services.AddOptions();
             // Entity framework
-            services.AddEntityFrameworkSqlServer()
+//#if DEBUG
+//            services.AddEntityFrameworkMySql()
+//                .AddDbContext<BaseDbContext>(
+//                o => o.UseMySql(@"Server = localhost; port = 3306; Database = angular-tests; user = root; Convert Zero Datetime = true;",
+//                    b => b.MigrationsAssembly("eFormAPI.Web")));
+//#else
+            if (Configuration.MyConnectionString().ToLower().Contains("convert zero datetime"))
+            {
+                services.AddEntityFrameworkMySql()
+                .AddDbContext<BaseDbContext>(o => o.UseMySql(Configuration.MyConnectionString(),
+                    b => b.MigrationsAssembly("eFormAPI.Web")));
+            }
+            else
+            {
+                services.AddEntityFrameworkSqlServer()
                 .AddDbContext<BaseDbContext>(o => o.UseSqlServer(Configuration.MyConnectionString(),
                     b => b.MigrationsAssembly("eFormAPI.Web")));
-
+            }
+//#endif
             // plugins
             services.AddEFormPluginsDbContext(Configuration, Plugins);
             // Identity services

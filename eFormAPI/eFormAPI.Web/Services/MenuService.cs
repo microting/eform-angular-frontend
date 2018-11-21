@@ -7,7 +7,6 @@ using eFormAPI.Web.Abstractions.Security;
 using eFormAPI.Web.Infrastructure;
 using eFormAPI.Web.Infrastructure.Database;
 using eFormAPI.Web.Infrastructure.Database.Entities;
-using eFormAPI.Web.Infrastructure.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
@@ -60,7 +59,7 @@ namespace eFormAPI.Web.Services
                 }
 
                 List<MenuItemModel> orderedLeft = menuItems
-                    .Where(p => p.Parent == null && p.MenuPosition == MenuPosition.Left)
+                    .Where(p => p.Parent == null && p.MenuPosition == 1)
                     .OrderBy(p => p.Position)
                     .Select(p => new MenuItemModel()
                         {
@@ -69,7 +68,7 @@ namespace eFormAPI.Web.Services
                             E2EId = p.E2EId,
                             Link = p.Link,
                             MenuItems = menuItems
-                                .Where(c => c.ParentId == p.Id && p.MenuPosition == MenuPosition.Left)
+                                .Where(c => c.ParentId == p.Id && p.MenuPosition == 1)
                                 .OrderBy(c => c.Position)
                                 .Select(x => new MenuItemModel()
                                 {
@@ -82,7 +81,7 @@ namespace eFormAPI.Web.Services
                     ).ToList();
 
                 List<MenuItemModel> orderedRight = menuItems
-                    .Where(p => p.Parent == null && p.MenuPosition == MenuPosition.Right)
+                    .Where(p => p.Parent == null && p.MenuPosition == 0)
                     .OrderBy(p => p.Position)
                     .Select(p => new MenuItemModel()
                         {
@@ -91,7 +90,7 @@ namespace eFormAPI.Web.Services
                             E2EId = p.E2EId,
                             Link = p.Link,
                             MenuItems = menuItems
-                                .Where(c => c.ParentId == p.Id && p.MenuPosition == MenuPosition.Right)
+                                .Where(c => c.ParentId == p.Id && p.MenuPosition == 0)
                                 .OrderBy(c => c.Position)
                                 .Select(x => new MenuItemModel()
                                 {
