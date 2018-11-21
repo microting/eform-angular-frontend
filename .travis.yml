@@ -26,7 +26,9 @@ script:
   - dotnet test -v n eFormAPI/eFormAPI.Web.Tests/eFormAPI.Web.Tests.csproj
   - dotnet test -v n eFormAPI/eFormAPI.Web.Integration.Tests/eFormAPI.Web.Integration.Tests.csproj
   - cd eform-client && npm install
-  - npm test -v
+  - npm start &
+  - cd eFormAPI\eFormAPI.Web && dotnet run &
+  - npm test
 after_success:
 - echo dotnet test and npm test succeeded
 after_faliure:
