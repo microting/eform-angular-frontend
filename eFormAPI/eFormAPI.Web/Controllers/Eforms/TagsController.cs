@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions.Eforms;
 using eFormAPI.Web.Abstractions.Security;
 using eFormAPI.Web.Infrastructure;
+using eFormAPI.Web.Infrastructure.Models.Tags;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
@@ -35,9 +36,9 @@ namespace eFormAPI.Web.Controllers.Eforms
         [HttpGet]
         [Route("api/tags/delete")]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UpdateTags)]
-        public OperationResult DeleteTag(int tagId)
+        public async Task<OperationResult> DeleteTag(int tagId)
         {
-            return _tagsService.DeleteTag(tagId);
+            return await _tagsService.DeleteTag(tagId);
         }
 
         [HttpPost]
@@ -46,6 +47,27 @@ namespace eFormAPI.Web.Controllers.Eforms
         public OperationResult CreateTag(string tagName)
         {
             return _tagsService.CreateTag(tagName);
+        }
+
+        [HttpGet]
+        [Route("api/tags/saved")]
+        public async Task<OperationDataResult<SavedTagsModel>> GetSavedTags()
+        {
+            return await _tagsService.GetSavedTags();
+        }
+
+        [HttpPut]
+        [Route("api/tags/saved")]
+        public async Task<OperationResult> AddTagToSaved([FromBody] SavedTagModel model)
+        {
+            return await _tagsService.AddTagToSaved(model);
+        }
+
+        [HttpDelete]
+        [Route("api/tags/saved")]
+        public async Task<OperationResult> RemoveTagFromSaved(int tagId)
+        {
+            return await _tagsService.RemoveTagFromSaved(tagId);
         }
 
         [HttpPost]

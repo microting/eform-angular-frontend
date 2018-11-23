@@ -2,10 +2,10 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {UserClaimsEnum} from 'src/app/common/enums';
 import {CommonDictionaryModel} from 'src/app/common/models/common';
 import {TemplateDto} from 'src/app/common/models/dto';
-import {TemplateListModel, TemplateRequestModel} from 'src/app/common/models/eforms';
+import {SavedTagModel, TemplateListModel, TemplateRequestModel} from 'src/app/common/models/eforms';
 import {EformPermissionsSimpleModel} from 'src/app/common/models/security/group-permissions/eform';
 import {AuthService} from 'src/app/common/services/auth';
-import {EFormService, EFormTagService} from 'src/app/common/services/eform';
+import {EFormService, EformTagService} from 'src/app/common/services/eform';
 import {SecurityGroupEformsPermissionsService} from 'src/app/common/services/security';
 
 @Component({
@@ -43,7 +43,7 @@ export class EformsPageComponent implements OnInit {
   ];
 
   constructor(private eFormService: EFormService,
-              private eFormTagService: EFormTagService,
+              private eFormTagService: EformTagService,
               private authService: AuthService,
               private securityGroupEformsService: SecurityGroupEformsPermissionsService
   ) {
@@ -51,36 +51,81 @@ export class EformsPageComponent implements OnInit {
 
   ngOnInit() {
     this.loadEformsPermissions();
-    this.loadAllTemplates();
     this.loadAllTags();
   }
 
   loadAllTemplates() {
-      this.spinnerStatus = true;
-      this.eFormService.getAll(this.templateRequestModel).subscribe(operation => {
-        this.spinnerStatus = false;
-        if (operation && operation.success) {
-          this.templateListModel = operation.model;
-        }
-      });
+    this.spinnerStatus = true;
+    this.eFormService.getAll(this.templateRequestModel).subscribe(operation => {
+      this.spinnerStatus = false;
+      if (operation && operation.success) {
+        this.templateListModel = operation.model;
+      }
+    });
   }
 
   loadAllTags() {
     if (this.userClaims.eFormsReadTags) {
-      this.eFormTagService.getAvailableTags().subscribe((data => {
+      this.spinnerStatus = true;
+      this.eFormTagService.getAvailableTags().subscribe((data) => {
         if (data && data.success) {
           this.availableTags = data.model;
+          this.loadSelectedUserTags();
         }
-      }));
+      }, (error) => {
+        this.spinnerStatus = false;
+      });
     }
   }
 
+  saveTag(e: any) {
+    const savedTagModel = new SavedTagModel();
+    savedTagModel.tagId = e.id;
+    savedTagModel.tagName = e.name;
+    this.spinnerStatus = true;
+    this.eFormTagService.addSavedTag(savedTagModel).subscribe((data) => {
+      if (data && data.success) {
+        this.templateRequestModel.tagIds.push(e.id);
+        this.loadAllTemplates();
+      }
+    }, (error) => {
+      this.spinnerStatus = false;
+    });
+  }
+
+  removeSavedTag(e: any) {
+    this.spinnerStatus = true;
+    this.eFormTagService.deleteSavedTag(e.value.id).subscribe(data => {
+      if (data && data.success) {
+        this.templateRequestModel.tagIds = this.templateRequestModel.tagIds.filter(x => x !== e.id);
+        this.loadAllTemplates();
+      }
+    },(error) => {
+      this.spinnerStatus = false;
+    });
+  }
+
+  loadSelectedUserTags() {
+    this.spinnerStatus = true;
+    this.eFormTagService.getSavedTags().subscribe((data) => {
+      if (data && data.success) {
+        this.templateRequestModel.tagIds = data.model.tagList.map(x => x.tagId);
+        this.loadAllTemplates();
+      }
+    }, (error) => {
+      this.spinnerStatus = false;
+    });
+  }
+
   loadEformsPermissions() {
-    this.securityGroupEformsService.getEformsSimplePermissions().subscribe((data => {
+    this.spinnerStatus = false;
+    this.securityGroupEformsService.getEformsSimplePermissions().subscribe((data) => {
       if (data && data.success) {
         this.eformPermissionsSimpleModel = this.securityGroupEformsService.mapEformsSimplePermissions(data.model);
-      }
-    }));
+      } this.spinnerStatus = false;
+    }, (error) => {
+      this.spinnerStatus = false;
+    });
   }
 
   onLabelInputChanged(label: string) {

@@ -195,7 +195,7 @@ namespace eFormAPI.Web
 
         private void ConnectServices(IServiceCollection services)
         {
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();//AddHttpContextAccessor 
             services.AddTransient(provider => provider.GetService<IHttpContextAccessor>().HttpContext.User);
             services.AddSingleton<ILocalizationService, LocalizationService>();
             services.AddScoped<IEFormCoreService, EFormCoreService>();
