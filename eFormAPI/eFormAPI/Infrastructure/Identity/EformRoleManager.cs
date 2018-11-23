@@ -1,8 +1,9 @@
-﻿using eFormApi.BasePn.Infrastructure.Data;
-using eFormApi.BasePn.Infrastructure.Data.Entities;
+﻿using eFormAPI.Web.Infrastructure.Data;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
+using Microting.eFormApi.BasePn.Infrastructure.Data.Entities;
 
 namespace eFormAPI.Web.Infrastructure.Identity
 {
@@ -15,7 +16,7 @@ namespace eFormAPI.Web.Infrastructure.Identity
 
         public static EformRoleManager Create(IdentityFactoryOptions<EformRoleManager> options, IOwinContext context)
         {
-            var appRoleManager = new EformRoleManager(new EformRoleStore(context.Get<BaseDbContext>()));
+            var appRoleManager = new EformRoleManager(new RoleStore<EformRole, int, EformUserRole>(context.Get<BaseDbContext>()));
 
             return appRoleManager;
         }

@@ -19,7 +19,7 @@ export let TemplateTagMethods = {
 };
 
 @Injectable()
-export class EformTagService extends BaseService {
+export class EFormTagService extends BaseService {
   constructor(private _http: HttpClient, router: Router, toastrService: ToastrService) {
     super(_http, router, toastrService);
   }

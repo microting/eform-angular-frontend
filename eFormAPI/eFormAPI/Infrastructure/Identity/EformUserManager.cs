@@ -1,10 +1,11 @@
 ﻿using System;
+using eFormAPI.Web.Infrastructure.Data;
 using eFormAPI.Web.Infrastructure.Services;
-using eFormApi.BasePn.Infrastructure.Data;
-using eFormApi.BasePn.Infrastructure.Data.Entities;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
+using Microting.eFormApi.BasePn.Infrastructure.Data.Entities;
 
 namespace eFormAPI.Web.Infrastructure.Identity
 {
@@ -18,7 +19,7 @@ namespace eFormAPI.Web.Infrastructure.Identity
         public static EformUserManager Create(IdentityFactoryOptions<EformUserManager> options, IOwinContext context)
         {
             var appDbContext = context.Get<BaseDbContext>();
-            var appUserManager = new EformUserManager(new EformUserStore(appDbContext));
+            var appUserManager = new EformUserManager(new UserStore<EformUser, EformRole, int, EformUserLogin, EformUserRole, EformUserClaim>(appDbContext));
 
             // Configure validation logic for usernames
             appUserManager.UserValidator = new UserValidator<EformUser, int>(appUserManager)

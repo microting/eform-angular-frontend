@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {CommonDictionaryModel} from 'src/app/common/models/common';
 import {TemplateDto} from 'src/app/common/models/dto';
 import {SavedTagModel, TemplateListModel, TemplateRequestModel} from 'src/app/common/models/eforms';
-import {EFormService, EformTagService} from 'src/app/common/services/eform';
+import {EFormService, EFormTagService} from 'src/app/common/services';
 
 @Component({
   selector: 'app-eform-page',
@@ -29,7 +29,7 @@ export class EformsPageComponent implements OnInit {
     'Test1'
   ];
 
-  constructor(private eFormService: EFormService, private eFormTagService: EformTagService) { }
+  constructor(private eFormService: EFormService, private eFormTagService: EFormTagService) { }
 
   ngOnInit() {
     this.loadAllTags();

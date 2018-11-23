@@ -1,18 +1,17 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using Base32;
 using Castle.Core.Internal;
 using eFormAPI.Web.Infrastructure.Helpers;
-using eFormApi.BasePn.Infrastructure.Data.Entities;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
+using Microting.eFormApi.BasePn.Infrastructure.Data.Entities;
 using OtpSharp;
+using Claim = System.Security.Claims.Claim;
 
 namespace eFormAPI.Web.Infrastructure.Identity.Providers
 {

@@ -15,7 +15,7 @@ namespace eFormAPI.Web
             configuration.EnableSwagger(c =>
                 {
                     c.SingleApiVersion("v1", "Eform API");
-                    c.IncludeXmlComments($@"{System.AppDomain.CurrentDomain.BaseDirectory}\bin\API.docs.xml");
+                    c.IncludeXmlComments($@"{AppDomain.CurrentDomain.BaseDirectory}\bin\API.docs.xml");
                     c.DescribeAllEnumsAsStrings();
                     c.DocumentFilter<AuthTokenOperation>();
                     c.OperationFilter<AddAuthorizationHeader>();

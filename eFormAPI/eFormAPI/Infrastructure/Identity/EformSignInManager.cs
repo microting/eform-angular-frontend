@@ -1,7 +1,7 @@
-﻿using eFormApi.BasePn.Infrastructure.Data.Entities;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Microting.eFormApi.BasePn.Infrastructure.Data.Entities;
 
 namespace eFormAPI.Web.Infrastructure.Identity
 {
