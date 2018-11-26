@@ -81,7 +81,7 @@ namespace eFormAPI.Web.Services
                     ).ToList();
 
                 List<MenuItemModel> orderedRight = menuItems
-                    .Where(p => p.Parent == null && p.MenuPosition == 0)
+                    .Where(p => p.Parent == null && p.MenuPosition == 2)
                     .OrderBy(p => p.Position)
                     .Select(p => new MenuItemModel()
                         {
@@ -90,7 +90,7 @@ namespace eFormAPI.Web.Services
                             E2EId = p.E2EId,
                             Link = p.Link,
                             MenuItems = menuItems
-                                .Where(c => c.ParentId == p.Id && p.MenuPosition == 0)
+                                .Where(c => c.ParentId == p.Id && p.MenuPosition == 2)
                                 .OrderBy(c => c.Position)
                                 .Select(x => new MenuItemModel()
                                 {

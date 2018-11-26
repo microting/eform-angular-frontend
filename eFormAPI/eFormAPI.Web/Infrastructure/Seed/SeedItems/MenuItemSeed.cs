@@ -104,7 +104,7 @@ namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
                     E2EId = "sign-out-dropdown",
                     Link = "",
                     Position = 0,
-                    MenuPosition = 0,
+                    MenuPosition = 2,
                 },
                 new MenuItem
                 {
@@ -114,7 +114,7 @@ namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
                     Link = "/account-management/users",
                     Position = 0,
                     ParentId = 10,
-                    MenuPosition = 0,
+                    MenuPosition = 2,
                 },
                 new MenuItem
                 {
@@ -124,7 +124,7 @@ namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
                     Link = "/account-management/settings",
                     Position = 1,
                     ParentId = 10,
-                    MenuPosition = 0,
+                    MenuPosition = 2,
                 },
                 new MenuItem
                 {
@@ -134,7 +134,7 @@ namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
                     Link = "/security",
                     Position = 2,
                     ParentId = 10,
-                    MenuPosition = 0,
+                    MenuPosition = 2,
                 },
                 new MenuItem
                 {
@@ -144,7 +144,7 @@ namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
                     Link = "/account-management/change-password",
                     Position = 3,
                     ParentId = 10,
-                    MenuPosition = 0,
+                    MenuPosition = 2,
                 },
                 new MenuItem
                 {
@@ -154,7 +154,7 @@ namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
                     Link = "/auth/sign-out",
                     Position = 4,
                     ParentId = 10,
-                    MenuPosition = 0,
+                    MenuPosition = 2,
                 }
             );
             return modelBuilder;
