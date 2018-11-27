@@ -355,5 +355,13 @@ namespace eFormAPI.Web.Controllers
         }
 
         #endregion
+
+        [Authorize]
+        [HttpGet]
+        [Route("api/settings/version")]
+        public OperationDataResult<string> GetApplicationVersion()
+        {
+            return new OperationDataResult<string>(true, null, Assembly.GetExecutingAssembly().GetName().Version.ToString());
+        }
     }
 }

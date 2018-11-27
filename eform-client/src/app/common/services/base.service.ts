@@ -12,7 +12,7 @@ export class BaseService {
 
   protected get<T>(method: string, params?: any): Observable<any> {
     return this.http.get(method,
-      { headers: this.setHeaders(), params: this.setParams(params) })
+      {headers: this.setHeaders(), params: this.setParams(params)})
       .pipe(
         map((response) => this.extractData<T>(response)),
         catchError(err => this.handleError(err))
@@ -21,7 +21,7 @@ export class BaseService {
 
   protected post<T>(method: string, body: any): Observable<any> {
     const model = JSON.stringify(body);
-    return this.http.post(method, model, { headers: this.setHeaders() })
+    return this.http.post(method, model, {headers: this.setHeaders()})
       .pipe(
         map((response) => this.extractData<T>(response)),
         catchError(err => this.handleError(err))
@@ -29,7 +29,7 @@ export class BaseService {
   }
 
   protected postUrlEncoded<T>(method: string, body: any): Observable<any> {
-    return this.http.post(method, body.toString(), { headers: this.setHeaders('application/x-www-form-urlencoded') })
+    return this.http.post(method, body.toString(), {headers: this.setHeaders('application/x-www-form-urlencoded')})
       .pipe(
         map((response) => this.extractData<T>(response)),
         catchError(err => this.handleError(err))
@@ -37,7 +37,7 @@ export class BaseService {
   }
 
   protected delete<T>(method: string): Observable<any> {
-    return this.http.delete(method, { headers: this.setHeaders() })
+    return this.http.delete(method, {headers: this.setHeaders()})
       .pipe(
         map((response) => this.extractData<T>(response)),
         catchError(err => this.handleError(err))
@@ -46,7 +46,7 @@ export class BaseService {
 
   protected put<T>(method: string, body: any): Observable<any> {
     const model = JSON.stringify(body);
-    return this.http.put(method, model, { headers: this.setHeaders() })
+    return this.http.put(method, model, {headers: this.setHeaders()})
       .pipe(
         map((response) => this.extractData<T>(response)),
         catchError(err => this.handleError(err))
@@ -54,7 +54,7 @@ export class BaseService {
   }
 
   protected postFormData<T>(method: string, body: any): Observable<any> {
-    return this.http.post(method, body, { headers: this.setHeaders('formData') })
+    return this.http.post(method, body, {headers: this.setHeaders('formData')})
       .pipe(
         map((response) => this.extractData<T>(response)),
         catchError(err => this.handleError(err))
@@ -63,7 +63,8 @@ export class BaseService {
 
   private setHeaders(contentType?: string) {
     let headers = new HttpHeaders();
-    if (contentType === 'formData') {} else if (contentType) {
+    if (contentType === 'formData') {
+    } else if (contentType) {
       headers = headers.set('Content-Type', contentType);
     } else {
       headers = headers.set('Content-Type', 'application/json');
@@ -106,10 +107,12 @@ export class BaseService {
     let body;
     try {
       body = res;
-      if (body && body.success && body.message !== 'Success') {
-        this.toastrService.success(body.message);
-      } else if (body && !body.success && body.message) {
-        this.toastrService.error(body.message);
+      if (body && body.message) {
+        if (body.success && body.message !== 'Success') {
+          this.toastrService.success(body.message);
+        } else if (!body.success) {
+          this.toastrService.error(body.message);
+        }
       }
     } catch (e) {
       return {};
