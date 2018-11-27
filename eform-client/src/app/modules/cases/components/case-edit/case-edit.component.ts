@@ -111,16 +111,15 @@ export class CaseEditComponent implements OnInit, OnDestroy {
       this.saveCase();
     } else {
       this.isNoSaveExitAllowed = true;
-      this.navigateToReverse();
     }
   }
 
   navigateToReverse() {
-    if (this.reverseRoute) {
-      this.router.navigate([this.reverseRoute]).then();
-    } else {
-      this.router.navigate(['/cases/', this.currentTemplate.id]).then();
-    }
+      if (this.reverseRoute) {
+        this.router.navigate([this.reverseRoute]).then();
+      } else {
+        this.router.navigate(['/cases/', this.currentTemplate.id]).then();
+      }
   }
 
   canDeactivate(): Observable<boolean> | boolean {
