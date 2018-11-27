@@ -1,5 +1,6 @@
 import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {AdminSettingsModel} from 'src/app/common/models/settings';
+import {environment} from 'src/environments/environment';
 import { AppSettingsService} from '../../common/services/app-settings';
 
 @Component({
@@ -10,6 +11,7 @@ import { AppSettingsService} from '../../common/services/app-settings';
 export class FooterComponent implements OnInit, AfterViewInit {
   adminSettingsModel: AdminSettingsModel;
   version: string;
+  get appVersion() { return environment.VERSION; }
   constructor(private settingsService: AppSettingsService) {
   }
   ngOnInit() {

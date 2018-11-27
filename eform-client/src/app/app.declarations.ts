@@ -13,7 +13,7 @@ import {AppSettingsService} from 'src/app/common/services/app-settings';
 import {AuthService, LocaleService, UserSettingsService} from 'src/app/common/services/auth';
 import {CasesService, ImageService} from 'src/app/common/services/cases';
 import {DeviceUserService} from 'src/app/common/services/device-users';
-import {EFormService, EFormTagService} from 'src/app/common/services/eform';
+import {EFormService, EFormTagService} from 'src/app/common/services';
 import {AdminService} from 'src/app/common/services/users';
 // Guards
 

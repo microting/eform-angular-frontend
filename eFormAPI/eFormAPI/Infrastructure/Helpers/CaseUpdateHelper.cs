@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using eFormAPI.Web.Infrastructure.Models.Cases.Request;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Database;
 
 namespace eFormAPI.Web.Infrastructure.Helpers
 {

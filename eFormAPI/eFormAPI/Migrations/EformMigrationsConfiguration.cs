@@ -1,9 +1,10 @@
 using System.Configuration;
+using eFormAPI.Web.Infrastructure.Data;
 using eFormAPI.Web.Infrastructure.Identity;
-using eFormApi.BasePn.Consts;
-using eFormApi.BasePn.Infrastructure.Data;
-using eFormApi.BasePn.Infrastructure.Data.Entities;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microting.eFormApi.BasePn.Consts;
+using Microting.eFormApi.BasePn.Infrastructure.Data.Entities;
 
 namespace eFormAPI.Web.Migrations
 {
@@ -30,7 +31,7 @@ namespace eFormAPI.Web.Migrations
                 _connectionString = ConfigurationManager.ConnectionStrings["eFormMainConnection"].ConnectionString;
             }
             // Seed roles
-            var roleManager = new EformRoleManager(new EformRoleStore(new BaseDbContext(_connectionString)));
+            var roleManager = new EformRoleManager(new RoleStore<EformRole, int, EformUserRole>(new BaseDbContext(_connectionString)));
             if (!roleManager.RoleExists(EformRoles.Admin))
             {
                 roleManager.Create(new EformRole(EformRoles.Admin));

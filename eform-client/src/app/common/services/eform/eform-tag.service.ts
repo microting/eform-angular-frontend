@@ -6,7 +6,7 @@ import {Observable} from 'rxjs';
 import {
   CommonDictionaryModel,
   OperationDataResult,
-  OperationResult,
+  OperationResult, SavedTagModel,
   TemplateTagsUpdateModel
 } from 'src/app/common/models';
 import {BaseService} from 'src/app/common/services/base.service';
@@ -14,7 +14,8 @@ import {BaseService} from 'src/app/common/services/base.service';
 export let TemplateTagMethods = {
   Tags: 'api/tags',
   DeleteTag: 'api/tags/delete',
-  TemplateTags: 'api/tags/template'
+  TemplateTags: 'api/tags/template',
+  SavedTags: 'api/tags/saved'
 };
 
 @Injectable()
@@ -25,6 +26,18 @@ export class EFormTagService extends BaseService {
 
   getAvailableTags(): Observable<OperationDataResult<Array<CommonDictionaryModel>>> {
     return this.get(TemplateTagMethods.Tags);
+  }
+
+  getSavedTags(): Observable<OperationDataResult<any>> {
+    return this.get(TemplateTagMethods.SavedTags);
+  }
+
+  addSavedTag(model: SavedTagModel): Observable<OperationResult> {
+    return this.put(TemplateTagMethods.SavedTags, model);
+  }
+
+  deleteSavedTag(tagId: number): Observable<OperationResult> {
+    return this.delete(TemplateTagMethods.SavedTags + '?tagId=' + tagId);
   }
 
   deleteTag(tagId: number): Observable<OperationResult> {

@@ -2,11 +2,12 @@
 using System.Configuration;
 using System.Linq;
 using System.Web.Configuration;
+using eFormAPI.Web.Infrastructure.Data;
 using eFormAPI.Web.Infrastructure.Identity;
 using eFormAPI.Web.Infrastructure.Models.Settings.Initial;
-using eFormApi.BasePn.Infrastructure.Data;
-using eFormApi.BasePn.Infrastructure.Data.Entities;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microting.eFormApi.BasePn.Infrastructure.Data.Entities;
 using NLog;
 
 namespace eFormAPI.Web.Infrastructure.Helpers
@@ -28,7 +29,10 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                 _connectionString = ConfigurationManager.ConnectionStrings["eFormMainConnection"].ConnectionString;
             }
             // Seed admin and demo users
-            var manager = new EformUserManager(new EformUserStore(new BaseDbContext(_connectionString)));
+            var manager =
+                new EformUserManager(
+                    new UserStore<EformUser, EformRole, int, EformUserLogin, EformUserRole, EformUserClaim>(
+                        new BaseDbContext(_connectionString)));
             var adminUser = new EformUser()
             {
                 UserName = adminSetupModel.UserName,
@@ -50,11 +54,11 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                 if (ir != null)
                 {
                     manager.AddToRole(adminUser.Id, "admin");
-                } else
+                }
+                else
                 {
                     throw new Exception("Could not create the user");
                 }
-                
             }
         }
 
@@ -62,9 +66,8 @@ namespace eFormAPI.Web.Infrastructure.Helpers
         {
             try
             {
-
                 var configuration = WebConfigurationManager.OpenWebConfiguration("~");
-                var section = (AppSettingsSection)configuration.GetSection("appSettings");
+                var section = (AppSettingsSection) configuration.GetSection("appSettings");
                 return section.Settings["auth:isTwoFactorForced"].Value.Equals("True");
             }
             catch (Exception e)
@@ -79,7 +82,7 @@ namespace eFormAPI.Web.Infrastructure.Helpers
             try
             {
                 var configuration = WebConfigurationManager.OpenWebConfiguration("~");
-                var section = (AppSettingsSection)configuration.GetSection("appSettings");
+                var section = (AppSettingsSection) configuration.GetSection("appSettings");
                 section.Settings["auth:isTwoFactorForced"].Value = isTwoFactorEnabled.ToString();
                 configuration.Save();
                 ConfigurationManager.RefreshSection("appSettings");

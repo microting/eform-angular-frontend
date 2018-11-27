@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace eFormAPI.Web.Infrastructure.Helpers.ExchangeTokenValidation
+﻿namespace eFormAPI.Web.Infrastructure.Helpers.ExchangeTokenValidation
 {
     /// <summary>
     /// Provides validation results for an Exchange identity token

@@ -117,7 +117,9 @@ export class CaseEditComponent implements OnInit, OnDestroy {
 
   navigateToReverse() {
     if (this.reverseRoute) {
-      this.router.navigate([this.reverseRoute]);
+      this.router.navigate([this.reverseRoute]).then();
+    } else {
+      this.router.navigate(['/cases/', this.currentTemplate.id]).then();
     }
   }
 

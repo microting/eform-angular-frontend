@@ -5,17 +5,18 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
+using eFormAPI.Web.Infrastructure.Data;
 using eFormAPI.Web.Infrastructure.Helpers;
 using eFormAPI.Web.Infrastructure.Identity;
 using eFormAPI.Web.Infrastructure.Models.Common;
 using eFormAPI.Web.Infrastructure.Models.User;
-using eFormApi.BasePn.Consts;
-using eFormApi.BasePn.Infrastructure.Data;
-using eFormApi.BasePn.Infrastructure.Data.Entities;
-using eFormApi.BasePn.Infrastructure.Helpers;
-using eFormApi.BasePn.Infrastructure.Models.API;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
+using Microting.eFormApi.BasePn.Consts;
+using Microting.eFormApi.BasePn.Infrastructure.Data.Entities;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using NLog;
 
 namespace eFormAPI.Web.Controllers
@@ -41,7 +42,7 @@ namespace eFormAPI.Web.Controllers
 
         public EformRoleManager RoleManager
         {
-            get => _eformRoleManager ?? new EformRoleManager(new EformRoleStore(BaseDbContext.Create()));
+            get => _eformRoleManager ?? new EformRoleManager(new RoleStore<EformRole, int, EformUserRole>(BaseDbContext.Create()));
             set => _eformRoleManager = value;
         }
 

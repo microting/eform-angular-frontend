@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿
+using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
 using System.Net.Http;
@@ -6,17 +7,18 @@ using System.Threading.Tasks;
 using System.Web.Configuration;
 using System.Web.Http;
 using Castle.Core.Internal;
+using eFormAPI.Web.Infrastructure.Data;
 using eFormAPI.Web.Infrastructure.Identity;
 using eFormAPI.Web.Infrastructure.Models.Auth;
 using eFormAPI.Web.Infrastructure.Models.Settings.User;
 using eFormAPI.Web.Infrastructure.Models.User;
-using eFormApi.BasePn.Consts;
-using eFormApi.BasePn.Infrastructure.Data;
-using eFormApi.BasePn.Infrastructure.Data.Entities;
-using eFormApi.BasePn.Infrastructure.Helpers;
-using eFormApi.BasePn.Infrastructure.Models.API;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
+using Microting.eFormApi.BasePn.Consts;
+using Microting.eFormApi.BasePn.Infrastructure.Data.Entities;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Controllers
 {
@@ -31,7 +33,7 @@ namespace eFormAPI.Web.Controllers
         public AccountController(BaseDbContext dbContext)
         {
             _eformRoleManager = new EformRoleManager(
-                new EformRoleStore(new BaseDbContext()));
+                new RoleStore<EformRole, int, EformUserRole>(new BaseDbContext()));
             _dbContext = dbContext;
         }
 
@@ -47,7 +49,7 @@ namespace eFormAPI.Web.Controllers
             {
                 return null;
             }
-            var rolemanager = new EformRoleManager(new EformRoleStore(BaseDbContext.Create()));
+            var rolemanager = new EformRoleManager(new RoleStore<EformRole, int, EformUserRole>(BaseDbContext.Create()));
             var roleId = user.Roles.FirstOrDefault()?.RoleId;
             string role = null;
             if (roleId != null) role = rolemanager.FindById((int) roleId)?.Name;
