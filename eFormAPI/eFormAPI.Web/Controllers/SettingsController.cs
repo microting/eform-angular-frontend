@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Reflection;
+using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -96,5 +98,13 @@ namespace eFormAPI.Web.Controllers
         }
 
         #endregion
+
+        [Authorize]
+        [HttpGet]
+        [Route("api/settings/version")]
+        public OperationDataResult<string> GetApplicationVersion()
+        {
+            return _settingsService.GetAssemblyVersion();
+        }
     }
 }

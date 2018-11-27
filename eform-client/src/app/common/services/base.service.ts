@@ -105,7 +105,7 @@ export class BaseService {
     let body;
     try {
       body = res;
-      if (body && body.success && body.message !== 'Success') {
+      if (body && body.success && body.message && body.message !== 'Success') {
         this.toastrService.success(body.message);
       } else if (body && !body.success && body.message) {
         this.toastrService.error(body.message);

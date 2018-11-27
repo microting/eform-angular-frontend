@@ -293,6 +293,11 @@ namespace eFormAPI.Web.Services
             }
         }
 
+        public OperationDataResult<string> GetAssemblyVersion()
+        {
+            return new OperationDataResult<string>(true, null, Assembly.GetExecutingAssembly().GetName().Version.ToString());
+        }
+
         public OperationDataResult<AdminSettingsModel> GetAdminSettings()
         {
             try
