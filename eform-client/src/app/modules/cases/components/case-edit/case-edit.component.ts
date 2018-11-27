@@ -37,8 +37,13 @@ export class CaseEditComponent implements OnInit, OnDestroy {
   spinnerStatus = false;
   reverseRoute: string;
 
-  get userClaims() { return this.authService.userClaims; }
-  get userClaimsEnum() { return UserClaimsEnum; }
+  get userClaims() {
+    return this.authService.userClaims;
+  }
+
+  get userClaimsEnum() {
+    return UserClaimsEnum;
+  }
 
   constructor(private activateRoute: ActivatedRoute,
               private casesService: CasesService,
@@ -105,7 +110,8 @@ export class CaseEditComponent implements OnInit, OnDestroy {
           this.currentTemplate = operation.model;
           this.loadEformPermissions(this.currentTemplate.id);
           this.loadCase();
-        } this.spinnerStatus = false;
+        }
+        this.spinnerStatus = false;
       });
     }
   }
@@ -123,7 +129,6 @@ export class CaseEditComponent implements OnInit, OnDestroy {
       this.saveCase();
     } else {
       this.isNoSaveExitAllowed = true;
-      this.navigateToReverse();
     }
   }
 
