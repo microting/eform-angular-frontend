@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Settings.Admin;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Settings.Initial;
@@ -12,6 +13,7 @@ namespace eFormAPI.Web.Abstractions
         OperationDataResult<string> GetDefaultLocale();
         OperationDataResult<LoginPageSettingsModel> GetLoginPageSettings();
         OperationDataResult<HeaderSettingsModel> GetPageHeaderSettings();
+        OperationDataResult<string> GetAssemblyVersion();
         OperationResult ResetLoginPageSettings();
         OperationResult ResetPageHeaderSettings();
         OperationResult UpdateAdminSettings(AdminSettingsModel adminSettingsModel);
