@@ -1,31 +1,26 @@
-import {Component, OnInit, AfterViewInit} from '@angular/core';
-import {AdminSettingsModel} from 'src/app/common/models/settings';
-import {environment} from 'src/environments/environment';
-import { AppSettingsService} from '../../common/services/app-settings';
+import {Component, OnInit} from '@angular/core';
+import {AppSettingsService} from '../../common/services/app-settings';
 
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss']
 })
-export class FooterComponent implements OnInit, AfterViewInit {
-  adminSettingsModel: AdminSettingsModel;
+export class FooterComponent implements OnInit {
   version: string;
-  get appVersion() { return environment.VERSION; }
+
   constructor(private settingsService: AppSettingsService) {
   }
+
   ngOnInit() {
-  // this.getAssemblyVersion('AssemblyVersion');
+    this.getAssemblyVersion();
   }
-  ngAfterViewInit() {
-  }
-  getAssemblyVersion(attribute: string) {
-    this.settingsService.getOneAdminSetting(attribute).subscribe(operation => {
+
+  getAssemblyVersion() {
+    this.settingsService.getAssemblyVersion().subscribe(operation => {
       if (operation && operation.success) {
-        this.adminSettingsModel = operation.model;
+        this.version = operation.model;
       }
-      this.version = this.adminSettingsModel.assemblyVersion;
     });
-    return this.version;
   }
 }
