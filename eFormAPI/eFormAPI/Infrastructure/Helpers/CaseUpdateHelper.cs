@@ -55,7 +55,7 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                     var commentFirst = editRequestField?.FieldValues?.First();
                     if (commentFirst?.Value != null && commentFirst?.FieldId != null)
                     {
-                        string val = $"{commentFirst.FieldId}|{commentFirst.Value.ToString()}";
+                        string val = $"{commentFirst.FieldId}|{commentFirst.Value.ToString().Replace("</p>", "<br>").Replace("<p>", "").Replace("<div>", "").Replace("</div>", "<br>").Replace("&nbsp;", "").Replace("</span>","").Replace("<span style=\"font-size: 1rem;\">","")}";
                         list.Add(val);
                     }
 
