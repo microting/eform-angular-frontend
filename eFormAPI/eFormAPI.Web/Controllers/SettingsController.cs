@@ -99,7 +99,7 @@ namespace eFormAPI.Web.Controllers
 
         #endregion
 
-        [Authorize]
+        [AllowAnonymous]
         [HttpGet]
         [Route("api/settings/version")]
         public OperationDataResult<string> GetApplicationVersion()
