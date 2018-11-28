@@ -46,7 +46,14 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                     var checkBoxfirst = editRequestField?.FieldValues?.First();
                     if (checkBoxfirst?.Value != null && checkBoxfirst?.FieldId != null)
                     {
-                        string val = $"{checkBoxfirst.FieldId}|{checkBoxfirst.Value.ToString()}";
+                        string val;
+                        if (checkBoxfirst.Value.ToString() == "1" || checkBoxfirst.Value.ToString() == "checked")
+                        {
+                            val = $"{checkBoxfirst.FieldId}|checked";
+                        } else
+                        {
+                            val = $"{checkBoxfirst.FieldId}|unchecked";
+                        }
                         list.Add(val);
                     }
 
@@ -55,7 +62,7 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                     var commentFirst = editRequestField?.FieldValues?.First();
                     if (commentFirst?.Value != null && commentFirst?.FieldId != null)
                     {
-                        string val = $"{commentFirst.FieldId}|{commentFirst.Value.ToString().Replace("</p>", "<br>").Replace("<p>", "").Replace("<div>", "").Replace("</div>", "<br>").Replace("&nbsp;", "").Replace("</span>","").Replace("<span style=\"font-size: 1rem;\">","")}";
+                        string val = $"{commentFirst.FieldId}|{commentFirst.Value.ToString().Replace("</p>", "<br>").Replace("<p>", "").Replace("<div>", "").Replace("</div>", "<br>").Replace("&nbsp;", "").Replace("</span>","").Replace("<span style=\"font-size: 1rem;\">","").Replace("</br>","<br>")}";
                         list.Add(val);
                     }
 
