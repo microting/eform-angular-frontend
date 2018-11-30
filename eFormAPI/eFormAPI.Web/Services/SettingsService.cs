@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
@@ -89,19 +90,52 @@ namespace eFormAPI.Web.Services
 
         public async Task<OperationResult> UpdateConnectionString(InitialSettingsModel initialSettingsModel)
         {
-            string sdkConnectionString = initialSettingsModel.ConnectionStringSdk.Source + ";Initial Catalog="
-                                                                                      + initialSettingsModel
-                                                                                          .ConnectionStringSdk
-                                                                                          .Catalogue + ";"
-                                                                                      + initialSettingsModel
-                                                                                          .ConnectionStringSdk.Auth;
+            string sdkConnectionString, mainConnectionString;
+            string customerNo = initialSettingsModel.GeneralAppSetupSettingsModel.CustomerNo.toString();
+            string dbNamePrefix = "";
+            
+            if (initialSettingsModel.ConnectionStringSdk.PrefixAllDatabases)
+            {
+                dbNamePrefix = "Microting_";
+            }
+            string sdkDbName = dbNamePrefix + customerNo + "_SDK";
+            string angularDbName = dbNamePrefix + customerNo + "_Angular";
+            
+            if (initialSettingsModel.ConnectionStringSdk.SqlServerType == "mssql")
+            {
+                sdkConnectionString = initialSettingsModel.ConnectionStringSdk.Host + 
+                                      ";Initial Catalog=" +
+                                      sdkDbName + ";" +
+                                      initialSettingsModel
+                                          .ConnectionStringSdk.Auth;
 
-            string mainConnectionString = initialSettingsModel.ConnectionStringMain.Source + ";Initial Catalog="
-                                                                                        + initialSettingsModel
-                                                                                            .ConnectionStringMain
-                                                                                            .Catalogue + ";"
-                                                                                        + initialSettingsModel
-                                                                                            .ConnectionStringMain.Auth;
+                mainConnectionString = initialSettingsModel.ConnectionStringSdk.Host +
+                                       ";Initial Catalog=" +
+                                       angularDbName + ";" +
+                                       initialSettingsModel
+                                           .ConnectionStringSdk.Auth;
+            }
+            else
+            {
+                sdkConnectionString = "host= " +
+                                      initialSettingsModel.ConnectionStringSdk.Host +
+                                      ";Database=" + 
+                                      sdkDbName + ";" +
+                                      initialSettingsModel
+                                          .ConnectionStringSdk.Auth + 
+                                      "port=" + initialSettingsModel.ConnectionStringSdk.Port +
+                                      "Convert Zero Datetime = true;";
+
+                mainConnectionString = initialSettingsModel.ConnectionStringSdk.Source +
+                                       ";Database=" +
+                                       angularDbName + ";" +
+                                       initialSettingsModel
+                                           .ConnectionStringSdk.Auth +
+                                       "port=" + initialSettingsModel.ConnectionStringSdk.Port +
+                                       "Convert Zero Datetime = true;";
+            }
+            
+            
             if (!string.IsNullOrEmpty(_connectionStrings.Value.SdkConnection))
             {
                 return new OperationResult(false, 
@@ -183,7 +217,7 @@ namespace eFormAPI.Web.Services
                     // Seed admin and demo users
                     EformUser adminUser = new EformUser()
                     {
-                        UserName = initialSettingsModel.AdminSetupModel.UserName,
+                        UserName = initialSettingsModel.AdminSetupModel.Email,
                         Email = initialSettingsModel.AdminSetupModel.Email,
                         FirstName = initialSettingsModel.AdminSetupModel.FirstName,
                         LastName = initialSettingsModel.AdminSetupModel.LastName,
@@ -296,6 +330,15 @@ namespace eFormAPI.Web.Services
         public OperationDataResult<string> GetAssemblyVersion()
         {
             return new OperationDataResult<string>(true, null, Assembly.GetExecutingAssembly().GetName().Version.ToString());
+        }
+
+        public OperationDataResult<string> GetApplicationHostOs()
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return new OperationDataResult<string>(true, "Windows");
+            }            
+            return new OperationDataResult<string>(true, "Linux");
         }
 
         public OperationDataResult<AdminSettingsModel> GetAdminSettings()

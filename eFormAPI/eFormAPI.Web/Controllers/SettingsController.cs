@@ -106,5 +106,14 @@ namespace eFormAPI.Web.Controllers
         {
             return _settingsService.GetAssemblyVersion();
         }
+        
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("api/settings/hostos")]
+        public OperationDataResult<string> GetApplicationHostOs()
+        {
+            
+            return _settingsService.GetApplicationHostOs();
+        }
     }
 }

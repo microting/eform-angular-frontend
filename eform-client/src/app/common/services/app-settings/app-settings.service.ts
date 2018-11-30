@@ -19,13 +19,15 @@ const SettingsMethods = {
   UpdateConnectionString: '/api/settings/connection-string',
   ConnectionStringExist: '/api/settings/connection-string-exist',
   GetAdminSettings: '/api/settings/admin',
+  GetAssemblyVersion: '/api/settings/version',
+  GetApplicationHostOs: '/api/settings/hostos',
   ResetLoginPageSettings: '/api/settings/reset-login-page',
   ResetHeaderSettings: '/api/settings/reset-page-header',
   GetLoginPageSettings: '/api/settings/login-page',
   GetHeaderSettings: '/api/settings/page-header',
   GetAnonymousImage: 'api/images/login-page-images',
   GetAuthorizedImage: 'api/images/eform-images'
-}; 
+};
 
 @Injectable()
 export class AppSettingsService extends BaseService {
@@ -58,7 +60,10 @@ export class AppSettingsService extends BaseService {
   resetHeaderSettings(): Observable<OperationResult> {
     return this.get(SettingsMethods.ResetHeaderSettings);
   }
-  getOneAdminSetting(attribute: string): Observable<OperationDataResult<AdminSettingsModel>> {
-    return this.get<AdminSettingsModel>(SettingsMethods.GetAdminSettings, attribute);
+  getAssemblyVersion(): Observable<OperationDataResult<string>> {
+    return this.get<string>(SettingsMethods.GetAssemblyVersion);
+  }
+  getApplicationHostOs(): Observable<OperationDataResult<string>> {
+    return this.get<string>(SettingsMethods.GetApplicationHostOs);
   }
 }
