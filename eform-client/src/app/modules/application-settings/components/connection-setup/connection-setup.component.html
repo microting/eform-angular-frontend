@@ -20,23 +20,6 @@
           <div class="col-md-6">
             <div class="md-form input-group">
               <input mdbInputDirective
-                     [mdbValidate]="false"
-                     [(ngModel)]="settingsModel.adminSetupModel.password"
-                     required type="text" name="password" #password="ngModel"
-                     id="password" class="form-control">
-              <label for="password">Password<span class="text-danger">*</span> </label>
-            </div>
-            <div class="md-form input-group">
-              <input mdbInputDirective
-                     [(ngModel)]="settingsModel.adminSetupModel.email"
-                     [mdbValidate]="false"
-                     type="email" name="email" id="email" #email="ngModel" class="form-control">
-              <label for="email">Email</label>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="md-form input-group">
-              <input mdbInputDirective
                      [mdbValidate]="false" [(ngModel)]="settingsModel.adminSetupModel.firstName"
                      type="text" name="firstName" #firstName="ngModel"
                      id="firstName" class="form-control">
@@ -49,6 +32,23 @@
                      type="text" name="lastName" #lastName="ngModel"
                      id="lastName" class="form-control">
               <label for="lastName">Last Name</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="md-form input-group">
+              <input mdbInputDirective
+                     [(ngModel)]="settingsModel.adminSetupModel.email"
+                     [mdbValidate]="false"
+                     type="email" name="email" id="email" #email="ngModel" class="form-control">
+              <label for="email">Email</label>
+            </div>
+            <div class="md-form input-group">
+              <input mdbInputDirective
+                     [mdbValidate]="false"
+                     [(ngModel)]="settingsModel.adminSetupModel.password"
+                     required type="text" name="password" #password="ngModel"
+                     id="password" class="form-control">
+              <label for="password">Password<span class="text-danger">*</span> </label>
             </div>
           </div>
         </div>
@@ -92,8 +92,8 @@
                          [(ngModel)]="settingsModel.connectionStringSDK.host"
                          [mdbValidate]="false"
                          placeholder="Data Source=COMPUTER_NAME\SQLEXPRESS" type="text"
-                         required name="source" id="source1" class="form-control">
-                  <label for="source1">Data Source<span class="text-danger">*</span></label>
+                         required name="host" id="host1" class="form-control">
+                  <label for="host1">Data Source<span class="text-danger">*</span></label>
                 </div>
                 <div class="md-form input-group" *ngIf="settingsModel.connectionStringSDK.sqlServerType === 'mssql'">
                   <input mdbInputDirective
@@ -108,15 +108,15 @@
                          [(ngModel)]="settingsModel.connectionStringSDK.host"
                          [mdbValidate]="false"
                          placeholder="localhost" type="text"
-                         required name="source" id="source2" class="form-control">
-                  <label for="source2">Server<span class="text-danger">*</span></label>
+                         required name="host" id="host2" class="form-control">
+                  <label for="host2">Server<span class="text-danger">*</span></label>
                 </div>
                 <div class="md-form input-group" *ngIf="settingsModel.connectionStringSDK.sqlServerType === 'mysql'">
                   <input mdbInputDirective
                          [mdbValidate]="false"
                          [(ngModel)]="settingsModel.connectionStringSDK.port"
                          placeholder="3306"
-                         type="text" name="auth" id="port" class="form-control">
+                         type="text" name="port" id="port" class="form-control">
                   <label for="port">Port<span class="text-danger">*</span></label>
                 </div>
                 <div class="md-form input-group" *ngIf="settingsModel.connectionStringSDK.sqlServerType === 'mysql'">

@@ -33,6 +33,8 @@ export class ConnectionSetupComponent implements OnInit {
           this.settingsModel.connectionStringSDK.sqlServerType = 'mssql';
         } else {
           this.settingsModel.connectionStringSDK.sqlServerType = 'mysql';
+          this.settingsModel.connectionStringSDK.port = 3306;
+          this.settingsModel.connectionStringSDK.host = 'localhost';
         }
       }
     });

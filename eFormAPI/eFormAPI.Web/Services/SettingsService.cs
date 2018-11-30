@@ -91,7 +91,7 @@ namespace eFormAPI.Web.Services
         public async Task<OperationResult> UpdateConnectionString(InitialSettingsModel initialSettingsModel)
         {
             string sdkConnectionString, mainConnectionString;
-            string customerNo = initialSettingsModel.GeneralAppSetupSettingsModel.CustomerNo.toString();
+            string customerNo = initialSettingsModel.GeneralAppSetupSettingsModel.CustomerNo.ToString();
             string dbNamePrefix = "";
             
             if (initialSettingsModel.ConnectionStringSdk.PrefixAllDatabases)
@@ -124,15 +124,16 @@ namespace eFormAPI.Web.Services
                                       initialSettingsModel
                                           .ConnectionStringSdk.Auth + 
                                       "port=" + initialSettingsModel.ConnectionStringSdk.Port +
-                                      "Convert Zero Datetime = true;";
+                                      ";Convert Zero Datetime = true;";
 
-                mainConnectionString = initialSettingsModel.ConnectionStringSdk.Source +
+                mainConnectionString = "host= " +
+                                       initialSettingsModel.ConnectionStringSdk.Host +
                                        ";Database=" +
                                        angularDbName + ";" +
                                        initialSettingsModel
                                            .ConnectionStringSdk.Auth +
                                        "port=" + initialSettingsModel.ConnectionStringSdk.Port +
-                                       "Convert Zero Datetime = true;";
+                                       ";Convert Zero Datetime = true;";
             }
             
             
