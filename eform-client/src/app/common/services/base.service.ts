@@ -116,16 +116,10 @@ export class BaseService {
     return <T>body || {};
   }
 
-  // private extractData<T>(res: Response) {
-  //   const body = res.json();
-  //   return <T>body || {};
-  // }
-
   private logOutWhenTokenFalse() {
     localStorage.clear();
     this.router.navigate(['/auth']).then();
   }
-
 
   private handleError(error: Response | any) {
     let errorMessage = '';

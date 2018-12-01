@@ -26,23 +26,20 @@
     <table class="table table-sm table-striped text-center z-depth-1">
       <thead>
       <tr>
-        <th scope="col" class="table-header-sortable"
-            (click)="sortByUid()">
+        <th scope="col" class="table-header-sortable" (click)="sortTable('id')">
           <div class="d-flex align-items-center justify-content-center">
             ID
-            <i class="material-icons text-black-50" *ngIf="!isSortedByUidDsc && !isSortedByUidAsc">unfold_more</i>
-            <i class="material-icons" *ngIf="isSortedByUidAsc">expand_less</i>
-            <i class="material-icons" *ngIf="isSortedByUidDsc">expand_more</i>
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'id'">unfold_more</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'id' && !localPageSettings.isSortDsc">expand_less</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'id' && localPageSettings.isSortDsc">expand_more</i>
           </div>
-
         </th>
-        <th class="table-header-sortable"
-            (click)="sortByName()">
+        <th class="table-header-sortable" (click)="sortTable('name')">
           <div class="d-flex align-items-center justify-content-center">
             {{ 'Name' | translate }}
-            <i class="material-icons text-black-50" *ngIf="!isSortedByNameDsc && !isSortedByNameAsc">unfold_more</i>
-            <i class="material-icons" *ngIf="isSortedByNameAsc">expand_less</i>
-            <i class="material-icons" *ngIf="isSortedByNameDsc">expand_more</i>
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'name'">unfold_more</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'name' && !localPageSettings.isSortDsc">expand_less</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'name' && localPageSettings.isSortDsc">expand_more</i>
           </div>
         </th>
         <th *ngIf="userClaims.entitySearchDelete || userClaims.entitySearchUpdate">
@@ -75,19 +72,32 @@
       </tr>
       </tbody>
     </table>
-  </div>
 
-  <!--pagination(if required)-->
-  <eform-pagination
-    *ngIf="advEntitySearchableGroupListModel.numOfElements > advEntitySearchableGroupListRequestModel.pageSize"
-    [limit]="advEntitySearchableGroupListRequestModel.pageSize"
-    [size]="advEntitySearchableGroupListModel.numOfElements"
-    [offset]="advEntitySearchableGroupListRequestModel.offset"
-    (onPageChanged)="changePage($event)"></eform-pagination>
+
+  </div>
+  <div class="row justify-content-between mr-2 ml-2">
+    <div class="col-md-1">
+      <eform-page-size
+        [pageSize]="localPageSettings.pageSize"
+        (onPageSizeChanged)="localPageSettings.pageSize = $event; updateLocalPageSettings('pagesSettings')">
+      </eform-page-size>
+    </div>
+    <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
+      <eform-pagination
+                        *ngIf="advEntitySearchableGroupListModel.numOfElements > advEntitySearchableGroupListRequestModel.pageSize"
+                        [limit]="advEntitySearchableGroupListRequestModel.pageSize"
+                        [size]="advEntitySearchableGroupListModel.numOfElements"
+                        [offset]="advEntitySearchableGroupListRequestModel.offset"
+                        (onPageChanged)="changePage($event)"></eform-pagination>
+    </div>
+  </div>
 </div>
 
 <eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>
 
-<app-entity-search-create (onEntityGroupCreated)="getEntitySearchableGroupList()" #modalSearchCreate></app-entity-search-create>
-<app-entity-search-remove (onEntityRemoved)="getEntitySearchableGroupList()" #modalSearchRemove></app-entity-search-remove>
-<app-entity-search-edit (onEntityGroupEdited)="getEntitySearchableGroupList()" #modalSearchEdit></app-entity-search-edit>
+<app-entity-search-create (onEntityGroupCreated)="getEntitySearchableGroupList()"
+                          #modalSearchCreate></app-entity-search-create>
+<app-entity-search-remove (onEntityRemoved)="getEntitySearchableGroupList()"
+                          #modalSearchRemove></app-entity-search-remove>
+<app-entity-search-edit (onEntityGroupEdited)="getEntitySearchableGroupList()"
+                        #modalSearchEdit></app-entity-search-edit>

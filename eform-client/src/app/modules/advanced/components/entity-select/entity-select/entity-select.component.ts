@@ -1,10 +1,12 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
+import {ApplicationPages} from 'src/app/common/enums';
 import {
   AdvEntitySelectableGroupListModel,
   AdvEntitySelectableGroupListRequestModel, AdvEntitySelectableGroupModel
 } from 'src/app/common/models/advanced';
+import {PageSettingsModel} from 'src/app/common/models/settings';
 import {EntitySearchService, EntitySelectService} from 'src/app/common/services/advanced';
-import {AuthService} from 'src/app/common/services/auth';
+import {AuthService, UserSettingsService} from 'src/app/common/services/auth';
 
 @Component({
   selector: 'app-selectable-list',
@@ -15,23 +17,46 @@ export class EntitySelectComponent implements OnInit {
   @ViewChild('modalSelectRemove') modalSelectRemove;
   @ViewChild('modalSelectCreate') modalSelectCreate;
   @ViewChild('modalSelectEdit') modalSelectEdit;
+  localPageSettings: PageSettingsModel = new PageSettingsModel();
   spinnerStatus: boolean;
   selectedAdvGroup: AdvEntitySelectableGroupModel = new AdvEntitySelectableGroupModel();
   advEntitySelectableGroupListModel: AdvEntitySelectableGroupListModel = new AdvEntitySelectableGroupListModel();
   advEntitySelectableGroupListRequestModel: AdvEntitySelectableGroupListRequestModel
     = new AdvEntitySelectableGroupListRequestModel();
-  isSortedByUidAsc = false;
-  isSortedByUidDsc = false;
-  isSortedByNameAsc = false;
-  isSortedByNameDsc = false;
 
   get userClaims() { return this.authService.userClaims; }
 
-  constructor(private entitySelectService: EntitySelectService, private authService: AuthService) {
+  constructor(private entitySelectService: EntitySelectService, private authService: AuthService, public userSettingsService: UserSettingsService) {
   }
 
   ngOnInit() {
+    this.getLocalPageSettings();
+  }
+
+  getEntitySelectableGroupList() {
+    this.spinnerStatus = true;
+    this.advEntitySelectableGroupListRequestModel.isSortDsc = this.localPageSettings.isSortDsc;
+    this.advEntitySelectableGroupListRequestModel.sort = this.localPageSettings.sort;
+    this.advEntitySelectableGroupListRequestModel.pageSize = this.localPageSettings.pageSize;
+    this.entitySelectService.getEntitySelectableGroupList(this.advEntitySelectableGroupListRequestModel).subscribe((data) => {
+      if (data && data.model) {
+        this.advEntitySelectableGroupListModel = data.model;
+      } this.spinnerStatus = false;
+    });
+  }
+
+  getLocalPageSettings() {
+    this.localPageSettings = this.userSettingsService.getLocalPageSettings
+    ('pagesSettings', ApplicationPages[ApplicationPages.EntitySelect])
+      .settings;
     this.getEntitySelectableGroupList();
+  }
+
+
+  updateLocalPageSettings(localStorageItemName: string) {
+    this.userSettingsService.updateLocalPageSettings
+    (localStorageItemName, this.localPageSettings, ApplicationPages[ApplicationPages.EntitySelect]);
+    this.getLocalPageSettings();
   }
 
   openModalSelectRemove(selectedSelectModel: AdvEntitySelectableGroupModel) {
@@ -59,14 +84,7 @@ export class EntitySelectComponent implements OnInit {
     this.getEntitySelectableGroupList();
   }
 
-  getEntitySelectableGroupList() {
-    this.spinnerStatus = true;
-    this.entitySelectService.getEntitySelectableGroupList(this.advEntitySelectableGroupListRequestModel).subscribe((data) => {
-      if (data && data.model) {
-        this.advEntitySelectableGroupListModel = data.model;
-      } this.spinnerStatus = false;
-    });
-  }
+
 
   changePage(e: any) {
     if (e || e === 0) {
@@ -81,41 +99,14 @@ export class EntitySelectComponent implements OnInit {
     }
   }
 
-  sortByUid() {
-    this.isSortedByNameAsc = false;
-    this.isSortedByNameDsc = false;
-    this.advEntitySelectableGroupListRequestModel.sort = 'id';
-    if (this.isSortedByUidDsc) {
-      this.isSortedByUidAsc = true;
-      this.isSortedByUidDsc = false;
-      this.advEntitySelectableGroupListRequestModel.isSortDsc = false;
-    } else if (this.isSortedByUidAsc) {
-      this.isSortedByUidAsc = false;
-      this.isSortedByUidDsc = true;
-      this.advEntitySelectableGroupListRequestModel.isSortDsc = true;
+  sortTable(sort: string) {
+    if (this.localPageSettings.sort === sort) {
+      this.localPageSettings.isSortDsc = !this.localPageSettings.isSortDsc;
     } else {
-      this.isSortedByUidDsc = true;
-      this.advEntitySelectableGroupListRequestModel.isSortDsc = true;
+      this.localPageSettings.isSortDsc = false;
+      this.localPageSettings.sort = sort;
     }
-    this.getEntitySelectableGroupList();
+    this.updateLocalPageSettings('pagesSettings');
   }
 
-  sortByName() {
-    this.isSortedByUidAsc = false;
-    this.isSortedByUidDsc = false;
-    this.advEntitySelectableGroupListRequestModel.sort = 'name';
-    if (this.isSortedByNameDsc) {
-      this.isSortedByNameAsc = true;
-      this.isSortedByNameDsc = false;
-      this.advEntitySelectableGroupListRequestModel.isSortDsc = false;
-    } else if (this.isSortedByNameAsc) {
-      this.isSortedByNameAsc = false;
-      this.isSortedByNameDsc = true;
-      this.advEntitySelectableGroupListRequestModel.isSortDsc = true;
-    } else {
-      this.isSortedByNameDsc = true;
-      this.advEntitySelectableGroupListRequestModel.isSortDsc = true;
-    }
-    this.getEntitySelectableGroupList();
-  }
 }
