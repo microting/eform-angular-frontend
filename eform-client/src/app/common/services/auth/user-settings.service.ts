@@ -35,14 +35,7 @@ export class UserSettingsService extends BaseService {
     } return <ApplicationPageModel> JSON.parse(localPagesSettings).find(x => x.name === pageName);
   }
 
-  // updateLocalPageSettings(localStorageItemName: string, parameterName: string, parameterValue: any, pageName: string) {
-  //   const localPagesSettings = <Array<ApplicationPageModel>> JSON.parse(localStorage.getItem(localStorageItemName));
-  //   localPagesSettings[localPagesSettings.findIndex(x => x.name === pageName)].settings[parameterName] = parameterValue;
-  //   localStorage.setItem(localStorageItemName, JSON.stringify(localPagesSettings));
-  // }
-
   updateLocalPageSettings(localStorageItemName: string, model: PageSettingsModel, pageName: string) {
-    debugger;
     const localPagesSettings = <Array<ApplicationPageModel>> JSON.parse(localStorage.getItem(localStorageItemName));
     localPagesSettings[localPagesSettings.findIndex(x => x.name === pageName)].settings = model;
     localStorage.setItem(localStorageItemName, JSON.stringify(localPagesSettings));

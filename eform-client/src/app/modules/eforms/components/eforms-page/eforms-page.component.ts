@@ -68,6 +68,7 @@ export class EformsPageComponent implements OnInit {
   loadAllTemplates() {
     this.spinnerStatus = true;
     this.templateRequestModel.sort = this.localPageSettings.sort;
+    this.templateRequestModel.isSortDsc = this.localPageSettings.isSortDsc;
     this.eFormService.getAll(this.templateRequestModel).subscribe(operation => {
       this.spinnerStatus = false;
       if (operation && operation.success) {

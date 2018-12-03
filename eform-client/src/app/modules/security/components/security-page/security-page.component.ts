@@ -15,10 +15,6 @@ export class SecurityPageComponent implements OnInit {
   localPageSettings: PageSettingsModel = new PageSettingsModel();
   spinnerStatus = false;
 
-  get applicationPagesEnum() {
-    return ApplicationPages;
-  }
-
   constructor(private securityGroupsService: SecurityGroupsService, public userSettingsService: UserSettingsService) {
   }
 

@@ -1,4 +1,4 @@
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ApplicationPages, UserClaimsEnum} from 'src/app/common/enums';
 import {CaseListModel, CaseModel, CasesRequestModel} from 'src/app/common/models/cases';
@@ -26,7 +26,6 @@ export class CasesTableComponent implements OnInit {
 
   get userClaims() { return this.authService.userClaims; }
   get userClaimsEnum() { return UserClaimsEnum; }
-  get applicationPagesEnum() { return ApplicationPages; }
 
   constructor(private activateRoute: ActivatedRoute,
               private casesService: CasesService,

@@ -2,9 +2,10 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {ApplicationPages} from 'src/app/common/enums';
 import {
   AdvEntitySearchableGroupListModel,
-  AdvEntitySearchableGroupListRequestModel, AdvEntitySelectableGroupModel
-} from 'src/app/common/models/advanced';
-import {PageSettingsModel} from 'src/app/common/models/settings';
+  AdvEntitySearchableGroupListRequestModel,
+  AdvEntitySelectableGroupModel,
+  PageSettingsModel
+} from 'src/app/common/models';
 import {EntitySearchService} from 'src/app/common/services/advanced';
 import {AuthService, UserSettingsService} from 'src/app/common/services/auth';
 

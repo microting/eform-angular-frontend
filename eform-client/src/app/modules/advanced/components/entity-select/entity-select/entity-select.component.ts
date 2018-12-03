@@ -5,7 +5,7 @@ import {
   AdvEntitySelectableGroupListRequestModel, AdvEntitySelectableGroupModel
 } from 'src/app/common/models/advanced';
 import {PageSettingsModel} from 'src/app/common/models/settings';
-import {EntitySearchService, EntitySelectService} from 'src/app/common/services/advanced';
+import {EntitySelectService} from 'src/app/common/services/advanced';
 import {AuthService, UserSettingsService} from 'src/app/common/services/auth';
 
 @Component({
@@ -26,8 +26,9 @@ export class EntitySelectComponent implements OnInit {
 
   get userClaims() { return this.authService.userClaims; }
 
-  constructor(private entitySelectService: EntitySelectService, private authService: AuthService, public userSettingsService: UserSettingsService) {
-  }
+  constructor(private entitySelectService: EntitySelectService,
+              private authService: AuthService,
+              public userSettingsService: UserSettingsService) {}
 
   ngOnInit() {
     this.getLocalPageSettings();
