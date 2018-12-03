@@ -129,17 +129,4 @@ export class CasesTableComponent implements OnInit {
       return this.userClaims[UserClaimsEnum[permissionIndex].toString()];
     }
   }
-
-  changePage(e: any) {
-    if (e || e === 0) {
-      this.casesRequestModel.offset = e;
-      if (e === 0) {
-        this.casesRequestModel.pageIndex = 0;
-      } else {
-        this.casesRequestModel.pageIndex
-          = Math.floor(e / this.casesRequestModel.pageSize);
-      }
-      this.loadAllCases();
-    }
-  }
 }
