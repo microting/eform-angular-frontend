@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Infrastructure.Database;
 using eFormCore;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -34,6 +35,7 @@ namespace eFormAPI.Web.Services
         private readonly IWritableOptions<EmailSettings> _emailSettings;
         private readonly IWritableOptions<EformTokenOptions> _tokenOptions;
         private readonly IEFormCoreService _coreHelper;
+        private IApplicationLifetime _applicationLifetime { get; set; }
 
         public SettingsService(ILogger<SettingsService> logger,
             IWritableOptions<ConnectionStrings> connectionStrings,
@@ -43,7 +45,8 @@ namespace eFormAPI.Web.Services
             IWritableOptions<EmailSettings> emailSettings,
             IEFormCoreService coreHelper,
             ILocalizationService localizationService, 
-            IWritableOptions<EformTokenOptions> tokenOptions)
+            IWritableOptions<EformTokenOptions> tokenOptions,
+            IApplicationLifetime appLifetime)
         {
             _logger = logger;
             _connectionStrings = connectionStrings;
@@ -54,6 +57,7 @@ namespace eFormAPI.Web.Services
             _coreHelper = coreHelper;
             _localizationService = localizationService;
             _tokenOptions = tokenOptions;
+            _applicationLifetime = appLifetime;
         }
 
         public OperationResult ConnectionStringExist()
@@ -120,11 +124,11 @@ namespace eFormAPI.Web.Services
                 sdkConnectionString = "host= " +
                                       initialSettingsModel.ConnectionStringSdk.Host +
                                       ";Database=" + 
-                                      sdkDbName + ";" +
+                                      sdkDbName + ";" + 
                                       initialSettingsModel
                                           .ConnectionStringSdk.Auth + 
                                       "port=" + initialSettingsModel.ConnectionStringSdk.Port +
-                                      ";Convert Zero Datetime = true;";
+                                      ";Convert Zero Datetime = true;SslMode=none;";
 
                 mainConnectionString = "host= " +
                                        initialSettingsModel.ConnectionStringSdk.Host +
@@ -133,7 +137,7 @@ namespace eFormAPI.Web.Services
                                        initialSettingsModel
                                            .ConnectionStringSdk.Auth +
                                        "port=" + initialSettingsModel.ConnectionStringSdk.Port +
-                                       ";Convert Zero Datetime = true;";
+                                       ";Convert Zero Datetime = true;SslMode=none;";
             }
             
             
@@ -279,6 +283,8 @@ namespace eFormAPI.Web.Services
                 return new OperationResult(false, 
                     _localizationService.GetString("CouldNotWriteConnectionString"));
             }
+            _applicationLifetime.StopApplication();
+            
 
             return new OperationResult(true);
         }
