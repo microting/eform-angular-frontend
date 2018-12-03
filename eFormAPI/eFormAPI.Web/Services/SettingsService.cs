@@ -13,13 +13,16 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microting.eFormApi.BasePn;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
+using Microting.eFormApi.BasePn.Infrastructure.Enums;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers.WritableOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Settings.Admin;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Settings.Initial;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 
 
 namespace eFormAPI.Web.Services
@@ -341,11 +344,11 @@ namespace eFormAPI.Web.Services
 
         public OperationDataResult<string> GetApplicationHostOs()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            if (PathHelper.GetOsVersion() == OSPlatforms.Windows)
             {
                 return new OperationDataResult<string>(true, "Windows");
             }            
-            return new OperationDataResult<string>(true, "Linux");
+            return new OperationDataResult<string>(true, PathHelper.GetOsVersion().ToString());
         }
 
         public OperationDataResult<AdminSettingsModel> GetAdminSettings()
