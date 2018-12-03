@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>3.10</ProductVersion>
+    <ProjectGuid>2b339def-fb4f-4987-a361-8b95410c438b</ProjectGuid>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputName>maininstaller</OutputName>
+    <OutputType>Package</OutputType>
+	<!--<WixToolPath>$(ProjectDir)..\wix\3.11\</WixToolPath>
+	<WixTargetsPath>$(WixToolPath)\wix.targets</WixTargetsPath>
+	<WixTasksPath>wixtasks.dll</WixTasksPath>-->
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <OutputPath>..\Bundle\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <DefineConstants>Debug</DefineConstants>
+    <SuppressAllWarnings>False</SuppressAllWarnings>
+    <SuppressValidation>True</SuppressValidation>
+    <Pedantic>True</Pedantic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>..\Bundle\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <SuppressValidation>true</SuppressValidation>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="ApiFileList.wxs" />
+    <Compile Include="ExitDlgModified.wxs" />
+    <Compile Include="DomainNameDlg.wxs" />
+    <Compile Include="EmptyFIieldDlg.wxs" />
+    <Compile Include="ClientFileList.wxs" />
+    <Compile Include="KeepSettingsDlg.wxs" />
+    <Compile Include="LetsEncryptFileList.wxs" />
+    <Compile Include="MaintenanceTypeModifiedDlg.wxs" />
+    <Compile Include="DomainNameSelectDlg.wxs" />
+    <Compile Include="ProgressModifiedDlg.wxs" />
+    <Compile Include="VerifyReadyModifiedDlg.wxs" />
+    <Compile Include="WelcomeDlgModified.wxs" />
+    <Compile Include="WixUI_InstallDirModified.wxs" />
+    <Compile Include="Product.wxs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MainInstaller.wax" />
+    <Content Include="MicrotingEULA.rtf" />
+    <Content Include="TopBanner.bmp" />
+    <Content Include="Transform.xslt" />
+    <Content Include="WelcomeBanner.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <WixExtension Include="WixUtilExtension">
+      <HintPath>$(WixExtDir)\WixUtilExtension.dll</HintPath>
+      <Name>WixUtilExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixUIExtension">
+      <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
+      <Name>WixUIExtension</Name>
+    </WixExtension>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\eFormAPI\eFormAPI.Web.csproj">
+      <Name>eFormAPI.Web</Name>
+      <Project>{54404cf9-a407-4f55-bc26-b243099e29a8}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\CustomActions\CustomActions.csproj">
+      <Name>CustomActions</Name>
+      <Project>{768280ff-c359-4e58-8b5c-1f682b41cc24}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(WixTargetsPath)" Condition=" '$(WixTargetsPath)' != '' " />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets" Condition=" '$(WixTargetsPath)' == '' AND Exists('$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets') " />
+  <Target Name="EnsureWixToolsetInstalled" Condition=" '$(WixTargetsImported)' != 'true' ">
+    <Error Text="The WiX Toolset v3.11 (or newer) build tools must be installed to build this project. To download the WiX Toolset, see http://wixtoolset.org/releases/" />
+  </Target>
+
+  <!--<Import Project="$(WixTargetsPath)"/>-->
+  <PropertyGroup>
+    <DefineConstants>ClientPath=..\..\..\eform-client; ApiPath=..\..\eformapi; LetsEncryptPath=..\..\..\eFormAPI\Installation\letsencrypt</DefineConstants>
+  </PropertyGroup>
+  <Target Name="BeforeBuild">
+    <HeatDirectory Directory="..\..\..\eform-client" PreprocessorVariable="var.ClientPath" OutputFile="ClientFileList.wxs" ComponentGroupName="ClientFiles" DirectoryRefId="eform_client" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" />
+    <HeatDirectory Directory="..\..\eformapi" PreprocessorVariable="var.ApiPath" Transforms="Transform.xslt" OutputFile="ApiFileList.wxs" ComponentGroupName="ApiFiles" DirectoryRefId="eform_api" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" />
+    <HeatDirectory Directory="..\..\..\eFormAPI\Installation\letsencrypt" PreprocessorVariable="var.LetsEncryptPath" OutputFile="LetsEncryptFileList.wxs" ComponentGroupName="LetsEncryptFiles" DirectoryRefId="letsencrypt" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" />
+  </Target>
+  <PropertyGroup>
+    <PostBuildEvent>"$(ProjectDir)BuildedCustomActions\AllowMultipleVersions.exe" "$(TargetPath)"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <DefineConstants>Debug</DefineConstants>
+    <SuppressAllWarnings>False</SuppressAllWarnings>
+    <SuppressValidation>True</SuppressValidation>
+    <Pedantic>True</Pedantic>
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <SuppressValidation>true</SuppressValidation>
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <!--
+	To modify your build process, add your task inside one of the targets below and uncomment it.
+	Other similar extension points exist, see Wix.targets.
+	<Target Name="BeforeBuild">
+	</Target>
+	<Target Name="AfterBuild">
+	</Target>
+	-->
+</Project>
