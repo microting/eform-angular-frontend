@@ -1,9 +1,13 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
+import {ApplicationPages} from 'src/app/common/enums';
 import {
   AdvEntitySearchableGroupListModel,
-  AdvEntitySearchableGroupListRequestModel, AdvEntitySelectableGroupModel
-} from 'src/app/common/models/advanced';
+  AdvEntitySearchableGroupListRequestModel,
+  AdvEntitySelectableGroupModel,
+  PageSettingsModel
+} from 'src/app/common/models';
 import {EntitySearchService} from 'src/app/common/services/advanced';
+import {AuthService, UserSettingsService} from 'src/app/common/services/auth';
 
 @Component({
   selector: 'app-searchable-list',
@@ -19,16 +23,52 @@ export class EntitySearchComponent implements OnInit {
   advEntitySearchableGroupListModel: AdvEntitySearchableGroupListModel = new AdvEntitySearchableGroupListModel();
   advEntitySearchableGroupListRequestModel: AdvEntitySearchableGroupListRequestModel
     = new AdvEntitySearchableGroupListRequestModel();
-  isSortedByUidAsc = false;
-  isSortedByUidDsc = false;
-  isSortedByNameAsc = false;
-  isSortedByNameDsc = false;
+  localPageSettings: PageSettingsModel = new PageSettingsModel();
 
-  constructor(private entitySearchService: EntitySearchService) {
+  constructor(private entitySearchService: EntitySearchService,
+              public userSettingsService: UserSettingsService) {
   }
 
   ngOnInit() {
+    this.getLocalPageSettings();
+  }
+
+  getLocalPageSettings() {
+    this.localPageSettings = this.userSettingsService.getLocalPageSettings
+    ('pagesSettings', ApplicationPages[ApplicationPages.EntitySearch])
+      .settings;
     this.getEntitySearchableGroupList();
+  }
+
+  updateLocalPageSettings(localStorageItemName: string) {
+    this.userSettingsService.updateLocalPageSettings
+    (localStorageItemName, this.localPageSettings, ApplicationPages[ApplicationPages.EntitySearch]);
+    this.getLocalPageSettings();
+  }
+
+  getEntitySearchableGroupList() {
+    this.spinnerStatus = true;
+    this.advEntitySearchableGroupListRequestModel.isSortDsc = this.localPageSettings.isSortDsc;
+    this.advEntitySearchableGroupListRequestModel.sort = this.localPageSettings.sort;
+    this.advEntitySearchableGroupListRequestModel.pageSize = this.localPageSettings.pageSize;
+    this.entitySearchService.getEntitySearchableGroupList(this.advEntitySearchableGroupListRequestModel).subscribe((data) => {
+      if (data && data.model) {
+        this.advEntitySearchableGroupListModel = data.model;
+      } this.spinnerStatus = false;
+    });
+  }
+
+  changePage(e: any) {
+    if (e || e === 0) {
+      this.advEntitySearchableGroupListRequestModel.offset = e;
+      if (e === 0) {
+        this.advEntitySearchableGroupListRequestModel.pageIndex = 0;
+      } else {
+        this.advEntitySearchableGroupListRequestModel.pageIndex
+          = Math.floor(e / this.advEntitySearchableGroupListRequestModel.pageSize);
+      }
+      this.getEntitySearchableGroupList();
+    }
   }
 
   openModalSearchRemove(selectedSearchModel: AdvEntitySelectableGroupModel) {
@@ -56,63 +96,13 @@ export class EntitySearchComponent implements OnInit {
     this.getEntitySearchableGroupList();
   }
 
-  getEntitySearchableGroupList() {
-    this.spinnerStatus = true;
-    this.entitySearchService.getEntitySearchableGroupList(this.advEntitySearchableGroupListRequestModel).subscribe((data) => {
-      if (data && data.model) {
-        this.advEntitySearchableGroupListModel = data.model;
-      } this.spinnerStatus = false;
-    });
-  }
-
-  changePage(e: any) {
-    if (e || e === 0) {
-      this.advEntitySearchableGroupListRequestModel.offset = e;
-      if (e === 0) {
-        this.advEntitySearchableGroupListRequestModel.pageIndex = 0;
-      } else {
-        this.advEntitySearchableGroupListRequestModel.pageIndex
-          = Math.floor(e / this.advEntitySearchableGroupListRequestModel.pageSize);
-      }
-      this.getEntitySearchableGroupList();
-    }
-  }
-
-  sortByUid() {
-    this.isSortedByNameAsc = false;
-    this.isSortedByNameDsc = false;
-    this.advEntitySearchableGroupListRequestModel.sort = 'id';
-    if (this.isSortedByUidDsc) {
-      this.isSortedByUidAsc = true;
-      this.isSortedByUidDsc = false;
-      this.advEntitySearchableGroupListRequestModel.isSortDsc = false;
-    } else if (this.isSortedByUidAsc) {
-      this.isSortedByUidAsc = false;
-      this.isSortedByUidDsc = true;
-      this.advEntitySearchableGroupListRequestModel.isSortDsc = true;
+  sortTable(sort: string) {
+    if (this.localPageSettings.sort === sort) {
+      this.localPageSettings.isSortDsc = !this.localPageSettings.isSortDsc;
     } else {
-      this.isSortedByUidDsc = true;
-      this.advEntitySearchableGroupListRequestModel.isSortDsc = true;
+      this.localPageSettings.isSortDsc = false;
+      this.localPageSettings.sort = sort;
     }
-    this.getEntitySearchableGroupList();
-  }
-
-  sortByName() {
-    this.isSortedByUidAsc = false;
-    this.isSortedByUidDsc = false;
-    this.advEntitySearchableGroupListRequestModel.sort = 'name';
-    if (this.isSortedByNameDsc) {
-      this.isSortedByNameAsc = true;
-      this.isSortedByNameDsc = false;
-      this.advEntitySearchableGroupListRequestModel.isSortDsc = false;
-    } else if (this.isSortedByNameAsc) {
-      this.isSortedByNameAsc = false;
-      this.isSortedByNameDsc = true;
-      this.advEntitySearchableGroupListRequestModel.isSortDsc = true;
-    } else {
-      this.isSortedByNameDsc = true;
-      this.advEntitySearchableGroupListRequestModel.isSortDsc = true;
-    }
-    this.getEntitySearchableGroupList();
+    this.updateLocalPageSettings('pagesSettings');
   }
 }
