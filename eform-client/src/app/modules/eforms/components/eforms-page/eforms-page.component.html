@@ -40,32 +40,32 @@
       <thead>
       <tr>
         <th scope="col" class="table-header-sortable" id="idSort"
-            (click)="sortByColumn('id', templateRequestModel.isSortDsc = !templateRequestModel.isSortDsc)">
+            (click)="sortTable('id')">
           <div class="d-flex align-items-center justify-content-center">
             ID
-            <i class="material-icons text-black-50" *ngIf="templateRequestModel.sort != 'id'">unfold_more</i>
-            <i class="material-icons" *ngIf="templateRequestModel.sort == 'id' && !templateRequestModel.isSortDsc">expand_less</i>
-            <i class="material-icons" *ngIf="templateRequestModel.sort == 'id' && templateRequestModel.isSortDsc">expand_more</i>
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'id'">unfold_more</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'id' && !localPageSettings.isSortDsc">expand_less</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'id' && localPageSettings.isSortDsc">expand_more</i>
           </div>
         </th>
         <th scope="col" class="table-header-sortable" id="createdAtSort"
-            (click)="sortByColumn('createdAt', templateRequestModel.isSortDsc = !templateRequestModel.isSortDsc)">
+            (click)="sortTable('createdAt')">
           <div class="d-flex align-items-center justify-content-center">
             {{ 'Created at' | translate }}
-            <i class="material-icons text-black-50" *ngIf="templateRequestModel.sort != 'createdAt'">unfold_more</i>
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'createdAt'">unfold_more</i>
             <i class="material-icons"
-               *ngIf="templateRequestModel.sort == 'createdAt' && !templateRequestModel.isSortDsc">expand_less</i>
+               *ngIf="localPageSettings.sort == 'createdAt' && !localPageSettings.isSortDsc">expand_less</i>
             <i class="material-icons"
-               *ngIf="templateRequestModel.sort == 'createdAt' && templateRequestModel.isSortDsc">expand_more</i>
+               *ngIf="localPageSettings.sort == 'createdAt' && localPageSettings.isSortDsc">expand_more</i>
           </div>
         </th>
         <th scope="col" class="table-header-sortable" id="nameEFormSort"
-            (click)="sortByColumn('label', templateRequestModel.isSortDsc = !templateRequestModel.isSortDsc)">
+            (click)="sortTable('label')">
           <div class="d-flex align-items-center justify-content-center">
             {{ 'eForm Name' | translate }}
-            <i class="material-icons text-black-50" *ngIf="templateRequestModel.sort != 'label'">unfold_more</i>
-            <i class="material-icons" *ngIf="templateRequestModel.sort == 'label' && !templateRequestModel.isSortDsc">expand_less</i>
-            <i class="material-icons" *ngIf="templateRequestModel.sort == 'label' && templateRequestModel.isSortDsc">expand_more</i>
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'label'">unfold_more</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'label' && !localPageSettings.isSortDsc">expand_less</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'label' && localPageSettings.isSortDsc">expand_more</i>
           </div>
         </th>
         <th>{{ 'Tags' | translate }}</th>
@@ -177,6 +177,7 @@
       </tbody>
     </table>
   </div>
+
 
   <!--pagination(if required)-->
 </div>

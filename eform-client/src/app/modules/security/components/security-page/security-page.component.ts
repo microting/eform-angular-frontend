@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {SecurityGroupsRequestModel, SecurityGroupsModel} from 'src/app/common/models';
-import {SecurityGroupsService} from 'src/app/common/services';
+import {ApplicationPages} from 'src/app/common/enums';
+import {SecurityGroupsRequestModel, SecurityGroupsModel, PageSettingsModel} from 'src/app/common/models';
+import {SecurityGroupsService, UserSettingsService} from 'src/app/common/services';
 
 @Component({
   selector: 'app-security-page',
@@ -11,17 +12,32 @@ export class SecurityPageComponent implements OnInit {
   @ViewChild('modalGroupDelete') modalGroupDelete;
   securityGroups: SecurityGroupsModel = new SecurityGroupsModel();
   securityGroupsRequestModel: SecurityGroupsRequestModel = new SecurityGroupsRequestModel();
+  localPageSettings: PageSettingsModel = new PageSettingsModel();
   spinnerStatus = false;
 
-  constructor(private securityGroupsService: SecurityGroupsService) {
+  constructor(private securityGroupsService: SecurityGroupsService, public userSettingsService: UserSettingsService) {
   }
 
   ngOnInit() {
+    this.getLocalPageSettings();
+  }
+
+  getLocalPageSettings() {
+    this.localPageSettings = this.userSettingsService.getLocalPageSettings
+    ('pagesSettings', ApplicationPages[ApplicationPages.Security])
+      .settings;
     this.getSecurityGroups();
+  }
+
+  updateLocalPageSettings(localStorageItemName: string) {
+    this.userSettingsService.updateLocalPageSettings
+    (localStorageItemName, this.localPageSettings, ApplicationPages[ApplicationPages.Security]);
+    this.getLocalPageSettings();
   }
 
   getSecurityGroups() {
     this.spinnerStatus = true;
+    this.securityGroupsRequestModel.pageSize = this.localPageSettings.pageSize;
     this.securityGroupsService.getAllSecurityGroups(this.securityGroupsRequestModel).subscribe((data) => {
       if (data && data.success) {
         this.securityGroups = data.model;
