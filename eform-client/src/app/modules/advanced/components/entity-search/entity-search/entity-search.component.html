@@ -79,7 +79,8 @@
     <div class="col-md-1">
       <eform-page-size
         [pageSize]="localPageSettings.pageSize"
-        (onPageSizeChanged)="localPageSettings.pageSize = $event; updateLocalPageSettings('pagesSettings')">
+        (onPageSizeChanged)="localPageSettings.pageSize = $event; advEntitySearchableGroupListRequestModel.pageIndex = 1;
+        updateLocalPageSettings('pagesSettings')">
       </eform-page-size>
     </div>
     <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
