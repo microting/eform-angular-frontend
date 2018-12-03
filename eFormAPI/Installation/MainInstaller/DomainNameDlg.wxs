@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <UI>
+            <Dialog Id="DomainNameDlg" Width="370" Height="270" Title="[ProductName] Setup" NoMinimize="yes">
+                <Control Id="NameLabel" Type="Text" X="45" Y="73" Width="100" Height="15" TabSkip="no" Text="&amp;Domain Name:" />
+                <Control Id="NameEdit" Type="Edit" X="45" Y="85" Width="220" Height="15" Property="DOMAINNAME" Text="{80}" />
+                <Control Type="Text" Id="CustomerNumberText" Width="100" Height="15" X="45" Y="118" Text="&amp;Customer number:" />
+                <Control Type="Edit" Id="CustomerNumber" Width="220" Height="15" X="45" Y="132" Property="CUSTOMERNUMBER" Text="{80}" />
+              
+                <Control Type="CheckBox" Id="certgen" Property="GENERATESSL" Width="215" Height="17" X="45" Y="165" CheckBoxValue="1" Text="Generate SSL certificate" />
+
+                <Control Id="EmailText" Type="Text" X="45" Y="182" Width="220" Height="15" Text ="&amp;Email address:">
+                  <Condition Action="show" >GENERATESSL</Condition> 
+                  <Condition Action="hide"><![CDATA[GENERATESSL <> "1"]]></Condition>
+                </Control>
+              <Control Id="EmailBox" Type="Edit" X="45" Y="196" Width="220" Height="15" Property="EMAIL" Text="{80}">
+                <Condition Action="show" >GENERATESSL</Condition>
+                <Condition Action="hide"><![CDATA[GENERATESSL <> "1"]]></Condition>
+              </Control>
+              
+                <Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="&amp;Back" />
+                <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Text="&amp;Next">
+                    <Publish Event="SpawnDialog" Value="EmptyFieldDlg">(NOT DOMAINNAME OR NOT CUSTOMERNUMBER) OR (GENERATESSL AND NOT EMAIL)</Publish>
+                </Control>
+                <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="Cancel">
+                    <Publish Event="SpawnDialog" Value="CancelDlg">1</Publish>
+                </Control>
+                <Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="WixUI_Bmp_Banner" />
+                <Control Id="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Transparent="yes" NoPrefix="yes">
+                    <Text>Please enter your customer information</Text>
+                </Control>
+                <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
+                <Control Id="Title" Type="Text" X="15" Y="6" Width="200" Height="15" Transparent="yes" NoPrefix="yes">
+                    <Text>{\WixUI_Font_Title}Customer Information</Text>
+                </Control>
+                <Control Id="BannerLine" Type="Line" X="0" Y="44" Width="370" Height="0" />
+            </Dialog>
+        </UI>
+    </Fragment>
+</Wix>

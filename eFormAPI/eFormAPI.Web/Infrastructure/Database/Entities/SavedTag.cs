@@ -12,6 +12,6 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities
         public string TagName { get; set; }
 
         public int EformUserId { get; set; }
-        public EformUser EformUser { get; set; }
+        public virtual EformUser EformUser { get; set; }
     }
 }

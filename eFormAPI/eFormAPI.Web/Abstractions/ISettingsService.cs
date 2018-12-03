@@ -14,6 +14,7 @@ namespace eFormAPI.Web.Abstractions
         OperationDataResult<LoginPageSettingsModel> GetLoginPageSettings();
         OperationDataResult<HeaderSettingsModel> GetPageHeaderSettings();
         OperationDataResult<string> GetAssemblyVersion();
+        OperationDataResult<string> GetApplicationHostOs();
         OperationResult ResetLoginPageSettings();
         OperationResult ResetPageHeaderSettings();
         OperationResult UpdateAdminSettings(AdminSettingsModel adminSettingsModel);

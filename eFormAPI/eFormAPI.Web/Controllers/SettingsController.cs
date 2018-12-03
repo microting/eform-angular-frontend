@@ -99,12 +99,21 @@ namespace eFormAPI.Web.Controllers
 
         #endregion
 
-        [Authorize]
+        [AllowAnonymous]
         [HttpGet]
         [Route("api/settings/version")]
         public OperationDataResult<string> GetApplicationVersion()
         {
             return _settingsService.GetAssemblyVersion();
+        }
+        
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("api/settings/hostos")]
+        public OperationDataResult<string> GetApplicationHostOs()
+        {
+            
+            return _settingsService.GetApplicationHostOs();
         }
     }
 }

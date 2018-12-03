@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Net;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
+using Castle.Windsor;
+using Castle.MicroKernel.Registration;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Advanced;
 using eFormAPI.Web.Abstractions.Eforms;
@@ -22,11 +26,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
+using eFormCore;
+using eFormCore.Installers;
 using Microting.eFormApi.BasePn;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Services;
+using Rebus.Bus;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace eFormAPI.Web
@@ -34,6 +41,11 @@ namespace eFormAPI.Web
     public class Startup
     {
         public static List<IEformPlugin> Plugins;
+
+        private Core _core;
+        private IWindsorContainer _container;
+        
+        public static IBus Bus { get; private set; }
 
         public Startup(IConfiguration configuration)
         {
@@ -56,18 +68,22 @@ namespace eFormAPI.Web
 //                o => o.UseMySql(@"Server = localhost; port = 3306; Database = angular-tests; user = root; Convert Zero Datetime = true;",
 //                    b => b.MigrationsAssembly("eFormAPI.Web")));
 //#else
-            if (Configuration.MyConnectionString().ToLower().Contains("convert zero datetime"))
+            if (!string.IsNullOrEmpty(Configuration.MyConnectionString()))
             {
-                services.AddEntityFrameworkMySql()
-                .AddDbContext<BaseDbContext>(o => o.UseMySql(Configuration.MyConnectionString(),
-                    b => b.MigrationsAssembly("eFormAPI.Web")));
+                if (Configuration.MyConnectionString().ToLower().Contains("convert zero datetime"))
+                {
+                    services.AddEntityFrameworkMySql()
+                        .AddDbContext<BaseDbContext>(o => o.UseMySql(Configuration.MyConnectionString(),
+                            b => b.MigrationsAssembly("eFormAPI.Web")));
+                }
+                else
+                {
+                    services.AddEntityFrameworkSqlServer()
+                        .AddDbContext<BaseDbContext>(o => o.UseSqlServer(Configuration.MyConnectionString(),
+                            b => b.MigrationsAssembly("eFormAPI.Web")));
+                }   
             }
-            else
-            {
-                services.AddEntityFrameworkSqlServer()
-                .AddDbContext<BaseDbContext>(o => o.UseSqlServer(Configuration.MyConnectionString(),
-                    b => b.MigrationsAssembly("eFormAPI.Web")));
-            }
+            
 //#endif
             // plugins
             services.AddEFormPluginsDbContext(Configuration, Plugins);
@@ -136,6 +152,16 @@ namespace eFormAPI.Web
             // plugins
             services.AddEFormPlugins(Plugins);
             ConnectServices(services);
+            if (!string.IsNullOrEmpty(Configuration.MyConnectionString()))
+            {
+                _container = new WindsorContainer();	
+                                
+                
+//                _container.Register(Castle.MicroKernel.Registration.Component.For<Core>().Instance(_core));	
+                _container.Install(new RebusHandlerInstaller(),	
+                    new RebusInstaller(Configuration.MyConnectionString(), 1, 1));	
+                Bus = _container.Resolve<IBus>();
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -21,6 +21,7 @@ const SettingsMethods = {
   ConnectionStringExist: '/api/settings/connection-string-exist',
   GetAdminSettings: '/api/settings/admin',
   GetAssemblyVersion: '/api/settings/version',
+  GetApplicationHostOs: '/api/settings/hostos',
   ResetLoginPageSettings: '/api/settings/reset-login-page',
   ResetHeaderSettings: '/api/settings/reset-page-header',
   GetLoginPageSettings: '/api/settings/login-page',
@@ -62,5 +63,8 @@ export class AppSettingsService extends BaseService {
   }
   getAssemblyVersion(): Observable<OperationDataResult<string>> {
     return this.get<string>(SettingsMethods.GetAssemblyVersion);
+  }
+  getApplicationHostOs(): Observable<OperationDataResult<string>> {
+    return this.get<string>(SettingsMethods.GetApplicationHostOs);
   }
 }

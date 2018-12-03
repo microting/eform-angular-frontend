@@ -277,7 +277,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                         fastZip.ExtractZip(filePath, extractPath, null);
                         //ZipFile.ExtractToDirectory(filePath, extractPath);
                         System.IO.File.Delete(filePath);
-                        await _coreHelper.Bus.SendLocal(new GenerateJasperFiles(templateId));
+//                        await Startup.Bus.SendLocal(new GenerateJasperFiles(templateId)); // TODO disabled for now 3. dec. 2018
                         return Ok();
                     }
                 }

@@ -17,23 +17,30 @@ namespace eFormAPI.Web
         {
             IWebHost host = BuildWebHost(args);
             using (IServiceScope scope = host.Services.GetService<IServiceScopeFactory>().CreateScope())
-            using (BaseDbContext dbContext = scope.ServiceProvider.GetRequiredService<BaseDbContext>())
             {
                 try
                 {
-                    IWritableOptions<ConnectionStrings> connectionStrings =
-                        scope.ServiceProvider.GetRequiredService<IWritableOptions<ConnectionStrings>>();
-                    if (connectionStrings.Value.DefaultConnection != "...")
+                    using (BaseDbContext dbContext = scope.ServiceProvider.GetRequiredService<BaseDbContext>())
                     {
-                        dbContext.Database.Migrate();
-                    }
-                }
-                catch (Exception e)
-                {
-                    ILogger<Program> logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(e, "Error while migrating db");
-                }
+                        try
+                        {
+                            IWritableOptions<ConnectionStrings> connectionStrings =
+                                scope.ServiceProvider.GetRequiredService<IWritableOptions<ConnectionStrings>>();
+                            if (connectionStrings.Value.DefaultConnection != "...")
+                            {
+                                dbContext.Database.Migrate();
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            ILogger<Program> logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+                            logger.LogError(e, "Error while migrating db");
+                        }
+                    }    
+                } catch {}
+                                
             }
+            
             host.Run();
         }
 
