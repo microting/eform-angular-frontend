@@ -37,7 +37,7 @@ export class PellComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnChanges(changes: any) {
     try {
-      if (this.editor.content.innerHTML != this.value) {
+      if (this.editor.content.innerHTML !== this.value) {
         this.editor.content.innerHTML = this.value;
       }
     } catch (err) {

@@ -21,6 +21,7 @@ export class ConnectionSetupComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.settingsModel.generalAppSetupSettingsModel.defaultLocale = 'en-US';
   }
 
   updateConnectionString() {
