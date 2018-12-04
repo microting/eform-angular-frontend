@@ -42,6 +42,12 @@
   </ItemGroup>
   
   <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  
+  <ItemGroup>
     <None Update="API.doc.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
