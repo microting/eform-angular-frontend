@@ -41,7 +41,9 @@ export class LoginComponent implements OnInit {
     this.spinnerStatus = true;
     this.authService.login(new LoginRequestModel(this.formLogin.getRawValue()))
       .subscribe((result: AuthResponseModel) => {
+          // Set auth
           localStorage.setItem('currentAuth', JSON.stringify(result));
+          // get user settings from db
           this.userSettings.getUserSettings().subscribe((data) => {
             localStorage.setItem('locale', data.model.locale);
             this.router.navigate(['/']).then();

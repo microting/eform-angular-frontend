@@ -1,10 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {UserClaimsEnum} from 'src/app/common/enums';
+import {ApplicationPages, UserClaimsEnum} from 'src/app/common/enums';
 import {CommonDictionaryModel} from 'src/app/common/models/common';
 import {TemplateDto} from 'src/app/common/models/dto';
 import {SavedTagModel, TemplateListModel, TemplateRequestModel} from 'src/app/common/models/eforms';
 import {EformPermissionsSimpleModel} from 'src/app/common/models/security/group-permissions/eform';
-import {AuthService} from 'src/app/common/services/auth';
+import {PageSettingsModel} from 'src/app/common/models/settings';
+import {AuthService, UserSettingsService} from 'src/app/common/services/auth';
 import {EFormService, EformTagService} from 'src/app/common/services/eform';
 import {SecurityGroupEformsPermissionsService} from 'src/app/common/services/security';
 
@@ -23,18 +24,14 @@ export class EformsPageComponent implements OnInit {
   @ViewChild('modalUploadZip') modalUploadZip;
 
   spinnerStatus = false;
+  localPageSettings: PageSettingsModel = new PageSettingsModel();
   templateRequestModel: TemplateRequestModel = new TemplateRequestModel;
   templateListModel: TemplateListModel = new TemplateListModel();
   eformPermissionsSimpleModel: Array<EformPermissionsSimpleModel> = [];
   availableTags: Array<CommonDictionaryModel> = [];
 
-  get userClaims() {
-    return this.authService.userClaims;
-  }
-
-  get userClaimsEnum() {
-    return UserClaimsEnum;
-  }
+  get userClaims() { return this.authService.userClaims; }
+  get userClaimsEnum() { return UserClaimsEnum; }
 
   items = [
     'New',
@@ -45,17 +42,33 @@ export class EformsPageComponent implements OnInit {
   constructor(private eFormService: EFormService,
               private eFormTagService: EformTagService,
               private authService: AuthService,
-              private securityGroupEformsService: SecurityGroupEformsPermissionsService
+              private securityGroupEformsService: SecurityGroupEformsPermissionsService,
+              private userSettingsService: UserSettingsService
   ) {
   }
 
   ngOnInit() {
     this.loadEformsPermissions();
+    this.getLocalPageSettings();
+  }
+
+  getLocalPageSettings() {
+    this.localPageSettings = this.userSettingsService.getLocalPageSettings
+    ('pagesSettings', ApplicationPages[ApplicationPages.Eforms])
+      .settings;
     this.loadAllTags();
+  }
+
+  updateLocalPageSettings(localStorageItemName: string) {
+    this.userSettingsService.updateLocalPageSettings
+    (localStorageItemName, this.localPageSettings, ApplicationPages[ApplicationPages.Eforms]);
+    this.getLocalPageSettings();
   }
 
   loadAllTemplates() {
     this.spinnerStatus = true;
+    this.templateRequestModel.sort = this.localPageSettings.sort;
+    this.templateRequestModel.isSortDsc = this.localPageSettings.isSortDsc;
     this.eFormService.getAll(this.templateRequestModel).subscribe(operation => {
       this.spinnerStatus = false;
       if (operation && operation.success) {
@@ -133,10 +146,14 @@ export class EformsPageComponent implements OnInit {
     this.loadAllTemplates();
   }
 
-  sortByColumn(columnName: string, sortedByDsc: boolean) {
-    this.templateRequestModel.sort = columnName;
-    this.templateRequestModel.isSortDsc = sortedByDsc;
-    this.loadAllTemplates();
+  sortTable(sort: string) {
+    if (this.localPageSettings.sort === sort) {
+      this.localPageSettings.isSortDsc = !this.localPageSettings.isSortDsc;
+    } else {
+      this.localPageSettings.isSortDsc = false;
+      this.localPageSettings.sort = sort;
+    }
+    this.updateLocalPageSettings('pagesSettings');
   }
 
   openNewEformModal() {

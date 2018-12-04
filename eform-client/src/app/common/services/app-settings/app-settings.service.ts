@@ -4,6 +4,7 @@ import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {Observable} from 'rxjs';
+import {ApplicationPagesSettings} from 'src/app/common/enums/application-pages-settings.const';
 import {
   AdminSettingsModel,
   HeaderSettingsModel,

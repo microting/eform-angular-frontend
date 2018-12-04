@@ -24,105 +24,93 @@
         <th>{{ 'Data accessible at' | translate }}</th>
         <th>{{ 'eForm done by' | translate }}</th>
         <th *ngIf="currentTemplate.field1" class="table-header-sortable"
-            (click)="sortByColumn('field1', casesRequestModel.isSortDsc = !casesRequestModel.isSortDsc)"
+            (click)="sortTable('field1')"
             rowspan="1" colspan="1">
           <div class="d-flex align-items-center justify-content-center">
             {{currentTemplate.field1.label}}
-            <i class="material-icons text-black-50" *ngIf="casesRequestModel.sort != 'finishedAt'">unfold_more</i>
-            <i class="material-icons" *ngIf="casesRequestModel.sort == 'finishedAt' && !casesRequestModel.isSortDsc">expand_less</i>
-            <i class="material-icons" *ngIf="casesRequestModel.sort == 'finishedAt' && casesRequestModel.isSortDsc">expand_more</i>
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'field1'">unfold_more</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'field1' && !localPageSettings.isSortDsc">expand_less</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'field1' && localPageSettings.isSortDsc">expand_more</i>
           </div>
         </th>
         <th *ngIf="currentTemplate.field2" class="table-header-sortable"
-            (click)="sortByColumn('field2', casesRequestModel.isSortDsc = !casesRequestModel.isSortDsc)"
+            (click)="sortTable('field2')"
             rowspan="1" colspan="1">
           <div class="d-flex align-items-center justify-content-center">
             {{currentTemplate.field2.label}}
-            <i class="material-icons text-black-50" *ngIf="casesRequestModel.sort != 'finishedAt'">unfold_more</i>
-            <i class="material-icons" *ngIf="casesRequestModel.sort == 'finishedAt' && !casesRequestModel.isSortDsc">expand_less</i>
-            <i class="material-icons" *ngIf="casesRequestModel.sort == 'finishedAt' && casesRequestModel.isSortDsc">expand_more</i>
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'field2'">unfold_more</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'field2' && !localPageSettings.isSortDsc">expand_less</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'field2' && localPageSettings.isSortDsc">expand_more</i>
           </div>
         </th>
         <th *ngIf="currentTemplate.field3" class="table-header-sortable"
-            (click)="sortByColumn('field3', casesRequestModel.isSortDsc = !casesRequestModel.isSortDsc)"
+            (click)="sortTable('field3')"
             rowspan="1" colspan="1">
           <div class="d-flex align-items-center justify-content-center">
             {{currentTemplate.field3.label}}
-            <i class="material-icons text-black-50" *ngIf="casesRequestModel.sort != 'finishedAt'">unfold_more</i>
-            <i class="material-icons" *ngIf="casesRequestModel.sort == 'finishedAt' && !casesRequestModel.isSortDsc">expand_less</i>
-            <i class="material-icons" *ngIf="casesRequestModel.sort == 'finishedAt' && casesRequestModel.isSortDsc">expand_more</i>
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'field3'">unfold_more</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'field3' && !localPageSettings.isSortDsc">expand_less</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'field3' && localPageSettings.isSortDsc">expand_more</i>
           </div>
         </th>
         <th *ngIf="currentTemplate.field4" class="table-header-sortable"
-            (click)="sortByColumn('field4', casesRequestModel.isSortDsc = !casesRequestModel.isSortDsc)"
+            (click)="sortTable('field4')"
             rowspan="1" colspan="1">
-
           <div class="d-flex align-items-center justify-content-center">
             {{currentTemplate.field4.label}}
-            <i class="material-icons text-black-50" *ngIf="casesRequestModel.sort != 'finishedAt'">unfold_more</i>
-            <i class="material-icons" *ngIf="casesRequestModel.sort == 'finishedAt' && !casesRequestModel.isSortDsc">expand_less</i>
-            <i class="material-icons" *ngIf="casesRequestModel.sort == 'finishedAt' && casesRequestModel.isSortDsc">expand_more</i>
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'field4'">unfold_more</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'field4' && !localPageSettings.isSortDsc">expand_less</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'field4' && localPageSettings.isSortDsc">expand_more</i>
           </div>
         </th>
         <th *ngIf="currentTemplate.field5" class="table-header-sortable"
-            (click)="sortByColumn('field5', casesRequestModel.isSortDsc = !casesRequestModel.isSortDsc)"
+            (click)="sortTable('field5')"
             rowspan="1" colspan="1">
           <div class="d-flex align-items-center justify-content-center">
             {{currentTemplate.field5.label}}
-            <i class="material-icons text-black-50" *ngIf="casesRequestModel.sort != 'finishedAt'">unfold_more</i>
-            <i class="material-icons" *ngIf="casesRequestModel.sort == 'finishedAt' && !casesRequestModel.isSortDsc">expand_less</i>
-            <i class="material-icons" *ngIf="casesRequestModel.sort == 'finishedAt' && casesRequestModel.isSortDsc">expand_more</i>
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'field5'">unfold_more</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'field5' && !localPageSettings.isSortDsc">expand_less</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'field5' && localPageSettings.isSortDsc">expand_more</i>
           </div>
         </th>
         <th *ngIf="currentTemplate.field6" class="table-header-sortable"
-            (click)="sortByColumn('field6', casesRequestModel.isSortDsc = !casesRequestModel.isSortDsc)"
+            (click)="sortTable('field6')"
             rowspan="1" colspan="1">
           <div class="d-flex align-items-center justify-content-center">
             {{currentTemplate.field6.label}}
-            <i class="material-icons text-black-50" *ngIf="casesRequestModel.sort != 'finishedAt'">unfold_more</i>
-            <i class="material-icons" *ngIf="casesRequestModel.sort == 'finishedAt' && !casesRequestModel.isSortDsc">expand_less</i>
-            <i class="material-icons" *ngIf="casesRequestModel.sort == 'finishedAt' && casesRequestModel.isSortDsc">expand_more</i>
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'field6'">unfold_more</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'field6' && !localPageSettings.isSortDsc">expand_less</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'field6' && localPageSettings.isSortDsc">expand_more</i>
           </div>
         </th>
         <th *ngIf="currentTemplate.field7" class="table-header-sortable"
-            (click)="sortByColumn('field7', casesRequestModel.isSortDsc = !casesRequestModel.isSortDsc)"
+            (click)="sortTable('field7')"
             rowspan="1" colspan="1">
           <div class="d-flex align-items-center justify-content-center">
             {{currentTemplate.field7.label}}
-            <i class="material-icons text-black-50" *ngIf="casesRequestModel.sort != 'finishedAt'">unfold_more</i>
-            <i class="material-icons" *ngIf="casesRequestModel.sort == 'finishedAt' && !casesRequestModel.isSortDsc">expand_less</i>
-            <i class="material-icons" *ngIf="casesRequestModel.sort == 'finishedAt' && casesRequestModel.isSortDsc">expand_more</i>
-          </div>
-        </th>
-        <th *ngIf="currentTemplate.field7" class="table-header-sortable"
-            (click)="sortByColumn('field7', casesRequestModel.isSortDsc = !casesRequestModel.isSortDsc)"
-            rowspan="1" colspan="1">
-          <div class="d-flex align-items-center justify-content-center">
-            {{currentTemplate.field7.label}}
-            <i class="material-icons text-black-50" *ngIf="casesRequestModel.sort != 'finishedAt'">unfold_more</i>
-            <i class="material-icons" *ngIf="casesRequestModel.sort == 'finishedAt' && !casesRequestModel.isSortDsc">expand_less</i>
-            <i class="material-icons" *ngIf="casesRequestModel.sort == 'finishedAt' && casesRequestModel.isSortDsc">expand_more</i>
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'field7'">unfold_more</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'field7' && !localPageSettings.isSortDsc">expand_less</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'field7' && localPageSettings.isSortDsc">expand_more</i>
           </div>
         </th>
         <th *ngIf="currentTemplate.field8" class="table-header-sortable"
-            (click)="sortByColumn('field8', casesRequestModel.isSortDsc = !casesRequestModel.isSortDsc)"
+            (click)="sortTable('field8')"
             rowspan="1" colspan="1">
           <div class="d-flex align-items-center justify-content-center">
             {{currentTemplate.field8.label}}
-            <i class="material-icons text-black-50" *ngIf="casesRequestModel.sort != 'finishedAt'">unfold_more</i>
-            <i class="material-icons" *ngIf="casesRequestModel.sort == 'finishedAt' && !casesRequestModel.isSortDsc">expand_less</i>
-            <i class="material-icons" *ngIf="casesRequestModel.sort == 'finishedAt' && casesRequestModel.isSortDsc">expand_more</i>
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'field8'">unfold_more</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'field8' && !localPageSettings.isSortDsc">expand_less</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'field8' && localPageSettings.isSortDsc">expand_more</i>
           </div>
         </th>
         <th *ngIf="currentTemplate.field9" class="table-header-sortable"
-            (click)="sortByColumn('field9', casesRequestModel.isSortDsc = !casesRequestModel.isSortDsc)"
+            (click)="sortTable('field9')"
             rowspan="1" colspan="1">
-          {{currentTemplate.field9.label}}
           <div class="d-flex align-items-center justify-content-center">
-            {{ 'eForm Name' | translate }}
-            <i class="material-icons text-black-50" *ngIf="casesRequestModel.sort != 'finishedAt'">unfold_more</i>
-            <i class="material-icons" *ngIf="casesRequestModel.sort == 'finishedAt' && !casesRequestModel.isSortDsc">expand_less</i>
-            <i class="material-icons" *ngIf="casesRequestModel.sort == 'finishedAt' && casesRequestModel.isSortDsc">expand_more</i>
+            {{currentTemplate.field9.label}}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'field9'">unfold_more</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'field9' && !localPageSettings.isSortDsc">expand_less</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'field9' && localPageSettings.isSortDsc">expand_more</i>
           </div>
         </th>
         <th>{{ 'Actions' | translate }}

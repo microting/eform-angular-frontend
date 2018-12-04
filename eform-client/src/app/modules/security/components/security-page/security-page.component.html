@@ -74,11 +74,23 @@
       </tbody>
     </table>
   </div>
-  <eform-pagination *ngIf="securityGroups.total > securityGroupsRequestModel.pageSize"
-                    [limit]="securityGroupsRequestModel.pageSize"
-                    [size]="securityGroups.total"
-                    [offset]="securityGroupsRequestModel.offset"
-                    (onPageChanged)="changePage($event)"></eform-pagination>
+
+  <div class="row justify-content-between mr-2 ml-2">
+    <div class="col-md-1">
+      <eform-page-size
+        [pageSize]="localPageSettings.pageSize"
+        (onPageSizeChanged)="localPageSettings.pageSize = $event; securityGroupsRequestModel.pageIndex = 1;
+        updateLocalPageSettings('pagesSettings')">
+      </eform-page-size>
+    </div>
+    <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
+      <eform-pagination *ngIf="securityGroups.total > securityGroupsRequestModel.pageSize"
+                        [limit]="securityGroupsRequestModel.pageSize"
+                        [size]="securityGroups.total"
+                        [offset]="securityGroupsRequestModel.offset"
+                        (onPageChanged)="changePage($event)"></eform-pagination>
+    </div>
+  </div>
 </div>
 
 <eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>
