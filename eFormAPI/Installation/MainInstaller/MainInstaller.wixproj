@@ -28,7 +28,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ApiFileList.wxs" />
-    <Compile Include="ApiFileList2.wxs" />
     <Compile Include="ExitDlgModified.wxs" />
     <Compile Include="DomainNameDlg.wxs" />
     <Compile Include="EmptyFIieldDlg.wxs" />
@@ -44,7 +43,6 @@
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TransformSubfolders.xslt" />
     <Content Include="MainInstaller.wax" />
     <Content Include="MicrotingEULA.rtf" />
     <Content Include="TopBanner.bmp" />
@@ -86,12 +84,11 @@
   </Target>
   <!--<Import Project="$(WixTargetsPath)"/>-->
   <PropertyGroup>
-    <DefineConstants>ClientPath=..\..\..\eform-client; ApiPath=..\..\eformapi.web\bin; ApiPath2=..\..\eformapi.web\bin\da; LetsEncryptPath=..\..\..\eFormAPI\Installation\letsencrypt</DefineConstants>
+    <DefineConstants>ClientPath=..\..\..\eform-client; ApiPath=..\..\eformapi.web; LetsEncryptPath=..\..\..\eFormAPI\Installation\letsencrypt</DefineConstants>
   </PropertyGroup>
   <Target Name="BeforeBuild">
     <HeatDirectory Directory="..\..\..\eform-client" PreprocessorVariable="var.ClientPath" OutputFile="ClientFileList.wxs" ComponentGroupName="ClientFiles" DirectoryRefId="eform_client" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" />
-    <HeatDirectory Directory="..\..\eformapi.web\bin" PreprocessorVariable="var.ApiPath" Transforms="Transform.xslt" OutputFile="ApiFileList.wxs" ComponentGroupName="ApiFiles" DirectoryRefId="eform_api" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" />
-    <HeatDirectory Directory="..\..\eformapi.web\bin\da" PreprocessorVariable="var.ApiPath2" Transforms="TransformSubfolders.xslt" OutputFile="ApiFileList2.wxs" ComponentGroupName="ApiFiles2" DirectoryRefId="eform_api2" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" />
+    <HeatDirectory Directory="..\..\eformapi.web" PreprocessorVariable="var.ApiPath" Transforms="Transform.xslt" OutputFile="ApiFileList.wxs" ComponentGroupName="ApiFiles" DirectoryRefId="eform_api" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" />
     <HeatDirectory Directory="..\..\..\eFormAPI\Installation\letsencrypt" PreprocessorVariable="var.LetsEncryptPath" OutputFile="LetsEncryptFileList.wxs" ComponentGroupName="LetsEncryptFiles" DirectoryRefId="letsencrypt" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" />
   </Target>
   <PropertyGroup>

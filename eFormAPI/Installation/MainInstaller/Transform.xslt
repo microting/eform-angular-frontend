@@ -11,24 +11,31 @@
     </xsl:copy>
   </xsl:template>
 
-  <xsl:key name="files-search" match="wix:Component[not(contains(wix:File/@Source, '.config')) and not(contains(wix:File/@Source, '.asax')) and not(contains(wix:File/@Source, '.json')) and not(contains(wix:File/@Source, '.dll')) and not(contains(wix:File/@Source, '.jar'))]" use="@Id"/>
-  
-  <!--<xsl:key name="files-search2" match="wix:Component[not(contains(wix:File/@Source/da, '.config')) and not(contains(wix:File/@Source/da, '.asax')) and not(contains(wix:File/@Source/da, '.json')) and not(contains(wix:File/@Source/da, '.dll')) and not(contains(wix:File/@Source/da, '.jar'))]" use="@Id"/>-->
-  <!--<xsl:key name="files-search" match="wix:Component[contains(wix:File/@Source, 'eFormAPI.Web.deps.json')]" use="@Id"/>-->
+  <xsl:key name="files-search" match="wix:Component[not(contains(wix:File/@Source, '.dll')) and (contains(wix:File/@Source, '.cs'))]" use="@Id"/>
+  <xsl:key name="files-search" match="wix:Component[contains(wix:File/@Source, 'Resources')]" use="@Id"/>
+  <xsl:key name="files-search" match="wix:Component[contains(wix:File/@Source, 'Properties')]" use="@Id"/>
+  <xsl:key name="files-search" match="wix:Component[contains(wix:File/@Source, 'obj')]" use="@Id"/>
+  <xsl:key name="files-search" match="wix:Component[contains(wix:File/@Source, 'pdb')]" use="@Id"/>
+  <xsl:key name="files-search" match="wix:Component[contains(wix:File/@Source, 'Microsoft.Data.Edm.resources.dll')]" use="@Id"/>
+  <xsl:key name="files-search" match="wix:Component[contains(wix:File/@Source, 'Microsoft.Data.OData.resources.dll')]" use="@Id"/>
+  <xsl:key name="files-search" match="wix:Component[contains(wix:File/@Source, 'System.Spatial.resources.dll')]" use="@Id"/>
   <xsl:key name="files-search" match="wix:Component[contains(wix:File/@Source, 'eFormAPI.Web.runtimeconfig.dev.json')]" use="@Id"/>
-  <!--<xsl:key name="files-search" match="wix:Component[contains(wix:File/@Source, 'eFormAPI.Web.runtimeconfig.json')]" use="@Id"/>-->
-  <!--<xsl:key name="files-search" match="wix:Component[contains(wix:File/@Source,'Web.Release.config')]" use="@Id"/>-->
-  <!--<xsl:key name="files-search" match="wix:Component[contains(wix:File/@Source,'Web.Debug.config')]" use="@Id"/>-->
-  <xsl:key name="dir-search" match="wix:Component[ancestor::wix:Directory/@Name != 'bin']" use="@Id"/>
-  <!--<xsl:key name="dir-search2" match="wix:Component[ancestor::wix:Directory/@Name != 'bin\da']" use="@Id"/>-->
+  <xsl:key name="dir-search" match="wix:Component[contains(wix:Directory/@Name, 'bin')]" use="@Id"/>
+  
 
   <xsl:template match="wix:Component[key('files-search', @Id)]"/>
   <xsl:template match="wix:ComponentRef[key('files-search', @Id)]"/>
-    
-  <!--<xsl:template match="wix:Component[key('files-search2', @Id)]"/>
-  <xsl:template match="wix:ComponentRef[key('files-search2', @Id)]"/>-->
-  
-  <xsl:template match="wix:Directory[@Name != 'bin']"/>
+
+  <xsl:template match="wix:Directory[contains(@Name, 'Abstractions')]"/>
+  <xsl:template match="wix:Directory[contains(@Name, 'Controllers')]"/>
+  <xsl:template match="wix:Directory[contains(@Name, 'Hosting')]"/>
+  <xsl:template match="wix:Directory[contains(@Name, 'Infrastructure')]"/>
+  <xsl:template match="wix:Directory[contains(@Name, 'Models')]"/>
+  <xsl:template match="wix:Directory[contains(@Name, 'Seed')]"/>
+  <xsl:template match="wix:Directory[contains(@Name, 'Migrations')]"/>
+  <xsl:template match="wix:Directory[contains(@Name, 'Resources')]"/>
+  <xsl:template match="wix:Directory[contains(@Name, 'obj')]"/>
+  <xsl:template match="wix:Directory[contains(@Name, 'Properties')]"/>
+  <xsl:template match="wix:Directory[contains(@Name, 'Services')]"/>
   <xsl:template match="wix:ComponentRef[key('dir-search', @Id)]"/>
-  <!--<xsl:template match="wix:ComponentRef[key('dir-search2', @Id)]"/>-->
 </xsl:stylesheet>
