@@ -33,6 +33,8 @@ Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "MainInstaller", "Installati
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "InstallBundle", "Installation\Bundle\InstallBundle.wixproj", "{B63F5F50-AA5B-4BC2-AC61-B2A94B62C042}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DevOps", "DevOps", "{6336CFAA-297B-4F55-94EF-5F4CC2D879A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
