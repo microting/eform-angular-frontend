@@ -15,6 +15,7 @@
     <Feature Id="ProductFeature" Title="Microting Service" Level="1">
       <ComponentGroupRef Id="ClientFiles" />
       <ComponentGroupRef Id="ApiFiles" />
+      <ComponentGroupRef Id="ApiFiles2" />
       <ComponentGroupRef Id="LetsEncryptFiles" />
     </Feature>
   </Product>
@@ -23,6 +24,7 @@
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="INSTALLFOLDER" Name="$(var.ProductName)">
         <Directory Id="eform_api" Name="eform-api"/>
+        <Directory Id="eform_api2" Name="eform-api2"/>
         <Directory Id="eform_client" Name="eform-client"/>
         <Directory Id="letsencrypt" Name="letsencrypt"/>
       </Directory>
