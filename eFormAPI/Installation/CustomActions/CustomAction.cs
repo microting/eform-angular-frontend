@@ -230,6 +230,8 @@ namespace CustomActions
                 AddImageHandlers(webApiName);
                 IncrementProgressBar(session);
 
+                CopyProtectedData(session, webApiLocation);
+
                 session.Log("RunAngularAsWinService called");
                 RunAngularAsWinService(webApiPort, uiPort, clientLocation, uiName);
                 IncrementProgressBar(session);
@@ -356,6 +358,14 @@ namespace CustomActions
             DeleteDirectory(tmpConfigs);
         }
 
+        private static void CopyProtectedData(Session session, string installFolder)
+        {
+            // System.Security.Cryptography.ProtectedData.dll
+            string dst = Path.Combine(installFolder, @"runtimes\win\lib\netstandard2.0");
+            Directory.CreateDirectory(dst);
+            File.Copy(Path.Combine(installFolder, "System.Security.Cryptography.ProtectedData.dll"), Path.Combine(dst, "System.Security.Cryptography.ProtectedData.dll"));
+        }
+
         [CustomAction]
         public static ActionResult UpdateCA(Session session)
         {
@@ -419,6 +429,7 @@ namespace CustomActions
                 session.Log("Set proper names to folders");
 
                 DirectoryCopy(apiTemp, webApiLocation);
+                CopyProtectedData(session, webApiLocation);
                 DirectoryCopy(clientTemp, uiIisDir);
 
                 IncrementProgressBar(session);
