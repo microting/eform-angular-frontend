@@ -823,10 +823,10 @@ namespace CustomActions
                 //    if (toRemoveCe != null)
                 //        handlersCollection.Remove(toRemoveCe);
                 //} catch { }
-                //foreach (ConfigurationElement ce in toRemoveElements)
-                //{
-                //    handlersCollection.Remove(ce);
-                //}
+                foreach (ConfigurationElement ce in toRemoveElements)
+                {
+                    handlersCollection.Remove(ce);
+                }
                 //handlersCollection.Clear();
 
                 //if (remove1Missing)
@@ -869,23 +869,38 @@ namespace CustomActions
                 //        //MessageBox.Show("TRACEVerbHandler ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
                 //    }
                 //}
-                if (add1Missing)
+                //if (add1Missing)
+                //{
+                //    try
+                //    {
+                //        ConfigurationElement ele = handlersCollection.CreateElement("add");
+                //        ele["name"] = "ExtensionlessUrlHandler-Integrated-4.0";
+                //        ele["path"] = @"*.";
+                //        ele["verb"] = "*";
+                //        ele["type"] = @"System.Web.Handlers.TransferRequestHandler";
+                //        ele["preCondition"] = "integratedMode,runtimeVersionv4.0";
+                //        handlersCollection.Add(ele);
+                //    }
+                //    catch
+                //    {
+                //        //MessageBox.Show("pngHandlerMissing ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
+                //    }
+                //}             
+
+                try
                 {
-                    try
-                    {
-                        ConfigurationElement ele = handlersCollection.CreateElement("add");
-                        ele["name"] = "ExtensionlessUrlHandler-Integrated-4.0";
-                        ele["path"] = @"*.";
-                        ele["verb"] = "*";
-                        ele["type"] = @"System.Web.Handlers.TransferRequestHandler";
-                        ele["preCondition"] = "integratedMode,runtimeVersionv4.0";
-                        handlersCollection.Add(ele);
-                    }
-                    catch
-                    {
-                        //MessageBox.Show("pngHandlerMissing ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
-                    }
-                }             
+                    ConfigurationElement ele = handlersCollection.CreateElement("add");
+                    ele["name"] = "aspNetCore";
+                    ele["path"] = "*";
+                    ele["verb"] = "*";
+                    ele["modules"] = "AspNetCoreModule";
+                    ele["resourceType"] = "Unspecified";
+                    handlersCollection.Add(ele);
+
+                } catch
+                {
+
+                }
 
                 if (pngHandlerMissing) {
                     try
