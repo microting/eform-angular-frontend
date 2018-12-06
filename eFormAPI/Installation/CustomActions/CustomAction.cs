@@ -227,7 +227,7 @@ namespace CustomActions
                 IncrementProgressBar(session);
 
                 session.Log("Host WebAPI called");
-                AddImageHandlers(webApiName);
+                AddImageHandlers(webApiName, webApiLocation);
                 IncrementProgressBar(session);
 
                 CopyProtectedData(session, webApiLocation);
@@ -448,7 +448,7 @@ namespace CustomActions
                 IncrementProgressBar(session);
 
                 session.Log("AddImageHandlers called");
-                AddImageHandlers(webApiName);
+                AddImageHandlers(webApiName, webApiLocation);
                 IncrementProgressBar(session);
 
 
@@ -764,7 +764,7 @@ namespace CustomActions
             }
         }
 
-        private static void AddImageHandlers(string siteName)
+        private static void AddImageHandlers(string siteName, string webdataLocation)
         {
 
             using (ServerManager serverManager = new ServerManager())
@@ -774,6 +774,21 @@ namespace CustomActions
 
                 ConfigurationSection handlersSection = config.GetSection("system.webServer/handlers");
                 ConfigurationElementCollection handlersCollection = handlersSection.GetCollection();
+
+                ConfigurationSection webserverSection = config.GetSection("system.webserver");
+                foreach(ConfigurationElement ele in webserverSection.ChildElements)
+                {
+                    if (ele.ChildElements.Count < 1)
+                    {
+                        webserverSection.GetCollection().Remove(ele);
+                        ConfigurationElement new_ele = webserverSection.GetCollection().CreateElement("aspNetCore");
+                        new_ele["processPath"] = "dotnet";
+                        new_ele["arguments"] = Path.Combine(webdataLocation, @"bin\eFormAPI.Web.dll");
+                        new_ele["stdoutLogEnabled"] = "false";
+                        new_ele["stdoutLogFile"] = Path.Combine(webdataLocation, @"bin\logs\stdout");
+                        webserverSection.GetCollection().Add(new_ele);
+                    }
+                }
 
                 List<ConfigurationElement> toRemoveElements = new List<ConfigurationElement>();
 
