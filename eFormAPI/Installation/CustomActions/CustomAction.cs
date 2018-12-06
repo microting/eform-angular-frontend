@@ -823,52 +823,52 @@ namespace CustomActions
                 //    if (toRemoveCe != null)
                 //        handlersCollection.Remove(toRemoveCe);
                 //} catch { }
-                foreach (ConfigurationElement ce in toRemoveElements)
-                {
-                    handlersCollection.Remove(ce);
-                }
-                handlersCollection.Clear();
+                //foreach (ConfigurationElement ce in toRemoveElements)
+                //{
+                //    handlersCollection.Remove(ce);
+                //}
+                //handlersCollection.Clear();
 
-                if (remove1Missing)
-                {
-                    try
-                    {
-                        ConfigurationElement ele = handlersCollection.CreateElement("remove");
-                        ele["name"] = "ExtensionlessUrlHandler-Integrated-4.0";
-                        handlersCollection.Add(ele);
-                    }
-                    catch (Exception ex)
-                    {
-                        //MessageBox.Show("ExtensionlessUrlHandler ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
-                    }
-                }
+                //if (remove1Missing)
+                //{
+                //    try
+                //    {
+                //        ConfigurationElement ele = handlersCollection.CreateElement("remove");
+                //        ele["name"] = "ExtensionlessUrlHandler-Integrated-4.0";
+                //        handlersCollection.Add(ele);
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        //MessageBox.Show("ExtensionlessUrlHandler ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
+                //    }
+                //}
 
-                if (remove2Missing)
-                {
-                    try
-                    {
-                        ConfigurationElement ele = handlersCollection.CreateElement("remove");
-                        ele["name"] = "OPTIONSVerbHandler";
-                        handlersCollection.Add(ele);
-                    }
-                    catch (Exception ex)
-                    {
-                        //MessageBox.Show("OPTIONSVerbHandler ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
-                    }
-                }
+                //if (remove2Missing)
+                //{
+                //    try
+                //    {
+                //        ConfigurationElement ele = handlersCollection.CreateElement("remove");
+                //        ele["name"] = "OPTIONSVerbHandler";
+                //        handlersCollection.Add(ele);
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        //MessageBox.Show("OPTIONSVerbHandler ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
+                //    }
+                //}
 
-                if (remove3Missing) {
-                    try
-                    {
-                        ConfigurationElement ele = handlersCollection.CreateElement("remove");
-                        ele["name"] = "TRACEVerbHandler";
-                        handlersCollection.Add(ele);
-                    }
-                    catch (Exception ex)
-                    {
-                        //MessageBox.Show("TRACEVerbHandler ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
-                    }
-                }
+                //if (remove3Missing) {
+                //    try
+                //    {
+                //        ConfigurationElement ele = handlersCollection.CreateElement("remove");
+                //        ele["name"] = "TRACEVerbHandler";
+                //        handlersCollection.Add(ele);
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        //MessageBox.Show("TRACEVerbHandler ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
+                //    }
+                //}
                 if (add1Missing)
                 {
                     try
