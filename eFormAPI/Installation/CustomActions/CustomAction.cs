@@ -363,6 +363,10 @@ namespace CustomActions
             // System.Security.Cryptography.ProtectedData.dll
             string dst = Path.Combine(installFolder, @"bin\runtimes\win\lib\netstandard2.0");
             Directory.CreateDirectory(dst);
+            if (File.Exists(Path.Combine(dst, "System.Security.Cryptography.ProtectedData.dll")))
+            {
+                File.Delete(Path.Combine(dst, "System.Security.Cryptography.ProtectedData.dll"));                
+            }
             File.Copy(Path.Combine(installFolder, @"bin\System.Security.Cryptography.ProtectedData.dll"), Path.Combine(dst, "System.Security.Cryptography.ProtectedData.dll"));
         }
 
