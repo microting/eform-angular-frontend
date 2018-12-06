@@ -361,9 +361,9 @@ namespace CustomActions
         private static void CopyProtectedData(Session session, string installFolder)
         {
             // System.Security.Cryptography.ProtectedData.dll
-            string dst = Path.Combine(installFolder, @"runtimes\win\lib\netstandard2.0");
+            string dst = Path.Combine(installFolder, @"bin\runtimes\win\lib\netstandard2.0");
             Directory.CreateDirectory(dst);
-            File.Copy(Path.Combine(installFolder, "System.Security.Cryptography.ProtectedData.dll"), Path.Combine(dst, "System.Security.Cryptography.ProtectedData.dll"));
+            File.Copy(Path.Combine(installFolder, @"bin\System.Security.Cryptography.ProtectedData.dll"), Path.Combine(dst, "System.Security.Cryptography.ProtectedData.dll"));
         }
 
         [CustomAction]
