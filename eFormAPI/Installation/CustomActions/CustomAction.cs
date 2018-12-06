@@ -780,15 +780,16 @@ namespace CustomActions
                 {
                     if (ele.ChildElements.Count < 1)
                     {
-                        webserverSection.GetCollection().Remove(ele);
-                        ConfigurationElement new_ele = webserverSection.GetCollection().CreateElement("aspNetCore");
-                        new_ele["processPath"] = "dotnet";
-                        new_ele["arguments"] = Path.Combine(webdataLocation, @"bin\eFormAPI.Web.dll");
-                        new_ele["stdoutLogEnabled"] = "false";
-                        new_ele["stdoutLogFile"] = Path.Combine(webdataLocation, @"bin\logs\stdout");
-                        webserverSection.GetCollection().Add(new_ele);
+                        webserverSection.GetCollection().Remove(ele);                        
                     }
                 }
+
+                ConfigurationElement new_ele = webserverSection.GetCollection().CreateElement("aspNetCore");
+                new_ele["processPath"] = "dotnet";
+                new_ele["arguments"] = Path.Combine(webdataLocation, @"bin\eFormAPI.Web.dll");
+                new_ele["stdoutLogEnabled"] = "false";
+                new_ele["stdoutLogFile"] = Path.Combine(webdataLocation, @"bin\logs\stdout");
+                webserverSection.GetCollection().Add(new_ele);
 
                 List<ConfigurationElement> toRemoveElements = new List<ConfigurationElement>();
 
