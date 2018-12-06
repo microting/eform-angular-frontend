@@ -14,14 +14,26 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Installation", "Installation", "{4691F570-A301-4F86-B6BC-F804E4EC5155}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomActions", "Installation\CustomActions\CustomActions.csproj", "{768280FF-C359-4E58-8B5C-1F682B41CC24}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2B167169-F122-4F1F-9881-0DC8C07585B8} = {2B167169-F122-4F1F-9881-0DC8C07585B8}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllowMultipleVersions", "Installation\AllowMultipleVersions\AllowMultipleVersions.csproj", "{2B167169-F122-4F1F-9881-0DC8C07585B8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllowMultipleVersionsBundle", "Installation\AllowMultipleVersionsBundle\AllowMultipleVersionsBundle.csproj", "{FF3054DF-B9E9-49A9-9BCE-384C2E657262}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B63F5F50-AA5B-4BC2-AC61-B2A94B62C042} = {B63F5F50-AA5B-4BC2-AC61-B2A94B62C042}
+	EndProjectSection
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "MainInstaller", "Installation\MainInstaller\MainInstaller.wixproj", "{2B339DEF-FB4F-4987-A361-8B95410C438B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2B167169-F122-4F1F-9881-0DC8C07585B8} = {2B167169-F122-4F1F-9881-0DC8C07585B8}
+		{701DF5E7-71CC-4187-835F-2C9E8056956B} = {701DF5E7-71CC-4187-835F-2C9E8056956B}
+	EndProjectSection
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "InstallBundle", "Installation\Bundle\InstallBundle.wixproj", "{B63F5F50-AA5B-4BC2-AC61-B2A94B62C042}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DevOps", "DevOps", "{6336CFAA-297B-4F55-94EF-5F4CC2D879A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,8 +111,8 @@ Global
 		{2B339DEF-FB4F-4987-A361-8B95410C438B}.Debug|x64.ActiveCfg = Debug|x64
 		{2B339DEF-FB4F-4987-A361-8B95410C438B}.Debug|x86.ActiveCfg = Debug|x86
 		{2B339DEF-FB4F-4987-A361-8B95410C438B}.Release|Any CPU.ActiveCfg = Release|x86
-		{2B339DEF-FB4F-4987-A361-8B95410C438B}.Release|x64.ActiveCfg = Release|x64
-		{2B339DEF-FB4F-4987-A361-8B95410C438B}.Release|x64.Build.0 = Release|x64
+		{2B339DEF-FB4F-4987-A361-8B95410C438B}.Release|x64.ActiveCfg = Release|x86
+		{2B339DEF-FB4F-4987-A361-8B95410C438B}.Release|x64.Build.0 = Release|x86
 		{2B339DEF-FB4F-4987-A361-8B95410C438B}.Release|x86.ActiveCfg = Release|x86
 		{2B339DEF-FB4F-4987-A361-8B95410C438B}.Release|x86.Build.0 = Release|x86
 		{B63F5F50-AA5B-4BC2-AC61-B2A94B62C042}.Debug|Any CPU.ActiveCfg = Debug|x86

@@ -158,9 +158,9 @@ namespace eFormAPI.Web
                                 
                 
 //                _container.Register(Castle.MicroKernel.Registration.Component.For<Core>().Instance(_core));	
-                _container.Install(new RebusHandlerInstaller(),	
-                    new RebusInstaller(Configuration.MyConnectionString(), 1, 1));	
-                Bus = _container.Resolve<IBus>();
+                //_container.Install(new RebusHandlerInstaller(),	
+                //    new RebusInstaller(Configuration.MyConnectionString(), 1, 1));	
+                //Bus = _container.Resolve<IBus>();
             }
         }
 

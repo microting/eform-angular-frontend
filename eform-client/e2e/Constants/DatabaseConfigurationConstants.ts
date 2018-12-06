@@ -5,12 +5,13 @@ export default {
   firstName: 'John',
   lastNAme: 'Smith',
   dataSourceSDK: 'Data Source=.\\SQLEXPRESS',
-  initialCatalogueSDK: 'eFormSDK',
-  authenticationTypeSDK: 'Integrated Security=True',
+  customerNo: '420',
+  SqlServer: 'localhost',
+  port: '3306',
   dataSourceMain: 'Data Source=.\\SQLEXPRESS',
   token: 'abc1234567890abc1234567890abcdef',
   initialCatalogueMain: 'eFormMain',
-  authenticationTypeMain: 'Integrated Security=True',
+  authenticationType: 'user = root;',
   languageOptions: {
     english: 'English',
     danish: 'Danish'
