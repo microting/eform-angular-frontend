@@ -111,13 +111,13 @@ namespace eFormAPI.Web.Services
             if (initialSettingsModel.ConnectionStringSdk.SqlServerType == "mssql")
             {
                 sdkConnectionString = initialSettingsModel.ConnectionStringSdk.Host + 
-                                      ";Initial Catalog=" +
+                                      ";Database=" +
                                       sdkDbName + ";" +
                                       initialSettingsModel
                                           .ConnectionStringSdk.Auth;
 
                 mainConnectionString = initialSettingsModel.ConnectionStringSdk.Host +
-                                       ";Initial Catalog=" +
+                                       ";Database=" +
                                        angularDbName + ";" +
                                        initialSettingsModel
                                            .ConnectionStringSdk.Auth;
@@ -158,8 +158,16 @@ namespace eFormAPI.Web.Services
             catch (Exception exception)
             {
                 _logger.LogError(exception.Message);
-                return new OperationResult(false, 
-                    _localizationService.GetString("SDKConnectionStringIsInvalid"));
+                if (exception.InnerException != null)
+                {
+                    return new OperationResult(false, exception.Message + " - " + exception.InnerException.Message);
+                }
+                else
+                {
+                    return new OperationResult(false, exception.Message);
+                }
+                //return new OperationResult(false, 
+                //    _localizationService.GetString("SDKConnectionStringIsInvalid"));
             }
 
             // Migrate DB
@@ -254,8 +262,17 @@ namespace eFormAPI.Web.Services
             catch (Exception exception)
             {
                 _logger.LogError(exception.Message);
-                return new OperationResult(false, 
-                    _localizationService.GetString("MainConnectionStringIsInvalid"));
+                //return new OperationResult(false, 
+                //    _localizationService.GetString("MainConnectionStringIsInvalid"));
+
+                if (exception.InnerException != null)
+                {
+                    return new OperationResult(false, exception.Message + " - " + exception.InnerException.Message);
+                }
+                else
+                {
+                    return new OperationResult(false, exception.Message);
+                }
             }
 
             // Setup SDK DB
@@ -283,8 +300,16 @@ namespace eFormAPI.Web.Services
             catch (Exception exception)
             {
                 _logger.LogError(exception.Message);
-                return new OperationResult(false, 
-                    _localizationService.GetString("CouldNotWriteConnectionString"));
+                if (exception.InnerException != null)
+                {
+                    return new OperationResult(false, exception.Message + " - " + exception.InnerException.Message);
+                }
+                else
+                {
+                    return new OperationResult(false, exception.Message);
+                }
+                //return new OperationResult(false, 
+                //    _localizationService.GetString("CouldNotWriteConnectionString"));
             }
             _applicationLifetime.StopApplication();
             

@@ -91,7 +91,7 @@
                   <input mdbInputDirective
                          [(ngModel)]="settingsModel.connectionStringSDK.host"
                          [mdbValidate]="false"
-                         placeholder="Data Source=COMPUTER_NAME\SQLEXPRESS" type="text"
+                         placeholder="Server=COMPUTER_NAME\SQLEXPRESS" type="text"
                          required name="host" id="host1" class="form-control">
                   <label for="host1">Data Source<span class="text-danger">*</span></label>
                 </div>
@@ -99,7 +99,7 @@
                   <input mdbInputDirective
                          [mdbValidate]="false"
                          [(ngModel)]="settingsModel.connectionStringSDK.auth"
-                         placeholder="Integrated Security=True"
+                         placeholder="User ID=xxx;Password=xxxx;Trusted_Connection=True;"
                          type="text" name="auth" id="auth1" class="form-control">
                   <label for="auth1">Authentication type<span class="text-danger">*</span></label>
                 </div>
