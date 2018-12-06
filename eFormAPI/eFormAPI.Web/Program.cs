@@ -55,28 +55,11 @@ namespace eFormAPI.Web
             int port = defaultConfig.GetValue("port", 5000);
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-#if DEBUG
+//#if DEBUG
                 return WebHost.CreateDefaultBuilder(args)
                     //.UseIISIntegration()
                    .UseUrls($"http://localhost:{port}")
-                   .ConfigureAppConfiguration((hostContext, config) =>
-                   {
-                       // delete all default configuration providers
-                       config.Sources.Clear();
-                       config.SetBasePath(hostContext.HostingEnvironment.ContentRootPath);
-                       config.AddJsonFile("appsettings.json",
-                           optional: true,
-                           reloadOnChange: true);
-                       config.AddEnvironmentVariables();
-                   })
-                   .UseStartup<Startup>()
-                   .Build();
-#else
-                Console.WriteLine("WE ARE IN RELEASE MODE");
-                return WebHost.CreateDefaultBuilder(args)
-                    .UseKestrel()
                     .UseIISIntegration()
-                   //.UseUrls($"http://localhost:{port}")
                    .ConfigureAppConfiguration((hostContext, config) =>
                    {
                        // delete all default configuration providers
@@ -89,7 +72,25 @@ namespace eFormAPI.Web
                    })
                    .UseStartup<Startup>()
                    .Build();
-#endif
+//#else
+                //Console.WriteLine("WE ARE IN RELEASE MODE");
+                //return WebHost.CreateDefaultBuilder(args)
+                //    .UseKestrel()
+                //    .UseIISIntegration()
+                //   //.UseUrls($"http://localhost:{port}")
+                //   .ConfigureAppConfiguration((hostContext, config) =>
+                //   {
+                //       // delete all default configuration providers
+                //       config.Sources.Clear();
+                //       config.SetBasePath(hostContext.HostingEnvironment.ContentRootPath);
+                //       config.AddJsonFile("appsettings.json",
+                //           optional: true,
+                //           reloadOnChange: true);
+                //       config.AddEnvironmentVariables();
+                //   })
+                //   .UseStartup<Startup>()
+                //   .Build();
+//#endif
             }
             else
             {
