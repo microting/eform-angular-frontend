@@ -74,6 +74,7 @@ namespace eFormAPI.Web
 #else
                 Console.WriteLine("WE ARE IN RELEASE MODE");
                 return WebHost.CreateDefaultBuilder(args)
+                    .UseKestrel()
                     .UseIISIntegration()
                    //.UseUrls($"http://localhost:{port}")
                    .ConfigureAppConfiguration((hostContext, config) =>
