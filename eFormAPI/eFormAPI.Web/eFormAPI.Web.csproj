@@ -27,7 +27,6 @@
   
   <ItemGroup>
     <PackageReference Include="Automapper" Version="6.1.0" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="1.1.58" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.2" />
     <PackageReference Include="SharpZipLib.NETStandard" Version="1.0.7" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0005" />
@@ -36,7 +35,6 @@
     <PackageReference Include="OtpSharp.Core" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.4" />
-    <PackageReference Include="Microting.eForm" Version="3.0.97" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.4" />
   </ItemGroup>
@@ -51,5 +49,10 @@
     <None Update="API.doc.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\eform-sdk-dotnet\eFormCore\Microting.eForm.csproj" />
+    <ProjectReference Include="..\..\..\eFormApi.BasePn\eFormApi.BasePn\eFormApi.BasePn.csproj" />
   </ItemGroup>
 </Project>
