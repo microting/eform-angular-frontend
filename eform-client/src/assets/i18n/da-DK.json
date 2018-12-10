@@ -208,7 +208,6 @@
   "Read": "Læs",
   "General Permissions": "Generelle Tilladelser",
   "Column": "Kolonne",
-
   "Eform Permissions": "Eform Tilladelser",
   "Forbidden": "Forbudt",
   "Add Eform to Group": "Tilføj Eform til Gruppe",
@@ -225,5 +224,9 @@
   "Case read": "Sagen læst",
   "Case update": "Sag opdatering",
   "Case delete": "Slet slette",
-  "Get PDF": "Få PDF"
+  "Get PDF": "Få PDF",
+  "Machine Area": "Maskinområde",
+  "Areas": "Områder",
+  "Machines": "Maskiner",
+  "Display": "Skærm"
 }

@@ -26,6 +26,8 @@
   </form>
   <eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>
 </div>
-<a class="link-primary" [routerLink]="['restore-password']">{{'Forgot password' | translate}}?</a>
+<a class="link-primary" [routerLink]="['restore-password']" *ngIf="settingsService.loginPageSettingsModel.isSMTPExist">
+  {{'Forgot password' | translate}}?
+</a>
 
 

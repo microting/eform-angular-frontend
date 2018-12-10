@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private router: Router,
               private authService: AuthService,
-              private settingsService: AppSettingsService,
+              public settingsService: AppSettingsService,
               private fb: FormBuilder,
               private toastrService: ToastrService,
               private localeService: LocaleService,

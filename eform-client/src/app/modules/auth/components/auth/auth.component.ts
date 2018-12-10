@@ -24,22 +24,38 @@ export class AuthComponent implements OnInit {
 
   ngOnInit() {
     this.localeService.initLocale();
+    this.checkConnectionString();
+  }
+
+  checkConnectionString() {
+    if (!this.isConnectionStringExist(false)) {
+      setTimeout(() => {
+        this.isConnectionStringExist(true);
+      }, 5000);
+    }
+  }
+
+  isConnectionStringExist(secondCheck: boolean) {
     this.spinnerStatus = true;
     this.settingsService.connectionStringExist().subscribe((result) => {
       if (result && !result.success) {
-        this.router.navigate(['/application-settings/connection-string']).then();
+        if (secondCheck) {
+          this.router.navigate(['/application-settings/connection-string']).then();
+        }
+        return false;
       } else if (result && result.success) {
         this.getSettings();
         this.getTwoFactorInfo();
       } this.spinnerStatus = false;
-    });
+      return true;
+    }, error => false);
   }
 
   getSettings() {
     this.spinnerStatus = true;
     this.settingsService.getLoginPageSettings().subscribe((data) => {
       if (data && data.success) {
-        this.loginPageSettings = data.model;
+        this.loginPageSettings = this.settingsService.loginPageSettingsModel = data.model;
         if (this.loginPageSettings.imageLink && this.loginPageSettings.imageLinkVisible) {
           this.loginImage = 'api/images/login-page-images?fileName=' + this.loginPageSettings.imageLink;
         } else if (!this.loginPageSettings.imageLink) {
