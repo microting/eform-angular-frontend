@@ -89,7 +89,7 @@ class DatabasePage extends Page {
     // this.dataSourceMainInput.setValue(DatabaseConfigurationConstants.dataSourceMain);
     // this.initialCatalogMainInput.setValue(DatabaseConfigurationConstants.initialCatalogueMain);
     this.authenticationType.setValue(DatabaseConfigurationConstants.authenticationType);
-    // this.selectLanguage(language);
+    this.selectLanguage(language);
   }
 }
 
