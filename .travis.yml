@@ -1,6 +1,7 @@
 dist: trusty
 addons:
   firefox: latest
+  chrome: stable
   apt:
     sources:
     - google-chrome
@@ -11,6 +12,8 @@ language: csharp
 mono: none
 dotnet: 2.1
 bundler_args: --retry 5
+before_install:
+  - google-chrome-stable --headless --diable-gpu
 install:
 - nvm install 8.0.0
 - nvm use 8.0.0
