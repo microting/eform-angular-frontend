@@ -7,7 +7,9 @@
     "start-port": "ng serve --port 4300 --proxy-config proxy.config.json",
     "build": "ng build --prod",
     "test": "./node_modules/.bin/wdio wdio.conf.js",
+    "test2": "./node_modules/.bin/wdio wdio-step2.conf.js",
     "testheadless": "./node_modules/.bin/wdio wdio-headless.conf.js --disable-gpu --browsers=ChromeHeadless",
+    "testheadless2": "./node_modules/.bin/wdio wdio-headless-step2.conf.js --disable-gpu --browsers=ChromeHeadless",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
