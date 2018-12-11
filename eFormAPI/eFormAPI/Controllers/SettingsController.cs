@@ -6,6 +6,7 @@ using System.IO;
 using System.Reflection;
 using System.Web.Configuration;
 using System.Web.Http;
+using Castle.Core.Internal;
 using eFormAPI.Web.Infrastructure.Helpers;
 using eFormAPI.Web.Infrastructure.Models.Settings.Admin;
 using eFormAPI.Web.Infrastructure.Models.Settings.Initial;
@@ -155,7 +156,9 @@ namespace eFormAPI.Web.Controllers
                     MainText = section.Settings["loginPage:mainText"]?.Value,
                     MainTextVisible = section.Settings["loginPage:mainTextVisible"].Value.Equals("True"),
                     SecondaryText = section.Settings["loginPage:secondaryText"]?.Value,
-                    SecondaryTextVisible = section.Settings["loginPage:secondaryTextVisible"].Value.Equals("True")
+                    SecondaryTextVisible = section.Settings["loginPage:secondaryTextVisible"].Value.Equals("True"),
+                    IsSMTPExists = !section.Settings["email:smtpHost"].Value.IsNullOrEmpty() &&
+                                   !section.Settings["email:smtpPort"].Value.IsNullOrEmpty()
                 };
                 return new OperationDataResult<LoginPageSettingsModel>(true, model);
             }
