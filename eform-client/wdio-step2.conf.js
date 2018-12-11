@@ -10,7 +10,7 @@ exports.config = {
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
   specs: [
-    // 'e2e/Tests/application-settings/**/*spec.ts',
+    'e2e/Tests/application-settings/**/*spec.ts',
     // 'e2e\\Tests\\device-users\\device-users.add.spec.ts',
     // 'e2e\\Tests\\device-users\\device-users.edit.spec.ts',
     // 'e2e\\Tests\\device-users\\device-users.delete.spec.ts',
@@ -58,7 +58,10 @@ exports.config = {
     // 5 instances get started at a time.
     maxInstances: 1,
     //
-    browserName: 'chrome'
+    browserName: 'chrome',
+    chromeOptions: {
+      args: ['--start-maximized']
+    }
   }],
   //
   // ===================
