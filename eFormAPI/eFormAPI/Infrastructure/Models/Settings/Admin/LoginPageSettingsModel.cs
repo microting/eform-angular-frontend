@@ -8,5 +8,6 @@
         public bool SecondaryTextVisible { get; set; }
         public string ImageLink { get; set; }
         public bool ImageLinkVisible { get; set; }
+        public bool IsSMTPExists { get; set; }
     }
 }
