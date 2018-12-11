@@ -1,10 +1,12 @@
 export class Navbar {
-  public get advancedDropdown() {
-    return browser.element('#advanced');
+  public advancedDropdown() {
+    this.clickOnHeaderMenuItem('Advanced');
+    // return browser.element('#advanced');
+
   }
 
-  public get applicationSettingsBtn() {
-    return browser.element('#application-settings');
+  public applicationSettingsBtn() {
+    browser.element(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Application Settings')]`).click();
   }
 
   public get userDropdown() {
@@ -19,14 +21,18 @@ export class Navbar {
     return browser.element('#device-users');
   }
 
+  public clickOnHeaderMenuItem(headerMenuItem) {
+    browser.element(`//*[@id="header"]//*[text()="${headerMenuItem}"]`).element('..').element('..').click();
+  }
+
   public logout() {
     this.userDropdown.click();
     this.logoutBtn.click();
   }
 
   public goToApplicationSettings() {
-    this.advancedDropdown.click();
-    this.applicationSettingsBtn.click();
+    this.advancedDropdown();
+    this.applicationSettingsBtn();
     browser.pause(25000);
   }
 

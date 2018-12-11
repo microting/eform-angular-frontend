@@ -10,7 +10,16 @@ exports.config = {
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
   specs: [
-    'e2e/Tests/database-configuration/**/*.spec.ts',
+    'e2e/Tests/application-settings/**/*spec.ts',
+    // 'e2e\\Tests\\device-users\\device-users.add.spec.ts',
+    // 'e2e\\Tests\\device-users\\device-users.edit.spec.ts',
+    // 'e2e\\Tests\\device-users\\device-users.delete.spec.ts',
+    // 'e2e\\Tests\\main-page-eforms\\my-eforms.create-eform.spec.ts',
+    // 'e2e\\Tests\\main-page-eforms\\my-eforms.sort-eform.spec.ts',
+    // 'e2e/Tests/main-page-eforms/my-eforms.filter-eform.spec.ts',
+    // 'e2e\\Tests\\main-page-eforms\\my-eforms.tags-eform.spec.ts',
+    // 'e2e\\Tests\\main-page-eforms\\my-eforms.pairing-eform.spec.ts',
+    // 'e2e\\Tests\\main-page-eforms\\my-eforms.delete-eform.spec.ts',
   ],
   suites: {
     settings: [
@@ -51,8 +60,7 @@ exports.config = {
     //
     browserName: 'chrome',
     chromeOptions: {
-      args: ['--headless',
-      '--disable-gpu']
+      args: ['--start-maximized']
     }
   }],
   //

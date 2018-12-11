@@ -1,6 +1,7 @@
 dist: trusty
 addons:
   firefox: latest
+  chrome: stable
   apt:
     sources:
     - google-chrome
@@ -11,9 +12,11 @@ language: csharp
 mono: none
 dotnet: 2.1
 bundler_args: --retry 5
+before_install:
+  - google-chrome-stable --headless --disable-gpu
 install:
-- nvm install 8.0.0
-- nvm use 8.0.0
+- nvm install 8.14.0
+- nvm use 8.14.0
 - npm install
 before_script:
 - "export DISPLAY=:99.0"
@@ -26,7 +29,15 @@ script:
   - dotnet test -v n eFormAPI/eFormAPI.Web.Tests/eFormAPI.Web.Tests.csproj
   - dotnet test -v n eFormAPI/eFormAPI.Web.Integration.Tests/eFormAPI.Web.Integration.Tests.csproj
   - cd eform-client && npm install
-  - npm test -v
+  - npm start &
+  - sleep 30
+  - cp appsettingsMaster.json appsettings.json
+  - dotnet run --project ../eFormAPI/eFormAPI.Web/eFormAPI.Web.csproj &
+  - sleep 10
+  - npm run testheadless
+  - dotnet run --project ../eFormAPI/eFormAPI.Web/eFormAPI.Web.csproj &
+  - sleep 10
+  - npm run testheadless2
 after_success:
 - echo dotnet test and npm test succeeded
 after_faliure:
