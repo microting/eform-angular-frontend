@@ -30,10 +30,10 @@ script:
   - dotnet test -v n eFormAPI/eFormAPI.Web.Integration.Tests/eFormAPI.Web.Integration.Tests.csproj
   - cd eform-client && npm install
   - dotnet run --project ../eFormAPI/eFormAPI.Web/eFormAPI.Web.csproj &
-  - sleep 6
+  - sleep 16
   - npm run testheadless
   - dotnet run --project ../eFormAPI/eFormAPI.Web/eFormAPI.Web.csproj &
-  - sleep 6
+  - sleep 16
   - npm run testheadless2
 after_success:
 - echo dotnet test and npm test succeeded
