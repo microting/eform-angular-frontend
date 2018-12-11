@@ -4,11 +4,13 @@ export default {
   email: 'admin@admin.com',
   firstName: 'John',
   lastNAme: 'Smith',
-  dataSourceSDK: 'Data Source=.\\SQLEXPRESS',
   customerNo: '420',
   SqlServer: 'localhost',
   port: '3306',
-  dataSourceMain: 'Data Source=.\\SQLEXPRESS',
+  sqlServerType: {
+    mysql: 'MySQL',
+    mssql: 'MSSQL'
+  },
   token: 'abc1234567890abc1234567890abcdef',
   initialCatalogueMain: 'eFormMain',
   authenticationType: 'user = root;',
