@@ -112,7 +112,7 @@ export class CasesTableComponent implements OnInit {
       this.spinnerStatus = true;
       this.securityGroupEformsService.getEformsSimplePermissions().subscribe((data => {
         if (data && data.success) {
-          let foundTemplates = this.securityGroupEformsService.mapEformsSimplePermissions(data.model);
+          const foundTemplates = this.securityGroupEformsService.mapEformsSimplePermissions(data.model);
           if (foundTemplates.length) {
             this.eformPermissionsSimpleModel = foundTemplates.find(x => x.templateId == templateId);
           }
@@ -127,6 +127,19 @@ export class CasesTableComponent implements OnInit {
       return this.eformPermissionsSimpleModel.permissionsSimpleList.find(x => x == UserClaimsEnum[permissionIndex].toString());
     } else {
       return this.userClaims[UserClaimsEnum[permissionIndex].toString()];
+    }
+  }
+
+  changePage(e: any) {
+    if (e || e === 0) {
+      this.casesRequestModel.offset = e;
+      if (e === 0) {
+        this.casesRequestModel.pageIndex = 0;
+      } else {
+        this.casesRequestModel.pageIndex
+          = Math.floor(e / this.casesRequestModel.pageSize);
+      }
+      this.loadAllCases();
     }
   }
 }
