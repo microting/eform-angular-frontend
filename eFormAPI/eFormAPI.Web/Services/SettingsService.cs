@@ -153,7 +153,9 @@ namespace eFormAPI.Web.Services
             AdminTools adminTools;
             try
             {
-                adminTools = new AdminTools(sdkConnectionString);
+                adminTools = new AdminTools(sdkConnectionString);                
+                // Setup SDK DB
+                adminTools.DbSetup(initialSettingsModel.ConnectionStringSdk.Token);
             }
             catch (Exception exception)
             {
@@ -275,8 +277,6 @@ namespace eFormAPI.Web.Services
                 }
             }
 
-            // Setup SDK DB
-            adminTools.DbSetup(initialSettingsModel.ConnectionStringSdk.Token);
             try
             {
                 // Generate SigningKey
@@ -297,6 +297,7 @@ namespace eFormAPI.Web.Services
                     options.DefaultLocale = initialSettingsModel.GeneralAppSetupSettingsModel.DefaultLocale;
                 });
             }
+            
             catch (Exception exception)
             {
                 _logger.LogError(exception.Message);
