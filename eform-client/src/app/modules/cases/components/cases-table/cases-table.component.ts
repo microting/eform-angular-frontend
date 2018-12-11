@@ -72,6 +72,7 @@ export class CasesTableComponent implements OnInit {
     this.casesRequestModel.templateId = this.id;
     this.casesRequestModel.isSortDsc = this.localPageSettings.isSortDsc;
     this.casesRequestModel.sort = this.localPageSettings.sort;
+    this.casesRequestModel.pageSize= this.localPageSettings.pageSize;
     this.casesService.getCases(this.casesRequestModel).subscribe(operation => {
       if (operation && operation.success) {
         this.caseListModel = operation.model;
