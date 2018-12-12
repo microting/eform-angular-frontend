@@ -27,7 +27,7 @@
   
   <ItemGroup>
     <PackageReference Include="Automapper" Version="6.1.0" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="1.1.59" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="1.1.64" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.2" />
     <PackageReference Include="SharpZipLib.NETStandard" Version="1.0.7" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0005" />
@@ -36,15 +36,30 @@
     <PackageReference Include="OtpSharp.Core" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.4" />
-    <PackageReference Include="Microting.eForm" Version="3.0.101" />
+    <PackageReference Include="Microting.eForm" Version="3.0.102" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.4" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Update="Resources\CustomersResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CustomersResources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   
   <ItemGroup>
     <Content Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\CustomersResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CustomersResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   
   <ItemGroup>

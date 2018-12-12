@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using eFormAPI.Web.Abstractions;
 using Microsoft.Extensions.Localization;
-using Microting.eFormApi.BasePn.Localization;
 
 namespace eFormAPI.Web.Services
 {
