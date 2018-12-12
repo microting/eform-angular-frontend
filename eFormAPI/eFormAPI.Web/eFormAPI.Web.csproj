@@ -27,8 +27,8 @@
   
   <ItemGroup>
     <PackageReference Include="Automapper" Version="6.1.0" />
-    <PackageReference Include="Microting.eForm" Version="3.0.100" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="1.1.60" />
+    <PackageReference Include="Microting.eForm" Version="3.0.102" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="1.1.63" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.2" />
     <PackageReference Include="SharpZipLib.NETStandard" Version="1.0.7" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0005" />
