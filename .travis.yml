@@ -31,12 +31,11 @@ script:
   - cd eform-client && npm install
   - npm start &
   - sleep 30
-  - cp appsettingsMaster.json appsettings.json
   - dotnet run --project ../eFormAPI/eFormAPI.Web/eFormAPI.Web.csproj &
   - sleep 10
   - npm run testheadless
   - dotnet run --project ../eFormAPI/eFormAPI.Web/eFormAPI.Web.csproj &
-  - sleep 10
+  - sleep 15
   - npm run testheadless2
 after_success:
 - echo dotnet test and npm test succeeded
