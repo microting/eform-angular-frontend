@@ -23,14 +23,14 @@ namespace eFormAPI.Web.Controllers
             try
             {
                 var core = _coreHelper.GetCore();
-                var caseList = core.CaseReadAll(requestModel.TemplateId, null, null,
+                CaseList caseList = core.CaseReadAll(requestModel.TemplateId, null, null,
                     Constants.WorkflowStates.NotRemoved, requestModel.NameFilter,
-                    requestModel.IsSortDsc, requestModel.Sort);
+                    requestModel.IsSortDsc, requestModel.Sort, requestModel.PageIndex, requestModel.PageSize);
                 var model = new CaseListModel()
                 {
-                    NumOfElements = 40,
+                    NumOfElements = caseList.NumOfElements,
                     PageNum = requestModel.PageIndex,
-                    Cases = caseList
+                    Cases = caseList.Cases
                 };
 
                 return new OperationDataResult<CaseListModel>(true, model);
