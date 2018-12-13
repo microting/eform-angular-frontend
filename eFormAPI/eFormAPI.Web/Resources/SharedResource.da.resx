@@ -337,7 +337,7 @@
     <value>Valgbar liste oprettelse mislykkedes</value>
   </data>
   <data name="SettingsUpdatedSuccessfully" xml:space="preserve">
-    <value>Indstillinger opdateret med succes</value>
+    <value>Indstillinger er blevet gemt</value>
   </data>
   <data name="SiteParamCouldNotBeDeleted" xml:space="preserve">
     <value>Webstedet "{0}" kunne ikke slettes</value>
