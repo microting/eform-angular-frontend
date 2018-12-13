@@ -1,6 +1,6 @@
 export class Navbar {
   public advancedDropdown() {
-    this.clickOnHeaderMenuItem('Advanced');
+    this.clickOnHeaderMenuItem('Advanced').click();
     // return browser.element('#advanced');
 
   }
@@ -9,12 +9,13 @@ export class Navbar {
     browser.element(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Application Settings')]`).click();
   }
 
-  public get userDropdown() {
-    return browser.element('#userDropdown');
-  }
+  // public get userDropdown() {
+  //   return browser.element('#userDropdown');
+  // }
 
   public get logoutBtn() {
-    return browser.element('#sign-out');
+    // return browser.element('#sign-out');
+    return browser.element(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Logout')]`);
   }
 
   public get deviceUsersBtn() {
@@ -22,11 +23,13 @@ export class Navbar {
   }
 
   public clickOnHeaderMenuItem(headerMenuItem) {
-    browser.element(`//*[@id="header"]//*[text()="${headerMenuItem}"]`).element('..').element('..').click();
+    return browser.element(`//*[@id="header"]//*[text()="${headerMenuItem}"]`).element('..').element('..');
   }
 
   public logout() {
-    this.userDropdown.click();
+    this.clickOnHeaderMenuItem('John Smith').click();
+    // .click();
+    // this.userDropdown.click();
     this.logoutBtn.click();
   }
 
