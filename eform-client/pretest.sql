@@ -1,0 +1,38 @@
+SET FOREIGN_KEY_CHECKS = 0;
+USE 420_sdk;
+Truncate case_versions;
+Truncate cases;
+Truncate field_value_versions;
+Truncate field_values;
+Truncate field_versions;
+Truncate fields;
+Truncate check_list_site_versions;
+Truncate check_list_sites;
+Truncate check_list_value_versions;
+Truncate check_list_values;
+Truncate taggings;
+Truncate tagging_versions;
+Truncate tags;
+Truncate tag_versions;
+Truncate check_list_versions;
+Truncate check_lists;
+Truncate entity_group_versions;
+Truncate entity_groups;
+Truncate entity_item_versions;
+Truncate entity_items;
+Truncate log_exceptions;
+Truncate logs;
+Truncate notifications;
+Truncate unit_versions;
+Truncate units;
+Truncate site_worker_versions;
+Truncate site_workers;
+Truncate worker_versions;
+Truncate workers;
+Truncate site_versions;
+Truncate sites;
+Truncate uploaded_data;
+Truncate uploaded_data_versions;
+Truncate field_types;
+
+
