@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Net;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using Castle.Windsor;
-using Castle.MicroKernel.Registration;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Advanced;
 using eFormAPI.Web.Abstractions.Eforms;
@@ -26,12 +23,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
-using eFormCore;
-using eFormCore.Installers;
+using Microsoft.Extensions.Localization;
 using Microting.eFormApi.BasePn;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
+using Microting.eFormApi.BasePn.Localization;
+using Microting.eFormApi.BasePn.Localization.Abstractions;
 using Microting.eFormApi.BasePn.Services;
 using Rebus.Bus;
 using Swashbuckle.AspNetCore.Swagger;
@@ -41,8 +39,6 @@ namespace eFormAPI.Web
     public class Startup
     {
         public static List<IEformPlugin> Plugins;
-
-        private Core _core;
         private IWindsorContainer _container;
         
         public static IBus Bus { get; private set; }
@@ -111,7 +107,10 @@ namespace eFormAPI.Web
             // Authentication
             services.AddEFormAuth(Configuration);
             // Localiation
-            services.AddLocalization(options => { options.ResourcesPath = "Resources"; });
+            services.AddTransient<IEformLocalizerFactory, JsonStringLocalizerFactory>();
+            services.AddTransient<IStringLocalizerFactory, ResourceManagerStringLocalizerFactory>();
+            services.AddTransient<IStringLocalizer, JsonStringLocalizer>();
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
             // MVC and API services with Plugins
             services.AddEFormMvc(Plugins);
             // Writable options

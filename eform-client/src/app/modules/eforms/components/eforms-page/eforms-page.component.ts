@@ -1,4 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
+import {Subject} from 'rxjs';
+import {debounceTime} from 'rxjs/operators';
 import {ApplicationPages, UserClaimsEnum} from 'src/app/common/enums';
 import {CommonDictionaryModel} from 'src/app/common/models/common';
 import {TemplateDto} from 'src/app/common/models/dto';
@@ -30,6 +32,8 @@ export class EformsPageComponent implements OnInit {
   eformPermissionsSimpleModel: Array<EformPermissionsSimpleModel> = [];
   availableTags: Array<CommonDictionaryModel> = [];
 
+  mySubject = new Subject();
+
   get userClaims() { return this.authService.userClaims; }
   get userClaimsEnum() { return UserClaimsEnum; }
 
@@ -45,6 +49,13 @@ export class EformsPageComponent implements OnInit {
               private securityGroupEformsService: SecurityGroupEformsPermissionsService,
               private userSettingsService: UserSettingsService
   ) {
+    this.mySubject.pipe(
+      debounceTime(500)
+    ). subscribe(val => {
+      debugger;
+      this.templateRequestModel.nameFilter = val.toString();
+      this.loadAllTemplates();
+    });
   }
 
   ngOnInit() {
@@ -142,8 +153,7 @@ export class EformsPageComponent implements OnInit {
   }
 
   onLabelInputChanged(label: string) {
-    this.templateRequestModel.nameFilter = label;
-    this.loadAllTemplates();
+    this.mySubject.next(label);
   }
 
   sortTable(sort: string) {
