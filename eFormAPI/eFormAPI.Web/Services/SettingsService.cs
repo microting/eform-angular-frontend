@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using Castle.Core.Internal;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Infrastructure.Database;
 using eFormCore;
@@ -330,6 +331,9 @@ namespace eFormAPI.Web.Services
                     MainTextVisible = _loginPageSettings.Value.MainTextVisible,
                     SecondaryText = _loginPageSettings.Value.SecondaryText,
                     SecondaryTextVisible = _loginPageSettings.Value.SecondaryTextVisible,
+                    // TODO fix
+                    //IsSMTPExists = !_emailSettings.Value.SmtpHost.IsNullOrEmpty() && 
+                    //               !_emailSettings.Value.SmtpPort.ToString().IsNullOrEmpty()
                 };
                 return new OperationDataResult<LoginPageSettingsModel>(true, model);
             }

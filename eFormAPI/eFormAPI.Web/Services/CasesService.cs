@@ -30,14 +30,14 @@ namespace eFormAPI.Web.Services
             try
             {
                 Core core = _coreHelper.GetCore();
-                List<Case> caseList = core.CaseReadAll(requestModel.TemplateId, null, null,
+                CaseList caseList = core.CaseReadAll(requestModel.TemplateId, null, null,
                     Constants.WorkflowStates.NotRemoved, requestModel.NameFilter,
-                    requestModel.IsSortDsc, requestModel.Sort);
+                    requestModel.IsSortDsc, requestModel.Sort, requestModel.PageIndex, requestModel.PageSize);
                 CaseListModel model = new CaseListModel()
                 {
-                    NumOfElements = 40,
-                    PageNum = requestModel.PageIndex,
-                    Cases = caseList
+                    NumOfElements = caseList.NumOfElements,
+                    PageNum = caseList.PageNum,
+                    Cases = caseList.Cases
                 };
 
                 return new OperationDataResult<CaseListModel>(true, model);

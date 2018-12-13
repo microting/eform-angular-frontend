@@ -225,8 +225,11 @@
   "Case update": "Case update",
   "Case delete": "Case delete",
   "Get PDF": "Get PDF",
-  "Bind Eform": "Binde Eform"
-
+  "Bind Eform": "Bind Eform",
+  "Machine Area": "Machine Area",
+  "Areas": "Areas",
+  "Machines": "Machines",
+  "Display": "Display"
 }
 
 

@@ -32,7 +32,7 @@ const SettingsMethods = {
 
 @Injectable()
 export class AppSettingsService extends BaseService {
-
+  loginPageSettingsModel: LoginPageSettingsModel = new LoginPageSettingsModel();
   constructor(private _http: HttpClient, router: Router, toastrService: ToastrService) {
     super(_http, router, toastrService);
   }
