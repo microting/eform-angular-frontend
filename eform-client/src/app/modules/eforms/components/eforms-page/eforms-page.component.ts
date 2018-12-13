@@ -50,10 +50,10 @@ export class EformsPageComponent implements OnInit {
               private userSettingsService: UserSettingsService
   ) {
     this.mySubject.pipe(
-      debounceTime(5000)
+      debounceTime(500)
     ). subscribe(val => {
       debugger;
-      this.templateRequestModel.nameFilter = 'x';
+      this.templateRequestModel.nameFilter = val.toString();
       this.loadAllTemplates();
     });
   }
