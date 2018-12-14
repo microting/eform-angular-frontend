@@ -2,31 +2,7 @@
 
 ## Preparing
 
-### Create non-root user
-
-![Install](node_2.png "Install")
-
-Script should be launched via Non-root user via sudo.
-
-Exec adduser to create new user in system
-
-```bash
-adduser username
-```
-
-Give sudo privileges to user
-
-```bash
-usermod -aG sudo newuser
-```
-
-logout and login to new created user
-
-if you are root, you can run __su__ to login as new user
-
-```bash
-su - newuser
-```
+Recommended distributive - Ubuntu 18.04
 
 ### Swapfile
 
@@ -48,12 +24,38 @@ sudo swapon /swapfile
 echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 ```
 
+### Create non-root user
+
+![Install](node_2.png "Install")
+
+Script should be launched via Non-root user via sudo.
+
+Exec adduser to create new user in system
+
+```bash
+adduser eformuser
+```
+
+Give sudo privileges to user
+
+```bash
+usermod -aG sudo eformuser
+```
+
+logout and login to new created user
+
+if you are root, you can run __su__ to login as new user
+
+```bash
+su - eformuser
+```
+
 ### Downloading script
 
 Use wget to download script (replace with download link from repo)
 
 ```bash
-wget https://gist.githubusercontent.com/Keroosha/d9170bb11049c901584102eceb267357/raw/3cd3e8e79db5d5a181553132afe53093cdd117e5/install.sh
+wget https://raw.githubusercontent.com/microting/eform-angular-frontend/netcore/install.sh
 ```
 
 Make script executable
