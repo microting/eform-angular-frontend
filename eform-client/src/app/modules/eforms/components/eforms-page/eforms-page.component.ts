@@ -1,4 +1,6 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Subject} from 'rxjs';
+import {debounceTime} from 'rxjs/operators';
 import {ApplicationPages} from 'src/app/common/enums';
 import {CommonDictionaryModel} from 'src/app/common/models/common';
 import {TemplateDto} from 'src/app/common/models/dto';
@@ -12,7 +14,7 @@ import {EFormService, EFormTagService} from 'src/app/common/services/eform';
   templateUrl: './eforms-page.component.html',
   styleUrls: ['./eforms-page.component.scss']
 })
-export class EformsPageComponent implements OnInit {
+export class EformsPageComponent implements OnInit, OnDestroy {
 
   @ViewChild('modalNewEform') newEformModal;
   @ViewChild('modalCasesColumns') modalCasesColumnsModal;
@@ -20,6 +22,8 @@ export class EformsPageComponent implements OnInit {
   @ViewChild('modalEditTags') modalEditTags;
   @ViewChild('modalRemoveEform') modalRemoveEform;
   @ViewChild('modalUploadZip') modalUploadZip;
+
+  searchSubject = new Subject();
 
   spinnerStatus = false;
   localPageSettings: PageSettingsModel = new PageSettingsModel();
@@ -38,10 +42,20 @@ export class EformsPageComponent implements OnInit {
               private userSettingsService: UserSettingsService,
               private eFormTagService: EFormTagService
   ) {
+    this.searchSubject.pipe(
+      debounceTime(500)
+    ). subscribe(val => {
+      this.templateRequestModel.nameFilter = val.toString();
+      this.loadAllTemplates();
+    });
   }
 
   ngOnInit() {
     this.getLocalPageSettings();
+  }
+
+  ngOnDestroy() {
+    this.searchSubject.unsubscribe();
   }
 
   getLocalPageSettings() {
@@ -121,8 +135,7 @@ export class EformsPageComponent implements OnInit {
   }
 
   onLabelInputChanged(label: string) {
-    this.templateRequestModel.nameFilter = label;
-    this.loadAllTemplates();
+    this.searchSubject.next(label);
   }
 
   sortTable(sort: string) {
