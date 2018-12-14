@@ -4,6 +4,8 @@
 
 ### Create non-root user
 
+(node_2.png "Install")
+
 Script should be launched via Non-root user via sudo.
 
 Exec adduser to create new user in system
