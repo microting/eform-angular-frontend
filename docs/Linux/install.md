@@ -2,7 +2,7 @@
 
 ## Preparing
 
-Recommended distributive - Ubuntu 18.04
+Recommended distributive - __Ubuntu 18.04__
 
 ### Swapfile
 
@@ -14,7 +14,7 @@ Run __cat__ to check does your system have a swap file
 cat /proc/swaps
 ```
 
-If no swap file or partition is available, you can create swapfile with commands below
+If no swap file or partition is available - you can create swapfile with commands below
 
 ```bash
 sudo fallocate -l 4G /swapfile
@@ -25,8 +25,6 @@ echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 ```
 
 ### Create non-root user
-
-![Install](node_2.png "Install")
 
 Script should be launched via Non-root user via sudo.
 
@@ -42,9 +40,9 @@ Give sudo privileges to user
 usermod -aG sudo eformuser
 ```
 
-logout and login to new created user
+logout and login to created user
 
-if you are root, you can run __su__ to login as new user
+if you are in root, you can run __su__ to login as new user
 
 ```bash
 su - eformuser
@@ -52,7 +50,7 @@ su - eformuser
 
 ### Downloading script
 
-Use wget to download script (replace with download link from repo)
+Use wget to download script (replace with download link from repository)
 
 ```bash
 wget https://raw.githubusercontent.com/microting/eform-angular-frontend/netcore/install.sh
@@ -72,6 +70,9 @@ Launch script with command
 sudo ./install.sh
 ```
 
+You should see this window: 
+![Install](main_script_window.png "Install")
+
 Configuration wizard ask you a 4 parameters to setup
 
 * Username
@@ -85,15 +86,15 @@ Configuration wizard ask you a 4 parameters to setup
   * Which launching environment should use dotnet
   * __Available values__: _Development_, _Production_
   * __Default value__: _Production_
-  * Leave default value, if you plan only working with eForm dashboard
+  * Leave default value if you plan to work only with eForm dashboard
 * Port
   * Defines on which port application will be available
   * __Default value__: 80
 
 ## Installation process
 
-All installation process is automated, after installation eFrom will be available on host and port that you specified in configuration
+All installation process is automated, after installation eFrom application will be available on host and port that you specified in configuration
 
 ## Error solving
 
-If app not launched, or something missing, check __errlog__ file for more info about installation process
+If app is not launched or something missing - check __errlog__ file for more info about installation process
