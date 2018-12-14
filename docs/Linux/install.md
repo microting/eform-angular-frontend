@@ -4,7 +4,7 @@
 
 ### Create non-root user
 
-(node_2.png "Install")
+![Install](node_2.png "Install")
 
 Script should be launched via Non-root user via sudo.
 
