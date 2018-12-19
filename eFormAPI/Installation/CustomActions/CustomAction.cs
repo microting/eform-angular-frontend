@@ -1041,6 +1041,9 @@ namespace CustomActions
                 if (file.Name.Equals("Web.config", StringComparison.InvariantCultureIgnoreCase) && File.Exists(temppath))
                     continue;
 
+                if (file.Name.Equals("appsettings.json", StringComparison.InvariantCultureIgnoreCase) && File.Exists(temppath))
+                    continue;
+
                 if (File.Exists(temppath) && !overrideFile)
                     continue;
 
