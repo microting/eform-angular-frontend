@@ -21,6 +21,7 @@ namespace eFormAPI.Web.Services
         private readonly ILogger<MenuService> _logger;
         private readonly IClaimsService _claimsService;
         private readonly IUserService _userService;
+        private readonly IServiceProvider _serviceProvider;
         private readonly ILocalizationService _localizationService;
         private readonly BaseDbContext _dbContext;
 
@@ -28,6 +29,7 @@ namespace eFormAPI.Web.Services
             BaseDbContext dbContext,
             IClaimsService claimsService,
             IUserService userService,
+            IServiceProvider serviceProvider,
             ILocalizationService localizationService)
         {
             _logger = logger;
@@ -35,6 +37,7 @@ namespace eFormAPI.Web.Services
             _claimsService = claimsService;
             _userService = userService;
             _localizationService = localizationService;
+            _serviceProvider = serviceProvider;
         }
 
         public async Task<OperationDataResult<MenuModel>> GetCurrentUserMenu()
@@ -63,7 +66,7 @@ namespace eFormAPI.Web.Services
                     .OrderBy(p => p.Position)
                     .Select(p => new MenuItemModel()
                         {
-                            Name = p.Name,
+                            Name = _localizationService.GetString(p.LocaleName),
                             Position = p.Position,
                             E2EId = p.E2EId,
                             Link = p.Link,
@@ -72,7 +75,7 @@ namespace eFormAPI.Web.Services
                                 .OrderBy(c => c.Position)
                                 .Select(x => new MenuItemModel()
                                 {
-                                    Name = x.Name,
+                                    Name = _localizationService.GetString(x.LocaleName),
                                     Position = x.Position,
                                     Link = x.Link,
                                     E2EId = x.E2EId
@@ -85,7 +88,7 @@ namespace eFormAPI.Web.Services
                     .OrderBy(p => p.Position)
                     .Select(p => new MenuItemModel()
                         {
-                            Name = p.Name,
+                            Name = _localizationService.GetString(p.LocaleName),
                             Position = p.Position,
                             E2EId = p.E2EId,
                             Link = p.Link,
@@ -94,7 +97,7 @@ namespace eFormAPI.Web.Services
                                 .OrderBy(c => c.Position)
                                 .Select(x => new MenuItemModel()
                                 {
-                                    Name = x.Name,
+                                    Name = _localizationService.GetString(x.LocaleName),
                                     Position = x.Position,
                                     Link = x.Link,
                                     E2EId = x.E2EId
@@ -130,7 +133,7 @@ namespace eFormAPI.Web.Services
                 {
                     foreach (IEformPlugin plugin in Startup.Plugins)
                     {
-                        MenuModel pluginMenu = plugin.HeaderMenu();
+                        MenuModel pluginMenu = plugin.HeaderMenu(_serviceProvider);
                         result.LeftMenu.AddRange(pluginMenu.LeftMenu);
                         result.RightMenu.AddRange(pluginMenu.RightMenu);
                     }

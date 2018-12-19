@@ -501,4 +501,7 @@
   <data name="TagAlreadySaved" xml:space="preserve">
     <value>Tag already saved</value>
   </data>
+  <data name="MyEforms" xml:space="preserve">
+    <value>My eForms</value>
+  </data>
 </root>

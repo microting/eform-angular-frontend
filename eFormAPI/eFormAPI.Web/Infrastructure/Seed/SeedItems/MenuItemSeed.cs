@@ -13,6 +13,7 @@ namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
                 {
                     Id = 1,
                     Name = "My eForms",
+                    LocaleName = "MyEforms",
                     E2EId = "my-eforms",
                     Link = "/",
                     Position = 0,
