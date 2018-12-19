@@ -501,4 +501,46 @@
   <data name="TagAlreadySaved" xml:space="preserve">
     <value>Tag allerede gemt</value>
   </data>
+  <data name="Advanced" xml:space="preserve">
+    <value>Avanceret</value>
+  </data>
+  <data name="ApplicationSettings" xml:space="preserve">
+    <value>Applikationsindstillinger</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Skift adgangskode</value>
+  </data>
+  <data name="DeviceUsers" xml:space="preserve">
+    <value>Enhedsbrugere</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Log ud</value>
+  </data>
+  <data name="MyEforms" xml:space="preserve">
+    <value>Mine eForms</value>
+  </data>
+  <data name="SearchableList" xml:space="preserve">
+    <value>Søgbar Lister</value>
+  </data>
+  <data name="Security" xml:space="preserve">
+    <value>Sikkerhed</value>
+  </data>
+  <data name="SelectableList" xml:space="preserve">
+    <value>Valgbar Liste</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Indstillinger</value>
+  </data>
+  <data name="Sites" xml:space="preserve">
+    <value>Lokationer</value>
+  </data>
+  <data name="Units" xml:space="preserve">
+    <value>Enheder</value>
+  </data>
+  <data name="UserManagement" xml:space="preserve">
+    <value>Brugeradministration</value>
+  </data>
+  <data name="Workers" xml:space="preserve">
+    <value>Medarbejder</value>
+  </data>
 </root>

@@ -66,7 +66,7 @@ namespace eFormAPI.Web.Services
                     .OrderBy(p => p.Position)
                     .Select(p => new MenuItemModel()
                         {
-                            Name = _localizationService.GetString(p.LocaleName),
+                            Name = _localizationService.GetString(p.LocaleName, p.Name),
                             Position = p.Position,
                             E2EId = p.E2EId,
                             Link = p.Link,
@@ -75,7 +75,7 @@ namespace eFormAPI.Web.Services
                                 .OrderBy(c => c.Position)
                                 .Select(x => new MenuItemModel()
                                 {
-                                    Name = _localizationService.GetString(x.LocaleName),
+                                    Name = _localizationService.GetString(x.LocaleName, x.Name),
                                     Position = x.Position,
                                     Link = x.Link,
                                     E2EId = x.E2EId
@@ -88,7 +88,7 @@ namespace eFormAPI.Web.Services
                     .OrderBy(p => p.Position)
                     .Select(p => new MenuItemModel()
                         {
-                            Name = _localizationService.GetString(p.LocaleName),
+                            Name = _localizationService.GetString(p.LocaleName, p.Name),
                             Position = p.Position,
                             E2EId = p.E2EId,
                             Link = p.Link,
@@ -97,7 +97,7 @@ namespace eFormAPI.Web.Services
                                 .OrderBy(c => c.Position)
                                 .Select(x => new MenuItemModel()
                                 {
-                                    Name = _localizationService.GetString(x.LocaleName),
+                                    Name = _localizationService.GetString(x.LocaleName, x.Name),
                                     Position = x.Position,
                                     Link = x.Link,
                                     E2EId = x.E2EId
