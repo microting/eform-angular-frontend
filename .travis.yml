@@ -1,6 +1,5 @@
-dist: trusty
+dist: xenial
 addons:
-  firefox: latest
   chrome: stable
   apt:
     sources:
