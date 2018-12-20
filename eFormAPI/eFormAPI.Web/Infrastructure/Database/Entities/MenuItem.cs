@@ -8,6 +8,10 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities
     {
         [StringLength(250)] 
         public string Name { get; set; }
+
+        [StringLength(250)] 
+        public string LocaleName { get; set; }
+
         public string Link { get; set; }
         public string E2EId { get; set; }
 

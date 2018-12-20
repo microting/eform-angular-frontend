@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Castle.Core.Internal;
 using eFormAPI.Web.Abstractions;
 using Microsoft.Extensions.Localization;
 
@@ -30,6 +31,15 @@ namespace eFormAPI.Web.Services
                 return null;
             }
             return string.Format(message.Value, args);
+        }
+
+        public string GetString(string key, string defaultValue)
+        {
+            if (key.IsNullOrEmpty())
+            {
+                return defaultValue;
+            }
+            return GetString(key);
         }
     }
 }
