@@ -34,8 +34,6 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   eformPermissionsSimpleModel: Array<EformPermissionsSimpleModel> = [];
   availableTags: Array<CommonDictionaryModel> = [];
 
-  searchSubject = new Subject();
-
   get userClaims() { return this.authService.userClaims; }
   get userClaimsEnum() { return UserClaimsEnum; }
 
