@@ -54,23 +54,36 @@ namespace eFormAPI.Web
         {
             using (var scope = webHost.Services.GetService<IServiceScopeFactory>().CreateScope())
             {
-                using (var dbContext = scope.ServiceProvider.GetRequiredService<BaseDbContext>())
+
+                BaseDbContext dbContext = null;
+                try
                 {
-                    try
-                    {
-                        var connectionStrings =
-                            scope.ServiceProvider.GetRequiredService<IWritableOptions<ConnectionStrings>>();
-                        if (connectionStrings.Value.DefaultConnection != "...")
-                        {
-                            dbContext.Database.Migrate();
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-                        logger.LogError(e, "Error while migrating db");
-                    }
+                    dbContext = scope.ServiceProvider.GetRequiredService<BaseDbContext>();
                 }
+                catch {}
+
+                if (dbContext != null)
+                {
+                    using (dbContext = scope.ServiceProvider.GetRequiredService<BaseDbContext>())
+                    {
+                        try
+                        {
+                            var connectionStrings =
+                                scope.ServiceProvider.GetRequiredService<IWritableOptions<ConnectionStrings>>();
+                            if (connectionStrings.Value.DefaultConnection != "...")
+                            {
+                                dbContext.Database.Migrate();
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+                            logger.LogError(e, "Error while migrating db");
+                        }
+                    }    
+                }
+                
+                
             }
         }
 
