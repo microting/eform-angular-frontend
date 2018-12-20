@@ -55,11 +55,11 @@
             <div class="row">
               <div class="col-md-6 ng-select-wrapper">
                 <ng-select required
-                           bindLabel="value"
+                           bindLabel="name"
                            bindValue="id"
-                           [(ngModel)]="newUserModel.role" name="createRole"
-                           [placeholder]="'Role' | translate"
-                           [items]="[{id: 'admin', value: 'Admin'}, {id: 'user', value: 'User'}]"></ng-select>
+                           [(ngModel)]="newUserModel.groupId" name="createGroup"
+                           [placeholder]="'Group' | translate"
+                           [items]="availableGroups.securityGroupList"></ng-select>
               </div>
               <div class="col-md-6">
                 <div class="md-form">

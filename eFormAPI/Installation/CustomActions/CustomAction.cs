@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Security.Principal;
 using System.Management.Automation;
 using System.Net.NetworkInformation;
+using System.Xml.Linq;
 
 namespace CustomActions
 {
@@ -100,7 +101,7 @@ namespace CustomActions
                 var appFolderName = $"{customerNumber}_{domain}";
 
                 var configFolders = session["KEEPFOLDERS"].Split(',');
-                var configFiles = session["KEEPFILES"].Split(','); 
+                var configFiles = session["KEEPFILES"].Split(',');
 
                 var dirs = Directory.GetDirectories(installFolder).Where(t => t.Contains(appFolderName));
 
@@ -207,7 +208,7 @@ namespace CustomActions
                 IncrementProgressBar(session);
 
                 session.Log("Get ui port");
-                var uiPort = webApiPort-2000;
+                var uiPort = webApiPort - 2000;
                 var uiName = $"{customerNumber}_{domain}_client_{uiPort}";
                 IncrementProgressBar(session);
 
@@ -227,8 +228,10 @@ namespace CustomActions
                 IncrementProgressBar(session);
 
                 session.Log("Host WebAPI called");
-                AddImageHandlers(webApiName);
+                AddImageHandlers(webApiName, webApiLocation);
                 IncrementProgressBar(session);
+
+                CopyProtectedData(session, webApiLocation);
 
                 session.Log("RunAngularAsWinService called");
                 RunAngularAsWinService(webApiPort, uiPort, clientLocation, uiName);
@@ -356,6 +359,26 @@ namespace CustomActions
             DeleteDirectory(tmpConfigs);
         }
 
+        private static void CopyProtectedData(Session session, string installFolder)
+        {
+            // System.Security.Cryptography.ProtectedData.dll
+            string dst = Path.Combine(installFolder, @"bin\runtimes\win\lib\netstandard2.0");
+            Directory.CreateDirectory(dst);
+            if (File.Exists(Path.Combine(dst, "System.Security.Cryptography.ProtectedData.dll")))
+            {
+                File.Delete(Path.Combine(dst, "System.Security.Cryptography.ProtectedData.dll"));
+            }
+            File.Copy(Path.Combine(installFolder, @"bin\System.Security.Cryptography.ProtectedData.dll"), Path.Combine(dst, "System.Security.Cryptography.ProtectedData.dll"));
+
+            dst = Path.Combine(installFolder, @"bin\runtimes\win\lib\netcoreapp2.1");
+            Directory.CreateDirectory(dst);
+            if (File.Exists(Path.Combine(dst, "System.Data.SqlClient.dll")))
+            {
+                File.Delete(Path.Combine(dst, "System.Data.SqlClient.dll"));
+            }
+            File.Copy(Path.Combine(installFolder, @"bin\System.Data.SqlClient.dll"), Path.Combine(dst, "System.Data.SqlClient.dll"));
+        }
+
         [CustomAction]
         public static ActionResult UpdateCA(Session session)
         {
@@ -373,7 +396,7 @@ namespace CustomActions
                 var clientTemp = Path.Combine(instDir, "eform-client");
 
                 var domainName = session.CustomActionData["DOMAINNAME"];
-                var api =  domainName.Split('_');
+                var api = domainName.Split('_');
                 var domain = api[1];
                 var customerNumber = api.First();
                 var apiPort = int.Parse(api.Last());
@@ -383,6 +406,7 @@ namespace CustomActions
 
                 // stop sites
                 ControlSites(customerNumber, domain, apiPort, uiPort, false);
+                Thread.Sleep(10000);
                 IncrementProgressBar(session);
 
                 // client update
@@ -400,25 +424,30 @@ namespace CustomActions
                 try
                 {
                     DeleteDirectory(Path.Combine(uiIisDir, "node_modules"));
-                } catch { }
+                }
+                catch { }
                 try
                 {
                     File.Delete(uiIisDir + "\\package-lock.json");
-                } catch { }
+                }
+                catch { }
 
                 try
                 {
                     DeleteDirectory(Path.Combine(uiIisDir, "dist"));
-                } catch { }
+                }
+                catch { }
                 try
                 {
                     BackupPluginSettings(session, uiIisDir);
                     DeleteDirectory(Path.Combine(uiIisDir, "src"));
-                } catch { }
+                }
+                catch { }
 
                 session.Log("Set proper names to folders");
 
                 DirectoryCopy(apiTemp, webApiLocation);
+                CopyProtectedData(session, webApiLocation);
                 DirectoryCopy(clientTemp, uiIisDir);
 
                 IncrementProgressBar(session);
@@ -429,9 +458,10 @@ namespace CustomActions
                 IncrementProgressBar(session);
 
                 session.Log("AddImageHandlers called");
-                AddImageHandlers(webApiName);
-                IncrementProgressBar(session);
+                AddImageHandlers(webApiName, webApiLocation);
+                AddAspNetCoreSection(webApiName, webApiLocation);
 
+                IncrementProgressBar(session);
 
                 session.Log("RunAngularAsWinService called");
                 RunAngularAsWinService(apiPort, uiPort, uiIisDir, uiName);
@@ -456,7 +486,7 @@ namespace CustomActions
                 MessageBox.Show(ex.Message + " " + ex.StackTrace);
                 return ActionResult.Failure;
             }
-            
+
         }
 
         public static bool HandleUpdateWebConfigFile(string filePath)
@@ -469,9 +499,10 @@ namespace CustomActions
                     "<bindingRedirect oldVersion=\"0.0.0.0 - 11.0.0.0\" newVersion=\"11.0.0.0\" />");
 
                 File.WriteAllText(filePath, fileContents);
-            } catch { }
+            }
+            catch { }
 
-            
+
 
             return true;
         }
@@ -494,7 +525,7 @@ namespace CustomActions
                 var apiPort = int.Parse(api.Last());
                 var uiPort = apiPort - 2000;
 
-                var installDir = GetInstallDirrectory(domainName);          
+                var installDir = GetInstallDirrectory(domainName);
 
                 var uiName = $"{customerNumber}_{domain}_client_{uiPort}";
                 var uiIisDir = Path.Combine(installDir + uiName);
@@ -545,7 +576,7 @@ namespace CustomActions
                 MessageBox.Show(ex.Message + " " + ex.StackTrace);
                 return ActionResult.Failure;
             }
-           
+
         }
 
         [CustomAction]
@@ -568,7 +599,7 @@ namespace CustomActions
                 return ActionResult.Failure;
             }
         }
-        
+
         private static long GetSiteId(string uiName)
         {
             using (var serverManager = new ServerManager())
@@ -595,7 +626,7 @@ namespace CustomActions
             return session.Message(InstallMessage.Progress, record);
         }
 
-        public static void DeleteDirectory(string targetDir) => 
+        public static void DeleteDirectory(string targetDir) =>
             DeleteDirectory(targetDir, new string[0], new string[0], targetDir);
 
         public static void DeleteDirectory(string targetDir, string[] keepFolders, string[] keepFiles, string initialDir)
@@ -711,7 +742,7 @@ namespace CustomActions
             using (var serverManager = new ServerManager())
             {
                 var sitePath = serverManager.Sites[siteName].Applications["/"].VirtualDirectories["/"].PhysicalPath;
-                 return new DirectoryInfo(sitePath).Parent.FullName + "\\";
+                return new DirectoryInfo(sitePath).Parent.FullName + "\\";
             }
         }
 
@@ -744,192 +775,122 @@ namespace CustomActions
             }
         }
 
-        private static void AddImageHandlers(string siteName)
+        private static void AddImageHandlers(string siteName, string webdataLocation)
         {
 
             using (ServerManager serverManager = new ServerManager())
             {
-                //MessageBox.Show("AddImageHandlers called for siteName " + siteName);
 
                 Configuration config = serverManager.GetWebConfiguration(siteName);
 
                 ConfigurationSection handlersSection = config.GetSection("system.webServer/handlers");
                 ConfigurationElementCollection handlersCollection = handlersSection.GetCollection();
-                bool pngHandlerMissing = true;
-                bool jpgHandlerMissing = true;
-                bool jpegHandlerMissing = true;
-                bool add1Missing = true;
-                bool remove1Missing = true;
-                bool remove2Missing = true;
-                bool remove3Missing = true;
-                //ConfigurationElement toRemoveCe = null;
+
+                ConfigurationSection webserverSection = null;
 
                 List<ConfigurationElement> toRemoveElements = new List<ConfigurationElement>();
 
                 foreach (ConfigurationElement ce in handlersCollection)
                 {
-                    //if (ce.GetAttributeValue("name").ToString() == "get-image-png")
-                    //{
-                    //    //MessageBox.Show("pngHandlerMissing");
-                    //    pngHandlerMissing = false;
-                    //}
-                    //if (ce.GetAttributeValue("name").ToString() == "get-image-jpg")
-                    //{
-                    //    //MessageBox.Show("jpgHandlerMissing");
-                    //    jpgHandlerMissing = false;
-                    //}
-                    //if (ce.GetAttributeValue("name").ToString() == "get-image-jpeg")
-                    //{
-                    //    //MessageBox.Show("jpegHandlerMissing");
-                    //    jpegHandlerMissing = false;
-                    //}
-                    //if (ce.GetAttributeValue("name").ToString() == "ExtensionlessUrlHandler-Integrated-4.0")
-                    //{
-                    //    add1Missing = false;
-                    //}
-                    //if (ce.GetAttributeValue("name").ToString() == "OPTIONSVerbHandler")
-                    //{
-                    //    remove2Missing = false;
-                    //}
-                    //if (ce.GetAttributeValue("name").ToString() == "TRACEVerbHandler")
-                    //{
-                    //    remove3Missing = false;
-                    //}
-
-                    //if (ce.GetAttributeValue("name").ToString() == "ExtensionlessUrlHandler-Integrated-4.0")
-                    //{
-                    //    toRemoveCe = ce;
-                    //}
                     toRemoveElements.Add(ce);
 
                 }
-                //try
-                //{
-                //    if (toRemoveCe != null)
-                //        handlersCollection.Remove(toRemoveCe);
-                //} catch { }
                 foreach (ConfigurationElement ce in toRemoveElements)
                 {
                     handlersCollection.Remove(ce);
                 }
-                handlersCollection.Clear();
 
-                if (remove1Missing)
+                try
                 {
-                    try
-                    {
-                        ConfigurationElement ele = handlersCollection.CreateElement("remove");
-                        ele["name"] = "ExtensionlessUrlHandler-Integrated-4.0";
-                        handlersCollection.Add(ele);
-                    }
-                    catch (Exception ex)
-                    {
-                        //MessageBox.Show("ExtensionlessUrlHandler ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
-                    }
-                }
+                    ConfigurationElement ele = handlersCollection.CreateElement("add");
+                    ele["name"] = "aspNetCore";
+                    ele["path"] = "*";
+                    ele["verb"] = "*";
+                    ele["modules"] = "AspNetCoreModule";
+                    ele["resourceType"] = "Unspecified";
+                    handlersCollection.Add(ele);
 
-                if (remove2Missing)
+                }
+                catch (Exception ex)
                 {
-                    try
-                    {
-                        ConfigurationElement ele = handlersCollection.CreateElement("remove");
-                        ele["name"] = "OPTIONSVerbHandler";
-                        handlersCollection.Add(ele);
-                    }
-                    catch (Exception ex)
-                    {
-                        //MessageBox.Show("OPTIONSVerbHandler ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
-                    }
+                    MessageBox.Show("jpgHandlerMissing ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
                 }
 
-                if (remove3Missing) {
-                    try
-                    {
-                        ConfigurationElement ele = handlersCollection.CreateElement("remove");
-                        ele["name"] = "TRACEVerbHandler";
-                        handlersCollection.Add(ele);
-                    }
-                    catch (Exception ex)
-                    {
-                        //MessageBox.Show("TRACEVerbHandler ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
-                    }
-                }
-                if (add1Missing)
+                try
                 {
-                    try
-                    {
-                        ConfigurationElement ele = handlersCollection.CreateElement("add");
-                        ele["name"] = "ExtensionlessUrlHandler-Integrated-4.0";
-                        ele["path"] = @"*.";
-                        ele["verb"] = "*";
-                        ele["type"] = @"System.Web.Handlers.TransferRequestHandler";
-                        ele["preCondition"] = "integratedMode,runtimeVersionv4.0";
-                        handlersCollection.Add(ele);
-                    }
-                    catch
-                    {
-                        //MessageBox.Show("pngHandlerMissing ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
-                    }
-                }             
-
-                if (pngHandlerMissing) {
-                    try
-                    {
-                        ConfigurationElement ele = handlersCollection.CreateElement("add");
-                        ele["name"] = "get-image-png";
-                        ele["path"] = @"*.png";
-                        ele["verb"] = "GET";
-                        ele["type"] = @"System.Web.Handlers.TransferRequestHandler";
-                        ele["preCondition"] = "integratedMode,runtimeVersionv4.0";
-                        ele["responseBufferLimit"] = 0;
-                        handlersCollection.Add(ele);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("pngHandlerMissing ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
-                    }
+                    ConfigurationElement ele = handlersCollection.CreateElement("add");
+                    ele["name"] = "get-image-png";
+                    ele["path"] = @"*.png";
+                    ele["verb"] = "GET";
+                    ele["type"] = @"System.Web.Handlers.TransferRequestHandler";
+                    ele["preCondition"] = "integratedMode,runtimeVersionv4.0";
+                    ele["responseBufferLimit"] = 0;
+                    handlersCollection.Add(ele);
                 }
-                
-                if (jpgHandlerMissing) {
-                    try
-                    {
-                        ConfigurationElement ele = handlersCollection.CreateElement("add");
-                        ele["name"] = "get-image-jpg";
-                        ele["path"] = @"*.jpg";
-                        ele["verb"] = "GET";
-                        ele["type"] = @"System.Web.Handlers.TransferRequestHandler";
-                        ele["preCondition"] = "integratedMode,runtimeVersionv4.0";
-                        ele["responseBufferLimit"] = 0;
-                        handlersCollection.Add(ele);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("jpgHandlerMissing ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
-                    }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("pngHandlerMissing ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
                 }
-                
-                if (jpegHandlerMissing) {
-                    try
-                    {
-                        ConfigurationElement ele = handlersCollection.CreateElement("add");
-                        ele["name"] = "get-image-jpeg";
-                        ele["path"] = @"*.jpeg";
-                        ele["verb"] = "GET";
-                        ele["type"] = @"System.Web.Handlers.TransferRequestHandler";
-                        ele["preCondition"] = "integratedMode,runtimeVersionv4.0";
-                        ele["responseBufferLimit"] = 0;
 
-                        handlersCollection.Add(ele);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("jpegHandlerMissing ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
-                    }
+                try
+                {
+                    ConfigurationElement ele = handlersCollection.CreateElement("add");
+                    ele["name"] = "get-image-jpg";
+                    ele["path"] = @"*.jpg";
+                    ele["verb"] = "GET";
+                    ele["type"] = @"System.Web.Handlers.TransferRequestHandler";
+                    ele["preCondition"] = "integratedMode,runtimeVersionv4.0";
+                    ele["responseBufferLimit"] = 0;
+                    handlersCollection.Add(ele);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("jpgHandlerMissing ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
+                }
+
+                try
+                {
+                    ConfigurationElement ele = handlersCollection.CreateElement("add");
+                    ele["name"] = "get-image-jpeg";
+                    ele["path"] = @"*.jpeg";
+                    ele["verb"] = "GET";
+                    ele["type"] = @"System.Web.Handlers.TransferRequestHandler";
+                    ele["preCondition"] = "integratedMode,runtimeVersionv4.0";
+                    ele["responseBufferLimit"] = 0;
+
+                    handlersCollection.Add(ele);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("jpegHandlerMissing ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
                 }
 
                 serverManager.CommitChanges();
             }
         }
+
+        private static void AddAspNetCoreSection(string siteName, string webdataLocation)
+        {
+
+            XDocument xmlFile = XDocument.Load(Path.Combine(webdataLocation, "web.config"));
+            var query = from c in xmlFile.Elements("configuration").Elements("location").Elements("system.webServer") select c;
+
+            query.First();
+
+            if (query.Elements("aspNetCore").Count() != 1)
+            {
+
+                XElement xElement = new XElement("aspNetCore");
+                xElement.SetAttributeValue("processPath", "dotnet");
+                xElement.SetAttributeValue("arguments", Path.Combine(webdataLocation, @"bin\eFormAPI.Web.dll"));
+                xElement.SetAttributeValue("stdoutLogEnabled", "false");
+                xElement.SetAttributeValue("stdoutLogFile", Path.Combine(webdataLocation, @"bin\logs\stdout"));
+                query.First().Add(xElement);
+
+                xmlFile.Save(Path.Combine(webdataLocation, "web.config"));
+            }
+        }
+
 
         private static void AddRedirectionRules(string siteName, string uiServiceLink)
         {
@@ -1016,7 +977,7 @@ namespace CustomActions
             using (var serverManager = new ServerManager())
             {
                 var usedPorts = serverManager.Sites.Where(t => t.Bindings.First().EndPoint.Port >= 5000).Select(t => t.Bindings.First().EndPoint.Port);
-                var port =  usedPorts.Any() ? usedPorts.Max() + 1 : 5000;
+                var port = usedPorts.Any() ? usedPorts.Max() + 1 : 5000;
 
                 while (!IsPortAvailable(port))
                     port += 1;
@@ -1078,6 +1039,9 @@ namespace CustomActions
             {
                 string temppath = Path.Combine(destDirName, file.Name);
                 if (file.Name.Equals("Web.config", StringComparison.InvariantCultureIgnoreCase) && File.Exists(temppath))
+                    continue;
+
+                if (file.Name.Equals("appsettings.json", StringComparison.InvariantCultureIgnoreCase) && File.Exists(temppath))
                     continue;
 
                 if (File.Exists(temppath) && !overrideFile)

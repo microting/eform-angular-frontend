@@ -29,4 +29,5 @@ export class CaseEditConfirmationComponent implements OnInit {
     this.frame.hide();
     this.navigateAwaySelection$.next(false);
   }
+
 }

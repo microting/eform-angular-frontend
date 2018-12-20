@@ -17,11 +17,28 @@ export class ConnectionSetupComponent implements OnInit {
     {id: 'da-DK', text: 'Danish'}
   ];
 
+  serverTypes = [
+    {id: 'mysql', text: 'MySQL'},
+    {id: 'mssql', text: 'MS SQL'}
+  ];
+
   constructor(private settingsService: AppSettingsService, private router: Router) {
   }
 
   ngOnInit() {
     this.settingsModel.generalAppSetupSettingsModel.defaultLocale = 'en-US';
+    this.settingsService.getApplicationHostOs().subscribe(operation => {
+      if (operation && operation.success) {
+        if (operation.message === 'Windows') {
+          this.settingsModel.connectionStringSDK.sqlServerType = 'mssql';
+        } else {
+          this.settingsModel.connectionStringSDK.sqlServerType = 'mysql';
+          this.settingsModel.connectionStringSDK.port = 3306;
+          this.settingsModel.connectionStringSDK.host = 'localhost';
+        }
+      }
+    });
+
   }
 
   updateConnectionString() {

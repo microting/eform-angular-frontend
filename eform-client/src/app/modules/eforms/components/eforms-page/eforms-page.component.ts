@@ -1,13 +1,15 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Subject} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
-import {ApplicationPages} from 'src/app/common/enums';
+import {ApplicationPages, UserClaimsEnum} from 'src/app/common/enums';
 import {CommonDictionaryModel} from 'src/app/common/models/common';
 import {TemplateDto} from 'src/app/common/models/dto';
 import {SavedTagModel, TemplateListModel, TemplateRequestModel} from 'src/app/common/models/eforms';
+import {EformPermissionsSimpleModel} from 'src/app/common/models/security/group-permissions/eform';
 import {PageSettingsModel} from 'src/app/common/models/settings';
 import {AuthService, UserSettingsService} from 'src/app/common/services/auth';
-import {EFormService, EFormTagService} from 'src/app/common/services/eform';
+import {EFormService, EformTagService} from 'src/app/common/services/eform';
+import {SecurityGroupEformsPermissionsService} from 'src/app/common/services/security';
 
 @Component({
   selector: 'app-eform-page',
@@ -29,7 +31,13 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   localPageSettings: PageSettingsModel = new PageSettingsModel();
   templateRequestModel: TemplateRequestModel = new TemplateRequestModel;
   templateListModel: TemplateListModel = new TemplateListModel();
+  eformPermissionsSimpleModel: Array<EformPermissionsSimpleModel> = [];
   availableTags: Array<CommonDictionaryModel> = [];
+
+  mySubject = new Subject();
+
+  get userClaims() { return this.authService.userClaims; }
+  get userClaimsEnum() { return UserClaimsEnum; }
 
   items = [
     'New',
@@ -38,24 +46,23 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   ];
 
   constructor(private eFormService: EFormService,
+              private eFormTagService: EformTagService,
               private authService: AuthService,
-              private userSettingsService: UserSettingsService,
-              private eFormTagService: EFormTagService
+              private securityGroupEformsService: SecurityGroupEformsPermissionsService,
+              private userSettingsService: UserSettingsService
   ) {
-    this.searchSubject.pipe(
+    this.mySubject.pipe(
       debounceTime(500)
     ). subscribe(val => {
+      debugger;
       this.templateRequestModel.nameFilter = val.toString();
       this.loadAllTemplates();
     });
   }
 
   ngOnInit() {
+    this.loadEformsPermissions();
     this.getLocalPageSettings();
-  }
-
-  ngOnDestroy() {
-    this.searchSubject.unsubscribe();
   }
 
   getLocalPageSettings() {
@@ -84,6 +91,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   }
 
   loadAllTags() {
+    if (this.userClaims.eFormsReadTags) {
       this.spinnerStatus = true;
       this.eFormTagService.getAvailableTags().subscribe((data) => {
         if (data && data.success) {
@@ -93,6 +101,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
       }, (error) => {
         this.spinnerStatus = false;
       });
+    }
   }
 
   saveTag(e: any) {
@@ -117,7 +126,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
         this.templateRequestModel.tagIds = this.templateRequestModel.tagIds.filter(x => x !== e.id);
         this.loadAllTemplates();
       }
-    }, (error) => {
+    },(error) => {
       this.spinnerStatus = false;
     });
   }
@@ -134,8 +143,19 @@ export class EformsPageComponent implements OnInit, OnDestroy {
     });
   }
 
+  loadEformsPermissions() {
+    this.spinnerStatus = false;
+    this.securityGroupEformsService.getEformsSimplePermissions().subscribe((data) => {
+      if (data && data.success) {
+        this.eformPermissionsSimpleModel = this.securityGroupEformsService.mapEformsSimplePermissions(data.model);
+      } this.spinnerStatus = false;
+    }, (error) => {
+      this.spinnerStatus = false;
+    });
+  }
+
   onLabelInputChanged(label: string) {
-    this.searchSubject.next(label);
+    this.mySubject.next(label);
   }
 
   sortTable(sort: string) {
@@ -178,5 +198,14 @@ export class EformsPageComponent implements OnInit, OnDestroy {
 
   openEditTagsModal(templateDto: TemplateDto) {
     this.modalEditTags.show(templateDto);
+  }
+
+  checkEformPermissions(templateId: number, permissionIndex: number) {
+    const foundEform = this.eformPermissionsSimpleModel.find(x => x.templateId === templateId);
+    if (foundEform) {
+      return foundEform.permissionsSimpleList.find(x => x == UserClaimsEnum[permissionIndex].toString());
+    } else {
+      return this.userClaims[UserClaimsEnum[permissionIndex].toString()];
+    }
   }
 }

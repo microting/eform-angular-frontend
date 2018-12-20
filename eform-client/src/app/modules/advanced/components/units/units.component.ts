@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {UnitDto} from 'src/app/common/models/dto';
 import {UnitsService} from 'src/app/common/services/advanced';
+import {AuthService} from 'src/app/common/services/auth';
 
 @Component({
   selector: 'app-units',
@@ -13,7 +14,9 @@ export class UnitsComponent implements OnInit {
   unitModels: Array<UnitDto> = [];
   selectedUnitModel: UnitDto = new UnitDto();
 
-  constructor(private unitsService: UnitsService) {
+  get userClaims() { return this.authService.userClaims; }
+
+  constructor(private unitsService: UnitsService, private authService: AuthService) {
   }
 
   ngOnInit() {

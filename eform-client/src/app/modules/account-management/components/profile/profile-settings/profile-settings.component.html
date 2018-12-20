@@ -8,45 +8,55 @@
   </div>
 </eform-page-subheader>
 
-<div class="container-fluid">
-  <div class="row p-3">
+<div class="container-fluid mt-4">
+  <div class="row mb-4">
     <div class="col-md-6">
-      <eform-page-subheader [title]="'Google Authenticator'" [heandingSizeRem]="1"></eform-page-subheader>
-      <div class="p-2">
-        <label class="md-checkbox" (change)="isTwoFactorEnabledCheckBoxChanged($event)">
-          <input value="{{googleAuthInfoModel.isTwoFactorEnabled}}"
-                 [checked]="googleAuthInfoModel.isTwoFactorEnabled"
-                 [disabled]="googleAuthInfoModel.isTwoFactorForced" type="checkbox"/>
-          <label class="md-checkbox--fake"></label>
-          <div (change)="isTwoFactorEnabledCheckBoxChanged($event)">{{'Status' | translate}}</div>
-        </label>
-        <p class="text-danger">({{ 'change will logout you from the application' | translate }})</p>
-      </div>
-      <ng-container *ngIf="googleAuthInfoModel.psk">
-        <div class="p-0">
-          <div [innerHTML]="'Google Authenticator description' | translate">
-          </div>
-          <p><strong>{{googleAuthInfoModel.psk}}</strong></p>
+      <div class="card">
+        <div class="card-header card-header-simple">
+          {{ 'Google Authenticator' | translate}}
         </div>
-        <div class="p-0">
-          <button class="btn btn-ar btn-danger" id="deleteGoogleAuthenticatorInfo"
-                  mdbTooltip="{{ 'Remove google authenticator secret key' | translate }}"
-                  (click)="deleteGoogleAuthenticatorInfo()">
-            {{ 'Remove PSK' | translate }}
-          </button>
-        </div>
-      </ng-container>
+        <div class="card-body">
 
+            <div class="mat-checkbox mb-1">
+              <input id="2fauthForsed" (change)="isTwoFactorEnabledCheckBoxChanged($event)"
+                     [checked]="googleAuthInfoModel.isTwoFactorEnabled" [value]="googleAuthInfoModel.isTwoFactorEnabled"
+                     color="primary" type="checkbox">
+              <label for="2fauthForsed">{{'Status' | translate}}</label>
+            </div>
+            <p class="text-danger">({{ 'change will logout you from the application' | translate }})</p>
+
+          <ng-container *ngIf="googleAuthInfoModel.psk">
+            <div class="p-0">
+              <div [innerHTML]="'Google Authenticator description' | translate">
+              </div>
+              <p><strong>{{googleAuthInfoModel.psk}}</strong></p>
+            </div>
+            <div class="p-0">
+              <button class="btn btn-ar btn-danger" id="deleteGoogleAuthenticatorInfo"
+                      mdbTooltip="{{ 'Remove google authenticator secret key' | translate }}"
+                      (click)="deleteGoogleAuthenticatorInfo()">
+                {{ 'Remove PSK' | translate }}
+              </button>
+            </div>
+          </ng-container>
+        </div>
+      </div>
     </div>
     <div class="col-md-6">
-      <eform-page-subheader [title]="'General' | translate" [heandingSizeRem]="1"></eform-page-subheader>
-      <div class="container-fluid p-2">
-        <ng-select
-          [placeholder]="'Language' | translate"
-          [bindLabel]="'text'"
-          [bindValue]="'id'"
-          [(ngModel)]="userSettingsModel.locale"
-          [items]="languages"></ng-select>
+      <div class="card">
+        <div class="card-header card-header-simple">
+          {{ 'General' | translate}}
+        </div>
+        <div class="card-body">
+          <div class="container-fluid">
+            <ng-select
+              [placeholder]="'Language' | translate"
+              [bindLabel]="'text'"
+              [bindValue]="'id'"
+              [(ngModel)]="userSettingsModel.locale"
+              [items]="languages"></ng-select>
+          </div>
+        </div>
       </div>
     </div>
   </div>

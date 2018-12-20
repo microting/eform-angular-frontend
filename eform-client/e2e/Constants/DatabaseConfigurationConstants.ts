@@ -4,13 +4,16 @@ export default {
   email: 'admin@admin.com',
   firstName: 'John',
   lastNAme: 'Smith',
-  dataSourceSDK: 'Data Source=.\\SQLEXPRESS',
-  initialCatalogueSDK: 'eFormSDK',
-  authenticationTypeSDK: 'Integrated Security=True',
-  dataSourceMain: 'Data Source=.\\SQLEXPRESS',
+  customerNo: '420',
+  SqlServer: 'localhost',
+  port: '3306',
+  sqlServerType: {
+    mysql: 'MySQL',
+    mssql: 'MSSQL'
+  },
   token: 'abc1234567890abc1234567890abcdef',
   initialCatalogueMain: 'eFormMain',
-  authenticationTypeMain: 'Integrated Security=True',
+  authenticationType: 'user = root;',
   languageOptions: {
     english: 'English',
     danish: 'Danish'

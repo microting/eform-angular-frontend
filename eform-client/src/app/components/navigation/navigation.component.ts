@@ -1,7 +1,8 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {EventBrokerService} from 'src/app/common/helpers';
-import {UserInfoModel} from 'src/app/common/models/user';
+import {UserInfoModel, UserMenuModel} from 'src/app/common/models/user';
+import {AppMenuService} from 'src/app/common/services/app-settings';
 import {AuthService, LocaleService, UserSettingsService} from 'src/app/common/services/auth';
 import {AdminService} from 'src/app/common/services/users';
 
@@ -16,6 +17,7 @@ export class NavigationComponent implements OnInit {
   userInfo: UserInfoModel = new UserInfoModel;
   userMenu: any;
   navMenu: any;
+  appMenu: UserMenuModel = new UserMenuModel();
   brokerListener: any;
 
   constructor(private authService: AuthService,
@@ -23,11 +25,11 @@ export class NavigationComponent implements OnInit {
               private userSettingsService: UserSettingsService,
               private localeService: LocaleService,
               private translateService: TranslateService,
-              private eventBrokerService: EventBrokerService) {
+              private eventBrokerService: EventBrokerService,
+              private appMenuService: AppMenuService) {
     this.brokerListener = eventBrokerService.listen<void>('get-navigation-menu',
       () => {
-        this.initLocaleAsync().then();
-        this.initNavigationMenu();
+        this.getNavigationMenu();
       });
   }
 
@@ -38,7 +40,7 @@ export class NavigationComponent implements OnInit {
         this.userSettingsService.getUserSettings().subscribe(((data) => {
           localStorage.setItem('locale', data.model.locale);
           this.initLocaleAsync().then(() => {
-            this.initNavigationMenu();
+            this.getNavigationMenu();
           });
         }));
       });
@@ -49,6 +51,17 @@ export class NavigationComponent implements OnInit {
     await this.localeService.initLocale();
   }
 
+  checkRole(roles: string[]) {
+    if (roles.length === 0) {
+      return true;
+    }
+    const currentRole = this.authService.currentRole;
+    if (roles.includes(currentRole)) {
+      return true;
+    }
+    return false;
+  }
+
   expandMenu() {
     this._menuFlag ?
       this.menuElement.nativeElement.classList.remove('show') :
@@ -56,87 +69,11 @@ export class NavigationComponent implements OnInit {
     this._menuFlag = !this._menuFlag;
   }
 
-  initNavigationMenu() {
-    setTimeout(() => {
-      this.userMenu = {
-        name: this.userInfo.firstName + ' ' + this.userInfo.lastName || 'name',
-        e2eId: 'sign-out-dropdown',
-        appendLeftStyles: true,
-        submenus: [
-          {
-            name: this.translateService.instant('User Management'),
-            e2eId: 'user-management-menu',
-            link: '/account-management/users',
-            guard: 'admin'
-          },
-          {
-            name: this.translateService.instant('Settings'),
-            e2eId: 'settings',
-            link: '/account-management/settings'
-          },
-          {
-            name: this.translateService.instant('Change password'),
-            e2eId: 'change-password',
-            link: '/account-management/change-password'
-          },
-          {
-            name: this.translateService.instant('Logout'),
-            e2eId: 'sign-out',
-            link: '/auth/sign-out'
-          }
-        ]
-      };
-      this.navMenu = [
-        {
-          name: this.translateService.instant('My eForms'),
-          e2eId: 'my-eforms',
-          link: '/',
-          submenus: []
-        },
-        {
-          name: this.translateService.instant('Device Users'),
-          e2eId: 'device-users',
-          link: '/simplesites',
-          submenus: []
-        },
-        {
-          name: this.translateService.instant('Advanced'),
-          e2eId: 'advanced',
-          submenus: [
-            {
-              name: this.translateService.instant('Sites'),
-              e2eId: 'sites',
-              link: '/advanced/sites',
-            },
-            {
-              name: this.translateService.instant('Workers'),
-              e2eId: 'workers',
-              link: '/advanced/workers',
-            },
-            {
-              name: this.translateService.instant('Units'),
-              e2eId: 'units',
-              link: '/advanced/units',
-            },
-            {
-              name: this.translateService.instant('Searchable list'),
-              e2eId: 'search',
-              link: '/advanced/entity-search',
-            },
-            {
-              name: this.translateService.instant('Selectable list'),
-              e2eId: 'selectable-list',
-              link: '/advanced/entity-select'
-            },
-            {
-              name: this.translateService.instant('Application Settings'),
-              e2eId: 'application-settings',
-              link: '/application-settings',
-              guard: 'admin'
-            }
-          ]
-        }
-      ];
-    }, 500);
+  getNavigationMenu() {
+    this.appMenuService.getAppMenu().subscribe((data) => {
+      if (data && data.success) {
+        this.appMenu = data.model;
+      }
+    });
   }
 }

@@ -69,13 +69,12 @@ export class BaseService {
     } else {
       headers = headers.set('Content-Type', 'application/json');
     }
-    const user: AuthResponseModel = JSON.parse(localStorage.getItem('currentUser'));
+    const user: AuthResponseModel = JSON.parse(localStorage.getItem('currentAuth'));
     // check user
     if (user && user.access_token) {
       headers = headers.append('Authorization', 'Bearer ' + user.access_token);
     }
     // add localization
-    headers = headers.append('Locale', localStorage.getItem('locale'));
     return headers;
   }
 
@@ -107,12 +106,10 @@ export class BaseService {
     let body;
     try {
       body = res;
-      if (body && body.message) {
-        if (body.success && body.message !== 'Success') {
-          this.toastrService.success(body.message);
-        } else if (!body.success) {
-          this.toastrService.error(body.message);
-        }
+      if (body && body.success && body.message && body.message !== 'Success') {
+        this.toastrService.success(body.message);
+      } else if (body && !body.success && body.message) {
+        this.toastrService.error(body.message);
       }
     } catch (e) {
       return {};
@@ -120,16 +117,10 @@ export class BaseService {
     return <T>body || {};
   }
 
-  // private extractData<T>(res: Response) {
-  //   const body = res.json();
-  //   return <T>body || {};
-  // }
-
   private logOutWhenTokenFalse() {
     localStorage.clear();
     this.router.navigate(['/auth']).then();
   }
-
 
   private handleError(error: Response | any) {
     let errorMessage = '';
@@ -150,11 +141,17 @@ export class BaseService {
       return throwError(error);
     }
     // Handle 401 - Unauthorized
-    if (error.status === 401 || error.status === 403) {
-      this.toastrService.warning('401(403) - Invalid token');
-      console.error('401(403) - Invalid token');
+    if (error.status === 401) {
+      this.toastrService.warning('401 - Unauthorized');
+      console.error('401 - Unauthorized');
       this.logOutWhenTokenFalse();
       console.error(error);
+      return throwError(errorMessage);
+    } else if (error.status === 403) {
+      this.toastrService.warning('403 - Forbidden');
+      console.error('403 - Forbidden');
+      console.error(error);
+      this.router.navigate(['/']).then();
       return throwError(errorMessage);
     }
     const body = error._body || '';

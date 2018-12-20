@@ -1,7 +1,7 @@
 // We want overlays to always appear over user content, so set a baseline
 // very high z-index for the overlay container, which is where we create the new
 // stacking context for all overlays.
-$cdk-z-index-overlay-container: 10000;
+$cdk-z-index-overlay-container: 100000;
 $cdk-z-index-overlay: 1000;
 $cdk-z-index-overlay-backdrop: 1000;
 
@@ -26,7 +26,7 @@ $backdrop-animation-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1) !default;
 // The overlay-container is an invisible element which contains all individual overlays.
 .cdk-overlay-container {
   position: fixed;
-  z-index: $cdk-z-index-overlay-container;
+  z-index: $cdk-z-index-overlay-container !important;
 
   &:empty {
     // Hide the element when it doesn't have any child nodes. This doesn't

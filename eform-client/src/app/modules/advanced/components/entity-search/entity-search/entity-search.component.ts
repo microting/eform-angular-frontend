@@ -25,8 +25,9 @@ export class EntitySearchComponent implements OnInit {
     = new AdvEntitySearchableGroupListRequestModel();
   localPageSettings: PageSettingsModel = new PageSettingsModel();
 
-  constructor(private entitySearchService: EntitySearchService,
-              public userSettingsService: UserSettingsService) {
+  get userClaims() { return this.authService.userClaims; }
+
+  constructor(private entitySearchService: EntitySearchService, private authService: AuthService, public userSettingsService: UserSettingsService) {
   }
 
   ngOnInit() {

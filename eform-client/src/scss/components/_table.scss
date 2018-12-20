@@ -1,4 +1,14 @@
+.table > tbody > tr > td {
+  vertical-align: middle;
+}
+
 .table-header-sortable {
   cursor: pointer;
   font-size: 14px !important;;
 }
+
+.table-fixed-scrollable {
+  max-height: 450px;
+  overflow: auto;
+}
+
