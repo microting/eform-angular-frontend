@@ -12,9 +12,13 @@ An Angular2 Frontend for integrating with the Microting eForm API v1.
 
 ## Support Platforms
 
- - .NET Framework 4.5+
- - Windows 7 SP1
- - MS SQL 2008 R2
+| OS        | .Net Standard 2.0 | NET Framework 4.6.1 | MS SQL 2016+ | MySQL/MariaDB  |
+| ------------- |:-----:|:-----:|:-----:|:-----:|
+| OSX 10.14.2     | X |  | X | X |
+| Windows 10     | X | X | X | X |
+| Windows Server 2016     | X| X | X | X |
+| Ubuntu 18.04     | X |  | X | X |
+| Ubuntu 16.04     | X |  | X | X |
 
 ## Get access token
 
