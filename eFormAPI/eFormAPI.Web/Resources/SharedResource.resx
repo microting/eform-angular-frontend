@@ -501,4 +501,46 @@
   <data name="TagAlreadySaved" xml:space="preserve">
     <value>Tag already saved</value>
   </data>
+  <data name="Advanced" xml:space="preserve">
+    <value>Advanced</value>
+  </data>
+  <data name="ApplicationSettings" xml:space="preserve">
+    <value>Application Settings</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Change Password</value>
+  </data>
+  <data name="DeviceUsers" xml:space="preserve">
+    <value>Device Users</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="MyEforms" xml:space="preserve">
+    <value>My eForms</value>
+  </data>
+  <data name="SearchableList" xml:space="preserve">
+    <value>Searchable List</value>
+  </data>
+  <data name="Security" xml:space="preserve">
+    <value>Security</value>
+  </data>
+  <data name="SelectableList" xml:space="preserve">
+    <value>Selectable List</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Sites" xml:space="preserve">
+    <value>Sites</value>
+  </data>
+  <data name="Units" xml:space="preserve">
+    <value>Units</value>
+  </data>
+  <data name="UserManagement" xml:space="preserve">
+    <value>User Management</value>
+  </data>
+  <data name="Workers" xml:space="preserve">
+    <value>Workers</value>
+  </data>
 </root>
