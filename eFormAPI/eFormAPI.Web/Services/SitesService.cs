@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using AutoMapper;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Advanced;
 using eFormCore;
@@ -69,24 +68,17 @@ namespace eFormAPI.Web.Services
             {
                 Core core = _coreHelper.GetCore();
                 SiteName_Dto siteDto = core.Advanced_SiteItemRead(id);
-                SiteNameModel siteNameModel;
 
-                if (!siteDto.Equals(null))
-                {
-                    Mapper.Initialize(cfg => cfg.CreateMap<SiteName_Dto, SiteNameModel>());
-                    siteNameModel =
-                        Mapper.Map<SiteName_Dto, SiteNameModel>(siteDto);
-                }
-                else
+                if (siteDto.Equals(null))                    
                 {
                     return new OperationResult(false, _localizationService.GetString("SiteParamNotFound", id));
                 }
 
                 return core.Advanced_SiteItemDelete(id)
                     ? new OperationResult(true,
-                        _localizationService.GetString("SiteParamDeletedSuccessfully", siteNameModel.SiteName))
+                        _localizationService.GetString("SiteParamDeletedSuccessfully", siteDto.SiteName))
                     : new OperationResult(false,
-                        _localizationService.GetString("SiteParamCouldNotBeDeleted", siteNameModel.SiteName));
+                        _localizationService.GetString("SiteParamCouldNotBeDeleted", siteDto.SiteName));
             }
 
             catch (Exception)

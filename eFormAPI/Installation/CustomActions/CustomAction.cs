@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Security.Principal;
 using System.Management.Automation;
 using System.Net.NetworkInformation;
+using System.Xml.Linq;
 
 namespace CustomActions
 {
@@ -368,6 +369,14 @@ namespace CustomActions
                 File.Delete(Path.Combine(dst, "System.Security.Cryptography.ProtectedData.dll"));
             }
             File.Copy(Path.Combine(installFolder, @"bin\System.Security.Cryptography.ProtectedData.dll"), Path.Combine(dst, "System.Security.Cryptography.ProtectedData.dll"));
+
+            dst = Path.Combine(installFolder, @"bin\runtimes\win\lib\netcoreapp2.1");
+            Directory.CreateDirectory(dst);
+            if (File.Exists(Path.Combine(dst, "System.Data.SqlClient.dll")))
+            {
+                File.Delete(Path.Combine(dst, "System.Data.SqlClient.dll"));
+            }
+            File.Copy(Path.Combine(installFolder, @"bin\System.Data.SqlClient.dll"), Path.Combine(dst, "System.Data.SqlClient.dll"));
         }
 
         [CustomAction]
@@ -397,6 +406,7 @@ namespace CustomActions
 
                 // stop sites
                 ControlSites(customerNumber, domain, apiPort, uiPort, false);
+                Thread.Sleep(10000);
                 IncrementProgressBar(session);
 
                 // client update
@@ -449,8 +459,9 @@ namespace CustomActions
 
                 session.Log("AddImageHandlers called");
                 AddImageHandlers(webApiName, webApiLocation);
-                IncrementProgressBar(session);
+                AddAspNetCoreSection(webApiName, webApiLocation);
 
+                IncrementProgressBar(session);
 
                 session.Log("RunAngularAsWinService called");
                 RunAngularAsWinService(apiPort, uiPort, uiIisDir, uiName);
@@ -775,21 +786,7 @@ namespace CustomActions
                 ConfigurationSection handlersSection = config.GetSection("system.webServer/handlers");
                 ConfigurationElementCollection handlersCollection = handlersSection.GetCollection();
 
-                ConfigurationSection webserverSection = config.GetSection("system.webserver");
-                foreach(ConfigurationElement ele in webserverSection.ChildElements)
-                {
-                    if (ele.ChildElements.Count < 1)
-                    {
-                        webserverSection.GetCollection().Remove(ele);                        
-                    }
-                }
-
-                ConfigurationElement new_ele = webserverSection.GetCollection().CreateElement("aspNetCore");
-                new_ele["processPath"] = "dotnet";
-                new_ele["arguments"] = Path.Combine(webdataLocation, @"bin\eFormAPI.Web.dll");
-                new_ele["stdoutLogEnabled"] = "false";
-                new_ele["stdoutLogFile"] = Path.Combine(webdataLocation, @"bin\logs\stdout");
-                webserverSection.GetCollection().Add(new_ele);
+                ConfigurationSection webserverSection = null;
 
                 List<ConfigurationElement> toRemoveElements = new List<ConfigurationElement>();
 
@@ -814,9 +811,9 @@ namespace CustomActions
                     handlersCollection.Add(ele);
 
                 }
-                catch
+                catch (Exception ex)
                 {
-
+                    MessageBox.Show("jpgHandlerMissing ex is : " + ex.Message + "stacktrace : " + ex.StackTrace);
                 }
 
                 try
@@ -871,6 +868,29 @@ namespace CustomActions
                 serverManager.CommitChanges();
             }
         }
+
+        private static void AddAspNetCoreSection(string siteName, string webdataLocation)
+        {
+
+            XDocument xmlFile = XDocument.Load(Path.Combine(webdataLocation, "web.config"));
+            var query = from c in xmlFile.Elements("configuration").Elements("location").Elements("system.webServer") select c;
+
+            query.First();
+
+            if (query.Elements("aspNetCore").Count() != 1)
+            {
+
+                XElement xElement = new XElement("aspNetCore");
+                xElement.SetAttributeValue("processPath", "dotnet");
+                xElement.SetAttributeValue("arguments", Path.Combine(webdataLocation, @"bin\eFormAPI.Web.dll"));
+                xElement.SetAttributeValue("stdoutLogEnabled", "false");
+                xElement.SetAttributeValue("stdoutLogFile", Path.Combine(webdataLocation, @"bin\logs\stdout"));
+                query.First().Add(xElement);
+
+                xmlFile.Save(Path.Combine(webdataLocation, "web.config"));
+            }
+        }
+
 
         private static void AddRedirectionRules(string siteName, string uiServiceLink)
         {
@@ -1019,6 +1039,9 @@ namespace CustomActions
             {
                 string temppath = Path.Combine(destDirName, file.Name);
                 if (file.Name.Equals("Web.config", StringComparison.InvariantCultureIgnoreCase) && File.Exists(temppath))
+                    continue;
+
+                if (file.Name.Equals("appsettings.json", StringComparison.InvariantCultureIgnoreCase) && File.Exists(temppath))
                     continue;
 
                 if (File.Exists(temppath) && !overrideFile)
