@@ -2,12 +2,13 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {ApplicationPages} from 'src/app/common/enums';
 
 import {
+  SecurityGroupsModel,
   UserInfoModel,
   UserInfoModelList,
   PaginationModel,
-  PageSettingsModel
+  SecurityGroupsRequestModel, ApplicationPageModel, PageSettingsModel
 } from 'src/app/common/models';
-import {AuthService, AdminService, UserSettingsService} from 'src/app/common/services';
+import {AuthService, SecurityGroupsService, AdminService, UserSettingsService} from 'src/app/common/services';
 
 @Component({
   selector: 'app-users-page',
@@ -22,13 +23,18 @@ export class UsersPageComponent implements OnInit {
   paginationModel: PaginationModel = new PaginationModel(1, 5, 0);
   userInfoModelList: UserInfoModelList = new UserInfoModelList;
   selectedUser: UserInfoModel = new UserInfoModel;
+  securityGroups: SecurityGroupsModel = new SecurityGroupsModel();
 
   spinnerStatus: boolean;
-  isChecked = false;
+  isChecked = true;
+
+  get userClaims() { return this.authService.userClaims; }
+  get userRole() { return this.authService.currentRole; }
 
   constructor(
     private adminService: AdminService,
     private authService: AuthService,
+    private securityGroupsService: SecurityGroupsService,
     public userSettingsService: UserSettingsService
   ) {
   }
@@ -36,6 +42,7 @@ export class UsersPageComponent implements OnInit {
   ngOnInit() {
     this.getLocalPageSettings();
     this.getTwoFactorInfo();
+    this.getSecurityGroups();
   }
 
   getLocalPageSettings() {
@@ -67,6 +74,17 @@ export class UsersPageComponent implements OnInit {
         this.userInfoModelList = data.model;
       }
       this.spinnerStatus = false;
+    });
+  }
+
+  getSecurityGroups() {
+    const securityGroupRequestModel = new SecurityGroupsRequestModel();
+    securityGroupRequestModel.pageSize = 10000;
+    this.spinnerStatus = true;
+    this.securityGroupsService.getAllSecurityGroups(securityGroupRequestModel).subscribe((data) => {
+      if (data && data.success) {
+        this.securityGroups = data.model;
+      } this.spinnerStatus = false;
     });
   }
 

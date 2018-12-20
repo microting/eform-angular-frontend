@@ -1,4 +1,6 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {CommonDictionaryModel} from 'src/app/common/models/common';
+import {SecurityGroupsModel} from 'src/app/common/models/security';
 import {UserRegisterModel} from 'src/app/common/models/user';
 import {AdminService} from 'src/app/common/services/users';
 
@@ -8,6 +10,7 @@ import {AdminService} from 'src/app/common/services/users';
   styleUrls: ['./new-user-modal.component.scss']
 })
 export class NewUserModalComponent implements OnInit {
+  @Input() availableGroups: SecurityGroupsModel = new SecurityGroupsModel();
   @Output() onUserCreated: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('frame') frame;
   newUserModel: UserRegisterModel = new UserRegisterModel;

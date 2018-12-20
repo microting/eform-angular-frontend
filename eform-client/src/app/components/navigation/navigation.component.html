@@ -13,15 +13,15 @@
     <!--nav items here-->
     <div class="collapse navbar-collapse" #navigationMenu>
       <ul class="navbar-nav mr-auto">
-        <ng-container *ngFor="let menu of navMenu">
-          <ng-container *ngIf="menu?.submenus?.length == 0; else dropdown;">
+        <ng-container *ngFor="let menu of appMenu.leftMenu">
+          <ng-container *ngIf="checkRole(menu.guards)">
+          <ng-container *ngIf="menu?.menuItems?.length == 0; else dropdown;">
             <li class="nav-item">
-              <a
-                routerLink="{{menu.link}}"
+              <a routerLink="{{menu.link}}"
                 mdbWavesEffect
                 class="nav-link waves-light"
                 id="{{menu.e2eId}}">
-                {{menu.name}}
+                {{menu.name | translate}}
               </a>
             </li>
           </ng-container>
@@ -32,42 +32,60 @@
                   mdbDropdownToggle
                   mdbWavesEffect
                   class="nav-link dropdown-toggle waves-light"
-                  id="{{menu.e2eId}}">{{menu.name}}</a>
-                <div class="dropdown-menu" *ngIf="menu?.submenus?.length > 0;">
-                  <a
-                    *ngFor="let subMenu of menu.submenus"
+                  id="{{menu.e2eId}}">{{menu.name | translate}}</a>
+                <div class="dropdown-menu" *ngIf="menu?.menuItems?.length > 0;">
+                  <ng-container *ngFor="let subMenu of menu.menuItems">
+                  <a *ngIf="checkRole(subMenu.guards)"
                     class="dropdown-item waves-light"
                     routerLink="{{subMenu.link}}"
                     routerLinkActive="active"
                     id="{{subMenu.e2eId}}">
-                    {{subMenu.name}}
+                    {{subMenu.name | translate}}
                   </a>
+                  </ng-container>
                 </div>
               </div>
             </li>
           </ng-template>
         </ng-container>
+        </ng-container>
       </ul>
       <ul class="navbar-nav ml-auto">
+        <ng-container *ngFor="let menu of appMenu.rightMenu">
+          <ng-container *ngIf="menu?.menuItems?.length == 0; else dropdown;">
+            <li class="nav-item">
+              <a
+                routerLink="{{menu.link}}"
+                mdbWavesEffect
+                class="nav-link waves-light"
+                id="{{menu.e2eId}}">
+                {{menu.name | translate}}
+              </a>
+            </li>
+          </ng-container>
+          <ng-template #dropdown>
             <li class="nav-item">
               <div mdbDropdown class="dropdown">
-                <a *ngIf="userMenu?.name"
+                <a
                   mdbDropdownToggle
                   mdbWavesEffect
                   class="nav-link dropdown-toggle waves-light"
-                   id="userDropdown">{{userMenu.name}}</a>
-                <div class="dropdown-menu outbounds-fix" *ngIf="userMenu?.submenus?.length">
-                  <a
-                    *ngFor="let subMenu of userMenu.submenus"
-                    id="{{subMenu.e2eId}}"
-                    class="dropdown-item waves-light"
-                    routerLink="{{subMenu.link}}"
-                    routerLinkActive="active">
-                    {{subMenu.name}}
-                  </a>
+                  id="{{menu.e2eId}}">{{menu.name | translate}}</a>
+                <div class="dropdown-menu outbounds-fix" *ngIf="menu?.menuItems?.length > 0;">
+                  <ng-container *ngFor="let subMenu of menu.menuItems">
+                    <a *ngIf="checkRole(subMenu.guards)"
+                      class="dropdown-item waves-light"
+                      routerLink="{{subMenu.link}}"
+                      routerLinkActive="active"
+                      id="{{subMenu.e2eId}}">
+                      {{subMenu.name | translate}}
+                    </a>
+                  </ng-container>
                 </div>
               </div>
             </li>
+          </ng-template>
+        </ng-container>
       </ul>
     </div>
     <!--right menu-->

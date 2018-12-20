@@ -4,6 +4,7 @@ import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {Observable} from 'rxjs';
+import {ApplicationPagesSettings} from 'src/app/common/enums/application-pages-settings.const';
 import {
   AdminSettingsModel,
   HeaderSettingsModel,
@@ -20,6 +21,7 @@ const SettingsMethods = {
   ConnectionStringExist: '/api/settings/connection-string-exist',
   GetAdminSettings: '/api/settings/admin',
   GetAssemblyVersion: '/api/settings/version',
+  GetApplicationHostOs: '/api/settings/hostos',
   ResetLoginPageSettings: '/api/settings/reset-login-page',
   ResetHeaderSettings: '/api/settings/reset-page-header',
   GetLoginPageSettings: '/api/settings/login-page',
@@ -31,8 +33,6 @@ const SettingsMethods = {
 @Injectable()
 export class AppSettingsService extends BaseService {
   loginPageSettingsModel: LoginPageSettingsModel = new LoginPageSettingsModel();
-  private headers: Headers;
-
   constructor(private _http: HttpClient, router: Router, toastrService: ToastrService) {
     super(_http, router, toastrService);
   }
@@ -63,5 +63,8 @@ export class AppSettingsService extends BaseService {
   }
   getAssemblyVersion(): Observable<OperationDataResult<string>> {
     return this.get<string>(SettingsMethods.GetAssemblyVersion);
+  }
+  getApplicationHostOs(): Observable<OperationDataResult<string>> {
+    return this.get<string>(SettingsMethods.GetApplicationHostOs);
   }
 }

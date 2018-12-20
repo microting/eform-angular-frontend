@@ -52,7 +52,7 @@ export class PellComponent implements OnInit, AfterViewInit, OnChanges {
         this.html = html;
         this.valueChange.emit(this.html);
       },
-      defaultParagraphSeparator: 'p',
+      defaultParagraphSeparator: 'br',
       styleWithCSS: false,
       actions: [
         'bold',

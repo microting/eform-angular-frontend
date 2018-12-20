@@ -8,7 +8,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <OutputName>maininstaller</OutputName>
     <OutputType>Package</OutputType>
-	<!--<WixToolPath>$(ProjectDir)..\wix\3.11\</WixToolPath>
+    <!--<WixToolPath>$(ProjectDir)..\wix\3.11\</WixToolPath>
 	<WixTargetsPath>$(WixToolPath)\wix.targets</WixTargetsPath>
 	<WixTasksPath>wixtasks.dll</WixTasksPath>-->
   </PropertyGroup>
@@ -24,6 +24,7 @@
     <OutputPath>..\Bundle\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <SuppressValidation>true</SuppressValidation>
+    <DefineConstants>ClientPath=..\..\..\eform-client; ApiPath=..\..\eformapi.web; LetsEncryptPath=..\..\..\eFormAPI\Installation\letsencrypt</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ApiFileList.wxs" />
@@ -81,14 +82,13 @@
   <Target Name="EnsureWixToolsetInstalled" Condition=" '$(WixTargetsImported)' != 'true' ">
     <Error Text="The WiX Toolset v3.11 (or newer) build tools must be installed to build this project. To download the WiX Toolset, see http://wixtoolset.org/releases/" />
   </Target>
-
   <!--<Import Project="$(WixTargetsPath)"/>-->
   <PropertyGroup>
-    <DefineConstants>ClientPath=..\..\..\eform-client; ApiPath=..\..\eformapi; LetsEncryptPath=..\..\..\eFormAPI\Installation\letsencrypt</DefineConstants>
+    <DefineConstants>ClientPath=..\..\..\eform-client; ApiPath=..\..\eformapi.web; LetsEncryptPath=..\..\..\eFormAPI\Installation\letsencrypt</DefineConstants>
   </PropertyGroup>
   <Target Name="BeforeBuild">
     <HeatDirectory Directory="..\..\..\eform-client" PreprocessorVariable="var.ClientPath" OutputFile="ClientFileList.wxs" ComponentGroupName="ClientFiles" DirectoryRefId="eform_client" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" />
-    <HeatDirectory Directory="..\..\eformapi" PreprocessorVariable="var.ApiPath" Transforms="Transform.xslt" OutputFile="ApiFileList.wxs" ComponentGroupName="ApiFiles" DirectoryRefId="eform_api" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" />
+    <HeatDirectory Directory="..\..\eformapi.web" PreprocessorVariable="var.ApiPath" Transforms="Transform.xslt" OutputFile="ApiFileList.wxs" ComponentGroupName="ApiFiles" DirectoryRefId="eform_api" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" />
     <HeatDirectory Directory="..\..\..\eFormAPI\Installation\letsencrypt" PreprocessorVariable="var.LetsEncryptPath" OutputFile="LetsEncryptFileList.wxs" ComponentGroupName="LetsEncryptFiles" DirectoryRefId="letsencrypt" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" />
   </Target>
   <PropertyGroup>
@@ -104,7 +104,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
     <SuppressValidation>true</SuppressValidation>
-    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>..\Bundle\</OutputPath>
     <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
   <!--

@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angula
 import {CommonDictionaryModel} from 'src/app/common/models/common';
 import {TemplateDto} from 'src/app/common/models/dto';
 import {TemplateTagsUpdateModel} from 'src/app/common/models/eforms';
-import {EFormTagService} from 'src/app/common/services';
+import {EformTagService} from 'src/app/common/services/eform';
 
 @Component({
   selector: 'app-eform-edit-tags-modal',
@@ -20,7 +20,7 @@ export class EformEditTagsModalComponent implements OnInit {
   tagForRemoval: number;
   spinnerStatus = false;
 
-  constructor(private eFormTagService: EFormTagService) { }
+  constructor(private eFormTagService: EformTagService) { }
 
   ngOnInit() {
   }

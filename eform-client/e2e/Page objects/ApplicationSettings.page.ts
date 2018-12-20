@@ -29,7 +29,7 @@ export class ApplicationSettingsPage extends PageWithNavbarPage {
 
   public save() {
     this.saveBtn.click();
-    browser.pause(25000);
+    browser.pause(6000);
   }
 }
 

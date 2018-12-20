@@ -1,5 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import {UserClaimsEnum} from 'src/app/common/enums';
+import {ClaimsGuard} from 'src/app/common/guards/claims.guard';
 import {
   EntitySearchComponent,
   EntitySelectComponent,
@@ -14,30 +16,44 @@ const routes: Routes = [
   {
     path: 'units',
     component: UnitsComponent,
+    canActivate: [ClaimsGuard],
+    data: {requiredClaim: UserClaimsEnum.unitsRead}
   },
   {
     path: 'sites',
-    component: SitesComponent
+    component: SitesComponent,
+    canActivate: [ClaimsGuard],
+    data: {requiredClaim: UserClaimsEnum.sitesRead}
   },
   {
     path: 'workers',
-    component: WorkersComponent
+    component: WorkersComponent,
+    canActivate: [ClaimsGuard],
+    data: {requiredClaim: UserClaimsEnum.workersRead}
   },
   {
     path: 'workeredit/:id',
-    component: WorkerEditComponent
+    component: WorkerEditComponent,
+    canActivate: [ClaimsGuard],
+    data: {requiredClaim: UserClaimsEnum.workersUpdate}
   },
   {
     path: 'siteedit/:id',
-    component: SiteEditComponent
+    component: SiteEditComponent,
+    canActivate: [ClaimsGuard],
+    data: {requiredClaim: UserClaimsEnum.sitesUpdate}
   },
   {
     path: 'entity-search',
-    component: EntitySearchComponent
+    component: EntitySearchComponent,
+    canActivate: [ClaimsGuard],
+    data: {requiredClaim: UserClaimsEnum.entitySearchRead}
   },
   {
     path: 'entity-select',
-    component: EntitySelectComponent
+    component: EntitySelectComponent,
+    canActivate: [ClaimsGuard],
+    data: {requiredClaim: UserClaimsEnum.entitySelectRead}
   }
 ];
 

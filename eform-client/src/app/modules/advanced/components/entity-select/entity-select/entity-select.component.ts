@@ -6,7 +6,7 @@ import {
 } from 'src/app/common/models/advanced';
 import {PageSettingsModel} from 'src/app/common/models/settings';
 import {EntitySelectService} from 'src/app/common/services/advanced';
-import {UserSettingsService} from 'src/app/common/services/auth';
+import {AuthService, UserSettingsService} from 'src/app/common/services/auth';
 
 @Component({
   selector: 'app-selectable-list',
@@ -24,7 +24,10 @@ export class EntitySelectComponent implements OnInit {
   advEntitySelectableGroupListRequestModel: AdvEntitySelectableGroupListRequestModel
     = new AdvEntitySelectableGroupListRequestModel();
 
+  get userClaims() { return this.authService.userClaims; }
+
   constructor(private entitySelectService: EntitySelectService,
+              private authService: AuthService,
               public userSettingsService: UserSettingsService) {}
 
   ngOnInit() {

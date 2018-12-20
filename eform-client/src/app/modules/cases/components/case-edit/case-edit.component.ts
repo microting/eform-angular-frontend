@@ -3,10 +3,14 @@ import {ActivatedRoute, NavigationStart, Router} from '@angular/router';
 import {RouteConfigLoadEnd} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {Observable} from 'rxjs';
+import {UserClaimsEnum} from 'src/app/common/enums';
 import {CaseEditRequest, ReplyElement, ReplyRequest} from 'src/app/common/models/cases';
 import {TemplateDto} from 'src/app/common/models/dto';
+import {EformPermissionsSimpleModel} from 'src/app/common/models/security/group-permissions/eform';
+import {AuthService} from 'src/app/common/services/auth';
 import {CasesService} from 'src/app/common/services/cases';
 import {EFormService} from 'src/app/common/services/eform';
+import {SecurityGroupEformsPermissionsService} from 'src/app/common/services/security';
 import {CaseEditElementComponent} from '../case-edit-element/case-edit-element.component';
 
 @Component({
@@ -25,6 +29,7 @@ export class CaseEditComponent implements OnInit, OnDestroy {
 
   requestModels: Array<CaseEditRequest> = [];
   replyRequest: ReplyRequest = new ReplyRequest();
+  eformPermissionsSimpleModel: EformPermissionsSimpleModel = new EformPermissionsSimpleModel();
 
   isNoSaveExitAllowed = false;
   isSaveClicked = false;
@@ -32,10 +37,20 @@ export class CaseEditComponent implements OnInit, OnDestroy {
   spinnerStatus = false;
   reverseRoute: string;
 
+  get userClaims() {
+    return this.authService.userClaims;
+  }
+
+  get userClaimsEnum() {
+    return UserClaimsEnum;
+  }
+
   constructor(private activateRoute: ActivatedRoute,
               private casesService: CasesService,
               private eFormService: EFormService,
-              private router: Router) {
+              private router: Router,
+              private authService: AuthService,
+              private securityGroupEformsService: SecurityGroupEformsPermissionsService) {
     const activatedRouteSub = this.activateRoute.params.subscribe(params => {
       this.id = +params['id'];
       this.templateId = +params['templateId'];
@@ -46,7 +61,6 @@ export class CaseEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.loadCase();
     this.loadTemplateInfo();
   }
 
@@ -58,7 +72,7 @@ export class CaseEditComponent implements OnInit, OnDestroy {
     if (!this.id || this.id == 0) {
       return;
     }
-    this.casesService.getById(this.id).subscribe(operation => {
+    this.casesService.getById(this.id, this.currentTemplate.id).subscribe(operation => {
       if (operation && operation.success) {
         this.replyElement = operation.model;
       }
@@ -75,7 +89,7 @@ export class CaseEditComponent implements OnInit, OnDestroy {
     this.replyRequest.id = this.replyElement.id;
     this.replyRequest.label = this.replyElement.label;
     this.replyRequest.elementList = this.requestModels;
-    this.casesService.updateCase(this.replyRequest).subscribe(operation => {
+    this.casesService.updateCase(this.replyRequest, this.currentTemplate.id).subscribe(operation => {
       if (operation && operation.success) {
         this.replyElement = new ReplyElement();
         this.spinnerStatus = false;
@@ -90,10 +104,14 @@ export class CaseEditComponent implements OnInit, OnDestroy {
 
   loadTemplateInfo() {
     if (this.templateId) {
+      this.spinnerStatus = true;
       this.eFormService.getSingle(this.templateId).subscribe(operation => {
         if (operation && operation.success) {
           this.currentTemplate = operation.model;
+          this.loadEformPermissions(this.currentTemplate.id);
+          this.loadCase();
         }
+        this.spinnerStatus = false;
       });
     }
   }
@@ -114,19 +132,44 @@ export class CaseEditComponent implements OnInit, OnDestroy {
     }
   }
 
-  navigateToReverse() {
-      if (this.reverseRoute) {
-        this.router.navigate([this.reverseRoute]).then();
-      } else {
-        this.router.navigate(['/cases/', this.currentTemplate.id]).then();
-      }
-  }
-
   canDeactivate(): Observable<boolean> | boolean {
-    if (!this.isNoSaveExitAllowed) {
+    if (!this.isNoSaveExitAllowed && this.checkEformPermissions(UserClaimsEnum.caseUpdate)) {
       this.caseConfirmation.show();
       return this.caseConfirmation.navigateAwaySelection$;
     }
     return true;
+  }
+
+  navigateToReverse() {
+    if (this.reverseRoute) {
+      this.router.navigate([this.reverseRoute]).then();
+    } else {
+      this.router.navigate(['/cases/', this.currentTemplate.id]).then();
+    }
+  }
+
+  loadEformPermissions(templateId: number) {
+    if (this.securityGroupEformsService.mappedPermissions.length) {
+      this.eformPermissionsSimpleModel = this.securityGroupEformsService.mappedPermissions.find(x => x.templateId == templateId);
+    } else {
+      this.spinnerStatus = true;
+      this.securityGroupEformsService.getEformsSimplePermissions().subscribe((data => {
+        if (data && data.success) {
+          let foundTemplates = this.securityGroupEformsService.mapEformsSimplePermissions(data.model);
+          if (foundTemplates.length) {
+            this.eformPermissionsSimpleModel = foundTemplates.find(x => x.templateId == templateId);
+          }
+          this.spinnerStatus = false;
+        }
+      }));
+    }
+  }
+
+  checkEformPermissions(permissionIndex: number) {
+    if (this.eformPermissionsSimpleModel.templateId) {
+      return this.eformPermissionsSimpleModel.permissionsSimpleList.find(x => x == UserClaimsEnum[permissionIndex].toString());
+    } else {
+      return this.userClaims[UserClaimsEnum[permissionIndex].toString()];
+    }
   }
 }

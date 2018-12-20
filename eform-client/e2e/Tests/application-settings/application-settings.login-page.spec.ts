@@ -16,7 +16,9 @@ describe('Application settings page - site header section', function () {
     browser.refresh();
     browser.pause(8000);
     applicationSettingsPage.Navbar.logout();
-    expect(loginPage.mainText.getText(), 'Error while changing main text on login page').to.equal(ApplicationSettingsConstants.LoginPage.customMainText);
+    expect(loginPage.loginBtn.isVisible()).equal(true);
+    expect(loginPage.mainText.getText(),
+      'Error while changing main text on login page').to.equal(ApplicationSettingsConstants.LoginPage.customMainText);
   });
   it('should change secondary text', function () {
     loginPage.login();
@@ -26,7 +28,9 @@ describe('Application settings page - site header section', function () {
     browser.refresh();
     browser.pause(8000);
     applicationSettingsPage.Navbar.logout();
-    expect(loginPage.secondaryText.getText(), 'Error while changing secondary text on login page').to.equal(ApplicationSettingsConstants.LoginPage.customSecondaryText);
+    expect(loginPage.loginBtn.isVisible()).equal(true);
+    expect(loginPage.secondaryText.getText(),
+      'Error while changing secondary text on login page').to.equal(ApplicationSettingsConstants.LoginPage.customSecondaryText);
   });
   it('should hide main text', function () {
     loginPage.login();
@@ -36,7 +40,9 @@ describe('Application settings page - site header section', function () {
     browser.refresh();
     browser.pause(8000);
     applicationSettingsPage.Navbar.logout();
-    expect(loginPage.mainText.isVisible(), 'Error while toggling visibility of main text on login page').to.equal(false);
+    expect(loginPage.loginBtn.isVisible()).equal(true);
+    expect(loginPage.mainText.isVisible(),
+      'Error while toggling visibility of main text on login page').to.equal(false);
   });
   it('should hide secondary text', function () {
     loginPage.login();
@@ -46,7 +52,9 @@ describe('Application settings page - site header section', function () {
     browser.refresh();
     browser.pause(8000);
     applicationSettingsPage.Navbar.logout();
-    expect(loginPage.secondaryText.isVisible(), 'Error while toggling visibility of secondary text on login page').to.equal(false);
+    expect(loginPage.loginBtn.isVisible()).equal(true);
+    expect(loginPage.secondaryText.isVisible(),
+      'Error while toggling visibility of secondary text on login page').to.equal(false);
   });
   it('should hide image', function () {
     loginPage.login();
@@ -56,25 +64,33 @@ describe('Application settings page - site header section', function () {
     browser.refresh();
     browser.pause(8000);
     applicationSettingsPage.Navbar.logout();
-    expect(loginPage.image.isVisible(), 'Error while toggling visibility of image on login page').to.equal(false);
+    expect(loginPage.loginBtn.isVisible()).equal(true);
+    expect(loginPage.image.isVisible(),
+      'Error while toggling visibility of image on login page').to.equal(false);
   });
   it('should reset main text', function () {
     loginPage.login();
     myEformsPage.Navbar.goToApplicationSettings();
     applicationSettingsPage.LoginPage.reset();
     applicationSettingsPage.Navbar.logout();
-    expect(loginPage.mainText.getText(), 'Error while resetting main text on login page').to.equal(ApplicationSettingsConstants.LoginPage.originalMainText);
+    expect(loginPage.loginBtn.isVisible()).equal(true);
+    expect(loginPage.mainText.getText(),
+      'Error while resetting main text on login page').to.equal(ApplicationSettingsConstants.LoginPage.originalMainText);
   });
   it('should reset secondary text', function () {
-    expect(loginPage.secondaryText.getText(), 'Error while resetting secondary text on login page').to.equal(ApplicationSettingsConstants.LoginPage.originalSecondaryText);
+    expect(loginPage.secondaryText.getText(),
+      'Error while resetting secondary text on login page').to.equal(ApplicationSettingsConstants.LoginPage.originalSecondaryText);
   });
   it('should reset main text visibility', function () {
-    expect(loginPage.mainText.isVisible(), 'Error while refreshing visibility of main text on login page').to.equal(true);
+    expect(loginPage.mainText.isVisible(),
+      'Error while refreshing visibility of main text on login page').to.equal(true);
   });
   it('should reset secondary text visibility', function () {
-    expect(loginPage.secondaryText.isVisible(), 'Error while refreshing visibility of secondary text on login page').to.equal(true);
+    expect(loginPage.secondaryText.isVisible(),
+      'Error while refreshing visibility of secondary text on login page').to.equal(true);
   });
   it('should reset image visibility', function () {
-    expect(loginPage.image.isVisible(), 'Error while refreshing visibility of image on login page').to.equal(true);
+    expect(loginPage.image.isVisible(),
+      'Error while refreshing visibility of image on login page').to.equal(true);
   });
 });

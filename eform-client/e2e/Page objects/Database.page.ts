@@ -6,10 +6,6 @@ class DatabasePage extends Page {
     super();
   }
 
-  public get usernameInput() {
-    return browser.element('#userName');
-  }
-
   public get passwordInput() {
     return browser.element('#password');
   }
@@ -26,36 +22,34 @@ class DatabasePage extends Page {
     return browser.element('#lastName');
   }
 
-  public get dataSourceSdkInput() {
-    return browser.element('#sourceSDK');
+  public get customerNo() {
+    return browser.element('#customerNo');
   }
 
-  public get initialCatalogSdkInput() {
-    return browser.element('#catalogueSDK');
+  public SqlServer(sqlserver) {
+    this.sqlserverDropdown.click();
+    browser.element(`//*[@id="sqlServerSelector"]//*[text()="${sqlserver}"]`).element('..').element('..').click();
   }
 
-  public get authenticationTypeSdkInput() {
-    return browser.element('#authSDK');
+  public get port() {
+    return browser.element('#port');
   }
 
   public get tokenInput() {
     return browser.element('#token');
   }
 
-  public get dataSourceMainInput() {
-    return browser.element('#sourceMain');
-  }
-
-  public get initialCatalogMainInput() {
-    return browser.element('#catalogueMain');
-  }
-
-  public get authenticationTypeMainInput() {
-    return browser.element('#authMain');
+  public get authenticationType() {
+    return browser.element('#auth2');
   }
 
   public get languageDropdown() {
     return browser.element('#languageSelector');
+  }
+
+
+  public get sqlserverDropdown() {
+    return browser.element('#sqlServerSelector');
   }
 
   public get saveBtn() {
@@ -68,22 +62,20 @@ class DatabasePage extends Page {
 
   public selectLanguage(language) {
     this.languageDropdown.click();
-    browser.element(`//*[@id="languageSelector"]//*[text()="${language}"]`).click();
+    browser.element(`//*[@id="languageSelector"]//*[text()="${language}"]`).element('..').element('..').click();
   }
 
   public configure(language) {
-    this.usernameInput.setValue(DatabaseConfigurationConstants.username);
+    // this.usernameInput.setValue(DatabaseConfigurationConstants.username);
     this.passwordInput.setValue(DatabaseConfigurationConstants.password);
     this.emailInput.setValue(DatabaseConfigurationConstants.email);
     this.firstNameInput.setValue(DatabaseConfigurationConstants.firstName);
     this.lastNameInput.setValue(DatabaseConfigurationConstants.lastNAme);
-    this.dataSourceSdkInput.setValue(DatabaseConfigurationConstants.dataSourceSDK);
-    this.initialCatalogSdkInput.setValue(DatabaseConfigurationConstants.initialCatalogueSDK);
-    this.authenticationTypeSdkInput.setValue(DatabaseConfigurationConstants.authenticationTypeSDK);
     this.tokenInput.setValue(DatabaseConfigurationConstants.token);
-    this.dataSourceMainInput.setValue(DatabaseConfigurationConstants.dataSourceMain);
-    this.initialCatalogMainInput.setValue(DatabaseConfigurationConstants.initialCatalogueMain);
-    this.authenticationTypeMainInput.setValue(DatabaseConfigurationConstants.authenticationTypeMain);
+    this.customerNo.setValue(DatabaseConfigurationConstants.customerNo);
+    this.SqlServer(DatabaseConfigurationConstants.sqlServerType.mysql);
+    this.port.setValue(DatabaseConfigurationConstants.port);
+    this.authenticationType.setValue(DatabaseConfigurationConstants.authenticationType);
     this.selectLanguage(language);
   }
 }
