@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subject} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
 import {ApplicationPages, UserClaimsEnum} from 'src/app/common/enums';
@@ -34,7 +34,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   eformPermissionsSimpleModel: Array<EformPermissionsSimpleModel> = [];
   availableTags: Array<CommonDictionaryModel> = [];
 
-  mySubject = new Subject();
+  searchSubject = new Subject();
 
   get userClaims() { return this.authService.userClaims; }
   get userClaimsEnum() { return UserClaimsEnum; }
@@ -51,10 +51,9 @@ export class EformsPageComponent implements OnInit, OnDestroy {
               private securityGroupEformsService: SecurityGroupEformsPermissionsService,
               private userSettingsService: UserSettingsService
   ) {
-    this.mySubject.pipe(
+    this.searchSubject.pipe(
       debounceTime(500)
     ). subscribe(val => {
-      debugger;
       this.templateRequestModel.nameFilter = val.toString();
       this.loadAllTemplates();
     });
@@ -63,6 +62,10 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.loadEformsPermissions();
     this.getLocalPageSettings();
+  }
+
+  ngOnDestroy() {
+    this.searchSubject.unsubscribe();
   }
 
   getLocalPageSettings() {
@@ -155,7 +158,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   }
 
   onLabelInputChanged(label: string) {
-    this.mySubject.next(label);
+    this.searchSubject.next(label);
   }
 
   sortTable(sort: string) {
