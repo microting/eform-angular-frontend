@@ -26,12 +26,6 @@
     <SuppressValidation>true</SuppressValidation>
     <DefineConstants>ClientPath=..\..\..\eform-client; ApiPath=..\..\eformapi.web; LetsEncryptPath=..\..\..\eFormAPI\Installation\letsencrypt</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
-    <OutputPath>..\Bundle\</OutputPath>
-    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
-    <SuppressValidation>true</SuppressValidation>
-    <DefineConstants>ClientPath=..\..\..\eform-client; ApiPath=..\..\eformapi.web; LetsEncryptPath=..\..\..\eFormAPI\Installation\letsencrypt</DefineConstants>
-  </PropertyGroup>
   <ItemGroup>
     <Compile Include="ApiFileList.wxs" />
     <Compile Include="ExitDlgModified.wxs" />
@@ -99,6 +93,19 @@
   </Target>
   <PropertyGroup>
     <PostBuildEvent>"$(ProjectDir)BuildedCustomActions\AllowMultipleVersions.exe" "$(TargetPath)"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <DefineConstants>Debug</DefineConstants>
+    <SuppressAllWarnings>False</SuppressAllWarnings>
+    <SuppressValidation>True</SuppressValidation>
+    <Pedantic>True</Pedantic>
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <SuppressValidation>true</SuppressValidation>
+    <OutputPath>..\Bundle\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
   <!--
 	To modify your build process, add your task inside one of the targets below and uncomment it.
