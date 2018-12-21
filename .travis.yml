@@ -11,6 +11,8 @@ language: csharp
 mono: none
 dotnet: 2.2
 bundler_args: --retry 5
+services:
+- mysql
 before_install:
   - google-chrome-stable --headless --disable-gpu
 install:
@@ -29,12 +31,13 @@ script:
   - dotnet test -v n eFormAPI/eFormAPI.Web.Integration.Tests/eFormAPI.Web.Integration.Tests.csproj
   - cd eform-client && npm install
   - npm start &
-  - sleep 30
+  - sleep 40
   - dotnet run --project ../eFormAPI/eFormAPI.Web/eFormAPI.Web.csproj &
-  - sleep 10
+  - sleep 40
   - npm run testheadless
-  - dotnet run --project ../eFormAPI/eFormAPI.Web/eFormAPI.Web.csproj &
   - sleep 30
+  - dotnet run --project ../eFormAPI/eFormAPI.Web/eFormAPI.Web.csproj &
+  - sleep 40
   - npm run testheadless2
 after_success:
 - echo dotnet test and npm test succeeded
