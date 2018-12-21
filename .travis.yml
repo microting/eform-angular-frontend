@@ -33,7 +33,7 @@ script:
   - npm start &
   - sleep 30
   - dotnet run --project ../eFormAPI/eFormAPI.Web/eFormAPI.Web.csproj &
-  - sleep 10
+  - sleep 30
   - npm run testheadless
   - dotnet run --project ../eFormAPI/eFormAPI.Web/eFormAPI.Web.csproj &
   - sleep 30
