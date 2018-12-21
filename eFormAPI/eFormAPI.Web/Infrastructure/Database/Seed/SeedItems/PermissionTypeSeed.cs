@@ -1,7 +1,7 @@
 ﻿using eFormAPI.Web.Infrastructure.Database.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
+namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
 {
     public static class PermissionTypeSeed
     {

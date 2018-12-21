@@ -1,7 +1,7 @@
-﻿using eFormAPI.Web.Infrastructure.Seed.SeedItems;
+﻿using eFormAPI.Web.Infrastructure.Database.Seed.SeedItems;
 using Microsoft.EntityFrameworkCore;
 
-namespace eFormAPI.Web.Infrastructure.Seed
+namespace eFormAPI.Web.Infrastructure.Database.Seed
 {
     public static class EformSeed
     {

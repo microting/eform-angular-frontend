@@ -1,8 +1,8 @@
 ﻿using eFormAPI.Web.Infrastructure.Database.Entities;
-//using eFormAPI.Web.Infrastructure.Enums;
 using Microsoft.EntityFrameworkCore;
+//using eFormAPI.Web.Infrastructure.Enums;
 
-namespace eFormAPI.Web.Infrastructure.Seed.SeedItems
+namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
 {
     public static class MenuItemSeed
     {

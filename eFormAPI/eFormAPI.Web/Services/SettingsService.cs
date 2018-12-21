@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Castle.Core.Internal;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Infrastructure.Database;
+using eFormAPI.Web.Infrastructure.Models.Settings.Admin;
+using eFormAPI.Web.Infrastructure.Models.Settings.Initial;
 using eFormCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -15,12 +17,10 @@ using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Enums;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers.WritableOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Settings.Admin;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Settings.Initial;
-using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 
 
 namespace eFormAPI.Web.Services
@@ -323,8 +323,8 @@ namespace eFormAPI.Web.Services
                     MainTextVisible = _loginPageSettings.Value.MainTextVisible,
                     SecondaryText = _loginPageSettings.Value.SecondaryText,
                     SecondaryTextVisible = _loginPageSettings.Value.SecondaryTextVisible,
-                    IsSMTPExists = !_emailSettings.Value.SmtpHost.IsNullOrEmpty() && 
-                                   !_emailSettings.Value.SmtpPort.ToString().IsNullOrEmpty()
+                    //IsSMTPExists = !_emailSettings.Value.SmtpHost.IsNullOrEmpty() && 
+                    //               !_emailSettings.Value.SmtpPort.ToString().IsNullOrEmpty()
                 };
                 return new OperationDataResult<LoginPageSettingsModel>(true, model);
             }

@@ -26,7 +26,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="1.1.73" />
+    <!--<PackageReference Include="Microting.eFormApi.BasePn" Version="1.1.73" />-->
     <PackageReference Include="Microting.eForm" Version="3.0.114" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.4" />
     <PackageReference Include="SharpZipLib.NETStandard" Version="1.0.7" />
@@ -36,7 +36,14 @@
     <PackageReference Include="OtpSharp.Core" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.All" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.0" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Reference Include="Microting.eFormApi.BasePn">
+      <HintPath>..\..\..\eFormApi.BasePn\eFormApi.BasePn\bin\Debug\netcoreapp2.2\Microting.eFormApi.BasePn.dll</HintPath>
+    </Reference>
   </ItemGroup>
   
   <ItemGroup>

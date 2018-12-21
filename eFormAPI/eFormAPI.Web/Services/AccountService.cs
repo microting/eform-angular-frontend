@@ -12,8 +12,8 @@ using Microting.eFormApi.BasePn.Infrastructure.Helpers.WritableOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Settings.User;
 using System.Collections.Generic;
+using eFormAPI.Web.Infrastructure.Models.Settings.User;
 
 namespace eFormAPI.Web.Services
 {

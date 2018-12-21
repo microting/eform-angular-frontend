@@ -1,5 +1,5 @@
 ﻿using eFormAPI.Web.Infrastructure.Database.Entities;
-using eFormAPI.Web.Infrastructure.Seed;
+using eFormAPI.Web.Infrastructure.Database.Seed;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

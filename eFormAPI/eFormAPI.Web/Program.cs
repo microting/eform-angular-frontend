@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
+using eFormAPI.Web.Hosting.Settings;
 using eFormAPI.Web.Infrastructure.Database;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
@@ -106,9 +108,17 @@ namespace eFormAPI.Web
                         // delete all default configuration providers
                         config.Sources.Clear();
                         config.SetBasePath(hostContext.HostingEnvironment.ContentRootPath);
-                        config.AddJsonFile("appsettings.json",
+
+                        var filePath = Path.Combine(hostContext.HostingEnvironment.ContentRootPath,
+                            "connection.json");
+                        if (!File.Exists(filePath))
+                        {
+                            ConnectionStringManager.CreateDefalt(filePath);
+                        }
+                        config.AddJsonFile("connection.json",
                             optional: true,
                             reloadOnChange: true);
+
                         config.AddEnvironmentVariables();
                     })
                     .UseStartup<Startup>()
