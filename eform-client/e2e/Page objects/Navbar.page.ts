@@ -1,12 +1,12 @@
 export class Navbar {
   public advancedDropdown() {
-    this.clickOnHeaderMenuItem('Advanced').click();
+    this.clickOnHeaderMenuItem('Avanceret').click();
     // return browser.element('#advanced');
 
   }
 
   public applicationSettingsBtn() {
-    browser.element(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Application Settings')]`).click();
+    browser.element(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Applikationsindstillinger')]`).click();
   }
 
   // public get userDropdown() {
@@ -15,7 +15,7 @@ export class Navbar {
 
   public get logoutBtn() {
     // return browser.element('#sign-out');
-    return browser.element(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Logout')]`);
+    return browser.element(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Log ud')]`);
   }
 
   public get deviceUsersBtn() {
