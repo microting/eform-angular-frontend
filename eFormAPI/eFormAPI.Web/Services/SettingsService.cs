@@ -2,19 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Castle.Core.Internal;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Infrastructure.Database;
 using eFormCore;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microting.eFormApi.BasePn;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Enums;
@@ -39,7 +36,6 @@ namespace eFormAPI.Web.Services
         private readonly IWritableOptions<EmailSettings> _emailSettings;
         private readonly IWritableOptions<EformTokenOptions> _tokenOptions;
         private readonly IEFormCoreService _coreHelper;
-        private IApplicationLifetime _applicationLifetime { get; set; }
 
         public SettingsService(ILogger<SettingsService> logger,
             IWritableOptions<ConnectionStrings> connectionStrings,
@@ -49,8 +45,7 @@ namespace eFormAPI.Web.Services
             IWritableOptions<EmailSettings> emailSettings,
             IEFormCoreService coreHelper,
             ILocalizationService localizationService, 
-            IWritableOptions<EformTokenOptions> tokenOptions,
-            IApplicationLifetime appLifetime)
+            IWritableOptions<EformTokenOptions> tokenOptions)
         {
             _logger = logger;
             _connectionStrings = connectionStrings;
@@ -61,7 +56,6 @@ namespace eFormAPI.Web.Services
             _coreHelper = coreHelper;
             _localizationService = localizationService;
             _tokenOptions = tokenOptions;
-            _applicationLifetime = appLifetime;
         }
 
         public OperationResult ConnectionStringExist()
@@ -313,9 +307,7 @@ namespace eFormAPI.Web.Services
                 //return new OperationResult(false, 
                 //    _localizationService.GetString("CouldNotWriteConnectionString"));
             }
-            _applicationLifetime.StopApplication();
-            
-
+            Program.Restart();
             return new OperationResult(true);
         }
 
@@ -331,9 +323,8 @@ namespace eFormAPI.Web.Services
                     MainTextVisible = _loginPageSettings.Value.MainTextVisible,
                     SecondaryText = _loginPageSettings.Value.SecondaryText,
                     SecondaryTextVisible = _loginPageSettings.Value.SecondaryTextVisible,
-                    // TODO fix
-                    //IsSMTPExists = !_emailSettings.Value.SmtpHost.IsNullOrEmpty() && 
-                    //               !_emailSettings.Value.SmtpPort.ToString().IsNullOrEmpty()
+                    IsSMTPExists = !_emailSettings.Value.SmtpHost.IsNullOrEmpty() && 
+                                   !_emailSettings.Value.SmtpPort.ToString().IsNullOrEmpty()
                 };
                 return new OperationDataResult<LoginPageSettingsModel>(true, model);
             }
