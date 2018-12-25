@@ -72,7 +72,7 @@ namespace eFormAPI.Web.Controllers
         [Authorize(Roles = EformRole.Admin)]
         [HttpPost]
         [Route("api/settings/admin")]
-        public OperationResult UpdateAdminSettings([FromBody] AdminSettingsModel adminSettingsModel)
+        public Task<OperationResult> UpdateAdminSettings([FromBody] AdminSettingsModel adminSettingsModel)
         {
             return _settingsService.UpdateAdminSettings(adminSettingsModel);
         }
@@ -82,7 +82,7 @@ namespace eFormAPI.Web.Controllers
         [HttpGet]
         [Authorize(Roles = EformRole.Admin)]
         [Route("api/settings/reset-login-page")]
-        public OperationResult ResetLoginPageSettings()
+        public Task<OperationResult> ResetLoginPageSettings()
         {
             return _settingsService.ResetLoginPageSettings();
         }
@@ -90,7 +90,7 @@ namespace eFormAPI.Web.Controllers
         [HttpGet]
         [Authorize(Roles = EformRole.Admin)]
         [Route("api/settings/reset-page-header")]
-        public OperationResult ResetPageHeaderSettings()
+        public Task<OperationResult> ResetPageHeaderSettings()
         {
             return _settingsService.ResetPageHeaderSettings();
         }

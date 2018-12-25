@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Hosting.Helpers.DbOptions;
 using eFormAPI.Web.Infrastructure.Database;
 using eFormAPI.Web.Infrastructure.Database.Entities;
 using eFormAPI.Web.Infrastructure.Models.Users;
@@ -10,7 +11,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
-using Microting.eFormApi.BasePn.Infrastructure.Helpers.WritableOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
@@ -20,7 +20,7 @@ namespace eFormAPI.Web.Services
     public class AdminService : IAdminService
     {
         private readonly IUserService _userService;
-        private readonly IWritableOptions<ApplicationSettings> _appSettings;
+        private readonly IDbOptions<ApplicationSettings> _appSettings;
         private readonly ILogger<AdminService> _logger;
         private readonly ILocalizationService _localizationService;
         private readonly BaseDbContext _dbContext;
@@ -28,7 +28,7 @@ namespace eFormAPI.Web.Services
 
         public AdminService(ILogger<AdminService> logger,
             UserManager<EformUser> userManager,
-            IWritableOptions<ApplicationSettings> appSettings,
+            IDbOptions<ApplicationSettings> appSettings,
             IUserService userService,
             ILocalizationService localizationService,
             BaseDbContext dbContext)
@@ -293,11 +293,14 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public OperationResult EnableTwoFactorAuthForce()
+        public async Task<OperationResult> EnableTwoFactorAuthForce()
         {
             try
             {
-                _appSettings.Update((options) => { options.IsTwoFactorForced = true; });
+                await _appSettings.UpdateDb((options) =>
+                {
+                    options.IsTwoFactorForced = true;
+                }, _dbContext);
             }
             catch (Exception)
             {
@@ -307,11 +310,14 @@ namespace eFormAPI.Web.Services
             return new OperationResult(true);
         }
 
-        public OperationResult DisableTwoFactorAuthForce()
+        public async Task<OperationResult> DisableTwoFactorAuthForce()
         {
             try
             {
-                _appSettings.Update((options) => { options.IsTwoFactorForced = false; });
+                await _appSettings.UpdateDb((options) =>
+                {
+                    options.IsTwoFactorForced = false;
+                }, _dbContext);
             }
             catch (Exception)
             {

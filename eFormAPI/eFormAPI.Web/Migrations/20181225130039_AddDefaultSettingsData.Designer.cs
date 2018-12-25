@@ -10,7 +10,7 @@ using eFormAPI.Web.Infrastructure.Database;
 namespace eFormAPI.Web.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    [Migration("20181225113554_AddDefaultSettingsData")]
+    [Migration("20181225130039_AddDefaultSettingsData")]
     partial class AddDefaultSettingsData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

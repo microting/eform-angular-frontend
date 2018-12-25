@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Security;
+using eFormAPI.Web.Hosting.Helpers.DbOptions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
@@ -29,7 +30,7 @@ namespace eFormAPI.Web.Services
     {
         private readonly IOptions<EformTokenOptions> _tokenOptions;
         private readonly IUserService _userService;
-        private readonly IWritableOptions<ApplicationSettings> _appSettings;
+        private readonly IDbOptions<ApplicationSettings> _appSettings;
         private readonly IClaimsService _claimsService;
         private readonly IUserClaimsPrincipalFactory<EformUser> _userClaimsPrincipalFactory;
         private readonly ILocalizationService _localizationService;
@@ -41,7 +42,7 @@ namespace eFormAPI.Web.Services
 
         public AuthService(IOptions<EformTokenOptions> tokenOptions,
             ILogger<AuthService> logger,
-            IWritableOptions<ApplicationSettings> appSettings,
+            IDbOptions<ApplicationSettings> appSettings,
             RoleManager<EformRole> roleManager,
             SignInManager<EformUser> signInManager,
             UserManager<EformUser> userManager,

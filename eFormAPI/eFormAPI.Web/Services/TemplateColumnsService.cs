@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Eforms;
-using eFormCore;
-using eFormShared;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Templates;
@@ -104,7 +102,8 @@ namespace eFormAPI.Web.Services
                     model.FieldId10
                 };
                 columnsList = columnsList.OrderBy(x => x == null).ToList();
-                var columnsUpdateResult = core.Advanced_TemplateUpdateFieldIdsForColumns((int) model.TemplateId,
+                var columnsUpdateResult = core.Advanced_TemplateUpdateFieldIdsForColumns(
+                    (int) model.TemplateId,
                     columnsList[0], columnsList[1], columnsList[2], columnsList[3],
                     columnsList[4], columnsList[5], columnsList[6], columnsList[7],
                     columnsList[8], columnsList[9]);

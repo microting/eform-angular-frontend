@@ -52,8 +52,6 @@ namespace eFormAPI.Web
             // Configuration
             //services.AddSingleton(Configuration);
             services.AddOptions();
-            services.Configure<ConnectionStringsSdk>(Configuration.GetSection("ConnectionStringsSdk"));
-            // Logging
             services.AddLogging(loggingBuilder =>
             {
                 loggingBuilder.AddConfiguration(Configuration.GetSection("Logging"));
@@ -117,12 +115,14 @@ namespace eFormAPI.Web
             // MVC and API services with Plugins
             services.AddEFormMvc(Plugins);
             // Writable options
-            services.ConfigureWritable<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
-            services.ConfigureWritable<EmailSettings>(Configuration.GetSection("EmailSettings"));
-            services.ConfigureWritable<LoginPageSettings>(Configuration.GetSection("LoginPageSettings"));
-            services.ConfigureWritable<HeaderSettings>(Configuration.GetSection("HeaderSettings"));
             services.ConfigureWritable<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"), "connection.json");
-            services.ConfigureWritable<EformTokenOptions>(Configuration.GetSection("EformTokenOptions"));
+            // Database options
+            services.ConfigureDbOptions<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
+            services.ConfigureDbOptions<EmailSettings>(Configuration.GetSection("EmailSettings"));
+            services.ConfigureDbOptions<LoginPageSettings>(Configuration.GetSection("LoginPageSettings"));
+            services.ConfigureDbOptions<HeaderSettings>(Configuration.GetSection("HeaderSettings"));
+            services.ConfigureDbOptions<ConnectionStringsSdk>(Configuration.GetSection("ConnectionStringsSdk"));
+            services.ConfigureDbOptions<EformTokenOptions>(Configuration.GetSection("EformTokenOptions"));
             // Form options
             services.Configure<FormOptions>(x =>
             {
@@ -214,8 +214,7 @@ namespace eFormAPI.Web
 
         private void ConnectServices(IServiceCollection services)
         {
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();//AddHttpContextAccessor 
-            services.AddTransient(provider => provider.GetService<IHttpContextAccessor>().HttpContext.User);
+            services.AddHttpContextAccessor();
             services.AddSingleton<ILocalizationService, LocalizationService>();
             services.AddScoped<IEFormCoreService, EFormCoreService>();
             services.AddScoped<ITagsService, TagsService>();

@@ -9,8 +9,8 @@ namespace eFormAPI.Web.Abstractions
     {
         Task<OperationResult> CreateUser(UserRegisterModel userRegisterModel);
         Task<OperationResult> DeleteUser(int userId);
-        OperationResult DisableTwoFactorAuthForce();
-        OperationResult EnableTwoFactorAuthForce();
+        Task<OperationResult> DisableTwoFactorAuthForce();
+        Task<OperationResult> EnableTwoFactorAuthForce();
         OperationDataResult<UserInfoModelList> GetAllUsers(PaginationModel paginationModel);
         Task<OperationDataResult<UserRegisterModel>> GetUser(int userId);
         Task<OperationResult> UpdateUser(UserRegisterModel userRegisterModel);

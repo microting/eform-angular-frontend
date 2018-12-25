@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using eFormAPI.Web.Hosting.Helpers.DbOptions;
 using eFormAPI.Web.Infrastructure;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -30,6 +31,19 @@ namespace eFormAPI.Web.Hosting.Extensions
                 var environment = provider.GetService<IHostingEnvironment>();
                 var options = provider.GetService<IOptionsMonitor<T>>();
                 return new WritableOptions<T>(environment, options, section.Key, file);
+            });
+        }
+
+        public static void ConfigureDbOptions<T>(
+            this IServiceCollection services,
+            IConfigurationSection section) where T : class, new()
+        {
+            services.Configure<T>(section);
+            services.AddTransient<IDbOptions<T>>(provider =>
+            {
+                var environment = provider.GetService<IHostingEnvironment>();
+                var options = provider.GetService<IOptionsMonitor<T>>();
+                return new DbOptions<T>(options);
             });
         }
 

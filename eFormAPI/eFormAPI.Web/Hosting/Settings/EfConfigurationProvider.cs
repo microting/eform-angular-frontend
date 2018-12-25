@@ -33,14 +33,14 @@ namespace eFormAPI.Web.Hosting.Settings
             {
                 using (var dbContext = new BaseDbContext(builder.Options))
                 {
-                    dbContext.Database.EnsureCreated();
-
+                    dbContext.Database.Migrate();
+                    
                     Data = dbContext.ConfigurationValues
                         .AsNoTracking()
                         .ToDictionary(c => c.Id, c => c.Value);
                 }
             }
-            catch
+            catch (Exception)
             {
                 var vvvvvs = ConfigurationSeed.Data;
                 Data = vvvvvs.ToDictionary(

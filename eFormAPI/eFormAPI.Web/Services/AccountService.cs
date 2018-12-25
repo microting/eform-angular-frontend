@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Hosting.Helpers.DbOptions;
 using eFormAPI.Web.Infrastructure.Models.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -8,11 +9,9 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
-using Microting.eFormApi.BasePn.Infrastructure.Helpers.WritableOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
-using System.Collections.Generic;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Settings.User;
 
 namespace eFormAPI.Web.Services
@@ -21,14 +20,14 @@ namespace eFormAPI.Web.Services
     {
         private readonly IUserService _userService;
         private readonly IEmailSender _emailSender;
-        private readonly IWritableOptions<ApplicationSettings> _appSettings;
+        private readonly IDbOptions<ApplicationSettings> _appSettings;
         private readonly ILogger<AccountService> _logger;
         private readonly ILocalizationService _localizationService;
         private readonly UserManager<EformUser> _userManager;
 
         public AccountService(UserManager<EformUser> userManager,
             IUserService userService,
-            IWritableOptions<ApplicationSettings> appSettings, 
+            IDbOptions<ApplicationSettings> appSettings, 
             ILogger<AccountService> logger,
             ILocalizationService localizationService, 
             IEmailSender emailSender)

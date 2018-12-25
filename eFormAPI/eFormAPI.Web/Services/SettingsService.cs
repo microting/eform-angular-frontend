@@ -5,14 +5,13 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
-using eFormAPI.Web.Hosting.Settings;
+using eFormAPI.Web.Hosting.Helpers.DbOptions;
 using eFormAPI.Web.Infrastructure.Database;
 using eFormCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Enums;
@@ -22,6 +21,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Settings.Admin;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Settings.Initial;
+using Castle.Core.Internal;
 
 namespace eFormAPI.Web.Services
 {
@@ -30,24 +30,25 @@ namespace eFormAPI.Web.Services
         private readonly ILogger<SettingsService> _logger;
         private readonly ILocalizationService _localizationService;
         private readonly IWritableOptions<ConnectionStrings> _connectionStrings;
-        private readonly IWritableOptions<ApplicationSettings> _applicationSettings;
-        private readonly IWritableOptions<LoginPageSettings> _loginPageSettings;
-        private readonly IWritableOptions<HeaderSettings> _headerSettings;
-        private readonly IWritableOptions<EmailSettings> _emailSettings;
-        private readonly IOptions<ConnectionStringsSdk> _connectionStringsSdk;
+        private readonly IDbOptions<ApplicationSettings> _applicationSettings;
+        private readonly IDbOptions<LoginPageSettings> _loginPageSettings;
+        private readonly IDbOptions<HeaderSettings> _headerSettings;
+        private readonly IDbOptions<EmailSettings> _emailSettings;
+        private readonly IDbOptions<ConnectionStringsSdk> _connectionStringsSdk;
+        private readonly IDbOptions<EformTokenOptions> _tokenOptions;
         private readonly IEFormCoreService _coreHelper;
-        private readonly IOptionsMonitor<ApplicationSettings> _optionsAccessor;
+        private readonly BaseDbContext _dbContext;
 
         public SettingsService(ILogger<SettingsService> logger,
             IWritableOptions<ConnectionStrings> connectionStrings,
-            IWritableOptions<ApplicationSettings> applicationSettings,
-            IWritableOptions<LoginPageSettings> loginPageSettings,
-            IWritableOptions<HeaderSettings> headerSettings,
-            IWritableOptions<EmailSettings> emailSettings,
+            IDbOptions<ApplicationSettings> applicationSettings,
+            IDbOptions<LoginPageSettings> loginPageSettings,
+            IDbOptions<HeaderSettings> headerSettings,
+            IDbOptions<EmailSettings> emailSettings,
             IEFormCoreService coreHelper,
             ILocalizationService localizationService,
-            IOptionsMonitor<ApplicationSettings> optionsAccessor,
-            IOptions<ConnectionStringsSdk> connectionStringsSdk)
+            IDbOptions<ConnectionStringsSdk> connectionStringsSdk,
+            BaseDbContext dbContext, IDbOptions<EformTokenOptions> tokenOptions)
         {
             _logger = logger;
             _connectionStrings = connectionStrings;
@@ -57,15 +58,13 @@ namespace eFormAPI.Web.Services
             _emailSettings = emailSettings;
             _coreHelper = coreHelper;
             _localizationService = localizationService;
-            _optionsAccessor = optionsAccessor;
             _connectionStringsSdk = connectionStringsSdk;
+            _dbContext = dbContext;
+            _tokenOptions = tokenOptions;
         }
 
         public OperationResult ConnectionStringExist()
         {
-            Program.ReloadDbConfigurationDelegate.Invoke();
-
-
             var connectionString = _connectionStringsSdk.Value.SdkConnection;
             if (!string.IsNullOrEmpty(connectionString))
             {
@@ -176,7 +175,6 @@ namespace eFormAPI.Web.Services
             var dbContextOptionsBuilder = new DbContextOptionsBuilder<BaseDbContext>();
             try
             {
-                
                 if (mainConnectionString.ToLower().Contains("convert zero datetime"))
                 {
                     dbContextOptionsBuilder.UseMySql(mainConnectionString, b =>
@@ -266,10 +264,8 @@ namespace eFormAPI.Web.Services
                 {
                     return new OperationResult(false, exception.Message + " - " + exception.InnerException.Message);
                 }
-                else
-                {
-                    return new OperationResult(false, exception.Message);
-                }
+
+                return new OperationResult(false, exception.Message);
             }
 
             try
@@ -279,49 +275,27 @@ namespace eFormAPI.Web.Services
                 RandomNumberGenerator.Create().GetBytes(key);
                 var signingKey = Convert.ToBase64String(key);
 
-
-
-
+                // Update Database settings
                 using (var dbContext = new BaseDbContext(dbContextOptionsBuilder.Options))
                 {
-                    var signingKeyValue = dbContext.ConfigurationValues
-                        .FirstOrDefault(x => x.Id == "EformTokenOptions:SigningKey");
-                    var sdkConnection = dbContext.ConfigurationValues
-                        .FirstOrDefault(x => x.Id == "ConnectionStringsSdk:SdkConnection");
-                    var defaultLocale = dbContext.ConfigurationValues
-                        .FirstOrDefault(x => x.Id == "ApplicationSettings:DefaultLocale");
+                    await _tokenOptions.UpdateDb((options) => { options.SigningKey = signingKey; }, dbContext);
 
-                    if (signingKeyValue != null)
-                    {
-                        signingKeyValue.Value = signingKey;
-                    }
-                    if (sdkConnection != null)
-                    {
-                        sdkConnection.Value = sdkConnectionString;
-                    }
-                    if (defaultLocale != null)
-                    {
-                        defaultLocale.Value = initialSettingsModel.GeneralAppSetupSettingsModel.DefaultLocale;
-                    }
+                    await _applicationSettings.UpdateDb(
+                        options =>
+                        {
+                            options.DefaultLocale = initialSettingsModel.GeneralAppSetupSettingsModel.DefaultLocale;
+                        }, dbContext);
 
-                    dbContext.SaveChanges();
-
+                    await _connectionStringsSdk.UpdateDb((options) =>
+                        {
+                            options.SdkConnection = sdkConnectionString;
+                        }, dbContext);
                 }
-                _connectionStrings.Update((options) =>
+                // Update connection string 
+                _connectionStrings.UpdateFile((options) =>
                 {
                     options.DefaultConnection = mainConnectionString;
                 });
-
-                //_tokenOptions.Update((options) => { options.SigningKey = signingKey; });
-                //_connectionStrings.Update((options) =>
-                //{
-                //    options.SdkConnection = sdkConnectionString;
-                //    options.DefaultConnection = mainConnectionString;
-                //});
-                //_applicationSettings.Update((options) =>
-                //{
-                //    options.DefaultLocale = initialSettingsModel.GeneralAppSetupSettingsModel.DefaultLocale;
-                //});
             }
 
             catch (Exception exception)
@@ -354,8 +328,8 @@ namespace eFormAPI.Web.Services
                     MainTextVisible = _loginPageSettings.Value.MainTextVisible,
                     SecondaryText = _loginPageSettings.Value.SecondaryText,
                     SecondaryTextVisible = _loginPageSettings.Value.SecondaryTextVisible,
-                    //IsSMTPExists = !_emailSettings.Value.SmtpHost.IsNullOrEmpty() && 
-                    //               !_emailSettings.Value.SmtpPort.ToString().IsNullOrEmpty()
+                    IsSMTPExists = !_emailSettings.Value.SmtpHost.IsNullOrEmpty() && 
+                                   !_emailSettings.Value.SmtpPort.ToString().IsNullOrEmpty()
                 };
                 return new OperationDataResult<LoginPageSettingsModel>(true, model);
             }
@@ -451,19 +425,19 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public OperationResult UpdateAdminSettings(AdminSettingsModel adminSettingsModel)
+        public async Task<OperationResult> UpdateAdminSettings(AdminSettingsModel adminSettingsModel)
         {
             try
             {
                 var core = _coreHelper.GetCore();
-                _emailSettings.Update((option) =>
+                await _emailSettings.UpdateDb((option) =>
                 {
                     option.SmtpHost = adminSettingsModel.SMTPSettingsModel.Host;
                     option.SmtpPort = int.Parse(adminSettingsModel.SMTPSettingsModel.Port);
                     option.Login = adminSettingsModel.SMTPSettingsModel.Login;
                     option.Password = adminSettingsModel.SMTPSettingsModel.Password;
-                });
-                _headerSettings.Update((option) =>
+                }, _dbContext);
+                await _headerSettings.UpdateDb((option) =>
                 {
                     option.ImageLink = adminSettingsModel.HeaderSettingsModel.ImageLink;
                     option.ImageLinkVisible = adminSettingsModel.HeaderSettingsModel.ImageLinkVisible;
@@ -471,8 +445,8 @@ namespace eFormAPI.Web.Services
                     option.MainTextVisible = adminSettingsModel.HeaderSettingsModel.MainTextVisible;
                     option.SecondaryText = adminSettingsModel.HeaderSettingsModel.SecondaryText;
                     option.SecondaryTextVisible = adminSettingsModel.HeaderSettingsModel.SecondaryTextVisible;
-                });
-                _loginPageSettings.Update((option) =>
+                }, _dbContext);
+                await _loginPageSettings.UpdateDb((option) =>
                 {
                     option.ImageLink = adminSettingsModel.LoginPageSettingsModel.ImageLink;
                     option.ImageLinkVisible = adminSettingsModel.LoginPageSettingsModel.ImageLinkVisible;
@@ -480,7 +454,7 @@ namespace eFormAPI.Web.Services
                     option.MainTextVisible = adminSettingsModel.LoginPageSettingsModel.MainTextVisible;
                     option.SecondaryText = adminSettingsModel.LoginPageSettingsModel.SecondaryText;
                     option.SecondaryTextVisible = adminSettingsModel.LoginPageSettingsModel.SecondaryTextVisible;
-                });
+                }, _dbContext);
                 core.SetHttpServerAddress(adminSettingsModel.SiteLink);
                 return new OperationResult(true, _localizationService.GetString("SettingsUpdatedSuccessfully"));
             }
@@ -493,11 +467,11 @@ namespace eFormAPI.Web.Services
 
         #region ResetSettingsSection
 
-        public OperationResult ResetLoginPageSettings()
+        public async Task<OperationResult> ResetLoginPageSettings()
         {
             try
             {
-                _loginPageSettings.Update((option) =>
+                await _loginPageSettings.UpdateDb((option) =>
                 {
                     option.ImageLink = "";
                     option.ImageLinkVisible = true;
@@ -505,7 +479,7 @@ namespace eFormAPI.Web.Services
                     option.MainTextVisible = true;
                     option.SecondaryText = "No more paper-forms and back-office data entry";
                     option.SecondaryTextVisible = true;
-                });
+                }, _dbContext);
                 return new OperationResult(true, "Login page settings have been reseted successfully");
             }
             catch (Exception e)
@@ -515,11 +489,11 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public OperationResult ResetPageHeaderSettings()
+        public async Task<OperationResult> ResetPageHeaderSettings()
         {
             try
             {
-                _headerSettings.Update((option) =>
+               await _headerSettings.UpdateDb((option) =>
                 {
                     option.ImageLink = "";
                     option.ImageLinkVisible = true;
@@ -527,7 +501,7 @@ namespace eFormAPI.Web.Services
                     option.MainTextVisible = true;
                     option.SecondaryText = "No more paper-forms and back-office data entry";
                     option.SecondaryTextVisible = true;
-                });
+                }, _dbContext);
                 return new OperationResult(true, "Header settings have been reseted successfully");
             }
             catch (Exception e)
