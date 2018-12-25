@@ -137,9 +137,6 @@ namespace eFormAPI.Web
 
                             config.AddInMemoryCollection(defaultSettings);
                         }
-
-                        config.AddJsonFile(filePath);
-
                         config.AddEnvironmentVariables();
                         
                     })

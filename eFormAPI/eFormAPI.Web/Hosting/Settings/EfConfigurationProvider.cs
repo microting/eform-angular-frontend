@@ -12,10 +12,10 @@ namespace eFormAPI.Web.Hosting.Settings
         public EfConfigurationProvider(Action<DbContextOptionsBuilder> optionsAction)
         {
             OptionsAction = optionsAction;
-            Program.ReloadDbConfigurationDelegate = ReloadConfuguration;
+            Program.ReloadDbConfigurationDelegate = ReloadConfiguration;
         }
 
-        private void ReloadConfuguration()
+        private void ReloadConfiguration()
         {
             Load();
             OnReload();
@@ -27,7 +27,6 @@ namespace eFormAPI.Web.Hosting.Settings
         public override void Load()
         {
             var builder = new DbContextOptionsBuilder<BaseDbContext>();
-
             OptionsAction(builder);
             try
             {
@@ -42,8 +41,8 @@ namespace eFormAPI.Web.Hosting.Settings
             }
             catch (Exception)
             {
-                var vvvvvs = ConfigurationSeed.Data;
-                Data = vvvvvs.ToDictionary(
+                var seedData = ConfigurationSeed.Data;
+                Data = seedData.ToDictionary(
                     item => item.Id,
                     item => item.Value);
             }
