@@ -48,6 +48,10 @@ namespace eFormAPI.Web.Infrastructure.Database
                 .HasIndex(p => p.TemplateId)
                 .IsUnique();
 
+            modelBuilder.Entity<EformReport>()
+                .Property(b => b.Description)
+                .HasDefaultValue("");
+
             modelBuilder.Entity<EformReportElement>()
                 .HasIndex(p => p.ElementId);
 

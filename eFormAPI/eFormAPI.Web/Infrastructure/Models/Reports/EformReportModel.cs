@@ -7,6 +7,7 @@ namespace eFormAPI.Web.Infrastructure.Models.Reports
     {
         public int Id { get; set; }
         public int TemplateId { get; set; }
+        public string Description { get; set; }
         public string HeaderImage { get; set; }
         public string HeaderVisibility { get; set; }
         public bool IsDateVisible { get; set; }

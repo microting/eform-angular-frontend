@@ -8,7 +8,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities
     {
         [Required]
         public int TemplateId { get; set; }
-
+        public string Description { get; set; }
         public byte[] HeaderImage { get; set; }
         public string HeaderVisibility { get; set; }
         public bool IsDateVisible { get; set; }
