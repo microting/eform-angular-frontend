@@ -40,7 +40,7 @@ namespace eFormAPI.Web.Services.Security
                         _localizationService.GetString("SecurityGroupNotFound"));
                 }
 
-                List<PermissionModel> permissionModels = await _dbContext.Permissions
+                var permissionModels = await _dbContext.Permissions
                     .Select(x => new PermissionModel()
                     {
                         Id = x.Id,
@@ -53,7 +53,7 @@ namespace eFormAPI.Web.Services.Security
                     })
                     .ToListAsync();
 
-                List<PermissionTypeModel> permissionTypes = permissionModels
+                var permissionTypes = permissionModels
                     .OrderBy(x => x.PermissionType)
                     .GroupBy(x => x.PermissionType)
                     .Select(g => new PermissionTypeModel()
@@ -62,7 +62,7 @@ namespace eFormAPI.Web.Services.Security
                         Permissions = g.Select(permission => permission).ToList()
                     }).ToList();
 
-                PermissionsModel result = new PermissionsModel
+                var result = new PermissionsModel
                 {
                     GroupId = groupId,
                     GroupName = group.Name,
@@ -88,28 +88,28 @@ namespace eFormAPI.Web.Services.Security
                         _localizationService.GetString("SecurityGroupNotFound"));
                 }
 
-                using (IDbContextTransaction transaction = await _dbContext.Database.BeginTransactionAsync())
+                using (var transaction = await _dbContext.Database.BeginTransactionAsync())
                 {
-                    List<int> enabledList = requestModel.Permissions
+                    var enabledList = requestModel.Permissions
                         .Where(x => x.IsEnabled)
                         .Select(x => x.Id)
                         .ToList();
 
                     // for delete
-                    IQueryable<GroupPermission> forDelete = _dbContext.GroupPermissions
+                    var forDelete = _dbContext.GroupPermissions
                         .Where(x => x.SecurityGroupId == requestModel.GroupId)
                         .Where(x => !enabledList.Contains(x.Permission.Id));
 
                     _dbContext.GroupPermissions.RemoveRange(forDelete);
                     await _dbContext.SaveChangesAsync();
 
-                    List<int> list = _dbContext.GroupPermissions
+                    var list = _dbContext.GroupPermissions
                         .Where(x => x.SecurityGroupId == requestModel.GroupId)
                         .Where(x => enabledList.Contains(x.Permission.Id))
                         .Select(x => x.Permission.Id)
                         .ToList();
 
-                    foreach (int permissionId in enabledList)
+                    foreach (var permissionId in enabledList)
                     {
                         if (!list.Contains(permissionId))
                         {

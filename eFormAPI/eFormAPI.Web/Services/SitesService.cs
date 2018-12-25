@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Advanced;
-using eFormAPI.Web.Infrastructure.Models;
 using eFormCore;
 using eFormShared;
 using Microting.eFormApi.BasePn.Abstractions;
+using Microting.eFormApi.BasePn.Infrastructure.Models;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Services
@@ -24,16 +24,16 @@ namespace eFormAPI.Web.Services
 
         public OperationDataResult<List<SiteName_Dto>> Index()
         {
-            Core core = _coreHelper.GetCore();
-            List<SiteName_Dto> siteNamesDto = core.Advanced_SiteItemReadAll(false);
+            var core = _coreHelper.GetCore();
+            var siteNamesDto = core.Advanced_SiteItemReadAll(false);
 
             return new OperationDataResult<List<SiteName_Dto>>(true, siteNamesDto);
         }
 
         public OperationDataResult<SiteName_Dto> Edit(int id)
         {
-            Core core = _coreHelper.GetCore();
-            SiteName_Dto siteNameDto = core.Advanced_SiteItemRead(id);
+            var core = _coreHelper.GetCore();
+            var siteNameDto = core.Advanced_SiteItemRead(id);
 
             return !siteNameDto.Equals(null)
                 ? new OperationDataResult<SiteName_Dto>(true, siteNameDto)
@@ -44,8 +44,8 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                Core core = _coreHelper.GetCore();
-                SiteName_Dto siteNameDto = core.Advanced_SiteItemRead(siteNameModel.Id);
+                var core = _coreHelper.GetCore();
+                var siteNameDto = core.Advanced_SiteItemRead(siteNameModel.Id);
 
                 if (!siteNameDto.Equals(null))
                 {
@@ -66,8 +66,8 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                Core core = _coreHelper.GetCore();
-                SiteName_Dto siteDto = core.Advanced_SiteItemRead(id);
+                var core = _coreHelper.GetCore();
+                var siteDto = core.Advanced_SiteItemRead(id);
 
                 if (siteDto.Equals(null))                    
                 {

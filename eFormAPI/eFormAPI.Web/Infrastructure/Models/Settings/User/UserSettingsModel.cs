@@ -1,4 +1,4 @@
-﻿namespace eFormAPI.Web.Infrastructure.Models.Settings.User
+﻿namespace Microting.eFormApi.BasePn.Infrastructure.Models.Settings.User
 {
     public class UserSettingsModel
     {

@@ -13,7 +13,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
 using System.Collections.Generic;
-using eFormAPI.Web.Infrastructure.Models.Settings.User;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Settings.User;
 
 namespace eFormAPI.Web.Services
 {
@@ -43,14 +43,14 @@ namespace eFormAPI.Web.Services
 
         public async Task<UserInfoViewModel> GetUserInfo()
         {
-            EformUser user = await _userService.GetCurrentUserAsync();
+            var user = await _userService.GetCurrentUserAsync();
             if (user == null)
             {
                 return null;
             }
 
-            IList<string> roles = await _userManager.GetRolesAsync(user);
-            string role = roles.FirstOrDefault();
+            var roles = await _userManager.GetRolesAsync(user);
+            var role = roles.FirstOrDefault();
             return new UserInfoViewModel
             {
                 Email = user.Email,
@@ -63,13 +63,13 @@ namespace eFormAPI.Web.Services
 
         public async Task<OperationDataResult<UserSettingsModel>> GetUserSettings()
         {
-            EformUser user = await _userService.GetCurrentUserAsync();
+            var user = await _userService.GetCurrentUserAsync();
             if (user == null)
             {
                 return new OperationDataResult<UserSettingsModel>(false, _localizationService.GetString("UserNotFound"));
             }
 
-            string locale = user.Locale;
+            var locale = user.Locale;
             if (string.IsNullOrEmpty(locale))
             {
                 locale = _appSettings.Value.DefaultLocale;
@@ -87,14 +87,14 @@ namespace eFormAPI.Web.Services
 
         public async Task<OperationResult> UpdateUserSettings(UserSettingsModel model)
         {
-            EformUser user = await _userService.GetCurrentUserAsync();
+            var user = await _userService.GetCurrentUserAsync();
             if (user == null)
             {
                 return new OperationResult(false, _localizationService.GetString("UserNotFound"));
             }
 
             user.Locale = model.Locale;
-            IdentityResult updateResult = await _userManager.UpdateAsync(user);
+            var updateResult = await _userManager.UpdateAsync(user);
             if (!updateResult.Succeeded)
             {
                 return new OperationResult(false,
@@ -106,7 +106,7 @@ namespace eFormAPI.Web.Services
 
         public async Task<OperationResult> ChangePassword(ChangePasswordModel model)
         {
-            IdentityResult result = await _userManager.ChangePasswordAsync(
+            var result = await _userManager.ChangePasswordAsync(
                 await _userService.GetCurrentUserAsync(),
                 model.OldPassword,
                 model.NewPassword);
@@ -121,14 +121,14 @@ namespace eFormAPI.Web.Services
 
         public async Task<OperationResult> ForgotPassword(ForgotPasswordModel model)
         {
-            EformUser user = await _userManager.FindByEmailAsync(model.Email);
+            var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
                 return new OperationResult(false, $"User with {model.Email} not found");
             }
 
-            string code = await _userManager.GeneratePasswordResetTokenAsync(user);
-            string link = _appSettings.Value.SiteLink;
+            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var link = _appSettings.Value.SiteLink;
             link = $"{link}/auth/restore-password-confirmation?userId={user.Id}&code={code}";
             await _emailSender.SendEmailAsync(user.Email, "EForm Password Reset",
                 "Please reset your password by clicking <a href=\"" + link + "\">here</a>");
@@ -141,27 +141,27 @@ namespace eFormAPI.Web.Services
         [Route("reset-admin-password")]
         public async Task<OperationResult> ResetAdminPassword(string code)
         {
-            string securityCode = _appSettings.Value.SecurityCode;
+            var securityCode = _appSettings.Value.SecurityCode;
             if (string.IsNullOrEmpty(securityCode))
             {
                 return new OperationResult(false, _localizationService.GetString("PleaseSetupSecurityCode"));
             }
 
-            string defaultPassword = _appSettings.Value.DefaultPassword;
+            var defaultPassword = _appSettings.Value.DefaultPassword;
             if (code != securityCode)
             {
                 return new OperationResult(false, _localizationService.GetString("InvalidSecurityCode"));
             }
 
-            IList<EformUser> users = await _userManager.GetUsersInRoleAsync(EformRole.Admin);
-            EformUser user = users.FirstOrDefault();
+            var users = await _userManager.GetUsersInRoleAsync(EformRole.Admin);
+            var user = users.FirstOrDefault();
 
             if (user == null)
             {
                 return new OperationResult(false, _localizationService.GetString("AdminUserNotFound"));
             }
 
-            IdentityResult removeResult = await _userManager.RemovePasswordAsync(user);
+            var removeResult = await _userManager.RemovePasswordAsync(user);
             if (!removeResult.Succeeded)
             {
                 return new OperationResult(false,
@@ -169,7 +169,7 @@ namespace eFormAPI.Web.Services
                     string.Join(" ", removeResult.Errors));
             }
 
-            IdentityResult addPasswordResult = await _userManager.AddPasswordAsync(user, defaultPassword);
+            var addPasswordResult = await _userManager.AddPasswordAsync(user, defaultPassword);
             if (!addPasswordResult.Succeeded)
             {
                 return new OperationResult(false,
@@ -182,13 +182,13 @@ namespace eFormAPI.Web.Services
 
         public async Task<OperationResult> ResetPassword(ResetPasswordModel model)
         {
-            EformUser user = await _userManager.FindByIdAsync(model.UserId.ToString());
+            var user = await _userManager.FindByIdAsync(model.UserId.ToString());
             if (user == null)
             {
                 return new OperationResult(false);
             }
 
-            IdentityResult result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
+            var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
             if (result.Succeeded)
             {
                 return new OperationResult(true);

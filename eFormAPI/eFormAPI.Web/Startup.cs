@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Castle.Windsor;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Advanced;
 using eFormAPI.Web.Abstractions.Eforms;
@@ -31,7 +30,6 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Localization;
 using Microting.eFormApi.BasePn.Localization.Abstractions;
 using Microting.eFormApi.BasePn.Services;
-using Rebus.Bus;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace eFormAPI.Web
@@ -39,9 +37,6 @@ namespace eFormAPI.Web
     public class Startup
     {
         public static List<IEformPlugin> Plugins;
-        private IWindsorContainer _container;
-        
-        public static IBus Bus { get; private set; }
 
         public Startup(IConfiguration configuration)
         {
@@ -55,8 +50,16 @@ namespace eFormAPI.Web
         public void ConfigureServices(IServiceCollection services)
         {
             // Configuration
-            services.AddSingleton(Configuration);
+            //services.AddSingleton(Configuration);
             services.AddOptions();
+            services.Configure<ConnectionStringsSdk>(Configuration.GetSection("ConnectionStringsSdk"));
+            // Logging
+            services.AddLogging(loggingBuilder =>
+            {
+                loggingBuilder.AddConfiguration(Configuration.GetSection("Logging"));
+                loggingBuilder.AddConsole();
+                loggingBuilder.AddDebug();
+            });
             // Entity framework
 //#if DEBUG
 //            services.AddEntityFrameworkMySql()
@@ -118,7 +121,7 @@ namespace eFormAPI.Web
             services.ConfigureWritable<EmailSettings>(Configuration.GetSection("EmailSettings"));
             services.ConfigureWritable<LoginPageSettings>(Configuration.GetSection("LoginPageSettings"));
             services.ConfigureWritable<HeaderSettings>(Configuration.GetSection("HeaderSettings"));
-            services.ConfigureWritable<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
+            services.ConfigureWritable<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"), "connection.json");
             services.ConfigureWritable<EformTokenOptions>(Configuration.GetSection("EformTokenOptions"));
             // Form options
             services.Configure<FormOptions>(x =>
@@ -136,8 +139,8 @@ namespace eFormAPI.Web
                     Description = "API documentation"
                 });
                 //Set the comments path for the swagger json and ui.
-                string basePath = PlatformServices.Default.Application.ApplicationBasePath;
-                string xmlPath = Path.Combine(basePath, "API.doc.xml");
+                var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+                var xmlPath = Path.Combine(basePath, "API.doc.xml");
                 c.IncludeXmlComments(xmlPath);
                 c.AddSecurityDefinition("Bearer", new ApiKeyScheme
                 {
@@ -151,16 +154,6 @@ namespace eFormAPI.Web
             // plugins
             services.AddEFormPlugins(Plugins);
             ConnectServices(services);
-            if (!string.IsNullOrEmpty(Configuration.MyConnectionString()))
-            {
-                _container = new WindsorContainer();	
-                                
-                
-//                _container.Register(Castle.MicroKernel.Registration.Component.For<Core>().Instance(_core));	
-                //_container.Install(new RebusHandlerInstaller(),	
-                //    new RebusInstaller(Configuration.MyConnectionString(), 1, 1));	
-                //Bus = _container.Resolve<IBus>();
-            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -189,9 +182,10 @@ namespace eFormAPI.Web
             app.UseHttpsRedirection();
             if (env.IsDevelopment())
             {
-                loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-                loggerFactory.AddDebug();
+                //loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+                //loggerFactory.AddDebug();
             }
+
 
             app.UseDefaultFiles();
             app.UseStaticFiles();

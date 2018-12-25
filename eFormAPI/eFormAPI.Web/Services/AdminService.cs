@@ -45,14 +45,14 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                EformUser user = await _userService.GetByIdAsync(userId);
+                var user = await _userService.GetByIdAsync(userId);
                 if (user == null)
                 {
                     return new OperationDataResult<UserRegisterModel>(false,
                         _localizationService.GetString("UserNotFound"));
                 }
 
-                UserRegisterModel result = new UserRegisterModel()
+                var result = new UserRegisterModel()
                 {
                     Email = user.Email,
                     Id = user.Id,
@@ -61,7 +61,7 @@ namespace eFormAPI.Web.Services
                     UserName = user.UserName,
                 };
                 // get role
-                IList<string> roles = await _userManager.GetRolesAsync(user);
+                var roles = await _userManager.GetRolesAsync(user);
                 result.Role = roles.FirstOrDefault();
                 // get user group
                 result.GroupId = await _dbContext.SecurityGroupUsers
@@ -83,8 +83,8 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                List<UserInfoViewModel> userList = new List<UserInfoViewModel>();
-                List<EformUser> userResult = _userManager.Users
+                var userList = new List<UserInfoViewModel>();
+                var userResult = _userManager.Users
                     .Include(x => x.UserRoles)
                     .ThenInclude(x => x.Role)
                     .OrderBy(z => z.Id)
@@ -94,8 +94,8 @@ namespace eFormAPI.Web.Services
 
                 userResult.ForEach(userItem =>
                 {
-                    string roleName = userItem.UserRoles.Select(y => y.Role.Name).FirstOrDefault();
-                    UserInfoViewModel modelItem = new UserInfoViewModel();
+                    var roleName = userItem.UserRoles.Select(y => y.Role.Name).FirstOrDefault();
+                    var modelItem = new UserInfoViewModel();
                     if (roleName != null)
                     {
                         modelItem.Role = roleName;
@@ -108,7 +108,7 @@ namespace eFormAPI.Web.Services
                     modelItem.UserName = userItem.UserName;
                     userList.Add(modelItem);
                 });
-                int totalUsers = _userManager.Users.Count();
+                var totalUsers = _userManager.Users.Count();
                 return new OperationDataResult<UserInfoModelList>(true, new UserInfoModelList()
                 {
                     TotalUsers = totalUsers,
@@ -127,7 +127,7 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                EformUser user = await _userService.GetByIdAsync(userRegisterModel.Id);
+                var user = await _userService.GetByIdAsync(userRegisterModel.Id);
                 if (user == null)
                 {
                     return new OperationResult(false,
@@ -155,7 +155,7 @@ namespace eFormAPI.Web.Services
                 user.UserName = userRegisterModel.UserName;
                 user.FirstName = userRegisterModel.FirstName;
                 user.LastName = userRegisterModel.LastName;
-                IdentityResult result = await _userManager.UpdateAsync(user);
+                var result = await _userManager.UpdateAsync(user);
                 if (!result.Succeeded)
                 {
                     return new OperationResult(false, string.Join(" ", result.Errors));
@@ -171,7 +171,7 @@ namespace eFormAPI.Web.Services
                 // Change group
                 if (userRegisterModel.GroupId > 0 && user.Id > 0)
                 {
-                    IQueryable<SecurityGroupUser> securityGroupUsers = _dbContext.SecurityGroupUsers
+                    var securityGroupUsers = _dbContext.SecurityGroupUsers
                         .Where(x => x.EformUserId == user.Id
                                     && x.SecurityGroupId != userRegisterModel.GroupId);
 
@@ -179,7 +179,7 @@ namespace eFormAPI.Web.Services
                     if (!_dbContext.SecurityGroupUsers.Any(x =>
                         x.EformUserId == user.Id && x.SecurityGroupId == userRegisterModel.GroupId))
                     {
-                        SecurityGroupUser securityGroupUser = new SecurityGroupUser()
+                        var securityGroupUser = new SecurityGroupUser()
                         {
                             SecurityGroupId = (int) userRegisterModel.GroupId,
                             EformUserId = user.Id
@@ -204,7 +204,7 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                EformUser userResult = await _userManager.FindByNameAsync(userRegisterModel.UserName);
+                var userResult = await _userManager.FindByNameAsync(userRegisterModel.UserName);
                 if (userResult != null)
                 {
                     return new OperationResult(false,
@@ -217,7 +217,7 @@ namespace eFormAPI.Web.Services
                         _localizationService.GetString("SecurityGroupNotFound"));
                 }
 
-                EformUser user = new EformUser
+                var user = new EformUser
                 {
                     Email = userRegisterModel.Email,
                     UserName = userRegisterModel.UserName,
@@ -227,7 +227,7 @@ namespace eFormAPI.Web.Services
                     IsGoogleAuthenticatorEnabled = false
                 };
 
-                IdentityResult result = await _userManager.CreateAsync(user, userRegisterModel.Password);
+                var result = await _userManager.CreateAsync(user, userRegisterModel.Password);
                 if (!result.Succeeded)
                 {
                     return new OperationResult(false, string.Join(" ", result.Errors));
@@ -238,7 +238,7 @@ namespace eFormAPI.Web.Services
                 // add to group
                 if (userRegisterModel.GroupId > 0 && user.Id > 0)
                 {
-                    SecurityGroupUser securityGroupUser = new SecurityGroupUser()
+                    var securityGroupUser = new SecurityGroupUser()
                     {
                         SecurityGroupId = (int) userRegisterModel.GroupId,
                         EformUserId = user.Id
@@ -266,7 +266,7 @@ namespace eFormAPI.Web.Services
                     return new OperationResult(false, _localizationService.GetString("CantDeletePrimaryAdminUser"));
                 }
 
-                EformUser user = await _userService.GetByIdAsync(userId);
+                var user = await _userService.GetByIdAsync(userId);
                 if (await _userManager.IsInRoleAsync(user, EformRole.Admin)
                     && _userService.Role != EformRole.Admin)
                 {
@@ -278,7 +278,7 @@ namespace eFormAPI.Web.Services
                     return new OperationResult(false, _localizationService.GetString("UserUserNameNotFound", userId));
                 }
 
-                IdentityResult result = await _userManager.DeleteAsync(user);
+                var result = await _userManager.DeleteAsync(user);
                 if (!result.Succeeded)
                 {
                     return new OperationResult(false, string.Join(" ", result.Errors));

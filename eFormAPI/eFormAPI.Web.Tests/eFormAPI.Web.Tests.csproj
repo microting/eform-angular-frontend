@@ -10,6 +10,7 @@
     <PackageReference Include="Microting.eForm" Version="3.0.114" />
     <PackageReference Include="NUnit" Version="3.11.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.12.0" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="1.1.73" />
   </ItemGroup>
 
   <ItemGroup>

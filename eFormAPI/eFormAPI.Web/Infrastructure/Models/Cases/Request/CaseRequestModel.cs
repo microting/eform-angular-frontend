@@ -1,4 +1,4 @@
-﻿namespace eFormAPI.Web.Infrastructure.Models.Cases.Request
+﻿namespace Microting.eFormApi.BasePn.Infrastructure.Models.Cases.Request
 {
     public class CaseRequestModel
     {

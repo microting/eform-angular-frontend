@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace eFormAPI.Web.Infrastructure.Models.Settings
+namespace Microting.eFormApi.BasePn.Infrastructure.Models.Settings
 {
     public class ConnectionStringMainModel
     {

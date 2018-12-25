@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using Castle.Core.Internal;
+using System.Text;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Newtonsoft.Json;
 
@@ -12,30 +12,13 @@ namespace eFormAPI.Web.Hosting.Settings
             = new ConnectionStrings();
     }
 
-    public class ConnectionStringManager
+    public static class ConnectionStringManager
     {
-        private string _connectionString;
-
-        public string ConnectionString
-        {
-            get
-            {
-                if (!_connectionString.IsNullOrEmpty())
-                {
-                    return _connectionString;
-                }
-
-                _connectionString = Read().DefaultConnection;
-                return _connectionString;
-            }
-        }
-
-        public ConnectionStrings Read()
+        public static MainSettings Read(string filePath)
         {
             try
             {
-                var filePath = GetFilePath();
-                var deserializedProduct = JsonConvert.DeserializeObject<ConnectionStrings>(File.ReadAllText(filePath));
+                var deserializedProduct = JsonConvert.DeserializeObject<MainSettings>(File.ReadAllText(filePath));
                 return deserializedProduct;
             }
             catch (Exception e)
@@ -62,7 +45,7 @@ namespace eFormAPI.Web.Hosting.Settings
             try
             {
                 var output = JsonConvert.SerializeObject(mainSettings);
-                File.WriteAllText(filePath, output);
+                File.WriteAllText(filePath, output, Encoding.UTF8);
             }
             catch (Exception e)
             {

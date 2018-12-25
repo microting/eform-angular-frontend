@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using eFormAPI.Web.Infrastructure.Models.Cases.Request;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Cases.Request;
 
-namespace eFormAPI.Web.Infrastructure.Helpers
+namespace Microting.eFormApi.BasePn.Infrastructure.Helpers
 {
     public static class CaseUpdateHelper
     {
@@ -46,7 +46,15 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                     var checkBoxfirst = editRequestField?.FieldValues?.First();
                     if (checkBoxfirst?.Value != null && checkBoxfirst?.FieldId != null)
                     {
-                        string val = $"{checkBoxfirst.FieldId}|{checkBoxfirst.Value.ToString()}";
+                        string val;
+                        if (checkBoxfirst.Value.ToString() == "1" || checkBoxfirst.Value.ToString() == "checked")
+                        {
+                            val = $"{checkBoxfirst.FieldId}|checked";
+                        }
+                        else
+                        {
+                            val = $"{checkBoxfirst.FieldId}|unchecked";
+                        }
                         list.Add(val);
                     }
 
@@ -55,7 +63,7 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                     var commentFirst = editRequestField?.FieldValues?.First();
                     if (commentFirst?.Value != null && commentFirst?.FieldId != null)
                     {
-                        string val = $"{commentFirst.FieldId}|{commentFirst.Value.ToString()}";
+                        var val = $"{commentFirst.FieldId}|{commentFirst.Value.ToString().Replace("</p>", "<br>").Replace("<p>", "").Replace("<div>", "").Replace("</div>", "<br>").Replace("&nbsp;", "").Replace("</span>", "").Replace("<span style=\"font-size: 1rem;\">", "").Replace("</br>", "<br>")}";
                         list.Add(val);
                     }
 
@@ -64,7 +72,7 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                     var numberFirst = editRequestField?.FieldValues?.First();
                     if (numberFirst?.Value != null && numberFirst?.FieldId != null)
                     {
-                        string val = $"{numberFirst.FieldId}|{numberFirst.Value.ToString()}";
+                        var val = $"{numberFirst.FieldId}|{numberFirst.Value.ToString()}";
                         list.Add(val);
                     }
 
@@ -73,7 +81,7 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                     var textFirst = editRequestField?.FieldValues?.First();
                     if (textFirst?.Value != null && textFirst?.FieldId != null)
                     {
-                        string val = $"{textFirst.FieldId}|{textFirst.Value.ToString()}";
+                        var val = $"{textFirst.FieldId}|{textFirst.Value.ToString()}";
                         list.Add(val);
                     }
 
@@ -107,7 +115,7 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                     var singleSelect = editRequestField?.FieldValues?.First();
                     if (singleSelect?.Value != null && singleSelect?.Value != "0" && singleSelect?.FieldId != null)
                     {
-                        string val = $"{singleSelect.FieldId}|{singleSelect.Value.ToString()}";
+                        var val = $"{singleSelect.FieldId}|{singleSelect.Value.ToString()}";
                         list.Add(val);
                     }
 
@@ -116,7 +124,7 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                     var entitySearch = editRequestField?.FieldValues?.First();
                     if (entitySearch?.Value != null && entitySearch?.Value != "0" && entitySearch?.FieldId != null)
                     {
-                        string val = $"{entitySearch.FieldId}|{entitySearch.Value.ToString()}";
+                        var val = $"{entitySearch.FieldId}|{entitySearch.Value.ToString()}";
                         list.Add(val);
                     }
 
@@ -125,7 +133,7 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                     var entitySelect = editRequestField?.FieldValues?.First();
                     if (entitySelect?.Value != null && entitySelect?.FieldId != null)
                     {
-                        string val = $"{entitySelect.FieldId}|{entitySelect.Value.ToString()}";
+                        var val = $"{entitySelect.FieldId}|{entitySelect.Value.ToString()}";
                         list.Add(val);
                     }
 
@@ -134,7 +142,7 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                     var multiFirst = editRequestField?.FieldValues?.First();
                     if (multiFirst?.Value != null && multiFirst?.FieldId != null)
                     {
-                        string val = $"{multiFirst.FieldId}|{multiFirst.Value.ToString()}";
+                        var val = $"{multiFirst.FieldId}|{multiFirst.Value.ToString()}";
                         list.Add(val);
                     }
 
@@ -143,7 +151,7 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                     var audioFirst = editRequestField?.FieldValues?.First();
                     if (audioFirst?.Value != null && audioFirst?.FieldId != null)
                     {
-                        string val = $"{audioFirst.FieldId}|{audioFirst.Value.ToString()}";
+                        var val = $"{audioFirst.FieldId}|{audioFirst.Value.ToString()}";
                         list.Add(val);
                     }
 

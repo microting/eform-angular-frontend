@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using eFormData;
 
-namespace eFormAPI.Web.Infrastructure.Models.SearchableList
+namespace Microting.eFormApi.BasePn.Infrastructure.Models.SearchableList
 {
     public class AdvEntitySearchableGroupEditModel
     {

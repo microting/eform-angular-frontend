@@ -1,4 +1,4 @@
-﻿namespace eFormAPI.Web.Infrastructure.Models.Settings.Admin
+﻿namespace Microting.eFormApi.BasePn.Infrastructure.Models.Settings.Admin
 {
     public class LoginPageSettingsModel
     {
@@ -8,5 +8,6 @@
         public bool SecondaryTextVisible { get; set; }
         public string ImageLink { get; set; }
         public bool ImageLinkVisible { get; set; }
+        public bool IsSMTPExists { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace eFormAPI.Web.Infrastructure.Models.Templates
+namespace Microting.eFormApi.BasePn.Infrastructure.Models.Templates
 {
     public class DeployModel
     {

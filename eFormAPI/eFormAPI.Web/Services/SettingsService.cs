@@ -4,24 +4,24 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-using Castle.Core.Internal;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Hosting.Settings;
 using eFormAPI.Web.Infrastructure.Database;
-using eFormAPI.Web.Infrastructure.Models.Settings.Admin;
-using eFormAPI.Web.Infrastructure.Models.Settings.Initial;
 using eFormCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Enums;
-using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers.WritableOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-
+using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Settings.Admin;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Settings.Initial;
 
 namespace eFormAPI.Web.Services
 {
@@ -34,8 +34,9 @@ namespace eFormAPI.Web.Services
         private readonly IWritableOptions<LoginPageSettings> _loginPageSettings;
         private readonly IWritableOptions<HeaderSettings> _headerSettings;
         private readonly IWritableOptions<EmailSettings> _emailSettings;
-        private readonly IWritableOptions<EformTokenOptions> _tokenOptions;
+        private readonly IOptions<ConnectionStringsSdk> _connectionStringsSdk;
         private readonly IEFormCoreService _coreHelper;
+        private readonly IOptionsMonitor<ApplicationSettings> _optionsAccessor;
 
         public SettingsService(ILogger<SettingsService> logger,
             IWritableOptions<ConnectionStrings> connectionStrings,
@@ -44,8 +45,9 @@ namespace eFormAPI.Web.Services
             IWritableOptions<HeaderSettings> headerSettings,
             IWritableOptions<EmailSettings> emailSettings,
             IEFormCoreService coreHelper,
-            ILocalizationService localizationService, 
-            IWritableOptions<EformTokenOptions> tokenOptions)
+            ILocalizationService localizationService,
+            IOptionsMonitor<ApplicationSettings> optionsAccessor,
+            IOptions<ConnectionStringsSdk> connectionStringsSdk)
         {
             _logger = logger;
             _connectionStrings = connectionStrings;
@@ -55,18 +57,22 @@ namespace eFormAPI.Web.Services
             _emailSettings = emailSettings;
             _coreHelper = coreHelper;
             _localizationService = localizationService;
-            _tokenOptions = tokenOptions;
+            _optionsAccessor = optionsAccessor;
+            _connectionStringsSdk = connectionStringsSdk;
         }
 
         public OperationResult ConnectionStringExist()
         {
-            string connectionString = _connectionStrings.Value.SdkConnection;
+            Program.ReloadDbConfigurationDelegate.Invoke();
+
+
+            var connectionString = _connectionStringsSdk.Value.SdkConnection;
             if (!string.IsNullOrEmpty(connectionString))
             {
                 return new OperationResult(true);
             }
 
-            return new OperationResult(false, 
+            return new OperationResult(false,
                 _localizationService.GetString("ConnectionStringDoesNotExist"));
         }
 
@@ -74,7 +80,7 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                string locale = _applicationSettings.Value.DefaultLocale;
+                var locale = _applicationSettings.Value.DefaultLocale;
                 if (string.IsNullOrEmpty(locale))
                 {
                     return new OperationDataResult<string>(true, "en-US");
@@ -93,19 +99,20 @@ namespace eFormAPI.Web.Services
         public async Task<OperationResult> UpdateConnectionString(InitialSettingsModel initialSettingsModel)
         {
             string sdkConnectionString, mainConnectionString;
-            string customerNo = initialSettingsModel.GeneralAppSetupSettingsModel.CustomerNo.ToString();
-            string dbNamePrefix = "";
-            
+            var customerNo = initialSettingsModel.GeneralAppSetupSettingsModel.CustomerNo.ToString();
+            var dbNamePrefix = "";
+
             if (initialSettingsModel.ConnectionStringSdk.PrefixAllDatabases)
             {
                 dbNamePrefix = "Microting_";
             }
-            string sdkDbName = dbNamePrefix + customerNo + "_SDK";
-            string angularDbName = dbNamePrefix + customerNo + "_Angular";
-            
+
+            var sdkDbName = dbNamePrefix + customerNo + "_SDK";
+            var angularDbName = dbNamePrefix + customerNo + "_Angular";
+
             if (initialSettingsModel.ConnectionStringSdk.SqlServerType == "mssql")
             {
-                sdkConnectionString = initialSettingsModel.ConnectionStringSdk.Host + 
+                sdkConnectionString = initialSettingsModel.ConnectionStringSdk.Host +
                                       ";Database=" +
                                       sdkDbName + ";" +
                                       initialSettingsModel
@@ -121,10 +128,10 @@ namespace eFormAPI.Web.Services
             {
                 sdkConnectionString = "host= " +
                                       initialSettingsModel.ConnectionStringSdk.Host +
-                                      ";Database=" + 
-                                      sdkDbName + ";" + 
+                                      ";Database=" +
+                                      sdkDbName + ";" +
                                       initialSettingsModel
-                                          .ConnectionStringSdk.Auth + 
+                                          .ConnectionStringSdk.Auth +
                                       "port=" + initialSettingsModel.ConnectionStringSdk.Port +
                                       ";Convert Zero Datetime = true;SslMode=none;";
 
@@ -137,18 +144,17 @@ namespace eFormAPI.Web.Services
                                        "port=" + initialSettingsModel.ConnectionStringSdk.Port +
                                        ";Convert Zero Datetime = true;SslMode=none;";
             }
-            
-            
-            if (!string.IsNullOrEmpty(_connectionStrings.Value.SdkConnection))
+
+
+            if (!string.IsNullOrEmpty(_connectionStringsSdk.Value.SdkConnection))
             {
-                return new OperationResult(false, 
+                return new OperationResult(false,
                     _localizationService.GetString("ConnectionStringAlreadyExist"));
             }
 
-            AdminTools adminTools;
             try
             {
-                adminTools = new AdminTools(sdkConnectionString);                
+                var adminTools = new AdminTools(sdkConnectionString);
                 // Setup SDK DB
                 adminTools.DbSetup(initialSettingsModel.ConnectionStringSdk.Token);
             }
@@ -159,39 +165,33 @@ namespace eFormAPI.Web.Services
                 {
                     return new OperationResult(false, exception.Message + " - " + exception.InnerException.Message);
                 }
-                else
-                {
-                    return new OperationResult(false, exception.Message);
-                }
+
+                return new OperationResult(false, exception.Message);
+
                 //return new OperationResult(false, 
                 //    _localizationService.GetString("SDKConnectionStringIsInvalid"));
             }
 
             // Migrate DB
+            var dbContextOptionsBuilder = new DbContextOptionsBuilder<BaseDbContext>();
             try
             {
-                DbContextOptionsBuilder<BaseDbContext> dbContextOptionsBuilder = new DbContextOptionsBuilder<BaseDbContext>();
+                
                 if (mainConnectionString.ToLower().Contains("convert zero datetime"))
                 {
                     dbContextOptionsBuilder.UseMySql(mainConnectionString, b =>
-                     b.MigrationsAssembly("eFormAPI.Web"));
-                } else {
+                        b.MigrationsAssembly("eFormAPI.Web"));
+                }
+                else
+                {
                     dbContextOptionsBuilder.UseSqlServer(mainConnectionString, b =>
-                     b.MigrationsAssembly("eFormAPI.Web"));
-                }              
+                        b.MigrationsAssembly("eFormAPI.Web"));
+                }
 
-                using (BaseDbContext dbContext = new BaseDbContext(dbContextOptionsBuilder.Options))
+                using (var dbContext = new BaseDbContext(dbContextOptionsBuilder.Options))
                 {
                     dbContext.Database.Migrate();
-                    UserStore<EformUser,
-                        EformRole,
-                        BaseDbContext,
-                        int,
-                        IdentityUserClaim<int>,
-                        EformUserRole,
-                        IdentityUserLogin<int>,
-                        IdentityUserToken<int>,
-                        IdentityRoleClaim<int>> userStore = new UserStore<EformUser,
+                    var userStore = new UserStore<EformUser,
                         EformRole,
                         BaseDbContext,
                         int,
@@ -203,9 +203,9 @@ namespace eFormAPI.Web.Services
 
 
                     IPasswordHasher<EformUser> hasher = new PasswordHasher<EformUser>();
-                    UserValidator<EformUser> validator = new UserValidator<EformUser>();
-                    List<UserValidator<EformUser>> validators = new List<UserValidator<EformUser>> {validator};
-                    UserManager<EformUser> userManager = new UserManager<EformUser>(userStore, null, hasher, validators, null, null, null,
+                    var validator = new UserValidator<EformUser>();
+                    var validators = new List<UserValidator<EformUser>> {validator};
+                    var userManager = new UserManager<EformUser>(userStore, null, hasher, validators, null, null, null,
                         null, null);
 
                     // Set-up token providers.
@@ -215,8 +215,8 @@ namespace eFormAPI.Web.Services
                         new PhoneNumberTokenProvider<EformUser>();
                     userManager.RegisterTokenProvider("PhoneTokenProvider", phoneTokenProvider);
                     // Roles
-                    RoleStore<EformRole, BaseDbContext, int> roleStore = new RoleStore<EformRole, BaseDbContext, int>(dbContext);
-                    RoleManager<EformRole> roleManager = new RoleManager<EformRole>(roleStore, null, null, null, null);
+                    var roleStore = new RoleStore<EformRole, BaseDbContext, int>(dbContext);
+                    var roleManager = new RoleManager<EformRole>(roleStore, null, null, null, null);
                     if (!await roleManager.RoleExistsAsync(EformRole.Admin))
                     {
                         await roleManager.CreateAsync(new EformRole() {Name = EformRole.Admin});
@@ -228,7 +228,7 @@ namespace eFormAPI.Web.Services
                     }
 
                     // Seed admin and demo users
-                    EformUser adminUser = new EformUser()
+                    var adminUser = new EformUser()
                     {
                         UserName = initialSettingsModel.AdminSetupModel.Email,
                         Email = initialSettingsModel.AdminSetupModel.Email,
@@ -240,16 +240,16 @@ namespace eFormAPI.Web.Services
                     };
                     if (!userManager.Users.Any(x => x.Email.Equals(adminUser.Email)))
                     {
-                        IdentityResult createResult = await userManager.CreateAsync(adminUser,
+                        var createResult = await userManager.CreateAsync(adminUser,
                             initialSettingsModel.AdminSetupModel.Password);
                         if (!createResult.Succeeded)
                         {
-                            return new OperationResult(false, 
+                            return new OperationResult(false,
                                 _localizationService.GetString("Could not create the user"));
                         }
                     }
 
-                    EformUser user = userManager.Users.FirstOrDefault(x => x.Email.Equals(adminUser.Email));
+                    var user = userManager.Users.FirstOrDefault(x => x.Email.Equals(adminUser.Email));
                     if (!await userManager.IsInRoleAsync(user, EformRole.Admin))
                     {
                         await userManager.AddToRoleAsync(user, EformRole.Admin);
@@ -275,24 +275,55 @@ namespace eFormAPI.Web.Services
             try
             {
                 // Generate SigningKey
-                byte[] key = new byte[32];
+                var key = new byte[32];
                 RandomNumberGenerator.Create().GetBytes(key);
-                string signingKey = Convert.ToBase64String(key);
-                _tokenOptions.Update((options) =>
+                var signingKey = Convert.ToBase64String(key);
+
+
+
+
+                using (var dbContext = new BaseDbContext(dbContextOptionsBuilder.Options))
                 {
-                    options.SigningKey = signingKey;
-                });
+                    var signingKeyValue = dbContext.ConfigurationValues
+                        .FirstOrDefault(x => x.Id == "EformTokenOptions:SigningKey");
+                    var sdkConnection = dbContext.ConfigurationValues
+                        .FirstOrDefault(x => x.Id == "ConnectionStringsSdk:SdkConnection");
+                    var defaultLocale = dbContext.ConfigurationValues
+                        .FirstOrDefault(x => x.Id == "ApplicationSettings:DefaultLocale");
+
+                    if (signingKeyValue != null)
+                    {
+                        signingKeyValue.Value = signingKey;
+                    }
+                    if (sdkConnection != null)
+                    {
+                        sdkConnection.Value = sdkConnectionString;
+                    }
+                    if (defaultLocale != null)
+                    {
+                        defaultLocale.Value = initialSettingsModel.GeneralAppSetupSettingsModel.DefaultLocale;
+                    }
+
+                    dbContext.SaveChanges();
+
+                }
                 _connectionStrings.Update((options) =>
                 {
-                    options.SdkConnection = sdkConnectionString;
                     options.DefaultConnection = mainConnectionString;
                 });
-                _applicationSettings.Update((options) =>
-                {
-                    options.DefaultLocale = initialSettingsModel.GeneralAppSetupSettingsModel.DefaultLocale;
-                });
+
+                //_tokenOptions.Update((options) => { options.SigningKey = signingKey; });
+                //_connectionStrings.Update((options) =>
+                //{
+                //    options.SdkConnection = sdkConnectionString;
+                //    options.DefaultConnection = mainConnectionString;
+                //});
+                //_applicationSettings.Update((options) =>
+                //{
+                //    options.DefaultLocale = initialSettingsModel.GeneralAppSetupSettingsModel.DefaultLocale;
+                //});
             }
-            
+
             catch (Exception exception)
             {
                 _logger.LogError(exception.Message);
@@ -300,13 +331,13 @@ namespace eFormAPI.Web.Services
                 {
                     return new OperationResult(false, exception.Message + " - " + exception.InnerException.Message);
                 }
-                else
-                {
-                    return new OperationResult(false, exception.Message);
-                }
+
+                return new OperationResult(false, exception.Message);
+
                 //return new OperationResult(false, 
                 //    _localizationService.GetString("CouldNotWriteConnectionString"));
             }
+
             Program.Restart();
             return new OperationResult(true);
         }
@@ -315,7 +346,7 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                LoginPageSettingsModel model = new LoginPageSettingsModel()
+                var model = new LoginPageSettingsModel()
                 {
                     ImageLink = _loginPageSettings.Value.ImageLink,
                     ImageLinkVisible = _loginPageSettings.Value.ImageLinkVisible,
@@ -340,7 +371,7 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                HeaderSettingsModel model = new HeaderSettingsModel()
+                var model = new HeaderSettingsModel()
                 {
                     ImageLink = _headerSettings.Value.ImageLink,
                     ImageLinkVisible = _headerSettings.Value.ImageLinkVisible,
@@ -360,7 +391,8 @@ namespace eFormAPI.Web.Services
 
         public OperationDataResult<string> GetAssemblyVersion()
         {
-            return new OperationDataResult<string>(true, null, Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            return new OperationDataResult<string>(true, null,
+                Assembly.GetExecutingAssembly().GetName().Version.ToString());
         }
 
         public OperationDataResult<string> GetApplicationHostOs()
@@ -368,7 +400,8 @@ namespace eFormAPI.Web.Services
             if (PathHelper.GetOsVersion() == OSPlatforms.Windows)
             {
                 return new OperationDataResult<string>(true, "Windows");
-            }            
+            }
+
             return new OperationDataResult<string>(true, PathHelper.GetOsVersion().ToString());
         }
 
@@ -376,9 +409,9 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                Core core = _coreHelper.GetCore();
+                var core = _coreHelper.GetCore();
 
-                AdminSettingsModel model = new AdminSettingsModel()
+                var model = new AdminSettingsModel()
                 {
                     SMTPSettingsModel = new SMTPSettingsModel()
                     {
@@ -422,7 +455,7 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                Core core = _coreHelper.GetCore();
+                var core = _coreHelper.GetCore();
                 _emailSettings.Update((option) =>
                 {
                     option.SmtpHost = adminSettingsModel.SMTPSettingsModel.Host;

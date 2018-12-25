@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace eFormAPI.Web.Infrastructure.Models
+namespace Microting.eFormApi.BasePn.Infrastructure.Models
 {
     public class EFormXmlModel
     {

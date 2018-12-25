@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using eFormShared;
 
-namespace eFormAPI.Web.Infrastructure.Models.Templates
+namespace Microting.eFormApi.BasePn.Infrastructure.Models.Templates
 {
     public class TemplateListModel
     {

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eFormAPI.Web.Infrastructure.Database;
 
 namespace eFormAPI.Web.Migrations
@@ -186,6 +187,178 @@ namespace eFormAPI.Web.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("UserRoles");
+                });
+
+            modelBuilder.Entity("eFormAPI.Web.Infrastructure.Database.Entities.EformConfigurationValue", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Value");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.ToTable("ConfigurationValues");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "ConnectionStringsSdk:SdkConnection",
+                            Value = ""
+                        },
+                        new
+                        {
+                            Id = "ApplicationSettings:DefaultLocale",
+                            Value = "en-US"
+                        },
+                        new
+                        {
+                            Id = "ApplicationSettings:SiteLink",
+                            Value = ""
+                        },
+                        new
+                        {
+                            Id = "ApplicationSettings:SecurityCode",
+                            Value = "code"
+                        },
+                        new
+                        {
+                            Id = "ApplicationSettings:DefaultPassword",
+                            Value = "Qq1234567$"
+                        },
+                        new
+                        {
+                            Id = "ApplicationSettings:IsTwoFactorForced",
+                            Value = "false"
+                        },
+                        new
+                        {
+                            Id = "EmailSettings:SmtpHost",
+                            Value = ""
+                        },
+                        new
+                        {
+                            Id = "EmailSettings:SmtpPort",
+                            Value = "25"
+                        },
+                        new
+                        {
+                            Id = "EmailSettings:Login",
+                            Value = ""
+                        },
+                        new
+                        {
+                            Id = "EmailSettings:Password",
+                            Value = ""
+                        },
+                        new
+                        {
+                            Id = "LoginPageSettings:MainText",
+                            Value = "Microting eForm"
+                        },
+                        new
+                        {
+                            Id = "LoginPageSettings:MainTextVisible",
+                            Value = "true"
+                        },
+                        new
+                        {
+                            Id = "LoginPageSettings:SecondaryText",
+                            Value = "No more paper-forms and back-office data entry"
+                        },
+                        new
+                        {
+                            Id = "LoginPageSettings:SecondaryTextVisible",
+                            Value = "true"
+                        },
+                        new
+                        {
+                            Id = "LoginPageSettings:ImageLink",
+                            Value = ""
+                        },
+                        new
+                        {
+                            Id = "LoginPageSettings:ImageLinkVisible",
+                            Value = "true"
+                        },
+                        new
+                        {
+                            Id = "HeaderSettings:MainText",
+                            Value = "Microting eForm"
+                        },
+                        new
+                        {
+                            Id = "HeaderSettings:MainTextVisible",
+                            Value = "true"
+                        },
+                        new
+                        {
+                            Id = "HeaderSettings:SecondaryText",
+                            Value = "No more paper-forms and back-office data entry"
+                        },
+                        new
+                        {
+                            Id = "HeaderSettings:SecondaryTextVisible",
+                            Value = "true"
+                        },
+                        new
+                        {
+                            Id = "HeaderSettings:ImageLink",
+                            Value = ""
+                        },
+                        new
+                        {
+                            Id = "HeaderSettings:ImageLinkVisible",
+                            Value = "true"
+                        },
+                        new
+                        {
+                            Id = "Logging:IncludeScopes",
+                            Value = "false"
+                        },
+                        new
+                        {
+                            Id = "Logging:IncludeScopes:LogLevel:Default",
+                            Value = "Debug"
+                        },
+                        new
+                        {
+                            Id = "Logging:IncludeScopes:LogLevel:System",
+                            Value = "Information"
+                        },
+                        new
+                        {
+                            Id = "Logging:IncludeScopes:LogLevel:Microsoft",
+                            Value = "Information"
+                        },
+                        new
+                        {
+                            Id = "EformTokenOptions:Issuer",
+                            Value = "eForm API"
+                        },
+                        new
+                        {
+                            Id = "EformTokenOptions:Audience",
+                            Value = "eForm Angular"
+                        },
+                        new
+                        {
+                            Id = "EformTokenOptions:Expiration",
+                            Value = "12:00:00"
+                        },
+                        new
+                        {
+                            Id = "EformTokenOptions:SigningKey",
+                            Value = "lTBBR6Wt7RTvcI0jwRvXVPTOmcFV6NnAUA+rIWn/5bs="
+                        },
+                        new
+                        {
+                            Id = "EformTokenOptions:CookieName",
+                            Value = "Authorization"
+                        });
                 });
 
             modelBuilder.Entity("eFormAPI.Web.Infrastructure.Database.Entities.EformInGroup", b =>

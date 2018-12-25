@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace eFormAPI.Web.Infrastructure.Models.Settings
+namespace Microting.eFormApi.BasePn.Infrastructure.Models.Settings
 {
-    public class ConnectionStringSdkModel
+    public class ConnectionStringSDKModel
     {
         [Required] public string Source { get; set; }
         [Required] public string Catalogue { get; set; }

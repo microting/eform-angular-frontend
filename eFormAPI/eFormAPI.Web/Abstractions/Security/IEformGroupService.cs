@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using eFormAPI.Web.Infrastructure.Models.EformPermissions;
-using eFormAPI.Web.Infrastructure.Models.Templates;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Templates;
 
 namespace eFormAPI.Web.Abstractions.Security
 {

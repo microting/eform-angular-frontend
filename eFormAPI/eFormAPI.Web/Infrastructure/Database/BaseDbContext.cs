@@ -24,7 +24,8 @@ namespace eFormAPI.Web.Infrastructure.Database
         // Common
         public DbSet<MenuItem> MenuItems { get; set; }
         public DbSet<SavedTag> SavedTags { get; set; }
-
+        public DbSet<EformConfigurationValue> ConfigurationValues { get; set; }
+        
         // Security
         public DbSet<SecurityGroup> SecurityGroups { get; set; }
         public DbSet<SecurityGroupUser> SecurityGroupUsers { get; set; }
@@ -77,6 +78,13 @@ namespace eFormAPI.Web.Infrastructure.Database
 
             modelBuilder.Entity<EformInGroup>()
                 .HasIndex(p => p.TemplateId);
+
+            modelBuilder.Entity<EformConfigurationValue>()
+                .HasKey(value => value.Id);
+
+            modelBuilder.Entity<EformConfigurationValue>()
+                .HasIndex(value => value.Id)
+                .IsUnique();
 
             modelBuilder.Entity<SavedTag>()
                 .HasIndex(p => new

@@ -376,3 +376,5 @@ eFormAPI/eFormAPI\.Web/Plugins/
 eFormAPI/eFormAPI\.Web/output/
 FormAPI/eFormAPI.Web/appsettings.json
 
+
+eFormAPI/eFormAPI\.Web/connection\.json

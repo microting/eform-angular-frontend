@@ -11,7 +11,9 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed
                 .AddDefaultSecurityGroups()
                 .AddPermissions()
                 .AddDefaultGroupPermission()
-                .AddDefaultMenu();
+                .AddDefaultMenu()
+                .AddConfigurationDefault();
+
             return modelBuilder;
         }
     }

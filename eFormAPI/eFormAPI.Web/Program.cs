@@ -1,15 +1,19 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
+using Castle.Core.Internal;
 using eFormAPI.Web.Hosting.Settings;
 using eFormAPI.Web.Infrastructure.Database;
+using eFormAPI.Web.Infrastructure.Database.Seed.SeedItems;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Primitives;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers.WritableOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 
@@ -52,17 +56,21 @@ namespace eFormAPI.Web
             _cancelTokenSource.Cancel();
         }
 
+        public delegate void ReloadDbConfiguration();
+        public static ReloadDbConfiguration ReloadDbConfigurationDelegate { get; set; }
+
         public static void MigrateDb(IWebHost webHost)
         {
             using (var scope = webHost.Services.GetService<IServiceScopeFactory>().CreateScope())
             {
-
                 BaseDbContext dbContext = null;
                 try
                 {
                     dbContext = scope.ServiceProvider.GetRequiredService<BaseDbContext>();
                 }
-                catch {}
+                catch
+                {
+                }
 
                 if (dbContext != null)
                 {
@@ -82,10 +90,8 @@ namespace eFormAPI.Web
                             var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
                             logger.LogError(e, "Error while migrating db");
                         }
-                    }    
+                    }
                 }
-                
-                
             }
         }
 
@@ -98,9 +104,7 @@ namespace eFormAPI.Web
             var port = defaultConfig.GetValue("port", 5000);
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-//#if DEBUG
                 return WebHost.CreateDefaultBuilder(args)
-                    //.UseIISIntegration()
                     .UseUrls($"http://localhost:{port}")
                     .UseIISIntegration()
                     .ConfigureAppConfiguration((hostContext, config) =>
@@ -115,51 +119,49 @@ namespace eFormAPI.Web
                         {
                             ConnectionStringManager.CreateDefalt(filePath);
                         }
+
                         config.AddJsonFile("connection.json",
                             optional: true,
                             reloadOnChange: true);
+                        var mainSettings = ConnectionStringManager.Read(filePath);
+                        if (!mainSettings.ConnectionStrings.DefaultConnection.IsNullOrEmpty()) // &&
+                            // mainSettings.ConnectionStrings.DefaultConnection != "...")
+                        {
+                            config.AddEfConfiguration(builder =>
+                                builder.UseSqlServer(mainSettings.ConnectionStrings.DefaultConnection));
+                        }
+                        else
+                        {
+                            var defaultSettings = ConfigurationSeed.Data.ToDictionary(
+                                item => item.Id,
+                                item => item.Value);
+
+                            config.AddInMemoryCollection(defaultSettings);
+                        }
+
+                        config.AddJsonFile(filePath);
 
                         config.AddEnvironmentVariables();
-                    })
-                    .UseStartup<Startup>()
-                    .Build();
-//#else
-                //Console.WriteLine("WE ARE IN RELEASE MODE");
-                //return WebHost.CreateDefaultBuilder(args)
-                //    .UseKestrel()
-                //    .UseIISIntegration()
-                //   //.UseUrls($"http://localhost:{port}")
-                //   .ConfigureAppConfiguration((hostContext, config) =>
-                //   {
-                //       // delete all default configuration providers
-                //       config.Sources.Clear();
-                //       config.SetBasePath(hostContext.HostingEnvironment.ContentRootPath);
-                //       config.AddJsonFile("appsettings.json",
-                //           optional: true,
-                //           reloadOnChange: true);
-                //       config.AddEnvironmentVariables();
-                //   })
-                //   .UseStartup<Startup>()
-                //   .Build();
-//#endif
-            }
-            else
-            {
-                return WebHost.CreateDefaultBuilder(args)
-                    .UseUrls($"http://localhost:{port}")
-                    .ConfigureAppConfiguration((hostContext, config) =>
-                    {
-                        // delete all default configuration providers
-                        config.Sources.Clear();
-                        config.SetBasePath(hostContext.HostingEnvironment.ContentRootPath);
-                        config.AddJsonFile("appsettings.json",
-                            optional: true,
-                            reloadOnChange: true);
-                        config.AddEnvironmentVariables();
+                        
                     })
                     .UseStartup<Startup>()
                     .Build();
             }
+
+            return WebHost.CreateDefaultBuilder(args)
+                .UseUrls($"http://localhost:{port}")
+                .ConfigureAppConfiguration((hostContext, config) =>
+                {
+                    // delete all default configuration providers
+                    config.Sources.Clear();
+                    config.SetBasePath(hostContext.HostingEnvironment.ContentRootPath);
+                    config.AddJsonFile("appsettings.json",
+                        optional: true,
+                        reloadOnChange: true);
+                    config.AddEnvironmentVariables();
+                })
+                .UseStartup<Startup>()
+                .Build();
         }
     }
 }

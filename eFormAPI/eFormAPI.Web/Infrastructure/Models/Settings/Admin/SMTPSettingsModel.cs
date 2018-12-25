@@ -1,4 +1,4 @@
-﻿namespace eFormAPI.Web.Infrastructure.Models.Settings.Admin
+﻿namespace Microting.eFormApi.BasePn.Infrastructure.Models.Settings.Admin
 {
     public class SMTPSettingsModel
     {

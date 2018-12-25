@@ -1,4 +1,4 @@
-﻿namespace eFormAPI.Web.Infrastructure.Models.SelectableList
+﻿namespace Microting.eFormApi.BasePn.Infrastructure.Models.SelectableList
 {
     public class AdvEntitySelectableItemModel
     {
