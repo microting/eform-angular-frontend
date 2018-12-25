@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {CaseFieldValue} from 'src/app/common/models/cases';
+import {FieldValueDto} from 'src/app/common/models';
 import {CommonDictionaryTextModel} from 'src/app/common/models/common';
 
 @Component({
@@ -17,7 +17,7 @@ export class ElementSingleselectComponent {
   set fieldValue(val) {
     this.fieldValueObj = val;
   }
-  fieldValueObj: CaseFieldValue = new CaseFieldValue();
+  fieldValueObj: FieldValueDto = new FieldValueDto();
   constructor() { }
 
   onSelectedChanged(e: any) {

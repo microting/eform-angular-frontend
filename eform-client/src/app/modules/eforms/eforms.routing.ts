@@ -6,7 +6,14 @@ const routes: Routes = [
   {
     path: '',
     component: EformsPageComponent,
-  }
+  },
+  {
+    path: 'report/:eformId',
+    loadChildren: './eform-report/eform-report.module#EformReportModule',
+    data: {
+      eformId: 1
+    }
+  },
 ];
 
 

@@ -1,0 +1,12 @@
+<div *ngFor="let fieldValueObj of fieldValueObjects" style="margin-bottom: 10px;">
+  <audio controls preload="auto"
+         *ngIf="fieldValueObj.uploadedDataObj && fieldValueObj.uploadedDataObj.fileName"
+         src="/api/audio/eform-audio?fileName={{fieldValueObj.uploadedDataObj.fileName.replace('3gp','wav')}}">
+    This text displays if the audio tag isn't supported.
+  </audio>
+  <pell-editor [(value)]="fieldValueObj.value"></pell-editor>
+</div>
+
+
+
+

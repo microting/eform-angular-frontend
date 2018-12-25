@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CaseDataItem} from 'src/app/common/models/cases';
+import {DataItemDto} from 'src/app/common/models';
 
 @Component({
   selector: 'element-pdf',
@@ -7,7 +7,7 @@ import {CaseDataItem} from 'src/app/common/models/cases';
   styleUrls: ['./element-pdf.component.scss']
 })
 export class ElementPdfComponent {
-  dataItemObj: CaseDataItem = new CaseDataItem();
+  dataItemObj: DataItemDto = new DataItemDto();
 
   @Input()
   get dataItem() {

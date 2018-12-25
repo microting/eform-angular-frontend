@@ -15,7 +15,7 @@ import {AppMenuService, AppSettingsService} from 'src/app/common/services/app-se
 import {AuthService, LocaleService, UserSettingsService} from 'src/app/common/services/auth';
 import {CasesService, ImageService} from 'src/app/common/services/cases';
 import {DeviceUserService} from 'src/app/common/services/device-users';
-import {EFormService, EformTagService} from 'src/app/common/services/eform';
+import {EformReportService, EFormService, EformTagService} from 'src/app/common/services/eform';
 import {SecurityGroupEformsPermissionsService, SecurityGroupsService} from 'src/app/common/services/security';
 import {AdminService} from 'src/app/common/services/users';
 // Guards
@@ -44,6 +44,7 @@ export let providers = [
   EntitySelectService,
   EFormService,
   EformTagService,
+  EformReportService,
   CasesService,
   ImageService,
   SecurityGroupsService,

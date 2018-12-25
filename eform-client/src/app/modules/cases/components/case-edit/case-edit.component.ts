@@ -4,7 +4,7 @@ import {RouteConfigLoadEnd} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {Observable} from 'rxjs';
 import {UserClaimsEnum} from 'src/app/common/enums';
-import {CaseEditRequest, ReplyElement, ReplyRequest} from 'src/app/common/models/cases';
+import {CaseEditRequest, ReplyElementDto, ReplyRequest} from 'src/app/common/models/cases';
 import {TemplateDto} from 'src/app/common/models/dto';
 import {EformPermissionsSimpleModel} from 'src/app/common/models/security/group-permissions/eform';
 import {AuthService} from 'src/app/common/services/auth';
@@ -25,7 +25,7 @@ export class CaseEditComponent implements OnInit, OnDestroy {
   id: number;
   templateId: number;
   currentTemplate: TemplateDto = new TemplateDto;
-  replyElement: ReplyElement = new ReplyElement();
+  replyElement: ReplyElementDto = new ReplyElementDto();
 
   requestModels: Array<CaseEditRequest> = [];
   replyRequest: ReplyRequest = new ReplyRequest();
@@ -91,7 +91,7 @@ export class CaseEditComponent implements OnInit, OnDestroy {
     this.replyRequest.elementList = this.requestModels;
     this.casesService.updateCase(this.replyRequest, this.currentTemplate.id).subscribe(operation => {
       if (operation && operation.success) {
-        this.replyElement = new ReplyElement();
+        this.replyElement = new ReplyElementDto();
         this.spinnerStatus = false;
         this.isNoSaveExitAllowed = true;
         if (this.isSaveClicked) {

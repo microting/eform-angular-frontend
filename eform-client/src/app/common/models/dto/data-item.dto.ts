@@ -1,6 +1,6 @@
-import {CaseFieldValue} from './case-field-value';
+import {FieldValueDto} from './field-value.dto';
 
-export class CaseDataItem {
+export class DataItemDto {
   // DataItem
   id: number;
   mandatory: Boolean;
@@ -11,8 +11,8 @@ export class CaseDataItem {
   // Field
   fieldType: string;
   fieldValue: string;
-  fieldValues: Array<CaseFieldValue> = [];
-  dataItemList: Array<CaseDataItem> = [];
+  fieldValues: Array<FieldValueDto> = [];
+  dataItemList: Array<DataItemDto> = [];
   entityGroupId: string;
   // Picture
   multi: number;

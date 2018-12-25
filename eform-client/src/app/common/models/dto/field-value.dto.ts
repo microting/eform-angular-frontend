@@ -1,9 +1,9 @@
-import {CaseKeyValuePair} from './key-value-pair.model';
-import {CaseUploadedData} from './uploaded-data.model';
-import {CaseDataItem} from './data-item.model';
+import {KeyValuePairDto} from './key-value-pair.dto';
+import {CaseUploadedData} from '../cases/response/case-uploaded-data.model';
+import {DataItemDto} from './data-item.dto';
 
 
-export class CaseFieldValue extends CaseDataItem {
+export class FieldValueDto extends DataItemDto {
   // FieldValue
   fieldId: number;
   fieldType: string;
@@ -20,5 +20,5 @@ export class CaseFieldValue extends CaseDataItem {
   date: Date;
   uploadedData: string;
   uploadedDataObj: CaseUploadedData;
-  keyValuePairList: Array<CaseKeyValuePair> = [];
+  keyValuePairList: Array<KeyValuePairDto> = [];
 }

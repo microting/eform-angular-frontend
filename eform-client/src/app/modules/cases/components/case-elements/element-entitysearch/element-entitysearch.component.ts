@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {debounceTime, switchMap} from 'rxjs/operators';
-import {CaseFieldValue} from 'src/app/common/models/cases';
+import {FieldValueDto} from 'src/app/common/models';
 import {CommonDictionaryTextModel} from 'src/app/common/models/common';
 import {EntitySearchService} from 'src/app/common/services/advanced';
 
@@ -12,7 +12,7 @@ import {EntitySearchService} from 'src/app/common/services/advanced';
 })
 export class ElementEntitysearchComponent {
   items: Array<CommonDictionaryTextModel> = [];
-  fieldValueObj: CaseFieldValue = new CaseFieldValue();
+  fieldValueObj: FieldValueDto = new FieldValueDto();
   typeahead = new EventEmitter<string>();
   @Input() entityGroupUid: string;
 

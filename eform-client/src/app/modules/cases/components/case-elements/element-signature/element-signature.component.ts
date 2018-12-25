@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {Gallery, GalleryComponent, GalleryItem, ImageItem} from '@ngx-gallery/core';
 import {Lightbox} from '@ngx-gallery/lightbox';
-import {CaseFieldValue} from 'src/app/common/models/cases';
+import {FieldValueDto} from 'src/app/common/models';
 
 
 
@@ -11,7 +11,7 @@ import {CaseFieldValue} from 'src/app/common/models/cases';
   styleUrls: ['./element-signature.component.scss']
 })
 export class ElementSignatureComponent implements OnChanges {
-  @Input() fieldValues: Array<CaseFieldValue> = [];
+  @Input() fieldValues: Array<FieldValueDto> = [];
   images = [];
   galleryImages: GalleryItem[] = [];
   spinnerStatus = false;

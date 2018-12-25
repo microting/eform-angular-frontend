@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CaseFieldValue} from 'src/app/common/models/cases';
+import {FieldValueDto} from 'src/app/common/models';
 
 @Component({
   selector: 'element-audio',
@@ -7,7 +7,7 @@ import {CaseFieldValue} from 'src/app/common/models/cases';
   styleUrls: ['./element-audio.component.scss']
 })
 export class ElementAudioComponent {
-  fieldValueObjects: Array<CaseFieldValue> = [];
+  fieldValueObjects: Array<FieldValueDto> = [];
 
   @Input()
   get fieldValues() {

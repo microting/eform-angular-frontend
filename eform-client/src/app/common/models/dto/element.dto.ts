@@ -1,13 +1,13 @@
-import {CaseDataItem} from './data-item.model';
+import {DataItemDto} from './data-item.dto';
 
-export class CaseElement {
+export class ElementDto {
   id: number;
   label: string;
   status: string;
   reviewEnabled: boolean;
   approvalEnabled: boolean;
   extraFieldsEnabled: boolean;
-  dataItemList: Array<CaseDataItem> = [];
+  dataItemList: Array<DataItemDto> = [];
   // dataItemGroupList: Array<CaseDataItemGroup> = [];
-  elementList: Array<CaseElement> = [];
+  elementList: Array<ElementDto> = [];
 }

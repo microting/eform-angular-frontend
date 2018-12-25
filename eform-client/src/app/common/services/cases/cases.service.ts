@@ -8,7 +8,7 @@ import {
   CasesRequestModel,
   OperationDataResult,
   OperationResult,
-  ReplyElement,
+  ReplyElementDto,
   ReplyRequest
 } from 'src/app/common/models';
 import {BaseService} from 'src/app/common/services/base.service';
@@ -26,8 +26,8 @@ export class CasesService extends BaseService {
     super(_http, router, toastrService);
   }
 
-  getById(id: number, templateId: number): Observable<OperationDataResult<ReplyElement>> {
-    return this.get<ReplyElement>(CasesMethods.EditById + '?id=' + id + '&templateId=' + templateId);
+  getById(id: number, templateId: number): Observable<OperationDataResult<ReplyElementDto>> {
+    return this.get<ReplyElementDto>(CasesMethods.EditById + '?id=' + id + '&templateId=' + templateId);
   }
 
   getCases(model: CasesRequestModel): Observable<OperationDataResult<CaseListModel>> {
