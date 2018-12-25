@@ -10,7 +10,7 @@ using eFormAPI.Web.Infrastructure.Database;
 namespace eFormAPI.Web.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    [Migration("20181225185848_AddReportsTables")]
+    [Migration("20181225201919_AddReportsTables")]
     partial class AddReportsTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1323,7 +1323,7 @@ namespace eFormAPI.Web.Migrations
                     b.HasOne("eFormAPI.Web.Infrastructure.Database.Entities.EformReportElement", "Parent")
                         .WithMany("NestedElements")
                         .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("eFormAPI.Web.Infrastructure.Database.Entities.GroupPermission", b =>

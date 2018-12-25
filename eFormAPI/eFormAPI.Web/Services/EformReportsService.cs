@@ -69,6 +69,8 @@ namespace eFormAPI.Web.Services
                     .Where(x => x.EformReportId == eformReport.Id)
                     .ToListAsync();
 
+                //Func<List<> >
+
                 var reportElementsOrdered = reportElements
                     .Where(p => p.Parent == null)
                     .OrderBy(p => p.Position)

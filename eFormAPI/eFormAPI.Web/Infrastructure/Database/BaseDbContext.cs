@@ -54,7 +54,7 @@ namespace eFormAPI.Web.Infrastructure.Database
             modelBuilder.Entity<EformReportElement>()
                 .HasOne(x => x.Parent)
                 .WithMany(x => x.NestedElements)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
 
             // Security

@@ -51,7 +51,7 @@ namespace eFormAPI.Web.Migrations
                         column: x => x.ParentId,
                         principalTable: "EformReportElements",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(

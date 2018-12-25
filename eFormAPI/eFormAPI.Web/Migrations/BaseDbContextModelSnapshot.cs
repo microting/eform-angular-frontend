@@ -1321,7 +1321,7 @@ namespace eFormAPI.Web.Migrations
                     b.HasOne("eFormAPI.Web.Infrastructure.Database.Entities.EformReportElement", "Parent")
                         .WithMany("NestedElements")
                         .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("eFormAPI.Web.Infrastructure.Database.Entities.GroupPermission", b =>
