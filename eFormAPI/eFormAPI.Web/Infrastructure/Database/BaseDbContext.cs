@@ -25,6 +25,10 @@ namespace eFormAPI.Web.Infrastructure.Database
         public DbSet<MenuItem> MenuItems { get; set; }
         public DbSet<SavedTag> SavedTags { get; set; }
         public DbSet<EformConfigurationValue> ConfigurationValues { get; set; }
+
+        // Reports
+        public DbSet<EformReport> EformReports { get; set; }
+        public DbSet<EformReportElement> EformReportElements { get; set; }
         
         // Security
         public DbSet<SecurityGroup> SecurityGroups { get; set; }
@@ -38,6 +42,20 @@ namespace eFormAPI.Web.Infrastructure.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            // Reports
+            modelBuilder.Entity<EformReport>()
+                .HasIndex(p => p.TemplateId)
+                .IsUnique();
+
+            modelBuilder.Entity<EformReportElement>()
+                .HasIndex(p => p.ElementId);
+
+            modelBuilder.Entity<EformReportElement>()
+                .HasOne(x => x.Parent)
+                .WithMany(x => x.NestedElements)
+                .OnDelete(DeleteBehavior.Cascade);
+
 
             // Security
             modelBuilder.Entity<SecurityGroupUser>()

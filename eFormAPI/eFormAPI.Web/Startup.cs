@@ -239,6 +239,7 @@ namespace eFormAPI.Web
             services.AddScoped<IMenuService, MenuService>();
             services.AddScoped<IEformGroupService, EformGroupService>();
             services.AddScoped<IEformPermissionsService, EformPermissionsService>();
+            services.AddScoped<IEformReportsService, EformReportsService>();
         }
     }
 }
