@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Castle.MicroKernel.Registration;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Eforms;
 using eFormAPI.Web.Infrastructure.Database;
@@ -44,6 +43,7 @@ namespace eFormAPI.Web.Services
                 {
                     Id = x.Id,
                     ElementId = x.ElementId,
+                    Label = x.ElementId.ToString(),
                     ElementList = GetReportElementsList(x),
                     DataItemList = GetReportDataItemListFromElement(x),
                 }).ToList();
@@ -58,6 +58,8 @@ namespace eFormAPI.Web.Services
                 {
                     Id = x.Id,
                     DataItemId = x.DataItemId,
+                    FieldType = "Checkbox",
+                    Label = x.DataItemId.ToString(),
                     Position = x.Position,
                     Visibility = x.Visibility,
                     DataItemList = GetReportDataItemList(x),
@@ -75,6 +77,8 @@ namespace eFormAPI.Web.Services
                 .Select(x => new EformReportDataItemModel()
                 {
                     Id = x.Id,
+                    Label = x.DataItemId.ToString(),
+                    FieldType = "Checkbox",
                     DataItemId = x.DataItemId,
                     Position = x.Position,
                     Visibility = x.Visibility,
@@ -83,7 +87,6 @@ namespace eFormAPI.Web.Services
 
             return list;
         }
-
 
         public async Task<OperationDataResult<EformReportFullModel>> GetEformReport(int templateId)
         {
@@ -97,8 +100,6 @@ namespace eFormAPI.Web.Services
                     return new OperationDataResult<EformReportFullModel>(false,
                         _localizationService.GetString(""));
                 }
-
-                //          result.EformMainElement = template;
 
                 var eformReport = await _dbContext.EformReports
                     .Where(x => x.TemplateId == templateId)
@@ -119,14 +120,14 @@ namespace eFormAPI.Web.Services
                 }
 
                 var reportElements = await _dbContext.EformReportElements
-                    .Include(x=>x.DataItems)
-                    .ThenInclude(x=>x.NestedDataItems)
-                    .Include(x=>x.NestedElements)
-                    .ThenInclude(x=>x.DataItems)
-                    .ThenInclude(x=>x.NestedDataItems)
+                    .Include(x => x.DataItems)
+                    .ThenInclude(x => x.NestedDataItems)
+                    .Include(x => x.NestedElements)
+                    .ThenInclude(x => x.DataItems)
+                    .ThenInclude(x => x.NestedDataItems)
                     .Where(x => x.EformReportId == eformReport.Id)
                     .ToListAsync();
-                
+
 
                 var reportElementsOrdered = reportElements
                     .Where(p => p.Parent == null)
@@ -135,18 +136,21 @@ namespace eFormAPI.Web.Services
                         {
                             Id = p.Id,
                             ElementId = p.ElementId,
+                            Label = p.ElementId.ToString(),
                             ElementList = GetReportElementsList(p),
                             DataItemList = GetReportDataItemListFromElement(p),
                         }
                     ).ToList();
 
-                if (reportElementsOrdered.Any())
+
+                result.EformMainElement = new EformMainElement()
                 {
-                    result.EformMainElement = new EformMainElement()
-                    {
-                        ElementList = reportElementsOrdered
-                    };
-                }
+                    Id = template.Id,
+                    Label = template.Label,
+                    ElementList = reportElementsOrdered
+                };
+
+
                 result.EformReport = eformReport;
                 return new OperationDataResult<EformReportFullModel>(true, result);
             }
