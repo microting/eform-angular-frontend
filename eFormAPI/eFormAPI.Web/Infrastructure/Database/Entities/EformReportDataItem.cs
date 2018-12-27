@@ -18,6 +18,6 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities
         public int? ParentId { get; set; }
         public EformReportDataItem Parent { get; set; }
 
-        public ICollection<EformReportDataItem> NestedDataItems { get; set; }
+        public virtual ICollection<EformReportDataItem> NestedDataItems { get; set; }
     }
 }

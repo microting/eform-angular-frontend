@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Castle.MicroKernel.Registration;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Eforms;
 using eFormAPI.Web.Infrastructure.Database;
@@ -37,16 +38,47 @@ namespace eFormAPI.Web.Services
 
         private static List<EformReportElementsModel> GetReportElementsList(EformReportElement parent)
         {
-            var list = parent.NestedElements
+            return parent.NestedElements
                 .Where(c => c.ParentId == parent.Id)
-     //           .OrderBy(c => c.Position)
                 .Select(x => new EformReportElementsModel()
                 {
                     Id = x.Id,
                     ElementId = x.ElementId,
-   //                 Position = x.Position,
-   //                 Visibility = x.Visibility,
-   //                 NestedElements = GetReportElementsList(x)
+                    ElementList = GetReportElementsList(x),
+                    DataItemList = GetReportDataItemListFromElement(x),
+                }).ToList();
+        }
+
+        private static List<EformReportDataItemModel> GetReportDataItemList(EformReportDataItem parent)
+        {
+            var list = parent.NestedDataItems
+                .Where(c => c.ParentId == parent.Id)
+                .OrderBy(c => c.Position)
+                .Select(x => new EformReportDataItemModel()
+                {
+                    Id = x.Id,
+                    DataItemId = x.DataItemId,
+                    Position = x.Position,
+                    Visibility = x.Visibility,
+                    DataItemList = GetReportDataItemList(x),
+                }).ToList();
+
+            return list;
+        }
+
+
+        private static List<EformReportDataItemModel> GetReportDataItemListFromElement(EformReportElement parent)
+        {
+            var list = parent.DataItems
+                .Where(c => c.ParentId == parent.Id)
+                .OrderBy(c => c.Position)
+                .Select(x => new EformReportDataItemModel()
+                {
+                    Id = x.Id,
+                    DataItemId = x.DataItemId,
+                    Position = x.Position,
+                    Visibility = x.Visibility,
+                    DataItemList = GetReportDataItemList(x)
                 }).ToList();
 
             return list;
@@ -66,7 +98,7 @@ namespace eFormAPI.Web.Services
                         _localizationService.GetString(""));
                 }
 
-      //          result.EformMainElement = template;
+                //          result.EformMainElement = template;
 
                 var eformReport = await _dbContext.EformReports
                     .Where(x => x.TemplateId == templateId)
@@ -75,7 +107,7 @@ namespace eFormAPI.Web.Services
                         Id = x.Id,
                         TemplateId = x.TemplateId,
                         Description = x.Description,
-                        HeaderImage = Encoding.UTF8.GetString(x.HeaderImage),
+                        HeaderImage = x.HeaderImage == null ? string.Empty : Encoding.UTF8.GetString(x.HeaderImage),
                         HeaderVisibility = x.HeaderVisibility,
                         IsDateVisible = x.IsDateVisible,
                         IsWorkerNameVisible = x.IsWorkerNameVisible,
@@ -87,23 +119,34 @@ namespace eFormAPI.Web.Services
                 }
 
                 var reportElements = await _dbContext.EformReportElements
+                    .Include(x=>x.DataItems)
+                    .ThenInclude(x=>x.NestedDataItems)
+                    .Include(x=>x.NestedElements)
+                    .ThenInclude(x=>x.DataItems)
+                    .ThenInclude(x=>x.NestedDataItems)
                     .Where(x => x.EformReportId == eformReport.Id)
                     .ToListAsync();
+                
 
                 var reportElementsOrdered = reportElements
                     .Where(p => p.Parent == null)
- //                   .OrderBy(p => p.Position)
+                    .OrderBy(p => p.Id)
                     .Select(p => new EformReportElementsModel()
                         {
                             Id = p.Id,
                             ElementId = p.ElementId,
-       //                     Position = p.Position,
-        //                    Visibility = p.Visibility,
-         //                   NestedElements = GetReportElementsList(p)
+                            ElementList = GetReportElementsList(p),
+                            DataItemList = GetReportDataItemListFromElement(p),
                         }
                     ).ToList();
 
-       //         eformReport.Elements = reportElementsOrdered;
+                if (reportElementsOrdered.Any())
+                {
+                    result.EformMainElement = new EformMainElement()
+                    {
+                        ElementList = reportElementsOrdered
+                    };
+                }
                 result.EformReport = eformReport;
                 return new OperationDataResult<EformReportFullModel>(true, result);
             }
@@ -122,9 +165,9 @@ namespace eFormAPI.Web.Services
                 var result = new EformReportFullModel();
                 using (var transaction = await _dbContext.Database.BeginTransactionAsync())
                 {
-
                     transaction.Commit();
                 }
+
                 return new OperationDataResult<EformReportFullModel>(true, result);
             }
             catch (Exception e)
