@@ -1,4 +1,4 @@
-﻿namespace eFormAPI.Web
+﻿namespace eFormAPI.Web.Hosting
 {
     public static class DbConfig
     {

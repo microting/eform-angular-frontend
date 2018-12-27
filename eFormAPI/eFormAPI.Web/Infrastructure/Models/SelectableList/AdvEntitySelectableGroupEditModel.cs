@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using eFormData;
 
-namespace Microting.eFormApi.BasePn.Infrastructure.Models.SelectableList
+namespace eFormAPI.Web.Infrastructure.Models.SelectableList
 {
     public class AdvEntitySelectableGroupEditModel
     {

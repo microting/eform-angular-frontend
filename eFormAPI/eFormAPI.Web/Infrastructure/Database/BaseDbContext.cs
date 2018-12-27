@@ -29,7 +29,8 @@ namespace eFormAPI.Web.Infrastructure.Database
         // Reports
         public DbSet<EformReport> EformReports { get; set; }
         public DbSet<EformReportElement> EformReportElements { get; set; }
-        
+        public DbSet<EformReportDataItem> EformReportDataItems { get; set; }
+
         // Security
         public DbSet<SecurityGroup> SecurityGroups { get; set; }
         public DbSet<SecurityGroupUser> SecurityGroupUsers { get; set; }
@@ -56,10 +57,19 @@ namespace eFormAPI.Web.Infrastructure.Database
                 .HasIndex(p => p.ElementId);
 
             modelBuilder.Entity<EformReportElement>()
-                .HasOne(x => x.Parent)
-                .WithMany(x => x.NestedElements)
+                .HasMany(e => e.NestedElements)
+                .WithOne(e => e.Parent)
+                .HasForeignKey(e => e.ParentId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<EformReportDataItem>()
+                .HasIndex(p => p.DataItemId);
+
+            modelBuilder.Entity<EformReportDataItem>()
+                .HasMany(e => e.NestedDataItems)
+                .WithOne(e => e.Parent)
+                .HasForeignKey(e => e.ParentId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // Security
             modelBuilder.Entity<SecurityGroupUser>()

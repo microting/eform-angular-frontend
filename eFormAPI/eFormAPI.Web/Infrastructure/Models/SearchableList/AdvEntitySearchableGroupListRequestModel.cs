@@ -1,4 +1,4 @@
-﻿namespace Microting.eFormApi.BasePn.Infrastructure.Models.SearchableList
+﻿namespace eFormAPI.Web.Infrastructure.Models.SearchableList
 {
     public class AdvEntitySearchableGroupListRequestModel
     {

@@ -1,11 +1,11 @@
 ﻿using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Infrastructure.Models.Settings.Admin;
+using eFormAPI.Web.Infrastructure.Models.Settings.Initial;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Settings.Admin;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Settings.Initial;
 
 namespace eFormAPI.Web.Controllers
 {

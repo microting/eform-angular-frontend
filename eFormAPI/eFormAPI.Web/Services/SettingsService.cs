@@ -19,9 +19,9 @@ using Microting.eFormApi.BasePn.Infrastructure.Helpers.WritableOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Settings.Admin;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Settings.Initial;
 using Castle.Core.Internal;
+using eFormAPI.Web.Infrastructure.Models.Settings.Admin;
+using eFormAPI.Web.Infrastructure.Models.Settings.Initial;
 
 namespace eFormAPI.Web.Services
 {

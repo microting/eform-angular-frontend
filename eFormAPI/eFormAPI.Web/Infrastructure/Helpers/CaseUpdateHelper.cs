@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Cases.Request;
+using eFormAPI.Web.Infrastructure.Models.Cases.Request;
 
-namespace Microting.eFormApi.BasePn.Infrastructure.Helpers
+namespace eFormAPI.Web.Infrastructure.Helpers
 {
     public static class CaseUpdateHelper
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Microting.eFormApi.BasePn.Infrastructure.Models.Tags
+namespace eFormAPI.Web.Infrastructure.Models.Tags
 {
     public class UpdateTemplateTagsModel
     {

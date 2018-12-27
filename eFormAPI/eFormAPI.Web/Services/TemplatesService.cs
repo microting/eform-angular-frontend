@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Eforms;
 using eFormAPI.Web.Infrastructure.Database;
+using eFormAPI.Web.Infrastructure.Models;
+using eFormAPI.Web.Infrastructure.Models.Templates;
 using eFormCore;
 using eFormShared;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +16,6 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microsoft.Extensions.Options;
 using Microting.eFormApi.BasePn.Infrastructure.Models;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Templates;
 
 namespace eFormAPI.Web.Services
 {

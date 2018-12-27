@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Abstractions.Eforms;
 using eFormAPI.Web.Infrastructure.Database;
 using eFormAPI.Web.Infrastructure.Database.Entities;
 using eFormAPI.Web.Infrastructure.Models.Reports;
@@ -38,14 +39,14 @@ namespace eFormAPI.Web.Services
         {
             var list = parent.NestedElements
                 .Where(c => c.ParentId == parent.Id)
-                .OrderBy(c => c.Position)
+     //           .OrderBy(c => c.Position)
                 .Select(x => new EformReportElementsModel()
                 {
                     Id = x.Id,
                     ElementId = x.ElementId,
-                    Position = x.Position,
-                    Visibility = x.Visibility,
-                    NestedElements = GetReportElementsList(x)
+   //                 Position = x.Position,
+   //                 Visibility = x.Visibility,
+   //                 NestedElements = GetReportElementsList(x)
                 }).ToList();
 
             return list;
@@ -58,14 +59,14 @@ namespace eFormAPI.Web.Services
             {
                 var result = new EformReportFullModel();
                 var core = _coreHelper.GetCore();
-                var template = core.TemplateRead(templateId);
+                MainElement template = core.TemplateRead(templateId);
                 if (template == null)
                 {
                     return new OperationDataResult<EformReportFullModel>(false,
                         _localizationService.GetString(""));
                 }
 
-                result.EformMainElement = template;
+      //          result.EformMainElement = template;
 
                 var eformReport = await _dbContext.EformReports
                     .Where(x => x.TemplateId == templateId)
@@ -91,18 +92,18 @@ namespace eFormAPI.Web.Services
 
                 var reportElementsOrdered = reportElements
                     .Where(p => p.Parent == null)
-                    .OrderBy(p => p.Position)
+ //                   .OrderBy(p => p.Position)
                     .Select(p => new EformReportElementsModel()
                         {
                             Id = p.Id,
                             ElementId = p.ElementId,
-                            Position = p.Position,
-                            Visibility = p.Visibility,
-                            NestedElements = GetReportElementsList(p)
+       //                     Position = p.Position,
+        //                    Visibility = p.Visibility,
+         //                   NestedElements = GetReportElementsList(p)
                         }
                     ).ToList();
 
-                eformReport.Elements = reportElementsOrdered;
+       //         eformReport.Elements = reportElementsOrdered;
                 result.EformReport = eformReport;
                 return new OperationDataResult<EformReportFullModel>(true, result);
             }
@@ -119,7 +120,11 @@ namespace eFormAPI.Web.Services
             try
             {
                 var result = new EformReportFullModel();
+                using (var transaction = await _dbContext.Database.BeginTransactionAsync())
+                {
 
+                    transaction.Commit();
+                }
                 return new OperationDataResult<EformReportFullModel>(true, result);
             }
             catch (Exception e)

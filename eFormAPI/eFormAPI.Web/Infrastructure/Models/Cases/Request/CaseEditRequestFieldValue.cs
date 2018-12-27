@@ -1,4 +1,4 @@
-﻿namespace Microting.eFormApi.BasePn.Infrastructure.Models.Cases.Request
+﻿namespace eFormAPI.Web.Infrastructure.Models.Cases.Request
 {
     public class CaseEditRequestFieldValue
     {

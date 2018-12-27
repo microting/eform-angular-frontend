@@ -1,4 +1,4 @@
-﻿namespace Microting.eFormApi.BasePn.Infrastructure.Models
+﻿namespace eFormAPI.Web.Infrastructure.Models
 {
     public class WorkerModel
     {

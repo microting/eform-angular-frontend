@@ -12,8 +12,5 @@ namespace eFormAPI.Web.Infrastructure.Models.Reports
         public string HeaderVisibility { get; set; }
         public bool IsDateVisible { get; set; }
         public bool IsWorkerNameVisible { get; set; }
-
-        public List<EformReportElementsModel> Elements { get; set; }
-            = new List<EformReportElementsModel>();
     }
 }

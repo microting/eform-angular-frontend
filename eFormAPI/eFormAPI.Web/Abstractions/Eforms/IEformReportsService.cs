@@ -2,7 +2,7 @@
 using eFormAPI.Web.Infrastructure.Models.Reports;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
-namespace eFormAPI.Web.Services
+namespace eFormAPI.Web.Abstractions.Eforms
 {
     public interface IEformReportsService
     {

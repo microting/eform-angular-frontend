@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using eFormAPI.Web.Infrastructure.Models.Reports;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
 
 namespace eFormAPI.Web.Infrastructure.Database.Entities
@@ -8,8 +10,6 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities
     {        
         [Required]
         public int ElementId { get; set; }
-        public int Position { get; set; }
-        public bool Visibility { get; set; }
 
         public int EformReportId { get; set; }
         public EformReport EformReport { get; set; }
@@ -17,7 +17,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities
         public int? ParentId { get; set; }
         public EformReportElement Parent { get; set; }
 
-        public List<EformReportElement> NestedElements { get; set; }
-            = new List<EformReportElement>();
+        public ICollection<EformReportElement> NestedElements { get; set; }
+        public ICollection<EformReportDataItem> DataItems { get; set; }
     }
 }

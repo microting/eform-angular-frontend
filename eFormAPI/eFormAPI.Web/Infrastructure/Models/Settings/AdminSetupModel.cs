@@ -1,4 +1,4 @@
-﻿namespace Microting.eFormApi.BasePn.Infrastructure.Models.Settings
+﻿namespace eFormAPI.Web.Infrastructure.Models.Settings
 {
     public class AdminSetupModel
     {

@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace eFormSDK.Tests
+namespace eFormAPI.Web.Integration.Tests
 {
     [TestFixture]
     public class CanaryInAColeMine

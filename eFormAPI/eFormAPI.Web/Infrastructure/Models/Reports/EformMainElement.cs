@@ -1,15 +1,12 @@
 ﻿using System.Collections.Generic;
+using eFormAPI.Web.Infrastructure.Database.Entities;
 
 namespace eFormAPI.Web.Infrastructure.Models.Reports
 {
-    public class EformReportElementsModel
+    public class EformMainElement
     {
         public int Id { get; set; }
-        public int ElementId { get; set; }
         public string Label { get; set; }
-
-        public List<EformReportDataItemModel> DataItemList { get; set; }
-            = new List<EformReportDataItemModel>();
 
         public List<EformReportElementsModel> ElementList { get; set; }
             = new List<EformReportElementsModel>();

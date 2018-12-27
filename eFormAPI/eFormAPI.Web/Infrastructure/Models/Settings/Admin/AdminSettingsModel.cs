@@ -1,4 +1,4 @@
-﻿namespace Microting.eFormApi.BasePn.Infrastructure.Models.Settings.Admin
+﻿namespace eFormAPI.Web.Infrastructure.Models.Settings.Admin
 {
     public class AdminSettingsModel
     {
