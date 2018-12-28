@@ -1,12 +1,8 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading;
-using Castle.Core.Internal;
 using eFormAPI.Web.Hosting.Settings;
 using eFormAPI.Web.Infrastructure.Database;
-using eFormAPI.Web.Infrastructure.Database.Seed.SeedItems;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -56,6 +52,7 @@ namespace eFormAPI.Web
         }
 
         public delegate void ReloadDbConfiguration();
+
         public static ReloadDbConfiguration ReloadDbConfigurationDelegate { get; set; }
 
         public static void MigrateDb(IWebHost webHost)
@@ -101,59 +98,27 @@ namespace eFormAPI.Web
                 .AddEnvironmentVariables(prefix: "ASPNETCORE_")
                 .Build();
             var port = defaultConfig.GetValue("port", 5000);
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                return WebHost.CreateDefaultBuilder(args)
-                    .UseUrls($"http://localhost:{port}")
-                    .UseIISIntegration()
-                    .ConfigureAppConfiguration((hostContext, config) =>
-                    {
-                        // delete all default configuration providers
-                        config.Sources.Clear();
-                        config.SetBasePath(hostContext.HostingEnvironment.ContentRootPath);
-
-                        var filePath = Path.Combine(hostContext.HostingEnvironment.ContentRootPath,
-                            "connection.json");
-                        if (!File.Exists(filePath))
-                        {
-                            ConnectionStringManager.CreateDefalt(filePath);
-                        }
-
-                        config.AddJsonFile("connection.json",
-                            optional: true,
-                            reloadOnChange: true);
-                        var mainSettings = ConnectionStringManager.Read(filePath);
-                        if (!mainSettings.ConnectionStrings.DefaultConnection.IsNullOrEmpty()) // &&
-                            // mainSettings.ConnectionStrings.DefaultConnection != "...")
-                        {
-                            config.AddEfConfiguration(builder =>
-                                builder.UseSqlServer(mainSettings.ConnectionStrings.DefaultConnection));
-                        }
-                        else
-                        {
-                            var defaultSettings = ConfigurationSeed.Data.ToDictionary(
-                                item => item.Id,
-                                item => item.Value);
-
-                            config.AddInMemoryCollection(defaultSettings);
-                        }
-                        config.AddEnvironmentVariables();
-                        
-                    })
-                    .UseStartup<Startup>()
-                    .Build();
-            }
-
             return WebHost.CreateDefaultBuilder(args)
                 .UseUrls($"http://localhost:{port}")
+                .UseIISIntegration()
                 .ConfigureAppConfiguration((hostContext, config) =>
                 {
                     // delete all default configuration providers
                     config.Sources.Clear();
                     config.SetBasePath(hostContext.HostingEnvironment.ContentRootPath);
-                    config.AddJsonFile("appsettings.json",
+
+                    var filePath = Path.Combine(hostContext.HostingEnvironment.ContentRootPath,
+                        "connection.json");
+                    if (!File.Exists(filePath))
+                    {
+                        ConnectionStringManager.CreateDefalt(filePath);
+                    }
+
+                    config.AddJsonFile("connection.json",
                         optional: true,
                         reloadOnChange: true);
+                    var mainSettings = ConnectionStringManager.Read(filePath);
+                    config.AddEfConfiguration(mainSettings?.ConnectionStrings?.DefaultConnection);
                     config.AddEnvironmentVariables();
                 })
                 .UseStartup<Startup>()

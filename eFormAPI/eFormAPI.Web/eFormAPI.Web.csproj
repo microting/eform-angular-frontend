@@ -20,9 +20,13 @@
 
   <ItemGroup>
     <Compile Remove="output\**" />
+    <Compile Remove="Plugins\**" />
     <Content Remove="output\**" />
+    <Content Remove="Plugins\**" />
     <EmbeddedResource Remove="output\**" />
+    <EmbeddedResource Remove="Plugins\**" />
     <None Remove="output\**" />
+    <None Remove="Plugins\**" />
   </ItemGroup>
   
   <ItemGroup>
@@ -45,13 +49,6 @@
       <HintPath>..\..\..\eFormApi.BasePn\eFormApi.BasePn\bin\Debug\netcoreapp2.2\Microting.eFormApi.BasePn.dll</HintPath>
     </Reference>
   </ItemGroup>
-  
-  <ItemGroup>
-    <Content Update="appsettingssssssss.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
   
   <ItemGroup>
     <None Update="API.doc.xml">

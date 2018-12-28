@@ -2,9 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using eFormAPI.Web.Hosting.Enums;
+using eFormAPI.Web.Hosting.Extensions;
+using eFormAPI.Web.Infrastructure.Database.Entities;
+using eFormAPI.Web.Infrastructure.Database.Factories;
 using eFormCore;
 using McMaster.NETCore.Plugins;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microting.eFormApi.BasePn;
 using Microting.eFormApi.BasePn.Abstractions;
@@ -14,9 +20,52 @@ namespace eFormAPI.Web.Hosting.Helpers
 {
     public static class PluginHelper
     {
-        public static List<IEformPlugin> GetPlugins()
+        public static List<IEformPlugin> GetPlugins(IConfiguration configuration)
         {
-            var loaders = new List<PluginLoader>();
+            // Load info from database
+            List<EformPlugin> eformPlugins;
+            var newPlugins = new List<EformPlugin>();
+            var contextFactory = new BaseDbContextFactory();
+            using (var dbContext = contextFactory.CreateDbContext(new[] {configuration.MyConnectionString()}))
+            {
+                eformPlugins = dbContext.EformPlugins
+                    .AsNoTracking()
+                    .ToList();
+            }
+            var plugins = new List<IEformPlugin>();
+            // create plugin loaders
+            foreach (var plugin in GetAllPlugins())
+            {
+                var eformPlugin = eformPlugins.FirstOrDefault(x => x.PluginId == plugin.PluginId);
+                if (eformPlugin != null)
+                {
+                    if (eformPlugin.Status ==  PluginStatus.Enabled)
+                    {
+                        plugins.Add(plugin);
+                    }
+                }
+                else
+                {
+                    newPlugins.Add(new EformPlugin()
+                    {
+                        PluginId = plugin.PluginId,
+                        ConnectionString = "...",
+                        Status = PluginStatus.Disabled
+                    });
+                }
+            }
+
+            using (var dbContext = contextFactory.CreateDbContext(new[] {configuration.MyConnectionString()}))
+            {
+                dbContext.EformPlugins.AddRange(newPlugins);
+                dbContext.SaveChanges();
+            }
+            return plugins;
+        }
+
+
+        public static List<IEformPlugin> GetAllPlugins()
+        {
             var plugins = new List<IEformPlugin>();
             // create plugin loaders
             Console.ForegroundColor = ConsoleColor.Green;
@@ -36,7 +85,6 @@ namespace eFormAPI.Web.Hosting.Helpers
 
             //   var assemblies = new List<Assembly>();
             var directories = Directory.EnumerateDirectories(pluginsDir);
-
             foreach (var directory in directories)
             {
                 List<string> pluginList;
@@ -78,31 +126,12 @@ namespace eFormAPI.Web.Hosting.Helpers
                         Console.WriteLine("Found plugin : " + type.Name);
                         var plugin = (IEformPlugin) Activator.CreateInstance(type);
                         plugins.Add(plugin);
-                    }
 
-                    //var loader = PluginLoader.CreateFromAssemblyFile(
-                    //    plugin,
-                    //    sharedTypes: new [] { typeof(IEformPlugin), typeof(IServiceCollection), typeof(ILogger) });
-                    loaders.Add(loader);
+                    }
                 }
             }
+
             Console.ForegroundColor = ConsoleColor.Gray;
-
-
-            //// Create an instance of plugin types
-            //foreach (var loader in loaders)
-            //{
-            //    foreach (var pluginType in loader
-            //        .LoadDefaultAssembly()
-            //        .GetTypes()
-            //        .Where(t => typeof(IEformPlugin).IsAssignableFrom(t) && !t.IsAbstract))
-            //    {
-            //        // This assumes the implementation of IPlugin has a parameterless constructor
-            //        IEformPlugin plugin = (IEformPlugin)Activator.CreateInstance(pluginType);
-
-            //        Console.WriteLine($"Created plugin instance '{plugin.GetName()}'.");
-            //    }
-            //}
             return plugins;
         }
     }

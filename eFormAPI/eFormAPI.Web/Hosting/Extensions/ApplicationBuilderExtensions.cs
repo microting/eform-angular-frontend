@@ -52,7 +52,7 @@ namespace eFormAPI.Web.Hosting.Extensions
             Console.WriteLine($"Trying to load plugins, found : {plugins.Count}");
             foreach (var plugin in plugins)
             {
-                Console.WriteLine($"Loading plugin : {plugin.GetName()}");
+                Console.WriteLine($"Loading plugin : {plugin.Name}");
                 plugin.Configure(app);
             }
             Console.ForegroundColor = ConsoleColor.Gray;

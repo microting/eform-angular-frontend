@@ -12,10 +12,10 @@ using eFormAPI.Web.Services;
 using eFormAPI.Web.Services.Security;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
+using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -30,7 +30,6 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Localization;
 using Microting.eFormApi.BasePn.Localization.Abstractions;
 using Microting.eFormApi.BasePn.Services;
-using Swashbuckle.AspNetCore.Swagger;
 
 namespace eFormAPI.Web
 {
@@ -41,7 +40,7 @@ namespace eFormAPI.Web
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            Plugins = PluginHelper.GetPlugins();
+            Plugins = PluginHelper.GetPlugins(Configuration);
         }
 
         public IConfiguration Configuration { get; }
@@ -212,7 +211,7 @@ namespace eFormAPI.Web
         }
 
 
-        private void ConnectServices(IServiceCollection services)
+        private static void ConnectServices(IServiceCollection services)
         {
             services.AddHttpContextAccessor();
             services.AddSingleton<ILocalizationService, LocalizationService>();
@@ -240,6 +239,7 @@ namespace eFormAPI.Web
             services.AddScoped<IEformGroupService, EformGroupService>();
             services.AddScoped<IEformPermissionsService, EformPermissionsService>();
             services.AddScoped<IEformReportsService, EformReportsService>();
+            services.AddScoped<IPluginsSettingsService, PluginsSettingsService>();
         }
     }
 }

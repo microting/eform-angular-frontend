@@ -1,4 +1,4 @@
 export enum PluginsSettingsStatusEnum {
-  Disabled = 0,
-  Enabled = 1
+  Disabled = 1,
+  Enabled = 2
 }

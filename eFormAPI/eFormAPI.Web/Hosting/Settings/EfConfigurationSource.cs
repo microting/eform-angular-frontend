@@ -1,21 +1,19 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 
 namespace eFormAPI.Web.Hosting.Settings
 {
     public class EfConfigurationSource : IConfigurationSource
     {
-        private readonly Action<DbContextOptionsBuilder> _optionsAction;
+        private readonly string _connectionString;
 
-        public EfConfigurationSource(Action<DbContextOptionsBuilder> optionsAction)
+        public EfConfigurationSource(string connectionString)
         {
-            _optionsAction = optionsAction;
+            _connectionString = connectionString;
         }
 
         public IConfigurationProvider Build(IConfigurationBuilder builder)
         {
-            return new EfConfigurationProvider(_optionsAction);
+            return new EfConfigurationProvider(_connectionString);
         }
     }
 }

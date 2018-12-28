@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 
 namespace eFormAPI.Web.Hosting.Settings
 {
@@ -8,9 +6,9 @@ namespace eFormAPI.Web.Hosting.Settings
     {
         public static IConfigurationBuilder AddEfConfiguration(
             this IConfigurationBuilder builder,
-            Action<DbContextOptionsBuilder> optionsAction)
+            string connectionString)
         {
-            return builder.Add(new EfConfigurationSource(optionsAction));
+            return builder.Add(new EfConfigurationSource(connectionString));
         }
     }
 }

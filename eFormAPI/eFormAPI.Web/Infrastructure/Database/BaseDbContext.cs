@@ -17,7 +17,7 @@ namespace eFormAPI.Web.Infrastructure.Database
         IdentityRoleClaim<int>,
         IdentityUserToken<int>>
     {
-        public BaseDbContext(DbContextOptions<BaseDbContext> options) : base(options)
+        public BaseDbContext(DbContextOptions options) : base(options)
         {
         }
 
@@ -25,7 +25,8 @@ namespace eFormAPI.Web.Infrastructure.Database
         public DbSet<MenuItem> MenuItems { get; set; }
         public DbSet<SavedTag> SavedTags { get; set; }
         public DbSet<EformConfigurationValue> ConfigurationValues { get; set; }
-
+        public DbSet<EformPlugin> EformPlugins { get; set; }
+        
         // Reports
         public DbSet<EformReport> EformReports { get; set; }
         public DbSet<EformReportElement> EformReportElements { get; set; }
@@ -43,6 +44,14 @@ namespace eFormAPI.Web.Infrastructure.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<EformPlugin>()
+                .HasIndex(p => p.PluginId)
+                .IsUnique();
+
+            modelBuilder.Entity<EformPlugin>()
+                .Property(b => b.ConnectionString)
+                .HasDefaultValue("...");
 
             // Reports
             modelBuilder.Entity<EformReport>()

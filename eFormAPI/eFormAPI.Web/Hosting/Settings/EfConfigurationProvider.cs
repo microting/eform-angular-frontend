@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
-using eFormAPI.Web.Infrastructure.Database;
+using Castle.Core.Internal;
+using eFormAPI.Web.Infrastructure.Database.Factories;
 using eFormAPI.Web.Infrastructure.Database.Seed.SeedItems;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -9,9 +10,11 @@ namespace eFormAPI.Web.Hosting.Settings
 {
     public class EfConfigurationProvider : ConfigurationProvider
     {
-        public EfConfigurationProvider(Action<DbContextOptionsBuilder> optionsAction)
+        private readonly string _connectionString;
+
+        public EfConfigurationProvider(string connectionString)
         {
-            OptionsAction = optionsAction;
+            _connectionString = connectionString;
             Program.ReloadDbConfigurationDelegate = ReloadConfiguration;
         }
 
@@ -21,30 +24,27 @@ namespace eFormAPI.Web.Hosting.Settings
             OnReload();
         }
 
-        private Action<DbContextOptionsBuilder> OptionsAction { get; }
 
         // Load config data from EF DB.
         public override void Load()
         {
-            var builder = new DbContextOptionsBuilder<BaseDbContext>();
-            OptionsAction(builder);
-            try
-            {
-                using (var dbContext = new BaseDbContext(builder.Options))
-                {
-                    dbContext.Database.Migrate();
-                    
-                    Data = dbContext.ConfigurationValues
-                        .AsNoTracking()
-                        .ToDictionary(c => c.Id, c => c.Value);
-                }
-            }
-            catch (Exception)
+            if (_connectionString.IsNullOrEmpty() || _connectionString == "...")
             {
                 var seedData = ConfigurationSeed.Data;
                 Data = seedData.ToDictionary(
                     item => item.Id,
                     item => item.Value);
+            }
+            else
+            {
+                var contextFactory = new BaseDbContextFactory();
+                using (var dbContext = contextFactory.CreateDbContext(new[] {_connectionString}))
+                {
+                    dbContext.Database.Migrate();
+                    Data = dbContext.ConfigurationValues
+                        .AsNoTracking()
+                        .ToDictionary(c => c.Id, c => c.Value);
+                }
             }
         }
     }
