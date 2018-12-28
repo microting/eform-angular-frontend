@@ -8,6 +8,5 @@ export class ElementDto {
   approvalEnabled: boolean;
   extraFieldsEnabled: boolean;
   dataItemList: Array<DataItemDto> = [];
-  // dataItemGroupList: Array<CaseDataItemGroup> = [];
   elementList: Array<ElementDto> = [];
 }

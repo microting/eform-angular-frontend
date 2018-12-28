@@ -11,7 +11,8 @@
 
   <div mdbCollapse #collapse="bs-collapse">
     <div class="card-body">
-      <app-eform-report-switch [dataItemList]="dataItemList"></app-eform-report-switch>
+      <app-eform-report-switch [dragulaContainerName]="dataItemLabel + '-container'" [dataItemList]="dataItemList">
+      </app-eform-report-switch>
     </div>
   </div>
 </div>

@@ -23,10 +23,10 @@ import {EformReportRouting} from './eform-report.routing';
 import {
   EformReportPageComponent,
   EformReportSwitchComponent,
-  EformReportBlockComponent
+  EformReportBlockComponent,
+  EformReportHeaderComponent,
+  EformReportCropperComponent
 } from './components';
-import { EformReportHeaderComponent } from './components/eform-report-header/eform-report-header.component';
-import { EformReportCropperComponent } from './components/eform-report-cropper/eform-report-cropper.component';
 
 @NgModule({
   imports: [
