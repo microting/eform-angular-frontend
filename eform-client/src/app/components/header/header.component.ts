@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {EventBrokerService} from 'src/app/common/helpers';
 import {HeaderSettingsModel} from 'src/app/common/models/settings';
-import {AppSettingsService} from 'src/app/common/services/app-settings';
+import {AppSettingsService} from 'src/app/common/services/settings/app-settings';
 
 @Component({
   selector: 'app-header',

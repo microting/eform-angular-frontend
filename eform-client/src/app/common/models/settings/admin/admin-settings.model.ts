@@ -1,6 +1,6 @@
-import {LoginPageSettingsModel} from './login-page-settings.model';
-import {SmtpSettingsModel} from './smtp-settings.model';
-import {HeaderSettingsModel} from './header-settings.model';
+import {LoginPageSettingsModel} from '../app-parts/login-page-settings.model';
+import {SmtpSettingsModel} from '../smtp-settings.model';
+import {HeaderSettingsModel} from '../app-parts/header-settings.model';
 
 export class AdminSettingsModel {
   loginPageSettingsModel: LoginPageSettingsModel;

@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {AuthResponseModel, GoogleAuthenticatorModel, LoginRequestModel} from 'src/app/common/models/auth';
 import {LoginPageSettingsModel} from 'src/app/common/models/settings';
-import {AppSettingsService} from 'src/app/common/services/app-settings';
+import {AppSettingsService} from 'src/app/common/services/settings/app-settings';
 import {AuthService, LocaleService, UserSettingsService} from 'src/app/common/services/auth';
 
 @Component({

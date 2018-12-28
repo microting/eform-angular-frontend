@@ -42,7 +42,9 @@ import {
     TranslateModule.forRoot(translateConfig),
     HttpClientModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot(
+      {preventDuplicates: true}
+    ),
     DragulaModule.forRoot(),
     GalleryModule.forRoot(),
     LightboxModule.forRoot(),

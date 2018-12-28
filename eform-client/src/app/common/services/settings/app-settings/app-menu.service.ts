@@ -8,7 +8,7 @@ import {
   OperationDataResult, UserMenuModel
 } from 'src/app/common/models';
 
-import {BaseService} from '../base.service';
+import {BaseService} from '../../base.service';
 
 const AppMenuMethods = {
   UserMenu: '/api/menu/current-user'

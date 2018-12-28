@@ -1,7 +1,7 @@
-import {AdminSetupModel} from './admin-setup.model';
+import {AdminSetupModel} from '../admin/admin-setup.model';
 import {ConnectionStringMainModel} from './connection-string-main';
 import {ConnectionStringSDKModel} from './connection-string-sdk';
-import {GeneralAppSetupSettingsModel} from './general-app-setup-settings.model';
+import {GeneralAppSetupSettingsModel} from '../general-app-setup-settings.model';
 
 export class SettingsModel {
   connectionStringMain: ConnectionStringMainModel = new ConnectionStringMainModel;

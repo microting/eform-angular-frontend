@@ -14,7 +14,7 @@ import {
 } from 'src/app/common/models';
 import {SettingsModel} from 'src/app/common/models/settings';
 
-import {BaseService} from '../base.service';
+import {BaseService} from '../../base.service';
 
 const SettingsMethods = {
   UpdateConnectionString: '/api/settings/connection-string',
