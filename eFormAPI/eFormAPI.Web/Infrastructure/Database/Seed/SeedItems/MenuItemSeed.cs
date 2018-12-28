@@ -169,6 +169,17 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                     Position = 4,
                     ParentId = 10,
                     MenuPosition = 2,
+                },
+                new MenuItem
+                {
+                    Id = 16,
+                    Name = "Plugins Settings",
+                    LocaleName = "PluginsSettings",
+                    E2EId = "plugins-settings",
+                    Link = "/plugins-settings",
+                    Position = 6,
+                    ParentId = 3,
+                    MenuPosition = 1,
                 }
             );
             return modelBuilder;
