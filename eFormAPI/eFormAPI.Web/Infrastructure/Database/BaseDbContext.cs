@@ -17,7 +17,7 @@ namespace eFormAPI.Web.Infrastructure.Database
         IdentityRoleClaim<int>,
         IdentityUserToken<int>>
     {
-        public BaseDbContext(DbContextOptions options) : base(options)
+        public BaseDbContext(DbContextOptions<BaseDbContext> options) : base(options)
         {
         }
 

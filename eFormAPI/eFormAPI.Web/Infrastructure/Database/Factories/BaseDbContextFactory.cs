@@ -9,7 +9,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Factories
     {
         public BaseDbContext CreateDbContext(string[] args)
         {
-            DbContextOptionsBuilder optionsBuilder = new DbContextOptionsBuilder<BaseDbContext>();
+            var optionsBuilder = new DbContextOptionsBuilder<BaseDbContext>();
             if (args.Any())
             {
                 if (args.FirstOrDefault().ToLower().Contains("convert zero datetime"))

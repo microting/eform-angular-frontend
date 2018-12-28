@@ -43,6 +43,7 @@ namespace eFormAPI.Web.Services
                         var pluginSettingsModel = new PluginSettingsModel()
                         {
                             Id = eformPlugin.Id,
+                            PluginId = eformPlugin.PluginId,
                             ConnectionString = eformPlugin.ConnectionString,
                             Status = eformPlugin.Status,
                             Name = loadedPlugin.Name,
