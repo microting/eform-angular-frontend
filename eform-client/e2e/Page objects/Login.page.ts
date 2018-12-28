@@ -31,11 +31,11 @@ class LoginPage extends Page {
   }
 
   public login(): void {
-    browser.pause(20000);
+    browser.pause(10000);
     this.usernameInput.setValue(LoginConstants.username);
     this.passwordInput.setValue(LoginConstants.password);
     this.loginBtn.click();
-    browser.pause(20000);
+    browser.pause(10000);
   }
 }
 

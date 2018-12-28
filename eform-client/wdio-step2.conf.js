@@ -61,7 +61,7 @@ exports.config = {
     //
     browserName: 'chrome',
     chromeOptions: {
-      args: ['--start-maximized']
+      args: ['--window-size=1920,1080']
     }
   }],
   //
@@ -86,7 +86,7 @@ exports.config = {
   //
   // If you only want to run your Tests until a specific amount of Tests have failed use
   // bail (default is 0 - don't bail, run all Tests).
-  bail: 0,
+  bail: 1,
   //
   // Saves a screenshot to a given path if a command fails.
   screenshotPath: './errorShots/',
