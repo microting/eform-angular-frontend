@@ -27,17 +27,18 @@ export class PluginSettingsEditComponent implements OnInit {
 
   show(model: PluginSettingsModel) {
     this.selectedPluginSettings = model;
-    this.pluginSettingsUpdateModel.id = this.selectedPluginSettings.id;
+    this.pluginSettingsUpdateModel = new PluginsSettingsUpdateModel(this.selectedPluginSettings);
     this.frame.show();
   }
 
   updateSettings() {
     this.spinnerStatus = true;
-    this.pluginSettingsService.updatePluginSettings(this.selectedPluginSettings).subscribe((data) => {
+    this.pluginSettingsService.updatePluginSettings(this.pluginSettingsUpdateModel).subscribe((data) => {
       if (data && data.success) {
         this.frame.hide();
         this.onPluginSettingsUpdated.emit();
         this.pluginSettingsUpdateModel = new PluginsSettingsUpdateModel();
+        window.location.reload();
       }
       this.spinnerStatus = false;
     });

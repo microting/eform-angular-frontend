@@ -22,7 +22,7 @@
         <td scope="row">{{plugin.id}}</td>
         <td>{{plugin.name}}</td>
         <td>{{plugin.version}}</td>
-        <td [ngStyle]="{'color': '#06ba06'}">
+        <td [ngStyle]="{'color': plugin.status == statusEnum.Enabled ? '#06ba06' : '#ba3f4e'}">
           {{statusEnum[plugin.status] | translate}}
         </td>
         <td>

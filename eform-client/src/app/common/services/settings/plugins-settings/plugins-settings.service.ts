@@ -12,7 +12,7 @@ import {
 import {BaseService} from 'src/app/common/services/base.service';
 
 const PluginsSettingsMethods = {
-  Settings: '/api/plugins-settings/connection-string',
+  Settings: '/api/plugins/settings',
 };
 
 @Injectable()
@@ -25,6 +25,6 @@ export class PluginsSettingsService extends BaseService {
     return this.get(PluginsSettingsMethods.Settings, model);
   }
   updatePluginSettings(model: PluginsSettingsUpdateModel): Observable<OperationResult> {
-    return this.post(PluginsSettingsMethods.Settings, model);
+    return this.put(PluginsSettingsMethods.Settings, model);
   }
 }
