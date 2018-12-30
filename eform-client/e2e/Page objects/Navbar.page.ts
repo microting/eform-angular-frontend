@@ -36,7 +36,7 @@ export class Navbar {
   public goToApplicationSettings() {
     this.advancedDropdown();
     this.applicationSettingsBtn();
-    browser.pause(25000);
+    browser.pause(15000);
   }
 
   public goToDeviceUsersPage() {
