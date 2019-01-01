@@ -18,8 +18,12 @@ export class PluginsSettingsPageComponent implements OnInit {
   pluginsSettingsModel: PluginsSettingsModel = new PluginsSettingsModel();
   spinnerStatus = false;
 
-  get statusEnum() { return PluginsSettingsStatusEnum; }
-  constructor(private pluginsSettingsService: PluginsSettingsService) { }
+  constructor(private pluginsSettingsService: PluginsSettingsService) {
+  }
+
+  get statusEnum() {
+    return PluginsSettingsStatusEnum;
+  }
 
   ngOnInit() {
     this.getAllPlugins();
@@ -30,7 +34,8 @@ export class PluginsSettingsPageComponent implements OnInit {
     this.pluginsSettingsService.getAllPluginsSettings(this.pluginsSettingsRequestModel).subscribe((data) => {
       if (data && data.success) {
         this.pluginsSettingsModel = data.model;
-      } this.spinnerStatus = false;
+      }
+      this.spinnerStatus = false;
     });
   }
 
