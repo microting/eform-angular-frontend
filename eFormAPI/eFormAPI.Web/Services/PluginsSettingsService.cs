@@ -47,7 +47,7 @@ namespace eFormAPI.Web.Services
                             ConnectionString = eformPlugin.ConnectionString,
                             Status = eformPlugin.Status,
                             Name = loadedPlugin.Name,
-                            Version = loadedPlugin.PluginAssembly().ImageRuntimeVersion,
+                            Version = loadedPlugin.PluginAssembly().GetName().Version.ToString(),
                         };
                         result.SettingsList.Add(pluginSettingsModel);
                     }

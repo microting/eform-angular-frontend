@@ -35,7 +35,7 @@ namespace eFormAPI.Web
 {
     public class Startup
     {
-        public static List<IEformPlugin> Plugins;
+        public static List<IEformPlugin> Plugins = new List<IEformPlugin>();
 
         public Startup(IConfiguration configuration)
         {
