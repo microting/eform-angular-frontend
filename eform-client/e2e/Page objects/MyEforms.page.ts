@@ -91,8 +91,12 @@ class MyEformsRowObject {
   constructor(rowNum) {
     if ($$('#eform-id')[rowNum - 1]) {
       this.id = +$$('#eform-id')[rowNum - 1];
-      this.createdAt = new Date($$('#eform-created-at')[rowNum - 1].getText());
-      this.eFormName = $$('#eform-label')[rowNum - 1].getText();
+      try {
+        this.createdAt = new Date($$('#eform-created-at')[rowNum - 1].getText());
+      } catch (e) {}
+      try {
+        this.eFormName = $$('#eform-label')[rowNum - 1].getText();
+      } catch (e) {}
       this.tags = $$(`//*[@id="mainPageEFormsTableBody"]/tr[${rowNum}]//*[@id="eform-tag"]`);
       this.pairs = $$(`//*[@id="mainPageEFormsTableBody"]/tr[${rowNum}]//*[@id="eform-tag"]`);
       this.editTagsBtn = $$('#eform-edit-btn')[rowNum - 1];
