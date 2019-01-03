@@ -89,7 +89,7 @@ export default myEformsPage;
 
 class MyEformsRowObject {
   constructor(rowNum) {
-    if (!$$('#eform-id')[rowNum - 1]) {
+    if ($$('#eform-id')[rowNum - 1]) {
       this.id = +$$('#eform-id')[rowNum - 1];
       this.createdAt = new Date($$('#eform-created-at')[rowNum - 1].getText());
       this.eFormName = $$('#eform-label')[rowNum - 1].getText();
