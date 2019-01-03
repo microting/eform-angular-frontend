@@ -27,8 +27,7 @@ describe('Device users page should add new device user', function () {
 describe('Device users page should not add new device user', function () {
   afterEach(function () {
     browser.refresh();
-    deviceUsersPage.open('/simplesites');
-    browser.pause(8000);
+    myEformsPage.Navbar.goToDeviceUsersPage();
   });
   // TODO fix SDK to be able to tests this!
   // it('with only first name', function () {
