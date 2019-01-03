@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace eFormAPI.Web.Migrations
 {
-    public partial class AddedDataItemTables : Migration
+    public partial class AddPluginTables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,6 +14,26 @@ namespace eFormAPI.Web.Migrations
             migrationBuilder.DropColumn(
                 name: "Visibility",
                 table: "EformReportElements");
+
+            migrationBuilder.AddColumn<string>(
+                name: "Description",
+                table: "EformReports",
+                nullable: true);
+
+            migrationBuilder.CreateTable(
+                name: "EformPlugins",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    PluginId = table.Column<string>(maxLength: 100, nullable: false),
+                    ConnectionString = table.Column<string>(nullable: true),
+                    Status = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EformPlugins", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "EformReportDataItems",
@@ -44,6 +64,17 @@ namespace eFormAPI.Web.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.InsertData(
+                table: "MenuItems",
+                columns: new[] { "Id", "E2EId", "Link", "LocaleName", "MenuPosition", "Name", "ParentId", "Position" },
+                values: new object[] { 16, "plugins-settings", "/plugins-settings", "PluginsSettings", 1, "Plugins Settings", 3, 6 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EformPlugins_PluginId",
+                table: "EformPlugins",
+                column: "PluginId",
+                unique: true);
+
             migrationBuilder.CreateIndex(
                 name: "IX_EformReportDataItems_DataItemId",
                 table: "EformReportDataItems",
@@ -63,7 +94,19 @@ namespace eFormAPI.Web.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "EformPlugins");
+
+            migrationBuilder.DropTable(
                 name: "EformReportDataItems");
+
+            migrationBuilder.DeleteData(
+                table: "MenuItems",
+                keyColumn: "Id",
+                keyValue: 16);
+
+            migrationBuilder.DropColumn(
+                name: "Description",
+                table: "EformReports");
 
             migrationBuilder.AddColumn<int>(
                 name: "Position",

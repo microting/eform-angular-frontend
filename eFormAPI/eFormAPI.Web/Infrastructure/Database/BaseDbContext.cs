@@ -49,18 +49,10 @@ namespace eFormAPI.Web.Infrastructure.Database
                 .HasIndex(p => p.PluginId)
                 .IsUnique();
 
-            modelBuilder.Entity<EformPlugin>()
-                .Property(b => b.ConnectionString)
-                .HasDefaultValue("...");
-
             // Reports
             modelBuilder.Entity<EformReport>()
                 .HasIndex(p => p.TemplateId)
                 .IsUnique();
-
-            modelBuilder.Entity<EformReport>()
-                .Property(b => b.Description)
-                .HasDefaultValue("");
 
             modelBuilder.Entity<EformReportElement>()
                 .HasIndex(p => p.ElementId);

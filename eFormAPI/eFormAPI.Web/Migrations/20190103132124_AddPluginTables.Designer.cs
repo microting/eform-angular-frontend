@@ -10,8 +10,8 @@ using eFormAPI.Web.Infrastructure.Database;
 namespace eFormAPI.Web.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    [Migration("20181227195618_AddedDataItemTables")]
-    partial class AddedDataItemTables
+    [Migration("20190103132124_AddPluginTables")]
+    partial class AddPluginTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -405,15 +405,35 @@ namespace eFormAPI.Web.Migrations
                     b.ToTable("EformPermissions");
                 });
 
+            modelBuilder.Entity("eFormAPI.Web.Infrastructure.Database.Entities.EformPlugin", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ConnectionString");
+
+                    b.Property<string>("PluginId")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<int>("Status");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PluginId")
+                        .IsUnique();
+
+                    b.ToTable("EformPlugins");
+                });
+
             modelBuilder.Entity("eFormAPI.Web.Infrastructure.Database.Entities.EformReport", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Description")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValue("");
+                    b.Property<string>("Description");
 
                     b.Property<byte[]>("HeaderImage");
 
@@ -825,6 +845,17 @@ namespace eFormAPI.Web.Migrations
                             Name = "Logout",
                             ParentId = 10,
                             Position = 4
+                        },
+                        new
+                        {
+                            Id = 16,
+                            E2EId = "plugins-settings",
+                            Link = "/plugins-settings",
+                            LocaleName = "PluginsSettings",
+                            MenuPosition = 1,
+                            Name = "Plugins Settings",
+                            ParentId = 3,
+                            Position = 6
                         });
                 });
 

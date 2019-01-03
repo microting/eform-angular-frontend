@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Castle.Core.Internal;
 using eFormAPI.Web.Infrastructure.Database.Factories;
 using eFormAPI.Web.Infrastructure.Database.Seed.SeedItems;
@@ -23,7 +22,6 @@ namespace eFormAPI.Web.Hosting.Settings
             Load();
             OnReload();
         }
-
 
         // Load config data from EF DB.
         public override void Load()

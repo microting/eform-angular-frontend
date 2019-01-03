@@ -409,9 +409,7 @@ namespace eFormAPI.Web.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ConnectionString")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValue("...");
+                    b.Property<string>("ConnectionString");
 
                     b.Property<string>("PluginId")
                         .IsRequired()
@@ -433,9 +431,7 @@ namespace eFormAPI.Web.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Description")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValue("");
+                    b.Property<string>("Description");
 
                     b.Property<byte[]>("HeaderImage");
 
