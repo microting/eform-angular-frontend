@@ -35,7 +35,7 @@ class LoginPage extends Page {
     this.usernameInput.setValue(LoginConstants.username);
     this.passwordInput.setValue(LoginConstants.password);
     this.loginBtn.click();
-    browser.pause(15000);
+    browser.pause(10000);
   }
 }
 
