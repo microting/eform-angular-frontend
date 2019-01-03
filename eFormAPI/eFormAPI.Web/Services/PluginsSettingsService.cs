@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Hosting.Enums;
 using eFormAPI.Web.Hosting.Helpers;
 using eFormAPI.Web.Infrastructure.Database;
 using eFormAPI.Web.Infrastructure.Models.Plugins;
@@ -45,7 +46,7 @@ namespace eFormAPI.Web.Services
                             Id = eformPlugin.Id,
                             PluginId = eformPlugin.PluginId,
                             ConnectionString = eformPlugin.ConnectionString,
-                            Status = eformPlugin.Status,
+                            Status = (PluginStatus) eformPlugin.Status,
                             Name = loadedPlugin.Name,
                             Version = loadedPlugin.PluginAssembly().GetName().Version.ToString(),
                         };
@@ -78,7 +79,7 @@ namespace eFormAPI.Web.Services
                 }
 
                 eformPlugin.ConnectionString = updateModel.ConnectionString;
-                eformPlugin.Status = updateModel.Status;
+                eformPlugin.Status = (int) updateModel.Status;
                 _dbContext.EformPlugins.Update(eformPlugin);
                 await _dbContext.SaveChangesAsync();
                 Program.Restart();

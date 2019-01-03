@@ -39,7 +39,7 @@ namespace eFormAPI.Web.Hosting.Helpers
                 var eformPlugin = eformPlugins.FirstOrDefault(x => x.PluginId == plugin.PluginId);
                 if (eformPlugin != null)
                 {
-                    if (eformPlugin.Status ==  PluginStatus.Enabled)
+                    if (eformPlugin.Status ==  (int) PluginStatus.Enabled)
                     {
                         plugins.Add(plugin);
                     }
@@ -50,7 +50,7 @@ namespace eFormAPI.Web.Hosting.Helpers
                     {
                         PluginId = plugin.PluginId,
                         ConnectionString = "...",
-                        Status = PluginStatus.Disabled
+                        Status = (int) PluginStatus.Disabled
                     });
                 }
             }

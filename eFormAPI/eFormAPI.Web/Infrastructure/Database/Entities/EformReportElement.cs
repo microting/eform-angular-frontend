@@ -12,10 +12,10 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities
         public int ElementId { get; set; }
 
         public int EformReportId { get; set; }
-        public EformReport EformReport { get; set; }
+        public virtual EformReport EformReport { get; set; }
 
         public int? ParentId { get; set; }
-        public EformReportElement Parent { get; set; }
+        public virtual EformReportElement Parent { get; set; }
 
         public virtual ICollection<EformReportElement> NestedElements { get; set; }
         public virtual ICollection<EformReportDataItem> DataItems { get; set; }

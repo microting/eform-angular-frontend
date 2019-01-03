@@ -13,10 +13,10 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities
         public bool Visibility { get; set; }
 
         public int EformReportElementId { get; set; }
-        public EformReportElement EformReportElement { get; set; }
+        public virtual EformReportElement EformReportElement { get; set; }
 
         public int? ParentId { get; set; }
-        public EformReportDataItem Parent { get; set; }
+        public virtual EformReportDataItem Parent { get; set; }
 
         public virtual ICollection<EformReportDataItem> NestedDataItems { get; set; }
     }

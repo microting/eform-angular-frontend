@@ -25,6 +25,8 @@ namespace eFormAPI.Web.Infrastructure.Database.Factories
             {
                 optionsBuilder.UseSqlServer("...");
             }
+
+            optionsBuilder.UseLazyLoadingProxies();
             return new BaseDbContext(optionsBuilder.Options);
         }
     }

@@ -12,6 +12,6 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities
 
         public string ConnectionString { get; set; }
 
-        public PluginStatus Status { get; set; }
+        public int Status { get; set; }
     }
 }
