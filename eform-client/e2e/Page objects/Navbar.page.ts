@@ -19,7 +19,7 @@ export class Navbar {
   }
 
   public get deviceUsersBtn() {
-    return browser.element(`//*[contains(text(), 'Enhedsbrugere')]`);
+    return this.clickOnHeaderMenuItem(' Enhedsbrugere ');
   }
 
   public clickOnHeaderMenuItem(headerMenuItem) {

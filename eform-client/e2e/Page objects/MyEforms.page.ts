@@ -1,5 +1,5 @@
 import {PageWithNavbarPage} from './PageWithNavbar.page';
-import XMLForEform from "../Constants/XMLForEform";
+import XMLForEform from '../Constants/XMLForEform';
 
 class MyEformsPage extends PageWithNavbarPage {
   constructor() {
@@ -23,7 +23,7 @@ class MyEformsPage extends PageWithNavbarPage {
   }
 
   public get eformNameSortBtn() {
-    return browser.element('#nameEFormSort')
+    return browser.element('#nameEFormSort');
   }
 
   public get eformFilter() {
@@ -60,31 +60,31 @@ class MyEformsPage extends PageWithNavbarPage {
     this.newEformBtn.click();
     browser.pause(3000);
     // Create replaced xml and insert it in textarea
-    let xml = XMLForEform.XML.replace('TEST_LABEL', eFormLabel);
+    const xml = XMLForEform.XML.replace('TEST_LABEL', eFormLabel);
     browser.execute(function (xmlText) {
-      (<HTMLInputElement>document.getElementById("eFormXml")).value = xmlText;
+      (<HTMLInputElement>document.getElementById('eFormXml')).value = xmlText;
     }, xml);
     this.xmlTextArea.addValue(' ');
     // Create new tags
-    let addedTags: string[] = newTagsList;
+    const addedTags: string[] = newTagsList;
     if (newTagsList.length > 0) {
       this.createEformNewTagInput.setValue(newTagsList.join(','));
     }
     // Add existing tags
-    let selectedTags: string[] = [];
+    const selectedTags: string[] = [];
     if (tagAddedNum > 0) {
       for (let i = 0; i < tagAddedNum; i++) {
         this.createEformTagSelector.click();
-        browser.pause(2000);
-        let selectedTag = $('.ng-option:not(.ng-option-selected)');
+        browser.pause(3000);
+        const selectedTag = $('.ng-option:not(.ng-option-selected)');
         selectedTags.push(selectedTag.getText());
         selectedTag.click();
-        browser.pause(2000);
+        browser.pause(3000);
       }
     }
     this.createEformBtn.click();
     browser.pause(10000);
-    return {added: addedTags, selected: selectedTags}
+    return {added: addedTags, selected: selectedTags};
   }
 }
 
@@ -93,16 +93,22 @@ export default myEformsPage;
 
 class MyEformsRowObject {
   constructor(rowNum) {
-    this.id = +$$('#eform-id')[rowNum - 1];
-    this.createdAt = new Date($$('#eform-created-at')[rowNum - 1].getText());
-    this.eFormName = $$('#eform-label')[rowNum - 1].getText();
-    this.tags = $$(`//*[@id="mainPageEFormsTableBody"]/tr[${rowNum}]//*[@id="eform-tag"]`);
-    this.pairs = $$(`//*[@id="mainPageEFormsTableBody"]/tr[${rowNum}]//*[@id="eform-tag"]`);
-    this.editTagsBtn = $$('#eform-edit-btn')[rowNum - 1];
-    this.pairEformBtn = $$('#eform-pairing-btn')[rowNum - 1];
-    this.editColumnsBtn = $$('#edit-columnts-btn')[rowNum - 1];
-    this.deleteBtn = $$('#delete-eform-btn')[rowNum - 1];
-    this.uploadZipArchiveBtn = $$('#upload-zip-btn')[rowNum - 1]
+    if ($$('#eform-id')[rowNum - 1]) {
+      this.id = +$$('#eform-id')[rowNum - 1];
+      try {
+        this.createdAt = new Date($$('#eform-created-at')[rowNum - 1].getText());
+      } catch (e) {}
+      try {
+        this.eFormName = $$('#eform-label')[rowNum - 1].getText();
+      } catch (e) {}
+      this.tags = $$(`//*[@id="mainPageEFormsTableBody"]/tr[${rowNum}]//*[@id="eform-tag"]`);
+      this.pairs = $$(`//*[@id="mainPageEFormsTableBody"]/tr[${rowNum}]//*[@id="eform-tag"]`);
+      this.editTagsBtn = $$('#eform-edit-btn')[rowNum - 1];
+      this.pairEformBtn = $$('#eform-pairing-btn')[rowNum - 1];
+      this.editColumnsBtn = $$('#edit-columnts-btn')[rowNum - 1];
+      this.deleteBtn = $$('#delete-eform-btn')[rowNum - 1];
+      this.uploadZipArchiveBtn = $$('#upload-zip-btn')[rowNum - 1];
+    }
   }
 
   id: number;
