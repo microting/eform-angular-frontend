@@ -26,6 +26,10 @@ class MyEformsPage extends PageWithNavbarPage {
     return browser.element('#nameEFormSort');
   }
 
+  public get eformFilter() {
+    return browser.element('#labelInput')
+  }
+
 
   // Create eform modal
   public get createEformTagSelector() {
