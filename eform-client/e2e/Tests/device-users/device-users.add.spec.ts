@@ -40,6 +40,8 @@ describe('Device users page should not add new device user', function () {
   // });
   it('with only last name', function () {
     const lastName = generateRandmString();
+    browser.refresh();
+    browser.pause(8000);
     deviceUsersPage.newDeviceUserBtn.click();
     browser.pause(4000);
     deviceUsersPage.createLastNameInput.setValue(lastName);
@@ -47,6 +49,8 @@ describe('Device users page should not add new device user', function () {
       'Create button in modal window while creating new device user is active when only last name is provided').equal(false);
   });
   it('without first and last names', function () {
+    browser.refresh();
+    browser.pause(8000);
     deviceUsersPage.newDeviceUserBtn.click();
     browser.pause(4000);
     expect(deviceUsersPage.saveCreateBtn.isEnabled(),
@@ -55,6 +59,8 @@ describe('Device users page should not add new device user', function () {
   });
   it('if cancel was clicked', function () {
     const rowCountBeforeCreation = deviceUsersPage.rowNum;
+    browser.refresh();
+    browser.pause(8000);
     deviceUsersPage.newDeviceUserBtn.click();
     browser.pause(4000);
     deviceUsersPage.cancelCreateBtn.click();
