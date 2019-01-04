@@ -10,6 +10,7 @@ describe('Device users page should add new device user', function () {
     loginPage.open('/');
     loginPage.login();
     myEformsPage.Navbar.goToDeviceUsersPage();
+    browser.pause(8000)
   });
   it('with first name and last name', function () {
     const name = generateRandmString();
