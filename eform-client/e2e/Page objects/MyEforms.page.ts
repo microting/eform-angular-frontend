@@ -54,7 +54,7 @@ class MyEformsPage extends PageWithNavbarPage {
 
   createNewEform(eFormLabel, newTagsList = [], tagAddedNum = 0) {
     this.newEformBtn.click();
-    browser.pause(3000);
+    browser.pause(5000);
     // Create replaced xml and insert it in textarea
     const xml = XMLForEform.XML.replace('TEST_LABEL', eFormLabel);
     browser.execute(function (xmlText) {
@@ -71,15 +71,15 @@ class MyEformsPage extends PageWithNavbarPage {
     if (tagAddedNum > 0) {
       for (let i = 0; i < tagAddedNum; i++) {
         this.createEformTagSelector.click();
-        browser.pause(3000);
+        browser.pause(5000);
         const selectedTag = $('.ng-option:not(.ng-option-selected)');
         selectedTags.push(selectedTag.getText());
         selectedTag.click();
-        browser.pause(3000);
+        browser.pause(5000);
       }
     }
     this.createEformBtn.click();
-    browser.pause(10000);
+    browser.pause(15000);
     return {added: addedTags, selected: selectedTags};
   }
 }
