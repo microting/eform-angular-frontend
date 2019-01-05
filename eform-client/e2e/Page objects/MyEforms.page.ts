@@ -75,11 +75,11 @@ class MyEformsPage extends PageWithNavbarPage {
     if (tagAddedNum > 0) {
       for (let i = 0; i < tagAddedNum; i++) {
         this.createEformTagSelector.click();
-        browser.pause(5000);
+        browser.pause(10000);
         const selectedTag = $('.ng-option:not(.ng-option-selected)');
         selectedTags.push(selectedTag.getText());
         selectedTag.click();
-        browser.pause(5000);
+        browser.pause(10000);
       }
     }
     this.createEformBtn.click();
