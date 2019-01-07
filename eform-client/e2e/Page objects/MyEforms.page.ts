@@ -85,7 +85,7 @@ class MyEformsPage extends PageWithNavbarPage {
       }
     }
     this.createEformBtn.click();
-    browser.pause(15000);
+    browser.pause(14000);
     return {added: addedTags, selected: selectedTags};
   }
 }
