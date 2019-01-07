@@ -57,7 +57,6 @@ class MyEformsPage extends PageWithNavbarPage {
   }
 
   createNewEform(eFormLabel, newTagsList = [], tagAddedNum = 0) {
-    browser.pause(5000);
     this.newEformBtn.click();
     browser.pause(5000);
     // Create replaced xml and insert it in textarea
@@ -82,7 +81,7 @@ class MyEformsPage extends PageWithNavbarPage {
         selectedTags.push(selectedTag.getText());
         console.log('selectedTags is ' + JSON.stringify(selectedTags));
         selectedTag.click();
-        browser.pause(10000);
+        browser.pause(5000);
       }
     }
     this.createEformBtn.click();
