@@ -54,6 +54,8 @@ describe('My eforms', function () {
     expect(eform.id === null);
   });
   it('should create eform with creating 1 tag and using 1 already prepared tag', function () {
+    browser.refresh();
+    browser.pause(8000);
     let eform = myEformsPage.getFirstMyEformsRowObj();
     expect(eform.id === null);
     const newEformLabel = Guid.create().toString();
