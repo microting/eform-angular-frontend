@@ -74,9 +74,9 @@ class MyEformsPage extends PageWithNavbarPage {
     // Add existing tags
     const selectedTags: string[] = [];
     if (tagAddedNum > 0) {
+      browser.pause(15000);
       for (let i = 0; i < tagAddedNum; i++) {
         this.createEformTagSelector.click();
-        browser.pause(10000);
         const selectedTag = $('.ng-option:not(.ng-option-selected)');
         selectedTags.push(selectedTag.getText());
         console.log('selectedTags is ' + JSON.stringify(selectedTags));
