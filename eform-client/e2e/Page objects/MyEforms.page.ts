@@ -27,7 +27,7 @@ class MyEformsPage extends PageWithNavbarPage {
   }
 
   public get eformFilter() {
-    return browser.element('#labelInput')
+    return browser.element('#labelInput');
   }
 
 
@@ -69,6 +69,7 @@ class MyEformsPage extends PageWithNavbarPage {
     const addedTags: string[] = newTagsList;
     if (newTagsList.length > 0) {
       this.createEformNewTagInput.setValue(newTagsList.join(','));
+      browser.pause(5000);
     }
     // Add existing tags
     const selectedTags: string[] = [];
@@ -78,6 +79,7 @@ class MyEformsPage extends PageWithNavbarPage {
         browser.pause(10000);
         const selectedTag = $('.ng-option:not(.ng-option-selected)');
         selectedTags.push(selectedTag.getText());
+        console.log('selectedTags is ' + JSON.stringify(selectedTags));
         selectedTag.click();
         browser.pause(10000);
       }
