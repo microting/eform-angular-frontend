@@ -54,11 +54,13 @@ describe('My eforms', function () {
     expect(eform.id === null);
   });
   it('should create eform with creating 1 tag and using 1 already prepared tag', function () {
+    let eform = myEformsPage.getFirstMyEformsRowObj();
+    expect(eform.id === null);
     const newEformLabel = Guid.create().toString();
     const createdTags = [Guid.create().toString()];
     const tagAddedNum = 1;
     const addedAndSelectedTags = myEformsPage.createNewEform(newEformLabel, createdTags, tagAddedNum);
-    let eform = myEformsPage.getFirstMyEformsRowObj();
+    eform = myEformsPage.getFirstMyEformsRowObj();
     const tagsTexts = eform.tags.map(el => {
       return el.getText();
     });
