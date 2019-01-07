@@ -21,14 +21,14 @@ namespace eFormAPI.Web.Services.Security
         {
             try
             {
-                List<Claim> claims = new List<Claim>();
-                List<int> groups = _dbContext.SecurityGroupUsers
+                var claims = new List<Claim>();
+                var groups = _dbContext.SecurityGroupUsers
                     .Where(x => x.EformUserId == userId)
                     .Select(x => x.SecurityGroupId)
                     .ToList();
                 if (groups.Any())
                 {
-                    List<string> claimNames = _dbContext.GroupPermissions
+                    var claimNames = _dbContext.GroupPermissions
                         .Where(x => groups.Contains(x.SecurityGroupId))
                         .Select(x => x.Permission.ClaimName)
                         .ToList();
@@ -51,8 +51,8 @@ namespace eFormAPI.Web.Services.Security
         {
             try
             {
-                List<Claim> claims = GetUserClaims(userId);
-                List<string> result = new List<string>();
+                var claims = GetUserClaims(userId);
+                var result = new List<string>();
                 if (claims.Any())
                 {
                     result = claims.Select(x => x.Type).ToList();

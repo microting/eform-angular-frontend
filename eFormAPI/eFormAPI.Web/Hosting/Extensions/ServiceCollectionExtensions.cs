@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Castle.Core.Internal;
+using eFormAPI.Web.Hosting.Helpers.DbOptions;
 using eFormAPI.Web.Infrastructure;
+using eFormAPI.Web.Infrastructure.Database.Entities;
+using eFormAPI.Web.Infrastructure.Database.Factories;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -27,16 +33,28 @@ namespace eFormAPI.Web.Hosting.Extensions
             services.Configure<T>(section);
             services.AddTransient<IWritableOptions<T>>(provider =>
             {
-                IHostingEnvironment environment = provider.GetService<IHostingEnvironment>();
-                IOptionsMonitor<T> options = provider.GetService<IOptionsMonitor<T>>();
+                var environment = provider.GetService<IHostingEnvironment>();
+                var options = provider.GetService<IOptionsMonitor<T>>();
                 return new WritableOptions<T>(environment, options, section.Key, file);
+            });
+        }
+
+        public static void ConfigureDbOptions<T>(
+            this IServiceCollection services,
+            IConfigurationSection section) where T : class, new()
+        {
+            services.Configure<T>(section);
+            services.AddTransient<IDbOptions<T>>(provider =>
+            {
+                var options = provider.GetService<IOptionsMonitor<T>>();
+                return new DbOptions<T>(options);
             });
         }
 
         public static void AddEFormPlugins(this IServiceCollection services,
             List<IEformPlugin> plugins)
         {
-            foreach (IEformPlugin plugin in plugins)
+            foreach (var plugin in plugins)
             {
                 plugin.ConfigureServices(services);
             }
@@ -44,7 +62,7 @@ namespace eFormAPI.Web.Hosting.Extensions
 
         public static void AddEFormAuth(this IServiceCollection services, IConfiguration configuration)
         {
-            TokenValidationParameters tokenValidationParameters = new TokenValidationParameters()
+            var tokenValidationParameters = new TokenValidationParameters()
             {
                 ValidIssuer = configuration["EformTokenOptions:Issuer"],
                 ValidAudience = configuration["EformTokenOptions:Issuer"],
@@ -225,12 +243,12 @@ namespace eFormAPI.Web.Hosting.Extensions
         public static void AddEFormMvc(this IServiceCollection services,
             List<IEformPlugin> plugins)
         {
-            IMvcBuilder mvcBuilder = services.AddMvc()
+            var mvcBuilder = services.AddMvc()
                 .AddJsonOptions(options => options.SerializerSettings.ContractResolver =
                     new CamelCasePropertyNamesContractResolver())
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            foreach (IEformPlugin plugin in plugins)
+            foreach (var plugin in plugins)
             {
                 mvcBuilder.AddApplicationPart(plugin.PluginAssembly())
                     .AddControllersAsServices();
@@ -241,10 +259,27 @@ namespace eFormAPI.Web.Hosting.Extensions
             IConfiguration configuration,
             List<IEformPlugin> plugins)
         {
-            foreach (IEformPlugin plugin in plugins)
+            var connectionString = configuration.MyConnectionString();
+            if (!connectionString.IsNullOrEmpty() && connectionString != "...")
             {
-                string connectionString = configuration.GetConnectionString(plugin.ConnectionStringName());
-                plugin.ConfigureDbContext(services, connectionString);
+                List<EformPlugin> eformPlugins;
+                var contextFactory = new BaseDbContextFactory();
+                using (var dbContext = contextFactory.CreateDbContext(new[] {configuration.MyConnectionString()}))
+                {
+                    eformPlugins = dbContext.EformPlugins
+                        .AsNoTracking()
+                        .Where(x => x.ConnectionString != "...")
+                        .ToList();
+                }
+
+                foreach (var plugin in plugins)
+                {
+                    var eformPlugin = eformPlugins.FirstOrDefault(x => x.PluginId == plugin.PluginId);
+                    if (eformPlugin?.ConnectionString != null)
+                    {
+                        plugin.ConfigureDbContext(services, eformPlugin.ConnectionString);
+                    }
+                }
             }
         }
     }

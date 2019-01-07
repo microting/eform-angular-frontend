@@ -226,7 +226,12 @@
   "Case delete": "Case delete",
   "Get PDF": "Get PDF",
   "Bind Eform": "Bind Eform",
-  "Display": "Display"
+  "Display": "Display",
+  "Enabled": "Enabled",
+  "Disabled": "Disabled",
+  "Plugins Settings": "Plugins Settings",
+  "Connection String": "Connection String",
+  "Version": "Version"
 }
 
 

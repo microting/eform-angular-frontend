@@ -5,5 +5,6 @@ export enum ApplicationPages {
   AccountManagementUsers,
   Security,
   EntitySearch,
-  EntitySelect
+  EntitySelect,
+  PluginsSettings
 }

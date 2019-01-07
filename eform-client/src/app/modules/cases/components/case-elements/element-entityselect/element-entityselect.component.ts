@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {CaseFieldValue} from 'src/app/common/models/cases';
+import {FieldValueDto} from 'src/app/common/models';
 import {CommonDictionaryTextModel} from 'src/app/common/models/common';
 import {EntitySelectService} from 'src/app/common/services/advanced';
 
@@ -11,7 +11,7 @@ import {EntitySelectService} from 'src/app/common/services/advanced';
 })
 export class ElementEntityselectComponent implements OnInit {
   items: Array<CommonDictionaryTextModel> = [];
-  fieldValueObj: CaseFieldValue = new CaseFieldValue();
+  fieldValueObj: FieldValueDto = new FieldValueDto();
   @Input() entityGroupUid: string;
 
   @Input()

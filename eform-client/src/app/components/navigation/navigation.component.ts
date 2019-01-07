@@ -2,7 +2,7 @@ import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {EventBrokerService} from 'src/app/common/helpers';
 import {UserInfoModel, UserMenuModel} from 'src/app/common/models/user';
-import {AppMenuService} from 'src/app/common/services/app-settings';
+import {AppMenuService} from 'src/app/common/services/settings/app-settings';
 import {AuthService, LocaleService, UserSettingsService} from 'src/app/common/services/auth';
 import {AdminService} from 'src/app/common/services/users';
 

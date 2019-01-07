@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Advanced;
-using eFormCore;
+using eFormAPI.Web.Infrastructure.Models;
 using eFormShared;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models;
@@ -24,19 +24,19 @@ namespace eFormAPI.Web.Services
 
         public OperationDataResult<List<Site_Dto>> Index()
         {
-            Core core = _coreHelper.GetCore();
-            List<Site_Dto> siteDto = core.SiteReadAll(false);
+            var core = _coreHelper.GetCore();
+            var siteDto = core.SiteReadAll(false);
             return new OperationDataResult<List<Site_Dto>>(true, siteDto);
         }
 
         public OperationResult Create(SimpleSiteModel simpleSiteModel)
         {
-            Core core = _coreHelper.GetCore();
-            string siteName = simpleSiteModel.UserFirstName + " " + simpleSiteModel.UserLastName;
+            var core = _coreHelper.GetCore();
+            var siteName = simpleSiteModel.UserFirstName + " " + simpleSiteModel.UserLastName;
 
             try
             {
-                Site_Dto siteDto = core.SiteCreate(siteName, simpleSiteModel.UserFirstName, simpleSiteModel.UserLastName,
+                var siteDto = core.SiteCreate(siteName, simpleSiteModel.UserFirstName, simpleSiteModel.UserLastName,
                     null);
 
                 return siteDto != null
@@ -66,8 +66,8 @@ namespace eFormAPI.Web.Services
 
         public OperationDataResult<Site_Dto> Edit(int id)
         {
-            Core core = _coreHelper.GetCore();
-            Site_Dto siteDto = core.SiteRead(id);
+            var core = _coreHelper.GetCore();
+            var siteDto = core.SiteRead(id);
 
             return siteDto != null
                 ? new OperationDataResult<Site_Dto>(true, siteDto)
@@ -79,15 +79,15 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                Core core = _coreHelper.GetCore();
-                Site_Dto siteDto = core.SiteRead(simpleSiteModel.Id);
+                var core = _coreHelper.GetCore();
+                var siteDto = core.SiteRead(simpleSiteModel.Id);
                 if (siteDto.WorkerUid != null)
                 {
-                    Worker_Dto workerDto = core.Advanced_WorkerRead((int) siteDto.WorkerUid);
+                    var workerDto = core.Advanced_WorkerRead((int) siteDto.WorkerUid);
                     if (workerDto != null)
                     {
-                        string fullName = simpleSiteModel.UserFirstName + " " + simpleSiteModel.UserLastName;
-                        bool isUpdated = core.SiteUpdate(simpleSiteModel.Id, fullName, simpleSiteModel.UserFirstName,
+                        var fullName = simpleSiteModel.UserFirstName + " " + simpleSiteModel.UserLastName;
+                        var isUpdated = core.SiteUpdate(simpleSiteModel.Id, fullName, simpleSiteModel.UserFirstName,
                             simpleSiteModel.UserLastName, workerDto.Email);
 
                         return isUpdated
@@ -111,8 +111,8 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                Core core = _coreHelper.GetCore();
-                SiteName_Dto siteNameDto = core.Advanced_SiteItemRead(id);
+                var core = _coreHelper.GetCore();
+                var siteNameDto = core.Advanced_SiteItemRead(id);
 
                 return core.SiteDelete(siteNameDto.SiteUId)
                     ? new OperationResult(true,

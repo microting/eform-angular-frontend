@@ -19,13 +19,13 @@ namespace eFormAPI.Web.Hosting.Extensions
                 await next();
                 if (context.Response.StatusCode == 404 && !Path.HasExtension(context.Request.Path.Value))
                 {
-                    string indexFile = Path.Combine(env.ContentRootPath, "wwwroot", "index.html");
+                    var indexFile = Path.Combine(env.ContentRootPath, "wwwroot", "index.html");
                     if (File.Exists(indexFile))
                     {
                         context.Response.StatusCode = 200;
                         const int BUFFER_SIZE = 1024;
-                        byte[] buffer = new byte[BUFFER_SIZE];
-                        using (FileStream indexFileStream = File.OpenRead(indexFile))
+                        var buffer = new byte[BUFFER_SIZE];
+                        using (var indexFileStream = File.OpenRead(indexFile))
                         {
                             int bytesReaded;
                             context.Response.ContentLength = indexFileStream.Length;
@@ -50,9 +50,9 @@ namespace eFormAPI.Web.Hosting.Extensions
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"Trying to load plugins, found : {plugins.Count}");
-            foreach (IEformPlugin plugin in plugins)
+            foreach (var plugin in plugins)
             {
-                Console.WriteLine($"Loading plugin : {plugin.GetName()}");
+                Console.WriteLine($"Loading plugin : {plugin.Name}");
                 plugin.Configure(app);
             }
             Console.ForegroundColor = ConsoleColor.Gray;
@@ -66,14 +66,14 @@ namespace eFormAPI.Web.Hosting.Extensions
                 new CultureInfo("en-US"),
                 new CultureInfo("da"),
             };
-            RequestLocalizationOptions localizationOptions = new RequestLocalizationOptions
+            var localizationOptions = new RequestLocalizationOptions
             {
                 DefaultRequestCulture = new RequestCulture("en-US"),
                 SupportedCultures = supportedCultures,
                 SupportedUICultures = supportedCultures,
             };
             // Find the cookie provider with LINQ
-            CookieRequestCultureProvider cookieProvider = localizationOptions.RequestCultureProviders
+            var cookieProvider = localizationOptions.RequestCultureProviders
                 .OfType<CookieRequestCultureProvider>()
                 .First();
             // Set the new cookie name

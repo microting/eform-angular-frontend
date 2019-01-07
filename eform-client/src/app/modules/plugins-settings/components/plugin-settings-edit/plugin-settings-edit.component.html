@@ -1,0 +1,48 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{selectedPluginSettings.name}}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <div class="md-form">
+                <input mdbInputDirective
+                       [(ngModel)]="pluginSettingsUpdateModel.connectionString"
+                       [mdbValidate]="false" required name="connectionInput"
+                       id="connectionInput" type="text" class="form-control">
+                <label for="connectionInput">{{'Connection String' | translate}}</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <ng-select required
+                         bindLabel="text"
+                         bindValue="id"
+                         [clearable]="false"
+                         [(ngModel)]="pluginSettingsUpdateModel.status"
+                         name="editGroup"
+                         [placeholder]="'Status' | translate"
+                         [items]="[{ id: statusEnum.Enabled, text: statusEnum[statusEnum.Enabled] | translate },
+                                   { id: statusEnum.Disabled, text: statusEnum[statusEnum.Disabled] | translate }]"></ng-select>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success" (click)="updateSettings()" id="saveBtn">{{ 'Save' | translate }}</button>
+        <button class="btn btn-neutral text-black-50" id="cancelCreateBtn" (click)="frame.hide()">
+          {{ 'Cancel' | translate }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>
+
+
+

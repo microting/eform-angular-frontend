@@ -189,6 +189,178 @@ namespace eFormAPI.Web.Migrations
                     b.ToTable("UserRoles");
                 });
 
+            modelBuilder.Entity("eFormAPI.Web.Infrastructure.Database.Entities.EformConfigurationValue", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Value");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.ToTable("ConfigurationValues");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "ConnectionStringsSdk:SdkConnection",
+                            Value = ""
+                        },
+                        new
+                        {
+                            Id = "ApplicationSettings:DefaultLocale",
+                            Value = "en-US"
+                        },
+                        new
+                        {
+                            Id = "ApplicationSettings:SiteLink",
+                            Value = ""
+                        },
+                        new
+                        {
+                            Id = "ApplicationSettings:SecurityCode",
+                            Value = "code"
+                        },
+                        new
+                        {
+                            Id = "ApplicationSettings:DefaultPassword",
+                            Value = "Qq1234567$"
+                        },
+                        new
+                        {
+                            Id = "ApplicationSettings:IsTwoFactorForced",
+                            Value = "false"
+                        },
+                        new
+                        {
+                            Id = "EmailSettings:SmtpHost",
+                            Value = ""
+                        },
+                        new
+                        {
+                            Id = "EmailSettings:SmtpPort",
+                            Value = "25"
+                        },
+                        new
+                        {
+                            Id = "EmailSettings:Login",
+                            Value = ""
+                        },
+                        new
+                        {
+                            Id = "EmailSettings:Password",
+                            Value = ""
+                        },
+                        new
+                        {
+                            Id = "LoginPageSettings:MainText",
+                            Value = "Microting eForm"
+                        },
+                        new
+                        {
+                            Id = "LoginPageSettings:MainTextVisible",
+                            Value = "true"
+                        },
+                        new
+                        {
+                            Id = "LoginPageSettings:SecondaryText",
+                            Value = "No more paper-forms and back-office data entry"
+                        },
+                        new
+                        {
+                            Id = "LoginPageSettings:SecondaryTextVisible",
+                            Value = "true"
+                        },
+                        new
+                        {
+                            Id = "LoginPageSettings:ImageLink",
+                            Value = ""
+                        },
+                        new
+                        {
+                            Id = "LoginPageSettings:ImageLinkVisible",
+                            Value = "true"
+                        },
+                        new
+                        {
+                            Id = "HeaderSettings:MainText",
+                            Value = "Microting eForm"
+                        },
+                        new
+                        {
+                            Id = "HeaderSettings:MainTextVisible",
+                            Value = "true"
+                        },
+                        new
+                        {
+                            Id = "HeaderSettings:SecondaryText",
+                            Value = "No more paper-forms and back-office data entry"
+                        },
+                        new
+                        {
+                            Id = "HeaderSettings:SecondaryTextVisible",
+                            Value = "true"
+                        },
+                        new
+                        {
+                            Id = "HeaderSettings:ImageLink",
+                            Value = ""
+                        },
+                        new
+                        {
+                            Id = "HeaderSettings:ImageLinkVisible",
+                            Value = "true"
+                        },
+                        new
+                        {
+                            Id = "Logging:IncludeScopes",
+                            Value = "false"
+                        },
+                        new
+                        {
+                            Id = "Logging:IncludeScopes:LogLevel:Default",
+                            Value = "Debug"
+                        },
+                        new
+                        {
+                            Id = "Logging:IncludeScopes:LogLevel:System",
+                            Value = "Information"
+                        },
+                        new
+                        {
+                            Id = "Logging:IncludeScopes:LogLevel:Microsoft",
+                            Value = "Information"
+                        },
+                        new
+                        {
+                            Id = "EformTokenOptions:Issuer",
+                            Value = "eForm API"
+                        },
+                        new
+                        {
+                            Id = "EformTokenOptions:Audience",
+                            Value = "eForm Angular"
+                        },
+                        new
+                        {
+                            Id = "EformTokenOptions:Expiration",
+                            Value = "12:00:00"
+                        },
+                        new
+                        {
+                            Id = "EformTokenOptions:SigningKey",
+                            Value = "lTBBR6Wt7RTvcI0jwRvXVPTOmcFV6NnAUA+rIWn/5bs="
+                        },
+                        new
+                        {
+                            Id = "EformTokenOptions:CookieName",
+                            Value = "Authorization"
+                        });
+                });
+
             modelBuilder.Entity("eFormAPI.Web.Infrastructure.Database.Entities.EformInGroup", b =>
                 {
                     b.Property<int>("Id")
@@ -229,6 +401,104 @@ namespace eFormAPI.Web.Migrations
                         .IsUnique();
 
                     b.ToTable("EformPermissions");
+                });
+
+            modelBuilder.Entity("eFormAPI.Web.Infrastructure.Database.Entities.EformPlugin", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ConnectionString");
+
+                    b.Property<string>("PluginId")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<int>("Status");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PluginId")
+                        .IsUnique();
+
+                    b.ToTable("EformPlugins");
+                });
+
+            modelBuilder.Entity("eFormAPI.Web.Infrastructure.Database.Entities.EformReport", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description");
+
+                    b.Property<byte[]>("HeaderImage");
+
+                    b.Property<string>("HeaderVisibility");
+
+                    b.Property<bool>("IsDateVisible");
+
+                    b.Property<bool>("IsWorkerNameVisible");
+
+                    b.Property<int>("TemplateId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TemplateId")
+                        .IsUnique();
+
+                    b.ToTable("EformReports");
+                });
+
+            modelBuilder.Entity("eFormAPI.Web.Infrastructure.Database.Entities.EformReportDataItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("DataItemId");
+
+                    b.Property<int>("EformReportElementId");
+
+                    b.Property<int?>("ParentId");
+
+                    b.Property<int>("Position");
+
+                    b.Property<bool>("Visibility");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DataItemId");
+
+                    b.HasIndex("EformReportElementId");
+
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("EformReportDataItems");
+                });
+
+            modelBuilder.Entity("eFormAPI.Web.Infrastructure.Database.Entities.EformReportElement", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("EformReportId");
+
+                    b.Property<int>("ElementId");
+
+                    b.Property<int?>("ParentId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EformReportId");
+
+                    b.HasIndex("ElementId");
+
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("EformReportElements");
                 });
 
             modelBuilder.Entity("eFormAPI.Web.Infrastructure.Database.Entities.GroupPermission", b =>
@@ -573,6 +843,17 @@ namespace eFormAPI.Web.Migrations
                             Name = "Logout",
                             ParentId = 10,
                             Position = 4
+                        },
+                        new
+                        {
+                            Id = 16,
+                            E2EId = "plugins-settings",
+                            Link = "/plugins-settings",
+                            LocaleName = "PluginsSettings",
+                            MenuPosition = 1,
+                            Name = "Plugins Settings",
+                            ParentId = 3,
+                            Position = 6
                         });
                 });
 
@@ -1086,6 +1367,32 @@ namespace eFormAPI.Web.Migrations
                         .WithMany()
                         .HasForeignKey("PermissionId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("eFormAPI.Web.Infrastructure.Database.Entities.EformReportDataItem", b =>
+                {
+                    b.HasOne("eFormAPI.Web.Infrastructure.Database.Entities.EformReportElement", "EformReportElement")
+                        .WithMany("DataItems")
+                        .HasForeignKey("EformReportElementId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("eFormAPI.Web.Infrastructure.Database.Entities.EformReportDataItem", "Parent")
+                        .WithMany("NestedDataItems")
+                        .HasForeignKey("ParentId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("eFormAPI.Web.Infrastructure.Database.Entities.EformReportElement", b =>
+                {
+                    b.HasOne("eFormAPI.Web.Infrastructure.Database.Entities.EformReport", "EformReport")
+                        .WithMany("ReportElements")
+                        .HasForeignKey("EformReportId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("eFormAPI.Web.Infrastructure.Database.Entities.EformReportElement", "Parent")
+                        .WithMany("NestedElements")
+                        .HasForeignKey("ParentId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("eFormAPI.Web.Infrastructure.Database.Entities.GroupPermission", b =>

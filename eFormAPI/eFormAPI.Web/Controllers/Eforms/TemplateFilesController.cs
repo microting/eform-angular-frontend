@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Security;
 using eFormAPI.Web.Infrastructure;
-using eFormCore;
 using ICSharpCode.SharpZipLib.Zip;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -13,7 +12,6 @@ using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 
 namespace eFormAPI.Web.Controllers.Eforms
@@ -45,12 +43,12 @@ namespace eFormAPI.Web.Controllers.Eforms
                 return Forbid();
             }
 
-            Core core = _coreHelper.GetCore();
-            string fileName = $"{id}_{DateTime.Now.Ticks}.csv";
-            string filePath = PathHelper.GetOutputPath(fileName);
-            string fullPath = core.CasesToCsv(id, null, null, filePath,
+            var core = _coreHelper.GetCore();
+            var fileName = $"{id}_{DateTime.Now.Ticks}.csv";
+            var filePath = PathHelper.GetOutputPath(fileName);
+            var fullPath = core.CasesToCsv(id, null, null, filePath,
                 $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image/");
-            FileStream fileStream = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
+            var fileStream = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
             return File(fileStream, "application/octet-stream", fileName);
         }
 
@@ -59,15 +57,15 @@ namespace eFormAPI.Web.Controllers.Eforms
         [Authorize(Policy = AuthConsts.EformPolicies.Cases.CasesRead)]
         public IActionResult GetImage(string fileName, string ext, string noCache = "noCache")
         {
-            Core core = _coreHelper.GetCore();
-            string filePath = $"{core.GetPicturePath()}\\{fileName}.{ext}";
+            var core = _coreHelper.GetCore();
+            var filePath = $"{core.GetPicturePath()}\\{fileName}.{ext}";
             if (!System.IO.File.Exists(filePath))
             {
                 return NotFound($"Trying to find file at location: {filePath}");
             }
 
-            string extention = Path.GetExtension(filePath).Replace(".", "");
-            FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            var extention = Path.GetExtension(filePath).Replace(".", "");
+            var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             return File(fileStream, $"image/{extention}");
         }
 
@@ -77,8 +75,8 @@ namespace eFormAPI.Web.Controllers.Eforms
         [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseUpdate)]
         public OperationResult RotateImage(string fileName)
         {
-            Core core = _coreHelper.GetCore();
-            string filePath = $"{core.GetPicturePath()}\\{fileName}";
+            var core = _coreHelper.GetCore();
+            var filePath = $"{core.GetPicturePath()}\\{fileName}";
             if (!System.IO.File.Exists(filePath))
             {
                 return new OperationResult(false, _localizationService.GetString("FileNotFound"));
@@ -86,7 +84,7 @@ namespace eFormAPI.Web.Controllers.Eforms
 
             try
             {
-                Image<Rgba32> img = Image.Load(filePath);
+                var img = Image.Load(filePath);
                 img.Mutate(x => x.Rotate(RotateMode.Rotate90));
                 img.Save(filePath);
                 img.Dispose();
@@ -112,7 +110,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         {
             try
             {
-                Core core = _coreHelper.GetCore();
+                var core = _coreHelper.GetCore();
                 if (!core.Advanced_DeleteUploadedData(fieldId, uploadedObjId))
                 {
                     return new OperationResult(false, _localizationService.GetString("ImageNotDeleted"));
@@ -135,14 +133,14 @@ namespace eFormAPI.Web.Controllers.Eforms
         [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseGetPdf)]
         public IActionResult GetPdfFile(string fileName)
         {
-            Core core = _coreHelper.GetCore();
-            string filePath = $"{core.GetPdfPath()}\\{fileName}.pdf";
+            var core = _coreHelper.GetCore();
+            var filePath = $"{core.GetPdfPath()}\\{fileName}.pdf";
             if (!System.IO.File.Exists(filePath))
             {
                 return NotFound();
             }
 
-            FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             return File(fileStream, "application/pdf", Path.GetFileName(filePath));
         }
 
@@ -160,8 +158,8 @@ namespace eFormAPI.Web.Controllers.Eforms
 
             try
             {
-                Core core = _coreHelper.GetCore();
-                string filePath = core.CaseToPdf(caseId, templateId.ToString(),
+                var core = _coreHelper.GetCore();
+                var filePath = core.CaseToPdf(caseId, templateId.ToString(),
                     DateTime.Now.ToString("yyyyMMddHHmmssffff"),
                     $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image/");
                 //DateTime.Now.ToString("yyyyMMddHHmmssffff"), $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image?&filename=");
@@ -170,7 +168,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                     return NotFound();
                 }
 
-                FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+                var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
                 return File(fileStream, "application/pdf", Path.GetFileName(filePath));
             }
             catch (Exception)
@@ -193,16 +191,16 @@ namespace eFormAPI.Web.Controllers.Eforms
 
             try
             {
-                Core core = _coreHelper.GetCore();
-                int? caseId = core.CaseReadFirstId(templateId, "not_revmoed");
-                string filePath = core.CaseToJasperXml((int) caseId, DateTime.Now.ToString("yyyyMMddHHmmssffff"),
+                var core = _coreHelper.GetCore();
+                var caseId = core.CaseReadFirstId(templateId, "not_revmoed");
+                var filePath = core.CaseToJasperXml((int) caseId, DateTime.Now.ToString("yyyyMMddHHmmssffff"),
                     $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image/");
                 if (!System.IO.File.Exists(filePath))
                 {
                     return NotFound();
                 }
 
-                FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+                var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
                 return File(fileStream, "application/xml", Path.GetFileName(filePath));
             }
             catch (Exception)
@@ -225,18 +223,18 @@ namespace eFormAPI.Web.Controllers.Eforms
 
             try
             {
-                Core core = _coreHelper.GetCore();
-                int templateId = uploadModel.TemplateId;
+                var core = _coreHelper.GetCore();
+                var templateId = uploadModel.TemplateId;
                 if (templateId <= 0)
                 {
                     return BadRequest("Invalid Request!");
                 }
 
-                string saveFolder =
+                var saveFolder =
                     Path.Combine(core.GetJasperPath(),
                         Path.Combine("templates", templateId.ToString()));
 
-                string zipArchiveFolder =
+                var zipArchiveFolder =
                     Path.Combine(core.GetJasperPath(),
                         Path.Combine("templates", Path.Combine("zip-archives", templateId.ToString())));
 
@@ -249,16 +247,16 @@ namespace eFormAPI.Web.Controllers.Eforms
                 Directory.CreateDirectory(zipArchiveFolder);
                 if (uploadModel.File.Length > 0)
                 {
-                    string filePath = Path.Combine(zipArchiveFolder, Path.GetFileName(uploadModel.File.FileName));
+                    var filePath = Path.Combine(zipArchiveFolder, Path.GetFileName(uploadModel.File.FileName));
                     if (!System.IO.File.Exists(filePath))
                     {
-                        using (FileStream stream = new FileStream(filePath, FileMode.Create))
+                        using (var stream = new FileStream(filePath, FileMode.Create))
                         {
                             await uploadModel.File.CopyToAsync(stream);
                         }
                     }
 
-                    string extractPath = Path.Combine(saveFolder);
+                    var extractPath = Path.Combine(saveFolder);
                     if (System.IO.File.Exists(filePath))
                     {
                         if (!Directory.Exists(extractPath))
@@ -271,7 +269,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                         }
 
                         // extract
-                        FastZip fastZip = new FastZip();
+                        var fastZip = new FastZip();
                         // Will always overwrite if target filenames already exist
                         fastZip.ExtractZip(filePath, extractPath, null);
                         //ZipFile.ExtractToDirectory(filePath, extractPath);

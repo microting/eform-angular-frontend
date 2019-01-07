@@ -1,11 +1,11 @@
 import {Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {
-  CaseDataItem,
+  DataItemDto,
   CaseEditRequest,
   CaseEditRequestField,
   CaseEditRequestFieldValue,
-  CaseElement
-} from 'src/app/common/models/cases';
+  ElementDto
+} from 'src/app/common/models';
 
 @Component({
   selector: 'app-case-edit-element',
@@ -14,7 +14,7 @@ import {
 })
 export class CaseEditElementComponent implements OnInit {
   @ViewChildren(CaseEditElementComponent) editElements: QueryList<CaseEditElementComponent>;
-  @Input() element: CaseElement = new CaseElement();
+  @Input() element: ElementDto = new ElementDto();
   requestModel: CaseEditRequest = new CaseEditRequest();
   requestModels: Array<CaseEditRequest> = [];
   constructor() { }
@@ -31,7 +31,7 @@ export class CaseEditElementComponent implements OnInit {
     this.requestModels = [];
   }
 
-  extractDataItemList(dataItemList: Array<CaseDataItem> ) {
+  extractDataItemList(dataItemList: Array<DataItemDto> ) {
     dataItemList.forEach(item => {
       const elem = new CaseEditRequestField();
       elem.fieldType = item.fieldType;

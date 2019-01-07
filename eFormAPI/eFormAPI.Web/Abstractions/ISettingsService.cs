@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
+using eFormAPI.Web.Infrastructure.Models.Settings.Admin;
+using eFormAPI.Web.Infrastructure.Models.Settings.Initial;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Settings.Admin;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Settings.Initial;
 
 namespace eFormAPI.Web.Abstractions
 {
@@ -14,9 +14,9 @@ namespace eFormAPI.Web.Abstractions
         OperationDataResult<HeaderSettingsModel> GetPageHeaderSettings();
         OperationDataResult<string> GetAssemblyVersion();
         OperationDataResult<string> GetApplicationHostOs();
-        OperationResult ResetLoginPageSettings();
-        OperationResult ResetPageHeaderSettings();
-        OperationResult UpdateAdminSettings(AdminSettingsModel adminSettingsModel);
+        Task<OperationResult> ResetLoginPageSettings();
+        Task<OperationResult> ResetPageHeaderSettings();
+        Task<OperationResult> UpdateAdminSettings(AdminSettingsModel adminSettingsModel);
         Task<OperationResult> UpdateConnectionString(InitialSettingsModel initialSettingsModel);
     }
 }

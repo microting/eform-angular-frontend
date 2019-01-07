@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {differenceInMinutes, format} from 'date-fns';
-import {CaseFieldValue} from 'src/app/common/models/cases';
+import {FieldValueDto} from 'src/app/common/models';
 
 @Component({
   selector: 'element-timer',
@@ -8,7 +8,7 @@ import {CaseFieldValue} from 'src/app/common/models/cases';
   styleUrls: ['./element-timer.component.scss']
 })
 export class ElementTimerComponent implements OnInit {
-  fieldValueObj: CaseFieldValue = new CaseFieldValue();
+  fieldValueObj: FieldValueDto = new FieldValueDto();
   dateArray = [];
   startDate: string;
   endDate: string;

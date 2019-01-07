@@ -14,12 +14,12 @@ namespace eFormAPI.Web.Controllers.Eforms
         [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseRead)]
         public IActionResult GetAudio(string fileName)
         {
-            string filePath = PathHelper.GetAudioPath(fileName);
+            var filePath = PathHelper.GetAudioPath(fileName);
             if (!System.IO.File.Exists(filePath))
             {
                 return NotFound();
             }
-            FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             //result.Content = new StreamContent(stream);
             //result.Content.Headers.ContentType =
             //    new MediaTypeHeaderValue("application/octet-stream");
