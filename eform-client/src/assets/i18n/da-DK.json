@@ -224,5 +224,10 @@
   "Case update": "Sag opdatering",
   "Case delete": "Slet slette",
   "Get PDF": "Få PDF",
-  "Display": "Skærm"
+  "Display": "Skærm",
+  "Enabled": "Aktiveret",
+  "Disabled": "Deaktiveret",
+  "Plugins Settings": "Plugins Indstillinger",
+  "Connection String": "Forbindelsesstreng",
+  "Version": "Version"
 }

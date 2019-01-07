@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CaseFieldValue} from 'src/app/common/models/cases';
+import {FieldValueDto} from 'src/app/common/models';
 
 @Component({
   selector: 'element-comment',
@@ -7,7 +7,7 @@ import {CaseFieldValue} from 'src/app/common/models/cases';
   styleUrls: ['./element-comment.component.scss']
 })
 export class ElementCommentComponent {
-  fieldValueObj: CaseFieldValue = new CaseFieldValue();
+  fieldValueObj: FieldValueDto = new FieldValueDto();
 
   @Input()
   get fieldValue() {

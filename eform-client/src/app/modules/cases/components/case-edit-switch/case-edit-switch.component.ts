@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CaseDataItem} from 'src/app/common/models';
+import {DataItemDto} from 'src/app/common/models';
 
 @Component({
   selector: 'app-case-edit-switch',
@@ -7,7 +7,7 @@ import {CaseDataItem} from 'src/app/common/models';
   styleUrls: ['./case-edit-switch.component.scss']
 })
 export class CaseEditSwitchComponent implements OnInit {
-  @Input() dataItemList: Array<CaseDataItem> = [];
+  @Input() dataItemList: Array<DataItemDto> = [];
   constructor() { }
 
   ngOnInit() {

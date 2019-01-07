@@ -1,7 +1,7 @@
-import {CaseElement} from './case-element';
+import {ElementDto} from '../../dto/element.dto';
 
-export class ReplyElement {
+export class ReplyElementDto {
   id: number;
   label: string;
-  elementList: Array<CaseElement> = [];
+  elementList: Array<ElementDto> = [];
 }

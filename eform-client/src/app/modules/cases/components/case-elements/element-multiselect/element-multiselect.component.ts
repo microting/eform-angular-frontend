@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CaseFieldValue} from 'src/app/common/models/cases';
+import {FieldValueDto} from 'src/app/common/models';
 
 @Component({
   selector: 'element-multiselect',
@@ -7,7 +7,7 @@ import {CaseFieldValue} from 'src/app/common/models/cases';
   styleUrls: ['./element-multiselect.component.scss']
 })
 export class ElementMultiselectComponent implements OnInit {
-  fieldValueObj: CaseFieldValue = new CaseFieldValue();
+  fieldValueObj: FieldValueDto = new FieldValueDto();
 
   @Input()
   get fieldValue() {

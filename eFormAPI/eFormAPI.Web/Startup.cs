@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Castle.Windsor;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Advanced;
 using eFormAPI.Web.Abstractions.Eforms;
@@ -13,10 +12,10 @@ using eFormAPI.Web.Services;
 using eFormAPI.Web.Services.Security;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
+using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -31,22 +30,17 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Localization;
 using Microting.eFormApi.BasePn.Localization.Abstractions;
 using Microting.eFormApi.BasePn.Services;
-using Rebus.Bus;
-using Swashbuckle.AspNetCore.Swagger;
 
 namespace eFormAPI.Web
 {
     public class Startup
     {
-        public static List<IEformPlugin> Plugins;
-        private IWindsorContainer _container;
-        
-        public static IBus Bus { get; private set; }
+        public static List<IEformPlugin> Plugins = new List<IEformPlugin>();
 
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            Plugins = PluginHelper.GetPlugins();
+            Plugins = PluginHelper.GetPlugins(Configuration);
         }
 
         public IConfiguration Configuration { get; }
@@ -55,8 +49,14 @@ namespace eFormAPI.Web
         public void ConfigureServices(IServiceCollection services)
         {
             // Configuration
-            services.AddSingleton(Configuration);
+            //services.AddSingleton(Configuration);
             services.AddOptions();
+            services.AddLogging(loggingBuilder =>
+            {
+                loggingBuilder.AddConfiguration(Configuration.GetSection("Logging"));
+                loggingBuilder.AddConsole();
+                loggingBuilder.AddDebug();
+            });
             // Entity framework
 //#if DEBUG
 //            services.AddEntityFrameworkMySql()
@@ -114,12 +114,14 @@ namespace eFormAPI.Web
             // MVC and API services with Plugins
             services.AddEFormMvc(Plugins);
             // Writable options
-            services.ConfigureWritable<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
-            services.ConfigureWritable<EmailSettings>(Configuration.GetSection("EmailSettings"));
-            services.ConfigureWritable<LoginPageSettings>(Configuration.GetSection("LoginPageSettings"));
-            services.ConfigureWritable<HeaderSettings>(Configuration.GetSection("HeaderSettings"));
-            services.ConfigureWritable<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
-            services.ConfigureWritable<EformTokenOptions>(Configuration.GetSection("EformTokenOptions"));
+            services.ConfigureWritable<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"), "connection.json");
+            // Database options
+            services.ConfigureDbOptions<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
+            services.ConfigureDbOptions<EmailSettings>(Configuration.GetSection("EmailSettings"));
+            services.ConfigureDbOptions<LoginPageSettings>(Configuration.GetSection("LoginPageSettings"));
+            services.ConfigureDbOptions<HeaderSettings>(Configuration.GetSection("HeaderSettings"));
+            services.ConfigureDbOptions<ConnectionStringsSdk>(Configuration.GetSection("ConnectionStringsSdk"));
+            services.ConfigureDbOptions<EformTokenOptions>(Configuration.GetSection("EformTokenOptions"));
             // Form options
             services.Configure<FormOptions>(x =>
             {
@@ -136,8 +138,8 @@ namespace eFormAPI.Web
                     Description = "API documentation"
                 });
                 //Set the comments path for the swagger json and ui.
-                string basePath = PlatformServices.Default.Application.ApplicationBasePath;
-                string xmlPath = Path.Combine(basePath, "API.doc.xml");
+                var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+                var xmlPath = Path.Combine(basePath, "API.doc.xml");
                 c.IncludeXmlComments(xmlPath);
                 c.AddSecurityDefinition("Bearer", new ApiKeyScheme
                 {
@@ -151,16 +153,6 @@ namespace eFormAPI.Web
             // plugins
             services.AddEFormPlugins(Plugins);
             ConnectServices(services);
-            if (!string.IsNullOrEmpty(Configuration.MyConnectionString()))
-            {
-                _container = new WindsorContainer();	
-                                
-                
-//                _container.Register(Castle.MicroKernel.Registration.Component.For<Core>().Instance(_core));	
-                //_container.Install(new RebusHandlerInstaller(),	
-                //    new RebusInstaller(Configuration.MyConnectionString(), 1, 1));	
-                //Bus = _container.Resolve<IBus>();
-            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -189,9 +181,10 @@ namespace eFormAPI.Web
             app.UseHttpsRedirection();
             if (env.IsDevelopment())
             {
-                loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-                loggerFactory.AddDebug();
+                //loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+                //loggerFactory.AddDebug();
             }
+
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
@@ -218,10 +211,9 @@ namespace eFormAPI.Web
         }
 
 
-        private void ConnectServices(IServiceCollection services)
+        private static void ConnectServices(IServiceCollection services)
         {
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();//AddHttpContextAccessor 
-            services.AddTransient(provider => provider.GetService<IHttpContextAccessor>().HttpContext.User);
+            services.AddHttpContextAccessor();
             services.AddSingleton<ILocalizationService, LocalizationService>();
             services.AddScoped<IEFormCoreService, EFormCoreService>();
             services.AddScoped<ITagsService, TagsService>();
@@ -246,6 +238,8 @@ namespace eFormAPI.Web
             services.AddScoped<IMenuService, MenuService>();
             services.AddScoped<IEformGroupService, EformGroupService>();
             services.AddScoped<IEformPermissionsService, EformPermissionsService>();
+            services.AddScoped<IEformReportsService, EformReportsService>();
+            services.AddScoped<IPluginsSettingsService, PluginsSettingsService>();
         }
     }
 }

@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Eforms;
-using eFormCore;
+using eFormAPI.Web.Infrastructure.Helpers;
+using eFormAPI.Web.Infrastructure.Models.Cases.Request;
+using eFormAPI.Web.Infrastructure.Models.Cases.Response;
 using eFormData;
 using eFormShared;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Cases.Request;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Cases.Response;
 
 namespace eFormAPI.Web.Services
 {
@@ -29,11 +29,11 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                Core core = _coreHelper.GetCore();
-                CaseList caseList = core.CaseReadAll(requestModel.TemplateId, null, null,
+                var core = _coreHelper.GetCore();
+                var caseList = core.CaseReadAll(requestModel.TemplateId, null, null,
                     Constants.WorkflowStates.NotRemoved, requestModel.NameFilter,
                     requestModel.IsSortDsc, requestModel.Sort, requestModel.PageIndex, requestModel.PageSize);
-                CaseListModel model = new CaseListModel()
+                var model = new CaseListModel()
                 {
                     NumOfElements = caseList.NumOfElements,
                     PageNum = caseList.PageNum,
@@ -52,11 +52,11 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                Core core = _coreHelper.GetCore();
-                Case_Dto caseDto = core.CaseReadByCaseId(id);
-                string microtingUId = caseDto.MicrotingUId;
-                string microtingCheckUId = caseDto.CheckUId;
-                ReplyElement theCase = core.CaseRead(microtingUId, microtingCheckUId);
+                var core = _coreHelper.GetCore();
+                var caseDto = core.CaseReadByCaseId(id);
+                var microtingUId = caseDto.MicrotingUId;
+                var microtingCheckUId = caseDto.CheckUId;
+                var theCase = core.CaseRead(microtingUId, microtingCheckUId);
                 theCase.Id = id;
 
                 return !theCase.Equals(null)
@@ -73,7 +73,7 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                Core core = _coreHelper.GetCore();
+                var core = _coreHelper.GetCore();
 
                 return core.CaseDeleteResult(id)
                     ? new OperationResult(true, _localizationService.GetString("CaseParamDeletedSuccessfully", id))
@@ -87,9 +87,9 @@ namespace eFormAPI.Web.Services
 
         public OperationResult Update(ReplyRequest model)
         {
-            List<string> checkListValueList = new List<string>();
-            List<string> fieldValueList = new List<string>();
-            Core core = _coreHelper.GetCore();
+            var checkListValueList = new List<string>();
+            var fieldValueList = new List<string>();
+            var core = _coreHelper.GetCore();
             try
             {
                 model.ElementList.ForEach(element =>

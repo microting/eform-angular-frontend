@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using eFormAPI.Web.Hosting;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace eFormAPI.Web.Migrations
@@ -9,7 +10,7 @@ namespace eFormAPI.Web.Migrations
         {
             //Setup for SQL Server Provider
 
-            string autoIDGenStrategy = "SqlServer:ValueGenerationStrategy";
+            var autoIDGenStrategy = "SqlServer:ValueGenerationStrategy";
             object autoIDGenStrategyValue = SqlServerValueGenerationStrategy.IdentityColumn;
 
             // Setup for MySQL Provider

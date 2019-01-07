@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {format} from "date-fns";
 import {DateTimeAdapter} from 'ng-pick-datetime';
-import {CaseFieldValue} from 'src/app/common/models/cases';
+import {FieldValueDto} from 'src/app/common/models';
 import {LocaleService} from 'src/app/common/services/auth';
 
 @Component({
@@ -10,7 +10,7 @@ import {LocaleService} from 'src/app/common/services/auth';
   styleUrls: ['./element-date.component.scss']
 })
 export class ElementDateComponent {
-  fieldValueObj: CaseFieldValue = new CaseFieldValue();
+  fieldValueObj: FieldValueDto = new FieldValueDto();
 
   constructor(dateTimeAdapter: DateTimeAdapter<any>,
               private localeService: LocaleService) {

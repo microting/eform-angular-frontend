@@ -8,7 +8,6 @@ using eFormAPI.Web.Infrastructure.Database;
 using eFormAPI.Web.Infrastructure.Database.Entities;
 using eFormAPI.Web.Infrastructure.Models.Permissions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Infrastructure.Extensions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
@@ -35,7 +34,7 @@ namespace eFormAPI.Web.Services.Security
         {
             try
             {
-                SecurityGroupsModel securityGroupsModel = new SecurityGroupsModel();
+                var securityGroupsModel = new SecurityGroupsModel();
                 IQueryable<SecurityGroup> securityGroupsQuery = _dbContext.SecurityGroups.AsQueryable();
                 if (!string.IsNullOrEmpty(requestModel.Sort))
                 {
@@ -135,13 +134,13 @@ namespace eFormAPI.Web.Services.Security
                         _localizationService.GetString("SecurityGroupNameIsEmpty"));
                 }
 
-                using (IDbContextTransaction transaction = await _dbContext.Database.BeginTransactionAsync())
+                using (var transaction = await _dbContext.Database.BeginTransactionAsync())
                 {
                     SecurityGroup securityGroup = new SecurityGroup
                     {
                         Name = requestModel.Name,
                     };
-                    foreach (int userId in requestModel.UserIds)
+                    foreach (var userId in requestModel.UserIds)
                     {
                         securityGroup.SecurityGroupUsers.Add(new SecurityGroupUser()
                         {
@@ -169,7 +168,7 @@ namespace eFormAPI.Web.Services.Security
         {
             try
             {
-                using (IDbContextTransaction transaction = await _dbContext.Database.BeginTransactionAsync())
+                using (var transaction = await _dbContext.Database.BeginTransactionAsync())
                 {
                     SecurityGroup securityGroup = await _dbContext.SecurityGroups
                         .Include(x => x.SecurityGroupUsers)
@@ -184,12 +183,12 @@ namespace eFormAPI.Web.Services.Security
 
                     securityGroup.Name = requestModel.Name;
                     // delete old
-                    IQueryable<SecurityGroupUser> usersForDelete = _dbContext.SecurityGroupUsers
+                    var usersForDelete = _dbContext.SecurityGroupUsers
                         .Where(x => x.SecurityGroupId == requestModel.Id
                                     && !requestModel.UserIds.Contains(x.EformUserId));
                     _dbContext.SecurityGroupUsers.RemoveRange(usersForDelete);
                     // add new
-                    foreach (int userId in requestModel.UserIds)
+                    foreach (var userId in requestModel.UserIds)
                     {
                         if (securityGroup.SecurityGroupUsers.All(x => x.EformUserId != userId))
                         {

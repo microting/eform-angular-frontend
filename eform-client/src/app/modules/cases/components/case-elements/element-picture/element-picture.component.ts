@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {Gallery, GalleryItem, ImageItem} from '@ngx-gallery/core';
 import {Lightbox} from '@ngx-gallery/lightbox';
-import {CaseFieldValue} from 'src/app/common/models/cases';
+import {FieldValueDto} from 'src/app/common/models';
 import {ImageService} from 'src/app/common/services/cases';
 
 @Component({
@@ -10,7 +10,7 @@ import {ImageService} from 'src/app/common/services/cases';
   styleUrls: ['./element-picture.component.scss']
 })
 export class ElementPictureComponent implements OnChanges {
-  @Input() fieldValues: Array<CaseFieldValue> = [];
+  @Input() fieldValues: Array<FieldValueDto> = [];
   buttonsLocked = false;
   geoObjects = [];
   images = [];

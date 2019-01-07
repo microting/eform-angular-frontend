@@ -1,5 +1,5 @@
 ﻿using eFormAPI.Web.Infrastructure.Database.Entities;
-using eFormAPI.Web.Infrastructure.Seed;
+using eFormAPI.Web.Infrastructure.Database.Seed;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +24,13 @@ namespace eFormAPI.Web.Infrastructure.Database
         // Common
         public DbSet<MenuItem> MenuItems { get; set; }
         public DbSet<SavedTag> SavedTags { get; set; }
+        public DbSet<EformConfigurationValue> ConfigurationValues { get; set; }
+        public DbSet<EformPlugin> EformPlugins { get; set; }
+        
+        // Reports
+        public DbSet<EformReport> EformReports { get; set; }
+        public DbSet<EformReportElement> EformReportElements { get; set; }
+        public DbSet<EformReportDataItem> EformReportDataItems { get; set; }
 
         // Security
         public DbSet<SecurityGroup> SecurityGroups { get; set; }
@@ -37,6 +44,33 @@ namespace eFormAPI.Web.Infrastructure.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<EformPlugin>()
+                .HasIndex(p => p.PluginId)
+                .IsUnique();
+
+            // Reports
+            modelBuilder.Entity<EformReport>()
+                .HasIndex(p => p.TemplateId)
+                .IsUnique();
+
+            modelBuilder.Entity<EformReportElement>()
+                .HasIndex(p => p.ElementId);
+
+            modelBuilder.Entity<EformReportElement>()
+                .HasMany(e => e.NestedElements)
+                .WithOne(e => e.Parent)
+                .HasForeignKey(e => e.ParentId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<EformReportDataItem>()
+                .HasIndex(p => p.DataItemId);
+
+            modelBuilder.Entity<EformReportDataItem>()
+                .HasMany(e => e.NestedDataItems)
+                .WithOne(e => e.Parent)
+                .HasForeignKey(e => e.ParentId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // Security
             modelBuilder.Entity<SecurityGroupUser>()
@@ -77,6 +111,13 @@ namespace eFormAPI.Web.Infrastructure.Database
 
             modelBuilder.Entity<EformInGroup>()
                 .HasIndex(p => p.TemplateId);
+
+            modelBuilder.Entity<EformConfigurationValue>()
+                .HasKey(value => value.Id);
+
+            modelBuilder.Entity<EformConfigurationValue>()
+                .HasIndex(value => value.Id)
+                .IsUnique();
 
             modelBuilder.Entity<SavedTag>()
                 .HasIndex(p => new

@@ -9,6 +9,5 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities
 
         public int EformInGroupId { get; set; }
         public virtual EformInGroup EformInGroup { get; set; }
-
     }
 }

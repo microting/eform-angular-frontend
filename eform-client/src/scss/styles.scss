@@ -29,6 +29,10 @@ body {
     margin-top: 0.3rem;
     margin-bottom: 0;
   }
+  &.md-form-no-spacing {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
 }
 
 .footer-version {

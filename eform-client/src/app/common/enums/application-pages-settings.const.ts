@@ -66,5 +66,15 @@ export const ApplicationPagesSettings = [
         isSortDsc: false
       })
     }
+  ),
+  new ApplicationPageModel({
+      name: ApplicationPages[ApplicationPages.PluginsSettings],
+      index: ApplicationPages.PluginsSettings,
+      settings: new PageSettingsModel({
+        pageSize: 10,
+        sort: 'id',
+        isSortDsc: false
+      })
+    }
   )
 ];

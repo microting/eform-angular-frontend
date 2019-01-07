@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Runtime.InteropServices;
+using System.IO;
 using System.Threading;
+using eFormAPI.Web.Hosting.Settings;
 using eFormAPI.Web.Infrastructure.Database;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
@@ -8,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microting.eFormApi.BasePn.Infrastructure.Helpers.WritableOptions;
+using Microsoft.Extensions.Options;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 
 namespace eFormAPI.Web
@@ -50,17 +51,22 @@ namespace eFormAPI.Web
             _cancelTokenSource.Cancel();
         }
 
+        public delegate void ReloadDbConfiguration();
+
+        public static ReloadDbConfiguration ReloadDbConfigurationDelegate { get; set; }
+
         public static void MigrateDb(IWebHost webHost)
         {
             using (var scope = webHost.Services.GetService<IServiceScopeFactory>().CreateScope())
             {
-
                 BaseDbContext dbContext = null;
                 try
                 {
                     dbContext = scope.ServiceProvider.GetRequiredService<BaseDbContext>();
                 }
-                catch {}
+                catch
+                {
+                }
 
                 if (dbContext != null)
                 {
@@ -69,7 +75,7 @@ namespace eFormAPI.Web
                         try
                         {
                             var connectionStrings =
-                                scope.ServiceProvider.GetRequiredService<IWritableOptions<ConnectionStrings>>();
+                                scope.ServiceProvider.GetRequiredService<IOptions<ConnectionStrings>>();
                             if (connectionStrings.Value.DefaultConnection != "...")
                             {
                                 dbContext.Database.Migrate();
@@ -80,10 +86,8 @@ namespace eFormAPI.Web
                             var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
                             logger.LogError(e, "Error while migrating db");
                         }
-                    }    
+                    }
                 }
-                
-                
             }
         }
 
@@ -94,62 +98,31 @@ namespace eFormAPI.Web
                 .AddEnvironmentVariables(prefix: "ASPNETCORE_")
                 .Build();
             var port = defaultConfig.GetValue("port", 5000);
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-//#if DEBUG
-                return WebHost.CreateDefaultBuilder(args)
-                    //.UseIISIntegration()
-                    .UseUrls($"http://localhost:{port}")
-                    .UseIISIntegration()
-                    .ConfigureAppConfiguration((hostContext, config) =>
+            return WebHost.CreateDefaultBuilder(args)
+                .UseUrls($"http://localhost:{port}")
+                .UseIISIntegration()
+                .ConfigureAppConfiguration((hostContext, config) =>
+                {
+                    // delete all default configuration providers
+                    config.Sources.Clear();
+                    config.SetBasePath(hostContext.HostingEnvironment.ContentRootPath);
+
+                    var filePath = Path.Combine(hostContext.HostingEnvironment.ContentRootPath,
+                        "connection.json");
+                    if (!File.Exists(filePath))
                     {
-                        // delete all default configuration providers
-                        config.Sources.Clear();
-                        config.SetBasePath(hostContext.HostingEnvironment.ContentRootPath);
-                        config.AddJsonFile("appsettings.json",
-                            optional: true,
-                            reloadOnChange: true);
-                        config.AddEnvironmentVariables();
-                    })
-                    .UseStartup<Startup>()
-                    .Build();
-//#else
-                //Console.WriteLine("WE ARE IN RELEASE MODE");
-                //return WebHost.CreateDefaultBuilder(args)
-                //    .UseKestrel()
-                //    .UseIISIntegration()
-                //   //.UseUrls($"http://localhost:{port}")
-                //   .ConfigureAppConfiguration((hostContext, config) =>
-                //   {
-                //       // delete all default configuration providers
-                //       config.Sources.Clear();
-                //       config.SetBasePath(hostContext.HostingEnvironment.ContentRootPath);
-                //       config.AddJsonFile("appsettings.json",
-                //           optional: true,
-                //           reloadOnChange: true);
-                //       config.AddEnvironmentVariables();
-                //   })
-                //   .UseStartup<Startup>()
-                //   .Build();
-//#endif
-            }
-            else
-            {
-                return WebHost.CreateDefaultBuilder(args)
-                    .UseUrls($"http://localhost:{port}")
-                    .ConfigureAppConfiguration((hostContext, config) =>
-                    {
-                        // delete all default configuration providers
-                        config.Sources.Clear();
-                        config.SetBasePath(hostContext.HostingEnvironment.ContentRootPath);
-                        config.AddJsonFile("appsettings.json",
-                            optional: true,
-                            reloadOnChange: true);
-                        config.AddEnvironmentVariables();
-                    })
-                    .UseStartup<Startup>()
-                    .Build();
-            }
+                        ConnectionStringManager.CreateDefalt(filePath);
+                    }
+
+                    config.AddJsonFile("connection.json",
+                        optional: true,
+                        reloadOnChange: true);
+                    var mainSettings = ConnectionStringManager.Read(filePath);
+                    config.AddEfConfiguration(mainSettings?.ConnectionStrings?.DefaultConnection);
+                    config.AddEnvironmentVariables();
+                })
+                .UseStartup<Startup>()
+                .Build();
         }
     }
 }

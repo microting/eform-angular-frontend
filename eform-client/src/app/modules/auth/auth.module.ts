@@ -1,16 +1,18 @@
-import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {NgModule} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {TranslateModule} from '@ngx-translate/core';
+import {MDBBootstrapModule} from 'port/angular-bootstrap-md';
 import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
 import {AuthRouting} from './auth.routing';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MDBBootstrapModule} from 'port/angular-bootstrap-md';
-import {TranslateModule} from '@ngx-translate/core';
 import {
+  AuthComponent,
   GoogleAuthenticatorComponent,
   LoginComponent,
   ResetAdminPasswordComponent,
-  RestorePasswordComponent, SignOutComponent,
-  AuthComponent, RestorePasswordConfirmationComponent
+  RestorePasswordComponent,
+  RestorePasswordConfirmationComponent,
+  SignOutComponent
 } from './components';
 
 @NgModule({

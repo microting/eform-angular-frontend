@@ -1,0 +1,47 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{'Header Picture' | translate}}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <input type="file" (change)="fileChangeEvent($event)" />
+          <div class="mb-1">
+            <image-cropper
+              [imageChangedEvent]="imageChangedEvent"
+              [maintainAspectRatio]="true"
+              [aspectRatio]="200 / 70"
+              [resizeToWidth]="200"
+              [roundCropper]="false"
+              format="png"
+              outputType="both"
+              (imageCropped)="imageCropped($event)"
+              (imageLoaded)="imageLoaded()"
+              (loadImageFailed)="loadImageFailed()"
+              style="max-height: 40vh"
+              [style.display]="cropperReady ? null : 'none'"
+            ></image-cropper>
+            <ng-container *ngIf="error">
+              {{error | translate}}
+            </ng-container>
+          </div>
+          <div *ngIf="croppedImage">
+            {{'Preview' | translate}}
+            <img [src]="croppedImage" />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success" id="saveCreateBtn" (click)="saveImage()"
+                [disabled]="!croppedImage">
+          {{ 'Save' | translate }}</button>
+        <button class="btn btn-neutral text-black-50" id="cancelCreateBtn" (click)="frame.hide()">
+          {{ 'Cancel' | translate }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

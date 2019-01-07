@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CaseFieldValue} from 'src/app/common/models/cases';
+import {FieldValueDto} from 'src/app/common/models';
 
 @Component({
   selector: 'element-checkbox',
@@ -7,7 +7,7 @@ import {CaseFieldValue} from 'src/app/common/models/cases';
   styleUrls: ['./element-checkbox.component.scss']
 })
 export class ElementCheckboxComponent {
-  fieldValueObj: CaseFieldValue = new CaseFieldValue();
+  fieldValueObj: FieldValueDto = new FieldValueDto();
   isChecked: boolean;
 
   @Input()

@@ -63,7 +63,7 @@ namespace eFormAPI.Web.Controllers
         [HttpGet]
         [Route("api/admin/enable-two-factor")]
         [Authorize(Roles = EformRole.Admin)]
-        public OperationResult EnableTwoFactorAuthForce()
+        public Task<OperationResult> EnableTwoFactorAuthForce()
         {
             return _adminService.EnableTwoFactorAuthForce();
         }
@@ -71,7 +71,7 @@ namespace eFormAPI.Web.Controllers
         [HttpGet]
         [Route("api/admin/disable-two-factor")]
         [Authorize(Roles = EformRole.Admin)]
-        public OperationResult DisableTwoFactorAuthForce()
+        public Task<OperationResult> DisableTwoFactorAuthForce()
         {
             return _adminService.DisableTwoFactorAuthForce();
         }

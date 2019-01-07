@@ -7,14 +7,11 @@ using eFormAPI.Web.Abstractions.Eforms;
 using eFormAPI.Web.Infrastructure.Database;
 using eFormAPI.Web.Infrastructure.Database.Entities;
 using eFormAPI.Web.Infrastructure.Models.Tags;
-using eFormCore;
-using eFormShared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Tags;
 
 namespace eFormAPI.Web.Services
 {
@@ -43,9 +40,9 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                Core core = _coreHelper.GetCore();
-                List<Tag> tags = core.GetAllTags(false);
-                List<CommonDictionaryModel> model = new List<CommonDictionaryModel>(tags.Count);
+                var core = _coreHelper.GetCore();
+                var tags = core.GetAllTags(false);
+                var model = new List<CommonDictionaryModel>(tags.Count);
                 tags.ForEach(tag =>
                 {
                     model.Add(new CommonDictionaryModel()
@@ -68,7 +65,7 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                bool result = _coreHelper.GetCore().TagDelete(tagId);
+                var result = _coreHelper.GetCore().TagDelete(tagId);
                 if (result)
                 {
                     var savedTags = _dbContext.SavedTags.Where(x => x.TagId == tagId).ToList();
@@ -94,7 +91,7 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                int result = _coreHelper.GetCore().TagCreate(tagName);
+                var result = _coreHelper.GetCore().TagCreate(tagName);
                 return result > 0
                     ? new OperationResult(true, _localizationService.GetString("TagParamCreatedSuccessfully", tagName))
                     : new OperationResult(false, _localizationService.GetString("ErrorWhileCreatingParamTag", tagName));
@@ -111,7 +108,7 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                bool result = _coreHelper.GetCore().TemplateSetTags(requestModel.TemplateId, requestModel.TagsIds);
+                var result = _coreHelper.GetCore().TemplateSetTags(requestModel.TemplateId, requestModel.TagsIds);
                 return result
                     ? new OperationResult(true, _localizationService.GetString("TemplateTagUpdatedSuccessfully"))
                     : new OperationResult(false, _localizationService.GetString("ErrorWhileUpdatingTemplateTags"));

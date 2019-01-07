@@ -21,11 +21,11 @@ import {
     CommonModule,
     EformsRouting,
     NgSelectModule,
-    TranslateModule,
     MDBBootstrapModule,
     EformSharedModule,
     FileUploadModule,
-    FormsModule
+    FormsModule,
+    TranslateModule.forChild()
   ],
   declarations: [
     EformsPageComponent,

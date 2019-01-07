@@ -8,14 +8,12 @@ using eFormAPI.Web.Infrastructure;
 using eFormAPI.Web.Infrastructure.Database;
 using eFormAPI.Web.Infrastructure.Database.Entities;
 using eFormAPI.Web.Infrastructure.Models.EformPermissions;
-using eFormCore;
+using eFormAPI.Web.Infrastructure.Models.Templates;
 using eFormShared;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Templates;
 
 namespace eFormAPI.Web.Services.Security
 {
@@ -45,26 +43,26 @@ namespace eFormAPI.Web.Services.Security
         {
             try
             {
-                TemplateListModel result = new TemplateListModel
+                var result = new TemplateListModel
                 {
                     Templates = new List<Template_Dto>()
                 };
-                Core core = _coreHelper.GetCore();
-                List<Template_Dto> templatesDto = core.TemplateItemReadAll(false,
+                var core = _coreHelper.GetCore();
+                var templatesDto = core.TemplateItemReadAll(false,
                     "",
                     templateRequestModel.NameFilter,
                     templateRequestModel.IsSortDsc,
                     templateRequestModel.Sort,
                     templateRequestModel.TagIds);
 
-                List<int> eformsInGroup = await _dbContext.EformInGroups
+                var eformsInGroup = await _dbContext.EformInGroups
                     .Where(x => x.SecurityGroupId == groupId)
                     .Select(x => x.TemplateId)
                     .ToListAsync();
 
                 if (templatesDto.Any())
                 {
-                    foreach (Template_Dto templateDto in templatesDto)
+                    foreach (var templateDto in templatesDto)
                     {
                         if (!eformsInGroup.Contains(templateDto.Id))
                         {
@@ -102,7 +100,7 @@ namespace eFormAPI.Web.Services.Security
                     return new OperationResult(false, _localizationService.GetString("eFormAlreadyInGroup"));
                 }
 
-                EformInGroup newEformInGroup = new EformInGroup()
+                var newEformInGroup = new EformInGroup()
                 {
                     SecurityGroupId = requestModel.GroupId,
                     TemplateId = requestModel.EformId
@@ -124,8 +122,8 @@ namespace eFormAPI.Web.Services.Security
         {
             try
             {
-                EformsPermissionsModel result = new EformsPermissionsModel();
-                string[] eformClaims = new[]
+                var result = new EformsPermissionsModel();
+                var eformClaims = new[]
                 {
                     AuthConsts.EformClaims.EformsClaims.UpdateColumns,
                     AuthConsts.EformClaims.EformsClaims.DownloadXml,
@@ -166,11 +164,11 @@ namespace eFormAPI.Web.Services.Security
                             }).ToList()
                     })
                     .ToListAsync();
-                Core core = _coreHelper.GetCore();
-                List<Template_Dto> templatesDto = core.TemplateItemReadAll(false);
-                foreach (EformPermissionsModel eformInGroups in eformsInGroup)
+                var core = _coreHelper.GetCore();
+                var templatesDto = core.TemplateItemReadAll(false);
+                foreach (var eformInGroups in eformsInGroup)
                 {
-                    Template_Dto template = templatesDto.FirstOrDefault(x => x.Id == eformInGroups.TemplateId);
+                    var template = templatesDto.FirstOrDefault(x => x.Id == eformInGroups.TemplateId);
                     if (template != null)
                     {
                         eformInGroups.Label = template.Label;
@@ -178,9 +176,9 @@ namespace eFormAPI.Web.Services.Security
                     }
                 }
 
-                foreach (EformPermissionsModel eformInGroup in eformsInGroup)
+                foreach (var eformInGroup in eformsInGroup)
                 {
-                    List<EformPermissionTypeModel> permissionTypes = eformInGroup.Permissions
+                    var permissionTypes = eformInGroup.Permissions
                         .OrderBy(x => x.PermissionType)
                         .GroupBy(x => x.PermissionType)
                         .Select(g => new EformPermissionTypeModel()
@@ -251,18 +249,18 @@ namespace eFormAPI.Web.Services.Security
             try
             {
                 requestModel.Permissions.Clear();
-                foreach (EformPermissionTypeModel permissionType in requestModel.PermissionTypes)
+                foreach (var permissionType in requestModel.PermissionTypes)
                 {
-                    foreach (EformPermissionModel permission in permissionType.Permissions)
+                    foreach (var permission in permissionType.Permissions)
                     {
                         requestModel.Permissions.Add(permission);
                     }
                 }
                 
-                using (IDbContextTransaction transaction = await _dbContext.Database.BeginTransactionAsync())
+                using (var transaction = await _dbContext.Database.BeginTransactionAsync())
                 {
-                    List<int> enabledEformPermission = new List<int>();
-                    foreach (EformPermissionModel eformPermission in requestModel.Permissions)
+                    var enabledEformPermission = new List<int>();
+                    foreach (var eformPermission in requestModel.Permissions)
                     {
                         if (eformPermission.IsEnabled)
                         {
@@ -271,7 +269,7 @@ namespace eFormAPI.Web.Services.Security
                     }
 
                     // for delete
-                    List<EformPermission> forDelete = _dbContext.EformPermissions
+                    var forDelete = _dbContext.EformPermissions
                         .Where(x => !enabledEformPermission.Contains(x.Id)
                                     && x.EformInGroupId == requestModel.EformInGroupId)
                         .ToList();
@@ -279,14 +277,14 @@ namespace eFormAPI.Web.Services.Security
                     _dbContext.EformPermissions.RemoveRange(forDelete);
                     await _dbContext.SaveChangesAsync();
 
-                    List<int> list = _dbContext.EformPermissions
+                    var list = _dbContext.EformPermissions
                         .Where(x => x.EformInGroupId == requestModel.EformInGroupId)
                         .Where(x => enabledEformPermission.Contains(x.Id))
                         .Select(x => x.PermissionId)
                         .ToList();
 
-                    List<int> enabledPermissions = new List<int>();
-                    foreach (EformPermissionModel eformPermission in requestModel.Permissions)
+                    var enabledPermissions = new List<int>();
+                    foreach (var eformPermission in requestModel.Permissions)
                     {
                         if (eformPermission.IsEnabled)
                         {
@@ -294,11 +292,11 @@ namespace eFormAPI.Web.Services.Security
                         }
                     }
 
-                    foreach (int permissionId in enabledPermissions)
+                    foreach (var permissionId in enabledPermissions)
                     {
                         if (!list.Contains(permissionId))
                         {
-                            EformPermissionModel permissionModel = requestModel.Permissions.FirstOrDefault(x =>
+                            var permissionModel = requestModel.Permissions.FirstOrDefault(x =>
                                 x.Id == permissionId && x.IsEnabled);
                             if (permissionModel != null)
                             {
@@ -330,7 +328,7 @@ namespace eFormAPI.Web.Services.Security
         {
             try
             {
-                EformInGroup eformInGroup = await _dbContext.EformInGroups
+                var eformInGroup = await _dbContext.EformInGroups
                     .FirstOrDefaultAsync(x => x.TemplateId == templateId
                                               && x.SecurityGroupId == groupId);
                 if (eformInGroup == null)
