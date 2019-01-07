@@ -23,37 +23,44 @@ namespace eFormAPI.Web.Hosting.Helpers
         public static List<IEformPlugin> GetPlugins(IConfiguration configuration)
         {
             // Load info from database
-            List<EformPlugin> eformPlugins;
+            List<EformPlugin> eformPlugins = null;
             var newPlugins = new List<EformPlugin>();
             var contextFactory = new BaseDbContextFactory();
             using (var dbContext = contextFactory.CreateDbContext(new[] {configuration.MyConnectionString()}))
             {
-                eformPlugins = dbContext.EformPlugins
-                    .AsNoTracking()
-                    .ToList();
+                try
+                {
+                    eformPlugins = dbContext.EformPlugins
+                        .AsNoTracking()
+                        .ToList();
+                } catch {}
             }
             var plugins = new List<IEformPlugin>();
             // create plugin loaders
-            foreach (var plugin in GetAllPlugins())
+            if (eformPlugins != null)
             {
-                var eformPlugin = eformPlugins.FirstOrDefault(x => x.PluginId == plugin.PluginId);
-                if (eformPlugin != null)
+                foreach (var plugin in GetAllPlugins())
                 {
-                    if (eformPlugin.Status ==  (int) PluginStatus.Enabled)
+                    var eformPlugin = eformPlugins.FirstOrDefault(x => x.PluginId == plugin.PluginId);
+                    if (eformPlugin != null)
                     {
-                        plugins.Add(plugin);
+                        if (eformPlugin.Status ==  (int) PluginStatus.Enabled)
+                        {
+                            plugins.Add(plugin);
+                        }
+                    }
+                    else
+                    {
+                        newPlugins.Add(new EformPlugin()
+                        {
+                            PluginId = plugin.PluginId,
+                            ConnectionString = "...",
+                            Status = (int) PluginStatus.Disabled
+                        });
                     }
                 }
-                else
-                {
-                    newPlugins.Add(new EformPlugin()
-                    {
-                        PluginId = plugin.PluginId,
-                        ConnectionString = "...",
-                        Status = (int) PluginStatus.Disabled
-                    });
-                }
             }
+            
 
             using (var dbContext = contextFactory.CreateDbContext(new[] {configuration.MyConnectionString()}))
             {
