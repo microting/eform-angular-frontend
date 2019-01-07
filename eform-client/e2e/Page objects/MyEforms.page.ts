@@ -57,6 +57,7 @@ class MyEformsPage extends PageWithNavbarPage {
   }
 
   createNewEform(eFormLabel, newTagsList = [], tagAddedNum = 0) {
+    browser.pause(5000);
     this.newEformBtn.click();
     browser.pause(5000);
     // Create replaced xml and insert it in textarea
@@ -74,7 +75,7 @@ class MyEformsPage extends PageWithNavbarPage {
     // Add existing tags
     const selectedTags: string[] = [];
     if (tagAddedNum > 0) {
-      browser.pause(20000);
+      browser.pause(5000);
       for (let i = 0; i < tagAddedNum; i++) {
         this.createEformTagSelector.click();
         const selectedTag = $('.ng-option:not(.ng-option-selected)');
