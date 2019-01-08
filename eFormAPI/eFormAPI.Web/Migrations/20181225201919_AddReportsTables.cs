@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using eFormAPI.Web.Hosting;
 
 namespace eFormAPI.Web.Migrations
 {
@@ -8,12 +10,19 @@ namespace eFormAPI.Web.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            string autoIDGenStrategy = "SqlServer:ValueGenerationStrategy";
+            object autoIDGenStrategyValue = SqlServerValueGenerationStrategy.IdentityColumn;
+            if (DbConfig.IsMySQL)
+            {
+                autoIDGenStrategy = "MySql:ValueGenerationStrategy";
+                autoIDGenStrategyValue = MySqlValueGenerationStrategy.IdentityColumn;
+            }
             migrationBuilder.CreateTable(
                 name: "EformReports",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation(autoIDGenStrategy, autoIDGenStrategyValue),
                     TemplateId = table.Column<int>(nullable: false),
                     HeaderImage = table.Column<byte[]>(nullable: true),
                     HeaderVisibility = table.Column<string>(nullable: true),
@@ -30,7 +39,7 @@ namespace eFormAPI.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation(autoIDGenStrategy, autoIDGenStrategyValue),
                     ElementId = table.Column<int>(nullable: false),
                     Position = table.Column<int>(nullable: false),
                     Visibility = table.Column<bool>(nullable: false),

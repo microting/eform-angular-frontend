@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
+using eFormAPI.Web.Hosting;
+
 
 namespace eFormAPI.Web.Migrations
 {
@@ -6,6 +9,13 @@ namespace eFormAPI.Web.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            string autoIDGenStrategy = "SqlServer:ValueGenerationStrategy";
+            object autoIDGenStrategyValue = SqlServerValueGenerationStrategy.IdentityColumn;
+            if (DbConfig.IsMySQL)
+            {
+                autoIDGenStrategy = "MySql:ValueGenerationStrategy";
+                autoIDGenStrategyValue = MySqlValueGenerationStrategy.IdentityColumn;
+            }
             migrationBuilder.CreateTable(
                 name: "ConfigurationValues",
                 columns: table => new
