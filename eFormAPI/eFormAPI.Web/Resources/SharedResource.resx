@@ -543,4 +543,7 @@
   <data name="Workers" xml:space="preserve">
     <value>Workers</value>
   </data>
+  <data name="PluginsSettings" xml:space="preserve">
+    <value>Plugins Settings</value>
+  </data>
 </root>

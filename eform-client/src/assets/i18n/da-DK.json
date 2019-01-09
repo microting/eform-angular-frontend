@@ -228,6 +228,8 @@
   "Enabled": "Aktiveret",
   "Disabled": "Deaktiveret",
   "Plugins Settings": "Plugins Indstillinger",
+  "PluginsSettings": "Plugins Indstillinger",
+  "Edit Settings": "Rediger Indstillinger",
   "Connection String": "Forbindelsesstreng",
   "Version": "Version"
 }
