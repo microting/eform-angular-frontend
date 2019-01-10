@@ -76,7 +76,7 @@ namespace eFormAPI.Web.Migrations
             migrationBuilder.InsertData(
                 table: "MenuItems",
                 columns: new[] { "Id", "E2EId", "Link", "LocaleName", "MenuPosition", "Name", "ParentId", "Position" },
-                values: new object[] { 16, "plugins-settings", "/plugins-settings", "PluginsSettings", 1, "Plugins Settings", 3, 6 });
+                values: new object[] { 16, "plugins-settings", "/plugins-settings", "Plugin Settings", 1, "Plugin Settings", 3, 6 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_EformPlugins_PluginId",

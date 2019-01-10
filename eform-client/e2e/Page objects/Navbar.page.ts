@@ -10,7 +10,7 @@ export class Navbar {
   }
 
   public clickonSubMenuItem(menuItem) {
-    browser.element(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), '"${menuItem}"')]`).click();
+    browser.element(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), '${menuItem}')]`).click();
   }
   // public get userDropdown() {
   //   return browser.element('#userDropdown');
