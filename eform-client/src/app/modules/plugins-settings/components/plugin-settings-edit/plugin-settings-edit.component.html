@@ -34,7 +34,9 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-success" (click)="updateSettings()" id="saveBtn">{{ 'Save' | translate }}</button>
+        <button class="btn btn-success" (click)="updateSettings()" [disabled]="!pluginSettingsUpdateModel.connectionString ||
+        pluginSettingsUpdateModel.connectionString == '...'"
+                id="saveBtn">{{ 'Save' | translate }}</button>
         <button class="btn btn-neutral text-black-50" id="cancelCreateBtn" (click)="frame.hide()">
           {{ 'Cancel' | translate }}</button>
       </div>
