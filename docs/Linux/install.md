@@ -91,9 +91,7 @@ Configuration wizard ask you a 4 parameters to setup
   * Defines on which port application will be available
   * __Default value__: 80
 
-Script can be launched with key parameters
-
-Example:
+Script can be launched with key parameters:
 ```
 sudo ./install.sh --port=80 --hostname=example.org --launch-env=Production --username=user --ssl --silent
 ```
