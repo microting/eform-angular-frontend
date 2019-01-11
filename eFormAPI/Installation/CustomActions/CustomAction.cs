@@ -440,9 +440,20 @@ namespace CustomActions
                 try
                 {
                     BackupPluginSettings(session, uiIisDir);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("We got an exception trying to do backup " + ex.Message);
+                }
+
+                try
+                {
                     DeleteDirectory(Path.Combine(uiIisDir, "src"));
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("We got an exception trying to delete folder src " + ex.Message);
+                }
 
                 session.Log("Set proper names to folders");
 
