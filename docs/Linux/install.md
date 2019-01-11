@@ -91,6 +91,20 @@ Configuration wizard ask you a 4 parameters to setup
   * Defines on which port application will be available
   * __Default value__: 80
 
+Script can be launched with key parameters:
+```
+sudo ./install.sh --port=80 --hostname=example.org --launch-env=Production --username=user --ssl --silent
+```
+
+```BASH
+--port= - Defines on which port application will be available
+--hostname= - Hostname that NGINX should use as route to webapp
+--launch-env= -Which launching environment should use dotnet
+--username= - Non-root username who launched that script
+--ssl - Setup SSL
+--silent - enables non-interactive installation mode
+```
+
 ## Installation process
 
 All installation process is automated, after installation eFrom application will be available on host and port that you specified in configuration
