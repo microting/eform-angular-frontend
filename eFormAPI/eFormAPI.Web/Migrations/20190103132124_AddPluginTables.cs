@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using eFormAPI.Web.Hosting;
+
 
 namespace eFormAPI.Web.Migrations
 {
@@ -7,6 +9,13 @@ namespace eFormAPI.Web.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            string autoIDGenStrategy = "SqlServer:ValueGenerationStrategy";
+            object autoIDGenStrategyValue = SqlServerValueGenerationStrategy.IdentityColumn;
+            if (DbConfig.IsMySQL)
+            {
+                autoIDGenStrategy = "MySql:ValueGenerationStrategy";
+                autoIDGenStrategyValue = MySqlValueGenerationStrategy.IdentityColumn;
+            }
             migrationBuilder.DropColumn(
                 name: "Position",
                 table: "EformReportElements");
@@ -25,7 +34,7 @@ namespace eFormAPI.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation(autoIDGenStrategy, autoIDGenStrategyValue),
                     PluginId = table.Column<string>(maxLength: 100, nullable: false),
                     ConnectionString = table.Column<string>(nullable: true),
                     Status = table.Column<int>(nullable: false)
@@ -40,7 +49,7 @@ namespace eFormAPI.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation(autoIDGenStrategy, autoIDGenStrategyValue),
                     DataItemId = table.Column<int>(nullable: false),
                     Position = table.Column<int>(nullable: false),
                     Visibility = table.Column<bool>(nullable: false),
@@ -67,7 +76,7 @@ namespace eFormAPI.Web.Migrations
             migrationBuilder.InsertData(
                 table: "MenuItems",
                 columns: new[] { "Id", "E2EId", "Link", "LocaleName", "MenuPosition", "Name", "ParentId", "Position" },
-                values: new object[] { 16, "plugins-settings", "/plugins-settings", "PluginsSettings", 1, "Plugins Settings", 3, 6 });
+                values: new object[] { 16, "plugins-settings", "/plugins-settings", "Plugin Settings", 1, "Plugin Settings", 3, 6 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_EformPlugins_PluginId",

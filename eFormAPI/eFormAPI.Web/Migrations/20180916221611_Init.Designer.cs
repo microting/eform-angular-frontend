@@ -21,8 +21,8 @@ namespace eFormAPI.Web.Migrations
             object autoIDGenStrategyValue = SqlServerValueGenerationStrategy.IdentityColumn;
             if (DbConfig.IsMySQL)
             {
-                autoIDGenStrategyValue = true;
-                autoIDGenStrategy = "MySQL:ValueGeneratedOnAdd";
+                autoIDGenStrategy = "MySql:ValueGenerationStrategy";
+                autoIDGenStrategyValue = MySqlValueGenerationStrategy.IdentityColumn;
             }
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.2-rtm-30932")

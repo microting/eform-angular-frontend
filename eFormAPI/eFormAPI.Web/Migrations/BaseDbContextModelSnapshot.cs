@@ -849,9 +849,9 @@ namespace eFormAPI.Web.Migrations
                             Id = 16,
                             E2EId = "plugins-settings",
                             Link = "/plugins-settings",
-                            LocaleName = "PluginsSettings",
+                            LocaleName = "PluginSettings",
                             MenuPosition = 1,
-                            Name = "Plugins Settings",
+                            Name = "Plugin Settings",
                             ParentId = 3,
                             Position = 6
                         });

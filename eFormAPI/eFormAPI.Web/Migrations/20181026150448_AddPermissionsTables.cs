@@ -17,8 +17,8 @@ namespace eFormAPI.Web.Migrations
             if (migrationBuilder.ActiveProvider == "Pomelo.EntityFrameworkCore.MySql")
             {
                 DbConfig.IsMySQL = true;
-                autoIDGenStrategy = "MySQL:ValueGeneratedOnAdd";
-                autoIDGenStrategyValue = true;
+                autoIDGenStrategy = "MySql:ValueGenerationStrategy";
+                autoIDGenStrategyValue = MySqlValueGenerationStrategy.IdentityColumn;
             }
 
             // This is commented in current version, since MySQL has trouble with it.

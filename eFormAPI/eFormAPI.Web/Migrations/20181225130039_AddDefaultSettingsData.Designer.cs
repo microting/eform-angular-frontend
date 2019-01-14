@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eFormAPI.Web.Infrastructure.Database;
+using eFormAPI.Web.Hosting;
 
 namespace eFormAPI.Web.Migrations
 {
@@ -16,16 +17,23 @@ namespace eFormAPI.Web.Migrations
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
+            string autoIDGenStrategy = "SqlServer:ValueGenerationStrategy";
+            object autoIDGenStrategyValue = SqlServerValueGenerationStrategy.IdentityColumn;
+            if (DbConfig.IsMySQL)
+            {
+                autoIDGenStrategy = "MySql:ValueGenerationStrategy";
+                autoIDGenStrategyValue = MySqlValueGenerationStrategy.IdentityColumn;
+            }
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
 
                     b.Property<string>("ClaimType");
 
@@ -44,7 +52,7 @@ namespace eFormAPI.Web.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
 
                     b.Property<string>("ClaimType");
 
@@ -95,7 +103,7 @@ namespace eFormAPI.Web.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -120,7 +128,7 @@ namespace eFormAPI.Web.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
 
                     b.Property<int>("AccessFailedCount");
 
@@ -367,7 +375,7 @@ namespace eFormAPI.Web.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
 
                     b.Property<int>("SecurityGroupId");
 
@@ -389,7 +397,7 @@ namespace eFormAPI.Web.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
 
                     b.Property<int>("EformInGroupId");
 
@@ -409,7 +417,7 @@ namespace eFormAPI.Web.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
 
                     b.Property<int>("PermissionId");
 
@@ -563,7 +571,7 @@ namespace eFormAPI.Web.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
 
                     b.Property<string>("E2EId");
 
@@ -754,7 +762,7 @@ namespace eFormAPI.Web.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
 
                     b.Property<string>("ClaimName")
                         .HasMaxLength(250);
@@ -1068,7 +1076,7 @@ namespace eFormAPI.Web.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
 
                     b.Property<string>("Name")
                         .HasMaxLength(250);
@@ -1133,7 +1141,7 @@ namespace eFormAPI.Web.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
 
                     b.Property<int>("EformUserId");
 
@@ -1154,7 +1162,7 @@ namespace eFormAPI.Web.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
 
                     b.Property<string>("Name")
                         .HasMaxLength(250);
@@ -1180,7 +1188,7 @@ namespace eFormAPI.Web.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
 
                     b.Property<int>("EformUserId");
 

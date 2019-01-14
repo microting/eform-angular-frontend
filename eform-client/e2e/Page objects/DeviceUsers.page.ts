@@ -65,7 +65,7 @@ class DeviceUsersPage extends PageWithNavbarPage {
     return users;
   }
 
-  public createNewDeviceUser(firstName = '', lastName = '') {
+  public createNewDeviceUser(firstName: string, lastName: string) {
     this.newDeviceUserBtn.click();
     browser.pause(6000);
     this.createFirstNameInput.setValue(firstName);

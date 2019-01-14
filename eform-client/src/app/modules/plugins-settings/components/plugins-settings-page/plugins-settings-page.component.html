@@ -19,10 +19,10 @@
       </thead>
       <tbody id="tableBody">
       <tr *ngFor="let plugin of pluginsSettingsModel.settingsList">
-        <td scope="row">{{plugin.id}}</td>
-        <td>{{plugin.name}}</td>
-        <td>{{plugin.version}}</td>
-        <td [ngStyle]="{'color': plugin.status == statusEnum.Enabled ? '#06ba06' : '#ba3f4e'}">
+        <td scope="row" id="plugin-id">{{plugin.id}}</td>
+        <td id="plugin-name">{{plugin.name}}</td>
+        <td id="plugin-version">{{plugin.version}}</td>
+        <td [ngStyle]="{'color': plugin.status == statusEnum.Enabled ? '#06ba06' : '#ba3f4e'}" id="plugin-status">
           {{statusEnum[plugin.status] | translate}}
         </td>
         <td>
@@ -30,7 +30,7 @@
             <button class="btn btn-accent text-black-50 btn-icon mb-2"
                     mdbTooltip="{{'Edit Settings' | translate}}"
                     (click)="showEditModal(plugin)"
-                    mdbWavesEffect id="editSettingsBtn">
+                    mdbWavesEffect id="editSettingsBtn" id="plugin-settings-btn">
               <i class="material-icons">
                 edit
               </i>

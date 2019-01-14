@@ -9,6 +9,9 @@ export class Navbar {
     browser.element(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Applikationsindstillinger')]`).click();
   }
 
+  public clickonSubMenuItem(menuItem) {
+    browser.element(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), '${menuItem}')]`).click();
+  }
   // public get userDropdown() {
   //   return browser.element('#userDropdown');
   // }
@@ -19,7 +22,7 @@ export class Navbar {
   }
 
   public get deviceUsersBtn() {
-    return browser.element('#device-users');
+    return this.clickOnHeaderMenuItem(' Enhedsbrugere ');
   }
 
   public clickOnHeaderMenuItem(headerMenuItem) {
@@ -36,7 +39,7 @@ export class Navbar {
   public goToApplicationSettings() {
     this.advancedDropdown();
     this.applicationSettingsBtn();
-    browser.pause(25000);
+    browser.pause(15000);
   }
 
   public goToDeviceUsersPage() {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using eFormAPI.Web.Hosting;
 
 namespace eFormAPI.Web.Migrations
 {
@@ -7,12 +8,25 @@ namespace eFormAPI.Web.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            //Setup for SQL Server Provider
+
+            var autoIDGenStrategy = "SqlServer:ValueGenerationStrategy";
+            object autoIDGenStrategyValue = SqlServerValueGenerationStrategy.IdentityColumn;
+
+            // Setup for MySQL Provider
+            if (migrationBuilder.ActiveProvider == "Pomelo.EntityFrameworkCore.MySql")
+            {
+                DbConfig.IsMySQL = true;
+                autoIDGenStrategy = "MySql:ValueGenerationStrategy";
+                autoIDGenStrategyValue = MySqlValueGenerationStrategy.IdentityColumn;
+            }
+            
             migrationBuilder.CreateTable(
                 name: "SavedTags",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation(autoIDGenStrategy, autoIDGenStrategyValue),
                     TagId = table.Column<int>(nullable: false),
                     TagName = table.Column<string>(maxLength: 250, nullable: true),
                     EformUserId = table.Column<int>(nullable: false)

@@ -10,12 +10,15 @@ exports.config = {
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
   specs: [
-    'e2e/Tests/application-settings/application-settings.login-page.spec.ts'
-    // 'e2e/Tests/application-settings/**/*spec.ts',
-    // 'e2e\\Tests\\device-users\\device-users.add.spec.ts',
+    'e2e/Tests/application-settings/application-settings.login-page.spec.ts',
+    'e2e/Tests/application-settings/application-settings.site-header.spec.ts',
+    'e2e/Tests/device-users/device-users.add.spec.ts',
+    // 'e2e/Tests/device-users/device-users.add.spec.ts'
     // 'e2e\\Tests\\device-users\\device-users.edit.spec.ts',
     // 'e2e\\Tests\\device-users\\device-users.delete.spec.ts',
     // 'e2e\\Tests\\main-page-eforms\\my-eforms.create-eform.spec.ts',
+    'e2e/Tests/main-page-eforms/my-eforms.sort-eform.spec.ts',
+    'e2e/Tests/main-page-eforms/my-eforms.create-eform.spec.ts',
     // 'e2e\\Tests\\main-page-eforms\\my-eforms.sort-eform.spec.ts',
     // 'e2e/Tests/main-page-eforms/my-eforms.filter-eform.spec.ts',
     // 'e2e\\Tests\\main-page-eforms\\my-eforms.tags-eform.spec.ts',
@@ -61,7 +64,7 @@ exports.config = {
     //
     browserName: 'chrome',
     chromeOptions: {
-      args: ['--start-maximized']
+      args: ['--window-size=1920,1080']
     }
   }],
   //
@@ -86,7 +89,7 @@ exports.config = {
   //
   // If you only want to run your Tests until a specific amount of Tests have failed use
   // bail (default is 0 - don't bail, run all Tests).
-  bail: 0,
+  bail: 1,
   //
   // Saves a screenshot to a given path if a command fails.
   screenshotPath: './errorShots/',

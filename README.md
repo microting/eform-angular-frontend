@@ -1,6 +1,6 @@
 # eform-angular-frontend 
 build status
-[![Build Status](https://travis-ci.org/microting/eform-angular-frontend.svg?branch=netcore)](https://travis-ci.org/microting/eform-angular-frontend)
+[![Build Status](https://travis-ci.org/microting/eform-angular-frontend.svg?branch=master)](https://travis-ci.org/microting/eform-angular-frontend)
 
 An Angular (6.1.10) Frontend for integrating with the Microting eForm API v1.
 

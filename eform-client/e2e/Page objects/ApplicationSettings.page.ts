@@ -64,8 +64,9 @@ class LoginPageSettings {
 
   public reset() {
     this.resetBtn.click();
-    browser.pause(25000);
+    browser.pause(5000);
     browser.refresh();
+    browser.pause(10000);
   }
 }
 
