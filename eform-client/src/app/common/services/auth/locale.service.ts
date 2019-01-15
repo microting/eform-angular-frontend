@@ -70,8 +70,8 @@ export class LocaleService extends BaseService {
       } else {
         culture = this.buildCookieValue('en-US');
       }
-    this.cookieService.set('culture', culture);
-    this.cookieService.set('locale', locale);
+    this.cookieService.set('culture', culture, 9999999, '/');
+    this.cookieService.set('locale', locale, 9999999, '/');
   }
 
   buildCookieValue(locale: string) {
@@ -79,7 +79,7 @@ export class LocaleService extends BaseService {
   }
 
   updateCookies(locale: string) {
-    this.cookieService.set('locale', locale);
-    this.cookieService.set('culture', this.buildCookieValue(locale));
+    this.cookieService.set('locale', locale, 9999999, '/');
+    this.cookieService.set('culture', this.buildCookieValue(locale), 9999999, '/');
   }
 }

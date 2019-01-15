@@ -134,7 +134,8 @@ namespace eFormAPI.Web.Services
                         _localizationService.GetString("UserNotFoundUserName", userRegisterModel.UserName));
                 }
 
-                if (!_dbContext.SecurityGroups.Any(x => x.Id == userRegisterModel.GroupId))
+                var isAdmin = await _userManager.IsInRoleAsync(user, EformRole.Admin);
+                if (!_dbContext.SecurityGroups.Any(x => x.Id == userRegisterModel.GroupId) && !isAdmin)
                 {
                     return new OperationResult(false,
                         _localizationService.GetString("SecurityGroupNotFound"));
@@ -145,8 +146,7 @@ namespace eFormAPI.Web.Services
                     return new OperationResult(false, _localizationService.GetString("RoleIsRequired"));
                 }
 
-                if (await _userManager.IsInRoleAsync(user, EformRole.Admin)
-                    && _userService.Role != EformRole.Admin)
+                if (isAdmin && _userService.Role != EformRole.Admin)
                 {
                     return new OperationResult(false, _localizationService.GetString("YouCantViewChangeOrDeleteAdmin"));
                 }
@@ -297,10 +297,7 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                await _appSettings.UpdateDb((options) =>
-                {
-                    options.IsTwoFactorForced = true;
-                }, _dbContext);
+                await _appSettings.UpdateDb((options) => { options.IsTwoFactorForced = true; }, _dbContext);
             }
             catch (Exception)
             {
@@ -314,10 +311,7 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                await _appSettings.UpdateDb((options) =>
-                {
-                    options.IsTwoFactorForced = false;
-                }, _dbContext);
+                await _appSettings.UpdateDb((options) => { options.IsTwoFactorForced = false; }, _dbContext);
             }
             catch (Exception)
             {
