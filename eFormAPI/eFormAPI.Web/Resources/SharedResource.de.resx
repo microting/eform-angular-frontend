@@ -118,238 +118,238 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AdminUserNotFound" xml:space="preserve">
-    <value>Admin user not found</value>
+    <value>Admin-Benutzer nicht gefunden</value>
   </data>
   <data name="CannotOpenDatabes" xml:space="preserve">
-    <value>Can't open database</value>
+    <value>Datenbank kann nicht geöffnet werden</value>
   </data>
   <data name="CantDeletePrimaryAdminUser" xml:space="preserve">
-    <value>Can't delete primary admin user</value>
+    <value>Primärer Admin-Benutzer kann nicht gelöscht werden</value>
   </data>
   <data name="CantObtainSettingsFromWebConfig" xml:space="preserve">
-    <value>Can't obtain settings from web.config</value>
+    <value>Einstellungen können nicht von web.config abgerufen werden</value>
   </data>
   <data name="CantUpdateSettingsInWebConfig" xml:space="preserve">
-    <value>Can't update settings in web.config</value>
+    <value>Einstellungen in web.config können nicht aktualisiert werden</value>
   </data>
   <data name="CaseCouldNotBeRemoved" xml:space="preserve">
-    <value>Case could not be removed</value>
+    <value>Fall konnte nicht entfernt werden</value>
   </data>
   <data name="CaseCouldNotBeUpdated" xml:space="preserve">
-    <value>Case could not be updated</value>
+    <value>Fall konnte nicht aktualisiert werden</value>
   </data>
   <data name="CaseHasBeenUpdated" xml:space="preserve">
-    <value>Case has been updated</value>
+    <value>Fall wurde aktualisiert</value>
   </data>
   <data name="CaseLoadingFailed" xml:space="preserve">
-    <value>Case loading failed</value>
+    <value>Fallladen fehlgeschlagen</value>
   </data>
   <data name="CaseParamDeletedSuccessfully" xml:space="preserve">
-    <value>Case #{0} deleted successfully</value>
+    <value>Fall # {0} wurde erfolgreich gelöscht</value>
   </data>
   <data name="CheckConnectionString" xml:space="preserve">
-    <value>Check connection string</value>
+    <value>Überprüfen Sie die Verbindungszeichenfolge</value>
   </data>
   <data name="CheckSettingsBeforeProceed" xml:space="preserve">
-    <value>Check settings before proceed</value>
+    <value>Überprüfen Sie die Einstellungen, bevor Sie fortfahren</value>
   </data>
   <data name="ColumnsWereUpdated" xml:space="preserve">
-    <value>Columns were updated</value>
+    <value>Spalten wurden aktualisiert</value>
   </data>
   <data name="ConnectionStringAlreadyExist" xml:space="preserve">
-    <value>Connection string already exist</value>
+    <value>Verbindungszeichenfolge ist bereits vorhanden</value>
   </data>
   <data name="CoreIsNotStarted" xml:space="preserve">
-    <value>Core is not started</value>
+    <value>Core wird nicht gestartet</value>
   </data>
   <data name="CouldNotWriteConnectionString" xml:space="preserve">
-    <value>Could not write connection string in /bin/Input.txt</value>
+    <value>Verbindungszeichenfolge konnte nicht in /bin/Input.txt geschrieben werden</value>
   </data>
   <data name="DeviceUserCouldNotBeCreated" xml:space="preserve">
-    <value>Device User could not be created</value>
+    <value>Gerätebenutzer konnte nicht erstellt werden</value>
   </data>
   <data name="DeviceUserCouldNotBeObtained" xml:space="preserve">
-    <value>Device User with such UId could not be obtained</value>
+    <value>Gerätebenutzer mit einer solchen "UId" konnte nicht abgerufen werden</value>
   </data>
   <data name="DeviceUserCouldNotBeUpdated" xml:space="preserve">
-    <value>Device User could not be updated</value>
+    <value>Gerätebenutzer konnte nicht aktualisiert werden</value>
   </data>
   <data name="DeviceUserNotFound" xml:space="preserve">
-    <value>Device User UId not found</value>
+    <value>Gerätebenutzer "UId" nicht gefunden</value>
   </data>
   <data name="DeviceUserPa" xml:space="preserve">
-    <value>Device User with id  "{0}" could not be deleted</value>
+    <value>Gerätebenutzer mit der ID "{0}" konnte nicht gelöscht werden</value>
   </data>
   <data name="DeviceUserParamCouldNotBeDeleted" xml:space="preserve">
-    <value>Device User "{0}" could not be deleted</value>
+    <value>Gerätebenutzer "{0}" konnte nicht gelöscht werden</value>
   </data>
   <data name="DeviceUserParamCouldNotBeEdited" xml:space="preserve">
-    <value>Device User with id {0} could not be edited</value>
+    <value>Gerätebenutzer mit der ID {0} konnte nicht bearbeitet werden</value>
   </data>
   <data name="DeviceUserParamCouldNotBeUpdated" xml:space="preserve">
-    <value>Device User with id {0} could not be updated</value>
+    <value>Gerätebenutzer mit der ID {0} konnte nicht aktualisiert werden</value>
   </data>
   <data name="DeviceUserParamCreatedSuccessfully" xml:space="preserve">
-    <value>Device user "{0}" created successfully</value>
+    <value>Gerätebenutzer "{0}" wurde erfolgreich erstellt</value>
   </data>
   <data name="DeviceUserParamDeletedSuccessfully" xml:space="preserve">
-    <value>Device User "{0}" deleted successfully</value>
+    <value>Gerätebenutzer "{0}" wurde erfolgreich gelöscht</value>
   </data>
   <data name="DeviceUserUpdatedSuccessfully" xml:space="preserve">
-    <value>Device User updated successfully</value>
+    <value>Gerätebenutzer erfolgreich aktualisiert</value>
   </data>
   <data name="eFormCouldNotBeCreated" xml:space="preserve">
-    <value>eForm could not be created</value>
+    <value>eForm konnte nicht erstellt werden</value>
   </data>
   <data name="eFormParamCouldNotBeDeleted" xml:space="preserve">
-    <value>eForm "{0}" could not be deleted</value>
+    <value>eForm "{0}" konnte nicht gelöscht werden</value>
   </data>
   <data name="eFormParamCreatedSuccessfully" xml:space="preserve">
-    <value>eForm "{0}" created successfully</value>
+    <value>eForm "{0}" wurde erfolgreich erstellt</value>
   </data>
   <data name="eFormParamDeletedSuccessfully" xml:space="preserve">
-    <value>eForm "{0}" deleted successfully</value>
+    <value>eForm "{0}" wurde erfolgreich gelöscht</value>
   </data>
   <data name="ErrorWhenDeletingSearchableList" xml:space="preserve">
-    <value>Error when deleting searchable list</value>
+    <value>Fehler beim Löschen der durchsuchbaren Liste</value>
   </data>
   <data name="ErrorWhenObtainingSearchableList" xml:space="preserve">
-    <value>Error when obtaining searchable list</value>
+    <value>Fehler beim Abrufen einer durchsuchbaren Liste</value>
   </data>
   <data name="ErrorWhileAddNewPassword" xml:space="preserve">
-    <value>Error while add new password</value>
+    <value>Fehler beim Hinzufügen eines neuen Passworts</value>
   </data>
   <data name="ErrorWhileCreatingFileForSDK" xml:space="preserve">
-    <value>Error while creating file for SDK</value>
+    <value>Fehler beim Erstellen der Datei für das SDK</value>
   </data>
   <data name="ErrorWhileCreatingParamTag" xml:space="preserve">
-    <value>Error while creating "{0}" tag</value>
+    <value>Fehler beim Erstellen des Tags "{0}"</value>
   </data>
   <data name="ErrorWhileCreatingUser" xml:space="preserve">
-    <value>Error when creating user</value>
+    <value>Fehler beim Erstellen eines Benutzers</value>
   </data>
   <data name="ErrorWhileCreatingWorker" xml:space="preserve">
-    <value>Error while creating worker</value>
+    <value>Fehler beim Erstellen eines Arbeiters</value>
   </data>
   <data name="ErrorWhileDeletingSelectableList" xml:space="preserve">
-    <value>Error when deleting selectable list</value>
+    <value>Fehler beim Löschen der auswählbaren Liste</value>
   </data>
   <data name="ErrorWhileDeletingTag" xml:space="preserve">
-    <value>Error while deleting tag</value>
+    <value>Fehler beim Löschen des Tags</value>
   </data>
   <data name="ErrorWhileDeletingUser" xml:space="preserve">
-    <value>Error while deleting user</value>
+    <value>Fehler beim Löschen des Benutzers</value>
   </data>
   <data name="ErrorWhileObtainColumns" xml:space="preserve">
-    <value>Error while obtain columns</value>
+    <value>Fehler beim Abrufen von Spalten</value>
   </data>
   <data name="ErrorWhileObtainSelectableList" xml:space="preserve">
-    <value>Error when obtaining selectable list</value>
+    <value>Fehler beim Abrufen einer auswählbaren Liste</value>
   </data>
   <data name="ErrorWhileObtainTags" xml:space="preserve">
-    <value>Error while obtain tags</value>
+    <value>Fehler beim Abrufen von Tags</value>
   </data>
   <data name="ErrorWhileObtainUsers" xml:space="preserve">
-    <value>Error when obtaining users</value>
+    <value>Fehler beim Abrufen von Benutzern</value>
   </data>
   <data name="ErrorWhileRemovingOldPassword" xml:space="preserve">
-    <value>Error while removing old password</value>
+    <value>Fehler beim Entfernen des alten Passworts</value>
   </data>
   <data name="ErrorWhileRotateImage" xml:space="preserve">
-    <value>Error while rotate image</value>
+    <value>Fehler beim Drehen des Bildes</value>
   </data>
   <data name="ErrorWhileUpdatingColumns" xml:space="preserve">
-    <value>Error while updating columns</value>
+    <value>Fehler beim Aktualisieren der Spalten</value>
   </data>
   <data name="ErrorWhileUpdatingPSK" xml:space="preserve">
-    <value>Error while updating user PSK</value>
+    <value>Fehler beim Aktualisieren des Benutzer-PSK</value>
   </data>
   <data name="ErrorWhileUpdatingTemplateTags" xml:space="preserve">
-    <value>Error while updating template tags</value>
+    <value>Fehler beim Aktualisieren von Vorlagen-Tags</value>
   </data>
   <data name="ErrorWhileUpdatingUser" xml:space="preserve">
-    <value>Error when updating user</value>
+    <value>Fehler beim Aktualisieren des Benutzers</value>
   </data>
   <data name="FileNotFound" xml:space="preserve">
-    <value>File not found</value>
+    <value>Datei nicht gefunden</value>
   </data>
   <data name="FolderError" xml:space="preserve">
-    <value>Folder error</value>
+    <value>Ordnerfehler</value>
   </data>
   <data name="ImageDeletedSuccessfully" xml:space="preserve">
-    <value>Image deleted successfully</value>
+    <value>Bild erfolgreich gelöscht</value>
   </data>
   <data name="ImageNotDeleted" xml:space="preserve">
-    <value>Image was not deleted</value>
+    <value>Bild wurde nicht gelöscht</value>
   </data>
   <data name="ImageRotatedSuccessfully" xml:space="preserve">
-    <value>Image rotated successfully</value>
+    <value>Bild erfolgreich gedreht</value>
   </data>
   <data name="InvalidRequest" xml:space="preserve">
-    <value>Invalid Request</value>
+    <value>Ungültige Anfrage</value>
   </data>
   <data name="InvalidSecurityCode" xml:space="preserve">
-    <value>Invalid security code</value>
+    <value>Ungültiger Sicherheitscode</value>
   </data>
   <data name="InvalidUserNameOrPassword" xml:space="preserve">
-    <value>Invalid username or password</value>
+    <value>Ungültiger Benutzername oder Passwort</value>
   </data>
   <data name="MainConnectionStringIsInvalid" xml:space="preserve">
-    <value>Main connection string is invalid</value>
+    <value>Hauptverbindungszeichenfolge ist ungültig</value>
   </data>
   <data name="NewOTPCreatedSuccessfully" xml:space="preserve">
-    <value>New OTP created successfully</value>
+    <value>Neues OTP wurde erfolgreich erstellt</value>
   </data>
   <data name="ParamCreatedSuccessfully" xml:space="preserve">
-    <value>{0} created successfully</value>
+    <value>{0} wurde erfolgreich erstellt</value>
   </data>
   <data name="ParamDeletedSuccessfully" xml:space="preserve">
-    <value>{0} deleted successfully</value>
+    <value>{0} wurde erfolgreich gelöscht</value>
   </data>
   <data name="ParamPairedSuccessfully" xml:space="preserve">
-    <value>"{0}" paired successfully</value>
+    <value>"{0}" wurde erfolgreich gekoppelt</value>
   </data>
   <data name="ParamUpdatedSuccessfully" xml:space="preserve">
-    <value>{0} updated successfully</value>
+    <value>{0} wurde erfolgreich aktualisiert</value>
   </data>
   <data name="PleaseSetupSecurityCode" xml:space="preserve">
-    <value>Please setup security code on server</value>
+    <value>Bitte richten Sie den Sicherheitscode auf dem Server ein</value>
   </data>
   <data name="RequestFieldsAreNotFilled" xml:space="preserve">
-    <value>Required fields are not filled</value>
+    <value>Pflichtfelder sind nicht ausgefüllt</value>
   </data>
   <data name="RoleIsRequired" xml:space="preserve">
-    <value>Role is required</value>
+    <value>Rolle ist erforderlich</value>
   </data>
   <data name="SDKConnectionStringIsInvalid" xml:space="preserve">
-    <value>SDK connection string is invalid</value>
+    <value>SDK-Verbindungszeichenfolge ist ungültig</value>
   </data>
   <data name="SearchableListCreationFailed" xml:space="preserve">
-    <value>Searchable list creation failed</value>
+    <value>Durchsuchbare Listenerstellung fehlgeschlagen</value>
   </data>
   <data name="SearchableListLoadingFailed" xml:space="preserve">
-    <value>Searchable list loading failed</value>
+    <value>Laden der durchsuchbaren Liste fehlgeschlagen</value>
   </data>
   <data name="SelectableGroupLoadingFailed" xml:space="preserve">
-    <value>Selectable group loading failed</value>
+    <value>Auswählbares Laden der Gruppe fehlgeschlagen</value>
   </data>
   <data name="SelectableListCreationFailed" xml:space="preserve">
-    <value>Selectable list creation failed</value>
+    <value>Auswählbare Listenerstellung fehlgeschlagen</value>
   </data>
   <data name="SettingsUpdatedSuccessfully" xml:space="preserve">
-    <value>Settings updated successfully</value>
+    <value>Einstellungen erfolgreich aktualisiert</value>
   </data>
   <data name="SiteParamCouldNotBeDeleted" xml:space="preserve">
-    <value>Site "{0}" could not be deleted</value>
+    <value>Site mit der ID {0} konnte nicht aktualisiert werden</value>
   </data>
   <data name="SiteParamCouldNotBeUpdated" xml:space="preserve">
-    <value>Site with id {0} could not be updated</value>
+    <value>Site mit der ID {0} konnte nicht aktualisiert werden</value>
   </data>
   <data name="SiteParamDeletedSuccessfully" xml:space="preserve">
-    <value>Site "{0}" deleted successfully</value>
+    <value>Site "{0}" wurde erfolgreich gelöscht</value>
   </data>
   <data name="SiteParamNotFound" xml:space="preserve">
-    <value>Site with id {0} not found</value>
+    <value>Site mit der ID {0} wurde nicht gefunden</value>
   </data>
   <data name="SiteWithIdCouldNotBeDeleted" xml:space="preserve">
     <value>Arbeiter mit der ID {0} konnte nicht gelöscht werden</value>
