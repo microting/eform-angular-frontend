@@ -16,8 +16,8 @@ export class ProfileSettingsComponent implements OnInit {
 
   languages = [
     {id: 'en-US', text: 'English'},
-    {id: 'de-DE', text: 'German'},
-    {id: 'da-DK', text: 'Danish'}
+    {id: 'da-DK', text: 'Danish'},
+    {id: 'de-DE', text: 'German'}
   ];
 
   userSettingsModel: UserSettingsModel = new UserSettingsModel();
