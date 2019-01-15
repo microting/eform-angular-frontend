@@ -17,6 +17,7 @@ An Angular (6.1.10) Frontend for integrating with the Microting eForm API v1.
 ## Translating eForm Angular Frontend
 
 | Language | C# part | Angular part |
+| ------------- |:-----:|:-----:|
 | English | 100% | 100%|
 | Danish | 100% | 100% |
 | German | 100% | 100% |
