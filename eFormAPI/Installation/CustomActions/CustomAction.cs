@@ -546,13 +546,24 @@ namespace CustomActions
                 // stop sites
                 ControlSites(customerNumber, domain, apiPort, uiPort, false);
                 IncrementProgressBar(session);
-                RemoveSites(customerNumber, domain, apiPort, uiPort);
+                try {
+                    RemoveSites(customerNumber, domain, apiPort, uiPort);
+                } catch { }
+                
                 IncrementProgressBar(session);
-
-                RunProcess(@"sc", $"stop eformangular{uiName.Replace(".", "")}.exe");
+                try
+                {
+                    RunProcess(@"sc", $"stop eformangular{uiName.Replace(".", "")}.exe");
+                } catch { }
                 Thread.Sleep(1000);
-                RunProcess(@"C:\Program Files\nodejs\node.exe", "svc.js uninstall", uiIisDir);
-                RunProcess(@"sc", $"delete eformangular{uiName.Replace(".", "")}.exe");
+                try
+                {
+                    RunProcess(@"C:\Program Files\nodejs\node.exe", "svc.js uninstall", uiIisDir);
+                } catch { }
+                try
+                {
+                    RunProcess(@"sc", $"delete eformangular{uiName.Replace(".", "")}.exe");
+                } catch { }
                 IncrementProgressBar(session);
 
                 var keepSettings = session.CustomActionData["KEEPSETTINGS"] == "1";
@@ -567,9 +578,15 @@ namespace CustomActions
                             .Replace("eform-client\\", "")).ToArray()
                     : new string[0];
 
-                DeleteDirectory(uiIisDir, keepFolders, keepFiles, uiIisDir);
+                try
+                {
+                    DeleteDirectory(uiIisDir, keepFolders, keepFiles, uiIisDir);
+                } catch { }
                 IncrementProgressBar(session);
-                DeleteDirectory(webApiIisDir, keepFolders, keepFiles, webApiIisDir);
+                try
+                {
+                    DeleteDirectory(webApiIisDir, keepFolders, keepFiles, webApiIisDir);
+                } catch { }
                 IncrementProgressBar(session);
 
                 var vendorName = "Microting";
