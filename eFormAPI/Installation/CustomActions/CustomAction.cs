@@ -295,10 +295,10 @@ namespace CustomActions
                     }
                 }
 
-                // navigation.component.ts
-                src = Path.Combine(installFolder, "src\\app\\components\\navigation\\navigation.component.ts");
-                session.Log("BackupPluginSettings src is : " + src.ToString());
-                File.Copy(src, Path.Combine(tmpConfigs, "navigation.component.ts"), true);
+                //// navigation.component.ts
+                //src = Path.Combine(installFolder, "src\\app\\components\\navigation\\navigation.component.ts");
+                //session.Log("BackupPluginSettings src is : " + src.ToString());
+                //File.Copy(src, Path.Combine(tmpConfigs, "navigation.component.ts"), true);
             }
             catch { }
 
@@ -325,10 +325,10 @@ namespace CustomActions
                     DirectoryCopy(dir, Path.Combine(installFolder, "src\\app\\plugins\\modules\\", folder), true);
                 }
 
-                // navigation.component.ts
-                dst = Path.Combine(installFolder, "src\\app\\components\\navigation\\navigation.component.ts");
-                session.Log("RestorePluginSettings src is : " + dst.ToString());
-                File.Copy(Path.Combine(tmpConfigs, "navigation.component.ts"), dst, true);
+                //// navigation.component.ts
+                //dst = Path.Combine(installFolder, "src\\app\\components\\navigation\\navigation.component.ts");
+                //session.Log("RestorePluginSettings src is : " + dst.ToString());
+                //File.Copy(Path.Combine(tmpConfigs, "navigation.component.ts"), dst, true);
             }
             catch { }
         }
