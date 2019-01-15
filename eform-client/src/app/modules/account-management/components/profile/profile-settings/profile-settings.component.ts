@@ -86,7 +86,7 @@ export class ProfileSettingsComponent implements OnInit {
     this.userSettingsService.updateUserSettings(this.userSettingsModel).subscribe(((data) => {
       this.localeService.updateUserLocale(this.userSettingsModel.locale);
       this.spinnerStatus = false;
-      this.eventBrokerService.emit<void>('get-navigation-menu', null);
+      window.location.reload();
     }), error => {
       this.spinnerStatus = false;
     });
