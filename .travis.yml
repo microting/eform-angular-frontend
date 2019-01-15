@@ -1,24 +1,9 @@
 dist: xenial
-addons:
-  chrome: stable
-  apt:
-    sources:
-    - google-chrome
-    packages:
-    - google-chrome-stable fluxbox
-sudo: required
 language: csharp
 mono: none
 dotnet: 2.2
-bundler_args: --retry 5
 services:
 - mysql
-- xvfb
-before_install:
-  - google-chrome-stable --headless --disable-gpu
-install:
-- nvm install 8.14.0
-- nvm use 8.14.0
 script:
   - dotnet restore -v q eFormAPI/eFormAPI.sln
   - dotnet build eFormAPI/eFormAPI.sln
