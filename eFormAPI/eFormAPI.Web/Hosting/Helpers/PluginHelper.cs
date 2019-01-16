@@ -96,18 +96,18 @@ namespace eFormAPI.Web.Hosting.Helpers
             {
                 List<string> pluginList;
 
-#if DEBUG
+//#if DEBUG
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("RUNNING IN DEBUG MODE!");
                 pluginList = Directory.GetFiles(Path.Combine(directory, "netcoreapp2.2"))
                     .Where(x => x.EndsWith("Pn.dll") && Path.GetFileName(x) != "eFormApi.BasePn.dll")
                     .ToList();
-#else
-                pluginList = Directory.GetFiles(directory)
-                    .Where(x => x.EndsWith("Pn.dll") && Path.GetFileName(x) != "eFormApi.BasePn.dll")
-                    .ToList();
-
-#endif
+//#else
+//                pluginList = Directory.GetFiles(directory)
+//                    .Where(x => x.EndsWith("Pn.dll") && Path.GetFileName(x) != "eFormApi.BasePn.dll")
+//                    .ToList();
+//
+//#endif
 
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"{pluginList.Count} number of plugins found");
