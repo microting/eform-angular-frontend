@@ -39,7 +39,9 @@ export class EformReportSwitchComponent implements OnInit {
     this.dataItemListChanged.emit(this.dataItemList);
   }
 
-  onDataItemChanged(e: any) {
-    this.dataItemList = e;
+  onVisibilityChanged(id: number, visibility: boolean) {
+    const itemIndex = this.dataItemList.findIndex(x => x.id == id);
+    this.dataItemList[itemIndex].visibility = visibility;
+    this.dataItemListChanged.emit(this.dataItemList);
   }
 }

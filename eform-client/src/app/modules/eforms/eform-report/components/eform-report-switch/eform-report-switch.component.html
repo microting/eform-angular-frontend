@@ -21,7 +21,7 @@
                 <report-element-checkbox></report-element-checkbox>
               </ng-container>
               <ng-container *ngSwitchCase="'Number'">
-                <report-element-text [placeholder]="'Number'"></report-element-text>
+                <report-element-text [placeholder]="'Number' | translate"></report-element-text>
               </ng-container>
               <ng-container *ngSwitchCase="'NumberStepper'">
                 <report-element-text [placeholder]="'Number'"></report-element-text>
@@ -67,17 +67,17 @@
                 </report-element-text>
               </ng-container>
               <ng-container *ngSwitchCase="'Audio'">
-                <report-element-text [placeholder]="'Audio'">
+                <report-element-text [placeholder]="'Audio'" [prefixIcon]="'audio'">
                 </report-element-text>
               </ng-container>
               <div *ngSwitchDefault></div>
             </ng-container>
           </div>
           <div class="col-md-1 text-center">
-            <i class="material-icons material-icon-success align-middle" *ngIf="dataItem.visibility"
-               (click)="visibilityTest = !visibilityTest" style="cursor: pointer"> visibility </i>
-            <i class="material-icons material-icon-danger align-middle" *ngIf="!dataItem.visibility"
-               (click)="visibilityTest = !visibilityTest" style="cursor: pointer"> visibility_off </i>
+            <i class="material-icons material-icon-success material-icon-pointer align-middle" *ngIf="dataItem.visibility"
+               (click)="onVisibilityChanged(dataItem.id, !dataItem.visibility)"> visibility </i>
+            <i class="material-icons material-icon-danger material-icon-pointer align-middle" *ngIf="!dataItem.visibility"
+               (click)="onVisibilityChanged(dataItem.id, !dataItem.visibility)"> visibility_off </i>
           </div>
         </div>
       </div>

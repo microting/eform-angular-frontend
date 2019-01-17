@@ -233,7 +233,19 @@
   "PluginsSettings": "Plugins Settings",
   "Edit Settings": "Edit Settings",
   "Connection String": "Connection String",
-  "Version": "Version"
+  "Version": "Version",
+
+  "Header Picture": "Header Picture",
+  "Preview": "Preview",
+  "Number": "Number",
+  "Commentary": "Commentary",
+  "Text": "Text",
+  "Selected Value": "Selected Value",
+  "PDF Link": "PDF Link",
+  "Information": "Information",
+  "Duration": "Duration",
+  "Signature": "Signature",
+  "Audio": "Audio"
 }
 
 

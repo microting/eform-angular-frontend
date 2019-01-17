@@ -229,5 +229,16 @@
   "PluginsSettings": "Plugin-Einstellungen",
   "Edit Settings": "Einstellungen bearbeiten",
   "Connection String": "Verbindungszeichenfolge",
-  "Version": "Version"
+  "Version": "Version",
+  "Header Picture": "Kopfbild",
+  "Preview": "Vorschau",
+  "Number": "Nummer",
+  "Commentary": "Kommentar",
+  "Text": "Text",
+  "Selected Value": "Ausgewählter Wert",
+  "PDF Link": "PDF Link",
+  "Information": "Information",
+  "Duration": "Dauer",
+  "Signature": "Signature",
+  "Audio": "Audio"
 }

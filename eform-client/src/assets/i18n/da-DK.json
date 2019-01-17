@@ -231,5 +231,16 @@
   "PluginsSettings": "Plugin Indstillinger",
   "Edit Settings": "Rediger Indstillinger",
   "Connection String": "Forbindelsesstreng",
-  "Version": "Version"
+  "Version": "Version",
+  "Header Picture": "Hovedbillede",
+  "Preview": "Eksempel",
+  "Number": "Nummer",
+  "Commentary": "Kommentar",
+  "Text": "Tekst",
+  "Selected Value": "Udvalgt Værdi",
+  "PDF Link": "PDF Link",
+  "Information": "Information",
+  "Duration": "Varighed",
+  "Signature": "Underskrift",
+  "Audio": "Audio"
 }
