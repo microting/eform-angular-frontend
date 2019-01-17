@@ -11,7 +11,6 @@ import {PellModule} from 'src/app/common/modules/eform-imported/pell/pell.module
 
 import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
 import {
-  ElementAudioComponent,
   ElementCheckboxComponent,
   ElementCommentComponent,
   ElementContainerComponent,
@@ -46,7 +45,6 @@ import {
     EformReportPageComponent,
     EformReportSwitchComponent,
     EformReportBlockComponent,
-    ElementAudioComponent,
     ElementCheckboxComponent,
     ElementCommentComponent,
     ElementContainerComponent,

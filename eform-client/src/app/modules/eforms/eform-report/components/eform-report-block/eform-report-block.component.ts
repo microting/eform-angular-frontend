@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren} from '@angular/core';
-import {CaseEditRequest, ElementDto} from 'src/app/common/models';
+import {EformReportDataItem, EformReportElement} from 'src/app/common/models';
 
 @Component({
   selector: 'app-eform-report-block',
@@ -7,13 +7,17 @@ import {CaseEditRequest, ElementDto} from 'src/app/common/models';
   styleUrls: ['./eform-report-block.component.scss']
 })
 export class EformReportBlockComponent implements OnInit {
-  @ViewChildren(EformReportBlockComponent) editElements: QueryList<EformReportBlockComponent>;
-  @Input() element: ElementDto = new ElementDto();
+  @Input() element: EformReportElement = new EformReportElement();
   @Output() onElementVisibilityChanged: EventEmitter<{id: number, visibility: boolean}> =
     new EventEmitter<{id: number, visibility: boolean}>();
+  @Output() elementChanged: EventEmitter<EformReportElement> = new EventEmitter();
   constructor() { }
 
   ngOnInit() {
   }
 
+  onDataItemListChanged(e: EformReportDataItem[]) {
+    this.element.dataItemList = e;
+    this.elementChanged.emit(this.element);
+  }
 }

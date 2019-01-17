@@ -151,9 +151,16 @@ namespace eFormAPI.Web.Services
 
                     dbContext.EformReportDataItems.Add(eformReportDataItem);
                     dbContext.SaveChanges();
+
+                    eformReportDataItem = dbContext.EformReportDataItems
+                        .Include(x => x.NestedDataItems)
+                        .ThenInclude(x => x.NestedDataItems)
+                        .FirstOrDefault(x => x.Id == eformReportDataItem.Id);
+
+                    parentItems.Add(eformReportDataItem);
                 }
 
-                parentItems.Add(eformReportDataItem);
+        
             }
 
             var result = new List<EformReportDataItemModel>();
@@ -306,6 +313,15 @@ namespace eFormAPI.Web.Services
                         };
                         _dbContext.EformReportElements.Add(reportElement);
                         await _dbContext.SaveChangesAsync();
+
+                        reportElement = await _dbContext.EformReportElements
+                            .Include(x => x.DataItems)
+                            .ThenInclude(x => x.NestedDataItems)
+                            .Include(x => x.NestedElements)
+                            .ThenInclude(x => x.DataItems)
+                            .ThenInclude(x => x.NestedDataItems)
+                            .Where(x => x.EformReportId == eformReport.Id && x.ElementId == templateElement.Id)
+                            .FirstOrDefaultAsync();
                     }
 
 
@@ -404,8 +420,8 @@ namespace eFormAPI.Web.Services
                         if (dataItems.Any())
                         {
                             var dataItemsIds = dataItems.Select(x => x.Id).ToArray();
-                            var eformDataItems = _dbContext.EformReportDataItems
-                                .Where(x => dataItemsIds.Contains(x.Id));
+                            var eformDataItems = await _dbContext.EformReportDataItems
+                                .Where(x => dataItemsIds.Contains(x.Id)).ToListAsync();
 
                             foreach (var eformDataItem in eformDataItems)
                             {

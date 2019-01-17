@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {DragulaService} from 'ng2-dragula';
-import {DataItemDto} from 'src/app/common/models';
+import {DataItemDto, EformReportDataItem} from 'src/app/common/models';
 
 @Component({
   selector: 'app-eform-report-switch',
@@ -8,10 +8,9 @@ import {DataItemDto} from 'src/app/common/models';
   styleUrls: ['./eform-report-switch.component.scss']
 })
 export class EformReportSwitchComponent implements OnInit {
-  @Input() dataItemList: Array<DataItemDto> = [];
-  @Input() dragulaContainerName = '';
-  @Output() onElementVisibilityChanged: EventEmitter<{id: number, visibility: boolean}> =
-    new EventEmitter<{id: number, visibility: boolean}>();
+  @Input() dataItemList: Array<EformReportDataItem> = [];
+  @Input() dragulaContainerName = 'dataItems';
+  @Output() dataItemListChanged: EventEmitter<Array<EformReportDataItem>> = new EventEmitter();
 
   visibilityTest = false;
   constructor(private dragulaService: DragulaService) { }
@@ -21,8 +20,26 @@ export class EformReportSwitchComponent implements OnInit {
       removeOnSpill: false,
       moves: (el, container, handle) => {
         return handle.classList.contains('dragula-handle');
+      },
+      copy: (el, source) => {
+        return source.id === this.dragulaContainerName;
+      },
+      copyItem: (customItem: any) => {
+        return new DataItemDto();
+      },
+      accepts: (el, target, source, sibling) => {
+        // To avoid dragging from right to left container
+        return target.id !== this.dragulaContainerName;
       }
     });
   }
 
+  onDataItemListChanged(e: any[]) {
+    this.dataItemList = e;
+    this.dataItemListChanged.emit(this.dataItemList);
+  }
+
+  onDataItemChanged(e: any) {
+    this.dataItemList = e;
+  }
 }

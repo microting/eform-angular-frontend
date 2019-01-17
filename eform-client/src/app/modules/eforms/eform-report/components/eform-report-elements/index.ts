@@ -1,4 +1,3 @@
-export * from './element-audio/element-audio.component';
 export * from './element-checkbox/element-checkbox.component';
 export * from './element-comment/element-comment.component';
 export * from './element-container/element-container.component';

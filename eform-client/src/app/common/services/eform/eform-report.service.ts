@@ -12,7 +12,8 @@ import {
 import {BaseService} from 'src/app/common/services/base.service';
 
 const TemplateReportMethods = {
-  Templates: '/api/templates/',
+  Report: '/api/templates/',
+  UpdateReport: '/api/templates/report',
 };
 
 @Injectable()
@@ -22,10 +23,10 @@ export class EformReportService extends BaseService {
   }
 
   getSingle(templateId: number): Observable<OperationDataResult<EformFullReportModel>> {
-    return this.get(TemplateReportMethods.Templates + templateId + '/report');
+    return this.get(TemplateReportMethods.Report + templateId + '/report');
   }
 
-  updateSingle(model: EformReportModel): Observable<OperationResult> {
-    return this.put(TemplateReportMethods.Templates, model);
+  updateSingle(model: EformFullReportModel): Observable<OperationResult> {
+    return this.put(TemplateReportMethods.UpdateReport, model);
   }
 }
