@@ -267,17 +267,7 @@ namespace eFormAPI.Web.Services
                 }
 
                 var eformReport = await _dbContext.EformReports
-                    .Where(x => x.TemplateId == templateId)
-                    .Select(x => new EformReport()
-                    {
-                        Id = x.Id,
-                        TemplateId = x.TemplateId,
-                        Description = x.Description,
-                        //     HeaderImage = x.HeaderImage == null ? string.Empty : Encoding.UTF8.GetString(x.HeaderImage),
-                        HeaderVisibility = x.HeaderVisibility,
-                        IsDateVisible = x.IsDateVisible,
-                        IsWorkerNameVisible = x.IsWorkerNameVisible,
-                    }).FirstOrDefaultAsync();
+                    .FirstOrDefaultAsync(x => x.TemplateId == templateId)
 
                 if (eformReport == null)
                 {
