@@ -1,10 +1,12 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Security;
 using eFormAPI.Web.Infrastructure;
 using ICSharpCode.SharpZipLib.Zip;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -34,7 +36,8 @@ namespace eFormAPI.Web.Controllers.Eforms
         [HttpGet]
         [Authorize]
         [Route("api/template-files/csv/{id}")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.GetCsv)]
+        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme,
+            Policy = AuthConsts.EformPolicies.Eforms.GetCsv)]
         public async Task<IActionResult> Csv(int id)
         {
             if (!await _permissionsService.CheckEform(id,
@@ -54,7 +57,8 @@ namespace eFormAPI.Web.Controllers.Eforms
 
         [HttpGet]
         [Route("api/template-files/get-image/{fileName}.{ext}")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Cases.CasesRead)]
+        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, 
+            Policy = AuthConsts.EformPolicies.Cases.CasesRead)]
         public IActionResult GetImage(string fileName, string ext, string noCache = "noCache")
         {
             var core = _coreHelper.GetCore();
@@ -147,7 +151,8 @@ namespace eFormAPI.Web.Controllers.Eforms
         [HttpGet]
         [Authorize]
         [Route("api/template-files/download-case-pdf/{templateId}")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseGetPdf)]
+        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme,
+            Policy = AuthConsts.EformPolicies.Cases.CaseGetPdf)]
         public async Task<IActionResult> DownloadEFormPdf(int templateId, int caseId)
         {
             if (!await _permissionsService.CheckEform(templateId,
@@ -180,7 +185,8 @@ namespace eFormAPI.Web.Controllers.Eforms
         [HttpGet]
         [Authorize]
         [Route("api/template-files/download-eform-xml/{templateId}")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.DownloadXml)]
+        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme,
+            Policy = AuthConsts.EformPolicies.Eforms.DownloadXml)]
         public async Task<IActionResult> DownloadEFormXml(int templateId)
         {
             if (!await _permissionsService.CheckEform(templateId,
@@ -212,7 +218,8 @@ namespace eFormAPI.Web.Controllers.Eforms
         [HttpPost]
         [Authorize]
         [Route("api/template-files/upload-eform-zip")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UploadZip)]
+        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme,
+            Policy = AuthConsts.EformPolicies.Eforms.UploadZip)]
         public async Task<IActionResult> UploadEformZip(EformZipUploadModel uploadModel)
         {
             if (!await _permissionsService.CheckEform(uploadModel.TemplateId,
