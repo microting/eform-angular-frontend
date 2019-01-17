@@ -40,7 +40,6 @@ export class EformReportPageComponent implements OnInit {
 
   updateReport() {
     this.spinnerStatus = true;
-    debugger;
     this.eformReportService.updateSingle(this.fullReportModel).subscribe((data) => {
       if (data && data.success) {
 
