@@ -71,6 +71,7 @@ namespace eFormAPI.Web.Services
                         dbContext.EformReportElements.Add(eformReportElement);
                         dbContext.SaveChanges();
                     }
+
                     parent.NestedElements.Add(eformReportElement);
                 }
 
@@ -147,9 +148,11 @@ namespace eFormAPI.Web.Services
                     {
                         eformReportDataItem.ParentId = parentDataItem.ParentId;
                     }
+
                     dbContext.EformReportDataItems.Add(eformReportDataItem);
                     dbContext.SaveChanges();
                 }
+
                 parentItems.Add(eformReportDataItem);
             }
 
@@ -376,28 +379,65 @@ namespace eFormAPI.Web.Services
             {
                 using (var transaction = await _dbContext.Database.BeginTransactionAsync())
                 {
-                    var eformReport = _dbContext.EformReports
-                        .FirstOrDefault(x => x.Id == requestModel.EformReport.Id);
-
-                    if (eformReport == null)
+                    try
                     {
-                        return new OperationResult(false,
-                            _localizationService.GetString(""));
-                    }
+                        var eformReport = _dbContext.EformReports
+                            .FirstOrDefault(x => x.Id == requestModel.EformReport.Id);
 
-                    eformReport.Description = requestModel.EformReport.Description;
-                    if (!string.IsNullOrEmpty(requestModel.EformReport.HeaderImage))
+                        if (eformReport == null)
+                        {
+                            return new OperationResult(false,
+                                _localizationService.GetString(""));
+                        }
+
+                        eformReport.Description = requestModel.EformReport.Description;
+                        if (!string.IsNullOrEmpty(requestModel.EformReport.HeaderImage))
+                        {
+                            eformReport.HeaderImage = Encoding.UTF8.GetBytes(requestModel.EformReport.HeaderImage);
+                        }
+
+                        eformReport.HeaderVisibility = requestModel.EformReport.HeaderVisibility;
+                        eformReport.IsDateVisible = requestModel.EformReport.IsDateVisible;
+                        eformReport.IsWorkerNameVisible = requestModel.EformReport.IsWorkerNameVisible;
+
+                        _dbContext.EformReports.Update(eformReport);
+                        await _dbContext.SaveChangesAsync();
+
+                        var elementList = requestModel.EformMainElement?.ElementList;
+                        if (elementList == null)
+                        {
+                            return new OperationResult(false,
+                                _localizationService.GetString(""));
+                        }
+
+                        var dataItems = ParseElements(elementList);
+                        if (dataItems.Any())
+                        {
+                            var dataItemsIds = dataItems.Select(x => x.Id).ToArray();
+                            var eformDataItems = _dbContext.EformReportDataItems
+                                .Where(x => dataItemsIds.Contains(x.Id));
+
+                            foreach (var eformDataItem in eformDataItems)
+                            {
+                                var dataItem = dataItems.FirstOrDefault(x => x.Id == eformDataItem.Id);
+                                if (dataItem != null)
+                                {
+                                    eformDataItem.Position = dataItem.Position;
+                                    eformDataItem.Visibility = dataItem.Visibility;
+                                    _dbContext.EformReportDataItems.Update(eformDataItem);
+                                }
+                            }
+
+                            await _dbContext.SaveChangesAsync();
+                        }
+
+                        transaction.Commit();
+                    }
+                    catch (Exception)
                     {
-                        eformReport.HeaderImage = Encoding.UTF8.GetBytes(requestModel.EformReport.HeaderImage);
+                        transaction.Rollback();
+                        throw;
                     }
-
-                    eformReport.HeaderVisibility = requestModel.EformReport.HeaderVisibility;
-                    eformReport.IsDateVisible = requestModel.EformReport.IsDateVisible;
-                    eformReport.IsWorkerNameVisible = requestModel.EformReport.IsWorkerNameVisible;
-                    //         eformReport.ReportElements
-
-
-                    transaction.Commit();
                 }
 
                 return new OperationResult(true);
@@ -408,6 +448,43 @@ namespace eFormAPI.Web.Services
                 return new OperationResult(false,
                     _localizationService.GetString(""));
             }
+        }
+
+        public List<EformReportDataItemModel> ParseDataItems(List<EformReportDataItemModel> dataItemModels)
+        {
+            var list = new List<EformReportDataItemModel>();
+            for (var i = 0; i < dataItemModels.Count; i++)
+            {
+                var dataItem = dataItemModels[i];
+                dataItem.Position = i;
+                list.Add(dataItem);
+                if (dataItem.DataItemList.Any())
+                {
+                    list.AddRange(ParseDataItems(dataItem.DataItemList));
+                }
+            }
+
+            return list;
+        }
+
+        public List<EformReportDataItemModel> ParseElements(List<EformReportElementsModel> elementsModels)
+        {
+            var list = new List<EformReportDataItemModel>();
+
+            foreach (var elementsModel in elementsModels)
+            {
+                if (elementsModel.DataItemList.Any())
+                {
+                    list.AddRange(ParseDataItems(elementsModel.DataItemList));
+                }
+
+                if (elementsModel.ElementList.Any())
+                {
+                    list.AddRange(ParseElements(elementsModel.ElementList));
+                }
+            }
+
+            return list;
         }
     }
 }
