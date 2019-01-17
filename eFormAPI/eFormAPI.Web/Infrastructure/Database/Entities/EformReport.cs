@@ -14,6 +14,6 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities
         public bool IsDateVisible { get; set; }
         public bool IsWorkerNameVisible { get; set; }
 
-        public virtual ICollection<EformReportElement> ReportElements { get; set; }
+        public virtual ICollection<EformReportElement> ReportElements { get; set; } = new List<EformReportElement>();
     }
 }
