@@ -27,7 +27,7 @@ namespace eFormAPI.Web.Controllers.Eforms
 
         [HttpPut]
         [Route("api/templates/report")]
-        public async Task<OperationResult> UpdateEformReport([FromBody] EformReportModel eformReportModel)
+        public async Task<OperationResult> UpdateEformReport([FromBody] EformReportFullModel eformReportModel)
         {
             return await _eformReportsService.UpdateEformReport(eformReportModel);
         }

@@ -7,6 +7,6 @@ namespace eFormAPI.Web.Abstractions.Eforms
     public interface IEformReportsService
     {
         Task<OperationDataResult<EformReportFullModel>> GetEformReport(int templateId);
-        Task<OperationResult> UpdateEformReport(EformReportModel requestModel);
+        Task<OperationResult> UpdateEformReport(EformReportFullModel requestModel);
     }
 }
