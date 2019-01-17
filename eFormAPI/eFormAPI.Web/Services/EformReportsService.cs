@@ -267,7 +267,7 @@ namespace eFormAPI.Web.Services
                 }
 
                 var eformReport = await _dbContext.EformReports
-                    .FirstOrDefaultAsync(x => x.TemplateId == templateId)
+                    .FirstOrDefaultAsync(x => x.TemplateId == templateId);
 
                 if (eformReport == null)
                 {
