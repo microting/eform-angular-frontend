@@ -159,8 +159,6 @@ namespace eFormAPI.Web.Services
 
                     parentItems.Add(eformReportDataItem);
                 }
-
-        
             }
 
             var result = new List<EformReportDataItemModel>();
@@ -270,7 +268,7 @@ namespace eFormAPI.Web.Services
                 if (template == null)
                 {
                     return new OperationDataResult<EformReportFullModel>(false,
-                        _localizationService.GetString(""));
+                        _localizationService.GetString("TemplateNotFound"));
                 }
 
                 var eformReport = await _dbContext.EformReports
@@ -375,7 +373,7 @@ namespace eFormAPI.Web.Services
             {
                 _logger.LogCritical(e, e.Message);
                 return new OperationDataResult<EformReportFullModel>(false,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("ErrorWhileObtainingReportInfo"));
             }
         }
 
@@ -393,7 +391,7 @@ namespace eFormAPI.Web.Services
                         if (eformReport == null)
                         {
                             return new OperationResult(false,
-                                _localizationService.GetString(""));
+                                _localizationService.GetString("EformReportNotFound"));
                         }
 
                         eformReport.Description = requestModel.EformReport.Description;
@@ -413,7 +411,7 @@ namespace eFormAPI.Web.Services
                         if (elementList == null)
                         {
                             return new OperationResult(false,
-                                _localizationService.GetString(""));
+                                _localizationService.GetString("ElementListNotProvided"));
                         }
 
                         var dataItems = ParseElements(elementList);
@@ -446,13 +444,14 @@ namespace eFormAPI.Web.Services
                     }
                 }
 
-                return new OperationResult(true);
+                return new OperationResult(true,
+                    _localizationService.GetString("ReportUpdatedSuccessfully"));
             }
             catch (Exception e)
             {
                 _logger.LogCritical(e, e.Message);
                 return new OperationResult(false,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("ErrorWhileUpdatingReport"));
             }
         }
 

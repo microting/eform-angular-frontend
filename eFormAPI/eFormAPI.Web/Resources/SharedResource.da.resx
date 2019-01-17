@@ -546,4 +546,22 @@
   <data name="PluginsSettings" xml:space="preserve">
     <value>Plugins Indstillinger</value>
   </data>
+  <data name="EformReportNotFound" xml:space="preserve">
+    <value>Eform-rapport blev ikke fundet</value>
+  </data>
+  <data name="ElementListNotProvided" xml:space="preserve">
+    <value>ElementList findes ikke</value>
+  </data>
+  <data name="ErrorWhileObtainingReportInfo" xml:space="preserve">
+    <value>Fejl under opnåelse af rapportoplysninger</value>
+  </data>
+  <data name="ErrorWhileUpdatingReport" xml:space="preserve">
+    <value>Fejl under opdatering af rapport</value>
+  </data>
+  <data name="ReportUpdatedSuccessfully" xml:space="preserve">
+    <value>Rapport opdateret med succes</value>
+  </data>
+  <data name="TemplateNotFound" xml:space="preserve">
+    <value>Skabelon blev ikke fundet</value>
+  </data>
 </root>
