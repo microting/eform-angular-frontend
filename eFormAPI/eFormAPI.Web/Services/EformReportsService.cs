@@ -35,57 +35,227 @@ namespace eFormAPI.Web.Services
             _logger = logger;
         }
 
-        private static List<EformReportElementsModel> GetReportElementsList(EformReportElement parent)
+        private static List<EformReportElementsModel> GetReportElementsList(BaseDbContext dbContext,
+            EformReportElement parent,
+            List<object> elementList)
         {
+            if (elementList == null)
+            {
+                elementList = new List<object>();
+            }
+
+            var elements = new List<Element>();
+            var dataElements = new List<DataElement>();
+            var groupElements = new List<GroupElement>();
+
+            var item = elementList.FirstOrDefault();
+            if (item != null)
+            {
+                var itemType = item.GetType();
+                foreach (var element in elementList)
+                {
+                    elements.Add((Element) element);
+                }
+
+                foreach (var element in elements)
+                {
+                    var eformReportElement = parent.NestedElements.FirstOrDefault(x => x.ElementId == element.Id);
+                    if (eformReportElement == null)
+                    {
+                        eformReportElement = new EformReportElement()
+                        {
+                            EformReportId = parent.EformReportId,
+                            ElementId = element.Id,
+                            ParentId = parent.Id,
+                        };
+                        dbContext.EformReportElements.Add(eformReportElement);
+                        dbContext.SaveChanges();
+                    }
+
+                    parent.NestedElements.Add(eformReportElement);
+                }
+
+                if (itemType == typeof(DataElement))
+                {
+                    foreach (var element in elementList)
+                    {
+                        dataElements.Add((DataElement) element);
+                    }
+                }
+
+                if (itemType == typeof(GroupElement))
+                {
+                    foreach (var element in elementList)
+                    {
+                        groupElements.Add((GroupElement) element);
+                    }
+                }
+            }
+
             return parent.NestedElements
                 .Where(c => c.ParentId == parent.Id)
                 .Select(x => new EformReportElementsModel()
                 {
                     Id = x.Id,
                     ElementId = x.ElementId,
-                    Label = x.ElementId.ToString(),
-                    ElementList = GetReportElementsList(x),
-                    DataItemList = GetReportDataItemListFromElement(x),
+                    Label = elements.Where(y => y.Id == x.ElementId)
+                        .Select(y => y.Label)
+                        .FirstOrDefault(),
+                    ElementList = GetReportElementsList(dbContext, x,
+                        (List<object>) groupElements.Where(y => y.Id == x.ElementId)
+                            .Select(y => (object) y.ElementList)
+                            .FirstOrDefault()),
+                    DataItemList = GetReportDataItemList(dbContext, x, null,
+                        (List<object>) dataElements.Where(y => y.Id == x.ElementId)
+                            .Select(y => (object) y.DataItemList)
+                            .FirstOrDefault()),
                 }).ToList();
         }
 
-        private static List<EformReportDataItemModel> GetReportDataItemList(EformReportDataItem parent)
+        private static List<EformReportDataItemModel> GetReportDataItemList(BaseDbContext dbContext,
+            EformReportElement parentElement, EformReportDataItem parentDataItem,
+            List<object> dataItemsList)
         {
-            var list = parent.NestedDataItems
-                .Where(c => c.ParentId == parent.Id)
-                .OrderBy(c => c.Position)
-                .Select(x => new EformReportDataItemModel()
+            var parentItems = new List<EformReportDataItem>();
+
+            if (parentElement != null)
+            {
+                parentItems.AddRange(parentElement.DataItems);
+            }
+
+            if (parentDataItem != null)
+            {
+                parentItems.AddRange(parentDataItem.NestedDataItems);
+            }
+
+            foreach (var dataItemObject in dataItemsList)
+            {
+                var item = (DataItem) dataItemObject;
+                var eformReportDataItem = parentItems.FirstOrDefault(x => x.DataItemId == item.Id);
+                if (eformReportDataItem == null)
                 {
-                    Id = x.Id,
-                    DataItemId = x.DataItemId,
-                    FieldType = "Checkbox",
-                    Label = x.DataItemId.ToString(),
-                    Position = x.Position,
-                    Visibility = x.Visibility,
-                    DataItemList = GetReportDataItemList(x),
-                }).ToList();
+                    eformReportDataItem = new EformReportDataItem()
+                    {
+                        DataItemId = item.Id,
+                        Visibility = true,
+                    };
+                    if (parentElement != null)
+                    {
+                        eformReportDataItem.EformReportElementId = parentElement.Id;
+                    }
 
-            return list;
-        }
+                    if (parentDataItem != null)
+                    {
+                        eformReportDataItem.ParentId = parentDataItem.ParentId;
+                    }
 
+                    dbContext.EformReportDataItems.Add(eformReportDataItem);
+                    dbContext.SaveChanges();
 
-        private static List<EformReportDataItemModel> GetReportDataItemListFromElement(EformReportElement parent)
-        {
-            var list = parent.DataItems
-                .Where(c => c.ParentId == parent.Id)
-                .OrderBy(c => c.Position)
-                .Select(x => new EformReportDataItemModel()
+                    eformReportDataItem = dbContext.EformReportDataItems
+                        .Include(x => x.NestedDataItems)
+                        .ThenInclude(x => x.NestedDataItems)
+                        .FirstOrDefault(x => x.Id == eformReportDataItem.Id);
+
+                    parentItems.Add(eformReportDataItem);
+                }
+            }
+
+            var result = new List<EformReportDataItemModel>();
+            foreach (var dataItem in parentItems.OrderBy(c => c.Position))
+            {
+                var model = new EformReportDataItemModel
                 {
-                    Id = x.Id,
-                    Label = x.DataItemId.ToString(),
-                    FieldType = "Checkbox",
-                    DataItemId = x.DataItemId,
-                    Position = x.Position,
-                    Visibility = x.Visibility,
-                    DataItemList = GetReportDataItemList(x)
-                }).ToList();
+                    Id = dataItem.Id,
+                    DataItemId = dataItem.DataItemId,
+                    Position = dataItem.Position,
+                    Visibility = dataItem.Visibility,
+                };
+                foreach (var dataItemObject in dataItemsList)
+                {
+                    var type = dataItemObject.GetType();
+                    if (type == typeof(FieldContainer))
+                    {
+                        var item = (FieldContainer) dataItemObject;
+                        if (item.Id == dataItem.DataItemId)
+                        {
+                            model.FieldType = type.ToString().Remove(0, 10);
+                            model.Label = item.Label;
+                            model.DataItemList = GetReportDataItemList(dbContext, null, dataItem,
+                                item.DataItemList.Select(x => (object) x).ToList());
+                        }
+                    }
 
-            return list;
+                    if (type == typeof(MultiSelect))
+                    {
+                        var item = (MultiSelect) dataItemObject;
+                        if (item.Id == dataItem.DataItemId)
+                        {
+                            model.FieldType = type.ToString().Remove(0, 10);
+                            model.Label = item.Label;
+                            foreach (var keyValuePair in item.KeyValuePairList)
+                            {
+                                model.KeyValuePairList.Add(new EformKeyValuePairModel()
+                                {
+                                    Key = keyValuePair.Key,
+                                    Value = keyValuePair.Value,
+                                    DisplayOrder = keyValuePair.DisplayOrder,
+                                    Selected = keyValuePair.Selected,
+                                });
+                            }
+                        }
+                    }
+
+                    if (type == typeof(SingleSelect))
+                    {
+                        var item = (SingleSelect) dataItemObject;
+                        if (item.Id == dataItem.DataItemId)
+                        {
+                            model.FieldType = type.ToString().Remove(0, 10);
+                            model.Label = item.Label;
+                            foreach (var keyValuePair in item.KeyValuePairList)
+                            {
+                                model.KeyValuePairList.Add(new EformKeyValuePairModel()
+                                {
+                                    Key = keyValuePair.Key,
+                                    Value = keyValuePair.Value,
+                                    DisplayOrder = keyValuePair.DisplayOrder,
+                                    Selected = keyValuePair.Selected,
+                                });
+                            }
+                        }
+                    }
+
+                    // Common fields
+                    if (type == typeof(Audio)
+                        || type == typeof(Comment)
+                        || type == typeof(Date)
+                        || type == typeof(EntitySearch)
+                        || type == typeof(EntitySelect)
+                        || type == typeof(None)
+                        || type == typeof(Number)
+                        || type == typeof(NumberStepper)
+                        || type == typeof(Picture)
+                        || type == typeof(ShowPdf)
+                        || type == typeof(SaveButton)
+                        || type == typeof(Signature)
+                        || type == typeof(Text)
+                        || type == typeof(Timer)
+                        || type == typeof(CheckBox))
+                    {
+                        var item = (DataItem) dataItemObject;
+                        if (item.Id == dataItem.DataItemId)
+                        {
+                            model.FieldType = type.ToString().Remove(0, 10);
+                            model.Label = item.Label;
+                        }
+                    }
+                }
+
+                result.Add(model);
+            }
+
+            return result;
         }
 
         public async Task<OperationDataResult<EformReportFullModel>> GetEformReport(int templateId)
@@ -98,25 +268,22 @@ namespace eFormAPI.Web.Services
                 if (template == null)
                 {
                     return new OperationDataResult<EformReportFullModel>(false,
-                        _localizationService.GetString(""));
+                        _localizationService.GetString("TemplateNotFound"));
                 }
 
                 var eformReport = await _dbContext.EformReports
-                    .Where(x => x.TemplateId == templateId)
-                    .Select(x => new EformReportModel()
-                    {
-                        Id = x.Id,
-                        TemplateId = x.TemplateId,
-                        Description = x.Description,
-                        HeaderImage = x.HeaderImage == null ? string.Empty : Encoding.UTF8.GetString(x.HeaderImage),
-                        HeaderVisibility = x.HeaderVisibility,
-                        IsDateVisible = x.IsDateVisible,
-                        IsWorkerNameVisible = x.IsWorkerNameVisible,
-                    }).FirstOrDefaultAsync();
+                    .FirstOrDefaultAsync(x => x.TemplateId == templateId);
 
                 if (eformReport == null)
                 {
-                    return new OperationDataResult<EformReportFullModel>(true, result);
+                    eformReport = new EformReport
+                    {
+                        TemplateId = template.Id,
+                        IsDateVisible = true,
+                        IsWorkerNameVisible = true,
+                    };
+                    _dbContext.EformReports.Add(eformReport);
+                    await _dbContext.SaveChangesAsync();
                 }
 
                 var reportElements = await _dbContext.EformReportElements
@@ -129,19 +296,57 @@ namespace eFormAPI.Web.Services
                     .ToListAsync();
 
 
-                var reportElementsOrdered = reportElements
-                    .Where(p => p.Parent == null)
-                    .OrderBy(p => p.Id)
-                    .Select(p => new EformReportElementsModel()
-                        {
-                            Id = p.Id,
-                            ElementId = p.ElementId,
-                            Label = p.ElementId.ToString(),
-                            ElementList = GetReportElementsList(p),
-                            DataItemList = GetReportDataItemListFromElement(p),
-                        }
-                    ).ToList();
+                var reportElementsOrdered = new List<EformReportElementsModel>();
+                foreach (var templateElement in template.ElementList)
+                {
+                    var reportElement = reportElements
+                        .FirstOrDefault(p => p.ElementId == templateElement.Id);
 
+                    if (reportElement == null)
+                    {
+                        reportElement = new EformReportElement()
+                        {
+                            EformReportId = eformReport.Id,
+                            ElementId = templateElement.Id,
+                        };
+                        _dbContext.EformReportElements.Add(reportElement);
+                        await _dbContext.SaveChangesAsync();
+
+                        reportElement = await _dbContext.EformReportElements
+                            .Include(x => x.DataItems)
+                            .ThenInclude(x => x.NestedDataItems)
+                            .Include(x => x.NestedElements)
+                            .ThenInclude(x => x.DataItems)
+                            .ThenInclude(x => x.NestedDataItems)
+                            .Where(x => x.EformReportId == eformReport.Id && x.ElementId == templateElement.Id)
+                            .FirstOrDefaultAsync();
+                    }
+
+
+                    var element = new EformReportElementsModel()
+                    {
+                        Id = reportElement.Id,
+                        ElementId = reportElement.ElementId,
+                        Label = templateElement.Label,
+                    };
+                    if (templateElement.GetType() == typeof(DataElement))
+                    {
+                        var item = (DataElement) templateElement;
+                        var dataItemList = GetReportDataItemList(_dbContext, reportElement, null,
+                            item.DataItemList.Select(x => (object) x).ToList());
+                        element.DataItemList = dataItemList;
+                    }
+
+                    if (templateElement.GetType() == typeof(GroupElement))
+                    {
+                        var item = (GroupElement) templateElement;
+                        var elementList = GetReportElementsList(_dbContext, reportElement,
+                            item.ElementList.Select(x => (object) x).ToList());
+                        element.ElementList = elementList;
+                    }
+
+                    reportElementsOrdered.Add(element);
+                }
 
                 result.EformMainElement = new EformMainElement()
                 {
@@ -149,37 +354,142 @@ namespace eFormAPI.Web.Services
                     Label = template.Label,
                     ElementList = reportElementsOrdered
                 };
-
-
-                result.EformReport = eformReport;
+                var eformReportModel = new EformReportModel()
+                {
+                    Id = eformReport.Id,
+                    TemplateId = eformReport.TemplateId,
+                    Description = eformReport.Description,
+                    HeaderImage = eformReport.HeaderImage == null
+                        ? string.Empty
+                        : Encoding.UTF8.GetString(eformReport.HeaderImage),
+                    HeaderVisibility = eformReport.HeaderVisibility,
+                    IsDateVisible = eformReport.IsDateVisible,
+                    IsWorkerNameVisible = eformReport.IsWorkerNameVisible,
+                };
+                result.EformReport = eformReportModel;
                 return new OperationDataResult<EformReportFullModel>(true, result);
             }
             catch (Exception e)
             {
                 _logger.LogCritical(e, e.Message);
                 return new OperationDataResult<EformReportFullModel>(false,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("ErrorWhileObtainingReportInfo"));
             }
         }
 
-        public async Task<OperationResult> UpdateEformReport(EformReportModel requestModel)
+        public async Task<OperationResult> UpdateEformReport(EformReportFullModel requestModel)
         {
             try
             {
-                var result = new EformReportFullModel();
                 using (var transaction = await _dbContext.Database.BeginTransactionAsync())
                 {
-                    transaction.Commit();
+                    try
+                    {
+                        var eformReport = _dbContext.EformReports
+                            .FirstOrDefault(x => x.Id == requestModel.EformReport.Id);
+
+                        if (eformReport == null)
+                        {
+                            return new OperationResult(false,
+                                _localizationService.GetString("EformReportNotFound"));
+                        }
+
+                        eformReport.Description = requestModel.EformReport.Description;
+                        if (!string.IsNullOrEmpty(requestModel.EformReport.HeaderImage))
+                        {
+                            eformReport.HeaderImage = Encoding.UTF8.GetBytes(requestModel.EformReport.HeaderImage);
+                        }
+
+                        eformReport.HeaderVisibility = requestModel.EformReport.HeaderVisibility;
+                        eformReport.IsDateVisible = requestModel.EformReport.IsDateVisible;
+                        eformReport.IsWorkerNameVisible = requestModel.EformReport.IsWorkerNameVisible;
+
+                        _dbContext.EformReports.Update(eformReport);
+                        await _dbContext.SaveChangesAsync();
+
+                        var elementList = requestModel.EformMainElement?.ElementList;
+                        if (elementList == null)
+                        {
+                            return new OperationResult(false,
+                                _localizationService.GetString("ElementListNotProvided"));
+                        }
+
+                        var dataItems = ParseElements(elementList);
+                        if (dataItems.Any())
+                        {
+                            var dataItemsIds = dataItems.Select(x => x.Id).ToArray();
+                            var eformDataItems = await _dbContext.EformReportDataItems
+                                .Where(x => dataItemsIds.Contains(x.Id)).ToListAsync();
+
+                            foreach (var eformDataItem in eformDataItems)
+                            {
+                                var dataItem = dataItems.FirstOrDefault(x => x.Id == eformDataItem.Id);
+                                if (dataItem != null)
+                                {
+                                    eformDataItem.Position = dataItem.Position;
+                                    eformDataItem.Visibility = dataItem.Visibility;
+                                    _dbContext.EformReportDataItems.Update(eformDataItem);
+                                }
+                            }
+
+                            await _dbContext.SaveChangesAsync();
+                        }
+
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
                 }
 
-                return new OperationDataResult<EformReportFullModel>(true, result);
+                return new OperationResult(true,
+                    _localizationService.GetString("ReportUpdatedSuccessfully"));
             }
             catch (Exception e)
             {
                 _logger.LogCritical(e, e.Message);
-                return new OperationDataResult<EformReportFullModel>(false,
-                    _localizationService.GetString(""));
+                return new OperationResult(false,
+                    _localizationService.GetString("ErrorWhileUpdatingReport"));
             }
+        }
+
+        public List<EformReportDataItemModel> ParseDataItems(List<EformReportDataItemModel> dataItemModels)
+        {
+            var list = new List<EformReportDataItemModel>();
+            for (var i = 0; i < dataItemModels.Count; i++)
+            {
+                var dataItem = dataItemModels[i];
+                dataItem.Position = i;
+                list.Add(dataItem);
+                if (dataItem.DataItemList.Any())
+                {
+                    list.AddRange(ParseDataItems(dataItem.DataItemList));
+                }
+            }
+
+            return list;
+        }
+
+        public List<EformReportDataItemModel> ParseElements(List<EformReportElementsModel> elementsModels)
+        {
+            var list = new List<EformReportDataItemModel>();
+
+            foreach (var elementsModel in elementsModels)
+            {
+                if (elementsModel.DataItemList.Any())
+                {
+                    list.AddRange(ParseDataItems(elementsModel.DataItemList));
+                }
+
+                if (elementsModel.ElementList.Any())
+                {
+                    list.AddRange(ParseElements(elementsModel.ElementList));
+                }
+            }
+
+            return list;
         }
     }
 }

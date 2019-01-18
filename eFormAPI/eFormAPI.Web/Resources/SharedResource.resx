@@ -546,4 +546,22 @@
   <data name="PluginsSettings" xml:space="preserve">
     <value>Plugins Settings</value>
   </data>
+  <data name="EformReportNotFound" xml:space="preserve">
+    <value>Eform report not found</value>
+  </data>
+  <data name="ElementListNotProvided" xml:space="preserve">
+    <value>ElementList not provided</value>
+  </data>
+  <data name="ErrorWhileObtainingReportInfo" xml:space="preserve">
+    <value>Error while obtaining report info</value>
+  </data>
+  <data name="ErrorWhileUpdatingReport" xml:space="preserve">
+    <value>Error while updating report</value>
+  </data>
+  <data name="ReportUpdatedSuccessfully" xml:space="preserve">
+    <value>Report updated successfully</value>
+  </data>
+  <data name="TemplateNotFound" xml:space="preserve">
+    <value>Template not found</value>
+  </data>
 </root>

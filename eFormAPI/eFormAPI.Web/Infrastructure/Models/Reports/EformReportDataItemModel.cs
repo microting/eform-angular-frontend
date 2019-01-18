@@ -13,6 +13,9 @@ namespace eFormAPI.Web.Infrastructure.Models.Reports
         public int Position { get; set; }
         public bool Visibility { get; set; }
 
+        public List<EformKeyValuePairModel> KeyValuePairList { get; set; }
+            = new List<EformKeyValuePairModel>();
+
         public List<EformReportDataItemModel> DataItemList =
             new List<EformReportDataItemModel>();
     }

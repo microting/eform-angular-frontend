@@ -1,7 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {ActivatedRoute, ChildActivationEnd, Router} from '@angular/router';
-import {ReplyElementDto} from 'src/app/common/models/cases';
-import {EformFullReportModel} from 'src/app/common/models/eforms/report';
+import {ElementDto} from 'src/app/common/models/dto';
+import {EformFullReportModel, EformReportElement} from 'src/app/common/models/eforms/report';
 import {CasesService} from 'src/app/common/services/cases';
 import {EformReportService} from 'src/app/common/services/eform';
 
@@ -36,5 +36,19 @@ export class EformReportPageComponent implements OnInit {
         this.fullReportModel = data.model;
       } this.spinnerStatus = false;
     });
+  }
+
+  updateReport() {
+    this.spinnerStatus = true;
+    this.eformReportService.updateSingle(this.fullReportModel).subscribe((data) => {
+      if (data && data.success) {
+
+      } this.spinnerStatus = false;
+    });
+  }
+
+  onElementChanged(e: EformReportElement) {
+    const foundElementIndex = this.fullReportModel.eformMainElement.elementList.findIndex(x => x.elementId == e.elementId);
+    this.fullReportModel.eformMainElement.elementList[foundElementIndex] = e;
   }
 }

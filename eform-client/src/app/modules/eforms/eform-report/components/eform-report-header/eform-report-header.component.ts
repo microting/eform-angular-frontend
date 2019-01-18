@@ -9,7 +9,6 @@ import {EformReportModel} from 'src/app/common/models/eforms/report';
 export class EformReportHeaderComponent implements OnInit {
   @Input() reportModel: EformReportModel = new EformReportModel();
   @ViewChild('reportCropperModal') reportCropperModal;
-  headerImage = '../../../../../../assets/images/img-placeholder.png';
   constructor() { }
 
   ngOnInit() {
@@ -20,7 +19,6 @@ export class EformReportHeaderComponent implements OnInit {
   }
 
   updateHeaderImage(e: string) {
-    this.headerImage = e;
-    this.reportModel.headerImage = this.headerImage;
+    this.reportModel.headerImage = e;
   }
 }

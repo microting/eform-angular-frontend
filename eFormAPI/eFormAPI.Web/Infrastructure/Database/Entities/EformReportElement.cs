@@ -17,7 +17,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities
         public int? ParentId { get; set; }
         public virtual EformReportElement Parent { get; set; }
 
-        public virtual ICollection<EformReportElement> NestedElements { get; set; }
-        public virtual ICollection<EformReportDataItem> DataItems { get; set; }
+        public virtual ICollection<EformReportElement> NestedElements { get; set; } = new List<EformReportElement>();
+        public virtual ICollection<EformReportDataItem> DataItems { get; set; } = new List<EformReportDataItem>();
     }
 }

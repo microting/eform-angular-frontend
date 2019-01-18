@@ -3,6 +3,7 @@
     <div class="card-body">
       <app-eform-report-switch
         [dragulaContainerName]="element.id + element.label"
+        (dataItemListChanged)="onDataItemListChanged($event)"
         [dataItemList]="element.dataItemList"></app-eform-report-switch>
     </div>
   </div>
