@@ -189,7 +189,7 @@ exports.config = {
    */
   before: function () {
     require('ts-node/register');
-    browser.timeouts('implicit', 5000);
+    browser.timeouts('implicit', 10000);
   },
   /**
    * Runs before a WebdriverIO command gets executed.

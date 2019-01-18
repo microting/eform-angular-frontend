@@ -1,29 +1,9 @@
 dist: xenial
-addons:
-  chrome: stable
-  apt:
-    sources:
-    - google-chrome
-    packages:
-    - google-chrome-stable fluxbox
-sudo: required
 language: csharp
 mono: none
 dotnet: 2.2
-bundler_args: --retry 5
 services:
 - mysql
-before_install:
-  - google-chrome-stable --headless --disable-gpu
-install:
-- nvm install 8.14.0
-- nvm use 8.14.0
-- npm install
-before_script:
-- "export DISPLAY=:99.0"
-- "sh -e /etc/init.d/xvfb start"
-- sleep 3
-- fluxbox > /dev/null 2>&1 &
 script:
   - dotnet restore -v q eFormAPI/eFormAPI.sln
   - dotnet build eFormAPI/eFormAPI.sln

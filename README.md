@@ -1,5 +1,4 @@
 # eform-angular-frontend 
-build status
 [![Build Status](https://travis-ci.org/microting/eform-angular-frontend.svg?branch=master)](https://travis-ci.org/microting/eform-angular-frontend)
 
 An Angular (6.1.10) Frontend for integrating with the Microting eForm API v1.
@@ -13,6 +12,17 @@ An Angular (6.1.10) Frontend for integrating with the Microting eForm API v1.
 | Windows Server 2016     | X| X | X | X |
 | Ubuntu 18.04     | X |  | X | X |
 | Ubuntu 16.04     | X |  | X | X |
+
+## Translating eForm Angular Frontend
+
+| Language | C# part | Angular part |
+| ------------- |:-----:|:-----:|
+| English | 100% | 100%|
+| Danish | 100% | 100% |
+| German | 100% | 100% |
+
+If you want to contribute with a translation to another language, please start by cloning the repository and create a copy of [SharedResource.resx](https://github.com/microting/eform-angular-frontend/blob/master/eFormAPI/eFormAPI.Web/Resources/SharedResource.resx) and name it SharedResource.XX.resx where XX is the language code.
+For the Angular part, please create a copy of [en-US.json](https://github.com/microting/eform-angular-frontend/blob/master/eform-client/src/assets/i18n/en-US.json) and follow pattern on [ISO 639-1 standard language codes](https://www.andiamo.co.uk/resources/iso-language-codes/)
 
 ## Get access token
 

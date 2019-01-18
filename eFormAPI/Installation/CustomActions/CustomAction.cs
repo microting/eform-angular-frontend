@@ -295,10 +295,10 @@ namespace CustomActions
                     }
                 }
 
-                // navigation.component.ts
-                src = Path.Combine(installFolder, "src\\app\\components\\navigation\\navigation.component.ts");
-                session.Log("BackupPluginSettings src is : " + src.ToString());
-                File.Copy(src, Path.Combine(tmpConfigs, "navigation.component.ts"), true);
+                //// navigation.component.ts
+                //src = Path.Combine(installFolder, "src\\app\\components\\navigation\\navigation.component.ts");
+                //session.Log("BackupPluginSettings src is : " + src.ToString());
+                //File.Copy(src, Path.Combine(tmpConfigs, "navigation.component.ts"), true);
             }
             catch { }
 
@@ -325,10 +325,10 @@ namespace CustomActions
                     DirectoryCopy(dir, Path.Combine(installFolder, "src\\app\\plugins\\modules\\", folder), true);
                 }
 
-                // navigation.component.ts
-                dst = Path.Combine(installFolder, "src\\app\\components\\navigation\\navigation.component.ts");
-                session.Log("RestorePluginSettings src is : " + dst.ToString());
-                File.Copy(Path.Combine(tmpConfigs, "navigation.component.ts"), dst, true);
+                //// navigation.component.ts
+                //dst = Path.Combine(installFolder, "src\\app\\components\\navigation\\navigation.component.ts");
+                //session.Log("RestorePluginSettings src is : " + dst.ToString());
+                //File.Copy(Path.Combine(tmpConfigs, "navigation.component.ts"), dst, true);
             }
             catch { }
         }
@@ -546,13 +546,24 @@ namespace CustomActions
                 // stop sites
                 ControlSites(customerNumber, domain, apiPort, uiPort, false);
                 IncrementProgressBar(session);
-                RemoveSites(customerNumber, domain, apiPort, uiPort);
+                try {
+                    RemoveSites(customerNumber, domain, apiPort, uiPort);
+                } catch { }
+                
                 IncrementProgressBar(session);
-
-                RunProcess(@"sc", $"stop eformangular{uiName.Replace(".", "")}.exe");
+                try
+                {
+                    RunProcess(@"sc", $"stop eformangular{uiName.Replace(".", "")}.exe");
+                } catch { }
                 Thread.Sleep(1000);
-                RunProcess(@"C:\Program Files\nodejs\node.exe", "svc.js uninstall", uiIisDir);
-                RunProcess(@"sc", $"delete eformangular{uiName.Replace(".", "")}.exe");
+                try
+                {
+                    RunProcess(@"C:\Program Files\nodejs\node.exe", "svc.js uninstall", uiIisDir);
+                } catch { }
+                try
+                {
+                    RunProcess(@"sc", $"delete eformangular{uiName.Replace(".", "")}.exe");
+                } catch { }
                 IncrementProgressBar(session);
 
                 var keepSettings = session.CustomActionData["KEEPSETTINGS"] == "1";
@@ -567,9 +578,15 @@ namespace CustomActions
                             .Replace("eform-client\\", "")).ToArray()
                     : new string[0];
 
-                DeleteDirectory(uiIisDir, keepFolders, keepFiles, uiIisDir);
+                try
+                {
+                    DeleteDirectory(uiIisDir, keepFolders, keepFiles, uiIisDir);
+                } catch { }
                 IncrementProgressBar(session);
-                DeleteDirectory(webApiIisDir, keepFolders, keepFiles, webApiIisDir);
+                try
+                {
+                    DeleteDirectory(webApiIisDir, keepFolders, keepFiles, webApiIisDir);
+                } catch { }
                 IncrementProgressBar(session);
 
                 var vendorName = "Microting";

@@ -1,0 +1,549 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AdminUserNotFound" xml:space="preserve">
+    <value>Admin-Benutzer nicht gefunden</value>
+  </data>
+  <data name="CannotOpenDatabes" xml:space="preserve">
+    <value>Datenbank kann nicht geöffnet werden</value>
+  </data>
+  <data name="CantDeletePrimaryAdminUser" xml:space="preserve">
+    <value>Primärer Admin-Benutzer kann nicht gelöscht werden</value>
+  </data>
+  <data name="CantObtainSettingsFromWebConfig" xml:space="preserve">
+    <value>Einstellungen können nicht von web.config abgerufen werden</value>
+  </data>
+  <data name="CantUpdateSettingsInWebConfig" xml:space="preserve">
+    <value>Einstellungen in web.config können nicht aktualisiert werden</value>
+  </data>
+  <data name="CaseCouldNotBeRemoved" xml:space="preserve">
+    <value>Fall konnte nicht entfernt werden</value>
+  </data>
+  <data name="CaseCouldNotBeUpdated" xml:space="preserve">
+    <value>Fall konnte nicht aktualisiert werden</value>
+  </data>
+  <data name="CaseHasBeenUpdated" xml:space="preserve">
+    <value>Fall wurde aktualisiert</value>
+  </data>
+  <data name="CaseLoadingFailed" xml:space="preserve">
+    <value>Fallladen fehlgeschlagen</value>
+  </data>
+  <data name="CaseParamDeletedSuccessfully" xml:space="preserve">
+    <value>Fall # {0} wurde erfolgreich gelöscht</value>
+  </data>
+  <data name="CheckConnectionString" xml:space="preserve">
+    <value>Überprüfen Sie die Verbindungszeichenfolge</value>
+  </data>
+  <data name="CheckSettingsBeforeProceed" xml:space="preserve">
+    <value>Überprüfen Sie die Einstellungen, bevor Sie fortfahren</value>
+  </data>
+  <data name="ColumnsWereUpdated" xml:space="preserve">
+    <value>Spalten wurden aktualisiert</value>
+  </data>
+  <data name="ConnectionStringAlreadyExist" xml:space="preserve">
+    <value>Verbindungszeichenfolge ist bereits vorhanden</value>
+  </data>
+  <data name="CoreIsNotStarted" xml:space="preserve">
+    <value>Core wird nicht gestartet</value>
+  </data>
+  <data name="CouldNotWriteConnectionString" xml:space="preserve">
+    <value>Verbindungszeichenfolge konnte nicht in /bin/Input.txt geschrieben werden</value>
+  </data>
+  <data name="DeviceUserCouldNotBeCreated" xml:space="preserve">
+    <value>Gerätebenutzer konnte nicht erstellt werden</value>
+  </data>
+  <data name="DeviceUserCouldNotBeObtained" xml:space="preserve">
+    <value>Gerätebenutzer mit einer solchen "UId" konnte nicht abgerufen werden</value>
+  </data>
+  <data name="DeviceUserCouldNotBeUpdated" xml:space="preserve">
+    <value>Gerätebenutzer konnte nicht aktualisiert werden</value>
+  </data>
+  <data name="DeviceUserNotFound" xml:space="preserve">
+    <value>Gerätebenutzer "UId" nicht gefunden</value>
+  </data>
+  <data name="DeviceUserPa" xml:space="preserve">
+    <value>Gerätebenutzer mit der ID "{0}" konnte nicht gelöscht werden</value>
+  </data>
+  <data name="DeviceUserParamCouldNotBeDeleted" xml:space="preserve">
+    <value>Gerätebenutzer "{0}" konnte nicht gelöscht werden</value>
+  </data>
+  <data name="DeviceUserParamCouldNotBeEdited" xml:space="preserve">
+    <value>Gerätebenutzer mit der ID {0} konnte nicht bearbeitet werden</value>
+  </data>
+  <data name="DeviceUserParamCouldNotBeUpdated" xml:space="preserve">
+    <value>Gerätebenutzer mit der ID {0} konnte nicht aktualisiert werden</value>
+  </data>
+  <data name="DeviceUserParamCreatedSuccessfully" xml:space="preserve">
+    <value>Gerätebenutzer "{0}" wurde erfolgreich erstellt</value>
+  </data>
+  <data name="DeviceUserParamDeletedSuccessfully" xml:space="preserve">
+    <value>Gerätebenutzer "{0}" wurde erfolgreich gelöscht</value>
+  </data>
+  <data name="DeviceUserUpdatedSuccessfully" xml:space="preserve">
+    <value>Gerätebenutzer erfolgreich aktualisiert</value>
+  </data>
+  <data name="eFormCouldNotBeCreated" xml:space="preserve">
+    <value>eForm konnte nicht erstellt werden</value>
+  </data>
+  <data name="eFormParamCouldNotBeDeleted" xml:space="preserve">
+    <value>eForm "{0}" konnte nicht gelöscht werden</value>
+  </data>
+  <data name="eFormParamCreatedSuccessfully" xml:space="preserve">
+    <value>eForm "{0}" wurde erfolgreich erstellt</value>
+  </data>
+  <data name="eFormParamDeletedSuccessfully" xml:space="preserve">
+    <value>eForm "{0}" wurde erfolgreich gelöscht</value>
+  </data>
+  <data name="ErrorWhenDeletingSearchableList" xml:space="preserve">
+    <value>Fehler beim Löschen der durchsuchbaren Liste</value>
+  </data>
+  <data name="ErrorWhenObtainingSearchableList" xml:space="preserve">
+    <value>Fehler beim Abrufen einer durchsuchbaren Liste</value>
+  </data>
+  <data name="ErrorWhileAddNewPassword" xml:space="preserve">
+    <value>Fehler beim Hinzufügen eines neuen Passworts</value>
+  </data>
+  <data name="ErrorWhileCreatingFileForSDK" xml:space="preserve">
+    <value>Fehler beim Erstellen der Datei für das SDK</value>
+  </data>
+  <data name="ErrorWhileCreatingParamTag" xml:space="preserve">
+    <value>Fehler beim Erstellen des Tags "{0}"</value>
+  </data>
+  <data name="ErrorWhileCreatingUser" xml:space="preserve">
+    <value>Fehler beim Erstellen eines Benutzers</value>
+  </data>
+  <data name="ErrorWhileCreatingWorker" xml:space="preserve">
+    <value>Fehler beim Erstellen eines Arbeiters</value>
+  </data>
+  <data name="ErrorWhileDeletingSelectableList" xml:space="preserve">
+    <value>Fehler beim Löschen der auswählbaren Liste</value>
+  </data>
+  <data name="ErrorWhileDeletingTag" xml:space="preserve">
+    <value>Fehler beim Löschen des Tags</value>
+  </data>
+  <data name="ErrorWhileDeletingUser" xml:space="preserve">
+    <value>Fehler beim Löschen des Benutzers</value>
+  </data>
+  <data name="ErrorWhileObtainColumns" xml:space="preserve">
+    <value>Fehler beim Abrufen von Spalten</value>
+  </data>
+  <data name="ErrorWhileObtainSelectableList" xml:space="preserve">
+    <value>Fehler beim Abrufen einer auswählbaren Liste</value>
+  </data>
+  <data name="ErrorWhileObtainTags" xml:space="preserve">
+    <value>Fehler beim Abrufen von Tags</value>
+  </data>
+  <data name="ErrorWhileObtainUsers" xml:space="preserve">
+    <value>Fehler beim Abrufen von Benutzern</value>
+  </data>
+  <data name="ErrorWhileRemovingOldPassword" xml:space="preserve">
+    <value>Fehler beim Entfernen des alten Passworts</value>
+  </data>
+  <data name="ErrorWhileRotateImage" xml:space="preserve">
+    <value>Fehler beim Drehen des Bildes</value>
+  </data>
+  <data name="ErrorWhileUpdatingColumns" xml:space="preserve">
+    <value>Fehler beim Aktualisieren der Spalten</value>
+  </data>
+  <data name="ErrorWhileUpdatingPSK" xml:space="preserve">
+    <value>Fehler beim Aktualisieren des Benutzer-PSK</value>
+  </data>
+  <data name="ErrorWhileUpdatingTemplateTags" xml:space="preserve">
+    <value>Fehler beim Aktualisieren von Vorlagen-Tags</value>
+  </data>
+  <data name="ErrorWhileUpdatingUser" xml:space="preserve">
+    <value>Fehler beim Aktualisieren des Benutzers</value>
+  </data>
+  <data name="FileNotFound" xml:space="preserve">
+    <value>Datei nicht gefunden</value>
+  </data>
+  <data name="FolderError" xml:space="preserve">
+    <value>Ordnerfehler</value>
+  </data>
+  <data name="ImageDeletedSuccessfully" xml:space="preserve">
+    <value>Bild erfolgreich gelöscht</value>
+  </data>
+  <data name="ImageNotDeleted" xml:space="preserve">
+    <value>Bild wurde nicht gelöscht</value>
+  </data>
+  <data name="ImageRotatedSuccessfully" xml:space="preserve">
+    <value>Bild erfolgreich gedreht</value>
+  </data>
+  <data name="InvalidRequest" xml:space="preserve">
+    <value>Ungültige Anfrage</value>
+  </data>
+  <data name="InvalidSecurityCode" xml:space="preserve">
+    <value>Ungültiger Sicherheitscode</value>
+  </data>
+  <data name="InvalidUserNameOrPassword" xml:space="preserve">
+    <value>Ungültiger Benutzername oder Passwort</value>
+  </data>
+  <data name="MainConnectionStringIsInvalid" xml:space="preserve">
+    <value>Hauptverbindungszeichenfolge ist ungültig</value>
+  </data>
+  <data name="NewOTPCreatedSuccessfully" xml:space="preserve">
+    <value>Neues OTP wurde erfolgreich erstellt</value>
+  </data>
+  <data name="ParamCreatedSuccessfully" xml:space="preserve">
+    <value>{0} wurde erfolgreich erstellt</value>
+  </data>
+  <data name="ParamDeletedSuccessfully" xml:space="preserve">
+    <value>{0} wurde erfolgreich gelöscht</value>
+  </data>
+  <data name="ParamPairedSuccessfully" xml:space="preserve">
+    <value>"{0}" wurde erfolgreich gekoppelt</value>
+  </data>
+  <data name="ParamUpdatedSuccessfully" xml:space="preserve">
+    <value>{0} wurde erfolgreich aktualisiert</value>
+  </data>
+  <data name="PleaseSetupSecurityCode" xml:space="preserve">
+    <value>Bitte richten Sie den Sicherheitscode auf dem Server ein</value>
+  </data>
+  <data name="RequestFieldsAreNotFilled" xml:space="preserve">
+    <value>Pflichtfelder sind nicht ausgefüllt</value>
+  </data>
+  <data name="RoleIsRequired" xml:space="preserve">
+    <value>Rolle ist erforderlich</value>
+  </data>
+  <data name="SDKConnectionStringIsInvalid" xml:space="preserve">
+    <value>SDK-Verbindungszeichenfolge ist ungültig</value>
+  </data>
+  <data name="SearchableListCreationFailed" xml:space="preserve">
+    <value>Durchsuchbare Listenerstellung fehlgeschlagen</value>
+  </data>
+  <data name="SearchableListLoadingFailed" xml:space="preserve">
+    <value>Laden der durchsuchbaren Liste fehlgeschlagen</value>
+  </data>
+  <data name="SelectableGroupLoadingFailed" xml:space="preserve">
+    <value>Auswählbares Laden der Gruppe fehlgeschlagen</value>
+  </data>
+  <data name="SelectableListCreationFailed" xml:space="preserve">
+    <value>Auswählbare Listenerstellung fehlgeschlagen</value>
+  </data>
+  <data name="SettingsUpdatedSuccessfully" xml:space="preserve">
+    <value>Einstellungen erfolgreich aktualisiert</value>
+  </data>
+  <data name="SiteParamCouldNotBeDeleted" xml:space="preserve">
+    <value>Site mit der ID {0} konnte nicht aktualisiert werden</value>
+  </data>
+  <data name="SiteParamCouldNotBeUpdated" xml:space="preserve">
+    <value>Site mit der ID {0} konnte nicht aktualisiert werden</value>
+  </data>
+  <data name="SiteParamDeletedSuccessfully" xml:space="preserve">
+    <value>Site "{0}" wurde erfolgreich gelöscht</value>
+  </data>
+  <data name="SiteParamNotFound" xml:space="preserve">
+    <value>Site mit der ID {0} wurde nicht gefunden</value>
+  </data>
+  <data name="SiteWithIdCouldNotBeDeleted" xml:space="preserve">
+    <value>Arbeiter mit der ID {0} konnte nicht gelöscht werden</value>
+  </data>
+  <data name="TagDeletedSuccessfully" xml:space="preserve">
+    <value>Tag erfolgreich gelöscht</value>
+  </data>
+  <data name="TagParamCreatedSuccessfully" xml:space="preserve">
+    <value>Das Tag "{0}" wurde erfolgreich erstellt</value>
+  </data>
+  <data name="TemplateTagUpdatedSuccessfully" xml:space="preserve">
+    <value>Vorlagen-Tags wurden erfolgreich aktualisiert</value>
+  </data>
+  <data name="UnitParamOTPCouldNotCompleted" xml:space="preserve">
+    <value>OTP-Anforderung der Einheit "{0}" konnte nicht abgeschlossen werden</value>
+  </data>
+  <data name="UserNameOrPasswordIncorrect" xml:space="preserve">
+    <value>Benutzername oder Passwort ist falsch</value>
+  </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>Benutzer wurde nicht gefunden</value>
+  </data>
+  <data name="UserNotFoundUserName" xml:space="preserve">
+    <value>Benutzer {0} wurde nicht gefunden</value>
+  </data>
+  <data name="UserParamWasDeleted" xml:space="preserve">
+    <value>Benutzer {0} wurde gelöscht</value>
+  </data>
+  <data name="UserUserNameAlreadyExist" xml:space="preserve">
+    <value>Benutzer {0} ist bereits vorhanden</value>
+  </data>
+  <data name="UserUserNameWasCreated" xml:space="preserve">
+    <value>Benutzer {0} wurde erstellt</value>
+  </data>
+  <data name="UserUserNameWasUpdated" xml:space="preserve">
+    <value>Benutzer {0} wurde aktualisiert</value>
+  </data>
+  <data name="WorkerParamCantBeDeted" xml:space="preserve">
+    <value>Arbeiter "{0} {1}" kann nicht gelöscht werden</value>
+  </data>
+  <data name="WorkerParamCantBeUpdated" xml:space="preserve">
+    <value>Arbeiter mit der ID {0} kann nicht aktualisiert werden</value>
+  </data>
+  <data name="WorkerParamDeletedSuccessfully" xml:space="preserve">
+    <value>Arbeiter "{0} {1}" wurde erfolgreich gelöscht</value>
+  </data>
+  <data name="WorkerParamWasUpdated" xml:space="preserve">
+    <value>Arbeiter mit der ID {0} wurde aktualisiert</value>
+  </data>
+  <data name="WorkerWasSuccessfullyCreated" xml:space="preserve">
+    <value>Arbeiter wurde erfolgreich erstellt</value>
+  </data>
+  <data name="YouNeedToBuyMoreLicenses" xml:space="preserve">
+    <value>Sie müssen weitere Lizenzen erwerben, um weitere Einheiten hinzuzufügen.</value>
+  </data>
+  <data name="YourEmailPasswordHasBeenReset" xml:space="preserve">
+    <value>Ihre E-Mail-Adresse: {0} Passwort wurde zurückgesetzt.</value>
+  </data>
+  <data name="SecurityGroupNotFound" xml:space="preserve">
+    <value>Sicherheitsgruppe nicht gefunden</value>
+  </data>
+  <data name="YouCantViewChangeOrDeleteAdmin" xml:space="preserve">
+    <value>Sie können Admin nicht anzeigen, ändern oder löschen</value>
+  </data>
+  <data name="ErrorWhileObtainingPermissions" xml:space="preserve">
+    <value>Fehler beim Abrufen von Berechtigungen</value>
+  </data>
+  <data name="ErrorWhileUpdatingPermissions" xml:space="preserve">
+    <value>Fehler beim Aktualisieren von Berechtigungen</value>
+  </data>
+  <data name="PermissionsUpdatedSuccessfully" xml:space="preserve">
+    <value>Berechtigungen wurden erfolgreich aktualisiert</value>
+  </data>
+  <data name="ConnectionStringDoesNotExist" xml:space="preserve">
+    <value>Verbindungszeichenfolge ist nicht vorhanden</value>
+  </data>
+  <data name="eFormAlreadyInGroup" xml:space="preserve">
+    <value>eForm bereits in der Gruppe</value>
+  </data>
+  <data name="eFormHasBeenDeletedFromGroup" xml:space="preserve">
+    <value>eForm wurde aus der Gruppe gelöscht</value>
+  </data>
+  <data name="eFormNotFound" xml:space="preserve">
+    <value>eForm wurde nicht gefunden</value>
+  </data>
+  <data name="ErrorWhileBindingEformToGroup" xml:space="preserve">
+    <value>Fehler beim Binden von eForm an Gruppe</value>
+  </data>
+  <data name="ErrorWhileCreatingSecurityGroup" xml:space="preserve">
+    <value>Fehler beim Erstellen der Sicherheitsgruppe</value>
+  </data>
+  <data name="ErrorWhileDeletingEformFromGroup" xml:space="preserve">
+    <value>Fehler beim Löschen von eForm aus der Gruppe</value>
+  </data>
+  <data name="ErrorWhileDeletingSecurityGroup" xml:space="preserve">
+    <value>Fehler beim Löschen der Sicherheitsgruppe</value>
+  </data>
+  <data name="ErrorWhileObtainingAvailableEForms" xml:space="preserve">
+    <value>Fehler beim Abrufen verfügbarer eForms</value>
+  </data>
+  <data name="ErrorWhileObtainingEformInfo" xml:space="preserve">
+    <value>Fehler beim Abrufen von Eform-Informationen</value>
+  </data>
+  <data name="ErrorWhileObtainingSecurityGroup" xml:space="preserve">
+    <value>Fehler beim Abrufen der Sicherheitsgruppe</value>
+  </data>
+  <data name="ErrorWhileObtainingSecurityGroups" xml:space="preserve">
+    <value>Fehler beim Abrufen von Sicherheitsgruppen</value>
+  </data>
+  <data name="ErrorWhileObtainingUserMenu" xml:space="preserve">
+    <value>Fehler beim Abrufen des Benutzermenüs</value>
+  </data>
+  <data name="ErrorWhileUpdatingSecurityGroup" xml:space="preserve">
+    <value>Fehler beim Aktualisieren der Sicherheitsgruppe</value>
+  </data>
+  <data name="PermissionForEformHasBeenUpdated" xml:space="preserve">
+    <value>Die Berechtigung für Eform wurde aktualisiert</value>
+  </data>
+  <data name="SecurityGroupCreatedSuccessfully" xml:space="preserve">
+    <value>Sicherheitsgruppe erfolgreich erstellt</value>
+  </data>
+  <data name="SecurityGroupNameIsEmpty" xml:space="preserve">
+    <value>Der Name der Sicherheitsgruppe ist leer</value>
+  </data>
+  <data name="SecurityGroupRemovedSuccessfully" xml:space="preserve">
+    <value>Sicherheitsgruppe wurde erfolgreich entfernt</value>
+  </data>
+  <data name="SecurityGroupUpdatedSuccessfully" xml:space="preserve">
+    <value>Sicherheitsgruppe erfolgreich aktualisiert</value>
+  </data>
+  <data name="ErrorWhileObtainingSavedTags" xml:space="preserve">
+    <value>Fehler beim Abrufen gespeicherter Tags</value>
+  </data>
+  <data name="ErrorWhileRemovingSavedTags" xml:space="preserve">
+    <value>Fehler beim Entfernen gespeicherter Tags</value>
+  </data>
+  <data name="ErrorWhileSavingTag" xml:space="preserve">
+    <value>Fehler beim Speichern des Tags</value>
+  </data>
+  <data name="InvalidTagId" xml:space="preserve">
+    <value>Ungültige Tag-ID</value>
+  </data>
+  <data name="InvalidTagName" xml:space="preserve">
+    <value>Ungültiger tagname</value>
+  </data>
+  <data name="SavedTagNotFound" xml:space="preserve">
+    <value>Das gespeicherte Tag wurde nicht gefunden</value>
+  </data>
+  <data name="TagAlreadySaved" xml:space="preserve">
+    <value>Tag bereits gespeichert</value>
+  </data>
+  <data name="Advanced" xml:space="preserve">
+    <value>Fortgeschritten</value>
+  </data>
+  <data name="ApplicationSettings" xml:space="preserve">
+    <value>Anwendungseinstellungen</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Passwort ändern</value>
+  </data>
+  <data name="DeviceUsers" xml:space="preserve">
+    <value>Gerätebenutzer </value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Abmelden</value>
+  </data>
+  <data name="MyEforms" xml:space="preserve">
+    <value>Meine eForms</value>
+  </data>
+  <data name="SearchableList" xml:space="preserve">
+    <value>Durchsuchbare Listen</value>
+  </data>
+  <data name="Security" xml:space="preserve">
+    <value>Sicherheit</value>
+  </data>
+  <data name="SelectableList" xml:space="preserve">
+    <value>Auswählbare Liste</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Einstellungen</value>
+  </data>
+  <data name="Sites" xml:space="preserve">
+    <value>Standorte</value>
+  </data>
+  <data name="Units" xml:space="preserve">
+    <value>Einheiten</value>
+  </data>
+  <data name="UserManagement" xml:space="preserve">
+    <value>Benutzerverwaltung</value>
+  </data>
+  <data name="Workers" xml:space="preserve">
+    <value>Mitarbeiter</value>
+  </data>
+  <data name="PluginsSettings" xml:space="preserve">
+    <value>Plugin-Einstellungen</value>
+  </data>
+</root>

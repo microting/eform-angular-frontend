@@ -92,25 +92,23 @@ namespace eFormAPI.Web.Hosting.Helpers
 
             //   var assemblies = new List<Assembly>();
             var directories = Directory.EnumerateDirectories(pluginsDir);
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("RUNNING IN DEBUG MODE!");
             foreach (var directory in directories)
             {
                 List<string> pluginList;
 
-#if DEBUG
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("RUNNING IN DEBUG MODE!");
+//#if DEBUG
                 pluginList = Directory.GetFiles(Path.Combine(directory, "netcoreapp2.2"))
                     .Where(x => x.EndsWith("Pn.dll") && Path.GetFileName(x) != "eFormApi.BasePn.dll")
                     .ToList();
-#else
-                pluginList = Directory.GetFiles(directory)
-                    .Where(x => x.EndsWith("Pn.dll") && Path.GetFileName(x) != "eFormApi.BasePn.dll")
-                    .ToList();
+//#else
+//                pluginList = Directory.GetFiles(directory)
+//                    .Where(x => x.EndsWith("Pn.dll") && Path.GetFileName(x) != "eFormApi.BasePn.dll")
+//                    .ToList();
+//
+//#endif
 
-#endif
-
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"{pluginList.Count} number of plugins found");
 
                 foreach (var pluginFile in pluginList)
                 {
@@ -130,6 +128,7 @@ namespace eFormAPI.Web.Hosting.Helpers
                         .GetTypes()
                         .Where(t => typeof(IEformPlugin).IsAssignableFrom(t) && !t.IsAbstract))
                     {
+                        Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("Found plugin : " + type.Name);
                         var plugin = (IEformPlugin) Activator.CreateInstance(type);
                         plugins.Add(plugin);
@@ -137,6 +136,8 @@ namespace eFormAPI.Web.Hosting.Helpers
                     }
                 }
             }
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"{plugins.Count} number of plugins found");
 
             Console.ForegroundColor = ConsoleColor.Gray;
             return plugins;
