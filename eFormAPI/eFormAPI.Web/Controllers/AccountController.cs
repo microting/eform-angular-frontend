@@ -51,8 +51,8 @@ namespace eFormAPI.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var allErrors = ModelState.Values.SelectMany(v => v.Errors);
-                return new OperationResult(false, string.Join(" ", allErrors.Select(x => x.ErrorMessage)));
+                var allErrors = ModelState.Values.SelectMany(v => v.Errors).Select(x => x.ErrorMessage);
+                return new OperationResult(false, string.Join(" ", allErrors));
             }
 
             return await _accountService.ChangePassword(model);
@@ -89,7 +89,7 @@ namespace eFormAPI.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var allErrors = ModelState.Values.SelectMany(v => v.Errors);
+                var allErrors = ModelState.Values.SelectMany(v => v.Errors).Select(x => x.ErrorMessage);
                 return new OperationResult(false, string.Join(" ", allErrors));
             }
 

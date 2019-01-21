@@ -97,7 +97,7 @@ namespace eFormAPI.Web.Services
             if (!updateResult.Succeeded)
             {
                 return new OperationResult(false,
-                    $"Error while updating user settings: {string.Join(", ", updateResult.Errors.Select(x => x.ToString()).ToArray())}");
+                    $"Error while updating user settings: {string.Join(", ", updateResult.Errors.Select(x => x.Description).ToArray())}");
             }
 
             return new OperationResult(true);
@@ -105,14 +105,16 @@ namespace eFormAPI.Web.Services
 
         public async Task<OperationResult> ChangePassword(ChangePasswordModel model)
         {
+            var user = await _userService.GetCurrentUserAsync();
             var result = await _userManager.ChangePasswordAsync(
-                await _userService.GetCurrentUserAsync(),
+                user,
                 model.OldPassword,
                 model.NewPassword);
 
             if (!result.Succeeded)
             {
-                return new OperationResult(false, string.Join(" ", result.Errors));
+                var errors = result.Errors.Select(x => x.Description).ToArray();
+                return new OperationResult(false, string.Join(" ", errors));
             }
 
             return new OperationResult(true);
@@ -165,7 +167,7 @@ namespace eFormAPI.Web.Services
             {
                 return new OperationResult(false,
                     _localizationService.GetString("ErrorWhileRemovingOldPassword") + ". \n" +
-                    string.Join(" ", removeResult.Errors));
+                    string.Join(" ", removeResult.Errors.Select(x=>x.Description).ToArray()));
             }
 
             var addPasswordResult = await _userManager.AddPasswordAsync(user, defaultPassword);
@@ -173,7 +175,7 @@ namespace eFormAPI.Web.Services
             {
                 return new OperationResult(false,
                     _localizationService.GetString("ErrorWhileAddNewPassword") + ". \n" +
-                    string.Join(" ", addPasswordResult.Errors));
+                    string.Join(" ", addPasswordResult.Errors.Select(x=>x.Description).ToArray()));
             }
 
             return new OperationResult(true, _localizationService.GetString("YourEmailPasswordHasBeenReset", user.Email));
@@ -193,7 +195,7 @@ namespace eFormAPI.Web.Services
                 return new OperationResult(true);
             }
 
-            return new OperationResult(false, string.Join(" ", result));
+            return new OperationResult(false, string.Join(" ", result.Errors.Select(x=>x.Description).ToArray()));
         }
     }
 }

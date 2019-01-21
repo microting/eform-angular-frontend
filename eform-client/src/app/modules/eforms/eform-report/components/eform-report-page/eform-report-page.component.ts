@@ -42,7 +42,7 @@ export class EformReportPageComponent implements OnInit {
     this.spinnerStatus = true;
     this.eformReportService.updateSingle(this.fullReportModel).subscribe((data) => {
       if (data && data.success) {
-
+        this.router.navigate(['/']).then();
       } this.spinnerStatus = false;
     });
   }

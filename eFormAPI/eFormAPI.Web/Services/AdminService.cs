@@ -158,7 +158,7 @@ namespace eFormAPI.Web.Services
                 var result = await _userManager.UpdateAsync(user);
                 if (!result.Succeeded)
                 {
-                    return new OperationResult(false, string.Join(" ", result.Errors));
+                    return new OperationResult(false, string.Join(" ", result.Errors.Select(x=>x.Description).ToArray()));
                 }
 
                 // password
@@ -230,7 +230,7 @@ namespace eFormAPI.Web.Services
                 var result = await _userManager.CreateAsync(user, userRegisterModel.Password);
                 if (!result.Succeeded)
                 {
-                    return new OperationResult(false, string.Join(" ", result.Errors));
+                    return new OperationResult(false, string.Join(" ", result.Errors.Select(x=>x.Description).ToArray()));
                 }
 
                 // change role
@@ -281,7 +281,7 @@ namespace eFormAPI.Web.Services
                 var result = await _userManager.DeleteAsync(user);
                 if (!result.Succeeded)
                 {
-                    return new OperationResult(false, string.Join(" ", result.Errors));
+                    return new OperationResult(false, string.Join(" ", result.Errors.Select(x=>x.Description).ToArray()));
                 }
 
                 return new OperationResult(true, _localizationService.GetString("UserParamWasDeleted", userId));
