@@ -7,28 +7,19 @@ import {FieldValueDto} from 'src/app/common/models';
   templateUrl: './element-number.component.html',
   styleUrls: ['./element-number.component.scss']
 })
-export class ElementNumberComponent implements OnInit {
+export class ElementNumberComponent {
   fieldValueObj: FieldValueDto = new FieldValueDto();
-  numberForm: FormGroup;
   @Input()
   get fieldValue() {
-    this.fieldValueObj.value = this.numberForm.getRawValue().numberControl;
     return this.fieldValueObj;
   }
 
   set fieldValue(val) {
+    val.value = val.value.replace(/,/g, '.');
     this.fieldValueObj = val;
-    this.numberForm.setValue({numberControl: val.value});
   }
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor() {
 
-  }
-
-  ngOnInit() {
-    this.numberForm = this.formBuilder.group({
-      numberControl: ['', Validators.required,
-        Validators.pattern('^[1-9][\\.\\d]*(,\\d+)?$')]
-    });
   }
 }
