@@ -2,6 +2,7 @@
   <input mdbInputDirective type="number"
          [(ngModel)]="fieldValueObj.value"
          [mdbValidate]="false"
+         customRegex="^[1-9][\.\d]*(,\d+)?$"
          id="numberElement{{fieldValueObj.fieldId}}" name="numberElement" class="form-control">
   <label for="numberElement{{fieldValueObj.fieldId}}">{{'Value' | translate}}</label>
 </div>
