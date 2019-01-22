@@ -15,7 +15,6 @@ export class ElementNumberComponent {
   }
 
   set fieldValue(val) {
-    val.value = val.value.replace(/,/g, '.');
     this.fieldValueObj = val;
   }
 
