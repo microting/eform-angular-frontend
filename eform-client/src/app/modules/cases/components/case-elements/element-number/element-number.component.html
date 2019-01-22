@@ -1,7 +1,11 @@
-<div class="md-form md-form-case-elem">
-  <input mdbInputDirective type="number"
-         [(ngModel)]="fieldValueObj.value"
-         [mdbValidate]="false"
-         id="numberElement{{fieldValueObj.fieldId}}" name="numberElement" class="form-control">
-  <label for="numberElement{{fieldValueObj.fieldId}}">{{'Value' | translate}}</label>
-</div>
+<form [formGroup]="numberForm">
+  <div class="md-form md-form-case-elem">
+    <input mdbInputDirective type="number"
+           formControlName="numberControl"
+           [mdbValidate]="false"
+           id="numberElement{{fieldValueObj.fieldId}}"
+           name="numberElement" class="form-control">
+    <label for="numberElement{{fieldValueObj.fieldId}}">{{'Value' | translate}}</label>
+  </div>
+</form>
+
