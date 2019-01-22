@@ -19,10 +19,46 @@
     <table class="table table-sm table-striped text-center z-depth-1">
       <thead>
       <tr>
-        <th scope="col">ID</th>
-        <th>{{ 'eForm finished at' | translate }}</th>
-        <th>{{ 'Data accessible at' | translate }}</th>
-        <th>{{ 'eForm done by' | translate }}</th>
+        <th class="table-header-sortable"
+            (click)="sortTable('id')"
+            rowspan="1" colspan="1">
+          <div class="d-flex align-items-center justify-content-center">
+            ID
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'id'">unfold_more</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'id' && !localPageSettings.isSortDsc">expand_less</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'id' && localPageSettings.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th class="table-header-sortable"
+            (click)="sortTable('done_at')"
+            rowspan="1" colspan="1">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ 'eForm finished at' | translate }}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'done_at'">unfold_more</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'done_at' && !localPageSettings.isSortDsc">expand_less</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'done_at' && localPageSettings.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th class="table-header-sortable"
+            (click)="sortTable('created_at')"
+            rowspan="1" colspan="1">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ 'Data accessible at' | translate }}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'created_at'">unfold_more</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'created_at' && !localPageSettings.isSortDsc">expand_less</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'created_at' && localPageSettings.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th class="table-header-sortable"
+            (click)="sortTable('worker_name')"
+            rowspan="1" colspan="1">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ 'eForm done by' | translate }}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'worker_name'">unfold_more</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'worker_name' && !localPageSettings.isSortDsc">expand_less</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'worker_name' && localPageSettings.isSortDsc">expand_more</i>
+          </div>
+        </th>
         <th *ngIf="currentTemplate.field1" class="table-header-sortable"
             (click)="sortTable('field1')"
             rowspan="1" colspan="1">

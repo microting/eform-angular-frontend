@@ -137,7 +137,7 @@ namespace eFormAPI.Web.Hosting.Helpers
                 }
             }
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"{plugins.Count} number of plugins found");
+            Console.WriteLine($"{plugins.Count} plugins found");
 
             Console.ForegroundColor = ConsoleColor.Gray;
             return plugins;
