@@ -53,6 +53,7 @@
               [placeholder]="'Language' | translate"
               [bindLabel]="'text'"
               [bindValue]="'id'"
+              [clearable]="false"
               [(ngModel)]="userSettingsModel.locale"
               [items]="languages"></ng-select>
           </div>
