@@ -25,7 +25,21 @@ export class ElementNumberComponent {
 
   validateInput(e): boolean {
     const value = e.target.value + String.fromCharCode(e.keyCode);
-    const rgx = /^(\d+,?(?:\d+,|\d*)+)$/;
-    return !!value.match(rgx);
+    let rgx = /^(\d+,?(?:\d+,|\d*)+)$/;
+    if (value.match(rgx)) {
+      if (value.includes(',')) {
+        rgx = /(,)/g;
+        const b = value.match(rgx);
+        if (b.length > 1) {
+          return false;
+        } else {
+          return true;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
   }
 }
