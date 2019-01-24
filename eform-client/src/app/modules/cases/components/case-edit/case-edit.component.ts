@@ -69,13 +69,14 @@ export class CaseEditComponent implements OnInit, OnDestroy {
   }
 
   loadCase() {
-    if (!this.id || this.id == 0) {
+    if (!this.id || this.id === 0) {
       return;
     }
     this.casesService.getById(this.id, this.currentTemplate.id).subscribe(operation => {
       if (operation && operation.success) {
         this.replyElement = operation.model;
       }
+      this.spinnerStatus = false;
     });
   }
 
@@ -111,7 +112,7 @@ export class CaseEditComponent implements OnInit, OnDestroy {
           this.loadEformPermissions(this.currentTemplate.id);
           this.loadCase();
         }
-        this.spinnerStatus = false;
+        // this.spinnerStatus = false; // This is commented as loadCase is in 99% of the time the slowest
       });
     }
   }
@@ -155,11 +156,11 @@ export class CaseEditComponent implements OnInit, OnDestroy {
       this.spinnerStatus = true;
       this.securityGroupEformsService.getEformsSimplePermissions().subscribe((data => {
         if (data && data.success) {
-          let foundTemplates = this.securityGroupEformsService.mapEformsSimplePermissions(data.model);
+          const foundTemplates = this.securityGroupEformsService.mapEformsSimplePermissions(data.model);
           if (foundTemplates.length) {
             this.eformPermissionsSimpleModel = foundTemplates.find(x => x.templateId == templateId);
           }
-          this.spinnerStatus = false;
+          // this.spinnerStatus = false; // This is commented as loadCase is in 99% of the time the slowest
         }
       }));
     }

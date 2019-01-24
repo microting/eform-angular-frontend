@@ -16,6 +16,7 @@ export class ElementNumberComponent {
 
   set fieldValue(val) {
     this.fieldValueObj = val;
+    this.fieldValueObj.value = val.value.replace('.', ',');
   }
 
   constructor() {
@@ -24,7 +25,7 @@ export class ElementNumberComponent {
 
   validateInput(e): boolean {
     const value = e.target.value + String.fromCharCode(e.keyCode);
-    const rgx = /^(\d+\.?(?:\d+\.|\d*)+)$/;
+    const rgx = /^(\d+,?(?:\d+,|\d*)+)$/;
     return !!value.match(rgx);
   }
 }
