@@ -23,8 +23,8 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="1.1.92" />
-    <PackageReference Include="Microting.eForm" Version="3.0.149" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="1.1.93" />
+    <PackageReference Include="Microting.eForm" Version="3.0.151" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.4" />
     <PackageReference Include="SharpZipLib.NETStandard" Version="1.0.7" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0005" />
