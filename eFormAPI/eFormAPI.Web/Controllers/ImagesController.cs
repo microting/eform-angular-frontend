@@ -21,6 +21,7 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [Route("api/images/eform-images")]
         public IActionResult GetImage(string fileName)
         {
