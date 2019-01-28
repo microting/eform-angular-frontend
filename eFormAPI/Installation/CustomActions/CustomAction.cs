@@ -228,7 +228,14 @@ namespace CustomActions
                 IncrementProgressBar(session);
 
                 session.Log("Host WebAPI called");
-                AddImageHandlers(webApiName, webApiLocation);
+                try {
+                    AddImageHandlers(webApiName, webApiLocation);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message + " " + ex.StackTrace);
+                }
+                
                 IncrementProgressBar(session);
 
                 CopyProtectedData(session, webApiLocation);
