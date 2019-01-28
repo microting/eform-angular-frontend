@@ -476,7 +476,14 @@ namespace CustomActions
                 IncrementProgressBar(session);
 
                 session.Log("AddImageHandlers called");
-                AddImageHandlers(webApiName, webApiLocation);
+                try
+                {
+                    AddImageHandlers(webApiName, webApiLocation);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message + " " + ex.StackTrace);
+                }
                 AddAspNetCoreSection(webApiName, webApiLocation);
 
                 IncrementProgressBar(session);
