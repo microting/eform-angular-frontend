@@ -37,6 +37,13 @@ class LoginPage extends Page {
     this.loginBtn.click();
     browser.pause(10000);
   }
+  public loginWithNewPassword(): void {
+    browser.pause(10000);
+    this.usernameInput.setValue(LoginConstants.username);
+    this.passwordInput.setValue(LoginConstants.newPassword);
+    this.loginBtn.click();
+    browser.pause(10000);
+  }
 }
 
 const loginPage = new LoginPage();

@@ -54,7 +54,11 @@ export class Navbar {
     this.applicationSettingsBtn();
     browser.pause(15000);
   }
-
+  public goToPasswordSettings() {
+    this.clickOnHeaderMenuItem('John Smith').click();
+    this.changePasswordBtn.click();
+    browser.pause(8000);
+  }
   public goToDeviceUsersPage() {
     this.deviceUsersBtn.click();
     browser.pause(20000);
