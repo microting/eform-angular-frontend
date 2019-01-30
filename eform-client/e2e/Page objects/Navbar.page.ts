@@ -26,6 +26,9 @@ export class Navbar {
   public get changePasswordBtn() {
     return browser.element(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Skift adgangskode')]`);
   }
+  public get userAdministrationBtn() {
+    return browser.element(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Brugeradministration')]`);
+  }
   public get deviceUsersBtn() {
     return this.clickOnHeaderMenuItem(' Enhedsbrugere ');
   }
@@ -34,7 +37,7 @@ export class Navbar {
     return browser.element(`//*[@id="header"]//*[text()="${headerMenuItem}"]`).element('..').element('..');
   }
   public verifyHeaderMenuItem(headerMenuItem) {
-    return browser.element(`//*[@id="header"]//*[text()="${headerMenuItem}"]`);
+    return browser.getText(`//*[@id="header"]//*[contains(text(), '${headerMenuItem}')]`);
   }
 
   public logout() {
@@ -53,6 +56,11 @@ export class Navbar {
     this.advancedDropdown();
     this.applicationSettingsBtn();
     browser.pause(15000);
+  }
+  public goToUserAdministration() {
+    this.clickOnHeaderMenuItem('John Smith').click();
+    this.userAdministrationBtn.click();
+    browser.pause(8000);
   }
   public goToPasswordSettings() {
     this.clickOnHeaderMenuItem('John Smith').click();

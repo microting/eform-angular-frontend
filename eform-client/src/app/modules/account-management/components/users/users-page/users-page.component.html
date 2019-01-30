@@ -43,7 +43,8 @@
         </td>
         <td *ngIf="userClaims.usersUpdate || userClaims.usersDelete">
           <div class="d-flex flex-row justify-content-center">
-            <button class="btn btn-accent text-black-50 btn-icon mb-2" *ngIf="userClaims.usersUpdate"
+            <button id="userAdministrationEditBtn"
+              class="btn btn-accent text-black-50 btn-icon mb-2" *ngIf="userClaims.usersUpdate"
                     mdbTooltip="{{'Edit User' | translate}}"
                     (click)="openEditModal(userInfoModel.id)">
               <i class="material-icons">
