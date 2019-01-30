@@ -1,6 +1,7 @@
 <eform-page-subheader [title]="'Profile Settings' | translate">
   <div class="p-3">
     <button
+      id = "ProfileSettingsSaveBtn"
       class="btn btn-success"
       (click)="updateUserProfileSettings()"
       mdbTooltip="Save settings">{{ 'Save' | translate }}
@@ -50,6 +51,7 @@
         <div class="card-body">
           <div class="container-fluid">
             <ng-select
+              id = "ProfileLanguageSelector"
               [placeholder]="'Language' | translate"
               [bindLabel]="'text'"
               [bindValue]="'id'"
