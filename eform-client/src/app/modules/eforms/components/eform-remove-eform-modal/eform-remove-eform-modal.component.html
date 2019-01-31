@@ -21,7 +21,9 @@
               <h6>{{'Creation Date' | translate}}</h6>
             </div>
             <div class="col-md-6">
-              <strong>{{selectedTemplateDto.createdAt | date:'dd.MM.y HH:mm:ss'}}</strong>
+              <strong>
+                <date-formatter [date]="selectedTemplateDto.createdAt" [Format]="'datetime'"></date-formatter>
+              </strong>
             </div>
           </div>
 

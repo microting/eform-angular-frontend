@@ -20,7 +20,9 @@
               <h6>{{'Accessible at' | translate}}</h6>
             </div>
             <div class="col-md-6">
-              <h6><strong>{{selectedCaseModel.createdAt | date:'dd.MM.y HH:mm:ss'}}</strong></h6>
+              <h6><strong>
+                <date-formatter [date]="selectedCaseModel.createdAt" [Format]="'datetime'"></date-formatter>
+              </strong></h6>
             </div>
           </div>
 
@@ -29,7 +31,9 @@
               <h6>{{'Finished at' | translate}}</h6>
             </div>
             <div class="col-md-6">
-              <h6><strong>{{selectedCaseModel.doneAt | date:'dd.MM.y HH:mm:ss'}}</strong></h6>
+              <h6><strong>
+                <date-formatter [date]="selectedCaseModel.doneAt" [Format]="'datetime'"></date-formatter>
+              </strong></h6>
             </div>
           </div>
 

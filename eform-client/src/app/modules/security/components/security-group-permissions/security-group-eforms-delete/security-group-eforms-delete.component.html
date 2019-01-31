@@ -21,7 +21,9 @@
               <h6>{{'Creation Date' | translate}}</h6>
             </div>
             <div class="col-md-6">
-              <strong>{{eformSecurityModel.createdAt | date:'dd.MM.y HH:mm:ss'}}</strong>
+              <strong>
+                <date-formatter [date]="eformSecurityModel.createdAt" [Format]="'datetime'"></date-formatter>
+              </strong>
             </div>
           </div>
 

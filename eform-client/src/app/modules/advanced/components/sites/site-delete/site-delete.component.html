@@ -20,7 +20,7 @@
               <h6>{{'Creation Date' | translate}}</h6>
             </div>
             <div class="col-md-6">
-              {{siteNameDto.createdAt | date:'dd.MM.y HH:mm:ss'}}
+              <date-formatter [date]="siteNameDto.createdAt" [Format]="'datetime'"></date-formatter>
             </div>
           </div>
 

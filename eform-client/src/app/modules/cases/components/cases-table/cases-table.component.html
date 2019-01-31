@@ -156,8 +156,12 @@
       <tbody>
       <tr *ngFor="let caseModel of caseListModel.cases">
         <td scope="row">{{caseModel.id}}</td>
-        <td> {{caseModel.doneAt | date:'dd.MM.y HH:mm:ss'}}</td>
-        <td> {{caseModel.createdAt | date:'dd.MM.y HH:mm:ss'}}</td>
+        <td>
+          <date-formatter [date]="caseModel.doneAt" [Format]="'datetime'"></date-formatter>
+        </td>
+        <td>
+          <date-formatter [date]="caseModel.createdAt" [Format]="'datetime'"></date-formatter>
+        </td>
         <td> {{caseModel.workerName}}</td>
         <td *ngIf="currentTemplate.field1" class="text-center">
           {{caseModel.fieldValue1}}
