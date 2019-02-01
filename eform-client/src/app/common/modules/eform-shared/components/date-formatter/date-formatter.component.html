@@ -1,0 +1,9 @@
+<div *ngIf="format == 'date'">
+  {{dateFormatter.date | date : 'dd.MM.y'}}
+</div>
+<div *ngIf="format == 'time'">
+  {{dateFormatter.date | date : 'HH:mm:ss'}}
+</div>
+<div *ngIf="format == 'datetime'">
+  {{dateFormatter.date | date : 'dd.MM.y HH:mm:ss'}}
+</div>

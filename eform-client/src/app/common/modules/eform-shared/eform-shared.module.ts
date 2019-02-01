@@ -8,8 +8,9 @@ import {
   EformPageSubheaderComponent,
   EformPaginationComponent,
   EformSpinnerComponent,
-  EformPageSizeComponent
-} from './components';
+  EformPageSizeComponent,
+  StatusBarComponent,
+  DateFormatterComponent} from './components';
 
 @NgModule({
   imports: [
@@ -22,13 +23,17 @@ import {
     EformPageSubheaderComponent,
     EformPaginationComponent,
     EformSpinnerComponent,
-    EformPageSizeComponent
+    EformPageSizeComponent,
+    StatusBarComponent,
+    DateFormatterComponent
   ],
   exports: [
     EformPageSubheaderComponent,
     EformPaginationComponent,
     EformSpinnerComponent,
-    EformPageSizeComponent
+    EformPageSizeComponent,
+    StatusBarComponent,
+    DateFormatterComponent
   ]
 })
 export class EformSharedModule {

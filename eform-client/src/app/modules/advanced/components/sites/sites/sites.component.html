@@ -18,10 +18,10 @@
       <tbody>
       <tr *ngFor="let siteDto of sitesDto">
         <td scope="row">
-          {{siteDto.createdAt | date:'dd.MM.y HH:mm:ss'}}
+          <date-formatter [date]="siteDto.createdAt" [Format]="'datetime'"></date-formatter>
         </td>
         <td>
-          {{siteDto.updatedAt | date:'dd.MM.y HH:mm:ss'}}
+          <date-formatter [date]="siteDto.updatedAt" [Format]="'datetime'"></date-formatter>
         </td>
         <td>{{siteDto.siteName}}</td>
         <td>

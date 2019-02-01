@@ -76,7 +76,8 @@
       <tbody id="mainPageEFormsTableBody">
       <tr *ngFor="let templateDto of templateListModel.templates">
         <td scope="row" id="eform-id">{{templateDto.id}}</td>
-        <td id="eform-created-at">{{templateDto.createdAt | date:'dd.MM.y HH:mm:ss'}}</td>
+        <!--<td id="eform-created-at">{{templateDto.createdAt | date:'dd.MM.y HH:mm:ss'}}</td>-->
+        <td id="eform-created-at"><date-formatter [date]="templateDto.createdAt" [Format]="'datetime'"></date-formatter></td>
         <td id="eform-label">{{templateDto.label}}</td>
         <td>
           <div class="d-flex justify-content-center">
@@ -171,13 +172,13 @@
                 unarchive
               </i>
             </button>
-            <button class="btn btn-accent text-black-50 btn-icon mb-2" id="eform-report-button"
-                    [routerLink]="['./report', templateDto.id]"
-                    mdbTooltip="{{ 'Jasper Report' | translate }}">
-              <i class="material-icons">
-                receipt
-              </i>
-            </button>
+            <!--<button class="btn btn-accent text-black-50 btn-icon mb-2" id="eform-report-button"-->
+                    <!--[routerLink]="['./report', templateDto.id]"-->
+                    <!--mdbTooltip="{{ 'Jasper Report' | translate }}">-->
+              <!--<i class="material-icons">-->
+                <!--receipt-->
+              <!--</i>-->
+            <!--</button>-->
           </div>
         </td>
       </tr>

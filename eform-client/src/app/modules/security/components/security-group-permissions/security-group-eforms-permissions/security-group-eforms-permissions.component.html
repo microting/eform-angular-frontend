@@ -34,7 +34,7 @@
       <tbody id="mainPageEFormsTableBody">
       <tr *ngFor="let eform of eformSecurityModel.eformsList">
         <td scope="row" id="eform-id">{{eform.templateId}}</td>
-        <td id="eform-created-at">{{eform.createdAt | date:'dd.MM.y HH:mm:ss'}}</td>
+        <td id="eform-created-at"><date-formatter [date]="eform.createdAt" [Format]="'datetime'"></date-formatter></td>
         <td id="eform-label">{{eform.label}}</td>
         <td>
           <div class="d-flex flex-row justify-content-center">

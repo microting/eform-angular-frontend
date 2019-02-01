@@ -20,7 +20,9 @@
               <h6>{{'Creation Date' | translate}}</h6>
             </div>
             <div class="col-md-6">
-              <h6>{{selectedWorkerDto.createdAt | date:'dd.MM.y HH:mm:ss'}}</h6>
+              <h6>
+                <date-formatter [date]="selectedWorkerDto.createdAt" [Format]="'datetime'"></date-formatter>
+              </h6>
             </div>
           </div>
 

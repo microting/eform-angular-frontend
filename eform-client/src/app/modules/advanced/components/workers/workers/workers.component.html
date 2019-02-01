@@ -22,8 +22,12 @@
       </thead>
       <tbody>
       <tr *ngFor="let workerDto of workersDto">
-        <td scope="row">{{workerDto.createdAt | date:'dd.MM.y HH:mm:ss'}}</td>
-        <td>{{workerDto.updatedAt | date:'dd.MM.y HH:mm:ss'}}</td>
+        <td scope="row">
+          <date-formatter [date]="workerDto.createdAt" [Format]="'datetime'"></date-formatter>
+        </td>
+        <td>
+          <date-formatter [date]="workerDto.updatedAt" [Format]="'datetime'"></date-formatter>
+        </td>
         <td>{{workerDto.firstName}}</td>
         <td>
           {{workerDto.lastName}}
