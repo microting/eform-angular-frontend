@@ -12,29 +12,6 @@
                 <div class="md-form">
                   <input mdbInputDirective
                          [mdbValidate]="false"
-                         #createUserName="ngModel" type="text"
-                         [(ngModel)]="newUserModel.userName"
-                         name="createUserName" id="createUserName" class="form-control">
-                  <label for="createUserName">{{'Username' | translate}} </label>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="md-form">
-                  <input mdbInputDirective
-                         [mdbValidate]="false"
-                         class="form-control"
-                         required #createEmail="ngModel" type="text"
-                         [(ngModel)]="newUserModel.email" id="createEmail"
-                         name="createEmail">
-                  <label for="createEmail">{{'Email' | translate}}</label>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="md-form">
-                  <input mdbInputDirective
-                         [mdbValidate]="false"
                          class="form-control" type="text"
                          [(ngModel)]="newUserModel.firstName" id="createFirstName"
                          name="createFirstName">
@@ -53,13 +30,16 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6 ng-select-wrapper">
-                <ng-select required
-                           bindLabel="name"
-                           bindValue="id"
-                           [(ngModel)]="newUserModel.groupId" name="createGroup"
-                           [placeholder]="'Group' | translate"
-                           [items]="availableGroups.securityGroupList"></ng-select>
+              <div class="col-md-6">
+                <div class="md-form">
+                  <input mdbInputDirective
+                         [mdbValidate]="false"
+                         class="form-control"
+                         required #createEmail="ngModel" type="text"
+                         [(ngModel)]="newUserModel.email" id="createEmail"
+                         name="createEmail">
+                  <label for="createEmail">{{'Email' | translate}}</label>
+                </div>
               </div>
               <div class="col-md-6">
                 <div class="md-form">
@@ -71,6 +51,16 @@
                          name="createPassword">
                   <label for="createPassword">{{'Password' | translate}}*</label>
                 </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 ng-select-wrapper">
+                <ng-select required
+                           bindLabel="name"
+                           bindValue="id"
+                           [(ngModel)]="newUserModel.groupId" name="createGroup"
+                           [placeholder]="'Group' | translate"
+                           [items]="availableGroups.securityGroupList"></ng-select>
               </div>
             </div>
           </form>

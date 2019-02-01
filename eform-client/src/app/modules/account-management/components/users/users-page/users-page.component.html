@@ -23,7 +23,6 @@
       <thead>
       <tr>
         <th scope="col">ID</th>
-        <th scope="col">{{ 'Username' | translate }}</th>
         <th scope="col">{{ 'Email' | translate }}</th>
         <th scope="col">{{ 'Full Name' | translate }}</th>
         <th scope="col">{{ 'Role' | translate }}</th>
@@ -33,7 +32,6 @@
       <tbody>
       <tr *ngFor="let userInfoModel of userInfoModelList.userList">
         <td scope="row">{{userInfoModel.id}}</td>
-        <td>  {{userInfoModel.userName}}</td>
         <td> {{userInfoModel.email}}</td>
         <td>
           {{userInfoModel.firstName}} {{userInfoModel.lastName}}
