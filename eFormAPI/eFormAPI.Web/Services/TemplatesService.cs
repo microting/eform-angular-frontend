@@ -308,7 +308,6 @@ namespace eFormAPI.Web.Services
             foreach (var siteUId in sitesToBeRetractedFrom)
             {
                 core.CaseDelete(deployModel.Id, siteUId);
-                core.CaseDelete("123");
             }
 
             return new OperationResult(true,
