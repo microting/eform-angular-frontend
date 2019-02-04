@@ -55,10 +55,11 @@ namespace eFormAPI.Web.Controllers.Eforms
             return File(fileStream, "application/octet-stream", fileName);
         }
 
-        [HttpGet]
+        [HttpGet]        
+        [AllowAnonymous]
         [Route("api/template-files/get-image/{fileName}.{ext}")]
-        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, 
-            Policy = AuthConsts.EformPolicies.Cases.CasesRead)]
+//        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, 
+//            Policy = AuthConsts.EformPolicies.Cases.CasesRead)]
         public IActionResult GetImage(string fileName, string ext, string noCache = "noCache")
         {
             var core = _coreHelper.GetCore();
