@@ -81,8 +81,8 @@
                 public const string ReadTags = "eforms_read_tags";
                 public const string UpdateTags = "eforms_update_tags";
                 public const string GetCsv = "eforms_get_csv";
-                public const string ReadJasperReport = "read_jasper_report";
-                public const string UpdateJasperReport = "update_jasper_report";
+                public const string ReadJasperReport = "eforms_read_jasper_report";
+                public const string UpdateJasperReport = "eforms_update_jasper_report";
             }
         }
 

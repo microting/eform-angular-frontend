@@ -41,6 +41,8 @@ export class UserClaimsModel {
   eFormsPairingRead: boolean;
   eFormsReadTags: boolean;
   eFormsGetCsv: boolean;
+  eFormsReadJasperReport: boolean;
+  eFormsUpdateJasperReport: boolean;
 
   constructor(decodedToken: any) {
     this.unitsRead = decodedToken.units_read === 'True';
@@ -94,5 +96,7 @@ export class UserClaimsModel {
     this.eFormsPairingRead = decodedToken.eforms_pairing_read === 'True';
     this.eFormsReadTags = decodedToken.eforms_read_tags === 'True';
     this.eFormsGetCsv = decodedToken.eforms_get_csv === 'True';
+    this.eFormsReadJasperReport = decodedToken.eforms_read_jasper_report === 'True';
+    this.eFormsUpdateJasperReport = decodedToken.eforms_update_jasper_report === 'True';
   }
 }

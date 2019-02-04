@@ -193,7 +193,7 @@ namespace eFormAPI.Web.Services
                         }
 
                         break;
-                    case "Searchable list":
+                    case "SearchableList":
                         if (claims.Contains(AuthConsts.EformClaims.EntitySearchClaims.Read))
                         {
                             newList.Add(menuItem);
