@@ -224,6 +224,18 @@ namespace eFormAPI.Web.Services
 
             var result = core.TemplateDelete(id);
 
+            if (result)
+            {
+                var eformReport = _dbContext.EformReports
+                    .FirstOrDefault(x => x.TemplateId == id);
+
+                if (eformReport != null)
+                {
+                    _dbContext.EformReports.Remove(eformReport);
+                    _dbContext.SaveChanges();
+                }
+            }
+
             try
             {
                 return result
