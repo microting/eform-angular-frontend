@@ -212,7 +212,12 @@ namespace eFormAPI.Web.Services
                         {
                             newList.Add(menuItem);
                         }
-
+                        break;
+                    case "Plugins Settings":
+                        if (_userService.IsAdmin())
+                        {
+                            newList.Add(menuItem);
+                        }
                         break;
                     case "Security":
                         break;
