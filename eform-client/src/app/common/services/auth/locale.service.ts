@@ -55,7 +55,7 @@ export class LocaleService extends BaseService {
     if (!currentUserLocale) {
       currentUserLocale = 'en-US';
       localStorage.setItem('locale', currentUserLocale);
-      this.translateService.setDefaultLang('en-US');
+      this.translateService.setDefaultLang(currentUserLocale);
       this.translateService.use(currentUserLocale);
     }
     return currentUserLocale;
@@ -64,13 +64,11 @@ export class LocaleService extends BaseService {
 
   initCookies(locale: string) {
     this.translateService.setDefaultLang('en-US');
-    let culture = '';
+    let culture = this.buildCookieValue('en-US');
     if (locale === 'da-DK') {
       culture = this.buildCookieValue('da');
-    } else if (locale === 'de-DE') {
-      culture = this.buildCookieValue('de-DE');
-    } else {
-      culture = this.buildCookieValue('en-US');
+    } else if (locale) {
+      culture = this.buildCookieValue(locale);
     }
     this.cookieService.set('culture', culture, 9999999, '/');
     this.cookieService.set('locale', locale, 9999999, '/');
