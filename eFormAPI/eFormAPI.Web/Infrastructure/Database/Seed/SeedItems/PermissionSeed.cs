@@ -298,6 +298,20 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                     ClaimName = AuthConsts.EformClaims.EformsClaims.GetCsv,
                     PermissionName = "Get CSV",
                     PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Eforms,
+                },
+                new Permission()
+                {
+                    Id = AuthConsts.DbIds.Permissions.Eforms.ReadJasperReport,
+                    ClaimName = AuthConsts.EformClaims.EformsClaims.ReadJasperReport,
+                    PermissionName = "Read Jasper Report",
+                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Eforms,
+                },
+                new Permission()
+                {
+                    Id = AuthConsts.DbIds.Permissions.Eforms.UpdateJasperReport,
+                    ClaimName = AuthConsts.EformClaims.EformsClaims.UpdateJasperReport,
+                    PermissionName = "Update Jasper Report",
+                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Eforms,
                 }
             );
             return modelBuilder;

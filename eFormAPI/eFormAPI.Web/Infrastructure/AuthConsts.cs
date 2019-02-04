@@ -81,9 +81,10 @@
                 public const string ReadTags = "eforms_read_tags";
                 public const string UpdateTags = "eforms_update_tags";
                 public const string GetCsv = "eforms_get_csv";
+                public const string ReadJasperReport = "read_jasper_report";
+                public const string UpdateJasperReport = "update_jasper_report";
             }
         }
-
 
         public static class EformPolicies
         {
@@ -162,6 +163,8 @@
                 public const string ReadTags = EformClaims.EformsClaims.ReadTags;
                 public const string UpdateTags = EformClaims.EformsClaims.UpdateTags;
                 public const string GetCsv = EformClaims.EformsClaims.GetCsv;
+                public const string ReadJasperReport = EformClaims.EformsClaims.ReadJasperReport;
+                public const string UpdateJasperReport = EformClaims.EformsClaims.UpdateJasperReport;
             }
         }
 
@@ -263,6 +266,8 @@
                     public const int ReadTags = 40;
                     public const int UpdateTags = 41;
                     public const int GetCsv = 42;
+                    public const int ReadJasperReport = 43;
+                    public const int UpdateJasperReport = 44;
                 }
             }
         }

@@ -55,7 +55,7 @@ namespace eFormAPI.Web.Controllers.Advanced
 
         [HttpGet]
         [Route("api/selectable-groups/dict/{entityGroupUid}")]
-        [Authorize(Policy = AuthConsts.EformPolicies.EntitySelect.Read)]
+        [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseRead)]
         public OperationDataResult<List<CommonDictionaryTextModel>> GetEntityGroupDictionary(string entityGroupUid)
         {
             return _entitySelectService.GetEntityGroupDictionary(entityGroupUid);

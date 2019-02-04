@@ -237,6 +237,12 @@ namespace eFormAPI.Web.Hosting.Extensions
                 options.AddPolicy(AuthConsts.EformPolicies.Eforms.GetCsv,
                     policy => policy.RequireClaim(AuthConsts.EformClaims.EformsClaims.GetCsv,
                         AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.Eforms.ReadJasperReport,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.EformsClaims.ReadJasperReport,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.Eforms.UpdateJasperReport,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.EformsClaims.UpdateJasperReport,
+                        AuthConsts.ClaimDefaultValue));
             });
         }
 
