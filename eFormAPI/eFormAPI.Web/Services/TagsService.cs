@@ -93,14 +93,14 @@ namespace eFormAPI.Web.Services
             {
                 var result = _coreHelper.GetCore().TagCreate(tagName);
                 return result > 0
-                    ? new OperationResult(true, _localizationService.GetString("TagParamCreatedSuccessfully", tagName))
-                    : new OperationResult(false, _localizationService.GetString("ErrorWhileCreatingParamTag", tagName));
+                    ? new OperationResult(true, _localizationService.GetStringWithFormat("TagParamCreatedSuccessfully", tagName))
+                    : new OperationResult(false, _localizationService.GetStringWithFormat("ErrorWhileCreatingParamTag", tagName));
             }
             catch (Exception e)
             {
                 _logger.LogError(e.Message);
                 return new OperationResult(false,
-                    _localizationService.GetString("ErrorWhileCreatingParamTag", tagName));
+                    _localizationService.GetStringWithFormat("ErrorWhileCreatingParamTag", tagName));
             }
         }
 

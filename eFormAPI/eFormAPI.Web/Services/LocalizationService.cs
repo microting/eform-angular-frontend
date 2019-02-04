@@ -1,6 +1,9 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Linq;
+using System.Reflection;
 using Castle.Core.Internal;
 using eFormAPI.Web.Abstractions;
+using JetBrains.Annotations;
 using Microsoft.Extensions.Localization;
 
 namespace eFormAPI.Web.Services
@@ -15,31 +18,36 @@ namespace eFormAPI.Web.Services
                 Assembly.GetEntryAssembly().FullName);
         }
  
-        public string GetString(string key)
+        public string GetString([NotNull] string key)
         {
-            //If changed, weird stuff happens
+            if (key.IsNullOrEmpty())
+            {
+                return key;
+            }
             var str = _localizer[key];
             return str.Value;
         }
 
-        public string GetString(string format, params object[] args)
+        public string GetStringWithFormat([NotNull] string format,
+            params object[] args)
         {
-            //If changed, weird stuff happens
+            if (format.IsNullOrEmpty())
+            {
+                return format;
+            }
+
             var message = _localizer[format];
             if (message?.Value == null)
             {
                 return null;
             }
-            return string.Format(message.Value, args);
-        }
 
-        public string GetString(string key, string defaultValue)
-        {
-            if (key.IsNullOrEmpty())
+            if (args != null && args.Any())
             {
-                return defaultValue;
+                return string.Format(message.Value, args);
             }
-            return GetString(key);
+
+            return message.Value;
         }
     }
 }

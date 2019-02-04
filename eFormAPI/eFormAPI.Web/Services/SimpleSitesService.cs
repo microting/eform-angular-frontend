@@ -41,7 +41,7 @@ namespace eFormAPI.Web.Services
 
                 return siteDto != null
                     ? new OperationResult(true,
-                        _localizationService.GetString("DeviceUserParamCreatedSuccessfully", siteDto.SiteName))
+                        _localizationService.GetStringWithFormat("DeviceUserParamCreatedSuccessfully", siteDto.SiteName))
                     : new OperationResult(false, _localizationService.GetString("DeviceUserCouldNotBeCreated"));
             }
             catch (Exception ex)
@@ -72,7 +72,7 @@ namespace eFormAPI.Web.Services
             return siteDto != null
                 ? new OperationDataResult<Site_Dto>(true, siteDto)
                 : new OperationDataResult<Site_Dto>(false,
-                    _localizationService.GetString("DeviceUserParamCouldNotBeEdited", id));
+                    _localizationService.GetStringWithFormat("DeviceUserParamCouldNotBeEdited", id));
         }
 
         public OperationResult Update(SimpleSiteModel simpleSiteModel)
@@ -93,7 +93,7 @@ namespace eFormAPI.Web.Services
                         return isUpdated
                             ? new OperationResult(true, _localizationService.GetString("DeviceUserUpdatedSuccessfully"))
                             : new OperationResult(false,
-                                _localizationService.GetString("DeviceUserParamCouldNotBeUpdated", simpleSiteModel.Id));
+                                _localizationService.GetStringWithFormat("DeviceUserParamCouldNotBeUpdated", simpleSiteModel.Id));
                     }
 
                     return new OperationResult(false, _localizationService.GetString("DeviceUserCouldNotBeObtained"));
@@ -116,13 +116,13 @@ namespace eFormAPI.Web.Services
 
                 return core.SiteDelete(siteNameDto.SiteUId)
                     ? new OperationResult(true,
-                        _localizationService.GetString("DeviceUserParamDeletedSuccessfully", siteNameDto.SiteName))
+                        _localizationService.GetStringWithFormat("DeviceUserParamDeletedSuccessfully", siteNameDto.SiteName))
                     : new OperationResult(false,
-                        _localizationService.GetString("DeviceUserParamCouldNotBeDeleted", siteNameDto.SiteName));
+                        _localizationService.GetStringWithFormat("DeviceUserParamCouldNotBeDeleted", siteNameDto.SiteName));
             }
             catch (Exception)
             {
-                return new OperationResult(false, _localizationService.GetString("DeviceUserParamCouldNotBeDeleted", id));
+                return new OperationResult(false, _localizationService.GetStringWithFormat("DeviceUserParamCouldNotBeDeleted", id));
             }
         }
     }

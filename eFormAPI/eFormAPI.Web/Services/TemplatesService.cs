@@ -205,7 +205,7 @@ namespace eFormAPI.Web.Services
                 }
 
                 return new OperationResult(true,
-                    _localizationService.GetString("eFormParamCreatedSuccessfully", newTemplate.Label));
+                    _localizationService.GetStringWithFormat("eFormParamCreatedSuccessfully", newTemplate.Label));
             }
             catch (Exception e)
             {
@@ -228,13 +228,13 @@ namespace eFormAPI.Web.Services
             {
                 return result
                     ? new OperationResult(true,
-                        _localizationService.GetString("eFormParamDeletedSuccessfully", templateDto.Label))
+                        _localizationService.GetStringWithFormat("eFormParamDeletedSuccessfully", templateDto.Label))
                     : new OperationResult(false,
-                        _localizationService.GetString("eFormParamCouldNotBeDeleted", templateDto.Label));
+                        _localizationService.GetStringWithFormat("eFormParamCouldNotBeDeleted", templateDto.Label));
             }
             catch (Exception)
             {
-                return new OperationResult(false, _localizationService.GetString("eFormParamCouldNotBeDeleted", id));
+                return new OperationResult(false, _localizationService.GetStringWithFormat("eFormParamCouldNotBeDeleted", id));
             }
         }
 
@@ -312,7 +312,7 @@ namespace eFormAPI.Web.Services
             }
 
             return new OperationResult(true,
-                _localizationService.GetString("ParamPairedSuccessfully", templateDto.Label));
+                _localizationService.GetStringWithFormat("ParamPairedSuccessfully", templateDto.Label));
         }
 
         //[HttpGet]

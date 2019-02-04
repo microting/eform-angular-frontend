@@ -39,7 +39,7 @@ namespace eFormAPI.Web.Services
             catch (Exception)
             {
                 return new OperationDataResult<Unit_Dto>(false,
-                    _localizationService.GetString("UnitParamOTPCouldNotCompleted", id));
+                    _localizationService.GetStringWithFormat("UnitParamOTPCouldNotCompleted", id));
             }
         }
     }

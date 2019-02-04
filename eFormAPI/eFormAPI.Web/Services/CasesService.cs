@@ -8,7 +8,6 @@ using eFormAPI.Web.Infrastructure.Models.Cases.Response;
 using eFormData;
 using eFormShared;
 using Microting.eFormApi.BasePn.Abstractions;
-using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Services
@@ -76,7 +75,7 @@ namespace eFormAPI.Web.Services
                 var core = _coreHelper.GetCore();
 
                 return core.CaseDeleteResult(id)
-                    ? new OperationResult(true, _localizationService.GetString("CaseParamDeletedSuccessfully", id))
+                    ? new OperationResult(true, _localizationService.GetStringWithFormat("CaseParamDeletedSuccessfully", id))
                     : new OperationResult(false, _localizationService.GetString("CaseCouldNotBeRemoved"));
             }
             catch (Exception)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Castle.Core.Internal;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Security;
 using eFormAPI.Web.Infrastructure;
@@ -65,7 +66,9 @@ namespace eFormAPI.Web.Services
                     .OrderBy(p => p.Position)
                     .Select(p => new MenuItemModel()
                         {
-                            Name = _localizationService.GetString(p.LocaleName, p.Name),
+                            Name = p.LocaleName.IsNullOrEmpty() 
+                                ? p.Name 
+                                : _localizationService.GetString(p.LocaleName),
                             Position = p.Position,
                             E2EId = p.E2EId,
                             Link = p.Link,
@@ -74,7 +77,9 @@ namespace eFormAPI.Web.Services
                                 .OrderBy(c => c.Position)
                                 .Select(x => new MenuItemModel()
                                 {
-                                    Name = _localizationService.GetString(x.LocaleName, x.Name),
+                                    Name = x.LocaleName.IsNullOrEmpty()
+                                        ? x.Name
+                                        : _localizationService.GetString(x.LocaleName),
                                     Position = x.Position,
                                     Link = x.Link,
                                     E2EId = x.E2EId
@@ -87,7 +92,9 @@ namespace eFormAPI.Web.Services
                     .OrderBy(p => p.Position)
                     .Select(p => new MenuItemModel()
                         {
-                            Name = _localizationService.GetString(p.LocaleName, p.Name),
+                            Name = p.LocaleName.IsNullOrEmpty() 
+                                ? p.Name 
+                                : _localizationService.GetString(p.LocaleName),
                             Position = p.Position,
                             E2EId = p.E2EId,
                             Link = p.Link,
@@ -96,7 +103,9 @@ namespace eFormAPI.Web.Services
                                 .OrderBy(c => c.Position)
                                 .Select(x => new MenuItemModel()
                                 {
-                                    Name = _localizationService.GetString(x.LocaleName, x.Name),
+                                    Name = x.LocaleName.IsNullOrEmpty()
+                                        ? x.Name
+                                        : _localizationService.GetString(x.LocaleName),
                                     Position = x.Position,
                                     Link = x.Link,
                                     E2EId = x.E2EId
