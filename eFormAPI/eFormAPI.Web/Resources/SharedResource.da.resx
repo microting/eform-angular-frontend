@@ -564,4 +564,13 @@
   <data name="TemplateNotFound" xml:space="preserve">
     <value>Skabelon blev ikke fundet</value>
   </data>
+  <data name="ErrorWhileObtainingPlugins" xml:space="preserve">
+    <value>Fejl under opnåelse af plugins</value>
+  </data>
+  <data name="ErrorWhileUpdatingPluginSettings" xml:space="preserve">
+    <value>Fejl under opdatering af pluginindstillinger</value>
+  </data>
+  <data name="PluginNotFound" xml:space="preserve">
+    <value>Plugin ikke fundet</value>
+  </data>
 </root>
