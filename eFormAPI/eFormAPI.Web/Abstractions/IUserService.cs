@@ -8,6 +8,7 @@ namespace eFormAPI.Web.Abstractions
         int UserId { get; }
         string Role { get; }
         bool IsInRole(string role);
+        bool IsAdmin();
         Task<EformUser> GetByIdAsync(int id);
         Task<EformUser> GetByUsernameAsync(string username);
         Task<EformUser> GetCurrentUserAsync();

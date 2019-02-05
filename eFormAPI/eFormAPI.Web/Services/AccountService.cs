@@ -178,7 +178,7 @@ namespace eFormAPI.Web.Services
                     string.Join(" ", addPasswordResult.Errors.Select(x=>x.Description).ToArray()));
             }
 
-            return new OperationResult(true, _localizationService.GetString("YourEmailPasswordHasBeenReset", user.Email));
+            return new OperationResult(true, _localizationService.GetStringWithFormat("YourEmailPasswordHasBeenReset", user.Email));
         }
 
         public async Task<OperationResult> ResetPassword(ResetPasswordModel model)

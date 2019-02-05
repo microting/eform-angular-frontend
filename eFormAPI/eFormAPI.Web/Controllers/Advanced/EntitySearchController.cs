@@ -39,7 +39,7 @@ namespace eFormAPI.Web.Controllers.Advanced
 
         [HttpGet]
         [Route("api/searchable-groups/dict/{entityGroupUid}")]
-        [Authorize(Policy = AuthConsts.EformPolicies.EntitySearch.Read)]
+        [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseRead)]
         public OperationDataResult<List<CommonDictionaryTextModel>> GetEntityGroupDictionary(string entityGroupUid,
             string searchString)
         {

@@ -5,7 +5,6 @@ using eFormAPI.Web.Abstractions.Advanced;
 using eFormAPI.Web.Infrastructure.Models;
 using eFormShared;
 using Microting.eFormApi.BasePn.Abstractions;
-using Microting.eFormApi.BasePn.Infrastructure.Models;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Services
@@ -58,7 +57,7 @@ namespace eFormAPI.Web.Services
             catch (Exception)
             {
                 return new OperationResult(false,
-                    _localizationService.GetString("SiteParamCouldNotBeUpdated", siteNameModel.Id));
+                    _localizationService.GetStringWithFormat("SiteParamCouldNotBeUpdated", siteNameModel.Id));
             }
         }
 
@@ -71,20 +70,20 @@ namespace eFormAPI.Web.Services
 
                 if (siteDto.Equals(null))                    
                 {
-                    return new OperationResult(false, _localizationService.GetString("SiteParamNotFound", id));
+                    return new OperationResult(false, _localizationService.GetStringWithFormat("SiteParamNotFound", id));
                 }
 
                 return core.Advanced_SiteItemDelete(id)
                     ? new OperationResult(true,
-                        _localizationService.GetString("SiteParamDeletedSuccessfully", siteDto.SiteName))
+                        _localizationService.GetStringWithFormat("SiteParamDeletedSuccessfully", siteDto.SiteName))
                     : new OperationResult(false,
-                        _localizationService.GetString("SiteParamCouldNotBeDeleted", siteDto.SiteName));
+                        _localizationService.GetStringWithFormat("SiteParamCouldNotBeDeleted", siteDto.SiteName));
             }
 
             catch (Exception)
             {
                 return new OperationDataResult<SiteNameModel>(false,
-                    _localizationService.GetString("SiteParamCouldNotBeDeleted", id));
+                    _localizationService.GetStringWithFormat("SiteParamCouldNotBeDeleted", id));
             }
         }
     }

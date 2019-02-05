@@ -48,6 +48,11 @@ namespace eFormAPI.Web.Services
 
         public bool IsInRole(string role) => _httpAccessor.HttpContext.User.IsInRole(role);
 
+        public bool IsAdmin()
+        {
+            return IsInRole(EformRole.Admin);
+        }
+
         public async Task<EformUser> GetCurrentUserAsync()
         {
             return await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == UserId);
