@@ -1,7 +1,7 @@
 <eform-page-subheader [title]="'Workers' | translate">
   <div class="p-3">
     <button
-      class="btn btn-success" *ngIf="userClaims.workersCreate"
+      class="btn btn-success" id="workerCreateBtn" *ngIf="userClaims.workersCreate"
       (click)="openCreateModal()">{{ 'Create Worker' | translate }}</button>
   </div>
 </eform-page-subheader>
