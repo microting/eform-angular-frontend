@@ -544,7 +544,7 @@
     <value>Medarbejder</value>
   </data>
   <data name="PluginsSettings" xml:space="preserve">
-    <value>Plugins Indstillinger</value>
+    <value>Plugins</value>
   </data>
   <data name="EformReportNotFound" xml:space="preserve">
     <value>Eform-rapport blev ikke fundet</value>
@@ -565,7 +565,7 @@
     <value>Skabelon blev ikke fundet</value>
   </data>
   <data name="ErrorWhileObtainingPlugins" xml:space="preserve">
-    <value>Fejl under opnåelse af plugins</value>
+    <value>Fejl under indlæsning af plugins</value>
   </data>
   <data name="ErrorWhileUpdatingPluginSettings" xml:space="preserve">
     <value>Fejl under opdatering af pluginindstillinger</value>
