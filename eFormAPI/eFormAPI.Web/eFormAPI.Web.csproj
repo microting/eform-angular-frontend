@@ -24,12 +24,12 @@
   
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2018.3.0" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="1.1.93" />
-    <PackageReference Include="Microting.eForm" Version="3.0.151" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="1.1.94" />
+    <PackageReference Include="Microting.eForm" Version="3.0.155" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.4" />
     <PackageReference Include="SharpZipLib.NETStandard" Version="1.0.7" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0005" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
     <PackageReference Include="McMaster.NETCore.Plugins" Version="0.2.1" />
     <PackageReference Include="OtpSharp.Core" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
