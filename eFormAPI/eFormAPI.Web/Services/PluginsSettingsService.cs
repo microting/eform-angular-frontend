@@ -61,7 +61,7 @@ namespace eFormAPI.Web.Services
             {
                 _logger.LogError(e.Message);
                 return new OperationDataResult<PluginsSettingsModel>(false, 
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("ErrorWhileObtainingPlugins"));
             }
         }
 
@@ -75,7 +75,7 @@ namespace eFormAPI.Web.Services
                 if (eformPlugin == null)
                 {
                     return new OperationDataResult<PluginsSettingsModel>(false, 
-                        _localizationService.GetString(""));
+                        _localizationService.GetString("PluginNotFound"));
                 }
 
                 eformPlugin.ConnectionString = updateModel.ConnectionString;
@@ -89,7 +89,7 @@ namespace eFormAPI.Web.Services
             {
                 _logger.LogError(e.Message);
                 return new OperationDataResult<PluginsSettingsModel>(false, 
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("ErrorWhileUpdatingPluginSettings"));
             }
         }
     }

@@ -205,7 +205,7 @@ namespace eFormAPI.Web.Services
                 }
 
                 return new OperationResult(true,
-                    _localizationService.GetString("eFormParamCreatedSuccessfully", newTemplate.Label));
+                    _localizationService.GetStringWithFormat("eFormParamCreatedSuccessfully", newTemplate.Label));
             }
             catch (Exception e)
             {
@@ -224,17 +224,29 @@ namespace eFormAPI.Web.Services
 
             var result = core.TemplateDelete(id);
 
+            if (result)
+            {
+                var eformReport = _dbContext.EformReports
+                    .FirstOrDefault(x => x.TemplateId == id);
+
+                if (eformReport != null)
+                {
+                    _dbContext.EformReports.Remove(eformReport);
+                    _dbContext.SaveChanges();
+                }
+            }
+
             try
             {
                 return result
                     ? new OperationResult(true,
-                        _localizationService.GetString("eFormParamDeletedSuccessfully", templateDto.Label))
+                        _localizationService.GetStringWithFormat("eFormParamDeletedSuccessfully", templateDto.Label))
                     : new OperationResult(false,
-                        _localizationService.GetString("eFormParamCouldNotBeDeleted", templateDto.Label));
+                        _localizationService.GetStringWithFormat("eFormParamCouldNotBeDeleted", templateDto.Label));
             }
             catch (Exception)
             {
-                return new OperationResult(false, _localizationService.GetString("eFormParamCouldNotBeDeleted", id));
+                return new OperationResult(false, _localizationService.GetStringWithFormat("eFormParamCouldNotBeDeleted", id));
             }
         }
 
@@ -308,11 +320,10 @@ namespace eFormAPI.Web.Services
             foreach (var siteUId in sitesToBeRetractedFrom)
             {
                 core.CaseDelete(deployModel.Id, siteUId);
-                core.CaseDelete("123");
             }
 
             return new OperationResult(true,
-                _localizationService.GetString("ParamPairedSuccessfully", templateDto.Label));
+                _localizationService.GetStringWithFormat("ParamPairedSuccessfully", templateDto.Label));
         }
 
         //[HttpGet]

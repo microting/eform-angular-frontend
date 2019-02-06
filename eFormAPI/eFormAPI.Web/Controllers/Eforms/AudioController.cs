@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using eFormAPI.Web.Infrastructure;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
@@ -11,7 +12,8 @@ namespace eFormAPI.Web.Controllers.Eforms
     {
         [HttpGet]
         [Route("api/audio/eform-audio")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseRead)]
+        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, 
+            Policy = AuthConsts.EformPolicies.Cases.CasesRead)]
         public IActionResult GetAudio(string fileName)
         {
             var filePath = PathHelper.GetAudioPath(fileName);

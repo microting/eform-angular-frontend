@@ -141,6 +141,19 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                     Id = 22,
                     PermissionId = AuthConsts.DbIds.Permissions.Cases.CaseGetPdf,
                     SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformUsers
+                },
+                // eForm admin group
+                new GroupPermission()
+                {
+                    Id = 23,
+                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.ReadJasperReport,
+                    SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins
+                },
+                new GroupPermission()
+                {
+                    Id = 24,
+                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.UpdateJasperReport,
+                    SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins
                 }
             );
             return modelBuilder;

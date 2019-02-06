@@ -42,6 +42,8 @@ export enum UserClaimsEnum {
   eFormsPairingUpdate,
   eFormsReadTags,
   eFormsUpdateTags,
-  eFormsGetCsv
+  eFormsGetCsv,
+  eFormsReadJasperReport,
+  eFormsUpdateJasperReport
 }
 

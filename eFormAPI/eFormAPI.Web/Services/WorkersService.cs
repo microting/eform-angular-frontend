@@ -8,7 +8,6 @@ using eFormShared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Abstractions;
-using Microting.eFormApi.BasePn.Infrastructure.Models;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Services
@@ -52,12 +51,12 @@ namespace eFormAPI.Web.Services
                     workerModel.UserLastName, workerDto.Email);
 
                 return isUpdated
-                    ? new OperationResult(true, _localizationService.GetString("WorkerParamWasUpdated", workerModel.Id))
-                    : new OperationResult(false, _localizationService.GetString("WorkerParamCantBeUpdated", workerModel.Id));
+                    ? new OperationResult(true, _localizationService.GetStringWithFormat("WorkerParamWasUpdated", workerModel.Id))
+                    : new OperationResult(false, _localizationService.GetStringWithFormat("WorkerParamCantBeUpdated", workerModel.Id));
             }
             catch (Exception)
             {
-                return new OperationResult(false, _localizationService.GetString("WorkerParamCantBeUpdated", workerModel.Id));
+                return new OperationResult(false, _localizationService.GetStringWithFormat("WorkerParamCantBeUpdated", workerModel.Id));
             }
         }
 
@@ -91,21 +90,23 @@ namespace eFormAPI.Web.Services
                 if (workerDto.Equals(null))
                 {
                     return new OperationDataResult<SiteNameModel>(false,
-                        _localizationService.GetString("SiteWithIdCouldNotBeDeleted", id));
+                        _localizationService.GetStringWithFormat("SiteWithIdCouldNotBeDeleted", id));
                 }
 
                 return core.Advanced_WorkerDelete(id)
                     ? new OperationDataResult<SiteNameModel>(true,
-                        _localizationService.GetString("WorkerParamDeletedSuccessfully", workerDto.FirstName,
+                        _localizationService.GetStringWithFormat(
+                            "WorkerParamDeletedSuccessfully",
+                            workerDto.FirstName,
                             workerDto.LastName))
                     : new OperationDataResult<SiteNameModel>(false,
-                        _localizationService.GetString("WorkerParamCantBeDeted", workerDto.FirstName, workerDto.LastName));
+                        _localizationService.GetStringWithFormat("WorkerParamCantBeDeted", workerDto.FirstName, workerDto.LastName));
             }
 
             catch (Exception)
             {
                 return new OperationDataResult<SiteNameModel>(false,
-                    _localizationService.GetString("SiteWithIdCouldNotBeDeleted", id));
+                    _localizationService.GetStringWithFormat("SiteWithIdCouldNotBeDeleted", id));
             }
         }
     }

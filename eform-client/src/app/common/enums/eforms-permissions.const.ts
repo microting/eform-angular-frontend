@@ -11,6 +11,8 @@ export const EformPermissionsNamesSwap =  [
   {originalName: 'eforms_download_xml', swappedName: 'eFormsDownloadXml'},
   {originalName: 'eforms_upload_zip', swappedName: 'eFormsUploadZip'},
   {originalName: 'eforms_pairing_update', swappedName: 'eFormsPairingUpdate'},
+  {originalName: 'eforms_read_jasper_report', swappedName: 'eFormsReadJasperReport'},
+  {originalName: 'eforms_update_jasper_report', swappedName: 'eFormsUpdateJasperReport'},
   {originalName: 'eforms_update_tags', swappedName: 'eFormsUpdateTags'},
   {originalName: 'eforms_pairing_read', swappedName: 'eFormsPairingRead'},
   {originalName: 'eforms_read_tags', swappedName: 'eFormsReadTags'},

@@ -67,7 +67,7 @@ namespace eFormAPI.Web.Services
                 }
 
                 return new OperationResult(true,
-                    _localizationService.GetString("ParamCreatedSuccessfully", groupCreate.MicrotingUUID));
+                    _localizationService.GetStringWithFormat("ParamCreatedSuccessfully", groupCreate.MicrotingUUID));
             }
             catch (Exception)
             {
@@ -112,7 +112,7 @@ namespace eFormAPI.Web.Services
                 }
 
                 return new OperationResult(true,
-                    _localizationService.GetString("ParamUpdatedSuccessfully", editModel.GroupUid));
+                    _localizationService.GetStringWithFormat("ParamUpdatedSuccessfully", editModel.GroupUid));
             }
             catch (Exception)
             {
@@ -174,7 +174,7 @@ namespace eFormAPI.Web.Services
 
 
                 return core.EntityGroupDelete(entityGroupUid)
-                    ? new OperationResult(true, _localizationService.GetString("ParamDeletedSuccessfully", entityGroupUid))
+                    ? new OperationResult(true, _localizationService.GetStringWithFormat("ParamDeletedSuccessfully", entityGroupUid))
                     : new OperationResult(false, _localizationService.GetString("ErrorWhenDeletingSearchableList"));
             }
             catch (Exception)
@@ -190,7 +190,7 @@ namespace eFormAPI.Web.Services
                 var core = _coreHelper.GetCore();
 
 
-                return new OperationResult(true, _localizationService.GetString("ParamDeletedSuccessfully", entityGroupUid));
+                return new OperationResult(true, _localizationService.GetStringWithFormat("ParamDeletedSuccessfully", entityGroupUid));
             }
             catch (Exception)
             {

@@ -135,8 +135,11 @@ namespace eFormAPI.Web.Services.Security
                     AuthConsts.EformClaims.CasesClaims.CaseGetPdf,
                     AuthConsts.EformClaims.EformsClaims.PairingUpdate,
                     AuthConsts.EformClaims.EformsClaims.UpdateTags,
-                    AuthConsts.EformClaims.EformsClaims.GetCsv
+                    AuthConsts.EformClaims.EformsClaims.GetCsv,
+                    AuthConsts.EformClaims.EformsClaims.ReadJasperReport,
+                    AuthConsts.EformClaims.EformsClaims.UpdateJasperReport,
                 };
+
                 List<EformPermissionsModel> eformsInGroup = await _dbContext.EformInGroups
                     .Where(x => x.SecurityGroupId == groupId)
                     .Select(e => new EformPermissionsModel()

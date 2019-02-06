@@ -131,7 +131,7 @@ namespace eFormAPI.Web.Services
                 if (user == null)
                 {
                     return new OperationResult(false,
-                        _localizationService.GetString("UserNotFoundUserName", userRegisterModel.UserName));
+                        _localizationService.GetStringWithFormat("UserNotFoundUserName", userRegisterModel.UserName));
                 }
 
                 var isAdmin = await _userManager.IsInRoleAsync(user, EformRole.Admin);
@@ -192,7 +192,7 @@ namespace eFormAPI.Web.Services
                 }
 
                 return new OperationResult(true,
-                    _localizationService.GetString("UserUserNameWasUpdated", user.UserName));
+                    _localizationService.GetStringWithFormat("UserUserNameWasUpdated", user.UserName));
             }
             catch (Exception exception)
             {
@@ -209,7 +209,7 @@ namespace eFormAPI.Web.Services
                 if (userResult != null)
                 {
                     return new OperationResult(false,
-                        _localizationService.GetString("UserUserNameAlreadyExist", userRegisterModel.UserName));
+                        _localizationService.GetStringWithFormat("UserUserNameAlreadyExist", userRegisterModel.UserName));
                 }
 
                 if (!_dbContext.SecurityGroups.Any(x => x.Id == userRegisterModel.GroupId))
@@ -250,7 +250,7 @@ namespace eFormAPI.Web.Services
                 }
 
                 return new OperationResult(true,
-                    _localizationService.GetString("UserUserNameWasCreated", user.UserName));
+                    _localizationService.GetStringWithFormat("UserUserNameWasCreated", user.UserName));
             }
             catch (Exception exception)
             {
@@ -277,7 +277,7 @@ namespace eFormAPI.Web.Services
 
                 if (user == null)
                 {
-                    return new OperationResult(false, _localizationService.GetString("UserUserNameNotFound", userId));
+                    return new OperationResult(false, _localizationService.GetStringWithFormat("UserUserNameNotFound", userId));
                 }
 
                 var result = await _userManager.DeleteAsync(user);
@@ -286,7 +286,7 @@ namespace eFormAPI.Web.Services
                     return new OperationResult(false, string.Join(" ", result.Errors.Select(x=>x.Description).ToArray()));
                 }
 
-                return new OperationResult(true, _localizationService.GetString("UserParamWasDeleted", userId));
+                return new OperationResult(true, _localizationService.GetStringWithFormat("UserParamWasDeleted", userId));
             }
             catch (Exception exception)
             {

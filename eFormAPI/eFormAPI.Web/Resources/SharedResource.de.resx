@@ -544,6 +544,15 @@
     <value>Mitarbeiter</value>
   </data>
   <data name="PluginsSettings" xml:space="preserve">
-    <value>Plugin-Einstellungen</value>
+    <value>Plugins</value>
+  </data>
+  <data name="ErrorWhileObtainingPlugins" xml:space="preserve">
+    <value>Fehler beim Laden von Plugins</value>
+  </data>
+  <data name="ErrorWhileUpdatingPluginSettings" xml:space="preserve">
+    <value>Fehler beim Aktualisieren der Plugin-Einstellungen</value>
+  </data>
+  <data name="PluginNotFound" xml:space="preserve">
+    <value>Plugin nicht gefunden</value>
   </data>
 </root>

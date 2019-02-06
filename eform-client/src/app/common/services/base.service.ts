@@ -53,10 +53,11 @@ export class BaseService {
       );
   }
 
-  protected postFormData<T>(method: string, body: any): Observable<any> {
-    return this.http.post(method, body, {headers: this.setHeaders('formData')})
+  protected getBlobData<T>(method: string, params?: any): Observable<any> {
+    return this.http.get(method,
+      {headers: this.setHeaders(), params: this.setParams(params), responseType: 'blob'})
       .pipe(
-        map((response) => this.extractData<T>(response)),
+        map((response) => response),
         catchError(err => this.handleError(err))
       );
   }

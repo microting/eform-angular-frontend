@@ -227,6 +227,8 @@
   "Case delete": "Case delete",
   "Get PDF": "Get PDF",
   "Bind Eform": "Bind Eform",
+  "Read Jasper Report": "Read Jasper Report",
+  "Update Jasper Report": "Update Jasper Report",
   "Display": "Display",
   "Enabled": "Enabled",
   "Disabled": "Disabled",
