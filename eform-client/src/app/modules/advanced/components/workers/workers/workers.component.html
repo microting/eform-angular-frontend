@@ -28,23 +28,25 @@
         <td>
           <date-formatter [date]="workerDto.updatedAt" [Format]="'datetime'"></date-formatter>
         </td>
-        <td>{{workerDto.firstName}}</td>
-        <td>
+        <td id="workerFirstName">
+          {{workerDto.firstName}}
+        </td>
+        <td id="workerLastName">
           {{workerDto.lastName}}
         </td>
-        <td>
+        <td id="workerUID">
           {{workerDto.workerUId}}
         </td>
         <td *ngIf="userClaims.workersDelete || userClaims.workersUpdate">
           <div class="d-flex flex-row justify-content-center">
-            <button class="btn btn-accent text-black-50 btn-icon mb-2" *ngIf="userClaims.workersUpdate"
+            <button id="workerEditBtn" class="btn btn-accent text-black-50 btn-icon mb-2" *ngIf="userClaims.workersUpdate"
                     mdbTooltip="{{'Edit Worker' | translate}}"
                     (click)="openEditModal(workerDto)">
               <i class="material-icons">
                 edit
               </i>
             </button>
-            <button
+            <button id="workerDeleteBtn"
               class="btn btn-danger btn-icon mb-2 " *ngIf="userClaims.workersDelete"
               mdbTooltip="{{'Delete Worker' | translate}}"
               (click)="openDeleteModal(workerDto)">
