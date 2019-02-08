@@ -25,7 +25,6 @@ namespace eFormAPI.Web.Hosting.Helpers
         {
             // Load info from database
             List<EformPlugin> eformPlugins = null;
-            var newPlugins = new List<EformPlugin>();
             var contextFactory = new BaseDbContextFactory();
             using (var dbContext = contextFactory.CreateDbContext(new[] {configuration.MyConnectionString()}))
             {
@@ -71,17 +70,19 @@ namespace eFormAPI.Web.Hosting.Helpers
                         {
                             var pluginDbName = $"Database={dbPrefix}_{plugin.PluginId};";
                             var pluginConnectionString = connectionString.Replace(dbNameSection, pluginDbName);
-                            newPlugins.Add(new EformPlugin()
+                            var newPlugin = new EformPlugin()
                             {
                                 PluginId = plugin.PluginId,
                                 ConnectionString = pluginConnectionString,
-                                Status = (int) PluginStatus.Disabled
-                            });
+                                Status = (int) PluginStatus.Enabled
+                            };
+                            dbContext.EformPlugins.Add(newPlugin);
+                            dbContext.SaveChanges();
+                            plugins.Add(plugin);
                         }
                     }
 
-                    dbContext.EformPlugins.AddRange(newPlugins);
-                    dbContext.SaveChanges();
+
                 }
             }
 
