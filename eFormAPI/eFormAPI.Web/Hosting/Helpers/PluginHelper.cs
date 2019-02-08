@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using eFormAPI.Web.Hosting.Enums;
 using eFormAPI.Web.Hosting.Extensions;
 using eFormAPI.Web.Infrastructure.Database.Entities;
@@ -33,40 +34,57 @@ namespace eFormAPI.Web.Hosting.Helpers
                     eformPlugins = dbContext.EformPlugins
                         .AsNoTracking()
                         .ToList();
-                } catch {}
+                }
+                catch
+                {
+                }
             }
+
             var plugins = new List<IEformPlugin>();
             // create plugin loaders
             if (eformPlugins != null)
             {
-                foreach (var plugin in GetAllPlugins())
+                using (var dbContext = contextFactory.CreateDbContext(new[] {configuration.MyConnectionString()}))
                 {
-                    var eformPlugin = eformPlugins.FirstOrDefault(x => x.PluginId == plugin.PluginId);
-                    if (eformPlugin != null)
+                    var connectionString = dbContext.Database.GetDbConnection().ConnectionString;
+
+                    var connectionStringMatch = Regex.Match(connectionString, @"Database=(.*)_(.*);");//.Groups[1].Value;
+                    if (connectionStringMatch.Groups.Count != 3)
                     {
-                        if (eformPlugin.Status ==  (int) PluginStatus.Enabled)
+                        throw new Exception("Error while parsing connection-string database name");
+                    }
+
+                    var dbNameSection = connectionStringMatch.Groups[0].Value;
+                    var dbPrefix = connectionStringMatch.Groups[1].Value;
+
+                    foreach (var plugin in GetAllPlugins())
+                    {
+                        var eformPlugin = eformPlugins.FirstOrDefault(x => x.PluginId == plugin.PluginId);
+                        if (eformPlugin != null)
                         {
-                            plugins.Add(plugin);
+                            if (eformPlugin.Status == (int) PluginStatus.Enabled)
+                            {
+                                plugins.Add(plugin);
+                            }
+                        }
+                        else
+                        {
+                            var pluginDbName = $"Database={dbPrefix}_{plugin.PluginId};";
+                            var pluginConnectionString = connectionString.Replace(dbNameSection, pluginDbName);
+                            newPlugins.Add(new EformPlugin()
+                            {
+                                PluginId = plugin.PluginId,
+                                ConnectionString = pluginConnectionString,
+                                Status = (int) PluginStatus.Disabled
+                            });
                         }
                     }
-                    else
-                    {
-                        newPlugins.Add(new EformPlugin()
-                        {
-                            PluginId = plugin.PluginId,
-                            ConnectionString = "...",
-                            Status = (int) PluginStatus.Disabled
-                        });
-                    }
+
+                    dbContext.EformPlugins.AddRange(newPlugins);
+                    dbContext.SaveChanges();
                 }
             }
-            
 
-            using (var dbContext = contextFactory.CreateDbContext(new[] {configuration.MyConnectionString()}))
-            {
-                dbContext.EformPlugins.AddRange(newPlugins);
-                dbContext.SaveChanges();
-            }
             return plugins;
         }
 
@@ -132,10 +150,10 @@ namespace eFormAPI.Web.Hosting.Helpers
                         Console.WriteLine("Found plugin : " + type.Name);
                         var plugin = (IEformPlugin) Activator.CreateInstance(type);
                         plugins.Add(plugin);
-
                     }
                 }
             }
+
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"{plugins.Count} plugins found");
 
