@@ -36,6 +36,8 @@ describe('Device users page should not add new device user', function () {
   // TODO fix SDK to be able to tests this!
   it('with only first name', function () {
     const name = generateRandmString();
+    browser.refresh();
+    browser.pause(8000);
     deviceUsersPage.newDeviceUserBtn.click();
     browser.pause(4000);
     deviceUsersPage.createFirstNameInput.setValue(name);
