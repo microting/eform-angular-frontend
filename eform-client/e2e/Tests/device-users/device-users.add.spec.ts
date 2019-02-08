@@ -30,6 +30,8 @@ describe('Device users page should not add new device user', function () {
   afterEach(function () {
     browser.refresh();
     myEformsPage.Navbar.goToDeviceUsersPage();
+    browser.pause(8000);
+
   });
   // TODO fix SDK to be able to tests this!
   it('with only first name', function () {

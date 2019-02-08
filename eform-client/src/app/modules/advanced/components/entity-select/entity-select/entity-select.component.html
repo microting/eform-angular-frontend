@@ -1,6 +1,7 @@
 <eform-page-subheader [title]="'Selectable lists' | translate">
   <div class="p-3">
     <button
+      id="entitySelectCreateBtn"
       class="btn btn-success" *ngIf="userClaims.entitySelectCreate"
       mdbTooltip="{{ 'Create new selectable list' | translate }}"
       (click)="openModalSelectCreate()">{{ 'New list' | translate }}
@@ -49,18 +50,18 @@
       </thead>
       <tbody>
       <tr *ngFor="let advEntitySelectableGroup of advEntitySelectableGroupListModel.entityGroups">
-        <td scope="row">{{advEntitySelectableGroup.microtingUUID}}</td>
-        <td> {{advEntitySelectableGroup.name}}</td>
+        <td scope="row" id="entitySelectMicrotingUUID">{{advEntitySelectableGroup.microtingUUID}}</td>
+        <td id="entitySelectName"> {{advEntitySelectableGroup.name}}</td>
         <td *ngIf="userClaims.entitySelectUpdate || userClaims.entitySelectDelete">
           <div class="d-flex flex-row justify-content-center">
-            <button class="btn btn-accent btn-icon text-black-50 mb-2 "  *ngIf="userClaims.entitySelectUpdate"
+            <button id="entitySelectEditBtn" class="btn btn-accent btn-icon text-black-50 mb-2 "  *ngIf="userClaims.entitySelectUpdate"
                     mdbTooltip="{{'Edit' | translate}}"
                     (click)="openModalSelectEdit(advEntitySelectableGroup)">
               <i class="material-icons">
                 edit
               </i>
             </button>
-            <button class="btn btn-danger btn-icon mb-2 " *ngIf="userClaims.entitySelectDelete"
+            <button id="entitySelectDeleteBtn" class="btn btn-danger btn-icon mb-2 " *ngIf="userClaims.entitySelectDelete"
                     mdbTooltip="{{'Remove' | translate}}"
                     (click)="openModalSelectRemove(advEntitySelectableGroup)">
               <i class="material-icons">
