@@ -20,7 +20,7 @@
               <a routerLink="{{menu.link}}"
                 mdbWavesEffect
                 class="nav-link waves-light"
-                id="{{menu.e2eId}}">
+                 [id]="menu.e2EId">
                 {{menu.name}}
               </a>
             </li>
@@ -32,14 +32,14 @@
                   mdbDropdownToggle
                   mdbWavesEffect
                   class="nav-link dropdown-toggle waves-light"
-                  id="{{menu.e2eId}}">{{menu.name}}</a>
+                  [id]="menu.e2EId">{{menu.name}}</a>
                 <div class="dropdown-menu" *ngIf="menu?.menuItems?.length > 0;">
                   <ng-container *ngFor="let subMenu of menu.menuItems">
                   <a *ngIf="checkRole(subMenu.guards)"
                     class="dropdown-item waves-light"
                     routerLink="{{subMenu.link}}"
                     routerLinkActive="active"
-                    id="{{subMenu.e2eId}}">
+                     [id]="subMenu.e2EId">
                     {{subMenu.name}}
                   </a>
                   </ng-container>
@@ -58,7 +58,7 @@
                 routerLink="{{menu.link}}"
                 mdbWavesEffect
                 class="nav-link waves-light"
-                id="{{menu.e2eId}}">
+                [id]="menu.e2EId">
                 {{menu.name}}
               </a>
             </li>
@@ -70,14 +70,14 @@
                   mdbDropdownToggle
                   mdbWavesEffect
                   class="nav-link dropdown-toggle waves-light"
-                  id="{{menu.e2eId}}">{{menu.name}}</a>
+                  [id]="menu.e2EId">{{menu.name}}</a>
                 <div class="dropdown-menu outbounds-fix" *ngIf="menu?.menuItems?.length > 0;">
                   <ng-container *ngFor="let subMenu of menu.menuItems">
                     <a *ngIf="checkRole(subMenu.guards)"
                       class="dropdown-item waves-light"
                       routerLink="{{subMenu.link}}"
                       routerLinkActive="active"
-                      id="{{subMenu.e2eId}}">
+                       [id]="subMenu.e2EId">
                       {{subMenu.name}}
                     </a>
                   </ng-container>
