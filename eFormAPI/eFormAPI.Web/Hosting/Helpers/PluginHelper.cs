@@ -55,7 +55,7 @@ namespace eFormAPI.Web.Hosting.Helpers
 //                    }
 
                     var dbNameSection = Regex.Match(connectionString, @"(Database=\w*;)").Groups[0].Value;
-                    var dbPrefix = Regex.Match(connectionString, @"Database=(.*)_").Groups[1].Value;
+                    var dbPrefix = Regex.Match(connectionString, @"Database=(\d*)_").Groups[1].Value;
 
                     foreach (var plugin in GetAllPlugins())
                     {
