@@ -60,8 +60,9 @@ namespace eFormAPI.Web.Controllers
             return File(fileStream, $"image/{extention}");
         }
 
-        [HttpPost]
-        [Authorize(Roles = EformRole.Admin, AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+        [HttpPost]        
+        [AllowAnonymous]
+//        [Authorize(Roles = EformRole.Admin, AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
         [Route("api/images/login-page-images")]
         public async Task<IActionResult> PostLoginPageImages(IFormFile file)
         {
@@ -97,8 +98,9 @@ namespace eFormAPI.Web.Controllers
             return BadRequest(_localizationService.GetString("InvalidRequest"));
         }
 
-        [HttpPost]
-        [Authorize(Roles = EformRole.Admin, AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+        [HttpPost]       
+        [AllowAnonymous]
+//        [Authorize(Roles = EformRole.Admin, AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
         [Route("api/images/eform-images")]
         public async Task<IActionResult> PostEformImages(IFormFile file)
         {

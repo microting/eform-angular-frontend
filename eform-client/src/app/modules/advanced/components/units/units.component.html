@@ -16,8 +16,12 @@
       </thead>
       <tbody>
       <tr *ngFor="let unitModel of unitModels">
-        <td scope="row">{{unitModel.createdAt | date:'dd.MM.y HH:mm:ss'}}</td>
-        <td> {{unitModel.updatedAt | date:'dd.MM.y HH:mm:ss'}}</td>
+        <td scope="row">
+          <date-formatter [date]="unitModel.createdAt" [Format]="'datetime'"></date-formatter>
+        </td>
+        <td>
+          <date-formatter [date]="unitModel.updatedAt" [Format]="'datetime'"></date-formatter>
+        </td>
         <td>
           <div class="d-flex flex-row justify-content-center">
             <div *ngIf="unitModel.otpCode != 0">

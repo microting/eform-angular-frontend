@@ -18,10 +18,10 @@
       <tbody>
       <tr *ngFor="let siteDto of sitesDto">
         <td scope="row">
-          {{siteDto.createdAt | date:'dd.MM.y HH:mm:ss'}}
+          <date-formatter [date]="siteDto.createdAt" [Format]="'datetime'"></date-formatter>
         </td>
         <td>
-          {{siteDto.updatedAt | date:'dd.MM.y HH:mm:ss'}}
+          <date-formatter [date]="siteDto.updatedAt" [Format]="'datetime'"></date-formatter>
         </td>
         <td>{{siteDto.siteName}}</td>
         <td>
@@ -29,14 +29,14 @@
         </td>
         <td *ngIf="userClaims.sitesDelete || userClaims.sitesUpdate">
           <div class="d-flex flex-row justify-content-center">
-            <button class="btn btn-accent text-black-50 btn-icon mb-2 " *ngIf="userClaims.sitesUpdate"
+            <button class="btn btn-accent text-black-50 btn-icon mb-2 " id="editSiteBtn" *ngIf="userClaims.sitesUpdate"
                     mdbTooltip="{{'Edit Site' | translate}}" mdbWavesEffect
                     (click)="openEditModal(siteDto)">
               <i class="material-icons">
                 edit
               </i>
             </button>
-            <button class="btn btn-danger btn-icon mb-2 " *ngIf="userClaims.sitesDelete"
+            <button class="btn btn-danger btn-icon mb-2 " id="deleteSiteBtn" *ngIf="userClaims.sitesDelete"
                     mdbTooltip="{{'Delete site' | translate}}"
                     (click)="openDeleteModal(siteDto)">
               <i class="material-icons">

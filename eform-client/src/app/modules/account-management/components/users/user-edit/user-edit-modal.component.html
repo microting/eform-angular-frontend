@@ -12,29 +12,6 @@
                 <div class="md-form">
                   <input mdbInputDirective
                          [mdbValidate]="false"
-                         required placeholder="testUser" #userNameEdit="ngModel" type="text"
-                         [(ngModel)]="selectedUserModel.userName"
-                         name="userName" id="userName" class="form-control">
-                  <label for="userName">{{'Username' | translate}}</label>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="md-form">
-                  <input mdbInputDirective
-                         [mdbValidate]="false"
-                         class="form-control"
-                         required #emailEdit="ngModel" type="text"
-                         [(ngModel)]="selectedUserModel.email" id="createEmail"
-                         name="createEmail">
-                  <label for="createEmail">{{'Email' | translate}}</label>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="md-form">
-                  <input mdbInputDirective
-                         [mdbValidate]="false"
                          class="form-control" type="text"
                          [(ngModel)]="selectedUserModel.firstName" id="editFirstName"
                          name="editFirstName">
@@ -53,14 +30,16 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6 ng-select-wrapper" *ngIf="selectedUserModel.role != 'admin'">
-                <ng-select required
-                           bindLabel="name"
-                           bindValue="id"
-                           [(ngModel)]="selectedUserModel.groupId"
-                           name="editGroup"
-                           [placeholder]="'Group' | translate"
-                           [items]="availableGroups.securityGroupList"></ng-select>
+              <div class="col-md-6">
+                <div class="md-form">
+                  <input mdbInputDirective
+                         [mdbValidate]="false"
+                         class="form-control"
+                         required #emailEdit="ngModel" type="text"
+                         [(ngModel)]="selectedUserModel.email" id="createEmail"
+                         name="createEmail">
+                  <label for="createEmail">{{'Email' | translate}}</label>
+                </div>
               </div>
               <div class="col-md-6">
                 <div class="md-form">
@@ -72,6 +51,17 @@
                          name="editPassword">
                   <label for="editPassword">{{'Password' | translate}}</label>
                 </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 ng-select-wrapper" *ngIf="selectedUserModel.role != 'admin'">
+                <ng-select required
+                           bindLabel="name"
+                           bindValue="id"
+                           [(ngModel)]="selectedUserModel.groupId"
+                           name="editGroup"
+                           [placeholder]="'Group' | translate"
+                           [items]="availableGroups.securityGroupList"></ng-select>
               </div>
             </div>
 

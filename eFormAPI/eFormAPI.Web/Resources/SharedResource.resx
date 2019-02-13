@@ -544,7 +544,7 @@
     <value>Workers</value>
   </data>
   <data name="PluginsSettings" xml:space="preserve">
-    <value>Plugins Settings</value>
+    <value>Plugins</value>
   </data>
   <data name="EformReportNotFound" xml:space="preserve">
     <value>Eform report not found</value>
@@ -565,7 +565,7 @@
     <value>Template not found</value>
   </data>
   <data name="ErrorWhileObtainingPlugins" xml:space="preserve">
-    <value>Error while obtaining plugins</value>
+    <value>Error while loading plugins</value>
   </data>
   <data name="ErrorWhileUpdatingPluginSettings" xml:space="preserve">
     <value>Error while updating plugin settings</value>

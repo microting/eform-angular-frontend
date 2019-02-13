@@ -19,7 +19,9 @@
               <h6>{{'Creation date' | translate}}</h6>
             </div>
             <div class="col-md-6">
-              <h6><strong>{{selectedGroupModel.createdAt | date:'dd.MM.y HH:mm:ss'}}</strong></h6>
+              <h6><strong>
+                <date-formatter [date]="selectedGroupModel.createdAt" [Format]="'datetime'"></date-formatter>
+              </strong></h6>
             </div>
           </div>
           <div class="row">

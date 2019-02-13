@@ -20,7 +20,9 @@
               <h6>{{'Creation Date' | translate}}</h6>
             </div>
             <div class="col-md-6">
-              <h6>{{selectedWorkerDto.createdAt | date:'dd.MM.y HH:mm:ss'}}</h6>
+              <h6>
+                <date-formatter [date]="selectedWorkerDto.createdAt" [Format]="'datetime'"></date-formatter>
+              </h6>
             </div>
           </div>
 
@@ -28,7 +30,7 @@
             <div class="col-md-6">
               <h6>{{'First Name' | translate}}</h6>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6" id="deleteWorkerFirstName">
               <h6>{{selectedWorkerDto.firstName}}</h6>
             </div>
           </div>
@@ -37,7 +39,7 @@
             <div class="col-md-6">
               <h6>{{'Last Name' | translate}}</h6>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6" id="deleteWorkerLastName">
               <h6>{{selectedWorkerDto.lastName}}</h6>
             </div>
           </div>
@@ -45,7 +47,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-danger" (click)="deleteWorker()">{{'Delete' | translate}}</button>
+        <button id="deleteWorkerDeleteBtn" class="btn btn-danger" (click)="deleteWorker()">{{'Delete' | translate}}</button>
         <button class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Cancel' | translate}}</button>
       </div>
     </div>

@@ -29,8 +29,11 @@ export class Navbar {
   public get userAdministrationBtn() {
     return browser.element(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Brugeradministration')]`);
   }
+  public get workersBtn() {
+    return browser.element(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Medarbejder')]`);
+  }
   public get deviceUsersBtn() {
-    return this.clickOnHeaderMenuItem(' Enhedsbrugere ');
+    return this.clickOnHeaderMenuItem2(' Enhedsbrugere ');
   }
 
   public clickOnHeaderMenuItem(headerMenuItem) {
@@ -38,6 +41,8 @@ export class Navbar {
   }
   public verifyHeaderMenuItem(headerMenuItem) {
     return browser.getText(`//*[@id="header"]//*[contains(text(), '${headerMenuItem}')]`);
+  }  public clickOnHeaderMenuItem2(headerMenuItem) {
+    return browser.element(`//*[@id="header"]//*[contains(text(), '${headerMenuItem}')]`);
   }
 
   public logout() {
@@ -55,6 +60,11 @@ export class Navbar {
   public goToApplicationSettings() {
     this.advancedDropdown();
     this.applicationSettingsBtn();
+    browser.pause(15000);
+  }
+  public goToWorkers() {
+    this.advancedDropdown();
+    this.workersBtn.click();
     browser.pause(15000);
   }
   public goToUserAdministration() {

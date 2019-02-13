@@ -1,6 +1,7 @@
 <eform-page-subheader [title]="'Searchable lists' | translate">
   <div class="p-3">
     <button
+      id="createEntitySearchBtn"
       class="btn btn-success"
       mdbTooltip="{{ 'Create new searchable list' | translate }}" *ngIf="userClaims.entitySearchCreate"
       (click)="openModalSearchCreate()">{{ 'New list' | translate }}
@@ -53,14 +54,14 @@
         <td> {{advEntitySearchableGroup.name}}</td>
         <td *ngIf="userClaims.entitySearchDelete || userClaims.entitySearchUpdate">
           <div class="d-flex flex-row justify-content-center">
-            <button class="btn btn-accent btn-icon text-black-50 mb-2 " *ngIf="userClaims.entitySearchUpdate"
+            <button id="entitySearchUpdateBtn" class="btn btn-accent btn-icon text-black-50 mb-2 " *ngIf="userClaims.entitySearchUpdate"
                     mdbTooltip="{{'Edit' | translate}}"
                     (click)="openModalSearchEdit(advEntitySearchableGroup)">
               <i class="material-icons">
                 edit
               </i>
             </button>
-            <button class="btn btn-danger btn-icon mb-2 " *ngIf="userClaims.entitySearchDelete"
+            <button id="entitySearchDeleteBtn" class="btn btn-danger btn-icon mb-2 " *ngIf="userClaims.entitySearchDelete"
                     mdbTooltip="{{'Remove' | translate}}"
                     (click)="openModalSearchRemove(advEntitySearchableGroup)">
               <i class="material-icons">

@@ -152,7 +152,8 @@ namespace eFormAPI.Web.Services
                 }
 
                 user.Email = userRegisterModel.Email;
-                user.UserName = userRegisterModel.UserName;
+                user.EmailConfirmed = true;
+                user.UserName = userRegisterModel.Email;
                 user.FirstName = userRegisterModel.FirstName;
                 user.LastName = userRegisterModel.LastName;
                 var result = await _userManager.UpdateAsync(user);
@@ -220,9 +221,10 @@ namespace eFormAPI.Web.Services
                 var user = new EformUser
                 {
                     Email = userRegisterModel.Email,
-                    UserName = userRegisterModel.UserName,
+                    UserName = userRegisterModel.Email,
                     FirstName = userRegisterModel.FirstName,
                     LastName = userRegisterModel.LastName,
+                    EmailConfirmed =  true,
                     TwoFactorEnabled = false,
                     IsGoogleAuthenticatorEnabled = false
                 };

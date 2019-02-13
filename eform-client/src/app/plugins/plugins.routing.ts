@@ -3,7 +3,6 @@ import {RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from 'src/app/common/guards';
 
 export const routes: Routes = [
-  // INSERT ROUTES HERE
 ];
 
 @NgModule({

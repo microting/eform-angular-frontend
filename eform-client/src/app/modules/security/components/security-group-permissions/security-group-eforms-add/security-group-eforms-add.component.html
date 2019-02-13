@@ -31,7 +31,8 @@
               <!--<td scope="row" id="eform-id">{{templateDto.id}}</td>-->
               <td scope="row" id="eform-id">{{template.id}}</td>
               <!--<td id="eform-created-at">{{templateDto.createdAt | date:'dd.MM.y HH:mm:ss'}}</td>-->
-              <td id="eform-created-at">{{template.createdAt | date:'dd.MM.y HH:mm:ss'}}</td>
+              <td id="eform-created-at">
+                <date-formatter [date]="template.createdAt" [Format]="'datetime'"></date-formatter></td>
               <!--<td id="eform-label">{{templateDto.label}}</td>-->
               <td id="eform-label">{{template.label}}</td>
             </tr>
