@@ -74,7 +74,7 @@ namespace eFormAPI.Web.Hosting.Helpers
                             {
                                 PluginId = plugin.PluginId,
                                 ConnectionString = pluginConnectionString,
-                                Status = (int) PluginStatus.Enabled
+                                Status = (int) PluginStatus.Disabled
                             };
                             dbContext.EformPlugins.Add(newPlugin);
                             dbContext.SaveChanges();
