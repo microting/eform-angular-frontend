@@ -47,12 +47,6 @@ namespace eFormAPI.Web.Hosting.Helpers
                 {
                     var connectionString = dbContext.Database.GetDbConnection().ConnectionString;
 
-//                    var connectionStringMatch = Regex.Match(connectionString, @"(Database=\w*;)");//.Groups[1].Value;
-//                    if (connectionStringMatch.Groups.Count != 3)
-//                    {
-//                        throw new Exception("Error while parsing connection-string database name");
-//                    }
-
                     var dbNameSection = Regex.Match(connectionString, @"(Database=\w*;)").Groups[0].Value;
                     var dbPrefix = Regex.Match(connectionString, @"Database=(\d*)_").Groups[1].Value;
 
