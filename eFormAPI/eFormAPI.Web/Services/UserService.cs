@@ -15,7 +15,6 @@ namespace eFormAPI.Web.Services
         private readonly IHttpContextAccessor _httpAccessor;
         private readonly BaseDbContext _dbContext;
 
-
         public UserService(BaseDbContext dbContext,
             UserManager<EformUser> userManager,
             IHttpContextAccessor httpAccessor)
