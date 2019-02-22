@@ -10,12 +10,13 @@ describe('Device users page should add new device user', function () {
     loginPage.open('/');
     loginPage.login();
     myEformsPage.Navbar.goToDeviceUsersPage();
-    browser.pause(8000)
+    browser.pause(8000);
   });
   it('with first name and last name', function () {
     const name = 'John Noname';
     const surname = 'Doe';
     const rowCountBeforeCreation = deviceUsersPage.rowNum;
+    browser.pause(2000);
     deviceUsersPage.createNewDeviceUser(name, surname);
     const rowCountAfterCreation = deviceUsersPage.rowNum;
     expect(rowCountAfterCreation, 'Number of rows hasn\'t changed after creating new user').equal(rowCountBeforeCreation + 1);
@@ -29,16 +30,20 @@ describe('Device users page should not add new device user', function () {
   afterEach(function () {
     browser.refresh();
     myEformsPage.Navbar.goToDeviceUsersPage();
+    browser.pause(8000);
+
   });
   // TODO fix SDK to be able to tests this!
-  // it('with only first name', function () {
-  //   const name = generateRandmString();
-  //   deviceUsersPage.newDeviceUserBtn.click();
-  //   browser.pause(4000);
-  //   deviceUsersPage.createFirstNameInput.setValue(name);
-  //   expect(deviceUsersPage.saveCreateBtn.isEnabled(),
-  //     'Create button in modal window while creating new device user is active when only name is provided').equal(false);
-  // });
+  it('with only first name', function () {
+    const name = generateRandmString();
+    browser.refresh();
+    browser.pause(8000);
+    deviceUsersPage.newDeviceUserBtn.click();
+    browser.pause(4000);
+    deviceUsersPage.createFirstNameInput.setValue(name);
+    expect(deviceUsersPage.saveCreateBtn.isEnabled(),
+      'Create button in modal window while creating new device user is active when only name is provided').equal(false);
+  });
   it('with only last name', function () {
     const lastName = generateRandmString();
     browser.refresh();

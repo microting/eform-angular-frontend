@@ -25,6 +25,7 @@
               <div class="md-form">
                 <input mdbInputDirective
                        name="firstName" [(ngModel)]="newWorkerModel.firstName"
+                       required
                        id="firstName" type="text" class="form-control">
                 <label for="firstName">{{'First Name: ' | translate}}</label>
               </div>
@@ -34,6 +35,7 @@
             <div class="col-md-12">
               <div class="md-form">
                 <input mdbInputDirective
+                       required
                        name="lastName"
                        [(ngModel)]="newWorkerModel.lastName"
                        id="lastName" type="text" class="form-control">
@@ -44,7 +46,9 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-success" (click)="createWorker()">{{'Create' | translate}}</button>
+        <button class="btn btn-success"
+                [disabled]="!newWorkerModel.firstName || !newWorkerModel.lastName"
+                id="workerSaveBtn" (click)="createWorker()">{{'Create' | translate}}</button>
         <button class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Cancel' | translate}}</button>
       </div>
     </div>

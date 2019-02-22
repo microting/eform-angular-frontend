@@ -6,7 +6,7 @@ export class UserMenuModel {
 export class MenuItemModel {
   name: string;
   link: string;
-  e2eId: string;
+  e2EId: string;
   position: number;
 
   menuItems: Array<MenuItemModel> = [];

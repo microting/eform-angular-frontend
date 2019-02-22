@@ -23,7 +23,7 @@
             <div class="mr-auto">
             </div>
             <div class="d-inline-flex">
-              <button class="btn btn-success btn-icon" (click)="modalSelectImportList.show()">
+              <button id="importEntitySelectBtn" class="btn btn-success btn-icon" (click)="modalSelectImportList.show()">
                 <i class="material-icons">format_list_bulleted</i>
               </button>
               <button class="btn btn-success btn-icon" (click)="addNewAdvEntitySelectableItem()">
@@ -72,8 +72,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-success" (click)="createEntitySelectableGroup()">{{'Create' | translate}}</button>
-        <button class="btn btn-accent text-black-50" (click)="closeFrame()">{{'Close' | translate}}</button>
+        <button id="createEntitySelectSaveBtn" class="btn btn-success" (click)="createEntitySelectableGroup()">{{'Create' | translate}}</button>
+        <button id="createEntitySelectDeleteBtn" class="btn btn-accent text-black-50" (click)="closeFrame()">{{'Close' | translate}}</button>
       </div>
     </div>
   </div>

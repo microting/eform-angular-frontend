@@ -444,6 +444,12 @@ namespace CustomActions
                     DeleteDirectory(Path.Combine(uiIisDir, "dist"));
                 }
                 catch { }
+
+                try
+                {                    
+                    DeleteDirectory(Path.Combine("c:\\", "MicrotingTemp"));
+                }
+                catch { }
                 try
                 {
                     BackupPluginSettings(session, uiIisDir);

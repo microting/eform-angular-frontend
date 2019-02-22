@@ -13,8 +13,8 @@
                        [mdbValidate]="false"
                        required
                        [(ngModel)]="selectedWorkerDto.firstName"
-                       id="firstName" type="text" class="form-control">
-                <label for="firstName">{{'First Name' | translate}}</label>
+                       id="firstNameEdit" type="text" class="form-control">
+                <label for="firstNameEdit">{{'First Name' | translate}}</label>
               </div>
             </div>
           </div>
@@ -25,15 +25,15 @@
                        [mdbValidate]="false"
                        required
                        [(ngModel)]="selectedWorkerDto.lastName"
-                       id="lastName" type="text" class="form-control">
-                <label for="lastName">{{'Last Name' | translate}}</label>
+                       id="lastNameEdit" type="text" class="form-control">
+                <label for="lastNameEdit">{{'Last Name' | translate}}</label>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-success"
+        <button class="btn btn-success" id="workerEditSaveBtn"
                 [disabled]="!selectedWorkerDto.firstName || !selectedWorkerDto.lastName"
                 (click)="updateSingle()">{{'Save' | translate}}</button>
         <button class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Cancel' | translate}}</button>
