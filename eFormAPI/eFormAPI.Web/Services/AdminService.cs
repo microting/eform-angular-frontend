@@ -205,11 +205,11 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                var userResult = await _userManager.FindByNameAsync(userRegisterModel.UserName);
+                var userResult = await _userManager.FindByNameAsync(userRegisterModel.Email);
                 if (userResult != null)
                 {
                     return new OperationResult(false,
-                        _localizationService.GetStringWithFormat("UserUserNameAlreadyExist", userRegisterModel.UserName));
+                        _localizationService.GetStringWithFormat("UserUserNameAlreadyExist", userRegisterModel.Email));
                 }
 
                 if (!_dbContext.SecurityGroups.Any(x => x.Id == userRegisterModel.GroupId))
