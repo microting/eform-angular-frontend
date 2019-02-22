@@ -64,7 +64,7 @@ namespace eFormAPI.Web.Hosting.Helpers
                         {
                             var pluginDbName = $"Database={dbPrefix}_{plugin.PluginId};";
                             var pluginConnectionString = connectionString.Replace(dbNameSection, pluginDbName);
-                            var newPlugin = new EformPlugin()
+                            var newPlugin = new EformPlugin
                             {
                                 PluginId = plugin.PluginId,
                                 ConnectionString = pluginConnectionString,
@@ -72,11 +72,8 @@ namespace eFormAPI.Web.Hosting.Helpers
                             };
                             dbContext.EformPlugins.Add(newPlugin);
                             dbContext.SaveChanges();
-                            plugins.Add(plugin);
                         }
                     }
-
-
                 }
             }
 

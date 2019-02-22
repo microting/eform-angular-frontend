@@ -60,7 +60,6 @@ namespace eFormAPI.Web.Services
             }
         }
 
-
         public OperationResult Сreate(WorkerCreateModel model)
         {
             try
