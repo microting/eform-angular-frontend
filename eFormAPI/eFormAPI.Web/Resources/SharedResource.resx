@@ -573,4 +573,13 @@
   <data name="PluginNotFound" xml:space="preserve">
     <value>Plugin not found</value>
   </data>
+  <data name="CantEditPrimaryAdminUser" xml:space="preserve">
+    <value>You can't view, change or delete primary admin</value>
+  </data>
+  <data name="CantUpdateRoleForPrimaryAdminUser" xml:space="preserve">
+    <value>It's not possible to change role for primary admin</value>
+  </data>
+  <data name="RoleNotFound" xml:space="preserve">
+    <value>Role not fond</value>
+  </data>
 </root>

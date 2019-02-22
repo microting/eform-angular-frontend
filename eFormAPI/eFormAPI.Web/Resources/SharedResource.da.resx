@@ -573,4 +573,13 @@
   <data name="PluginNotFound" xml:space="preserve">
     <value>Plugin ikke fundet</value>
   </data>
+  <data name="CantEditPrimaryAdminUser" xml:space="preserve">
+    <value>Du kan ikke se, ændre eller slette primæradministrator</value>
+  </data>
+  <data name="CantUpdateRoleForPrimaryAdminUser" xml:space="preserve">
+    <value>Det er ikke muligt at skifte rolle for primæradministrator</value>
+  </data>
+  <data name="RoleNotFound" xml:space="preserve">
+    <value>Rolle ikke fundet</value>
+  </data>
 </root>
