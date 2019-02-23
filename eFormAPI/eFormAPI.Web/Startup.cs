@@ -198,11 +198,12 @@ namespace eFormAPI.Web
                     "default",
                     "api/{controller=Home}/{action=Index}/{id?}");
             });
-            if (env.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "API V1"); });
-            }
+            //if (env.IsDevelopment())
+            //{ 
+            // Since swagger is not accessible from outside the local server we do not need to disable it for production.
+            app.UseSwagger();
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "API V1"); });
+            //}
 
             // Plugins
             app.UseEFormPlugins(Plugins);
