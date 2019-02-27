@@ -8,7 +8,7 @@ namespace eFormAPI.Web.Infrastructure.Models.Reports
         public int Id { get; set; }
         public string Label { get; set; }
 
-        public List<EformReportElementsModel> ElementList { get; set; }
-            = new List<EformReportElementsModel>();
+        public List<EformReportElementModel> ElementList { get; set; }
+            = new List<EformReportElementModel>();
     }
 }

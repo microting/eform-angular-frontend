@@ -2,7 +2,7 @@
   <div class="card z-depth-3 mb-4 mt-4" style="width: 100%">
     <div class="card-body">
       <app-eform-report-switch
-        [dragulaContainerName]="element.id + element.label"
+        [dragulaContainerName]="element.label + '_' + dragulaElementContainerName"
         (dataItemListChanged)="onDataItemListChanged($event)"
         [dataItemList]="element.dataItemList"></app-eform-report-switch>
     </div>
