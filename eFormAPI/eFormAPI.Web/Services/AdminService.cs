@@ -127,6 +127,17 @@ namespace eFormAPI.Web.Services
         {
             try
             {
+                if (userRegisterModel.Id == 1 && _userService.UserId != 1)
+                {
+                    return new OperationResult(false, _localizationService.GetString("CantEditPrimaryAdminUser"));
+                }
+
+                if (userRegisterModel.Role != EformRole.Admin && userRegisterModel.Role != EformRole.User)
+                {
+                    return new OperationResult(false,
+                        _localizationService.GetString("RoleNotFound"));
+                }
+
                 var user = await _userService.GetByIdAsync(userRegisterModel.Id);
                 if (user == null)
                 {
@@ -134,16 +145,17 @@ namespace eFormAPI.Web.Services
                         _localizationService.GetStringWithFormat("UserNotFoundUserName", userRegisterModel.UserName));
                 }
 
+
+                if (_userService.UserId == 1 && !await _userManager.IsInRoleAsync(user, userRegisterModel.Role))
+                {
+                    return new OperationResult(false, _localizationService.GetString("CantUpdateRoleForPrimaryAdminUser"));
+                }
+
                 var isAdmin = await _userManager.IsInRoleAsync(user, EformRole.Admin);
                 if (!_dbContext.SecurityGroups.Any(x => x.Id == userRegisterModel.GroupId) && !isAdmin)
                 {
                     return new OperationResult(false,
                         _localizationService.GetString("SecurityGroupNotFound"));
-                }
-
-                if (userRegisterModel.Role == null)
-                {
-                    return new OperationResult(false, _localizationService.GetString("RoleIsRequired"));
                 }
 
                 if (isAdmin && _userService.Role != EformRole.Admin)
@@ -156,6 +168,7 @@ namespace eFormAPI.Web.Services
                 user.UserName = userRegisterModel.Email;
                 user.FirstName = userRegisterModel.FirstName;
                 user.LastName = userRegisterModel.LastName;
+
                 var result = await _userManager.UpdateAsync(user);
                 if (!result.Succeeded)
                 {
@@ -167,6 +180,15 @@ namespace eFormAPI.Web.Services
                 {
                     await _userManager.RemovePasswordAsync(user);
                     await _userManager.AddPasswordAsync(user, userRegisterModel.Password);
+                }
+
+                // change role
+                if (!await _userManager.IsInRoleAsync(user, userRegisterModel.Role))
+                {
+                    var currentUserRole = await _userManager.GetRolesAsync(user);
+                    await _userManager.RemoveFromRolesAsync(user, currentUserRole);
+
+                    await _userManager.AddToRoleAsync(user, userRegisterModel.Role);
                 }
 
                 // Change group
@@ -191,6 +213,19 @@ namespace eFormAPI.Web.Services
                     await _dbContext.SaveChangesAsync();
                 }
 
+                if (userRegisterModel.Role == EformRole.Admin)
+                {
+                    var securityGroupUsers = await _dbContext.SecurityGroupUsers.Where(x => x.EformUserId == user.Id)
+                        .ToListAsync();
+
+                    if (securityGroupUsers.Any())
+                    {
+                        _dbContext.SecurityGroupUsers.RemoveRange(securityGroupUsers);
+
+                        await _dbContext.SaveChangesAsync();
+                    }
+                }
+
                 return new OperationResult(true,
                     _localizationService.GetStringWithFormat("UserUserNameWasUpdated", user.UserName));
             }
@@ -205,14 +240,21 @@ namespace eFormAPI.Web.Services
         {
             try
             {
+                if (userRegisterModel.Role != EformRole.Admin && userRegisterModel.Role != EformRole.User)
+                {
+                    return new OperationResult(false,
+                        _localizationService.GetString("RoleNotFound"));
+                }
+
                 var userResult = await _userManager.FindByNameAsync(userRegisterModel.Email);
+
                 if (userResult != null)
                 {
                     return new OperationResult(false,
                         _localizationService.GetStringWithFormat("UserUserNameAlreadyExist", userRegisterModel.Email));
                 }
 
-                if (!_dbContext.SecurityGroups.Any(x => x.Id == userRegisterModel.GroupId))
+                if (userRegisterModel.Role != EformRole.Admin && !_dbContext.SecurityGroups.Any(x => x.Id == userRegisterModel.GroupId))
                 {
                     return new OperationResult(false,
                         _localizationService.GetString("SecurityGroupNotFound"));
@@ -235,10 +277,12 @@ namespace eFormAPI.Web.Services
                     return new OperationResult(false, string.Join(" ", result.Errors.Select(x=>x.Description).ToArray()));
                 }
 
+               
+
                 // change role
-                await _userManager.AddToRoleAsync(user, EformRole.User);
+                await _userManager.AddToRoleAsync(user, userRegisterModel.Role);
                 // add to group
-                if (userRegisterModel.GroupId > 0 && user.Id > 0)
+                if (userRegisterModel.GroupId > 0 && user.Id > 0 && userRegisterModel.Role != EformRole.Admin)
                 {
                     var securityGroupUser = new SecurityGroupUser()
                     {

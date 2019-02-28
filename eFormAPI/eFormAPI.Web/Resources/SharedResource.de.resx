@@ -555,4 +555,13 @@
   <data name="PluginNotFound" xml:space="preserve">
     <value>Plugin nicht gefunden</value>
   </data>
+  <data name="CantEditPrimaryAdminUser" xml:space="preserve">
+    <value>U kunt primaire beheerder niet bekijken, wijzigen of verwijderen</value>
+  </data>
+  <data name="CantUpdateRoleForPrimaryAdminUser" xml:space="preserve">
+    <value>Het is niet mogelijk om de rol voor primaire beheerder te wijzigen</value>
+  </data>
+  <data name="RoleNotFound" xml:space="preserve">
+    <value>Rol niet gevonden</value>
+  </data>
 </root>

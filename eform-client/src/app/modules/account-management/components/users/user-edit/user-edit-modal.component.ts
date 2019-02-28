@@ -13,7 +13,6 @@ export class UserEditModalComponent implements OnInit {
   @Input() availableGroups: SecurityGroupsModel = new SecurityGroupsModel();
   @Output() onUserUpdated: EventEmitter<void> = new EventEmitter<void>();
   selectedUserModel: UserRegisterModel = new UserRegisterModel;
-  newUserModel: UserRegisterModel = new UserRegisterModel;
   spinnerStatus = false;
 
   constructor(private adminService: AdminService) {
@@ -44,5 +43,10 @@ export class UserEditModalComponent implements OnInit {
         this.frame.hide();
       } this.spinnerStatus = false;
     });
+  }
+
+  onUserRoleUpdated(e: string) {
+    this.selectedUserModel.role = e;
+    this.selectedUserModel.groupId = null;
   }
 }
