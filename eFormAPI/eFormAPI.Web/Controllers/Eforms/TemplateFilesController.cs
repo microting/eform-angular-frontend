@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Security;
 using eFormAPI.Web.Infrastructure;
+using eFormShared;
 using ICSharpCode.SharpZipLib.Zip;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -49,7 +50,7 @@ namespace eFormAPI.Web.Controllers.Eforms
             var fileName = $"{id}_{DateTime.Now.Ticks}.csv";
             var filePath = PathHelper.GetOutputPath(fileName);
             var fullPath = core.CasesToCsv(id, null, null, filePath,
-                $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image/", ",", "");
+                $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", ",", "");
             var fileStream = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
             return File(fileStream, "application/octet-stream", fileName);
         }
@@ -62,7 +63,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         public IActionResult GetImage(string fileName, string ext, string noCache = "noCache")
         {
             var core = _coreHelper.GetCore();
-            var filePath = $"{core.GetPicturePath()}\\{fileName}.{ext}";
+            var filePath = $"{core.GetSdkSetting(Settings.fileLocationPicture)}\\{fileName}.{ext}";
             if (!System.IO.File.Exists(filePath))
             {
                 return NotFound($"Trying to find file at location: {filePath}");
@@ -80,7 +81,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         public OperationResult RotateImage(string fileName)
         {
             var core = _coreHelper.GetCore();
-            var filePath = $"{core.GetPicturePath()}\\{fileName}";
+            var filePath = $"{core.GetSdkSetting(Settings.fileLocationPicture)}\\{fileName}";
             if (!System.IO.File.Exists(filePath))
             {
                 return new OperationResult(false, _localizationService.GetString("FileNotFound"));
@@ -138,7 +139,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         public IActionResult GetPdfFile(string fileName)
         {
             var core = _coreHelper.GetCore();
-            var filePath = $"{core.GetPdfPath()}\\{fileName}.pdf";
+            var filePath = $"{core.GetSdkSetting(Settings.fileLocationPdf)}\\{fileName}.pdf";
             if (!System.IO.File.Exists(filePath))
             {
                 return NotFound();
@@ -166,7 +167,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                 var core = _coreHelper.GetCore();
                 var filePath = core.CaseToPdf(caseId, templateId.ToString(),
                     DateTime.Now.ToString("yyyyMMddHHmmssffff"),
-                    $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image/");
+                    $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/");
                 //DateTime.Now.ToString("yyyyMMddHHmmssffff"), $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image?&filename=");
                 if (!System.IO.File.Exists(filePath))
                 {
@@ -200,7 +201,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                 var core = _coreHelper.GetCore();
                 var caseId = core.CaseReadFirstId(templateId, "not_revmoed");
                 var filePath = core.CaseToJasperXml((int) caseId, DateTime.Now.ToString("yyyyMMddHHmmssffff"),
-                    $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image/");
+                    $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/");
                 if (!System.IO.File.Exists(filePath))
                 {
                     return NotFound();
@@ -238,11 +239,11 @@ namespace eFormAPI.Web.Controllers.Eforms
                 }
 
                 var saveFolder =
-                    Path.Combine(core.GetJasperPath(),
+                    Path.Combine(core.GetSdkSetting(Settings.fileLocationJasper),
                         Path.Combine("templates", templateId.ToString()));
 
                 var zipArchiveFolder =
-                    Path.Combine(core.GetJasperPath(),
+                    Path.Combine(core.GetSdkSetting(Settings.fileLocationJasper),
                         Path.Combine("templates", Path.Combine("zip-archives", templateId.ToString())));
 
                 if (string.IsNullOrEmpty(saveFolder))

@@ -5,6 +5,7 @@
         public HeaderSettingsModel HeaderSettingsModel { get; set; }
         public LoginPageSettingsModel LoginPageSettingsModel { get; set; }
         public SMTPSettingsModel SMTPSettingsModel { get; set; }
+        public SwiftSettingsModel SwiftSettingsModel { get; set; }
         public string SiteLink { get; set; }
         public string AssemblyVersion { get; set; }
 
@@ -13,6 +14,7 @@
             HeaderSettingsModel = new HeaderSettingsModel();
             LoginPageSettingsModel = new LoginPageSettingsModel();
             SMTPSettingsModel = new SMTPSettingsModel();
+            SwiftSettingsModel = new SwiftSettingsModel();
         }
     }
 }
