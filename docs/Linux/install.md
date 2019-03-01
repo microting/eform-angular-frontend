@@ -53,7 +53,7 @@ su - eformuser
 Use wget to download script
 
 ```bash
-wget https://raw.githubusercontent.com/microting/eform-angular-frontend/netcore/install.sh
+wget https://raw.githubusercontent.com/microting/eform-angular-frontend/master/install.sh
 ```
 
 Make script executable
