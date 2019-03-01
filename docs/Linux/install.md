@@ -48,15 +48,27 @@ if you are in root, you can run __su__ to login as new user
 su - eformuser
 ```
 
-### Downloading/Running script
+### Downloading script
 
 Use wget to download script
 
 ```bash
-sudo -s
-\curl -sSL https://raw.githubusercontent.com/microting/eform-angular-frontend/netcore/install.sh | bash
+wget https://raw.githubusercontent.com/microting/eform-angular-frontend/netcore/install.sh
 ```
 
+Make script executable
+
+```bash
+sudo chmod +x install.sh
+```
+
+## Running script
+
+Launch script with command
+
+```bash
+sudo ./install.sh
+```
 
 You should see this window: 
 ![Install](main_script_window.png "Install")
