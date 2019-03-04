@@ -1,18 +1,28 @@
 #!/bin/bash
 
 ################## START OF CONFIG PARAMETERS ##################
-export INSTANCE_PROJECT_NAME=""
-export DATABASE_NAME=""
-export SWIFT_FOLDER_NAME=""
-export MAX_NUMBER_OF_BACKUPS=288
-export SHOULD_RESTORE_DATABASE=true
-export SHOULD_SETUP_DB_BACKUP=true
-export SHOULD_INSTALL_POSTFIX=true
-export DOMAIN_NAME=""
-export RELAY_HOST=""
+declare -A conf_parameters=(
+    ["DATABASE_NAME"]='""'
+    ["SWIFT_FOLDER_NAME"]='""'
+    ["MAX_NUMBER_OF_BACKUPS"]=288
+    ["SHOULD_RESTORE_DATABASE"]=false
+    ["SHOULD_SETUP_DB_BACKUP"]=true
+    ["SHOULD_INSTALL_POSTFIX"]=true
+    ["IS_PRODUCTION"]=true
+    ["DOMAIN_NAME"]='""'
+    ["RELAY_HOST"]='"'
+)
+# WRITE CONFIG FILE
+mkdir -p /var/www/integration; for conf_param in "${!conf_parameters[@]}"; do echo "$conf_param=${conf_parameters["$conf_param"]}" >> /var/www/integration/openstack.conf; done
 ##################  END OF CONFIG PARAMETERS  ##################
 
+# LOAD CONFIG
+source /var/www/integration/openstack.conf
+
 echo "################## BASIC SETUP ##################"
+
+apt update
+
 export DEBIAN_FRONTEND=noninteractive
 export EC2_INSTANCE_ID=`curl --insecure http://169.254.169.254/openstack/2012-08-10/meta_data.json | cut -d '"' -f 4`
 echo $EC2_INSTANCE_ID
@@ -38,17 +48,29 @@ echo $INSTANCE_HOSTNAME
 echo "$INSTANCE_IP $INSTANCE_HOSTNAME" >> /etc/hosts
 #sed -i "s/SERVER_NAME_REPLACE_ME/$INSTANCE_IP/g" /opt/nginx/conf/nginx.conf # > /opt/nginx/conf/nginx.conf
 
+apt-get -y install software-properties-common
+apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
+add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://mirror.one.com/mariadb/repo/10.3/ubuntu bionic main'
+
+apt update
+
+debconf-set-selections <<< 'mariadb-server-10.3 mysql-server/root_password password your_password'
+debconf-set-selections <<< 'mariadb-server-10.3 mysql-server/root_password_again password your_password'
+
+apt-get -y install mariadb-server
+
+mysql -uroot <<MYSQL_SCRIPT
+CREATE USER '$INSTANCE_HOSTNAME'@'localhost' IDENTIFIED BY 'your_password';
+GRANT ALL PRIVILEGES ON *.* TO '$INSTANCE_HOSTNAME'@'localhost';
+MYSQL_SCRIPT
 
 
-wget https://raw.githubusercontent.com/microting/eform-angular-frontend/master/install.sh
-chmod +x install.sh
-./install.sh --port=80 --hostname=_ --launch-env=Production --username=ubuntu --ssl --silent
+#wget https://raw.githubusercontent.com/microting/eform-angular-frontend/master/install.sh
+#chmod +x install.sh
+#./install.sh --port=80 --hostname=_ --launch-env=Production --username=ubuntu --ssl --silent
 
 
-debconf-set-selections <<< 'mysql-server mysql-server/root_password password your_password'
-debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password your_password'
 
-apt-get -y install mysql-server
 
 if [ $SHOULD_SETUP_DB_BACKUP = true ]
     then
