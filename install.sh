@@ -124,23 +124,23 @@ preparing_backend() {
     cd ../eFormAPI/eFormAPI.Web/
     su $CURENTUSER -c \
     "dotnet publish -o out"
-    mkdir -p /opt/www/aspnetcore/eform-app
+    mkdir -p /var/www/aspnetcore/eform-app
     mkdir -p /out/www/aspnetcore/eform-app/wwwroot
 
-    rsync -aP out/* /opt/www/aspnetcore/eform-app
+    rsync -aP out/* /var/www/aspnetcore/eform-app
 
     cd ../../
     cd eform-client
-    rsync -aP dist/* /opt/www/aspnetcore/eform-app/wwwroot  
-    chown -R www-data:www-data /opt/www
+    rsync -aP dist/* /var/www/aspnetcore/eform-app/wwwroot  
+    chown -R www-data:www-data /var/www
 
     cat > /etc/systemd/system/eform.service << EndOfUnitFile
 [Unit]
 Description=eForm application
 
 [Service]
-WorkingDirectory=/opt/www/aspnetcore/eform-app
-ExecStart=/usr/bin/dotnet /opt/www/aspnetcore/eform-app/eFormAPI.Web.dll
+WorkingDirectory=/var/www/aspnetcore/eform-app
+ExecStart=/usr/bin/dotnet /var/www/aspnetcore/eform-app/eFormAPI.Web.dll
 Restart=always
 RestartSec=10 # Restart service
 SyslogIdentifier=dotnet-eform
