@@ -22,6 +22,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using Castle.Core.Internal;
 using eFormAPI.Web.Infrastructure.Models.Settings.Admin;
 using eFormAPI.Web.Infrastructure.Models.Settings.Initial;
+using eFormShared;
 
 namespace eFormAPI.Web.Services
 {
@@ -412,7 +413,14 @@ namespace eFormAPI.Web.Services
                         SecondaryText = _loginPageSettings.Value.SecondaryText,
                         SecondaryTextVisible = _loginPageSettings.Value.SecondaryTextVisible,
                     },
-                    SiteLink = core.GetHttpServerAddress(),
+                    SwiftSettingsModel = new SwiftSettingsModel()
+                    {
+                        SwiftEnabled = (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true"),
+                        SwiftUserName = core.GetSdkSetting(Settings.swiftUserName),
+                        SwiftPassword = core.GetSdkSetting(Settings.swiftPassword),
+                        SwiftEndpoints = core.GetSdkSetting(Settings.swiftEndPoints)
+                    },
+                    SiteLink = core.GetSdkSetting(Settings.httpServerAddress),
                     AssemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString()
                 };
                 return new OperationDataResult<AdminSettingsModel>(true, model);
@@ -455,7 +463,11 @@ namespace eFormAPI.Web.Services
                     option.SecondaryText = adminSettingsModel.LoginPageSettingsModel.SecondaryText;
                     option.SecondaryTextVisible = adminSettingsModel.LoginPageSettingsModel.SecondaryTextVisible;
                 }, _dbContext);
-                core.SetHttpServerAddress(adminSettingsModel.SiteLink);
+                core.SetSdkSetting(Settings.httpServerAddress, adminSettingsModel.SiteLink);
+                core.SetSdkSetting(Settings.swiftEnabled, adminSettingsModel.SwiftSettingsModel.SwiftEnabled.ToString());
+                core.SetSdkSetting(Settings.swiftUserName, adminSettingsModel.SwiftSettingsModel.SwiftUserName);
+                core.SetSdkSetting(Settings.swiftPassword, adminSettingsModel.SwiftSettingsModel.SwiftPassword);
+                core.SetSdkSetting(Settings.swiftEndPoints, adminSettingsModel.SwiftSettingsModel.SwiftEndpoints);
                 return new OperationResult(true, _localizationService.GetString("SettingsUpdatedSuccessfully"));
             }
             catch (Exception e)
