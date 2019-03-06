@@ -69,9 +69,11 @@ namespace eFormAPI.Web.Controllers.Eforms
             switch (extension)
             {
                 case "png":
+                    fileType = "image/png";
+                    break;
                 case "jpg":
                 case "jpeg":
-                    fileType = $"image/#{extension}";
+                    fileType = "image/jpeg";
                     break;
                 case "wav":
                     fileType = "audio/wav";
@@ -114,6 +116,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                     img.Mutate(x => x.Rotate(RotateMode.Rotate90));
                     img.Save(filePath);
                     img.Dispose();
+                    await core.PutFilToStorageSystem(filePath, fileName);
                     // TODO! Add method call to sdk to put file back into swift.
                 }
                 catch (Exception e)
