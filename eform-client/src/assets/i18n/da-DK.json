@@ -244,5 +244,12 @@
   "Information": "Information",
   "Duration": "Varighed",
   "Signature": "Underskrift",
-  "Audio": "Audio"
+  "Audio": "Audio",
+  "Are you sure you want to install plugin": "Er du sikker på, at du vil installere plugin",
+  "This may take up to 10 minutes and rewrite current plugin version if it is already exist in the system":   "Det kan tage op til 10 minutter og omskrive nuværende pluginversion, hvis den allerede findes i systemet",
+  "Installation": "Installation",
+  "Install": "Installere",
+  "Marketplace": "Markedsplads",
+  "Plugins Marketplace": "Plugins Markedsplads",
+  "Plugins Management": "Plugins Management"
 }

@@ -43,7 +43,7 @@ export const routes: Routes = [
       {
         path: 'plugins-settings',
         canActivate: [AdminGuard],
-        loadChildren: './modules/plugins-settings/plugins-settings.module#PluginsSettingsModule'
+        loadChildren: './modules/plugins-management/plugins-management.module#PluginsManagementModule'
       },
       {
         path: 'account-management',

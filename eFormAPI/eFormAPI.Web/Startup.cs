@@ -240,7 +240,7 @@ namespace eFormAPI.Web
             services.AddScoped<IEformGroupService, EformGroupService>();
             services.AddScoped<IEformPermissionsService, EformPermissionsService>();
             services.AddScoped<IEformReportsService, EformReportsService>();
-            services.AddScoped<IPluginsSettingsService, PluginsSettingsService>();
+            services.AddScoped<IPluginsManagementService, PluginsManagementService>();
         }
     }
 }
