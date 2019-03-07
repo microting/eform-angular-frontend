@@ -12,6 +12,7 @@ namespace eFormAPI.Web.Infrastructure.Models.Reports
 
         public int Position { get; set; }
         public bool Visibility { get; set; }
+        public bool IsNewPageItem { get; set; }
 
         public List<EformKeyValuePairModel> KeyValuePairList { get; set; }
             = new List<EformKeyValuePairModel>();
