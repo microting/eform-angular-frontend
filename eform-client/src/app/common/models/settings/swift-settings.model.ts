@@ -2,5 +2,7 @@ export class SwiftSettingsModel {
   swiftEnabled: boolean;
   swiftUserName: string;
   swiftPassword: string;
-  swiftEndpoints: string;
+  swiftEndpoint: string;
+  keystoneEndpoint: string;
+  customerNo: string;
 }
