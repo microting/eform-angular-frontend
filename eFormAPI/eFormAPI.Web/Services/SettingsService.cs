@@ -178,9 +178,11 @@ namespace eFormAPI.Web.Services
             try
             {
                 var adminTools = new AdminTools(sdkConnectionString);
-                // Setup SDK DB
+//                 Setup SDK DB
                 adminTools.DbSetup(initialSettingsModel.ConnectionStringSdk.Token);
-                var core = _coreHelper.GetCore();
+//                var core = _coreHelper.GetCore();
+                Core core = new Core();
+                core.StartSqlOnly(sdkConnectionString);
                 core.SetSdkSetting(Settings.customerNo, customerNo);
             }
             catch (Exception exception)
