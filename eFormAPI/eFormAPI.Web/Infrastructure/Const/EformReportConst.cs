@@ -21,17 +21,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace eFormAPI.Web.Infrastructure.Models.Permissions
+namespace eFormAPI.Web.Infrastructure.Const
 {
-    public class SecurityGroupModel
+    public static class EformReportConst
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int UserAmount { get; set; }
-
-        public List<SecurityGroupUserModel> UsersList { get; set; }
-            = new List<SecurityGroupUserModel>();
+        public const int ElementSize = 20;
+        public const int HeaderSize = 60;
+        public const int TotalPageSize = 640;
     }
 }

@@ -300,10 +300,26 @@
 
               <div class="md-form input-group">
                 <input mdbInputDirective [mdbValidate]="false"
-                       class="form-control" [(ngModel)]="adminSettingsModel.swiftSettingsModel.swiftEndpoints"
-                       placeholder="http://172.16.4.4:8080" #swiftEndpoints="ngModel" type="text" value=""
-                       name="swiftEndpoints" id="swiftEndpoints">
-                <label for="swiftEndpoints">{{ 'Endpoints' | translate }}</label>
+                       class="form-control" [(ngModel)]="adminSettingsModel.swiftSettingsModel.swiftEndpoint"
+                       placeholder="http://172.16.4.4:8080/swift/v1" #swiftEndpoint="ngModel" type="text" value=""
+                       name="swiftEndpoint" id="swiftEndpoint">
+                <label for="swiftEndpoint">{{ 'Swift Endpoint' | translate }}</label>
+              </div>
+
+              <div class="md-form input-group">
+                <input mdbInputDirective [mdbValidate]="false"
+                       class="form-control" [(ngModel)]="adminSettingsModel.swiftSettingsModel.keystoneEndpoint"
+                       placeholder="http://172.16.4.4:5000/v2.0" #keystoneEndpoint="ngModel" type="text" value=""
+                       name="keystoneEndpoint" id="keystoneEndpoint">
+                <label for="keystoneEndpoint">{{ 'Keystone Endpoint' | translate }}</label>
+              </div>
+
+              <div class="md-form input-group">
+                <input mdbInputDirective [mdbValidate]="false"
+                       class="form-control" [(ngModel)]="adminSettingsModel.swiftSettingsModel.customerNo"
+                       #customerNo="ngModel" type="text" value=""
+                       name="customerNo" id="customerNo">
+                <label for="customerNo">{{ 'Customer no' | translate }}</label>
               </div>
             </div>
           </div>

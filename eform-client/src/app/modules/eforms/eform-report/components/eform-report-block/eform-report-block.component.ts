@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren} from '@angular/core';
 import {EformReportDataItem, EformReportElement} from 'src/app/common/models';
+import {UUID} from 'angular2-uuid';
 
 @Component({
   selector: 'app-eform-report-block',
@@ -11,6 +12,8 @@ export class EformReportBlockComponent implements OnInit {
   @Output() onElementVisibilityChanged: EventEmitter<{id: number, visibility: boolean}> =
     new EventEmitter<{id: number, visibility: boolean}>();
   @Output() elementChanged: EventEmitter<EformReportElement> = new EventEmitter();
+  dragulaElementContainerName = UUID.UUID();
+
   constructor() { }
 
   ngOnInit() {

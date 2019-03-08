@@ -23,15 +23,18 @@ SOFTWARE.
 */
 using System.Collections.Generic;
 
-namespace eFormAPI.Web.Infrastructure.Models.Permissions
+namespace eFormAPI.Web.Infrastructure.Models.Reports
 {
-    public class SecurityGroupModel
+    public class EformReportElementModel
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public int UserAmount { get; set; }
+        public int ElementId { get; set; }
+        public string Label { get; set; }
 
-        public List<SecurityGroupUserModel> UsersList { get; set; }
-            = new List<SecurityGroupUserModel>();
+        public List<EformReportDataItemModel> DataItemList { get; set; }
+            = new List<EformReportDataItemModel>();
+
+        public List<EformReportElementModel> ElementList { get; set; }
+            = new List<EformReportElementModel>();
     }
 }

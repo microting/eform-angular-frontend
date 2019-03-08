@@ -1,4 +1,27 @@
-﻿using System;
+﻿/*
+The MIT License (MIT)
+
+Copyright (c) 2007 - 2019 microting
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +30,7 @@ using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Eforms;
 using eFormAPI.Web.Infrastructure.Database;
 using eFormAPI.Web.Infrastructure.Database.Entities;
+using eFormAPI.Web.Infrastructure.Helpers;
 using eFormAPI.Web.Infrastructure.Models.Reports;
 using eFormData;
 using Microsoft.EntityFrameworkCore;
@@ -35,7 +59,7 @@ namespace eFormAPI.Web.Services
             _logger = logger;
         }
 
-        private static List<EformReportElementsModel> GetReportElementsList(BaseDbContext dbContext,
+        private static List<EformReportElementModel> GetReportElementsList(BaseDbContext dbContext,
             EformReportElement parent,
             List<object> elementList)
         {
@@ -47,7 +71,7 @@ namespace eFormAPI.Web.Services
             var elements = new List<Element>();
             var dataElements = new List<DataElement>();
             var groupElements = new List<GroupElement>();
-
+            
             var item = elementList.FirstOrDefault();
             if (item != null)
             {
@@ -94,7 +118,7 @@ namespace eFormAPI.Web.Services
 
             return parent.NestedElements
                 .Where(c => c.ParentId == parent.Id)
-                .Select(x => new EformReportElementsModel()
+                .Select(x => new EformReportElementModel()
                 {
                     Id = x.Id,
                     ElementId = x.ElementId,
@@ -103,11 +127,11 @@ namespace eFormAPI.Web.Services
                         .FirstOrDefault(),
                     ElementList = GetReportElementsList(dbContext, x,
                         (List<object>) groupElements.Where(y => y.Id == x.ElementId)
-                            .Select(y => (object) y.ElementList)
+                            .Select(y => new List<object>(y.ElementList))
                             .FirstOrDefault()),
                     DataItemList = GetReportDataItemList(dbContext, x, null,
                         (List<object>) dataElements.Where(y => y.Id == x.ElementId)
-                            .Select(y => (object) y.DataItemList)
+                            .Select(y => new List<object>(y.DataItemList))
                             .FirstOrDefault()),
                 }).ToList();
         }
@@ -116,6 +140,11 @@ namespace eFormAPI.Web.Services
             EformReportElement parentElement, EformReportDataItem parentDataItem,
             List<object> dataItemsList)
         {
+            if (dataItemsList == null)
+            {
+                dataItemsList = new List<object>();
+            }
+
             var parentItems = new List<EformReportDataItem>();
 
             if (parentElement != null)
@@ -296,7 +325,7 @@ namespace eFormAPI.Web.Services
                     .ToListAsync();
 
 
-                var reportElementsOrdered = new List<EformReportElementsModel>();
+                var reportElementsOrdered = new List<EformReportElementModel>();
                 foreach (var templateElement in template.ElementList)
                 {
                     var reportElement = reportElements
@@ -323,7 +352,7 @@ namespace eFormAPI.Web.Services
                     }
 
 
-                    var element = new EformReportElementsModel()
+                    var element = new EformReportElementModel()
                     {
                         Id = reportElement.Id,
                         ElementId = reportElement.ElementId,
@@ -367,6 +396,9 @@ namespace eFormAPI.Web.Services
                     IsWorkerNameVisible = eformReport.IsWorkerNameVisible,
                 };
                 result.EformReport = eformReportModel;
+
+                result.EformMainElement = new EformReportHelper().AddPageBreaks(result.EformMainElement);
+
                 return new OperationDataResult<EformReportFullModel>(true, result);
             }
             catch (Exception e)
@@ -472,7 +504,7 @@ namespace eFormAPI.Web.Services
             return list;
         }
 
-        public List<EformReportDataItemModel> ParseElements(List<EformReportElementsModel> elementsModels)
+        public List<EformReportDataItemModel> ParseElements(List<EformReportElementModel> elementsModels)
         {
             var list = new List<EformReportDataItemModel>();
 

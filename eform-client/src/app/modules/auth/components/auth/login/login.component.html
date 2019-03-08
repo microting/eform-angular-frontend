@@ -1,5 +1,5 @@
 <div class="mb-2">
-  <form [formGroup]="formLogin">
+  <form [formGroup]="formLogin" (ngSubmit)="submitLoginForm()">
     <div class="md-form">
       <i class="material-icons prefix">
         person
@@ -20,7 +20,7 @@
              type="password" id="password" name="password" class="form-control">
       <label for="password">{{'Password' | translate}}</label>
     </div>
-    <button mdbWavesEffect type="button" class="btn btn-success btn-lg btn-block" (click)="submitLoginForm()" id="loginBtn">
+    <button mdbWavesEffect type="submit"  class="btn btn-success btn-lg btn-block" id="loginBtn">
       {{'Login' | translate}}
     </button>
   </form>
