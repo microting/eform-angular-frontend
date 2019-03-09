@@ -66,8 +66,8 @@ namespace eFormAPI.Web.Services
                     .OrderBy(p => p.Position)
                     .Select(p => new MenuItemModel()
                         {
-                            Name = p.LocaleName.IsNullOrEmpty() 
-                                ? p.Name 
+                            Name = p.LocaleName.IsNullOrEmpty()
+                                ? p.Name
                                 : _localizationService.GetString(p.LocaleName),
                             Position = p.Position,
                             E2EId = p.E2EId,
@@ -92,8 +92,8 @@ namespace eFormAPI.Web.Services
                     .OrderBy(p => p.Position)
                     .Select(p => new MenuItemModel()
                         {
-                            Name = p.LocaleName.IsNullOrEmpty() 
-                                ? p.Name 
+                            Name = p.LocaleName.IsNullOrEmpty()
+                                ? p.Name
                                 : _localizationService.GetString(p.LocaleName),
                             Position = p.Position,
                             E2EId = p.E2EId,
@@ -137,9 +137,9 @@ namespace eFormAPI.Web.Services
                     }
                 });
                 // Add menu from plugins
-                if (Startup.Plugins.Any())
+                if (Program.Plugins.Any())
                 {
-                    foreach (var plugin in Startup.Plugins)
+                    foreach (var plugin in Program.Plugins)
                     {
                         var pluginMenu = plugin.HeaderMenu(_serviceProvider);
                         result.LeftMenu.AddRange(pluginMenu.LeftMenu);
@@ -212,12 +212,14 @@ namespace eFormAPI.Web.Services
                         {
                             newList.Add(menuItem);
                         }
+
                         break;
                     case "Plugins Settings":
                         if (_userService.IsAdmin())
                         {
                             newList.Add(menuItem);
                         }
+
                         break;
                     case "Security":
                         break;

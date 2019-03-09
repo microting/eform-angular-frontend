@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Advanced;
 using eFormAPI.Web.Abstractions.Eforms;
 using eFormAPI.Web.Abstractions.Security;
 using eFormAPI.Web.Hosting.Extensions;
-using eFormAPI.Web.Hosting.Helpers;
 using eFormAPI.Web.Infrastructure.Database;
 using eFormAPI.Web.Services;
 using eFormAPI.Web.Services.Security;
@@ -23,7 +20,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.Extensions.Localization;
-using Microting.eFormApi.BasePn;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
@@ -35,12 +31,9 @@ namespace eFormAPI.Web
 {
     public class Startup
     {
-        public static List<IEformPlugin> Plugins = new List<IEformPlugin>();
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            Plugins = PluginHelper.GetPlugins(Configuration);
         }
 
         public IConfiguration Configuration { get; }
@@ -77,12 +70,12 @@ namespace eFormAPI.Web
                     services.AddEntityFrameworkSqlServer()
                         .AddDbContext<BaseDbContext>(o => o.UseSqlServer(Configuration.MyConnectionString(),
                             b => b.MigrationsAssembly("eFormAPI.Web")));
-                }   
+                }
             }
-            
+
 //#endif
             // plugins
-            services.AddEFormPluginsDbContext(Configuration, Plugins);
+            services.AddEFormPluginsDbContext(Configuration, Program.Plugins);
             // Identity services
             services.AddIdentity<EformUser, EformRole>()
                 .AddEntityFrameworkStores<BaseDbContext>()
@@ -112,9 +105,10 @@ namespace eFormAPI.Web
             services.AddTransient<IStringLocalizer, JsonStringLocalizer>();
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             // MVC and API services with Plugins
-            services.AddEFormMvc(Plugins);
+            services.AddEFormMvc(Program.Plugins);
             // Writable options
-            services.ConfigureWritable<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"), "connection.json");
+            services.ConfigureWritable<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"),
+                "connection.json");
             // Database options
             services.ConfigureDbOptions<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
             services.ConfigureDbOptions<EmailSettings>(Configuration.GetSection("EmailSettings"));
@@ -122,6 +116,15 @@ namespace eFormAPI.Web
             services.ConfigureDbOptions<HeaderSettings>(Configuration.GetSection("HeaderSettings"));
             services.ConfigureDbOptions<ConnectionStringsSdk>(Configuration.GetSection("ConnectionStringsSdk"));
             services.ConfigureDbOptions<EformTokenOptions>(Configuration.GetSection("EformTokenOptions"));
+            // Database plugins options
+            foreach (var plugin in Program.Plugins)
+            {
+                plugin.ConfigureOptionsServices(
+                    services,
+                    Configuration
+                );
+            }
+            
             // Form options
             services.Configure<FormOptions>(x =>
             {
@@ -151,7 +154,7 @@ namespace eFormAPI.Web
                 });
             });
             // plugins
-            services.AddEFormPlugins(Plugins);
+            services.AddEFormPlugins(Program.Plugins);
             ConnectServices(services);
         }
 
@@ -206,7 +209,7 @@ namespace eFormAPI.Web
             //}
 
             // Plugins
-            app.UseEFormPlugins(Plugins);
+            app.UseEFormPlugins(Program.Plugins);
             // Route all unknown requests to app root
             app.UseAngularMiddleware(env);
         }

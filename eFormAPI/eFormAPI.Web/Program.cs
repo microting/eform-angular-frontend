@@ -1,8 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
+using Castle.Core.Internal;
+using eFormAPI.Web.Hosting.Helpers;
 using eFormAPI.Web.Hosting.Settings;
 using eFormAPI.Web.Infrastructure.Database;
+using eFormAPI.Web.Infrastructure.Database.Factories;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +15,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microting.eFormApi.BasePn;
+using Microting.eFormApi.BasePn.Infrastructure.Delegates;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 
 namespace eFormAPI.Web
@@ -18,6 +25,7 @@ namespace eFormAPI.Web
     {
         private static CancellationTokenSource _cancelTokenSource = new CancellationTokenSource();
         private static bool _shouldBeRestarted;
+        public static List<IEformPlugin> Plugins = new List<IEformPlugin>();
 
         public static void Main(string[] args)
         {
@@ -51,9 +59,7 @@ namespace eFormAPI.Web
             _cancelTokenSource.Cancel();
         }
 
-        public delegate void ReloadDbConfiguration();
-
-        public static ReloadDbConfiguration ReloadDbConfigurationDelegate { get; set; }
+       // public static ReloadDbConfiguration ReloadDbConfigurationDelegate { get; set; }
 
         public static void MigrateDb(IWebHost webHost)
         {
@@ -118,7 +124,25 @@ namespace eFormAPI.Web
                         optional: true,
                         reloadOnChange: true);
                     var mainSettings = ConnectionStringManager.Read(filePath);
-                    config.AddEfConfiguration(mainSettings?.ConnectionStrings?.DefaultConnection);
+                    var defaultConnectionString = mainSettings?.ConnectionStrings?.DefaultConnection;
+                    config.AddEfConfiguration(defaultConnectionString);
+
+                    Plugins = PluginHelper.GetPlugins(defaultConnectionString);
+                    var contextFactory = new BaseDbContextFactory();
+                    using (var dbContext = contextFactory.CreateDbContext(new[] {defaultConnectionString}))
+                    {
+                        foreach (var plugin in Plugins)
+                        {
+                            var pluginEntity = dbContext.EformPlugins
+                                .FirstOrDefault(x => x.PluginId == plugin.PluginId);
+
+                            if (pluginEntity != null && !pluginEntity.ConnectionString.IsNullOrEmpty())
+                            {
+                                plugin.AddPluginConfig(config, pluginEntity.ConnectionString);
+                            }
+                        }
+                    }
+
                     config.AddEnvironmentVariables();
                 })
                 .UseStartup<Startup>()
