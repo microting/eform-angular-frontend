@@ -24,8 +24,8 @@
   
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2018.3.0" />
-    <PackageReference Include="Microting.eForm" Version="3.0.171" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="1.1.103" />
+    <PackageReference Include="Microting.eForm" Version="3.0.173" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="1.1.104" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
     <PackageReference Include="SharpZipLib.NETStandard" Version="1.0.7" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0005" />

@@ -37,6 +37,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using OpenStack.NetCoreSwiftClient.Extensions;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
 
@@ -106,9 +107,13 @@ namespace eFormAPI.Web.Controllers.Eforms
             
             if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
             {
-                var result =  await core.GetFileFromStorageSystem(fileName);
+                var ss =  await core.GetFileFromStorageSystem(fileName);
                     
-                return new FileStreamResult(result, fileType);
+                //return new FileStreamResult(result, fileType);
+                Response.ContentType = ss.ContentType;
+                Response.ContentLength = ss.ContentLength;
+
+                return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty("application/octet-stream"), fileName);
             }
             
             if (!System.IO.File.Exists(filePath))
@@ -132,7 +137,11 @@ namespace eFormAPI.Web.Controllers.Eforms
             {
                 var result =  await core.GetFileFromStorageSystem(fileName);
                 var fileStream = System.IO.File.Create(filePath);
-                result.CopyTo(fileStream);
+                Response.ContentType = result.ContentType;
+                Response.ContentLength = result.ContentLength;
+
+                //return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty("application/octet-stream"), fileName);
+                //result.CopyTo(fileStream);
                 fileStream.Close();
                 try
                 {

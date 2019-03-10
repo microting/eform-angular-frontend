@@ -32,6 +32,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+using OpenStack.NetCoreSwiftClient;
+using OpenStack.NetCoreSwiftClient.Extensions;
 
 namespace eFormAPI.Web.Controllers
 {
@@ -60,21 +62,26 @@ namespace eFormAPI.Web.Controllers
                 ext = "jpeg";
             }
             string fileType = $"image/{ext}";
-            if (!System.IO.File.Exists(filePath))
-            {
+            //if (!System.IO.File.Exists(filePath))
+            //{
                 
                 var core = _coreHelper.GetCore();
                 if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
                 {
-                    var result =  await core.GetFileFromStorageSystem(fileName);
-                    return new FileStreamResult(result, fileType);
+                    var ss =  await core.GetFileFromStorageSystem(fileName);
+                    Response.ContentType = ss.ContentType;
+                    Response.ContentLength = ss.ContentLength;
+
+                    return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty("application/octet-stream"), fileName);
+
+                    //return new FileStreamResult(result, fileType);
                 }
                 else
                 {
                     return NotFound();
                 }
                 
-            }
+            //}
 
             var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             return File(fileStream, fileType);
@@ -92,19 +99,32 @@ namespace eFormAPI.Web.Controllers
                 ext = "jpeg";
             }
             string fileType = $"image/{ext}";
-            if (!System.IO.File.Exists(filePath))
-            {
+            //if (!System.IO.File.Exists(filePath))
+            //{
                 var core = _coreHelper.GetCore();
                 if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
                 {
-                    var result =  await core.GetFileFromStorageSystem(fileName);
-                    return new FileStreamResult(result, fileType);
+                    var ss =  await core.GetFileFromStorageSystem(fileName);
+                    //FileStreamResult fileStreamResult = new FileStreamResult(result)
+                    //result.Seek(0, SeekOrigin.Begin);
+                    //return new FileStreamResult(result., fileType);
+                    //FileStream file = new FileStream(filePath, FileMode.Create, System.IO.FileAccess.Write);
+                    //result.CopyTo(file);
+                    //return File(file, fileType);
+                    //if (Request.GetQueryParameter("disposition").Count > 0)
+                    //    Response.Headers["Content-Disposition"] = Request.GetQueryParameter("disposition");
+                    Response.ContentType = ss.ContentType;
+                    Response.ContentLength = ss.ContentLength;
+
+                    //return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty("application/octet-stream"), fileName);
+                    return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty(fileType), fileName);
+                    
                 }
                 else
                 {
                     return NotFound();
                 }
-            }
+            //}
 
             var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             return File(fileStream, fileType);
