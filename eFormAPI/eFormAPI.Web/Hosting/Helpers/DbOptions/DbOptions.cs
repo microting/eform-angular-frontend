@@ -33,11 +33,12 @@ namespace eFormAPI.Web.Hosting.Helpers.DbOptions
             // Reload configuration from database
             if (ReloadDbConfigurationDelegates.ReloadDbConfigurationDelegate != null)
             {
-                var enumerable = ReloadDbConfigurationDelegates.ReloadDbConfigurationDelegate
-                    .GetInvocationList()
-                    .Select(x => x.DynamicInvoke());
-                foreach (var result in enumerable)
-                    Console.WriteLine(result);
+                var invocationList = ReloadDbConfigurationDelegates.ReloadDbConfigurationDelegate
+                    .GetInvocationList();
+                foreach (var func in invocationList)
+                {
+                    func.DynamicInvoke();
+                }
             }
         }
 

@@ -15,7 +15,7 @@ namespace eFormAPI.Web.Hosting.Settings
         public EfConfigurationProvider(string connectionString)
         {
             _connectionString = connectionString;
-        //    Program.ReloadDbConfigurationDelegate += new ReloadDbConfiguration(ReloadConfiguration);
+            ReloadDbConfigurationDelegates.ReloadDbConfigurationDelegate += ReloadConfiguration;
         }
 
         private void ReloadConfiguration()
