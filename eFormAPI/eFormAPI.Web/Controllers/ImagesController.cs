@@ -57,6 +57,7 @@ namespace eFormAPI.Web.Controllers
         {
             var filePath = PathHelper.GetEformSettingsImagesPath(fileName);
             string ext = Path.GetExtension(fileName).Replace(".", "");
+            
             if (ext == "jpg")
             {
                 ext = "jpeg";
@@ -68,14 +69,25 @@ namespace eFormAPI.Web.Controllers
             if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
             {
                 var ss =  await core.GetFileFromStorageSystem(fileName);
+                
+                if (ss == null)
+                {
+                    return NotFound($"Trying to find file at location: {filePath}");
+                }
+                
                 Response.ContentType = ss.ContentType;
                 Response.ContentLength = ss.ContentLength;
 
                 return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty("application/octet-stream"), fileName);
-
             }
             
-            return NotFound();
+            if (!System.IO.File.Exists(filePath))
+            {                
+                return NotFound($"Trying to find file at location: {filePath}");
+            }
+
+            var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            return File(fileStream, fileType);            
         }
 
         [HttpGet]
@@ -97,14 +109,25 @@ namespace eFormAPI.Web.Controllers
             if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
             {
                 var ss =  await core.GetFileFromStorageSystem(fileName);
+                
+                if (ss == null)
+                {
+                    return NotFound($"Trying to find file at location: {filePath}");
+                }
+                
                 Response.ContentType = ss.ContentType;
                 Response.ContentLength = ss.ContentLength;
 
-                return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty(fileType), fileName);
-                
+                return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty(fileType), fileName);                
             }
             
-            return NotFound();
+            if (!System.IO.File.Exists(filePath))
+            {                
+                return NotFound($"Trying to find file at location: {filePath}");
+            }
+
+            var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            return File(fileStream, fileType);  
         }
 
         [HttpPost]        
