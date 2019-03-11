@@ -62,29 +62,20 @@ namespace eFormAPI.Web.Controllers
                 ext = "jpeg";
             }
             string fileType = $"image/{ext}";
-            //if (!System.IO.File.Exists(filePath))
-            //{
                 
-                var core = _coreHelper.GetCore();
-                if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
-                {
-                    var ss =  await core.GetFileFromStorageSystem(fileName);
-                    Response.ContentType = ss.ContentType;
-                    Response.ContentLength = ss.ContentLength;
+            var core = _coreHelper.GetCore();
+            
+            if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
+            {
+                var ss =  await core.GetFileFromStorageSystem(fileName);
+                Response.ContentType = ss.ContentType;
+                Response.ContentLength = ss.ContentLength;
 
-                    return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty("application/octet-stream"), fileName);
+                return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty("application/octet-stream"), fileName);
 
-                    //return new FileStreamResult(result, fileType);
-                }
-                else
-                {
-                    return NotFound();
-                }
-                
-            //}
-
-            var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            return File(fileStream, fileType);
+            }
+            
+            return NotFound();
         }
 
         [HttpGet]
@@ -94,40 +85,26 @@ namespace eFormAPI.Web.Controllers
         {
             var filePath = PathHelper.GetEformLoginPageSettingsImagesPath(fileName);
             string ext = Path.GetExtension(fileName).Replace(".", "");
+            
             if (ext == "jpg")
             {
                 ext = "jpeg";
             }
+            
             string fileType = $"image/{ext}";
-            //if (!System.IO.File.Exists(filePath))
-            //{
-                var core = _coreHelper.GetCore();
-                if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
-                {
-                    var ss =  await core.GetFileFromStorageSystem(fileName);
-                    //FileStreamResult fileStreamResult = new FileStreamResult(result)
-                    //result.Seek(0, SeekOrigin.Begin);
-                    //return new FileStreamResult(result., fileType);
-                    //FileStream file = new FileStream(filePath, FileMode.Create, System.IO.FileAccess.Write);
-                    //result.CopyTo(file);
-                    //return File(file, fileType);
-                    //if (Request.GetQueryParameter("disposition").Count > 0)
-                    //    Response.Headers["Content-Disposition"] = Request.GetQueryParameter("disposition");
-                    Response.ContentType = ss.ContentType;
-                    Response.ContentLength = ss.ContentLength;
+            var core = _coreHelper.GetCore();
+            
+            if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
+            {
+                var ss =  await core.GetFileFromStorageSystem(fileName);
+                Response.ContentType = ss.ContentType;
+                Response.ContentLength = ss.ContentLength;
 
-                    //return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty("application/octet-stream"), fileName);
-                    return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty(fileType), fileName);
-                    
-                }
-                else
-                {
-                    return NotFound();
-                }
-            //}
-
-            var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            return File(fileStream, fileType);
+                return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty(fileType), fileName);
+                
+            }
+            
+            return NotFound();
         }
 
         [HttpPost]        
