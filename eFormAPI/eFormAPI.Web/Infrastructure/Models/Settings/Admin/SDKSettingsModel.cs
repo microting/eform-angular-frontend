@@ -1,4 +1,4 @@
-﻿/*
+/*
 The MIT License (MIT)
 
 Copyright (c) 2007 - 2019 microting
@@ -23,23 +23,16 @@ SOFTWARE.
 */
 namespace eFormAPI.Web.Infrastructure.Models.Settings.Admin
 {
-    public class AdminSettingsModel
+    public class SDKSettingsModel
     {
-        public HeaderSettingsModel HeaderSettingsModel { get; set; }
-        public LoginPageSettingsModel LoginPageSettingsModel { get; set; }
-        public SMTPSettingsModel SMTPSettingsModel { get; set; }
-        public SwiftSettingsModel SwiftSettingsModel { get; set; }
-        public SDKSettingsModel SdkSettingsModel { get; set; }
-        public string SiteLink { get; set; }
-        public string AssemblyVersion { get; set; }
-
-        public AdminSettingsModel()
-        {
-            HeaderSettingsModel = new HeaderSettingsModel();
-            LoginPageSettingsModel = new LoginPageSettingsModel();
-            SMTPSettingsModel = new SMTPSettingsModel();
-            SwiftSettingsModel = new SwiftSettingsModel();
-            SdkSettingsModel = new SDKSettingsModel();
-        }
+        public string CustomerNo { get; set; }
+        public string LogLevel { get; set; }
+        public string LogLimit { get; set; }
+        public string FileLocationPicture { get; set; }
+        public string FileLocationPdf { get; set; }
+        public string FileLocationReports { get; set; }
+        public string HttpServerAddress { get; set; }
+        
+        
     }
 }
