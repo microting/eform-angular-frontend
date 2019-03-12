@@ -7,7 +7,9 @@ import {OperationDataResult, OperationResult} from 'src/app/common/models';
 import {
   InstalledPluginsModel,
   InstalledPluginsRequestModel,
-  InstalledPluginUpdateModel, MarketplacePluginModel, MarketplacePluginsRequestModel
+  InstalledPluginUpdateModel,
+  MarketplacePluginsModel,
+  MarketplacePluginsRequestModel
 } from 'src/app/common/models/plugins-management';
 import {BaseService} from 'src/app/common/services/base.service';
 
@@ -30,7 +32,7 @@ export class PluginsManagementService extends BaseService {
     return this.put(PluginsManagementMethods.InstalledPlugins, model);
   }
 
-  getMarketplacePlugins(model: MarketplacePluginsRequestModel): Observable<OperationDataResult<Array<MarketplacePluginModel>>> {
+  getMarketplacePlugins(model: MarketplacePluginsRequestModel): Observable<OperationDataResult<MarketplacePluginsModel>> {
     return this.get(PluginsManagementMethods.MarketplacePlugins, model);
   }
 

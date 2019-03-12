@@ -1,10 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {PluginsManagementService} from '../../../../../common/services/plugins-management';
 import {
-  MarketplacePluginModel,
+  MarketplacePluginModel, MarketplacePluginsModel,
   MarketplacePluginsRequestModel
-} from '../../../../../common/models/plugins-management';
-import {InstalledPluginStatusEnum} from '../../../../../common/enums';
+} from 'src/app/common/models/plugins-management';
 
 @Component({
   selector: 'app-plugins-marketplace-page',
@@ -14,7 +13,7 @@ import {InstalledPluginStatusEnum} from '../../../../../common/enums';
 export class MarketplacePluginsPageComponent implements OnInit {
   @ViewChild('installMarketplacePluginModal') installMarketplacePluginModal;
   marketplacePluginsRequestModel: MarketplacePluginsRequestModel = new MarketplacePluginsRequestModel();
-  marketplacePluginsList: Array<MarketplacePluginModel> = [];
+  marketplacePluginsList: MarketplacePluginsModel = new MarketplacePluginsModel();
   spinnerStatus = false;
 
   constructor(private pluginManagementService: PluginsManagementService) {
@@ -26,7 +25,8 @@ export class MarketplacePluginsPageComponent implements OnInit {
 
   getMarketplacePlugins() {
     this.spinnerStatus = true;
-    this.pluginManagementService.getMarketplacePlugins(this.marketplacePluginsRequestModel).subscribe((data) => {
+    this.pluginManagementService.getMarketplacePlugins(this.marketplacePluginsRequestModel)
+      .subscribe((data) => {
       if (data && data.success) {
         this.marketplacePluginsList = data.model;
       }

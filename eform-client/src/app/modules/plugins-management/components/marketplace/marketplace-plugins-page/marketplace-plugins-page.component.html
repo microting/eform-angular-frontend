@@ -11,17 +11,13 @@
 <div class="container-fluid mt-4">
   <div class="row p-1 table-responsive no-gutters">
     <table class="table table-sm table-striped text-center z-depth-1">
-      <thead>
       <tr>
-        <th scope="col">{{ 'ID' }}</th>
-        <th scope="col">{{ 'Name' | translate }}</th>
-        <th scope="col">{{ 'Actions' | translate }}</th>
+        <th>{{ 'ID' }}</th>
+        <th>{{ 'Name' | translate }}</th>
+        <th>{{ 'Actions' | translate }}</th>
       </tr>
-      </thead>
-      <tbody id="tableBody">
-      <tr *ngFor="let plugin of marketplacePluginsList">
-        <td scope="row"></td>
-        <td>{{plugin.id}}</td>
+      <tr *ngFor="let plugin of marketplacePluginsList.pluginsList">
+        <td>{{plugin.pluginId}}</td>
         <td>{{plugin.name}}</td>
         <td>
           <div class="d-flex flex-row justify-content-center">
@@ -35,7 +31,6 @@
           </div>
         </td>
       </tr>
-      </tbody>
     </table>
     <eform-spinner [spinnerVisibility]="false"></eform-spinner>
   </div>
