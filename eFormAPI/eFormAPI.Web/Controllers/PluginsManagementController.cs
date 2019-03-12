@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Infrastructure.Models.Plugins;
-using eFormAPI.Web.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
@@ -35,14 +34,14 @@ namespace eFormAPI.Web.Controllers
 
         [HttpGet]
         [Route("api/plugins-management/marketplace")]
-        public async Task<OperationDataResult<InstalledPluginsModel>> GetMarketplacePlugins(MarketplacePluginsRequestModel model)
+        public async Task<OperationDataResult<PluginsStoreModel>> GetMarketplacePlugins(MarketplacePluginsRequestModel model)
         {
             return await _pluginsManagementService.GetMarketplacePlugins(model);
         }
 
         [HttpPut]
         [Route("api/plugins-management/marketplace")]
-        public async Task<OperationResult> InstallMarketplacePlugin([FromBody]int pluginId)
+        public async Task<OperationResult> InstallMarketplacePlugin([FromBody]string pluginId)
         {
             return await _pluginsManagementService.InstallMarketplacePlugin(pluginId);
         }

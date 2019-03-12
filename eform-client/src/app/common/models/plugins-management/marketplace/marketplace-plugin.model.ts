@@ -1,4 +1,4 @@
 export class MarketplacePluginModel {
-  id: number;
+  pluginId: string;
   name: string;
 }

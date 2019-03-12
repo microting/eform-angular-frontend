@@ -34,7 +34,7 @@ export class PluginsManagementService extends BaseService {
     return this.get(PluginsManagementMethods.MarketplacePlugins, model);
   }
 
-  installMarketplacePlugin(pluginId: number): Observable<OperationResult> {
+  installMarketplacePlugin(pluginId: string): Observable<OperationResult> {
     return this.put(PluginsManagementMethods.MarketplacePlugins, pluginId);
   }
 }

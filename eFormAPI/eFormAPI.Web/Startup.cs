@@ -5,6 +5,7 @@ using eFormAPI.Web.Abstractions.Eforms;
 using eFormAPI.Web.Abstractions.Security;
 using eFormAPI.Web.Hosting.Extensions;
 using eFormAPI.Web.Infrastructure.Database;
+using eFormAPI.Web.Infrastructure.Models.Settings.Plugins;
 using eFormAPI.Web.Services;
 using eFormAPI.Web.Services.Security;
 using Microsoft.AspNetCore.Builder;
@@ -116,6 +117,7 @@ namespace eFormAPI.Web
             services.ConfigureDbOptions<HeaderSettings>(Configuration.GetSection("HeaderSettings"));
             services.ConfigureDbOptions<ConnectionStringsSdk>(Configuration.GetSection("ConnectionStringsSdk"));
             services.ConfigureDbOptions<EformTokenOptions>(Configuration.GetSection("EformTokenOptions"));
+            services.ConfigureDbOptions<PluginStoreSettings>(Configuration.GetSection("PluginStoreSettings"));
             // Database plugins options
             foreach (var plugin in Program.Plugins)
             {
@@ -124,7 +126,9 @@ namespace eFormAPI.Web
                     Configuration
                 );
             }
-            
+
+            // Use HttpClient factory
+            services.AddHttpClient();
             // Form options
             services.Configure<FormOptions>(x =>
             {

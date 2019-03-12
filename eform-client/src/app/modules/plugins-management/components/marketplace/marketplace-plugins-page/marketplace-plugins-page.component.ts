@@ -40,7 +40,7 @@ export class MarketplacePluginsPageComponent implements OnInit {
 
   installPlugin(model: MarketplacePluginModel) {
     this.spinnerStatus = true;
-    this.pluginManagementService.installMarketplacePlugin(model.id).subscribe((data) => {
+    this.pluginManagementService.installMarketplacePlugin(model.pluginId).subscribe((data) => {
       if (data && data.success) {
         this.installMarketplacePluginModal.hide();
       }

@@ -1,0 +1,14 @@
+[
+   {
+      "pluginId":"EFormCustomersPn",
+      "name ":"Microting Customers plugin",
+      "version":"1.0.0",
+      "installScript":"https://raw.githubusercontent.com/microting/eform-angular-basecustomer-plugin/master/install.sh"
+   },
+   {
+      "pluginId":"EFormTrashInspectionPn",
+      "name ":"Microting Trash Inspection Plugin",
+      "version":"1.0.0",
+      "installScript":"https://raw.githubusercontent.com/microting/eform-angular-trashinspection-plugin/master/install.sh"
+   }
+]

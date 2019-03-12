@@ -8,7 +8,7 @@ namespace eFormAPI.Web.Abstractions
     {
         Task<OperationDataResult<InstalledPluginsModel>> GetInstalledPlugins(InstalledPluginsRequestModel requestModel);
         Task<OperationResult> UpdateInstalledPlugins(InstalledPluginUpdateModel updateModel);
-        Task<OperationDataResult<InstalledPluginsModel>> GetMarketplacePlugins(MarketplacePluginsRequestModel model);
-        Task<OperationResult> InstallMarketplacePlugin(int pluginId);
+        Task<OperationDataResult<PluginsStoreModel>> GetMarketplacePlugins(MarketplacePluginsRequestModel model);
+        Task<OperationResult> InstallMarketplacePlugin(string pluginId);
     }
 }
