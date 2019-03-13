@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -172,16 +173,17 @@ namespace eFormAPI.Web.Services
                     throw new Exception("Error while obtaining install script file");
                 }
 
-                Directory.CreateDirectory("PluginInstallDaemonQueue");
-                string pluginName = plugin.PluginId + ".sh";
-                string filePath = Path.Combine("PluginInstallDaemonQueue", pluginName);
-                StreamWriter file = new StreamWriter(filePath);
+                const string pluginInstallDirectory = "/tmp";
+                var filePath = Path.Combine(pluginInstallDirectory, "install.sh");
+                using (var file = new StreamWriter(filePath))
+                {
+                    file.Write(scriptContent);    
+                    file.Close();
+                }
                 
-                file.Write(scriptContent);    
-                file.Close();
-
-
-                return new OperationResult(true);
+                // Execute file
+                var result = Bash("sudo systemctl plugin-install start");
+                return new OperationResult(true, result);
             }
             catch (Exception e)
             {
@@ -189,6 +191,27 @@ namespace eFormAPI.Web.Services
                 return new OperationDataResult<PluginsStoreModel>(false,
                     _localizationService.GetString("ErrorWhileExecutingPluginInstall"));
             }
+        }
+
+        public string Bash(string cmd)
+        {
+            var command = cmd;
+            var result = "";
+            using (var proc = new Process())
+            {
+                proc.StartInfo.FileName = "/bin/bash";
+                proc.StartInfo.Arguments = "-c \" " + command + " \"";
+                proc.StartInfo.UseShellExecute = false;
+                proc.StartInfo.RedirectStandardOutput = true;
+                proc.StartInfo.RedirectStandardError = true;
+                proc.Start();
+
+                result += proc.StandardOutput.ReadToEnd();
+                result += proc.StandardError.ReadToEnd();
+
+                proc.WaitForExit();
+            }
+            return result;
         }
     }
 }
