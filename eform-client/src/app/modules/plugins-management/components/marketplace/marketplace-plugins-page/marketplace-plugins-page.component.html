@@ -1,0 +1,41 @@
+<eform-page-subheader [title]="'Plugins Marketplace' | translate">
+  <div class="p-3">
+    <button
+      class="btn btn-success"
+      id="managementPageButton" [routerLink]="['/plugins-management-settings']">{{ 'Management' | translate }}
+    </button>
+  </div>
+</eform-page-subheader>
+
+<!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
+<div class="container-fluid mt-4">
+  <div class="row p-1 table-responsive no-gutters">
+    <table class="table table-sm table-striped text-center z-depth-1">
+      <tr>
+        <th>{{ 'ID' }}</th>
+        <th>{{ 'Name' | translate }}</th>
+        <th>{{ 'Actions' | translate }}</th>
+      </tr>
+      <tr *ngFor="let plugin of marketplacePluginsList.pluginsList">
+        <td>{{plugin.pluginId}}</td>
+        <td>{{plugin.name}}</td>
+        <td>
+          <div class="d-flex flex-row justify-content-center">
+            <button class="btn btn-accent text-black-50 btn-icon mb-2"
+                    mdbTooltip="{{'Edit Settings' | translate}}" (click)="showEditModal()"
+                    mdbWavesEffect id="editSettingsBtn" id="plugin-settings-btn">
+              <i class="material-icons">
+                edit
+              </i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <eform-spinner [spinnerVisibility]="false"></eform-spinner>
+  </div>
+</div>
+
+
+<app-plugins-marketplace-install #installMarketplacePluginModal
+                                 (onMarketplacePluginInstall)="installPlugin($event)"></app-plugins-marketplace-install>

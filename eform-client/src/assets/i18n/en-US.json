@@ -248,7 +248,14 @@
   "Information": "Information",
   "Duration": "Duration",
   "Signature": "Signature",
-  "Audio": "Audio"
+  "Audio": "Audio",
+  "Are you sure you want to install plugin": "Are you sure you want to install plugin",
+  "This may take up to 10 minutes and rewrite current plugin version if it is already exist in the system":   "This may take up to 10 minutes and rewrite current plugin version if it is already exist in the system",
+  "Installation": "Installation",
+  "Install": "Install",
+  "Marketplace": "Marketplace",
+  "Plugins Marketplace": "Plugins Marketplace",
+  "Plugins Management": "Plugins Management"
 }
 
 
