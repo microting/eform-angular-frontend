@@ -37,6 +37,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microting.eFormApi.BasePn;
 using Microting.eFormApi.BasePn.Abstractions;
+using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Delegates;
 using Microting.eFormApi.BasePn.Services;
 
@@ -158,11 +159,17 @@ namespace eFormAPI.Web.Hosting.Helpers
                             typeof(IPluginDbContext),
                             typeof(IConfigurationBuilder),
                             typeof(ReloadDbConfiguration),
+                            typeof(DbSet<PluginConfigurationVersion>),
+                            typeof(DbSet<PluginConfigurationVersion>),
+                            typeof(ReloadDbConfiguration),
                             typeof(EFormCoreService),
                             typeof(Core)
                         });
-                    foreach (var type in loader.LoadDefaultAssembly()
-                        .GetTypes()
+                    var types = loader
+                        .LoadDefaultAssembly()
+                        .GetTypes();
+
+                    foreach (var type in types
                         .Where(t => typeof(IEformPlugin).IsAssignableFrom(t) && !t.IsAbstract))
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
