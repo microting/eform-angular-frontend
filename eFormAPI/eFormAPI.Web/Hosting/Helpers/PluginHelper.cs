@@ -129,17 +129,19 @@ namespace eFormAPI.Web.Hosting.Helpers
             {
                 List<string> pluginList;
 
-//#if DEBUG
-                pluginList = Directory.GetFiles(Path.Combine(directory, "netcoreapp2.2"))
-                    .Where(x => x.EndsWith("Pn.dll") && Path.GetFileName(x) != "eFormApi.BasePn.dll")
-                    .ToList();
-//#else
-//                pluginList = Directory.GetFiles(directory)
-//                    .Where(x => x.EndsWith("Pn.dll") && Path.GetFileName(x) != "eFormApi.BasePn.dll")
-//                    .ToList();
-//
-//#endif
-
+                string path = Path.Combine(directory, "netcoreapp2.2");
+                if (Directory.Exists(path))
+                {
+                    pluginList = Directory.GetFiles(path)
+                        .Where(x => x.EndsWith("Pn.dll") && Path.GetFileName(x) != "eFormApi.BasePn.dll")
+                        .ToList();    
+                }
+                else
+                {
+                    pluginList = Directory.GetFiles(directory)
+                        .Where(x => x.EndsWith("Pn.dll") && Path.GetFileName(x) != "eFormApi.BasePn.dll")
+                        .ToList();
+                }                
 
                 foreach (var pluginFile in pluginList)
                 {
