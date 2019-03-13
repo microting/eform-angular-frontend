@@ -172,8 +172,14 @@ namespace eFormAPI.Web.Services
                     throw new Exception("Error while obtaining install script file");
                 }
 
-                // Save and exeute script
-                // TODO: scriptContent
+                Directory.CreateDirectory("PluginInstallDaemonQueue");
+                string pluginName = plugin.PluginId + ".sh";
+                string filePath = Path.Combine("PluginInstallDaemonQueue", pluginName);
+                StreamWriter file = new StreamWriter(filePath);
+                
+                file.Write(scriptContent);    
+                file.Close();
+
 
                 return new OperationResult(true);
             }

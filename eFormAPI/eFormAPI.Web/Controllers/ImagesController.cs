@@ -1,4 +1,27 @@
-﻿using System.IO;
+﻿/*
+The MIT License (MIT)
+
+Copyright (c) 2007 - 2019 microting
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+using System.IO;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormShared;
@@ -9,6 +32,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+using OpenStack.NetCoreSwiftClient;
+using OpenStack.NetCoreSwiftClient.Extensions;
 
 namespace eFormAPI.Web.Controllers
 {
@@ -32,29 +57,37 @@ namespace eFormAPI.Web.Controllers
         {
             var filePath = PathHelper.GetEformSettingsImagesPath(fileName);
             string ext = Path.GetExtension(fileName).Replace(".", "");
+            
             if (ext == "jpg")
             {
                 ext = "jpeg";
             }
             string fileType = $"image/{ext}";
-            if (!System.IO.File.Exists(filePath))
+                
+            var core = _coreHelper.GetCore();
+            
+            if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
             {
+                var ss =  await core.GetFileFromStorageSystem(fileName);
                 
-                var core = _coreHelper.GetCore();
-                if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
+                if (ss == null)
                 {
-                    var result =  await core.GetFileFromStorageSystem(fileName);
-                    return new FileStreamResult(result, fileType);
-                }
-                else
-                {
-                    return NotFound();
+                    return NotFound($"Trying to find file at location: {filePath}");
                 }
                 
+                Response.ContentType = ss.ContentType;
+                Response.ContentLength = ss.ContentLength;
+
+                return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty("application/octet-stream"), fileName);
+            }
+            
+            if (!System.IO.File.Exists(filePath))
+            {                
+                return NotFound($"Trying to find file at location: {filePath}");
             }
 
             var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            return File(fileStream, fileType);
+            return File(fileStream, fileType);            
         }
 
         [HttpGet]
@@ -64,27 +97,37 @@ namespace eFormAPI.Web.Controllers
         {
             var filePath = PathHelper.GetEformLoginPageSettingsImagesPath(fileName);
             string ext = Path.GetExtension(fileName).Replace(".", "");
+            
             if (ext == "jpg")
             {
                 ext = "jpeg";
             }
+            
             string fileType = $"image/{ext}";
-            if (!System.IO.File.Exists(filePath))
+            var core = _coreHelper.GetCore();
+            
+            if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
             {
-                var core = _coreHelper.GetCore();
-                if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
+                var ss =  await core.GetFileFromStorageSystem(fileName);
+                
+                if (ss == null)
                 {
-                    var result =  await core.GetFileFromStorageSystem(fileName);
-                    return new FileStreamResult(result, fileType);
+                    return NotFound($"Trying to find file at location: {filePath}");
                 }
-                else
-                {
-                    return NotFound();
-                }
+                
+                Response.ContentType = ss.ContentType;
+                Response.ContentLength = ss.ContentLength;
+
+                return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty(fileType), fileName);                
+            }
+            
+            if (!System.IO.File.Exists(filePath))
+            {                
+                return NotFound($"Trying to find file at location: {filePath}");
             }
 
             var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            return File(fileStream, fileType);
+            return File(fileStream, fileType);  
         }
 
         [HttpPost]        
@@ -117,7 +160,7 @@ namespace eFormAPI.Web.Controllers
                         var core = _coreHelper.GetCore();
                         if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
                         {
-                            await core.PutFilToStorageSystem(filePath, file.FileName);
+                            await core.PutFilToStorageSystem(filePath, file.FileName, 0);
                         }
                     }
                     iUploadedCnt++;
@@ -160,7 +203,7 @@ namespace eFormAPI.Web.Controllers
                         var core = _coreHelper.GetCore();
                         if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
                         {
-                            await core.PutFilToStorageSystem(filePath, file.FileName);
+                            await core.PutFilToStorageSystem(filePath, file.FileName, 0);
                         }
                     }
                     iUploadedCnt++;

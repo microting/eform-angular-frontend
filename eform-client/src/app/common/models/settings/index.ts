@@ -5,3 +5,4 @@ export * from './app-parts/header-settings.model';
 export * from './user-settings.model';
 export * from './application-page-settings.model';
 export * from './swift-settings.model';
+export * from './sdk-settings-model';

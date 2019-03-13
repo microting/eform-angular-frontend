@@ -1,4 +1,27 @@
-﻿using System;
+﻿/*
+The MIT License (MIT)
+
+Copyright (c) 2007 - 2019 microting
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -155,8 +178,12 @@ namespace eFormAPI.Web.Services
             try
             {
                 var adminTools = new AdminTools(sdkConnectionString);
-                // Setup SDK DB
+//                 Setup SDK DB
                 adminTools.DbSetup(initialSettingsModel.ConnectionStringSdk.Token);
+//                var core = _coreHelper.GetCore();
+                Core core = new Core();
+                core.StartSqlOnly(sdkConnectionString);
+                core.SetSdkSetting(Settings.customerNo, customerNo);
             }
             catch (Exception exception)
             {
@@ -418,7 +445,18 @@ namespace eFormAPI.Web.Services
                         SwiftEnabled = (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true"),
                         SwiftUserName = core.GetSdkSetting(Settings.swiftUserName),
                         SwiftPassword = core.GetSdkSetting(Settings.swiftPassword),
-                        SwiftEndpoints = core.GetSdkSetting(Settings.swiftEndPoints)
+                        SwiftEndpoint = core.GetSdkSetting(Settings.swiftEndPoint),
+                        KeystoneEndpoint = core.GetSdkSetting(Settings.keystoneEndPoint)
+                    },
+                    SdkSettingsModel = new SDKSettingsModel()
+                    {
+                        CustomerNo = core.GetSdkSetting(Settings.customerNo),
+                        LogLevel = core.GetSdkSetting(Settings.logLevel),
+                        LogLimit = core.GetSdkSetting(Settings.logLimit),
+                        FileLocationPicture = core.GetSdkSetting(Settings.fileLocationPicture),
+                        FileLocationPdf = core.GetSdkSetting(Settings.fileLocationPdf),
+                        FileLocationReports = core.GetSdkSetting(Settings.fileLocationJasper),
+                        HttpServerAddress = core.GetSdkSetting(Settings.httpServerAddress)
                     },
                     SiteLink = core.GetSdkSetting(Settings.httpServerAddress),
                     AssemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString()
@@ -467,7 +505,15 @@ namespace eFormAPI.Web.Services
                 core.SetSdkSetting(Settings.swiftEnabled, adminSettingsModel.SwiftSettingsModel.SwiftEnabled.ToString());
                 core.SetSdkSetting(Settings.swiftUserName, adminSettingsModel.SwiftSettingsModel.SwiftUserName);
                 core.SetSdkSetting(Settings.swiftPassword, adminSettingsModel.SwiftSettingsModel.SwiftPassword);
-                core.SetSdkSetting(Settings.swiftEndPoints, adminSettingsModel.SwiftSettingsModel.SwiftEndpoints);
+                core.SetSdkSetting(Settings.swiftEndPoint, adminSettingsModel.SwiftSettingsModel.SwiftEndpoint);
+                core.SetSdkSetting(Settings.keystoneEndPoint, adminSettingsModel.SwiftSettingsModel.KeystoneEndpoint);
+                core.SetSdkSetting(Settings.customerNo, adminSettingsModel.SdkSettingsModel.CustomerNo);
+                core.SetSdkSetting(Settings.logLevel, adminSettingsModel.SdkSettingsModel.LogLevel);
+                core.SetSdkSetting(Settings.logLimit, adminSettingsModel.SdkSettingsModel.LogLimit);
+                core.SetSdkSetting(Settings.fileLocationPicture, adminSettingsModel.SdkSettingsModel.FileLocationPicture);
+                core.SetSdkSetting(Settings.fileLocationPdf, adminSettingsModel.SdkSettingsModel.FileLocationPdf);
+                core.SetSdkSetting(Settings.fileLocationJasper, adminSettingsModel.SdkSettingsModel.FileLocationReports);
+                core.SetSdkSetting(Settings.httpServerAddress, adminSettingsModel.SdkSettingsModel.HttpServerAddress);
                 return new OperationResult(true, _localizationService.GetString("SettingsUpdatedSuccessfully"));
             }
             catch (Exception e)
