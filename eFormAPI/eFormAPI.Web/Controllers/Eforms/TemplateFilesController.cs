@@ -369,6 +369,10 @@ namespace eFormAPI.Web.Controllers.Eforms
                         var fastZip = new FastZip();
                         // Will always overwrite if target filenames already exist
                         fastZip.ExtractZip(filePath, extractPath, null);
+                        if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
+                        {
+                            await core.PutFilToStorageSystem(filePath, templateId.ToString() + "_" + uploadModel.File.FileName, 0);
+                        }
                         //ZipFile.ExtractToDirectory(filePath, extractPath);
                         System.IO.File.Delete(filePath);
 //                        await Startup.Bus.SendLocal(new GenerateJasperFiles(templateId)); // TODO disabled for now 3. dec. 2018
