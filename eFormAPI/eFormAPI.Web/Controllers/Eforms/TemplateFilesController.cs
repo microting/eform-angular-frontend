@@ -149,7 +149,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                     img.Mutate(x => x.Rotate(RotateMode.Rotate90));
                     img.Save(filePath);
                     img.Dispose();
-                    await core.PutFilToStorageSystem(filePath, fileName, 0);
+                    core.PutFilToStorageSystem(filePath, fileName, 0);
                     // TODO! Add method call to sdk to put file back into swift.
                 }
                 catch (Exception e)
@@ -371,7 +371,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                         fastZip.ExtractZip(filePath, extractPath, null);
                         if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
                         {
-                            await core.PutFilToStorageSystem(filePath, templateId.ToString() + "_" + uploadModel.File.FileName, 0);
+                            core.PutFilToStorageSystem(filePath, templateId.ToString() + "_" + uploadModel.File.FileName, 0);
                         }
                         //ZipFile.ExtractToDirectory(filePath, extractPath);
                         System.IO.File.Delete(filePath);
