@@ -139,10 +139,10 @@ namespace eFormAPI.Web.Controllers.Eforms
                 var fileStream = System.IO.File.Create(filePath);
                 Response.ContentType = result.ContentType;
                 Response.ContentLength = result.ContentLength;
+                result.ObjectStreamContent.CopyTo(fileStream);
 
-                //return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty("application/octet-stream"), fileName);
-                //result.CopyTo(fileStream);
                 fileStream.Close();
+                fileStream.Dispose();
                 try
                 {
                     var img = Image.Load(filePath);
@@ -150,7 +150,6 @@ namespace eFormAPI.Web.Controllers.Eforms
                     img.Save(filePath);
                     img.Dispose();
                     core.PutFilToStorageSystem(filePath, fileName, 0);
-                    // TODO! Add method call to sdk to put file back into swift.
                 }
                 catch (Exception e)
                 {
