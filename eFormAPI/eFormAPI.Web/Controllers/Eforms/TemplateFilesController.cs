@@ -132,7 +132,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         public async Task<OperationResult> RotateImage(string fileName)
         {
             var core = _coreHelper.GetCore();
-            var filePath = $"{core.GetSdkSetting(Settings.fileLocationPicture)}\\{fileName}";
+            var filePath = Path.Combine(core.GetSdkSetting(Settings.fileLocationPicture),fileName);
             if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
             {
                 var result =  await core.GetFileFromStorageSystem(fileName);
