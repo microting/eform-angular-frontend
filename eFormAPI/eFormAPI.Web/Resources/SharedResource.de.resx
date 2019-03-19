@@ -564,4 +564,10 @@
   <data name="RoleNotFound" xml:space="preserve">
     <value>Rol niet gevonden</value>
   </data>
+  <data name="ErrorWhileExecutingPluginInstall" xml:space="preserve">
+    <value>Fehler beim Ausführen der Plugin-Installation</value>
+  </data>
+  <data name="ErrorWhileObtainingPluginList" xml:space="preserve">
+    <value>Fehler beim Abrufen der Plugin-Liste</value>
+  </data>
 </root>

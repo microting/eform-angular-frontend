@@ -4,5 +4,4 @@ export class SwiftSettingsModel {
   swiftPassword: string;
   swiftEndpoint: string;
   keystoneEndpoint: string;
-  customerNo: string;
 }

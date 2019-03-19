@@ -72,10 +72,10 @@ namespace eFormAPI.Web.Hosting.Extensions
         public static void UseEFormPlugins(this IApplicationBuilder app, List<IEformPlugin> plugins)
         {
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"Trying to load {plugins.Count} plugins...");
+            Console.WriteLine($@"Trying to load {plugins.Count} plugins...");
             foreach (var plugin in plugins)
             {
-                Console.WriteLine($"Loading plugin : {plugin.Name}");
+                Console.WriteLine($@"Loading plugin : {plugin.Name}");
                 plugin.Configure(app);
             }
             Console.ForegroundColor = ConsoleColor.Gray;

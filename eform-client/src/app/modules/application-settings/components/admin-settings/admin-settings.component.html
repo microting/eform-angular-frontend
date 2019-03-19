@@ -13,7 +13,7 @@
 <div class="container-fluid">
   <form #settingsForm="ngForm">
     <div class="row mt-4">
-      <div class="col-md-6 col-xs-12 control-block">
+      <div class="col-md-6 col-xs-12 mt-1 mb-4 control-block">
         <div class="card">
           <div class="card-header card-header-extended">
             <div class="d-flex justify-content-between align-items-center">
@@ -117,7 +117,7 @@
         </div>
 
       </div>
-      <div class="col-md-6 col-xs-12 control-block">
+      <div class="col-md-6 col-xs-12 mt-1 mb-4 control-block">
         <div class="card">
           <div class="card-header card-header-extended">
             <div class="d-flex justify-content-between align-items-center">
@@ -219,6 +219,77 @@
     </div>
 
     <div class="row mt-4">
+      <div class="col-md-12 col-xs-12 mt-1 mb-4 control-block">
+        <div class="card">
+          <div class="card-header card-header-simple">
+            <div class="d-flex justify-content-between align-items-center">
+              {{ 'SDK Information' | translate}}
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="container-fluid">
+
+              <div class="md-form input-group">
+                <input mdbInputDirective [mdbValidate]="false"
+                       class="form-control" [(ngModel)]="adminSettingsModel.sdkSettingsModel.customerNo"
+                       type="text" name="customerNo"
+                       id="customerNo">
+                <label for="customerNo">{{ 'Customer no' | translate }}</label>
+              </div>
+
+              <div class="md-form input-group">
+                <input mdbInputDirective [mdbValidate]="false"
+                       class="form-control"
+                       [(ngModel)]="adminSettingsModel.sdkSettingsModel.logLevel"
+                       type="text" name="logLevel" id="logLevel">
+                <label for="logLevel">{{ 'Log level' | translate }}</label>
+              </div>
+
+              <div class="md-form input-group">
+                <input mdbInputDirective [mdbValidate]="false"
+                       class="form-control" [(ngModel)]="adminSettingsModel.sdkSettingsModel.logLimit"
+                       type="text" name="logLimit" id="logLimit">
+                <label for="logLimit">{{ 'Log limit' | translate }}</label>
+              </div>
+
+              <div class="md-form input-group">
+                <input mdbInputDirective [mdbValidate]="false"
+                       class="form-control" [(ngModel)]="adminSettingsModel.sdkSettingsModel.fileLocationPicture"
+                       type="text" value=""
+                       name="fileLocationPicture" id="fileLocationPicture">
+                <label>{{ 'Filelocation Picture' | translate }}</label>
+              </div>
+
+              <div class="md-form input-group">
+                <input mdbInputDirective [mdbValidate]="false"
+                       class="form-control" [(ngModel)]="adminSettingsModel.sdkSettingsModel.fileLocationPdf"
+                       type="text" value=""
+                       name="fileLocationPdf" id="fileLocationPdf">
+                <label>{{ 'Filelocation PDF' | translate }}</label>
+              </div>
+
+              <div class="md-form input-group">
+                <input mdbInputDirective [mdbValidate]="false"
+                       class="form-control" [(ngModel)]="adminSettingsModel.sdkSettingsModel.fileLocationReports"
+                       type="text" value=""
+                       name="fileLocationReports" id="fileLocationReports">
+                <label>{{ 'Filelocation Jasper report files' | translate }}</label>
+              </div>
+
+              <div class="md-form input-group">
+                <input mdbInputDirective [mdbValidate]="false"
+                       class="form-control" [(ngModel)]="adminSettingsModel.sdkSettingsModel.httpServerAddress"
+                       type="text" value=""
+                       name="httpServerAddress" id="httpServerAddress">
+                <label>{{ 'Http server address' | translate }}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-4">
       <div class="col-md-6 col-xs-12 mt-1 mb-4 control-block">
         <div class="card">
           <div class="card-header card-header-simple">
@@ -312,14 +383,6 @@
                        placeholder="http://172.16.4.4:5000/v2.0" #keystoneEndpoint="ngModel" type="text" value=""
                        name="keystoneEndpoint" id="keystoneEndpoint">
                 <label for="keystoneEndpoint">{{ 'Keystone Endpoint' | translate }}</label>
-              </div>
-
-              <div class="md-form input-group">
-                <input mdbInputDirective [mdbValidate]="false"
-                       class="form-control" [(ngModel)]="adminSettingsModel.swiftSettingsModel.customerNo"
-                       #customerNo="ngModel" type="text" value=""
-                       name="customerNo" id="customerNo">
-                <label for="customerNo">{{ 'Customer no' | translate }}</label>
               </div>
             </div>
           </div>

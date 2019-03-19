@@ -32,6 +32,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+using OpenStack.NetCoreSwiftClient;
+using OpenStack.NetCoreSwiftClient.Extensions;
 
 namespace eFormAPI.Web.Controllers
 {
@@ -55,29 +57,37 @@ namespace eFormAPI.Web.Controllers
         {
             var filePath = PathHelper.GetEformSettingsImagesPath(fileName);
             string ext = Path.GetExtension(fileName).Replace(".", "");
+            
             if (ext == "jpg")
             {
                 ext = "jpeg";
             }
             string fileType = $"image/{ext}";
-            if (!System.IO.File.Exists(filePath))
+                
+            var core = _coreHelper.GetCore();
+            
+            if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
             {
+                var ss =  await core.GetFileFromStorageSystem(fileName);
                 
-                var core = _coreHelper.GetCore();
-                if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
+                if (ss == null)
                 {
-                    var result =  await core.GetFileFromStorageSystem(fileName);
-                    return new FileStreamResult(result, fileType);
-                }
-                else
-                {
-                    return NotFound();
+                    return NotFound($"Trying to find file at location: {filePath}");
                 }
                 
+                Response.ContentType = ss.ContentType;
+                Response.ContentLength = ss.ContentLength;
+
+                return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty("application/octet-stream"), fileName);
+            }
+            
+            if (!System.IO.File.Exists(filePath))
+            {                
+                return NotFound($"Trying to find file at location: {filePath}");
             }
 
             var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            return File(fileStream, fileType);
+            return File(fileStream, fileType);            
         }
 
         [HttpGet]
@@ -87,27 +97,37 @@ namespace eFormAPI.Web.Controllers
         {
             var filePath = PathHelper.GetEformLoginPageSettingsImagesPath(fileName);
             string ext = Path.GetExtension(fileName).Replace(".", "");
+            
             if (ext == "jpg")
             {
                 ext = "jpeg";
             }
+            
             string fileType = $"image/{ext}";
-            if (!System.IO.File.Exists(filePath))
+            var core = _coreHelper.GetCore();
+            
+            if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
             {
-                var core = _coreHelper.GetCore();
-                if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
+                var ss =  await core.GetFileFromStorageSystem(fileName);
+                
+                if (ss == null)
                 {
-                    var result =  await core.GetFileFromStorageSystem(fileName);
-                    return new FileStreamResult(result, fileType);
+                    return NotFound($"Trying to find file at location: {filePath}");
                 }
-                else
-                {
-                    return NotFound();
-                }
+                
+                Response.ContentType = ss.ContentType;
+                Response.ContentLength = ss.ContentLength;
+
+                return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty(fileType), fileName);                
+            }
+            
+            if (!System.IO.File.Exists(filePath))
+            {                
+                return NotFound($"Trying to find file at location: {filePath}");
             }
 
             var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            return File(fileStream, fileType);
+            return File(fileStream, fileType);  
         }
 
         [HttpPost]        

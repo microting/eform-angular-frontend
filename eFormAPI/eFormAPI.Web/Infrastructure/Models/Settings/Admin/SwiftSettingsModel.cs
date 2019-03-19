@@ -30,6 +30,5 @@ namespace eFormAPI.Web.Infrastructure.Models.Settings.Admin
         public string SwiftPassword { get; set; }
         public string SwiftEndpoint { get; set; }
         public string KeystoneEndpoint { get; set; }
-        public string CustomerNo { get; set; }
     }
 }

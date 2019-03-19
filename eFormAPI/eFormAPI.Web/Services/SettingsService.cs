@@ -446,8 +446,17 @@ namespace eFormAPI.Web.Services
                         SwiftUserName = core.GetSdkSetting(Settings.swiftUserName),
                         SwiftPassword = core.GetSdkSetting(Settings.swiftPassword),
                         SwiftEndpoint = core.GetSdkSetting(Settings.swiftEndPoint),
-                        KeystoneEndpoint = core.GetSdkSetting(Settings.keystoneEndPoint),
-                        CustomerNo = core.GetSdkSetting(Settings.customerNo)
+                        KeystoneEndpoint = core.GetSdkSetting(Settings.keystoneEndPoint)
+                    },
+                    SdkSettingsModel = new SDKSettingsModel()
+                    {
+                        CustomerNo = core.GetSdkSetting(Settings.customerNo),
+                        LogLevel = core.GetSdkSetting(Settings.logLevel),
+                        LogLimit = core.GetSdkSetting(Settings.logLimit),
+                        FileLocationPicture = core.GetSdkSetting(Settings.fileLocationPicture),
+                        FileLocationPdf = core.GetSdkSetting(Settings.fileLocationPdf),
+                        FileLocationReports = core.GetSdkSetting(Settings.fileLocationJasper),
+                        HttpServerAddress = core.GetSdkSetting(Settings.httpServerAddress)
                     },
                     SiteLink = core.GetSdkSetting(Settings.httpServerAddress),
                     AssemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString()
@@ -498,7 +507,13 @@ namespace eFormAPI.Web.Services
                 core.SetSdkSetting(Settings.swiftPassword, adminSettingsModel.SwiftSettingsModel.SwiftPassword);
                 core.SetSdkSetting(Settings.swiftEndPoint, adminSettingsModel.SwiftSettingsModel.SwiftEndpoint);
                 core.SetSdkSetting(Settings.keystoneEndPoint, adminSettingsModel.SwiftSettingsModel.KeystoneEndpoint);
-                core.SetSdkSetting(Settings.customerNo, adminSettingsModel.SwiftSettingsModel.CustomerNo);
+                core.SetSdkSetting(Settings.customerNo, adminSettingsModel.SdkSettingsModel.CustomerNo);
+                core.SetSdkSetting(Settings.logLevel, adminSettingsModel.SdkSettingsModel.LogLevel);
+                core.SetSdkSetting(Settings.logLimit, adminSettingsModel.SdkSettingsModel.LogLimit);
+                core.SetSdkSetting(Settings.fileLocationPicture, adminSettingsModel.SdkSettingsModel.FileLocationPicture);
+                core.SetSdkSetting(Settings.fileLocationPdf, adminSettingsModel.SdkSettingsModel.FileLocationPdf);
+                core.SetSdkSetting(Settings.fileLocationJasper, adminSettingsModel.SdkSettingsModel.FileLocationReports);
+                core.SetSdkSetting(Settings.httpServerAddress, adminSettingsModel.SdkSettingsModel.HttpServerAddress);
                 return new OperationResult(true, _localizationService.GetString("SettingsUpdatedSuccessfully"));
             }
             catch (Exception e)
