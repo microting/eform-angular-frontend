@@ -242,7 +242,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         [Route("api/template-files/download-case-pdf/{templateId}")]
         [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme,
             Policy = AuthConsts.EformPolicies.Cases.CaseGetPdf)]
-        public async Task<IActionResult> DownloadEFormPdf(int templateId, int caseId)
+        public async Task<IActionResult> DownloadEFormPdf(int templateId, int caseId, string fileType)
         {
             if (!await _permissionsService.CheckEform(templateId,
                 AuthConsts.EformClaims.CasesClaims.CaseGetPdf))
@@ -255,7 +255,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                 var core = _coreHelper.GetCore();
                 var filePath = core.CaseToPdf(caseId, templateId.ToString(),
                     DateTime.Now.ToString("yyyyMMddHHmmssffff"),
-                    $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", "pdf", "");
+                    $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", fileType, "");
                 //DateTime.Now.ToString("yyyyMMddHHmmssffff"), $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image?&filename=");
                 if (!System.IO.File.Exists(filePath))
                 {

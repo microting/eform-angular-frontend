@@ -206,6 +206,20 @@
                 picture_as_pdf
               </i>
             </button>
+            <button class="btn btn-success btn-icon mb-2" *ngIf="checkEformPermissions(userClaimsEnum.caseGetDocx)"
+                    (click)="downloadDocx(caseModel.id)"
+                    mdbTooltip="{{ 'Download Docx' | translate }}">
+              <i class="material-icons">
+                docx
+              </i>
+            </button>
+            <button class="btn btn-success btn-icon mb-2" *ngIf="checkEformPermissions(userClaimsEnum.caseGetPptx)"
+                    (click)="downloadPPTX(caseModel.id)"
+                    mdbTooltip="{{ 'Download PPTX' | translate }}">
+              <i class="material-icons">
+                pptx
+              </i>
+            </button>
             <button class="btn btn-danger btn-icon mb-2 " *ngIf="checkEformPermissions(userClaimsEnum.caseDelete)"
                     mdbTooltip="{{ 'Delete Case' | translate }}"
                     (click)="onDeleteClicked(caseModel)">
