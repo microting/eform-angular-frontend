@@ -289,7 +289,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                 var core = _coreHelper.GetCore();
                 var caseId = core.CaseReadFirstId(templateId, "not_revmoed");
                 var filePath = core.CaseToJasperXml((int) caseId, DateTime.Now.ToString("yyyyMMddHHmmssffff"),
-                    $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/");
+                    $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", "");
                 if (!System.IO.File.Exists(filePath))
                 {
                     return NotFound();
