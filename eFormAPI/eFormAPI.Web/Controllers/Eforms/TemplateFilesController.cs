@@ -255,7 +255,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                 var core = _coreHelper.GetCore();
                 var filePath = core.CaseToPdf(caseId, templateId.ToString(),
                     DateTime.Now.ToString("yyyyMMddHHmmssffff"),
-                    $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/");
+                    $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", "pdf", "");
                 //DateTime.Now.ToString("yyyyMMddHHmmssffff"), $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image?&filename=");
                 if (!System.IO.File.Exists(filePath))
                 {
