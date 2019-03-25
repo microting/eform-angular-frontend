@@ -42,17 +42,13 @@
             <button id="workerEditBtn" class="btn btn-accent text-black-50 btn-icon mb-2" *ngIf="userClaims.workersUpdate"
                     mdbTooltip="{{'Edit Worker' | translate}}"
                     (click)="openEditModal(workerDto)">
-              <i class="material-icons">
-                edit
-              </i>
+              <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
             <button id="workerDeleteBtn"
               class="btn btn-danger btn-icon mb-2 " *ngIf="userClaims.workersDelete"
               mdbTooltip="{{'Delete Worker' | translate}}"
               (click)="openDeleteModal(workerDto)">
-              <i class="material-icons">
-                delete_forever
-              </i>
+              <fa-icon icon="trash-alt" [fixedWidth]="true" size="lg"></fa-icon>>
             </button>
           </div>
         </td>

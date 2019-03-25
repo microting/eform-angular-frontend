@@ -28,6 +28,8 @@ import {
   WorkerEditComponent,
   WorkersComponent
 } from './components';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+
 
 @NgModule({
   imports: [
@@ -38,7 +40,8 @@ import {
     EformSharedModule,
     NgSelectModule,
     FormsModule,
-    DragulaModule
+    DragulaModule,
+    FontAwesomeModule
   ],
   declarations: [
     EntitySearchComponent,

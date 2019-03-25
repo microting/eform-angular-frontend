@@ -10,6 +10,8 @@ import {DragulaModule} from 'ng2-dragula';
 import {ToastrModule} from 'ngx-toastr';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {library} from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+// import { far } from '@fortawesome/free-regular-svg-icons';
 
 import {MDBBootstrapModule} from 'port/angular-bootstrap-md';
 import {providers} from 'src/app/app.declarations';
@@ -24,7 +26,7 @@ import {
   SimpleLayoutComponent,
   FullLayoutComponent,
 } from './components';
-import {importedIcons} from 'src/app/common/const';
+// import {importedIcons} from 'src/app/common/const';
 
 
 @NgModule({
@@ -64,6 +66,7 @@ import {importedIcons} from 'src/app/common/const';
 export class AppModule {
   constructor() {
     // Font Awesome
-    library.add(...importedIcons);
+    library.add(fas);
+    // library.add(...importedIcons);
   }
 }

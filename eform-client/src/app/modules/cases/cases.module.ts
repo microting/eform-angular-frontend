@@ -36,6 +36,8 @@ import {
   ElementPictureComponent,
   ElementSignatureComponent
 } from './components';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+
 
 @NgModule({
   imports: [
@@ -52,7 +54,8 @@ import {
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     OwlMomentDateTimeModule,
-    FormsModule
+    FormsModule,
+    FontAwesomeModule
   ],
   declarations: [
     CasesTableComponent,

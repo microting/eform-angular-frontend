@@ -121,7 +121,7 @@
         </td>
         <td>
           <div class="d-flex flex-row justify-content-center">
-            <button class="btn btn-success btn-icon  mb-2" *ngIf="templateDto.hasCases && checkEformPermissions(templateDto.id, userClaimsEnum.casesRead)"
+            <button class="btn btn-success btn-icon mb-2" *ngIf="templateDto.hasCases && checkEformPermissions(templateDto.id, userClaimsEnum.casesRead)"
                     id="eform-cases-btn"
                     [routerLink]="['/cases', templateDto.id]"
                     mdbTooltip="{{ 'Show cases' | translate }}">
@@ -129,21 +129,17 @@
                 work
               </i>
             </button>
-            <button class="btn btn-success btn-icon mb-2 " id="edit-columnts-btn"
+            <button class="btn btn-success btn-icon mb-2" id="edit-columnts-btn"
                     *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eFormsUpdateColumns)"
                     (click)="openEditColumnsModal(templateDto)"
                     mdbTooltip="{{ 'Edit columns' | translate }}">
-              <i class="material-icons">
-                table_chart
-              </i>
+              <fa-icon icon="table" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
-            <button class="btn btn-danger btn-icon mb-2 " id="delete-eform-btn"
+            <button class="btn btn-danger btn-icon mb-2" id="delete-eform-btn"
                     (click)="openEformDeleteModal(templateDto)"
                     *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eFormsDelete)"
                     mdbTooltip="{{ 'Delete eForm' | translate }}">
-              <i class="material-icons">
-                delete_forever
-              </i>
+              <fa-icon icon="trash-alt" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
           </div>
           <div class="d-flex flex-row justify-content-center">
@@ -168,17 +164,13 @@
             <button class="btn btn-accent text-black-50 btn-icon mb-2" id="upload-zip-btn"
                     (click)="uploadZipFile(templateDto)" *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eFormsUploadZip)"
                     mdbTooltip="{{ 'Upload ZIP archive' | translate }}">
-              <i class="material-icons">
-                unarchive
-              </i>
+              <fa-icon icon="file-upload" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
             <button class="btn btn-accent text-black-50 btn-icon mb-2" id="eform-report-button"
                     *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eFormsReadJasperReport)"
                     [routerLink]="['./report', templateDto.id]"
                     mdbTooltip="{{ 'Jasper Report' | translate }}">
-              <i class="material-icons">
-                receipt
-              </i>
+              <fa-icon icon="receipt" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
           </div>
         </td>
