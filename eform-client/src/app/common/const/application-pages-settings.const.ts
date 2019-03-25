@@ -1,4 +1,4 @@
-import {ApplicationPages} from 'src/app/common/enums/application-pages.enum';
+import {ApplicationPages} from 'src/app/common/const/enums/application-pages.enum';
 import {
   ApplicationPageModel,
   PageSettingsModel

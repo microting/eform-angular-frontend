@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ApplicationPages} from 'src/app/common/enums';
+import {ApplicationPages} from 'src/app/common/const';
 import {SecurityGroupsRequestModel, SecurityGroupsModel, PageSettingsModel} from 'src/app/common/models';
 import {SecurityGroupsService, UserSettingsService} from 'src/app/common/services';
 

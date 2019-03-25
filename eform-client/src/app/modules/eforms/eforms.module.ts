@@ -15,6 +15,7 @@ import {
   EformEditTagsModalComponent,
   EformRemoveEformModalComponent, EformUploadZipModalComponent
 } from './components';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import {
     EformSharedModule,
     FileUploadModule,
     FormsModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    FontAwesomeModule
   ],
   declarations: [
     EformsPageComponent,

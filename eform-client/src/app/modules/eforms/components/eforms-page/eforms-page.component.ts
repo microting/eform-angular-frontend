@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subject} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
-import {ApplicationPages, UserClaimsEnum} from 'src/app/common/enums';
+import {ApplicationPages, UserClaimsEnum} from 'src/app/common/const';
 import {CommonDictionaryModel} from 'src/app/common/models/common';
 import {TemplateDto} from 'src/app/common/models/dto';
 import {SavedTagModel, TemplateListModel, TemplateRequestModel} from 'src/app/common/models/eforms';

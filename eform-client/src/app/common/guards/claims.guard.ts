@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Router, CanActivate, RouterStateSnapshot, ActivatedRouteSnapshot} from '@angular/router';
-import {UserClaimsEnum} from 'src/app/common/enums';
+import {UserClaimsEnum} from 'src/app/common/const';
 import {AuthService} from 'src/app/common/services';
 
 @Injectable()
