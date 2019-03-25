@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {InstalledPluginModel, InstalledPluginUpdateModel} from '../../../../../common/models/plugins-management';
-import {InstalledPluginStatusEnum} from '../../../../../common/enums';
+import {InstalledPluginStatusEnum} from '../../../../../common/const';
 import {PluginsManagementService} from '../../../../../common/services/plugins-management';
 
 @Component({

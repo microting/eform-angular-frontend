@@ -8,6 +8,8 @@ import {TranslateModule} from '@ngx-translate/core';
 import { LightboxModule } from '@ngx-gallery/lightbox';
 import {DragulaModule} from 'ng2-dragula';
 import {ToastrModule} from 'ngx-toastr';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {library} from '@fortawesome/fontawesome-svg-core';
 
 import {MDBBootstrapModule} from 'port/angular-bootstrap-md';
 import {providers} from 'src/app/app.declarations';
@@ -22,6 +24,8 @@ import {
   SimpleLayoutComponent,
   FullLayoutComponent,
 } from './components';
+import {importedIcons} from 'src/app/common/const';
+
 
 @NgModule({
   declarations: [
@@ -49,6 +53,7 @@ import {
     GalleryModule.forRoot(),
     LightboxModule.forRoot(),
     GallerizeModule,
+    FontAwesomeModule,
     // Modules
     PluginsModule
   ],
@@ -57,4 +62,8 @@ import {
   bootstrap: [AppComponent]
 })
 export class AppModule {
+  constructor() {
+    // Font Awesome
+    library.add(...importedIcons);
+  }
 }
