@@ -125,9 +125,7 @@
                     id="eform-cases-btn"
                     [routerLink]="['/cases', templateDto.id]"
                     mdbTooltip="{{ 'Show cases' | translate }}">
-              <i class="material-icons">
-                work
-              </i>
+              <fa-icon icon="briefcase" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
             <button class="btn btn-success btn-icon mb-2" id="edit-columnts-btn"
                     *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eFormsUpdateColumns)"
@@ -148,18 +146,14 @@
                     id="download-csv-btn"
                     (click)="downloadItem('CSV', templateDto.id)"
                     mdbTooltip="{{ 'Download' | translate }} CSV">
-              <i class="material-icons">
-                insert_drive_file
-              </i>
+              <fa-icon icon="file-csv" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
             <button class="btn btn-accent text-black-50 btn-icon mb-2"
                     *ngIf="templateDto.hasCases && checkEformPermissions(templateDto.id, userClaimsEnum.eFormsDownloadXml)"
                     id="download-xml-btn"
                     (click)="downloadItem('XML', templateDto.id)"
                     mdbTooltip="{{ 'Download' | translate }} XML">
-              <i class="material-icons">
-                code
-              </i>
+              <fa-icon icon="file-code" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
             <button class="btn btn-accent text-black-50 btn-icon mb-2" id="upload-zip-btn"
                     (click)="uploadZipFile(templateDto)" *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eFormsUploadZip)"

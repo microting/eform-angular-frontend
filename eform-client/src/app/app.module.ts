@@ -10,7 +10,9 @@ import {DragulaModule} from 'ng2-dragula';
 import {ToastrModule} from 'ngx-toastr';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {library} from '@fortawesome/fontawesome-svg-core';
-import { fas } from '@fortawesome/free-solid-svg-icons';
+// import { faTrashAlt,  faTable, faFileUpload, faReceipt, faFilePdf, faPen,
+//          faEye, faEyeSlash, faUndo, faClipboardList, faLockOpen} from '@fortawesome/free-solid-svg-icons';
+import {fas} from '@fortawesome/free-solid-svg-icons';
 // import { far } from '@fortawesome/free-regular-svg-icons';
 
 import {MDBBootstrapModule} from 'port/angular-bootstrap-md';
@@ -26,6 +28,7 @@ import {
   SimpleLayoutComponent,
   FullLayoutComponent,
 } from './components';
+import {assertLessThan} from '@angular/core/src/render3/assert';
 // import {importedIcons} from 'src/app/common/const';
 
 
@@ -66,7 +69,9 @@ import {
 export class AppModule {
   constructor() {
     // Font Awesome
+    // library.add(faTrashAlt,  faTable, faFileUpload, faReceipt, faFilePdf, faPen, faEye, faEyeSlash, faUndo, faClipboardList, faLockOpen);
     library.add(fas);
+
     // library.add(...importedIcons);
   }
 }

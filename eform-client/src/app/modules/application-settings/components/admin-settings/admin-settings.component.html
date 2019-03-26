@@ -165,7 +165,7 @@
                     (click)="adminSettingsModel.headerSettingsModel.secondaryTextVisible
             = !adminSettingsModel.headerSettingsModel.secondaryTextVisible">
                     <fa-icon icon="eye" [fixedWidth]="true" size="lg" *ngIf="adminSettingsModel.headerSettingsModel.secondaryTextVisible"></fa-icon>
-                    <fa-icon icon="eye" [fixedWidth]="true" size="lg" *ngIf="!adminSettingsModel.headerSettingsModel.secondaryTextVisible"></fa-icon>
+                    <fa-icon icon="eye-slash" [fixedWidth]="true" size="lg" *ngIf="!adminSettingsModel.headerSettingsModel.secondaryTextVisible"></fa-icon>
                   </button>
                 </div>
               </div>
@@ -197,10 +197,8 @@
                     [class.btn-danger]="!adminSettingsModel.headerSettingsModel.imageLinkVisible"
                     (click)="adminSettingsModel.headerSettingsModel.imageLinkVisible
             = !adminSettingsModel.headerSettingsModel.imageLinkVisible">
-                    <i class="material-icons" *ngIf="adminSettingsModel.headerSettingsModel.imageLinkVisible">
-                      visibility </i>
-                    <i class="material-icons" *ngIf="!adminSettingsModel.headerSettingsModel.imageLinkVisible">
-                      visibility_off </i>
+                    <fa-icon icon="eye" [fixedWidth]="true" size="lg" *ngIf="adminSettingsModel.headerSettingsModel.imageLinkVisible"></fa-icon>
+                    <fa-icon icon="eye-slash" [fixedWidth]="true" size="lg" *ngIf="!adminSettingsModel.headerSettingsModel.imageLinkVisible"></fa-icon>
                   </button>
                 </div>
               </div>
