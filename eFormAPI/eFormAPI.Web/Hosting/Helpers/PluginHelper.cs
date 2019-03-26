@@ -33,13 +33,22 @@ using eFormCore;
 using McMaster.NETCore.Plugins;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microting.eFormApi.BasePn;
 using Microting.eFormApi.BasePn.Abstractions;
+using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Delegates;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
+using Microting.eFormApi.BasePn.Infrastructure.Settings;
 using Microting.eFormApi.BasePn.Services;
+using Microting.eFormTrashInspectionBase.Infrastructure.Data;
+using Microting.eFormTrashInspectionBase.Infrastructure.Data.Factories;
 
 namespace eFormAPI.Web.Hosting.Helpers
 {
@@ -159,10 +168,36 @@ namespace eFormAPI.Web.Hosting.Helpers
                             typeof(IPluginDbContext),
                             typeof(IConfigurationBuilder),
                             typeof(ReloadDbConfiguration),
-                            typeof(DbSet<PluginConfigurationVersion>),
-                            typeof(DbSet<PluginConfigurationVersion>),
+                            typeof(DbSet<PluginConfigurationValueVersion>),
+                            typeof(DbSet<PluginConfigurationValue>),
                             typeof(ReloadDbConfiguration),
                             typeof(EFormCoreService),
+
+                            typeof(ModelBuilder),
+                            typeof(PluginConfigurationValue),
+                            typeof(PluginConfigurationValueVersion),
+                            typeof(BaseEntity),
+                            typeof(PluginConfigurationProvider<>),
+                            typeof(ConfigurationProvider),
+                            typeof(DbContext),
+                            typeof(WarningsConfiguration),
+                            typeof(WarningBehavior),
+                            typeof(DbContextOptionsBuilder),
+                            typeof(DbContextOptions),
+                            typeof(InMemoryEventId),
+                            typeof(LoggerCategory<>),
+                            typeof(DbLoggerCategory),
+                            typeof(WarningsConfigurationBuilder),
+                            typeof(MySqlDbContextOptionsExtensions),
+                            typeof(CoreOptionsExtension),
+                            typeof(RelationalEventId),
+                            typeof(IDbContextOptionsBuilderInfrastructure),
+                            typeof(ModelSnapshot),       
+
+                            typeof(IPluginDbOptions<>),
+                            typeof(IOptionsSnapshot<>),
+                            typeof(PluginDbOptions<>),
+                            typeof(IDesignTimeDbContextFactory<>),
                             typeof(Core)
                         });
                     var types = loader
