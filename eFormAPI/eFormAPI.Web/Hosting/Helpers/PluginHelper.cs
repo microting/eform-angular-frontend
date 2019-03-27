@@ -47,8 +47,6 @@ using Microting.eFormApi.BasePn.Infrastructure.Delegates;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Settings;
 using Microting.eFormApi.BasePn.Services;
-using Microting.eFormTrashInspectionBase.Infrastructure.Data;
-using Microting.eFormTrashInspectionBase.Infrastructure.Data.Factories;
 
 namespace eFormAPI.Web.Hosting.Helpers
 {
