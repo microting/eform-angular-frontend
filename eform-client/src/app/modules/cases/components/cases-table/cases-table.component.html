@@ -195,23 +195,19 @@
             <button class="btn btn-success btn-icon mb-2" *ngIf="checkEformPermissions(userClaimsEnum.caseRead)"
                     [routerLink]="['/cases/edit/' + caseModel.id + '/' + currentTemplate.id]"
                     mdbTooltip="{{ 'Edit Case' | translate }}">
-              <i class="material-icons">
-                edit
-              </i>
+              <fa-icon [icon]="['fas', 'pen']" size="2x"></fa-icon>
+
             </button>
             <button class="btn btn-success btn-icon mb-2" *ngIf="checkEformPermissions(userClaimsEnum.caseGetPdf)"
                     (click)="downloadPDF(caseModel.id)"
                     mdbTooltip="{{ 'Download PDF' | translate }}">
-              <i class="material-icons">
-                picture_as_pdf
-              </i>
+              <fa-icon [icon]="['fas', 'file-pdf']" size="2x"></fa-icon>
+
             </button>
             <button class="btn btn-danger btn-icon mb-2 " *ngIf="checkEformPermissions(userClaimsEnum.caseDelete)"
                     mdbTooltip="{{ 'Delete Case' | translate }}"
                     (click)="onDeleteClicked(caseModel)">
-              <i class="material-icons">
-                delete_forever
-              </i>
+              <fa-icon [icon]="['fas', 'trash-alt']" size="2x"></fa-icon>
             </button>
           </div>
         </td>

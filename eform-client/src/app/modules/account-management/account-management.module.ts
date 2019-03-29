@@ -15,6 +15,8 @@ import {
 } from './components';
 import {AccountManagementRouting} from './account-management.routing';
 import {TranslateModule} from '@ngx-translate/core';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+
 
 @NgModule({
   imports: [
@@ -25,7 +27,8 @@ import {TranslateModule} from '@ngx-translate/core';
     EformSharedModule,
     TranslateModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    FontAwesomeModule
   ],
   declarations: [
     ChangePasswordComponent,
