@@ -13,8 +13,6 @@ import {
 } from './components';
 import {DeviceUsersRouting} from './device-users.routing';
 import {TranslateModule} from '@ngx-translate/core';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-
 
 @NgModule({
   imports: [
@@ -24,8 +22,7 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
     MDBBootstrapModule,
     EformSharedModule,
     TranslateModule,
-    FormsModule,
-    FontAwesomeModule
+    FormsModule
   ],
   declarations: [
     DeviceUsersPageComponent,

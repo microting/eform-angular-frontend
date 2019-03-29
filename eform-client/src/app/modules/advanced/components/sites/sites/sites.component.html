@@ -32,12 +32,16 @@
             <button class="btn btn-accent text-black-50 btn-icon mb-2 " id="editSiteBtn" *ngIf="userClaims.sitesUpdate"
                     mdbTooltip="{{'Edit Site' | translate}}" mdbWavesEffect
                     (click)="openEditModal(siteDto)">
-              <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
+              <i class="material-icons">
+                edit
+              </i>
             </button>
             <button class="btn btn-danger btn-icon mb-2 " id="deleteSiteBtn" *ngIf="userClaims.sitesDelete"
                     mdbTooltip="{{'Delete site' | translate}}"
                     (click)="openDeleteModal(siteDto)">
-              <fa-icon icon="trash-alt" [fixedWidth]="true" size="lg"></fa-icon>
+              <i class="material-icons">
+                delete_forever
+              </i>
             </button>
           </div>
         </td>

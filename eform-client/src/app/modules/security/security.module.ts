@@ -20,8 +20,6 @@ import {
   SecurityGroupEformsAddComponent,
   SecurityGroupEformsEditComponent, SecurityGroupEformsDeleteComponent
 } from './components';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-
 
 
 @NgModule({
@@ -32,8 +30,7 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
     NgSelectModule,
     TranslateModule,
     MDBBootstrapModule,
-    FormsModule,
-    FontAwesomeModule
+    FormsModule
   ],
   declarations: [
     SecurityPageComponent,

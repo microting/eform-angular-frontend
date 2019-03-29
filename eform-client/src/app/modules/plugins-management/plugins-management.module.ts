@@ -9,8 +9,6 @@ import {MDBBootstrapModule} from '../../../../port/angular-bootstrap-md';
 import {PluginsManagementRouting} from './plugins-management.routing';
 import { InstalledPluginEditComponent, InstalledPluginsPageComponent,
   MarketplacePluginsPageComponent, MarketplacePluginInstallComponent } from './components';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-
 
 @NgModule({
   imports: [
@@ -20,8 +18,7 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
     FormsModule,
     TranslateModule,
     NgSelectModule,
-    PluginsManagementRouting,
-    FontAwesomeModule
+    PluginsManagementRouting
   ],
   declarations: [InstalledPluginsPageComponent, InstalledPluginEditComponent,
     MarketplacePluginsPageComponent, MarketplacePluginInstallComponent]

@@ -44,24 +44,29 @@
             <button class="btn btn-accent text-black-50 btn-icon mb-2"
                     [routerLink]="['update-group', securityGroup.id]"
                     mdbTooltip="{{'Edit Group' | translate}}">
-              <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
+              <i class="material-icons">
+                edit
+              </i>
             </button>
             <button class="btn btn-success btn-icon mb-2"
                     [routerLink]="['group/' + securityGroup.id + '/eforms-permissions']"
                     mdbTooltip="{{'Eforms Permissions' | translate}}">
-              <fa-icon icon="clipboard-list" [fixedWidth]="true" size="lg"></fa-icon>
-
+              <i class="material-icons">
+                assignment
+              </i>
             </button>
             <button class="btn btn-success btn-icon mb-2 "
                     [routerLink]="['group/' + securityGroup.id + '/general-permissions']"
                     mdbTooltip="{{'General Permissions' | translate}}">
-              <fa-icon icon="lock-open" [fixedWidth]="true" size="lg"></fa-icon>
-
+              <i class="material-icons">
+                lock_open
+              </i>
             </button>
             <button class="btn btn-danger btn-icon mb-2 "
                     mdbTooltip="{{'Delete Group' | translate}}" (click)="openDeleteModal(securityGroup)">
-              <fa-icon icon="trash-alt" [fixedWidth]="true" size="lg"></fa-icon>
-
+              <i class="material-icons">
+                delete_forever
+              </i>
             </button>
           </div>
         </td>

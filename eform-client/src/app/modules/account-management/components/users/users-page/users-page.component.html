@@ -45,14 +45,16 @@
               class="btn btn-accent text-black-50 btn-icon mb-2" *ngIf="userClaims.usersUpdate"
                     mdbTooltip="{{'Edit User' | translate}}"
                     (click)="openEditModal(userInfoModel.id)">
-              <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
-
+              <i class="material-icons">
+                edit
+              </i>
             </button>
             <button class="btn btn-danger btn-icon mb-2 " *ngIf="userClaims.usersDelete"
                     mdbTooltip="{{'Delete User' | translate}}"
                     (click)="openRemoveUserModal(userInfoModel)">
-              <fa-icon icon="trash-alt" [fixedWidth]="true" size="lg"></fa-icon>
-
+              <i class="material-icons">
+                delete_forever
+              </i>
             </button>
           </div>
         </td>

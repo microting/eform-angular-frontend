@@ -22,8 +22,9 @@
                       id="loginPageReset"
                       (click)="resetLoginPageSettings()"
                       mdbTooltip="{{ 'Reset' | translate }}" id="loginPageReset">
-                <fa-icon icon="undo" [fixedWidth]="true" size="lg"></fa-icon>
-
+                <i class="material-icons">
+                  autorenew
+                </i>
               </button>
             </div>
           </div>
@@ -44,10 +45,10 @@
                     [class.btn-danger]="!adminSettingsModel.loginPageSettingsModel.mainTextVisible"
                     (click)="adminSettingsModel.loginPageSettingsModel.mainTextVisible
             = !adminSettingsModel.loginPageSettingsModel.mainTextVisible">
-                    <fa-icon icon="eye" [fixedWidth]="true" size="lg" *ngIf="adminSettingsModel.loginPageSettingsModel.mainTextVisible"></fa-icon>
-
-                    <fa-icon icon="eye-slash" [fixedWidth]="true" size="lg" *ngIf="!adminSettingsModel.loginPageSettingsModel.mainTextVisible"></fa-icon>
-
+                    <i class="material-icons" *ngIf="adminSettingsModel.loginPageSettingsModel.mainTextVisible">
+                      visibility </i>
+                    <i class="material-icons" *ngIf="!adminSettingsModel.loginPageSettingsModel.mainTextVisible">
+                      visibility_off </i>
                   </button>
                 </div>
               </div>
@@ -67,9 +68,10 @@
                     [class.btn-danger]="!adminSettingsModel.loginPageSettingsModel.secondaryTextVisible"
                     (click)="adminSettingsModel.loginPageSettingsModel.secondaryTextVisible
             = !adminSettingsModel.loginPageSettingsModel.secondaryTextVisible">
-                    <fa-icon icon="eye" [fixedWidth]="true" size="lg" *ngIf="adminSettingsModel.loginPageSettingsModel.secondaryTextVisible"></fa-icon>
-
-                    <fa-icon icon="eye-slash" [fixedWidth]="true" size="lg" *ngIf="!adminSettingsModel.loginPageSettingsModel.secondaryTextVisible"></fa-icon>
+                    <i class="material-icons" *ngIf="adminSettingsModel.loginPageSettingsModel.secondaryTextVisible">
+                      visibility </i>
+                    <i class="material-icons" *ngIf="!adminSettingsModel.loginPageSettingsModel.secondaryTextVisible">
+                      visibility_off </i>
                   </button>
                 </div>
               </div>
@@ -103,9 +105,10 @@
                     [class.btn-danger]="!adminSettingsModel.loginPageSettingsModel.imageLinkVisible"
                     (click)="adminSettingsModel.loginPageSettingsModel.imageLinkVisible
             = !adminSettingsModel.loginPageSettingsModel.imageLinkVisible">
-                    <fa-icon icon="eye" [fixedWidth]="true" size="lg" *ngIf="adminSettingsModel.loginPageSettingsModel.imageLinkVisible"></fa-icon>
-
-                    <fa-icon icon="eye-slash" [fixedWidth]="true" size="lg" *ngIf="!adminSettingsModel.loginPageSettingsModel.imageLinkVisible"></fa-icon>
+                    <i class="material-icons" *ngIf="adminSettingsModel.loginPageSettingsModel.imageLinkVisible">
+                      visibility </i>
+                    <i class="material-icons" *ngIf="!adminSettingsModel.loginPageSettingsModel.imageLinkVisible">
+                      visibility_off </i>
                   </button>
                 </div>
               </div>
@@ -121,7 +124,9 @@
               {{ 'Site header' | translate}}
               <button class="btn btn-neutral btn-icon" id="siteHeaderReset"
                       mdbTooltip="{{ 'Reset' | translate }}" (click)="resetHeaderSettings()">
-                <fa-icon icon="undo" [fixedWidth]="true" size="lg"></fa-icon>
+                <i class="material-icons">
+                  autorenew
+                </i>
               </button>
             </div>
           </div>
@@ -143,9 +148,10 @@
                     [class.btn-danger]="!adminSettingsModel.headerSettingsModel.mainTextVisible"
                     (click)="adminSettingsModel.headerSettingsModel.mainTextVisible
             = !adminSettingsModel.headerSettingsModel.mainTextVisible">
-                    <fa-icon icon="eye" [fixedWidth]="true" size="lg" *ngIf="adminSettingsModel.headerSettingsModel.mainTextVisible"></fa-icon>
-                    <fa-icon icon="eye-slash" [fixedWidth]="true" size="lg" *ngIf="!adminSettingsModel.headerSettingsModel.mainTextVisible"></fa-icon>
-
+                    <i class="material-icons" *ngIf="adminSettingsModel.headerSettingsModel.mainTextVisible">
+                      visibility </i>
+                    <i class="material-icons" *ngIf="!adminSettingsModel.headerSettingsModel.mainTextVisible">
+                      visibility_off </i>
                   </button>
                 </div>
               </div>
@@ -164,8 +170,10 @@
                     [class.btn-danger]="!adminSettingsModel.headerSettingsModel.secondaryTextVisible"
                     (click)="adminSettingsModel.headerSettingsModel.secondaryTextVisible
             = !adminSettingsModel.headerSettingsModel.secondaryTextVisible">
-                    <fa-icon icon="eye" [fixedWidth]="true" size="lg" *ngIf="adminSettingsModel.headerSettingsModel.secondaryTextVisible"></fa-icon>
-                    <fa-icon icon="eye-slash" [fixedWidth]="true" size="lg" *ngIf="!adminSettingsModel.headerSettingsModel.secondaryTextVisible"></fa-icon>
+                    <i class="material-icons" *ngIf="adminSettingsModel.headerSettingsModel.secondaryTextVisible">
+                      visibility </i>
+                    <i class="material-icons" *ngIf="!adminSettingsModel.headerSettingsModel.secondaryTextVisible">
+                      visibility_off </i>
                   </button>
                 </div>
               </div>
@@ -197,8 +205,10 @@
                     [class.btn-danger]="!adminSettingsModel.headerSettingsModel.imageLinkVisible"
                     (click)="adminSettingsModel.headerSettingsModel.imageLinkVisible
             = !adminSettingsModel.headerSettingsModel.imageLinkVisible">
-                    <fa-icon icon="eye" [fixedWidth]="true" size="lg" *ngIf="adminSettingsModel.headerSettingsModel.imageLinkVisible"></fa-icon>
-                    <fa-icon icon="eye-slash" [fixedWidth]="true" size="lg" *ngIf="!adminSettingsModel.headerSettingsModel.imageLinkVisible"></fa-icon>
+                    <i class="material-icons" *ngIf="adminSettingsModel.headerSettingsModel.imageLinkVisible">
+                      visibility </i>
+                    <i class="material-icons" *ngIf="!adminSettingsModel.headerSettingsModel.imageLinkVisible">
+                      visibility_off </i>
                   </button>
                 </div>
               </div>
