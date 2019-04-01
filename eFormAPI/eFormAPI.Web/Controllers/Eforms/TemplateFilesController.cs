@@ -151,7 +151,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                     img.Mutate(x => x.Rotate(RotateMode.Rotate90));
                     img.Save(filePath);
                     img.Dispose();
-                    core.PutFilToStorageSystem(filePath, fileName, 0);
+                    core.PutFileToStorageSystem(filePath, fileName);
                 }
                 catch (Exception e)
                 {
@@ -376,7 +376,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                         fastZip.ExtractZip(filePath, extractPath, null);
                         if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
                         {
-                            core.PutFilToStorageSystem(filePath, templateId.ToString() + "_" + uploadModel.File.FileName, 0);
+                            core.PutFileToStorageSystem(filePath, templateId.ToString() + "_" + uploadModel.File.FileName);
                         }
                         //ZipFile.ExtractToDirectory(filePath, extractPath);
                         System.IO.File.Delete(filePath);
