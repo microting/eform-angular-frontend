@@ -27,6 +27,7 @@ using eFormAPI.Web.Infrastructure.Database.Factories;
 using eFormAPI.Web.Infrastructure.Database.Seed.SeedItems;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microting.eFormApi.BasePn.Infrastructure.Delegates;
 
 namespace eFormAPI.Web.Hosting.Settings
 {
@@ -37,7 +38,7 @@ namespace eFormAPI.Web.Hosting.Settings
         public EfConfigurationProvider(string connectionString)
         {
             _connectionString = connectionString;
-            Program.ReloadDbConfigurationDelegate = ReloadConfiguration;
+            ReloadDbConfigurationDelegates.ReloadDbConfigurationDelegate += ReloadConfiguration;
         }
 
         private void ReloadConfiguration()

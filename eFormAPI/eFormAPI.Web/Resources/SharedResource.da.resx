@@ -582,4 +582,10 @@
   <data name="RoleNotFound" xml:space="preserve">
     <value>Rolle ikke fundet</value>
   </data>
+  <data name="ErrorWhileExecutingPluginInstall" xml:space="preserve">
+    <value>Fejl under udførelsen af plugininstallation</value>
+  </data>
+  <data name="ErrorWhileObtainingPluginList" xml:space="preserve">
+    <value>Fejl under opnåelse af plugin liste</value>
+  </data>
 </root>

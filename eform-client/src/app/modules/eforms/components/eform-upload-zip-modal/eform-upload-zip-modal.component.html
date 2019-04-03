@@ -22,7 +22,7 @@
                   {{'Uploading progress:' | translate }}
                   <div class="progress">
                     <div class="progress-bar" role="progressbar"
-                         [ngStyle]="{ 'width': zipFileUploader.progress + '%' }"></div>
+                         [ngStyle]="{ 'width': zipFileUploader?.queue?.length !== 0 ? zipFileUploader.progress + '%' : '' }"></div>
                   </div>
                 </div>
               </div>

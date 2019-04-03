@@ -4,7 +4,7 @@ import {UUID} from 'angular2-uuid';
 import {FileItem, FileUploader} from 'ng2-file-upload';
 import {EventBrokerService} from 'src/app/common/helpers';
 import {AdminSettingsModel} from 'src/app/common/models/settings';
-import {AppSettingsService} from 'src/app/common/services/settings/app-settings';
+import {AppSettingsService} from 'src/app/common/services/settings';
 import {AuthService} from 'src/app/common/services/auth';
 
 @Component({

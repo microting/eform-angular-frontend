@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {Observable} from 'rxjs';
-import {EformPermissionsNamesSwap} from 'src/app/common/enums';
+import {EformPermissionsNamesSwap} from 'src/app/common/const';
 import {
   EformsPermissionsRequestModel,
   EformsPermissionsModel,

@@ -37,6 +37,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DevOps", "DevOps", "{6336CF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBMigrator", "DBMigrator\DBMigrator.csproj", "{C91C708A-A7A2-4CB9-B6C2-1D4992298968}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginInstallDaemon", "PluginInstallDaemon\PluginInstallDaemon.csproj", "{E0DC184B-CD72-4367-AF8B-3172B78DEBC9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -122,6 +124,18 @@ Global
 		{B63F5F50-AA5B-4BC2-AC61-B2A94B62C042}.Release|x64.Build.0 = Release|x86
 		{B63F5F50-AA5B-4BC2-AC61-B2A94B62C042}.Release|x86.ActiveCfg = Release|x86
 		{B63F5F50-AA5B-4BC2-AC61-B2A94B62C042}.Release|x86.Build.0 = Release|x86
+		{E0DC184B-CD72-4367-AF8B-3172B78DEBC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0DC184B-CD72-4367-AF8B-3172B78DEBC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0DC184B-CD72-4367-AF8B-3172B78DEBC9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E0DC184B-CD72-4367-AF8B-3172B78DEBC9}.Debug|x64.Build.0 = Debug|Any CPU
+		{E0DC184B-CD72-4367-AF8B-3172B78DEBC9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E0DC184B-CD72-4367-AF8B-3172B78DEBC9}.Debug|x86.Build.0 = Debug|Any CPU
+		{E0DC184B-CD72-4367-AF8B-3172B78DEBC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0DC184B-CD72-4367-AF8B-3172B78DEBC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0DC184B-CD72-4367-AF8B-3172B78DEBC9}.Release|x64.ActiveCfg = Release|Any CPU
+		{E0DC184B-CD72-4367-AF8B-3172B78DEBC9}.Release|x64.Build.0 = Release|Any CPU
+		{E0DC184B-CD72-4367-AF8B-3172B78DEBC9}.Release|x86.ActiveCfg = Release|Any CPU
+		{E0DC184B-CD72-4367-AF8B-3172B78DEBC9}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

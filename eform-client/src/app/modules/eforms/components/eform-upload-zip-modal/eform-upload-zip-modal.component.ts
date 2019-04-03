@@ -22,13 +22,11 @@ export class EformUploadZipModalComponent implements OnInit {
     };
     this.zipFileUploader.onSuccessItem = () => {
       this.zipFileUploader.clearQueue();
-      this.zipFileUploader.progress = 0;
       this.toastrService.success(this.translateService.instant('File has been uploaded successfully'));
       this.frame.hide();
     };
     this.zipFileUploader.onErrorItem = () => {
       this.zipFileUploader.clearQueue();
-      this.zipFileUploader.progress = 0;
       this.toastrService.error(this.translateService.instant('Error while uploading file'));
     };
     this.zipFileUploader.onAfterAddingFile = f => {

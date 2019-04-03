@@ -185,7 +185,11 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 Id = "EformTokenOptions:CookieName",
                 Value = "Authorization"
             },
-
+            new EformConfigurationValue()
+            {
+                Id = "PluginStoreSettings:PluginListLink",
+                Value = "https://raw.githubusercontent.com/microting/eform-angular-frontend/master/plugins.json"
+            },
         };
 
         public static ModelBuilder AddConfigurationDefault(this ModelBuilder modelBuilder)

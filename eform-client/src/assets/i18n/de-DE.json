@@ -242,5 +242,12 @@
   "Information": "Information",
   "Duration": "Dauer",
   "Signature": "Signature",
-  "Audio": "Audio"
+  "Audio": "Audio",
+  "Are you sure you want to install plugin": "Weet u zeker dat u de plug-in wilt installeren",
+  "This may take up to 10 minutes and rewrite current plugin version if it is already exist in the system":   "Dit kan tot 10 minuten duren en de huidige plug-inversie herschrijven als deze al in het systeem aanwezig is",
+  "Installation": "Installatie",
+  "Install": "Installeren",
+  "Marketplace": "Marktplaats",
+  "Plugins Marketplace": "Plugins Marktplaats",
+  "Plugins Management": "Plugins Beheer"
 }
