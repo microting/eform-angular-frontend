@@ -35,6 +35,8 @@ Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "InstallBundle", "Installati
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DevOps", "DevOps", "{6336CFAA-297B-4F55-94EF-5F4CC2D879A7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBMigrator", "DBMigrator\DBMigrator.csproj", "{F00DB077-B0E4-49DC-BA57-78B39B8D99B9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -120,6 +122,18 @@ Global
 		{B63F5F50-AA5B-4BC2-AC61-B2A94B62C042}.Release|x64.Build.0 = Release|x86
 		{B63F5F50-AA5B-4BC2-AC61-B2A94B62C042}.Release|x86.ActiveCfg = Release|x86
 		{B63F5F50-AA5B-4BC2-AC61-B2A94B62C042}.Release|x86.Build.0 = Release|x86
+		{F00DB077-B0E4-49DC-BA57-78B39B8D99B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F00DB077-B0E4-49DC-BA57-78B39B8D99B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F00DB077-B0E4-49DC-BA57-78B39B8D99B9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F00DB077-B0E4-49DC-BA57-78B39B8D99B9}.Debug|x64.Build.0 = Debug|Any CPU
+		{F00DB077-B0E4-49DC-BA57-78B39B8D99B9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F00DB077-B0E4-49DC-BA57-78B39B8D99B9}.Debug|x86.Build.0 = Debug|Any CPU
+		{F00DB077-B0E4-49DC-BA57-78B39B8D99B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F00DB077-B0E4-49DC-BA57-78B39B8D99B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F00DB077-B0E4-49DC-BA57-78B39B8D99B9}.Release|x64.ActiveCfg = Release|Any CPU
+		{F00DB077-B0E4-49DC-BA57-78B39B8D99B9}.Release|x64.Build.0 = Release|Any CPU
+		{F00DB077-B0E4-49DC-BA57-78B39B8D99B9}.Release|x86.ActiveCfg = Release|Any CPU
+		{F00DB077-B0E4-49DC-BA57-78B39B8D99B9}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
