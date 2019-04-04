@@ -289,6 +289,20 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 },
                 new Permission()
                 {
+                    Id = AuthConsts.DbIds.Permissions.Cases.CaseGetDocx,
+                    ClaimName = AuthConsts.EformClaims.CasesClaims.CaseGetDocx,
+                    PermissionName = "Get DOCX",
+                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Cases,
+                },
+                new Permission()
+                {
+                    Id = AuthConsts.DbIds.Permissions.Cases.CaseGetPptx,
+                    ClaimName = AuthConsts.EformClaims.CasesClaims.CaseGetPptx,
+                    PermissionName = "Get PPTX",
+                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Cases,
+                },
+                new Permission()
+                {
                     Id = AuthConsts.DbIds.Permissions.Eforms.PairingRead,
                     ClaimName = AuthConsts.EformClaims.EformsClaims.PairingRead,
                     PermissionName = "Pairing read",

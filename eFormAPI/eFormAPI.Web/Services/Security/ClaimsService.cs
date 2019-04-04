@@ -131,6 +131,8 @@ namespace eFormAPI.Web.Services.Security
                 new Claim(AuthConsts.EformClaims.CasesClaims.CaseUpdate, AuthConsts.ClaimDefaultValue),
                 new Claim(AuthConsts.EformClaims.CasesClaims.CaseDelete, AuthConsts.ClaimDefaultValue),
                 new Claim(AuthConsts.EformClaims.CasesClaims.CaseGetPdf, AuthConsts.ClaimDefaultValue),
+                new Claim(AuthConsts.EformClaims.CasesClaims.CaseGetDocx, AuthConsts.ClaimDefaultValue),
+                new Claim(AuthConsts.EformClaims.CasesClaims.CaseGetPptx, AuthConsts.ClaimDefaultValue),
                 // Eform
                 new Claim(AuthConsts.EformClaims.EformsClaims.Delete, AuthConsts.ClaimDefaultValue),
                 new Claim(AuthConsts.EformClaims.EformsClaims.Create, AuthConsts.ClaimDefaultValue),

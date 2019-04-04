@@ -106,6 +106,18 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 },
                 new GroupPermission()
                 {
+                    Id = 25,
+                    PermissionId = AuthConsts.DbIds.Permissions.Cases.CaseGetDocx,
+                    SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins
+                },
+                new GroupPermission()
+                {
+                    Id = 26,
+                    PermissionId = AuthConsts.DbIds.Permissions.Cases.CaseGetPptx,
+                    SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins
+                },
+                new GroupPermission()
+                {
                     Id = 13,
                     PermissionId = AuthConsts.DbIds.Permissions.Eforms.PairingRead,
                     SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins

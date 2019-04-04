@@ -226,6 +226,12 @@ namespace eFormAPI.Web.Hosting.Extensions
                 options.AddPolicy(AuthConsts.EformPolicies.Cases.CaseGetPdf,
                     policy => policy.RequireClaim(AuthConsts.EformClaims.CasesClaims.CaseGetPdf,
                         AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.Cases.CaseGetDocx,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.CasesClaims.CaseGetDocx,
+                        AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.Cases.CaseGetPptx,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.CasesClaims.CaseGetPptx,
+                        AuthConsts.ClaimDefaultValue));
                 // Eforms
                 options.AddPolicy(AuthConsts.EformPolicies.Eforms.Create,
                     policy => policy.RequireClaim(AuthConsts.EformClaims.EformsClaims.Create,
