@@ -30,6 +30,25 @@
         </td>
         <td>{{folderDto.name}}</td>
         <td>{{folderDto.description}}</td>
+        <td *ngIf="userClaims.workersDelete || userClaims.workersUpdate">
+          <div class="d-flex flex-row justify-content-center">
+            <button id="folderEditBtn" class="btn btn-accent text-black-50 btn-icon mb-2" *ngIf="userClaims.workersUpdate"
+                    mdbTooltip="{{'Edit Folder' | translate}}"
+                    (click)="openEditModal(folderDto)">
+              <i class="material-icons">
+                edit
+              </i>
+            </button>
+            <button id="folderDeleteBtn"
+                    class="btn btn-danger btn-icon mb-2 " *ngIf="userClaims.workersDelete"
+                    mdbTooltip="{{'Delete Folder' | translate}}"
+                    (click)="openDeleteModal(folderDto)">
+              <i class="material-icons">
+                delete_forever
+              </i>
+            </button>
+          </div>
+        </td>
       </tr>
       </tbody>
     </table>
@@ -40,5 +59,14 @@
   (FolderCreated)="loadAllFolders()"
   #modalFolderCreate></app-folder-create>
 
+<app-folder-edit
+  (onFolderEdited)="loadAllFolders()"
+  [selectedFolderDto] = "selectedFolder"
+  #modalFolderEdit></app-folder-edit>
+
+<app-folder-delete
+  (onFolderDeleted)="loadAllFolders()"
+  [selectedFolderDto] = "selectedFolder"
+  #modalFolderDelete></app-folder-delete>
 
 <eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>

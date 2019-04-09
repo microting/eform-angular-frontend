@@ -30,6 +30,8 @@ import {
   FoldersComponent,
   FolderCreateComponent
 } from './components';
+import { FolderEditComponent } from './components/folders/folder-edit/folder-edit.component';
+import { FolderDeleteComponent } from './components/folders/folder-delete/folder-delete.component';
 
 @NgModule({
   imports: [
@@ -65,7 +67,9 @@ import {
     EntitySelectImportListComponent,
     EntitySelectEditComponent,
     FoldersComponent,
-    FolderCreateComponent
+    FolderCreateComponent,
+    FolderEditComponent,
+    FolderDeleteComponent
   ]
 })
 export class AdvancedModule {

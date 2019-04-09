@@ -12,7 +12,10 @@ import {FolderDto} from '../../../../../common/models/dto/folder.dto';
 export class FoldersComponent implements OnInit {
 
   @ViewChild('modalFolderCreate') modalFolderCreate;
+  @ViewChild('modalFolderEdit') modalFolderEdit;
+  @ViewChild('modalFolderDelete') modalFolderDelete;
 
+  selectedFolder: FolderDto = new FolderDto();
   spinnerStatus = true;
   foldersDto: Array<FolderDto> = [];
 
@@ -29,6 +32,14 @@ export class FoldersComponent implements OnInit {
 
   openCreateModal() {
     this.modalFolderCreate.show();
+  }
+  openEditModal(selectedFolder: FolderDto) {
+    this.selectedFolder = selectedFolder;
+    this.modalFolderEdit.show();
+  }
+  openDeleteModal(selectedFolder: FolderDto) {
+    this.selectedFolder = selectedFolder;
+    this.modalFolderDelete.show();
   }
 
   loadAllFolders() {
