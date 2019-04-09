@@ -77,7 +77,7 @@ namespace eFormAPI.Web.Controllers.Advanced
         }
 
         [HttpGet]
-        [Route("api/folders/delete")]
+        [Route("api/folders/delete/{id}")]
         [Authorize(Policy = AuthConsts.EformPolicies.Sites.Delete)]
         public OperationResult Delete(int id)
         {
