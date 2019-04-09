@@ -1,0 +1,44 @@
+<eform-page-subheader [title]="'Folders' | translate">
+  <div class="p-3">
+    <button
+      class="btn btn-success" id="folderCreateBtn" *ngIf="userClaims.workersCreate"
+      (click)="openCreateModal()">{{ 'Create Folder' | translate }}</button>
+  </div>
+</eform-page-subheader>
+
+<div class="container-fluid">
+  <div class="row p-1 table-responsive no-gutters">
+    <table class="table table-sm table-striped text-center z-depth-1">
+      <thead>
+      <tr>
+        <th scope="col">{{'ID' | translate}}</th>
+        <th scope="col">{{'Created at' | translate}}</th>
+        <th scope="col"> {{ 'Updated at' | translate }}</th>
+        <th scope="col"> {{ 'Name' | translate }}</th>
+        <th scope="col"> {{ 'Description' | translate }}</th>
+        <th scope="col" *ngIf="userClaims.workersDelete || userClaims.workersUpdate">{{ 'Actions' | translate }}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let folderDto of foldersDto">
+        <td>{{folderDto.id}}</td>
+        <td>
+          <date-formatter [date]="folderDto.createdAt" [Format]="'datetime'"></date-formatter>
+        </td>
+        <td>
+          <date-formatter [date]="folderDto.updatedAt" [Format]="'datetime'"></date-formatter>
+        </td>
+        <td>{{folderDto.name}}</td>
+        <td>{{folderDto.description}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<app-folder-create
+  (FolderCreated)="loadAllFolders()"
+  #modalFolderCreate></app-folder-create>
+
+
+<eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>

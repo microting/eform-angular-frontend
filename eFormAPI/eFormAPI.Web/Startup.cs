@@ -246,6 +246,7 @@ namespace eFormAPI.Web
             services.AddScoped<IUnitsService, UnitsService>();
             services.AddScoped<IWorkersService, WorkersService>();
             services.AddScoped<ISitesService, SitesService>();
+            services.AddScoped<IFoldersService, FoldersService>();
             services.AddScoped<ISimpleSitesService, SimpleSitesService>();
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<IEntitySearchService, EntitySearchService>();

@@ -26,7 +26,9 @@ import {
   WorkerCreateComponent,
   WorkerDeleteComponent,
   WorkerEditComponent,
-  WorkersComponent
+  WorkersComponent,
+  FoldersComponent,
+  FolderCreateComponent
 } from './components';
 
 @NgModule({
@@ -45,23 +47,25 @@ import {
     EntitySelectComponent,
     SitesComponent,
     SiteEditComponent,
+    SiteDeleteComponent,
     UnitsComponent,
+    UnitsOtpCodeComponent,
     WorkersComponent,
     WorkerEditComponent,
-    SiteDeleteComponent,
-    UnitsOtpCodeComponent,
     WorkerDeleteComponent,
     WorkerCreateComponent,
     EntitySearchCreateComponent,
     EntitySearchRemoveComponent,
-    EntitySelectRemoveComponent,
     EntitySearchImportListComponent,
     EntitySearchEditNameComponent,
     EntitySearchEditComponent,
+    EntitySelectRemoveComponent,
     EntitySelectCreateComponent,
     EntitySelectEditNameComponent,
     EntitySelectImportListComponent,
-    EntitySelectEditComponent
+    EntitySelectEditComponent,
+    FoldersComponent,
+    FolderCreateComponent
   ]
 })
 export class AdvancedModule {

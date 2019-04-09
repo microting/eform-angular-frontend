@@ -5,6 +5,7 @@ import {ClaimsGuard} from 'src/app/common/guards/claims.guard';
 import {
   EntitySearchComponent,
   EntitySelectComponent,
+  FoldersComponent,
   SiteEditComponent,
   SitesComponent,
   UnitsComponent,
@@ -52,6 +53,12 @@ const routes: Routes = [
   {
     path: 'entity-select',
     component: EntitySelectComponent,
+    canActivate: [ClaimsGuard],
+    data: {requiredClaim: UserClaimsEnum.entitySelectRead}
+  },
+  {
+    path: 'folders',
+    component: FoldersComponent,
     canActivate: [ClaimsGuard],
     data: {requiredClaim: UserClaimsEnum.entitySelectRead}
   }

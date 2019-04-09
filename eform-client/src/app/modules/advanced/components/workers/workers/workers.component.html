@@ -65,7 +65,7 @@
 <eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>
 
 <app-worker-create
-  (onWorkerCreated)="loadAllWorkers()"
+  (WorkerCreated)="loadAllWorkers()"
   #modalWorkerCreate></app-worker-create>
 <app-worker-edit
   (onWorkerEdited)="loadAllWorkers()"
