@@ -67,7 +67,7 @@ Create new file by script
 nano plugin-install.service
 ```
 And insert this text
-
+```bash
 [Unit]
 Description=Plugin install service
 
@@ -76,7 +76,7 @@ Type=oneshot
 User=root
 ExecStart=/tmp/install.sh
 StandardOutput=journal
-
+```
 
 
 go to folder
