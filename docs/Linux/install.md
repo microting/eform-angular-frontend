@@ -96,7 +96,7 @@ nano plugin.pkla
 And insert this text
 ```bash
 [plugin unit]
-Identity=unix-user:**USER**
+Identity=unix-user:USER
 Action=org.freedesktop.systemd1.manage-units
 ResultAny=yes
 ```
