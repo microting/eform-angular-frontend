@@ -52,7 +52,9 @@ su - eformuser
 
 
 create file
+```bash
 touch /tmp/install.sh
+```
 
 make it executable
 ```bash
@@ -60,12 +62,15 @@ sudo chmod +x /tmp/install.sh
 ```
 
 go to services folder
+```bash
 cd /etc/systemd/system/
+```
 
 Create new file by script
 ```bash
 nano plugin-install.service
 ```
+
 And insert this text
 ```bash
 [Unit]
@@ -80,16 +85,22 @@ StandardOutput=journal
 
 
 go to folder
+```bash
 cd /var/lib/polkit-1/localauthority/10-vendor.d/
+```
 
 create new file
+```bash
 nano plugin.pkla
+```
 
+And insert this text
+```bash
 [plugin unit]
 Identity=unix-user:USER
 Action=org.freedesktop.systemd1.manage-units
 ResultAny=yes
-
+```
 USER - should be your eform user username
 
 
