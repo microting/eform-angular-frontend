@@ -12,6 +12,8 @@ using eFormAPI.Web.Hosting.Helpers.DbOptions;
 using eFormAPI.Web.Infrastructure.Database;
 using eFormAPI.Web.Infrastructure.Models.Plugins;
 using eFormAPI.Web.Infrastructure.Models.Settings.Plugins;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
@@ -158,7 +160,7 @@ namespace eFormAPI.Web.Services
                     return new OperationDataResult<PluginsStoreModel>(false,
                         _localizationService.GetString("PluginNotFound"));
                 }
-
+                
                 var link = plugin.InstallScript;
                 var httpClient = _httpClientFactory.CreateClient();
                 var stream = httpClient.GetStreamAsync(link).Result;
@@ -182,6 +184,8 @@ namespace eFormAPI.Web.Services
                 }
                 
                 // Execute file
+                //
+              
                 var result = Bash("sudo systemctl plugin-install start");
                 return new OperationResult(true, result);
             }

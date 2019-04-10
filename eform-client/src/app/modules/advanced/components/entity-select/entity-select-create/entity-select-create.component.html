@@ -24,10 +24,10 @@
             </div>
             <div class="d-inline-flex">
               <button id="importEntitySelectBtn" class="btn btn-success btn-icon" (click)="modalSelectImportList.show()">
-                <i class="material-icons">format_list_bulleted</i>
+                <fa-icon icon="list-ul" size="lg" [fixedWidth]="true"></fa-icon>
               </button>
               <button class="btn btn-success btn-icon" (click)="addNewAdvEntitySelectableItem()">
-                <i class="material-icons">add</i>
+                <fa-icon icon="plus" size="lg" [fixedWidth]="true"></fa-icon>
               </button>
             </div>
           </div>
@@ -44,21 +44,20 @@
                     <div class="d-flex justify-content-between">
                       <div>
                         <a>
-                          <i class="material-icons text-black-50"> drag_handle </i>
+                          <fa-icon icon="grip-lines" size="lg" [fixedWidth]="true"></fa-icon>
                         </a>
                       </div>
                       <div>{{entityItem.name}}</div>
                       <div>
-                        <i class="material-icons material-icon-danger mr-3" *ngIf="!entityItem.name"
-                           mdbTooltip="{{'Name is required' | translate}}!">
-                          warning
-                        </i>
+                        <fa-icon icon="exclamation-triangle" size="lg" [fixedWidth]="true"*ngIf="!entityItem.name"
+                                 mdbTooltip="{{'Name is required' | translate}}!"></fa-icon>
                         <a>
-                          <i class="material-icons text-black-50" (click)="openModalSelectEditName(entityItem)"> edit </i>
+                          <fa-icon icon="pen" size="lg" [fixedWidth]="true"
+                                   (click)="openModalSelectEditName(entityItem)"></fa-icon>
                         </a>
                         <a>
-                          <i class="material-icons text-black-50"
-                             (click)="deleteAdvEntitySelectableItem(entityItem.entityItemUId)"> delete </i>
+                          <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true"
+                                   (click)="deleteAdvEntitySelectableItem(entityItem.entityItemUId)"></fa-icon>
                         </a>
                       </div>
                     </div>

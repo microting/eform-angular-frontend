@@ -4,6 +4,16 @@ import {AuthGuard} from 'src/app/common/guards';
 
 export const routes: Routes = [
 // INSERT ROUTES HERE
+  {
+    path: 'customers-pn',
+    canActivate: [AuthGuard],
+    loadChildren: './modules/customers-pn/customers-pn.module#CustomersPnModule'
+  },
+  {
+    path: 'trash-inspection-pn',
+    canActivate: [AuthGuard],
+    loadChildren: './modules/trash-inspection-pn/trash-inspection-pn.module#TrashInspectionPnModule'
+  }
 ];
 
 @NgModule({

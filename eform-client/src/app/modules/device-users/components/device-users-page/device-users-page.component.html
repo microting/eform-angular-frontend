@@ -54,9 +54,8 @@
               <button class="btn btn-danger btn-icon mb-2 " *ngIf="userClaims.deviceUsersUpdate"
                       mdbTooltip="{{'New OTP' | translate}}"
                       (click)="openOtpModal(siteDto)">
-                <i class="material-icons">
-                  vpn_key
-                </i>
+                <fa-icon icon="key" size="lg" [fixedWidth]="true"></fa-icon>
+
               </button>
             </ng-container>
             <ng-container *ngIf="!siteDto.unitId">
