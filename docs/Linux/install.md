@@ -40,7 +40,7 @@ Give sudo privileges to user
 usermod -aG sudo eformuser
 ```
 
-logout and login to created user
+Logout and login to created user
 
 if you are in root, you can run __su__ to login as new user
 
@@ -51,17 +51,17 @@ su - eformuser
 ### Setup plugin install service
 
 
-create file
+Create file
 ```bash
 touch /tmp/install.sh
 ```
 
-make it executable
+Make it executable
 ```bash
 sudo chmod +x /tmp/install.sh
 ```
 
-go to services folder
+Go to services folder
 ```bash
 cd /etc/systemd/system/
 ```
@@ -83,7 +83,6 @@ ExecStart=/tmp/install.sh
 StandardOutput=journal
 ```
 
-
 go to folder
 ```bash
 cd /var/lib/polkit-1/localauthority/10-vendor.d/
@@ -97,11 +96,12 @@ nano plugin.pkla
 And insert this text
 ```bash
 [plugin unit]
-Identity=unix-user:USER
+Identity=unix-user:**USER**
 Action=org.freedesktop.systemd1.manage-units
 ResultAny=yes
 ```
-USER - should be your eform user username
+
+**USER** - should be your eform user username
 
 
 
