@@ -20,6 +20,7 @@ declare -A conf_parameters=(
 ["RELAY_HOST"]='"172.16.0.66"'
 ["CURRENTUSER"]='"ubuntu"'
 ["DOTNET_SKIP_FIRST_TIME_EXPERIENCE"]=true
+["SHOULD_SETUP_LOCAL_SERVICE"]=true
 )
 # WRITE CONFIG FILE
 mkdir -p /var/www/microting
@@ -58,7 +59,7 @@ echo $INSTANCE_HOSTNAME
 echo "$INSTANCE_IP $INSTANCE_HOSTNAME" >> /etc/hosts
 #sed -i "s/SERVER_NAME_REPLACE_ME/$INSTANCE_IP/g" /opt/nginx/conf/nginx.conf # > /opt/nginx/conf/nginx.conf
 
-apt-get -y install software-properties-common
+apt-get -y install software-properties-common unzip
 apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
 add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://mirror.one.com/mariadb/repo/10.3/ubuntu bionic main'
 
@@ -93,9 +94,8 @@ chown -R ubuntu:ubuntu /var/www
 cd /var/www/microting
 
 echo "################## START CLONING ##################"
-whoami
 su ubuntu -c \
-"git clone https://github.com/microting/eform-angular-frontend.git -b master"
+"git clone https://github.com/microting/eform-angular-frontend.git -b stable"
 echo "################## END CLONING ##################"
 
 cd eform-angular-frontend/eform-client
@@ -109,7 +109,7 @@ export GITVERSION=`git describe --abbrev=0 --tags | cut -d "v" -f 2`
 echo $GITVERSION
 echo "################## END GITVERSION ##################"
 su ubuntu -c \
-"dotnet publish -o out /p:Version=$GITVERSION --runtime linux-x64"
+"dotnet publish -o out /p:Version=$GITVERSION --runtime linux-x64 --configuration Release"
 
 cat > /etc/systemd/system/eform.service << EndOfUnitFile
 [Unit]
@@ -119,7 +119,7 @@ WorkingDirectory=/var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web
 ExecStart=/usr/bin/dotnet /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/eFormAPI.Web.dll
 Restart=always
 RestartSec=10
-SyslogIdentifier=dotnet-eform
+SyslogIdentifier=dotnet-eform-frontend
 User=ubuntu
 Environment=ASPNETCORE_ENVIRONMENT=Production
 [Install]
@@ -180,16 +180,54 @@ if [ $SHOULD_SETUP_DB_BACKUP = true ]
 		echo "cd /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/" >> /root/backup-mysql-hourly.sh
 		echo "swift upload SWIFT_FOLDER_PREFIXConnection connection.json" >> /root/backup-mysql-hourly.sh
 		
+		echo "cd /var/www/microting" >> /root/backup-mysql-hourly.sh
+		echo "rm /var/www/microting/plugins-installed.txt" >> /root/backup-mysql-hourly.sh
+		echo "for D in *;" >> /root/backup-mysql-hourly.sh
+		echo "do" >> /root/backup-mysql-hourly.sh
+		echo 'if [ -d "${D}" ]; then' >> /root/backup-mysql-hourly.sh
+		echo 'if [ $D != "eform-angular-frontend" ]; then' >> /root/backup-mysql-hourly.sh
+		echo 'if [ $D != "eform-debian-service" ]; then' >> /root/backup-mysql-hourly.sh
+    echo 'if [[ $D == *"eform-angular"* ]]; then' >> /root/backup-mysql-hourly.sh
+		echo 'echo "${D}" >> /var/www/microting/plugins-installed.txt' >> /root/backup-mysql-hourly.sh
+		echo 'fi' >> /root/backup-mysql-hourly.sh
+		echo "fi" >> /root/backup-mysql-hourly.sh
+		echo "fi" >> /root/backup-mysql-hourly.sh
+		echo "fi" >> /root/backup-mysql-hourly.sh
+		echo "done" >> /root/backup-mysql-hourly.sh
+		echo "cat /var/www/microting/plugins-installed.txt" >> /root/backup-mysql-hourly.sh
+		echo "cd /var/www/microting/" >> /root/backup-mysql-hourly.sh
+		echo "swift upload SWIFT_FOLDER_PREFIXConnection plugins-installed.txt" >> /root/backup-mysql-hourly.sh
+    
+		echo "cd /var/www/microting" >> /root/backup-mysql-hourly.sh
+		echo "rm /var/www/microting/plugins-installed.txt" >> /root/backup-mysql-hourly.sh
+		echo "for D in *;" >> /root/backup-mysql-hourly.sh
+		echo "do" >> /root/backup-mysql-hourly.sh
+		echo 'if [ -d "${D}" ]; then' >> /root/backup-mysql-hourly.sh
+		echo 'if [ $D != "eform-angular-frontend" ]; then' >> /root/backup-mysql-hourly.sh
+		echo 'if [ $D != "eform-debian-service" ]; then' >> /root/backup-mysql-hourly.sh
+    echo 'if [[ $D == *"eform-service"* ]]; then' >> /root/backup-mysql-hourly.sh
+		echo 'echo "${D}" >> /var/www/microting/service-plugins-installed.txt' >> /root/backup-mysql-hourly.sh
+		echo 'fi' >> /root/backup-mysql-hourly.sh
+		echo "fi" >> /root/backup-mysql-hourly.sh
+		echo "fi" >> /root/backup-mysql-hourly.sh
+		echo "fi" >> /root/backup-mysql-hourly.sh
+		echo "done" >> /root/backup-mysql-hourly.sh
+		echo "cat /var/www/microting/service-plugins-installed.txt" >> /root/backup-mysql-hourly.sh
+		echo "cd /var/www/microting/" >> /root/backup-mysql-hourly.sh
+		echo "swift upload SWIFT_FOLDER_PREFIXConnection service-plugins-installed.txt" >> /root/backup-mysql-hourly.sh
+		
+		
     sed -i "s/SWIFT_FOLDER_PREFIX/$SWIFT_FOLDER_PREFIX/g" /root/backup-mysql-hourly.sh
     echo '############# DONE SETTING UP HOURLY BACKUP #############'
 		chmod +x /root/backup-mysql-hourly.sh
+    echo "55 * * * * root /root/backup-mysql-hourly.sh" >> /etc/cron.d/eform-backup
 		
 
 fi
 
 if [ $SHOULD_RESTORE_DATABASE = true ]
 	then
-	cd 
+	cd /var/www/microting/
 	# export OS_USERNAME=$SWIFT_USER_NAME
 	# export OS_TENANT_NAME=$SWIFT_TENANT_NAME
 	# export OS_PASSWORD=$SWIFT_PASSWORD
@@ -246,15 +284,121 @@ if [ $SHOULD_RESTORE_DATABASE = true ]
 		NUM_BACKUPS=`swift list $DATABASE_NAME | wc -l`
 		echo "New number of backups : $NUM_BACKUPS max is $MAX_NUMBER_OF_BACKUPS"
 	done
+  
 	export CONNECTIONSTRINGJSON=$SWIFT_FOLDER_PREFIX
 	export CONNECTIONSTRINGJSON+=Connection
   swift download $CONNECTIONSTRINGJSON connection.json
 	mv connection.json /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/
 	chown ubuntu:ubuntu /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/connection.json
-	echo "Done checking and cleaning backups"
+	
+	export CONNECTIONSTRINGJSON=$SWIFT_FOLDER_PREFIX
+	export CONNECTIONSTRINGJSON+=Connection
+  swift download $CONNECTIONSTRINGJSON plugins-installed.txt
+  while read plugin; do
+    cd /var/www/microting/
+    su ubuntu -c \
+      "git clone https://github.com/microting/$plugin.git -b stable"
+    echo "$p"
+    chmod +x /var/www/microting/$plugin/install.sh
+    /var/www/microting/$plugin/install.sh
+    echo "Setting up backup for $plugin"
+    echo '/usr/bin/mysqldump --host=$HOST --user=$USER --password=$PASS SWIFT_FOLDER_PREFIXMYNAME | gzip > $FILENAME.gz' >> /root/backup-mysql-hourly.sh
+    echo 'swift upload SWIFT_FOLDER_PREFIXMYNAME $FILENAME.gz' >> /root/backup-mysql-hourly.sh
+    echo 'rm $FILENAME.gz' >> /root/backup-mysql-hourly.sh
+    sed -i "s/SWIFT_FOLDER_PREFIX/$SWIFT_FOLDER_PREFIX/g" /root/backup-mysql-hourly.sh
+    sed -i "s/MYNAME/$plugin/g" /root/backup-mysql-hourly.sh
+    echo "Done setting up backup for $plugin"
+    echo "Restoring backup for $plugin"
+    
+  	export DATABASE_NAME=$SWIFT_FOLDER_PREFIX
+  	export DATABASE_NAME+=$plugin
+
+  	export LAST_BACKUP=`swift list $DATABASE_NAME | tail -1`
+  	swift download $DATABASE_NAME $LAST_BACKUP
+  	gunzip $LAST_BACKUP
+  	export LAST_BACKUP=`expr substr $LAST_BACKUP 1 27`
+  	echo "Creating DB"
+  	`time mysql -u $INSTANCE_HOSTNAME --password=$MYSQL_PASSWORD -e "create database $DATABASE_NAME"`
+  	echo "Restoring db from backup"
+  	`time mysql -u $INSTANCE_HOSTNAME --password=$MYSQL_PASSWORD $DATABASE_NAME < $LAST_BACKUP`
+  	echo "Restore complete"
+
+  	echo "Checking backup status"
+  	export NUM_BACKUPS=`swift list $DATABASE_NAME | wc -l`
+  	echo "Current number of backups : $NUM_BACKUPS max is $MAX_NUMBER_OF_BACKUPS"
+  	while (( $NUM_BACKUPS > $MAX_NUMBER_OF_BACKUPS ))
+  	do
+  		CURRENT_BACKUP_TO_DELETE=`swift list $DATABASE_NAME | head -1`
+  		echo "SHOULD DELETE $CURRENT_BACKUP_TO_DELETE."
+  		swift delete $SWIFT_FOLDER_PREFIX $CURRENT_BACKUP_TO_DELETE
+  		NUM_BACKUPS=`swift list $DATABASE_NAME | wc -l`
+  		echo "New number of backups : $NUM_BACKUPS max is $MAX_NUMBER_OF_BACKUPS"
+  	done
+    
+    echo "Done restoring backup for $plugin"
+  done <plugins-installed.txt
+  
+  mkdir -p /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/output/datafolder/reports/templates/zip-archives 
+  cd /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/output/datafolder/reports/templates/zip-archives
+  
+	export REPORTSFOLDER=$SWIFT_FOLDER_PREFIX
+	export REPORTSFOLDER+=uploaded_data
+  export REPORTS=`swift list $REPORTSFOLDER | grep .zip`
+  for one_thing in $REPORTS; do
+    export FOLDER=`echo $one_thing | cut -d "_" -f 1`
+    echo $FOLDER
+    mkdir -p /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/output/datafolder/reports/templates/$FOLDER
+
+    mkdir -p /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/output/datafolder/reports/templates/zip-archives/$FOLDER
+    cd /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/output/datafolder/reports/templates/zip-archives/$FOLDER
+    swift download $REPORTSFOLDER $one_thing
+    unzip $one_thing -d /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/output/datafolder/reports/templates/$FOLDER/
+    echo $one_thing | cut -d "_" -f 1
+    echo $one_thing | cut -d "_" -f 2
+  done
+	
+  chown -R ubuntu:ubuntu /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/output/
+  
+  echo "Done checking and cleaning backups"
 fi
 
 systemctl daemon-reload
 systemctl enable eform.service
 systemctl start eform.service
 nginx -s reload
+
+echo "################## SERVICE SETUP ##################"
+if [ $SHOULD_SETUP_LOCAL_SERVICE = true ]
+then
+	cd /var/www/microting
+su ubuntu -c \
+"git clone https://github.com/microting/eform-debian-service.git -b stable"
+	cd /var/www/microting/eform-debian-service/MicrotingService
+	
+	export GITVERSION=`git describe --abbrev=0 --tags | cut -d "v" -f 2`
+	echo $GITVERSION
+su ubuntu -c \
+"dotnet publish -o out /p:Version=$GITVERSION --runtime linux-x64 --configuration Release"
+	
+	cp /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/connection.json /var/www/microting/eform-debian-service/MicrotingService/MicrotingService/out/
+	
+cat > /etc/systemd/system/eformbackend.service << EndOfUnitFile
+[Unit]
+Description=eForm service application
+[Service]
+WorkingDirectory=/var/www/microting/eform-debian-service/MicrotingService/MicrotingService/out
+ExecStart=/usr/bin/dotnet /var/www/microting/eform-debian-service/MicrotingService/MicrotingService/out/MicrotingService.dll
+Restart=always
+RestartSec=10
+slogIdentifier=dotnet-eform-backend
+User=ubuntu
+Environment=ASPNETCORE_ENVIRONMENT=Production
+[Install]
+WantedBy=multi-user.target
+EndOfUnitFile
+systemctl daemon-reload
+systemctl enable eformbackend.service
+systemctl start eformbackend.service
+	
+fi
+echo "################## END SERVICE SETUP ##################"

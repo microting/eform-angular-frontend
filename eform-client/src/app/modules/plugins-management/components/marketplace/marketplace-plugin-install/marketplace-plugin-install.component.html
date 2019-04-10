@@ -1,0 +1,26 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{selectedPluginModel.name}} {{'Installation' | translate}}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <p>{{'Are you sure you want to install plugin' | translate}}?
+            <br>{{'This may take up to 10 minutes and rewrite ' +
+            'current plugin version if it is already exist in the system' | translate}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success" (click)="installPlugin()"
+                id="saveBtn">{{ 'Install' | translate }}</button>
+        <button class="btn btn-neutral text-black-50" id="cancelCreateBtn" (click)="frame.hide()">
+          {{ 'Cancel' | translate }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

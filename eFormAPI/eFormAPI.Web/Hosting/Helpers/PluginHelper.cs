@@ -27,29 +27,37 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using eFormAPI.Web.Hosting.Enums;
-using eFormAPI.Web.Hosting.Extensions;
 using eFormAPI.Web.Infrastructure.Database.Entities;
 using eFormAPI.Web.Infrastructure.Database.Factories;
 using eFormCore;
 using McMaster.NETCore.Plugins;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microting.eFormApi.BasePn;
 using Microting.eFormApi.BasePn.Abstractions;
+using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
+using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
+using Microting.eFormApi.BasePn.Infrastructure.Delegates;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
+using Microting.eFormApi.BasePn.Infrastructure.Settings;
 using Microting.eFormApi.BasePn.Services;
 
 namespace eFormAPI.Web.Hosting.Helpers
 {
     public static class PluginHelper
     {
-        public static List<IEformPlugin> GetPlugins(IConfiguration configuration)
+        public static List<IEformPlugin> GetPlugins(string connectionString)
         {
             // Load info from database
             List<EformPlugin> eformPlugins = null;
             var contextFactory = new BaseDbContextFactory();
-            using (var dbContext = contextFactory.CreateDbContext(new[] {configuration.MyConnectionString()}))
+            using (var dbContext = contextFactory.CreateDbContext(new[] {connectionString}))
             {
                 try
                 {
@@ -66,10 +74,8 @@ namespace eFormAPI.Web.Hosting.Helpers
             // create plugin loaders
             if (eformPlugins != null)
             {
-                using (var dbContext = contextFactory.CreateDbContext(new[] {configuration.MyConnectionString()}))
+                using (var dbContext = contextFactory.CreateDbContext(new[] {connectionString}))
                 {
-                    var connectionString = dbContext.Database.GetDbConnection().ConnectionString;
-
                     var dbNameSection = Regex.Match(connectionString, @"(Database=\w*;)").Groups[0].Value;
                     var dbPrefix = Regex.Match(connectionString, @"Database=(\d*)_").Groups[1].Value;
 
@@ -157,11 +163,47 @@ namespace eFormAPI.Web.Hosting.Helpers
                             typeof(IEformPlugin),
                             typeof(IServiceCollection),
                             typeof(IEFormCoreService),
+                            typeof(IPluginConfigurationSeedData),
+                            typeof(IPluginDbContext),
+                            typeof(IConfigurationBuilder),
+                            typeof(ReloadDbConfiguration),
+                            typeof(DbSet<PluginConfigurationValueVersion>),
+                            typeof(DbSet<PluginConfigurationValue>),
+                            typeof(ReloadDbConfiguration),
                             typeof(EFormCoreService),
+
+                            typeof(ModelBuilder),
+                            typeof(PluginConfigurationValue),
+                            typeof(PluginConfigurationValueVersion),
+                            typeof(BaseEntity),
+                            typeof(PluginConfigurationProvider<>),
+                            typeof(ConfigurationProvider),
+                            typeof(DbContext),
+                            typeof(WarningsConfiguration),
+                            typeof(WarningBehavior),
+                            typeof(DbContextOptionsBuilder),
+                            typeof(DbContextOptions),
+                            typeof(InMemoryEventId),
+                            typeof(LoggerCategory<>),
+                            typeof(DbLoggerCategory),
+                            typeof(WarningsConfigurationBuilder),
+                            typeof(MySqlDbContextOptionsExtensions),
+                            typeof(CoreOptionsExtension),
+                            typeof(RelationalEventId),
+                            typeof(IDbContextOptionsBuilderInfrastructure),
+                            typeof(ModelSnapshot),       
+
+                            typeof(IPluginDbOptions<>),
+                            typeof(IOptionsSnapshot<>),
+                            typeof(PluginDbOptions<>),
+                            typeof(IDesignTimeDbContextFactory<>),
                             typeof(Core)
                         });
-                    foreach (var type in loader.LoadDefaultAssembly()
-                        .GetTypes()
+                    var types = loader
+                        .LoadDefaultAssembly()
+                        .GetTypes();
+
+                    foreach (var type in types
                         .Where(t => typeof(IEformPlugin).IsAssignableFrom(t) && !t.IsAbstract))
                     {
                         Console.ForegroundColor = ConsoleColor.Green;

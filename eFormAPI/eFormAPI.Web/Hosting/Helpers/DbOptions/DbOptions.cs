@@ -29,6 +29,7 @@ using System.Threading.Tasks;
 using Castle.Core.Internal;
 using eFormAPI.Web.Infrastructure.Database;
 using Microsoft.Extensions.Options;
+using Microting.eFormApi.BasePn.Infrastructure.Delegates;
 
 namespace eFormAPI.Web.Hosting.Helpers.DbOptions
 {
@@ -53,7 +54,15 @@ namespace eFormAPI.Web.Hosting.Helpers.DbOptions
             // Update values
             await UpdateConfig(dictionary, dbContext);
             // Reload configuration from database
-            Program.ReloadDbConfigurationDelegate.Invoke();
+            if (ReloadDbConfigurationDelegates.ReloadDbConfigurationDelegate != null)
+            {
+                var invocationList = ReloadDbConfigurationDelegates.ReloadDbConfigurationDelegate
+                    .GetInvocationList();
+                foreach (var func in invocationList)
+                {
+                    func.DynamicInvoke();
+                }
+            }
         }
 
         private static async Task UpdateConfig(Dictionary<string, string> dictionary, BaseDbContext dbContext)

@@ -32,6 +32,8 @@ import {
 } from './components';
 import { FolderEditComponent } from './components/folders/folder-edit/folder-edit.component';
 import { FolderDeleteComponent } from './components/folders/folder-delete/folder-delete.component';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+
 
 @NgModule({
   imports: [
@@ -42,7 +44,8 @@ import { FolderDeleteComponent } from './components/folders/folder-delete/folder
     EformSharedModule,
     NgSelectModule,
     FormsModule,
-    DragulaModule
+    DragulaModule,
+    FontAwesomeModule
   ],
   declarations: [
     EntitySearchComponent,
