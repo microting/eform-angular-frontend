@@ -123,7 +123,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                     LocaleName = "ApplicationSettings",
                     E2EId = "application-settings",
                     Link = "/application-settings",
-                    Position = 5,
+                    Position = 6,
                     ParentId = 3,
                     MenuPosition = 1,
                 },
@@ -199,7 +199,18 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                     LocaleName = "PluginsSettings",
                     E2EId = "plugins-settings",
                     Link = "/plugins-settings",
-                    Position = 6,
+                    Position = 7,
+                    ParentId = 3,
+                    MenuPosition = 1,
+                },
+                new MenuItem
+                {
+                    Id = 17,
+                    Name = "Folders",
+                    LocaleName = "Folders",
+                    E2EId = "folders",
+                    Link = "/advanced/folders",
+                    Position = 5,
                     ParentId = 3,
                     MenuPosition = 1,
                 }

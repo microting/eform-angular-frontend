@@ -10,7 +10,7 @@ import {DeviceUserService} from 'src/app/common/services/device-users';
   styleUrls: ['./worker-create.component.scss']
 })
 export class WorkerCreateComponent implements OnInit {
-  @Output() onWorkerCreated: EventEmitter<void> = new EventEmitter<void>();
+  @Output() WorkerCreated: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('frame') frame;
   newWorkerModel: WorkerCreateModel = new WorkerCreateModel;
   simpleSites: Array<SiteDto> = [];
@@ -28,7 +28,7 @@ export class WorkerCreateComponent implements OnInit {
 
   loadAllSimpleSites() {
     this.simpleSitesService.getAllSimpleSites().subscribe((data => {
-      this.simpleSites = data.model.map((i) => { i.fullName = i.firstName + ' ' + i.lastName; return i; });;
+      this.simpleSites = data.model.map((i) => { i.fullName = i.firstName + ' ' + i.lastName; return i; });
     }));
   }
 
@@ -39,7 +39,7 @@ export class WorkerCreateComponent implements OnInit {
     this.workersService.createWorker(this.newWorkerModel).subscribe((data => {
       if (data && data.success) {
         this.newWorkerModel = new WorkerCreateModel;
-        this.onWorkerCreated.emit();
+        this.WorkerCreated.emit();
         this.frame.hide();
       }
       this.spinnerStatus = false;

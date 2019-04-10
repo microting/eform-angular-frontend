@@ -4,15 +4,17 @@ using eFormAPI.Web.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eFormAPI.Web.Infrastructure.Database;
 
 namespace eFormAPI.Web.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    partial class BaseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190408060348_AddingFoldersMenu")]
+    partial class AddingFoldersMenu
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             string autoIDGenStrategy = "SqlServer:ValueGenerationStrategy";
@@ -366,11 +368,6 @@ namespace eFormAPI.Web.Migrations
                         {
                             Id = "EformTokenOptions:CookieName",
                             Value = "Authorization"
-                        },
-                        new
-                        {
-                            Id = "PluginStoreSettings:PluginListLink",
-                            Value = "https://raw.githubusercontent.com/microting/eform-angular-frontend/master/plugins.json"
                         });
                 });
 
@@ -1170,7 +1167,7 @@ namespace eFormAPI.Web.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedByUserId = 0,
                             E2EId = "folders",
-                            Link = "/advanced/folders",
+                            Link = "/folders",
                             LocaleName = "Folders",
                             MenuPosition = 1,
                             Name = "Folders",

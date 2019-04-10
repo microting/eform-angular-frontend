@@ -89,6 +89,8 @@ namespace eFormAPI.Web.Infrastructure
                 public const string CaseUpdate = "case_update";
                 public const string CaseDelete = "case_delete";
                 public const string CaseGetPdf = "case_get_pdf";
+                public const string CaseGetDocx = "case_get_docx";
+                public const string CaseGetPptx = "case_get_pptx";
             }
 
             public static class EformsClaims
@@ -171,6 +173,8 @@ namespace eFormAPI.Web.Infrastructure
                 public const string CaseUpdate = EformClaims.CasesClaims.CaseUpdate;
                 public const string CaseDelete = EformClaims.CasesClaims.CaseDelete;
                 public const string CaseGetPdf = EformClaims.CasesClaims.CaseGetPdf;
+                public const string CaseGetDocx = EformClaims.CasesClaims.CaseGetDocx;
+                public const string CaseGetPptx = EformClaims.CasesClaims.CaseGetPptx;
             }
 
             public static class Eforms
@@ -274,6 +278,8 @@ namespace eFormAPI.Web.Infrastructure
                     public const int CaseUpdate = 35;
                     public const int CaseDelete = 36;
                     public const int CaseGetPdf = 37;
+                    public const int CaseGetDocx = 45;
+                    public const int CaseGetPptx = 46;
                 }
 
                 public static class Eforms

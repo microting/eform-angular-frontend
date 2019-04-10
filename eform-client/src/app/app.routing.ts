@@ -59,7 +59,7 @@ export const routes: Routes = [
         path: 'plugins',
         canActivate: [AuthGuard],
         loadChildren: './plugins/plugins.module#PluginsModule'
-      },
+      }
     ]
   },
   {

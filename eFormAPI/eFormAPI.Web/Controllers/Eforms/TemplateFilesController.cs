@@ -233,7 +233,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         public IActionResult GetPdfFile(string fileName)
         {
             var core = _coreHelper.GetCore();
-            var filePath = $"{core.GetSdkSetting(Settings.fileLocationPdf)}\\{fileName}.pdf";
+            var filePath = Path.Combine(core.GetSdkSetting(Settings.fileLocationPdf), fileName + ".pdf");
             if (!System.IO.File.Exists(filePath))
             {
                 return NotFound();

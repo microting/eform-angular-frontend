@@ -26,8 +26,12 @@ import {
   WorkerCreateComponent,
   WorkerDeleteComponent,
   WorkerEditComponent,
-  WorkersComponent
+  WorkersComponent,
+  FoldersComponent,
+  FolderCreateComponent
 } from './components';
+import { FolderEditComponent } from './components/folders/folder-edit/folder-edit.component';
+import { FolderDeleteComponent } from './components/folders/folder-delete/folder-delete.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 
@@ -48,23 +52,27 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
     EntitySelectComponent,
     SitesComponent,
     SiteEditComponent,
+    SiteDeleteComponent,
     UnitsComponent,
+    UnitsOtpCodeComponent,
     WorkersComponent,
     WorkerEditComponent,
-    SiteDeleteComponent,
-    UnitsOtpCodeComponent,
     WorkerDeleteComponent,
     WorkerCreateComponent,
     EntitySearchCreateComponent,
     EntitySearchRemoveComponent,
-    EntitySelectRemoveComponent,
     EntitySearchImportListComponent,
     EntitySearchEditNameComponent,
     EntitySearchEditComponent,
+    EntitySelectRemoveComponent,
     EntitySelectCreateComponent,
     EntitySelectEditNameComponent,
     EntitySelectImportListComponent,
-    EntitySelectEditComponent
+    EntitySelectEditComponent,
+    FoldersComponent,
+    FolderCreateComponent,
+    FolderEditComponent,
+    FolderDeleteComponent
   ]
 })
 export class AdvancedModule {
