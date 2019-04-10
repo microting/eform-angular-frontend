@@ -173,7 +173,7 @@ namespace eFormAPI.Web.Services
                     throw new Exception("Error while obtaining install script file");
                 }
 
-                const string pluginInstallDirectory = "/tmp";
+                const string pluginInstallDirectory = "/var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/PluginInstallDaemonQueue";
                 var filePath = Path.Combine(pluginInstallDirectory, "install.sh");
                 using (var file = new StreamWriter(filePath))
                 {
