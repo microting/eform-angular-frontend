@@ -12,6 +12,8 @@ using eFormAPI.Web.Hosting.Helpers.DbOptions;
 using eFormAPI.Web.Infrastructure.Database;
 using eFormAPI.Web.Infrastructure.Models.Plugins;
 using eFormAPI.Web.Infrastructure.Models.Settings.Plugins;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
@@ -158,7 +160,7 @@ namespace eFormAPI.Web.Services
                     return new OperationDataResult<PluginsStoreModel>(false,
                         _localizationService.GetString("PluginNotFound"));
                 }
-
+                
                 var link = plugin.InstallScript;
                 var httpClient = _httpClientFactory.CreateClient();
                 var stream = httpClient.GetStreamAsync(link).Result;
@@ -173,7 +175,7 @@ namespace eFormAPI.Web.Services
                     throw new Exception("Error while obtaining install script file");
                 }
 
-                const string pluginInstallDirectory = "/tmp";
+                const string pluginInstallDirectory = "/var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/PluginInstallDaemonQueue";
                 var filePath = Path.Combine(pluginInstallDirectory, "install.sh");
                 using (var file = new StreamWriter(filePath))
                 {
@@ -182,6 +184,8 @@ namespace eFormAPI.Web.Services
                 }
                 
                 // Execute file
+                //
+              
                 var result = Bash("sudo systemctl plugin-install start");
                 return new OperationResult(true, result);
             }

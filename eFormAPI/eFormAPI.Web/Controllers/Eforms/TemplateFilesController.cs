@@ -132,33 +132,39 @@ namespace eFormAPI.Web.Controllers.Eforms
         public async Task<OperationResult> RotateImage(string fileName)
         {
             var core = _coreHelper.GetCore();
-            var filePath = Path.Combine(core.GetSdkSetting(Settings.fileLocationPicture),fileName);
+            Directory.CreateDirectory(Path.Combine("tmp"));
+            var filePath = Path.Combine("tmp",fileName);
             if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
             {
                 var result =  await core.GetFileFromStorageSystem(fileName);
                 var fileStream = System.IO.File.Create(filePath);
-                Response.ContentType = result.ContentType;
-                Response.ContentLength = result.ContentLength;
                 result.ObjectStreamContent.CopyTo(fileStream);
 
                 fileStream.Close();
                 fileStream.Dispose();
+                
+                result.ObjectStreamContent.Close();
+                result.ObjectStreamContent.Dispose();
                 try
                 {
                     var img = Image.Load(filePath);
                     img.Mutate(x => x.Rotate(RotateMode.Rotate90));
                     img.Save(filePath);
                     img.Dispose();
-                    core.PutFilToStorageSystem(filePath, fileName, 0);
+                    core.PutFileToStorageSystem(filePath, fileName);
                 }
                 catch (Exception e)
                 {
                     if (e.Message == "A generic error occurred in GDI+.")
                     {
-                        return new OperationResult(true);
+                        return new OperationResult(false);
                     }
 
-                    return new OperationResult(false, _localizationService.GetString("ErrorWhileRotateImage"));
+                    return new OperationResult(false, _localizationService.GetString("ErrorWhileRotateImage") + $" Internal error: {e.Message}");
+                }
+                finally
+                {
+                    System.IO.File.Delete(filePath);
                 }
                     
                 return new OperationResult(true, _localizationService.GetString("ImageRotatedSuccessfully"));
@@ -184,10 +190,10 @@ namespace eFormAPI.Web.Controllers.Eforms
                 {
                     if (e.Message == "A generic error occurred in GDI+.")
                     {
-                        return new OperationResult(true);
+                        return new OperationResult(false);
                     }
 
-                    return new OperationResult(false, _localizationService.GetString("ErrorWhileRotateImage"));
+                    return new OperationResult(false, _localizationService.GetString("ErrorWhileRotateImage") + $" Internal error: {e.Message}");
                 }
 
                 return new OperationResult(true, _localizationService.GetString("ImageRotatedSuccessfully"));
@@ -227,7 +233,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         public IActionResult GetPdfFile(string fileName)
         {
             var core = _coreHelper.GetCore();
-            var filePath = $"{core.GetSdkSetting(Settings.fileLocationPdf)}\\{fileName}.pdf";
+            var filePath = Path.Combine(core.GetSdkSetting(Settings.fileLocationPdf), fileName + ".pdf");
             if (!System.IO.File.Exists(filePath))
             {
                 return NotFound();
@@ -370,7 +376,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                         fastZip.ExtractZip(filePath, extractPath, null);
                         if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
                         {
-                            core.PutFilToStorageSystem(filePath, templateId.ToString() + "_" + uploadModel.File.FileName, 0);
+                            core.PutFileToStorageSystem(filePath, templateId.ToString() + "_" + uploadModel.File.FileName);
                         }
                         //ZipFile.ExtractToDirectory(filePath, extractPath);
                         System.IO.File.Delete(filePath);

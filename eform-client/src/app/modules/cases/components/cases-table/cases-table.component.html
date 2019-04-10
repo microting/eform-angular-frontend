@@ -195,19 +195,31 @@
             <button class="btn btn-success btn-icon mb-2" *ngIf="checkEformPermissions(userClaimsEnum.caseRead)"
                     [routerLink]="['/cases/edit/' + caseModel.id + '/' + currentTemplate.id]"
                     mdbTooltip="{{ 'Edit Case' | translate }}">
-              <fa-icon [icon]="['fas', 'pen']" size="2x"></fa-icon>
+              <fa-icon icon="pen" size="lg" [fixedWidth]="true"></fa-icon>
 
             </button>
             <button class="btn btn-success btn-icon mb-2" *ngIf="checkEformPermissions(userClaimsEnum.caseGetPdf)"
                     (click)="downloadPDF(caseModel.id)"
                     mdbTooltip="{{ 'Download PDF' | translate }}">
-              <fa-icon [icon]="['fas', 'file-pdf']" size="2x"></fa-icon>
+              <fa-icon icon="file-pdf" size="lg" [fixedWidth]="true"></fa-icon>
+
+            </button>
+            <button class="btn btn-success btn-icon mb-2" *ngIf="checkEformPermissions(userClaimsEnum.caseGetDocx)"
+                    (click)="downloadDocx(caseModel.id)"
+                    mdbTooltip="{{ 'Download Docx' | translate }}">
+              <fa-icon icon="file-pdf" size="lg" [fixedWidth]="true"></fa-icon>
+
+            </button>
+            <button class="btn btn-success btn-icon mb-2" *ngIf="checkEformPermissions(userClaimsEnum.caseGetPptx)"
+                    (click)="downloadPPTX(caseModel.id)"
+                    mdbTooltip="{{ 'Download PPTX' | translate }}">
+              <fa-icon icon="file-powerpoint" size="lg" [fixedWidth]="true"></fa-icon>
 
             </button>
             <button class="btn btn-danger btn-icon mb-2 " *ngIf="checkEformPermissions(userClaimsEnum.caseDelete)"
                     mdbTooltip="{{ 'Delete Case' | translate }}"
                     (click)="onDeleteClicked(caseModel)">
-              <fa-icon [icon]="['fas', 'trash-alt']" size="2x"></fa-icon>
+              <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true"></fa-icon>
             </button>
           </div>
         </td>

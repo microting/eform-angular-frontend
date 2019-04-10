@@ -1,0 +1,45 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{'Edit' | translate}}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="md-form">
+                <input mdbInputDirective
+                       [mdbValidate]="false"
+                       required
+                       [(ngModel)]="selectedFolderDto.name"
+                       id="nameEdit" type="text" class="form-control">
+                <label for="nameEdit">{{'Name' | translate}}</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="md-form">
+                <input mdbInputDirective
+                       [mdbValidate]="false"
+                       required
+                       [(ngModel)]="selectedFolderDto.description"
+                       id="descriptionEdit" type="text" class="form-control">
+                <label for="descriptionEdit">{{'Description' | translate}}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success" id="folderEditSaveBtn"
+                [disabled]="!selectedFolderDto.name || !selectedFolderDto.description"
+                (click)="updateFolder()">{{'Save' | translate}}</button>
+        <button class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Cancel' | translate}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>

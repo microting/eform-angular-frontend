@@ -3,8 +3,8 @@
   <div class="card-header" style="cursor: pointer" (click)="collapse.toggle(); isCollapsed = !isCollapsed">
     <div class="d-flex justify-content-between">
       <h6>{{dataItemLabel}}</h6>
-      <i class="material-icons material-icon-danger" *ngIf="isCollapsed"> keyboard_arrow_right </i>
-      <i class="material-icons material-icon-danger" *ngIf="!isCollapsed"> keyboard_arrow_down </i>
+      <fa-icon icon="angle-right" size="lg" [fixedWidth]="true" *ngIf="isCollapsed"></fa-icon>
+      <fa-icon icon="angle-down" size="lg" [fixedWidth]="true" *ngIf="!isCollapsed"></fa-icon>
     </div>
 
   </div>

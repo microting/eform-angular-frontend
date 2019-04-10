@@ -244,6 +244,13 @@ namespace eFormAPI.Web.Services
                         }
 
                         break;
+                    case "Folders":
+                        if (claims.Contains(AuthConsts.EformClaims.SitesClaims.Read))
+                        {
+                            newList.Add(menuItem);
+                        }
+
+                        break;
                     case "Security":
                         break;
                     case "Application Settings":

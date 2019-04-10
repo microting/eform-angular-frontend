@@ -102,7 +102,17 @@ export class CasesTableComponent implements OnInit {
 
   downloadPDF(caseId: number) {
     window.open('/api/template-files/download-case-pdf/' +
-      this.currentTemplate.id + '?caseId=' + caseId, '_blank');
+      this.currentTemplate.id + '?caseId=' + caseId + '&fileType=pdf', '_blank');
+  }
+
+  downloadDocx(caseId: number) {
+    window.open('/api/template-files/download-case-pdf/' +
+      this.currentTemplate.id + '?caseId=' + caseId + '&fileType=docx', '_blank');
+  }
+
+  downloadPPTX(caseId: number) {
+    window.open('/api/template-files/download-case-pdf/' +
+      this.currentTemplate.id + '?caseId=' + caseId + '&fileType=pptx', '_blank');
   }
 
   loadEformPermissions(templateId: number) {

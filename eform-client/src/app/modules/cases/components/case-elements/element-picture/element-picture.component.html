@@ -9,24 +9,22 @@
                   mdbTooltip="{{'Rotate on 90' | translate}}"
                   [disabled]="buttonsLocked"
                   (click)="rotatePicture(image)">
-            <i class="material-icons">
-              rotate_90_degrees_ccw
-            </i>
+
+            <fa-icon icon="undo" flip="vertical" size="lg" [fixedWidth]="true"></fa-icon>
+
           </button>
           <button class="btn btn-icon btn-danger"
                   [disabled]="buttonsLocked"
                   mdbTooltip="{{'Delete picture' | translate}}"
                   (click)="deletePicture(image)">
-            <i class="material-icons">
-              restore_from_trash
-            </i>
+            <fa-icon icon="trash-restore-alt" size="lg" [fixedWidth]="true"></fa-icon>
+
           </button>
           <button [disabled]="!image.googleMapsLat && !image.googleMapsLon || buttonsLocked"
                   mdbTooltip="{{'Open location' | translate}}"
                   (click)="openGpsWindow(image.googleMapsUrl)" class="btn btn-icon btn-success">
-            <i class="material-icons">
-              location_on
-            </i>
+            <fa-icon icon="map-marker-alt" size="lg" [fixedWidth]="true"></fa-icon>
+
           </button>
         </div>
       </div>
