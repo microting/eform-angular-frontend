@@ -48,6 +48,52 @@ if you are in root, you can run __su__ to login as new user
 su - eformuser
 ```
 
+### Setup plugin install service
+
+
+create file
+touch /tmp/install.sh
+
+make it executable
+```bash
+sudo chmod +x /tmp/install.sh
+```
+
+go to services folder
+cd /etc/systemd/system/
+
+Create new file by script
+```bash
+nano plugin-install.service
+```
+And insert this text
+
+[Unit]
+Description=Plugin install service
+
+[Service]
+Type=oneshot
+User=root
+ExecStart=/tmp/install.sh
+StandardOutput=journal
+
+
+
+go to folder
+cd /var/lib/polkit-1/localauthority/10-vendor.d/
+
+create new file
+nano plugin.pkla
+
+[plugin unit]
+Identity=unix-user:USER
+Action=org.freedesktop.systemd1.manage-units
+ResultAny=yes
+
+USER - should be your eform user username
+
+
+
 ### Downloading script
 
 Use wget to download script
