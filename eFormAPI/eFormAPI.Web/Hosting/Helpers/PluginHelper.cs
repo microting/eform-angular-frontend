@@ -192,6 +192,7 @@ namespace eFormAPI.Web.Hosting.Helpers
                             typeof(RelationalEventId),
                             typeof(IDbContextOptionsBuilderInfrastructure),
                             typeof(ModelSnapshot),       
+                            typeof(ILazyLoader),
 
                             typeof(IPluginDbOptions<>),
                             typeof(IOptionsSnapshot<>),

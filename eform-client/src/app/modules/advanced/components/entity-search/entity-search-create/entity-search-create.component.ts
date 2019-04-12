@@ -40,6 +40,7 @@ export class EntitySearchCreateComponent implements OnInit {
     this.entitySearchService.createEntitySearchableGroup(this.advEntitySearchableGroupCreateModel).subscribe((data) => {
       if (data && data.success) {
         this.onEntityGroupCreated.emit();
+        this.advEntitySearchableGroupCreateModel = new AdvEntitySearchableGroupEditModel();
         this.frame.hide();
       }
       this.spinnerStatus = false;

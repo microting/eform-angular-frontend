@@ -40,6 +40,7 @@ export class EntitySelectCreateComponent implements OnInit {
       if (data && data.success) {
         this.onEntityGroupCreated.emit();
         this.frame.hide();
+        this.advEntitySelectableGroupCreateModel = new AdvEntitySelectableGroupEditModel();
       }
       this.spinnerStatus = false;
     });
