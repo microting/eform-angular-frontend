@@ -249,7 +249,7 @@ namespace eFormAPI.Web
         {
             services.AddHttpContextAccessor();
             services.AddSingleton<ILocalizationService, LocalizationService>();
-            services.AddTransient<IEFormCoreService, EFormCoreService>();
+            services.AddSingleton<IEFormCoreService, EFormCoreService>();
             services.AddScoped<ITagsService, TagsService>();
             services.AddScoped<ITemplateColumnsService, TemplateColumnsService>();
             services.AddScoped<IUnitsService, UnitsService>();
