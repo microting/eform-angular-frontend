@@ -32,7 +32,7 @@ source /var/www/microting/openstack.conf
 
 echo "################## BASIC SETUP ##################"
 
-apt update
+#apt update
 
 export DEBIAN_FRONTEND=noninteractive
 export EC2_INSTANCE_ID=`curl --insecure http://169.254.169.254/openstack/2012-08-10/meta_data.json | cut -d '"' -f 4`
@@ -59,11 +59,11 @@ echo $INSTANCE_HOSTNAME
 echo "$INSTANCE_IP $INSTANCE_HOSTNAME" >> /etc/hosts
 #sed -i "s/SERVER_NAME_REPLACE_ME/$INSTANCE_IP/g" /opt/nginx/conf/nginx.conf # > /opt/nginx/conf/nginx.conf
 
-apt-get -y install software-properties-common unzip
+#apt-get -y install software-properties-common unzip
 apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
 add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://mirror.one.com/mariadb/repo/10.3/ubuntu bionic main'
 
-apt update
+#apt update
 
 debconf-set-selections <<< "mariadb-server-10.3 mysql-server/root_password password "$MYSQL_PASSWORD
 debconf-set-selections <<< "mariadb-server-10.3 mysql-server/root_password_again password "$MYSQL_PASSWORD
@@ -78,16 +78,16 @@ MYSQL_SCRIPT
 curl -sL https://deb.nodesource.com/setup_8.x | sudo bash -
 apt install -y nodejs
 
-wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.asc.gpg
-mv microsoft.asc.gpg /etc/apt/trusted.gpg.d/
-wget -q https://packages.microsoft.com/config/ubuntu/18.04/prod.list
-mv prod.list /etc/apt/sources.list.d/microsoft-prod.list
-chown root:root /etc/apt/trusted.gpg.d/microsoft.asc.gpg
-chown root:root /etc/apt/sources.list.d/microsoft-prod.list
+#wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.asc.gpg
+#mv microsoft.asc.gpg /etc/apt/trusted.gpg.d/
+#wget -q https://packages.microsoft.com/config/ubuntu/18.04/prod.list
+#mv prod.list /etc/apt/sources.list.d/microsoft-prod.list
+#chown root:root /etc/apt/trusted.gpg.d/microsoft.asc.gpg
+#chown root:root /etc/apt/sources.list.d/microsoft-prod.list
 
-apt install -y apt-transport-https &&\
-apt update &&\
-apt install -y dotnet-runtime-2.2 dotnet-sdk-2.2
+#apt install -y apt-transport-https &&\
+#apt update &&\
+#apt install -y dotnet-runtime-2.2 dotnet-sdk-2.2
 
 chown -R ubuntu:ubuntu /var/www
 
@@ -95,7 +95,7 @@ cd /var/www/microting
 
 echo "################## START CLONING ##################"
 su ubuntu -c \
-"git clone https://github.com/microting/eform-angular-frontend.git -b stable"
+"git clone --progress --verbose https://github.com/microting/eform-angular-frontend.git -b stable"
 echo "################## END CLONING ##################"
 
 cd eform-angular-frontend/eform-client
@@ -172,10 +172,40 @@ if [ $SHOULD_SETUP_DB_BACKUP = true ]
     echo '/usr/bin/mysqldump --host=$HOST --user=$USER --password=$PASS SWIFT_FOLDER_PREFIXSDK | gzip > $FILENAME.gz' >> /root/backup-mysql-hourly.sh
     echo 'swift upload SWIFT_FOLDER_PREFIXSDK $FILENAME.gz' >> /root/backup-mysql-hourly.sh
     echo 'rm $FILENAME.gz' >> /root/backup-mysql-hourly.sh
+        
+    echo '' >> /root/backup-mysql-hourly.sh
+    echo 'export DATABASE_NAME=SWIFT_FOLDER_PREFIXSDK' >> /root/backup-mysql-hourly.sh
+    echo 'export NUM_BACKUPS=`swift list $DATABASE_NAME | wc -l`' >> /root/backup-mysql-hourly.sh
+    echo 'echo "Checking backup status for SWIFT_FOLDER_PREFIXSDK"' >> /root/backup-mysql-hourly.sh
+    echo 'echo "Current number of backups : $NUM_BACKUPS max is $MAX_NUMBER_OF_BACKUPS"' >> /root/backup-mysql-hourly.sh
+    echo 'while (( $NUM_BACKUPS > $MAX_NUMBER_OF_BACKUPS ))' >> /root/backup-mysql-hourly.sh
+    echo 'do' >> /root/backup-mysql-hourly.sh
+    echo 'CURRENT_BACKUP_TO_DELETE=`swift list $DATABASE_NAME | head -1`' >> /root/backup-mysql-hourly.sh
+    echo 'echo "SHOULD DELETE $CURRENT_BACKUP_TO_DELETE."' >> /root/backup-mysql-hourly.sh
+    echo 'swift delete $DATABASE_NAME $CURRENT_BACKUP_TO_DELETE' >> /root/backup-mysql-hourly.sh
+    echo 'NUM_BACKUPS=`swift list $DATABASE_NAME | wc -l`' >> /root/backup-mysql-hourly.sh
+    echo 'echo "New number of backups : $NUM_BACKUPS max is $MAX_NUMBER_OF_BACKUPS"' >> /root/backup-mysql-hourly.sh
+    echo 'done' >> /root/backup-mysql-hourly.sh
+    echo 'echo "Done cleanup backup for SWIFT_FOLDER_PREFIXSDK"' >> /root/backup-mysql-hourly.sh
 
     echo '/usr/bin/mysqldump --host=$HOST --user=$USER --password=$PASS SWIFT_FOLDER_PREFIXAngular | gzip > $FILENAME.gz' >> /root/backup-mysql-hourly.sh
     echo 'swift upload SWIFT_FOLDER_PREFIXAngular $FILENAME.gz' >> /root/backup-mysql-hourly.sh
     echo 'rm $FILENAME.gz' >> /root/backup-mysql-hourly.sh
+    
+    echo '' >> /root/backup-mysql-hourly.sh
+    echo 'export DATABASE_NAME=SWIFT_FOLDER_PREFIXAngular' >> /root/backup-mysql-hourly.sh
+    echo 'export NUM_BACKUPS=`swift list $DATABASE_NAME | wc -l`' >> /root/backup-mysql-hourly.sh
+    echo 'echo "Checking backup status for SWIFT_FOLDER_PREFIXAngular"' >> /root/backup-mysql-hourly.sh
+    echo 'echo "Current number of backups : $NUM_BACKUPS max is $MAX_NUMBER_OF_BACKUPS"' >> /root/backup-mysql-hourly.sh
+    echo 'while (( $NUM_BACKUPS > $MAX_NUMBER_OF_BACKUPS ))' >> /root/backup-mysql-hourly.sh
+    echo 'do' >> /root/backup-mysql-hourly.sh
+    echo 'CURRENT_BACKUP_TO_DELETE=`swift list $DATABASE_NAME | head -1`' >> /root/backup-mysql-hourly.sh
+    echo 'echo "SHOULD DELETE $CURRENT_BACKUP_TO_DELETE."' >> /root/backup-mysql-hourly.sh
+    echo 'swift delete $DATABASE_NAME $CURRENT_BACKUP_TO_DELETE' >> /root/backup-mysql-hourly.sh
+    echo 'NUM_BACKUPS=`swift list $DATABASE_NAME | wc -l`' >> /root/backup-mysql-hourly.sh
+    echo 'echo "New number of backups : $NUM_BACKUPS max is $MAX_NUMBER_OF_BACKUPS"' >> /root/backup-mysql-hourly.sh
+    echo 'done' >> /root/backup-mysql-hourly.sh
+    echo 'echo "Done cleanup backup for SWIFT_FOLDER_PREFIXAngular"' >> /root/backup-mysql-hourly.sh
 
 		echo "cd /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/" >> /root/backup-mysql-hourly.sh
 		echo "swift upload SWIFT_FOLDER_PREFIXConnection connection.json" >> /root/backup-mysql-hourly.sh
@@ -199,7 +229,7 @@ if [ $SHOULD_SETUP_DB_BACKUP = true ]
 		echo "swift upload SWIFT_FOLDER_PREFIXConnection plugins-installed.txt" >> /root/backup-mysql-hourly.sh
     
 		echo "cd /var/www/microting" >> /root/backup-mysql-hourly.sh
-		echo "rm /var/www/microting/plugins-installed.txt" >> /root/backup-mysql-hourly.sh
+		echo "rm /var/www/microting/service-plugins-installed.txt" >> /root/backup-mysql-hourly.sh
 		echo "for D in *;" >> /root/backup-mysql-hourly.sh
 		echo "do" >> /root/backup-mysql-hourly.sh
 		echo 'if [ -d "${D}" ]; then' >> /root/backup-mysql-hourly.sh
@@ -254,7 +284,7 @@ if [ $SHOULD_RESTORE_DATABASE = true ]
 	do
 		CURRENT_BACKUP_TO_DELETE=`swift list $DATABASE_NAME | head -1`
 		echo "SHOULD DELETE $CURRENT_BACKUP_TO_DELETE."
-		swift delete $SWIFT_FOLDER_PREFIX $CURRENT_BACKUP_TO_DELETE
+		swift delete $DATABASE_NAME $CURRENT_BACKUP_TO_DELETE
 		NUM_BACKUPS=`swift list $DATABASE_NAME | wc -l`
 		echo "New number of backups : $NUM_BACKUPS max is $MAX_NUMBER_OF_BACKUPS"
 	done
@@ -272,6 +302,7 @@ if [ $SHOULD_RESTORE_DATABASE = true ]
 	echo "Restoring db from backup"
 	`time mysql -u $INSTANCE_HOSTNAME --password=$MYSQL_PASSWORD $DATABASE_NAME < $LAST_BACKUP`
 	echo "Restore complete"
+  rm $LAST_BACKUP
 
 	echo "Checking backup status"
 	export NUM_BACKUPS=`swift list $DATABASE_NAME | wc -l`
@@ -280,7 +311,7 @@ if [ $SHOULD_RESTORE_DATABASE = true ]
 	do
 		CURRENT_BACKUP_TO_DELETE=`swift list $DATABASE_NAME | head -1`
 		echo "SHOULD DELETE $CURRENT_BACKUP_TO_DELETE."
-		swift delete $SWIFT_FOLDER_PREFIX $CURRENT_BACKUP_TO_DELETE
+		swift delete $DATABASE_NAME $CURRENT_BACKUP_TO_DELETE
 		NUM_BACKUPS=`swift list $DATABASE_NAME | wc -l`
 		echo "New number of backups : $NUM_BACKUPS max is $MAX_NUMBER_OF_BACKUPS"
 	done
@@ -305,10 +336,26 @@ if [ $SHOULD_RESTORE_DATABASE = true ]
     echo '/usr/bin/mysqldump --host=$HOST --user=$USER --password=$PASS SWIFT_FOLDER_PREFIXMYNAME | gzip > $FILENAME.gz' >> /root/backup-mysql-hourly.sh
     echo 'swift upload SWIFT_FOLDER_PREFIXMYNAME $FILENAME.gz' >> /root/backup-mysql-hourly.sh
     echo 'rm $FILENAME.gz' >> /root/backup-mysql-hourly.sh
-    sed -i "s/SWIFT_FOLDER_PREFIX/$SWIFT_FOLDER_PREFIX/g" /root/backup-mysql-hourly.sh
-    sed -i "s/MYNAME/$plugin/g" /root/backup-mysql-hourly.sh
     echo "Done setting up backup for $plugin"
     echo "Restoring backup for $plugin"
+
+    echo '' >> /root/backup-mysql-hourly.sh
+    echo 'export DATABASE_NAME=SWIFT_FOLDER_PREFIXMYNAME' >> /root/backup-mysql-hourly.sh
+    echo 'export NUM_BACKUPS=`swift list $DATABASE_NAME | wc -l`' >> /root/backup-mysql-hourly.sh
+    echo 'echo "Checking backup status for plugin MYNAME"' >> /root/backup-mysql-hourly.sh
+    echo 'echo "Current number of backups : $NUM_BACKUPS max is $MAX_NUMBER_OF_BACKUPS"' >> /root/backup-mysql-hourly.sh
+    echo 'while (( $NUM_BACKUPS > $MAX_NUMBER_OF_BACKUPS ))' >> /root/backup-mysql-hourly.sh
+    echo 'do' >> /root/backup-mysql-hourly.sh
+    echo 'CURRENT_BACKUP_TO_DELETE=`swift list $DATABASE_NAME | head -1`' >> /root/backup-mysql-hourly.sh
+    echo 'echo "SHOULD DELETE $CURRENT_BACKUP_TO_DELETE."' >> /root/backup-mysql-hourly.sh
+    echo 'swift delete $DATABASE_NAME $CURRENT_BACKUP_TO_DELETE' >> /root/backup-mysql-hourly.sh
+    echo 'NUM_BACKUPS=`swift list $DATABASE_NAME | wc -l`' >> /root/backup-mysql-hourly.sh
+    echo 'echo "New number of backups : $NUM_BACKUPS max is $MAX_NUMBER_OF_BACKUPS"' >> /root/backup-mysql-hourly.sh
+    echo 'done' >> /root/backup-mysql-hourly.sh
+    echo 'echo "Done cleanup backup for MYNAME"' >> /root/backup-mysql-hourly.sh
+  
+    sed -i "s/SWIFT_FOLDER_PREFIX/$SWIFT_FOLDER_PREFIX/g" /root/backup-mysql-hourly.sh
+    sed -i "s/MYNAME/$plugin/g" /root/backup-mysql-hourly.sh
     
   	export DATABASE_NAME=$SWIFT_FOLDER_PREFIX
   	export DATABASE_NAME+=$plugin
@@ -317,11 +364,12 @@ if [ $SHOULD_RESTORE_DATABASE = true ]
   	swift download $DATABASE_NAME $LAST_BACKUP
   	gunzip $LAST_BACKUP
   	export LAST_BACKUP=`expr substr $LAST_BACKUP 1 27`
-  	echo "Creating DB"
-  	`time mysql -u $INSTANCE_HOSTNAME --password=$MYSQL_PASSWORD -e "create database $DATABASE_NAME"`
-  	echo "Restoring db from backup"
-  	`time mysql -u $INSTANCE_HOSTNAME --password=$MYSQL_PASSWORD $DATABASE_NAME < $LAST_BACKUP`
+  	echo "Creating DB $DATABASE_NAME"
+  	mysql -u $INSTANCE_HOSTNAME --password=$MYSQL_PASSWORD -e "create database \`$DATABASE_NAME\`"
+  	echo "Restoring db from backup $LAST_BACKUP"
+  	mysql -u $INSTANCE_HOSTNAME --password=$MYSQL_PASSWORD $DATABASE_NAME < $LAST_BACKUP
   	echo "Restore complete"
+    rm $LAST_BACKUP
 
   	echo "Checking backup status"
   	export NUM_BACKUPS=`swift list $DATABASE_NAME | wc -l`
@@ -330,7 +378,7 @@ if [ $SHOULD_RESTORE_DATABASE = true ]
   	do
   		CURRENT_BACKUP_TO_DELETE=`swift list $DATABASE_NAME | head -1`
   		echo "SHOULD DELETE $CURRENT_BACKUP_TO_DELETE."
-  		swift delete $SWIFT_FOLDER_PREFIX $CURRENT_BACKUP_TO_DELETE
+  		swift delete $DATABASE_NAME $CURRENT_BACKUP_TO_DELETE
   		NUM_BACKUPS=`swift list $DATABASE_NAME | wc -l`
   		echo "New number of backups : $NUM_BACKUPS max is $MAX_NUMBER_OF_BACKUPS"
   	done
@@ -381,6 +429,19 @@ su ubuntu -c \
 "dotnet publish -o out /p:Version=$GITVERSION --runtime linux-x64 --configuration Release"
 	
 	cp /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/connection.json /var/www/microting/eform-debian-service/MicrotingService/MicrotingService/out/
+  
+  
+	export CONNECTIONSTRINGJSON=$SWIFT_FOLDER_PREFIX
+	export CONNECTIONSTRINGJSON+=Connection
+  swift download $CONNECTIONSTRINGJSON service-plugins-installed.txt
+  while read plugin; do
+    cd /var/www/microting/
+    su ubuntu -c \
+      "git clone https://github.com/microting/$plugin.git -b stable"
+    echo "Restoring $p"
+    chmod +x /var/www/microting/$plugin/install.sh
+    /var/www/microting/$plugin/install.sh
+  done <service-plugins-installed.txt
 	
 cat > /etc/systemd/system/eformbackend.service << EndOfUnitFile
 [Unit]
