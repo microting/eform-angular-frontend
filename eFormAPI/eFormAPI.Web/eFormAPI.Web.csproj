@@ -24,8 +24,8 @@
   
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2018.3.0" />
-    <PackageReference Include="Microting.eForm" Version="3.0.219" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="1.1.140" />
+    <PackageReference Include="Microting.eForm" Version="3.0.221" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="1.1.142" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
     <PackageReference Include="SharpZipLib.NETStandard" Version="1.0.7" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0005" />
@@ -33,9 +33,9 @@
     <PackageReference Include="McMaster.NETCore.Plugins" Version="0.2.1" />
     <PackageReference Include="OtpSharp.Core" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.2" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.4" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.4" />
   </ItemGroup>
 
   <ItemGroup>
