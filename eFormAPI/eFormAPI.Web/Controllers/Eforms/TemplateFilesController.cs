@@ -59,7 +59,6 @@ namespace eFormAPI.Web.Controllers.Eforms
         }
 
         [HttpGet]
-        [Authorize]
         [Route("api/template-files/csv/{id}")]
         [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme,
             Policy = AuthConsts.EformPolicies.Eforms.GetCsv)]
@@ -126,7 +125,6 @@ namespace eFormAPI.Web.Controllers.Eforms
         }
 
         [HttpGet]
-        [Authorize]
         [Route("api/template-files/rotate-image")]
         [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseUpdate)]
         public async Task<OperationResult> RotateImage(string fileName)
@@ -202,7 +200,6 @@ namespace eFormAPI.Web.Controllers.Eforms
         }
 
         [HttpGet]
-        [Authorize]
         [Route("api/template-files/delete-image")]
         [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseUpdate)]
         public OperationResult DeleteImage(string fileName, int fieldId, int uploadedObjId)
@@ -227,7 +224,6 @@ namespace eFormAPI.Web.Controllers.Eforms
 
 
         [HttpGet]
-        [Authorize]
         [Route("api/template-files/get-pdf-file")]
         [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseGetPdf)]
         public IActionResult GetPdfFile(string fileName)
@@ -244,7 +240,6 @@ namespace eFormAPI.Web.Controllers.Eforms
         }
 
         [HttpGet]
-        [Authorize]
         [Route("api/template-files/download-case-pdf/{templateId}")]
         [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme,
             Policy = AuthConsts.EformPolicies.Cases.CaseGetPdf)]
@@ -278,7 +273,6 @@ namespace eFormAPI.Web.Controllers.Eforms
         }
 
         [HttpGet]
-        [Authorize]
         [Route("api/template-files/download-eform-xml/{templateId}")]
         [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme,
             Policy = AuthConsts.EformPolicies.Eforms.DownloadXml)]
@@ -311,7 +305,6 @@ namespace eFormAPI.Web.Controllers.Eforms
         }
 
         [HttpPost]
-        [Authorize]
         [Route("api/template-files/upload-eform-zip")]
         [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme,
             Policy = AuthConsts.EformPolicies.Eforms.UploadZip)]
