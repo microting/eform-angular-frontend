@@ -14,8 +14,11 @@ export * from './sites/site-delete/site-delete.component';
 export * from './units/units.component';
 export * from './units/units-otp-code/units-otp-code.component';
 export * from './workers/workers/workers.component';
+export * from './folders/folders/folders.component';
+export * from './folders/folder-create/folder-create.component';
 export * from './workers/worker-edit/worker-edit.component';
 export * from './workers/worker-create/worker-create.component';
 export * from './workers/worker-delete/worker-delete.component';
 export * from './entity-search/entity-search-edit/entity-search-edit.component';
-export * from './entity-select/entity-select-edit/entity-select-edit.component'
+export * from './entity-select/entity-select-edit/entity-select-edit.component';
+// export * from './folders/folder-create/folder'

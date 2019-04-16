@@ -1,10 +1,11 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {UserClaimsEnum} from 'src/app/common/enums';
+import {UserClaimsEnum} from 'src/app/common/const';
 import {ClaimsGuard} from 'src/app/common/guards/claims.guard';
 import {
   EntitySearchComponent,
   EntitySelectComponent,
+  FoldersComponent,
   SiteEditComponent,
   SitesComponent,
   UnitsComponent,
@@ -52,6 +53,12 @@ const routes: Routes = [
   {
     path: 'entity-select',
     component: EntitySelectComponent,
+    canActivate: [ClaimsGuard],
+    data: {requiredClaim: UserClaimsEnum.entitySelectRead}
+  },
+  {
+    path: 'folders',
+    component: FoldersComponent,
     canActivate: [ClaimsGuard],
     data: {requiredClaim: UserClaimsEnum.entitySelectRead}
   }

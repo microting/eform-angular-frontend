@@ -46,10 +46,11 @@ namespace eFormAPI.Web.Infrastructure.Database.Factories
             }
             else
             {
-                //optionsBuilder.UseSqlServer("Data Source=.\\SQLEXPRESS;Database=123_Angular;Integrated Security=True");
-                optionsBuilder.UseSqlServer("...");
+                throw new ArgumentNullException("Connection string not present");
             }
 
+//            optionsBuilder.UseSqlServer(@"data source=(LocalDb)\SharedInstance;Initial catalog=eform-angular-tests;Integrated Security=True");
+//            dotnet ef migrations add InitialCreate --project eFormAPI.Web --startup-project DBMigrator
             optionsBuilder.UseLazyLoadingProxies();
             return new BaseDbContext(optionsBuilder.Options);
         }

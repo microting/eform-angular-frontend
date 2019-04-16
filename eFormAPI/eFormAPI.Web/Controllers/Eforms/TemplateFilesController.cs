@@ -107,13 +107,13 @@ namespace eFormAPI.Web.Controllers.Eforms
             
             if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
             {
-                var ss =  await core.GetFileFromStorageSystem(fileName);
+                var ss = await core.GetFileFromStorageSystem($"{fileName}.{ext}");
                     
                 //return new FileStreamResult(result, fileType);
                 Response.ContentType = ss.ContentType;
                 Response.ContentLength = ss.ContentLength;
 
-                return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty("application/octet-stream"), fileName);
+                return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty("application/octet-stream"), $"{fileName}.{ext}");
             }
             
             if (!System.IO.File.Exists(filePath))
@@ -132,34 +132,39 @@ namespace eFormAPI.Web.Controllers.Eforms
         public async Task<OperationResult> RotateImage(string fileName)
         {
             var core = _coreHelper.GetCore();
-            var filePath = $"{core.GetSdkSetting(Settings.fileLocationPicture)}\\{fileName}";
+            Directory.CreateDirectory(Path.Combine("tmp"));
+            var filePath = Path.Combine("tmp",fileName);
             if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
             {
                 var result =  await core.GetFileFromStorageSystem(fileName);
                 var fileStream = System.IO.File.Create(filePath);
-                Response.ContentType = result.ContentType;
-                Response.ContentLength = result.ContentLength;
+                result.ObjectStreamContent.CopyTo(fileStream);
 
-                //return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty("application/octet-stream"), fileName);
-                //result.CopyTo(fileStream);
                 fileStream.Close();
+                fileStream.Dispose();
+                
+                result.ObjectStreamContent.Close();
+                result.ObjectStreamContent.Dispose();
                 try
                 {
                     var img = Image.Load(filePath);
                     img.Mutate(x => x.Rotate(RotateMode.Rotate90));
                     img.Save(filePath);
                     img.Dispose();
-                    await core.PutFilToStorageSystem(filePath, fileName, 0);
-                    // TODO! Add method call to sdk to put file back into swift.
+                    core.PutFileToStorageSystem(filePath, fileName);
                 }
                 catch (Exception e)
                 {
                     if (e.Message == "A generic error occurred in GDI+.")
                     {
-                        return new OperationResult(true);
+                        return new OperationResult(false);
                     }
 
-                    return new OperationResult(false, _localizationService.GetString("ErrorWhileRotateImage"));
+                    return new OperationResult(false, _localizationService.GetString("ErrorWhileRotateImage") + $" Internal error: {e.Message}");
+                }
+                finally
+                {
+                    System.IO.File.Delete(filePath);
                 }
                     
                 return new OperationResult(true, _localizationService.GetString("ImageRotatedSuccessfully"));
@@ -185,10 +190,10 @@ namespace eFormAPI.Web.Controllers.Eforms
                 {
                     if (e.Message == "A generic error occurred in GDI+.")
                     {
-                        return new OperationResult(true);
+                        return new OperationResult(false);
                     }
 
-                    return new OperationResult(false, _localizationService.GetString("ErrorWhileRotateImage"));
+                    return new OperationResult(false, _localizationService.GetString("ErrorWhileRotateImage") + $" Internal error: {e.Message}");
                 }
 
                 return new OperationResult(true, _localizationService.GetString("ImageRotatedSuccessfully"));
@@ -228,7 +233,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         public IActionResult GetPdfFile(string fileName)
         {
             var core = _coreHelper.GetCore();
-            var filePath = $"{core.GetSdkSetting(Settings.fileLocationPdf)}\\{fileName}.pdf";
+            var filePath = Path.Combine(core.GetSdkSetting(Settings.fileLocationPdf), fileName + ".pdf");
             if (!System.IO.File.Exists(filePath))
             {
                 return NotFound();
@@ -243,7 +248,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         [Route("api/template-files/download-case-pdf/{templateId}")]
         [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme,
             Policy = AuthConsts.EformPolicies.Cases.CaseGetPdf)]
-        public async Task<IActionResult> DownloadEFormPdf(int templateId, int caseId)
+        public async Task<IActionResult> DownloadEFormPdf(int templateId, int caseId, string fileType)
         {
             if (!await _permissionsService.CheckEform(templateId,
                 AuthConsts.EformClaims.CasesClaims.CaseGetPdf))
@@ -256,7 +261,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                 var core = _coreHelper.GetCore();
                 var filePath = core.CaseToPdf(caseId, templateId.ToString(),
                     DateTime.Now.ToString("yyyyMMddHHmmssffff"),
-                    $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/");
+                    $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", fileType, "");
                 //DateTime.Now.ToString("yyyyMMddHHmmssffff"), $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image?&filename=");
                 if (!System.IO.File.Exists(filePath))
                 {
@@ -290,7 +295,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                 var core = _coreHelper.GetCore();
                 var caseId = core.CaseReadFirstId(templateId, "not_revmoed");
                 var filePath = core.CaseToJasperXml((int) caseId, DateTime.Now.ToString("yyyyMMddHHmmssffff"),
-                    $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/");
+                    $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", "");
                 if (!System.IO.File.Exists(filePath))
                 {
                     return NotFound();
@@ -369,6 +374,10 @@ namespace eFormAPI.Web.Controllers.Eforms
                         var fastZip = new FastZip();
                         // Will always overwrite if target filenames already exist
                         fastZip.ExtractZip(filePath, extractPath, null);
+                        if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
+                        {
+                            core.PutFileToStorageSystem(filePath, templateId.ToString() + "_" + uploadModel.File.FileName);
+                        }
                         //ZipFile.ExtractToDirectory(filePath, extractPath);
                         System.IO.File.Delete(filePath);
 //                        await Startup.Bus.SendLocal(new GenerateJasperFiles(templateId)); // TODO disabled for now 3. dec. 2018

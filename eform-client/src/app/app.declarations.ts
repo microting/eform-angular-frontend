@@ -18,6 +18,7 @@ import {DeviceUserService} from 'src/app/common/services/device-users';
 import {EformReportService, EFormService, EformTagService} from 'src/app/common/services/eform';
 import {SecurityGroupEformsPermissionsService, SecurityGroupsService} from 'src/app/common/services/security';
 import {AdminService} from 'src/app/common/services/users';
+import {FoldersService} from './common/services/advanced/folders.service';
 import {PluginsManagementService} from './common/services/plugins-management';
 // Guards
 
@@ -41,6 +42,7 @@ export let providers = [
   UnitsService,
   SitesService,
   WorkersService,
+  FoldersService,
   AdminService,
   EntitySearchService,
   EntitySelectService,

@@ -14,6 +14,8 @@ import {
   RestorePasswordConfirmationComponent,
   SignOutComponent
 } from './components';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+
 
 @NgModule({
   imports: [
@@ -23,7 +25,8 @@ import {
     CommonModule,
     AuthRouting,
     ReactiveFormsModule,
-    EformSharedModule
+    EformSharedModule,
+    FontAwesomeModule
   ],
   declarations: [
     LoginComponent,

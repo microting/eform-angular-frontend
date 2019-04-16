@@ -3,7 +3,7 @@ import {ActivatedRoute, NavigationStart, Router} from '@angular/router';
 import {RouteConfigLoadEnd} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {Observable} from 'rxjs';
-import {UserClaimsEnum} from 'src/app/common/enums';
+import {UserClaimsEnum} from 'src/app/common/const';
 import {CaseEditRequest, ReplyElementDto, ReplyRequest} from 'src/app/common/models/cases';
 import {TemplateDto} from 'src/app/common/models/dto';
 import {EformPermissionsSimpleModel} from 'src/app/common/models/security/group-permissions/eform';

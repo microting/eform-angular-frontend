@@ -156,6 +156,8 @@ namespace eFormAPI.Web.Services.Security
                     AuthConsts.EformClaims.CasesClaims.CaseUpdate,
                     AuthConsts.EformClaims.CasesClaims.CaseDelete,
                     AuthConsts.EformClaims.CasesClaims.CaseGetPdf,
+                    AuthConsts.EformClaims.CasesClaims.CaseGetDocx,
+                    AuthConsts.EformClaims.CasesClaims.CaseGetPptx,
                     AuthConsts.EformClaims.EformsClaims.PairingUpdate,
                     AuthConsts.EformClaims.EformsClaims.UpdateTags,
                     AuthConsts.EformClaims.EformsClaims.GetCsv,

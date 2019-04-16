@@ -57,16 +57,12 @@
             <button id="entitySelectEditBtn" class="btn btn-accent btn-icon text-black-50 mb-2 "  *ngIf="userClaims.entitySelectUpdate"
                     mdbTooltip="{{'Edit' | translate}}"
                     (click)="openModalSelectEdit(advEntitySelectableGroup)">
-              <i class="material-icons">
-                edit
-              </i>
+              <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
             <button id="entitySelectDeleteBtn" class="btn btn-danger btn-icon mb-2 " *ngIf="userClaims.entitySelectDelete"
                     mdbTooltip="{{'Remove' | translate}}"
                     (click)="openModalSelectRemove(advEntitySelectableGroup)">
-              <i class="material-icons">
-                delete_forever
-              </i>
+              <fa-icon icon="trash-alt" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
           </div>
         </td>

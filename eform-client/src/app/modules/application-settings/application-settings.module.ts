@@ -8,6 +8,7 @@ import {MDBBootstrapModule} from 'port/angular-bootstrap-md';
 import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
 import {ApplicationSettingsRouting} from './application-settings.routing';
 import {AdminSettingsComponent, ConnectionSetupComponent} from './components';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import {AdminSettingsComponent, ConnectionSetupComponent} from './components';
     EformSharedModule,
     FormsModule,
     TranslateModule,
-    FileUploadModule
+    FileUploadModule,
+    FontAwesomeModule
   ],
   declarations: [AdminSettingsComponent, ConnectionSetupComponent]
 })

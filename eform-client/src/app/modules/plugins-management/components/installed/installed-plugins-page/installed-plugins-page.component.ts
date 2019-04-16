@@ -5,7 +5,7 @@ import {
   InstalledPluginsRequestModel,
   InstalledPluginUpdateModel
 } from '../../../../../common/models/plugins-management';
-import {InstalledPluginStatusEnum} from '../../../../../common/enums';
+import {InstalledPluginStatusEnum} from '../../../../../common/const';
 import {PluginsManagementService} from '../../../../../common/services/plugins-management';
 
 @Component({

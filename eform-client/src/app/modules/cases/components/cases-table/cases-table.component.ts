@@ -1,6 +1,6 @@
 import {ActivatedRoute} from '@angular/router';
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ApplicationPages, UserClaimsEnum} from 'src/app/common/enums';
+import {ApplicationPages, UserClaimsEnum} from 'src/app/common/const';
 import {CaseListModel, CaseModel, CasesRequestModel} from 'src/app/common/models/cases';
 import {TemplateDto} from 'src/app/common/models/dto';
 import {EformPermissionsSimpleModel} from 'src/app/common/models/security/group-permissions/eform';
@@ -102,7 +102,17 @@ export class CasesTableComponent implements OnInit {
 
   downloadPDF(caseId: number) {
     window.open('/api/template-files/download-case-pdf/' +
-      this.currentTemplate.id + '?caseId=' + caseId, '_blank');
+      this.currentTemplate.id + '?caseId=' + caseId + '&fileType=pdf', '_blank');
+  }
+
+  downloadDocx(caseId: number) {
+    window.open('/api/template-files/download-case-pdf/' +
+      this.currentTemplate.id + '?caseId=' + caseId + '&fileType=docx', '_blank');
+  }
+
+  downloadPPTX(caseId: number) {
+    window.open('/api/template-files/download-case-pdf/' +
+      this.currentTemplate.id + '?caseId=' + caseId + '&fileType=pptx', '_blank');
   }
 
   loadEformPermissions(templateId: number) {

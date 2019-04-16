@@ -1,9 +1,9 @@
 <div class="mb-2">
   <form [formGroup]="formLogin" (ngSubmit)="submitLoginForm()">
     <div class="md-form">
-      <i class="material-icons prefix">
-        person
-      </i>
+
+      <fa-icon icon="user" size="lg" [fixedWidth]="true"></fa-icon>
+
       <input mdbInputDirective
              [mdbValidate]="false"
              formControlName="username"
@@ -11,9 +11,8 @@
       <label for="username">{{'Username' | translate}}</label>
     </div>
     <div class="md-form">
-      <i class="material-icons prefix">
-        lock
-      </i>
+      <fa-icon icon="lock" size="lg" [fixedWidth]="true"></fa-icon>
+
       <input mdbInputDirective
              [mdbValidate]="false"
              formControlName="password"

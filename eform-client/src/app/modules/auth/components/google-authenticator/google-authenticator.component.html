@@ -24,9 +24,8 @@
       <div class="mb-2">
         <form [formGroup]="formGoogleAuth">
           <div class="md-form">
-            <i class="material-icons prefix">
-              lock_open
-            </i>
+            <fa-icon icon="lock-open" size="lg" [fixedWidth]="true"></fa-icon>
+
             <input mdbInputDirective [mdbValidate]="false"
                    formControlName="code" type="text" name="code" id="code" class="form-control">
             <label for="code">{{'Code' | translate}}</label>

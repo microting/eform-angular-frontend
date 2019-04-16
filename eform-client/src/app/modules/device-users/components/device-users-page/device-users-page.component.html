@@ -54,9 +54,8 @@
               <button class="btn btn-danger btn-icon mb-2 " *ngIf="userClaims.deviceUsersUpdate"
                       mdbTooltip="{{'New OTP' | translate}}"
                       (click)="openOtpModal(siteDto)">
-                <i class="material-icons">
-                  vpn_key
-                </i>
+                <fa-icon icon="key" size="lg" [fixedWidth]="true"></fa-icon>
+
               </button>
             </ng-container>
             <ng-container *ngIf="!siteDto.unitId">
@@ -70,17 +69,13 @@
                     mdbTooltip="{{'Edit Device User' | translate}}"
                     mdbWavesEffect id="editDeviceUserBtn"
                     (click)="openEditModal(siteDto)">
-              <i class="material-icons">
-                edit
-              </i>
+              <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
             <button class="btn btn-danger btn-icon mb-2 " *ngIf="userClaims.deviceUsersDelete"
                     mdbTooltip="{{'Delete Device User' | translate}}"
                     id="deleteDeviceUserBtn"
                     (click)="openDeleteDeviceUserModal(siteDto)">
-              <i class="material-icons">
-                delete_forever
-              </i>
+              <fa-icon icon="trash-alt" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
           </div>
         </td>

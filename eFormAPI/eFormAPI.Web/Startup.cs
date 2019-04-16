@@ -189,7 +189,7 @@ namespace eFormAPI.Web
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
-        {
+        {            
             if (env.IsDevelopment())
             {
                 app.UseForwardedHeaders(new ForwardedHeadersOptions
@@ -230,12 +230,13 @@ namespace eFormAPI.Web
                     "default",
                     "api/{controller=Home}/{action=Index}/{id?}");
             });
-            //if (env.IsDevelopment())
-            //{ 
-            // Since swagger is not accessible from outside the local server we do not need to disable it for production.
-            app.UseSwagger();
-            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "API V1"); });
-            //}
+            
+            if (env.IsDevelopment())
+            { 
+                // Since swagger is not accessible from outside the local server we do not need to disable it for production.
+                app.UseSwagger();
+                app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "API V1"); });
+            }
 
             // Plugins
             app.UseEFormPlugins(Program.Plugins);
@@ -248,12 +249,13 @@ namespace eFormAPI.Web
         {
             services.AddHttpContextAccessor();
             services.AddSingleton<ILocalizationService, LocalizationService>();
-            services.AddScoped<IEFormCoreService, EFormCoreService>();
+            services.AddSingleton<IEFormCoreService, EFormCoreService>();
             services.AddScoped<ITagsService, TagsService>();
             services.AddScoped<ITemplateColumnsService, TemplateColumnsService>();
             services.AddScoped<IUnitsService, UnitsService>();
             services.AddScoped<IWorkersService, WorkersService>();
             services.AddScoped<ISitesService, SitesService>();
+            services.AddScoped<IFoldersService, FoldersService>();
             services.AddScoped<ISimpleSitesService, SimpleSitesService>();
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<IEntitySearchService, EntitySearchService>();
