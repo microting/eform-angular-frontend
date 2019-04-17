@@ -36,6 +36,8 @@ export class UserClaimsModel {
   caseUpdate: boolean;
   caseDelete: boolean;
   caseGetPdf: boolean;
+  caseGetDocx: boolean;
+  caseGetPptx: boolean;
   eFormsPairingUpdate: boolean;
   eFormsUpdateTags: boolean;
   eFormsPairingRead: boolean;
@@ -83,6 +85,8 @@ export class UserClaimsModel {
     this.caseUpdate = decodedToken.case_update === 'True';
     this.caseDelete = decodedToken.case_delete === 'True';
     this.caseGetPdf = decodedToken.case_get_pdf === 'True';
+    this.caseGetDocx = decodedToken.case_get_docx === 'True';
+    this.caseGetPptx = decodedToken.case_get_pptx === 'True';
 
     this.eFormsCreate = decodedToken.eforms_create === 'True';
     this.eFormsDelete = decodedToken.eforms_delete === 'True';
