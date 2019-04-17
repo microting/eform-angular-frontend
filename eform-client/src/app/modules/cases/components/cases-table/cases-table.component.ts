@@ -117,14 +117,14 @@ export class CasesTableComponent implements OnInit {
 
   loadEformPermissions(templateId: number) {
     if (this.securityGroupEformsService.mappedPermissions.length) {
-      this.eformPermissionsSimpleModel = this.securityGroupEformsService.mappedPermissions.find(x => x.templateId == templateId);
+      this.eformPermissionsSimpleModel = this.securityGroupEformsService.mappedPermissions.find(x => x.templateId === templateId);
     } else {
       this.spinnerStatus = true;
       this.securityGroupEformsService.getEformsSimplePermissions().subscribe((data => {
         if (data && data.success) {
           const foundTemplates = this.securityGroupEformsService.mapEformsSimplePermissions(data.model);
           if (foundTemplates.length) {
-            this.eformPermissionsSimpleModel = foundTemplates.find(x => x.templateId == templateId);
+            this.eformPermissionsSimpleModel = foundTemplates.find(x => x.templateId === templateId);
           }
           this.spinnerStatus = false;
         }
@@ -134,7 +134,7 @@ export class CasesTableComponent implements OnInit {
 
   checkEformPermissions(permissionIndex: number) {
     if (this.eformPermissionsSimpleModel.templateId) {
-      return this.eformPermissionsSimpleModel.permissionsSimpleList.find(x => x == UserClaimsEnum[permissionIndex].toString());
+      return this.eformPermissionsSimpleModel.permissionsSimpleList.find(x => x === UserClaimsEnum[permissionIndex].toString());
     } else {
       return this.userClaims[UserClaimsEnum[permissionIndex].toString()];
     }
