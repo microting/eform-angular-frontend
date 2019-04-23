@@ -24,6 +24,7 @@ SOFTWARE.
 
 using System;
 using System.IO;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Security;
@@ -110,11 +111,10 @@ namespace eFormAPI.Web.Controllers.Eforms
             {
                 var ss = await core.GetFileFromStorageSystem($"{fileName}.{ext}");
                     
-                //return new FileStreamResult(result, fileType);
                 Response.ContentType = ss.ContentType;
                 Response.ContentLength = ss.ContentLength;
-
-                return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty($"{fileType}"), $"{fileName}.{ext}");
+                
+                return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty($"{fileType}"));
             }
             
             if (!System.IO.File.Exists(filePath))
