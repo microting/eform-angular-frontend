@@ -88,9 +88,8 @@ namespace eFormAPI.Web.Controllers.Eforms
         {
             var core = _coreHelper.GetCore();
             var filePath = $"{core.GetSdkSetting(Settings.fileLocationPicture)}\\{fileName}.{ext}";
-            var extension = Path.GetExtension(ext).Replace(".", "");
             string fileType = "";
-            switch (extension)
+            switch (ext)
             {
                 case "png":
                     fileType = "image/png";
