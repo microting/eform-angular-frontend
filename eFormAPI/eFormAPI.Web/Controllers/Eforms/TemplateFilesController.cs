@@ -102,6 +102,9 @@ namespace eFormAPI.Web.Controllers.Eforms
                 case "wav":
                     fileType = "audio/wav";
                     break;
+                case "pdf":
+                    fileType = "application/pdf";
+                    break;
             }
             
             if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
@@ -112,7 +115,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                 Response.ContentType = ss.ContentType;
                 Response.ContentLength = ss.ContentLength;
 
-                return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty("application/octet-stream"), $"{fileName}.{ext}");
+                return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty($"{fileType}"), $"{fileName}.{ext}");
             }
             
             if (!System.IO.File.Exists(filePath))
