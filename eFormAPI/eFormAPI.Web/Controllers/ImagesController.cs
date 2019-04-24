@@ -78,7 +78,8 @@ namespace eFormAPI.Web.Controllers
                 Response.ContentType = ss.ContentType;
                 Response.ContentLength = ss.ContentLength;
 
-                return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty("application/octet-stream"), fileName);
+                return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty(fileType), fileName);
+//                return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty("application/octet-stream"), fileName);
             }
             
             if (!System.IO.File.Exists(filePath))

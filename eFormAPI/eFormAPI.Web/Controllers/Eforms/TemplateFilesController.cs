@@ -88,9 +88,8 @@ namespace eFormAPI.Web.Controllers.Eforms
         {
             var core = _coreHelper.GetCore();
             var filePath = $"{core.GetSdkSetting(Settings.fileLocationPicture)}\\{fileName}.{ext}";
-            var extension = Path.GetExtension(ext).Replace(".", "");
             string fileType = "";
-            switch (extension)
+            switch (ext)
             {
                 case "png":
                     fileType = "image/png";
@@ -102,6 +101,9 @@ namespace eFormAPI.Web.Controllers.Eforms
                 case "wav":
                     fileType = "audio/wav";
                     break;
+                case "pdf":
+                    fileType = "application/pdf";
+                    break;
             }
             
             if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
@@ -112,7 +114,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                 Response.ContentType = ss.ContentType;
                 Response.ContentLength = ss.ContentLength;
 
-                return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty("application/octet-stream"), $"{fileName}.{ext}");
+                return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty($"{fileType}"), $"{fileName}.{ext}");
             }
             
             if (!System.IO.File.Exists(filePath))

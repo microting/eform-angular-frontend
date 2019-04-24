@@ -38,14 +38,14 @@ export enum UserClaimsEnum {
   caseUpdate,
   caseDelete,
   caseGetPdf,
-  caseGetDocx,
-  caseGetPptx,
   eFormsPairingRead,
   eFormsPairingUpdate,
   eFormsReadTags,
   eFormsUpdateTags,
   eFormsGetCsv,
   eFormsReadJasperReport,
-  eFormsUpdateJasperReport
+  eFormsUpdateJasperReport,
+  caseGetDocx,
+  caseGetPptx
 }
 
