@@ -26,7 +26,7 @@ export class SharedPnService extends BaseService {
     let result;
     if (pageName) {
       const bla = JSON.parse(localPagesSettings);
-      if (bla.length > 1) {
+      if (bla.length > 0) {
         for (let i = 0; i < bla.length; i++) {
           const blu = bla[i];
           if (blu.name === pageName) {
