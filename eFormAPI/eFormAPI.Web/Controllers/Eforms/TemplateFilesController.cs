@@ -109,7 +109,7 @@ namespace eFormAPI.Web.Controllers.Eforms
             
             if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
             {
-                var ss = await core.GetFileFromStorageSystem($"{fileName}.{ext}");
+                var ss = await core.GetFileFromSwiftStorage($"{fileName}.{ext}");
                     
                 Response.ContentType = ss.ContentType;
                 Response.ContentLength = ss.ContentLength;
@@ -136,7 +136,7 @@ namespace eFormAPI.Web.Controllers.Eforms
             var filePath = Path.Combine("tmp",fileName);
             if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
             {
-                var result =  await core.GetFileFromStorageSystem(fileName);
+                var result =  await core.GetFileFromSwiftStorage(fileName);
                 var fileStream = System.IO.File.Create(filePath);
                 result.ObjectStreamContent.CopyTo(fileStream);
 

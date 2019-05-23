@@ -26,7 +26,6 @@ using System.Linq;
 using System.Reflection;
 using Castle.Core.Internal;
 using eFormAPI.Web.Abstractions;
-using JetBrains.Annotations;
 using Microsoft.Extensions.Localization;
 
 namespace eFormAPI.Web.Services
@@ -41,7 +40,7 @@ namespace eFormAPI.Web.Services
                 Assembly.GetEntryAssembly().FullName);
         }
  
-        public string GetString([NotNull] string key)
+        public string GetString(string key)
         {
             if (key.IsNullOrEmpty())
             {
@@ -51,7 +50,7 @@ namespace eFormAPI.Web.Services
             return str.Value;
         }
 
-        public string GetStringWithFormat([NotNull] string format,
+        public string GetStringWithFormat(string format,
             params object[] args)
         {
             if (format.IsNullOrEmpty())

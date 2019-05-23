@@ -68,7 +68,7 @@ namespace eFormAPI.Web.Controllers
             
             if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
             {
-                var ss =  await core.GetFileFromStorageSystem(fileName);
+                var ss =  await core.GetFileFromSwiftStorage(fileName);
                 
                 if (ss == null)
                 {
@@ -109,7 +109,7 @@ namespace eFormAPI.Web.Controllers
             
             if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
             {
-                var ss =  await core.GetFileFromStorageSystem(fileName);
+                var ss =  await core.GetFileFromSwiftStorage(fileName);
                 
                 if (ss == null)
                 {
