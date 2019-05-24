@@ -444,9 +444,16 @@ namespace eFormAPI.Web.Services
                     {
                         SwiftEnabled = (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true"),
                         SwiftUserName = core.GetSdkSetting(Settings.swiftUserName),
-                        SwiftPassword = core.GetSdkSetting(Settings.swiftPassword),
+                        SwiftPassword = "SOMESECRETPASSWORD",
                         SwiftEndpoint = core.GetSdkSetting(Settings.swiftEndPoint),
                         KeystoneEndpoint = core.GetSdkSetting(Settings.keystoneEndPoint)
+                    },
+                    S3SettingsModel = new S3SettingsModel()
+                    {
+                        S3Enabled = (core.GetSdkSetting(Settings.s3Enabled).ToLower() == "true"),
+                        S3AccessKeyId = core.GetSdkSetting(Settings.s3AccessKeyId),
+                        S3SecrectAccessKey = "SOMESECRETPASSWORD",
+                        S3Endpoint = core.GetSdkSetting(Settings.s3Endpoint)
                     },
                     SdkSettingsModel = new SDKSettingsModel()
                     {
@@ -504,7 +511,12 @@ namespace eFormAPI.Web.Services
                 core.SetSdkSetting(Settings.httpServerAddress, adminSettingsModel.SiteLink);
                 core.SetSdkSetting(Settings.swiftEnabled, adminSettingsModel.SwiftSettingsModel.SwiftEnabled.ToString());
                 core.SetSdkSetting(Settings.swiftUserName, adminSettingsModel.SwiftSettingsModel.SwiftUserName);
-                core.SetSdkSetting(Settings.swiftPassword, adminSettingsModel.SwiftSettingsModel.SwiftPassword);
+                
+                if (adminSettingsModel.SwiftSettingsModel.SwiftPassword != "SOMESECRETPASSWORD")
+                {
+                    core.SetSdkSetting(Settings.swiftPassword, adminSettingsModel.SwiftSettingsModel.SwiftPassword);
+                }
+                
                 core.SetSdkSetting(Settings.swiftEndPoint, adminSettingsModel.SwiftSettingsModel.SwiftEndpoint);
                 core.SetSdkSetting(Settings.keystoneEndPoint, adminSettingsModel.SwiftSettingsModel.KeystoneEndpoint);
                 core.SetSdkSetting(Settings.customerNo, adminSettingsModel.SdkSettingsModel.CustomerNo);
@@ -514,6 +526,15 @@ namespace eFormAPI.Web.Services
                 core.SetSdkSetting(Settings.fileLocationPdf, adminSettingsModel.SdkSettingsModel.FileLocationPdf);
                 core.SetSdkSetting(Settings.fileLocationJasper, adminSettingsModel.SdkSettingsModel.FileLocationReports);
                 core.SetSdkSetting(Settings.httpServerAddress, adminSettingsModel.SdkSettingsModel.HttpServerAddress);
+                core.SetSdkSetting(Settings.s3Enabled, adminSettingsModel.S3SettingsModel.S3Enabled.ToString());
+                core.SetSdkSetting(Settings.s3AccessKeyId, adminSettingsModel.S3SettingsModel.S3AccessKeyId);
+                
+                if (adminSettingsModel.S3SettingsModel.S3SecrectAccessKey != "SOMESECRETPASSWORD")
+                {
+                    core.SetSdkSetting(Settings.s3SecrectAccessKey, adminSettingsModel.S3SettingsModel.S3SecrectAccessKey);    
+                }
+                
+                core.SetSdkSetting(Settings.s3Endpoint, adminSettingsModel.S3SettingsModel.S3Endpoint);
                 return new OperationResult(true, _localizationService.GetString("SettingsUpdatedSuccessfully"));
             }
             catch (Exception e)
