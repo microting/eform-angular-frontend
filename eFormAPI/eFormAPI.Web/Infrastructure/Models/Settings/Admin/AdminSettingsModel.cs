@@ -29,6 +29,7 @@ namespace eFormAPI.Web.Infrastructure.Models.Settings.Admin
         public LoginPageSettingsModel LoginPageSettingsModel { get; set; }
         public SMTPSettingsModel SMTPSettingsModel { get; set; }
         public SwiftSettingsModel SwiftSettingsModel { get; set; }
+        public S3SettingsModel S3SettingsModel { get; set; }
         public SDKSettingsModel SdkSettingsModel { get; set; }
         public string SiteLink { get; set; }
         public string AssemblyVersion { get; set; }
@@ -39,6 +40,7 @@ namespace eFormAPI.Web.Infrastructure.Models.Settings.Admin
             LoginPageSettingsModel = new LoginPageSettingsModel();
             SMTPSettingsModel = new SMTPSettingsModel();
             SwiftSettingsModel = new SwiftSettingsModel();
+            S3SettingsModel = new S3SettingsModel();
             SdkSettingsModel = new SDKSettingsModel();
         }
     }
