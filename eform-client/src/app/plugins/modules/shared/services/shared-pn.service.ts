@@ -22,18 +22,12 @@ export class SharedPnService extends BaseService {
   }
 
   getLocalPageSettings(localStorageItemName: string, pageName?: string): ApplicationPageModel {
+    debugger;
     const localPagesSettings = localStorage.getItem(localStorageItemName);
     let result;
     if (pageName) {
       const bla = JSON.parse(localPagesSettings);
-      if (bla.length > 0) {
-        for (let i = 0; i < bla.length; i++) {
-          const blu = bla[i];
-          if (blu.name === pageName) {
-            result = bla[i];
-          }
-        }
-      }
+      result = bla.find(x => x.name === pageName);
       return <ApplicationPageModel> result;
     }
     return <ApplicationPageModel> JSON.parse(localPagesSettings);
