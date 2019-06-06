@@ -14,7 +14,7 @@ describe('Application settings page - site header section', function () {
     applicationSettingsPage.LoginPage.mainTextInput.setValue(ApplicationSettingsConstants.LoginPage.customMainText);
     applicationSettingsPage.save();
     browser.refresh();
-    browser.pause(10000);
+    browser.pause(12000);
     applicationSettingsPage.Navbar.logout();
     expect(loginPage.loginBtn.isVisible()).equal(true);
     expect(loginPage.mainText.getText(),
