@@ -23,12 +23,11 @@ SOFTWARE.
 */
 namespace eFormAPI.Web.Infrastructure.Models.Settings.Admin
 {
-    public class SwiftSettingsModel
+    public class S3SettingsModel
     {
-        public bool SwiftEnabled { get; set; }
-        public string SwiftUserName { get; set; }
-        public string SwiftPassword { get; set; }
-        public string SwiftEndpoint { get; set; }
-        public string KeystoneEndpoint { get; set; }
+        public bool S3Enabled { get; set; }
+        public string S3AccessKeyId  { get; set; }
+        public string S3SecrectAccessKey { get; set; }
+        public string S3Endpoint { get; set; }
     }
 }
