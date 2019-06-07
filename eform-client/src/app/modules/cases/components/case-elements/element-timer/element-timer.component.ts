@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {differenceInMinutes, format} from 'date-fns';
+import {differenceInSeconds} from 'date-fns';
 import {FieldValueDto} from 'src/app/common/models';
 
 @Component({
@@ -31,8 +31,8 @@ export class ElementTimerComponent implements OnInit {
     if (this.dateArray.length > 1) {
       this.startDate = this.dateArray[0];
       this.endDate = this.dateArray[1];
-      const duration = differenceInMinutes(new Date(this.startDate), new Date(this.endDate));
-      this.duration = format(Math.abs(duration), 'HH:mm:ss');
+      const durationInSeconds = Math.abs(differenceInSeconds(new Date(this.endDate), new Date(this.startDate)));
+      this.duration = new Date(durationInSeconds * 1000).toISOString().substr(11, 8);
     }
   }
 }
