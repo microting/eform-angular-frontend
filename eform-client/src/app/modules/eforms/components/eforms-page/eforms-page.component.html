@@ -107,15 +107,15 @@
               </button>
               <button *ngIf="templateDto.deployedSites.length == 0 && checkEformPermissions(templateDto.id, userClaimsEnum.eFormsPairingUpdate)"
                       id="eform-add-btn"
-                      class="btn btn-success btn-sm p-1 mb-2" (click)="openPairingModal(templateDto)"
+                      class="btn btn-btn-accent btn-sm text-black-50 p-1 mb-2" (click)="openPairingModal(templateDto)"
                       mdbTooltip="{{ 'Click to pair eForm with user(s)' | translate }}">
                 {{ 'Pair eForm' | translate }}
               </button>
-              <ng-container *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eFormsPairingRead)">
-                <p class="paragraph-sm" id="eform-paired-username" *ngFor="let deployedSite of templateDto.deployedSites">
-                  {{deployedSite.siteName}}
-                </p>
-              </ng-container>
+<!--              <ng-container *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eFormsPairingRead)">-->
+<!--                <p class="paragraph-sm" id="eform-paired-username" *ngFor="let deployedSite of templateDto.deployedSites">-->
+<!--                  {{deployedSite.siteName}}-->
+<!--                </p>-->
+<!--              </ng-container>-->
             </div>
           </div>
         </td>
