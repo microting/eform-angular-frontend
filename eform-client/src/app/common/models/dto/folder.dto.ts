@@ -5,4 +5,5 @@ export class FolderDto {
   name: string;
   description: string;
   parentId: number;
+  microtingUId: number;
 }
