@@ -32,7 +32,7 @@
                   <button  class="btn btn-success btn-icon m-0"
                            (click)="createNewTag(newTagInput.value); newTagInput.value=''"
                            type="button" [disabled]="!newTagInput.value">
-                    <i class="material-icons">add</i>
+                    <fa-icon icon="plus" [fixedWidth]="true" size="lg"></fa-icon>
                   </button>
               </div>
             </div>
@@ -50,7 +50,7 @@
                          (click)="removeTemplateTag()"
                          [disabled]="!  tagForRemoval"
                          type="button">
-                  <i class="material-icons">add</i>
+                  <fa-icon icon="plus" [fixedWidth]="true" size="lg"></fa-icon>
                 </button>
               </div>
             </div>

@@ -4,6 +4,8 @@ export const EformPermissionsNamesSwap =  [
   {originalName: 'case_update', swappedName: 'caseUpdate'},
   {originalName: 'case_delete', swappedName: 'caseDelete'},
   {originalName: 'case_get_pdf', swappedName: 'caseGetPdf'},
+  {originalName: 'case_get_docx', swappedName: 'caseGetDocx'},
+  {originalName: 'case_get_pptx', swappedName: 'caseGetPptx'},
   {originalName: 'eforms_create', swappedName: 'eFormsCreate'},
   {originalName: 'eforms_delete', swappedName: 'eFormsDelete'},
   {originalName: 'eforms_read', swappedName: 'eFormsRead'},

@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2019 microting
+Copyright (c) 2007 - 2019 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -68,7 +68,7 @@ namespace eFormAPI.Web.Controllers
             
             if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
             {
-                var ss =  await core.GetFileFromStorageSystem(fileName);
+                var ss =  await core.GetFileFromSwiftStorage(fileName);
                 
                 if (ss == null)
                 {
@@ -78,7 +78,17 @@ namespace eFormAPI.Web.Controllers
                 Response.ContentType = ss.ContentType;
                 Response.ContentLength = ss.ContentLength;
 
-                return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty("application/octet-stream"), fileName);
+                return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty(fileType), fileName);
+//                return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty("application/octet-stream"), fileName);
+            }
+
+            if (core.GetSdkSetting(Settings.s3Enabled).ToLower() == "true")
+            {
+                var ss = await core.GetFileFromS3Storage($"{fileName}.{ext}");
+
+                Response.ContentLength = ss.ContentLength;
+
+                return File(ss.ResponseStream, ss.Headers["Content-Type"]);
             }
             
             if (!System.IO.File.Exists(filePath))
@@ -108,7 +118,7 @@ namespace eFormAPI.Web.Controllers
             
             if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
             {
-                var ss =  await core.GetFileFromStorageSystem(fileName);
+                var ss =  await core.GetFileFromSwiftStorage(fileName);
                 
                 if (ss == null)
                 {
@@ -119,6 +129,15 @@ namespace eFormAPI.Web.Controllers
                 Response.ContentLength = ss.ContentLength;
 
                 return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty(fileType), fileName);                
+            }
+
+            if (core.GetSdkSetting(Settings.s3Enabled).ToLower() == "true")
+            {
+                var ss = await core.GetFileFromS3Storage($"{fileName}.{ext}");
+
+                Response.ContentLength = ss.ContentLength;
+
+                return File(ss.ResponseStream, ss.Headers["Content-Type"]);
             }
             
             if (!System.IO.File.Exists(filePath))
@@ -158,7 +177,7 @@ namespace eFormAPI.Web.Controllers
                         await file.CopyToAsync(stream);
 
                         var core = _coreHelper.GetCore();
-                        if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
+                        if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true" || core.GetSdkSetting(Settings.s3Enabled).ToLower() == "true")
                         {
                             core.PutFileToStorageSystem(filePath, file.FileName);
                         }
@@ -201,7 +220,7 @@ namespace eFormAPI.Web.Controllers
                     {
                         await file.CopyToAsync(stream);
                         var core = _coreHelper.GetCore();
-                        if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
+                        if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true" || core.GetSdkSetting(Settings.s3Enabled).ToLower() == "true")
                         {
                             core.PutFileToStorageSystem(filePath, file.FileName);
                         }

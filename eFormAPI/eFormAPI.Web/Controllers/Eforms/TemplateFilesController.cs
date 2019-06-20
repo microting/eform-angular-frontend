@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2019 microting
+Copyright (c) 2007 - 2019 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@ SOFTWARE.
 
 using System;
 using System.IO;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Security;
@@ -59,7 +60,6 @@ namespace eFormAPI.Web.Controllers.Eforms
         }
 
         [HttpGet]
-        [Authorize]
         [Route("api/template-files/csv/{id}")]
         [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme,
             Policy = AuthConsts.EformPolicies.Eforms.GetCsv)]
@@ -89,9 +89,8 @@ namespace eFormAPI.Web.Controllers.Eforms
         {
             var core = _coreHelper.GetCore();
             var filePath = $"{core.GetSdkSetting(Settings.fileLocationPicture)}\\{fileName}.{ext}";
-            var extension = Path.GetExtension(ext).Replace(".", "");
             string fileType = "";
-            switch (extension)
+            switch (ext)
             {
                 case "png":
                     fileType = "image/png";
@@ -103,17 +102,28 @@ namespace eFormAPI.Web.Controllers.Eforms
                 case "wav":
                     fileType = "audio/wav";
                     break;
+                case "pdf":
+                    fileType = "application/pdf";
+                    break;
             }
             
             if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
             {
-                var ss = await core.GetFileFromStorageSystem($"{fileName}.{ext}");
+                var ss = await core.GetFileFromSwiftStorage($"{fileName}.{ext}");
                     
-                //return new FileStreamResult(result, fileType);
                 Response.ContentType = ss.ContentType;
                 Response.ContentLength = ss.ContentLength;
+                
+                return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty($"{fileType}"));
+            }
 
-                return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty("application/octet-stream"), $"{fileName}.{ext}");
+            if (core.GetSdkSetting(Settings.s3Enabled).ToLower() == "true")
+            {
+                var ss = await core.GetFileFromS3Storage($"{fileName}.{ext}");
+
+                Response.ContentLength = ss.ContentLength;
+
+                return File(ss.ResponseStream, ss.Headers["Content-Type"]);
             }
             
             if (!System.IO.File.Exists(filePath))
@@ -126,7 +136,6 @@ namespace eFormAPI.Web.Controllers.Eforms
         }
 
         [HttpGet]
-        [Authorize]
         [Route("api/template-files/rotate-image")]
         [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseUpdate)]
         public async Task<OperationResult> RotateImage(string fileName)
@@ -136,73 +145,23 @@ namespace eFormAPI.Web.Controllers.Eforms
             var filePath = Path.Combine("tmp",fileName);
             if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
             {
-                var result =  await core.GetFileFromStorageSystem(fileName);
-                var fileStream = System.IO.File.Create(filePath);
-                result.ObjectStreamContent.CopyTo(fileStream);
-
-                fileStream.Close();
-                fileStream.Dispose();
-                
-                result.ObjectStreamContent.Close();
-                result.ObjectStreamContent.Dispose();
-                try
-                {
-                    var img = Image.Load(filePath);
-                    img.Mutate(x => x.Rotate(RotateMode.Rotate90));
-                    img.Save(filePath);
-                    img.Dispose();
-                    core.PutFileToStorageSystem(filePath, fileName);
-                }
-                catch (Exception e)
-                {
-                    if (e.Message == "A generic error occurred in GDI+.")
-                    {
-                        return new OperationResult(false);
-                    }
-
-                    return new OperationResult(false, _localizationService.GetString("ErrorWhileRotateImage") + $" Internal error: {e.Message}");
-                }
-                finally
-                {
-                    System.IO.File.Delete(filePath);
-                }
-                    
-                return new OperationResult(true, _localizationService.GetString("ImageRotatedSuccessfully"));
+                return await RotateImageSwift(fileName);
             }
             else
             {
-                
-            
-                if (!System.IO.File.Exists(filePath))
+                if (core.GetSdkSetting(Settings.s3Enabled).ToLower() == "true")
                 {
-                
-                    return new OperationResult(false, _localizationService.GetString("FileNotFound"));
+                    return await RotateImageS3(fileName);
                 }
-
-                try
+                else
                 {
-                    var img = Image.Load(filePath);
-                    img.Mutate(x => x.Rotate(RotateMode.Rotate90));
-                    img.Save(filePath);
-                    img.Dispose();
+                    return await RotateImageLocal(filePath);
                 }
-                catch (Exception e)
-                {
-                    if (e.Message == "A generic error occurred in GDI+.")
-                    {
-                        return new OperationResult(false);
-                    }
-
-                    return new OperationResult(false, _localizationService.GetString("ErrorWhileRotateImage") + $" Internal error: {e.Message}");
-                }
-
-                return new OperationResult(true, _localizationService.GetString("ImageRotatedSuccessfully"));
             }
             
         }
-
+        
         [HttpGet]
-        [Authorize]
         [Route("api/template-files/delete-image")]
         [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseUpdate)]
         public OperationResult DeleteImage(string fileName, int fieldId, int uploadedObjId)
@@ -224,10 +183,8 @@ namespace eFormAPI.Web.Controllers.Eforms
 
             return new OperationResult(true, _localizationService.GetString("ImageDeletedSuccessfully"));
         }
-
-
+        
         [HttpGet]
-        [Authorize]
         [Route("api/template-files/get-pdf-file")]
         [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseGetPdf)]
         public IActionResult GetPdfFile(string fileName)
@@ -244,7 +201,6 @@ namespace eFormAPI.Web.Controllers.Eforms
         }
 
         [HttpGet]
-        [Authorize]
         [Route("api/template-files/download-case-pdf/{templateId}")]
         [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme,
             Policy = AuthConsts.EformPolicies.Cases.CaseGetPdf)]
@@ -278,7 +234,6 @@ namespace eFormAPI.Web.Controllers.Eforms
         }
 
         [HttpGet]
-        [Authorize]
         [Route("api/template-files/download-eform-xml/{templateId}")]
         [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme,
             Policy = AuthConsts.EformPolicies.Eforms.DownloadXml)]
@@ -311,7 +266,6 @@ namespace eFormAPI.Web.Controllers.Eforms
         }
 
         [HttpPost]
-        [Authorize]
         [Route("api/template-files/upload-eform-zip")]
         [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme,
             Policy = AuthConsts.EformPolicies.Eforms.UploadZip)]
@@ -392,6 +346,111 @@ namespace eFormAPI.Web.Controllers.Eforms
                 return BadRequest("Invalid Request!");
             }
         }
+        
+        private async Task<OperationResult> RotateImageSwift(string fileName)
+        {
+            var core = _coreHelper.GetCore();
+            var result =  await core.GetFileFromSwiftStorage(fileName);
+            var filePath = Path.Combine("tmp",fileName);
+            var fileStream = System.IO.File.Create(filePath);
+            result.ObjectStreamContent.CopyTo(fileStream);
+
+            fileStream.Close();
+            fileStream.Dispose();
+                
+            result.ObjectStreamContent.Close();
+            result.ObjectStreamContent.Dispose();
+            try
+            {
+                var img = Image.Load(filePath);
+                img.Mutate(x => x.Rotate(RotateMode.Rotate90));
+                img.Save(filePath);
+                img.Dispose();
+                core.PutFileToStorageSystem(filePath, fileName);
+            }
+            catch (Exception e)
+            {
+                if (e.Message == "A generic error occurred in GDI+.")
+                {
+                    return new OperationResult(false);
+                }
+
+                return new OperationResult(false, _localizationService.GetString("ErrorWhileRotateImage") + $" Internal error: {e.Message}");
+            }
+            finally
+            {
+                System.IO.File.Delete(filePath);
+            }
+                    
+            return new OperationResult(true, _localizationService.GetString("ImageRotatedSuccessfully"));
+        }
+
+        private async Task<OperationResult> RotateImageS3(string fileName)
+        {
+            var core = _coreHelper.GetCore();
+            var result =  await core.GetFileFromS3Storage(fileName);
+            var filePath = Path.Combine("tmp",fileName);
+            var fileStream = System.IO.File.Create(filePath);
+            result.ResponseStream.CopyTo(fileStream);
+
+            fileStream.Close();
+            fileStream.Dispose();
+                
+            result.ResponseStream.Close();
+            result.ResponseStream.Dispose();
+            try
+            {
+                var img = Image.Load(filePath);
+                img.Mutate(x => x.Rotate(RotateMode.Rotate90));
+                img.Save(filePath);
+                img.Dispose();
+                core.PutFileToStorageSystem(filePath, fileName);
+            }
+            catch (Exception e)
+            {
+                if (e.Message == "A generic error occurred in GDI+.")
+                {
+                    return new OperationResult(false);
+                }
+
+                return new OperationResult(false, _localizationService.GetString("ErrorWhileRotateImage") + $" Internal error: {e.Message}");
+            }
+            finally
+            {
+                System.IO.File.Delete(filePath);
+            }
+                    
+            return new OperationResult(true, _localizationService.GetString("ImageRotatedSuccessfully"));
+        }
+        
+        private async Task<OperationResult> RotateImageLocal(string filePath)
+        {
+            if (!System.IO.File.Exists(filePath))
+            {
+                
+                return new OperationResult(false, _localizationService.GetString("FileNotFound"));
+            }
+
+            try
+            {
+                var img = Image.Load(filePath);
+                img.Mutate(x => x.Rotate(RotateMode.Rotate90));
+                img.Save(filePath);
+                img.Dispose();
+            }
+            catch (Exception e)
+            {
+                if (e.Message == "A generic error occurred in GDI+.")
+                {
+                    return new OperationResult(false);
+                }
+
+                return new OperationResult(false, _localizationService.GetString("ErrorWhileRotateImage") + $" Internal error: {e.Message}");
+            }
+
+            return new OperationResult(true, _localizationService.GetString("ImageRotatedSuccessfully"));
+        }
+
     }
 
     public class EformZipUploadModel
