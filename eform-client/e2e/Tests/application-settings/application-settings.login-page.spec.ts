@@ -14,7 +14,9 @@ describe('Application settings page - site header section', function () {
     applicationSettingsPage.LoginPage.mainTextInput.setValue(ApplicationSettingsConstants.LoginPage.customMainText);
     applicationSettingsPage.save();
     browser.refresh();
-    browser.pause(12000);
+    // browser.pause(10000);
+    browser.waitForVisible('#sign-out-dropdown', 20000);
+    browser.pause(1000);
     applicationSettingsPage.Navbar.logout();
     expect(loginPage.loginBtn.isVisible()).equal(true);
     expect(loginPage.mainText.getText(),
@@ -26,8 +28,9 @@ describe('Application settings page - site header section', function () {
     applicationSettingsPage.LoginPage.secondaryTextInput.setValue(ApplicationSettingsConstants.LoginPage.customSecondaryText);
     applicationSettingsPage.save();
     browser.refresh();
-    browser.pause(8000);
-    applicationSettingsPage.Navbar.logout();
+    // browser.pause(8000);
+    browser.waitForVisible('#sign-out-dropdown', 20000);
+    browser.pause(1000);    applicationSettingsPage.Navbar.logout();
     expect(loginPage.loginBtn.isVisible()).equal(true);
     expect(loginPage.secondaryText.getText(),
       'Error while changing secondary text on login page').to.equal(ApplicationSettingsConstants.LoginPage.customSecondaryText);
@@ -38,8 +41,9 @@ describe('Application settings page - site header section', function () {
     applicationSettingsPage.LoginPage.mainTextVisibilityToggleBtn.click();
     applicationSettingsPage.save();
     browser.refresh();
-    browser.pause(8000);
-    applicationSettingsPage.Navbar.logout();
+    // browser.pause(8000);
+    browser.waitForVisible('#sign-out-dropdown', 20000);
+    browser.pause(1000);    applicationSettingsPage.Navbar.logout();
     expect(loginPage.loginBtn.isVisible()).equal(true);
     expect(loginPage.mainText.isVisible(),
       'Error while toggling visibility of main text on login page').to.equal(false);
@@ -50,8 +54,9 @@ describe('Application settings page - site header section', function () {
     applicationSettingsPage.LoginPage.secondaryTextVisibilityToggleBtn.click();
     applicationSettingsPage.save();
     browser.refresh();
-    browser.pause(8000);
-    applicationSettingsPage.Navbar.logout();
+    // browser.pause(8000);
+    browser.waitForVisible('#sign-out-dropdown', 20000);
+    browser.pause(1000);    applicationSettingsPage.Navbar.logout();
     expect(loginPage.loginBtn.isVisible()).equal(true);
     expect(loginPage.secondaryText.isVisible(),
       'Error while toggling visibility of secondary text on login page').to.equal(false);
@@ -62,8 +67,9 @@ describe('Application settings page - site header section', function () {
     applicationSettingsPage.LoginPage.imageVisibilityToggler.click();
     applicationSettingsPage.save();
     browser.refresh();
-    browser.pause(8000);
-    applicationSettingsPage.Navbar.logout();
+    // browser.pause(8000);
+    browser.waitForVisible('#sign-out-dropdown', 20000);
+    browser.pause(1000);    applicationSettingsPage.Navbar.logout();
     expect(loginPage.loginBtn.isVisible()).equal(true);
     expect(loginPage.image.isVisible(),
       'Error while toggling visibility of image on login page').to.equal(false);
