@@ -93,7 +93,7 @@ namespace eFormAPI.Web.Services
                 return new OperationDataResult<AuthorizeResult>(false, "Empty username or password");
 
             var signInResult =
-                await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, lockoutOnFailure: true);
+                await _signInManager.PasswordSignInAsync(model.Username, model.Password, true, lockoutOnFailure: true);
 
             if (!signInResult.Succeeded && !signInResult.RequiresTwoFactor)
             {
@@ -222,7 +222,7 @@ namespace eFormAPI.Web.Services
                 await _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                     principal, new AuthenticationProperties
                     {
-                        IsPersistent = false
+                        IsPersistent = true
                     });
 
 
