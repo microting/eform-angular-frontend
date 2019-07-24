@@ -24,7 +24,7 @@ SOFTWARE.
 using System.Threading.Tasks;
 using eFormAPI.Web.Infrastructure.Models;
 using eFormAPI.Web.Infrastructure.Models.Templates;
-using eFormShared;
+using Microting.eForm.Dto;
 using Microting.eFormApi.BasePn.Infrastructure.Models;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 

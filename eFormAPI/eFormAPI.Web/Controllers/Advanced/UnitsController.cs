@@ -24,9 +24,9 @@ SOFTWARE.
 using System.Collections.Generic;
 using eFormAPI.Web.Abstractions.Advanced;
 using eFormAPI.Web.Infrastructure;
-using eFormShared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microting.eForm.Dto;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Controllers.Advanced

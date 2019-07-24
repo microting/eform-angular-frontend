@@ -23,7 +23,7 @@ SOFTWARE.
 */
 using eFormAPI.Web.Infrastructure.Models.Cases.Request;
 using eFormAPI.Web.Infrastructure.Models.Cases.Response;
-using eFormData;
+using Microting.eForm.Infrastructure.Models;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Abstractions.Eforms

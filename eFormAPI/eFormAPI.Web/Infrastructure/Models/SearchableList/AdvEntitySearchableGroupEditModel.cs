@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System.Collections.Generic;
-using eFormData;
+using Microting.eForm.Infrastructure.Models;
 
 namespace eFormAPI.Web.Infrastructure.Models.SearchableList
 {

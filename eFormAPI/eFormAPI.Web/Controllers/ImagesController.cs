@@ -24,15 +24,12 @@ SOFTWARE.
 using System.IO;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
-using eFormShared;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microting.eForm.Dto;
 using Microting.eFormApi.BasePn.Abstractions;
-using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
-using OpenStack.NetCoreSwiftClient;
 using OpenStack.NetCoreSwiftClient.Extensions;
 
 namespace eFormAPI.Web.Controllers

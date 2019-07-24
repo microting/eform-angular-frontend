@@ -28,7 +28,7 @@ using System.Threading.Tasks;
 using eFormAPI.Web.Infrastructure.Const;
 using eFormAPI.Web.Infrastructure.Database.Entities;
 using eFormAPI.Web.Infrastructure.Models.Reports;
-using eFormShared;
+using Microting.eForm.Infrastructure.Constants;
 
 namespace eFormAPI.Web.Infrastructure.Helpers
 {
