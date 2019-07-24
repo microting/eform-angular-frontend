@@ -24,7 +24,7 @@ export class PasswordSettings extends PageWithNavbarPage {
     this.newPasswordConfirmationField.addValue('2Times2WillDo');
     browser.pause(1000);
     this.saveBtn.click();
-    browser.pause(12000);
+    browser.pause(2000);
 
   }
   public revertToOldPassword() {
@@ -35,6 +35,7 @@ export class PasswordSettings extends PageWithNavbarPage {
     this.newPasswordConfirmationField.addValue('Qq1234567$');
     browser.pause(1000);
     this.saveBtn.click();
+    browser.pause(2000);
   }
 }
 

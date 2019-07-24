@@ -13,12 +13,13 @@ describe('Workers page ', function () {
     deviceUsersPage.createNewDeviceUser('Gurkemine', 'Ralphine');
     browser.pause(3000);
     myEformsPage.Navbar.goToWorkers();
-    browser.pause(8000);
+    browser.waitForVisible('#workerCreateBtn ', 8000);
   });
   it('should add new Worker with first and last name', function () {
     const name = 'Monty';
     const surName = 'Python';
     workers.createNewWorker(name, surName);
+    browser.pause(2000);
     const newWorker = workers.getWorker(workers.rowNum);
     expect(newWorker.firstName).equal(name);
     expect(newWorker.lastName).equal(surName);
@@ -27,6 +28,7 @@ describe('Workers page ', function () {
     const name = 'René';
     const surName = 'Éhl©µ';
     workers.createNewWorker(name, surName);
+    browser.pause(2000);
     const newWorker = workers.getWorker(workers.rowNum + 1);
     expect(newWorker.firstName).equal(name);
     expect(newWorker.lastName).equal(surName);

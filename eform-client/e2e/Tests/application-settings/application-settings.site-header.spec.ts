@@ -15,7 +15,8 @@ describe('Application settings page - site header section', function () {
     applicationSettingsPage.SiteHeader.mainTextInput.setValue(ApplicationSettingsConstants.SiteHeader.customMainText);
     applicationSettingsPage.save();
     browser.refresh();
-    browser.pause(8000);
+    browser.waitForVisible('#sign-out-dropdown', 20000);
+    browser.pause(1000);
     expect(applicationSettingsPage.siteHeaderMainText.getText(),
       'Error while editing site header main text').equal(ApplicationSettingsConstants.SiteHeader.customMainText);
   });
@@ -23,7 +24,8 @@ describe('Application settings page - site header section', function () {
     applicationSettingsPage.SiteHeader.secondaryTextInput.setValue(ApplicationSettingsConstants.SiteHeader.customSecondaryText);
     applicationSettingsPage.save();
     browser.refresh();
-    browser.pause(8000);
+    browser.waitForVisible('#sign-out-dropdown', 20000);
+    browser.pause(1000);
     expect(applicationSettingsPage.siteHeaderSecondaryText.getText(),
       'Error while editing site header secondary text').equal(ApplicationSettingsConstants.SiteHeader.customSecondaryText);
   });
@@ -31,7 +33,8 @@ describe('Application settings page - site header section', function () {
     applicationSettingsPage.SiteHeader.mainTextVisibilityToggleBtn.click();
     applicationSettingsPage.save();
     browser.refresh();
-    browser.pause(8000);
+    browser.waitForVisible('#sign-out-dropdown', 20000);
+    browser.pause(1000);
     expect(applicationSettingsPage.siteHeaderMainText.isVisible(),
       'Error while hiding site header main text').equal(false);
   });
@@ -39,7 +42,8 @@ describe('Application settings page - site header section', function () {
     applicationSettingsPage.SiteHeader.secondaryTextVisibilityToggleBtn.click();
     applicationSettingsPage.save();
     browser.refresh();
-    browser.pause(8000);
+    browser.waitForVisible('#sign-out-dropdown', 20000);
+    browser.pause(1000);
     expect(applicationSettingsPage.siteHeaderSecondaryText.isVisible(),
       'Error while hiding site header secondary text').equal(false);
   });
@@ -47,7 +51,8 @@ describe('Application settings page - site header section', function () {
     applicationSettingsPage.SiteHeader.imageVisibilityToggler.click();
     applicationSettingsPage.save();
     browser.refresh();
-    browser.pause(8000);
+    browser.waitForVisible('#sign-out-dropdown', 20000);
+    browser.pause(1000);
     expect(applicationSettingsPage.siteHeaderImage.isVisible(),
       'Error while hiding site header image').equal(false);
   });

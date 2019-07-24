@@ -58,7 +58,7 @@ class MyEformsPage extends PageWithNavbarPage {
 
   createNewEform(eFormLabel, newTagsList = [], tagAddedNum = 0) {
     this.newEformBtn.click();
-    browser.pause(5000);
+    browser.waitForVisible('#eFormXml', 20000);
     // Create replaced xml and insert it in textarea
     const xml = XMLForEform.XML.replace('TEST_LABEL', eFormLabel);
     browser.execute(function (xmlText) {
@@ -81,11 +81,13 @@ class MyEformsPage extends PageWithNavbarPage {
         selectedTags.push(selectedTag.getText());
         console.log('selectedTags is ' + JSON.stringify(selectedTags));
         selectedTag.click();
-        browser.pause(5000);
+        browser.waitForVisible('#createEformBtn', 10000);
+        // browser.pause(5000);
       }
     }
     this.createEformBtn.click();
-    browser.pause(14000);
+    // browser.pause(14000);
+    browser.waitForVisible('#delete-eform-btn', 20000);
     return {added: addedTags, selected: selectedTags};
   }
 }

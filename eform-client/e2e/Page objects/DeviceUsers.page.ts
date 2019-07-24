@@ -67,7 +67,8 @@ class DeviceUsersPage extends PageWithNavbarPage {
 
   public createNewDeviceUser(firstName: string, lastName: string) {
     this.newDeviceUserBtn.click();
-    browser.pause(6000);
+    // browser.pause(6000);
+    browser.waitForVisible('#firstName', 10000);
     this.createFirstNameInput.setValue(firstName);
     this.createLastNameInput.setValue(lastName);
     this.saveCreateBtn.click();
@@ -76,7 +77,8 @@ class DeviceUsersPage extends PageWithNavbarPage {
 
   public editDeviceUser(deviceUser: DeviceUsersRowObject, name = '', surname = '') {
     deviceUser.editBtn.click();
-    browser.pause(5000);
+    // browser.pause(5000);
+    browser.waitForVisible('#editFirstNameInput', 10000);
     if (name != null) {
       this.editFirstNameInput.click();
       this.editFirstNameInput.clearElement();
@@ -88,7 +90,8 @@ class DeviceUsersPage extends PageWithNavbarPage {
       this.editLastNameInput.setValue(surname);
     }
     this.saveEditBtn.click();
-    browser.pause(12000);
+    // browser.pause(12000);
+    browser.waitForVisible('#newDeviceUserBtn', 20000);
   }
 }
 
