@@ -55,8 +55,8 @@ import {assertLessThan} from '@angular/core/src/render3/assert';
       {preventDuplicates: true}
     ),
     DragulaModule.forRoot(),
-    GalleryModule.forRoot(),
-    LightboxModule.forRoot(),
+    GalleryModule,
+    LightboxModule,
     GallerizeModule,
     FontAwesomeModule,
     // Modules

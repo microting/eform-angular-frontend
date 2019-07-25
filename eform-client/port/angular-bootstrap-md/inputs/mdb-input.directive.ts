@@ -223,7 +223,7 @@ export class MdbInputDirective implements AfterViewChecked, OnInit, AfterViewIni
     }
 
     delayedResize() {
-        setTimeout(this.resize(), 0);
+        setTimeout(() => this.resize(), 0);
     }
 
     public initComponent(): void {
