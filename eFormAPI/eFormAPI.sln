@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBMigrator", "DBMigrator\DB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginInstallDaemon", "PluginInstallDaemon\PluginInstallDaemon.csproj", "{E0DC184B-CD72-4367-AF8B-3172B78DEBC9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrashInspection.Pn", "Plugins\TrashInspection.Pn\TrashInspection.Pn\TrashInspection.Pn.csproj", "{415EEA8B-0A45-4BAC-BD18-F9B1F432FF47}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -148,6 +150,18 @@ Global
 		{F00DB077-B0E4-49DC-BA57-78B39B8D99B9}.Release|x64.Build.0 = Release|Any CPU
 		{F00DB077-B0E4-49DC-BA57-78B39B8D99B9}.Release|x86.ActiveCfg = Release|Any CPU
 		{F00DB077-B0E4-49DC-BA57-78B39B8D99B9}.Release|x86.Build.0 = Release|Any CPU
+		{415EEA8B-0A45-4BAC-BD18-F9B1F432FF47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{415EEA8B-0A45-4BAC-BD18-F9B1F432FF47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{415EEA8B-0A45-4BAC-BD18-F9B1F432FF47}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{415EEA8B-0A45-4BAC-BD18-F9B1F432FF47}.Debug|x64.Build.0 = Debug|Any CPU
+		{415EEA8B-0A45-4BAC-BD18-F9B1F432FF47}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{415EEA8B-0A45-4BAC-BD18-F9B1F432FF47}.Debug|x86.Build.0 = Debug|Any CPU
+		{415EEA8B-0A45-4BAC-BD18-F9B1F432FF47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{415EEA8B-0A45-4BAC-BD18-F9B1F432FF47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{415EEA8B-0A45-4BAC-BD18-F9B1F432FF47}.Release|x64.ActiveCfg = Release|Any CPU
+		{415EEA8B-0A45-4BAC-BD18-F9B1F432FF47}.Release|x64.Build.0 = Release|Any CPU
+		{415EEA8B-0A45-4BAC-BD18-F9B1F432FF47}.Release|x86.ActiveCfg = Release|Any CPU
+		{415EEA8B-0A45-4BAC-BD18-F9B1F432FF47}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
