@@ -3,7 +3,15 @@ import {RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from 'src/app/common/guards';
 
 export const routes: Routes = [
-// INSERT ROUTES HERE
+  {
+
+    path: 'trash-inspection-pn',
+
+    canActivate: [AuthGuard],
+
+    loadChildren: './modules/trash-inspection-pn/trash-inspection-pn.module#TrashInspectionPnModule'
+
+  }
 ];
 
 @NgModule({
