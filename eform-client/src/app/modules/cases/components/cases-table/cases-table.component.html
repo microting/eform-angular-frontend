@@ -198,22 +198,16 @@
               <fa-icon icon="pen" size="lg" [fixedWidth]="true"></fa-icon>
 
             </button>
-            <button class="btn btn-success btn-icon mb-2" *ngIf="checkEformPermissions(userClaimsEnum.caseGetPdf)"
+            <button class="btn btn-success btn-icon mb-2" *ngIf="checkEformPermissions(userClaimsEnum.caseGetPdf) && (currentTemplate.jasperExportEnabled || currentTemplate.docxExportEnabled)"
                     (click)="downloadPDF(caseModel.id)"
                     mdbTooltip="{{ 'Download PDF' | translate }}">
               <fa-icon icon="file-pdf" size="lg" [fixedWidth]="true"></fa-icon>
 
             </button>
-            <button class="btn btn-success btn-icon mb-2" *ngIf="checkEformPermissions(userClaimsEnum.caseGetPdf)"
+            <button class="btn btn-success btn-icon mb-2" *ngIf="checkEformPermissions(userClaimsEnum.caseGetPdf) && currentTemplate.docxExportEnabled"
                     (click)="downloadDocx(caseModel.id)"
                     mdbTooltip="{{ 'Download Docx' | translate }}">
               <fa-icon icon="file-word" size="lg" [fixedWidth]="true"></fa-icon>
-
-            </button>
-            <button class="btn btn-success btn-icon mb-2" *ngIf="checkEformPermissions(userClaimsEnum.caseGetPdf)"
-                    (click)="downloadPPTX(caseModel.id)"
-                    mdbTooltip="{{ 'Download PPTX' | translate }}">
-              <fa-icon icon="file-powerpoint" size="lg" [fixedWidth]="true"></fa-icon>
 
             </button>
             <button class="btn btn-danger btn-icon mb-2 " *ngIf="checkEformPermissions(userClaimsEnum.caseDelete)"
