@@ -2,7 +2,6 @@ import loginPage from '../../Page objects/Login.page';
 import myEformsPage from '../../Page objects/MyEforms.page';
 import deviceUsersPage, {DeviceUsersRowObject} from '../../Page objects/DeviceUsers.page';
 import {generateRandmString} from '../../Helpers/helper-functions';
-import fractionsPage from '../../Page objects/trash-inspection/TrashInspection-Fraction.page';
 import {Guid} from 'guid-typescript';
 
 const expect = require('chai').expect;
