@@ -36,6 +36,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microting.eForm.Dto;
+using Microting.eForm.Infrastructure.Models;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
@@ -250,12 +251,14 @@ namespace eFormAPI.Web.Controllers.Eforms
             {
                 var core = _coreHelper.GetCore();
                 var caseId = core.CaseReadFirstId(templateId, "not_revmoed");
+                Case_Dto caseDto = core.CaseLookupCaseId((int)caseId);
+                ReplyElement replyElement = core.CaseRead(caseDto.MicrotingUId, caseDto.CheckUId);
                 if (caseId != null)
                 {
-                    var filePath = core.CaseToPdf((int) caseId, 
+                    var filePath = core.CaseToJasperXml(caseDto, replyElement, (int)caseId,
                         DateTime.Now.ToString("yyyyMMddHHmmssffff"),
                         $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", 
-                        "", "");
+                        "");
                     if (!System.IO.File.Exists(filePath))
                     {
                         return NotFound();
