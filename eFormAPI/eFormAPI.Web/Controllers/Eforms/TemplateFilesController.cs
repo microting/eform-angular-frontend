@@ -306,6 +306,9 @@ namespace eFormAPI.Web.Controllers.Eforms
                 var zipArchiveFolder =
                     Path.Combine(core.GetSdkSetting(Settings.fileLocationJasper),
                         Path.Combine("templates", Path.Combine("zip-archives", templateId.ToString())));
+                
+                var filePath = Path.Combine(zipArchiveFolder, Path.GetFileName(uploadModel.File.FileName));
+                System.IO.File.Delete(filePath);
 
                 if (string.IsNullOrEmpty(saveFolder))
                 {
@@ -316,13 +319,9 @@ namespace eFormAPI.Web.Controllers.Eforms
                 Directory.CreateDirectory(zipArchiveFolder);
                 if (uploadModel.File.Length > 0)
                 {
-                    var filePath = Path.Combine(zipArchiveFolder, Path.GetFileName(uploadModel.File.FileName));
-                    if (!System.IO.File.Exists(filePath))
+                    using (var stream = new FileStream(filePath, FileMode.Create))
                     {
-                        using (var stream = new FileStream(filePath, FileMode.Create))
-                        {
-                            await uploadModel.File.CopyToAsync(stream);
-                        }
+                        await uploadModel.File.CopyToAsync(stream);
                     }
 
                     var extractPath = Path.Combine(saveFolder);
@@ -346,8 +345,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                             core.PutFileToStorageSystem(filePath, templateId.ToString() + "_" + uploadModel.File.FileName);
                         }
 
-                        System.IO.File.Delete(filePath);
-                        if (Directory.GetFiles(extractPath, "*.docx").Length == 0)
+                        if (Directory.GetFiles(Path.Combine(extractPath, "compact"), "*.docx").Length == 0)
                         {
                             core.SetJasperExportEnabled(templateId, true);
                             core.SetDocxExportEnabled(templateId, false);
@@ -362,7 +360,6 @@ namespace eFormAPI.Web.Controllers.Eforms
                             core.SetDocxExportEnabled(templateId, true);
                             
                         }
-
                         return Ok();
                     }
                 }
