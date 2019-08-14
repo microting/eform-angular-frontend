@@ -25,16 +25,18 @@ SOFTWARE.
 using System;
 using System.IO;
 using System.Net.Mime;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Security;
 using eFormAPI.Web.Infrastructure;
-using eFormShared;
 using ICSharpCode.SharpZipLib.Zip;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microting.eForm.Dto;
+using Microting.eForm.Infrastructure.Models;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
@@ -249,15 +251,26 @@ namespace eFormAPI.Web.Controllers.Eforms
             {
                 var core = _coreHelper.GetCore();
                 var caseId = core.CaseReadFirstId(templateId, "not_revmoed");
-                var filePath = core.CaseToJasperXml((int) caseId, DateTime.Now.ToString("yyyyMMddHHmmssffff"),
-                    $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", "");
-                if (!System.IO.File.Exists(filePath))
+                Case_Dto caseDto = core.CaseLookupCaseId((int)caseId);
+                ReplyElement replyElement = core.CaseRead(caseDto.MicrotingUId, caseDto.CheckUId);
+                if (caseId != null)
                 {
-                    return NotFound();
-                }
+                    var filePath = core.CaseToJasperXml(caseDto, replyElement, (int)caseId,
+                        DateTime.Now.ToString("yyyyMMddHHmmssffff"),
+                        $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", 
+                        "");
+                    if (!System.IO.File.Exists(filePath))
+                    {
+                        return NotFound();
+                    }
 
-                var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-                return File(fileStream, "application/xml", Path.GetFileName(filePath));
+                    var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+                    return File(fileStream, "application/xml", Path.GetFileName(filePath));
+                }
+                else
+                {
+                    return BadRequest();
+                }
             }
             catch (Exception)
             {
@@ -293,6 +306,9 @@ namespace eFormAPI.Web.Controllers.Eforms
                 var zipArchiveFolder =
                     Path.Combine(core.GetSdkSetting(Settings.fileLocationJasper),
                         Path.Combine("templates", Path.Combine("zip-archives", templateId.ToString())));
+                
+                var filePath = Path.Combine(zipArchiveFolder, Path.GetFileName(uploadModel.File.FileName));
+                System.IO.File.Delete(filePath);
 
                 if (string.IsNullOrEmpty(saveFolder))
                 {
@@ -303,13 +319,9 @@ namespace eFormAPI.Web.Controllers.Eforms
                 Directory.CreateDirectory(zipArchiveFolder);
                 if (uploadModel.File.Length > 0)
                 {
-                    var filePath = Path.Combine(zipArchiveFolder, Path.GetFileName(uploadModel.File.FileName));
-                    if (!System.IO.File.Exists(filePath))
+                    using (var stream = new FileStream(filePath, FileMode.Create))
                     {
-                        using (var stream = new FileStream(filePath, FileMode.Create))
-                        {
-                            await uploadModel.File.CopyToAsync(stream);
-                        }
+                        await uploadModel.File.CopyToAsync(stream);
                     }
 
                     var extractPath = Path.Combine(saveFolder);
@@ -332,9 +344,22 @@ namespace eFormAPI.Web.Controllers.Eforms
                         {
                             core.PutFileToStorageSystem(filePath, templateId.ToString() + "_" + uploadModel.File.FileName);
                         }
-                        //ZipFile.ExtractToDirectory(filePath, extractPath);
-                        System.IO.File.Delete(filePath);
-//                        await Startup.Bus.SendLocal(new GenerateJasperFiles(templateId)); // TODO disabled for now 3. dec. 2018
+
+                        if (Directory.GetFiles(Path.Combine(extractPath, "compact"), "*.docx").Length == 0)
+                        {
+                            core.SetJasperExportEnabled(templateId, true);
+                            core.SetDocxExportEnabled(templateId, false);
+//                            await Startup.Bus.SendLocal(new GenerateJasperFiles(templateId)); // TODO disabled for now 3. dec. 2018
+                            foreach (var file in Directory.GetFiles(extractPath, "*.jasper"))
+                            {
+                                System.IO.File.Delete(file);
+                            }
+                        }
+                        else
+                        {   core.SetJasperExportEnabled(templateId, false);
+                            core.SetDocxExportEnabled(templateId, true);
+                            
+                        }
                         return Ok();
                     }
                 }

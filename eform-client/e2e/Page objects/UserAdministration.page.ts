@@ -18,7 +18,7 @@ export class UserAdministration extends  PageWithNavbarPage {
     }
     public setNewName(firstName: string, lastName: string) {
     this.editUserBtn.click();
-    browser.pause(2000);
+    browser.waitForVisible('#editFirstName', 2000);
     this.firstNameBox.clearElement();
     browser.pause(500);
     this.firstNameBox.addValue(firstName);
@@ -30,7 +30,7 @@ export class UserAdministration extends  PageWithNavbarPage {
     }
     public revertToOldName(firstName: string, lastName: string) {
       this.editUserBtn.click();
-      browser.pause(2000);
+      browser.waitForVisible('#editFirstName', 2000);
       this.firstNameBox.clearElement();
       browser.pause(500);
       this.firstNameBox.addValue(firstName);

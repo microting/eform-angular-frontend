@@ -43,7 +43,8 @@ export class Workers extends PageWithNavbarPage {
   }
   public createNewWorker(firstName: string, lastName: string) {
     this.workerCreateBtn.click();
-    browser.pause(8000);
+    // browser.pause(8000);
+    browser.waitForVisible('#firstName', 10000);
     this.workerSelect.click();
     browser.pause(1000);
     this.firstElement.click();
@@ -51,11 +52,12 @@ export class Workers extends PageWithNavbarPage {
     this.lastNameBox.addValue(lastName);
     browser.pause(1000);
     this.workerSaveBtn.click();
-    browser.pause(16000);
+    // browser.pause(16000);
   }
   public editWorker(worker: WorkersRowObject, firstName: string, lastName: string) {
     worker.editBtn.click();
-    browser.pause(8000);
+    // browser.pause(8000);
+    browser.waitForVisible('#firstNameEdit', 8000);
     this.firstNameEditBox.clearElement();
     this.firstNameEditBox.addValue(firstName);
     browser.pause(2000);

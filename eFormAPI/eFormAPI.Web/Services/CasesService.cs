@@ -28,8 +28,8 @@ using eFormAPI.Web.Abstractions.Eforms;
 using eFormAPI.Web.Infrastructure.Helpers;
 using eFormAPI.Web.Infrastructure.Models.Cases.Request;
 using eFormAPI.Web.Infrastructure.Models.Cases.Response;
-using eFormData;
-using eFormShared;
+using Microting.eForm.Infrastructure.Constants;
+using Microting.eForm.Infrastructure.Models;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 

@@ -15,7 +15,9 @@ public get saveBtn() {
 
 public saveProfileSettings() {
     this.saveBtn.click();
-    browser.pause(12000);
+    // browser.pause(12000);
+  browser.waitForVisible('#sign-out-dropdown', 20000);
+  browser.pause(1000);
 }
 public chooseLanguage(language: string) {
     this.languageSelector.click();

@@ -23,7 +23,7 @@ SOFTWARE.
 */
 using System.Collections.Generic;
 using eFormAPI.Web.Infrastructure.Models;
-using eFormShared;
+using Microting.eForm.Dto;
 using Microting.eFormApi.BasePn.Infrastructure.Models;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 

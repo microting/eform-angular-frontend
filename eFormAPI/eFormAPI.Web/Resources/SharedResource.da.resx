@@ -340,19 +340,19 @@
     <value>Indstillinger er blevet gemt</value>
   </data>
   <data name="SiteParamCouldNotBeDeleted" xml:space="preserve">
-    <value>Webstedet "{0}" kunne ikke slettes</value>
+    <value>Lokationen "{0}" kunne ikke slettes</value>
   </data>
   <data name="SiteParamCouldNotBeUpdated" xml:space="preserve">
-    <value>Websted med id {0} kunne ikke opdateres</value>
+    <value>Lokationen med id {0} kunne ikke opdateres</value>
   </data>
   <data name="SiteParamDeletedSuccessfully" xml:space="preserve">
-    <value>Site "{0}" slettes med succes</value>
+    <value>Lokation "{0}" blev slettet korrekt</value>
   </data>
   <data name="SiteParamNotFound" xml:space="preserve">
-    <value>Websted med id {0} ikke fundet</value>
+    <value>Lokation med id {0} ikke fundet</value>
   </data>
   <data name="SiteWithIdCouldNotBeDeleted" xml:space="preserve">
-    <value>Arbejdsgiver med id {0} kunne ikke slettes</value>
+    <value>Medarbejder med id {0} kunne ikke slettes</value>
   </data>
   <data name="TagDeletedSuccessfully" xml:space="preserve">
     <value>Tag slettet korrekt</value>
@@ -364,7 +364,7 @@
     <value>Skabelonetiketter blev opdateret med succes</value>
   </data>
   <data name="UnitParamOTPCouldNotCompleted" xml:space="preserve">
-    <value>Enhed "{0}" OTP-anmodning kunne ikke udfyldes</value>
+    <value>Enhed "{0}" OTP-anmodning kunne ikke udføres</value>
   </data>
   <data name="UserNameOrPasswordIncorrect" xml:space="preserve">
     <value>Brugernavn eller adgangskode er forkert</value>
@@ -388,22 +388,22 @@
     <value>Bruger {0} blev opdateret</value>
   </data>
   <data name="WorkerParamCantBeDeted" xml:space="preserve">
-    <value>Arbejder "{0 {1}" kan ikke slettes</value>
+    <value>Medarbejder "{0} {1}" kan ikke slettes</value>
   </data>
   <data name="WorkerParamCantBeUpdated" xml:space="preserve">
-    <value>Arbejder med id {0} kan ikke opdateres</value>
+    <value>Medarbejder med id {0} kan ikke opdateres</value>
   </data>
   <data name="WorkerParamDeletedSuccessfully" xml:space="preserve">
-    <value>Arbejder "{0} {1}" slettes med succes</value>
+    <value>Medarbejdere "{0} {1}" blet slettet korrekt</value>
   </data>
   <data name="WorkerParamWasUpdated" xml:space="preserve">
-    <value>Arbejdsgiver med id {0} blev opdateret</value>
+    <value>Medarbejder med id {0} blev opdateret</value>
   </data>
   <data name="WorkerWasSuccessfullyCreated" xml:space="preserve">
-    <value>Arbejderen blev oprettet med succes</value>
+    <value>Medarbejderen blev oprettet med succes</value>
   </data>
   <data name="YouNeedToBuyMoreLicenses" xml:space="preserve">
-    <value>Du skal købe flere licenser til yderligere enheder, der skal tilføjes.</value>
+    <value>Du skal købe flere licenser til yderligere enheder, kontakt Microting.</value>
   </data>
   <data name="YourEmailPasswordHasBeenReset" xml:space="preserve">
     <value>Din email: {0}. Adgangskoden er blevet nulstillet.</value>

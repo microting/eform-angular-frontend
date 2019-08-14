@@ -12,6 +12,7 @@
       <thead>
       <tr>
         <th scope="col">{{'ID' | translate}}</th>
+        <th scope="col">{{'Microting UUID' | translate}}</th>
         <th scope="col">{{'Created at' | translate}}</th>
         <th scope="col"> {{ 'Updated at' | translate }}</th>
         <th scope="col"> {{ 'Name' | translate }}</th>
@@ -22,6 +23,7 @@
       <tbody>
       <tr *ngFor="let folderDto of foldersDto">
         <td>{{folderDto.id}}</td>
+        <td>{{folderDto.microtingUId}}</td>
         <td>
           <date-formatter [date]="folderDto.createdAt" [Format]="'datetime'"></date-formatter>
         </td>

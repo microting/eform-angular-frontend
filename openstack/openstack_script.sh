@@ -2,9 +2,10 @@
 
 ################## START OF CONFIG PARAMETERS ##################
 declare -A conf_parameters=(
-["SWIFT_FOLDER_PREFIX"]='""'
+["SWIFT_FOLDER_PREFIX"]='"_"'
 ["DOMAIN_NAME"]='"microting.com"'
 ["MYSQL_PASSWORD"]='"your_password"'
+["MYSQL_USERNAME"]='"tester"'
 ["SWIFT_USER_NAME"]='"CloudCustomer"'
 ["SWIFT_TENANT_NAME"]='"admin"'
 ["SWIFT_PASSWORD"]='"your_password"'
@@ -71,8 +72,8 @@ debconf-set-selections <<< "mariadb-server-10.3 mysql-server/root_password_again
 apt-get -y install mariadb-server nginx curl python-pip python-swiftclient
 
 mysql -uroot --password=$MYSQL_PASSWORD <<MYSQL_SCRIPT
-CREATE USER '$INSTANCE_HOSTNAME'@'localhost' IDENTIFIED BY '$MYSQL_PASSWORD';
-GRANT ALL PRIVILEGES ON *.* TO '$INSTANCE_HOSTNAME'@'localhost';
+CREATE USER '$MYSQL_USERNAME'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';
+GRANT ALL PRIVILEGES ON *.* TO '$MYSQL_USERNAME'@'%';
 MYSQL_SCRIPT
 
 curl -sL https://deb.nodesource.com/setup_8.x | sudo bash -
@@ -249,10 +250,7 @@ if [ $SHOULD_SETUP_DB_BACKUP = true ]
 		
     sed -i "s/SWIFT_FOLDER_PREFIX/$SWIFT_FOLDER_PREFIX/g" /root/backup-mysql-hourly.sh
     echo '############# DONE SETTING UP HOURLY BACKUP #############'
-		chmod +x /root/backup-mysql-hourly.sh
-    echo "55 * * * * root /root/backup-mysql-hourly.sh" >> /etc/cron.d/eform-backup
-		
-
+		chmod +x /root/backup-mysql-hourly.sh	
 fi
 
 if [ $SHOULD_RESTORE_DATABASE = true ]
@@ -271,9 +269,9 @@ if [ $SHOULD_RESTORE_DATABASE = true ]
 	gunzip $LAST_BACKUP
 	export LAST_BACKUP=`expr substr $LAST_BACKUP 1 27`
 	echo "Creating DB"
-	`time mysql -u $INSTANCE_HOSTNAME --password=$MYSQL_PASSWORD -e "create database $DATABASE_NAME"`
+	`time mysql -u $MYSQL_USERNAME --password=$MYSQL_PASSWORD -e "create database $DATABASE_NAME"`
 	echo "Restoring db from backup"
-	`time mysql -u $INSTANCE_HOSTNAME --password=$MYSQL_PASSWORD $DATABASE_NAME < $LAST_BACKUP`
+	`time mysql -u $MYSQL_USERNAME --password=$MYSQL_PASSWORD $DATABASE_NAME < $LAST_BACKUP`
 	echo "Restore complete"
 	rm $LAST_BACKUP
 
@@ -298,9 +296,9 @@ if [ $SHOULD_RESTORE_DATABASE = true ]
 	gunzip $LAST_BACKUP
 	export LAST_BACKUP=`expr substr $LAST_BACKUP 1 27`
 	echo "Creating DB"
-	`time mysql -u $INSTANCE_HOSTNAME --password=$MYSQL_PASSWORD -e "create database $DATABASE_NAME"`
+	`time mysql -u $MYSQL_USERNAME --password=$MYSQL_PASSWORD -e "create database $DATABASE_NAME"`
 	echo "Restoring db from backup"
-	`time mysql -u $INSTANCE_HOSTNAME --password=$MYSQL_PASSWORD $DATABASE_NAME < $LAST_BACKUP`
+	`time mysql -u $MYSQL_USERNAME --password=$MYSQL_PASSWORD $DATABASE_NAME < $LAST_BACKUP`
 	echo "Restore complete"
   rm $LAST_BACKUP
 
@@ -365,9 +363,9 @@ if [ $SHOULD_RESTORE_DATABASE = true ]
   	gunzip $LAST_BACKUP
   	export LAST_BACKUP=`expr substr $LAST_BACKUP 1 27`
   	echo "Creating DB $DATABASE_NAME"
-  	mysql -u $INSTANCE_HOSTNAME --password=$MYSQL_PASSWORD -e "create database \`$DATABASE_NAME\`"
+  	mysql -u $MYSQL_USERNAME --password=$MYSQL_PASSWORD -e "create database \`$DATABASE_NAME\`"
   	echo "Restoring db from backup $LAST_BACKUP"
-  	mysql -u $INSTANCE_HOSTNAME --password=$MYSQL_PASSWORD $DATABASE_NAME < $LAST_BACKUP
+  	mysql -u $MYSQL_USERNAME --password=$MYSQL_PASSWORD $DATABASE_NAME < $LAST_BACKUP
   	echo "Restore complete"
     rm $LAST_BACKUP
 
@@ -463,3 +461,5 @@ systemctl start eformbackend.service
 	
 fi
 echo "################## END SERVICE SETUP ##################"
+
+echo "55 * * * * root /root/backup-mysql-hourly.sh" >> /etc/cron.d/eform-backup
