@@ -13,10 +13,12 @@ import {
 } from 'src/app/common/models';
 import {TemplateRequestModel} from 'src/app/common/models/eforms';
 import {BaseService} from 'src/app/common/services/base.service';
+import {FieldDto} from '../../models/dto/field.dto';
 
 const TemplatesMethods = {
   GetAll: '/api/templates/index',
   GetSingle: '/api/templates/get',
+  GetFields: '/api/templates/get-fields',
   DeleteSingle: '/api/templates/delete',
   CreateSingle: '/api/templates/create',
   DeploySingle: '/api/templates/deploy',
@@ -56,6 +58,10 @@ export class EFormService extends BaseService {
 
   deploySingle(deployModel: DeployModel): Observable<OperationResult> {
     return this.post(TemplatesMethods.DeploySingle, deployModel);
+  }
+
+  getFields(id: number): Observable<OperationDataResult<FieldDto[]>> {
+    return this.get<FieldDto[]>(TemplatesMethods.GetFields + '/' + id);
   }
 
   getTemplateColumns(templateId: number): Observable<OperationDataResult<Array<TemplateColumnModel>>> {

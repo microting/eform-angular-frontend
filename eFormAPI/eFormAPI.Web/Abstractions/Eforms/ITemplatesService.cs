@@ -24,9 +24,10 @@ SOFTWARE.
 using System.Threading.Tasks;
 using eFormAPI.Web.Infrastructure.Models;
 using eFormAPI.Web.Infrastructure.Models.Templates;
-using Microting.eForm.Dto;
-using Microting.eFormApi.BasePn.Infrastructure.Models;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.eForm.Dto;
+using System.Collections.Generic;
+using Microting.eForm.Infrastructure.Models;
 
 namespace eFormAPI.Web.Abstractions.Eforms
 {
@@ -37,6 +38,7 @@ namespace eFormAPI.Web.Abstractions.Eforms
         OperationResult Deploy(DeployModel deployModel);
         OperationDataResult<DeployToModel> DeployTo(int id);
         OperationDataResult<Template_Dto> Get(int id);
+        OperationDataResult<List<Field>> GetFields(int id);
         Task<OperationDataResult<TemplateListModel>> Index(TemplateRequestModel templateRequestModel);
     }
 }
