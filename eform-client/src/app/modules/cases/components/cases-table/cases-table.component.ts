@@ -9,6 +9,7 @@ import {AuthService, UserSettingsService} from 'src/app/common/services/auth';
 import {CasesService} from 'src/app/common/services/cases';
 import {EFormService} from 'src/app/common/services/eform';
 import {SecurityGroupEformsPermissionsService} from 'src/app/common/services/security';
+import {saveAs} from 'file-saver';
 
 @Component({
   selector: 'app-cases-table',
@@ -100,19 +101,13 @@ export class CasesTableComponent implements OnInit {
     });
   }
 
-  downloadPDF(caseId: number) {
-    window.open('/api/template-files/download-case-pdf/' +
-      this.currentTemplate.id + '?caseId=' + caseId + '&fileType=pdf', '_blank');
-  }
-
-  downloadDocx(caseId: number) {
-    window.open('/api/template-files/download-case-pdf/' +
-      this.currentTemplate.id + '?caseId=' + caseId + '&fileType=docx', '_blank');
-  }
-
-  downloadPPTX(caseId: number) {
-    window.open('/api/template-files/download-case-pdf/' +
-      this.currentTemplate.id + '?caseId=' + caseId + '&fileType=pptx', '_blank');
+  downloadFile(caseId: number, fileType: string) {
+    this.spinnerStatus = true;
+    this.eFormService.downloadEformPDF(this.currentTemplate.id, caseId, fileType).subscribe(data => {
+      const blob = new Blob([data]);
+      saveAs(blob, `template_${this.currentTemplate.id}.${fileType}`);
+      this.spinnerStatus = false;
+    });
   }
 
   loadEformPermissions(templateId: number) {

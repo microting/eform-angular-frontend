@@ -199,13 +199,13 @@
 
             </button>
             <button class="btn btn-success btn-icon mb-2" *ngIf="checkEformPermissions(userClaimsEnum.caseGetPdf) && (currentTemplate.jasperExportEnabled || currentTemplate.docxExportEnabled)"
-                    (click)="downloadPDF(caseModel.id)"
+                    (click)="downloadFile(caseModel.id, 'pdf')"
                     mdbTooltip="{{ 'Download PDF' | translate }}">
               <fa-icon icon="file-pdf" size="lg" [fixedWidth]="true"></fa-icon>
 
             </button>
             <button class="btn btn-success btn-icon mb-2" *ngIf="checkEformPermissions(userClaimsEnum.caseGetPdf) && currentTemplate.docxExportEnabled"
-                    (click)="downloadDocx(caseModel.id)"
+                    (click)="downloadFile(caseModel.id, 'docx')"
                     mdbTooltip="{{ 'Download Docx' | translate }}">
               <fa-icon icon="file-word" size="lg" [fixedWidth]="true"></fa-icon>
 
