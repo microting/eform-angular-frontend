@@ -29,7 +29,6 @@ using eFormAPI.Web.Infrastructure.Models;
 using eFormAPI.Web.Infrastructure.Models.Templates;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microting.eFormApi.BasePn.Infrastructure.Models;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Controllers.Eforms
@@ -65,6 +64,21 @@ namespace eFormAPI.Web.Controllers.Eforms
             try
             {
                 return Ok(_templatesService.Get(id));
+            }
+            catch (Exception)
+            {
+                return Unauthorized();
+            }
+        }
+
+        [HttpGet]
+        [Route("api/templates/get-fields/{id}")]
+        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Read)]
+        public IActionResult GetDataItems(int id)
+        {
+            try
+            {
+                return Ok(_templatesService.GetFields(id));
             }
             catch (Exception)
             {

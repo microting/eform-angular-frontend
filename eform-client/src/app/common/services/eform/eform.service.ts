@@ -13,10 +13,12 @@ import {
 } from 'src/app/common/models';
 import {TemplateRequestModel} from 'src/app/common/models/eforms';
 import {BaseService} from 'src/app/common/services/base.service';
+import {FieldDto} from '../../models/dto/field.dto';
 
 const TemplatesMethods = {
   GetAll: '/api/templates/index',
   GetSingle: '/api/templates/get',
+  GetFields: '/api/templates/get-fields',
   DeleteSingle: '/api/templates/delete',
   CreateSingle: '/api/templates/create',
   DeploySingle: '/api/templates/deploy',
@@ -58,6 +60,10 @@ export class EFormService extends BaseService {
     return this.post(TemplatesMethods.DeploySingle, deployModel);
   }
 
+  getFields(id: number): Observable<OperationDataResult<FieldDto[]>> {
+    return this.get<FieldDto[]>(TemplatesMethods.GetFields + '/' + id);
+  }
+
   getTemplateColumns(templateId: number): Observable<OperationDataResult<Array<TemplateColumnModel>>> {
     return this.get<Array<TemplateColumnModel>>(TemplateColumnMethods.GetColumns + '/' + templateId);
   }
@@ -74,7 +80,7 @@ export class EFormService extends BaseService {
     return this.get<any>(TemplateFilesMethods.DownloadXML + '/' + templateId);
   }
 
-  downloadEformPDF(templateId: number, caseId: number): Observable<OperationDataResult<any>> {
-    return this.get<any>(TemplateFilesMethods.DownloadPDF + '/' + templateId + '?caseId=' + caseId);
+  downloadEformPDF(templateId: number, caseId: number, fileType: string): Observable<OperationDataResult<any>> {
+    return this.getBlobData(TemplateFilesMethods.DownloadPDF + '/' + templateId + '/?caseId=' + caseId + '&fileType=' + fileType);
   }
 }

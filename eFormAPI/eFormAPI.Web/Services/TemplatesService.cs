@@ -38,7 +38,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microsoft.Extensions.Options;
 using Microting.eForm.Dto;
-using Microting.eFormApi.BasePn.Infrastructure.Models;
+using Microting.eForm.Infrastructure.Models;
 
 namespace eFormAPI.Web.Services
 {
@@ -347,6 +347,14 @@ namespace eFormAPI.Web.Services
 
             return new OperationResult(true,
                 _localizationService.GetStringWithFormat("ParamPairedSuccessfully", templateDto.Label));
+        }
+
+        public OperationDataResult<List<Field>> GetFields(int id)
+        {
+            var core = _coreHelper.GetCore();
+            var fields = core.Advanced_TemplateFieldReadAll(id).Select(f => core.Advanced_FieldRead(f.Id)).ToList();
+
+            return new OperationDataResult<List<Field>>(true, fields);
         }
     }
 }

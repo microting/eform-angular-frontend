@@ -15,7 +15,7 @@ describe('Application settings page - site header section', function () {
     applicationSettingsPage.save();
     browser.refresh();
     // browser.pause(10000);
-    browser.waitForVisible('#sign-out-dropdown', 20000);
+    browser.waitForVisible('#sign-out-dropdown', 40000);
     browser.pause(4000);
     applicationSettingsPage.Navbar.logout();
     expect(loginPage.loginBtn.isVisible()).equal(true);
