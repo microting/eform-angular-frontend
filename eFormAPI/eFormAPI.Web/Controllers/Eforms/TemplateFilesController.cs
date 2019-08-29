@@ -24,8 +24,6 @@ SOFTWARE.
 
 using System;
 using System.IO;
-using System.Net.Mime;
-using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Security;
@@ -43,6 +41,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using OpenStack.NetCoreSwiftClient.Extensions;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
+using Settings = Microting.eForm.Dto.Settings;
 
 namespace eFormAPI.Web.Controllers.Eforms
 {
@@ -82,16 +81,33 @@ namespace eFormAPI.Web.Controllers.Eforms
             return File(fileStream, "application/octet-stream", fileName);
         }
 
-        [HttpGet]        
+        [HttpGet]
         [AllowAnonymous]
         [Route("api/template-files/get-image/{fileName}.{ext}")]
-//        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, 
-//            Policy = AuthConsts.EformPolicies.Cases.CasesRead)]
         public async Task<IActionResult> GetImage(string fileName, string ext, string noCache = "noCache")
         {
+            return await GetFile(fileName, ext,"image", noCache);
+        }
+        
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("api/template-files/get-pdf/{fileName}.{ext}")]
+        public async Task<IActionResult> GetPdf(string fileName, string ext, string noCache = "noCache")
+        {
+            return await GetFile(fileName, ext, "pdf", noCache);
+        }
+        
+        
+        private async Task<IActionResult> GetFile(string fileName, string ext, string fileType, string noCache = "noCache")
+        {
             var core = _coreHelper.GetCore();
-            var filePath = $"{core.GetSdkSetting(Settings.fileLocationPicture)}\\{fileName}.{ext}";
-            string fileType = "";
+            string fullFileName = $"{fileName}.{ext}";
+            var filePath = Path.Combine(core.GetSdkSetting(Settings.fileLocationPicture),fullFileName);   ;
+            if (fileType == "pdf")
+            {
+                filePath = Path.Combine(core.GetSdkSetting(Settings.fileLocationPdf),fullFileName);   
+            }
+            
             switch (ext)
             {
                 case "png":
