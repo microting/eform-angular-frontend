@@ -8,6 +8,7 @@ import {AppSettingsService} from '../../common/services/settings';
 })
 export class FooterComponent implements OnInit {
   version: string;
+  date = new Date();
 
   constructor(private settingsService: AppSettingsService) {
   }
