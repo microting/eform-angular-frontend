@@ -16,7 +16,7 @@ describe('Application settings page - site header section', function () {
     applicationSettingsPage.save();
     browser.refresh();
     browser.waitForVisible('#sign-out-dropdown', 90000);
-    browser.pause(10000);
+    browser.pause(20000);
     expect(applicationSettingsPage.siteHeaderMainText.getText(),
       'Error while editing site header main text').equal(ApplicationSettingsConstants.SiteHeader.customMainText);
   });
