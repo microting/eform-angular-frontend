@@ -70,13 +70,14 @@ export class EntitySelectEditComponent implements OnInit {
   deleteAdvEntitySelectableItem(itemId: string) {
     this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels =
       this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels
-        .filter(x => x.entityItemUId != itemId);
+        .filter(x => x.entityItemUId !== itemId);
     this.actualizeAdvEntitySelectableItemPositions();
   }
 
   actualizeAdvEntitySelectableItemPositions() {
     for (let i = 0; i < this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels.length; i++) {
       this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels[i].entityItemUId = i.toString();
+      this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels[i].displayIndex = i;
     }
   }
 
