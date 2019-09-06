@@ -139,9 +139,9 @@ namespace eFormAPI.Web.Services
                 return new OperationResult(true,
                     _localizationService.GetStringWithFormat("ParamUpdatedSuccessfully", editModel.GroupUid));
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-                return new OperationResult(false, _localizationService.GetString("SelectableListCreationFailed"));
+                return new OperationResult(false, _localizationService.GetString("SelectableListCreationFailed") + exception.Message);
             }
         }
 

@@ -63,7 +63,7 @@ export class EntitySelectEditComponent implements OnInit {
 
   addNewAdvEntitySelectableItem() {
     const item = new AdvEntitySelectableItemModel();
-    item.entityItemUId = this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels.length.toString();
+    item.entityItemUId = (this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels.length + 1).toString();
     this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels.push(item);
   }
 
@@ -87,7 +87,7 @@ export class EntitySelectEditComponent implements OnInit {
 
   updateItem(itemModel: AdvEntitySelectableItemModel) {
     this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels
-      .find(x => x.entityItemUId == itemModel.entityItemUId).name = itemModel.name;
+      .find(x => x.entityItemUId === itemModel.entityItemUId).name = itemModel.name;
   }
 
   importAdvEntitySelectableGroup(importString: string) {
