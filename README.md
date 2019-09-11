@@ -11,6 +11,8 @@ eForm Backend is created using Angular \(6.1.10\) and C\#
 | OSX 10.14.2 | X |  | X | X |
 | Windows 10 | X | X | X | X |
 | Windows Server 2016 | X | X | X | X |
+| Ubuntu 19.04 | X |  | X | X |
+| Ubuntu 18.10 | X |  | X | X |
 | Ubuntu 18.04 | X |  | X | X |
 | Ubuntu 16.04 | X |  | X | X |
 
@@ -20,7 +22,7 @@ eForm Backend is created using Angular \(6.1.10\) and C\#
 | :--- | :---: | :---: |
 | English | 100% | 100% |
 | Danish | 100% | 100% |
-| German | 100% | 100% |
+| German | 90% | 90% |
 
 If you want to contribute with a translation to another language, please start by cloning the repository and create a copy of [SharedResource.resx](https://github.com/microting/eform-angular-frontend/blob/master/eFormAPI/eFormAPI.Web/Resources/SharedResource.resx) and name it SharedResource.XX.resx where XX is the language code. For the Angular part, please create a copy of [en-US.json](https://github.com/microting/eform-angular-frontend/blob/master/eform-client/src/assets/i18n/en-US.json) and follow pattern on [ISO 639-1 standard language codes](https://www.andiamo.co.uk/resources/iso-language-codes/)
 
@@ -32,14 +34,20 @@ You need to create an account for Microting API and get your access credentials.
 
 ## Development recommendations
 
-To work with back-end use [**Visual Studio 2017 Community edition**](https://www.visualstudio.com/vs/community/).
+To work with the C# part we recommend to use either:
+- [**JetBrains Rider**](https://www.jetbrains.com/rider/)
+- [**Visual Studio 2017 Community edition**](https://www.visualstudio.com/vs/community/).
 
-To work with Angular front-end code recommended to use [**WebStorm**](https://www.jetbrains.com/webstorm/) or [**VS Code**](https://code.visualstudio.com). If you're going to use VS Code you're need to install several plugins.
+To work with Angular code, recommended to use either:
+- [**WebStorm**](https://www.jetbrains.com/webstorm/)
+- [**VS Code**](https://code.visualstudio.com). 
 
-1.  [Angular Essentials](https://marketplace.visualstudio.com/items?itemName=johnpapa.angular-essentials)  - for Angular intellisense.
+If you're going to use VS Code you're need to install several plugins.
+
+1. [Angular Essentials](https://marketplace.visualstudio.com/items?itemName=johnpapa.angular-essentials)  - for Angular intellisense.
 2. [Angular Snippets](https://marketplace.visualstudio.com/items?itemName=Mikael.Angular-BeastCode)  - for Angular snippets.
-3.  [Angular Language Service](https://marketplace.visualstudio.com/items?itemName=johnpapa.angular-essentials) 
-4.  [Chrome Augury extention](https://augury.angular.io/) - to observe variables and changes in a real time.
+3. [Angular Language Service](https://marketplace.visualstudio.com/items?itemName=johnpapa.angular-essentials) 
+4. [Chrome Augury extention](https://augury.angular.io/) - to observe variables and changes in a real time.
 
 After installing, run **cmd** navigate to front-end **eform-client** folder and type **npm i**, after that **npm start**. This will start **Webpack** development server that will reload on any change in the front-end code.
 
