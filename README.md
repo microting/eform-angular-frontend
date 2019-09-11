@@ -4,7 +4,7 @@
 
 eForm Backend is created using Angular \(6.1.10\) and C\#
 
-## Support Platforms
+## Supported Platforms
 
 | OS | .Net Standard 2.0 | NET Framework 4.6.1 | MS SQL 2016+ | MySQL/MariaDB |
 | :--- | :---: | :---: | :---: | :---: |
@@ -34,13 +34,15 @@ You need to create an account for Microting API and get your access credentials.
 
 ## Development recommendations
 
-To work with the C# part we recommend to use either:
-- [**JetBrains Rider**](https://www.jetbrains.com/rider/)
-- [**Visual Studio 2017 Community edition**](https://www.visualstudio.com/vs/community/).
+To work with the C\# part we recommend to use either:
+
+* [**JetBrains Rider**](https://www.jetbrains.com/rider/)
+* [**Visual Studio 2017 Community edition**](https://www.visualstudio.com/vs/community/).
 
 To work with Angular code, recommended to use either:
-- [**WebStorm**](https://www.jetbrains.com/webstorm/)
-- [**VS Code**](https://code.visualstudio.com). 
+
+* [**WebStorm**](https://www.jetbrains.com/webstorm/)
+* [**VS Code**](https://code.visualstudio.com). 
 
 If you're going to use VS Code you're need to install several plugins.
 
