@@ -34,7 +34,7 @@ Sass is a stylesheet language that compiles to CSS. Sass is like CSS, but with e
 
 ## TypeScript
 
-[TypeScript](http://www.typescriptlang.org/) is a superset of JavaScript, which means it gives you JavaScript, along with a number of extra features such as [type declarations](http://www.typescriptlang.org/Handbook#basic-types) and [interfaces](http://www.typescriptlang.org/Handbook#interfaces). 
+[TypeScript](http://www.typescriptlang.org/) is a superset of JavaScript, which means it gives you JavaScript, along with a number of extra features such as [type declarations](http://www.typescriptlang.org/Handbook#basic-types) and [interfaces](http://www.typescriptlang.org/Handbook#interfaces).
 
 ## Unit tests
 
@@ -47,6 +47,4 @@ Unit Tests and unit testing are a way to test small pieces of code to see if the
 ## Web standards
 
 The [World Wide Web Consortium](https://www.w3.org/) \(W3C\) is the standards organization for the Web. Together, industry leaders and the public work together to develop [web standards](https://www.w3.org/standards/), which are a set of protocols, specifications, and technologies that define the Web Platform.
-
-
 
