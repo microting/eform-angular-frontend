@@ -28,136 +28,25 @@ import { scaleBand, scaleLinear, scalePoint, scaleTime } from 'd3-scale';
 
 @Component({
   selector: 'combo-chart-pn-component',
-  template: `
-    <ngx-charts-chart
-      [view]="[width + legendSpacing, height]"
-      [showLegend]="legend"
-      [legendOptions]="legendOptions"
-      [activeEntries]="activeEntries"
-      [animations]="animations"
-      (legendLabelClick)="onClick($event)"
-      (legendLabelActivate)="onActivate($event)"
-      (legendLabelDeactivate)="onDeactivate($event)"
-    >
-      <svg:g [attr.transform]="transform" class="bar-chart chart">
-        <svg:g
-          ngx-charts-x-axis
-          *ngIf="xAxis"
-          [xScale]="xScale"
-          [dims]="dims"
-          [showLabel]="showXAxisLabel"
-          [labelText]="xAxisLabel"
-          [tickFormatting]="xAxisTickFormatting"
-          (dimensionsChanged)="updateXAxisHeight($event)"
-        ></svg:g>
-        <svg:g
-          ngx-charts-y-axis
-          *ngIf="yAxis"
-          [yScale]="yScale"
-          [dims]="dims"
-          [yOrient]="yOrientLeft"
-          [showGridLines]="showGridLines"
-          [showLabel]="showYAxisLabel"
-          [labelText]="yAxisLabel"
-          [tickFormatting]="yAxisTickFormatting"
-          (dimensionsChanged)="updateYAxisWidth($event)"
-        ></svg:g>
-        <svg:g
-          ngx-charts-y-axis
-          *ngIf="yAxis"
-          [yScale]="yScaleLine"
-          [dims]="dims"
-          [yOrient]="yOrientRight"
-          [showGridLines]="showGridLines"
-          [showLabel]="showRightYAxisLabel"
-          [labelText]="yAxisLabelRight"
-          [tickFormatting]="yRightAxisTickFormatting"
-          (dimensionsChanged)="updateYAxisWidth($event)"
-        ></svg:g>
-        <svg:g
-          ngx-combo-charts-series-vertical
-          [xScale]="xScale"
-          [yScale]="yScale"
-          [colors]="colors"
-          [series]="results"
-          [seriesLine]="lineChart"
-          [dims]="dims"
-          [gradient]="gradient"
-          tooltipDisabled="true"
-          [activeEntries]="activeEntries"
-          [animations]="animations"
-          [noBarWhenZero]="noBarWhenZero"
-          (activate)="onActivate($event)"
-          (deactivate)="onDeactivate($event)"
-          (bandwidth)="updateLineWidth($event)"
-          (select)="onClick($event)"
-        ></svg:g>
-      </svg:g>
-      <svg:g [attr.transform]="transform" class="line-chart chart">
-        <svg:g>
-          <svg:g *ngFor="let series of lineChart; trackBy: trackBy">
-            <svg:g
-              ngx-charts-line-series
-              [xScale]="xScaleLine"
-              [yScale]="yScaleLine"
-              [colors]="colorsLine"
-              [data]="series"
-              [activeEntries]="activeEntries"
-              [scaleType]="scaleType"
-              [curve]="curve"
-              [rangeFillOpacity]="rangeFillOpacity"
-              [animations]="animations"
-            />
-          </svg:g>
-          <svg:g
-            ngx-charts-tooltip-area
-            *ngIf="!tooltipDisabled"
-            [dims]="dims"
-            [xSet]="xSet"
-            [xScale]="xScaleLine"
-            [yScale]="yScaleLine"
-            [results]="combinedSeries"
-            [colors]="colorsLine"
-            [tooltipDisabled]="tooltipDisabled"
-            (hover)="updateHoveredVertical($event)"
-          />
-          <svg:g *ngFor="let series of lineChart">
-            <svg:g
-              ngx-charts-circle-series
-              [xScale]="xScaleLine"
-              [yScale]="yScaleLine"
-              [colors]="colorsLine"
-              [data]="series"
-              [scaleType]="scaleType"
-              [visibleValue]="hoveredVertical"
-              [activeEntries]="activeEntries"
-              [tooltipDisabled]="tooltipDisabled"
-              (select)="onClick($event, series)"
-              (activate)="onActivate($event)"
-              (deactivate)="onDeactivate($event)"
-            />
-          </svg:g>
-        </svg:g>
-      </svg:g>
-    </ngx-charts-chart>
-  `,
+  templateUrl: './combo-chart-pn.component.html',
   styleUrls: ['./combo-chart-pn.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class ComboChartPnComponent extends BaseChartComponent {
   @Input() curve: any = curveLinear;
-  @Input() legend = false;
-  @Input() legendTitle = 'Legend';
-  @Input() legendPosition = 'right';
+  @Input() legend: boolean;
+  @Input() legendTitle: string;
+  @Input() legendPosition: string;
   @Input() xAxis;
   @Input() yAxis;
+  @Input() type;
   @Input() showXAxisLabel;
   @Input() showYAxisLabel;
   @Input() showRightYAxisLabel;
   @Input() xAxisLabel;
   @Input() yAxisLabel;
   @Input() yAxisLabelRight;
-  @Input() tooltipDisabled = false;
+  @Input() tooltipDisabled: boolean;
   @Input() gradient: boolean;
   @Input() showGridLines = true;
   @Input() activeEntries: any[] = [];
@@ -174,7 +63,7 @@ export class ComboChartPnComponent extends BaseChartComponent {
   @Input() rangeFillOpacity: number;
   @Input() animations = true;
   @Input() noBarWhenZero = true;
-
+  @Input() results;
   @Output() activate: EventEmitter<any> = new EventEmitter();
   @Output() deactivate: EventEmitter<any> = new EventEmitter();
 
@@ -194,7 +83,7 @@ export class ComboChartPnComponent extends BaseChartComponent {
   transform: string;
   colors: ColorHelper;
   colorsLine: ColorHelper;
-  margin: any[] = [10, 20, 10, 20];
+  margin: any[] = [10, 0, 0, 0];
   xAxisHeight = 0;
   yAxisWidth = 0;
   legendOptions: any;
