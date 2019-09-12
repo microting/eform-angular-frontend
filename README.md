@@ -1,4 +1,4 @@
-# Introduction
+# eForm Angular Frontend
 
 [![Build Status](https://travis-ci.org/microting/eform-angular-frontend.svg?branch=master)](https://travis-ci.org/microting/eform-angular-frontend)
 
