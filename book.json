@@ -1,0 +1,31 @@
+{
+    "gitbook": "3.x.x",
+    "title": "eform-backend",
+    "root": "/docs",
+    "plugins": [
+        "highlight",
+        "github",
+        "theme-api",
+        "include-codeblock",
+        "versions",
+        "anchors",
+        "githubcontributors",
+        "collapsible-chapters",
+        "youtube"
+    ],
+    "pluginsConfig": {
+        "github": {
+            "url": "https://github.com/microting/eform-angular-frontend/"
+        },
+        "theme-api": {
+            "theme": "dark"
+        },
+        "versions": {
+            "type": "tags"
+        },
+        "githubcontributors": {
+          "githubOwner": "microting",
+          "githubRepository": "eform-angular-frontend"
+        }
+    }
+}
