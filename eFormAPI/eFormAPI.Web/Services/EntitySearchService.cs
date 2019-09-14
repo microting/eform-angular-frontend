@@ -167,7 +167,7 @@ namespace eFormAPI.Web.Services
             {
                 var core = _coreHelper.GetCore();
 
-                var entityGroup = core.EntityGroupRead(entityGroupUid, null, searchString);
+                var entityGroup = core.EntityGroupRead(entityGroupUid, "Name", searchString);
 
                 var mappedEntityGroupDict = new List<CommonDictionaryTextModel>();
 
