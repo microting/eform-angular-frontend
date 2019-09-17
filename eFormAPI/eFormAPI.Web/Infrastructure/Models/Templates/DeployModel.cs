@@ -29,5 +29,6 @@ namespace eFormAPI.Web.Infrastructure.Models.Templates
     {
         public int Id { get; set; }
         public List<DeployCheckbox> DeployCheckboxes;
+        public int? FolderId { get; set; }
     }
 }
