@@ -104,6 +104,12 @@ namespace eFormAPI.Web.Services
             {
                 var core = _coreHelper.GetCore();
                 var entityGroup = core.EntityGroupRead(editModel.GroupUid);
+                
+                if (entityGroup.Name != editModel.Name)
+                {
+                    entityGroup.Name = editModel.Name;
+                    core.EntityGroupUpdate(entityGroup);
+                }
 
                 if (editModel.AdvEntitySelectableItemModels.Any())
                 {

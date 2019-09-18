@@ -6,6 +6,7 @@ export class DataItemDto {
   mandatory: Boolean;
   readOnly: Boolean;
   label: string;
+  description: string;
   color: string;
   displayOrder: number;
   // Field
