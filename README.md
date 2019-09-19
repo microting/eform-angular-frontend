@@ -1,8 +1,8 @@
 # eForm Angular Frontend
 
 [![Build Status](https://travis-ci.org/microting/eform-angular-frontend.svg?branch=master)](https://travis-ci.org/microting/eform-angular-frontend) 
-[![Dependencies Status](https://david-dm.org/microting/eform-angular-frontend/status.svg?path=eform-client)](https://david-dm.org/microting/eform-angular-frontend?path=eform-client)
-[![Dependencies Status](https://david-dm.org/microting/eform-angular-frontend/dev-status.svg?path=eform-client)](https://david-dm.org/microting/eform-angular-frontend?path=eform-client&type=dev)
+[![Dependencies Status](https://david-dm.org/microting/eform-angular-frontend/stable/status.svg?path=eform-client)](https://david-dm.org/microting/eform-angular-frontend/stable?path=eform-client)
+[![Dependencies Status](https://david-dm.org/microting/eform-angular-frontend/stable/dev-status.svg?path=eform-client)](https://david-dm.org/microting/eform-angular-frontend/stable?path=eform-client&type=dev)
 
 eForm Backend is created using Angular \(6.1.10\) and C\#
 
