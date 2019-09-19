@@ -25,6 +25,7 @@ SOFTWARE.
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Security;
 using eFormAPI.Web.Infrastructure;
@@ -233,9 +234,14 @@ namespace eFormAPI.Web.Controllers.Eforms
             try
             {
                 var core = _coreHelper.GetCore();
+                
+                // Fix for broken SDK not handling empty customXmlContent well
+                string customXmlContent = new XElement("FillerElement",
+                    new XElement("InnerElement", "SomeValue")).ToString();
+                
                 var filePath = core.CaseToPdf(caseId, templateId.ToString(),
                     DateTime.Now.ToString("yyyyMMddHHmmssffff"),
-                    $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", fileType, "");
+                    $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", fileType, customXmlContent);
                 //DateTime.Now.ToString("yyyyMMddHHmmssffff"), $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image?&filename=");
                 if (!System.IO.File.Exists(filePath))
                 {
