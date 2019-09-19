@@ -4,6 +4,7 @@
 [![Dependencies Status](https://david-dm.org/microting/eform-angular-frontend/stable/status.svg?path=eform-client)](https://david-dm.org/microting/eform-angular-frontend/stable?path=eform-client)
 [![Dependencies Status](https://david-dm.org/microting/eform-angular-frontend/stable/dev-status.svg?path=eform-client)](https://david-dm.org/microting/eform-angular-frontend/stable?path=eform-client&type=dev)
 [![Maintainability](https://api.codeclimate.com/v1/badges/383f012a79c7bea1101e/maintainability)](https://codeclimate.com/github/microting/eform-angular-frontend/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/383f012a79c7bea1101e/test_coverage)](https://codeclimate.com/github/microting/eform-angular-frontend/test_coverage)
 
 eForm Backend is created using Angular \(6.1.10\) and C\#
 
