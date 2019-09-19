@@ -22,8 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using eFormAPI.Web.Infrastructure.Models;
 using eFormAPI.Web.Infrastructure.Models.SearchableList;
-using Microting.eForm.Infrastructure.Models;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
@@ -31,7 +32,7 @@ namespace eFormAPI.Web.Abstractions.Advanced
 {
     public interface IEntitySearchService
     {
-        OperationDataResult<EntityGroupList> GetEntityGroupList(
+        Task<OperationDataResult<EntityGroupList>> GetEntityGroupList(
             AdvEntitySearchableGroupListRequestModel requestModel);
 
         OperationDataResult<List<CommonDictionaryTextModel>> GetEntityGroupDictionary(string entityGroupUid,

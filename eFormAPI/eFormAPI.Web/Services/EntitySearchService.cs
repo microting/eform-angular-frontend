@@ -24,11 +24,14 @@ SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Advanced;
+using eFormAPI.Web.Infrastructure.Database;
+using eFormAPI.Web.Infrastructure.Models;
 using eFormAPI.Web.Infrastructure.Models.SearchableList;
+using Microsoft.EntityFrameworkCore;
 using Microting.eForm.Infrastructure.Constants;
-using Microting.eForm.Infrastructure.Models;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
@@ -37,26 +40,45 @@ namespace eFormAPI.Web.Services
 {
     public class EntitySearchService : IEntitySearchService
     {
+        private readonly BaseDbContext _dbContext;
         private readonly IEFormCoreService _coreHelper;
         private readonly ILocalizationService _localizationService;
 
-        public EntitySearchService(IEFormCoreService coreHelper, ILocalizationService localizationService)
+        public EntitySearchService(BaseDbContext dbContext,
+            IEFormCoreService coreHelper, 
+            ILocalizationService localizationService)
         {
+            _dbContext = dbContext;
             _coreHelper = coreHelper;
             _localizationService = localizationService;
         }
 
 
-        public OperationDataResult<EntityGroupList> GetEntityGroupList(
+        public async Task<OperationDataResult<EntityGroupList>> GetEntityGroupList(
             AdvEntitySearchableGroupListRequestModel requestModel)
         {
             try
             {
                 var core = _coreHelper.GetCore();
-                var model = core.Advanced_EntityGroupAll(requestModel.Sort, requestModel.NameFilter,
+                EntityGroupList model = core.Advanced_EntityGroupAll(requestModel.Sort, requestModel.NameFilter,
                     requestModel.PageIndex, requestModel.PageSize, Constants.FieldTypes.EntitySearch,
                     requestModel.IsSortDsc,
                     Constants.WorkflowStates.NotRemoved);
+                if (model != null)
+                {
+                    List<string> eformPlugins = await _dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
+                    foreach (EntityGroup entityGroup in model.EntityGroups)
+                    {
+                        foreach (string eformPlugin in eformPlugins)
+                        {
+                            if (entityGroup.Name.Contains(eformPlugin))
+                            {
+                                entityGroup.IsLocked = true;
+                            }
+                        }
+                    }
+                }
+                
                 return new OperationDataResult<EntityGroupList>(true, model);
             }
             catch (Exception)
