@@ -10,6 +10,7 @@ import {PageSettingsModel} from 'src/app/common/models/settings';
 import {AuthService, UserSettingsService} from 'src/app/common/services/auth';
 import {EFormService, EformTagService} from 'src/app/common/services/eform';
 import {SecurityGroupEformsPermissionsService} from 'src/app/common/services/security';
+import {FolderDto} from '../../../../common/models/dto/folder.dto';
 
 @Component({
   selector: 'app-eform-page',

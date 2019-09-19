@@ -22,12 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions.Advanced;
 using eFormAPI.Web.Infrastructure;
+using eFormAPI.Web.Infrastructure.Models;
 using eFormAPI.Web.Infrastructure.Models.SelectableList;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microting.eForm.Infrastructure.Models;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
@@ -46,10 +47,10 @@ namespace eFormAPI.Web.Controllers.Advanced
         [HttpPost]
         [Route("api/selectable-groups")]
         [Authorize(Policy = AuthConsts.EformPolicies.EntitySelect.Read)]
-        public OperationDataResult<EntityGroupList> GetEntityGroupList(
+        public async Task<OperationDataResult<EntityGroupList>> GetEntityGroupList(
             [FromBody] AdvEntitySelectableGroupListRequestModel requestModel)
         {
-            return _entitySelectService.GetEntityGroupList(requestModel);
+            return await _entitySelectService.GetEntityGroupList(requestModel);
         }
 
         [HttpPost]
