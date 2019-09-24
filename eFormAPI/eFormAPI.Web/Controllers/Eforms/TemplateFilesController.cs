@@ -274,7 +274,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                 var core = _coreHelper.GetCore();
                 var caseId = core.CaseReadFirstId(templateId, "not_revmoed");
                 Case_Dto caseDto = core.CaseLookupCaseId((int)caseId);
-                ReplyElement replyElement = core.CaseRead(caseDto.MicrotingUId, caseDto.CheckUId);
+                ReplyElement replyElement = core.CaseRead((int)caseDto.MicrotingUId, (int)caseDto.CheckUId);
                 if (caseId != null)
                 {
                     var filePath = core.CaseToJasperXml(caseDto, replyElement, (int)caseId,
