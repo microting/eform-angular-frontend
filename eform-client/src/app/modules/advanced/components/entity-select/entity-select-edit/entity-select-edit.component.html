@@ -47,7 +47,7 @@
                           <fa-icon icon="grip-lines" size="lg" [fixedWidth]="true"></fa-icon>
                         </a>
                       </div>
-                      <div class="col-md-9">{{entityItem.name}}</div>
+                      <div id="entitySelectItemEditName{{entityItem.entityItemUId}}" class="col-md-9">{{entityItem.name}}</div>
                       <div class="col-md-2">
                         <fa-icon icon="exclamation-triangle" size="lg" [fixedWidth]="true" *ngIf="!entityItem.name"
                                  mdbTooltip="{{'Name is required' | translate}}!"></fa-icon>

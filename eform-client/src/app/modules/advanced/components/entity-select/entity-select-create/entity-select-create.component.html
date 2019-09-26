@@ -47,12 +47,12 @@
                           <fa-icon icon="grip-lines" size="lg" [fixedWidth]="true"></fa-icon>
                         </a>
                       </div>
-                      <div>{{entityItem.name}}</div>
+                      <div id="createEntityItemName">{{entityItem.name}}</div>
                       <div>
                         <fa-icon icon="exclamation-triangle" size="lg" [fixedWidth]="true"*ngIf="!entityItem.name"
                                  mdbTooltip="{{'Name is required' | translate}}!"></fa-icon>
                         <a>
-                          <fa-icon icon="pen" size="lg" [fixedWidth]="true"
+                          <fa-icon icon="pen" size="lg" [fixedWidth]="true" id="entitySelectCreateSingleItemEdit"
                                    (click)="openModalSelectEditName(entityItem)"></fa-icon>
                         </a>
                         <a>
