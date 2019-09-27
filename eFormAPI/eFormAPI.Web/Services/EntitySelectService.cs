@@ -135,34 +135,32 @@ namespace eFormAPI.Web.Services
                     core.EntityGroupUpdate(entityGroup);
                 }
 
-                if (editModel.AdvEntitySelectableItemModels.Any())
-                {
-                    var nextItemUid = entityGroup.EntityGroupItemLst.Count;
-                    var currentIds = new List<int>();
-                    foreach (var entityItem in editModel.AdvEntitySelectableItemModels)
-                    {
-                        if (string.IsNullOrEmpty(entityItem.MicrotingUUID))
-                        {
-                            var et = core.EntitySelectItemCreate(entityGroup.Id, entityItem.Name,
-                                entityItem.DisplayIndex, nextItemUid.ToString());
-                            currentIds.Add(et.Id);
-                        }
-                        else
-                        {
-                            core.EntityItemUpdate(entityItem.Id, entityItem.Name, entityItem.Description,
-                                entityItem.EntityItemUId, entityItem.DisplayIndex);
-                            currentIds.Add(entityItem.Id);
-                        }
+                var nextItemUid = entityGroup.EntityGroupItemLst.Count;
+                var currentIds = new List<int>();
 
-                        nextItemUid++;
+                foreach (var entityItem in editModel.AdvEntitySelectableItemModels)
+                {
+                    if (string.IsNullOrEmpty(entityItem.MicrotingUUID))
+                    {
+                        var et = core.EntitySelectItemCreate(entityGroup.Id, entityItem.Name,
+                            entityItem.DisplayIndex, nextItemUid.ToString());
+                        currentIds.Add(et.Id);
+                    }
+                    else
+                    {
+                        core.EntityItemUpdate(entityItem.Id, entityItem.Name, entityItem.Description,
+                            entityItem.EntityItemUId, entityItem.DisplayIndex);
+                        currentIds.Add(entityItem.Id);
                     }
 
-                    foreach (var entityItem in entityGroup.EntityGroupItemLst)
+                    nextItemUid++;
+                }
+                
+                foreach (var entityItem in entityGroup.EntityGroupItemLst)
+                {
+                    if (!currentIds.Contains(entityItem.Id))
                     {
-                        if (!currentIds.Contains(entityItem.Id))
-                        {
-                            core.EntityItemDelete(entityItem.Id);
-                        }
+                        core.EntityItemDelete(entityItem.Id);
                     }
                 }
 

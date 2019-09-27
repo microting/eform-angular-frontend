@@ -23,6 +23,7 @@ export class EformEditParingModalComponent implements OnInit {
   spinnerStatus = false;
   matchFound = false;
   foldersDto: Array<FolderDto> = [];
+  saveButtonDisabled = true;
 
   get userClaims() {
     return this.authService.userClaims;
@@ -50,6 +51,12 @@ export class EformEditParingModalComponent implements OnInit {
     }
   }
 
+  updateSaveButtonDisabled(event) {
+    if (this.deployModel.folderId != null) {
+      this.saveButtonDisabled = false;
+    }
+  }
+
   show(templateDto: TemplateDto) {
     this.selectedTemplateDto = templateDto;
     this.deployModel = new DeployModel();
@@ -66,7 +73,7 @@ export class EformEditParingModalComponent implements OnInit {
       deployObject.isChecked = true;
       this.deployModel.deployCheckboxes.push(deployObject);
     } else {
-      this.deployModel.deployCheckboxes = this.deployModel.deployCheckboxes.filter(x => x.id != deployId);
+      this.deployModel.deployCheckboxes = this.deployModel.deployCheckboxes.filter(x => x.id !== deployId);
     }
   }
 
@@ -106,6 +113,9 @@ export class EformEditParingModalComponent implements OnInit {
     this.foldersService.getAllFolders().subscribe((operation) => {
       if (operation && operation.success) {
         this.foldersDto = operation.model;
+        if (this.foldersDto.length === 0) {
+          this.saveButtonDisabled = false;
+        }
       }
       this.spinnerStatus = false;
     });

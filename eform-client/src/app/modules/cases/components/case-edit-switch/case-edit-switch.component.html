@@ -7,7 +7,7 @@
            *ngIf="dataItem.fieldType != 'FieldContainer' && dataItem.fieldType != 'SaveButton'">
         {{dataItem.label}}
         <br>
-        <i>{{dataItem.description.inderValue}}</i>
+        <i><div [innerHtml]="dataItem.description.inderValue"></div></i>
       </div>
       <div class="card-body">
         <ng-container [ngSwitch]="dataItem.fieldType">

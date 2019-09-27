@@ -12,6 +12,7 @@
             [placeholder]="'Folders' | translate"
             [items]="foldersDto"
             [(ngModel)]="deployModel.folderId"
+            (ngModelChange)="updateSaveButtonDisabled($event)"
             [clearable]="false"
             [bindLabel]="'name'"
             [bindValue]="'id'"
@@ -44,7 +45,7 @@
         </table>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-success" (click)="submitDeployment()">{{'Save'}}</button>
+        <button class="btn btn-success" (click)="submitDeployment()" [disabled]="saveButtonDisabled">{{'Save'}}</button>
         <button class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Cancel'}}</button>
       </div>
     </div>
