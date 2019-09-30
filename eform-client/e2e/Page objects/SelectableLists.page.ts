@@ -98,6 +98,9 @@ export class SelectableListsPage extends PageWithNavbarPage {
   getFirstRowObject(): SelectableListRowObject {
     return new SelectableListRowObject(1);
   }
+  getFirstItemObject(): EntitySelectItemRowObject {
+    return new EntitySelectItemRowObject(1);
+  }
   public goToEntitySelectPage() {
     this.Navbar.goToEntitySelect();
   }
@@ -202,6 +205,22 @@ export class SelectableListRowObject {
     }
   }
   id;
+  name;
+  editBtn;
+  deleteBtn;
+}
+export class EntitySelectItemRowObject {
+  constructor(rowNumber) {
+    if ($$('#createEntityItemName')[rowNumber - 1]) {
+      this.name = $$('#createEntityItemName')[rowNumber - 1];
+      try {
+        this.editBtn = $$('#entitySelectCreateSingleItemEdit')[rowNumber - 1];
+      } catch (e) {}
+      try {
+        this.deleteBtn = $$('#entitySelectCreateSingleItemDelete')[rowNumber - 1];
+      } catch (e) {}
+    }
+  }
   name;
   editBtn;
   deleteBtn;
