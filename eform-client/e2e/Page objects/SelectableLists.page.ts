@@ -40,6 +40,14 @@ export class SelectableListsPage extends PageWithNavbarPage {
     return browser.element('#createEntitySelectCancelBtn');
   }
 
+  public get entitySelectEditBtn() {
+    return browser.element('#entitySelectEditBtn');
+  }
+
+  public get entitySelectDeleteBtn() {
+    return browser.element('#entitySelectDeleteBtn');
+  }
+
   public get entitySelectEditName() {
     return browser.element('#editName');
   }
@@ -95,6 +103,18 @@ export class SelectableListsPage extends PageWithNavbarPage {
   public get entitySelectEditItemCancelBtn() {
     return browser.element('#entityItemCancelBtn');
   }
+
+  public get entityItemEditNameBox() {
+    return browser.element('#entityItemEditNameBox');
+  }
+
+  public get entityItemEditSaveBtn() {
+    return browser.element('#entityItemSaveBtn');
+  }
+
+  public get entityItemEditCancelBtn() {
+    return browser.element('#entityItemCancelBtn');
+  }
   getFirstRowObject(): SelectableListRowObject {
     return new SelectableListRowObject(1);
   }
@@ -110,6 +130,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
     this.entitySelectCreateName.addValue(name);
     browser.pause(4000);
     this.entitySelectCreateSaveBtn.click();
+    browser.pause(4000);
   }
   public createSelectableList_OneItem(name, itemName) {
     this.entitySelectCreateBtn.click();
@@ -124,6 +145,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
     this.entitySelectEditItemSaveBtn.click();
     browser.pause(4000);
     this.entitySelectCreateSaveBtn.click();
+    browser.pause(4000);
   }
   public createSelectableList_MultipleItems(name, itemNames) {
     this.entitySelectCreateBtn.click();
@@ -137,6 +159,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
     this.entitySelectImportSaveBtn.click();
     browser.pause(4000);
     this.entitySelectCreateSaveBtn.click();
+    browser.pause(4000);
   }
 
   public createSelectableList_NoItem_Cancels(name) {
@@ -145,6 +168,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
     this.entitySelectCreateName.addValue(name);
     browser.pause(4000);
     this.entitySelectCreateCancelBtn.click();
+    browser.pause(4000);
   }
   public createSelectableList_OneItem_Cancels(name, itemName) {
     this.entitySelectCreateBtn.click();
@@ -159,6 +183,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
     this.entitySelectEditItemSaveBtn.click();
     browser.pause(4000);
     this.entitySelectCreateSaveBtn.click();
+    browser.pause(4000);
   }
   public createSelectableList_MultipleItems_Cancels(name, itemNames) {
     this.entitySelectCreateBtn.click();
@@ -172,8 +197,84 @@ export class SelectableListsPage extends PageWithNavbarPage {
     this.entitySelectImportSaveBtn.click();
     browser.pause(4000);
     this.entitySelectCreateCancelBtn.click();
+    browser.pause(4000);
   }
-
+  public editSelectableListNameOnly(newName) {
+    this.entitySelectEditBtn.click();
+    browser.waitForVisible('#editName', 200000);
+    this.entitySelectEditName.clearElement();
+    this.entitySelectEditName.addValue(newName);
+    browser.pause(2000);
+    this.entitySelectEditSaveBtn.click();
+    browser.pause(4000);
+  }
+  public editSelectableListNameOnly_Cancels(newName) {
+    this.entitySelectEditBtn.click();
+    browser.waitForVisible('#editName', 200000);
+    this.entitySelectEditName.clearElement();
+    this.entitySelectEditName.addValue(newName);
+    browser.pause(2000);
+    this.entitySelectEditCancelBtn.click();
+    browser.pause(4000);
+  }
+  public editSelectableListNameAndItem(newName, newItemName) {
+    this.entitySelectEditBtn.click();
+    browser.waitForVisible('#editName', 200000);
+    this.entitySelectEditName.clearElement();
+    this.entitySelectEditName.addValue(newName);
+    browser.pause(2000);
+    this.editItemName(newItemName);
+    this.entitySelectEditSaveBtn.click();
+    browser.pause(4000);
+  }
+  public editSelectableListNameAndItem_Cancels(newName, newItemName) {
+    this.entitySelectEditBtn.click();
+    browser.waitForVisible('#editName', 200000);
+    this.entitySelectEditName.clearElement();
+    this.entitySelectEditName.addValue(newName);
+    browser.pause(2000);
+    this.editItemName(newItemName);
+    this.entitySelectEditCancelBtn.click();
+    browser.pause(4000);
+  }
+  public editSelectableListNameAndItem_CancelsBoth(newName, newItemName) {
+    this.entitySelectEditBtn.click();
+    browser.waitForVisible('#editName', 200000);
+    this.entitySelectEditName.clearElement();
+    this.entitySelectEditName.addValue(newName);
+    browser.pause(2000);
+    this.editItemName_Cancels(newItemName);
+    this.entitySelectEditCancelBtn.click();
+    browser.pause(4000);
+  }
+  public editSelectableListNameAndItem_CancelsItemName(newName, newItemName) {
+    this.entitySelectEditBtn.click();
+    browser.waitForVisible('#editName', 200000);
+    this.entitySelectEditName.clearElement();
+    this.entitySelectEditName.addValue(newName);
+    browser.pause(2000);
+    this.editItemName_Cancels(newItemName);
+    this.entitySelectEditSaveBtn.click();
+    browser.pause(4000);
+  }
+  public editItemName(newItemName) {
+    const firstItem = this.getFirstItemObject();
+    firstItem.editBtn.click();
+    browser.pause(2000);
+    this.entityItemEditNameBox.clearElement();
+    this.entityItemEditNameBox.addValue(newItemName);
+    this.entityItemEditSaveBtn.click();
+    browser.pause(2000);
+  }
+  public editItemName_Cancels(newItemName) {
+    const firstItem = this.getFirstItemObject();
+    firstItem.editBtn.click();
+    browser.pause(2000);
+    this.entityItemEditNameBox.clearElement();
+    this.entityItemEditNameBox.addValue(newItemName);
+    this.entityItemEditCancelBtn.click();
+    browser.pause(2000);
+  }
   public cleanup() {
     const deleteObject = this.getFirstRowObject();
     if (deleteObject != null) {
