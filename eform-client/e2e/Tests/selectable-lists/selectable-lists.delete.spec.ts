@@ -33,7 +33,7 @@ describe('Entity Select', function () {
     expect(selectableList.name).equal(name);
     selectableList.editBtn.click();
     browser.pause(4000);
-    expect(selectableLists.entityItemName.getText()).equal(itemName);
+    expect(selectableLists.firstEntityItemName.getText()).equal(itemName);
     selectableLists.entitySelectEditCancelBtn.click();
     browser.pause(8000);
   });

@@ -80,11 +80,15 @@ export class SelectableListsPage extends PageWithNavbarPage {
   public get entitySelectImportTextArea() {
     return browser.element('#entityImportTextArea');
   }
-
+  public get entitySelectImportTextAreaEdit() {
+    return browser.element(`//app-entity-select-edit//textarea`);
+  }
   public get entitySelectImportSaveBtn() {
     return browser.element('#entityImportSaveBtn');
   }
-
+  public get entitySelectImportEditSaveBtn() {
+    return browser.element(`//app-entity-select-edit//app-entity-select-import-list//button[1]`);
+  }
   public get  entitySelectImportCancelBtn() {
     return browser.element('#entityImportCancelBtn');
   }
@@ -109,14 +113,14 @@ export class SelectableListsPage extends PageWithNavbarPage {
     return browser.element('#entityItemCancelBtn');
   }
 
-  public get entityItemName() {
-    return browser.element('#entitySelectItemEditNameentityItemUId');
+  public get firstEntityItemName() {
+    return browser.element(`//app-entity-select-edit//ul//li[1]//div[2]`);
   }
   public get entityItemEditBtn() {
     return browser.element('#entitySelectEditItemEditBtn');
   }
   public get entityItemDeleteBtn() {
-    return browser.element('#entitySelectEditItemDeleteBtn');
+    return browser.element('//app-entity-select-edit//ul//li[1]//div[3]//a[2]');
   }
 
   public get entityItemEditNameBox() {
