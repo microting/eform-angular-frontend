@@ -4,7 +4,9 @@ export class SelectableListsPage extends PageWithNavbarPage {
   constructor() {
     super();
   }
-
+  public get rowNum(): number {
+    return $$('#tableBody > tr').length;
+  }
   public get entitySelectCreateBtn() {
     return browser.element('#entitySelectCreateBtn');
   }
@@ -104,16 +106,26 @@ export class SelectableListsPage extends PageWithNavbarPage {
     return browser.element('#entityItemCancelBtn');
   }
 
+  public get entityItemName() {
+    return browser.element('#entitySelectItemEditNameentityItemUId');
+  }
+  public get entityItemEditBtn() {
+    return browser.element('#entitySelectEditItemEditBtn');
+  }
+  public get entityItemDeleteBtn() {
+    return browser.element('#entitySelectEditItemDeleteBtn');
+  }
+
   public get entityItemEditNameBox() {
-    return browser.element('#entityItemEditNameBox');
+    return browser.element(`//app-entity-select-edit//input[@id= 'entityItemEditNameBox']`);
   }
 
   public get entityItemEditSaveBtn() {
-    return browser.element('#entityItemSaveBtn');
+    return browser.element(`//app-entity-select-edit//button[@id= 'entityItemSaveBtn']`);
   }
 
   public get entityItemEditCancelBtn() {
-    return browser.element('#entityItemCancelBtn');
+    return browser.element(`//app-entity-select-edit//button[@id= 'entityItemCancelBtn']`);
   }
   getFirstRowObject(): SelectableListRowObject {
     return new SelectableListRowObject(1);
@@ -182,7 +194,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
     this.entitySelectEditItemNameBox.addValue(itemName);
     this.entitySelectEditItemSaveBtn.click();
     browser.pause(4000);
-    this.entitySelectCreateSaveBtn.click();
+    this.entitySelectCreateCancelBtn.click();
     browser.pause(4000);
   }
   public createSelectableList_MultipleItems_Cancels(name, itemNames) {
@@ -227,6 +239,13 @@ export class SelectableListsPage extends PageWithNavbarPage {
     this.entitySelectEditSaveBtn.click();
     browser.pause(4000);
   }
+  public editSelectableListOnlyItem(newItemName) {
+    this.entitySelectEditBtn.click();
+    browser.waitForVisible('#editName', 200000);
+    this.editItemName(newItemName);
+    this.entitySelectEditSaveBtn.click();
+    browser.pause(4000);
+  }
   public editSelectableListNameAndItem_Cancels(newName, newItemName) {
     this.entitySelectEditBtn.click();
     browser.waitForVisible('#editName', 200000);
@@ -258,9 +277,8 @@ export class SelectableListsPage extends PageWithNavbarPage {
     browser.pause(4000);
   }
   public editItemName(newItemName) {
-    const firstItem = this.getFirstItemObject();
-    firstItem.editBtn.click();
-    browser.pause(2000);
+    this.entityItemEditBtn.click();
+    browser.pause(4000);
     this.entityItemEditNameBox.clearElement();
     this.entityItemEditNameBox.addValue(newItemName);
     this.entityItemEditSaveBtn.click();
@@ -269,10 +287,15 @@ export class SelectableListsPage extends PageWithNavbarPage {
   public editItemName_Cancels(newItemName) {
     const firstItem = this.getFirstItemObject();
     firstItem.editBtn.click();
-    browser.pause(2000);
+    browser.waitForVisible('#entityItemEditNameBox', 20000);
     this.entityItemEditNameBox.clearElement();
     this.entityItemEditNameBox.addValue(newItemName);
     this.entityItemEditCancelBtn.click();
+    browser.pause(2000);
+  }
+  public deleteItem() {
+    const firstItem = this.getFirstItemObject();
+    firstItem.deleteBtn.click();
     browser.pause(2000);
   }
   public cleanup() {
@@ -312,13 +335,13 @@ export class SelectableListRowObject {
 }
 export class EntitySelectItemRowObject {
   constructor(rowNumber) {
-    if ($$('#createEntityItemName')[rowNumber - 1]) {
-      this.name = $$('#createEntityItemName')[rowNumber - 1];
+    if ($$('#entitySelectItemEditNameentityItemUId')[rowNumber - 1]) {
+      this.name = $$('#entitySelectItemEditNameentityItemUId')[rowNumber - 1].getText();
       try {
-        this.editBtn = $$('#entitySelectCreateSingleItemEdit')[rowNumber - 1];
+        this.editBtn = $$('#entitySelectEditItemEditBtn')[rowNumber - 1];
       } catch (e) {}
       try {
-        this.deleteBtn = $$('#entitySelectCreateSingleItemDelete')[rowNumber - 1];
+        this.deleteBtn = $$('#entitySelectEditItemDeleteBtn')[rowNumber - 1];
       } catch (e) {}
     }
   }

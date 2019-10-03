@@ -17,6 +17,8 @@ exports.config = {
     // 'e2e\\Tests\\device-users\\device-users.delete.spec.ts',
     'e2e/Tests/main-page-eforms/my-eforms.sort-eform.spec.ts',
     'e2e/Tests/main-page-eforms/my-eforms.create-eform.spec.ts',
+    'e2e/Tests/selectable-lists/selectable-lists.add.spec.ts',
+    'e2e/Tests/selectable-lists/selectable-lists.edit.spec.ts',
     // 'e2e\\Tests\\main-page-eforms\\my-eforms.create-eform.spec.ts',
     // 'e2e\\Tests\\main-page-eforms\\my-eforms.sort-eform.spec.ts',
     // 'e2e/Tests/main-page-eforms/my-eforms.filter-eform.spec.ts',
