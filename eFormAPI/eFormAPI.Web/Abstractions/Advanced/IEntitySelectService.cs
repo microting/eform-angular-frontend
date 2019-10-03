@@ -22,16 +22,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using eFormAPI.Web.Infrastructure.Models;
 using eFormAPI.Web.Infrastructure.Models.SelectableList;
-using Microting.eForm.Infrastructure.Models;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+using EntityGroupList = eFormAPI.Web.Infrastructure.Models.EntityGroupList;
 
 namespace eFormAPI.Web.Abstractions.Advanced
 {
     public interface IEntitySelectService
     {
-        OperationDataResult<EntityGroupList> GetEntityGroupList(
+        Task<OperationDataResult<EntityGroupList>> GetEntityGroupList(
             AdvEntitySelectableGroupListRequestModel requestModel);
 
         OperationResult CreateEntityGroup(AdvEntitySelectableGroupEditModel editModel);

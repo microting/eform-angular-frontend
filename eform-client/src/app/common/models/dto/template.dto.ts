@@ -25,4 +25,7 @@ export class TemplateDto {
   field8: FieldDto;
   field9: FieldDto;
   field10: FieldDto;
+
+  jasperExportEnabled: boolean;
+  docxExportEnabled: boolean;
 }

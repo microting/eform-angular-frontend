@@ -8,4 +8,5 @@ export class AdvEntitySearchableGroupModel {
   createdAt: Date;
   updatedAt: Date;
   entityGroupItemLst: Array<AdvEntitySearchableItemModel> = [];
+  isLocked: boolean;
 }

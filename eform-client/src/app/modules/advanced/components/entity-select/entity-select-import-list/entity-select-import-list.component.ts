@@ -17,6 +17,7 @@ export class EntitySelectImportListComponent implements OnInit {
 
   show() {
     this.frame.show();
+    this.importString = '';
   }
 
   submitImport() {

@@ -32,6 +32,7 @@ using Microting.eForm.Infrastructure.Constants;
 using Microting.eForm.Infrastructure.Models;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.eFormApi.BasePn.Infrastructure.Delegates.CaseUpdate;
 
 namespace eFormAPI.Web.Services
 {
@@ -78,7 +79,7 @@ namespace eFormAPI.Web.Services
                 var caseDto = core.CaseReadByCaseId(id);
                 var microtingUId = caseDto.MicrotingUId;
                 var microtingCheckUId = caseDto.CheckUId;
-                var theCase = core.CaseRead(microtingUId, microtingCheckUId);
+                var theCase = core.CaseRead((int)microtingUId, (int)microtingCheckUId);
                 theCase.Id = id;
 
                 return !theCase.Equals(null)
@@ -129,6 +130,17 @@ namespace eFormAPI.Web.Services
             {
                 core.CaseUpdate(model.Id, fieldValueList, checkListValueList);
                 core.CaseUpdateFieldValues(model.Id);
+
+                if (CaseUpdateDelegates.CaseUpdateDelegate != null)
+                {
+                    var invocationList = CaseUpdateDelegates.CaseUpdateDelegate
+                        .GetInvocationList();
+                    foreach (var func in invocationList)
+                    {
+                        func.DynamicInvoke(model.Id);
+                    }
+                }
+
                 return new OperationResult(true, _localizationService.GetString("CaseHasBeenUpdated"));
             }
             catch (Exception)

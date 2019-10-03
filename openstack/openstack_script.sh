@@ -79,6 +79,14 @@ MYSQL_SCRIPT
 curl -sL https://deb.nodesource.com/setup_8.x | sudo bash -
 apt install -y nodejs
 
+rabbitmqctl add_user admin password 
+rabbitmqctl set_user_tags admin administrator
+rabbitmqctl set_permissions -p / admin ".*" ".*" ".*"
+wget http://localhost:15672/cli/rabbitmqadmin
+chmod +x rabbitmqadmin
+
+./rabbitmqadmin declare queue name=eformsdk-input durable=true
+
 #wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.asc.gpg
 #mv microsoft.asc.gpg /etc/apt/trusted.gpg.d/
 #wget -q https://packages.microsoft.com/config/ubuntu/18.04/prod.list

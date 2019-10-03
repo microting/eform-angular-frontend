@@ -24,8 +24,8 @@ SOFTWARE.
 
 using System;
 using System.IO;
-using System.Net.Mime;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Security;
 using eFormAPI.Web.Infrastructure;
@@ -35,12 +35,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microting.eForm.Dto;
+using Microting.eForm.Infrastructure.Models;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using OpenStack.NetCoreSwiftClient.Extensions;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
+using Settings = Microting.eForm.Dto.Settings;
 
 namespace eFormAPI.Web.Controllers.Eforms
 {
@@ -80,16 +82,33 @@ namespace eFormAPI.Web.Controllers.Eforms
             return File(fileStream, "application/octet-stream", fileName);
         }
 
-        [HttpGet]        
+        [HttpGet]
         [AllowAnonymous]
         [Route("api/template-files/get-image/{fileName}.{ext}")]
-//        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, 
-//            Policy = AuthConsts.EformPolicies.Cases.CasesRead)]
         public async Task<IActionResult> GetImage(string fileName, string ext, string noCache = "noCache")
         {
+            return await GetFile(fileName, ext,"image", noCache);
+        }
+        
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("api/template-files/get-pdf/{fileName}.{ext}")]
+        public async Task<IActionResult> GetPdf(string fileName, string ext, string noCache = "noCache")
+        {
+            return await GetFile(fileName, ext, "pdf", noCache);
+        }
+        
+        
+        private async Task<IActionResult> GetFile(string fileName, string ext, string fileType, string noCache = "noCache")
+        {
             var core = _coreHelper.GetCore();
-            var filePath = $"{core.GetSdkSetting(Settings.fileLocationPicture)}\\{fileName}.{ext}";
-            string fileType = "";
+            string fullFileName = $"{fileName}.{ext}";
+            var filePath = Path.Combine(core.GetSdkSetting(Settings.fileLocationPicture),fullFileName);   ;
+            if (fileType == "pdf")
+            {
+                filePath = Path.Combine(core.GetSdkSetting(Settings.fileLocationPdf),fullFileName);   
+            }
+            
             switch (ext)
             {
                 case "png":
@@ -215,9 +234,14 @@ namespace eFormAPI.Web.Controllers.Eforms
             try
             {
                 var core = _coreHelper.GetCore();
+                
+                // Fix for broken SDK not handling empty customXmlContent well
+                string customXmlContent = new XElement("FillerElement",
+                    new XElement("InnerElement", "SomeValue")).ToString();
+                
                 var filePath = core.CaseToPdf(caseId, templateId.ToString(),
                     DateTime.Now.ToString("yyyyMMddHHmmssffff"),
-                    $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", fileType, "");
+                    $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", fileType, customXmlContent);
                 //DateTime.Now.ToString("yyyyMMddHHmmssffff"), $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image?&filename=");
                 if (!System.IO.File.Exists(filePath))
                 {
@@ -249,15 +273,26 @@ namespace eFormAPI.Web.Controllers.Eforms
             {
                 var core = _coreHelper.GetCore();
                 var caseId = core.CaseReadFirstId(templateId, "not_revmoed");
-                var filePath = core.CaseToJasperXml((int) caseId, DateTime.Now.ToString("yyyyMMddHHmmssffff"),
-                    $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", "");
-                if (!System.IO.File.Exists(filePath))
+                Case_Dto caseDto = core.CaseLookupCaseId((int)caseId);
+                ReplyElement replyElement = core.CaseRead((int)caseDto.MicrotingUId, (int)caseDto.CheckUId);
+                if (caseId != null)
                 {
-                    return NotFound();
-                }
+                    var filePath = core.CaseToJasperXml(caseDto, replyElement, (int)caseId,
+                        DateTime.Now.ToString("yyyyMMddHHmmssffff"),
+                        $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", 
+                        "");
+                    if (!System.IO.File.Exists(filePath))
+                    {
+                        return NotFound();
+                    }
 
-                var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-                return File(fileStream, "application/xml", Path.GetFileName(filePath));
+                    var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+                    return File(fileStream, "application/xml", Path.GetFileName(filePath));
+                }
+                else
+                {
+                    return BadRequest();
+                }
             }
             catch (Exception)
             {
@@ -293,6 +328,9 @@ namespace eFormAPI.Web.Controllers.Eforms
                 var zipArchiveFolder =
                     Path.Combine(core.GetSdkSetting(Settings.fileLocationJasper),
                         Path.Combine("templates", Path.Combine("zip-archives", templateId.ToString())));
+                
+                var filePath = Path.Combine(zipArchiveFolder, Path.GetFileName(uploadModel.File.FileName));
+                System.IO.File.Delete(filePath);
 
                 if (string.IsNullOrEmpty(saveFolder))
                 {
@@ -303,13 +341,9 @@ namespace eFormAPI.Web.Controllers.Eforms
                 Directory.CreateDirectory(zipArchiveFolder);
                 if (uploadModel.File.Length > 0)
                 {
-                    var filePath = Path.Combine(zipArchiveFolder, Path.GetFileName(uploadModel.File.FileName));
-                    if (!System.IO.File.Exists(filePath))
+                    using (var stream = new FileStream(filePath, FileMode.Create))
                     {
-                        using (var stream = new FileStream(filePath, FileMode.Create))
-                        {
-                            await uploadModel.File.CopyToAsync(stream);
-                        }
+                        await uploadModel.File.CopyToAsync(stream);
                     }
 
                     var extractPath = Path.Combine(saveFolder);
@@ -332,9 +366,22 @@ namespace eFormAPI.Web.Controllers.Eforms
                         {
                             core.PutFileToStorageSystem(filePath, templateId.ToString() + "_" + uploadModel.File.FileName);
                         }
-                        //ZipFile.ExtractToDirectory(filePath, extractPath);
-                        System.IO.File.Delete(filePath);
-//                        await Startup.Bus.SendLocal(new GenerateJasperFiles(templateId)); // TODO disabled for now 3. dec. 2018
+
+                        if (Directory.GetFiles(Path.Combine(extractPath, "compact"), "*.docx").Length == 0)
+                        {
+                            core.SetJasperExportEnabled(templateId, true);
+                            core.SetDocxExportEnabled(templateId, false);
+//                            await Startup.Bus.SendLocal(new GenerateJasperFiles(templateId)); // TODO disabled for now 3. dec. 2018
+                            foreach (var file in Directory.GetFiles(extractPath, "*.jasper"))
+                            {
+                                System.IO.File.Delete(file);
+                            }
+                        }
+                        else
+                        {   core.SetJasperExportEnabled(templateId, false);
+                            core.SetDocxExportEnabled(templateId, true);
+                            
+                        }
                         return Ok();
                     }
                 }

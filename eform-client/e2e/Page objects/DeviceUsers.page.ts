@@ -1,4 +1,5 @@
 import {PageWithNavbarPage} from './PageWithNavbar.page';
+import {FractionsRowObject} from './trash-inspection/TrashInspection-Fraction.page';
 
 class DeviceUsersPage extends PageWithNavbarPage {
   constructor() {
@@ -15,6 +16,10 @@ class DeviceUsersPage extends PageWithNavbarPage {
 
   public get createLastNameInput() {
     return browser.element('#lastName');
+  }
+
+  getFirstRowObject(): DeviceUsersRowObject {
+    return new DeviceUsersRowObject(1);
   }
 
   public get saveCreateBtn() {
@@ -99,15 +104,21 @@ const deviceUsersPage = new DeviceUsersPage();
 export default deviceUsersPage;
 
 export class DeviceUsersRowObject {
-  constructor(rowNumber) {
-    this.siteId = +$$('#deviceUserId')[rowNumber - 1].getText();
-    this.firstName = $$('#deviceUserFirstName')[rowNumber - 1].getText();
-    this.lastName = $$('#deviceUserLastName')[rowNumber - 1].getText();
-    this.editBtn = $$('#editDeviceUserBtn')[rowNumber - 1];
-    this.deleteBtn = $$('#deleteDeviceUserBtn')[rowNumber - 1];
+  constructor(rowNum) {
+    if ($$('#deviceUserId')[rowNum - 1]) {
+      this.siteId = +$$('#deviceUserId')[rowNum - 1];
+      try {
+        this.firstName = $$('#deviceUserFirstName')[rowNum - 1].getText();
+      } catch (e) {}
+      try {
+        this.lastName = $$('#deviceUserLastName')[rowNum - 1].getText();
+      } catch (e) {}
+      this.editBtn = $$('#editDeviceUserBtn')[rowNum - 1];
+      this.deleteBtn = $$('#deleteDeviceUserBtn')[rowNum - 1];
+    }
   }
 
-  siteId: number;
+  siteId;
   firstName;
   lastName;
   editBtn;

@@ -259,7 +259,7 @@ namespace eFormAPI.Web.Migrations
                         new
                         {
                             Id = "LoginPageSettings:MainText",
-                            Value = "Microting eForm"
+                            Value = "eForm Backend"
                         },
                         new
                         {
@@ -289,7 +289,7 @@ namespace eFormAPI.Web.Migrations
                         new
                         {
                             Id = "HeaderSettings:MainText",
-                            Value = "Microting eForm"
+                            Value = "eForm Backend"
                         },
                         new
                         {

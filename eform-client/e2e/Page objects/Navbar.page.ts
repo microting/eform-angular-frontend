@@ -35,6 +35,9 @@ export class Navbar {
   public get deviceUsersBtn() {
     return this.clickOnHeaderMenuItem2(' Enhedsbrugere ');
   }
+  public get entitySelectBtn() {
+    return browser.element(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Valgbar Liste')]`);
+  }
 
   public clickOnHeaderMenuItem(headerMenuItem) {
     return browser.element(`//*[@id="header"]//*[text()="${headerMenuItem}"]`).element('..').element('..');
@@ -79,6 +82,11 @@ export class Navbar {
   }
   public goToDeviceUsersPage() {
     this.deviceUsersBtn.click();
+    browser.pause(20000);
+  }
+  public goToEntitySelect() {
+    this.advancedDropdown();
+    this.entitySelectBtn.click();
     browser.pause(20000);
   }
 }

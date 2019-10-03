@@ -6,6 +6,7 @@ export class DataItemDto {
   mandatory: Boolean;
   readOnly: Boolean;
   label: string;
+  description: Description;
   color: string;
   displayOrder: number;
   // Field
@@ -17,4 +18,8 @@ export class DataItemDto {
   // Picture
   multi: number;
   geolocationEnabled: number;
+}
+
+export class Description {
+  inderValue: string;
 }

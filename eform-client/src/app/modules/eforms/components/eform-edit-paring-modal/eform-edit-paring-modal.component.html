@@ -5,6 +5,20 @@
         <h3>{{'eForm Pairing'}}</h3>
       </div>
       <div class="modal-body table-responsive">
+        <div class="col-md-12 ng-select-wrapper" *ngIf="foldersDto.length > 0">
+          <ng-select
+            class="custom"
+            dropdownPosition="'bottom'"
+            [placeholder]="'Folders' | translate"
+            [items]="foldersDto"
+            [(ngModel)]="deployModel.folderId"
+            (ngModelChange)="updateSaveButtonDisabled($event)"
+            [clearable]="false"
+            [bindLabel]="'name'"
+            [bindValue]="'id'"
+            id="folderSelector"
+            [multiple]="false"></ng-select>
+        </div>
         <table class="table table-xs table-bordered text-center z-depth-1">
           <thead>
           <tr>
@@ -31,7 +45,7 @@
         </table>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-success" (click)="submitDeployment()">{{'Save'}}</button>
+        <button class="btn btn-success" (click)="submitDeployment()" [disabled]="saveButtonDisabled">{{'Save'}}</button>
         <button class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Cancel'}}</button>
       </div>
     </div>

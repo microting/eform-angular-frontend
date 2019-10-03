@@ -164,31 +164,31 @@
         </td>
         <td> {{caseModel.workerName}}</td>
         <td *ngIf="currentTemplate.field1" class="text-center">
-          {{caseModel.fieldValue1}}
+          <div class="max-lines" [innerHTML]="caseModel.fieldValue1"></div>
         </td>
         <td *ngIf="currentTemplate.field2" class="text-center">
-          {{caseModel.fieldValue2}}
+          <div class="max-lines" [innerHTML]="caseModel.fieldValue2"></div>
         </td>
         <td *ngIf="currentTemplate.field3" class="text-center">
-          {{caseModel.fieldValue3}}
+          <div class="max-lines" [innerHTML]="caseModel.fieldValue3"></div>
         </td>
         <td *ngIf="currentTemplate.field4" class="text-center">
-          {{caseModel.fieldValue4}}
+          <div class="max-lines" [innerHTML]="caseModel.fieldValue4"></div>
         </td>
         <td *ngIf="currentTemplate.field5" class="text-center">
-          {{caseModel.fieldValue5}}
+          <div class="max-lines" [innerHTML]="caseModel.fieldValue5"></div>
         </td>
         <td *ngIf="currentTemplate.field6" class="text-center">
-          {{caseModel.fieldValue6}}
+          <div class="max-lines" [innerHTML]="caseModel.fieldValue6"></div>
         </td>
         <td *ngIf="currentTemplate.field7" class="text-center">
-          {{caseModel.fieldValue7}}
+          <div class="max-lines" [innerHTML]="caseModel.fieldValue7"></div>
         </td>
         <td *ngIf="currentTemplate.field8" class="text-center">
-          {{caseModel.fieldValue8}}
+          <div class="max-lines" [innerHTML]="caseModel.fieldValue8"></div>
         </td>
         <td *ngIf="currentTemplate.field9" class="text-center">
-          {{caseModel.fieldValue9}}
+          <div class="max-lines" [innerHTML]="caseModel.fieldValue9"></div>
         </td>
         <td>
           <div class="d-flex flex-row justify-content-center">
@@ -198,22 +198,16 @@
               <fa-icon icon="pen" size="lg" [fixedWidth]="true"></fa-icon>
 
             </button>
-            <button class="btn btn-success btn-icon mb-2" *ngIf="checkEformPermissions(userClaimsEnum.caseGetPdf)"
-                    (click)="downloadPDF(caseModel.id)"
+            <button class="btn btn-success btn-icon mb-2" *ngIf="checkEformPermissions(userClaimsEnum.caseGetPdf) && (currentTemplate.jasperExportEnabled || currentTemplate.docxExportEnabled)"
+                    (click)="downloadFile(caseModel.id, 'pdf')"
                     mdbTooltip="{{ 'Download PDF' | translate }}">
               <fa-icon icon="file-pdf" size="lg" [fixedWidth]="true"></fa-icon>
 
             </button>
-            <button class="btn btn-success btn-icon mb-2" *ngIf="checkEformPermissions(userClaimsEnum.caseGetPdf)"
-                    (click)="downloadDocx(caseModel.id)"
+            <button class="btn btn-success btn-icon mb-2" *ngIf="checkEformPermissions(userClaimsEnum.caseGetPdf) && currentTemplate.docxExportEnabled"
+                    (click)="downloadFile(caseModel.id, 'docx')"
                     mdbTooltip="{{ 'Download Docx' | translate }}">
               <fa-icon icon="file-word" size="lg" [fixedWidth]="true"></fa-icon>
-
-            </button>
-            <button class="btn btn-success btn-icon mb-2" *ngIf="checkEformPermissions(userClaimsEnum.caseGetPdf)"
-                    (click)="downloadPPTX(caseModel.id)"
-                    mdbTooltip="{{ 'Download PPTX' | translate }}">
-              <fa-icon icon="file-powerpoint" size="lg" [fixedWidth]="true"></fa-icon>
 
             </button>
             <button class="btn btn-danger btn-icon mb-2 " *ngIf="checkEformPermissions(userClaimsEnum.caseDelete)"

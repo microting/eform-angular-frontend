@@ -83,7 +83,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
             new EformConfigurationValue()
             {
                 Id = "LoginPageSettings:MainText",
-                Value = "Microting eForm"
+                Value = "eForm Backend"
             },
             new EformConfigurationValue()
             {
@@ -113,7 +113,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
             new EformConfigurationValue()
             {
                 Id = "HeaderSettings:MainText",
-                Value = "Microting eForm"
+                Value = "eForm Backend"
             },
             new EformConfigurationValue()
             {

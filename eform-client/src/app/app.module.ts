@@ -30,8 +30,8 @@ import {
 } from './components';
 import {assertLessThan} from '@angular/core/src/render3/assert';
 // import {importedIcons} from 'src/app/common/const';
-
-
+import {GoogleChartsModule} from 'angular-google-charts';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
 @NgModule({
   declarations: [
     // Layouts
@@ -59,6 +59,8 @@ import {assertLessThan} from '@angular/core/src/render3/assert';
     LightboxModule,
     GallerizeModule,
     FontAwesomeModule,
+    GoogleChartsModule,
+    NgxChartsModule,
     // Modules
     PluginsModule
   ],
