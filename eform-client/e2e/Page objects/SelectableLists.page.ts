@@ -7,6 +7,9 @@ export class SelectableListsPage extends PageWithNavbarPage {
   public get rowNum(): number {
     return $$('#tableBody > tr').length;
   }
+  public get items(): number {
+    return $$('//app-entity-select-edit//ul//li').length;
+  }
   public get entitySelectCreateBtn() {
     return browser.element('#entitySelectCreateBtn');
   }
@@ -120,10 +123,12 @@ export class SelectableListsPage extends PageWithNavbarPage {
     return browser.element(`//app-entity-select-edit//input[@id= 'entityItemEditNameBox']`);
   }
 
+  public get entityItemList() {
+    return browser.element(`//app-entity-select-edit//ul`);
+  }
   public get entityItemEditSaveBtn() {
     return browser.element(`//app-entity-select-edit//button[@id= 'entityItemSaveBtn']`);
   }
-
   public get entityItemEditCancelBtn() {
     return browser.element(`//app-entity-select-edit//button[@id= 'entityItemCancelBtn']`);
   }
@@ -276,6 +281,25 @@ export class SelectableListsPage extends PageWithNavbarPage {
     this.entitySelectEditSaveBtn.click();
     browser.pause(4000);
   }
+  public deleteItemFromList() {
+    this.entitySelectEditBtn.click();
+    browser.waitForVisible('#editName', 200000);
+    this.deleteItem();
+    browser.pause(1000);
+    this.entitySelectEditSaveBtn.click();
+    browser.pause(4000);
+  }
+  public deleteList() {
+    const deleteList = this.getFirstRowObject();
+    if (deleteList != null) {
+      browser.pause(8000);
+      deleteList.deleteBtn.click();
+      browser.pause(4000);
+      this.entitySelectDeleteDeleteBtn.click();
+      browser.pause(1000);
+      browser.refresh();
+    }
+  }
   public editItemName(newItemName) {
     this.entityItemEditBtn.click();
     browser.pause(4000);
@@ -294,8 +318,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
     browser.pause(2000);
   }
   public deleteItem() {
-    const firstItem = this.getFirstItemObject();
-    firstItem.deleteBtn.click();
+    this.entityItemDeleteBtn.click();
     browser.pause(2000);
   }
   public cleanup() {
