@@ -102,15 +102,15 @@ export class SelectableListsPage extends PageWithNavbarPage {
   }
 
   public get entitySelectEditItemNameBox() {
-    return browser.element('#entityItemEditNameBox');
+    return browser.element('#entitySelectItemEditNameBox');
   }
 
   public get entitySelectEditItemSaveBtn() {
-    return browser.element('#entityItemSaveBtn');
+    return browser.element('#entitySelectItemSaveBtn');
   }
 
   public get entitySelectEditItemCancelBtn() {
-    return browser.element('#entityItemCancelBtn');
+    return browser.element('#entitySelectItemCancelBtn');
   }
 
   public get firstEntityItemName() {
@@ -124,17 +124,17 @@ export class SelectableListsPage extends PageWithNavbarPage {
   }
 
   public get entityItemEditNameBox() {
-    return browser.element(`//app-entity-select-edit//input[@id= 'entityItemEditNameBox']`);
+    return browser.element(`//app-entity-select-edit//input[@id= 'entitySelectItemEditNameBox']`);
   }
 
   public get entityItemList() {
     return browser.element(`//app-entity-select-edit//ul`);
   }
   public get entityItemEditSaveBtn() {
-    return browser.element(`//app-entity-select-edit//button[@id= 'entityItemSaveBtn']`);
+    return browser.element(`//app-entity-select-edit//button[@id= 'entitySelectItemSaveBtn']`);
   }
   public get entityItemEditCancelBtn() {
-    return browser.element(`//app-entity-select-edit//button[@id= 'entityItemCancelBtn']`);
+    return browser.element(`//app-entity-select-edit//button[@id= 'entitySelectItemCancelBtn']`);
   }
   getFirstRowObject(): SelectableListRowObject {
     return new SelectableListRowObject(1);

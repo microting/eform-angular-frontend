@@ -38,6 +38,9 @@ export class Navbar {
   public get entitySelectBtn() {
     return browser.element(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Valgbar Liste')]`);
   }
+  public get entitySearchBtn() {
+    return browser.element(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Søgbar Liste')]`);
+  }
 
   public clickOnHeaderMenuItem(headerMenuItem) {
     return browser.element(`//*[@id="header"]//*[text()="${headerMenuItem}"]`).element('..').element('..');
@@ -87,6 +90,11 @@ export class Navbar {
   public goToEntitySelect() {
     this.advancedDropdown();
     this.entitySelectBtn.click();
+    browser.pause(20000);
+  }
+  public goToEntitySearch() {
+    this.advancedDropdown();
+    this.entitySearchBtn.click();
     browser.pause(20000);
   }
 }

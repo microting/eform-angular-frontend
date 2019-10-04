@@ -10,14 +10,15 @@
             <input mdbInputDirective
                    [mdbValidate]="false"
                    [(ngModel)]="name"
-                   type="text" class="form-control">
+                   type="text" class="form-control"
+                   id="entitySearchItemEditNameBox">
             <label>{{'Name' | translate}}</label>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-success" (click)="updateItem()">{{'Save' | translate}}</button>
-        <button class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Close' | translate}}</button>
+        <button id="entitySearchItemSaveBtn" class="btn btn-success" (click)="updateItem()">{{'Save' | translate}}</button>
+        <button id="entitySearchItemCancelBtn" class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Close' | translate}}</button>
       </div>
     </div>
   </div>

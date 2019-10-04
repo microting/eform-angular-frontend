@@ -10,14 +10,14 @@
             <div class="form-group col-xs-12 col-md-12">
               <textarea
                 [(ngModel)]="importString"
-                class="form-control" id="eFormXml" name="eFormXML" rows="20"></textarea>
+                class="form-control" id="entitySearchImportTextArea" name="eFormXML" rows="20"></textarea>
             </div>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-success" (click)="submitImport()">{{'Save' | translate}}</button>
-        <button class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Close' | translate}}</button>
+        <button id="entitySearchImportSaveBtn" class="btn btn-success" (click)="submitImport()">{{'Save' | translate}}</button>
+        <button id="entitySearchImportCancelBtn" class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Close' | translate}}</button>
       </div>
     </div>
   </div>
