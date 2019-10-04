@@ -26,7 +26,7 @@ describe('Entity Search', function () {
     searchableLists.createSearchableList_NoItem_Cancels(name);
     expect(searchableLists.rowNum).equal(0);
   });
-  it('should create a new searchable lsit with one item', function () {
+  it('should create a new searchable list with one item', function () {
     const name = Guid.create().toString();
     const itemName = Guid.create().toString();
     searchableLists.createSearchableList_OneItem(name, itemName);

@@ -278,8 +278,8 @@ export class SearchableListsPage extends PageWithNavbarPage {
   public editItemName(newItemName) {
     this.entitySearchItemEditBtn.click();
     browser.pause(4000);
-    this.entitySearchEditNameBox.clearElement();
-    this.entitySearchEditNameBox.addValue(newItemName);
+    this.entitySearchEditItemNameBox.clearElement();
+    this.entitySearchEditItemNameBox.addValue(newItemName);
     this.entitySearchEditItemSaveBtn.click();
     browser.pause(2000);
   }
@@ -287,8 +287,8 @@ export class SearchableListsPage extends PageWithNavbarPage {
     const firstItem = this.getFirstItemObject();
     firstItem.editBtn.click();
     browser.waitForVisible('#entityItemEditNameBox', 20000);
-    this.entitySearchEditNameBox.clearElement();
-    this.entitySearchEditNameBox.addValue(newItemName);
+    this.entitySearchEditItemNameBox.clearElement();
+    this.entitySearchEditItemNameBox.addValue(newItemName);
     this.entitySearchEditItemSaveBtn.click();
     browser.pause(2000);
   }
