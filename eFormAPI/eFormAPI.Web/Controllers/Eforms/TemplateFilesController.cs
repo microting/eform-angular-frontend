@@ -205,10 +205,28 @@ namespace eFormAPI.Web.Controllers.Eforms
         
         [HttpGet]
         [Route("api/template-files/get-pdf-file")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseGetPdf)]
-        public IActionResult GetPdfFile(string fileName)
+        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme,
+            Policy = AuthConsts.EformPolicies.Cases.CaseGetPdf)]
+        public async Task<IActionResult> GetPdfFile(string fileName)
         {
             var core = _coreHelper.GetCore();
+            if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
+            {
+                try
+                {
+                    var ss = await core.GetFileFromSwiftStorage($"{fileName}.pdf");
+
+                    Response.ContentType = ss.ContentType;
+                    Response.ContentLength = ss.ContentLength;
+
+                    return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty($"pdf"));
+                }
+                catch (Exception)
+                {
+                    return NotFound();
+                }
+                
+            }
             var filePath = Path.Combine(core.GetSdkSetting(Settings.fileLocationPdf), fileName + ".pdf");
             if (!System.IO.File.Exists(filePath))
             {
