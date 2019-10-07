@@ -1,8 +1,6 @@
 ---
-description: >-
-  A simple guide to install a test environment for your Angular Frontend
-  development.
+description: A simple guide to install a test environment for eForm Backend development.
 ---
 
-# Install Angular Fronted
+# Install eForm Backend
 

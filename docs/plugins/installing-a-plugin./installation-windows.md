@@ -106,5 +106,5 @@ Refresh page.
 
 Enjoy!
 
-{% page-ref page="installing-a-plugin..md" %}
+{% page-ref page="./" %}
 
