@@ -181,6 +181,11 @@ namespace eFormAPI.Web
                     In = "header",
                     Type = "apiKey"
                 });
+                
+                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>()
+                {
+                    { "Bearer", new string[] {}}
+                });
             });
             // plugins
             services.AddEFormPlugins(Program.Plugins);
