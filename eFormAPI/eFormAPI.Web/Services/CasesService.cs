@@ -79,7 +79,7 @@ namespace eFormAPI.Web.Services
                 var caseDto = core.CaseReadByCaseId(id);
                 var microtingUId = caseDto.MicrotingUId;
                 var microtingCheckUId = caseDto.CheckUId;
-                var theCase = core.CaseRead(microtingUId, microtingCheckUId);
+                var theCase = core.CaseRead((int)microtingUId, (int)microtingCheckUId);
                 theCase.Id = id;
 
                 return !theCase.Equals(null)
@@ -137,7 +137,7 @@ namespace eFormAPI.Web.Services
                         .GetInvocationList();
                     foreach (var func in invocationList)
                     {
-                        func.DynamicInvoke();
+                        func.DynamicInvoke(model.Id);
                     }
                 }
 

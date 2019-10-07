@@ -4,6 +4,8 @@ import {DeployCheckbox, DeployModel} from 'src/app/common/models/eforms';
 import {SitesService} from 'src/app/common/services/advanced';
 import {AuthService} from 'src/app/common/services/auth';
 import {EFormService} from 'src/app/common/services/eform';
+import {FolderDto} from '../../../../common/models/dto/folder.dto';
+import {FoldersService} from '../../../../common/services/advanced/folders.service';
 
 @Component({
   selector: 'app-eform-edit-paring-modal',
@@ -20,12 +22,17 @@ export class EformEditParingModalComponent implements OnInit {
   sitesDto: Array<SiteNameDto> = [];
   spinnerStatus = false;
   matchFound = false;
+  foldersDto: Array<FolderDto> = [];
+  saveButtonDisabled = true;
 
   get userClaims() {
     return this.authService.userClaims;
   }
 
-  constructor(private eFormService: EFormService, private sitesService: SitesService, private authService: AuthService) {
+  constructor(private foldersService: FoldersService,
+              private eFormService: EFormService,
+              private sitesService: SitesService,
+              private authService: AuthService) {
   }
 
   ngOnInit() {
@@ -44,11 +51,18 @@ export class EformEditParingModalComponent implements OnInit {
     }
   }
 
+  updateSaveButtonDisabled(event) {
+    if (this.deployModel.folderId != null) {
+      this.saveButtonDisabled = false;
+    }
+  }
+
   show(templateDto: TemplateDto) {
     this.selectedTemplateDto = templateDto;
     this.deployModel = new DeployModel();
     this.deployViewModel = new DeployModel();
     this.fillCheckboxes();
+    this.loadAllFolders();
     this.frame.show();
   }
 
@@ -59,7 +73,7 @@ export class EformEditParingModalComponent implements OnInit {
       deployObject.isChecked = true;
       this.deployModel.deployCheckboxes.push(deployObject);
     } else {
-      this.deployModel.deployCheckboxes = this.deployModel.deployCheckboxes.filter(x => x.id != deployId);
+      this.deployModel.deployCheckboxes = this.deployModel.deployCheckboxes.filter(x => x.id !== deployId);
     }
   }
 
@@ -76,7 +90,7 @@ export class EformEditParingModalComponent implements OnInit {
       }
       this.deployViewModel.id = this.selectedTemplateDto.id;
       deployObject.id = siteDto.siteUId;
-      deployObject.isChecked = this.matchFound == true;
+      deployObject.isChecked = this.matchFound === true;
       this.matchFound = false;
       this.deployViewModel.deployCheckboxes.push(deployObject);
     }
@@ -89,6 +103,19 @@ export class EformEditParingModalComponent implements OnInit {
       if (operation && operation.success) {
         this.frame.hide();
         this.onDeploymentFinished.emit();
+      }
+      this.spinnerStatus = false;
+    });
+  }
+
+  loadAllFolders() {
+    this.spinnerStatus = true;
+    this.foldersService.getAllFolders().subscribe((operation) => {
+      if (operation && operation.success) {
+        this.foldersDto = operation.model;
+        if (this.foldersDto.length === 0) {
+          this.saveButtonDisabled = false;
+        }
       }
       this.spinnerStatus = false;
     });

@@ -191,8 +191,7 @@ namespace eFormAPI.Web.Services
                     _localizationService.GetString("CheckSettingsBeforeProceed"));
             }
         }
-
-
+        
         public OperationResult Create(EFormXmlModel eFormXmlModel)
         {
             try
@@ -333,8 +332,13 @@ namespace eFormAPI.Web.Services
             if (sitesToBeDeployedTo.Any())
             {
                 var mainElement = core.TemplateRead(deployModel.Id);
-                mainElement.Repeated =
-                    0; // We set this right now hardcoded, this will let the eForm be deployed until end date or we actively retract it.
+                mainElement.Repeated = 0; 
+                // We set this right now hardcoded,
+                // this will let the eForm be deployed until end date or we actively retract it.
+                if (deployModel.FolderId != null)
+                {
+                    mainElement.CheckListFolderName = deployModel.FolderId.ToString();
+                }
                 mainElement.EndDate = DateTime.Now.AddYears(10).ToUniversalTime();
                 mainElement.StartDate = DateTime.Now.ToUniversalTime();
                 core.CaseCreate(mainElement, "", sitesToBeDeployedTo, "");

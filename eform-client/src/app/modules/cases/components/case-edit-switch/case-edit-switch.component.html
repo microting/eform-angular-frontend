@@ -6,6 +6,8 @@
            [ngStyle]="{'background-color': dataItem.fieldValues.length > 0 ? (dataItem.fieldValues[0].color ? '#' + dataItem.fieldValues[0].color : '') : ''}"
            *ngIf="dataItem.fieldType != 'FieldContainer' && dataItem.fieldType != 'SaveButton'">
         {{dataItem.label}}
+        <br>
+        <i><div [innerHtml]="dataItem.description.inderValue"></div></i>
       </div>
       <div class="card-body">
         <ng-container [ngSwitch]="dataItem.fieldType">

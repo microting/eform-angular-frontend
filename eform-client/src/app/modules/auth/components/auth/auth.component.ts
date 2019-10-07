@@ -48,7 +48,9 @@ export class AuthComponent implements OnInit {
         this.getTwoFactorInfo();
       } this.spinnerStatus = false;
       return true;
-    }, error => false);
+    },
+        error => false);
+    return false;
   }
 
   getSettings() {

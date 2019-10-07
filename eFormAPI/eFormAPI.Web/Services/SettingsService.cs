@@ -554,7 +554,7 @@ namespace eFormAPI.Web.Services
                 {
                     option.ImageLink = "";
                     option.ImageLinkVisible = true;
-                    option.MainText = "Microting eForm";
+                    option.MainText = "eForm Backend";
                     option.MainTextVisible = true;
                     option.SecondaryText = "No more paper-forms and back-office data entry";
                     option.SecondaryTextVisible = true;
@@ -576,7 +576,7 @@ namespace eFormAPI.Web.Services
                 {
                     option.ImageLink = "";
                     option.ImageLinkVisible = true;
-                    option.MainText = "Microting eForm";
+                    option.MainText = "eForm Backend";
                     option.MainTextVisible = true;
                     option.SecondaryText = "No more paper-forms and back-office data entry";
                     option.SecondaryTextVisible = true;

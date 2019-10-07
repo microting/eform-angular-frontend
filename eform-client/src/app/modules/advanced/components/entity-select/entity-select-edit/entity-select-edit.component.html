@@ -13,8 +13,8 @@
                 <input mdbInputDirective
                        [mdbValidate]="false" required
                        [(ngModel)]="advEntitySelectableGroupEditModel.name"
-                       id="createName" type="text" class="form-control">
-                <label for="createName">{{'Name' | translate}}</label>
+                       id="editName" type="text" class="form-control">
+                <label for="editName">{{'Name' | translate}}</label>
               </div>
             </div>
           </div>
@@ -23,10 +23,10 @@
             <div class="mr-auto">
             </div>
             <div class="d-inline-flex">
-              <button class="btn btn-success btn-icon" (click)="modalSelectImportList.show()">
+              <button class="btn btn-success btn-icon" (click)="modalSelectImportList.show()" id="editEntitySelectImportBtn">
                 <i class="material-icons">format_list_bulleted</i>
               </button>
-              <button class="btn btn-success btn-icon" (click)="addNewAdvEntitySelectableItem()">
+              <button class="btn btn-success btn-icon" (click)="addNewAdvEntitySelectableItem()" id="editEntitySelectCreateItem">
                 <i class="material-icons">add</i>
               </button>
             </div>
@@ -47,7 +47,7 @@
                           <fa-icon icon="grip-lines" size="lg" [fixedWidth]="true"></fa-icon>
                         </a>
                       </div>
-                      <div class="col-md-9">{{entityItem.name}}</div>
+                      <div id="entitySelectItemEditName{{entityItem.entityItemUId}}" class="col-md-9">{{entityItem.name}}</div>
                       <div class="col-md-2">
                         <fa-icon icon="exclamation-triangle" size="lg" [fixedWidth]="true" *ngIf="!entityItem.name"
                                  mdbTooltip="{{'Name is required' | translate}}!"></fa-icon>
@@ -70,8 +70,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-success" (click)="updateEntitySelectableGroup()">{{'Save' | translate}}</button>
-        <button class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Close' | translate}}</button>
+        <button id="editEntitySelectSaveBtn" class="btn btn-success" (click)="updateEntitySelectableGroup()">{{'Save' | translate}}</button>
+        <button id="editEntitySelectCancelBtn" class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Close' | translate}}</button>
       </div>
     </div>
   </div>

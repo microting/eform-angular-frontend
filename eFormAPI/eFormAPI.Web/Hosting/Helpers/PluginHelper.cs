@@ -84,6 +84,14 @@ namespace eFormAPI.Web.Hosting.Helpers
                         var eformPlugin = eformPlugins.FirstOrDefault(x => x.PluginId == plugin.PluginId);
                         if (eformPlugin != null)
                         {
+                            if (!eformPlugin.ConnectionString.Contains("PersistSecurityInfo=true;"))
+                            {
+                                var aPlugin =
+                                    dbContext.EformPlugins.SingleOrDefault(x => x.PluginId == plugin.PluginId);
+                                if (aPlugin != null) aPlugin.ConnectionString += "PersistSecurityInfo=true;";
+                                dbContext.SaveChanges();
+                            }
+                            
                             if (eformPlugin.Status == (int) PluginStatus.Enabled)
                             {
                                 plugins.Add(plugin);
@@ -92,7 +100,9 @@ namespace eFormAPI.Web.Hosting.Helpers
                         else
                         {
                             var pluginDbName = $"Database={dbPrefix}_{plugin.PluginId};";
-                            var pluginConnectionString = connectionString.Replace(dbNameSection, pluginDbName);
+                            var pluginConnectionString =
+                                connectionString.Replace(dbNameSection, pluginDbName) + 
+                                "PersistSecurityInfo=true;";
                             var newPlugin = new EformPlugin
                             {
                                 PluginId = plugin.PluginId,

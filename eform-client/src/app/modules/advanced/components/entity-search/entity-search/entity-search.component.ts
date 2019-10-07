@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {ApplicationPages} from 'src/app/common/const';
 import {
   AdvEntitySearchableGroupListModel,
-  AdvEntitySearchableGroupListRequestModel,
+  AdvEntitySearchableGroupListRequestModel, AdvEntitySearchableGroupModel,
   AdvEntitySelectableGroupModel,
   PageSettingsModel
 } from 'src/app/common/models';
@@ -19,7 +19,7 @@ export class EntitySearchComponent implements OnInit {
   @ViewChild('modalSearchCreate') modalSearchCreate;
   @ViewChild('modalSearchEdit') modalSearchEdit;
   spinnerStatus: boolean;
-  selectedAdvGroup: AdvEntitySelectableGroupModel = new AdvEntitySelectableGroupModel();
+  selectedAdvGroup: AdvEntitySearchableGroupModel = new AdvEntitySearchableGroupModel();
   advEntitySearchableGroupListModel: AdvEntitySearchableGroupListModel = new AdvEntitySearchableGroupListModel();
   advEntitySearchableGroupListRequestModel: AdvEntitySearchableGroupListRequestModel
     = new AdvEntitySearchableGroupListRequestModel();
@@ -72,7 +72,7 @@ export class EntitySearchComponent implements OnInit {
     }
   }
 
-  openModalSearchRemove(selectedSearchModel: AdvEntitySelectableGroupModel) {
+  openModalSearchRemove(selectedSearchModel: AdvEntitySearchableGroupModel) {
     this.selectedAdvGroup = selectedSearchModel;
     this.modalSearchRemove.show(this.selectedAdvGroup);
   }
@@ -81,7 +81,7 @@ export class EntitySearchComponent implements OnInit {
     this.modalSearchCreate.show();
   }
 
-  openModalSearchEdit(selectedSearchModel: AdvEntitySelectableGroupModel) {
+  openModalSearchEdit(selectedSearchModel: AdvEntitySearchableGroupModel) {
     this.selectedAdvGroup = selectedSearchModel;
     this.modalSearchEdit.show(this.selectedAdvGroup.microtingUUID);
   }

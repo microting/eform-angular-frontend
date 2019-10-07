@@ -31,7 +31,7 @@ import {
 import {assertLessThan} from '@angular/core/src/render3/assert';
 // import {importedIcons} from 'src/app/common/const';
 import {GoogleChartsModule} from 'angular-google-charts';
-
+import {NgxChartsModule} from '@swimlane/ngx-charts';
 @NgModule({
   declarations: [
     // Layouts
@@ -55,11 +55,12 @@ import {GoogleChartsModule} from 'angular-google-charts';
       {preventDuplicates: true}
     ),
     DragulaModule.forRoot(),
-    GalleryModule.forRoot(),
-    LightboxModule.forRoot(),
+    GalleryModule,
+    LightboxModule,
     GallerizeModule,
     FontAwesomeModule,
     GoogleChartsModule,
+    NgxChartsModule,
     // Modules
     PluginsModule
   ],

@@ -45,7 +45,7 @@ export class HeaderComponent implements OnInit {
         this.headerSettingsModel.imageLinkVisible = true;
         this.headerSettingsModel.mainTextVisible = true;
         this.headerSettingsModel.secondaryTextVisible = true;
-        this.headerSettingsModel.mainText = 'Microting eForm';
+        this.headerSettingsModel.mainText = 'eForm Backend';
         this.headerSettingsModel.secondaryText = 'No more paper-forms and back-office data entry';
         this.router.navigate(['/application-settings/connection-string']).then();
       }

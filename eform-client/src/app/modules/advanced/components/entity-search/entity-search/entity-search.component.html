@@ -53,7 +53,7 @@
         <td scope="row">{{advEntitySearchableGroup.microtingUUID}}</td>
         <td> {{advEntitySearchableGroup.name}}</td>
         <td *ngIf="userClaims.entitySearchDelete || userClaims.entitySearchUpdate">
-          <div class="d-flex flex-row justify-content-center">
+          <div class="d-flex flex-row justify-content-center" *ngIf="!advEntitySearchableGroup.isLocked">
             <button id="entitySearchUpdateBtn" class="btn btn-accent btn-icon text-black-50 mb-2 " *ngIf="userClaims.entitySearchUpdate"
                     mdbTooltip="{{'Edit' | translate}}"
                     (click)="openModalSearchEdit(advEntitySearchableGroup)">
