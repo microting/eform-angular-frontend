@@ -1,4 +1,4 @@
-# Adding a menu point
+# Adding a menu item
 
 ### Step 1
 
