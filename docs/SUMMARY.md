@@ -18,6 +18,6 @@
   * [Editing a plugin - Windows](plugins/editing-a-plugin-windows.md)
   * [Editing a plugin - OSX](plugins/editing-a-plugin-osx.md)
   * [Adding a menu item](plugins/adding-a-menu-point.md)
-  * [Microting plugins](plugins/microting-plugins.md)
+* [Microting plugins](microting-plugins.md)
 * [Integration with Microting Backend](integration-with-microting-backend.md)
 
