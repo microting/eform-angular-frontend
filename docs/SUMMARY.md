@@ -18,6 +18,7 @@
   * [Editing a plugin - Windows](plugins/editing-a-plugin-windows.md)
   * [Editing a plugin - OSX](plugins/editing-a-plugin-osx.md)
   * [Adding a menu item](plugins/adding-a-menu-point.md)
-* [Microting plugins](microting-plugins.md)
+* [Microting plugins](microting-plugins/README.md)
+  * [Outer + Inner resource time registration](microting-plugins/outer-+-inner-resource-time-registration.md)
 * [Integration with Microting Backend](integration-with-microting-backend.md)
 
