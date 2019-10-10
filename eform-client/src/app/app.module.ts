@@ -55,8 +55,8 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
       {preventDuplicates: true}
     ),
     DragulaModule.forRoot(),
-    GalleryModule.forRoot(),
-    LightboxModule.forRoot(),
+    GalleryModule,
+    LightboxModule,
     GallerizeModule,
     FontAwesomeModule,
     GoogleChartsModule,

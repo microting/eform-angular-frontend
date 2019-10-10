@@ -12,6 +12,7 @@ describe('Application settings page - site header section', function () {
   });
   it('should change main text', function () {
     myEformsPage.Navbar.goToApplicationSettings();
+    browser.waitForVisible('#mainTextLoginPage', 120000);
     browser.pause(40000);
     applicationSettingsPage.SiteHeader.mainTextInput.setValue(ApplicationSettingsConstants.SiteHeader.customMainText);
     applicationSettingsPage.save();

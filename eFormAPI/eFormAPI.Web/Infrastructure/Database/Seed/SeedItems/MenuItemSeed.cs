@@ -47,7 +47,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                     Name = "Device Users",
                     LocaleName = "DeviceUsers",
                     E2EId = "device-users",
-                    Link = "/simplesites",
+                    Link = "/device-users",
                     Position = 1,
                     MenuPosition = 1,
                 },

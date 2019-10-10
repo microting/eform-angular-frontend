@@ -181,6 +181,11 @@ namespace eFormAPI.Web
                     In = "header",
                     Type = "apiKey"
                 });
+                
+                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>()
+                {
+                    { "Bearer", new string[] {}}
+                });
             });
             // plugins
             services.AddEFormPlugins(Program.Plugins);
@@ -256,7 +261,7 @@ namespace eFormAPI.Web
             services.AddScoped<IWorkersService, WorkersService>();
             services.AddScoped<ISitesService, SitesService>();
             services.AddScoped<IFoldersService, FoldersService>();
-            services.AddScoped<ISimpleSitesService, SimpleSitesService>();
+            services.AddScoped<IDeviceUsersService, DeviceUsersService>();
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<IEntitySearchService, EntitySearchService>();
             services.AddScoped<IEntitySelectService, EntitySelectService>();

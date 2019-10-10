@@ -3,16 +3,16 @@ import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {OperationDataResult, OperationResult, SimpleSiteModel} from 'src/app/common/models';
+import {OperationDataResult, OperationResult, DeviceUserModel} from 'src/app/common/models';
 import {SiteDto} from 'src/app/common/models/dto';
 import {BaseService} from '../base.service';
 
-const SimpleSitesMethods = {
-  GetAll: '/api/simplesites/index',
-  GetSingle: '/api/simplesites/edit',
-  UpdateSingle: '/api/simplesites/update',
-  DeleteSingle: '/api/simplesites/delete',
-  CreateSingle: '/api/simplesites/create'
+const DeviceUsersMethods = {
+  GetAll: '/api/device-users/index',
+  GetSingle: '/api/device-users/edit',
+  UpdateSingle: '/api/device-users/update',
+  DeleteSingle: '/api/device-users/delete',
+  CreateSingle: '/api/device-users/create'
 };
 
 @Injectable()
@@ -21,24 +21,24 @@ export class DeviceUserService extends BaseService {
     super(_http, router, toastrService);
   }
 
-  getAllSimpleSites(): Observable<OperationDataResult<Array<SiteDto>>> {
-    return this.get<Array<SiteDto>>(SimpleSitesMethods.GetAll);
+  getAllDeviceUsers(): Observable<OperationDataResult<Array<SiteDto>>> {
+    return this.get<Array<SiteDto>>(DeviceUsersMethods.GetAll);
   }
 
   getSingleSimpleSite(id: number): Observable<OperationDataResult<SiteDto>> {
-    return this.get<SiteDto>(SimpleSitesMethods.GetSingle + '/' + id);
+    return this.get<SiteDto>(DeviceUsersMethods.GetSingle + '/' + id);
   }
 
-  updateSingleSimpleSite(model: SimpleSiteModel): Observable<OperationResult> {
-    return this.post<SimpleSiteModel>(SimpleSitesMethods.UpdateSingle, model);
+  updateSingleDeviceUser(model: DeviceUserModel): Observable<OperationResult> {
+    return this.post<DeviceUserModel>(DeviceUsersMethods.UpdateSingle, model);
   }
 
-  deleteSingleSimpleSite(id: number): Observable<OperationResult> {
-    return this.get(SimpleSitesMethods.DeleteSingle + '/' + id);
+  deleteSingleDeviceUser(id: number): Observable<OperationResult> {
+    return this.delete(DeviceUsersMethods.DeleteSingle + '/' + id);
   }
 
-  createSingleSimpleSite(model: SimpleSiteModel): Observable<OperationResult> {
-    return this.post<SimpleSiteModel>(SimpleSitesMethods.CreateSingle, model);
+  createSingleDeviceUser(model: DeviceUserModel): Observable<OperationResult> {
+    return this.put<DeviceUserModel>(DeviceUsersMethods.CreateSingle, model);
   }
 }
 

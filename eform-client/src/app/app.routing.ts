@@ -27,7 +27,7 @@ export const routes: Routes = [
         loadChildren: './modules/advanced/advanced.module#AdvancedModule'
       },
       {
-        path: 'simplesites',
+        path: 'device-users',
         canActivate: [AuthGuard],
         loadChildren: './modules/device-users/device-users.module#DeviceUsersModule'
       },
