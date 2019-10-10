@@ -34,55 +34,60 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 namespace eFormAPI.Web.Controllers
 {
     [Authorize]
-    public class SimpleSitesController : Controller
+    public class DeviceUsersController : Controller
     {
-        private readonly ISimpleSitesService _simpleSitesService;
+        private readonly IDeviceUsersService _deviceUsersService;
         private readonly ILocalizationService _localizationService;
 
-        public SimpleSitesController(ISimpleSitesService simpleSitesService, 
+        public DeviceUsersController(IDeviceUsersService deviceUsersService, 
             ILocalizationService localizationService)
         {
-            _simpleSitesService = simpleSitesService;
+            _deviceUsersService = deviceUsersService;
             _localizationService = localizationService;
         }
 
         [HttpGet]
+        [Route("api/device-users/index")]
         [Authorize(Policy = AuthConsts.EformPolicies.DeviceUsers.Read)]
         public OperationDataResult<List<Site_Dto>> Index()
         {
-            return _simpleSitesService.Index();
+            return _deviceUsersService.Index();
         }
 
-        [HttpPost]
+        [HttpPut]
+        [Route("api/device-users/create")]
         [Authorize(Policy = AuthConsts.EformPolicies.DeviceUsers.Create)]
-        public OperationResult Create([FromBody] SimpleSiteModel simpleSiteModel)
+        public OperationResult Create([FromBody] DeviceUserModel deviceUserModel)
         {
             if (!ModelState.IsValid)
                 return new OperationResult(false,
                     _localizationService.GetString("DeviceUserCouldNotBeCreated"));
 
-            return _simpleSitesService.Create(simpleSiteModel);
+            return _deviceUsersService.Create(deviceUserModel);
         }
 
         [HttpGet]
+        [Route("api/device-users/{id}")]
         [Authorize(Policy = AuthConsts.EformPolicies.DeviceUsers.Update)]
         public OperationDataResult<Site_Dto> Edit(int id)
         {
-            return _simpleSitesService.Edit(id);
+            return _deviceUsersService.Edit(id);
         }
 
         [HttpPost]
+        [Route("api/device-users/update")]
         [Authorize(Policy = AuthConsts.EformPolicies.DeviceUsers.Update)]
-        public OperationResult Update([FromBody] SimpleSiteModel simpleSiteModel)
+        public OperationResult Update([FromBody] DeviceUserModel deviceUserModel)
         {
-            return _simpleSitesService.Update(simpleSiteModel);
+            return _deviceUsersService.Update(deviceUserModel);
         }
 
-        [HttpGet]
+        [HttpDelete]
+        [Route("api/device-users/delete/{id}")]
         [Authorize(Policy = AuthConsts.EformPolicies.DeviceUsers.Delete)]
         public OperationResult Delete(int id)
         {
-            return _simpleSitesService.Delete(id);
+            return _deviceUsersService.Delete(id);
         }
     }
 }

@@ -33,12 +33,12 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Services
 {
-    public class SimpleSitesService : ISimpleSitesService
+    public class DeviceUsersService : IDeviceUsersService
     {
         private readonly IEFormCoreService _coreHelper;
         private readonly ILocalizationService _localizationService;
 
-        public SimpleSitesService(ILocalizationService localizationService, 
+        public DeviceUsersService(ILocalizationService localizationService, 
             IEFormCoreService coreHelper)
         {
             _localizationService = localizationService;
@@ -52,14 +52,14 @@ namespace eFormAPI.Web.Services
             return new OperationDataResult<List<Site_Dto>>(true, siteDto);
         }
 
-        public OperationResult Create(SimpleSiteModel simpleSiteModel)
+        public OperationResult Create(DeviceUserModel deviceUserModel)
         {
             var core = _coreHelper.GetCore();
-            var siteName = simpleSiteModel.UserFirstName + " " + simpleSiteModel.UserLastName;
+            var siteName = deviceUserModel.UserFirstName + " " + deviceUserModel.UserLastName;
 
             try
             {
-                var siteDto = core.SiteCreate(siteName, simpleSiteModel.UserFirstName, simpleSiteModel.UserLastName,
+                var siteDto = core.SiteCreate(siteName, deviceUserModel.UserFirstName, deviceUserModel.UserLastName,
                     null);
 
                 return siteDto != null
@@ -98,25 +98,25 @@ namespace eFormAPI.Web.Services
                     _localizationService.GetStringWithFormat("DeviceUserParamCouldNotBeEdited", id));
         }
 
-        public OperationResult Update(SimpleSiteModel simpleSiteModel)
+        public OperationResult Update(DeviceUserModel deviceUserModel)
         {
             try
             {
                 var core = _coreHelper.GetCore();
-                var siteDto = core.SiteRead(simpleSiteModel.Id);
+                var siteDto = core.SiteRead(deviceUserModel.Id);
                 if (siteDto.WorkerUid != null)
                 {
                     var workerDto = core.Advanced_WorkerRead((int) siteDto.WorkerUid);
                     if (workerDto != null)
                     {
-                        var fullName = simpleSiteModel.UserFirstName + " " + simpleSiteModel.UserLastName;
-                        var isUpdated = core.SiteUpdate(simpleSiteModel.Id, fullName, simpleSiteModel.UserFirstName,
-                            simpleSiteModel.UserLastName, workerDto.Email);
+                        var fullName = deviceUserModel.UserFirstName + " " + deviceUserModel.UserLastName;
+                        var isUpdated = core.SiteUpdate(deviceUserModel.Id, fullName, deviceUserModel.UserFirstName,
+                            deviceUserModel.UserLastName, workerDto.Email);
 
                         return isUpdated
                             ? new OperationResult(true, _localizationService.GetString("DeviceUserUpdatedSuccessfully"))
                             : new OperationResult(false,
-                                _localizationService.GetStringWithFormat("DeviceUserParamCouldNotBeUpdated", simpleSiteModel.Id));
+                                _localizationService.GetStringWithFormat("DeviceUserParamCouldNotBeUpdated", deviceUserModel.Id));
                     }
 
                     return new OperationResult(false, _localizationService.GetString("DeviceUserCouldNotBeObtained"));

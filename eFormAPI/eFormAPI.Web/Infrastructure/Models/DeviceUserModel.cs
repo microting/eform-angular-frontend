@@ -21,20 +21,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System.Collections.Generic;
-using eFormAPI.Web.Infrastructure.Models;
-using Microting.eForm.Dto;
-using Microting.eFormApi.BasePn.Infrastructure.Models;
-using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-
-namespace eFormAPI.Web.Abstractions.Advanced
+namespace eFormAPI.Web.Infrastructure.Models
 {
-    public interface ISimpleSitesService
+    public class DeviceUserModel
     {
-        OperationDataResult<List<Site_Dto>> Index();
-        OperationResult Create(SimpleSiteModel simpleSiteModel);
-        OperationDataResult<Site_Dto> Edit(int id);
-        OperationResult Update(SimpleSiteModel simpleSiteModel);
-        OperationResult Delete(int id);
+        public int Id { get; set; }
+        public string UserFirstName { get; set; }
+        public string UserLastName { get; set; }
     }
 }
