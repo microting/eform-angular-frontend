@@ -47,15 +47,15 @@
                           <fa-icon icon="grip-lines" size="lg" [fixedWidth]="true"></fa-icon>
                         </a>
                       </div>
-                      <div id="entitySelectItemEditName{{entityItem.entityItemUId}}" class="col-md-9">{{entityItem.name}}</div>
+                      <div id="entitySelectItemEditNameentityItemUId" class="col-md-9">{{entityItem.name}}</div>
                       <div class="col-md-2">
                         <fa-icon icon="exclamation-triangle" size="lg" [fixedWidth]="true" *ngIf="!entityItem.name"
                                  mdbTooltip="{{'Name is required' | translate}}!"></fa-icon>
                         <a class="pull-right">
-                          <fa-icon icon="pen" size="lg" [fixedWidth]="true"
+                          <fa-icon icon="pen" size="lg" [fixedWidth]="true" id="entitySelectEditItemEditBtn"
                                    (click)="openModalSelectEditName(entityItem)"></fa-icon> </a>
                         <a class="pull-right">
-                          <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true"
+                          <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true" id="entitySelectEditItemDeleteBtn"
                                    (click)="deleteAdvEntitySelectableItem(entityItem.entityItemUId)"></fa-icon>
                         </a>
                       </div>

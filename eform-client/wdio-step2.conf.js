@@ -12,7 +12,7 @@ exports.config = {
   specs: [
     // 'e2e/Tests/application-settings/application-settings.login-page.spec.ts',
     // 'e2e/Tests/application-settings/application-settings.site-header.spec.ts',
-     'e2e/Tests/device-users/device-users.add.spec.ts',
+    //  'e2e/Tests/device-users/device-users.add.spec.ts',
     // 'e2e/Tests/device-users/device-users.edit.spec.ts',
     // 'e2e/Tests//device-users/device-users.delete.spec.ts',
     // 'e2e\\Tests\\main-page-eforms\\my-eforms.create-eform.spec.ts',
@@ -22,6 +22,12 @@ exports.config = {
     //'e2e/Tests/trash-inspection-general/fractions/trash-inspection-fraction.edit.spec.ts',
     // 'e2e/Tests/workers/workers.add.spec.ts',
     // 'e2e/Tests/workers/workers.edit.spec.ts',
+    // 'e2e/Tests/selectable-lists/selectable-lists.add.spec.ts',
+    // 'e2e/Tests/selectable-lists/selectable-lists.edit.spec.ts',
+    // 'e2e/Tests/selectable-lists/selectable-lists.delete.spec.ts',
+    // 'e2e/Tests/searchable-lists/searchable-lists.add.spec.ts',
+    // 'e2e/Tests/searchable-lists/searchable-lists.edit.spec.ts',
+    'e2e/Tests/searchable-lists/searchable-lists.delete.spec.ts',
     // 'e2e/Tests/main-page-eforms/my-eforms.sort-eform.spec.ts',
     // 'e2e/Tests/main-page-eforms/my-eforms.create-eform.spec.ts',
     // 'e2e\\Tests\\main-page-eforms\\my-eforms.sort-eform.spec.ts',
@@ -29,6 +35,9 @@ exports.config = {
     // 'e2e\\Tests\\main-page-eforms\\my-eforms.tags-eform.spec.ts',
     // 'e2e\\Tests\\main-page-eforms\\my-eforms.pairing-eform.spec.ts',
     // 'e2e\\Tests\\main-page-eforms\\my-eforms.delete-eform.spec.ts',
+    // 'e2e/Tests/trash-inspections-settings/application-settings.plugins-page.spec.ts',
+    // 'e2e/Tests/customer-settings/application-settings.plugins-page.spec.ts',
+    // 'e2e/Tests/trash-inspection-general/installations/trash-inspection-installation.add.spec.ts'
   ],
   suites: {
     settings: [
