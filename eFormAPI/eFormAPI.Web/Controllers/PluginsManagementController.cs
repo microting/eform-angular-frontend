@@ -1,49 +1,42 @@
 ﻿using System.Threading.Tasks;
-using eFormAPI.Web.Abstractions;
-using eFormAPI.Web.Infrastructure.Models.Plugins;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using eFormAPI.Web.Services;
+
 
 namespace eFormAPI.Web.Controllers
 {
+    using System.Collections.Generic;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
+
     [Authorize(Roles = EformRole.Admin)]
-    public class PluginsManagementController : Controller
+    public class PluginsPermissionsController : Controller
     {
-        private readonly IPluginsManagementService _pluginsManagementService;
+        private readonly IPluginPermissionsService _pluginPermissionsService;
 
-        public PluginsManagementController(IPluginsManagementService pluginsManagementService)
+        public PluginsPermissionsController(IPluginPermissionsService pluginPermissionsService)
         {
-            _pluginsManagementService = pluginsManagementService;
+            _pluginPermissionsService = pluginPermissionsService;
         }
 
-        [HttpGet]
-        [Route("api/plugins-management/installed")]
-        public async Task<OperationDataResult<InstalledPluginsModel>> GetInstalledPlugins(InstalledPluginsRequestModel model)
+        [HttpGet("api/plugins-permissions/{id}")]
+        public async Task<OperationDataResult<ICollection<PluginPermissionModel>>> GetInstalledPlugins(int id)
         {
-            return await _pluginsManagementService.GetInstalledPlugins(model);
+            return await _pluginPermissionsService.GetPluginPermissions(id);
         }
 
-        [HttpPut]
-        [Route("api/plugins-management/installed")]
-        public async Task<OperationResult> UpdateInstalledPlugin([FromBody] InstalledPluginUpdateModel model)
+        [HttpGet("api/plugins-permissions/{id}/group-permissions")]
+        public async Task<OperationDataResult<ICollection<PluginGroupPermissionModel>>> GetMarketplacePlugins(int id)
         {
-            return await _pluginsManagementService.UpdateInstalledPlugins(model);
+            return await _pluginPermissionsService.GetPluginGroupPermissions(id);
         }
 
-        [HttpGet]
-        [Route("api/plugins-management/marketplace")]
-        public async Task<OperationDataResult<PluginsStoreModel>> GetMarketplacePlugins(MarketplacePluginsRequestModel model)
+        [HttpPut("api/plugins-permissions/{id}/group-permissions")]
+        public async Task<OperationResult> SetPluginGroupPermissions(int id, [FromBody]ICollection<PluginGroupPermissionModel> permissions)
         {
-            return await _pluginsManagementService.GetMarketplacePlugins(model);
-        }
-
-        [HttpPut]
-        [Route("api/plugins-management/marketplace")]
-        public async Task<OperationResult> InstallMarketplacePlugin([FromBody]string pluginId)
-        {
-            return await _pluginsManagementService.InstallMarketplacePlugin(pluginId);
+            return await _pluginPermissionsService.SetPluginGroupPermissions(id, permissions);
         }
     }
 }

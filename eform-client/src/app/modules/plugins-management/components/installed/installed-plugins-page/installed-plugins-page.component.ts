@@ -15,6 +15,7 @@ import {PluginsManagementService} from '../../../../../common/services/plugins-m
 })
 export class InstalledPluginsPageComponent implements OnInit {
   @ViewChild('editInstalledPluginModal') editInstalledPluginModal;
+  @ViewChild('editInstalledPluginModal') editPluginPermissionsModal;
   installedPluginsRequestModel: InstalledPluginsRequestModel = new InstalledPluginsRequestModel();
   installedPluginsModel: InstalledPluginsModel = new InstalledPluginsModel();
   spinnerStatus = false;
@@ -41,6 +42,10 @@ export class InstalledPluginsPageComponent implements OnInit {
   }
 
   showEditModal(installedPlugin: InstalledPluginModel) {
+    this.editInstalledPluginModal.show(installedPlugin);
+  }
+
+  showPermissionsModal(installedPlugin: InstalledPluginModel) {
     this.editInstalledPluginModal.show(installedPlugin);
   }
 
