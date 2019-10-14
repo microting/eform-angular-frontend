@@ -30,8 +30,8 @@ namespace eFormAPI.Web.Services
 {
     public interface IPluginPermissionsService
     {
-        Task<OperationDataResult<ICollection<PluginGroupPermissionModel>>> GetPluginGroupPermissions(int id);
         Task<OperationDataResult<ICollection<PluginPermissionModel>>> GetPluginPermissions(int id);
-        Task<OperationResult> SetPluginGroupPermissions(int id, ICollection<PluginGroupPermissionModel> permissions);
+        Task<OperationDataResult<ICollection<PluginGroupPermissionsListModel>>> GetPluginGroupPermissions(int id);
+        Task<OperationResult> SetPluginGroupPermissions(int id, ICollection<PluginGroupPermissionsListModel> permissions);
     }
 }

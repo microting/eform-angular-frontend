@@ -36,13 +36,11 @@ namespace eFormAPI.Web.Services
     public class PluginPermissionsService : IPluginPermissionsService
     {
         private readonly BaseDbContext _dbContext;
-
         private readonly List<IEformPlugin> _loadedPlugins;
 
         public PluginPermissionsService(BaseDbContext dbContext)
         {
             _dbContext = dbContext;
-
             _loadedPlugins = PluginHelper.GetAllPlugins();
         }
 
@@ -50,26 +48,28 @@ namespace eFormAPI.Web.Services
         {
             var eformPlugin = await _dbContext.EformPlugins.FirstOrDefaultAsync(p => p.Id == id);
             var loadedPlugin = _loadedPlugins.First(x => x.PluginId == eformPlugin.PluginId);
-            var result = await loadedPlugin.GetPluginPermissions();
+            var helper = loadedPlugin.GetPermissionsHelper(eformPlugin.ConnectionString);
+            var result = await helper.GetPluginPermissions();
 
             return new OperationDataResult<ICollection<PluginPermissionModel>>(true, result);
         }
 
-        public async Task<OperationDataResult<ICollection<PluginGroupPermissionModel>>> GetPluginGroupPermissions(int id)
+        public async Task<OperationDataResult<ICollection<PluginGroupPermissionsListModel>>> GetPluginGroupPermissions(int id)
         {
             var eformPlugin = await _dbContext.EformPlugins.FirstOrDefaultAsync(p => p.Id == id);
             var loadedPlugin = _loadedPlugins.First(x => x.PluginId == eformPlugin.PluginId);
-            var result = await loadedPlugin.GetPluginGroupPermissions();
+            var helper = loadedPlugin.GetPermissionsHelper(eformPlugin.ConnectionString);
+            var result = await helper.GetPluginGroupPermissions();
 
-            return new OperationDataResult<ICollection<PluginGroupPermissionModel>>(true, result);
+            return new OperationDataResult<ICollection<PluginGroupPermissionsListModel>>(true, result);
         }
 
-        public async Task<OperationResult> SetPluginGroupPermissions(int id, ICollection<PluginGroupPermissionModel> permissions)
+        public async Task<OperationResult> SetPluginGroupPermissions(int id, ICollection<PluginGroupPermissionsListModel> permissions)
         {
             var eformPlugin = await _dbContext.EformPlugins.FirstOrDefaultAsync(p => p.Id == id);
             var loadedPlugin = _loadedPlugins.First(x => x.PluginId == eformPlugin.PluginId);
-
-            loadedPlugin.SetPluginGroupPermissions(permissions);
+            var helper = loadedPlugin.GetPermissionsHelper(eformPlugin.ConnectionString);
+            await helper.SetPluginGroupPermissions(permissions);
 
             return new OperationResult(true);
         }

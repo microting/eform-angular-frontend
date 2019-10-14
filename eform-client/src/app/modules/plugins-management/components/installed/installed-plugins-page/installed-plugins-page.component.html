@@ -58,4 +58,10 @@
   </div>
 </div>
 
-<app-installed-plugin-edit #editInstalledPluginModal (onInstalledPluginUpdate)="updateInstalledPlugin($event)"></app-installed-plugin-edit>
+<app-installed-plugin-edit #editInstalledPluginModal (onInstalledPluginUpdate)="updateInstalledPlugin($event)">
+</app-installed-plugin-edit>
+
+<app-installed-plugin-permissions #editPluginPermissionsModal
+  [securityGroups]="securityGroups"
+  (pluginPermissionsUpdate)="updatePluginPermissions($event)">
+</app-installed-plugin-permissions>
