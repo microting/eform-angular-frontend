@@ -25,13 +25,15 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 
-namespace eFormAPI.Web.Services
+namespace eFormAPI.Web.Abstractions
 {
     public interface IPluginPermissionsService
     {
         Task<OperationDataResult<ICollection<PluginPermissionModel>>> GetPluginPermissions(int id);
         Task<OperationDataResult<ICollection<PluginGroupPermissionsListModel>>> GetPluginGroupPermissions(int id);
         Task<OperationResult> SetPluginGroupPermissions(int id, ICollection<PluginGroupPermissionsListModel> permissions);
+        Task<PluginPermissionsManager> GetPermissionsManager(int pluginId);
     }
 }

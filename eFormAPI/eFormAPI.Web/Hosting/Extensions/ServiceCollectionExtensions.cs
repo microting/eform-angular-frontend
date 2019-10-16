@@ -42,6 +42,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microting.eFormApi.BasePn;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers.WritableOptions;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Newtonsoft.Json.Serialization;
 
 namespace eFormAPI.Web.Hosting.Extensions
@@ -83,7 +84,7 @@ namespace eFormAPI.Web.Hosting.Extensions
             }
         }
 
-        public static void AddEFormAuth(this IServiceCollection services, IConfiguration configuration)
+        public static void AddEFormAuth(this IServiceCollection services, IConfiguration configuration, ICollection<PluginPermissionModel> pluginPermissions)
         {
             var tokenValidationParameters = new TokenValidationParameters()
             {
@@ -275,6 +276,14 @@ namespace eFormAPI.Web.Hosting.Extensions
                 options.AddPolicy(AuthConsts.EformPolicies.Eforms.UpdateJasperReport,
                     policy => policy.RequireClaim(AuthConsts.EformClaims.EformsClaims.UpdateJasperReport,
                         AuthConsts.ClaimDefaultValue));
+
+                foreach (var permission in pluginPermissions)
+                {
+                    options.AddPolicy(
+                        permission.ClaimName, 
+                        policy => policy.RequireClaim(permission.ClaimName, AuthConsts.ClaimDefaultValue)
+                    );
+                }
             });
         }
 

@@ -1,7 +1,7 @@
 import {DatePipe, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import {CookieService} from 'ngx-cookie-service';
 import {ToastrService} from 'ngx-toastr';
-import {AdminGuard, AuthGuard, CanDeactivateGuard} from 'src/app/common/guards';
+import {AdminGuard, AuthGuard, CanDeactivateGuard, PermissionGuard} from 'src/app/common/guards';
 import {ClaimsGuard} from 'src/app/common/guards/claims.guard';
 import {EventBrokerService} from 'src/app/common/helpers';
 import {
@@ -19,7 +19,7 @@ import {EformReportService, EFormService, EformTagService} from 'src/app/common/
 import {SecurityGroupEformsPermissionsService, SecurityGroupsService} from 'src/app/common/services/security';
 import {AdminService} from 'src/app/common/services/users';
 import {FoldersService} from './common/services/advanced/folders.service';
-import {PluginsManagementService} from './common/services/plugins-management';
+import {PluginPermissionsService, PluginsManagementService} from './common/services/plugins-management';
 // Guards
 
 export let providers = [
@@ -28,6 +28,7 @@ export let providers = [
   AdminGuard,
   CanDeactivateGuard,
   ClaimsGuard,
+  PermissionGuard,
   // Libs services
   ToastrService,
   CookieService,
@@ -53,6 +54,7 @@ export let providers = [
   ImageService,
   SecurityGroupsService,
   SecurityGroupEformsPermissionsService,
+  PluginPermissionsService,
   // Helpers
   EventBrokerService,
   DatePipe,

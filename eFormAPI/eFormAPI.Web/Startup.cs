@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System;
+using System.Linq;
 using System.Collections.Generic;
-using System.IO;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Advanced;
 using eFormAPI.Web.Abstractions.Eforms;
@@ -52,6 +52,8 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Localization;
 using Microting.eFormApi.BasePn.Localization.Abstractions;
 using Microting.eFormApi.BasePn.Services;
+using System.Threading.Tasks;
+using eFormAPI.Web.Infrastructure.Database.Factories;
 
 namespace eFormAPI.Web
 {
@@ -65,7 +67,7 @@ namespace eFormAPI.Web
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public async void ConfigureServices(IServiceCollection services)
         {
             // Configuration
             //services.AddSingleton(Configuration);
@@ -124,7 +126,7 @@ namespace eFormAPI.Web
             });
 
             // Authentication
-            services.AddEFormAuth(Configuration);
+            services.AddEFormAuth(Configuration, await GetPluginsPermissions());
             // Localiation
             services.AddTransient<IEformLocalizerFactory, JsonStringLocalizerFactory>();
             services.AddTransient<IStringLocalizerFactory, ResourceManagerStringLocalizerFactory>();
@@ -281,6 +283,30 @@ namespace eFormAPI.Web
             services.AddScoped<IEformReportsService, EformReportsService>();
             services.AddScoped<IPluginsManagementService, PluginsManagementService>();
             services.AddScoped<IPluginPermissionsService, PluginPermissionsService>();
+        }
+
+        private async Task<ICollection<PluginPermissionModel>> GetPluginsPermissions()
+        {
+            var permissions = new List<PluginPermissionModel>();
+            var contextFactory = new BaseDbContextFactory();
+            using (var dbContext = contextFactory.CreateDbContext(new[] {Configuration.MyConnectionString()}))
+            {
+                foreach (var eformPlugin in dbContext.EformPlugins
+                    .AsNoTracking()
+                    .Where(x => x.ConnectionString != "..."))
+                {
+                    var plugin = Program.Plugins.FirstOrDefault(p => p.PluginId == eformPlugin.PluginId);
+
+                    if (plugin != null)
+                    {
+                        var permissionsManager = plugin.GetPermissionsManager(eformPlugin.ConnectionString);
+                        permissions.AddRange(await permissionsManager.GetPluginPermissions());
+                    }
+
+                }
+            }
+
+            return permissions;
         }
     }
 }

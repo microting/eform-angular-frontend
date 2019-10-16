@@ -3,7 +3,7 @@ import {
   InstalledPluginModel,
   InstalledPluginsModel,
   InstalledPluginsRequestModel,
-  InstalledPluginUpdateModel, PluginGroupPermissionsListModel
+  InstalledPluginUpdateModel, PluginGroupPermissionsListModel, PluginGroupPermissionsUpdateModel
 } from '../../../../../common/models/plugins-management';
 import {InstalledPluginStatusEnum} from '../../../../../common/const';
 import {PluginPermissionsService, PluginsManagementService} from '../../../../../common/services/plugins-management';
@@ -67,14 +67,14 @@ export class InstalledPluginsPageComponent implements OnInit {
               if (!groupData.model.some(p => p.groupId === securityGroup.id)) {
                 groupData.model.push(
                   new PluginGroupPermissionsListModel(
-                    {groupId: securityGroup.id, permissions: data.model}
+                    {groupId: securityGroup.id, permissions: data.model.map(p => ({...p}))}
                   )
                 );
               }
             }
           }
 
-          this.editPluginPermissionsModal.show(groupData.model);
+          this.editPluginPermissionsModal.show({pluginId: installedPlugin.id, groupPermissions: groupData.model});
           this.spinnerStatus = false;
         });
       }
@@ -92,7 +92,7 @@ export class InstalledPluginsPageComponent implements OnInit {
     });
   }
 
-  updatePluginPermissions(model: PluginGroupPermissionsListModel[]) {
+  updatePluginPermissions(model: PluginGroupPermissionsUpdateModel) {
     this.spinnerStatus = true;
     this.pluginPermissionsService.updatePluginGroupPermissions(model).subscribe((data) => {
       if (data && data.success) {

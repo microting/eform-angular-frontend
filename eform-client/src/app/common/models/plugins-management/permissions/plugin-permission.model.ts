@@ -1,11 +1,11 @@
 export class PluginPermissionModel {
   permissionId: number;
-  name: string;
+  permissionName: string;
 
   constructor(data?: any) {
     if (data) {
       this.permissionId = data.permissionId;
-      this.name = data.name;
+      this.permissionName = data.permissionName;
     }
   }
 }

@@ -5,7 +5,7 @@ import {ToastrService} from 'ngx-toastr';
 import {Observable} from 'rxjs';
 import {OperationDataResult, OperationResult} from 'src/app/common/models';
 import {
-  PluginGroupPermissionsListModel,
+  PluginGroupPermissionsListModel, PluginGroupPermissionsUpdateModel,
   PluginPermissionModel
 } from 'src/app/common/models/plugins-management';
 import {BaseService} from 'src/app/common/services/base.service';
@@ -29,7 +29,7 @@ export class PluginPermissionsService extends BaseService {
     return this.get(PluginPermissionsMethods.PluginGroupPermissions + '/' + pluginId);
   }
 
-  updatePluginGroupPermissions(permissions: PluginGroupPermissionsListModel[]): Observable<OperationResult> {
-    return this.put(PluginPermissionsMethods.PluginGroupPermissions, permissions);
+  updatePluginGroupPermissions(model: PluginGroupPermissionsUpdateModel): Observable<OperationResult> {
+    return this.put(PluginPermissionsMethods.PluginGroupPermissions + '/' + model.pluginId, model.groupPermissions);
   }
 }

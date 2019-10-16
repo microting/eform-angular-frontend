@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {PluginGroupPermissionsListModel} from '../../../../../common/models/plugins-management';
+import {PluginGroupPermissionsListModel, PluginGroupPermissionsUpdateModel} from '../../../../../common/models/plugins-management';
 import {SecurityGroupModel} from '../../../../../common/models/security/group';
 
 @Component({
@@ -9,9 +9,10 @@ import {SecurityGroupModel} from '../../../../../common/models/security/group';
 })
 export class InstalledPluginPermissionsComponent implements OnInit {
   @ViewChild('frame') frame;
-  @Output() pluginPermissionsUpdate: EventEmitter<PluginGroupPermissionsListModel[]> = new EventEmitter();
+  @Output() pluginPermissionsUpdate: EventEmitter<PluginGroupPermissionsUpdateModel> = new EventEmitter();
   @Input() securityGroups: SecurityGroupModel[] = [];
   pluginGroupPermissions: PluginGroupPermissionsListModel[] = [];
+  pluginId: number;
   spinnerStatus = false;
 
   constructor() { }
@@ -19,15 +20,16 @@ export class InstalledPluginPermissionsComponent implements OnInit {
   ngOnInit() {
   }
 
-  show(list: PluginGroupPermissionsListModel[]) {
-    this.pluginGroupPermissions = list;
+  show(model: PluginGroupPermissionsUpdateModel) {
+    this.pluginId = model.pluginId;
+    this.pluginGroupPermissions = model.groupPermissions;
     this.frame.show();
   }
 
   hide() { this.frame.hide(); }
 
   updatePermissions() {
-    this.pluginPermissionsUpdate.emit(this.pluginGroupPermissions);
+    this.pluginPermissionsUpdate.emit({pluginId: this.pluginId, groupPermissions: this.pluginGroupPermissions});
   }
 
   getSecurityGroupName(id: number) {

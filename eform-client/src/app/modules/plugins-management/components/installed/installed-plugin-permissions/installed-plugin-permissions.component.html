@@ -16,7 +16,7 @@
                       <input id="perm_{{groupPermissions.groupId}}_{{permission.permissionId}}" type="checkbox"
                              [(ngModel)]="permission.isEnabled">
                       <label for="perm_{{groupPermissions.groupId}}_{{permission.permissionId}}">
-                        {{permission.name | translate}}
+                        {{permission.permissionName | translate}}
                       </label>
                     </div>
                   </ng-container>

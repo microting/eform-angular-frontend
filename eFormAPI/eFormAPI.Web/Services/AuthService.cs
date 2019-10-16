@@ -45,10 +45,15 @@ using Microting.eFormApi.BasePn.Infrastructure.Helpers.WritableOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
+using eFormAPI.Web.Hosting.Helpers;
+using eFormAPI.Web.Infrastructure.Database;
+using Microting.eFormApi.BasePn;
 using OtpSharp;
 
 namespace eFormAPI.Web.Services
 {
+    using Infrastructure;
+
     public class AuthService : IAuthService
     {
         private readonly IOptions<EformTokenOptions> _tokenOptions;
@@ -62,6 +67,8 @@ namespace eFormAPI.Web.Services
         private readonly UserManager<EformUser> _userManager;
         private readonly RoleManager<EformRole> _roleManager;
         private readonly SignInManager<EformUser> _signInManager;
+        private readonly BaseDbContext _dbContext;
+        private readonly List<IEformPlugin> _loadedPlugins;
 
         public AuthService(IOptions<EformTokenOptions> tokenOptions,
             ILogger<AuthService> logger,
@@ -72,7 +79,9 @@ namespace eFormAPI.Web.Services
             IUserService userService,
             ILocalizationService localizationService,
             IClaimsService claimsService,
-            IUserClaimsPrincipalFactory<EformUser> userClaimsPrincipalFactory, IHttpContextAccessor httpContextAccessor)
+            IUserClaimsPrincipalFactory<EformUser> userClaimsPrincipalFactory, 
+            IHttpContextAccessor httpContextAccessor, 
+            BaseDbContext dbContext)
         {
             _tokenOptions = tokenOptions;
             _logger = logger;
@@ -85,6 +94,8 @@ namespace eFormAPI.Web.Services
             _claimsService = claimsService;
             _userClaimsPrincipalFactory = userClaimsPrincipalFactory;
             _httpContextAccessor = httpContextAccessor;
+            _dbContext = dbContext;
+            _loadedPlugins = PluginHelper.GetAllPlugins();
         }
 
         public async Task<OperationDataResult<AuthorizeResult>> AuthenticateUser(LoginModel model)
@@ -206,11 +217,11 @@ namespace eFormAPI.Web.Services
                 // Permissions
                 if (userRoles.Contains(EformRole.Admin))
                 {
-                    claims.AddRange(_claimsService.GetAllAuthClaims());
+                    claims.AddRange(await _claimsService.GetAllAuthClaims());
                 }
                 else
                 {
-                    claims.AddRange(_claimsService.GetUserClaims(user.Id));
+                    claims.AddRange(await _claimsService.GetUserClaims(user.Id));
                 }
 
                 var principal = await _userClaimsPrincipalFactory.CreateAsync(user);

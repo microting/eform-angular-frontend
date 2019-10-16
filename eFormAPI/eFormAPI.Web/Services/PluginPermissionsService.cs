@@ -30,6 +30,8 @@ using System.Threading.Tasks;
 using eFormAPI.Web.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+using eFormAPI.Web.Abstractions;
 
 namespace eFormAPI.Web.Services
 {
@@ -46,32 +48,34 @@ namespace eFormAPI.Web.Services
 
         public async Task<OperationDataResult<ICollection<PluginPermissionModel>>> GetPluginPermissions(int id)
         {
-            var eformPlugin = await _dbContext.EformPlugins.FirstOrDefaultAsync(p => p.Id == id);
-            var loadedPlugin = _loadedPlugins.First(x => x.PluginId == eformPlugin.PluginId);
-            var helper = loadedPlugin.GetPermissionsHelper(eformPlugin.ConnectionString);
-            var result = await helper.GetPluginPermissions();
+            var permissionsManager = await GetPermissionsManager(id);
+            var result = await permissionsManager.GetPluginPermissions();
 
             return new OperationDataResult<ICollection<PluginPermissionModel>>(true, result);
         }
 
         public async Task<OperationDataResult<ICollection<PluginGroupPermissionsListModel>>> GetPluginGroupPermissions(int id)
         {
-            var eformPlugin = await _dbContext.EformPlugins.FirstOrDefaultAsync(p => p.Id == id);
-            var loadedPlugin = _loadedPlugins.First(x => x.PluginId == eformPlugin.PluginId);
-            var helper = loadedPlugin.GetPermissionsHelper(eformPlugin.ConnectionString);
-            var result = await helper.GetPluginGroupPermissions();
+            var permissionsManager = await GetPermissionsManager(id);
+            var result = await permissionsManager.GetPluginGroupPermissions();
 
             return new OperationDataResult<ICollection<PluginGroupPermissionsListModel>>(true, result);
         }
 
         public async Task<OperationResult> SetPluginGroupPermissions(int id, ICollection<PluginGroupPermissionsListModel> permissions)
         {
-            var eformPlugin = await _dbContext.EformPlugins.FirstOrDefaultAsync(p => p.Id == id);
-            var loadedPlugin = _loadedPlugins.First(x => x.PluginId == eformPlugin.PluginId);
-            var helper = loadedPlugin.GetPermissionsHelper(eformPlugin.ConnectionString);
-            await helper.SetPluginGroupPermissions(permissions);
+            var permissionsManager = await GetPermissionsManager(id);
+            await permissionsManager.SetPluginGroupPermissions(permissions);
 
             return new OperationResult(true);
+        }
+
+        public async Task<PluginPermissionsManager> GetPermissionsManager(int pluginId)
+        {
+            var eformPlugin = await _dbContext.EformPlugins.FirstOrDefaultAsync(p => p.Id == pluginId);
+            var loadedPlugin = _loadedPlugins.FirstOrDefault(x => x.PluginId == eformPlugin.PluginId);
+
+            return loadedPlugin?.GetPermissionsManager(eformPlugin.ConnectionString);
         }
     }
 }
