@@ -102,7 +102,7 @@ We're also interested in your feedback for the future of Microting eForm SDK. Yo
 
 ## Microting Open Source Code of Conduct
 
-This project has adopted the [Microting Open Source Code of Conduct](https://www.microting.com/microting-open-source-code-of-conduct/). Contact opencode@microting.com with any additional questions or comments.
+This project has adopted the [Microting Open Source Code of Conduct](https://www.microting.com/microting-open-source-code-of-conduct). Contact opencode@microting.com with any additional questions or comments.
 
 ## License
 
