@@ -427,14 +427,14 @@ then
 	cd /var/www/microting
 su ubuntu -c \
 "git clone https://github.com/microting/eform-debian-service.git -b stable"
-	cd /var/www/microting/eform-debian-service/MicrotingService
+	cd /var/www/microting/eform-debian-service
 	
 	export GITVERSION=`git describe --abbrev=0 --tags | cut -d "v" -f 2`
 	echo $GITVERSION
 su ubuntu -c \
 "dotnet publish -o out /p:Version=$GITVERSION --runtime linux-x64 --configuration Release"
 	
-	cp /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/connection.json /var/www/microting/eform-debian-service/MicrotingService/MicrotingService/out/
+	cp /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/connection.json /var/www/microting/eform-debian-service/MicrotingService/out/
   
   
 	export CONNECTIONSTRINGJSON=$SWIFT_FOLDER_PREFIX
@@ -453,8 +453,8 @@ cat > /etc/systemd/system/eformbackend.service << EndOfUnitFile
 [Unit]
 Description=eForm service application
 [Service]
-WorkingDirectory=/var/www/microting/eform-debian-service/MicrotingService/MicrotingService/out
-ExecStart=/usr/bin/dotnet /var/www/microting/eform-debian-service/MicrotingService/MicrotingService/out/MicrotingService.dll
+WorkingDirectory=/var/www/microting/eform-debian-service/MicrotingService/out
+ExecStart=/usr/bin/dotnet /var/www/microting/eform-debian-service/MicrotingService/out/MicrotingService.dll
 Restart=always
 RestartSec=10
 slogIdentifier=dotnet-eform-backend
