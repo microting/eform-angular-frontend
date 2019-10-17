@@ -1,10 +1,11 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {EventBrokerService} from 'src/app/common/helpers';
+import {EventBrokerService, PluginClaimsHelper} from 'src/app/common/helpers';
 import {UserInfoModel, UserMenuModel} from 'src/app/common/models/user';
 import {AppMenuService} from 'src/app/common/services/settings';
 import {AuthService, LocaleService, UserSettingsService} from 'src/app/common/services/auth';
 import {AdminService} from 'src/app/common/services/users';
+import {PermissionGuard} from '../../common/guards';
 
 @Component({
   selector: 'app-navigation',
@@ -51,15 +52,17 @@ export class NavigationComponent implements OnInit {
     await this.localeService.initLocale();
   }
 
-  checkRole(roles: string[]) {
-    if (roles.length === 0) {
+  checkGuards(guards: string[]) {
+    if (guards.length === 0) {
       return true;
     }
+
     const currentRole = this.authService.currentRole;
-    if (roles.includes(currentRole)) {
+    if (guards.includes(currentRole)) {
       return true;
     }
-    return false;
+
+    return guards.some(g => PluginClaimsHelper.check(g));
   }
 
   expandMenu() {
