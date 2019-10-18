@@ -67,7 +67,7 @@ namespace eFormAPI.Web
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public async void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             // Configuration
             //services.AddSingleton(Configuration);
@@ -126,7 +126,7 @@ namespace eFormAPI.Web
             });
 
             // Authentication
-            services.AddEFormAuth(Configuration, await GetPluginsPermissions());
+            services.AddEFormAuth(Configuration, GetPluginsPermissions());
             // Localiation
             services.AddTransient<IEformLocalizerFactory, JsonStringLocalizerFactory>();
             services.AddTransient<IStringLocalizerFactory, ResourceManagerStringLocalizerFactory>();
@@ -285,7 +285,7 @@ namespace eFormAPI.Web
             services.AddScoped<IPluginPermissionsService, PluginPermissionsService>();
         }
 
-        private async Task<ICollection<PluginPermissionModel>> GetPluginsPermissions()
+        private ICollection<PluginPermissionModel> GetPluginsPermissions()
         {
             var permissions = new List<PluginPermissionModel>();
             var contextFactory = new BaseDbContextFactory();
@@ -300,7 +300,7 @@ namespace eFormAPI.Web
                     if (plugin != null)
                     {
                         var permissionsManager = plugin.GetPermissionsManager(eformPlugin.ConnectionString);
-                        permissions.AddRange(await permissionsManager.GetPluginPermissions());
+                        permissions.AddRange(permissionsManager.GetPluginPermissions().Result);
                     }
 
                 }

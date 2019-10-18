@@ -32,6 +32,7 @@ using eFormAPI.Web.Infrastructure.Database;
 using eFormAPI.Web.Hosting.Helpers;
 using Microting.eFormApi.BasePn;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Hosting.Enums;
 
 namespace eFormAPI.Web.Services.Security
 {
@@ -66,7 +67,7 @@ namespace eFormAPI.Web.Services.Security
                         claims.Add(new Claim(claimName, AuthConsts.ClaimDefaultValue));
                     });
 
-                    foreach (var eformPlugin in _dbContext.EformPlugins)
+                    foreach (var eformPlugin in _dbContext.EformPlugins.Where(p => p.Status == (int)PluginStatus.Enabled))
                     {
                         var permissionManager = await _pluginPermissionsService.GetPermissionsManager(eformPlugin.Id);
 
@@ -176,7 +177,7 @@ namespace eFormAPI.Web.Services.Security
                 new Claim(AuthConsts.EformClaims.EformsClaims.UpdateJasperReport, AuthConsts.ClaimDefaultValue),
             };
 
-            foreach (var eformPlugin in _dbContext.EformPlugins)
+            foreach (var eformPlugin in _dbContext.EformPlugins.Where(p => p.Status == (int) PluginStatus.Enabled))
             {
                 var permissionManager = await _pluginPermissionsService.GetPermissionsManager(eformPlugin.Id);
 
