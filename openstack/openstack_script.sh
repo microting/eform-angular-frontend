@@ -470,4 +470,5 @@ systemctl start eformbackend.service
 fi
 echo "################## END SERVICE SETUP ##################"
 
-echo "55 * * * * root /root/backup-mysql-hourly.sh" >> /etc/cron.d/eform-backup
+VAR=$(shuf -i 1-50 -n 1)
+echo "$VAR * * * * root /root/backup-mysql-hourly.sh" >> /etc/cron.d/eform-backup
