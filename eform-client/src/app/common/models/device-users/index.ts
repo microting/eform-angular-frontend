@@ -1,1 +1,1 @@
-export * from './simple-site.model';
+export * from './device-user.model';

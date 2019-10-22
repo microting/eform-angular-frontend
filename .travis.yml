@@ -1,3 +1,7 @@
+env:
+- TEST_SUITE=testheadless2a
+- TEST_SUITE=testheadless2b
+
 dist: xenial
 language: csharp
 mono: none
@@ -29,9 +33,7 @@ script:
   - sleep 40
   - npm run testheadless
   - sleep 40
-  - dotnet run --project ../eFormAPI/eFormAPI.Web/eFormAPI.Web.csproj > dotnet_log 2>&1 &
-  - sleep 40
-  - npm run testheadless2
+  - npm run $TEST_SUITE
 after_success:
 - echo dotnet test and npm test succeeded
 after_faliure:
