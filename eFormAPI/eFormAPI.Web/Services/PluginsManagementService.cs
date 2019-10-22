@@ -64,6 +64,7 @@ namespace eFormAPI.Web.Services
                             Status = (PluginStatus) eformPlugin.Status,
                             Name = loadedPlugin.Name,
                             Version = loadedPlugin.PluginAssembly().GetName().Version.ToString(),
+                            BaseUrl = loadedPlugin.PluginBaseUrl
                         };
                         result.PluginsList.Add(pluginSettingsModel);
                     }

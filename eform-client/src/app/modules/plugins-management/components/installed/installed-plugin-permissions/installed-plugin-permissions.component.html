@@ -1,0 +1,41 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{'Plugin permissions' | translate}}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row" *ngIf="pluginGroupPermissions">
+            <div class="mb-4 col-md-3" *ngFor="let groupPermissions of pluginGroupPermissions">
+              <div class="card">
+                <div class="card-header">{{getSecurityGroupName(groupPermissions.groupId)}}</div>
+                <div class="card-body">
+                  <ng-container *ngFor="let permission of groupPermissions.permissions">
+                    <div class="mat-checkbox mb-2">
+                      <input id="perm_{{groupPermissions.groupId}}_{{permission.permissionId}}" type="checkbox"
+                             [(ngModel)]="permission.isEnabled">
+                      <label for="perm_{{groupPermissions.groupId}}_{{permission.permissionId}}">
+                        {{permission.permissionName | translate}}
+                      </label>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success" (click)="updatePermissions()" id="saveBtn">{{ 'Save' | translate }}</button>
+        <button class="btn btn-neutral text-black-50" id="cancelCreateBtn" (click)="hide()">
+          {{ 'Cancel' | translate }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>
+
+
+

@@ -21,19 +21,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using eFormAPI.Web.Hosting.Enums;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 
-namespace eFormAPI.Web.Infrastructure.Models.Plugins
+namespace eFormAPI.Web.Abstractions
 {
-    public class InstalledPluginModel
+    public interface IPluginPermissionsService
     {
-        public int Id { get; set; }
-        public string PluginId { get; set; }
-        public string Name { get; set; }
-        public string Version { get; set; }
-        public string BaseUrl { get; set; }
-        public PluginStatus Status { get; set; }
-        public string ConnectionString { get; set; }
-
+        Task<OperationDataResult<ICollection<PluginPermissionModel>>> GetPluginPermissions(int id);
+        Task<OperationDataResult<ICollection<PluginGroupPermissionsListModel>>> GetPluginGroupPermissions(int id);
+        Task<OperationResult> SetPluginGroupPermissions(int id, ICollection<PluginGroupPermissionsListModel> permissions);
+        Task<PluginPermissionsManager> GetPermissionsManager(int pluginId);
     }
 }

@@ -18,6 +18,10 @@ class PluginPage extends Page {
     return browser.element('#plugin-settings-btn');
   }
 
+  public get pluginSettingsLink() {
+    return browser.element('#plugin-settings-link');
+  }
+
   public save() {
     this.saveBtn.click();
   }
