@@ -68,7 +68,7 @@ namespace eFormAPI.Web.Services
             try
             {
                 var menuItems = await _dbContext.MenuItems.ToListAsync();
-                var userClaims = _claimsService.GetUserClaimsNames(_userService.UserId);
+                var userClaims = await _claimsService.GetUserClaimsNames(_userService.UserId);
                 if (!_userService.IsInRole(EformRole.Admin))
                 {
                     menuItems = FilterMenuForUser(menuItems, userClaims);

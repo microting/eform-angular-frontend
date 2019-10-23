@@ -13,7 +13,7 @@
     <div class="collapse navbar-collapse" #navigationMenu>
       <ul class="navbar-nav mr-auto">
         <ng-container *ngFor="let menu of appMenu.leftMenu">
-          <ng-container *ngIf="checkRole(menu.guards)">
+          <ng-container *ngIf="checkGuards(menu.guards)">
           <ng-container *ngIf="menu?.menuItems?.length == 0; else dropdown;">
             <li class="nav-item">
               <a routerLink="{{menu.link}}"
@@ -34,7 +34,7 @@
                   [id]="menu.e2EId">{{menu.name}}</a>
                 <div class="dropdown-menu" *ngIf="menu?.menuItems?.length > 0;">
                   <ng-container *ngFor="let subMenu of menu.menuItems">
-                  <a *ngIf="checkRole(subMenu.guards)"
+                  <a *ngIf="checkGuards(subMenu.guards)"
                     class="dropdown-item waves-light"
                     routerLink="{{subMenu.link}}"
                     routerLinkActive="active"
@@ -72,7 +72,7 @@
                   [id]="menu.e2EId">{{menu.name}}</a>
                 <div class="dropdown-menu outbounds-fix" *ngIf="menu?.menuItems?.length > 0;">
                   <ng-container *ngFor="let subMenu of menu.menuItems">
-                    <a *ngIf="checkRole(subMenu.guards)"
+                    <a *ngIf="checkGuards(subMenu.guards)"
                       class="dropdown-item waves-light"
                       routerLink="{{subMenu.link}}"
                       routerLinkActive="active"

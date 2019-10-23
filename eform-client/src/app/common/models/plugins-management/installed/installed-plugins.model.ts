@@ -8,6 +8,7 @@ export class InstalledPluginModel {
   pluginId: number;
   name: string;
   version: string;
+  baseUrl: string;
   status: number;
   connectionString: string;
 }
