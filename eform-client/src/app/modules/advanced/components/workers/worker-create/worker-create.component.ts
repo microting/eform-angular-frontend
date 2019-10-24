@@ -27,7 +27,7 @@ export class WorkerCreateComponent implements OnInit {
   }
 
   loadAllSimpleSites() {
-    this.simpleSitesService.getAllSimpleSites().subscribe((data => {
+    this.simpleSitesService.getAllDeviceUsers().subscribe((data => {
       this.simpleSites = data.model.map((i) => { i.fullName = i.firstName + ' ' + i.lastName; return i; });
     }));
   }

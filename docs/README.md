@@ -23,3 +23,4 @@ description: 'eForm Backend is created using Angular (6.1.10) and C#'
 | English | 100% | 100% |
 | Danish | 100% | 100% |
 | German | 90% | 90% |
+

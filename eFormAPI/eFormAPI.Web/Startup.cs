@@ -263,7 +263,7 @@ namespace eFormAPI.Web
             services.AddScoped<IWorkersService, WorkersService>();
             services.AddScoped<ISitesService, SitesService>();
             services.AddScoped<IFoldersService, FoldersService>();
-            services.AddScoped<ISimpleSitesService, SimpleSitesService>();
+            services.AddScoped<IDeviceUsersService, DeviceUsersService>();
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<IEntitySearchService, EntitySearchService>();
             services.AddScoped<IEntitySelectService, EntitySelectService>();
@@ -288,21 +288,22 @@ namespace eFormAPI.Web
         private ICollection<PluginPermissionModel> GetPluginsPermissions()
         {
             var permissions = new List<PluginPermissionModel>();
-            var contextFactory = new BaseDbContextFactory();
-            using (var dbContext = contextFactory.CreateDbContext(new[] {Configuration.MyConnectionString()}))
+            if (Configuration.MyConnectionString() != "...")
             {
-                foreach (var eformPlugin in dbContext.EformPlugins
-                    .AsNoTracking()
-                    .Where(x => x.ConnectionString != "..."))
+                var contextFactory = new BaseDbContextFactory();
+                using (var dbContext = contextFactory.CreateDbContext(new[] { Configuration.MyConnectionString() }))
                 {
-                    var plugin = Program.Plugins.FirstOrDefault(p => p.PluginId == eformPlugin.PluginId);
-
-                    if (plugin != null)
+                    foreach (var eformPlugin in dbContext.EformPlugins
+                        .AsNoTracking()
+                        .Where(x => x.ConnectionString != "..."))
                     {
-                        var permissionsManager = plugin.GetPermissionsManager(eformPlugin.ConnectionString);
-                        permissions.AddRange(permissionsManager.GetPluginPermissions().Result);
+                        var plugin = Program.Plugins.FirstOrDefault(p => p.PluginId == eformPlugin.PluginId);
+                        if (plugin != null)
+                        {
+                            var permissionsManager = plugin.GetPermissionsManager(eformPlugin.ConnectionString);
+                            permissions.AddRange(permissionsManager.GetPluginPermissions().Result);
+                        }
                     }
-
                 }
             }
 
