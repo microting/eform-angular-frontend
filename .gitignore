@@ -386,3 +386,6 @@ eFormAPI/Plugins
 eFormAPI/eFormAPI\.Web/PluginInstallDaemonQueue
 
 *.deb
+
+docs/plugins/installing-a-plugin./
+
