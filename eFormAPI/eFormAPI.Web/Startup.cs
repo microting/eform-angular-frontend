@@ -287,6 +287,7 @@ namespace eFormAPI.Web
 
         private ICollection<PluginPermissionModel> GetPluginsPermissions()
         {
+            
             var permissions = new List<PluginPermissionModel>();
             if (Configuration.MyConnectionString() != "...")
             {
