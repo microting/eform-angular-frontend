@@ -325,9 +325,34 @@ namespace eFormAPI.Web.Hosting.Extensions
                     if (eformPlugin?.ConnectionString != null)
                     {
                         plugin.ConfigureDbContext(services, eformPlugin.ConnectionString);
+
+                        SetAdminGroupPluginPermissions(plugin, eformPlugin.ConnectionString);
                     }
                 }
             }
+        }
+
+        private static void SetAdminGroupPluginPermissions(IEformPlugin plugin, string connectionString)
+        {
+            // Set all plugin permissions for EformAdmins security group
+            var permissionsManager = plugin.GetPermissionsManager(connectionString);
+            var pluginPermissions = permissionsManager.GetPluginPermissions().Result;
+            permissionsManager.SetPluginGroupPermissions(new List<PluginGroupPermissionsListModel>
+                {
+                    new PluginGroupPermissionsListModel
+                    {
+                        GroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins,
+                        Permissions = pluginPermissions.Select(pp => new PluginGroupPermissionModel
+                            {
+                                ClaimName = pp.ClaimName,
+                                IsEnabled = true,
+                                PermissionId = pp.PermissionId,
+                                PermissionName = pp.PermissionName
+                            }
+                        ).ToList()
+                    }
+                }
+            );
         }
     }
 }
