@@ -31,14 +31,16 @@ class LoginPage extends Page {
   }
 
   public login(): void {
-    browser.waitForVisible('#username', 20000);
+    browser.waitForVisible('#username', 40000);
+    browser.pause(10000);
     this.usernameInput.setValue(LoginConstants.username);
     this.passwordInput.setValue(LoginConstants.password);
     this.loginBtn.click();
     browser.pause(10000);
   }
   public loginWithNewPassword(): void {
-    browser.waitForVisible('#username', 20000);
+    browser.pause(10000);
+    browser.waitForVisible('#username', 40000);
     this.usernameInput.setValue(LoginConstants.username);
     this.passwordInput.setValue(LoginConstants.newPassword);
     this.loginBtn.click();
