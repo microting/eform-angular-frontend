@@ -30,6 +30,7 @@ namespace eFormAPI.Web.Abstractions
     public interface IAuthService
     {
         Task<OperationDataResult<AuthorizeResult>> AuthenticateUser(LoginModel model);
+        Task<OperationDataResult<AuthorizeResult>> RefreshToken();
         Task<OperationResult> DeleteGoogleAuthenticatorInfo();
         Task<OperationDataResult<GoogleAuthenticatorModel>> GetGoogleAuthenticator(LoginModel loginModel);
         Task<OperationDataResult<GoogleAuthInfoModel>> GetGoogleAuthenticatorInfo();
