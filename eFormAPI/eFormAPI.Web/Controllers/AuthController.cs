@@ -56,13 +56,6 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpGet]
-        [Route("api/auth/refresh")]
-        public async Task<OperationResult> RefreshToken()
-        {
-            return await _authService.RefreshToken();
-        }
-
-        [HttpGet]
         [Route("api/auth/logout")]
         public async Task<OperationResult> Logout()
         {
