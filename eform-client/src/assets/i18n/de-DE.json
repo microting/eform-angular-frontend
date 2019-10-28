@@ -249,5 +249,6 @@
   "Install": "Installeren",
   "Marketplace": "Marktplaats",
   "Plugins Marketplace": "Plugins Marktplaats",
-  "Plugins Management": "Plugins Beheer"
+  "Plugins Management": "Plugins Beheer",
+  "Warning: you will be logged out when status is changed": "Warnung: Sie werden abgemeldet, wenn sich der status ändert"
 }

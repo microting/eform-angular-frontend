@@ -255,7 +255,8 @@
   "Install": "Install",
   "Marketplace": "Marketplace",
   "Plugins Marketplace": "Plugins Marketplace",
-  "Plugins Management": "Plugins Management"
+  "Plugins Management": "Plugins Management",
+  "Warning: you will be logged out when status is changed": "Warning: you will be logged out when status is changed"
 }
 
 
