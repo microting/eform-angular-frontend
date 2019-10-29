@@ -86,6 +86,7 @@ export class InstalledPluginsPageComponent implements OnInit {
     this.pluginManagementService.updateInstalledPlugin(model).subscribe((data) => {
       if (data && data.success) {
         this.editInstalledPluginModal.hide();
+        localStorage.removeItem('currentAuth');
         window.location.reload();
       }
       this.spinnerStatus = false;
