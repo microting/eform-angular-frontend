@@ -141,10 +141,7 @@ namespace eFormAPI.Web.Hosting.Helpers
                 }
             }
 
-            //   var assemblies = new List<Assembly>();
             var directories = Directory.EnumerateDirectories(pluginsDir);
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("[DBG] RUNNING IN DEBUG MODE!");
             foreach (var directory in directories)
             {
                 List<string> pluginList;
