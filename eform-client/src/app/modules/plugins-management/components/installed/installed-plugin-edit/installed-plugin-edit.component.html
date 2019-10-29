@@ -30,7 +30,11 @@
                          [items]="[{ id: statusEnum.Enabled, text: statusEnum[statusEnum.Enabled] | translate },
                                    { id: statusEnum.Disabled, text: statusEnum[statusEnum.Disabled] | translate }]"></ng-select>
             </div>
-
+          </div>
+          <div class="row" *ngIf="statusChanged">
+            <div class="col">
+              <p class="text-danger">{{'Warning: you will be logged out when status is changed' | translate}}</p>
+            </div>
           </div>
         </div>
       </div>

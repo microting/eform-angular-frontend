@@ -41,7 +41,6 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
-using Microting.eFormApi.BasePn.Infrastructure.Helpers.WritableOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
@@ -52,8 +51,6 @@ using OtpSharp;
 
 namespace eFormAPI.Web.Services
 {
-    using Infrastructure;
-
     public class AuthService : IAuthService
     {
         private readonly IOptions<EformTokenOptions> _tokenOptions;
@@ -171,6 +168,29 @@ namespace eFormAPI.Web.Services
             if (!roleList.Any())
             {
                 return new OperationDataResult<AuthorizeResult>(false, $"Role for user {model.Username} not found");
+            }
+
+            return new OperationDataResult<AuthorizeResult>(true, new AuthorizeResult
+            {
+                Id = user.Id,
+                access_token = token,
+                userName = user.UserName,
+                role = roleList.FirstOrDefault()
+            });
+        }
+
+        public async Task<OperationDataResult<AuthorizeResult>> RefreshToken()
+        {
+            var user = await _userService.GetByIdAsync(_userService.UserId);
+            if (user == null)
+                return new OperationDataResult<AuthorizeResult>(false,
+                    $"User with id {_userService.UserId} not found");
+
+            var token = await GenerateToken(user);
+            var roleList = _userManager.GetRolesAsync(user).Result;
+            if (!roleList.Any())
+            {
+                return new OperationDataResult<AuthorizeResult>(false, $"Role for user {_userService.UserId} not found");
             }
 
             return new OperationDataResult<AuthorizeResult>(true, new AuthorizeResult

@@ -19,6 +19,10 @@ export class InstalledPluginEditComponent implements OnInit {
     return InstalledPluginStatusEnum;
   }
 
+  get statusChanged() {
+    return this.selectedPluginSettings.status !== this.pluginSettingsUpdateModel.status;
+  }
+
   constructor(private pluginSettingsService: PluginsManagementService) {
   }
 
@@ -28,12 +32,14 @@ export class InstalledPluginEditComponent implements OnInit {
   show(model: InstalledPluginModel) {
     this.selectedPluginSettings = model;
     this.pluginSettingsUpdateModel = new InstalledPluginUpdateModel(this.selectedPluginSettings);
+
     this.frame.show();
   }
 
   hide() { this.frame.hide(); }
 
   updateSettings() {
+    this.pluginSettingsUpdateModel.statusChanged = this.statusChanged;
     this.onInstalledPluginUpdate.emit(this.pluginSettingsUpdateModel);
   }
 

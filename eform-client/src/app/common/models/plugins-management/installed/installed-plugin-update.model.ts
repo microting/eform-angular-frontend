@@ -3,6 +3,7 @@ export class InstalledPluginUpdateModel {
   connectionString: string;
   status: number;
   pluginId: number;
+  statusChanged = false;
 
   constructor(data?: any) {
     if (data) {
