@@ -30,13 +30,13 @@ namespace eFormAPI.Web.Abstractions
 {
     public interface ISettingsService
     {
-        OperationResult ConnectionStringExist();
-        OperationDataResult<AdminSettingsModel> GetAdminSettings();
-        OperationDataResult<string> GetDefaultLocale();
-        OperationDataResult<LoginPageSettingsModel> GetLoginPageSettings();
-        OperationDataResult<HeaderSettingsModel> GetPageHeaderSettings();
-        OperationDataResult<string> GetAssemblyVersion();
-        OperationDataResult<string> GetApplicationHostOs();
+        Task<OperationResult> ConnectionStringExist();
+        Task<OperationDataResult<AdminSettingsModel>> GetAdminSettings();
+        Task<OperationDataResult<string>> GetDefaultLocale();
+        Task<OperationDataResult<LoginPageSettingsModel>> GetLoginPageSettings();
+        Task<OperationDataResult<HeaderSettingsModel>> GetPageHeaderSettings();
+        Task<OperationDataResult<string>> GetAssemblyVersion();
+        Task<OperationDataResult<string>> GetApplicationHostOs();
         Task<OperationResult> ResetLoginPageSettings();
         Task<OperationResult> ResetPageHeaderSettings();
         Task<OperationResult> UpdateAdminSettings(AdminSettingsModel adminSettingsModel);

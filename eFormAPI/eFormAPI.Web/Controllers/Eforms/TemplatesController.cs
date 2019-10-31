@@ -88,23 +88,23 @@ namespace eFormAPI.Web.Controllers.Eforms
 
         [HttpPost]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Create)]
-        public OperationResult Create([FromBody] EFormXmlModel eFormXmlModel)
+        public async Task<OperationResult> Create([FromBody] EFormXmlModel eFormXmlModel)
         {
-            return _templatesService.Create(eFormXmlModel);
+            return await _templatesService.Create(eFormXmlModel);
         }
 
         [HttpGet]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Delete)]
-        public OperationResult Delete(int id)
+        public async Task<OperationResult> Delete(int id)
         {
-            return _templatesService.Delete(id);
+            return await _templatesService.Delete(id);
         }
 
         [HttpPost]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.PairingUpdate)]
-        public OperationResult Deploy([FromBody] DeployModel deployModel)
+        public async Task<OperationResult> Deploy([FromBody] DeployModel deployModel)
         {
-            return _templatesService.Deploy(deployModel);
+            return await _templatesService.Deploy(deployModel);
         }
     }
 }

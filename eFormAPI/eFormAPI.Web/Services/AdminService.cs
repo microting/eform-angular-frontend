@@ -102,7 +102,7 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public OperationDataResult<UserInfoModelList> GetAllUsers(PaginationModel paginationModel)
+        public async Task<OperationDataResult<UserInfoModelList>> GetAllUsers(PaginationModel paginationModel)
         {
             try
             {

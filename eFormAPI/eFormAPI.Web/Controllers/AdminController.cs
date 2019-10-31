@@ -54,25 +54,25 @@ namespace eFormAPI.Web.Controllers
         [HttpPost]
         [Route("api/admin/get-users")]
         [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Read)]
-        public OperationDataResult<UserInfoModelList> GetAllUsers([FromBody] PaginationModel paginationModel)
+        public async Task<OperationDataResult<UserInfoModelList>> GetAllUsers([FromBody] PaginationModel paginationModel)
         {
-            return _adminService.GetAllUsers(paginationModel);
+            return await _adminService.GetAllUsers(paginationModel);
         }
 
         [HttpPost]
         [Route("api/admin/update-user")]
         [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Update)]
-        public Task<OperationResult> UpdateUser([FromBody] UserRegisterModel userRegisterModel)
+        public async Task<OperationResult> UpdateUser([FromBody] UserRegisterModel userRegisterModel)
         {
-            return _adminService.UpdateUser(userRegisterModel);
+            return await _adminService.UpdateUser(userRegisterModel);
         }
 
         [HttpPost]
         [Route("api/admin/create-user")]
         [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Create)]
-        public Task<OperationResult> CreateUser([FromBody] UserRegisterModel userRegisterModel)
+        public async Task<OperationResult> CreateUser([FromBody] UserRegisterModel userRegisterModel)
         {
-            return _adminService.CreateUser(userRegisterModel);
+            return await _adminService.CreateUser(userRegisterModel);
         }
 
         [HttpGet]

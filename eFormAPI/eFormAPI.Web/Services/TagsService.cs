@@ -59,12 +59,12 @@ namespace eFormAPI.Web.Services
             _dbContext = dbContext;
         }
 
-        public OperationDataResult<List<CommonDictionaryModel>> GetAllTags()
+        public async Task<OperationDataResult<List<CommonDictionaryModel>>> GetAllTags()
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var tags = core.GetAllTags(false);
+                var core = await _coreHelper.GetCore();
+                var tags = await core.GetAllTags(false);
                 var model = new List<CommonDictionaryModel>(tags.Count);
                 tags.ForEach(tag =>
                 {
@@ -88,7 +88,7 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                var result = _coreHelper.GetCore().TagDelete(tagId);
+                var result = await _coreHelper.GetCore().Result.TagDelete(tagId);
                 if (result)
                 {
                     var savedTags = _dbContext.SavedTags.Where(x => x.TagId == tagId).ToList();
@@ -110,11 +110,11 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public OperationResult CreateTag(string tagName)
+        public async Task<OperationResult> CreateTag(string tagName)
         {
             try
             {
-                var result = _coreHelper.GetCore().TagCreate(tagName);
+                var result = await _coreHelper.GetCore().Result.TagCreate(tagName);
                 return result > 0
                     ? new OperationResult(true, _localizationService.GetStringWithFormat("TagParamCreatedSuccessfully", tagName))
                     : new OperationResult(false, _localizationService.GetStringWithFormat("ErrorWhileCreatingParamTag", tagName));
@@ -127,11 +127,11 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public OperationResult UpdateTemplateTags(UpdateTemplateTagsModel requestModel)
+        public async Task<OperationResult> UpdateTemplateTags(UpdateTemplateTagsModel requestModel)
         {
             try
             {
-                var result = _coreHelper.GetCore().TemplateSetTags(requestModel.TemplateId, requestModel.TagsIds);
+                var result = await _coreHelper.GetCore().Result.TemplateSetTags(requestModel.TemplateId, requestModel.TagsIds);
                 return result
                     ? new OperationResult(true, _localizationService.GetString("TemplateTagUpdatedSuccessfully"))
                     : new OperationResult(false, _localizationService.GetString("ErrorWhileUpdatingTemplateTags"));

@@ -48,16 +48,16 @@ namespace eFormAPI.Web.Controllers.Eforms
 
         [HttpGet]
         [Route("api/template-columns/{templateId}")]
-        public OperationDataResult<List<TemplateColumnModel>> GetAvailableColumns(int templateId)
+        public async Task<OperationDataResult<List<TemplateColumnModel>>> GetAvailableColumns(int templateId)
         {
-            return _templateColumnsService.GetAvailableColumns(templateId);
+            return await _templateColumnsService.GetAvailableColumns(templateId);
         }
 
         [HttpGet]
         [Route("api/template-columns/current/{templateId}")]
-        public OperationDataResult<DisplayTemplateColumnsModel> GetCurrentColumns(int templateId)
+        public async Task<OperationDataResult<DisplayTemplateColumnsModel>> GetCurrentColumns(int templateId)
         {
-            return _templateColumnsService.GetCurrentColumns(templateId);
+            return await _templateColumnsService.GetCurrentColumns(templateId);
         }
 
         [HttpPost]

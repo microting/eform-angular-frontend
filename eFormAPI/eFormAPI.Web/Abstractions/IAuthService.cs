@@ -35,7 +35,7 @@ namespace eFormAPI.Web.Abstractions
         Task<OperationDataResult<GoogleAuthenticatorModel>> GetGoogleAuthenticator(LoginModel loginModel);
         Task<OperationDataResult<GoogleAuthInfoModel>> GetGoogleAuthenticatorInfo();
         Task<OperationResult> LogOut();
-        OperationDataResult<bool> TwoFactorAuthForceInfo();
+        Task<OperationDataResult<bool>> TwoFactorAuthForceInfo();
         Task<OperationResult> UpdateGoogleAuthenticatorInfo(GoogleAuthInfoModel requestModel);
     }
 }

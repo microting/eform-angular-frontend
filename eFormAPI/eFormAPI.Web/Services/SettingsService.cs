@@ -87,7 +87,7 @@ namespace eFormAPI.Web.Services
             _tokenOptions = tokenOptions;
         }
 
-        public OperationResult ConnectionStringExist()
+        public async Task<OperationResult> ConnectionStringExist()
         {
             var connectionString = _connectionStringsSdk.Value.SdkConnection;
             if (!string.IsNullOrEmpty(connectionString))
@@ -99,7 +99,7 @@ namespace eFormAPI.Web.Services
                 _localizationService.GetString("ConnectionStringDoesNotExist"));
         }
 
-        public OperationDataResult<string> GetDefaultLocale()
+        public async Task<OperationDataResult<string>> GetDefaultLocale()
         {
             try
             {
@@ -179,11 +179,11 @@ namespace eFormAPI.Web.Services
             {
                 var adminTools = new AdminTools(sdkConnectionString);
 //                 Setup SDK DB
-                adminTools.DbSetup(initialSettingsModel.ConnectionStringSdk.Token);
-//                var core = _coreHelper.GetCore();
+                await adminTools.DbSetup(initialSettingsModel.ConnectionStringSdk.Token);
+//                var core = await _coreHelper.GetCore();
                 Core core = new Core();
-                core.StartSqlOnly(sdkConnectionString);
-                core.SetSdkSetting(Settings.customerNo, customerNo);
+                await core.StartSqlOnly(sdkConnectionString);
+                await core.SetSdkSetting(Settings.customerNo, customerNo);
             }
             catch (Exception exception)
             {
@@ -344,7 +344,7 @@ namespace eFormAPI.Web.Services
             return new OperationResult(true);
         }
 
-        public OperationDataResult<LoginPageSettingsModel> GetLoginPageSettings()
+        public async Task<OperationDataResult<LoginPageSettingsModel>> GetLoginPageSettings()
         {
             try
             {
@@ -369,7 +369,7 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public OperationDataResult<HeaderSettingsModel> GetPageHeaderSettings()
+        public async Task<OperationDataResult<HeaderSettingsModel>> GetPageHeaderSettings()
         {
             try
             {
@@ -391,13 +391,13 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public OperationDataResult<string> GetAssemblyVersion()
+        public async Task<OperationDataResult<string>> GetAssemblyVersion()
         {
             return new OperationDataResult<string>(true, null,
                 Assembly.GetExecutingAssembly().GetName().Version.ToString());
         }
 
-        public OperationDataResult<string> GetApplicationHostOs()
+        public async Task<OperationDataResult<string>> GetApplicationHostOs()
         {
             if (PathHelper.GetOsVersion() == OSPlatforms.Windows)
             {
@@ -407,11 +407,11 @@ namespace eFormAPI.Web.Services
             return new OperationDataResult<string>(true, PathHelper.GetOsVersion().ToString());
         }
 
-        public OperationDataResult<AdminSettingsModel> GetAdminSettings()
+        public async Task<OperationDataResult<AdminSettingsModel>> GetAdminSettings()
         {
             try
             {
-                var core = _coreHelper.GetCore();
+                var core = await _coreHelper.GetCore();
 
                 var model = new AdminSettingsModel()
                 {
@@ -442,30 +442,30 @@ namespace eFormAPI.Web.Services
                     },
                     SwiftSettingsModel = new SwiftSettingsModel()
                     {
-                        SwiftEnabled = (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true"),
-                        SwiftUserName = core.GetSdkSetting(Settings.swiftUserName),
+                        SwiftEnabled = (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true"),
+                        SwiftUserName = await core.GetSdkSetting(Settings.swiftUserName),
                         SwiftPassword = "SOMESECRETPASSWORD",
-                        SwiftEndpoint = core.GetSdkSetting(Settings.swiftEndPoint),
-                        KeystoneEndpoint = core.GetSdkSetting(Settings.keystoneEndPoint)
+                        SwiftEndpoint = await core.GetSdkSetting(Settings.swiftEndPoint),
+                        KeystoneEndpoint = await core.GetSdkSetting(Settings.keystoneEndPoint)
                     },
                     S3SettingsModel = new S3SettingsModel()
                     {
-                        S3Enabled = (core.GetSdkSetting(Settings.s3Enabled).ToLower() == "true"),
-                        S3AccessKeyId = core.GetSdkSetting(Settings.s3AccessKeyId),
+                        S3Enabled = (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true"),
+                        S3AccessKeyId = await core.GetSdkSetting(Settings.s3AccessKeyId),
                         S3SecrectAccessKey = "SOMESECRETPASSWORD",
-                        S3Endpoint = core.GetSdkSetting(Settings.s3Endpoint)
+                        S3Endpoint = await core.GetSdkSetting(Settings.s3Endpoint)
                     },
                     SdkSettingsModel = new SDKSettingsModel()
                     {
-                        CustomerNo = core.GetSdkSetting(Settings.customerNo),
-                        LogLevel = core.GetSdkSetting(Settings.logLevel),
-                        LogLimit = core.GetSdkSetting(Settings.logLimit),
-                        FileLocationPicture = core.GetSdkSetting(Settings.fileLocationPicture),
-                        FileLocationPdf = core.GetSdkSetting(Settings.fileLocationPdf),
-                        FileLocationReports = core.GetSdkSetting(Settings.fileLocationJasper),
-                        HttpServerAddress = core.GetSdkSetting(Settings.httpServerAddress)
+                        CustomerNo = await core.GetSdkSetting(Settings.customerNo),
+                        LogLevel = await core.GetSdkSetting(Settings.logLevel),
+                        LogLimit = await core.GetSdkSetting(Settings.logLimit),
+                        FileLocationPicture = await core.GetSdkSetting(Settings.fileLocationPicture),
+                        FileLocationPdf = await core.GetSdkSetting(Settings.fileLocationPdf),
+                        FileLocationReports = await core.GetSdkSetting(Settings.fileLocationJasper),
+                        HttpServerAddress = await core.GetSdkSetting(Settings.httpServerAddress)
                     },
-                    SiteLink = core.GetSdkSetting(Settings.httpServerAddress),
+                    SiteLink = await core.GetSdkSetting(Settings.httpServerAddress),
                     AssemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString()
                 };
                 return new OperationDataResult<AdminSettingsModel>(true, model);
@@ -482,7 +482,7 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                var core = _coreHelper.GetCore();
+                var core = await _coreHelper.GetCore();
                 await _emailSettings.UpdateDb((option) =>
                 {
                     option.SmtpHost = adminSettingsModel.SMTPSettingsModel.Host;
@@ -508,33 +508,33 @@ namespace eFormAPI.Web.Services
                     option.SecondaryText = adminSettingsModel.LoginPageSettingsModel.SecondaryText;
                     option.SecondaryTextVisible = adminSettingsModel.LoginPageSettingsModel.SecondaryTextVisible;
                 }, _dbContext);
-                core.SetSdkSetting(Settings.httpServerAddress, adminSettingsModel.SiteLink);
-                core.SetSdkSetting(Settings.swiftEnabled, adminSettingsModel.SwiftSettingsModel.SwiftEnabled.ToString());
-                core.SetSdkSetting(Settings.swiftUserName, adminSettingsModel.SwiftSettingsModel.SwiftUserName);
+                await core.SetSdkSetting(Settings.httpServerAddress, adminSettingsModel.SiteLink);
+                await core.SetSdkSetting(Settings.swiftEnabled, adminSettingsModel.SwiftSettingsModel.SwiftEnabled.ToString());
+                await core.SetSdkSetting(Settings.swiftUserName, adminSettingsModel.SwiftSettingsModel.SwiftUserName);
                 
                 if (adminSettingsModel.SwiftSettingsModel.SwiftPassword != "SOMESECRETPASSWORD")
                 {
                     core.SetSdkSetting(Settings.swiftPassword, adminSettingsModel.SwiftSettingsModel.SwiftPassword);
                 }
                 
-                core.SetSdkSetting(Settings.swiftEndPoint, adminSettingsModel.SwiftSettingsModel.SwiftEndpoint);
-                core.SetSdkSetting(Settings.keystoneEndPoint, adminSettingsModel.SwiftSettingsModel.KeystoneEndpoint);
-                core.SetSdkSetting(Settings.customerNo, adminSettingsModel.SdkSettingsModel.CustomerNo);
-                core.SetSdkSetting(Settings.logLevel, adminSettingsModel.SdkSettingsModel.LogLevel);
-                core.SetSdkSetting(Settings.logLimit, adminSettingsModel.SdkSettingsModel.LogLimit);
-                core.SetSdkSetting(Settings.fileLocationPicture, adminSettingsModel.SdkSettingsModel.FileLocationPicture);
-                core.SetSdkSetting(Settings.fileLocationPdf, adminSettingsModel.SdkSettingsModel.FileLocationPdf);
-                core.SetSdkSetting(Settings.fileLocationJasper, adminSettingsModel.SdkSettingsModel.FileLocationReports);
-                core.SetSdkSetting(Settings.httpServerAddress, adminSettingsModel.SdkSettingsModel.HttpServerAddress);
-                core.SetSdkSetting(Settings.s3Enabled, adminSettingsModel.S3SettingsModel.S3Enabled.ToString());
-                core.SetSdkSetting(Settings.s3AccessKeyId, adminSettingsModel.S3SettingsModel.S3AccessKeyId);
+                await core.SetSdkSetting(Settings.swiftEndPoint, adminSettingsModel.SwiftSettingsModel.SwiftEndpoint);
+                await core.SetSdkSetting(Settings.keystoneEndPoint, adminSettingsModel.SwiftSettingsModel.KeystoneEndpoint);
+                await core.SetSdkSetting(Settings.customerNo, adminSettingsModel.SdkSettingsModel.CustomerNo);
+                await core.SetSdkSetting(Settings.logLevel, adminSettingsModel.SdkSettingsModel.LogLevel);
+                await core.SetSdkSetting(Settings.logLimit, adminSettingsModel.SdkSettingsModel.LogLimit);
+                await core.SetSdkSetting(Settings.fileLocationPicture, adminSettingsModel.SdkSettingsModel.FileLocationPicture);
+                await core.SetSdkSetting(Settings.fileLocationPdf, adminSettingsModel.SdkSettingsModel.FileLocationPdf);
+                await core.SetSdkSetting(Settings.fileLocationJasper, adminSettingsModel.SdkSettingsModel.FileLocationReports);
+                await core.SetSdkSetting(Settings.httpServerAddress, adminSettingsModel.SdkSettingsModel.HttpServerAddress);
+                await core.SetSdkSetting(Settings.s3Enabled, adminSettingsModel.S3SettingsModel.S3Enabled.ToString());
+                await core.SetSdkSetting(Settings.s3AccessKeyId, adminSettingsModel.S3SettingsModel.S3AccessKeyId);
                 
                 if (adminSettingsModel.S3SettingsModel.S3SecrectAccessKey != "SOMESECRETPASSWORD")
                 {
-                    core.SetSdkSetting(Settings.s3SecrectAccessKey, adminSettingsModel.S3SettingsModel.S3SecrectAccessKey);    
+                    await core.SetSdkSetting(Settings.s3SecrectAccessKey, adminSettingsModel.S3SettingsModel.S3SecrectAccessKey);    
                 }
                 
-                core.SetSdkSetting(Settings.s3Endpoint, adminSettingsModel.S3SettingsModel.S3Endpoint);
+                await core.SetSdkSetting(Settings.s3Endpoint, adminSettingsModel.S3SettingsModel.S3Endpoint);
                 return new OperationResult(true, _localizationService.GetString("SettingsUpdatedSuccessfully"));
             }
             catch (Exception e)
