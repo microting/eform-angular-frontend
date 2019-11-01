@@ -31,7 +31,7 @@ class LoginPage extends Page {
   }
 
   public login(): void {
-    browser.waitForVisible('#username', 40000);
+    browser.waitForVisible('#username', 60000);
     browser.pause(10000);
     this.usernameInput.setValue(LoginConstants.username);
     this.passwordInput.setValue(LoginConstants.password);
@@ -40,7 +40,7 @@ class LoginPage extends Page {
   }
   public loginWithNewPassword(): void {
     browser.pause(10000);
-    browser.waitForVisible('#username', 40000);
+    browser.waitForVisible('#username', 60000);
     this.usernameInput.setValue(LoginConstants.username);
     this.passwordInput.setValue(LoginConstants.newPassword);
     this.loginBtn.click();
