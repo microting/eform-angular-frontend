@@ -140,7 +140,7 @@ namespace eFormAPI.Web.Services
                 return new OperationResult(false, string.Join(" ", errors));
             }
 
-            return new OperationResult(true);
+            return new OperationResult(true, _localizationService.GetString("PasswordSuccessfullyUpdated"));
         }
 
         public async Task<OperationResult> ForgotPassword(ForgotPasswordModel model)
