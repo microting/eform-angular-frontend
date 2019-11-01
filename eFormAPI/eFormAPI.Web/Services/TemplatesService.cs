@@ -341,12 +341,12 @@ namespace eFormAPI.Web.Services
                 }
                 mainElement.EndDate = DateTime.Now.AddYears(10).ToUniversalTime();
                 mainElement.StartDate = DateTime.Now.ToUniversalTime();
-                core.CaseCreate(mainElement, "", sitesToBeDeployedTo, "");
+                await core.CaseCreate(mainElement, "", sitesToBeDeployedTo, "");
             }
 
             foreach (var siteUId in sitesToBeRetractedFrom)
             {
-                core.CaseDelete(deployModel.Id, siteUId);
+                await core.CaseDelete(deployModel.Id, siteUId);
             }
 
             return new OperationResult(true,

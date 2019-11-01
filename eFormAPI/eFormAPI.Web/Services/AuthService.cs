@@ -288,7 +288,7 @@ namespace eFormAPI.Web.Services
             return new OperationResult(true);
         }
 
-        public async Task<OperationDataResult<bool>> TwoFactorAuthForceInfo()
+        public OperationDataResult<bool> TwoFactorAuthForceInfo()
         {
             try
             {

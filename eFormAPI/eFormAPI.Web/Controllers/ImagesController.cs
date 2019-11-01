@@ -176,7 +176,7 @@ namespace eFormAPI.Web.Controllers
                         var core = await _coreHelper.GetCore();
                         if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true" || core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
                         {
-                            core.PutFileToStorageSystem(filePath, file.FileName);
+                            await core.PutFileToStorageSystem(filePath, file.FileName);
                         }
                     }
                     iUploadedCnt++;
@@ -219,7 +219,7 @@ namespace eFormAPI.Web.Controllers
                         var core = await _coreHelper.GetCore();
                         if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true" || core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
                         {
-                            core.PutFileToStorageSystem(filePath, file.FileName);
+                            await core.PutFileToStorageSystem(filePath, file.FileName);
                         }
                     }
                     iUploadedCnt++;

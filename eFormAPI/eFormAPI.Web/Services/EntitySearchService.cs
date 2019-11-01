@@ -130,7 +130,7 @@ namespace eFormAPI.Web.Services
                 if (entityGroup.Name != editModel.Name)
                 {
                     entityGroup.Name = editModel.Name;
-                    core.EntityGroupUpdate(entityGroup);
+                    await core.EntityGroupUpdate(entityGroup);
                 }
 
                 var nextItemUid = entityGroup.EntityGroupItemLst.Count;
@@ -140,7 +140,7 @@ namespace eFormAPI.Web.Services
                 {
                     if (string.IsNullOrEmpty(entityItem.MicrotingUUID))
                     {
-                        var et = core.EntitySearchItemCreate(entityGroup.Id, entityItem.Name,
+                        var et = await core.EntitySearchItemCreate(entityGroup.Id, entityItem.Name,
                             entityItem.Description, nextItemUid.ToString());
                         currentIds.Add(et.Id);
                     }
@@ -158,7 +158,7 @@ namespace eFormAPI.Web.Services
                 {
                     if (!currentIds.Contains(entityItem.Id))
                     {
-                        core.EntityItemDelete(entityItem.Id);
+                        await core.EntityItemDelete(entityItem.Id);
                     }
                 }
 

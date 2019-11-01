@@ -174,7 +174,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                 }
                 else
                 {
-                    return await RotateImageLocal(filePath);
+                    return RotateImageLocal(filePath);
                 }
             }
             
@@ -488,7 +488,7 @@ namespace eFormAPI.Web.Controllers.Eforms
             return new OperationResult(true, _localizationService.GetString("ImageRotatedSuccessfully"));
         }
         
-        private async Task<OperationResult> RotateImageLocal(string filePath)
+        private OperationResult RotateImageLocal(string filePath)
         {
             if (!System.IO.File.Exists(filePath))
             {

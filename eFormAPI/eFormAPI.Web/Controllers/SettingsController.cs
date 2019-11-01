@@ -44,17 +44,17 @@ namespace eFormAPI.Web.Controllers
         [AllowAnonymous]
         [HttpGet]
         [Route("api/settings/connection-string-exist")]
-        public async Task<OperationResult> ConnectionStringExist()
+        public OperationResult ConnectionStringExist()
         {
-            return await _settingsService.ConnectionStringExist();
+            return _settingsService.ConnectionStringExist();
         }
 
         [AllowAnonymous]
         [HttpGet]
         [Route("api/settings/default-locale")]
-        public async Task<OperationDataResult<string>> GetDefaultLocale()
+        public OperationDataResult<string> GetDefaultLocale()
         {
-            return await _settingsService.GetDefaultLocale();
+            return _settingsService.GetDefaultLocale();
         }
 
         [AllowAnonymous]
@@ -68,18 +68,18 @@ namespace eFormAPI.Web.Controllers
         [HttpGet]
         [AllowAnonymous]
         [Route("api/settings/login-page")]
-        public async Task<OperationDataResult<LoginPageSettingsModel>> GetLoginPageSettings()
+        public OperationDataResult<LoginPageSettingsModel> GetLoginPageSettings()
         {
-            return await _settingsService.GetLoginPageSettings();
+            return _settingsService.GetLoginPageSettings();
         }
 
 
         [HttpGet]
         [Authorize]
         [Route("api/settings/page-header")]
-        public async Task<OperationDataResult<HeaderSettingsModel>> GetPageHeaderSettings()
+        public OperationDataResult<HeaderSettingsModel> GetPageHeaderSettings()
         {
-            return await _settingsService.GetPageHeaderSettings();
+            return _settingsService.GetPageHeaderSettings();
         }
 
 
@@ -123,18 +123,18 @@ namespace eFormAPI.Web.Controllers
         [AllowAnonymous]
         [HttpGet]
         [Route("api/settings/version")]
-        public async Task<OperationDataResult<string>> GetApplicationVersion()
+        public OperationDataResult<string> GetApplicationVersion()
         {
-            return await _settingsService.GetAssemblyVersion();
+            return _settingsService.GetAssemblyVersion();
         }
         
         [AllowAnonymous]
         [HttpGet]
         [Route("api/settings/hostos")]
-        public async Task<OperationDataResult<string>> GetApplicationHostOs()
+        public OperationDataResult<string> GetApplicationHostOs()
         {
             
-            return await _settingsService.GetApplicationHostOs();
+            return _settingsService.GetApplicationHostOs();
         }
     }
 }

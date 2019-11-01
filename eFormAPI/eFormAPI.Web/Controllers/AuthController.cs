@@ -68,9 +68,9 @@ namespace eFormAPI.Web.Controllers
         [HttpGet]
         [AllowAnonymous]
         [Route("api/auth/two-factor-info")]
-        public async Task<OperationDataResult<bool>> TwoFactorAuthForceInfo()
+        public OperationDataResult<bool> TwoFactorAuthForceInfo()
         {
-            return await _authService.TwoFactorAuthForceInfo();
+            return _authService.TwoFactorAuthForceInfo();
         }
 
         [HttpGet]

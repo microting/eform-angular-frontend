@@ -131,7 +131,7 @@ namespace eFormAPI.Web.Services
                     modelItem.UserName = userItem.UserName;
                     userList.Add(modelItem);
                 });
-                var totalUsers = _userManager.Users.Count();
+                var totalUsers = await _userManager.Users.CountAsync();
                 return new OperationDataResult<UserInfoModelList>(true, new UserInfoModelList()
                 {
                     TotalUsers = totalUsers,

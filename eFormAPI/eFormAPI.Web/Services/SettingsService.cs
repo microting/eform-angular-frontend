@@ -87,7 +87,7 @@ namespace eFormAPI.Web.Services
             _tokenOptions = tokenOptions;
         }
 
-        public async Task<OperationResult> ConnectionStringExist()
+        public OperationResult ConnectionStringExist()
         {
             var connectionString = _connectionStringsSdk.Value.SdkConnection;
             if (!string.IsNullOrEmpty(connectionString))
@@ -99,7 +99,7 @@ namespace eFormAPI.Web.Services
                 _localizationService.GetString("ConnectionStringDoesNotExist"));
         }
 
-        public async Task<OperationDataResult<string>> GetDefaultLocale()
+        public OperationDataResult<string> GetDefaultLocale()
         {
             try
             {
@@ -344,7 +344,7 @@ namespace eFormAPI.Web.Services
             return new OperationResult(true);
         }
 
-        public async Task<OperationDataResult<LoginPageSettingsModel>> GetLoginPageSettings()
+        public OperationDataResult<LoginPageSettingsModel> GetLoginPageSettings()
         {
             try
             {
@@ -369,7 +369,7 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public async Task<OperationDataResult<HeaderSettingsModel>> GetPageHeaderSettings()
+        public OperationDataResult<HeaderSettingsModel> GetPageHeaderSettings()
         {
             try
             {
@@ -391,13 +391,13 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public async Task<OperationDataResult<string>> GetAssemblyVersion()
+        public OperationDataResult<string> GetAssemblyVersion()
         {
             return new OperationDataResult<string>(true, null,
                 Assembly.GetExecutingAssembly().GetName().Version.ToString());
         }
 
-        public async Task<OperationDataResult<string>> GetApplicationHostOs()
+        public OperationDataResult<string> GetApplicationHostOs()
         {
             if (PathHelper.GetOsVersion() == OSPlatforms.Windows)
             {
@@ -514,7 +514,7 @@ namespace eFormAPI.Web.Services
                 
                 if (adminSettingsModel.SwiftSettingsModel.SwiftPassword != "SOMESECRETPASSWORD")
                 {
-                    core.SetSdkSetting(Settings.swiftPassword, adminSettingsModel.SwiftSettingsModel.SwiftPassword);
+                    await core.SetSdkSetting(Settings.swiftPassword, adminSettingsModel.SwiftSettingsModel.SwiftPassword);
                 }
                 
                 await core.SetSdkSetting(Settings.swiftEndPoint, adminSettingsModel.SwiftSettingsModel.SwiftEndpoint);
