@@ -72,7 +72,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                 return Forbid();
             }
 
-            return Ok(_templateColumnsService.UpdateColumns(model));
+            return Ok(await _templateColumnsService.UpdateColumns(model));
         }
     }
 }

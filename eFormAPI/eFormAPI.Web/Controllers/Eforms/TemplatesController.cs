@@ -59,11 +59,11 @@ namespace eFormAPI.Web.Controllers.Eforms
 
         [HttpGet]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Read)]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
             try
             {
-                return Ok(_templatesService.Get(id));
+                return Ok(await _templatesService.Get(id));
             }
             catch (Exception)
             {
@@ -74,11 +74,11 @@ namespace eFormAPI.Web.Controllers.Eforms
         [HttpGet]
         [Route("api/templates/get-fields/{id}")]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Read)]
-        public IActionResult GetDataItems(int id)
+        public async Task<IActionResult> GetDataItems(int id)
         {
             try
             {
-                return Ok(_templatesService.GetFields(id));
+                return Ok(await _templatesService.GetFields(id));
             }
             catch (Exception)
             {

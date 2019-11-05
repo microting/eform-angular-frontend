@@ -103,7 +103,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                 return Forbid();
             }
 
-            return Ok(_tagsService.UpdateTemplateTags(requestModel));
+            return Ok(await _tagsService.UpdateTemplateTags(requestModel));
         }
     }
 }

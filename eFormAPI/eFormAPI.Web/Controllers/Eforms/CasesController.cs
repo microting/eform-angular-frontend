@@ -55,7 +55,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                 return Forbid();
             }
 
-            return Ok(_casesService.Index(requestModel));
+            return Ok(await _casesService.Index(requestModel));
         }
 
         [HttpGet]
@@ -69,7 +69,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                 return Forbid();
             }
 
-            return Ok(_casesService.GetCase(id));
+            return Ok(await _casesService.GetCase(id));
         }
 
         [HttpGet]
@@ -83,7 +83,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                 return Forbid();
             }
 
-            return Ok(_casesService.Delete(id));
+            return Ok(await _casesService.Delete(id));
         }
 
         [HttpPost]
@@ -97,7 +97,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                 return Forbid();
             }
 
-            return Ok(_casesService.Update(model));
+            return Ok(await _casesService.Update(model));
         }
     }
 }
