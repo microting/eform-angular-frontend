@@ -43,6 +43,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using Castle.Core.Internal;
+using eFormAPI.Web.Infrastructure.Helpers;
 using eFormAPI.Web.Infrastructure.Models.Settings.Admin;
 using eFormAPI.Web.Infrastructure.Models.Settings.Initial;
 using Microting.eForm.Dto;
@@ -216,6 +217,7 @@ namespace eFormAPI.Web.Services
 
                 using (var dbContext = new BaseDbContext(dbContextOptionsBuilder.Options))
                 {
+                    Log.LogEvent("Migrating Angular DB");
                     dbContext.Database.Migrate();
                     var userStore = new UserStore<EformUser,
                         EformRole,

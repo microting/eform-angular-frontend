@@ -31,6 +31,7 @@ using eFormAPI.Web.Hosting.Helpers;
 using eFormAPI.Web.Hosting.Settings;
 using eFormAPI.Web.Infrastructure.Database;
 using eFormAPI.Web.Infrastructure.Database.Factories;
+using eFormAPI.Web.Infrastructure.Helpers;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -107,6 +108,7 @@ namespace eFormAPI.Web
                                 scope.ServiceProvider.GetRequiredService<IOptions<ConnectionStrings>>();
                             if (connectionStrings.Value.DefaultConnection != "...")
                             {
+                                Log.LogEvent("Migrating Angular DB");
                                 dbContext.Database.Migrate();
                             }
                         }

@@ -46,6 +46,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
 using eFormAPI.Web.Hosting.Helpers;
 using eFormAPI.Web.Infrastructure.Database;
+using eFormAPI.Web.Infrastructure.Helpers;
 using Microting.eFormApi.BasePn;
 using OtpSharp;
 
@@ -97,6 +98,7 @@ namespace eFormAPI.Web.Services
 
         public async Task<OperationDataResult<AuthorizeResult>> AuthenticateUser(LoginModel model)
         {
+            Log.LogEvent("AuthService.AuthenticateUser: called");
             if (string.IsNullOrEmpty(model.Username) || string.IsNullOrEmpty(model.Password))
                 return new OperationDataResult<AuthorizeResult>(false, "Empty username or password");
 

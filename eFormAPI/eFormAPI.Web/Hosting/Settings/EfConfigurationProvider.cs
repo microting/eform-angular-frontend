@@ -25,6 +25,7 @@ using System.Linq;
 using Castle.Core.Internal;
 using eFormAPI.Web.Infrastructure.Database.Factories;
 using eFormAPI.Web.Infrastructure.Database.Seed.SeedItems;
+using eFormAPI.Web.Infrastructure.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microting.eFormApi.BasePn.Infrastructure.Delegates;
@@ -62,6 +63,7 @@ namespace eFormAPI.Web.Hosting.Settings
                 var contextFactory = new BaseDbContextFactory();
                 using (var dbContext = contextFactory.CreateDbContext(new[] {_connectionString}))
                 {
+                    Log.LogEvent("Migrating Angular DB");
                     dbContext.Database.Migrate();
                     Data = dbContext.ConfigurationValues
                         .AsNoTracking()
