@@ -148,6 +148,11 @@ server {
         proxy_cache_bypass \$http_upgrad;
         proxy_set_header   X-Forwarded-For \$proxy_add_x_forwarded_for;
         proxy_set_header   X-Forwarded-Proto \$scheme;
+	proxy_buffer_size   128k;
+	proxy_buffers   4 256k;
+	proxy_busy_buffers_size   256k;
+	fastcgi_buffers 16 16k;
+	fastcgi_buffer_size 32k;
     }
 }
 EndOfConfig
