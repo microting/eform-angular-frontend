@@ -35,7 +35,6 @@ script:
   - npm run testheadless
   - sleep 40
   - npm run $TEST_SUITE
-  - ls -lah errorShots
   - touch ~/.aws/config || true
   - echo "[default]" >> ~/.aws/config || true
   - echo "aws_access_key_id=$AWS_ACCESS_KEY_ID" >> ~/.aws/config || true
