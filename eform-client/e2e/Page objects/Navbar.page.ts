@@ -1,5 +1,6 @@
 export class Navbar {
   public advancedDropdown() {
+    browser.waitForVisible('#advanced', 60000);
     this.clickOnHeaderMenuItem('Avanceret').click();
     // return browser.element('#advanced');
 
