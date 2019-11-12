@@ -9,6 +9,7 @@ dotnet: 2.2
 services:
 - mysql
 script:
+  - pip install --user awscli
   - echo 'deb http://www.rabbitmq.com/debian/ testing main' | sudo tee /etc/apt/sources.list.d/rabbitmq.list
   - wget -O- https://www.rabbitmq.com/rabbitmq-release-signing-key.asc | sudo apt-key add -
   - sudo apt-get update
@@ -34,6 +35,8 @@ script:
   - npm run testheadless
   - sleep 40
   - npm run $TEST_SUITE
+  - ls -lah errorShots
+  - aws s3 ls $S3_STORAGE_FOLDER
 after_success:
 - echo dotnet test and npm test succeeded
 after_faliure:
