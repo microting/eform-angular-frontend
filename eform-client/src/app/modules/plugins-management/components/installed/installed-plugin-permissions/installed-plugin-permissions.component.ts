@@ -8,7 +8,7 @@ import {SecurityGroupModel} from '../../../../../common/models/security/group';
   styleUrls: ['./installed-plugin-permissions.component.scss']
 })
 export class InstalledPluginPermissionsComponent implements OnInit {
-  @ViewChild('frame') frame;
+  @ViewChild('frame', { static: true }) frame;
   @Output() pluginPermissionsUpdate: EventEmitter<PluginGroupPermissionsUpdateModel> = new EventEmitter();
   @Input() securityGroups: SecurityGroupModel[] = [];
   pluginGroupPermissions: PluginGroupPermissionsListModel[] = [];
