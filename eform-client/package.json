@@ -35,8 +35,8 @@
     "@ngx-gallery/core": "4.0.3",
     "@ngx-gallery/gallerize": "4.0.3",
     "@ngx-gallery/lightbox": "4.0.3",
-    "@ngx-translate/core": "10.0.2",
-    "@ngx-translate/http-loader": "3.0.1",
+    "@ngx-translate/core": "11.0.1",
+    "@ngx-translate/http-loader": "^4.0.0",
     "@types/dragula": "2.1.33",
     "@types/file-saver": "^2.0.1",
     "angular-calendar": "^0.27.14",
@@ -57,7 +57,6 @@
     "ngx-papaparse": "^3.0.3",
     "ngx-slimscroll": "^5.2.2",
     "ngx-toastr": "^11.2.1",
-    "npm": "^6.13.0",
     "rxjs": "^6.5.3",
     "zone.js": "~0.9.1"
   },
