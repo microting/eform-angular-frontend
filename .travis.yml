@@ -4,6 +4,7 @@ env:
 
 dist: xenial
 language: csharp
+node_js: '12'
 mono: none
 dotnet: 2.2
 services:
