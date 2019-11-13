@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {format} from "date-fns";
+import {format} from 'date-fns';
 import {DateTimeAdapter} from 'ng-pick-datetime';
 import {FieldValueDto} from 'src/app/common/models';
 import {LocaleService} from 'src/app/common/services/auth';

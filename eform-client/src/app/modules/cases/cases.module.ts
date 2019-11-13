@@ -7,7 +7,7 @@ import {GallerizeModule} from '@ngx-gallery/gallerize';
 import {LightboxModule} from '@ngx-gallery/lightbox';
 import {TranslateModule} from '@ngx-translate/core';
 import {OWL_DATE_TIME_FORMATS, OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime';
-import {OwlMomentDateTimeModule} from 'ng-pick-datetime-moment';
+// import {OwlMomentDateTimeModule} from 'ng-pick-datetime-moment';
 import {MDBBootstrapModule} from 'port/angular-bootstrap-md';
 import {MY_MOMENT_FORMATS} from 'src/app/common/helpers';
 import {EformImportedModule} from 'src/app/common/modules/eform-imported/eform-imported.module';
@@ -53,7 +53,7 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
     GalleryModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
-    OwlMomentDateTimeModule,
+    // OwlMomentDateTimeModule,
     FormsModule,
     FontAwesomeModule
   ],
