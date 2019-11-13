@@ -292,8 +292,8 @@ namespace eFormAPI.Web.Services
             try
             {
                 var result = new EformReportFullModel();
-                var core = _coreHelper.GetCore();
-                MainElement template = core.TemplateRead(templateId);
+                var core = await _coreHelper.GetCore();
+                MainElement template = await core.TemplateRead(templateId);
                 if (template == null)
                 {
                     return new OperationDataResult<EformReportFullModel>(false,

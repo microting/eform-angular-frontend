@@ -28,6 +28,8 @@ export class EntitySearchCreateComponent implements OnInit {
 
   show() {
     this.frame.show();
+    this.advEntitySearchableGroupCreateModel.name = '';
+    this.advEntitySearchableGroupCreateModel.advEntitySearchableItemModels = [];
   }
 
   openModalSearchEditName(itemModel: AdvEntitySearchableItemModel) {

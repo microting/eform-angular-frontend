@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions.Advanced;
 using eFormAPI.Web.Infrastructure;
 using eFormAPI.Web.Infrastructure.Models;
@@ -46,42 +47,42 @@ namespace eFormAPI.Web.Controllers.Advanced
         [HttpGet]
         [Route("api/folders/index")]
         [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
-        public OperationDataResult<List<Folder_Dto>> Index()
+        public async Task<OperationDataResult<List<Folder_Dto>>> Index()
         {
-            return _foldersService.Index();
+            return await _foldersService.Index();
         }
         
         
         [HttpPost]
         [Route("api/folders/create")]
         [Authorize(Policy = AuthConsts.EformPolicies.Workers.Create)]
-        public OperationResult Сreate([FromBody] FolderNameModel model)
+        public async Task<OperationResult> Сreate([FromBody] FolderNameModel model)
         {
-            return _foldersService.Сreate(model);
+            return await _foldersService.Сreate(model);
         }
 
         [HttpGet]
         [Route("api/folders/edit")]
         [Authorize(Policy = AuthConsts.EformPolicies.Sites.Update)]
-        public OperationDataResult<Folder_Dto> Edit(int id)
+        public async Task<OperationDataResult<Folder_Dto>> Edit(int id)
         {
-            return _foldersService.Edit(id);
+            return await _foldersService.Edit(id);
         }
 
         [HttpPost]
         [Route("api/folders/update")]
         [Authorize(Policy = AuthConsts.EformPolicies.Sites.Update)]
-        public OperationResult Update([FromBody] FolderNameModel folderNameModel)
+        public async Task<OperationResult> Update([FromBody] FolderNameModel folderNameModel)
         {
-            return _foldersService.Update(folderNameModel);
+            return await _foldersService.Update(folderNameModel);
         }
 
         [HttpGet]
         [Route("api/folders/delete/{id}")]
         [Authorize(Policy = AuthConsts.EformPolicies.Sites.Delete)]
-        public OperationResult Delete(int id)
+        public async Task<OperationResult> Delete(int id)
         {
-            return _foldersService.Delete(id);
+            return await _foldersService.Delete(id);
         }
     }
 }

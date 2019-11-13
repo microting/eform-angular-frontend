@@ -60,9 +60,9 @@ namespace eFormAPI.Web.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("api/settings/connection-string")]
-        public Task<OperationResult> UpdateConnectionString([FromBody] InitialSettingsModel initialSettingsModel)
+        public async Task<OperationResult> UpdateConnectionString([FromBody] InitialSettingsModel initialSettingsModel)
         {
-            return _settingsService.UpdateConnectionString(initialSettingsModel);
+            return await _settingsService.UpdateConnectionString(initialSettingsModel);
         }
 
         [HttpGet]
@@ -86,18 +86,18 @@ namespace eFormAPI.Web.Controllers
         [Authorize(Roles = EformRole.Admin)]
         [HttpGet]
         [Route("api/settings/admin")]
-        public OperationDataResult<AdminSettingsModel> GetAdminSettings()
+        public async Task<OperationDataResult<AdminSettingsModel>> GetAdminSettings()
         {
-            return _settingsService.GetAdminSettings();
+            return await _settingsService.GetAdminSettings();
         }
 
 
         [Authorize(Roles = EformRole.Admin)]
         [HttpPost]
         [Route("api/settings/admin")]
-        public Task<OperationResult> UpdateAdminSettings([FromBody] AdminSettingsModel adminSettingsModel)
+        public async Task<OperationResult> UpdateAdminSettings([FromBody] AdminSettingsModel adminSettingsModel)
         {
-            return _settingsService.UpdateAdminSettings(adminSettingsModel);
+            return await _settingsService.UpdateAdminSettings(adminSettingsModel);
         }
 
         #region ResetSettingsSection
@@ -105,17 +105,17 @@ namespace eFormAPI.Web.Controllers
         [HttpGet]
         [Authorize(Roles = EformRole.Admin)]
         [Route("api/settings/reset-login-page")]
-        public Task<OperationResult> ResetLoginPageSettings()
+        public async Task<OperationResult> ResetLoginPageSettings()
         {
-            return _settingsService.ResetLoginPageSettings();
+            return await _settingsService.ResetLoginPageSettings();
         }
 
         [HttpGet]
         [Authorize(Roles = EformRole.Admin)]
         [Route("api/settings/reset-page-header")]
-        public Task<OperationResult> ResetPageHeaderSettings()
+        public async Task<OperationResult> ResetPageHeaderSettings()
         {
-            return _settingsService.ResetPageHeaderSettings();
+            return await _settingsService.ResetPageHeaderSettings();
         }
 
         #endregion

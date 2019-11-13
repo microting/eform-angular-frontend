@@ -24,6 +24,7 @@ SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Eforms;
 using eFormAPI.Web.Infrastructure.Models.Templates;
@@ -45,12 +46,12 @@ namespace eFormAPI.Web.Services
         }
 
 
-        public OperationDataResult<List<TemplateColumnModel>> GetAvailableColumns(int templateId)
+        public async Task<OperationDataResult<List<TemplateColumnModel>>> GetAvailableColumns(int templateId)
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var fields = core.Advanced_TemplateFieldReadAll(templateId);
+                var core = await _coreHelper.GetCore();
+                var fields = await core.Advanced_TemplateFieldReadAll(templateId);
                 var templateColumns = new List<TemplateColumnModel>();
                 foreach (var field in fields)
                 {
@@ -76,12 +77,12 @@ namespace eFormAPI.Web.Services
         }
 
 
-        public OperationDataResult<DisplayTemplateColumnsModel> GetCurrentColumns(int templateId)
+        public async Task<OperationDataResult<DisplayTemplateColumnsModel>> GetCurrentColumns(int templateId)
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var template = core.TemplateItemRead(templateId);
+                var core = await _coreHelper.GetCore();
+                var template = await core.TemplateItemRead(templateId);
                 var model = new DisplayTemplateColumnsModel()
                 {
                     TemplateId = template.Id,
@@ -106,11 +107,11 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public OperationResult UpdateColumns(UpdateTemplateColumnsModel model)
+        public async Task<OperationResult> UpdateColumns(UpdateTemplateColumnsModel model)
         {
             try
             {
-                var core = _coreHelper.GetCore();
+                var core = await _coreHelper.GetCore();
                 var columnsList = new List<int?>
                 {
                     model.FieldId1,
@@ -125,15 +126,15 @@ namespace eFormAPI.Web.Services
                     model.FieldId10
                 };
                 columnsList = columnsList.OrderBy(x => x == null).ToList();
-                var columnsUpdateResult = core.Advanced_TemplateUpdateFieldIdsForColumns(
+                var columnsUpdateResult = await core.Advanced_TemplateUpdateFieldIdsForColumns(
                     (int) model.TemplateId,
                     columnsList[0], columnsList[1], columnsList[2], columnsList[3],
                     columnsList[4], columnsList[5], columnsList[6], columnsList[7],
                     columnsList[8], columnsList[9]);
-                var allCases = core.CaseReadAll(model.TemplateId, null, null);
+                var allCases = await core.CaseReadAll(model.TemplateId, null, null);
                 foreach (var caseObject in allCases)
                 {
-                    core.CaseUpdateFieldValues(caseObject.Id);
+                    await core.CaseUpdateFieldValues(caseObject.Id);
                 }
 
                 return columnsUpdateResult

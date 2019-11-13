@@ -41,10 +41,13 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
-using Microting.eFormApi.BasePn.Infrastructure.Helpers.WritableOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
+using eFormAPI.Web.Hosting.Helpers;
+using eFormAPI.Web.Infrastructure.Database;
+using eFormAPI.Web.Infrastructure.Helpers;
+using Microting.eFormApi.BasePn;
 using OtpSharp;
 
 namespace eFormAPI.Web.Services
@@ -62,6 +65,8 @@ namespace eFormAPI.Web.Services
         private readonly UserManager<EformUser> _userManager;
         private readonly RoleManager<EformRole> _roleManager;
         private readonly SignInManager<EformUser> _signInManager;
+        private readonly BaseDbContext _dbContext;
+        private readonly List<IEformPlugin> _loadedPlugins;
 
         public AuthService(IOptions<EformTokenOptions> tokenOptions,
             ILogger<AuthService> logger,
@@ -72,7 +77,9 @@ namespace eFormAPI.Web.Services
             IUserService userService,
             ILocalizationService localizationService,
             IClaimsService claimsService,
-            IUserClaimsPrincipalFactory<EformUser> userClaimsPrincipalFactory, IHttpContextAccessor httpContextAccessor)
+            IUserClaimsPrincipalFactory<EformUser> userClaimsPrincipalFactory, 
+            IHttpContextAccessor httpContextAccessor, 
+            BaseDbContext dbContext)
         {
             _tokenOptions = tokenOptions;
             _logger = logger;
@@ -85,10 +92,13 @@ namespace eFormAPI.Web.Services
             _claimsService = claimsService;
             _userClaimsPrincipalFactory = userClaimsPrincipalFactory;
             _httpContextAccessor = httpContextAccessor;
+            _dbContext = dbContext;
+            _loadedPlugins = PluginHelper.GetAllPlugins();
         }
 
         public async Task<OperationDataResult<AuthorizeResult>> AuthenticateUser(LoginModel model)
         {
+            Log.LogEvent("AuthService.AuthenticateUser: called");
             if (string.IsNullOrEmpty(model.Username) || string.IsNullOrEmpty(model.Password))
                 return new OperationDataResult<AuthorizeResult>(false, "Empty username or password");
 
@@ -171,6 +181,29 @@ namespace eFormAPI.Web.Services
             });
         }
 
+        public async Task<OperationDataResult<AuthorizeResult>> RefreshToken()
+        {
+            var user = await _userService.GetByIdAsync(_userService.UserId);
+            if (user == null)
+                return new OperationDataResult<AuthorizeResult>(false,
+                    $"User with id {_userService.UserId} not found");
+
+            var token = await GenerateToken(user);
+            var roleList = _userManager.GetRolesAsync(user).Result;
+            if (!roleList.Any())
+            {
+                return new OperationDataResult<AuthorizeResult>(false, $"Role for user {_userService.UserId} not found");
+            }
+
+            return new OperationDataResult<AuthorizeResult>(true, new AuthorizeResult
+            {
+                Id = user.Id,
+                access_token = token,
+                userName = user.UserName,
+                role = roleList.FirstOrDefault()
+            });
+        }
+
         public async Task<string> GenerateToken(EformUser user)
         {
             if (user != null)
@@ -206,11 +239,11 @@ namespace eFormAPI.Web.Services
                 // Permissions
                 if (userRoles.Contains(EformRole.Admin))
                 {
-                    claims.AddRange(_claimsService.GetAllAuthClaims());
+                    claims.AddRange(await _claimsService.GetAllAuthClaims());
                 }
                 else
                 {
-                    claims.AddRange(_claimsService.GetUserClaims(user.Id));
+                    claims.AddRange(await _claimsService.GetUserClaims(user.Id));
                 }
 
                 var principal = await _userClaimsPrincipalFactory.CreateAsync(user);

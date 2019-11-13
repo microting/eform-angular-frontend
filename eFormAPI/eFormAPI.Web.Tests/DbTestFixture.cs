@@ -28,6 +28,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace eFormAPI.Web.Tests
 {
@@ -58,7 +59,7 @@ namespace eFormAPI.Web.Tests
         }
 
         [SetUp]
-        public void Setup()
+        public async Task Setup()
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
@@ -76,7 +77,7 @@ namespace eFormAPI.Web.Tests
 
             try
             {
-                ClearDb();
+                await ClearDb();
             }
             catch
             {
@@ -89,15 +90,15 @@ namespace eFormAPI.Web.Tests
         }
 
         [TearDown]
-        public void TearDown()
+        public async Task TearDown()
         {
 
-            ClearDb();
+            await ClearDb();
 
             DbContext.Dispose();
         }
 
-        public void ClearDb()
+        public async Task ClearDb()
         {
 
             Console.WriteLine("ClearDb called.");
@@ -125,13 +126,16 @@ namespace eFormAPI.Web.Tests
                     string sqlCmd = string.Empty;
                     if (DbContext.Database.IsMySql())
                     {
-                        sqlCmd = string.Format("SET FOREIGN_KEY_CHECKS = 0;TRUNCATE `{0}`.`{1}`", "angular-tests", modelName);
+                        sqlCmd = $"SET FOREIGN_KEY_CHECKS = 0;TRUNCATE `{"angular-tests"}`.`{modelName}`";
                     }
                     else
                     {
-                        sqlCmd = string.Format("DELETE FROM [{0}]", modelName);
+                        sqlCmd = $"DELETE FROM [{modelName}]";
                     }
-                    DbContext.Database.ExecuteSqlCommand(sqlCmd);
+#pragma warning disable EF1000 // Possible SQL injection vulnerability.
+                    await DbContext.Database.ExecuteSqlCommandAsync(sqlCmd);
+#pragma warning restore EF1000 // Possible SQL injection vulnerability.
+
                 }
                 catch (Exception ex)
                 {

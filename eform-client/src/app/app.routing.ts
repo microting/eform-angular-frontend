@@ -27,7 +27,7 @@ export const routes: Routes = [
         loadChildren: () => import('./modules/advanced/advanced.module').then(m => m.AdvancedModule)
       },
       {
-        path: 'simplesites',
+        path: 'device-users',
         canActivate: [AuthGuard],
         loadChildren: () => import('./modules/device-users/device-users.module').then(m => m.DeviceUsersModule)
       },

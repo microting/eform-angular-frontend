@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microting.eForm.Dto;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
@@ -29,7 +30,7 @@ namespace eFormAPI.Web.Abstractions.Advanced
 {
     public interface IUnitsService
     {
-        OperationDataResult<List<Unit_Dto>> Index();
-        OperationDataResult<Unit_Dto> RequestOtp(int id);
+        Task<OperationDataResult<List<Unit_Dto>>> Index();
+        Task<OperationDataResult<Unit_Dto>> RequestOtp(int id);
     }
 }

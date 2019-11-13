@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions.Advanced;
 using eFormAPI.Web.Infrastructure;
 using eFormAPI.Web.Infrastructure.Models;
@@ -45,38 +46,38 @@ namespace eFormAPI.Web.Controllers.Advanced
 
         [HttpGet]
         [Authorize(Policy = AuthConsts.EformPolicies.Workers.Read)]
-        public OperationDataResult<List<Worker_Dto>> Index()
+        public async Task<OperationDataResult<List<Worker_Dto>>> Index()
         {
-            return _workersService.Index();
+            return await _workersService.Index();
         }
 
         [HttpGet]
         [Authorize(Policy = AuthConsts.EformPolicies.Workers.Update)]
-        public OperationDataResult<Worker_Dto> Edit(int id)
+        public async Task<OperationDataResult<Worker_Dto>> Edit(int id)
         {
-            return _workersService.Edit(id);
+            return await _workersService.Edit(id);
         }
 
         [HttpPost]
         [Authorize(Policy = AuthConsts.EformPolicies.Workers.Update)]
-        public OperationResult Update([FromBody] WorkerModel workerModel)
+        public async Task<OperationResult> Update([FromBody] WorkerModel workerModel)
         {
-            return _workersService.Update(workerModel);
+            return await _workersService.Update(workerModel);
         }
 
         [HttpPost]
         [Route("api/workers/create")]
         [Authorize(Policy = AuthConsts.EformPolicies.Workers.Create)]
-        public OperationResult Сreate([FromBody] WorkerCreateModel model)
+        public async Task<OperationResult> Сreate([FromBody] WorkerCreateModel model)
         {
-            return _workersService.Сreate(model);
+            return await _workersService.Сreate(model);
         }
 
         [HttpGet]
         [Authorize(Policy = AuthConsts.EformPolicies.Workers.Delete)]
-        public OperationResult Delete(int id)
+        public async Task<OperationResult> Delete(int id)
         {
-            return _workersService.Delete(id);
+            return await _workersService.Delete(id);
         }
     }
 }

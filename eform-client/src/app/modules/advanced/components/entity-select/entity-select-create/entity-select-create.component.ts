@@ -27,6 +27,8 @@ export class EntitySelectCreateComponent implements OnInit {
 
   show() {
     this.frame.show();
+    this.advEntitySelectableGroupCreateModel.name = '';
+    this.advEntitySelectableGroupCreateModel.advEntitySelectableItemModels = [];
   }
 
   openModalSelectEditName(itemModel: AdvEntitySelectableItemModel) {

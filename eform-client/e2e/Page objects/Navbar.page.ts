@@ -1,5 +1,6 @@
 export class Navbar {
   public advancedDropdown() {
+    browser.waitForVisible('#advanced', 60000);
     this.clickOnHeaderMenuItem('Avanceret').click();
     // return browser.element('#advanced');
 
@@ -37,6 +38,9 @@ export class Navbar {
   }
   public get entitySelectBtn() {
     return browser.element(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Valgbar Liste')]`);
+  }
+  public get entitySearchBtn() {
+    return browser.element(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Søgbar Liste')]`);
   }
 
   public clickOnHeaderMenuItem(headerMenuItem) {
@@ -87,6 +91,11 @@ export class Navbar {
   public goToEntitySelect() {
     this.advancedDropdown();
     this.entitySelectBtn.click();
+    browser.pause(20000);
+  }
+  public goToEntitySearch() {
+    this.advancedDropdown();
+    this.entitySearchBtn.click();
     browser.pause(20000);
   }
 }

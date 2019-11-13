@@ -50,8 +50,8 @@
       </thead>
       <tbody id="tableBody">
       <tr *ngFor="let advEntitySearchableGroup of advEntitySearchableGroupListModel.entityGroups">
-        <td scope="row">{{advEntitySearchableGroup.microtingUUID}}</td>
-        <td> {{advEntitySearchableGroup.name}}</td>
+        <td scope="row" id="entitySearchMUid">{{advEntitySearchableGroup.microtingUUID}}</td>
+        <td id="entitySearchName"> {{advEntitySearchableGroup.name}}</td>
         <td *ngIf="userClaims.entitySearchDelete || userClaims.entitySearchUpdate">
           <div class="d-flex flex-row justify-content-center" *ngIf="!advEntitySearchableGroup.isLocked">
             <button id="entitySearchUpdateBtn" class="btn btn-accent btn-icon text-black-50 mb-2 " *ngIf="userClaims.entitySearchUpdate"
@@ -83,11 +83,11 @@
     </div>
     <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
       <eform-pagination
-                        *ngIf="advEntitySearchableGroupListModel.numOfElements > advEntitySearchableGroupListRequestModel.pageSize"
-                        [limit]="advEntitySearchableGroupListRequestModel.pageSize"
-                        [size]="advEntitySearchableGroupListModel.numOfElements"
-                        [offset]="advEntitySearchableGroupListRequestModel.offset"
-                        (onPageChanged)="changePage($event)"></eform-pagination>
+        *ngIf="advEntitySearchableGroupListModel.numOfElements > advEntitySearchableGroupListRequestModel.pageSize"
+        [limit]="advEntitySearchableGroupListRequestModel.pageSize"
+        [size]="advEntitySearchableGroupListModel.numOfElements"
+        [offset]="advEntitySearchableGroupListRequestModel.offset"
+        (onPageChanged)="changePage($event)"></eform-pagination>
     </div>
   </div>
 </div>

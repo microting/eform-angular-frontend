@@ -22,19 +22,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System.Collections.Generic;
-using eFormAPI.Web.Infrastructure.Models;
-using Microting.eForm.Dto;
-using Microting.eFormApi.BasePn.Infrastructure.Models;
+using System.Threading.Tasks;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 
-namespace eFormAPI.Web.Abstractions.Advanced
+namespace eFormAPI.Web.Abstractions
 {
-    public interface ISimpleSitesService
+    public interface IPluginPermissionsService
     {
-        OperationDataResult<List<Site_Dto>> Index();
-        OperationResult Create(SimpleSiteModel simpleSiteModel);
-        OperationDataResult<Site_Dto> Edit(int id);
-        OperationResult Update(SimpleSiteModel simpleSiteModel);
-        OperationResult Delete(int id);
+        Task<OperationDataResult<ICollection<PluginPermissionModel>>> GetPluginPermissions(int id);
+        Task<OperationDataResult<ICollection<PluginGroupPermissionsListModel>>> GetPluginGroupPermissions(int id);
+        Task<OperationResult> SetPluginGroupPermissions(int id, ICollection<PluginGroupPermissionsListModel> permissions);
+        Task<PluginPermissionsManager> GetPermissionsManager(int pluginId);
     }
 }

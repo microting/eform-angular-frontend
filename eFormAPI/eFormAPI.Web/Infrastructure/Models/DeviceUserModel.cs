@@ -23,7 +23,7 @@ SOFTWARE.
 */
 namespace eFormAPI.Web.Infrastructure.Models
 {
-    public class SimpleSiteModel
+    public class DeviceUserModel
     {
         public int Id { get; set; }
         public string UserFirstName { get; set; }

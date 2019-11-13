@@ -23,6 +23,7 @@ SOFTWARE.
 */
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Advanced;
 using eFormAPI.Web.Infrastructure.Models;
@@ -33,33 +34,33 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Services
 {
-    public class SimpleSitesService : ISimpleSitesService
+    public class DeviceUsersService : IDeviceUsersService
     {
         private readonly IEFormCoreService _coreHelper;
         private readonly ILocalizationService _localizationService;
 
-        public SimpleSitesService(ILocalizationService localizationService, 
+        public DeviceUsersService(ILocalizationService localizationService, 
             IEFormCoreService coreHelper)
         {
             _localizationService = localizationService;
             _coreHelper = coreHelper;
         }
 
-        public OperationDataResult<List<Site_Dto>> Index()
+        public async Task<OperationDataResult<List<Site_Dto>>> Index()
         {
-            var core = _coreHelper.GetCore();
-            var siteDto = core.SiteReadAll(false);
+            var core = await _coreHelper.GetCore();
+            var siteDto = await core.SiteReadAll(false);
             return new OperationDataResult<List<Site_Dto>>(true, siteDto);
         }
 
-        public OperationResult Create(SimpleSiteModel simpleSiteModel)
+        public async Task<OperationResult> Create(DeviceUserModel deviceUserModel)
         {
-            var core = _coreHelper.GetCore();
-            var siteName = simpleSiteModel.UserFirstName + " " + simpleSiteModel.UserLastName;
+            var core = await _coreHelper.GetCore();
+            var siteName = deviceUserModel.UserFirstName + " " + deviceUserModel.UserLastName;
 
             try
             {
-                var siteDto = core.SiteCreate(siteName, simpleSiteModel.UserFirstName, simpleSiteModel.UserLastName,
+                var siteDto = await core.SiteCreate(siteName, deviceUserModel.UserFirstName, deviceUserModel.UserLastName,
                     null);
 
                 return siteDto != null
@@ -87,10 +88,10 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public OperationDataResult<Site_Dto> Edit(int id)
+        public async Task<OperationDataResult<Site_Dto>> Edit(int id)
         {
-            var core = _coreHelper.GetCore();
-            var siteDto = core.SiteRead(id);
+            var core = await _coreHelper.GetCore();
+            var siteDto = await core.SiteRead(id);
 
             return siteDto != null
                 ? new OperationDataResult<Site_Dto>(true, siteDto)
@@ -98,25 +99,25 @@ namespace eFormAPI.Web.Services
                     _localizationService.GetStringWithFormat("DeviceUserParamCouldNotBeEdited", id));
         }
 
-        public OperationResult Update(SimpleSiteModel simpleSiteModel)
+        public async Task<OperationResult> Update(DeviceUserModel deviceUserModel)
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var siteDto = core.SiteRead(simpleSiteModel.Id);
+                var core = await _coreHelper.GetCore();
+                var siteDto = await core.SiteRead(deviceUserModel.Id);
                 if (siteDto.WorkerUid != null)
                 {
-                    var workerDto = core.Advanced_WorkerRead((int) siteDto.WorkerUid);
+                    var workerDto = await core.Advanced_WorkerRead((int) siteDto.WorkerUid);
                     if (workerDto != null)
                     {
-                        var fullName = simpleSiteModel.UserFirstName + " " + simpleSiteModel.UserLastName;
-                        var isUpdated = core.SiteUpdate(simpleSiteModel.Id, fullName, simpleSiteModel.UserFirstName,
-                            simpleSiteModel.UserLastName, workerDto.Email);
+                        var fullName = deviceUserModel.UserFirstName + " " + deviceUserModel.UserLastName;
+                        var isUpdated = await core.SiteUpdate(deviceUserModel.Id, fullName, deviceUserModel.UserFirstName,
+                            deviceUserModel.UserLastName, workerDto.Email);
 
                         return isUpdated
                             ? new OperationResult(true, _localizationService.GetString("DeviceUserUpdatedSuccessfully"))
                             : new OperationResult(false,
-                                _localizationService.GetStringWithFormat("DeviceUserParamCouldNotBeUpdated", simpleSiteModel.Id));
+                                _localizationService.GetStringWithFormat("DeviceUserParamCouldNotBeUpdated", deviceUserModel.Id));
                     }
 
                     return new OperationResult(false, _localizationService.GetString("DeviceUserCouldNotBeObtained"));
@@ -130,14 +131,14 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public OperationResult Delete(int id)
+        public async Task<OperationResult> Delete(int id)
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var siteNameDto = core.Advanced_SiteItemRead(id);
+                var core = await _coreHelper.GetCore();
+                var siteNameDto = await core.Advanced_SiteItemRead(id);
 
-                return core.SiteDelete(siteNameDto.SiteUId)
+                return await core.SiteDelete(siteNameDto.SiteUId)
                     ? new OperationResult(true,
                         _localizationService.GetStringWithFormat("DeviceUserParamDeletedSuccessfully", siteNameDto.SiteName))
                     : new OperationResult(false,

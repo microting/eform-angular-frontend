@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
-import {SimpleSiteModel} from 'src/app/common/models/device-users';
+import {DeviceUserModel} from 'src/app/common/models/device-users';
 import {SiteDto} from 'src/app/common/models/dto';
 import {UnitsService} from 'src/app/common/services/advanced';
 import {AuthService} from 'src/app/common/services/auth';
@@ -16,7 +16,7 @@ export class DeviceUsersPageComponent implements OnInit {
   @ViewChild('deleteDeviceUserModal', { static: true }) deleteDeviceUserModal;
 
   selectedSimpleSiteDto: SiteDto = new SiteDto;
-  selectedSimpleSite: SimpleSiteModel = new SimpleSiteModel;
+  selectedSimpleSite: DeviceUserModel = new DeviceUserModel;
   spinnerStatus = true;
   sitesDto: Array<SiteDto>;
 
@@ -54,7 +54,7 @@ export class DeviceUsersPageComponent implements OnInit {
 
   loadAllSimpleSites() {
     this.spinnerStatus = true;
-    this.deviceUsersService.getAllSimpleSites().subscribe(operation => {
+    this.deviceUsersService.getAllDeviceUsers().subscribe(operation => {
       if (operation && operation.success) {
         this.sitesDto = operation.model;
       }

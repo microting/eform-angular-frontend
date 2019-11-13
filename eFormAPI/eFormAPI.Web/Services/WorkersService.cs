@@ -23,6 +23,7 @@ SOFTWARE.
 */
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Advanced;
 using eFormAPI.Web.Infrastructure;
@@ -48,29 +49,29 @@ namespace eFormAPI.Web.Services
         }
 
         [Authorize(Policy = AuthConsts.EformPolicies.Workers.Read)]
-        public OperationDataResult<List<Worker_Dto>> Index()
+        public async Task<OperationDataResult<List<Worker_Dto>>> Index()
         {
-            var core = _coreHelper.GetCore();
-            var workersDto = core.Advanced_WorkerReadAll("not_removed", null, null);
+            var core = await _coreHelper.GetCore();
+            var workersDto = await core.Advanced_WorkerReadAll("not_removed", null, null);
 
             return new OperationDataResult<List<Worker_Dto>>(true, workersDto);
         }
 
-        public OperationDataResult<Worker_Dto> Edit(int id)
+        public async Task<OperationDataResult<Worker_Dto>> Edit(int id)
         {
-            var core = _coreHelper.GetCore();
-            var workerDto = core.Advanced_WorkerRead(id);
+            var core = await _coreHelper.GetCore();
+            var workerDto = await core.Advanced_WorkerRead(id);
 
             return new OperationDataResult<Worker_Dto>(true, workerDto);
         }
 
-        public OperationResult Update(WorkerModel workerModel)
+        public async Task<OperationResult> Update(WorkerModel workerModel)
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var workerDto = core.Advanced_WorkerRead(workerModel.Id);
-                var isUpdated = core.Advanced_WorkerUpdate(workerModel.Id, workerModel.UserFirstName,
+                var core = await _coreHelper.GetCore();
+                var workerDto = await core.Advanced_WorkerRead(workerModel.Id);
+                var isUpdated = await core.Advanced_WorkerUpdate(workerModel.Id, workerModel.UserFirstName,
                     workerModel.UserLastName, workerDto.Email);
 
                 return isUpdated
@@ -83,12 +84,12 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public OperationResult Сreate(WorkerCreateModel model)
+        public async Task<OperationResult> Сreate(WorkerCreateModel model)
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var workerDto = core.Advanced_WorkerCreate(model.FirstName, model.LastName,
+                var core = await _coreHelper.GetCore();
+                var workerDto = await core.Advanced_WorkerCreate(model.FirstName, model.LastName,
                     model.SiteId + "." + model.CustomerNo + "@invalid.invalid");
                 var createdWorker =
                     core.Advanced_SiteWorkerCreate(new SiteName_Dto(model.SiteId, "", null, null), workerDto);
@@ -102,12 +103,12 @@ namespace eFormAPI.Web.Services
         }
 
         [HttpGet]
-        public OperationResult Delete(int id)
+        public async Task<OperationResult> Delete(int id)
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var workerDto = core.Advanced_WorkerRead(id);
+                var core = await _coreHelper.GetCore();
+                var workerDto = await core.Advanced_WorkerRead(id);
 
                 if (workerDto.Equals(null))
                 {
@@ -115,7 +116,7 @@ namespace eFormAPI.Web.Services
                         _localizationService.GetStringWithFormat("SiteWithIdCouldNotBeDeleted", id));
                 }
 
-                return core.Advanced_WorkerDelete(id)
+                return await core.Advanced_WorkerDelete(id)
                     ? new OperationDataResult<SiteNameModel>(true,
                         _localizationService.GetStringWithFormat(
                             "WorkerParamDeletedSuccessfully",

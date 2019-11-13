@@ -25,22 +25,27 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions.Security;
 using eFormAPI.Web.Infrastructure;
 using eFormAPI.Web.Infrastructure.Database;
+using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Hosting.Enums;
 
 namespace eFormAPI.Web.Services.Security
 {
     public class ClaimsService : IClaimsService
     {
         private readonly BaseDbContext _dbContext;
+        private readonly IPluginPermissionsService _pluginPermissionsService;
 
-        public ClaimsService(BaseDbContext dbContext)
+        public ClaimsService(BaseDbContext dbContext, IPluginPermissionsService pluginPermissionsService)
         {
             _dbContext = dbContext;
+            _pluginPermissionsService = pluginPermissionsService;
         }
 
-        public List<Claim> GetUserClaims(int userId)
+        public async Task<List<Claim>> GetUserClaims(int userId)
         {
             try
             {
@@ -59,6 +64,8 @@ namespace eFormAPI.Web.Services.Security
                     {
                         claims.Add(new Claim(claimName, AuthConsts.ClaimDefaultValue));
                     });
+
+                    claims.AddRange(await GetPluginGroupClaims(groups));
                 }
 
                 return claims;
@@ -70,11 +77,11 @@ namespace eFormAPI.Web.Services.Security
             }
         }
 
-        public List<string> GetUserClaimsNames(int userId)
+        public async Task<List<string>> GetUserClaimsNames(int userId)
         {
             try
             {
-                var claims = GetUserClaims(userId);
+                var claims = await GetUserClaims(userId);
                 var result = new List<string>();
                 if (claims.Any())
                 {
@@ -89,9 +96,9 @@ namespace eFormAPI.Web.Services.Security
             }
         }
 
-        public List<Claim> GetAllAuthClaims()
+        public async Task<List<Claim>> GetAllAuthClaims()
         {
-            return new List<Claim>()
+            var claims = new List<Claim>()
             {
                 // Workers
                 new Claim(AuthConsts.EformClaims.WorkersClaims.Read, AuthConsts.ClaimDefaultValue),
@@ -148,6 +155,55 @@ namespace eFormAPI.Web.Services.Security
                 new Claim(AuthConsts.EformClaims.EformsClaims.ReadJasperReport, AuthConsts.ClaimDefaultValue),
                 new Claim(AuthConsts.EformClaims.EformsClaims.UpdateJasperReport, AuthConsts.ClaimDefaultValue),
             };
+
+            claims.AddRange(await GetAllPLuginClaims());
+
+            return claims;
+        }
+
+        private async Task<List<Claim>> GetAllPLuginClaims()
+        {
+            var claims = new List<Claim>();
+
+            foreach (var eformPlugin in _dbContext.EformPlugins.Where(p => p.Status == (int)PluginStatus.Enabled))
+            {
+                var permissionManager = await _pluginPermissionsService.GetPermissionsManager(eformPlugin.Id);
+
+                if (permissionManager == null) continue;
+
+                var pluginPermissions = await permissionManager.GetPluginPermissions();
+                claims.AddRange(pluginPermissions.Select(p => new Claim(p.ClaimName, AuthConsts.ClaimDefaultValue)));
+            }
+
+            return claims;
+        }
+
+        private async Task<List<Claim>> GetPluginGroupClaims(ICollection<int> groups)
+        {
+            var claims = new List<Claim>();
+
+            foreach (var eformPlugin in _dbContext.EformPlugins.Where(p => p.Status == (int)PluginStatus.Enabled))
+            {
+                var permissionManager = await _pluginPermissionsService.GetPermissionsManager(eformPlugin.Id);
+
+                if (permissionManager == null) continue;
+
+                foreach (var group in groups)
+                {
+                    var pluginGroupPermissions = await permissionManager.GetPluginGroupPermissions(group);
+                    var pluginClaims = pluginGroupPermissions
+                        .FirstOrDefault(p => p.GroupId == group)?.Permissions
+                        .Where(p => p.IsEnabled)
+                        .Select(p => new Claim(p.ClaimName, AuthConsts.ClaimDefaultValue));
+
+                    if (pluginClaims != null)
+                    {
+                        claims.AddRange(pluginClaims);
+                    }
+                }
+            }
+
+            return claims;
         }
     }
 }

@@ -21,6 +21,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
+using System.Threading.Tasks;
 using eFormAPI.Web.Infrastructure.Models.Cases.Request;
 using eFormAPI.Web.Infrastructure.Models.Cases.Response;
 using Microting.eForm.Infrastructure.Models;
@@ -30,9 +32,9 @@ namespace eFormAPI.Web.Abstractions.Eforms
 {
     public interface ICasesService
     {
-        OperationDataResult<CaseListModel> Index(CaseRequestModel requestModel);
-        OperationDataResult<ReplyElement> GetCase(int id);
-        OperationResult Delete(int id);
-        OperationResult Update(ReplyRequest model);
+        Task<OperationDataResult<CaseListModel>> Index(CaseRequestModel requestModel);
+        Task<OperationDataResult<ReplyElement>> GetCase(int id);
+        Task<OperationResult> Delete(int id);
+        Task<OperationResult> Update(ReplyRequest model);
     }
 }

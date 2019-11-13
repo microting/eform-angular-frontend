@@ -23,7 +23,7 @@ namespace eFormAPI.Web.Migrations
                 autoIDGenStrategyValue = MySqlValueGenerationStrategy.IdentityColumn;
             }
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
 
@@ -949,7 +949,7 @@ namespace eFormAPI.Web.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedByUserId = 0,
                             E2EId = "device-users",
-                            Link = "/simplesites",
+                            Link = "/device-users",
                             LocaleName = "DeviceUsers",
                             MenuPosition = 1,
                             Name = "Device Users",

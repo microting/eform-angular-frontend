@@ -59,8 +59,8 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                EntityGroupList model = core.Advanced_EntityGroupAll(requestModel.Sort, requestModel.NameFilter,
+                var core = await _coreHelper.GetCore();
+                EntityGroupList model = await core.Advanced_EntityGroupAll(requestModel.Sort, requestModel.NameFilter,
                     requestModel.PageIndex, requestModel.PageSize, Constants.FieldTypes.EntitySearch,
                     requestModel.IsSortDsc,
                     Constants.WorkflowStates.NotRemoved);
@@ -88,19 +88,19 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public OperationResult CreateEntityGroup(AdvEntitySearchableGroupEditModel editModel)
+        public async Task<OperationResult> CreateEntityGroup(AdvEntitySearchableGroupEditModel editModel)
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var groupCreate = core.EntityGroupCreate(Constants.FieldTypes.EntitySearch, editModel.Name);
+                var core = await _coreHelper.GetCore();
+                var groupCreate = await core.EntityGroupCreate(Constants.FieldTypes.EntitySearch, editModel.Name);
                 if (editModel.AdvEntitySearchableItemModels.Any())
                 {
-                    var entityGroup = core.EntityGroupRead(groupCreate.MicrotingUUID);
+                    var entityGroup = await core.EntityGroupRead(groupCreate.MicrotingUUID);
                     var nextItemUid = entityGroup.EntityGroupItemLst.Count;
                     foreach (var entityItem in editModel.AdvEntitySearchableItemModels)
                     {
-                        core.EntitySearchItemCreate(entityGroup.Id, entityItem.Name, entityItem.Description,
+                        await core.EntitySearchItemCreate(entityGroup.Id, entityItem.Name, entityItem.Description,
                             nextItemUid.ToString());
 
                         //entityGroup.EntityGroupItemLst.Add(new EntityItem(entityItem.Name,
@@ -120,17 +120,17 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public OperationResult UpdateEntityGroup(AdvEntitySearchableGroupEditModel editModel)
+        public async Task<OperationResult> UpdateEntityGroup(AdvEntitySearchableGroupEditModel editModel)
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var entityGroup = core.EntityGroupRead(editModel.GroupUid);
+                var core = await _coreHelper.GetCore();
+                var entityGroup = await core.EntityGroupRead(editModel.GroupUid);
 
                 if (entityGroup.Name != editModel.Name)
                 {
                     entityGroup.Name = editModel.Name;
-                    core.EntityGroupUpdate(entityGroup);
+                    await core.EntityGroupUpdate(entityGroup);
                 }
 
                 var nextItemUid = entityGroup.EntityGroupItemLst.Count;
@@ -140,13 +140,13 @@ namespace eFormAPI.Web.Services
                 {
                     if (string.IsNullOrEmpty(entityItem.MicrotingUUID))
                     {
-                        var et = core.EntitySearchItemCreate(entityGroup.Id, entityItem.Name,
+                        var et = await core.EntitySearchItemCreate(entityGroup.Id, entityItem.Name,
                             entityItem.Description, nextItemUid.ToString());
                         currentIds.Add(et.Id);
                     }
                     else
                     {
-                        core.EntityItemUpdate(entityItem.Id, entityItem.Name, entityItem.Description,
+                        await core.EntityItemUpdate(entityItem.Id, entityItem.Name, entityItem.Description,
                             entityItem.EntityItemUId, entityItem.DisplayIndex);
                         currentIds.Add(entityItem.Id);
                     }
@@ -158,7 +158,7 @@ namespace eFormAPI.Web.Services
                 {
                     if (!currentIds.Contains(entityItem.Id))
                     {
-                        core.EntityItemDelete(entityItem.Id);
+                        await core.EntityItemDelete(entityItem.Id);
                     }
                 }
 
@@ -171,13 +171,13 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public OperationDataResult<EntityGroup> GetEntityGroup(string entityGroupUid)
+        public async Task<OperationDataResult<EntityGroup>> GetEntityGroup(string entityGroupUid)
         {
             try
             {
-                var core = _coreHelper.GetCore();
+                var core = await _coreHelper.GetCore();
 
-                var entityGroup = core.EntityGroupRead(entityGroupUid);
+                var entityGroup = await core.EntityGroupRead(entityGroupUid);
 
                 return new OperationDataResult<EntityGroup>(true, entityGroup);
             }
@@ -188,14 +188,14 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public OperationDataResult<List<CommonDictionaryTextModel>> GetEntityGroupDictionary(string entityGroupUid,
+        public async Task<OperationDataResult<List<CommonDictionaryTextModel>>> GetEntityGroupDictionary(string entityGroupUid,
             string searchString)
         {
             try
             {
-                var core = _coreHelper.GetCore();
+                var core = await _coreHelper.GetCore();
 
-                var entityGroup = core.EntityGroupRead(entityGroupUid, "Name", searchString);
+                var entityGroup = await core.EntityGroupRead(entityGroupUid, "Name", searchString);
 
                 var mappedEntityGroupDict = new List<CommonDictionaryTextModel>();
 
@@ -217,14 +217,14 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public OperationResult DeleteEntityGroup(string entityGroupUid)
+        public async Task<OperationResult> DeleteEntityGroup(string entityGroupUid)
         {
             try
             {
-                var core = _coreHelper.GetCore();
+                var core = await _coreHelper.GetCore();
 
 
-                return core.EntityGroupDelete(entityGroupUid)
+                return await core.EntityGroupDelete(entityGroupUid)
                     ? new OperationResult(true, _localizationService.GetStringWithFormat("ParamDeletedSuccessfully", entityGroupUid))
                     : new OperationResult(false, _localizationService.GetString("ErrorWhenDeletingSearchableList"));
             }
@@ -234,11 +234,11 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public OperationResult SendSearchableGroup(string entityGroupUid)
+        public async Task<OperationResult> SendSearchableGroup(string entityGroupUid)
         {
             try
             {
-                var core = _coreHelper.GetCore();
+                var core = await _coreHelper.GetCore();
 
 
                 return new OperationResult(true, _localizationService.GetStringWithFormat("ParamDeletedSuccessfully", entityGroupUid));

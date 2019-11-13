@@ -70,8 +70,8 @@ namespace eFormAPI.Web.Services.Security
                 {
                     Templates = new List<Template_Dto>()
                 };
-                var core = _coreHelper.GetCore();
-                var templatesDto = core.TemplateItemReadAll(false,
+                var core = await _coreHelper.GetCore();
+                var templatesDto = await core.TemplateItemReadAll(false,
                     "",
                     templateRequestModel.NameFilter,
                     templateRequestModel.IsSortDsc,
@@ -192,8 +192,8 @@ namespace eFormAPI.Web.Services.Security
                             }).ToList()
                     })
                     .ToListAsync();
-                var core = _coreHelper.GetCore();
-                var templatesDto = core.TemplateItemReadAll(false);
+                var core = await _coreHelper.GetCore();
+                var templatesDto = await core.TemplateItemReadAll(false);
                 foreach (var eformInGroups in eformsInGroup)
                 {
                     var template = templatesDto.FirstOrDefault(x => x.Id == eformInGroups.TemplateId);

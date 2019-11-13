@@ -10,6 +10,7 @@ import {PluginsManagementRouting} from './plugins-management.routing';
 import { InstalledPluginEditComponent, InstalledPluginsPageComponent,
   MarketplacePluginsPageComponent, MarketplacePluginInstallComponent } from './components';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import { InstalledPluginPermissionsComponent } from './components/installed/installed-plugin-permissions/installed-plugin-permissions.component';
 
 
 @NgModule({
@@ -24,6 +25,6 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
     FontAwesomeModule
   ],
   declarations: [InstalledPluginsPageComponent, InstalledPluginEditComponent,
-    MarketplacePluginsPageComponent, MarketplacePluginInstallComponent]
+    MarketplacePluginsPageComponent, MarketplacePluginInstallComponent, InstalledPluginPermissionsComponent]
 })
 export class PluginsManagementModule { }

@@ -61,9 +61,9 @@ namespace eFormAPI.Web.Controllers
             }
             string fileType = $"image/{ext}";
                 
-            var core = _coreHelper.GetCore();
+            var core = await _coreHelper.GetCore();
             
-            if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
+            if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true")
             {
                 var ss =  await core.GetFileFromSwiftStorage(fileName);
                 
@@ -79,7 +79,7 @@ namespace eFormAPI.Web.Controllers
 //                return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty("application/octet-stream"), fileName);
             }
 
-            if (core.GetSdkSetting(Settings.s3Enabled).ToLower() == "true")
+            if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
             {
                 var ss = await core.GetFileFromS3Storage($"{fileName}.{ext}");
 
@@ -111,9 +111,9 @@ namespace eFormAPI.Web.Controllers
             }
             
             string fileType = $"image/{ext}";
-            var core = _coreHelper.GetCore();
+            var core = await _coreHelper.GetCore();
             
-            if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true")
+            if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true")
             {
                 var ss =  await core.GetFileFromSwiftStorage(fileName);
                 
@@ -128,7 +128,7 @@ namespace eFormAPI.Web.Controllers
                 return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty(fileType), fileName);                
             }
 
-            if (core.GetSdkSetting(Settings.s3Enabled).ToLower() == "true")
+            if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
             {
                 var ss = await core.GetFileFromS3Storage($"{fileName}.{ext}");
 
@@ -173,10 +173,10 @@ namespace eFormAPI.Web.Controllers
                     {
                         await file.CopyToAsync(stream);
 
-                        var core = _coreHelper.GetCore();
-                        if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true" || core.GetSdkSetting(Settings.s3Enabled).ToLower() == "true")
+                        var core = await _coreHelper.GetCore();
+                        if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true" || core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
                         {
-                            core.PutFileToStorageSystem(filePath, file.FileName);
+                            await core.PutFileToStorageSystem(filePath, file.FileName);
                         }
                     }
                     iUploadedCnt++;
@@ -216,10 +216,10 @@ namespace eFormAPI.Web.Controllers
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
                         await file.CopyToAsync(stream);
-                        var core = _coreHelper.GetCore();
-                        if (core.GetSdkSetting(Settings.swiftEnabled).ToLower() == "true" || core.GetSdkSetting(Settings.s3Enabled).ToLower() == "true")
+                        var core = await _coreHelper.GetCore();
+                        if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true" || core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
                         {
-                            core.PutFileToStorageSystem(filePath, file.FileName);
+                            await core.PutFileToStorageSystem(filePath, file.FileName);
                         }
                     }
                     iUploadedCnt++;

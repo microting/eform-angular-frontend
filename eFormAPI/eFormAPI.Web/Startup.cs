@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System;
+using System.Linq;
 using System.Collections.Generic;
-using System.IO;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Advanced;
 using eFormAPI.Web.Abstractions.Eforms;
@@ -52,6 +52,8 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Localization;
 using Microting.eFormApi.BasePn.Localization.Abstractions;
 using Microting.eFormApi.BasePn.Services;
+using System.Threading.Tasks;
+using eFormAPI.Web.Infrastructure.Database.Factories;
 
 namespace eFormAPI.Web
 {
@@ -124,7 +126,7 @@ namespace eFormAPI.Web
             });
 
             // Authentication
-            services.AddEFormAuth(Configuration);
+            services.AddEFormAuth(Configuration, GetPluginsPermissions());
             // Localiation
             services.AddTransient<IEformLocalizerFactory, JsonStringLocalizerFactory>();
             services.AddTransient<IStringLocalizerFactory, ResourceManagerStringLocalizerFactory>();
@@ -180,6 +182,11 @@ namespace eFormAPI.Web
                     Name = "Authorization",
                     In = "header",
                     Type = "apiKey"
+                });
+                
+                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>()
+                {
+                    { "Bearer", new string[] {}}
                 });
             });
             // plugins
@@ -256,7 +263,7 @@ namespace eFormAPI.Web
             services.AddScoped<IWorkersService, WorkersService>();
             services.AddScoped<ISitesService, SitesService>();
             services.AddScoped<IFoldersService, FoldersService>();
-            services.AddScoped<ISimpleSitesService, SimpleSitesService>();
+            services.AddScoped<IDeviceUsersService, DeviceUsersService>();
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<IEntitySearchService, EntitySearchService>();
             services.AddScoped<IEntitySelectService, EntitySelectService>();
@@ -275,6 +282,33 @@ namespace eFormAPI.Web
             services.AddScoped<IEformPermissionsService, EformPermissionsService>();
             services.AddScoped<IEformReportsService, EformReportsService>();
             services.AddScoped<IPluginsManagementService, PluginsManagementService>();
+            services.AddScoped<IPluginPermissionsService, PluginPermissionsService>();
+        }
+
+        private ICollection<PluginPermissionModel> GetPluginsPermissions()
+        {
+            
+            var permissions = new List<PluginPermissionModel>();
+            if (Configuration.MyConnectionString() != "...")
+            {
+                var contextFactory = new BaseDbContextFactory();
+                using (var dbContext = contextFactory.CreateDbContext(new[] { Configuration.MyConnectionString() }))
+                {
+                    foreach (var eformPlugin in dbContext.EformPlugins
+                        .AsNoTracking()
+                        .Where(x => x.ConnectionString != "..."))
+                    {
+                        var plugin = Program.Plugins.FirstOrDefault(p => p.PluginId == eformPlugin.PluginId);
+                        if (plugin != null)
+                        {
+                            var permissionsManager = plugin.GetPermissionsManager(eformPlugin.ConnectionString);
+                            permissions.AddRange(permissionsManager.GetPluginPermissions().Result);
+                        }
+                    }
+                }
+            }
+
+            return permissions;
         }
     }
 }

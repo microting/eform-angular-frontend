@@ -23,10 +23,10 @@
             <div class="mr-auto">
             </div>
             <div class="d-inline-flex">
-              <button class="btn btn-success btn-icon" (click)="modalSearchImportList.show()">
+              <button id="importEntitySearchBtn" class="btn btn-success btn-icon" (click)="modalSearchImportList.show()">
                 <i class="material-icons">format_list_bulleted</i>
               </button>
-              <button class="btn btn-success btn-icon" (click)="addNewAdvEntitySelectableItem()">
+              <button class="btn btn-success btn-icon" (click)="addNewAdvEntitySelectableItem()" id="addSingleEntitySearchableItem">
                 <i class="material-icons">add</i>
               </button>
             </div>
@@ -52,10 +52,12 @@
                         <fa-icon icon="exclamation-triangle" size="lg" [fixedWidth]="true" *ngIf="!entityItem.name"
                                  mdbTooltip="{{'Name is required' | translate}}!"></fa-icon>
                         <a>
-                          <fa-icon icon="pen" size="lg" [fixedWidth]="true" (click)="openModalSearchEditName(entityItem)"></fa-icon>
+                          <fa-icon icon="pen" size="lg" [fixedWidth]="true" (click)="openModalSearchEditName(entityItem)"
+                                   id="entitySearchCreateSingleItemEdit"></fa-icon>
                         </a>
                         <a>
-                          <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true" (click)="deleteAdvEntitySelectableItem(entityItem.entityItemUId)"></fa-icon>
+                          <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true" (click)="deleteAdvEntitySelectableItem(entityItem.entityItemUId)"
+                                   id="entitySearchCreateSingleItemDelete"></fa-icon>
                         </a>
                       </div>
                     </div>
