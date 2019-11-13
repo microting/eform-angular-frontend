@@ -19,46 +19,46 @@ export const routes: Routes = [
       {
         path: '',
         canActivate: [AuthGuard],
-        loadChildren: './modules/eforms/eforms.module#EFormsModule'
+        loadChildren: () => import('./modules/eforms/eforms.module').then(m => m.EFormsModule)
       },
       {
         path: 'advanced',
         canActivate: [AuthGuard],
-        loadChildren: './modules/advanced/advanced.module#AdvancedModule'
+        loadChildren: () => import('./modules/advanced/advanced.module').then(m => m.AdvancedModule)
       },
       {
         path: 'simplesites',
         canActivate: [AuthGuard],
-        loadChildren: './modules/device-users/device-users.module#DeviceUsersModule'
+        loadChildren: () => import('./modules/device-users/device-users.module').then(m => m.DeviceUsersModule)
       },
       {
         path: 'cases',
         canActivate: [AuthGuard],
-        loadChildren: './modules/cases/cases.module#CasesModule'
+        loadChildren: () => import('./modules/cases/cases.module').then(m => m.CasesModule)
       },
       {
         path: 'application-settings',
-        loadChildren: './modules/application-settings/application-settings.module#ApplicationSettingsModule'
+        loadChildren: () => import('./modules/application-settings/application-settings.module').then(m => m.ApplicationSettingsModule)
       },
       {
         path: 'plugins-settings',
         canActivate: [AdminGuard],
-        loadChildren: './modules/plugins-management/plugins-management.module#PluginsManagementModule'
+        loadChildren: () => import('./modules/plugins-management/plugins-management.module').then(m => m.PluginsManagementModule)
       },
       {
         path: 'account-management',
         canActivate: [AuthGuard],
-        loadChildren: './modules/account-management/account-management.module#AccountManagementModule'
+        loadChildren: () => import('./modules/account-management/account-management.module').then(m => m.AccountManagementModule)
       },
       {
         path: 'security',
         canActivate: [AdminGuard],
-        loadChildren: './modules/security/security.module#SecurityModule'
+        loadChildren: () => import('./modules/security/security.module').then(m => m.SecurityModule)
       },
       {
         path: 'plugins',
         canActivate: [AuthGuard],
-        loadChildren: './plugins/plugins.module#PluginsModule'
+        loadChildren: () => import('./plugins/plugins.module').then(m => m.PluginsModule)
       }
     ]
   },
@@ -68,7 +68,7 @@ export const routes: Routes = [
     data: {
       title: 'Auth'
     },
-    loadChildren: './modules/auth/auth.module#AuthModule'
+    loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule)
   },
   // otherwise redirect to home
   {path: '**', redirectTo: ''}
