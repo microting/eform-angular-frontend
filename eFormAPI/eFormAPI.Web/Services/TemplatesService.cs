@@ -39,6 +39,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microsoft.Extensions.Options;
 using Microting.eForm.Dto;
 using Microting.eForm.Infrastructure.Models;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 
 namespace eFormAPI.Web.Services
 {
@@ -122,6 +123,8 @@ namespace eFormAPI.Web.Services
             }
             catch (Exception ex)
             {
+                Log.LogException($"TemplatesService.Index: Got exception {ex.Message}");
+                Log.LogException($"TemplatesService.Index: Got stacktrace {ex.StackTrace}");
                 if (ex.Message.Contains("PrimeDb"))
                 {
                     var sdkConnectionString = _connectionStringsSdk.Value.SdkConnection;
@@ -131,13 +134,13 @@ namespace eFormAPI.Web.Services
                         _localizationService.GetString("CheckConnectionString"));
                 }
 
-                if (ex.InnerException.Message.Contains("Cannot open database"))
+                if (ex.InnerException != null && ex.InnerException.Message.Contains("Cannot open database"))
                 {
                     try
                     {
                         var core = await _coreHelper.GetCore();
                     }
-                    catch (Exception)
+                    catch (Exception ex2)
                     {
                         return new OperationDataResult<TemplateListModel>(false,
                             _localizationService.GetString("CoreIsNotStarted"));
