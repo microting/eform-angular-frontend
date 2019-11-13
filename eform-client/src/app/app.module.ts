@@ -30,7 +30,6 @@ import {
 } from './components';
 // import {assertLessThan} from '@angular/core/src/render3/assert';
 // import {importedIcons} from 'src/app/common/const';
-import {GoogleChartsModule} from 'angular-google-charts';
 import {NgxChartsModule} from '@microting/ngx-charts';
 @NgModule({
   declarations: [
@@ -59,7 +58,6 @@ import {NgxChartsModule} from '@microting/ngx-charts';
     LightboxModule,
     GallerizeModule,
     FontAwesomeModule,
-    GoogleChartsModule,
     NgxChartsModule,
     // Modules
     PluginsModule
