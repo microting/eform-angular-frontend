@@ -15,9 +15,9 @@ import {AuthService, SecurityGroupsService, AdminService, UserSettingsService} f
   templateUrl: './users-page.component.html',
 })
 export class UsersPageComponent implements OnInit {
-  @ViewChild('userEditModal') userEditModal;
-  @ViewChild('removeUserModal') removeUserModal;
-  @ViewChild('newUserModal') newUserModal;
+  @ViewChild('userEditModal', { static: true }) userEditModal;
+  @ViewChild('removeUserModal', { static: true }) removeUserModal;
+  @ViewChild('newUserModal', { static: true }) newUserModal;
 
   localPageSettings: PageSettingsModel = new PageSettingsModel();
   paginationModel: PaginationModel = new PaginationModel(1, 5, 0);

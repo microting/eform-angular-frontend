@@ -12,7 +12,7 @@ import {AdminService} from 'src/app/common/services/users';
   styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent implements OnInit {
-  @ViewChild('navigationMenu') menuElement: ElementRef;
+  @ViewChild('navigationMenu', { static: true }) menuElement: ElementRef;
   private _menuFlag = false;
   userInfo: UserInfoModel = new UserInfoModel;
   userMenu: any;

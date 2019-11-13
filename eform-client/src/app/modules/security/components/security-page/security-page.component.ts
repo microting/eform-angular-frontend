@@ -9,7 +9,7 @@ import {SecurityGroupsService, UserSettingsService} from 'src/app/common/service
   styleUrls: ['./security-page.component.scss']
 })
 export class SecurityPageComponent implements OnInit {
-  @ViewChild('modalGroupDelete') modalGroupDelete;
+  @ViewChild('modalGroupDelete', { static: true }) modalGroupDelete;
   securityGroups: SecurityGroupsModel = new SecurityGroupsModel();
   securityGroupsRequestModel: SecurityGroupsRequestModel = new SecurityGroupsRequestModel();
   localPageSettings: PageSettingsModel = new PageSettingsModel();

@@ -10,7 +10,7 @@ import {UnitsService} from 'src/app/common/services/advanced';
 export class UnitsOtpCodeComponent implements OnInit {
   @Input() selectedUnitModel: UnitDto = new UnitDto();
   @Output() onUnitOtpRewoked: EventEmitter<void> = new EventEmitter<void>();
-  @ViewChild('frame') frame;
+  @ViewChild('frame', { static: true }) frame;
   spinnerStatus = false;
 
   constructor(private unitsService: UnitsService) { }

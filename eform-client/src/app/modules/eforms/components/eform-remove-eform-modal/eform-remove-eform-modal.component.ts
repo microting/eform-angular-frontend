@@ -8,7 +8,7 @@ import {EFormService} from 'src/app/common/services/eform';
   styleUrls: ['./eform-remove-eform-modal.component.scss']
 })
 export class EformRemoveEformModalComponent implements OnInit {
-  @ViewChild('frame') frame;
+  @ViewChild('frame', { static: true }) frame;
   @Output() onEFormDeleted: EventEmitter<void> = new EventEmitter();
   selectedTemplateDto: TemplateDto = new TemplateDto();
   spinnerStatus = false;

@@ -10,7 +10,7 @@ import {TemplateDto} from 'src/app/common/models/dto';
   styleUrls: ['./eform-upload-zip-modal.component.scss']
 })
 export class EformUploadZipModalComponent implements OnInit {
-  @ViewChild('frame') frame;
+  @ViewChild('frame', { static: true }) frame;
   selectedTemplate: TemplateDto = new TemplateDto();
   zipFileUploader: FileUploader = new FileUploader({url: '/api/template-files/upload-eform-zip'});
 

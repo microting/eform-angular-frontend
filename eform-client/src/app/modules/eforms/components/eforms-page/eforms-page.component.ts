@@ -19,12 +19,12 @@ import {FolderDto} from '../../../../common/models/dto/folder.dto';
 })
 export class EformsPageComponent implements OnInit, OnDestroy {
 
-  @ViewChild('modalNewEform') newEformModal;
-  @ViewChild('modalCasesColumns') modalCasesColumnsModal;
-  @ViewChild('modalParing') modalPairing;
-  @ViewChild('modalEditTags') modalEditTags;
-  @ViewChild('modalRemoveEform') modalRemoveEform;
-  @ViewChild('modalUploadZip') modalUploadZip;
+  @ViewChild('modalNewEform', { static: true }) newEformModal;
+  @ViewChild('modalCasesColumns', { static: true }) modalCasesColumnsModal;
+  @ViewChild('modalParing', { static: true }) modalPairing;
+  @ViewChild('modalEditTags', { static: true }) modalEditTags;
+  @ViewChild('modalRemoveEform', { static: true }) modalRemoveEform;
+  @ViewChild('modalUploadZip', { static: true }) modalUploadZip;
 
   searchSubject = new Subject();
 

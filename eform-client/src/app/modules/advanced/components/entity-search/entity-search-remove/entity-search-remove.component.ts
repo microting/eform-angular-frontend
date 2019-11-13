@@ -8,7 +8,7 @@ import {EntitySearchService} from 'src/app/common/services/advanced';
   styleUrls: ['./entity-search-remove.component.scss']
 })
 export class EntitySearchRemoveComponent implements OnInit {
-  @ViewChild('frame') frame;
+  @ViewChild('frame', { static: true }) frame;
   @Output() onEntityRemoved: EventEmitter<void> = new EventEmitter<void>();
   selectedGroupModel: AdvEntitySearchableGroupModel = new AdvEntitySearchableGroupModel();
   spinnerStatus = false;

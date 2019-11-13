@@ -12,8 +12,8 @@ import {EntitySelectService} from 'src/app/common/services/advanced';
 })
 export class EntitySelectEditComponent implements OnInit {
   advEntitySelectableGroupEditModel: AdvEntitySelectableGroupEditModel = new AdvEntitySelectableGroupEditModel();
-  @ViewChild('frame') frame;
-  @ViewChild('modalSelectEditName') modalSelectEditName;
+  @ViewChild('frame', { static: true }) frame;
+  @ViewChild('modalSelectEditName', { static: true }) modalSelectEditName;
   @Output() onEntityGroupEdited: EventEmitter<void> = new EventEmitter<void>();
   selectedItem: AdvEntitySelectableItemModel = new AdvEntitySelectableItemModel();
   selectedGroupId: string;

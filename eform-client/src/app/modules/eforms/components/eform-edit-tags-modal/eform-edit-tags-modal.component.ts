@@ -11,7 +11,7 @@ import {EformTagService} from 'src/app/common/services/eform';
 })
 export class EformEditTagsModalComponent implements OnInit {
 
-  @ViewChild('frame') frame;
+  @ViewChild('frame', { static: true }) frame;
   @Output() onTagAdded: EventEmitter<void> = new EventEmitter<void>();
   @Output() onEFormTagsUpdated: EventEmitter<void> = new EventEmitter<void>();
   @Input() availableTags: Array<CommonDictionaryModel> = [];

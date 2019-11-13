@@ -11,9 +11,9 @@ import {DeviceUserService} from 'src/app/common/services/device-users';
   templateUrl: './device-users-page.component.html',
 })
 export class DeviceUsersPageComponent implements OnInit {
-  @ViewChild('editDeviceUserModal') editDeviceUserModal;
-  @ViewChild('newOtpModal') newOtpModal;
-  @ViewChild('deleteDeviceUserModal') deleteDeviceUserModal;
+  @ViewChild('editDeviceUserModal', { static: true }) editDeviceUserModal;
+  @ViewChild('newOtpModal', { static: true }) newOtpModal;
+  @ViewChild('deleteDeviceUserModal', { static: true }) deleteDeviceUserModal;
 
   selectedSimpleSiteDto: SiteDto = new SiteDto;
   selectedSimpleSite: SimpleSiteModel = new SimpleSiteModel;

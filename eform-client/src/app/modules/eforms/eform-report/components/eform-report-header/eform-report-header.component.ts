@@ -8,7 +8,7 @@ import {EformReportModel} from 'src/app/common/models/eforms/report';
 })
 export class EformReportHeaderComponent implements OnInit {
   @Input() reportModel: EformReportModel = new EformReportModel();
-  @ViewChild('reportCropperModal') reportCropperModal;
+  @ViewChild('reportCropperModal', { static: true }) reportCropperModal;
   constructor() { }
 
   ngOnInit() {

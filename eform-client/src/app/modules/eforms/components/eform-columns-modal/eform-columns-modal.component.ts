@@ -10,7 +10,7 @@ import {EFormService} from 'src/app/common/services/eform';
   styleUrls: ['./eform-columns-modal.component.scss']
 })
 export class EformColumnsModalComponent implements OnInit {
-  @ViewChild('frame') frame;
+  @ViewChild('frame', { static: true }) frame;
   spinnerStatus = false;
   selectedTemplateDto: TemplateDto = new TemplateDto();
   columnEditModel: UpdateColumnsModel = new UpdateColumnsModel;

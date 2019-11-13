@@ -10,7 +10,7 @@ import {AdminService} from 'src/app/common/services/users';
 export class RemoveUserModalComponent implements OnInit {
   @Input() selectedUser: UserInfoModel = new UserInfoModel;
   @Output() onUserDeleted: EventEmitter<void> = new EventEmitter<void>();
-  @ViewChild('frame') frame;
+  @ViewChild('frame', { static: true }) frame;
   spinnerStatus = false;
 
   constructor(private adminService: AdminService) { }

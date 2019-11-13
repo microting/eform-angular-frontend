@@ -7,7 +7,7 @@ import {MarketplacePluginModel} from '../../../../../common/models/plugins-manag
   styleUrls: ['./marketplace-plugin-install.component.scss']
 })
 export class MarketplacePluginInstallComponent implements OnInit {
-  @ViewChild('frame') frame;
+  @ViewChild('frame', { static: true }) frame;
   @Output() onMarketplacePluginInstall: EventEmitter<MarketplacePluginModel> = new EventEmitter();
   selectedPluginModel: MarketplacePluginModel = new MarketplacePluginModel();
 

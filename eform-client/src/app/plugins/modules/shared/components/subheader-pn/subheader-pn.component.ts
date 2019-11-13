@@ -7,7 +7,7 @@ import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 })
 export class SubheaderPnComponent implements OnInit {
 
-  @ViewChild('heading') heading: ElementRef;
+  @ViewChild('heading', { static: true }) heading: ElementRef;
 
   @Input() title = '';
   @Input() subtitle = '';

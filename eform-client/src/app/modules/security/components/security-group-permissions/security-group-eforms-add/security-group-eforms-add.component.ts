@@ -9,7 +9,7 @@ import {SecurityGroupEformsPermissionsService} from 'src/app/common/services/sec
   styleUrls: ['./security-group-eforms-add.component.scss']
 })
 export class SecurityGroupEformsAddComponent implements OnInit {
-  @ViewChild('frame') frame;
+  @ViewChild('frame', { static: true }) frame;
   @Input() templateListModel: TemplateListModel = new TemplateListModel();
   @Output() onEformBound: EventEmitter<void> = new EventEmitter<void>();
   @Output() onSearchInputChanged: EventEmitter<string> = new EventEmitter<string>();

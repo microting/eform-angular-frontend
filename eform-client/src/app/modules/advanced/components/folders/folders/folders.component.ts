@@ -11,9 +11,9 @@ import {FolderDto} from '../../../../../common/models/dto/folder.dto';
 
 export class FoldersComponent implements OnInit {
 
-  @ViewChild('modalFolderCreate') modalFolderCreate;
-  @ViewChild('modalFolderEdit') modalFolderEdit;
-  @ViewChild('modalFolderDelete') modalFolderDelete;
+  @ViewChild('modalFolderCreate', { static: true }) modalFolderCreate;
+  @ViewChild('modalFolderEdit', { static: true }) modalFolderEdit;
+  @ViewChild('modalFolderDelete', { static: true }) modalFolderDelete;
 
   selectedFolder: FolderDto = new FolderDto();
   spinnerStatus = true;

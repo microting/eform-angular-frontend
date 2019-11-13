@@ -9,7 +9,7 @@ import {AuthService} from 'src/app/common/services/auth';
 })
 export class UnitsComponent implements OnInit {
 
-  @ViewChild('modalUnitsOtpCode') modalUnitsOtpCode;
+  @ViewChild('modalUnitsOtpCode', { static: true }) modalUnitsOtpCode;
   spinnerStatus = false;
   unitModels: Array<UnitDto> = [];
   selectedUnitModel: UnitDto = new UnitDto();

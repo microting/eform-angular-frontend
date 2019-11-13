@@ -7,7 +7,7 @@ import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core'
 })
 export class EntitySearchImportListComponent implements OnInit {
   @Output() onImportSubmitted: EventEmitter<string> = new EventEmitter<string>();
-  @ViewChild('frame') frame;
+  @ViewChild('frame', { static: true }) frame;
   importString: string;
 
   constructor() { }

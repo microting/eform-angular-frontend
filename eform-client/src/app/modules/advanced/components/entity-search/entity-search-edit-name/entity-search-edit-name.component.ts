@@ -8,7 +8,7 @@ import {AdvEntitySearchableItemModel} from 'src/app/common/models/advanced';
 })
 export class EntitySearchEditNameComponent implements OnInit {
   @Output() onItemUpdated: EventEmitter<AdvEntitySearchableItemModel> = new EventEmitter<AdvEntitySearchableItemModel>();
-  @ViewChild('frame') frame;
+  @ViewChild('frame', { static: true }) frame;
   @Input() selectedAdvEntitySearchableItemModel: AdvEntitySearchableItemModel = new AdvEntitySearchableItemModel;
   name: string;
   constructor() { }

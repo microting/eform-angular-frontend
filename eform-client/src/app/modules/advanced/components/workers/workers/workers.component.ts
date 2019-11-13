@@ -12,9 +12,9 @@ import {DeviceUserService} from 'src/app/common/services/device-users';
 })
 export class WorkersComponent implements OnInit {
 
-  @ViewChild('modalWorkerEdit') modalWorkerEdit;
-  @ViewChild('modalWorkerCreate') modalWorkerCreate;
-  @ViewChild('modalWorkerDelete') modalWorkerDelete;
+  @ViewChild('modalWorkerEdit', { static: true }) modalWorkerEdit;
+  @ViewChild('modalWorkerCreate', { static: true }) modalWorkerCreate;
+  @ViewChild('modalWorkerDelete', { static: true }) modalWorkerDelete;
 
   spinnerStatus = true;
   selectedWorkerDto: WorkerDto = new WorkerDto();

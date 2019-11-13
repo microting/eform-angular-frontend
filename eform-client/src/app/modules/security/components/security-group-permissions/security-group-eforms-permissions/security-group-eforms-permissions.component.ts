@@ -15,9 +15,9 @@ import {SecurityGroupEformsPermissionsService} from 'src/app/common/services/sec
   styleUrls: ['./security-group-eforms-permissions.component.scss']
 })
 export class SecurityGroupEformsPermissionsComponent implements OnInit {
-  @ViewChild('eformBindModal') eformBindModal;
-  @ViewChild('eformEditPermissionsModal') eformEditPermissionsModal;
-  @ViewChild('eformDeleteFromGroupModal') eformDeleteFromGroupModal;
+  @ViewChild('eformBindModal', { static: true }) eformBindModal;
+  @ViewChild('eformEditPermissionsModal', { static: true }) eformEditPermissionsModal;
+  @ViewChild('eformDeleteFromGroupModal', { static: true }) eformDeleteFromGroupModal;
   templateRequestModel: TemplateRequestModel = new TemplateRequestModel;
   templateListModel: TemplateListModel = new TemplateListModel();
   eformSecurityModel: EformsPermissionsModel = new EformsPermissionsModel();

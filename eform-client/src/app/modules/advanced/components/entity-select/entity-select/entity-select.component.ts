@@ -14,9 +14,9 @@ import {AuthService, UserSettingsService} from 'src/app/common/services/auth';
   styleUrls: ['./entity-select.component.scss']
 })
 export class EntitySelectComponent implements OnInit {
-  @ViewChild('modalSelectRemove') modalSelectRemove;
-  @ViewChild('modalSelectCreate') modalSelectCreate;
-  @ViewChild('modalSelectEdit') modalSelectEdit;
+  @ViewChild('modalSelectRemove', { static: true }) modalSelectRemove;
+  @ViewChild('modalSelectCreate', { static: true }) modalSelectCreate;
+  @ViewChild('modalSelectEdit', { static: true }) modalSelectEdit;
   localPageSettings: PageSettingsModel = new PageSettingsModel();
   spinnerStatus: boolean;
   selectedAdvGroup: AdvEntitySelectableGroupModel = new AdvEntitySelectableGroupModel();

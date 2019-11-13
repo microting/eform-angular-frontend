@@ -15,9 +15,9 @@ import {AuthService, UserSettingsService} from 'src/app/common/services/auth';
   styleUrls: ['./entity-search.component.scss']
 })
 export class EntitySearchComponent implements OnInit {
-  @ViewChild('modalSearchRemove') modalSearchRemove;
-  @ViewChild('modalSearchCreate') modalSearchCreate;
-  @ViewChild('modalSearchEdit') modalSearchEdit;
+  @ViewChild('modalSearchRemove', { static: true }) modalSearchRemove;
+  @ViewChild('modalSearchCreate', { static: true }) modalSearchCreate;
+  @ViewChild('modalSearchEdit', { static: true }) modalSearchEdit;
   spinnerStatus: boolean;
   selectedAdvGroup: AdvEntitySearchableGroupModel = new AdvEntitySearchableGroupModel();
   advEntitySearchableGroupListModel: AdvEntitySearchableGroupListModel = new AdvEntitySearchableGroupListModel();

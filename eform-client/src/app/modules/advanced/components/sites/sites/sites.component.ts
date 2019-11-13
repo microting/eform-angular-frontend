@@ -9,8 +9,8 @@ import {AuthService} from 'src/app/common/services/auth';
   templateUrl: './sites.component.html'
 })
 export class SitesComponent implements OnInit {
-  @ViewChild('modalSiteEdit') modalSiteEdit;
-  @ViewChild('modalSiteDelete') modalSiteDelete;
+  @ViewChild('modalSiteEdit', { static: true }) modalSiteEdit;
+  @ViewChild('modalSiteDelete', { static: true }) modalSiteDelete;
   spinnerStatus = false;
   sitesDto: Array<SiteNameDto> = [];
   selectedSiteDto: SiteNameDto = new SiteNameDto();

@@ -9,7 +9,7 @@ import {PluginsManagementService} from '../../../../../common/services/plugins-m
   styleUrls: ['./installed-plugin-edit.component.scss']
 })
 export class InstalledPluginEditComponent implements OnInit {
-  @ViewChild('frame') frame;
+  @ViewChild('frame', { static: true }) frame;
   @Output() onInstalledPluginUpdate: EventEmitter<InstalledPluginUpdateModel> = new EventEmitter();
   selectedPluginSettings: InstalledPluginModel = new InstalledPluginModel();
   pluginSettingsUpdateModel: InstalledPluginUpdateModel = new InstalledPluginUpdateModel();

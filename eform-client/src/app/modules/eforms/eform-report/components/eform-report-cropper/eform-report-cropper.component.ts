@@ -7,7 +7,7 @@ import {ImageCroppedEvent} from 'ngx-image-cropper';
   styleUrls: ['./eform-report-cropper.component.scss']
 })
 export class EformReportCropperComponent implements OnInit {
-  @ViewChild('frame') frame;
+  @ViewChild('frame', { static: true }) frame;
   @Output() onImageCropped: EventEmitter<string> = new EventEmitter<string>();
   imageChangedEvent: any = '';
   croppedImage: any = '';

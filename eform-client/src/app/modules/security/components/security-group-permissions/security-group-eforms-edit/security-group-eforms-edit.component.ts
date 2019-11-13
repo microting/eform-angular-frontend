@@ -8,7 +8,7 @@ import {SecurityGroupEformsPermissionsService} from 'src/app/common/services/sec
   styleUrls: ['./security-group-eforms-edit.component.scss']
 })
 export class SecurityGroupEformsEditComponent implements OnInit {
-  @ViewChild('frame') frame;
+  @ViewChild('frame', { static: true }) frame;
   @Output() onEformUpdated: EventEmitter<void> = new EventEmitter<void>();
   eformSecurityModel: EformPermissionsModel = new EformPermissionsModel();
   spinnerStatus = false;

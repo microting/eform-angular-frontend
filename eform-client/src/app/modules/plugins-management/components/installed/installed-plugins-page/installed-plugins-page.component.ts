@@ -14,7 +14,7 @@ import {PluginsManagementService} from '../../../../../common/services/plugins-m
   styleUrls: ['./installed-plugins-page.component.scss']
 })
 export class InstalledPluginsPageComponent implements OnInit {
-  @ViewChild('editInstalledPluginModal') editInstalledPluginModal;
+  @ViewChild('editInstalledPluginModal', { static: true }) editInstalledPluginModal;
   installedPluginsRequestModel: InstalledPluginsRequestModel = new InstalledPluginsRequestModel();
   installedPluginsModel: InstalledPluginsModel = new InstalledPluginsModel();
   spinnerStatus = false;

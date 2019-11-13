@@ -8,7 +8,7 @@ import {EntitySelectService} from 'src/app/common/services/advanced';
   styleUrls: ['./entity-select-remove.component.scss']
 })
 export class EntitySelectRemoveComponent implements OnInit {
-  @ViewChild('frame') frame;
+  @ViewChild('frame', { static: true }) frame;
   @Output() onEntityRemoved: EventEmitter<void> = new EventEmitter<void>();
   selectedGroupModel: AdvEntitySelectableGroupModel = new AdvEntitySelectableGroupModel();
   spinnerStatus = false;

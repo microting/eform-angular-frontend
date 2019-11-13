@@ -10,7 +10,7 @@ import {SitesService} from 'src/app/common/services/advanced';
 })
 export class SiteEditComponent implements OnInit {
   @Input() siteNameDto: SiteNameDto = new SiteNameDto();
-  @ViewChild('frame') frame;
+  @ViewChild('frame', { static: true }) frame;
   siteModel: SiteNameModel = new SiteNameModel();
   spinnerStatus = false;
 

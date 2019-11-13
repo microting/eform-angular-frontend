@@ -20,7 +20,7 @@ import {CaseEditElementComponent} from '../case-edit-element/case-edit-element.c
 })
 export class CaseEditComponent implements OnInit, OnDestroy {
   @ViewChildren(CaseEditElementComponent) editElements: QueryList<CaseEditElementComponent>;
-  @ViewChild('caseConfirmation') caseConfirmation;
+  @ViewChild('caseConfirmation', { static: true }) caseConfirmation;
   activatedRouteSub: Subscription;
   id: number;
   templateId: number;

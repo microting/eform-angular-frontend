@@ -21,10 +21,10 @@ export class NavbarComponent implements AfterViewInit, OnInit {
   public collapse = false;
   public showClass = false;
   public collapsing = false;
-  @ViewChild('navbar') el: ElementRef;
-  @ViewChild('mobile') mobile: ElementRef;
-  @ViewChild('nav') navbar: ElementRef;
-  @ViewChild('container') container: ElementRef;
+  @ViewChild('navbar', { static: true }) el: ElementRef;
+  @ViewChild('mobile', { static: false }) mobile: ElementRef;
+  @ViewChild('nav', { static: true }) navbar: ElementRef;
+  @ViewChild('container', { static: true }) container: ElementRef;
 
   constructor(public renderer: Renderer2, private _navbarService: NavbarService) {
     // tslint:disable-next-line:max-line-length
