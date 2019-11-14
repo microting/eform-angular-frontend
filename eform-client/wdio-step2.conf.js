@@ -10,12 +10,18 @@ exports.config = {
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
   specs: [
-    'e2e/Tests/selectable-lists/selectable-lists.add.spec.ts',
-    'e2e/Tests/selectable-lists/selectable-lists.edit.spec.ts',
-    'e2e/Tests/selectable-lists/selectable-lists.delete.spec.ts',
-    'e2e/Tests/searchable-lists/searchable-lists.add.spec.ts',
-    'e2e/Tests/searchable-lists/searchable-lists.edit.spec.ts',
-    'e2e/Tests/searchable-lists/searchable-lists.delete.spec.ts',
+    'e2e/Tests/application-settings/application-settings.login-page.spec.ts',
+    'e2e/Tests/application-settings/application-settings.site-header.spec.ts',
+    'e2e/Tests/device-users/device-users.add.spec.ts',
+    'e2e/Tests/main-page-eforms/my-eforms.sort-eform.spec.ts',
+    'e2e/Tests/main-page-eforms/my-eforms.create-eform.spec.ts',
+
+    // 'e2e/Tests/selectable-lists/selectable-lists.add.spec.ts',
+    // 'e2e/Tests/selectable-lists/selectable-lists.edit.spec.ts',
+    // 'e2e/Tests/selectable-lists/selectable-lists.delete.spec.ts',
+    // 'e2e/Tests/searchable-lists/searchable-lists.add.spec.ts',
+    // 'e2e/Tests/searchable-lists/searchable-lists.edit.spec.ts',
+    // 'e2e/Tests/searchable-lists/searchable-lists.delete.spec.ts',
   ],
   suites: {
     settings: [
