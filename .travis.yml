@@ -9,7 +9,7 @@ dotnet: 2.2
 services:
 - mysql
 script:
-  - apt-get install g++ build-essential
+  - sudo apt-get install g++ build-essential
   - nvm install 12.0.0
   - nvm use 12.0.0
   - pip install --user awscli
