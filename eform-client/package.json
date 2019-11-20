@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --proxy-config proxy.config.json",
+    "start": "NODE_OPTIONS=\"--max-http-header-size=100000\" ng serve --proxy-config proxy.config.json",
     "start-port": "ng serve --port 4300 --proxy-config proxy.config.json",
     "build": "ng build --prod",
     "test": "./node_modules/.bin/wdio wdio.conf.js",
