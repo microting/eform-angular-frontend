@@ -12,7 +12,7 @@ script:
   - sudo apt-get install g++ build-essential
   - nvm install 11.0.0
   - nvm use 11.0.0
-  - export NODE_OPTIONS='--max-http-header-size=100000'
+  - #export NODE_OPTIONS='--max-http-header-size=100000'
   - pip install --user awscli
   - echo 'deb http://www.rabbitmq.com/debian/ testing main' | sudo tee /etc/apt/sources.list.d/rabbitmq.list
   - wget -O- https://www.rabbitmq.com/rabbitmq-release-signing-key.asc | sudo apt-key add -
