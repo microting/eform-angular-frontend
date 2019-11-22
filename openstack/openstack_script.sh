@@ -76,7 +76,7 @@ CREATE USER '$MYSQL_USERNAME'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';
 GRANT ALL PRIVILEGES ON *.* TO '$MYSQL_USERNAME'@'%';
 MYSQL_SCRIPT
 
-curl -sL https://deb.nodesource.com/setup_8.x | sudo bash -
+curl -sL https://deb.nodesource.com/setup_11.x | sudo bash -
 apt install -y nodejs
 
 rabbitmqctl add_user admin password 
