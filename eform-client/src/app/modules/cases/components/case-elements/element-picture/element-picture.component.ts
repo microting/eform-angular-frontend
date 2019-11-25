@@ -84,10 +84,12 @@ export class ElementPictureComponent implements OnChanges {
   openPicture(i: any) {
     this.updateGallery();
     if (this.galleryImages.length > 1) {
-      this.gallery.ref('lightbox', {counterPosition: 'bottom'}).load(this.galleryImages);
+      this.gallery.ref('lightbox', {counterPosition: 'bottom', loadingMode: 'indeterminate'}).load(this.galleryImages);
       this.lightbox.open(i);
     } else {
-      this.gallery.ref('lightbox', {counter: false}).load(this.galleryImages);
+      // this.gallery.destroyAll();
+      // this.gallery.resetAll();
+      this.gallery.ref('lightbox', {counter: false, loadingMode: 'indeterminate'}).load(this.galleryImages);
       this.lightbox.open(i);
     }
   }
