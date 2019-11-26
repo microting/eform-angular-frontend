@@ -61,23 +61,23 @@ echo "$INSTANCE_IP $INSTANCE_HOSTNAME" >> /etc/hosts
 #sed -i "s/SERVER_NAME_REPLACE_ME/$INSTANCE_IP/g" /opt/nginx/conf/nginx.conf # > /opt/nginx/conf/nginx.conf
 
 #apt-get -y install software-properties-common unzip
-apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://mirror.one.com/mariadb/repo/10.3/ubuntu bionic main'
+#apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
+#add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://mirror.one.com/mariadb/repo/10.3/ubuntu bionic main'
 
 #apt update
 
-debconf-set-selections <<< "mariadb-server-10.3 mysql-server/root_password password "$MYSQL_PASSWORD
-debconf-set-selections <<< "mariadb-server-10.3 mysql-server/root_password_again password "$MYSQL_PASSWORD
+#debconf-set-selections <<< "mariadb-server-10.3 mysql-server/root_password password "$MYSQL_PASSWORD
+#debconf-set-selections <<< "mariadb-server-10.3 mysql-server/root_password_again password "$MYSQL_PASSWORD
 
-apt-get -y install mariadb-server nginx curl python-pip python-swiftclient
+#apt-get -y install mariadb-server nginx curl python-pip python-swiftclient
 
-mysql -uroot --password=$MYSQL_PASSWORD <<MYSQL_SCRIPT
-CREATE USER '$MYSQL_USERNAME'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';
-GRANT ALL PRIVILEGES ON *.* TO '$MYSQL_USERNAME'@'%';
-MYSQL_SCRIPT
+#mysql -uroot --password=$MYSQL_PASSWORD <<MYSQL_SCRIPT
+#CREATE USER '$MYSQL_USERNAME'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';
+#GRANT ALL PRIVILEGES ON *.* TO '$MYSQL_USERNAME'@'%';
+#MYSQL_SCRIPT
 
-curl -sL https://deb.nodesource.com/setup_11.x | sudo bash -
-apt install -y nodejs
+#curl -sL https://deb.nodesource.com/setup_11.x | sudo bash -
+#apt install -y nodejs
 
 rabbitmqctl add_user admin password 
 rabbitmqctl set_user_tags admin administrator
