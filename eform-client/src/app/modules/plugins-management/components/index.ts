@@ -1,4 +1,5 @@
-export * from './installed/installed-plugin-edit/installed-plugin-edit.component';
+// export * from './installed/installed-plugin-edit/installed-plugin-edit.component';
+export * from './installed/installed-plugin-modal/installed-plugin-modal.component';
 export * from './installed/installed-plugins-page/installed-plugins-page.component';
 
 export * from './marketplace/marketplace-plugins-page/marketplace-plugins-page.component';

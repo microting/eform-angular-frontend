@@ -7,7 +7,7 @@ import {EformSharedModule} from '../../common/modules/eform-shared/eform-shared.
 import {MDBBootstrapModule} from '../../../../port/angular-bootstrap-md';
 
 import {PluginsManagementRouting} from './plugins-management.routing';
-import { InstalledPluginEditComponent, InstalledPluginsPageComponent,
+import { InstalledPluginModalComponent, InstalledPluginsPageComponent,
   MarketplacePluginsPageComponent, MarketplacePluginInstallComponent } from './components';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import { InstalledPluginPermissionsComponent } from './components/installed/installed-plugin-permissions/installed-plugin-permissions.component';
@@ -24,7 +24,7 @@ import { InstalledPluginPermissionsComponent } from './components/installed/inst
     PluginsManagementRouting,
     FontAwesomeModule
   ],
-  declarations: [InstalledPluginsPageComponent, InstalledPluginEditComponent,
+  declarations: [InstalledPluginsPageComponent, InstalledPluginModalComponent,
     MarketplacePluginsPageComponent, MarketplacePluginInstallComponent, InstalledPluginPermissionsComponent]
 })
 export class PluginsManagementModule { }

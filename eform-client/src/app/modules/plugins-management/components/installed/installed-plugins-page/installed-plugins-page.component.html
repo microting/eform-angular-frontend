@@ -16,7 +16,6 @@
         <th scope="col">{{ 'ID' }}</th>
         <th scope="col">{{ 'Name' | translate }}</th>
         <th scope="col">{{ 'Version' | translate }}</th>
-        <th scope="col">{{ 'Status' | translate }}</th>
         <th scope="col">{{ 'Actions' | translate }}</th>
       </tr>
       </thead>
@@ -25,17 +24,31 @@
         <td scope="row" id="plugin-id">{{plugin.id}}</td>
         <td id="plugin-name">{{plugin.name}}</td>
         <td id="plugin-version">{{plugin.version}}</td>
-        <td [ngStyle]="{'color': plugin.status == statusEnum.Enabled ? '#06ba06' : '#ba3f4e'}" id="plugin-status">
-          {{statusEnum[plugin.status] | translate}}
-        </td>
+
         <td>
           <div class="d-flex flex-row justify-content-center">
-            <button class="btn btn-accent text-black-50 btn-icon mb-2"
-                    mdbTooltip="{{'Edit Settings' | translate}}"
-                    (click)="showEditModal(plugin)"
-                    mdbWavesEffect id="plugin-settings-btn">
-              <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
-            </button>
+            <div [ngStyle]="{'color': plugin.status == statusEnum.Enabled ? '#06ba06' : '#ba3f4e'}" id="plugin-status">
+              <button *ngIf="plugin.status == statusEnum.Disabled"
+                      mdbTooltip="{{'Activate plugin' | translate}}"
+                      class="btn btn-accent text-black-50 btn-icon mb-2"
+                      (click)="openPluginModal(plugin, statusEnum.Enabled)">
+                <fa-icon icon="toggle-on"></fa-icon>
+              </button>
+              <button *ngIf="plugin.status == statusEnum.Enabled"
+                      mdbTooltip="{{'Deactivate plugin' | translate}}"
+                      class="btn btn-success text-black-50 btn-icon mb-2"
+                      (click)="openPluginModal(plugin, statusEnum.Disabled)">
+                <fa-icon icon="toggle-off"></fa-icon>
+              </button>
+
+              <!--          {{statusEnum[plugin.status] | translate}}-->
+            </div>
+<!--            <button class="btn btn-accent text-black-50 btn-icon mb-2"-->
+<!--                    mdbTooltip="{{'Edit Settings' | translate}}"-->
+<!--                    (click)="showEditModal(plugin)"-->
+<!--                    mdbWavesEffect id="plugin-settings-btn">-->
+<!--              <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>-->
+<!--            </button>-->
             <button *ngIf="plugin.status == statusEnum.Enabled"
                     class="btn btn-success text-black-50 btn-icon mb-2"
                     mdbTooltip="{{'Edit Plugin Permissions' | translate}}"
@@ -60,8 +73,10 @@
   </div>
 </div>
 
-<app-installed-plugin-edit #editInstalledPluginModal (onInstalledPluginUpdate)="updateInstalledPlugin($event)">
-</app-installed-plugin-edit>
+<!--<app-installed-plugin-edit #editInstalledPluginModal (onInstalledPluginUpdate)="updateInstalledPlugin($event)">-->
+<!--</app-installed-plugin-edit>-->
+<app-installed-plugin-modal #installedPluginModal></app-installed-plugin-modal>
+
 
 <app-installed-plugin-permissions #editPluginPermissionsModal
   [securityGroups]="securityGroups"
