@@ -14,7 +14,7 @@ export default {
   '    <DisplayOrder>3164</DisplayOrder>\n' +
   '    <CheckListFolderName>Storebælt - Skinneudtræk 2 mdr.</CheckListFolderName>\n' +
   '    <ElementList>\n' +
-  '        <Element type=\'DataElement\'>\n' +
+  '        <Element type="DataElement">\n' +
   '            <Id>13</Id>\n' +
   '            <Label>Målinger</Label>\n' +
   '            <DisplayOrder>1</DisplayOrder>\n' +
@@ -24,7 +24,7 @@ export default {
   '            <DoneButtonDisabled>false</DoneButtonDisabled>\n' +
   '            <ApprovalEnabled>true</ApprovalEnabled>\n' +
   '            <DataItemList>\n' +
-  '                <DataItem type=\'number\'>\n' +
+  '                <DataItem type="number">\n' +
   '                    <Id>59</Id>\n' +
   '                    <Label>Skinnetemperatur</Label>\n' +
   '                    <Description>C</Description>\n' +
@@ -37,12 +37,12 @@ export default {
   '                </DataItem>\n' +
   '            </DataItemList>\n' +
   '        </Element>\n' +
-  '        <Element type=\'GroupElement\'>\n' +
+  '        <Element type="GroupElement">\n' +
   '            <Id>14</Id>\n' +
   '            <Label>Tungetilslutning</Label>\n' +
   '            <DisplayOrder>2</DisplayOrder>\n' +
   '            <ElementList>\n' +
-  '                <Element type=\'DataElement\'>\n' +
+  '                <Element type="DataElement">\n' +
   '                    <Id>15</Id>\n' +
   '                    <Label>1. svelle imod Sprogø</Label>\n' +
   '                    <DisplayOrder>0</DisplayOrder>\n' +
@@ -52,7 +52,7 @@ export default {
   '                    <DoneButtonDisabled>false</DoneButtonDisabled>\n' +
   '                    <ApprovalEnabled>true</ApprovalEnabled>\n' +
   '                    <DataItemList>\n' +
-  '                        <DataItem type=\'number\'>\n' +
+  '                        <DataItem type="number">\n' +
   '                            <Id>65</Id>\n' +
   '                            <Label>Venstre streng 1</Label>\n' +
   '                            <Description>mm</Description>\n' +
@@ -65,7 +65,7 @@ export default {
   '                        </DataItem>\n' +
   '                    </DataItemList>\n' +
   '                </Element>\n' +
-  '                <Element type=\'DataElement\'>\n' +
+  '                <Element type="DataElement">\n' +
   '                    <Id>16</Id>\n' +
   '                    <Label>2. svelle imod Sprogø</Label>\n' +
   '                    <DisplayOrder>1</DisplayOrder>\n' +
@@ -75,7 +75,7 @@ export default {
   '                    <DoneButtonDisabled>false</DoneButtonDisabled>\n' +
   '                    <ApprovalEnabled>true</ApprovalEnabled>\n' +
   '                    <DataItemList>\n' +
-  '                        <DataItem type=\'number\'>\n' +
+  '                        <DataItem type="number">\n' +
   '                            <Id>72</Id>\n' +
   '                            <Label>Venstre streng 1</Label>\n' +
   '                            <Description>mm</Description>\n' +
@@ -88,7 +88,7 @@ export default {
   '                        </DataItem>\n' +
   '                    </DataItemList>\n' +
   '                </Element>\n' +
-  '                <Element type=\'DataElement\'>\n' +
+  '                <Element type="DataElement">\n' +
   '                    <Id>17</Id>\n' +
   '                    <Label>1. svelle imod Nyborg</Label>\n' +
   '                    <DisplayOrder>2</DisplayOrder>\n' +
@@ -98,7 +98,7 @@ export default {
   '                    <DoneButtonDisabled>false</DoneButtonDisabled>\n' +
   '                    <ApprovalEnabled>true</ApprovalEnabled>\n' +
   '                    <DataItemList>\n' +
-  '                        <DataItem type=\'number\'>\n' +
+  '                        <DataItem type="number">\n' +
   '                            <Id>79</Id>\n' +
   '                            <Label>Venstre streng 1</Label>\n' +
   '                            <Description>mm</Description>\n' +
@@ -111,7 +111,7 @@ export default {
   '                        </DataItem>\n' +
   '                    </DataItemList>\n' +
   '                </Element>\n' +
-  '                <Element type=\'DataElement\'>\n' +
+  '                <Element type="DataElement">\n' +
   '                    <Id>18</Id>\n' +
   '                    <Label>2. svelle imod Nyborg</Label>\n' +
   '                    <DisplayOrder>3</DisplayOrder>\n' +
@@ -121,7 +121,7 @@ export default {
   '                    <DoneButtonDisabled>false</DoneButtonDisabled>\n' +
   '                    <ApprovalEnabled>true</ApprovalEnabled>\n' +
   '                    <DataItemList>\n' +
-  '                        <DataItem type=\'number\'>\n' +
+  '                        <DataItem type="number">\n' +
   '                            <Id>86</Id>\n' +
   '                            <Label>Venstre streng 1</Label>\n' +
   '                            <Description>mm</Description>\n' +
@@ -136,7 +136,7 @@ export default {
   '                </Element>\n' +
   '            </ElementList>\n' +
   '        </Element>\n' +
-  '        <Element type=\'DataElement\'>\n' +
+  '        <Element type="DataElement">\n' +
   '            <Id>19</Id>\n' +
   '            <Label>Skinneudtrækkets stilling</Label>\n' +
   '            <DisplayOrder>3</DisplayOrder>\n' +
@@ -146,7 +146,7 @@ export default {
   '            <DoneButtonDisabled>false</DoneButtonDisabled>\n' +
   '            <ApprovalEnabled>true</ApprovalEnabled>\n' +
   '            <DataItemList>\n' +
-  '                <DataItem type=\'number\'>\n' +
+  '                <DataItem type="number">\n' +
   '                    <Id>93</Id>\n' +
   '                    <Label>Sprogø-enden (venstre streng)</Label>\n' +
   '                    <Description>mm</Description>\n' +
@@ -159,7 +159,7 @@ export default {
   '                </DataItem>\n' +
   '            </DataItemList>\n' +
   '        </Element>\n' +
-  '        <Element type=\'DataElement\'>\n' +
+  '        <Element type="DataElement">\n' +
   '            <Id>20</Id>\n' +
   '            <Label>Sporvidde</Label>\n' +
   '            <DisplayOrder>4</DisplayOrder>\n' +
@@ -169,7 +169,7 @@ export default {
   '            <DoneButtonDisabled>false</DoneButtonDisabled>\n' +
   '            <ApprovalEnabled>true</ApprovalEnabled>\n' +
   '            <DataItemList>\n' +
-  '                <DataItem type=\'number\'>\n' +
+  '                <DataItem type="number">\n' +
   '                    <Id>102</Id>\n' +
   '                    <Label>Sporvidde 1</Label>\n' +
   '                    <Description>(1430 - 1450 mm)</Description>\n' +
@@ -182,7 +182,7 @@ export default {
   '                </DataItem>\n' +
   '            </DataItemList>\n' +
   '        </Element>\n' +
-  '        <Element type=\'DataElement\'>\n' +
+  '        <Element type="DataElement">\n' +
   '            <Id>21</Id>\n' +
   '            <Label>Smørring</Label>\n' +
   '            <DisplayOrder>5</DisplayOrder>\n' +
@@ -192,7 +192,7 @@ export default {
   '            <DoneButtonDisabled>false</DoneButtonDisabled>\n' +
   '            <ApprovalEnabled>true</ApprovalEnabled>\n' +
   '            <DataItemList>\n' +
-  '                <DataItem type=\'single_select\'>\n' +
+  '                <DataItem type="single_select">\n' +
   '                    <Id>110</Id>\n' +
   '                    <Label>Kontaktflade sideskinne/tunge</Label>\n' +
   '                    <Description>Smøring udført</Description>\n' +
@@ -214,7 +214,7 @@ export default {
   '                </DataItem>\n' +
   '            </DataItemList>\n' +
   '        </Element>\n' +
-  '        <Element type=\'DataElement\'>\n' +
+  '        <Element type="DataElement">\n' +
   '            <Id>22</Id>\n' +
   '            <Label>Kontrol af tilspændinger</Label>\n' +
   '            <DisplayOrder>6</DisplayOrder>\n' +
@@ -224,7 +224,7 @@ export default {
   '            <DoneButtonDisabled>false</DoneButtonDisabled>\n' +
   '            <ApprovalEnabled>true</ApprovalEnabled>\n' +
   '            <DataItemList>\n' +
-  '                <DataItem type=\'single_select\'>\n' +
+  '                <DataItem type="single_select">\n' +
   '                    <Id>115</Id>\n' +
   '                    <Label>Befæstelse ved tunger</Label>\n' +
   '                    <Description>Moment 250Nm</Description>\n' +
