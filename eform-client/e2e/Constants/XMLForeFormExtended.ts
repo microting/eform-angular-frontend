@@ -219,7 +219,7 @@ export default {
     '                        <Label>31. Søg i liste Angular (grp. 1)</Label>\n' +
     '                        <Description><![CDATA[]]></Description>\n' +
     '                        <DisplayOrder>11</DisplayOrder>\n' +
-    '                        <EntityTypeId>21807</EntityTypeId>\n' +
+    '                        <EntityTypeId>REPLACE_SEARCHABLE_ID</EntityTypeId>\n' +
     '                        <Mandatory>false</Mandatory>\n' +
     '                        <Color>e8eaf6</Color>\n' +
     '                    </DataItem>\n' +
@@ -236,7 +236,7 @@ export default {
     '                        <Label>33. Vælg fra liste Angular (grp. 1)</Label>\n' +
     '                        <Description><![CDATA[]]></Description>\n' +
     '                        <DisplayOrder>13</DisplayOrder>\n' +
-    '                        <Source>5307</Source>\n' +
+    '                        <Source>REPLACE_SINGLE_SELECT_SEARCH_ID</Source>\n' +
     '                        <KeyValuePairList />\n' +
     '                        <Mandatory>false</Mandatory>\n' +
     '                        <Color>e8eaf6</Color>\n' +
@@ -475,7 +475,7 @@ export default {
     '                <Label>12. Søg i liste Angular</Label>\n' +
     '                <Description><![CDATA[]]></Description>\n' +
     '                <DisplayOrder>11</DisplayOrder>\n' +
-    '                <EntityTypeId />\n' +
+    '                <EntityTypeId >REPLACE_SEARCHABLE_ID</EntityTypeId>\n' +
     '                <Mandatory>false</Mandatory>\n' +
     '                <Color>e8eaf6</Color>\n' +
     '            </DataItem>\n' +
@@ -492,7 +492,7 @@ export default {
     '                <Label>14. Vælg fra liste Angular</Label>\n' +
     '                <Description><![CDATA[]]></Description>\n' +
     '                <DisplayOrder>13</DisplayOrder>\n' +
-    '                <Source>5307</Source>\n' +
+    '                <Source>REPLACE_SINGLE_SELECT_SEARCH_ID</Source>\n' +
     '                <KeyValuePairList />\n' +
     '                <Mandatory>false</Mandatory>\n' +
     '                <Color>e8eaf6</Color>\n' +
