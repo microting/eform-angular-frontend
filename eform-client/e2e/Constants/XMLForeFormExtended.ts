@@ -541,7 +541,7 @@ export default {
     '                <Color>e8eaf6</Color>\n' +
     '            </DataItem>\n' +
     '        </DataItemList>\n' +
-    '    '</Element>\n' +
+    '    </Element>\n' +
     '</ElementList>\n' +
     '</Main>'
     };
