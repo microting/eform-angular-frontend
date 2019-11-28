@@ -312,7 +312,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
 export class SearchableListRowObject {
   constructor(rowNumber) {
     if ($$('#entitySearchMUid')[rowNumber - 1]) {
-      this.id = +$$('#entitySearchMUid')[rowNumber - 1];
+      this.id = $$('#entitySearchMUid')[rowNumber - 1];
       try {
         this.name = $$('#entitySearchName')[rowNumber - 1].getText();
       } catch (e) {}
@@ -332,6 +332,7 @@ export class SearchableListRowObject {
 export class EntitySearchItemRowObject {
   constructor(rowNumber) {
     if ($$('#entitySearchItemEditNameentityItemUId')[rowNumber - 1]) {
+     this.id = $$('#entitySearchItemEditNameentityItemUId')[rowNumber - 1];
       this.name = $$('#entitySearchItemEditNameentityItemUId')[rowNumber - 1].getText();
       try {
         this.editBtn = $$('#entitySearchEditItemEditBtn')[rowNumber - 1];
@@ -341,6 +342,7 @@ export class EntitySearchItemRowObject {
       } catch (e) {}
     }
   }
+  id;
   name;
   editBtn;
   deleteBtn;

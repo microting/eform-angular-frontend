@@ -14,8 +14,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-danger" (click)="updatePluginStatus(installedPluginModel.status)">{{ 'OK' | translate }}</button>
-        <button class="btn btn-accent text-black-50" (click)="frame.hide()">{{ 'Cancel' | translate }}</button>
+        <button class="btn btn-danger" (click)="updatePluginStatus(installedPluginModel.status)" id="pluginOKBtn">{{ 'OK' | translate }}</button>
+        <button class="btn btn-accent text-black-50" (click)="frame.hide()" id="pluginCancelBtn">{{ 'Cancel' | translate }}</button>
       </div>
     </div>
   </div>

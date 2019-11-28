@@ -15,9 +15,12 @@ class PluginPage extends Page {
   }
 
   public get pluginSettingsBtn() {
-    return browser.element('#plugin-settings-btn');
+    return browser.element(`//*[@id= 'plugin-status']//button`);
   }
 
+  public get pluginOKBtn() {
+    return browser.element('#pluginOKBtn');
+  }
   public get pluginSettingsLink() {
     return browser.element('#plugin-settings-link');
   }
