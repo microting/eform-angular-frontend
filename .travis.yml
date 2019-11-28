@@ -1,6 +1,7 @@
 env:
 - TEST_SUITE=testheadless2a
 - TEST_SUITE=testheadless2b
+- TEST_SUITE=testheadless2c
 
 dist: xenial
 language: csharp
