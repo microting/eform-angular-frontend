@@ -17,8 +17,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBMigrator", "DBMigrator\DB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginInstallDaemon", "PluginInstallDaemon\PluginInstallDaemon.csproj", "{E0DC184B-CD72-4367-AF8B-3172B78DEBC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monitoring.Pn", "Plugins\Monitoring.Pn\Monitoring.Pn\Monitoring.Pn.csproj", "{A90B55DE-52D0-47E4-8B93-8DAD0CCCC4A5}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
