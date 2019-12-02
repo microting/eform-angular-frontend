@@ -16,9 +16,9 @@ import {SecurityGroupModel, SecurityGroupsRequestModel} from '../../../../../com
   styleUrls: ['./installed-plugins-page.component.scss']
 })
 export class InstalledPluginsPageComponent implements OnInit {
-  @ViewChild('installedPluginModal') installedPluginModal;
+  @ViewChild('installedPluginModal', { static: true }) installedPluginModal;
   // @ViewChild('editInstalledPluginModal') editInstalledPluginModal;
-  @ViewChild('editPluginPermissionsModal') editPluginPermissionsModal;
+  @ViewChild('editPluginPermissionsModal', { static: true }) editPluginPermissionsModal;
   @ViewChild('editInstalledPluginModal', { static: true }) editInstalledPluginModal;
   installedPluginsRequestModel: InstalledPluginsRequestModel = new InstalledPluginsRequestModel();
   installedPluginsModel: InstalledPluginsModel = new InstalledPluginsModel();
