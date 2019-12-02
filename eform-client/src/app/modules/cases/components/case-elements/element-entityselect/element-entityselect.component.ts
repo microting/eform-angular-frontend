@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {FieldValueDto} from 'src/app/common/models';
 import {CommonDictionaryTextModel} from 'src/app/common/models/common';
@@ -9,7 +9,7 @@ import {EntitySelectService} from 'src/app/common/services/advanced';
   templateUrl: './element-entityselect.component.html',
   styleUrls: ['./element-entityselect.component.scss']
 })
-export class ElementEntityselectComponent implements OnInit {
+export class ElementEntityselectComponent implements OnInit, AfterViewInit {
   items: Array<CommonDictionaryTextModel> = [];
   fieldValueObj: FieldValueDto = new FieldValueDto();
   @Input() entityGroupUid: string;
@@ -36,5 +36,11 @@ export class ElementEntityselectComponent implements OnInit {
 
   onSelectedChanged(e: any) {
     this.fieldValue.value = e.id;
+  }
+
+  ngAfterViewInit(): void {
+    if (this.fieldValueObj.valueReadable === 'null') {
+      this.fieldValueObj.valueReadable = '';
+    }
   }
 }

@@ -60,6 +60,14 @@ namespace eFormAPI.Web.Services
                 UseDefaultCredentials = false,
                 Credentials = new NetworkCredential(userName, password)
             };
+            if (!userName.Contains(@"@"))
+            {
+                if (htmlMessage.Contains("microting.com"))
+                {
+                    userName = "no-reply@microting.com";
+                }
+            }
+            
             using (var mailMessage = new MailMessage(userName, email))
             {
                 mailMessage.Subject = subject;

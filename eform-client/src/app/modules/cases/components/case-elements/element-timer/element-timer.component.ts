@@ -31,7 +31,10 @@ export class ElementTimerComponent implements OnInit {
     if (this.dateArray.length > 1) {
       this.startDate = this.dateArray[0];
       this.endDate = this.dateArray[1];
-      const durationInSeconds = Math.abs(differenceInSeconds(new Date(this.endDate), new Date(this.startDate)));
+      let durationInSeconds = 0;
+      if (this.startDate !== '' && this.endDate !== '') {
+        durationInSeconds = Math.abs(differenceInSeconds(new Date(this.endDate), new Date(this.startDate)));
+      }
       this.duration = new Date(durationInSeconds * 1000).toISOString().substr(11, 8);
     }
   }

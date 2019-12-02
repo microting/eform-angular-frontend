@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {debounceTime, switchMap} from 'rxjs/operators';
 import {FieldValueDto} from 'src/app/common/models';
@@ -10,7 +10,7 @@ import {EntitySearchService} from 'src/app/common/services/advanced';
   templateUrl: './element-entitysearch.component.html',
   styleUrls: ['./element-entitysearch.component.scss']
 })
-export class ElementEntitysearchComponent {
+export class ElementEntitysearchComponent implements AfterViewInit {
   items: Array<CommonDictionaryTextModel> = [];
   fieldValueObj: FieldValueDto = new FieldValueDto();
   typeahead = new EventEmitter<string>();
@@ -44,5 +44,11 @@ export class ElementEntitysearchComponent {
 
   onSelectedChanged(e: any) {
     this.fieldValue.value = e.id;
+  }
+
+  ngAfterViewInit(): void {
+    if (this.fieldValueObj.valueReadable === 'null') {
+      this.fieldValueObj.valueReadable = '';
+    }
   }
 }

@@ -1,6 +1,7 @@
 env:
 - TEST_SUITE=testheadless2a
 - TEST_SUITE=testheadless2b
+- TEST_SUITE=testheadless2c
 
 dist: xenial
 language: csharp
@@ -9,7 +10,6 @@ dotnet: 2.2
 services:
 - mysql
 script:
-  - sudo apt-get install g++ build-essential
   - nvm install 11.0.0
   - nvm use 11.0.0
   - pip install --user awscli

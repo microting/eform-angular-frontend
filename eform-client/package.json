@@ -2,7 +2,7 @@
   "name": "eform-angular",
   "version": "2.0.0",
   "scripts": {
-    "ng": "ng",
+    "ng": "node --max-http-header-size=100000 ng",
     "start": "ng serve --proxy-config proxy.config.json",
     "start-port": "ng serve --port 4300 --proxy-config proxy.config.json",
     "build": "ng build --prod",
@@ -11,6 +11,7 @@
     "testheadless": "./node_modules/.bin/wdio wdio-headless.conf.js --disable-gpu --browsers=ChromeHeadless",
     "testheadless2a": "./node_modules/.bin/wdio wdio-headless-step2a.conf.js --disable-gpu --browsers=ChromeHeadless",
     "testheadless2b": "./node_modules/.bin/wdio wdio-headless-step2b.conf.js --disable-gpu --browsers=ChromeHeadless",
+    "testheadless2c": "./node_modules/.bin/wdio wdio-headless-step2c.conf.js --disable-gpu --browsers=ChromeHeadless",
     "testplugin": "./node_modules/.bin/wdio wdio-plugin-step2.conf.js --disable-gpu --browsers=ChromeHeadless",
     "testheadlessplugin": "./node_modules/.bin/wdio wdio-headless-plugin-step2.conf.js --disable-gpu --browsers=ChromeHeadless",
     "lint": "ng lint",

@@ -16,12 +16,15 @@ import {SecurityGroupModel, SecurityGroupsRequestModel} from '../../../../../com
   styleUrls: ['./installed-plugins-page.component.scss']
 })
 export class InstalledPluginsPageComponent implements OnInit {
+  @ViewChild('installedPluginModal') installedPluginModal;
+  // @ViewChild('editInstalledPluginModal') editInstalledPluginModal;
+  @ViewChild('editPluginPermissionsModal') editPluginPermissionsModal;
   @ViewChild('editInstalledPluginModal', { static: true }) editInstalledPluginModal;
-  @ViewChild('editPluginPermissionsModal', { static: true }) editPluginPermissionsModal;
   installedPluginsRequestModel: InstalledPluginsRequestModel = new InstalledPluginsRequestModel();
   installedPluginsModel: InstalledPluginsModel = new InstalledPluginsModel();
   securityGroups: SecurityGroupModel[] = [];
   spinnerStatus = false;
+  pluginSettingsUpdateModel: InstalledPluginUpdateModel = new InstalledPluginUpdateModel();
 
   constructor(
     private pluginManagementService: PluginsManagementService,
@@ -53,9 +56,15 @@ export class InstalledPluginsPageComponent implements OnInit {
     });
   }
 
-  showEditModal(installedPlugin: InstalledPluginModel) {
-    this.editInstalledPluginModal.show(installedPlugin);
+  openPluginModal(installedPlugin: InstalledPluginModel, status: number) {
+    this.pluginSettingsUpdateModel.status = status;
+    this.installedPluginModal.installedPluginModel = installedPlugin;
+    this.installedPluginModal.show();
   }
+
+  // showEditModal(installedPlugin: InstalledPluginModel) {
+  //   this.editInstalledPluginModal.show(installedPlugin);
+  // }
 
   showPermissionsModal(installedPlugin: InstalledPluginModel) {
     this.spinnerStatus = true;
@@ -81,17 +90,9 @@ export class InstalledPluginsPageComponent implements OnInit {
     });
   }
 
-  updateInstalledPlugin(model: InstalledPluginUpdateModel) {
-    this.spinnerStatus = true;
-    this.pluginManagementService.updateInstalledPlugin(model).subscribe((data) => {
-      if (data && data.success) {
-        this.editInstalledPluginModal.hide();
-        localStorage.removeItem('currentAuth');
-        window.location.reload();
-      }
-      this.spinnerStatus = false;
-    });
-  }
+  // updateInstalledPlugin(model: InstalledPluginModel, status: number) {
+  //
+  // }
 
   updatePluginPermissions(model: PluginGroupPermissionsUpdateModel) {
     this.spinnerStatus = true;
@@ -102,4 +103,9 @@ export class InstalledPluginsPageComponent implements OnInit {
       this.spinnerStatus = false;
     });
   }
+
+  // updateSettings() {
+  //   this.pluginSettingsUpdateModel.statusChanged = this.statusChanged;
+  //   this.onInstalledPluginUpdate.emit(this.pluginSettingsUpdateModel);
+  // }
 }

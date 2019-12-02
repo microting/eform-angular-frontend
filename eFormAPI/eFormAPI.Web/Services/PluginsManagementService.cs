@@ -60,7 +60,6 @@ namespace eFormAPI.Web.Services
                         {
                             Id = eformPlugin.Id,
                             PluginId = eformPlugin.PluginId,
-                            ConnectionString = eformPlugin.ConnectionString,
                             Status = (PluginStatus) eformPlugin.Status,
                             Name = loadedPlugin.Name,
                             Version = loadedPlugin.PluginAssembly().GetName().Version.ToString(),
@@ -94,7 +93,6 @@ namespace eFormAPI.Web.Services
                         _localizationService.GetString("PluginNotFound"));
                 }
 
-                eformPlugin.ConnectionString = updateModel.ConnectionString;
                 eformPlugin.Status = (int) updateModel.Status;
                 _dbContext.EformPlugins.Update(eformPlugin);
                 await _dbContext.SaveChangesAsync();

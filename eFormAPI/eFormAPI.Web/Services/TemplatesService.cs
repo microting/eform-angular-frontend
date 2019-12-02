@@ -143,7 +143,7 @@ namespace eFormAPI.Web.Services
                     catch (Exception ex2)
                     {
                         return new OperationDataResult<TemplateListModel>(false,
-                            _localizationService.GetString("CoreIsNotStarted"));
+                            _localizationService.GetString("CoreIsNotStarted") +" " + ex2.Message);
                     }
 
                     return new OperationDataResult<TemplateListModel>(false,
