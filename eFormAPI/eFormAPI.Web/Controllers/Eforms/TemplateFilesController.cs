@@ -291,7 +291,7 @@ namespace eFormAPI.Web.Controllers.Eforms
             {
                 var core = await _coreHelper.GetCore();
                 var caseId = await core.CaseReadFirstId(templateId, "not_revmoed");
-                Case_Dto caseDto = await core.CaseLookupCaseId((int)caseId);
+                CaseDto caseDto = await core.CaseLookupCaseId((int)caseId);
                 ReplyElement replyElement = await core.CaseRead((int)caseDto.MicrotingUId, (int)caseDto.CheckUId);
                 if (caseId != null)
                 {
