@@ -63,8 +63,8 @@ namespace eFormAPI.Web.Controllers.Advanced
 
         [HttpGet]
         [Route("api/folders/edit")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Sites.Update)]
-        public async Task<OperationDataResult<Folder_Dto>> Edit(int id)
+        [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
+        public async Task<OperationDataResult<Folder_Dto>> Read(int id)
         {
             return await _foldersService.Edit(id);
         }

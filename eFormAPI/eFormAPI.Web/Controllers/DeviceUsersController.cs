@@ -70,7 +70,7 @@ namespace eFormAPI.Web.Controllers
         [HttpGet]
         [Route("api/device-users/{id}")]
         [Authorize(Policy = AuthConsts.EformPolicies.DeviceUsers.Update)]
-        public async Task<OperationDataResult<Site_Dto>> Edit(int id)
+        public async Task<OperationDataResult<Site_Dto>> Read(int id)
         {
             return await _deviceUsersService.Edit(id);
         }

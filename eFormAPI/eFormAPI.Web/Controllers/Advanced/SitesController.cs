@@ -61,8 +61,8 @@ namespace eFormAPI.Web.Controllers.Advanced
 
         [HttpGet]
         [Route("api/sites/edit")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Sites.Update)]
-        public async Task<OperationDataResult<SiteName_Dto>> Edit(int id)
+        [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
+        public async Task<OperationDataResult<SiteName_Dto>> Read(int id)
         {
             return await _sitesService.Edit(id);
         }

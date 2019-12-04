@@ -50,9 +50,32 @@ namespace eFormAPI.Web.Controllers.Eforms
         [HttpGet]
         [Route("api/tags")]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.ReadTags)]
-        public async Task<OperationDataResult<List<CommonDictionaryModel>>> GetAllTags()
+        public async Task<OperationDataResult<List<CommonDictionaryModel>>> Index()
         {
             return await _tagsService.GetAllTags();
+        }
+        
+        [HttpPost]
+        [Route("api/tags")]
+        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UpdateTags)]
+        public async Task<OperationResult> Create(string tagName)
+        {
+            return await _tagsService.CreateTag(tagName);
+        }
+
+
+        [HttpPost]
+        [Route("api/tags/template")]
+        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UpdateTags)]
+        public async Task<IActionResult> Update([FromBody] UpdateTemplateTagsModel requestModel)
+        {
+            if (!await _permissionsService.CheckEform(requestModel.TemplateId,
+                AuthConsts.EformClaims.EformsClaims.UpdateTags))
+            {
+                return Forbid();
+            }
+
+            return Ok(await _tagsService.UpdateTemplateTags(requestModel));
         }
 
         [HttpGet]
@@ -63,13 +86,7 @@ namespace eFormAPI.Web.Controllers.Eforms
             return await _tagsService.DeleteTag(tagId);
         }
 
-        [HttpPost]
-        [Route("api/tags")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UpdateTags)]
-        public async Task<OperationResult> CreateTag(string tagName)
-        {
-            return await _tagsService.CreateTag(tagName);
-        }
+        
 
         [HttpGet]
         [Route("api/tags/saved")]
@@ -91,19 +108,6 @@ namespace eFormAPI.Web.Controllers.Eforms
         {
             return await _tagsService.RemoveTagFromSaved(tagId);
         }
-
-        [HttpPost]
-        [Route("api/tags/template")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UpdateTags)]
-        public async Task<IActionResult> UpdateTemplateTags([FromBody] UpdateTemplateTagsModel requestModel)
-        {
-            if (!await _permissionsService.CheckEform(requestModel.TemplateId,
-                AuthConsts.EformClaims.EformsClaims.UpdateTags))
-            {
-                return Forbid();
-            }
-
-            return Ok(await _tagsService.UpdateTemplateTags(requestModel));
-        }
+        
     }
 }

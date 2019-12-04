@@ -51,9 +51,17 @@ namespace eFormAPI.Web.Controllers.Advanced
             return await _workersService.Index();
         }
 
+        [HttpPost]
+        [Route("api/workers/create")]
+        [Authorize(Policy = AuthConsts.EformPolicies.Workers.Create)]
+        public async Task<OperationResult> Сreate([FromBody] WorkerCreateModel model)
+        {
+            return await _workersService.Сreate(model);
+        }
+        
         [HttpGet]
         [Authorize(Policy = AuthConsts.EformPolicies.Workers.Update)]
-        public async Task<OperationDataResult<Worker_Dto>> Edit(int id)
+        public async Task<OperationDataResult<Worker_Dto>> Read(int id)
         {
             return await _workersService.Edit(id);
         }
@@ -63,14 +71,6 @@ namespace eFormAPI.Web.Controllers.Advanced
         public async Task<OperationResult> Update([FromBody] WorkerModel workerModel)
         {
             return await _workersService.Update(workerModel);
-        }
-
-        [HttpPost]
-        [Route("api/workers/create")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Workers.Create)]
-        public async Task<OperationResult> Сreate([FromBody] WorkerCreateModel model)
-        {
-            return await _workersService.Сreate(model);
         }
 
         [HttpGet]
