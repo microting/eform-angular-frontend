@@ -72,7 +72,7 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public async Task<OperationDataResult<ReplyElement>> GetCase(int id)
+        public async Task<OperationDataResult<ReplyElement>> Read(int id)
         {
             try
             {

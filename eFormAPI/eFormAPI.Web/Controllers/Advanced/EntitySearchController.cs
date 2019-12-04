@@ -50,7 +50,7 @@ namespace eFormAPI.Web.Controllers.Advanced
         public async Task<OperationDataResult<EntityGroupList>> Index(
             [FromBody] AdvEntitySearchableGroupListRequestModel requestModel)
         {
-            return await _entitySearchService.GetEntityGroupList(requestModel);
+            return await _entitySearchService.Index(requestModel);
         }
         
         [HttpPost]
@@ -58,7 +58,7 @@ namespace eFormAPI.Web.Controllers.Advanced
         [Authorize(Policy = AuthConsts.EformPolicies.EntitySearch.Create)]
         public async Task<OperationResult> Create([FromBody] AdvEntitySearchableGroupEditModel editModel)
         {
-            return await _entitySearchService.CreateEntityGroup(editModel);
+            return await _entitySearchService.Create(editModel);
         }
 
 
@@ -67,23 +67,23 @@ namespace eFormAPI.Web.Controllers.Advanced
         [Authorize(Policy = AuthConsts.EformPolicies.EntitySearch.Read)]
         public async Task<OperationDataResult<EntityGroup>> Read(string entityGroupUid)
         {
-            return await _entitySearchService.GetEntityGroup(entityGroupUid);
+            return await _entitySearchService.Read(entityGroupUid);
         }
         
         [HttpPost]
         [Route("api/searchable-groups/update")]
         [Authorize(Policy = AuthConsts.EformPolicies.EntitySearch.Update)]
-        public async Task<OperationResult> UpdateEntityGroup([FromBody] AdvEntitySearchableGroupEditModel editModel)
+        public async Task<OperationResult> Update([FromBody] AdvEntitySearchableGroupEditModel editModel)
         {
-            return await _entitySearchService.UpdateEntityGroup(editModel);
+            return await _entitySearchService.Update(editModel);
         }
 
         [HttpGet]
         [Route("api/searchable-groups/delete/{entityGroupUid}")]
         [Authorize(Policy = AuthConsts.EformPolicies.EntitySearch.Delete)]
-        public async Task<OperationResult> DeleteEntityGroup(string entityGroupUid)
+        public async Task<OperationResult> Delete(string entityGroupUid)
         {
-            return await _entitySearchService.DeleteEntityGroup(entityGroupUid);
+            return await _entitySearchService.Delete(entityGroupUid);
         }
 
 

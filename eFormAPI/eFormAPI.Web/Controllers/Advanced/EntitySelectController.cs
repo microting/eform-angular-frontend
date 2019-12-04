@@ -50,7 +50,7 @@ namespace eFormAPI.Web.Controllers.Advanced
         public async Task<OperationDataResult<EntityGroupList>> Index(
             [FromBody] AdvEntitySelectableGroupListRequestModel requestModel)
         {
-            return await _entitySelectService.GetEntityGroupList(requestModel);
+            return await _entitySelectService.Index(requestModel);
         }
 
         [HttpPost]
@@ -58,7 +58,7 @@ namespace eFormAPI.Web.Controllers.Advanced
         [Authorize(Policy = AuthConsts.EformPolicies.EntitySelect.Create)]
         public async Task<OperationResult> Create([FromBody] AdvEntitySelectableGroupEditModel editModel)
         {
-            return await _entitySelectService.CreateEntityGroup(editModel);
+            return await _entitySelectService.Create(editModel);
         }
         
         [HttpGet]
@@ -66,7 +66,7 @@ namespace eFormAPI.Web.Controllers.Advanced
         [Authorize(Policy = AuthConsts.EformPolicies.EntitySelect.Read)]
         public async Task<OperationDataResult<EntityGroup>> Read(string entityGroupUid)
         {
-            return await _entitySelectService.GetEntityGroup(entityGroupUid);
+            return await _entitySelectService.Read(entityGroupUid);
         }
 
         [HttpPost]
@@ -74,7 +74,7 @@ namespace eFormAPI.Web.Controllers.Advanced
         [Authorize(Policy = AuthConsts.EformPolicies.EntitySelect.Update)]
         public async Task<OperationResult> Update([FromBody] AdvEntitySelectableGroupEditModel editModel)
         {
-            return await _entitySelectService.UpdateEntityGroup(editModel);
+            return await _entitySelectService.Update(editModel);
         }
         
         [HttpGet]
@@ -82,7 +82,7 @@ namespace eFormAPI.Web.Controllers.Advanced
         [Authorize(Policy = AuthConsts.EformPolicies.EntitySelect.Delete)]
         public async Task<OperationResult> Delete(string entityGroupUid)
         {
-            return await _entitySelectService.DeleteEntityGroup(entityGroupUid);
+            return await _entitySelectService.Delete(entityGroupUid);
         }
 
         [HttpGet]

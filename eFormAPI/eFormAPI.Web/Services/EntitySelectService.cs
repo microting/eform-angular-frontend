@@ -56,7 +56,7 @@ namespace eFormAPI.Web.Services
         }
 
 
-        public async Task<OperationDataResult<EntityGroupList>> GetEntityGroupList(
+        public async Task<OperationDataResult<EntityGroupList>> Index(
             AdvEntitySelectableGroupListRequestModel requestModel)
         {
             try
@@ -91,7 +91,7 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public async Task<OperationResult> CreateEntityGroup(AdvEntitySelectableGroupEditModel editModel)
+        public async Task<OperationResult> Create(AdvEntitySelectableGroupEditModel editModel)
         {
             try
             {
@@ -122,7 +122,7 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public async Task<OperationResult> UpdateEntityGroup(AdvEntitySelectableGroupEditModel editModel)
+        public async Task<OperationResult> Update(AdvEntitySelectableGroupEditModel editModel)
         {
             try
             {
@@ -173,7 +173,7 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public async Task<OperationDataResult<EntityGroup>> GetEntityGroup(string entityGroupUid)
+        public async Task<OperationDataResult<EntityGroup>> Read(string entityGroupUid)
         {
             try
             {
@@ -218,7 +218,7 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public async Task<OperationResult> DeleteEntityGroup(string entityGroupUid)
+        public async Task<OperationResult> Delete(string entityGroupUid)
         {
             try
             {

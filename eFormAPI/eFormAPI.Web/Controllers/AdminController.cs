@@ -48,7 +48,7 @@ namespace eFormAPI.Web.Controllers
         [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Read)]
         public async Task<OperationDataResult<UserInfoModelList>> Index([FromBody] PaginationModel paginationModel)
         {
-            return await _adminService.GetAllUsers(paginationModel);
+            return await _adminService.Index(paginationModel);
         }
 
         [HttpPost]
@@ -56,7 +56,7 @@ namespace eFormAPI.Web.Controllers
         [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Create)]
         public async Task<OperationResult> Create([FromBody] UserRegisterModel userRegisterModel)
         {
-            return await _adminService.CreateUser(userRegisterModel);
+            return await _adminService.Create(userRegisterModel);
         }
 
         [HttpGet]
@@ -64,7 +64,7 @@ namespace eFormAPI.Web.Controllers
         [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Read)]
         public Task<OperationDataResult<UserRegisterModel>> Read(int userId)
         {
-            return _adminService.GetUser(userId);
+            return _adminService.Read(userId);
         }
         
         [HttpPost]
@@ -72,7 +72,7 @@ namespace eFormAPI.Web.Controllers
         [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Update)]
         public async Task<OperationResult> Update([FromBody] UserRegisterModel userRegisterModel)
         {
-            return await _adminService.UpdateUser(userRegisterModel);
+            return await _adminService.Update(userRegisterModel);
         }
         
         [HttpGet]
@@ -80,7 +80,7 @@ namespace eFormAPI.Web.Controllers
         [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Delete)]
         public Task<OperationResult> Delete(int userId)
         {
-            return _adminService.DeleteUser(userId);
+            return _adminService.Delete(userId);
         }
 
         [HttpGet]

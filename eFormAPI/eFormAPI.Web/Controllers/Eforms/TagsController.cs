@@ -52,7 +52,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.ReadTags)]
         public async Task<OperationDataResult<List<CommonDictionaryModel>>> Index()
         {
-            return await _tagsService.GetAllTags();
+            return await _tagsService.Index();
         }
         
         [HttpPost]
@@ -60,7 +60,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UpdateTags)]
         public async Task<OperationResult> Create(string tagName)
         {
-            return await _tagsService.CreateTag(tagName);
+            return await _tagsService.Create(tagName);
         }
 
 
@@ -75,7 +75,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                 return Forbid();
             }
 
-            return Ok(await _tagsService.UpdateTemplateTags(requestModel));
+            return Ok(await _tagsService.Update(requestModel));
         }
 
         [HttpGet]
@@ -83,7 +83,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UpdateTags)]
         public async Task<OperationResult> DeleteTag(int tagId)
         {
-            return await _tagsService.DeleteTag(tagId);
+            return await _tagsService.Delete(tagId);
         }
 
         

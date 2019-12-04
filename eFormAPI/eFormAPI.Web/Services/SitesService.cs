@@ -53,7 +53,7 @@ namespace eFormAPI.Web.Services
             return new OperationDataResult<List<SiteName_Dto>>(true, siteNamesDto);
         }
 
-        public async Task<OperationDataResult<SiteName_Dto>> Edit(int id)
+        public async Task<OperationDataResult<SiteName_Dto>> Read(int id)
         {
             var core = await _coreHelper.GetCore();
             var siteNameDto = await core.Advanced_SiteItemRead(id);

@@ -33,7 +33,7 @@ namespace eFormAPI.Web.Abstractions.Advanced
     public interface ISitesService
     {
         Task<OperationDataResult<List<SiteName_Dto>>> Index();
-        Task<OperationDataResult<SiteName_Dto>> Edit(int id);
+        Task<OperationDataResult<SiteName_Dto>> Read(int id);
         Task<OperationResult> Update(SiteNameModel siteNameModel);
         Task<OperationResult> Delete(int id);
     }

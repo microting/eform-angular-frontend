@@ -57,7 +57,7 @@ namespace eFormAPI.Web.Services
             return new OperationDataResult<List<Worker_Dto>>(true, workersDto);
         }
 
-        public async Task<OperationDataResult<Worker_Dto>> Edit(int id)
+        public async Task<OperationDataResult<Worker_Dto>> Read(int id)
         {
             var core = await _coreHelper.GetCore();
             var workerDto = await core.Advanced_WorkerRead(id);

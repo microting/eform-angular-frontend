@@ -32,16 +32,16 @@ namespace eFormAPI.Web.Abstractions.Advanced
 {
     public interface IEntitySearchService
     {
-        Task<OperationDataResult<EntityGroupList>> GetEntityGroupList(
+        Task<OperationDataResult<EntityGroupList>> Index(
             AdvEntitySearchableGroupListRequestModel requestModel);
 
         Task<OperationDataResult<List<CommonDictionaryTextModel>>> GetEntityGroupDictionary(string entityGroupUid,
             string searchString);
 
-        Task<OperationResult> CreateEntityGroup(AdvEntitySearchableGroupEditModel editModel);
-        Task<OperationResult> UpdateEntityGroup(AdvEntitySearchableGroupEditModel editModel);
-        Task<OperationDataResult<EntityGroup>> GetEntityGroup(string entityGroupUid);
-        Task<OperationResult> DeleteEntityGroup(string entityGroupUid);
+        Task<OperationResult> Create(AdvEntitySearchableGroupEditModel editModel);
+        Task<OperationResult> Update(AdvEntitySearchableGroupEditModel editModel);
+        Task<OperationDataResult<EntityGroup>> Read(string entityGroupUid);
+        Task<OperationResult> Delete(string entityGroupUid);
         Task<OperationResult> SendSearchableGroup(string entityGroupUid);
     }
 }

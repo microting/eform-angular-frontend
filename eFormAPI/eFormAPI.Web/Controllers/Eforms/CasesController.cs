@@ -69,7 +69,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                 return Forbid();
             }
 
-            return Ok(await _casesService.GetCase(id));
+            return Ok(await _casesService.Read(id));
         }
 
         [HttpPost]

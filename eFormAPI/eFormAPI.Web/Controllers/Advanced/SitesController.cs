@@ -64,7 +64,7 @@ namespace eFormAPI.Web.Controllers.Advanced
         [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
         public async Task<OperationDataResult<SiteName_Dto>> Read(int id)
         {
-            return await _sitesService.Edit(id);
+            return await _sitesService.Read(id);
         }
 
         [HttpPost]

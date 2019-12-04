@@ -63,7 +63,7 @@ namespace eFormAPI.Web.Controllers.Advanced
         [Authorize(Policy = AuthConsts.EformPolicies.Workers.Update)]
         public async Task<OperationDataResult<Worker_Dto>> Read(int id)
         {
-            return await _workersService.Edit(id);
+            return await _workersService.Read(id);
         }
 
         [HttpPost]
