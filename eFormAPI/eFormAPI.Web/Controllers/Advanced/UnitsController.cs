@@ -44,14 +44,14 @@ namespace eFormAPI.Web.Controllers.Advanced
 
         [HttpGet]
         [Authorize(Policy = AuthConsts.EformPolicies.Units.Read)]
-        public async Task<OperationDataResult<List<Unit_Dto>>> Index()
+        public async Task<OperationDataResult<List<UnitDto>>> Index()
         {
             return await _unitsService.Index();
         }
 
         [HttpGet]
         [Authorize(Policy = AuthConsts.EformPolicies.Units.Update)]
-        public async Task<OperationDataResult<Unit_Dto>> RequestOtp(int id)
+        public async Task<OperationDataResult<UnitDto>> RequestOtp(int id)
         {
             return await _unitsService.RequestOtp(id);
         }

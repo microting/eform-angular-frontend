@@ -46,7 +46,7 @@ namespace eFormAPI.Web.Controllers.Advanced
 
         [HttpGet]
         [Authorize(Policy = AuthConsts.EformPolicies.Workers.Read)]
-        public async Task<OperationDataResult<List<Worker_Dto>>> Index()
+        public async Task<OperationDataResult<List<WorkerDto>>> Index()
         {
             return await _workersService.Index();
         }
@@ -61,7 +61,7 @@ namespace eFormAPI.Web.Controllers.Advanced
         
         [HttpGet]
         [Authorize(Policy = AuthConsts.EformPolicies.Workers.Update)]
-        public async Task<OperationDataResult<Worker_Dto>> Read(int id)
+        public async Task<OperationDataResult<WorkerDto>> Read(int id)
         {
             return await _workersService.Read(id);
         }
