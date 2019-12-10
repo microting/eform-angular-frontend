@@ -10,5 +10,4 @@ export class InstalledPluginModel {
   version: string;
   baseUrl: string;
   status: number;
-  connectionString: string;
 }

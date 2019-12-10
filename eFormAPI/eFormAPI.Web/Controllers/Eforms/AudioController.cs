@@ -22,23 +22,55 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System.IO;
+using System.Threading.Tasks;
 using eFormAPI.Web.Infrastructure;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microting.eForm.Dto;
+using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+using OpenStack.NetCoreSwiftClient.Extensions;
 
 namespace eFormAPI.Web.Controllers.Eforms
 {
     [Authorize]
     public class AudioController : Controller
     {
+        private readonly IEFormCoreService _coreHelper;
+
+        public AudioController(IEFormCoreService coreHelper)
+        {
+            _coreHelper = coreHelper;
+        }
+        
         [HttpGet]
         [Route("api/audio/eform-audio")]
         [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, 
             Policy = AuthConsts.EformPolicies.Cases.CasesRead)]
-        public IActionResult GetAudio(string fileName)
+        public async Task<IActionResult> GetAudio(string fileName)
         {
+            var core = await _coreHelper.GetCore();
+
+            if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true")
+            {
+                var ss = await core.GetFileFromSwiftStorage($"{fileName}");
+                    
+                Response.ContentType = ss.ContentType;
+                Response.ContentLength = ss.ContentLength;
+                
+                return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty("wav"));
+            }
+
+            if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
+            {
+                var ss = await core.GetFileFromS3Storage($"{fileName}");
+
+                Response.ContentLength = ss.ContentLength;
+
+                return File(ss.ResponseStream, ss.Headers["Content-Type"]);
+            }
+            
             var filePath = PathHelper.GetAudioPath(fileName);
             if (!System.IO.File.Exists(filePath))
             {

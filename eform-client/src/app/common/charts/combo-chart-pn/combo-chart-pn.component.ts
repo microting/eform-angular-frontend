@@ -22,7 +22,7 @@ import {
   calculateViewDimensions,
   ViewDimensions,
   ColorHelper
-} from '@swimlane/ngx-charts';
+} from '@microting/ngx-charts';
 import { area, line, curveLinear } from 'd3-shape';
 import { scaleBand, scaleLinear, scalePoint, scaleTime } from 'd3-scale';
 

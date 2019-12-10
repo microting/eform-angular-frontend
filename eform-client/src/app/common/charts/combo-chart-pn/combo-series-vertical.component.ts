@@ -13,7 +13,7 @@ import {
   animate,
   transition
 } from '@angular/animations';
-import {calculateViewDimensions, formatLabel} from '@swimlane/ngx-charts';
+import {calculateViewDimensions, formatLabel} from '@microting/ngx-charts';
 import { scaleBand, scaleLinear } from 'd3-scale';
 
 

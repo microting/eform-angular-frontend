@@ -343,7 +343,7 @@ export default selectableLists;
 export class SelectableListRowObject {
   constructor(rowNumber) {
     if ($$('#entitySelectMicrotingUUID')[rowNumber - 1]) {
-      this.id = +$$('#entitySelectMicrotingUUID')[rowNumber - 1];
+      this.id = $$('#entitySelectMicrotingUUID')[rowNumber - 1];
       try {
         this.name = $$('#entitySelectName')[rowNumber - 1].getText();
       } catch (e) {}

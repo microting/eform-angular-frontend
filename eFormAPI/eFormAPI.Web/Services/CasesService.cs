@@ -23,6 +23,7 @@ SOFTWARE.
 */
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Eforms;
 using eFormAPI.Web.Infrastructure.Helpers;
@@ -48,12 +49,12 @@ namespace eFormAPI.Web.Services
             _localizationService = localizationService;
         }
 
-        public OperationDataResult<CaseListModel> Index(CaseRequestModel requestModel)
+        public async Task<OperationDataResult<CaseListModel>> Index(CaseRequestModel requestModel)
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var caseList = core.CaseReadAll(requestModel.TemplateId, null, null,
+                var core = await _coreHelper.GetCore();
+                var caseList = await core.CaseReadAll(requestModel.TemplateId, null, null,
                     Constants.WorkflowStates.NotRemoved, requestModel.NameFilter,
                     requestModel.IsSortDsc, requestModel.Sort, requestModel.PageIndex, requestModel.PageSize);
                 var model = new CaseListModel()
@@ -71,15 +72,15 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public OperationDataResult<ReplyElement> GetCase(int id)
+        public async Task<OperationDataResult<ReplyElement>> Read(int id)
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var caseDto = core.CaseReadByCaseId(id);
+                var core = await _coreHelper.GetCore();
+                var caseDto = await core.CaseReadByCaseId(id);
                 var microtingUId = caseDto.MicrotingUId;
                 var microtingCheckUId = caseDto.CheckUId;
-                var theCase = core.CaseRead((int)microtingUId, (int)microtingCheckUId);
+                var theCase = await core.CaseRead((int)microtingUId, (int)microtingCheckUId);
                 theCase.Id = id;
 
                 return !theCase.Equals(null)
@@ -92,13 +93,13 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public OperationResult Delete(int id)
+        public async Task<OperationResult> Delete(int id)
         {
             try
             {
-                var core = _coreHelper.GetCore();
+                var core = await _coreHelper.GetCore();
 
-                return core.CaseDeleteResult(id)
+                return await core.CaseDeleteResult(id)
                     ? new OperationResult(true, _localizationService.GetStringWithFormat("CaseParamDeletedSuccessfully", id))
                     : new OperationResult(false, _localizationService.GetString("CaseCouldNotBeRemoved"));
             }
@@ -108,11 +109,11 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public OperationResult Update(ReplyRequest model)
+        public async Task<OperationResult> Update(ReplyRequest model)
         {
             var checkListValueList = new List<string>();
             var fieldValueList = new List<string>();
-            var core = _coreHelper.GetCore();
+            var core = await _coreHelper.GetCore();
             try
             {
                 model.ElementList.ForEach(element =>
@@ -128,8 +129,8 @@ namespace eFormAPI.Web.Services
 
             try
             {
-                core.CaseUpdate(model.Id, fieldValueList, checkListValueList);
-                core.CaseUpdateFieldValues(model.Id);
+                await core.CaseUpdate(model.Id, fieldValueList, checkListValueList);
+                await core.CaseUpdateFieldValues(model.Id);
 
                 if (CaseUpdateDelegates.CaseUpdateDelegate != null)
                 {

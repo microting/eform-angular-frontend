@@ -23,6 +23,7 @@ SOFTWARE.
 */
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Advanced;
 using eFormAPI.Web.Infrastructure.Models;
@@ -44,34 +45,34 @@ namespace eFormAPI.Web.Services
             _localizationService = localizationService;
         }
 
-        public OperationDataResult<List<SiteName_Dto>> Index()
+        public async Task<OperationDataResult<List<SiteNameDto>>> Index()
         {
-            var core = _coreHelper.GetCore();
-            var siteNamesDto = core.Advanced_SiteItemReadAll(false);
+            var core = await _coreHelper.GetCore();
+            var siteNamesDto = await core.Advanced_SiteItemReadAll(false);
 
-            return new OperationDataResult<List<SiteName_Dto>>(true, siteNamesDto);
+            return new OperationDataResult<List<SiteNameDto>>(true, siteNamesDto);
         }
 
-        public OperationDataResult<SiteName_Dto> Edit(int id)
+        public async Task<OperationDataResult<SiteNameDto>> Read(int id)
         {
-            var core = _coreHelper.GetCore();
-            var siteNameDto = core.Advanced_SiteItemRead(id);
+            var core = await _coreHelper.GetCore();
+            var siteNameDto = await core.Advanced_SiteItemRead(id);
 
             return !siteNameDto.Equals(null)
-                ? new OperationDataResult<SiteName_Dto>(true, siteNameDto)
-                : new OperationDataResult<SiteName_Dto>(false);
+                ? new OperationDataResult<SiteNameDto>(true, siteNameDto)
+                : new OperationDataResult<SiteNameDto>(false);
         }
 
-        public OperationResult Update(SiteNameModel siteNameModel)
+        public async Task<OperationResult> Update(SiteNameModel siteNameModel)
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var siteNameDto = core.Advanced_SiteItemRead(siteNameModel.Id);
+                var core = await _coreHelper.GetCore();
+                var siteNameDto = await core.Advanced_SiteItemRead(siteNameModel.Id);
 
                 if (!siteNameDto.Equals(null))
                 {
-                    core.Advanced_SiteItemUpdate(siteNameDto.SiteUId, siteNameModel.SiteName);
+                    await core.Advanced_SiteItemUpdate(siteNameDto.SiteUId, siteNameModel.SiteName);
                     return new OperationResult(true);
                 }
 
@@ -84,19 +85,19 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public OperationResult Delete(int id)
+        public async Task<OperationResult> Delete(int id)
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var siteDto = core.Advanced_SiteItemRead(id);
+                var core = await _coreHelper.GetCore();
+                var siteDto = await core.Advanced_SiteItemRead(id);
 
                 if (siteDto.Equals(null))                    
                 {
                     return new OperationResult(false, _localizationService.GetStringWithFormat("SiteParamNotFound", id));
                 }
 
-                return core.Advanced_SiteItemDelete(id)
+                return await core.Advanced_SiteItemDelete(id)
                     ? new OperationResult(true,
                         _localizationService.GetStringWithFormat("SiteParamDeletedSuccessfully", siteDto.SiteName))
                     : new OperationResult(false,

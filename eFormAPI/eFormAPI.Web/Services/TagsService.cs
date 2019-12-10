@@ -59,12 +59,12 @@ namespace eFormAPI.Web.Services
             _dbContext = dbContext;
         }
 
-        public OperationDataResult<List<CommonDictionaryModel>> GetAllTags()
+        public async Task<OperationDataResult<List<CommonDictionaryModel>>> Index()
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var tags = core.GetAllTags(false);
+                var core = await _coreHelper.GetCore();
+                var tags = await core.GetAllTags(false);
                 var model = new List<CommonDictionaryModel>(tags.Count);
                 tags.ForEach(tag =>
                 {
@@ -84,11 +84,44 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public async Task<OperationResult> DeleteTag(int tagId)
+        public async Task<OperationResult> Create(string tagName)
         {
             try
             {
-                var result = _coreHelper.GetCore().TagDelete(tagId);
+                var result = await _coreHelper.GetCore().Result.TagCreate(tagName);
+                return result > 0
+                    ? new OperationResult(true, _localizationService.GetStringWithFormat("TagParamCreatedSuccessfully", tagName))
+                    : new OperationResult(false, _localizationService.GetStringWithFormat("ErrorWhileCreatingParamTag", tagName));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return new OperationResult(false,
+                    _localizationService.GetStringWithFormat("ErrorWhileCreatingParamTag", tagName));
+            }
+        }
+
+        public async Task<OperationResult> Update(UpdateTemplateTagsModel requestModel)
+        {
+            try
+            {
+                var result = await _coreHelper.GetCore().Result.TemplateSetTags(requestModel.TemplateId, requestModel.TagsIds);
+                return result
+                    ? new OperationResult(true, _localizationService.GetString("TemplateTagUpdatedSuccessfully"))
+                    : new OperationResult(false, _localizationService.GetString("ErrorWhileUpdatingTemplateTags"));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return new OperationResult(false, _localizationService.GetString("ErrorWhileUpdatingTemplateTags"));
+            }
+        }
+
+        public async Task<OperationResult> Delete(int tagId)
+        {
+            try
+            {
+                var result = await _coreHelper.GetCore().Result.TagDelete(tagId);
                 if (result)
                 {
                     var savedTags = _dbContext.SavedTags.Where(x => x.TagId == tagId).ToList();
@@ -107,39 +140,6 @@ namespace eFormAPI.Web.Services
             {
                 _logger.LogError(e.Message);
                 return new OperationResult(false, _localizationService.GetString("ErrorWhileDeletingTag"));
-            }
-        }
-
-        public OperationResult CreateTag(string tagName)
-        {
-            try
-            {
-                var result = _coreHelper.GetCore().TagCreate(tagName);
-                return result > 0
-                    ? new OperationResult(true, _localizationService.GetStringWithFormat("TagParamCreatedSuccessfully", tagName))
-                    : new OperationResult(false, _localizationService.GetStringWithFormat("ErrorWhileCreatingParamTag", tagName));
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e.Message);
-                return new OperationResult(false,
-                    _localizationService.GetStringWithFormat("ErrorWhileCreatingParamTag", tagName));
-            }
-        }
-
-        public OperationResult UpdateTemplateTags(UpdateTemplateTagsModel requestModel)
-        {
-            try
-            {
-                var result = _coreHelper.GetCore().TemplateSetTags(requestModel.TemplateId, requestModel.TagsIds);
-                return result
-                    ? new OperationResult(true, _localizationService.GetString("TemplateTagUpdatedSuccessfully"))
-                    : new OperationResult(false, _localizationService.GetString("ErrorWhileUpdatingTemplateTags"));
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e.Message);
-                return new OperationResult(false, _localizationService.GetString("ErrorWhileUpdatingTemplateTags"));
             }
         }
 

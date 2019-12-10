@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using eFormAPI.Web.Infrastructure.Helpers;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 
 namespace PluginInstallDaemon
 {
@@ -7,7 +9,7 @@ namespace PluginInstallDaemon
     {
         static void Main(string[] args)
         {
-            LogEvent("Starting up");
+            Log.LogEvent("Starting up");
 
             try
             {
@@ -28,43 +30,14 @@ namespace PluginInstallDaemon
             }
             catch (UnauthorizedAccessException uex)
             {
-                LogException(uex.Message);
+                Log.LogException(uex.Message);
             }
             
         }
 
         private static void OnChanged(object source, FileSystemEventArgs e)
         {            
-            LogEvent("New file found");
-        }
-        
-        private static void LogEvent(string appendText)
-        {
-            try
-            {                
-                var oldColor = Console.ForegroundColor;
-                Console.ForegroundColor = ConsoleColor.Gray;
-                Console.WriteLine("[DBG] " + appendText);
-                Console.ForegroundColor = oldColor;
-            }
-            catch
-            {
-            }
-        }
-
-        private static void LogException(string appendText)
-        {
-            try
-            {
-                var oldColor = Console.ForegroundColor;
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("[ERR] " + appendText);
-                Console.ForegroundColor = oldColor;
-            }
-            catch
-            {
-
-            }
+            Log.LogEvent("New file found");
         }
     }
 }

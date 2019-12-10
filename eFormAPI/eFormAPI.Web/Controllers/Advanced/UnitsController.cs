@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions.Advanced;
 using eFormAPI.Web.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
@@ -43,16 +44,16 @@ namespace eFormAPI.Web.Controllers.Advanced
 
         [HttpGet]
         [Authorize(Policy = AuthConsts.EformPolicies.Units.Read)]
-        public OperationDataResult<List<Unit_Dto>> Index()
+        public async Task<OperationDataResult<List<UnitDto>>> Index()
         {
-            return _unitsService.Index();
+            return await _unitsService.Index();
         }
 
         [HttpGet]
         [Authorize(Policy = AuthConsts.EformPolicies.Units.Update)]
-        public OperationDataResult<Unit_Dto> RequestOtp(int id)
+        public async Task<OperationDataResult<UnitDto>> RequestOtp(int id)
         {
-            return _unitsService.RequestOtp(id);
+            return await _unitsService.RequestOtp(id);
         }
     }
 }

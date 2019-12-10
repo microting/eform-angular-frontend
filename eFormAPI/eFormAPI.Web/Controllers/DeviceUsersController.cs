@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Advanced;
 using eFormAPI.Web.Infrastructure;
@@ -49,45 +50,45 @@ namespace eFormAPI.Web.Controllers
         [HttpGet]
         [Route("api/device-users/index")]
         [Authorize(Policy = AuthConsts.EformPolicies.DeviceUsers.Read)]
-        public OperationDataResult<List<Site_Dto>> Index()
+        public async Task<OperationDataResult<List<SiteDto>>> Index()
         {
-            return _deviceUsersService.Index();
+            return await _deviceUsersService.Index();
         }
 
         [HttpPut]
         [Route("api/device-users/create")]
         [Authorize(Policy = AuthConsts.EformPolicies.DeviceUsers.Create)]
-        public OperationResult Create([FromBody] DeviceUserModel deviceUserModel)
+        public async Task<OperationResult> Create([FromBody] DeviceUserModel deviceUserModel)
         {
             if (!ModelState.IsValid)
                 return new OperationResult(false,
                     _localizationService.GetString("DeviceUserCouldNotBeCreated"));
 
-            return _deviceUsersService.Create(deviceUserModel);
+            return await _deviceUsersService.Create(deviceUserModel);
         }
 
         [HttpGet]
         [Route("api/device-users/{id}")]
         [Authorize(Policy = AuthConsts.EformPolicies.DeviceUsers.Update)]
-        public OperationDataResult<Site_Dto> Edit(int id)
+        public async Task<OperationDataResult<SiteDto>> Read(int id)
         {
-            return _deviceUsersService.Edit(id);
+            return await _deviceUsersService.Edit(id);
         }
 
         [HttpPost]
         [Route("api/device-users/update")]
         [Authorize(Policy = AuthConsts.EformPolicies.DeviceUsers.Update)]
-        public OperationResult Update([FromBody] DeviceUserModel deviceUserModel)
+        public async Task<OperationResult> Update([FromBody] DeviceUserModel deviceUserModel)
         {
-            return _deviceUsersService.Update(deviceUserModel);
+            return await _deviceUsersService.Update(deviceUserModel);
         }
 
         [HttpDelete]
         [Route("api/device-users/delete/{id}")]
         [Authorize(Policy = AuthConsts.EformPolicies.DeviceUsers.Delete)]
-        public OperationResult Delete(int id)
+        public async Task<OperationResult> Delete(int id)
         {
-            return _deviceUsersService.Delete(id);
+            return await _deviceUsersService.Delete(id);
         }
     }
 }

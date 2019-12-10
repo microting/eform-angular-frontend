@@ -32,6 +32,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microting.eForm.Dto;
+using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
@@ -41,6 +43,7 @@ namespace eFormAPI.Web.Services
 {
     public class AccountService : IAccountService
     {
+        private readonly IEFormCoreService _coreHelper;
         private readonly IUserService _userService;
         private readonly IEmailSender _emailSender;
         private readonly IDbOptions<ApplicationSettings> _appSettings;
@@ -48,13 +51,15 @@ namespace eFormAPI.Web.Services
         private readonly ILocalizationService _localizationService;
         private readonly UserManager<EformUser> _userManager;
 
-        public AccountService(UserManager<EformUser> userManager,
+        public AccountService(IEFormCoreService coreHelper,
+            UserManager<EformUser> userManager,
             IUserService userService,
             IDbOptions<ApplicationSettings> appSettings, 
             ILogger<AccountService> logger,
             ILocalizationService localizationService, 
             IEmailSender emailSender)
         {
+            _coreHelper = coreHelper;
             _userManager = userManager;
             _userService = userService;
             _appSettings = appSettings;
@@ -140,11 +145,12 @@ namespace eFormAPI.Web.Services
                 return new OperationResult(false, string.Join(" ", errors));
             }
 
-            return new OperationResult(true);
+            return new OperationResult(true, _localizationService.GetString("PasswordSuccessfullyUpdated"));
         }
 
         public async Task<OperationResult> ForgotPassword(ForgotPasswordModel model)
         {
+            var core = await _coreHelper.GetCore();
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
@@ -152,7 +158,7 @@ namespace eFormAPI.Web.Services
             }
 
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-            var link = _appSettings.Value.SiteLink;
+            var link = await core.GetSdkSetting(Settings.httpServerAddress);
             link = $"{link}/auth/restore-password-confirmation?userId={user.Id}&code={code}";
             await _emailSender.SendEmailAsync(user.Email, "EForm Password Reset",
                 "Please reset your password by clicking <a href=\"" + link + "\">here</a>");

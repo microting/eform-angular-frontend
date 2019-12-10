@@ -1,5 +1,4 @@
 import {PageWithNavbarPage} from './PageWithNavbar.page';
-import {FractionsRowObject} from './trash-inspection/TrashInspection-Fraction.page';
 
 class DeviceUsersPage extends PageWithNavbarPage {
   constructor() {

@@ -10,8 +10,11 @@ describe('Application settings page - site header section', function () {
   });
   it('should change main text', function () {
     loginPage.login();
+    browser.pause(4000);
     myEformsPage.Navbar.goToApplicationSettings();
+    browser.pause(4000);
     applicationSettingsPage.LoginPage.mainTextInput.setValue(ApplicationSettingsConstants.LoginPage.customMainText);
+    browser.pause(4000);
     applicationSettingsPage.save();
     browser.refresh();
     // browser.pause(10000);

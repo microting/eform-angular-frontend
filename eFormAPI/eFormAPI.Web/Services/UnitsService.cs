@@ -23,6 +23,7 @@ SOFTWARE.
 */
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Advanced;
 using Microting.eForm.Dto;
@@ -43,25 +44,25 @@ namespace eFormAPI.Web.Services
         }
 
 
-        public OperationDataResult<List<Unit_Dto>> Index()
+        public async Task<OperationDataResult<List<UnitDto>>> Index()
         {
-            var core = _coreHelper.GetCore();
-            var unitsDto = core.Advanced_UnitReadAll();
-            return new OperationDataResult<List<Unit_Dto>>(true, unitsDto);
+            var core = await _coreHelper.GetCore();
+            var unitsDto = await core.Advanced_UnitReadAll();
+            return new OperationDataResult<List<UnitDto>>(true, unitsDto);
         }
 
-        public OperationDataResult<Unit_Dto> RequestOtp(int id)
+        public async Task<OperationDataResult<UnitDto>> RequestOtp(int id)
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var unitDto = core.Advanced_UnitRequestOtp(id);
-                return new OperationDataResult<Unit_Dto>(true, _localizationService.GetString("NewOTPCreatedSuccessfully"),
+                var core = await _coreHelper.GetCore();
+                var unitDto = await core.Advanced_UnitRequestOtp(id);
+                return new OperationDataResult<UnitDto>(true, _localizationService.GetString("NewOTPCreatedSuccessfully"),
                     unitDto);
             }
             catch (Exception)
             {
-                return new OperationDataResult<Unit_Dto>(false,
+                return new OperationDataResult<UnitDto>(false,
                     _localizationService.GetStringWithFormat("UnitParamOTPCouldNotCompleted", id));
             }
         }

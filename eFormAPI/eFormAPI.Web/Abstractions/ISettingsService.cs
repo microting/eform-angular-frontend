@@ -31,7 +31,7 @@ namespace eFormAPI.Web.Abstractions
     public interface ISettingsService
     {
         OperationResult ConnectionStringExist();
-        OperationDataResult<AdminSettingsModel> GetAdminSettings();
+        Task<OperationDataResult<AdminSettingsModel>> GetAdminSettings();
         OperationDataResult<string> GetDefaultLocale();
         OperationDataResult<LoginPageSettingsModel> GetLoginPageSettings();
         OperationDataResult<HeaderSettingsModel> GetPageHeaderSettings();

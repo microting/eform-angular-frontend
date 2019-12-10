@@ -30,12 +30,12 @@ namespace eFormAPI.Web.Abstractions
 {
     public interface IAdminService
     {
-        Task<OperationResult> CreateUser(UserRegisterModel userRegisterModel);
-        Task<OperationResult> DeleteUser(int userId);
+        Task<OperationDataResult<UserInfoModelList>> Index(PaginationModel paginationModel);
+        Task<OperationResult> Create(UserRegisterModel userRegisterModel);
+        Task<OperationDataResult<UserRegisterModel>> Read(int userId);
+        Task<OperationResult> Update(UserRegisterModel userRegisterModel);
+        Task<OperationResult> Delete(int userId);
         Task<OperationResult> DisableTwoFactorAuthForce();
         Task<OperationResult> EnableTwoFactorAuthForce();
-        OperationDataResult<UserInfoModelList> GetAllUsers(PaginationModel paginationModel);
-        Task<OperationDataResult<UserRegisterModel>> GetUser(int userId);
-        Task<OperationResult> UpdateUser(UserRegisterModel userRegisterModel);
     }
 }

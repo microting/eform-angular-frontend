@@ -23,6 +23,7 @@ SOFTWARE.
 */
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Advanced;
 using eFormAPI.Web.Infrastructure.Models;
@@ -45,21 +46,21 @@ namespace eFormAPI.Web.Services
             _coreHelper = coreHelper;
         }
 
-        public OperationDataResult<List<Site_Dto>> Index()
+        public async Task<OperationDataResult<List<SiteDto>>> Index()
         {
-            var core = _coreHelper.GetCore();
-            var siteDto = core.SiteReadAll(false);
-            return new OperationDataResult<List<Site_Dto>>(true, siteDto);
+            var core = await _coreHelper.GetCore();
+            var siteDto = await core.SiteReadAll(false);
+            return new OperationDataResult<List<SiteDto>>(true, siteDto);
         }
 
-        public OperationResult Create(DeviceUserModel deviceUserModel)
+        public async Task<OperationResult> Create(DeviceUserModel deviceUserModel)
         {
-            var core = _coreHelper.GetCore();
+            var core = await _coreHelper.GetCore();
             var siteName = deviceUserModel.UserFirstName + " " + deviceUserModel.UserLastName;
 
             try
             {
-                var siteDto = core.SiteCreate(siteName, deviceUserModel.UserFirstName, deviceUserModel.UserLastName,
+                var siteDto = await core.SiteCreate(siteName, deviceUserModel.UserFirstName, deviceUserModel.UserLastName,
                     null);
 
                 return siteDto != null
@@ -87,30 +88,30 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public OperationDataResult<Site_Dto> Edit(int id)
+        public async Task<OperationDataResult<SiteDto>> Edit(int id)
         {
-            var core = _coreHelper.GetCore();
-            var siteDto = core.SiteRead(id);
+            var core = await _coreHelper.GetCore();
+            var siteDto = await core.SiteRead(id);
 
             return siteDto != null
-                ? new OperationDataResult<Site_Dto>(true, siteDto)
-                : new OperationDataResult<Site_Dto>(false,
+                ? new OperationDataResult<SiteDto>(true, siteDto)
+                : new OperationDataResult<SiteDto>(false,
                     _localizationService.GetStringWithFormat("DeviceUserParamCouldNotBeEdited", id));
         }
 
-        public OperationResult Update(DeviceUserModel deviceUserModel)
+        public async Task<OperationResult> Update(DeviceUserModel deviceUserModel)
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var siteDto = core.SiteRead(deviceUserModel.Id);
+                var core = await _coreHelper.GetCore();
+                var siteDto = await core.SiteRead(deviceUserModel.Id);
                 if (siteDto.WorkerUid != null)
                 {
-                    var workerDto = core.Advanced_WorkerRead((int) siteDto.WorkerUid);
+                    var workerDto = await core.Advanced_WorkerRead((int) siteDto.WorkerUid);
                     if (workerDto != null)
                     {
                         var fullName = deviceUserModel.UserFirstName + " " + deviceUserModel.UserLastName;
-                        var isUpdated = core.SiteUpdate(deviceUserModel.Id, fullName, deviceUserModel.UserFirstName,
+                        var isUpdated = await core.SiteUpdate(deviceUserModel.Id, fullName, deviceUserModel.UserFirstName,
                             deviceUserModel.UserLastName, workerDto.Email);
 
                         return isUpdated
@@ -130,14 +131,14 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public OperationResult Delete(int id)
+        public async Task<OperationResult> Delete(int id)
         {
             try
             {
-                var core = _coreHelper.GetCore();
-                var siteNameDto = core.Advanced_SiteItemRead(id);
+                var core = await _coreHelper.GetCore();
+                var siteNameDto = await core.Advanced_SiteItemRead(id);
 
-                return core.SiteDelete(siteNameDto.SiteUId)
+                return await core.SiteDelete(siteNameDto.SiteUId)
                     ? new OperationResult(true,
                         _localizationService.GetStringWithFormat("DeviceUserParamDeletedSuccessfully", siteNameDto.SiteName))
                     : new OperationResult(false,

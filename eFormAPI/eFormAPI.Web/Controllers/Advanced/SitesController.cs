@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions.Advanced;
 using eFormAPI.Web.Infrastructure;
 using eFormAPI.Web.Infrastructure.Models;
@@ -46,40 +47,40 @@ namespace eFormAPI.Web.Controllers.Advanced
         [HttpGet]
         [Route("api/sites/index")]
         [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
-        public OperationDataResult<List<SiteName_Dto>> Index()
+        public async Task<OperationDataResult<List<SiteNameDto>>> Index()
         {
-            return _sitesService.Index();
+            return await _sitesService.Index();
         }
         [HttpGet]
         [Route("api/sites/pairing")]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.PairingRead)]
-        public OperationDataResult<List<SiteName_Dto>> ReadPairing()
+        public async Task<OperationDataResult<List<SiteNameDto>>> ReadPairing()
         {
-            return _sitesService.Index();
+            return await _sitesService.Index();
         }
 
         [HttpGet]
         [Route("api/sites/edit")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Sites.Update)]
-        public OperationDataResult<SiteName_Dto> Edit(int id)
+        [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
+        public async Task<OperationDataResult<SiteNameDto>> Read(int id)
         {
-            return _sitesService.Edit(id);
+            return await _sitesService.Read(id);
         }
 
         [HttpPost]
         [Route("api/sites/update")]
         [Authorize(Policy = AuthConsts.EformPolicies.Sites.Update)]
-        public OperationResult Update([FromBody] SiteNameModel siteNameModel)
+        public async Task<OperationResult> Update([FromBody] SiteNameModel siteNameModel)
         {
-            return _sitesService.Update(siteNameModel);
+            return await _sitesService.Update(siteNameModel);
         }
 
         [HttpGet]
         [Route("api/sites/delete/{id}")]
         [Authorize(Policy = AuthConsts.EformPolicies.Sites.Delete)]
-        public OperationResult Delete(int id)
+        public async Task<OperationResult> Delete(int id)
         {
-            return _sitesService.Delete(id);
+            return await _sitesService.Delete(id);
         }
     }
 }

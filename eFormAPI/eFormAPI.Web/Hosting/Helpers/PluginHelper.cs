@@ -47,6 +47,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Delegates;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Settings;
 using Microting.eFormApi.BasePn.Services;
+using OpenStack.NetCoreSwiftClient.Extensions;
 
 namespace eFormAPI.Web.Hosting.Helpers
 {
@@ -84,6 +85,10 @@ namespace eFormAPI.Web.Hosting.Helpers
                         var eformPlugin = eformPlugins.FirstOrDefault(x => x.PluginId == plugin.PluginId);
                         if (eformPlugin != null)
                         {
+//                            if (eformPlugin.ConnectionString.IsNullOrEmpty())
+//                            {
+//                                eformPlugin.ConnectionString = "";
+//                            }
                             if (!eformPlugin.ConnectionString.Contains("PersistSecurityInfo=true;"))
                             {
                                 var aPlugin =
@@ -141,10 +146,7 @@ namespace eFormAPI.Web.Hosting.Helpers
                 }
             }
 
-            //   var assemblies = new List<Assembly>();
             var directories = Directory.EnumerateDirectories(pluginsDir);
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("[DBG] RUNNING IN DEBUG MODE!");
             foreach (var directory in directories)
             {
                 List<string> pluginList;

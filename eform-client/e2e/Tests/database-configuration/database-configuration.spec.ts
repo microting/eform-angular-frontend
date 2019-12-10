@@ -7,7 +7,7 @@ const expect = require('chai').expect;
 describe('Database', function () {
   it('should be configured successfully', function () {
     databasePage.open('/');
-    browser.waitForVisible('#languageSelector', 30000);
+    browser.waitForVisible('#languageSelector', 50000);
     expect(databasePage.firstNameInput.isVisible()).equal(true);
     expect(databasePage.lastNameInput.isVisible()).equal(true);
     expect(databasePage.emailInput.isVisible()).equal(true);

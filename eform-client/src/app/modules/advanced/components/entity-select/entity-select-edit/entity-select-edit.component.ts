@@ -64,6 +64,7 @@ export class EntitySelectEditComponent implements OnInit {
   addNewAdvEntitySelectableItem() {
     const item = new AdvEntitySelectableItemModel();
     item.entityItemUId = (this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels.length + 1).toString();
+    item.displayIndex = this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels.length + 1;
     this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels.push(item);
   }
 
@@ -94,7 +95,11 @@ export class EntitySelectEditComponent implements OnInit {
     if (importString) {
       const lines = importString.split('\n');
       for (let i = 0; i < lines.length; i++) {
-        this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels.push(new AdvEntitySelectableItemModel(lines[i]));
+        const item = new AdvEntitySelectableItemModel();
+        item.entityItemUId = (this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels.length).toString();
+        item.name = lines[i];
+        item.displayIndex = this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels.length + 1;
+        this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels.push(item);
       }
     }
   }

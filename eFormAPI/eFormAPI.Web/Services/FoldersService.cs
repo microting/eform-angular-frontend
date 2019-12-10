@@ -24,6 +24,7 @@ SOFTWARE.
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Advanced;
 using eFormAPI.Web.Infrastructure.Models;
@@ -45,34 +46,34 @@ namespace eFormAPI.Web.Services
             _localizationService = localizationService;
         }
         
-        public OperationDataResult<List<Folder_Dto>> Index()
+        public async Task<OperationDataResult<List<FolderDto>>> Index()
         {
             _coreHelper.LogEvent("");
-            var core = _coreHelper.GetCore();
-            var folderDtos = core.FolderGetAll(false);
-            return new OperationDataResult<List<Folder_Dto>>(true, folderDtos);
+            var core = await _coreHelper.GetCore();
+            var folderDtos = await core.FolderGetAll(false);
+            return new OperationDataResult<List<FolderDto>>(true, folderDtos);
         }
 
-        public OperationResult Сreate(FolderNameModel model)
+        public async Task<OperationResult> Сreate(FolderNameModel model)
         {
-            var core = _coreHelper.GetCore();
-            core.FolderCreate(model.Name, model.Description, model.ParentId);
+            var core = await _coreHelper.GetCore();
+            await core.FolderCreate(model.Name, model.Description, model.ParentId);
             return new OperationResult(true);
         }
 
-        public OperationDataResult<Folder_Dto> Edit(int id)
+        public async Task<OperationDataResult<FolderDto>> Edit(int id)
         {
-            var core = _coreHelper.GetCore();
-            var folder = core.FolderRead(id);
-            return new OperationDataResult<Folder_Dto>(true, folder);
+            var core = await _coreHelper.GetCore();
+            var folder = await core.FolderRead(id);
+            return new OperationDataResult<FolderDto>(true, folder);
         }
 
-        public OperationResult Update(FolderNameModel folderNameModel)
+        public async Task<OperationResult> Update(FolderNameModel folderNameModel)
         {
-            var core = _coreHelper.GetCore();
+            var core = await _coreHelper.GetCore();
             try
             {
-                core.FolderUpdate(folderNameModel.Id, folderNameModel.Name, folderNameModel.Description,
+                await core.FolderUpdate(folderNameModel.Id, folderNameModel.Name, folderNameModel.Description,
                     folderNameModel.ParentId);                
                 return new OperationResult(true);
             }
@@ -83,12 +84,12 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public OperationResult Delete(int id)
+        public async Task<OperationResult> Delete(int id)
         {
-            var core = _coreHelper.GetCore();
+            var core = await _coreHelper.GetCore();
             try
             {
-                core.FolderDelete(id);
+                await core.FolderDelete(id);
                 return new OperationResult(true);
             }
             catch

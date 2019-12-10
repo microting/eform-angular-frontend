@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using eFormAPI.Web.Infrastructure.Models;
 using Microting.eForm.Dto;
 using Microting.eFormApi.BasePn.Infrastructure.Models;
@@ -31,9 +32,9 @@ namespace eFormAPI.Web.Abstractions.Advanced
 {
     public interface ISitesService
     {
-        OperationDataResult<List<SiteName_Dto>> Index();
-        OperationDataResult<SiteName_Dto> Edit(int id);
-        OperationResult Update(SiteNameModel siteNameModel);
-        OperationResult Delete(int id);
+        Task<OperationDataResult<List<SiteNameDto>>> Index();
+        Task<OperationDataResult<SiteNameDto>> Read(int id);
+        Task<OperationResult> Update(SiteNameModel siteNameModel);
+        Task<OperationResult> Delete(int id);
     }
 }

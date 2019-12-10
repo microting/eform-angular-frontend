@@ -12,12 +12,14 @@
                 <div class="card-header">{{getSecurityGroupName(groupPermissions.groupId)}}</div>
                 <div class="card-body">
                   <ng-container *ngFor="let permission of groupPermissions.permissions">
-                    <div class="mat-checkbox mb-2">
-                      <input id="perm_{{groupPermissions.groupId}}_{{permission.permissionId}}" type="checkbox"
-                             [(ngModel)]="permission.isEnabled">
-                      <label for="perm_{{groupPermissions.groupId}}_{{permission.permissionId}}">
-                        {{permission.permissionName | translate}}
-                      </label>
+                    <div class="row">
+                      <div class="mat-checkbox mb-2">
+                        <input id="perm_{{groupPermissions.groupId}}_{{permission.permissionId}}" type="checkbox"
+                               [(ngModel)]="permission.isEnabled">
+                        <label for="perm_{{groupPermissions.groupId}}_{{permission.permissionId}}">
+                          {{permission.permissionName | translate}}
+                        </label>
+                      </div>
                     </div>
                   </ng-container>
                 </div>

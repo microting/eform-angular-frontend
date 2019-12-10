@@ -57,54 +57,55 @@ namespace eFormAPI.Web.Controllers.Eforms
             }
         }
 
+        [HttpPost]
+        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Create)]
+        public async Task<OperationResult> Create([FromBody] EFormXmlModel eFormXmlModel)
+        {
+            return await _templatesService.Create(eFormXmlModel);
+        }
+        
         [HttpGet]
+        [Route("api/templates/get/{id}")]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Read)]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Read(int id)
         {
             try
             {
-                return Ok(_templatesService.Get(id));
+                return Ok(await _templatesService.Get(id));
             }
             catch (Exception)
             {
                 return Unauthorized();
             }
+        }
+
+        [HttpGet]
+        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Delete)]
+        public async Task<OperationResult> Delete(int id)
+        {
+            return await _templatesService.Delete(id);
         }
 
         [HttpGet]
         [Route("api/templates/get-fields/{id}")]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Read)]
-        public IActionResult GetDataItems(int id)
+        public async Task<IActionResult> GetDataItems(int id)
         {
             try
             {
-                return Ok(_templatesService.GetFields(id));
+                return Ok(await _templatesService.GetFields(id));
             }
             catch (Exception)
             {
                 return Unauthorized();
             }
         }
-
-        [HttpPost]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Create)]
-        public OperationResult Create([FromBody] EFormXmlModel eFormXmlModel)
-        {
-            return _templatesService.Create(eFormXmlModel);
-        }
-
-        [HttpGet]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Delete)]
-        public OperationResult Delete(int id)
-        {
-            return _templatesService.Delete(id);
-        }
-
+        
         [HttpPost]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.PairingUpdate)]
-        public OperationResult Deploy([FromBody] DeployModel deployModel)
+        public async Task<OperationResult> Deploy([FromBody] DeployModel deployModel)
         {
-            return _templatesService.Deploy(deployModel);
+            return await _templatesService.Deploy(deployModel);
         }
     }
 }

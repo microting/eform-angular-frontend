@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using eFormAPI.Web.Infrastructure.Models;
 using Microting.eForm.Dto;
 using Microting.eFormApi.BasePn.Infrastructure.Models;
@@ -31,10 +32,10 @@ namespace eFormAPI.Web.Abstractions.Advanced
 {
     public interface IWorkersService
     {
-        OperationDataResult<List<Worker_Dto>> Index();
-        OperationDataResult<Worker_Dto> Edit(int id);
-        OperationResult Update(WorkerModel workerModel);
-        OperationResult Сreate(WorkerCreateModel model);
-        OperationResult Delete(int id);
+        Task<OperationDataResult<List<WorkerDto>>> Index();
+        Task<OperationDataResult<WorkerDto>> Read(int id);
+        Task<OperationResult> Update(WorkerModel workerModel);
+        Task<OperationResult> Сreate(WorkerCreateModel model);
+        Task<OperationResult> Delete(int id);
     }
 }

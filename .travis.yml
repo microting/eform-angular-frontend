@@ -1,6 +1,10 @@
 env:
 - TEST_SUITE=testheadless2a
 - TEST_SUITE=testheadless2b
+- TEST_SUITE=testheadless2c
+- TEST_SUITE=testheadless2d
+- TEST_SUITE=testheadless2e
+- TEST_SUITE=testheadless2f
 
 dist: xenial
 language: csharp
@@ -9,6 +13,13 @@ dotnet: 2.2
 services:
 - mysql
 script:
+  - sudo apt-get install g++ build-essential
+  - nvm install 11.0.0
+  - nvm use 11.0.0
+  - node -v
+  - npm -v
+  - #export NODE_OPTIONS='--max-http-header-size=100000'
+  - pip install --user awscli
   - echo 'deb http://www.rabbitmq.com/debian/ testing main' | sudo tee /etc/apt/sources.list.d/rabbitmq.list
   - wget -O- https://www.rabbitmq.com/rabbitmq-release-signing-key.asc | sudo apt-key add -
   - sudo apt-get update
@@ -34,6 +45,12 @@ script:
   - npm run testheadless
   - sleep 40
   - npm run $TEST_SUITE
+  - touch ~/.aws/config || true
+  - echo "[default]" >> ~/.aws/config || true
+  - echo "aws_access_key_id=$AWS_ACCESS_KEY_ID" >> ~/.aws/config || true
+  - echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> ~/.aws/config || true
+  - echo "region=$AWS_DEFAULT_REGION" >> ~/.aws/config || true
+  - aws s3 sync errorShots/ s3://$S3_STORAGE_FOLDER/$TRAVIS_BUILD_NUMBER || true
 after_success:
 - echo dotnet test and npm test succeeded
 after_faliure:

@@ -33,14 +33,14 @@ namespace eFormAPI.Web.Abstractions.Advanced
 {
     public interface IEntitySelectService
     {
-        Task<OperationDataResult<EntityGroupList>> GetEntityGroupList(
+        Task<OperationDataResult<EntityGroupList>> Index(
             AdvEntitySelectableGroupListRequestModel requestModel);
 
-        OperationResult CreateEntityGroup(AdvEntitySelectableGroupEditModel editModel);
-        OperationResult UpdateEntityGroup(AdvEntitySelectableGroupEditModel editModel);
-        OperationDataResult<EntityGroup> GetEntityGroup(string entityGroupUid);
-        OperationDataResult<List<CommonDictionaryTextModel>> GetEntityGroupDictionary(string entityGroupUid);
-        OperationResult SendSearchableGroup(string entityGroupUid);
-        OperationResult DeleteEntityGroup(string entityGroupUid);
+        Task<OperationResult> Create(AdvEntitySelectableGroupEditModel editModel);
+        Task<OperationResult> Update(AdvEntitySelectableGroupEditModel editModel);
+        Task<OperationDataResult<EntityGroup>> Read(string entityGroupUid);
+        Task<OperationDataResult<List<CommonDictionaryTextModel>>> GetEntityGroupDictionary(string entityGroupUid);
+        Task<OperationResult> SendSearchableGroup(string entityGroupUid);
+        Task<OperationResult> Delete(string entityGroupUid);
     }
 }

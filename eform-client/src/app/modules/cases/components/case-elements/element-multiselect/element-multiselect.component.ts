@@ -38,13 +38,13 @@ export class ElementMultiselectComponent implements OnInit {
   }
 
   initCheckBoxes() {
-    var str = this.fieldValueObj.value;
-    var res = str.split('|');
+    const str = this.fieldValueObj.value;
+    const res = str.split('|');
     this.fieldValueObj.keyValuePairList.forEach(x => {
       if (this.arrayContains(x.key.toString(), res)) {
         x.selected = true;
       } else {
-        false;
+        x.selected = false;
       }
     });
   }
@@ -54,7 +54,7 @@ export class ElementMultiselectComponent implements OnInit {
   }
 
   refreshValue() {
-    let str = [];
+    const str = [];
     this.fieldValueObj.keyValuePairList.forEach(x => {
       if (x.selected) {
         str.push(x.key);
