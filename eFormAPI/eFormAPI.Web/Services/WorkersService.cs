@@ -49,20 +49,20 @@ namespace eFormAPI.Web.Services
         }
 
         [Authorize(Policy = AuthConsts.EformPolicies.Workers.Read)]
-        public async Task<OperationDataResult<List<Worker_Dto>>> Index()
+        public async Task<OperationDataResult<List<WorkerDto>>> Index()
         {
             var core = await _coreHelper.GetCore();
             var workersDto = await core.Advanced_WorkerReadAll("not_removed", null, null);
 
-            return new OperationDataResult<List<Worker_Dto>>(true, workersDto);
+            return new OperationDataResult<List<WorkerDto>>(true, workersDto);
         }
 
-        public async Task<OperationDataResult<Worker_Dto>> Read(int id)
+        public async Task<OperationDataResult<WorkerDto>> Read(int id)
         {
             var core = await _coreHelper.GetCore();
             var workerDto = await core.Advanced_WorkerRead(id);
 
-            return new OperationDataResult<Worker_Dto>(true, workerDto);
+            return new OperationDataResult<WorkerDto>(true, workerDto);
         }
 
         public async Task<OperationResult> Update(WorkerModel workerModel)
@@ -92,7 +92,7 @@ namespace eFormAPI.Web.Services
                 var workerDto = await core.Advanced_WorkerCreate(model.FirstName, model.LastName,
                     model.SiteId + "." + model.CustomerNo + "@invalid.invalid");
                 var createdWorker =
-                    core.Advanced_SiteWorkerCreate(new SiteName_Dto(model.SiteId, "", null, null), workerDto);
+                    core.Advanced_SiteWorkerCreate(new SiteNameDto(model.SiteId, "", null, null), workerDto);
 
                 return new OperationResult(true, _localizationService.GetString("WorkerWasSuccessfullyCreated"));
             }

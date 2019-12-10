@@ -8,9 +8,9 @@ namespace eFormAPI.Web.Abstractions.Advanced
 {
     public interface IFoldersService
     {
-        Task<OperationDataResult<List<Folder_Dto>>> Index();
+        Task<OperationDataResult<List<FolderDto>>> Index();
         Task<OperationResult> Сreate(FolderNameModel model);
-        Task<OperationDataResult<Folder_Dto>> Edit(int id);
+        Task<OperationDataResult<FolderDto>> Edit(int id);
         Task<OperationResult> Update(FolderNameModel folderNameModel);
         Task<OperationResult> Delete(int id);
         

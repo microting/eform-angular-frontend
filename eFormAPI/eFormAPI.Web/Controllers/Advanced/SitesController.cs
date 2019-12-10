@@ -47,14 +47,14 @@ namespace eFormAPI.Web.Controllers.Advanced
         [HttpGet]
         [Route("api/sites/index")]
         [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
-        public async Task<OperationDataResult<List<SiteName_Dto>>> Index()
+        public async Task<OperationDataResult<List<SiteNameDto>>> Index()
         {
             return await _sitesService.Index();
         }
         [HttpGet]
         [Route("api/sites/pairing")]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.PairingRead)]
-        public async Task<OperationDataResult<List<SiteName_Dto>>> ReadPairing()
+        public async Task<OperationDataResult<List<SiteNameDto>>> ReadPairing()
         {
             return await _sitesService.Index();
         }
@@ -62,7 +62,7 @@ namespace eFormAPI.Web.Controllers.Advanced
         [HttpGet]
         [Route("api/sites/edit")]
         [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
-        public async Task<OperationDataResult<SiteName_Dto>> Read(int id)
+        public async Task<OperationDataResult<SiteNameDto>> Read(int id)
         {
             return await _sitesService.Read(id);
         }

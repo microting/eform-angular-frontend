@@ -44,25 +44,25 @@ namespace eFormAPI.Web.Services
         }
 
 
-        public async Task<OperationDataResult<List<Unit_Dto>>> Index()
+        public async Task<OperationDataResult<List<UnitDto>>> Index()
         {
             var core = await _coreHelper.GetCore();
             var unitsDto = await core.Advanced_UnitReadAll();
-            return new OperationDataResult<List<Unit_Dto>>(true, unitsDto);
+            return new OperationDataResult<List<UnitDto>>(true, unitsDto);
         }
 
-        public async Task<OperationDataResult<Unit_Dto>> RequestOtp(int id)
+        public async Task<OperationDataResult<UnitDto>> RequestOtp(int id)
         {
             try
             {
                 var core = await _coreHelper.GetCore();
                 var unitDto = await core.Advanced_UnitRequestOtp(id);
-                return new OperationDataResult<Unit_Dto>(true, _localizationService.GetString("NewOTPCreatedSuccessfully"),
+                return new OperationDataResult<UnitDto>(true, _localizationService.GetString("NewOTPCreatedSuccessfully"),
                     unitDto);
             }
             catch (Exception)
             {
-                return new OperationDataResult<Unit_Dto>(false,
+                return new OperationDataResult<UnitDto>(false,
                     _localizationService.GetStringWithFormat("UnitParamOTPCouldNotCompleted", id));
             }
         }

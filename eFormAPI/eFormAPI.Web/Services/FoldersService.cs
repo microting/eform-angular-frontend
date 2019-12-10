@@ -46,12 +46,12 @@ namespace eFormAPI.Web.Services
             _localizationService = localizationService;
         }
         
-        public async Task<OperationDataResult<List<Folder_Dto>>> Index()
+        public async Task<OperationDataResult<List<FolderDto>>> Index()
         {
             _coreHelper.LogEvent("");
             var core = await _coreHelper.GetCore();
             var folderDtos = await core.FolderGetAll(false);
-            return new OperationDataResult<List<Folder_Dto>>(true, folderDtos);
+            return new OperationDataResult<List<FolderDto>>(true, folderDtos);
         }
 
         public async Task<OperationResult> Сreate(FolderNameModel model)
@@ -61,11 +61,11 @@ namespace eFormAPI.Web.Services
             return new OperationResult(true);
         }
 
-        public async Task<OperationDataResult<Folder_Dto>> Edit(int id)
+        public async Task<OperationDataResult<FolderDto>> Edit(int id)
         {
             var core = await _coreHelper.GetCore();
             var folder = await core.FolderRead(id);
-            return new OperationDataResult<Folder_Dto>(true, folder);
+            return new OperationDataResult<FolderDto>(true, folder);
         }
 
         public async Task<OperationResult> Update(FolderNameModel folderNameModel)

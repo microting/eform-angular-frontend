@@ -45,22 +45,22 @@ namespace eFormAPI.Web.Services
             _localizationService = localizationService;
         }
 
-        public async Task<OperationDataResult<List<SiteName_Dto>>> Index()
+        public async Task<OperationDataResult<List<SiteNameDto>>> Index()
         {
             var core = await _coreHelper.GetCore();
             var siteNamesDto = await core.Advanced_SiteItemReadAll(false);
 
-            return new OperationDataResult<List<SiteName_Dto>>(true, siteNamesDto);
+            return new OperationDataResult<List<SiteNameDto>>(true, siteNamesDto);
         }
 
-        public async Task<OperationDataResult<SiteName_Dto>> Read(int id)
+        public async Task<OperationDataResult<SiteNameDto>> Read(int id)
         {
             var core = await _coreHelper.GetCore();
             var siteNameDto = await core.Advanced_SiteItemRead(id);
 
             return !siteNameDto.Equals(null)
-                ? new OperationDataResult<SiteName_Dto>(true, siteNameDto)
-                : new OperationDataResult<SiteName_Dto>(false);
+                ? new OperationDataResult<SiteNameDto>(true, siteNameDto)
+                : new OperationDataResult<SiteNameDto>(false);
         }
 
         public async Task<OperationResult> Update(SiteNameModel siteNameModel)

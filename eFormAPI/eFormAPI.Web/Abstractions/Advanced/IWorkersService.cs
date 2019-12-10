@@ -32,8 +32,8 @@ namespace eFormAPI.Web.Abstractions.Advanced
 {
     public interface IWorkersService
     {
-        Task<OperationDataResult<List<Worker_Dto>>> Index();
-        Task<OperationDataResult<Worker_Dto>> Read(int id);
+        Task<OperationDataResult<List<WorkerDto>>> Index();
+        Task<OperationDataResult<WorkerDto>> Read(int id);
         Task<OperationResult> Update(WorkerModel workerModel);
         Task<OperationResult> Сreate(WorkerCreateModel model);
         Task<OperationResult> Delete(int id);

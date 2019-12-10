@@ -47,7 +47,7 @@ namespace eFormAPI.Web.Controllers.Advanced
         [HttpGet]
         [Route("api/folders/index")]
         [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
-        public async Task<OperationDataResult<List<Folder_Dto>>> Index()
+        public async Task<OperationDataResult<List<FolderDto>>> Index()
         {
             return await _foldersService.Index();
         }
@@ -64,7 +64,7 @@ namespace eFormAPI.Web.Controllers.Advanced
         [HttpGet]
         [Route("api/folders/edit")]
         [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
-        public async Task<OperationDataResult<Folder_Dto>> Read(int id)
+        public async Task<OperationDataResult<FolderDto>> Read(int id)
         {
             return await _foldersService.Edit(id);
         }

@@ -46,8 +46,8 @@ export class LoginComponent implements OnInit {
           this.userSettings.getUserSettings().subscribe((data) => {
             localStorage.setItem('locale', data.model.locale);
             this.router.navigate(['/']).then();
+            this.spinnerStatus = false;
           });
-          this.spinnerStatus = false;
         },
         (error) => {
           this.error = error;
