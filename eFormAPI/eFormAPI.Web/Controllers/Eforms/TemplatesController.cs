@@ -65,6 +65,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         }
         
         [HttpGet]
+        [Route("api/templates/get/{id}")]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Read)]
         public async Task<IActionResult> Read(int id)
         {

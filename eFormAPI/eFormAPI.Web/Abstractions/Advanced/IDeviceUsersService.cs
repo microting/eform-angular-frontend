@@ -32,9 +32,9 @@ namespace eFormAPI.Web.Abstractions.Advanced
 {
     public interface IDeviceUsersService
     {
-        Task<OperationDataResult<List<Site_Dto>>> Index();
+        Task<OperationDataResult<List<SiteDto>>> Index();
         Task<OperationResult> Create(DeviceUserModel deviceUserModel);
-        Task<OperationDataResult<Site_Dto>> Edit(int id);
+        Task<OperationDataResult<SiteDto>> Edit(int id);
         Task<OperationResult> Update(DeviceUserModel deviceUserModel);
         Task<OperationResult> Delete(int id);
     }

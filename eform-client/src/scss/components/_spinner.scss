@@ -6,11 +6,13 @@ $foreground: #FFF;
   height: 2em;
   width: 2em;
   overflow: visible;
-  margin: auto;
-  top: 0;
-  left: 0;
-  bottom: 40%;
-  right: 0;
+  //margin: auto;
+  top: 50%;
+  left: 50%;
+  //bottom: 40%;
+  //right: 0;
+  margin-top: -125px;
+  margin-left: -125px;
   &:before {
     content: '';
     display: block;
