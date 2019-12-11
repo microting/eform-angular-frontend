@@ -85,7 +85,7 @@ export class BaseService {
       return httpParams;
     }
     for (const param of Object.keys(params)) {
-      if (params[param]) {
+      if (params[param] === 0 || params[param]) {
         httpParams = httpParams.set(param, params[param]);
       }
     }
