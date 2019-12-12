@@ -8,7 +8,7 @@ declare -A conf_parameters=(
 ["MYSQL_USERNAME"]='"tester"'
 ["S3_KEY"]='"CloudCustomer"'
 ["S3_SECRET_ID"]='"your_password"'
-["S3_ENDPOINT"]='"http://172.16.4.4:5000/v2.0/"'
+["AWS_REGION"]='"eu-central-1"'
 ["MAX_NUMBER_OF_BACKUPS"]=288
 ["SHOULD_RESTORE_DATABASE"]=true
 ["SHOULD_SETUP_DB_BACKUP"]=true
@@ -45,6 +45,14 @@ MYSQL_SCRIPT
 
 curl -sL https://deb.nodesource.com/setup_11.x | sudo bash -
 apt install -y nodejs
+
+pip install --user awscli
+echo 'deb http://www.rabbitmq.com/debian/ testing main' | sudo tee /etc/apt/sources.list.d/rabbitmq.list
+wget -O- https://www.rabbitmq.com/rabbitmq-release-signing-key.asc | sudo apt-key add -
+apt-get update
+apt-get install rabbitmq-server
+systemctl enable rabbitmq-server
+systemctl start rabbitmq-server
 
 rabbitmqctl add_user admin password 
 rabbitmqctl set_user_tags admin administrator
