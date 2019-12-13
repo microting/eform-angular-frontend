@@ -6,7 +6,7 @@ env:
 - TEST_SUITE=testheadless2e
 - TEST_SUITE=testheadless2f
 
-dist: xenial
+dist: bionic
 language: csharp
 mono: none
 #dotnet: 2.2
@@ -25,8 +25,8 @@ script:
   - sudo chown root:root /etc/apt/trusted.gpg.d/microsoft.asc.gpg
   - sudo chown root:root /etc/apt/sources.list.d/microsoft-prod.list
 
-  - sudo apt install -y apt-transport-https &&\
-  - sudo apt update &&\
+  - sudo apt install -y apt-transport-https
+  - sudo apt update
   - sudo apt install -y dotnet-runtime-2.2 dotnet-sdk-2.2
 
   - #export NODE_OPTIONS='--max-http-header-size=100000'
