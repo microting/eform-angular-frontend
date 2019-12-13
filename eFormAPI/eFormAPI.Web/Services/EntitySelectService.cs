@@ -179,8 +179,18 @@ namespace eFormAPI.Web.Services
             {
                 var core = await _coreHelper.GetCore();
 
-                var entityGroup = await core.EntityGroupRead(entityGroupUid);
+                EntityGroup entityGroup = await core.EntityGroupRead(entityGroupUid);
 
+                List<string> eformPlugins = await _dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
+                
+                foreach (string eformPlugin in eformPlugins)
+                {
+                    if (entityGroup.Name.Contains(eformPlugin))
+                    {
+                        entityGroup.IsLocked = true;
+                    }
+                }
+                
                 return new OperationDataResult<EntityGroup>(true, entityGroup);
             }
             catch (Exception)

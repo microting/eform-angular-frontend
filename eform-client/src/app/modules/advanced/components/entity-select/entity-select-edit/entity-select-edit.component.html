@@ -13,7 +13,7 @@
                 <input mdbInputDirective
                        [mdbValidate]="false" required
                        [(ngModel)]="advEntitySelectableGroupEditModel.name"
-                       id="editName" type="text" class="form-control">
+                       id="editName" type="text" class="form-control" [disabled]="advEntitySelectableGroupEditModel.isLocked">
                 <label for="editName">{{'Name' | translate}}</label>
               </div>
             </div>
