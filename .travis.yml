@@ -9,7 +9,7 @@ env:
 dist: xenial
 language: csharp
 mono: none
-dotnet: 2.2
+#dotnet: 2.2
 services:
 - mysql
 script:
@@ -18,6 +18,17 @@ script:
   - nvm use 11.0.0
   - node -v
   - npm -v
+  - sudo wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.asc.gpg
+  - sudo mv microsoft.asc.gpg /etc/apt/trusted.gpg.d/
+  - sudo wget -q https://packages.microsoft.com/config/ubuntu/18.04/prod.list
+  - sudo mv prod.list /etc/apt/sources.list.d/microsoft-prod.list
+  - sudo chown root:root /etc/apt/trusted.gpg.d/microsoft.asc.gpg
+  - sudo chown root:root /etc/apt/sources.list.d/microsoft-prod.list
+
+  - sudo apt install -y apt-transport-https &&\
+  - sudo apt update &&\
+  - sudo apt install -y dotnet-runtime-2.2 dotnet-sdk-2.2
+
   - #export NODE_OPTIONS='--max-http-header-size=100000'
   - pip install --user awscli
   - echo 'deb http://www.rabbitmq.com/debian/ testing main' | sudo tee /etc/apt/sources.list.d/rabbitmq.list
