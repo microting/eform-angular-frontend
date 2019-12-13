@@ -66,12 +66,12 @@ namespace eFormAPI.Web.Services
                     Constants.WorkflowStates.NotRemoved);
                 if (model != null)
                 {
-                    List<string> eformPlugins = await _dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
+                    List<string> plugins = await _dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
                     foreach (EntityGroup entityGroup in model.EntityGroups)
                     {
-                        foreach (string eformPlugin in eformPlugins)
+                        foreach (string plugin in plugins)
                         {
-                            if (entityGroup.Name.Contains(eformPlugin))
+                            if (entityGroup.Name.Contains(plugin))
                             {
                                 entityGroup.IsLocked = true;
                             }
@@ -177,8 +177,18 @@ namespace eFormAPI.Web.Services
             {
                 var core = await _coreHelper.GetCore();
 
-                var entityGroup = await core.EntityGroupRead(entityGroupUid);
+                EntityGroup entityGroup = await core.EntityGroupRead(entityGroupUid);
 
+                List<string> plugins = await _dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
+                
+                foreach (string plugin in plugins)
+                {
+                    if (entityGroup.Name.Contains(plugin))
+                    {
+                        entityGroup.IsLocked = true;
+                    }
+                }
+                
                 return new OperationDataResult<EntityGroup>(true, entityGroup);
             }
             catch (Exception)
