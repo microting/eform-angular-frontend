@@ -22,7 +22,6 @@ namespace eFormAPI.Web.Infrastructure.Models
 
         public int Repeated { get; set; }
 
-        
         public string FolderName { get; set; }
 
         public string WorkflowState { get; set; }
@@ -66,7 +65,29 @@ namespace eFormAPI.Web.Infrastructure.Models
             return new TemplateDto()
             {
                 Id = templateDto.Id,
-                
+                CreatedAt = templateDto.CreatedAt,
+                UpdatedAt = templateDto.UpdatedAt,
+                Label = templateDto.Label,
+                Description = templateDto.Description,
+                Repeated = templateDto.Repeated,
+                FolderName = templateDto.FolderName,
+                WorkflowState = templateDto.WorkflowState,
+                DeployedSites = templateDto.DeployedSites,
+                HasCases = templateDto.HasCases,
+                DisplayIndex = templateDto.DisplayIndex,
+                Field1 = templateDto.Field1,
+                Field2 = templateDto.Field2,
+                Field3 = templateDto.Field3,
+                Field4 = templateDto.Field4,
+                Field5 = templateDto.Field5,
+                Field6 = templateDto.Field6,
+                Field7 = templateDto.Field7,
+                Field8 = templateDto.Field8,
+                Field9 = templateDto.Field9,
+                Field10 = templateDto.Field10,
+                JasperExportEnabled = templateDto.JasperExportEnabled,
+                DocxExportEnabled = templateDto.DocxExportEnabled,
+                Tags = templateDto.Tags
             };
         }
 
