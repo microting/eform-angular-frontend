@@ -64,8 +64,11 @@ namespace eFormAPI.Web.Hosting.Settings
                 var contextFactory = new BaseDbContextFactory();
                 using (var dbContext = contextFactory.CreateDbContext(new[] {_connectionString}))
                 {
-                    Log.LogEvent("Migrating Angular DB");
-                    dbContext.Database.Migrate();
+                    if (dbContext.Database.GetPendingMigrations().Any())
+                    {
+                        Log.LogEvent("Migrating Angular DB");
+                        dbContext.Database.Migrate();
+                    }
                     Data = dbContext.ConfigurationValues
                         .AsNoTracking()
                         .ToDictionary(c => c.Id, c => c.Value);

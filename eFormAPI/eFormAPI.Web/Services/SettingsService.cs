@@ -218,7 +218,10 @@ namespace eFormAPI.Web.Services
                 using (var dbContext = new BaseDbContext(dbContextOptionsBuilder.Options))
                 {
                     Log.LogEvent("Migrating Angular DB");
-                    dbContext.Database.Migrate();
+                    if (dbContext.Database.GetPendingMigrations().Any())
+                    {
+                        dbContext.Database.Migrate();
+                    }
                     var userStore = new UserStore<EformUser,
                         EformRole,
                         BaseDbContext,

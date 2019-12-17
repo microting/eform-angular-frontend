@@ -109,8 +109,11 @@ namespace eFormAPI.Web
                                 scope.ServiceProvider.GetRequiredService<IOptions<ConnectionStrings>>();
                             if (connectionStrings.Value.DefaultConnection != "...")
                             {
-                                Log.LogEvent("Migrating Angular DB");
-                                dbContext.Database.Migrate();
+                                if (dbContext.Database.GetPendingMigrations().Any())
+                                {
+                                    Log.LogEvent("Migrating Angular DB");
+                                    dbContext.Database.Migrate();
+                                }
                             }
                         }
                         catch (Exception e)
