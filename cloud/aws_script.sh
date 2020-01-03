@@ -135,3 +135,8 @@ EndOfConfig
 ln -s /var/www/microting/eform-angular-frontend/eform-client/dist /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/wwwroot
 
 chown -R ubuntu:ubuntu /var/www
+
+systemctl daemon-reload
+systemctl enable eform.service
+systemctl start eform.service
+nginx -s reload
