@@ -105,7 +105,7 @@ export default deviceUsersPage;
 export class DeviceUsersRowObject {
   constructor(rowNum) {
     if ($$('#deviceUserId')[rowNum - 1]) {
-      this.siteId = +$$('#deviceUserId')[rowNum - 1];
+      this.siteId = $$('#deviceUserId')[rowNum - 1];
       try {
         this.firstName = $$('#deviceUserFirstName')[rowNum - 1].getText();
       } catch (e) {}
