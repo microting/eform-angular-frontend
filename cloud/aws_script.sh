@@ -209,6 +209,28 @@ if [ $SHOULD_SETUP_DB_BACKUP = true ]
 		echo 'if [ $D != "eform-debian-service" ]; then' >> /root/backup-mysql-hourly.sh
     echo 'if [[ $D == *"eform-angular"* ]]; then' >> /root/backup-mysql-hourly.sh
 		echo 'echo "${D}" >> /var/www/microting/plugins-installed.txt' >> /root/backup-mysql-hourly.sh
+		
+		echo 'while read plugin; do' >> /root/backup-mysql-hourly.sh		
+		echo 'DATABASE_NAME="${S3_FOLDER_PREFIX}_$plugin"' >> /root/backup-mysql-hourly.sh
+    echo '/usr/bin/mysqldump --host=$HOST --user=$USER --password=$PASS $DATABASE_NAME | gzip > $FILENAME.gz' >> /root/backup-mysql-hourly.sh
+    echo 'aws s3 cp $FILENAME.gz s3://$S3_ANGULAR_PLUGINS_BUCKET/$S3_FOLDER_PREFIX/$plugin/$FILENAME.gz' >> /root/backup-mysql-hourly.sh
+    echo 'rm $FILENAME.gz' >> /root/backup-mysql-hourly.sh
+
+    echo 'export DATABASE_NAME=$S3_ANGULAR_PLUGINS_BUCKET/$S3_FOLDER_PREFIX/$plugin' >> /root/backup-mysql-hourly.sh
+    echo 'export NUM_BACKUPS=`aws s3 ls "${DATABASE_NAME}/" | wc -l`' >> /root/backup-mysql-hourly.sh
+    echo 'echo "Checking backup status for $DATABASE_NAME/"' >> /root/backup-mysql-hourly.sh
+    echo 'echo "Current number of backups : $NUM_BACKUPS max is $MAX_NUMBER_OF_BACKUPS"' >> /root/backup-mysql-hourly.sh
+    echo 'while (( $NUM_BACKUPS > $MAX_NUMBER_OF_BACKUPS ))' >> /root/backup-mysql-hourly.sh
+    echo 'do' >> /root/backup-mysql-hourly.sh
+    echo 'CURRENT_BACKUP_TO_DELETE=`aws s3 ls "${DATABASE_NAME}/" | grep backup | head -1 | awk '{print $4}'`' >> /root/backup-mysql-hourly.sh
+    echo 'echo "SHOULD DELETE $CURRENT_BACKUP_TO_DELETE."' >> /root/backup-mysql-hourly.sh
+    echo 'aws s3 rm s3://$DATABASE_NAME/$CURRENT_BACKUP_TO_DELETE' >> /root/backup-mysql-hourly.sh
+    echo 'NUM_BACKUPS=`aws s3 ls "${DATABASE_NAME}/" | wc -l`' >> /root/backup-mysql-hourly.sh
+    echo 'echo "New number of backups : $NUM_BACKUPS max is $MAX_NUMBER_OF_BACKUPS"' >> /root/backup-mysql-hourly.sh
+    echo 'done' >> /root/backup-mysql-hourly.sh
+    echo 'echo "Done cleanup backup for $DATABASE_NAME"' >> /root/backup-mysql-hourly.sh				
+		echo 'done <plugins-installed.txt' >> /root/backup-mysql-hourly.sh						
+		
 		echo 'fi' >> /root/backup-mysql-hourly.sh
 		echo "fi" >> /root/backup-mysql-hourly.sh
 		echo "fi" >> /root/backup-mysql-hourly.sh
@@ -229,7 +251,7 @@ if [ $SHOULD_SETUP_DB_BACKUP = true ]
 		echo 'if [ $D != "eform-angular-frontend" ]; then' >> /root/backup-mysql-hourly.sh
 		echo 'if [ $D != "eform-debian-service" ]; then' >> /root/backup-mysql-hourly.sh
     echo 'if [[ $D == *"eform-service"* ]]; then' >> /root/backup-mysql-hourly.sh
-		echo 'echo "${D}" >> /var/www/microting/service-plugins-installed.txt' >> /root/backup-mysql-hourly.sh
+		echo 'echo "${D}" >> /var/www/microting/service-plugins-installed.txt' >> /root/backup-mysql-hourly.sh		
 		echo 'fi' >> /root/backup-mysql-hourly.sh
 		echo "fi" >> /root/backup-mysql-hourly.sh
 		echo "fi" >> /root/backup-mysql-hourly.sh
@@ -290,30 +312,30 @@ if [ $SHOULD_RESTORE_DATABASE = true ]
     echo "$p"
     chmod +x /var/www/microting/$plugin/install.sh
     /var/www/microting/$plugin/install.sh
-    echo "Setting up backup for $plugin"
-    echo 'DATABASE_NAME="${S3_FOLDER_PREFIX}_$plugin"' >> /root/backup-mysql-hourly.sh
-    echo '/usr/bin/mysqldump --host=$HOST --user=$USER --password=$PASS $DATABASE_NAME | gzip > $FILENAME.gz' >> /root/backup-mysql-hourly.sh
-    echo 'aws s3 cp $FILENAME.gz s3://$S3_ANGULAR_PLUGINS_BUCKET/$S3_FOLDER_PREFIX/$plugin/$FILENAME.gz' >> /root/backup-mysql-hourly.sh
-    echo 'rm $FILENAME.gz' >> /root/backup-mysql-hourly.sh
-    echo "Done setting up backup for $plugin"
-    echo "Restoring backup for $plugin"
+#    echo "Setting up backup for $plugin"
+#    echo 'DATABASE_NAME="${S3_FOLDER_PREFIX}_$plugin"' >> /root/backup-mysql-hourly.sh
+#    echo '/usr/bin/mysqldump --host=$HOST --user=$USER --password=$PASS $DATABASE_NAME | gzip > $FILENAME.gz' >> /root/backup-mysql-hourly.sh
+#    echo 'aws s3 cp $FILENAME.gz s3://$S3_ANGULAR_PLUGINS_BUCKET/$S3_FOLDER_PREFIX/$plugin/$FILENAME.gz' >> /root/backup-mysql-hourly.sh
+#    echo 'rm $FILENAME.gz' >> /root/backup-mysql-hourly.sh
+#    echo "Done setting up backup for $plugin"
+#    echo "Restoring backup for $plugin"
     
-    echo '' >> /root/backup-mysql-hourly.sh
-    echo 'export DATABASE_NAME=$S3_ANGULAR_PLUGINS_BUCKET/$S3_FOLDER_PREFIX/MYNAME' >> /root/backup-mysql-hourly.sh
-    echo 'export NUM_BACKUPS=`aws s3 ls "${DATABASE_NAME}/" | wc -l`' >> /root/backup-mysql-hourly.sh
-    echo 'echo "Checking backup status for $DATABASE_NAME/"' >> /root/backup-mysql-hourly.sh
-    echo 'echo "Current number of backups : $NUM_BACKUPS max is $MAX_NUMBER_OF_BACKUPS"' >> /root/backup-mysql-hourly.sh
-    echo 'while (( $NUM_BACKUPS > $MAX_NUMBER_OF_BACKUPS ))' >> /root/backup-mysql-hourly.sh
-    echo 'do' >> /root/backup-mysql-hourly.sh
-    echo 'CURRENT_BACKUP_TO_DELETE=`aws s3 ls "${DATABASE_NAME}/" | grep backup | head -1 | awk '{print $4}'`' >> /root/backup-mysql-hourly.sh
-    echo 'echo "SHOULD DELETE $CURRENT_BACKUP_TO_DELETE."' >> /root/backup-mysql-hourly.sh
-    echo 'aws s3 rm s3://$DATABASE_NAME/$CURRENT_BACKUP_TO_DELETE' >> /root/backup-mysql-hourly.sh
-    echo 'NUM_BACKUPS=`aws s3 ls "${DATABASE_NAME}/" | wc -l`' >> /root/backup-mysql-hourly.sh
-    echo 'echo "New number of backups : $NUM_BACKUPS max is $MAX_NUMBER_OF_BACKUPS"' >> /root/backup-mysql-hourly.sh
-    echo 'done' >> /root/backup-mysql-hourly.sh
-    echo 'echo "Done cleanup backup for $DATABASE_NAME"' >> /root/backup-mysql-hourly.sh
+#    echo '' >> /root/backup-mysql-hourly.sh
+#    echo 'export DATABASE_NAME=$S3_ANGULAR_PLUGINS_BUCKET/$S3_FOLDER_PREFIX/MYNAME' >> /root/backup-mysql-hourly.sh
+#    echo 'export NUM_BACKUPS=`aws s3 ls "${DATABASE_NAME}/" | wc -l`' >> /root/backup-mysql-hourly.sh
+#    echo 'echo "Checking backup status for $DATABASE_NAME/"' >> /root/backup-mysql-hourly.sh
+#    echo 'echo "Current number of backups : $NUM_BACKUPS max is $MAX_NUMBER_OF_BACKUPS"' >> /root/backup-mysql-hourly.sh
+#    echo 'while (( $NUM_BACKUPS > $MAX_NUMBER_OF_BACKUPS ))' >> /root/backup-mysql-hourly.sh
+#    echo 'do' >> /root/backup-mysql-hourly.sh
+#    echo 'CURRENT_BACKUP_TO_DELETE=`aws s3 ls "${DATABASE_NAME}/" | grep backup | head -1 | awk '{print $4}'`' >> /root/backup-mysql-hourly.sh
+#    echo 'echo "SHOULD DELETE $CURRENT_BACKUP_TO_DELETE."' >> /root/backup-mysql-hourly.sh
+#    echo 'aws s3 rm s3://$DATABASE_NAME/$CURRENT_BACKUP_TO_DELETE' >> /root/backup-mysql-hourly.sh
+#    echo 'NUM_BACKUPS=`aws s3 ls "${DATABASE_NAME}/" | wc -l`' >> /root/backup-mysql-hourly.sh
+#    echo 'echo "New number of backups : $NUM_BACKUPS max is $MAX_NUMBER_OF_BACKUPS"' >> /root/backup-mysql-hourly.sh
+#    echo 'done' >> /root/backup-mysql-hourly.sh
+#    echo 'echo "Done cleanup backup for $DATABASE_NAME"' >> /root/backup-mysql-hourly.sh
   
-    sed -i "s/MYNAME/$plugin/g" /root/backup-mysql-hourly.sh
+#    sed -i "s/MYNAME/$plugin/g" /root/backup-mysql-hourly.sh
     
     export DATABASE_NAME="${S3_FOLDER_PREFIX}_$plugin"
 	  export DOWNLOAD_PATH="$S3_ANGULAR_BUCKET/$S3_FOLDER_PREFIX/$plugin/"
