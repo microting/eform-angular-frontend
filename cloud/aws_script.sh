@@ -317,27 +317,26 @@ if [ $SHOULD_RESTORE_DATABASE = true ]
     /var/www/microting/$plugin/install.sh
 
     export DATABASE_NAME="${S3_FOLDER_PREFIX}_$plugin"
-	  export DOWNLOAD_PATH="$S3_ANGULAR_BUCKET/$S3_FOLDER_PREFIX/$plugin/"
+	  export DOWNLOAD_PATH="$S3_ANGULAR_PLUGINS_BUCKET/$S3_FOLDER_PREFIX/$plugin/"
 
   	export LAST_BACKUP=`aws s3 ls $DOWNLOAD_PATH | tail -1 | grep backup | head -1 | awk '{print $4}'`
-    aws s3 cp s3://"$DOWNLOAD_PATH"$LAST_BACKUP $LAST_BACKUP
+    aws s3 cp s3://$DOWNLOAD_PATH$LAST_BACKUP $LAST_BACKUP
     gunzip $LAST_BACKUP
     export LAST_BACKUP=`expr substr $LAST_BACKUP 1 27`
     echo "Creating DB"
-    `time mysql -u $MYSQL_USERNAME --password=$MYSQL_PASSWORD -e "create database $DATABASE_NAME"`
+    mysql -u $MYSQL_USERNAME --password=$MYSQL_PASSWORD -e "create database \`$DATABASE_NAME\`"
     echo "Restoring db from backup"
-    `time mysql -u $MYSQL_USERNAME --password=$MYSQL_PASSWORD $DATABASE_NAME < $LAST_BACKUP`
+    mysql -u $MYSQL_USERNAME --password=$MYSQL_PASSWORD $DATABASE_NAME < $LAST_BACKUP
     echo "Restore complete"
     rm $LAST_BACKUP    
     
     echo "Done restoring backup for $plugin"
-  done <plugins-installed.txt
+  done < plugins-installed.txt
   
   mkdir -p /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/output/datafolder/reports/templates/zip-archives 
   cd /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/output/datafolder/reports/templates/zip-archives
   
 	export REPORTSFOLDER="$S3_UPLOADED_DATA_FOLDER/$PREFIX_S3_FOLDER/"
-#	export REPORTSFOLDER+=uploaded_data
   export REPORTS=`aws s3 ls $REPORTSFOLDER | grep .zip`
   for one_thing in $REPORTS; do
     export FOLDER=`echo $one_thing | cut -d "_" -f 1`
