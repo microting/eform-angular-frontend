@@ -166,7 +166,7 @@ if [ $SHOULD_SETUP_DB_BACKUP = true ]
     echo 'echo "Current number of backups : $NUM_BACKUPS max is $MAX_NUMBER_OF_BACKUPS"' >> /root/backup-mysql-hourly.sh
     echo 'while (( $NUM_BACKUPS > $MAX_NUMBER_OF_BACKUPS ))' >> /root/backup-mysql-hourly.sh
     echo 'do' >> /root/backup-mysql-hourly.sh
-    echo 'CURRENT_BACKUP_TO_DELETE=`aws s3 ls "${DATABASE_NAME}/" | grep backup | head -1 | awk '{print $4}'`' >> /root/backup-mysql-hourly.sh
+    echo 'CURRENT_BACKUP_TO_DELETE=`aws s3 ls $DATABASE_NAME/ | grep backup | awk '\'{print \$4}\'' | head -1`' >> /root/backup-mysql-hourly.sh
     echo 'echo "SHOULD DELETE $CURRENT_BACKUP_TO_DELETE."' >> /root/backup-mysql-hourly.sh
     echo 'aws s3 rm s3://$DATABASE_NAME/$CURRENT_BACKUP_TO_DELETE' >> /root/backup-mysql-hourly.sh
     echo 'NUM_BACKUPS=`aws s3 ls "${DATABASE_NAME}/" | wc -l`' >> /root/backup-mysql-hourly.sh
@@ -187,7 +187,7 @@ if [ $SHOULD_SETUP_DB_BACKUP = true ]
     echo 'echo "Current number of backups : $NUM_BACKUPS max is $MAX_NUMBER_OF_BACKUPS"' >> /root/backup-mysql-hourly.sh
     echo 'while (( $NUM_BACKUPS > $MAX_NUMBER_OF_BACKUPS ))' >> /root/backup-mysql-hourly.sh
     echo 'do' >> /root/backup-mysql-hourly.sh
-    echo 'CURRENT_BACKUP_TO_DELETE=`aws s3 ls "${DATABASE_NAME}/" | grep backup | head -1 | awk '{print $4}'`' >> /root/backup-mysql-hourly.sh
+    echo 'CURRENT_BACKUP_TO_DELETE=`aws s3 ls $DATABASE_NAME/ | grep backup | awk '\'{print \$4}\'' | head -1`' >> /root/backup-mysql-hourly.sh
     echo 'echo "SHOULD DELETE $CURRENT_BACKUP_TO_DELETE."' >> /root/backup-mysql-hourly.sh
     echo 'aws s3 rm s3://$DATABASE_NAME/$CURRENT_BACKUP_TO_DELETE' >> /root/backup-mysql-hourly.sh
     echo 'NUM_BACKUPS=`aws s3 ls "${DATABASE_NAME}/" | wc -l`' >> /root/backup-mysql-hourly.sh
@@ -222,7 +222,7 @@ if [ $SHOULD_SETUP_DB_BACKUP = true ]
     echo 'echo "Current number of backups : $NUM_BACKUPS max is $MAX_NUMBER_OF_BACKUPS"' >> /root/backup-mysql-hourly.sh
     echo 'while (( $NUM_BACKUPS > $MAX_NUMBER_OF_BACKUPS ))' >> /root/backup-mysql-hourly.sh
     echo 'do' >> /root/backup-mysql-hourly.sh
-    echo 'CURRENT_BACKUP_TO_DELETE=`aws s3 ls "${DATABASE_NAME}/" | grep backup | head -1 | awk '{print $4}'`' >> /root/backup-mysql-hourly.sh
+    echo 'CURRENT_BACKUP_TO_DELETE=`aws s3 ls $DATABASE_NAME/ | grep backup | awk '\'{print \$4}\'' | head -1`' >> /root/backup-mysql-hourly.sh
     echo 'echo "SHOULD DELETE $CURRENT_BACKUP_TO_DELETE."' >> /root/backup-mysql-hourly.sh
     echo 'aws s3 rm s3://$DATABASE_NAME/$CURRENT_BACKUP_TO_DELETE' >> /root/backup-mysql-hourly.sh
     echo 'NUM_BACKUPS=`aws s3 ls "${DATABASE_NAME}/" | wc -l`' >> /root/backup-mysql-hourly.sh
@@ -264,6 +264,7 @@ if [ $SHOULD_SETUP_DB_BACKUP = true ]
 		echo 'aws s3 cp service-plugins-installed.txt s3://"$S3_CONNECTION_BUCKET/${S3_FOLDER_PREFIX}/"' >> /root/backup-mysql-hourly.sh
 		
     echo '############# DONE SETTING UP HOURLY BACKUP #############'
+
 		chmod +x /root/backup-mysql-hourly.sh	
 fi
 
@@ -312,31 +313,7 @@ if [ $SHOULD_RESTORE_DATABASE = true ]
     echo "$p"
     chmod +x /var/www/microting/$plugin/install.sh
     /var/www/microting/$plugin/install.sh
-#    echo "Setting up backup for $plugin"
-#    echo 'DATABASE_NAME="${S3_FOLDER_PREFIX}_$plugin"' >> /root/backup-mysql-hourly.sh
-#    echo '/usr/bin/mysqldump --host=$HOST --user=$USER --password=$PASS $DATABASE_NAME | gzip > $FILENAME.gz' >> /root/backup-mysql-hourly.sh
-#    echo 'aws s3 cp $FILENAME.gz s3://$S3_ANGULAR_PLUGINS_BUCKET/$S3_FOLDER_PREFIX/$plugin/$FILENAME.gz' >> /root/backup-mysql-hourly.sh
-#    echo 'rm $FILENAME.gz' >> /root/backup-mysql-hourly.sh
-#    echo "Done setting up backup for $plugin"
-#    echo "Restoring backup for $plugin"
-    
-#    echo '' >> /root/backup-mysql-hourly.sh
-#    echo 'export DATABASE_NAME=$S3_ANGULAR_PLUGINS_BUCKET/$S3_FOLDER_PREFIX/MYNAME' >> /root/backup-mysql-hourly.sh
-#    echo 'export NUM_BACKUPS=`aws s3 ls "${DATABASE_NAME}/" | wc -l`' >> /root/backup-mysql-hourly.sh
-#    echo 'echo "Checking backup status for $DATABASE_NAME/"' >> /root/backup-mysql-hourly.sh
-#    echo 'echo "Current number of backups : $NUM_BACKUPS max is $MAX_NUMBER_OF_BACKUPS"' >> /root/backup-mysql-hourly.sh
-#    echo 'while (( $NUM_BACKUPS > $MAX_NUMBER_OF_BACKUPS ))' >> /root/backup-mysql-hourly.sh
-#    echo 'do' >> /root/backup-mysql-hourly.sh
-#    echo 'CURRENT_BACKUP_TO_DELETE=`aws s3 ls "${DATABASE_NAME}/" | grep backup | head -1 | awk '{print $4}'`' >> /root/backup-mysql-hourly.sh
-#    echo 'echo "SHOULD DELETE $CURRENT_BACKUP_TO_DELETE."' >> /root/backup-mysql-hourly.sh
-#    echo 'aws s3 rm s3://$DATABASE_NAME/$CURRENT_BACKUP_TO_DELETE' >> /root/backup-mysql-hourly.sh
-#    echo 'NUM_BACKUPS=`aws s3 ls "${DATABASE_NAME}/" | wc -l`' >> /root/backup-mysql-hourly.sh
-#    echo 'echo "New number of backups : $NUM_BACKUPS max is $MAX_NUMBER_OF_BACKUPS"' >> /root/backup-mysql-hourly.sh
-#    echo 'done' >> /root/backup-mysql-hourly.sh
-#    echo 'echo "Done cleanup backup for $DATABASE_NAME"' >> /root/backup-mysql-hourly.sh
-  
-#    sed -i "s/MYNAME/$plugin/g" /root/backup-mysql-hourly.sh
-    
+
     export DATABASE_NAME="${S3_FOLDER_PREFIX}_$plugin"
 	  export DOWNLOAD_PATH="$S3_ANGULAR_BUCKET/$S3_FOLDER_PREFIX/$plugin/"
 
@@ -383,3 +360,50 @@ systemctl enable eform.service
 systemctl start eform.service
 nginx -s reload
 
+if [ $SHOULD_SETUP_LOCAL_SERVICE = true ]
+then
+	cd /var/www/microting
+su ubuntu -c \
+"git clone https://github.com/microting/eform-debian-service.git -b stable"
+	cd /var/www/microting/eform-debian-service
+	
+	export GITVERSION=`git describe --abbrev=0 --tags | cut -d "v" -f 2`
+	echo $GITVERSION
+su ubuntu -c \
+"dotnet publish -o out /p:Version=$GITVERSION --runtime linux-x64 --configuration Release"
+	
+	cp /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/connection.json /var/www/microting/eform-debian-service/MicrotingService/out/  
+  
+	aws s3 cp s3://"$S3_CONNECTION_BUCKET/${S3_FOLDER_PREFIX}/service-plugins-installed.txt" service-plugins-installed.txt
+  while read plugin; do
+    cd /var/www/microting/
+    su ubuntu -c \
+      "git clone https://github.com/microting/$plugin.git -b stable"
+    echo "Restoring $p"
+    chmod +x /var/www/microting/$plugin/install.sh
+    /var/www/microting/$plugin/install.sh
+  done <service-plugins-installed.txt
+	
+cat > /etc/systemd/system/eformbackend.service << EndOfUnitFile
+[Unit]
+Description=eForm service application
+[Service]
+WorkingDirectory=/var/www/microting/eform-debian-service/MicrotingService/out
+ExecStart=/usr/bin/dotnet /var/www/microting/eform-debian-service/MicrotingService/out/MicrotingService.dll
+Restart=always
+RestartSec=10
+slogIdentifier=dotnet-eform-backend
+User=ubuntu
+Environment=ASPNETCORE_ENVIRONMENT=Production
+[Install]
+WantedBy=multi-user.target
+EndOfUnitFile
+systemctl daemon-reload
+systemctl enable eformbackend.service
+systemctl start eformbackend.service
+	
+fi
+echo "################## END SERVICE SETUP ##################"
+
+VAR=$(shuf -i 1-50 -n 1)
+echo "$VAR * * * * root /root/backup-mysql-hourly.sh" >> /etc/cron.d/eform-backup
