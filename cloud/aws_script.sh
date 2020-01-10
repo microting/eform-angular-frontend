@@ -41,7 +41,7 @@ add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://mirror.one.com/mariadb
 debconf-set-selections <<< "mariadb-server-10.3 mysql-server/root_password password "$MYSQL_PASSWORD
 debconf-set-selections <<< "mariadb-server-10.3 mysql-server/root_password_again password "$MYSQL_PASSWORD
 
-apt-get -y install mariadb-server nginx curl python-pip python-swiftclient
+apt-get -y install mariadb-server nginx curl python-pip
 
 mysql -uroot --password=$MYSQL_PASSWORD <<MYSQL_SCRIPT
 CREATE USER '$MYSQL_USERNAME'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';
