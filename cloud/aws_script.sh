@@ -18,6 +18,7 @@ declare -A conf_parameters=(
 ["SHOULD_RESTORE_DATABASE"]=true
 ["SHOULD_SETUP_DB_BACKUP"]=true
 ["SHOULD_INSTALL_POSTFIX"]=false
+["SHOULD_SETUP_LOCAL_SERVICE"]=true
 ["IS_PRODUCTION"]=true
 ["CURRENTUSER"]='"ubuntu"'
 ["DOTNET_SKIP_FIRST_TIME_EXPERIENCE"]=true
@@ -32,50 +33,51 @@ source /var/www/microting/openstack.conf
 
 echo "################## BASIC SETUP ##################"
 
-apt-get -y install software-properties-common unzip
-apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://mirror.one.com/mariadb/repo/10.3/ubuntu bionic main'
+#apt-get -y install software-properties-common unzip
+#apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
+#add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://mirror.one.com/mariadb/repo/10.3/ubuntu bionic main'
 
 #apt update
 
-debconf-set-selections <<< "mariadb-server-10.3 mysql-server/root_password password "$MYSQL_PASSWORD
-debconf-set-selections <<< "mariadb-server-10.3 mysql-server/root_password_again password "$MYSQL_PASSWORD
+#debconf-set-selections <<< "mariadb-server-10.3 mysql-server/root_password password "$MYSQL_PASSWORD
+#debconf-set-selections <<< "mariadb-server-10.3 mysql-server/root_password_again password "$MYSQL_PASSWORD
 
-apt-get -y install mariadb-server nginx curl python-pip
+#apt-get -y install mariadb-server nginx curl python-pip
 
-mysql -uroot --password=$MYSQL_PASSWORD <<MYSQL_SCRIPT
-CREATE USER '$MYSQL_USERNAME'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';
-GRANT ALL PRIVILEGES ON *.* TO '$MYSQL_USERNAME'@'%';
-MYSQL_SCRIPT
+#mysql -uroot --password=$MYSQL_PASSWORD <<MYSQL_SCRIPT
+#CREATE USER '$MYSQL_USERNAME'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';
+#GRANT ALL PRIVILEGES ON *.* TO '$MYSQL_USERNAME'@'%';
+#MYSQL_SCRIPT
 
-curl -sL https://deb.nodesource.com/setup_11.x | sudo bash -
-apt install -y nodejs
+#curl -sL https://deb.nodesource.com/setup_11.x | sudo bash -
+#apt install -y nodejs
 
-echo 'deb http://www.rabbitmq.com/debian/ testing main' | sudo tee /etc/apt/sources.list.d/rabbitmq.list
-wget -O- https://www.rabbitmq.com/rabbitmq-release-signing-key.asc | sudo apt-key add -
-apt-get update
-apt-get install rabbitmq-server
-systemctl enable rabbitmq-server
-systemctl start rabbitmq-server
+#echo 'deb http://www.rabbitmq.com/debian/ testing main' | sudo tee /etc/apt/sources.list.d/rabbitmq.list
+#wget -O- https://www.rabbitmq.com/rabbitmq-release-signing-key.asc | sudo apt-key add -
+#apt-get update
+#apt-get install rabbitmq-server
+#systemctl enable rabbitmq-server
+#systemctl start rabbitmq-server
 
 rabbitmqctl add_user admin password 
 rabbitmqctl set_user_tags admin administrator
 rabbitmqctl set_permissions -p / admin ".*" ".*" ".*"
-wget http://localhost:15672/cli/rabbitmqadmin
-chmod +x rabbitmqadmin
-
 ./rabbitmqadmin declare queue name=eformsdk-input durable=true
+#wget http://localhost:15672/cli/rabbitmqadmin
+#chmod +x rabbitmqadmin
 
-wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.asc.gpg
-mv microsoft.asc.gpg /etc/apt/trusted.gpg.d/
-wget -q https://packages.microsoft.com/config/ubuntu/18.04/prod.list
-mv prod.list /etc/apt/sources.list.d/microsoft-prod.list
-chown root:root /etc/apt/trusted.gpg.d/microsoft.asc.gpg
-chown root:root /etc/apt/sources.list.d/microsoft-prod.list
+#./rabbitmqadmin declare queue name=eformsdk-input durable=true
 
-apt install -y apt-transport-https &&\
-apt update &&\
-apt install -y dotnet-runtime-2.2 dotnet-sdk-2.2
+#wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.asc.gpg
+#mv microsoft.asc.gpg /etc/apt/trusted.gpg.d/
+#wget -q https://packages.microsoft.com/config/ubuntu/18.04/prod.list
+#mv prod.list /etc/apt/sources.list.d/microsoft-prod.list
+#chown root:root /etc/apt/trusted.gpg.d/microsoft.asc.gpg
+#chown root:root /etc/apt/sources.list.d/microsoft-prod.list
+
+#apt install -y apt-transport-https &&\
+#apt update &&\
+#apt install -y dotnet-runtime-2.2 dotnet-sdk-2.2
 
 chown -R ubuntu:ubuntu /var/www
 
