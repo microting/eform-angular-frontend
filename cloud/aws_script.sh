@@ -336,16 +336,17 @@ if [ $SHOULD_RESTORE_DATABASE = true ]
   mkdir -p /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/output/datafolder/reports/templates/zip-archives 
   cd /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/output/datafolder/reports/templates/zip-archives
   
-	export REPORTSFOLDER="$S3_UPLOADED_DATA_FOLDER/$PREFIX_S3_FOLDER/"
-  export REPORTS=`aws s3 ls $REPORTSFOLDER | grep .zip`
+	export REPORTSFOLDER="$S3_UPLOADED_DATA_FOLDER/$S3_FOLDER_PREFIX/"
+  export REPORTS=`aws s3 ls $REPORTSFOLDER | grep .zip | awk '{print $4}'`
   for one_thing in $REPORTS; do
+    echo $one_thing
     export FOLDER=`echo $one_thing | cut -d "_" -f 1`
     echo $FOLDER
     mkdir -p /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/output/datafolder/reports/templates/$FOLDER
 
     mkdir -p /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/output/datafolder/reports/templates/zip-archives/$FOLDER
     cd /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/output/datafolder/reports/templates/zip-archives/$FOLDER
-    aws s3 cp s3://$REPORTSFOLDER/$PREFIX_S3_FOLDER/$one_thing $one_thing
+    aws s3 cp s3://$REPORTSFOLDER$one_thing $one_thing
     unzip $one_thing -d /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/output/datafolder/reports/templates/$FOLDER/
     echo $one_thing | cut -d "_" -f 1
     echo $one_thing | cut -d "_" -f 2
