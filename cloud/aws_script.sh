@@ -22,6 +22,7 @@ declare -A conf_parameters=(
 ["IS_PRODUCTION"]=true
 ["CURRENTUSER"]='"ubuntu"'
 ["DOTNET_SKIP_FIRST_TIME_EXPERIENCE"]=true
+["ENERATE_SOURCEMAP"]=false
 )
 # WRITE CONFIG FILE
 mkdir -p /var/www/microting
