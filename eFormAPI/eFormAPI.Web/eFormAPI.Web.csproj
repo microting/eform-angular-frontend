@@ -26,7 +26,7 @@
     <PackageReference Include="AWSSDK.Core" Version="3.3.104.14" />
     <PackageReference Include="AWSSDK.S3" Version="3.3.110.10" />
     <PackageReference Include="AWSSDK.SQS" Version="3.3.102.53" />
-    <PackageReference Include="Microting.eForm" Version="3.1.31" />
+    <PackageReference Include="Microting.eForm" Version="3.1.32" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.6" />
     <PackageReference Include="SharpZipLib.NETStandard" Version="1.0.7" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0005" />
@@ -37,7 +37,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.6" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="1.2.29" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="1.2.30" />
   </ItemGroup>
 
   <ItemGroup>
