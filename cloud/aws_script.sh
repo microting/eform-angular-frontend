@@ -92,7 +92,7 @@ echo "################## END CLONING ##################"
 cd eform-angular-frontend/eform-client
 npm i -g @angular/cli
 su ubuntu -c \
-"npm i && npm run build"
+"npm i && GENERATE_SOURCEMAP=false npm run build"
 
 cd ../eFormAPI/eFormAPI.Web/
 echo "################## START GITVERSION ##################"
