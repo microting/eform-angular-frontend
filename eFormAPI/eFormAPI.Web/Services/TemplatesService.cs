@@ -69,7 +69,7 @@ namespace eFormAPI.Web.Services
             try
             {
                 var core = await _coreHelper.GetCore();
-                var templatesDto = await core.TemplateItemReadAll(false,
+                List<Template_Dto> templatesDto = await core.TemplateItemReadAll(false,
                     "",
                     templateRequestModel.NameFilter,
                     templateRequestModel.IsSortDsc,
@@ -80,10 +80,12 @@ namespace eFormAPI.Web.Services
                 {
                     NumOfElements = 40,
                     PageNum = templateRequestModel.PageIndex,
-                    Templates = new List<Template_Dto>()
+                    Templates = new List<TemplateDto>()
                 };
 
                 var eformIds = new List<int>();
+                List<string> plugins = await _dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
+
                 if (!_userService.IsInRole(EformRole.Admin))
                 {
                     var isEformsInGroups = await _dbContext.SecurityGroupUsers
@@ -98,26 +100,31 @@ namespace eFormAPI.Web.Services
                             .Select(x => x.TemplateId)
                             .ToList();
 
-                        foreach (var templateDto in templatesDto)
+                        foreach (TemplateDto templateDto in templatesDto)
                         {
                             if (eformIds.Contains(templateDto.Id))
                             {
+                                await templateDto.CheckForLock(_dbContext);
                                 model.Templates.Add(templateDto);
                             }
                         }
                     }
                     else
                     {
-                        foreach (var templateDto in templatesDto)
+                        foreach (TemplateDto templateDto in templatesDto)
                         {
+                            await templateDto.CheckForLock(_dbContext);
                             model.Templates.Add(templateDto);
                         }
                     }
-
                 }
                 else
                 {
-                    model.Templates = templatesDto;
+                    foreach (TemplateDto templateDto in templatesDto)
+                    {
+                        await templateDto.CheckForLock(_dbContext);
+                        model.Templates.Add(templateDto);
+                    }
                 }
                 return new OperationDataResult<TemplateListModel>(true, model);
             }

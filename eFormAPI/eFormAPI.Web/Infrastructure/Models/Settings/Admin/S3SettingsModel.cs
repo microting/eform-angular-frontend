@@ -29,5 +29,6 @@ namespace eFormAPI.Web.Infrastructure.Models.Settings.Admin
         public string S3AccessKeyId  { get; set; }
         public string S3SecrectAccessKey { get; set; }
         public string S3Endpoint { get; set; }
+        public string S3BucketName { get; set; }
     }
 }

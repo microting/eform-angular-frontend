@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 using System.Collections.Generic;
-using Microting.eForm.Dto;
 
 namespace eFormAPI.Web.Infrastructure.Models.Templates
 {
@@ -32,7 +31,7 @@ namespace eFormAPI.Web.Infrastructure.Models.Templates
         {
         }
 
-        public TemplateListModel(int numOfElements, int pageNum, List<Template_Dto> templates)
+        public TemplateListModel(int numOfElements, int pageNum, List<TemplateDto> templates)
         {
             NumOfElements = numOfElements;
             PageNum = pageNum;
@@ -43,6 +42,6 @@ namespace eFormAPI.Web.Infrastructure.Models.Templates
 
         public int PageNum { get; set; }
 
-        public List<Template_Dto> Templates { get; set; }
+        public List<TemplateDto> Templates { get; set; }
     }
 }

@@ -6,7 +6,7 @@ env:
 - TEST_SUITE=testheadless2e
 - TEST_SUITE=testheadless2f
 
-dist: xenial
+dist: bionic
 language: csharp
 mono: none
 dotnet: 2.2

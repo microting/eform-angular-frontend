@@ -30,6 +30,7 @@ using eFormAPI.Web.Abstractions.Security;
 using eFormAPI.Web.Infrastructure;
 using eFormAPI.Web.Infrastructure.Database;
 using eFormAPI.Web.Infrastructure.Database.Entities;
+using eFormAPI.Web.Infrastructure.Models;
 using eFormAPI.Web.Infrastructure.Models.EformPermissions;
 using eFormAPI.Web.Infrastructure.Models.Templates;
 using Microsoft.EntityFrameworkCore;
@@ -68,7 +69,7 @@ namespace eFormAPI.Web.Services.Security
             {
                 var result = new TemplateListModel
                 {
-                    Templates = new List<Template_Dto>()
+                    Templates = new List<TemplateDto>()
                 };
                 var core = await _coreHelper.GetCore();
                 var templatesDto = await core.TemplateItemReadAll(false,

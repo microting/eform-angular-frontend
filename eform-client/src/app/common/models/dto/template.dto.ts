@@ -25,6 +25,7 @@ export class TemplateDto {
   field8: FieldDto;
   field9: FieldDto;
   field10: FieldDto;
+  isLocked: boolean;
 
   jasperExportEnabled: boolean;
   docxExportEnabled: boolean;

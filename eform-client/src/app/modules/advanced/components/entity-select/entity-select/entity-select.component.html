@@ -53,13 +53,15 @@
         <td scope="row" id="entitySelectMicrotingUUID">{{advEntitySelectableGroup.microtingUUID}}</td>
         <td id="entitySelectName"> {{advEntitySelectableGroup.name}}</td>
         <td *ngIf="(userClaims.entitySelectUpdate || userClaims.entitySelectDelete)">
-          <div class="d-flex flex-row justify-content-center" *ngIf="!advEntitySelectableGroup.isLocked">
-            <button id="entitySelectEditBtn" class="btn btn-accent btn-icon text-black-50 mb-2 "  *ngIf="userClaims.entitySelectUpdate"
+          <div class="d-flex flex-row justify-content-center">
+            <button id="entitySelectEditBtn" class="btn btn-accent btn-icon text-black-50 mb-2 "
+                    *ngIf="userClaims.entitySelectUpdate && (!advEntitySelectableGroup.isLocked || advEntitySelectableGroup.name.includes('editable'))"
                     mdbTooltip="{{'Edit' | translate}}"
                     (click)="openModalSelectEdit(advEntitySelectableGroup)">
               <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
-            <button id="entitySelectDeleteBtn" class="btn btn-danger btn-icon mb-2 " *ngIf="userClaims.entitySelectDelete"
+            <button id="entitySelectDeleteBtn" class="btn btn-danger btn-icon mb-2 "
+                    *ngIf="userClaims.entitySelectDelete && !advEntitySelectableGroup.isLocked"
                     mdbTooltip="{{'Remove' | translate}}"
                     (click)="openModalSelectRemove(advEntitySelectableGroup)">
               <fa-icon icon="trash-alt" [fixedWidth]="true" size="lg"></fa-icon>
