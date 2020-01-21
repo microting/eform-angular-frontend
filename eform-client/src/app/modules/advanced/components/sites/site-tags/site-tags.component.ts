@@ -47,7 +47,7 @@ export class SiteTagsComponent implements OnInit {
   updateSiteTags() {
     this.spinnerStatus = true;
     const siteTagsUpdateModel = new SiteTagsUpdateModel();
-    siteTagsUpdateModel.siteId = this.selectedSite.siteUId;
+    siteTagsUpdateModel.siteId = this.selectedSite.id;
     siteTagsUpdateModel.tagsIds = this.selectedSiteTagsIds;
     this.siteTagService.updateSiteTags(siteTagsUpdateModel).subscribe((operation => {
       if (operation && operation.success) {

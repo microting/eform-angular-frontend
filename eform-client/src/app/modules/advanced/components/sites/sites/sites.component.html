@@ -67,6 +67,7 @@
   [siteNameDto]="selectedSiteDto"
   #modalSiteEdit></app-site-edit>
 <app-site-delete
+  (onSiteRemoved)="loadAllSites()"
   [siteNameDto]="selectedSiteDto"
   #modalSiteDelete></app-site-delete>
 <app-site-tags (onSiteTagsUpdated)="loadAllSites()"
