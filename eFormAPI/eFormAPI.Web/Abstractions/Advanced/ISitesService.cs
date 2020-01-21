@@ -29,9 +29,11 @@ namespace eFormAPI.Web.Abstractions.Advanced
 {
     using System.Collections.Generic;
     using Infrastructure.Models.Sites;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
     public interface ISitesService
     {
+        Task<OperationDataResult<List<CommonDictionaryModel>>> GetSitesDictionary();
         Task<OperationDataResult<List<SiteModel>>> Index();
         Task<OperationDataResult<SiteModel>> Read(int id);
         Task<OperationResult> Update(SiteUpdateModel updateModel);

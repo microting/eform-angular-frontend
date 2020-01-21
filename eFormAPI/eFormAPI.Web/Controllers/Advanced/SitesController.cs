@@ -33,6 +33,7 @@ namespace eFormAPI.Web.Controllers.Advanced
 {
     using System.Collections.Generic;
     using Infrastructure.Models.Sites;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
     [Authorize]
     public class SitesController : Controller
@@ -51,6 +52,15 @@ namespace eFormAPI.Web.Controllers.Advanced
         {
             return await _sitesService.Index();
         }
+
+        [HttpGet]
+        [Route("api/sites/dictionary")]
+        [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
+        public async Task<OperationDataResult<List<CommonDictionaryModel>>> GetSitesDictionary()
+        {
+            return await _sitesService.GetSitesDictionary();
+        }
+
         [HttpGet]
         [Route("api/sites/pairing")]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.PairingRead)]

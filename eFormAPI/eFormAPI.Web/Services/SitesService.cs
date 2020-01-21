@@ -37,6 +37,7 @@ namespace eFormAPI.Web.Services
     using Microting.eForm.Infrastructure.Constants;
     using Microting.eFormApi.BasePn.Abstractions;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
     public class SitesService : ISitesService
     {
@@ -53,6 +54,33 @@ namespace eFormAPI.Web.Services
             _logger = logger;
         }
 
+        public async Task<OperationDataResult<List<CommonDictionaryModel>>> GetSitesDictionary()
+        {
+            try
+            {
+                var core = await _coreHelper.GetCore();
+                using (var dbContext = core.dbContextHelper.GetDbContext())
+                {
+                    var sites = await dbContext.sites
+                        .AsNoTracking()
+                        .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                        .Select(x => new CommonDictionaryModel
+                        {
+                            Id = x.Id,
+                            Name = x.Name,
+                        }).ToListAsync();
+
+                    return new OperationDataResult<List<CommonDictionaryModel>>(true, sites);
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                return new OperationDataResult<List<CommonDictionaryModel>>(false,
+                    _localizationService.GetString("ErrorWhileObtainingSites"));
+            }
+        }
+
         public async Task<OperationDataResult<List<SiteModel>>> Index()
         {
             try
@@ -61,6 +89,7 @@ namespace eFormAPI.Web.Services
                 using (var dbContext = core.dbContextHelper.GetDbContext())
                 {
                     var sites = await dbContext.sites
+                        .AsNoTracking()
                         .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                         .Select(x => new SiteModel
                         {
