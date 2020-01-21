@@ -25,62 +25,32 @@ SOFTWARE.
 namespace eFormAPI.Web.Services
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using Abstractions;
     using Abstractions.Advanced;
+    using Infrastructure.Models;
+    using Infrastructure.Models.Sites;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
     using Microting.eForm.Infrastructure.Constants;
+    using Microting.eForm.Infrastructure.Data.Entities;
     using Microting.eFormApi.BasePn.Abstractions;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-
-    public class KeyValueModel
-    {
-        public int Key { get; set; }
-        public string Value { get; set; }
-    }
-
-    public class SitesModel
-    {
-        public int Total { get; set; }
-
-        public List<SiteModel> Entities { get; set; }
-            = new List<SiteModel>();
-    }
-
-    public class SiteModel
-    {
-        public int Id { get; set; }
-        public int SiteUId { get; set; }
-
-        public string SiteName { get; set; }
-            
-        public DateTime? CreatedAt { get; set; }
-
-        public DateTime? UpdatedAt { get; set; }
-
-        public List<KeyValueModel> Tags { get; set; }
-            = new List<KeyValueModel>();
-    }
-
-
-    public class SiteUpdateModel
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-    }
 
     public class SitesService : ISitesService
     {
         private readonly IEFormCoreService _coreHelper;
         private readonly ILocalizationService _localizationService;
+        private readonly ILogger<SitesService> _logger;
 
         public SitesService(IEFormCoreService coreHelper, 
-           ILocalizationService localizationService)
+           ILocalizationService localizationService,
+           ILogger<SitesService> logger)
         {
             _coreHelper = coreHelper;
             _localizationService = localizationService;
+            _logger = logger;
         }
 
         public async Task<OperationDataResult<SitesModel>> Index()
@@ -99,7 +69,11 @@ namespace eFormAPI.Web.Services
                             CreatedAt = x.CreatedAt,
                             SiteUId = (int) x.MicrotingUid,
                             UpdatedAt = x.UpdatedAt,
-                            //       Tags = x.
+                            Tags = x.SiteTags.Select(t => new KeyValueModel
+                            {
+                                Key = (int) t.TagId,
+                                Value = t.Tag.Name,
+                            }).ToList(),
                         }).ToListAsync();
 
                     var count = await dbContext.sites
@@ -118,8 +92,9 @@ namespace eFormAPI.Web.Services
             }
             catch (Exception e)
             {
+                _logger.LogError(e, e.Message);
                 return new OperationDataResult<SitesModel>(false,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("ErrorWhileObtainingSites"));
             }
         }
 
@@ -140,7 +115,11 @@ namespace eFormAPI.Web.Services
                             CreatedAt = x.CreatedAt,
                             SiteUId = (int) x.MicrotingUid,
                             UpdatedAt = x.UpdatedAt,
-                            //       Tags = x.
+                            Tags = x.SiteTags.Select(t => new KeyValueModel
+                            {
+                                Key = (int)t.TagId,
+                                Value = t.Tag.Name,
+                            }).ToList(),
                         }).FirstOrDefaultAsync();
 
                     if (site == null)
@@ -155,8 +134,9 @@ namespace eFormAPI.Web.Services
             }
             catch (Exception e)
             {
+                _logger.LogError(e, e.Message);
                 return new OperationDataResult<SiteModel>(false,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("ErrorWhileObtainingSites"));
             }
         }
 
@@ -167,29 +147,81 @@ namespace eFormAPI.Web.Services
                 var core = await _coreHelper.GetCore();
                 using (var dbContext = core.dbContextHelper.GetDbContext())
                 {
-                    var site = await dbContext.sites
-                        .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                        .Where(x => x.Id == updateModel.Id)
-                        .FirstOrDefaultAsync();
-
-                    if (site == null)
+                    using (var transaction = await dbContext.Database.BeginTransactionAsync())
                     {
-                        return new OperationResult(
-                            false,
-                            _localizationService.GetStringWithFormat("SiteParamNotFound", updateModel.Id));
+                        try
+                        {
+                            var site = await dbContext.sites
+                                .Include(x => x.SiteTags)
+                                .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                                .Where(x => x.Id == updateModel.Id)
+                                .FirstOrDefaultAsync();
+
+                            if (site == null)
+                            {
+                                transaction.Rollback();
+                                return new OperationResult(
+                                    false,
+                                    _localizationService.GetStringWithFormat("SiteParamNotFound", updateModel.Id));
+                            }
+
+                            site.Name = updateModel.Name;
+
+                            await site.Update(dbContext);
+
+                            // Tags
+                            var siteTagIds = site.SiteTags
+                                .Where(x=>x.TagId != null)
+                                .Select(x => (int) x.TagId)
+                                .ToList();
+
+                            var forRemove = siteTagIds
+                                .Where(x => !updateModel.TagIds.Contains(x))
+                                .ToList();
+
+                            foreach (var tagIdForRemove in forRemove)
+                            {
+                                var siteTag = await dbContext.SiteTags
+                                    .FirstOrDefaultAsync(
+                                        x => x.TagId == tagIdForRemove
+                                             && x.SiteId == site.Id);
+
+                                if (siteTag != null)
+                                {
+                                    await siteTag.Delete(dbContext);
+                                }
+                            }
+
+                            var forCreate = updateModel.TagIds
+                                .Where(x => !siteTagIds.Contains(x))
+                                .ToList();
+
+                            foreach (var tagIdForCreate in forCreate)
+                            {
+                                var siteTag = new site_tags()
+                                {
+                                    TagId = tagIdForCreate,
+                                    SiteId = site.Id,
+                                };
+
+                                await siteTag.Create(dbContext);
+                            }
+
+                            transaction.Commit();
+                        }
+                        catch (Exception)
+                        {
+                            transaction.Rollback();
+                            throw;
+                        }
                     }
-
-                    site.Name = updateModel.Name;
-
-                    await site.Update(dbContext);
                 }
 
-                return new OperationResult(
-                    true,
-                    _localizationService.GetString(""));
+                return new OperationResult(true);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                _logger.LogError(e, e.Message);
                 return new OperationResult(false,
                     _localizationService.GetStringWithFormat("SiteParamCouldNotBeUpdated", updateModel.Id));
             }
@@ -218,8 +250,9 @@ namespace eFormAPI.Web.Services
                         _localizationService.GetStringWithFormat("SiteParamDeletedSuccessfully", site.Name));
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                _logger.LogError(e, e.Message);
                 return new OperationResult(false,
                     _localizationService.GetStringWithFormat("SiteParamCouldNotBeDeleted", id));
             }

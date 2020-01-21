@@ -31,7 +31,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Controllers.Advanced
 {
-    using Services;
+    using Infrastructure.Models.Sites;
 
     [Authorize]
     public class SitesController : Controller

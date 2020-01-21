@@ -570,4 +570,7 @@
   <data name="ErrorWhileObtainingPluginList" xml:space="preserve">
     <value>Fehler beim Abrufen der Plugin-Liste</value>
   </data>
+  <data name="ErrorWhileObtainingSites" xml:space="preserve">
+    <value>Fehler beim Abrufen der sites</value>
+  </data>
 </root>

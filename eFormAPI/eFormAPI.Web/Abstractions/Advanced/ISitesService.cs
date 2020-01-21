@@ -27,7 +27,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Abstractions.Advanced
 {
-    using Services;
+    using Infrastructure.Models.Sites;
 
     public interface ISitesService
     {
