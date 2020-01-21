@@ -139,7 +139,7 @@ namespace eFormAPI.Web.Services
                     var site = await dbContext.sites
                         .Include(x => x.SiteTags)
                         .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                        .Where(x => x.Id == updateModel.Id)
+                        .Where(x => x.MicrotingUid == updateModel.Id)
                         .FirstOrDefaultAsync();
 
                     if (site == null)

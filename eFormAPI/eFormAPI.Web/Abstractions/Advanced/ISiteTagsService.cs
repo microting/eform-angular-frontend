@@ -34,7 +34,7 @@ namespace eFormAPI.Web.Abstractions.Advanced
     {
         Task<OperationDataResult<List<CommonDictionaryModel>>> GetSitesTags();
         Task<OperationResult> CreateSiteTag(string tagName);
-        Task<OperationResult> UpdateTag(UpdateSiteTagsModel siteTagsModel);
+        Task<OperationResult> UpdateSiteTags(UpdateSiteTagsModel siteTagsModel);
         Task<OperationResult> DeleteTag(int tagId);
     }
 }

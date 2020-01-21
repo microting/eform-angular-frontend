@@ -68,7 +68,7 @@ namespace eFormAPI.Web.Controllers.Advanced
         [Route("api/sites/tags/update")]
         public async Task<OperationResult> UpdateTag([FromBody] UpdateSiteTagsModel siteTagsModel)
         {
-            return await _siteTagsService.UpdateTag(siteTagsModel);
+            return await _siteTagsService.UpdateSiteTags(siteTagsModel);
         }
     }
 }

@@ -111,7 +111,7 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public async Task<OperationResult> UpdateTag(UpdateSiteTagsModel siteTagsModel)
+        public async Task<OperationResult> UpdateSiteTags(UpdateSiteTagsModel siteTagsModel)
         {
             try
             {
@@ -121,7 +121,7 @@ namespace eFormAPI.Web.Services
                     var site = await dbContext.sites
                         .Include(x => x.SiteTags)
                         .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                        .Where(x => x.Id == siteTagsModel.SiteId)
+                        .Where(x => x.MicrotingUid == siteTagsModel.SiteId)
                         .FirstOrDefaultAsync();
 
                     if (site == null)
