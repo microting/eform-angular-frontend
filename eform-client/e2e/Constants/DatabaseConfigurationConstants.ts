@@ -1,7 +1,7 @@
 export default {
   username: 'admin',
   password: 'Qq1234567$',
-  email: 'admin',
+  email: 'admin@admin.com',
   firstName: 'John',
   lastNAme: 'Smith',
   customerNo: '420',
