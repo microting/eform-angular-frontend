@@ -31,6 +31,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Controllers.Advanced
 {
+    using System.Collections.Generic;
     using Infrastructure.Models.Sites;
 
     [Authorize]
@@ -46,14 +47,14 @@ namespace eFormAPI.Web.Controllers.Advanced
         [HttpGet]
         [Route("api/sites/index")]
         [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
-        public async Task<OperationDataResult<SitesModel>> Index()
+        public async Task<OperationDataResult<List<SiteModel>>> Index()
         {
             return await _sitesService.Index();
         }
         [HttpGet]
         [Route("api/sites/pairing")]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.PairingRead)]
-        public async Task<OperationDataResult<SitesModel>> ReadPairing()
+        public async Task<OperationDataResult<List<SiteModel>>> ReadPairing()
         {
             return await _sitesService.Index();
         }

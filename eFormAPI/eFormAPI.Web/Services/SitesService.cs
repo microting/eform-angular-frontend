@@ -25,6 +25,7 @@ SOFTWARE.
 namespace eFormAPI.Web.Services
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using Abstractions;
@@ -53,7 +54,7 @@ namespace eFormAPI.Web.Services
             _logger = logger;
         }
 
-        public async Task<OperationDataResult<SitesModel>> Index()
+        public async Task<OperationDataResult<List<SiteModel>>> Index()
         {
             try
             {
@@ -76,24 +77,13 @@ namespace eFormAPI.Web.Services
                             }).ToList(),
                         }).ToListAsync();
 
-                    var count = await dbContext.sites
-                        .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                        .Select(x => x.Id)
-                        .CountAsync();
-
-                    var result = new SitesModel
-                    {
-                        Entities = sites,
-                        Total = count,
-                    };
-
-                    return new OperationDataResult<SitesModel>(true, result);
+                    return new OperationDataResult<List<SiteModel>>(true, sites);
                 }
             }
             catch (Exception e)
             {
                 _logger.LogError(e, e.Message);
-                return new OperationDataResult<SitesModel>(false,
+                return new OperationDataResult<List<SiteModel>>(false,
                     _localizationService.GetString("ErrorWhileObtainingSites"));
             }
         }

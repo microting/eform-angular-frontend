@@ -27,11 +27,12 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Abstractions.Advanced
 {
+    using System.Collections.Generic;
     using Infrastructure.Models.Sites;
 
     public interface ISitesService
     {
-        Task<OperationDataResult<SitesModel>> Index();
+        Task<OperationDataResult<List<SiteModel>>> Index();
         Task<OperationDataResult<SiteModel>> Read(int id);
         Task<OperationResult> Update(SiteUpdateModel updateModel);
         Task<OperationResult> Delete(int id);
