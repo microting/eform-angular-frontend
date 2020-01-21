@@ -133,6 +133,7 @@ namespace eFormAPI.Web.Services
 
                     // Tags
                     var siteTagIds = site.SiteTags
+                        .Where(x=>x.WorkflowState != Constants.WorkflowStates.Removed)
                         .Where(x => x.TagId != null)
                         .Select(x => (int)x.TagId)
                         .ToList();
