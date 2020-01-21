@@ -45,9 +45,9 @@ namespace eFormAPI.Web.Services
         private readonly ILocalizationService _localizationService;
         private readonly ILogger<SitesService> _logger;
 
-        public SitesService(IEFormCoreService coreHelper, 
-           ILocalizationService localizationService,
-           ILogger<SitesService> logger)
+        public SitesService(IEFormCoreService coreHelper,
+            ILocalizationService localizationService,
+            ILogger<SitesService> logger)
         {
             _coreHelper = coreHelper;
             _localizationService = localizationService;
@@ -107,7 +107,7 @@ namespace eFormAPI.Web.Services
                             UpdatedAt = x.UpdatedAt,
                             Tags = x.SiteTags.Select(t => new KeyValueModel
                             {
-                                Key = (int)t.TagId,
+                                Key = (int) t.TagId,
                                 Value = t.Tag.Name,
                             }).ToList(),
                         }).FirstOrDefaultAsync();
@@ -161,7 +161,7 @@ namespace eFormAPI.Web.Services
 
                             // Tags
                             var siteTagIds = site.SiteTags
-                                .Where(x=>x.TagId != null)
+                                .Where(x => x.TagId != null)
                                 .Select(x => (int) x.TagId)
                                 .ToList();
 
@@ -231,7 +231,8 @@ namespace eFormAPI.Web.Services
 
                     if (site.Equals(null))
                     {
-                        return new OperationResult(false, _localizationService.GetStringWithFormat("SiteParamNotFound", id));
+                        return new OperationResult(false,
+                            _localizationService.GetStringWithFormat("SiteParamNotFound", id));
                     }
 
                     await site.Delete(dbContext);

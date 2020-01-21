@@ -285,6 +285,7 @@ namespace eFormAPI.Web
             services.AddScoped<IEformReportsService, EformReportsService>();
             services.AddScoped<IPluginsManagementService, PluginsManagementService>();
             services.AddScoped<IPluginPermissionsService, PluginPermissionsService>();
+            services.AddScoped<ISiteTagsService, SiteTagsService>();
         }
 
         private ICollection<PluginPermissionModel> GetPluginsPermissions()
