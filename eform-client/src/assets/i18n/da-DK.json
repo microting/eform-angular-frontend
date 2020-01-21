@@ -252,5 +252,6 @@
   "Marketplace": "Markedsplads",
   "Plugins Marketplace": "Plugins Markedsplads",
   "Plugins Management": "Plugins Management",
-  "Warning: you will be logged out when status is changed": "Advarsel: Du logges ud, når status ændres"
+  "Warning: you will be logged out when status is changed": "Advarsel: Du logges ud, når status ændres",
+  "Select tags for site": "Vælg tags til webstedet"
 }

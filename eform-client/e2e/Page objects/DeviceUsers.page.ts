@@ -1,4 +1,7 @@
 import {PageWithNavbarPage} from './PageWithNavbar.page';
+import myEformsPage from './MyEforms.page';
+import {Guid} from 'guid-typescript';
+import {expect} from 'chai';
 
 class DeviceUsersPage extends PageWithNavbarPage {
   constructor() {
@@ -77,6 +80,19 @@ class DeviceUsersPage extends PageWithNavbarPage {
     this.createLastNameInput.setValue(lastName);
     this.saveCreateBtn.click();
     browser.pause(16000);
+  }
+
+  public createDeviceUserFromScratch(name: string, surname: string) {
+    myEformsPage.Navbar.goToDeviceUsersPage();
+    browser.waitForVisible('#newDeviceUserBtn', 20000);;
+    const rowCountBeforeCreation = deviceUsersPage.rowNum;
+    browser.pause(2000);
+    deviceUsersPage.createNewDeviceUser(name, surname);
+    const rowCountAfterCreation = deviceUsersPage.rowNum;
+    expect(rowCountAfterCreation, 'Number of rows hasn\'t changed after creating new user').equal(rowCountBeforeCreation + 1);
+    const lastDeviceUser: DeviceUsersRowObject = deviceUsersPage.getDeviceUser(deviceUsersPage.rowNum);
+    expect(lastDeviceUser.firstName, 'Name of created user is incorrect').equal(name);
+    expect(lastDeviceUser.lastName, 'Last name of created user is incorrect').equal(surname);
   }
 
   public editDeviceUser(deviceUser: DeviceUsersRowObject, name = '', surname = '') {
