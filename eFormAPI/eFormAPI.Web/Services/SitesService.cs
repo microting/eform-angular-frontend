@@ -182,10 +182,11 @@ namespace eFormAPI.Web.Services
                             _localizationService.GetStringWithFormat("SiteParamNotFound", id));
                     }
 
-                    await core.Advanced_SiteItemDelete((int) site.MicrotingUid);
-
-                    return new OperationResult(true,
-                        _localizationService.GetStringWithFormat("SiteParamDeletedSuccessfully", site.Name));
+                    return await core.Advanced_SiteItemDelete((int)site.MicrotingUid)
+                        ? new OperationResult(true,
+                            _localizationService.GetStringWithFormat("SiteParamDeletedSuccessfully", site.Name))
+                        : new OperationResult(false,
+                            _localizationService.GetStringWithFormat("SiteParamCouldNotBeDeleted", site.Name));
                 }
             }
             catch (Exception e)
