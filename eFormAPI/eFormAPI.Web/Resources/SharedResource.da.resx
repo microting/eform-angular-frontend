@@ -591,4 +591,13 @@
   <data name="ErrorWhileObtainingSites" xml:space="preserve">
     <value>Fejl under hentning af sider</value>
   </data>
+  <data name="ErrorWhileUpdatingTags" xml:space="preserve">
+    <value>Fejl under opdatering af tags</value>
+  </data>
+  <data name="TagNotFound" xml:space="preserve">
+    <value>Mærkaten blev ikke fundet</value>
+  </data>
+  <data name="TagUpdatedSuccessfully" xml:space="preserve">
+    <value>Mærkaten blev opdateret</value>
+  </data>
 </root>

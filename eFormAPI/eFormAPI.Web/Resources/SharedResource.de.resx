@@ -573,4 +573,13 @@
   <data name="ErrorWhileObtainingSites" xml:space="preserve">
     <value>Fehler beim Abrufen der sites</value>
   </data>
+  <data name="ErrorWhileUpdatingTags" xml:space="preserve">
+    <value>Fehler beim Aktualisieren der Tags</value>
+  </data>
+  <data name="TagNotFound" xml:space="preserve">
+    <value>Tag nicht gefunden</value>
+  </data>
+  <data name="TagUpdatedSuccessfully" xml:space="preserve">
+    <value>Tag erfolgreich aktualisiert</value>
+  </data>
 </root>

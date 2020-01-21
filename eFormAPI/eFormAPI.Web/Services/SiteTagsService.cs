@@ -75,7 +75,7 @@ namespace eFormAPI.Web.Services
             {
                 _logger.LogError(e, e.Message);
                 return new OperationDataResult<List<CommonDictionaryModel>>(false,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("ErrorWhileObtainTags"));
             }
         }
 
@@ -94,13 +94,19 @@ namespace eFormAPI.Web.Services
                     await tag.Create(dbContext);
                 }
 
-                return new OperationResult(true, _localizationService.GetString(""));
+                return new OperationResult(
+                    true,
+                    _localizationService.GetStringWithFormat(
+                        "TagParamCreatedSuccessfully",
+                        tagName));
             }
             catch (Exception e)
             {
                 _logger.LogError(e, e.Message);
                 return new OperationResult(false,
-                    _localizationService.GetString(""));
+                    _localizationService.GetStringWithFormat(
+                        "ErrorWhileCreatingParamTag",
+                        tagName));
             }
         }
 
@@ -118,7 +124,7 @@ namespace eFormAPI.Web.Services
                     if (tag == null)
                     {
                         return new OperationResult(false,
-                            _localizationService.GetString(""));
+                            _localizationService.GetString("TagNotFound"));
                     }
 
                     tag.Name = name;
@@ -126,13 +132,13 @@ namespace eFormAPI.Web.Services
                     await tag.Update(dbContext);
                 }
 
-                return new OperationResult(true, _localizationService.GetString(""));
+                return new OperationResult(true, _localizationService.GetString("TagUpdatedSuccessfully"));
             }
             catch (Exception e)
             {
                 _logger.LogError(e, e.Message);
                 return new OperationResult(false,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("ErrorWhileUpdatingTags"));
             }
         }
 
@@ -150,19 +156,21 @@ namespace eFormAPI.Web.Services
                     if (tag == null)
                     {
                         return new OperationResult(false,
-                            _localizationService.GetString(""));
+                            _localizationService.GetString("TagNotFound"));
                     }
 
                     await tag.Delete(dbContext);
                 }
 
-                return new OperationResult(true, _localizationService.GetString(""));
+                return new OperationResult(
+                    true,
+                    _localizationService.GetString("TagDeletedSuccessfully"));
             }
             catch (Exception e)
             {
                 _logger.LogError(e, e.Message);
                 return new OperationResult(false,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("ErrorWhileDeletingTag"));
             }
         }
     }
