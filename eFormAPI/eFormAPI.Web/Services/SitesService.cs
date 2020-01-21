@@ -176,13 +176,13 @@ namespace eFormAPI.Web.Services
                         .Where(x => x.Id == id)
                         .FirstOrDefaultAsync();
 
-                    if (site.Equals(null))
+                    if (site?.MicrotingUid == null)
                     {
                         return new OperationResult(false,
                             _localizationService.GetStringWithFormat("SiteParamNotFound", id));
                     }
 
-                    await site.Delete(dbContext);
+                    await core.Advanced_SiteItemDelete((int) site.MicrotingUid);
 
                     return new OperationResult(true,
                         _localizationService.GetStringWithFormat("SiteParamDeletedSuccessfully", site.Name));
