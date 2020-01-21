@@ -35,7 +35,6 @@ namespace eFormAPI.Web.Services
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
     using Microting.eForm.Infrastructure.Constants;
-    using Microting.eForm.Infrastructure.Data.Entities;
     using Microting.eFormApi.BasePn.Abstractions;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
@@ -137,74 +136,22 @@ namespace eFormAPI.Web.Services
                 var core = await _coreHelper.GetCore();
                 using (var dbContext = core.dbContextHelper.GetDbContext())
                 {
-                    using (var transaction = await dbContext.Database.BeginTransactionAsync())
+                    var site = await dbContext.sites
+                        .Include(x => x.SiteTags)
+                        .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                        .Where(x => x.Id == updateModel.Id)
+                        .FirstOrDefaultAsync();
+
+                    if (site == null)
                     {
-                        try
-                        {
-                            var site = await dbContext.sites
-                                .Include(x => x.SiteTags)
-                                .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                                .Where(x => x.Id == updateModel.Id)
-                                .FirstOrDefaultAsync();
-
-                            if (site == null)
-                            {
-                                transaction.Rollback();
-                                return new OperationResult(
-                                    false,
-                                    _localizationService.GetStringWithFormat("SiteParamNotFound", updateModel.Id));
-                            }
-
-                            site.Name = updateModel.Name;
-
-                            await site.Update(dbContext);
-
-                            // Tags
-                            var siteTagIds = site.SiteTags
-                                .Where(x => x.TagId != null)
-                                .Select(x => (int) x.TagId)
-                                .ToList();
-
-                            var forRemove = siteTagIds
-                                .Where(x => !updateModel.TagIds.Contains(x))
-                                .ToList();
-
-                            foreach (var tagIdForRemove in forRemove)
-                            {
-                                var siteTag = await dbContext.SiteTags
-                                    .FirstOrDefaultAsync(
-                                        x => x.TagId == tagIdForRemove
-                                             && x.SiteId == site.Id);
-
-                                if (siteTag != null)
-                                {
-                                    await siteTag.Delete(dbContext);
-                                }
-                            }
-
-                            var forCreate = updateModel.TagIds
-                                .Where(x => !siteTagIds.Contains(x))
-                                .ToList();
-
-                            foreach (var tagIdForCreate in forCreate)
-                            {
-                                var siteTag = new site_tags()
-                                {
-                                    TagId = tagIdForCreate,
-                                    SiteId = site.Id,
-                                };
-
-                                await siteTag.Create(dbContext);
-                            }
-
-                            transaction.Commit();
-                        }
-                        catch (Exception)
-                        {
-                            transaction.Rollback();
-                            throw;
-                        }
+                        return new OperationResult(
+                            false,
+                            _localizationService.GetStringWithFormat("SiteParamNotFound", updateModel.Id));
                     }
+
+                    site.Name = updateModel.Name;
+
+                    await site.Update(dbContext);
                 }
 
                 return new OperationResult(true);

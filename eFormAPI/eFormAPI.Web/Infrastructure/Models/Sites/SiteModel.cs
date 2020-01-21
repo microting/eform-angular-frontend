@@ -6,6 +6,7 @@
     public class SiteModel
     {
         public int Id { get; set; }
+
         public int SiteUId { get; set; }
 
         public string SiteName { get; set; }

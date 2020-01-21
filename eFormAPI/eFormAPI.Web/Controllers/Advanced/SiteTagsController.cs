@@ -27,6 +27,7 @@ namespace eFormAPI.Web.Controllers.Advanced
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Abstractions.Advanced;
+    using Infrastructure.Models.Sites;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
@@ -65,9 +66,9 @@ namespace eFormAPI.Web.Controllers.Advanced
 
         [HttpPost]
         [Route("api/sites/tags/update")]
-        public async Task<OperationResult> UpdateTag(int tagId, string tagName)
+        public async Task<OperationResult> UpdateTag([FromBody] UpdateSiteTagsModel siteTagsModel)
         {
-            return await _siteTagsService.UpdateTag(tagId, tagName);
+            return await _siteTagsService.UpdateTag(siteTagsModel);
         }
     }
 }

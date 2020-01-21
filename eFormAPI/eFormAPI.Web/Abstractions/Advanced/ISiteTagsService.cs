@@ -26,6 +26,7 @@ namespace eFormAPI.Web.Abstractions.Advanced
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Infrastructure.Models.Sites;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
     using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
@@ -33,7 +34,7 @@ namespace eFormAPI.Web.Abstractions.Advanced
     {
         Task<OperationDataResult<List<CommonDictionaryModel>>> GetSitesTags();
         Task<OperationResult> CreateSiteTag(string tagName);
-        Task<OperationResult> UpdateTag(int tagId, string name);
+        Task<OperationResult> UpdateTag(UpdateSiteTagsModel siteTagsModel);
         Task<OperationResult> DeleteTag(int tagId);
     }
 }

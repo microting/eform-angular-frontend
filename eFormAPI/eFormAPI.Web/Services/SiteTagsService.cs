@@ -30,6 +30,7 @@ namespace eFormAPI.Web.Services
     using System.Threading.Tasks;
     using Abstractions;
     using Abstractions.Advanced;
+    using Infrastructure.Models.Sites;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
     using Microting.eForm.Infrastructure.Constants;
@@ -110,26 +111,63 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public async Task<OperationResult> UpdateTag(int tagId, string name)
+        public async Task<OperationResult> UpdateTag(UpdateSiteTagsModel siteTagsModel)
         {
             try
             {
                 var core = await _coreHelper.GetCore();
                 using (var dbContext = core.dbContextHelper.GetDbContext())
                 {
-                    var tag = await dbContext.tags
+                    var site = await dbContext.sites
+                        .Include(x => x.SiteTags)
                         .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                        .FirstOrDefaultAsync(x => x.Id == tagId);
+                        .Where(x => x.Id == siteTagsModel.SiteId)
+                        .FirstOrDefaultAsync();
 
-                    if (tag == null)
+                    if (site == null)
                     {
-                        return new OperationResult(false,
-                            _localizationService.GetString("TagNotFound"));
+                        return new OperationResult(
+                            false,
+                            _localizationService.GetStringWithFormat("SiteParamNotFound", siteTagsModel.SiteId));
                     }
 
-                    tag.Name = name;
+                    // Tags
+                    var siteTagIds = site.SiteTags
+                        .Where(x => x.TagId != null)
+                        .Select(x => (int)x.TagId)
+                        .ToList();
 
-                    await tag.Update(dbContext);
+                    var forRemove = siteTagIds
+                        .Where(x => !siteTagsModel.TagsIds.Contains(x))
+                        .ToList();
+
+                    foreach (var tagIdForRemove in forRemove)
+                    {
+                        var siteTag = await dbContext.SiteTags
+                            .FirstOrDefaultAsync(
+                                x => x.TagId == tagIdForRemove
+                                     && x.SiteId == site.Id);
+
+                        if (siteTag != null)
+                        {
+                            await siteTag.Delete(dbContext);
+                        }
+                    }
+
+                    var forCreate = siteTagsModel.TagsIds
+                        .Where(x => !siteTagIds.Contains(x))
+                        .ToList();
+
+                    foreach (var tagIdForCreate in forCreate)
+                    {
+                        var siteTag = new site_tags()
+                        {
+                            TagId = tagIdForCreate,
+                            SiteId = site.Id,
+                        };
+
+                        await siteTag.Create(dbContext);
+                    }
                 }
 
                 return new OperationResult(true, _localizationService.GetString("TagUpdatedSuccessfully"));
