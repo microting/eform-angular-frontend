@@ -3,6 +3,6 @@
     public class SiteUpdateModel
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string SiteName { get; set; }
     }
 }

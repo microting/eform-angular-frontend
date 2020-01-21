@@ -121,7 +121,7 @@ namespace eFormAPI.Web.Services
                     var site = await dbContext.sites
                         .Include(x => x.SiteTags)
                         .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                        .Where(x => x.MicrotingUid == siteTagsModel.SiteId)
+                        .Where(x => x.Id == siteTagsModel.SiteId)
                         .FirstOrDefaultAsync();
 
                     if (site == null)
@@ -135,6 +135,7 @@ namespace eFormAPI.Web.Services
                     var siteTagIds = site.SiteTags
                         .Where(x=>x.WorkflowState != Constants.WorkflowStates.Removed)
                         .Where(x => x.TagId != null)
+                         .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                         .Select(x => (int)x.TagId)
                         .ToList();
 

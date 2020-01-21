@@ -69,7 +69,10 @@ namespace eFormAPI.Web.Services
                             CreatedAt = x.CreatedAt,
                             SiteUId = (int) x.MicrotingUid,
                             UpdatedAt = x.UpdatedAt,
-                            Tags = x.SiteTags.Select(t => new KeyValueModel
+                            Tags = x.SiteTags
+                            .Where(y => y.WorkflowState != Constants.WorkflowStates.Removed)
+                            .Where(y => y.Tag.WorkflowState != Constants.WorkflowStates.Removed)
+                            .Select(t => new KeyValueModel
                             {
                                 Key = (int) t.TagId,
                                 Value = t.Tag.Name,
@@ -139,7 +142,7 @@ namespace eFormAPI.Web.Services
                     var site = await dbContext.sites
                         .Include(x => x.SiteTags)
                         .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                        .Where(x => x.MicrotingUid == updateModel.Id)
+                        .Where(x => x.Id == updateModel.Id)
                         .FirstOrDefaultAsync();
 
                     if (site == null)
@@ -149,7 +152,7 @@ namespace eFormAPI.Web.Services
                             _localizationService.GetStringWithFormat("SiteParamNotFound", updateModel.Id));
                     }
 
-                    site.Name = updateModel.Name;
+                    site.Name = updateModel.SiteName;
 
                     await site.Update(dbContext);
                 }
