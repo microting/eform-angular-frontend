@@ -3,11 +3,12 @@ import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {OperationDataResult, OperationResult, SiteNameDto, SiteNameModel} from 'src/app/common/models';
+import {CommonDictionaryModel, OperationDataResult, OperationResult, SiteNameDto, SiteNameModel} from 'src/app/common/models';
 import {BaseService} from '../../base.service';
 
 const SitesMethods = {
   GetAll: '/api/sites/index',
+  GetAllDictionary: '/api/sites/dictionary',
   GetAllSitesForPairing: '/api/sites/pairing',
   GetSingle: '/api/sites/edit',
   UpdateSingle: '/api/sites/update',
@@ -22,6 +23,10 @@ export class SitesService extends BaseService {
 
   getAllSites(): Observable<OperationDataResult<Array<SiteNameDto>>> {
     return this.get<Array<SiteNameDto>>(SitesMethods.GetAll);
+  }
+
+  getAllSitesDictionary(): Observable<OperationDataResult<Array<CommonDictionaryModel>>> {
+    return this.get<Array<CommonDictionaryModel>>(SitesMethods.GetAllDictionary);
   }
 
   getAllSitesForPairing(): Observable<OperationDataResult<Array<SiteNameDto>>> {
