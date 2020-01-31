@@ -7,7 +7,7 @@ import {EventBrokerService} from 'src/app/common/helpers';
 import {
   EntitySearchService,
   EntitySelectService,
-  SitesService,
+  SitesService, SiteTagsService,
   UnitsService,
   WorkersService
 } from 'src/app/common/services/advanced';
@@ -42,6 +42,7 @@ export let providers = [
   DeviceUserService,
   UnitsService,
   SitesService,
+  SiteTagsService,
   WorkersService,
   FoldersService,
   AdminService,

@@ -28,7 +28,7 @@ import {
   WorkerEditComponent,
   WorkersComponent,
   FoldersComponent,
-  FolderCreateComponent
+  FolderCreateComponent, SiteTagsComponent
 } from './components';
 import { FolderEditComponent } from './components/folders/folder-edit/folder-edit.component';
 import { FolderDeleteComponent } from './components/folders/folder-delete/folder-delete.component';
@@ -72,7 +72,8 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
     FoldersComponent,
     FolderCreateComponent,
     FolderEditComponent,
-    FolderDeleteComponent
+    FolderDeleteComponent,
+    SiteTagsComponent
   ]
 })
 export class AdvancedModule {

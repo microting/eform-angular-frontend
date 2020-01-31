@@ -21,11 +21,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Infrastructure.Models
+
+namespace eFormAPI.Web.Abstractions.Advanced
 {
-    public class SiteNameModel
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Infrastructure.Models.Sites;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+
+    public interface ISiteTagsService
     {
-        public int Id { get; set; }
-        public string SiteName { get; set; }
+        Task<OperationDataResult<List<CommonDictionaryModel>>> GetSitesTags();
+        Task<OperationResult> CreateSiteTag(string tagName);
+        Task<OperationResult> UpdateSiteTags(UpdateSiteTagsModel siteTagsModel);
+        Task<OperationResult> DeleteTag(int tagId);
     }
 }

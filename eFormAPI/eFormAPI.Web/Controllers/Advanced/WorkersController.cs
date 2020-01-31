@@ -56,7 +56,7 @@ namespace eFormAPI.Web.Controllers.Advanced
         [Authorize(Policy = AuthConsts.EformPolicies.Workers.Create)]
         public async Task<OperationResult> Сreate([FromBody] WorkerCreateModel model)
         {
-            return await _workersService.Сreate(model);
+            return await _workersService.Create(model);
         }
         
         [HttpGet]

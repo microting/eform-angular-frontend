@@ -21,67 +21,178 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using eFormAPI.Web.Abstractions;
-using eFormAPI.Web.Abstractions.Advanced;
-using eFormAPI.Web.Infrastructure.Models;
-using Microting.eForm.Dto;
-using Microting.eFormApi.BasePn.Abstractions;
-using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Abstractions;
+    using Abstractions.Advanced;
+    using Infrastructure.Models;
+    using Infrastructure.Models.Sites;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
+    using Microting.eForm.Infrastructure.Constants;
+    using Microting.eFormApi.BasePn.Abstractions;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+
     public class SitesService : ISitesService
     {
         private readonly IEFormCoreService _coreHelper;
         private readonly ILocalizationService _localizationService;
+        private readonly ILogger<SitesService> _logger;
 
-        public SitesService(IEFormCoreService coreHelper, 
-           ILocalizationService localizationService)
+        public SitesService(IEFormCoreService coreHelper,
+            ILocalizationService localizationService,
+            ILogger<SitesService> logger)
         {
             _coreHelper = coreHelper;
             _localizationService = localizationService;
+            _logger = logger;
         }
 
-        public async Task<OperationDataResult<List<SiteNameDto>>> Index()
-        {
-            var core = await _coreHelper.GetCore();
-            var siteNamesDto = await core.Advanced_SiteItemReadAll(false);
-
-            return new OperationDataResult<List<SiteNameDto>>(true, siteNamesDto);
-        }
-
-        public async Task<OperationDataResult<SiteNameDto>> Read(int id)
-        {
-            var core = await _coreHelper.GetCore();
-            var siteNameDto = await core.Advanced_SiteItemRead(id);
-
-            return !siteNameDto.Equals(null)
-                ? new OperationDataResult<SiteNameDto>(true, siteNameDto)
-                : new OperationDataResult<SiteNameDto>(false);
-        }
-
-        public async Task<OperationResult> Update(SiteNameModel siteNameModel)
+        public async Task<OperationDataResult<List<CommonDictionaryModel>>> GetSitesDictionary()
         {
             try
             {
                 var core = await _coreHelper.GetCore();
-                var siteNameDto = await core.Advanced_SiteItemRead(siteNameModel.Id);
-
-                if (!siteNameDto.Equals(null))
+                using (var dbContext = core.dbContextHelper.GetDbContext())
                 {
-                    await core.Advanced_SiteItemUpdate(siteNameDto.SiteUId, siteNameModel.SiteName);
-                    return new OperationResult(true);
+                    var sites = await dbContext.sites
+                        .AsNoTracking()
+                        .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                        .Select(x => new CommonDictionaryModel
+                        {
+                            Id = x.Id,
+                            Name = x.Name,
+                        }).ToListAsync();
+
+                    return new OperationDataResult<List<CommonDictionaryModel>>(true, sites);
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                return new OperationDataResult<List<CommonDictionaryModel>>(false,
+                    _localizationService.GetString("ErrorWhileObtainingSites"));
+            }
+        }
+
+        public async Task<OperationDataResult<List<SiteModel>>> Index()
+        {
+            try
+            {
+                var core = await _coreHelper.GetCore();
+                using (var dbContext = core.dbContextHelper.GetDbContext())
+                {
+                    var sites = await dbContext.sites
+                        .AsNoTracking()
+                        .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                        .Select(x => new SiteModel
+                        {
+                            Id = x.Id,
+                            SiteName = x.Name,
+                            CreatedAt = x.CreatedAt,
+                            SiteUId = (int) x.MicrotingUid,
+                            UpdatedAt = x.UpdatedAt,
+                            Tags = x.SiteTags
+                            .Where(y => y.WorkflowState != Constants.WorkflowStates.Removed)
+                            .Where(y => y.Tag.WorkflowState != Constants.WorkflowStates.Removed)
+                            .Select(t => new KeyValueModel
+                            {
+                                Key = (int) t.TagId,
+                                Value = t.Tag.Name,
+                            }).ToList(),
+                        }).ToListAsync();
+
+                    return new OperationDataResult<List<SiteModel>>(true, sites);
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                return new OperationDataResult<List<SiteModel>>(false,
+                    _localizationService.GetString("ErrorWhileObtainingSites"));
+            }
+        }
+
+        public async Task<OperationDataResult<SiteModel>> Read(int id)
+        {
+            try
+            {
+                var core = await _coreHelper.GetCore();
+                using (var dbContext = core.dbContextHelper.GetDbContext())
+                {
+                    var site = await dbContext.sites
+                        .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                        .Where(x => x.Id == id)
+                        .Select(x => new SiteModel
+                        {
+                            Id = x.Id,
+                            SiteName = x.Name,
+                            CreatedAt = x.CreatedAt,
+                            SiteUId = (int) x.MicrotingUid,
+                            UpdatedAt = x.UpdatedAt,
+                            Tags = x.SiteTags.Select(t => new KeyValueModel
+                            {
+                                Key = (int) t.TagId,
+                                Value = t.Tag.Name,
+                            }).ToList(),
+                        }).FirstOrDefaultAsync();
+
+                    if (site == null)
+                    {
+                        return new OperationDataResult<SiteModel>(
+                            false,
+                            _localizationService.GetStringWithFormat("SiteParamNotFound", id));
+                    }
+
+                    return new OperationDataResult<SiteModel>(true, site);
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                return new OperationDataResult<SiteModel>(false,
+                    _localizationService.GetString("ErrorWhileObtainingSites"));
+            }
+        }
+
+        public async Task<OperationResult> Update(SiteUpdateModel updateModel)
+        {
+            try
+            {
+                var core = await _coreHelper.GetCore();
+                using (var dbContext = core.dbContextHelper.GetDbContext())
+                {
+                    var site = await dbContext.sites
+                        .Include(x => x.SiteTags)
+                        .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                        .Where(x => x.Id == updateModel.Id)
+                        .FirstOrDefaultAsync();
+
+                    if (site == null)
+                    {
+                        return new OperationResult(
+                            false,
+                            _localizationService.GetStringWithFormat("SiteParamNotFound", updateModel.Id));
+                    }
+
+                    site.Name = updateModel.SiteName;
+
+                    await site.Update(dbContext);
                 }
 
-                return new OperationResult(false);
+                return new OperationResult(true);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                _logger.LogError(e, e.Message);
                 return new OperationResult(false,
-                    _localizationService.GetStringWithFormat("SiteParamCouldNotBeUpdated", siteNameModel.Id));
+                    _localizationService.GetStringWithFormat("SiteParamCouldNotBeUpdated", updateModel.Id));
             }
         }
 
@@ -90,23 +201,30 @@ namespace eFormAPI.Web.Services
             try
             {
                 var core = await _coreHelper.GetCore();
-                var siteDto = await core.Advanced_SiteItemRead(id);
-
-                if (siteDto.Equals(null))                    
+                using (var dbContext = core.dbContextHelper.GetDbContext())
                 {
-                    return new OperationResult(false, _localizationService.GetStringWithFormat("SiteParamNotFound", id));
+                    var site = await dbContext.sites
+                        .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                        .Where(x => x.Id == id)
+                        .FirstOrDefaultAsync();
+
+                    if (site?.MicrotingUid == null)
+                    {
+                        return new OperationResult(false,
+                            _localizationService.GetStringWithFormat("SiteParamNotFound", id));
+                    }
+
+                    return await core.Advanced_SiteItemDelete((int)site.MicrotingUid)
+                        ? new OperationResult(true,
+                            _localizationService.GetStringWithFormat("SiteParamDeletedSuccessfully", site.Name))
+                        : new OperationResult(false,
+                            _localizationService.GetStringWithFormat("SiteParamCouldNotBeDeleted", site.Name));
                 }
-
-                return await core.Advanced_SiteItemDelete(id)
-                    ? new OperationResult(true,
-                        _localizationService.GetStringWithFormat("SiteParamDeletedSuccessfully", siteDto.SiteName))
-                    : new OperationResult(false,
-                        _localizationService.GetStringWithFormat("SiteParamCouldNotBeDeleted", siteDto.SiteName));
             }
-
-            catch (Exception)
+            catch (Exception e)
             {
-                return new OperationDataResult<SiteNameModel>(false,
+                _logger.LogError(e, e.Message);
+                return new OperationResult(false,
                     _localizationService.GetStringWithFormat("SiteParamCouldNotBeDeleted", id));
             }
         }

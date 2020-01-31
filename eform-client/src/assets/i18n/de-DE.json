@@ -250,5 +250,6 @@
   "Marketplace": "Marktplaats",
   "Plugins Marketplace": "Plugins Marktplaats",
   "Plugins Management": "Plugins Beheer",
-  "Warning: you will be logged out when status is changed": "Warnung: Sie werden abgemeldet, wenn sich der status ändert"
+  "Warning: you will be logged out when status is changed": "Warnung: Sie werden abgemeldet, wenn sich der status ändert",
+  "Select tags for site": "Tags für die Site auswählen"
 }
