@@ -21,6 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -84,7 +85,7 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public async Task<OperationResult> Сreate(WorkerCreateModel model)
+        public async Task<OperationResult> Create(WorkerCreateModel model)
         {
             try
             {
@@ -112,23 +113,23 @@ namespace eFormAPI.Web.Services
 
                 if (workerDto.Equals(null))
                 {
-                    return new OperationDataResult<SiteNameModel>(false,
+                    return new OperationResult(false,
                         _localizationService.GetStringWithFormat("SiteWithIdCouldNotBeDeleted", id));
                 }
 
                 return await core.Advanced_WorkerDelete(id)
-                    ? new OperationDataResult<SiteNameModel>(true,
+                    ? new OperationResult(true,
                         _localizationService.GetStringWithFormat(
                             "WorkerParamDeletedSuccessfully",
                             workerDto.FirstName,
                             workerDto.LastName))
-                    : new OperationDataResult<SiteNameModel>(false,
+                    : new OperationResult(false,
                         _localizationService.GetStringWithFormat("WorkerParamCantBeDeted", workerDto.FirstName, workerDto.LastName));
             }
 
             catch (Exception)
             {
-                return new OperationDataResult<SiteNameModel>(false,
+                return new OperationResult(false,
                     _localizationService.GetStringWithFormat("SiteWithIdCouldNotBeDeleted", id));
             }
         }

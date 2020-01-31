@@ -25,7 +25,7 @@ export class SiteEditComponent implements OnInit {
 
   updateSingle() {
     this.spinnerStatus = true;
-    this.siteModel.id = this.siteNameDto.siteUId;
+    this.siteModel.id = this.siteNameDto.id;
     this.siteModel.siteName = this.siteNameDto.siteName;
     this.sitesService.updateSingleSite(this.siteModel).subscribe(operation => {
       if (operation && operation.success) {
