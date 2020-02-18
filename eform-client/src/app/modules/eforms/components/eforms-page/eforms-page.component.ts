@@ -103,6 +103,8 @@ export class EformsPageComponent implements OnInit, OnDestroy {
       }, (error) => {
         this.spinnerStatus = false;
       });
+    } else {
+      this.loadAllTemplates();
     }
   }
 
@@ -187,7 +189,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   }
 
   downloadItem(itemName: string, templateId: number) {
-    if (itemName == 'XML') {
+    if (itemName === 'XML') {
       window.open('/api/template-files/download-eform-xml/' + templateId, '_blank');
     } else {
       window.open('/api/template-files/csv/' + templateId, '_blank');
@@ -205,7 +207,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   checkEformPermissions(templateId: number, permissionIndex: number) {
     const foundEform = this.eformPermissionsSimpleModel.find(x => x.templateId === templateId);
     if (foundEform) {
-      return foundEform.permissionsSimpleList.find(x => x == UserClaimsEnum[permissionIndex].toString());
+      return foundEform.permissionsSimpleList.find(x => x === UserClaimsEnum[permissionIndex].toString());
     } else {
       return this.userClaims[UserClaimsEnum[permissionIndex].toString()];
     }
