@@ -10,8 +10,8 @@ const tagName = generateRandmString();
 
 describe('Site tags', function () {
   before(function () {
-    loginPage.open('/');
-    loginPage.login();
+    // loginPage.open('/');
+    // loginPage.login();
     myEformsPage.Navbar.goToDeviceUsersPage();
     browser.waitForVisible('#newDeviceUserBtn', 20000);
     deviceUsersPage.createDeviceUserFromScratch('John', 'Smith');
