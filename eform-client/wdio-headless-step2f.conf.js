@@ -14,8 +14,7 @@ exports.config = {
     // 'e2e/Tests/application-settings/application-settings.site-header.spec.ts',
     'e2e/Tests/device-users/device-users.add.spec.ts',
     'e2e/Tests/device-users/device-users.edit.spec.ts',
-    'e2e/Tests/device-users/device-users.delete.spec.ts',
-    'e2e/Tests/sites/site-tag.multi.spec.ts',
+    'e2e/Tests/device-users/device-users.delete.spec.ts'
   ],
   suites: {
     settings: [
