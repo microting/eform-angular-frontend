@@ -32,13 +32,13 @@ namespace eFormAPI.Web.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            string autoIDGenStrategy = "SqlServer:ValueGenerationStrategy";
-            object autoIDGenStrategyValue = SqlServerValueGenerationStrategy.IdentityColumn;
-            if (DbConfig.IsMySQL)
-            {
-                autoIDGenStrategy = "MySql:ValueGenerationStrategy";
-                autoIDGenStrategyValue = MySqlValueGenerationStrategy.IdentityColumn;
-            }
+//            string autoIDGenStrategy = "SqlServer:ValueGenerationStrategy";
+//            object autoIDGenStrategyValue = SqlServerValueGenerationStrategy.IdentityColumn;
+//            if (DbConfig.IsMySQL)
+//            {
+//                autoIDGenStrategy = "MySql:ValueGenerationStrategy";
+//                autoIDGenStrategyValue = MySqlValueGenerationStrategy.IdentityColumn;
+//            }
             migrationBuilder.CreateTable(
                 name: "ConfigurationValues",
                 columns: table => new
