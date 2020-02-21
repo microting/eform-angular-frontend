@@ -32,22 +32,26 @@ class LoginPage extends Page {
 
   public login(): void {
     browser.waitForVisible('#username', 60000);
-    browser.pause(10000);
+    browser.waitForVisible('#spinner-animation', 10000, true);
+    // browser.pause(10000);
     this.usernameInput.setValue(LoginConstants.username);
     this.passwordInput.setValue(LoginConstants.password);
     this.loginBtn.click();
-    browser.pause(10000);
+    // browser.pause(10000);
     browser.waitForVisible('#newEFormBtn', 60000);
-    browser.pause(10000);
+    browser.waitForVisible('#spinner-animation', 10000, true);
+    // browser.pause(10000);
   }
   public loginWithNewPassword(): void {
-    browser.pause(10000);
+    // browser.pause(10000);
     browser.waitForVisible('#username', 60000);
+    browser.waitForVisible('#spinner-animation', 10000, true);
     this.usernameInput.setValue(LoginConstants.username);
     this.passwordInput.setValue(LoginConstants.newPassword);
     this.loginBtn.click();
     browser.waitForVisible('#newEFormBtn', 60000);
-    browser.pause(10000);
+    browser.waitForVisible('#spinner-animation', 10000, true);
+    // browser.pause(10000);
   }
 }
 
