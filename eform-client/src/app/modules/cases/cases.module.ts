@@ -36,7 +36,7 @@ import {
   ElementSignatureComponent
 } from './components';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {OWL_DATE_TIME_FORMATS, OwlDateTimeModule, OwlNativeDateTimeModule} from '@ye3i/ngx-datepicker';
+import {OWL_DATE_TIME_FORMATS, OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime';
 
 
 @NgModule({
