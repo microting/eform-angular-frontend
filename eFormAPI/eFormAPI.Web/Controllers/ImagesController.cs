@@ -81,7 +81,7 @@ namespace eFormAPI.Web.Controllers
 
             if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
             {
-                var ss = await core.GetFileFromS3Storage($"{fileName}.{ext}");
+                var ss = await core.GetFileFromS3Storage($"{fileName}");
 
                 Response.ContentLength = ss.ContentLength;
 
@@ -130,7 +130,7 @@ namespace eFormAPI.Web.Controllers
 
             if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
             {
-                var ss = await core.GetFileFromS3Storage($"{fileName}.{ext}");
+                var ss = await core.GetFileFromS3Storage($"{fileName}");
 
                 Response.ContentLength = ss.ContentLength;
 

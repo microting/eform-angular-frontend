@@ -30,7 +30,7 @@ namespace eFormAPI.Web.Abstractions.Advanced
 {
     public interface IUnitsService
     {
-        Task<OperationDataResult<List<Unit_Dto>>> Index();
-        Task<OperationDataResult<Unit_Dto>> RequestOtp(int id);
+        Task<OperationDataResult<List<UnitDto>>> Index();
+        Task<OperationDataResult<UnitDto>> RequestOtp(int id);
     }
 }

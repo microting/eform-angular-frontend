@@ -2,8 +2,11 @@ env:
 - TEST_SUITE=testheadless2a
 - TEST_SUITE=testheadless2b
 - TEST_SUITE=testheadless2c
+- TEST_SUITE=testheadless2d
+- TEST_SUITE=testheadless2e
+- TEST_SUITE=testheadless2f
 
-dist: xenial
+dist: bionic
 language: csharp
 mono: none
 dotnet: 2.2

@@ -218,7 +218,10 @@ namespace eFormAPI.Web.Services
                 using (var dbContext = new BaseDbContext(dbContextOptionsBuilder.Options))
                 {
                     Log.LogEvent("Migrating Angular DB");
-                    dbContext.Database.Migrate();
+                    if (dbContext.Database.GetPendingMigrations().Any())
+                    {
+                        dbContext.Database.Migrate();
+                    }
                     var userStore = new UserStore<EformUser,
                         EformRole,
                         BaseDbContext,
@@ -455,7 +458,8 @@ namespace eFormAPI.Web.Services
                         S3Enabled = (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true"),
                         S3AccessKeyId = await core.GetSdkSetting(Settings.s3AccessKeyId),
                         S3SecrectAccessKey = "SOMESECRETPASSWORD",
-                        S3Endpoint = await core.GetSdkSetting(Settings.s3Endpoint)
+                        S3Endpoint = await core.GetSdkSetting(Settings.s3Endpoint),
+                        S3BucketName = await core.GetSdkSetting(Settings.s3BucketName)
                     },
                     SdkSettingsModel = new SDKSettingsModel()
                     {
@@ -530,6 +534,7 @@ namespace eFormAPI.Web.Services
                 await core.SetSdkSetting(Settings.httpServerAddress, adminSettingsModel.SdkSettingsModel.HttpServerAddress);
                 await core.SetSdkSetting(Settings.s3Enabled, adminSettingsModel.S3SettingsModel.S3Enabled.ToString());
                 await core.SetSdkSetting(Settings.s3AccessKeyId, adminSettingsModel.S3SettingsModel.S3AccessKeyId);
+                await core.SetSdkSetting(Settings.s3BucketName, adminSettingsModel.S3SettingsModel.S3BucketName);
                 
                 if (adminSettingsModel.S3SettingsModel.S3SecrectAccessKey != "SOMESECRETPASSWORD")
                 {

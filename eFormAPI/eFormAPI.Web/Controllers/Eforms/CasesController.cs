@@ -61,7 +61,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         [HttpGet]
         [Route("api/cases/getcase")]
         [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseRead)]
-        public async Task<IActionResult> GetCase(int id, int templateId)
+        public async Task<IActionResult> Read(int id, int templateId)
         {
             if (! await _permissionsService.CheckEform(templateId, 
                 AuthConsts.EformClaims.CasesClaims.CaseRead))
@@ -69,21 +69,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                 return Forbid();
             }
 
-            return Ok(await _casesService.GetCase(id));
-        }
-
-        [HttpGet]
-        [Route("/api/cases/delete")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseDelete)]
-        public async Task<IActionResult> Delete(int id, int templateId)
-        {
-            if (! await _permissionsService.CheckEform(templateId,
-                AuthConsts.EformClaims.CasesClaims.CaseDelete))
-            {
-                return Forbid();
-            }
-
-            return Ok(await _casesService.Delete(id));
+            return Ok(await _casesService.Read(id));
         }
 
         [HttpPost]
@@ -99,5 +85,20 @@ namespace eFormAPI.Web.Controllers.Eforms
 
             return Ok(await _casesService.Update(model));
         }
+        
+        [HttpGet]
+        [Route("/api/cases/delete")]
+        [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseDelete)]
+        public async Task<IActionResult> Delete(int id, int templateId)
+        {
+            if (! await _permissionsService.CheckEform(templateId,
+                AuthConsts.EformClaims.CasesClaims.CaseDelete))
+            {
+                return Forbid();
+            }
+
+            return Ok(await _casesService.Delete(id));
+        }
+
     }
 }

@@ -25,17 +25,16 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using eFormAPI.Web.Infrastructure.Models;
 using Microting.eForm.Dto;
-using Microting.eFormApi.BasePn.Infrastructure.Models;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Abstractions.Advanced
 {
     public interface IWorkersService
     {
-        Task<OperationDataResult<List<Worker_Dto>>> Index();
-        Task<OperationDataResult<Worker_Dto>> Edit(int id);
+        Task<OperationDataResult<List<WorkerDto>>> Index();
+        Task<OperationDataResult<WorkerDto>> Read(int id);
         Task<OperationResult> Update(WorkerModel workerModel);
-        Task<OperationResult> Сreate(WorkerCreateModel model);
+        Task<OperationResult> Create(WorkerCreateModel model);
         Task<OperationResult> Delete(int id);
     }
 }

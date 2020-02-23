@@ -189,9 +189,11 @@ namespace eFormAPI.Web
                     { "Bearer", new string[] {}}
                 });
             });
+            
+            ConnectServices(services);
+            
             // plugins
             services.AddEFormPlugins(Program.Plugins);
-            ConnectServices(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -283,6 +285,7 @@ namespace eFormAPI.Web
             services.AddScoped<IEformReportsService, EformReportsService>();
             services.AddScoped<IPluginsManagementService, PluginsManagementService>();
             services.AddScoped<IPluginPermissionsService, PluginPermissionsService>();
+            services.AddScoped<ISiteTagsService, SiteTagsService>();
         }
 
         private ICollection<PluginPermissionModel> GetPluginsPermissions()

@@ -1,5 +1,6 @@
 export default {
-  XML: '<Main>\n' +
+  XML: '<?xml version="1.0" encoding="UTF-8"?>\n' +
+    '<Main>\n' +
     '<Id>141854</Id>\n' +
     '<Repeated>0</Repeated>\n' +
     '<Label>Test e-mail notifikation på alle felter</Label>\n' +

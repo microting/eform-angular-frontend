@@ -45,6 +45,7 @@ export class EntitySelectEditComponent implements OnInit {
         this.advEntitySelectableGroupEditModel.name = data.model.name;
         this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels = data.model.entityGroupItemLst;
         this.advEntitySelectableGroupEditModel.groupUid = this.selectedGroupId;
+        this.advEntitySelectableGroupEditModel.isLocked = data.model.isLocked;
       }
       this.spinnerStatus = false;
     });

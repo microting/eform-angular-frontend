@@ -64,45 +64,9 @@ namespace eFormAPI.Web.Services
             _dbContext = dbContext;
         }
 
-        public async Task<OperationDataResult<UserRegisterModel>> GetUser(int userId)
-        {
-            try
-            {
-                var user = await _userService.GetByIdAsync(userId);
-                if (user == null)
-                {
-                    return new OperationDataResult<UserRegisterModel>(false,
-                        _localizationService.GetString("UserNotFound"));
-                }
+        
 
-                var result = new UserRegisterModel()
-                {
-                    Email = user.Email,
-                    Id = user.Id,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    UserName = user.UserName,
-                };
-                // get role
-                var roles = await _userManager.GetRolesAsync(user);
-                result.Role = roles.FirstOrDefault();
-                // get user group
-                result.GroupId = await _dbContext.SecurityGroupUsers
-                    .Where(x => x.EformUserId == user.Id)
-                    .Select(x => x.SecurityGroup.Id)
-                    .FirstOrDefaultAsync();
-
-                return new OperationDataResult<UserRegisterModel>(true, result);
-            }
-            catch (Exception exception)
-            {
-                _logger.LogError(exception.Message);
-                return new OperationDataResult<UserRegisterModel>(false,
-                    _localizationService.GetString("ErrorWhileObtainUsers"));
-            }
-        }
-
-        public async Task<OperationDataResult<UserInfoModelList>> GetAllUsers(PaginationModel paginationModel)
+        public async Task<OperationDataResult<UserInfoModelList>> Index(PaginationModel paginationModel)
         {
             try
             {
@@ -145,8 +109,111 @@ namespace eFormAPI.Web.Services
                     _localizationService.GetString("ErrorWhileObtainUsers"));
             }
         }
+        public async Task<OperationResult> Create(UserRegisterModel userRegisterModel)
+        {
+            try
+            {
+                if (userRegisterModel.Role != EformRole.Admin && userRegisterModel.Role != EformRole.User)
+                {
+                    return new OperationResult(false,
+                        _localizationService.GetString("RoleNotFound"));
+                }
 
-        public async Task<OperationResult> UpdateUser(UserRegisterModel userRegisterModel)
+                var userResult = await _userManager.FindByNameAsync(userRegisterModel.Email);
+
+                if (userResult != null)
+                {
+                    return new OperationResult(false,
+                        _localizationService.GetStringWithFormat("UserUserNameAlreadyExist", userRegisterModel.Email));
+                }
+
+                if (userRegisterModel.Role != EformRole.Admin && !_dbContext.SecurityGroups.Any(x => x.Id == userRegisterModel.GroupId))
+                {
+                    return new OperationResult(false,
+                        _localizationService.GetString("SecurityGroupNotFound"));
+                }
+
+                var user = new EformUser
+                {
+                    Email = userRegisterModel.Email,
+                    UserName = userRegisterModel.Email,
+                    FirstName = userRegisterModel.FirstName,
+                    LastName = userRegisterModel.LastName,
+                    EmailConfirmed =  true,
+                    TwoFactorEnabled = false,
+                    IsGoogleAuthenticatorEnabled = false
+                };
+
+                var result = await _userManager.CreateAsync(user, userRegisterModel.Password);
+                if (!result.Succeeded)
+                {
+                    return new OperationResult(false, string.Join(" ", result.Errors.Select(x=>x.Description).ToArray()));
+                }
+
+               
+
+                // change role
+                await _userManager.AddToRoleAsync(user, userRegisterModel.Role);
+                // add to group
+                if (userRegisterModel.GroupId > 0 && user.Id > 0 && userRegisterModel.Role != EformRole.Admin)
+                {
+                    var securityGroupUser = new SecurityGroupUser()
+                    {
+                        SecurityGroupId = (int) userRegisterModel.GroupId,
+                        EformUserId = user.Id
+                    };
+                    _dbContext.SecurityGroupUsers.Add(securityGroupUser);
+                    await _dbContext.SaveChangesAsync();
+                }
+
+                return new OperationResult(true,
+                    _localizationService.GetStringWithFormat("UserUserNameWasCreated", user.UserName));
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(exception.Message);
+                return new OperationResult(false, _localizationService.GetString("ErrorWhileCreatingUser"));
+            }
+        }
+        public async Task<OperationDataResult<UserRegisterModel>> Read(int userId)
+        {
+            try
+            {
+                var user = await _userService.GetByIdAsync(userId);
+                if (user == null)
+                {
+                    return new OperationDataResult<UserRegisterModel>(false,
+                        _localizationService.GetString("UserNotFound"));
+                }
+
+                var result = new UserRegisterModel()
+                {
+                    Email = user.Email,
+                    Id = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    UserName = user.UserName,
+                };
+                // get role
+                var roles = await _userManager.GetRolesAsync(user);
+                result.Role = roles.FirstOrDefault();
+                // get user group
+                result.GroupId = await _dbContext.SecurityGroupUsers
+                    .Where(x => x.EformUserId == user.Id)
+                    .Select(x => x.SecurityGroup.Id)
+                    .FirstOrDefaultAsync();
+
+                return new OperationDataResult<UserRegisterModel>(true, result);
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(exception.Message);
+                return new OperationDataResult<UserRegisterModel>(false,
+                    _localizationService.GetString("ErrorWhileObtainUsers"));
+            }
+        }
+        
+        public async Task<OperationResult> Update(UserRegisterModel userRegisterModel)
         {
             try
             {
@@ -258,75 +325,8 @@ namespace eFormAPI.Web.Services
                 return new OperationResult(false, _localizationService.GetString("ErrorWhileUpdatingUser"));
             }
         }
-
-        public async Task<OperationResult> CreateUser(UserRegisterModel userRegisterModel)
-        {
-            try
-            {
-                if (userRegisterModel.Role != EformRole.Admin && userRegisterModel.Role != EformRole.User)
-                {
-                    return new OperationResult(false,
-                        _localizationService.GetString("RoleNotFound"));
-                }
-
-                var userResult = await _userManager.FindByNameAsync(userRegisterModel.Email);
-
-                if (userResult != null)
-                {
-                    return new OperationResult(false,
-                        _localizationService.GetStringWithFormat("UserUserNameAlreadyExist", userRegisterModel.Email));
-                }
-
-                if (userRegisterModel.Role != EformRole.Admin && !_dbContext.SecurityGroups.Any(x => x.Id == userRegisterModel.GroupId))
-                {
-                    return new OperationResult(false,
-                        _localizationService.GetString("SecurityGroupNotFound"));
-                }
-
-                var user = new EformUser
-                {
-                    Email = userRegisterModel.Email,
-                    UserName = userRegisterModel.Email,
-                    FirstName = userRegisterModel.FirstName,
-                    LastName = userRegisterModel.LastName,
-                    EmailConfirmed =  true,
-                    TwoFactorEnabled = false,
-                    IsGoogleAuthenticatorEnabled = false
-                };
-
-                var result = await _userManager.CreateAsync(user, userRegisterModel.Password);
-                if (!result.Succeeded)
-                {
-                    return new OperationResult(false, string.Join(" ", result.Errors.Select(x=>x.Description).ToArray()));
-                }
-
-               
-
-                // change role
-                await _userManager.AddToRoleAsync(user, userRegisterModel.Role);
-                // add to group
-                if (userRegisterModel.GroupId > 0 && user.Id > 0 && userRegisterModel.Role != EformRole.Admin)
-                {
-                    var securityGroupUser = new SecurityGroupUser()
-                    {
-                        SecurityGroupId = (int) userRegisterModel.GroupId,
-                        EformUserId = user.Id
-                    };
-                    _dbContext.SecurityGroupUsers.Add(securityGroupUser);
-                    await _dbContext.SaveChangesAsync();
-                }
-
-                return new OperationResult(true,
-                    _localizationService.GetStringWithFormat("UserUserNameWasCreated", user.UserName));
-            }
-            catch (Exception exception)
-            {
-                _logger.LogError(exception.Message);
-                return new OperationResult(false, _localizationService.GetString("ErrorWhileCreatingUser"));
-            }
-        }
-
-        public async Task<OperationResult> DeleteUser(int userId)
+        
+        public async Task<OperationResult> Delete(int userId)
         {
             try
             {

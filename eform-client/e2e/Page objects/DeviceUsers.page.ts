@@ -1,5 +1,7 @@
 import {PageWithNavbarPage} from './PageWithNavbar.page';
-import {FractionsRowObject} from './trash-inspection/TrashInspection-Fraction.page';
+import myEformsPage from './MyEforms.page';
+import {Guid} from 'guid-typescript';
+import {expect} from 'chai';
 
 class DeviceUsersPage extends PageWithNavbarPage {
   constructor() {
@@ -80,6 +82,19 @@ class DeviceUsersPage extends PageWithNavbarPage {
     browser.pause(16000);
   }
 
+  public createDeviceUserFromScratch(name: string, surname: string) {
+    myEformsPage.Navbar.goToDeviceUsersPage();
+    browser.waitForVisible('#newDeviceUserBtn', 20000);;
+    const rowCountBeforeCreation = deviceUsersPage.rowNum;
+    browser.pause(2000);
+    deviceUsersPage.createNewDeviceUser(name, surname);
+    const rowCountAfterCreation = deviceUsersPage.rowNum;
+    expect(rowCountAfterCreation, 'Number of rows hasn\'t changed after creating new user').equal(rowCountBeforeCreation + 1);
+    const lastDeviceUser: DeviceUsersRowObject = deviceUsersPage.getDeviceUser(deviceUsersPage.rowNum);
+    expect(lastDeviceUser.firstName, 'Name of created user is incorrect').equal(name);
+    expect(lastDeviceUser.lastName, 'Last name of created user is incorrect').equal(surname);
+  }
+
   public editDeviceUser(deviceUser: DeviceUsersRowObject, name = '', surname = '') {
     deviceUser.editBtn.click();
     // browser.pause(5000);
@@ -106,7 +121,7 @@ export default deviceUsersPage;
 export class DeviceUsersRowObject {
   constructor(rowNum) {
     if ($$('#deviceUserId')[rowNum - 1]) {
-      this.siteId = +$$('#deviceUserId')[rowNum - 1];
+      this.siteId = $$('#deviceUserId')[rowNum - 1];
       try {
         this.firstName = $$('#deviceUserFirstName')[rowNum - 1].getText();
       } catch (e) {}

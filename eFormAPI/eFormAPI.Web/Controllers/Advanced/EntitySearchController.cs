@@ -47,19 +47,45 @@ namespace eFormAPI.Web.Controllers.Advanced
         [HttpPost]
         [Route("api/searchable-groups")]
         [Authorize(Policy = AuthConsts.EformPolicies.EntitySearch.Read)]
-        public async Task<OperationDataResult<EntityGroupList>> GetEntityGroupList(
+        public async Task<OperationDataResult<EntityGroupList>> Index(
             [FromBody] AdvEntitySearchableGroupListRequestModel requestModel)
         {
-            return await _entitySearchService.GetEntityGroupList(requestModel);
+            return await _entitySearchService.Index(requestModel);
         }
+        
+        [HttpPost]
+        [Route("api/searchable-groups/create")]
+        [Authorize(Policy = AuthConsts.EformPolicies.EntitySearch.Create)]
+        public async Task<OperationResult> Create([FromBody] AdvEntitySearchableGroupEditModel editModel)
+        {
+            return await _entitySearchService.Create(editModel);
+        }
+
 
         [HttpGet]
         [Route("api/searchable-groups/get/{entityGroupUid}")]
         [Authorize(Policy = AuthConsts.EformPolicies.EntitySearch.Read)]
-        public async Task<OperationDataResult<EntityGroup>> GetEntityGroup(string entityGroupUid)
+        public async Task<OperationDataResult<EntityGroup>> Read(string entityGroupUid)
         {
-            return await _entitySearchService.GetEntityGroup(entityGroupUid);
+            return await _entitySearchService.Read(entityGroupUid);
         }
+        
+        [HttpPost]
+        [Route("api/searchable-groups/update")]
+        [Authorize(Policy = AuthConsts.EformPolicies.EntitySearch.Update)]
+        public async Task<OperationResult> Update([FromBody] AdvEntitySearchableGroupEditModel editModel)
+        {
+            return await _entitySearchService.Update(editModel);
+        }
+
+        [HttpGet]
+        [Route("api/searchable-groups/delete/{entityGroupUid}")]
+        [Authorize(Policy = AuthConsts.EformPolicies.EntitySearch.Delete)]
+        public async Task<OperationResult> Delete(string entityGroupUid)
+        {
+            return await _entitySearchService.Delete(entityGroupUid);
+        }
+
 
         [HttpGet]
         [Route("api/searchable-groups/dict/{entityGroupUid}")]
@@ -69,32 +95,6 @@ namespace eFormAPI.Web.Controllers.Advanced
         {
             return await _entitySearchService.GetEntityGroupDictionary(entityGroupUid, searchString);
         }
-
-        [HttpPost]
-        [Route("api/searchable-groups/create")]
-        [Authorize(Policy = AuthConsts.EformPolicies.EntitySearch.Create)]
-        public async Task<OperationResult> CreateEntityGroup([FromBody] AdvEntitySearchableGroupEditModel editModel)
-        {
-            return await _entitySearchService.CreateEntityGroup(editModel);
-        }
-
-        [HttpPost]
-        [Route("api/searchable-groups/update")]
-        [Authorize(Policy = AuthConsts.EformPolicies.EntitySearch.Update)]
-        public async Task<OperationResult> UpdateEntityGroup([FromBody] AdvEntitySearchableGroupEditModel editModel)
-        {
-            return await _entitySearchService.UpdateEntityGroup(editModel);
-        }
-
-        [HttpGet]
-        [Route("api/searchable-groups/delete/{entityGroupUid}")]
-        [Authorize(Policy = AuthConsts.EformPolicies.EntitySearch.Delete)]
-        public async Task<OperationResult> DeleteEntityGroup(string entityGroupUid)
-        {
-            return await _entitySearchService.DeleteEntityGroup(entityGroupUid);
-        }
-
-
         [HttpPost]
         [Route("api/searchable-groups/send")]
         public async Task<OperationResult> SendSearchableGroup(string entityGroupUid)

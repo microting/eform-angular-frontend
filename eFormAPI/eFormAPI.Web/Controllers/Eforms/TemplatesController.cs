@@ -57,9 +57,17 @@ namespace eFormAPI.Web.Controllers.Eforms
             }
         }
 
+        [HttpPost]
+        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Create)]
+        public async Task<OperationResult> Create([FromBody] EFormXmlModel eFormXmlModel)
+        {
+            return await _templatesService.Create(eFormXmlModel);
+        }
+        
         [HttpGet]
+        [Route("api/templates/get/{id}")]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Read)]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Read(int id)
         {
             try
             {
@@ -69,6 +77,13 @@ namespace eFormAPI.Web.Controllers.Eforms
             {
                 return Unauthorized();
             }
+        }
+
+        [HttpGet]
+        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Delete)]
+        public async Task<OperationResult> Delete(int id)
+        {
+            return await _templatesService.Delete(id);
         }
 
         [HttpGet]
@@ -85,21 +100,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                 return Unauthorized();
             }
         }
-
-        [HttpPost]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Create)]
-        public async Task<OperationResult> Create([FromBody] EFormXmlModel eFormXmlModel)
-        {
-            return await _templatesService.Create(eFormXmlModel);
-        }
-
-        [HttpGet]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Delete)]
-        public async Task<OperationResult> Delete(int id)
-        {
-            return await _templatesService.Delete(id);
-        }
-
+        
         [HttpPost]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.PairingUpdate)]
         public async Task<OperationResult> Deploy([FromBody] DeployModel deployModel)

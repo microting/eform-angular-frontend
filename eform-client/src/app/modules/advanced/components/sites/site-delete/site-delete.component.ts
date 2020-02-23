@@ -24,7 +24,7 @@ export class SiteDeleteComponent implements OnInit {
 
   deleteSingle() {
     this.spinnerStatus = true;
-    this.sitesService.deleteSingleSite(this.siteNameDto.siteUId).subscribe(operation => {
+    this.sitesService.deleteSingleSite(this.siteNameDto.id).subscribe(operation => {
       if (operation && operation.success) {
         this.onSiteRemoved.emit();
         this.frame.hide();

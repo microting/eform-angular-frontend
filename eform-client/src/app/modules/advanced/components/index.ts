@@ -11,6 +11,7 @@ export * from './entity-select/entity-select-import-list/entity-select-import-li
 export * from './sites/sites/sites.component';
 export * from './sites/site-edit/site-edit.component';
 export * from './sites/site-delete/site-delete.component';
+export * from './sites/site-tags/site-tags.component';
 export * from './units/units.component';
 export * from './units/units-otp-code/units-otp-code.component';
 export * from './workers/workers/workers.component';

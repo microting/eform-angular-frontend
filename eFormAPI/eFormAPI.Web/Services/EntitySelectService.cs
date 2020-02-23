@@ -56,7 +56,7 @@ namespace eFormAPI.Web.Services
         }
 
 
-        public async Task<OperationDataResult<EntityGroupList>> GetEntityGroupList(
+        public async Task<OperationDataResult<EntityGroupList>> Index(
             AdvEntitySelectableGroupListRequestModel requestModel)
         {
             try
@@ -69,12 +69,12 @@ namespace eFormAPI.Web.Services
 
                 if (model != null)
                 {
-                    List<string> eformPlugins = await _dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
+                    List<string> plugins = await _dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
                     foreach (EntityGroup entityGroup in model.EntityGroups)
                     {
-                        foreach (string eformPlugin in eformPlugins)
+                        foreach (string plugin in plugins)
                         {
-                            if (entityGroup.Name.Contains(eformPlugin))
+                            if (entityGroup.Name.Contains(plugin))
                             {
                                 entityGroup.IsLocked = true;
                             }
@@ -91,7 +91,7 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public async Task<OperationResult> CreateEntityGroup(AdvEntitySelectableGroupEditModel editModel)
+        public async Task<OperationResult> Create(AdvEntitySelectableGroupEditModel editModel)
         {
             try
             {
@@ -122,7 +122,7 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public async Task<OperationResult> UpdateEntityGroup(AdvEntitySelectableGroupEditModel editModel)
+        public async Task<OperationResult> Update(AdvEntitySelectableGroupEditModel editModel)
         {
             try
             {
@@ -173,14 +173,24 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public async Task<OperationDataResult<EntityGroup>> GetEntityGroup(string entityGroupUid)
+        public async Task<OperationDataResult<EntityGroup>> Read(string entityGroupUid)
         {
             try
             {
                 var core = await _coreHelper.GetCore();
 
-                var entityGroup = await core.EntityGroupRead(entityGroupUid);
+                EntityGroup entityGroup = await core.EntityGroupRead(entityGroupUid);
 
+                List<string> plugins = await _dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
+                
+                foreach (string plugin in plugins)
+                {
+                    if (entityGroup.Name.Contains(plugin))
+                    {
+                        entityGroup.IsLocked = true;
+                    }
+                }
+                
                 return new OperationDataResult<EntityGroup>(true, entityGroup);
             }
             catch (Exception)
@@ -218,7 +228,7 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public async Task<OperationResult> DeleteEntityGroup(string entityGroupUid)
+        public async Task<OperationResult> Delete(string entityGroupUid)
         {
             try
             {

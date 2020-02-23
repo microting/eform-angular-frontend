@@ -26,6 +26,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Amazon.S3;
+using Amazon.S3.Model;
 using eFormAPI.Web.Hosting.Enums;
 using eFormAPI.Web.Infrastructure.Database.Entities;
 using eFormAPI.Web.Infrastructure.Database.Factories;
@@ -47,7 +49,9 @@ using Microting.eFormApi.BasePn.Infrastructure.Delegates;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Settings;
 using Microting.eFormApi.BasePn.Services;
+using OpenStack.NetCoreSwiftClient;
 using OpenStack.NetCoreSwiftClient.Extensions;
+using OpenStack.NetCoreSwiftClient.Infrastructure.Models;
 
 namespace eFormAPI.Web.Hosting.Helpers
 {
@@ -212,7 +216,11 @@ namespace eFormAPI.Web.Hosting.Helpers
                             typeof(IOptionsSnapshot<>),
                             typeof(PluginDbOptions<>),
                             typeof(IDesignTimeDbContextFactory<>),
-                            typeof(Core)
+                            typeof(Core),
+                            typeof(GetObjectResponse),
+                            typeof(AmazonS3Client),
+                            typeof(SwiftObjectGetResponse),
+                            typeof(SwiftClient)
                         });
                     var types = loader
                         .LoadDefaultAssembly()

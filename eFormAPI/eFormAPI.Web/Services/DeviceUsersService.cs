@@ -46,11 +46,11 @@ namespace eFormAPI.Web.Services
             _coreHelper = coreHelper;
         }
 
-        public async Task<OperationDataResult<List<Site_Dto>>> Index()
+        public async Task<OperationDataResult<List<SiteDto>>> Index()
         {
             var core = await _coreHelper.GetCore();
             var siteDto = await core.SiteReadAll(false);
-            return new OperationDataResult<List<Site_Dto>>(true, siteDto);
+            return new OperationDataResult<List<SiteDto>>(true, siteDto);
         }
 
         public async Task<OperationResult> Create(DeviceUserModel deviceUserModel)
@@ -88,14 +88,14 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public async Task<OperationDataResult<Site_Dto>> Edit(int id)
+        public async Task<OperationDataResult<SiteDto>> Edit(int id)
         {
             var core = await _coreHelper.GetCore();
             var siteDto = await core.SiteRead(id);
 
             return siteDto != null
-                ? new OperationDataResult<Site_Dto>(true, siteDto)
-                : new OperationDataResult<Site_Dto>(false,
+                ? new OperationDataResult<SiteDto>(true, siteDto)
+                : new OperationDataResult<SiteDto>(false,
                     _localizationService.GetStringWithFormat("DeviceUserParamCouldNotBeEdited", id));
         }
 

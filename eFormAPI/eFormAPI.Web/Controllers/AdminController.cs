@@ -43,44 +43,44 @@ namespace eFormAPI.Web.Controllers
             _adminService = adminService;
         }
 
-        [HttpGet]
-        [Route("api/admin/user/{userId}")]
-        [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Read)]
-        public Task<OperationDataResult<UserRegisterModel>> GetUser(int userId)
-        {
-            return _adminService.GetUser(userId);
-        }
-
         [HttpPost]
         [Route("api/admin/get-users")]
         [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Read)]
-        public async Task<OperationDataResult<UserInfoModelList>> GetAllUsers([FromBody] PaginationModel paginationModel)
+        public async Task<OperationDataResult<UserInfoModelList>> Index([FromBody] PaginationModel paginationModel)
         {
-            return await _adminService.GetAllUsers(paginationModel);
-        }
-
-        [HttpPost]
-        [Route("api/admin/update-user")]
-        [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Update)]
-        public async Task<OperationResult> UpdateUser([FromBody] UserRegisterModel userRegisterModel)
-        {
-            return await _adminService.UpdateUser(userRegisterModel);
+            return await _adminService.Index(paginationModel);
         }
 
         [HttpPost]
         [Route("api/admin/create-user")]
         [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Create)]
-        public async Task<OperationResult> CreateUser([FromBody] UserRegisterModel userRegisterModel)
+        public async Task<OperationResult> Create([FromBody] UserRegisterModel userRegisterModel)
         {
-            return await _adminService.CreateUser(userRegisterModel);
+            return await _adminService.Create(userRegisterModel);
         }
 
         [HttpGet]
+        [Route("api/admin/user/{userId}")]
+        [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Read)]
+        public Task<OperationDataResult<UserRegisterModel>> Read(int userId)
+        {
+            return _adminService.Read(userId);
+        }
+        
+        [HttpPost]
+        [Route("api/admin/update-user")]
+        [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Update)]
+        public async Task<OperationResult> Update([FromBody] UserRegisterModel userRegisterModel)
+        {
+            return await _adminService.Update(userRegisterModel);
+        }
+        
+        [HttpGet]
         [Route("api/admin/delete-user/{userId}")]
         [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Delete)]
-        public Task<OperationResult> DeleteUser(int userId)
+        public Task<OperationResult> Delete(int userId)
         {
-            return _adminService.DeleteUser(userId);
+            return _adminService.Delete(userId);
         }
 
         [HttpGet]

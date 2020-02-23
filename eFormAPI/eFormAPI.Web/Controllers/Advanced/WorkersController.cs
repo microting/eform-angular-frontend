@@ -46,23 +46,9 @@ namespace eFormAPI.Web.Controllers.Advanced
 
         [HttpGet]
         [Authorize(Policy = AuthConsts.EformPolicies.Workers.Read)]
-        public async Task<OperationDataResult<List<Worker_Dto>>> Index()
+        public async Task<OperationDataResult<List<WorkerDto>>> Index()
         {
             return await _workersService.Index();
-        }
-
-        [HttpGet]
-        [Authorize(Policy = AuthConsts.EformPolicies.Workers.Update)]
-        public async Task<OperationDataResult<Worker_Dto>> Edit(int id)
-        {
-            return await _workersService.Edit(id);
-        }
-
-        [HttpPost]
-        [Authorize(Policy = AuthConsts.EformPolicies.Workers.Update)]
-        public async Task<OperationResult> Update([FromBody] WorkerModel workerModel)
-        {
-            return await _workersService.Update(workerModel);
         }
 
         [HttpPost]
@@ -70,7 +56,21 @@ namespace eFormAPI.Web.Controllers.Advanced
         [Authorize(Policy = AuthConsts.EformPolicies.Workers.Create)]
         public async Task<OperationResult> Сreate([FromBody] WorkerCreateModel model)
         {
-            return await _workersService.Сreate(model);
+            return await _workersService.Create(model);
+        }
+        
+        [HttpGet]
+        [Authorize(Policy = AuthConsts.EformPolicies.Workers.Update)]
+        public async Task<OperationDataResult<WorkerDto>> Read(int id)
+        {
+            return await _workersService.Read(id);
+        }
+
+        [HttpPost]
+        [Authorize(Policy = AuthConsts.EformPolicies.Workers.Update)]
+        public async Task<OperationResult> Update([FromBody] WorkerModel workerModel)
+        {
+            return await _workersService.Update(workerModel);
         }
 
         [HttpGet]

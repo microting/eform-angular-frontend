@@ -21,19 +21,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System.Collections.Generic;
+
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions.Advanced;
 using eFormAPI.Web.Infrastructure;
-using eFormAPI.Web.Infrastructure.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microting.eForm.Dto;
-using Microting.eFormApi.BasePn.Infrastructure.Models;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Controllers.Advanced
 {
+    using System.Collections.Generic;
+    using Infrastructure.Models.Sites;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+
     [Authorize]
     public class SitesController : Controller
     {
@@ -47,32 +48,41 @@ namespace eFormAPI.Web.Controllers.Advanced
         [HttpGet]
         [Route("api/sites/index")]
         [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
-        public async Task<OperationDataResult<List<SiteName_Dto>>> Index()
+        public async Task<OperationDataResult<List<SiteModel>>> Index()
         {
             return await _sitesService.Index();
         }
+
+        [HttpGet]
+        [Route("api/sites/dictionary")]
+        [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
+        public async Task<OperationDataResult<List<CommonDictionaryModel>>> GetSitesDictionary()
+        {
+            return await _sitesService.GetSitesDictionary();
+        }
+
         [HttpGet]
         [Route("api/sites/pairing")]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.PairingRead)]
-        public async Task<OperationDataResult<List<SiteName_Dto>>> ReadPairing()
+        public async Task<OperationDataResult<List<SiteModel>>> ReadPairing()
         {
             return await _sitesService.Index();
         }
 
         [HttpGet]
         [Route("api/sites/edit")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Sites.Update)]
-        public async Task<OperationDataResult<SiteName_Dto>> Edit(int id)
+        [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
+        public async Task<OperationDataResult<SiteModel>> Read(int id)
         {
-            return await _sitesService.Edit(id);
+            return await _sitesService.Read(id);
         }
 
         [HttpPost]
         [Route("api/sites/update")]
         [Authorize(Policy = AuthConsts.EformPolicies.Sites.Update)]
-        public async Task<OperationResult> Update([FromBody] SiteNameModel siteNameModel)
+        public async Task<OperationResult> Update([FromBody] SiteUpdateModel updateModel)
         {
-            return await _sitesService.Update(siteNameModel);
+            return await _sitesService.Update(updateModel);
         }
 
         [HttpGet]
