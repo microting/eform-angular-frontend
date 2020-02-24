@@ -380,7 +380,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                         var fastZip = new FastZip();
                         // Will always overwrite if target filenames already exist
                         fastZip.ExtractZip(filePath, extractPath, null);
-                        if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true")
+                        if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true" || core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
                         {
                             await core.PutFileToStorageSystem(filePath, templateId.ToString() + "_" + uploadModel.File.FileName);
                         }

@@ -8,19 +8,42 @@
     <table class="table table-sm table-striped text-center z-depth-1">
       <thead>
       <tr>
-        <th scope="col">{{ 'Created at' | translate }}</th>
-        <th scope="col"> {{ 'Updated at' | translate }}</th>
-        <th scope="col">{{ 'Customer' | translate }} No & OTP</th>
         <th scope="col"> Microting UID</th>
+<!--        <th scope="col">{{ 'Created at' | translate }}</th>-->
+<!--        <th scope="col"> {{ 'Updated at' | translate }}</th>-->
+        <th scope="col">{{ 'OS' | translate }}</th>
+        <th scope="col">{{ 'OS Version' | translate }}</th>
+        <th scope="col">{{ 'Model' | translate }}</th>
+        <th scope="col">{{ 'InSight Version' | translate }}</th>
+        <th scope="col">{{ 'eForm Version' | translate }}</th>
+        <th scope="col">{{ 'Customer No / OTP' | translate }}</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let unitModel of unitModels">
-        <td scope="row">
-          <date-formatter [date]="unitModel.createdAt" [Format]="'datetime'"></date-formatter>
+        <td>
+          {{unitModel.microtingUid}}
+        </td>
+<!--        <td scope="row">-->
+<!--          <date-formatter [date]="unitModel.createdAt" [Format]="'datetime'"></date-formatter>-->
+<!--        </td>-->
+<!--        <td>-->
+<!--          <date-formatter [date]="unitModel.updatedAt" [Format]="'datetime'"></date-formatter>-->
+<!--        </td>-->
+        <td>
+          {{unitModel.os}}
         </td>
         <td>
-          <date-formatter [date]="unitModel.updatedAt" [Format]="'datetime'"></date-formatter>
+          {{unitModel.osVersion}}
+        </td>
+        <td>
+          {{unitModel.model}}
+        </td>
+        <td>
+          {{unitModel.inSightVersion}}
+        </td>
+        <td>
+          {{unitModel.eFormVersion}}
         </td>
         <td>
           <div class="d-flex flex-row justify-content-center">
@@ -34,9 +57,6 @@
               <fa-icon icon="key" size="lg" [fixedWidth]="true"></fa-icon>
             </button>
           </div>
-        </td>
-        <td>
-          {{unitModel.unitUId}}
         </td>
       </tr>
       </tbody>

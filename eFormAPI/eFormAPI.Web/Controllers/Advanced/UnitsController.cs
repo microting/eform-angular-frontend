@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions.Advanced;
 using eFormAPI.Web.Infrastructure;
+using eFormAPI.Web.Infrastructure.Models.Units;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microting.eForm.Dto;
@@ -44,7 +45,7 @@ namespace eFormAPI.Web.Controllers.Advanced
 
         [HttpGet]
         [Authorize(Policy = AuthConsts.EformPolicies.Units.Read)]
-        public async Task<OperationDataResult<List<UnitDto>>> Index()
+        public async Task<OperationDataResult<List<UnitModel>>> Index()
         {
             return await _unitsService.Index();
         }
