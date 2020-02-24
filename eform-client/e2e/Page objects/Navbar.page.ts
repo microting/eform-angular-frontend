@@ -33,6 +33,9 @@ export class Navbar {
   public get workersBtn() {
     return browser.element(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Medarbejder')]`);
   }
+  public get sitesBtn() {
+    return browser.element(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Lokationer')]`);
+  }
   public get deviceUsersBtn() {
     return this.clickOnHeaderMenuItem2(' Enhedsbrugere ');
   }
@@ -72,6 +75,11 @@ export class Navbar {
   public goToWorkers() {
     this.advancedDropdown();
     this.workersBtn.click();
+    browser.pause(15000);
+  }
+  public goToSites() {
+    this.advancedDropdown();
+    this.sitesBtn.click();
     browser.pause(15000);
   }
   public goToUserAdministration() {

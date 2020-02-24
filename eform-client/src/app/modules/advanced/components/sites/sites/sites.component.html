@@ -17,7 +17,7 @@
       </thead>
       <tbody>
       <tr *ngFor="let siteDto of sitesDto">
-        <td scope="row">
+        <td id="siteId" scope="row">
           <date-formatter [date]="siteDto.createdAt" [Format]="'datetime'"></date-formatter>
         </td>
         <td>
@@ -31,11 +31,11 @@
           <div class="d-flex justify-content-center">
             <div>
               <a class="btn btn-sm btn-success p-1 mb-2"
-                 id="siteTagsEditBtn"
+                 id="editSiteTagsBtn"
                  mdbTooltip="{{ 'Edit tags' | translate }}" (click)="openEditTagsModal(siteDto)">
                 {{ 'Edit tags' | translate }}
               </a>
-              <p class="paragraph-sm" id="siteTag" *ngFor="let tag of siteDto.tags">
+              <p class="paragraph-sm" id="assignedTag" *ngFor="let tag of siteDto.tags">
                 {{tag.value}}
               </p>
             </div>
