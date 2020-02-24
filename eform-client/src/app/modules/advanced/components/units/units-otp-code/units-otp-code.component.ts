@@ -24,7 +24,7 @@ export class UnitsOtpCodeComponent implements OnInit {
 
   requestOtp() {
     this.spinnerStatus = true;
-    this.unitsService.requestOtp(this.selectedUnitModel.unitUId).subscribe(operation => {
+    this.unitsService.requestOtp(this.selectedUnitModel.microtingUid).subscribe(operation => {
       if (operation && operation.success) {
         this.onUnitOtpRewoked.emit();
         this.frame.hide();

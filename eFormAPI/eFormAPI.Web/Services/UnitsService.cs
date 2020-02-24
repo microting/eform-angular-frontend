@@ -23,9 +23,12 @@ SOFTWARE.
 */
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Advanced;
+using eFormAPI.Web.Infrastructure.Models.Units;
+using Microsoft.EntityFrameworkCore;
 using Microting.eForm.Dto;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
@@ -44,11 +47,34 @@ namespace eFormAPI.Web.Services
         }
 
 
-        public async Task<OperationDataResult<List<UnitDto>>> Index()
+        public async Task<OperationDataResult<List<UnitModel>>> Index()
         {
             var core = await _coreHelper.GetCore();
-            var unitsDto = await core.Advanced_UnitReadAll();
-            return new OperationDataResult<List<UnitDto>>(true, unitsDto);
+            using (var dbContext = core.dbContextHelper.GetDbContext())
+            {
+                var units = await dbContext.units.AsNoTracking().Select(t => new UnitModel()
+                {
+                    Id = t.Id,
+                    CreatedAt = t.CreatedAt,
+                    UpdatedAt = t.UpdatedAt,
+                    CustomerNo = t.CustomerNo,
+                    OtpCode = t.OtpCode,
+                    SiteId = (int)t.SiteId,
+                    Model = t.Model,
+                    Manufacturer = t.Manufacturer,
+                    Note = t.Note,
+                    Os = "",
+                    OsVersion = t.OsVersion,
+                    MicrotingUid = (int)t.MicrotingUid,
+                    eFormVersion = "0.0.0",
+                    InSightVersion = "0.0.0",
+                    eFormVersionHealth = "",
+                    InSightVersionHealth = ""
+                }).ToListAsync();
+                
+                
+                return new OperationDataResult<List<UnitModel>>(true, units);
+            }
         }
 
         public async Task<OperationDataResult<UnitDto>> RequestOtp(int id)
