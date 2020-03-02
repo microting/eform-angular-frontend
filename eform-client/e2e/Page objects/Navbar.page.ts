@@ -81,6 +81,7 @@ export class Navbar {
     this.advancedDropdown();
     this.sitesBtn.click();
     browser.pause(15000);
+    browser.waitForVisible('#spinner-animation', 30000, true);
   }
   public goToUserAdministration() {
     this.clickOnHeaderMenuItem('John Smith').click();

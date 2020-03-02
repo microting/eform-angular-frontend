@@ -18,6 +18,7 @@ describe('Site tags', function () {
     sitesPage.Navbar.goToSites();
   });
   it('should create new tag', function () {
+    browser.waitForVisible('#editSiteTagsBtn', 20000);
     const site = sitesPage.getFirstRowObject();
     sitesPage.createTag(site, tagName);
     const tagExist = sitesPage.tagExists(tagName);
