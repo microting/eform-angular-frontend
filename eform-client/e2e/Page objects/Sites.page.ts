@@ -64,11 +64,11 @@ class SitesPage extends PageWithNavbarPage {
   }
 
   public createTag(site: SitesRowObject, tagName: string) {
-    browser.pause(8000);
+    // browser.pause(8000);
     site.siteTagsEditBtn.click();
-    browser.pause(8000);
+    // browser.pause(8000);
     sitesPage.newTagInput.setValue(tagName);
-    browser.pause(4000);
+    // browser.pause(4000);
     sitesPage.newTagCreateBtn.click();
   }
 
@@ -118,18 +118,20 @@ export default sitesPage;
 
 export class SitesRowObject {
   constructor(rowNum) {
-    if ($$('#siteId')[rowNum - 1]) {
-      this.siteId = $$('#siteUUId')[rowNum - 1];
-      this.siteName = $$('#siteName')[rowNum - 1];
-      this.siteTagsEditBtn = $$('#editSiteTagsBtn')[rowNum - 1];
-      this.editBtn = $$('#editSiteBtn')[rowNum - 1];
-      this.assignedTag = $$('#assignedTag')[rowNum - 1];
-      this.deleteBtn = $$('#deleteSiteBtn')[rowNum - 1];
-      this.deleteBtn = $$('#deleteSiteBtn')[rowNum - 1];
+    if ($$('#siteUUId_' + (rowNum - 1))[0]) {
+      this.siteId = $$('#siteUUId_' + (rowNum - 1))[0];
+      this.units = $$('#units_' + (rowNum - 1))[0];
+      this.siteName = $$('#siteName_' + (rowNum - 1))[0];
+      this.siteTagsEditBtn = $$('#editSiteTagsBtn_' + (rowNum - 1))[0];
+      this.editBtn = $$('#editSiteBtn_' + (rowNum - 1))[0];
+      this.assignedTag = $$('#assignedTag_' + (rowNum - 1))[0];
+      this.deleteBtn = $$('#deleteSiteBtn_' + (rowNum - 1))[0];
+      // this.deleteBtn = $$('#deleteSiteBtn')[rowNum - 1];
     }
   }
 
   siteId;
+  units;
   siteName;
   editBtn;
   siteTagsEditBtn;

@@ -18,8 +18,8 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let siteDto of sitesDto">
-        <td>
+      <tr *ngFor="let siteDto of sitesDto; let i = index">
+        <td id="siteUUId_{{i}}">
           {{siteDto.siteUId}}
         </td>
 <!--        <td scope="row">-->
@@ -28,9 +28,9 @@
 <!--        <td>-->
 <!--          <date-formatter [date]="siteDto.updatedAt" [Format]="'datetime'"></date-formatter>-->
 <!--        </td>-->
-        <td>{{siteDto.siteName}}</td>
+        <td id="siteName_{{i}}">{{siteDto.siteName}}</td>
         <td>
-          <p class="paragraph-sm" id="units" *ngFor="let unit of siteDto.units">
+          <p class="paragraph-sm" id="units_{{i}}" *ngFor="let unit of siteDto.units">
             {{unit.microtingUid}}
           </p>
         </td>
@@ -38,7 +38,7 @@
           <div class="d-flex justify-content-center">
             <div>
               <a class="btn btn-sm btn-success p-1 mb-2"
-                 id="editSiteTagsBtn"
+                 id="editSiteTagsBtn_{{i}}"
                  mdbTooltip="{{ 'Edit tags' | translate }}" (click)="openEditTagsModal(siteDto)">
                 {{ 'Edit tags' | translate }}
               </a>
@@ -50,12 +50,12 @@
         </td>
         <td *ngIf="userClaims.sitesDelete || userClaims.sitesUpdate">
           <div class="d-flex flex-row justify-content-center">
-            <button class="btn btn-accent text-black-50 btn-icon mb-2 " id="editSiteBtn" *ngIf="userClaims.sitesUpdate"
+            <button class="btn btn-accent text-black-50 btn-icon mb-2 " id="editBtn_{{i}}" *ngIf="userClaims.sitesUpdate"
                     mdbTooltip="{{'Edit Site' | translate}}" mdbWavesEffect
                     (click)="openEditModal(siteDto)">
               <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
-            <button class="btn btn-danger btn-icon mb-2 " id="deleteSiteBtn" *ngIf="userClaims.sitesDelete"
+            <button class="btn btn-danger btn-icon mb-2 " id="deleteBtn_{{i}}" *ngIf="userClaims.sitesDelete"
                     mdbTooltip="{{'Delete site' | translate}}"
                     (click)="openDeleteModal(siteDto)">
               <fa-icon icon="trash-alt" [fixedWidth]="true" size="lg"></fa-icon>

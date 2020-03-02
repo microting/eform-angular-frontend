@@ -18,8 +18,9 @@ describe('Site tags', function () {
     sitesPage.Navbar.goToSites();
   });
   it('should create new tag', function () {
-    browser.waitForVisible('#editSiteTagsBtn', 20000);
+    browser.waitForVisible('#editSiteTagsBtn_0', 20000);
     const site = sitesPage.getFirstRowObject();
+    console.log(JSON.stringify(site));
     sitesPage.createTag(site, tagName);
     const tagExist = sitesPage.tagExists(tagName);
     browser.pause(4000);
@@ -28,33 +29,34 @@ describe('Site tags', function () {
   });
   it('should cancel assign tag', function () {
     const site = sitesPage.getFirstRowObject();
-    browser.pause(8000);
+    // browser.pause(8000);
     site.siteTagsEditBtn.click();
-    browser.pause(8000);
+    browser.waitForVisible('#newTag', 20000);
+    // browser.pause(8000);
     const tagNotSelected = sitesPage.tagNotSelected(tagName);
-    browser.pause(4000);
+    // browser.pause(4000);
     expect(tagNotSelected, true);
     browser.refresh();
   });
   it('should assign tag', function () {
-    browser.pause(5000);
+    // browser.pause(5000);
     const site = sitesPage.getFirstRowObject();
-    browser.pause(8000);
+    // browser.pause(8000);
     site.siteTagsEditBtn.click();
-    browser.pause(8000);
+    browser.waitForVisible('#newTag', 20000);
     const firstTag = sitesPage.getFirstAvailableTag;
     firstTag.click();
     sitesPage.updateTagsBtn.click();
-    browser.pause(10000);
+    // browser.pause(10000);
     expect(site.assignedTag, tagName);
     browser.refresh();
   });
   it('should delete tag', function () {
-    browser.pause(5000);
+    browser.waitForVisible('#editSiteTagsBtn_0', 20000);
     const site = sitesPage.getFirstRowObject();
-    browser.pause(8000);
+    // browser.pause(8000);
     site.siteTagsEditBtn.click();
-    browser.pause(8000);
+    browser.waitForVisible('#newTag', 20000);
     sitesPage.tagRemovalSelector.click();
     browser.pause(2000);
     const tagsForRemoval = sitesPage.getTagsListOfChoises();
