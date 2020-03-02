@@ -32,7 +32,7 @@ class LoginPage extends Page {
 
   public login(): void {
     browser.waitForVisible('#username', 60000);
-    browser.waitForVisible('#spinner-animation', 10000, true);
+    browser.waitForVisible('#spinner-animation', 30000, true);
     // browser.pause(10000);
     this.usernameInput.setValue(LoginConstants.username);
     this.passwordInput.setValue(LoginConstants.password);
