@@ -13,6 +13,7 @@ import {AuthService, LocaleService, UserSettingsService} from 'src/app/common/se
 export class ProfileSettingsComponent implements OnInit {
 
   test = true;
+  get userRole() { return this.authService.currentRole; }
 
   languages = [
     {id: 'en-US', text: 'English'},

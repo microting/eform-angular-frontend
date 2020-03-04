@@ -22,6 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using eFormAPI.Web.Infrastructure.Models.Units;
+using Microting.eForm.Dto;
+
 namespace eFormAPI.Web.Services
 {
     using System;
@@ -98,6 +101,14 @@ namespace eFormAPI.Web.Services
                             CreatedAt = x.CreatedAt,
                             SiteUId = (int) x.MicrotingUid,
                             UpdatedAt = x.UpdatedAt,
+                            Units = x.Units.Where(z => z.SiteId == x.Id).Select(t => new UnitModel
+                            {
+                                Id = t.Id,
+                                CreatedAt = t.CreatedAt,
+                                UpdatedAt = t.UpdatedAt,
+                                SiteId = (int)t.SiteId,
+                                MicrotingUid = (int)t.MicrotingUid
+                            }).ToList(),
                             Tags = x.SiteTags
                             .Where(y => y.WorkflowState != Constants.WorkflowStates.Removed)
                             .Where(y => y.Tag.WorkflowState != Constants.WorkflowStates.Removed)

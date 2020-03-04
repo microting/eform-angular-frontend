@@ -47,58 +47,58 @@ namespace eFormAPI.Web.Controllers.Advanced
         [HttpPost]
         [Route("api/selectable-groups")]
         [Authorize(Policy = AuthConsts.EformPolicies.EntitySelect.Read)]
-        public async Task<OperationDataResult<EntityGroupList>> Index(
+        public Task<OperationDataResult<EntityGroupList>> Index(
             [FromBody] AdvEntitySelectableGroupListRequestModel requestModel)
         {
-            return await _entitySelectService.Index(requestModel);
+            return _entitySelectService.Index(requestModel);
         }
 
         [HttpPost]
         [Route("api/selectable-groups/create")]
         [Authorize(Policy = AuthConsts.EformPolicies.EntitySelect.Create)]
-        public async Task<OperationResult> Create([FromBody] AdvEntitySelectableGroupEditModel editModel)
+        public Task<OperationResult> Create([FromBody] AdvEntitySelectableGroupEditModel editModel)
         {
-            return await _entitySelectService.Create(editModel);
+            return _entitySelectService.Create(editModel);
         }
         
         [HttpGet]
         [Route("api/selectable-groups/get/{entityGroupUid}")]
         [Authorize(Policy = AuthConsts.EformPolicies.EntitySelect.Read)]
-        public async Task<OperationDataResult<EntityGroup>> Read(string entityGroupUid)
+        public Task<OperationDataResult<EntityGroup>> Read(string entityGroupUid)
         {
-            return await _entitySelectService.Read(entityGroupUid);
+            return _entitySelectService.Read(entityGroupUid);
         }
 
         [HttpPost]
         [Route("api/selectable-groups/update")]
         [Authorize(Policy = AuthConsts.EformPolicies.EntitySelect.Update)]
-        public async Task<OperationResult> Update([FromBody] AdvEntitySelectableGroupEditModel editModel)
+        public Task<OperationResult> Update([FromBody] AdvEntitySelectableGroupEditModel editModel)
         {
-            return await _entitySelectService.Update(editModel);
+            return _entitySelectService.Update(editModel);
         }
         
         [HttpGet]
         [Route("api/selectable-groups/delete/{entityGroupUid}")]
         [Authorize(Policy = AuthConsts.EformPolicies.EntitySelect.Delete)]
-        public async Task<OperationResult> Delete(string entityGroupUid)
+        public Task<OperationResult> Delete(string entityGroupUid)
         {
-            return await _entitySelectService.Delete(entityGroupUid);
+            return _entitySelectService.Delete(entityGroupUid);
         }
 
         [HttpGet]
         [Route("api/selectable-groups/dict/{entityGroupUid}")]
         [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseRead)]
-        public async Task<OperationDataResult<List<CommonDictionaryTextModel>>> GetEntityGroupDictionary(string entityGroupUid)
+        public Task<OperationDataResult<List<CommonDictionaryTextModel>>> GetEntityGroupDictionary(string entityGroupUid)
         {
-            return await _entitySelectService.GetEntityGroupDictionary(entityGroupUid);
+            return _entitySelectService.GetEntityGroupDictionary(entityGroupUid);
         }
 
 
         [HttpPost]
         [Route("api/selectable-groups/send")]
-        public async Task<OperationResult> SendSearchableGroup(string entityGroupUid)
+        public Task<OperationResult> SendSearchableGroup(string entityGroupUid)
         {
-            return await _entitySelectService.SendSearchableGroup(entityGroupUid);
+            return _entitySelectService.SendSearchableGroup(entityGroupUid);
         }
     }
 }
