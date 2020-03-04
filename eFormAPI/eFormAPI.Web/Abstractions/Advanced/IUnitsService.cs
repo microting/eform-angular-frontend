@@ -32,6 +32,8 @@ namespace eFormAPI.Web.Abstractions.Advanced
     public interface IUnitsService
     {
         Task<OperationDataResult<List<UnitModel>>> Index();
+        Task<OperationResult> Create(UnitModel model);
+        Task<OperationResult> Update(UnitModel model);
         Task<OperationDataResult<UnitDto>> RequestOtp(int id);
     }
 }

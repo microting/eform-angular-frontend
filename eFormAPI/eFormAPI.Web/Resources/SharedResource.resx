@@ -366,6 +366,12 @@
   <data name="UnitParamOTPCouldNotCompleted" xml:space="preserve">
     <value>Unit "{0}" OTP request could not be completed</value>
   </data>
+  <data name="UnitWasSuccessfullyCreated" xml:space="preserve">
+    <value>Unit was successfully created</value>
+  </data>
+  <data name="ErrorWhileCreatingUnit" xml:space="preserve">
+    <value>Error while creating unit</value>
+  </data>
   <data name="UserNameOrPasswordIncorrect" xml:space="preserve">
     <value>Username or password is incorrect</value>
   </data>
@@ -387,7 +393,7 @@
   <data name="UserUserNameWasUpdated" xml:space="preserve">
     <value>User {0} was updated</value>
   </data>
-  <data name="WorkerParamCantBeDeted" xml:space="preserve">
+  <data name="WorkerParamCantBeDeleted" xml:space="preserve">
     <value>Worker "{0 {1}" can't be deleted</value>
   </data>
   <data name="WorkerParamCantBeUpdated" xml:space="preserve">

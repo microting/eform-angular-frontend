@@ -366,6 +366,12 @@
   <data name="UnitParamOTPCouldNotCompleted" xml:space="preserve">
     <value>Enhed "{0}" OTP-anmodning kunne ikke udføres</value>
   </data>
+  <data name="UnitWasSuccessfullyCreated" xml:space="preserve">
+    <value>Enheden blev oprettet med succes</value>
+  </data>
+  <data name="ErrorWhileCreatingUnit" xml:space="preserve">
+    <value>Fejl under oprettelse af enhed</value>
+  </data>
   <data name="UserNameOrPasswordIncorrect" xml:space="preserve">
     <value>Brugernavn eller adgangskode er forkert</value>
   </data>
@@ -387,7 +393,7 @@
   <data name="UserUserNameWasUpdated" xml:space="preserve">
     <value>Bruger {0} blev opdateret</value>
   </data>
-  <data name="WorkerParamCantBeDeted" xml:space="preserve">
+  <data name="WorkerParamCantBeDeleted" xml:space="preserve">
     <value>Medarbejder "{0} {1}" kan ikke slettes</value>
   </data>
   <data name="WorkerParamCantBeUpdated" xml:space="preserve">

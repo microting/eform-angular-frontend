@@ -46,7 +46,6 @@ namespace eFormAPI.Web.Services
             _coreHelper = coreHelper;
         }
 
-
         public async Task<OperationDataResult<List<UnitModel>>> Index()
         {
             var core = await _coreHelper.GetCore();
@@ -60,6 +59,8 @@ namespace eFormAPI.Web.Services
                     CustomerNo = t.CustomerNo,
                     OtpCode = t.OtpCode,
                     SiteId = (int)t.SiteId,
+                    SiteMicrotingUid = (int)t.Site.MicrotingUid,
+                    SiteName = t.Site.Name,
                     Model = t.Model,
                     Manufacturer = t.Manufacturer,
                     Note = t.Note,
@@ -70,10 +71,48 @@ namespace eFormAPI.Web.Services
                     InSightVersion = "0.0.0",
                     eFormVersionHealth = "",
                     InSightVersionHealth = ""
-                }).ToListAsync();
-                
-                
+                }).ToListAsync().ConfigureAwait(false);
+
                 return new OperationDataResult<List<UnitModel>>(true, units);
+            }
+        }
+
+        public async Task<OperationResult> Create(UnitModel model)
+        {
+            try
+            {
+                var core = await _coreHelper.GetCore();
+
+                if (await core.Advanced_UnitCreate(model.SiteId).ConfigureAwait(false))
+                {
+                    return new OperationResult(true, _localizationService.GetString("UnitWasSuccessfullyCreated"));    
+                }
+
+                return new OperationResult(false, _localizationService.GetString("ErrorWhileCreatingUnit"));
+            }
+            catch (Exception)
+            {
+                return new OperationResult(false, _localizationService.GetString("ErrorWhileCreatingUnit"));
+            }
+        }
+
+        public async Task<OperationResult> Update(UnitModel model)
+        {
+            try
+            {
+                var core = await _coreHelper.GetCore();
+                
+                if (await core.Advanced_UnitMove(model.Id, model.SiteId).ConfigureAwait(false))
+                {
+                    return new OperationResult(true, _localizationService.GetString("UnitWasSuccessfullyCreated"));    
+                }
+                
+                return new OperationResult(false, _localizationService.GetString("ErrorWhileCreatingUnit"));
+
+            }
+            catch (Exception)
+            {
+                return new OperationResult(false, _localizationService.GetString("ErrorWhileCreatingUnit"));
             }
         }
 

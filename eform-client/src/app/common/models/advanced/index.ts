@@ -10,7 +10,8 @@ export * from './adv-entity-selectable-group.model';
 export * from './adv-entity-selectable-group-list-request.model';
 export * from './adv-entity-selectable-group-edit.model';
 export * from './adv-entity-selectable-item.model';
-export * from './worker-create.model'
+export * from './worker-create.model';
+export * from  './unit.model';
 
 
 

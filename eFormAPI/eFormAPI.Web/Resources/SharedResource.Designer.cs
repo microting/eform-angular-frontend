@@ -544,6 +544,18 @@ namespace eFormAPI.Web.Resources {
             }
         }
         
+        public static string UnitWasSuccessfullyCreated {
+            get {
+                return ResourceManager.GetString("UnitWasSuccessfullyCreated", resourceCulture);
+            }
+        }
+        
+        public static string ErrorWhileCreatingUnit {
+            get {
+                return ResourceManager.GetString("ErrorWhileCreatingUnit", resourceCulture);
+            }
+        }
+        
         public static string UserNameOrPasswordIncorrect {
             get {
                 return ResourceManager.GetString("UserNameOrPasswordIncorrect", resourceCulture);
@@ -586,9 +598,9 @@ namespace eFormAPI.Web.Resources {
             }
         }
         
-        public static string WorkerParamCantBeDeted {
+        public static string WorkerParamCantBeDeleted {
             get {
-                return ResourceManager.GetString("WorkerParamCantBeDeted", resourceCulture);
+                return ResourceManager.GetString("WorkerParamCantBeDeleted", resourceCulture);
             }
         }
         
@@ -955,6 +967,60 @@ namespace eFormAPI.Web.Resources {
         public static string PluginNotFound {
             get {
                 return ResourceManager.GetString("PluginNotFound", resourceCulture);
+            }
+        }
+        
+        public static string CantEditPrimaryAdminUser {
+            get {
+                return ResourceManager.GetString("CantEditPrimaryAdminUser", resourceCulture);
+            }
+        }
+        
+        public static string CantUpdateRoleForPrimaryAdminUser {
+            get {
+                return ResourceManager.GetString("CantUpdateRoleForPrimaryAdminUser", resourceCulture);
+            }
+        }
+        
+        public static string RoleNotFound {
+            get {
+                return ResourceManager.GetString("RoleNotFound", resourceCulture);
+            }
+        }
+        
+        public static string ErrorWhileExecutingPluginInstall {
+            get {
+                return ResourceManager.GetString("ErrorWhileExecutingPluginInstall", resourceCulture);
+            }
+        }
+        
+        public static string ErrorWhileObtainingPluginList {
+            get {
+                return ResourceManager.GetString("ErrorWhileObtainingPluginList", resourceCulture);
+            }
+        }
+        
+        public static string ErrorWhileObtainingSites {
+            get {
+                return ResourceManager.GetString("ErrorWhileObtainingSites", resourceCulture);
+            }
+        }
+        
+        public static string ErrorWhileUpdatingTags {
+            get {
+                return ResourceManager.GetString("ErrorWhileUpdatingTags", resourceCulture);
+            }
+        }
+        
+        public static string TagNotFound {
+            get {
+                return ResourceManager.GetString("TagNotFound", resourceCulture);
+            }
+        }
+        
+        public static string TagUpdatedSuccessfully {
+            get {
+                return ResourceManager.GetString("TagUpdatedSuccessfully", resourceCulture);
             }
         }
     }
