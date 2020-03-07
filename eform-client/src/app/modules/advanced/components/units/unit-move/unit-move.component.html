@@ -25,14 +25,15 @@
                 [placeholder]="'Select location' | translate"
                 [items]="simpleSites"
                 id="workerSelector"
+                [clearable]="false"
                 [multiple]="false"></ng-select>
             </div>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-success"
-                id="workerSaveBtn" (click)="moveUnit()">{{'Create' | translate}}</button>
+        <button class="btn btn-danger"
+                id="workerSaveBtn" (click)="moveUnit()">{{'Move' | translate}}</button>
         <button class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Cancel' | translate}}</button>
       </div>
     </div>

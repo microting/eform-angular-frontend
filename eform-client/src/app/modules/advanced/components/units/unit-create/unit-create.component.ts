@@ -28,7 +28,9 @@ export class UnitCreateComponent implements OnInit {
 
   loadAllSimpleSites() {
     this.simpleSitesService.getAllDeviceUsers().subscribe((data => {
-      this.simpleSites = data.model.map((i) => { i.fullName = i.firstName + ' ' + i.lastName; return i; });
+      this.simpleSites = data.model.map((i) => { i.fullName = i.siteName; return i; });
+
+      // this.simpleSites = data.model.map((i) => { i.fullName = i.firstName + ' ' + i.lastName; return i; });
     }));
   }
 
