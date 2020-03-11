@@ -56,6 +56,8 @@ using eFormAPI.Web.Infrastructure.Database.Factories;
 
 namespace eFormAPI.Web
 {
+    using Services.Mailing.EmailTags;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -285,6 +287,7 @@ namespace eFormAPI.Web
             services.AddScoped<IPluginsManagementService, PluginsManagementService>();
             services.AddScoped<IPluginPermissionsService, PluginPermissionsService>();
             services.AddScoped<ISiteTagsService, SiteTagsService>();
+            services.AddScoped<IEmailTagsService, EmailTagsService>();
         }
 
         private ICollection<PluginPermissionModel> GetPluginsPermissions()

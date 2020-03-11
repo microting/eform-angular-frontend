@@ -10,10 +10,13 @@ namespace eFormAPI.Web.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            string autoIdGenStrategy = "SqlServer:ValueGenerationStrategy";
+            var autoIdGenStrategy = "SqlServer:ValueGenerationStrategy";
             object autoIdGenStrategyValue = SqlServerValueGenerationStrategy.IdentityColumn;
-            if (DbConfig.IsMySQL)
+
+            // Setup for MySQL Provider
+            if (migrationBuilder.ActiveProvider == "Pomelo.EntityFrameworkCore.MySql")
             {
+                DbConfig.IsMySQL = true;
                 autoIdGenStrategy = "MySql:ValueGenerationStrategy";
                 autoIdGenStrategyValue = MySqlValueGenerationStrategy.IdentityColumn;
             }
@@ -22,19 +25,19 @@ namespace eFormAPI.Web.Migrations
                 name: "CasePosts",
                 columns: table => new
                 {
-                    Id = table.Column<int>()
+                    Id = table.Column<int>(nullable: false)
                         .Annotation(autoIdGenStrategy, autoIdGenStrategyValue),
-                    CreatedAt = table.Column<DateTime>(),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: true),
                     WorkflowState = table.Column<string>(maxLength: 255, nullable: true),
-                    CreatedByUserId = table.Column<int>(),
-                    UpdatedByUserId = table.Column<int>(),
-                    Version = table.Column<int>(),
-                    PostDate = table.Column<DateTime>(),
-                    Subject = table.Column<string>(),
-                    Text = table.Column<string>(),
-                    LinkToCase = table.Column<bool>(),
-                    AttachPdf = table.Column<bool>()
+                    CreatedByUserId = table.Column<int>(nullable: false),
+                    UpdatedByUserId = table.Column<int>(nullable: false),
+                    Version = table.Column<int>(nullable: false),
+                    PostDate = table.Column<DateTime>(nullable: false),
+                    Subject = table.Column<string>(nullable: false),
+                    Text = table.Column<string>(nullable: false),
+                    LinkToCase = table.Column<bool>(nullable: false),
+                    AttachPdf = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -45,16 +48,16 @@ namespace eFormAPI.Web.Migrations
                 name: "EmailRecipients",
                 columns: table => new
                 {
-                    Id = table.Column<int>()
+                    Id = table.Column<int>(nullable: false)
                         .Annotation(autoIdGenStrategy, autoIdGenStrategyValue),
-                    CreatedAt = table.Column<DateTime>(),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: true),
                     WorkflowState = table.Column<string>(maxLength: 255, nullable: true),
-                    CreatedByUserId = table.Column<int>(),
-                    UpdatedByUserId = table.Column<int>(),
-                    Version = table.Column<int>(),
-                    Name = table.Column<string>(maxLength: 250),
-                    Email = table.Column<string>(maxLength: 250)
+                    CreatedByUserId = table.Column<int>(nullable: false),
+                    UpdatedByUserId = table.Column<int>(nullable: false),
+                    Version = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(maxLength: 250, nullable: false),
+                    Email = table.Column<string>(maxLength: 250, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -65,15 +68,15 @@ namespace eFormAPI.Web.Migrations
                 name: "EmailTags",
                 columns: table => new
                 {
-                    Id = table.Column<int>()
+                    Id = table.Column<int>(nullable: false)
                         .Annotation(autoIdGenStrategy, autoIdGenStrategyValue),
-                    CreatedAt = table.Column<DateTime>(),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: true),
                     WorkflowState = table.Column<string>(maxLength: 255, nullable: true),
-                    CreatedByUserId = table.Column<int>(),
-                    UpdatedByUserId = table.Column<int>(),
-                    Version = table.Column<int>(),
-                    Name = table.Column<string>(maxLength: 250)
+                    CreatedByUserId = table.Column<int>(nullable: false),
+                    UpdatedByUserId = table.Column<int>(nullable: false),
+                    Version = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(maxLength: 250, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -84,16 +87,16 @@ namespace eFormAPI.Web.Migrations
                 name: "CasePostEmailRecipients",
                 columns: table => new
                 {
-                    Id = table.Column<int>()
+                    Id = table.Column<int>(nullable: false)
                         .Annotation(autoIdGenStrategy, autoIdGenStrategyValue),
-                    CreatedAt = table.Column<DateTime>(),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: true),
                     WorkflowState = table.Column<string>(maxLength: 255, nullable: true),
-                    CreatedByUserId = table.Column<int>(),
-                    UpdatedByUserId = table.Column<int>(),
-                    Version = table.Column<int>(),
-                    EmailRecipientId = table.Column<int>(),
-                    CasePostId = table.Column<int>()
+                    CreatedByUserId = table.Column<int>(nullable: false),
+                    UpdatedByUserId = table.Column<int>(nullable: false),
+                    Version = table.Column<int>(nullable: false),
+                    EmailRecipientId = table.Column<int>(nullable: false),
+                    CasePostId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -116,16 +119,16 @@ namespace eFormAPI.Web.Migrations
                 name: "CasePostEmailTags",
                 columns: table => new
                 {
-                    Id = table.Column<int>()
+                    Id = table.Column<int>(nullable: false)
                         .Annotation(autoIdGenStrategy, autoIdGenStrategyValue),
-                    CreatedAt = table.Column<DateTime>(),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: true),
                     WorkflowState = table.Column<string>(maxLength: 255, nullable: true),
-                    CreatedByUserId = table.Column<int>(),
-                    UpdatedByUserId = table.Column<int>(),
-                    Version = table.Column<int>(),
-                    EmailTagId = table.Column<int>(),
-                    CasePostId = table.Column<int>()
+                    CreatedByUserId = table.Column<int>(nullable: false),
+                    UpdatedByUserId = table.Column<int>(nullable: false),
+                    Version = table.Column<int>(nullable: false),
+                    EmailTagId = table.Column<int>(nullable: false),
+                    CasePostId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -148,16 +151,16 @@ namespace eFormAPI.Web.Migrations
                 name: "EmailTagRecipients",
                 columns: table => new
                 {
-                    Id = table.Column<int>()
+                    Id = table.Column<int>(nullable: false)
                         .Annotation(autoIdGenStrategy, autoIdGenStrategyValue),
-                    CreatedAt = table.Column<DateTime>(),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: true),
                     WorkflowState = table.Column<string>(maxLength: 255, nullable: true),
-                    CreatedByUserId = table.Column<int>(),
-                    UpdatedByUserId = table.Column<int>(),
-                    Version = table.Column<int>(),
-                    EmailTagId = table.Column<int>(),
-                    EmailRecipientId = table.Column<int>()
+                    CreatedByUserId = table.Column<int>(nullable: false),
+                    UpdatedByUserId = table.Column<int>(nullable: false),
+                    Version = table.Column<int>(nullable: false),
+                    EmailTagId = table.Column<int>(nullable: false),
+                    EmailRecipientId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
