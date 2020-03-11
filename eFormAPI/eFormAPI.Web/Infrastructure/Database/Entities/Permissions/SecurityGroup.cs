@@ -21,17 +21,22 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
-using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 
-namespace eFormAPI.Web.Infrastructure.Database.Entities
+namespace eFormAPI.Web.Infrastructure.Database.Entities.Permissions
 {
-    public class SecurityGroupUser : BaseEntity
-    {
-        public int SecurityGroupId { get; set; }
-        public virtual SecurityGroup SecurityGroup { get; set; }
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
 
-        public int EformUserId { get; set; }
-        public virtual EformUser EformUser { get; set; }
+    public class SecurityGroup : BaseEntity
+    {
+        [StringLength(250)] 
+        public string Name { get; set; }
+
+        public virtual ICollection<SecurityGroupUser> SecurityGroupUsers { get; set; }
+            = new List<SecurityGroupUser>();
+
+        public virtual ICollection<EformInGroup> EformsInGroup { get; set; }
+            = new List<EformInGroup>();
     }
 }

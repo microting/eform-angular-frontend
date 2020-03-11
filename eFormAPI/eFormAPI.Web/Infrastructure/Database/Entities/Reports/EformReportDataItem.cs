@@ -21,19 +21,27 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System.ComponentModel.DataAnnotations;
-using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
 
-namespace eFormAPI.Web.Infrastructure.Database.Entities
+namespace eFormAPI.Web.Infrastructure.Database.Entities.Reports
 {
-    public class EformPlugin : BaseEntity
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
+
+    public class EformReportDataItem : BaseEntity
     {
         [Required]
-        [StringLength(100)]
-        public string PluginId { get; set; }
+        public int DataItemId { get; set; }
 
-        public string ConnectionString { get; set; }
+        public int Position { get; set; }
+        public bool Visibility { get; set; }
 
-        public int Status { get; set; }
+        public int EformReportElementId { get; set; }
+        public virtual EformReportElement EformReportElement { get; set; }
+
+        public int? ParentId { get; set; }
+        public virtual EformReportDataItem Parent { get; set; }
+
+        public virtual ICollection<EformReportDataItem> NestedDataItems { get; set; } = new List<EformReportDataItem>();
     }
 }

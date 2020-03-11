@@ -21,19 +21,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System.ComponentModel.DataAnnotations;
-using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
 
-namespace eFormAPI.Web.Infrastructure.Database.Entities
+namespace eFormAPI.Web.Infrastructure.Database.Entities.Mailing
 {
-    public class EformPlugin : BaseEntity
+    using System.ComponentModel.DataAnnotations;
+    using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
+
+    public class EmailRecipient : BaseEntity
     {
         [Required]
-        [StringLength(100)]
-        public string PluginId { get; set; }
+        [StringLength(250)]
+        public string Name { get; set; }
 
-        public string ConnectionString { get; set; }
-
-        public int Status { get; set; }
+        [Required]
+        [StringLength(250)]
+        public string Email { get; set; }
     }
 }

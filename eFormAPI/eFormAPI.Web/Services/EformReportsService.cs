@@ -29,7 +29,6 @@ using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Eforms;
 using eFormAPI.Web.Infrastructure.Database;
-using eFormAPI.Web.Infrastructure.Database.Entities;
 using eFormAPI.Web.Infrastructure.Helpers;
 using eFormAPI.Web.Infrastructure.Models.Reports;
 using Microsoft.EntityFrameworkCore;
@@ -40,6 +39,8 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Services
 {
+    using Infrastructure.Database.Entities.Reports;
+
     public class EformReportsService : IEformReportsService
     {
         private readonly IEFormCoreService _coreHelper;

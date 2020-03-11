@@ -21,22 +21,25 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
 
-namespace eFormAPI.Web.Infrastructure.Database.Entities
+namespace eFormAPI.Web.Infrastructure.Database.Entities.Reports
 {
-    public class EformReport : BaseEntity
-    {
-        [Required]
-        public int TemplateId { get; set; }
-        public string Description { get; set; }
-        public byte[] HeaderImage { get; set; }
-        public string HeaderVisibility { get; set; }
-        public bool IsDateVisible { get; set; }
-        public bool IsWorkerNameVisible { get; set; }
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
 
-        public virtual ICollection<EformReportElement> ReportElements { get; set; } = new List<EformReportElement>();
+    public class EformReportElement : BaseEntity
+    {        
+        [Required]
+        public int ElementId { get; set; }
+
+        public int EformReportId { get; set; }
+        public virtual EformReport EformReport { get; set; }
+
+        public int? ParentId { get; set; }
+        public virtual EformReportElement Parent { get; set; }
+
+        public virtual ICollection<EformReportElement> NestedElements { get; set; } = new List<EformReportElement>();
+        public virtual ICollection<EformReportDataItem> DataItems { get; set; } = new List<EformReportDataItem>();
     }
 }

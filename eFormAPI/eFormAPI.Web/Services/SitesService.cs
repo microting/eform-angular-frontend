@@ -23,7 +23,6 @@ SOFTWARE.
 */
 
 using eFormAPI.Web.Infrastructure.Models.Units;
-using Microting.eForm.Dto;
 
 namespace eFormAPI.Web.Services
 {

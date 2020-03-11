@@ -29,18 +29,18 @@ using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Security;
 using eFormAPI.Web.Infrastructure;
 using eFormAPI.Web.Infrastructure.Database;
-using eFormAPI.Web.Infrastructure.Database.Entities;
 using eFormAPI.Web.Infrastructure.Models;
 using eFormAPI.Web.Infrastructure.Models.EformPermissions;
 using eFormAPI.Web.Infrastructure.Models.Templates;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microting.eForm.Dto;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Services.Security
 {
+    using Infrastructure.Database.Entities.Permissions;
+
     public class EformGroupService : IEformGroupService
     {
         private readonly ILogger<EformGroupService> _logger;
