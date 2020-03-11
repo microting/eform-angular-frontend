@@ -24,6 +24,8 @@ SOFTWARE.
 
 namespace eFormAPI.Web.Infrastructure.Database.Entities.Mailing
 {
+    using System.Collections;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
 
@@ -36,5 +38,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities.Mailing
         [Required]
         [StringLength(250)]
         public string Email { get; set; }
+
+        public virtual ICollection<EmailTagRecipient> TagRecipients { get; set; }
     }
 }

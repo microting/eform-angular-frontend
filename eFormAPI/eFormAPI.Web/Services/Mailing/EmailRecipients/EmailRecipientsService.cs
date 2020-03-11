@@ -24,33 +24,205 @@ SOFTWARE.
 namespace eFormAPI.Web.Services.Mailing.EmailRecipients
 {
     using System;
-    using Infrastructure.Models;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Abstractions;
+    using Infrastructure.Database;
+    using Infrastructure.Database.Entities.Mailing;
     using Infrastructure.Models.Mailing;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
+    using Microting.eFormApi.BasePn.Infrastructure.Extensions;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
-    public class EmailRecipientsService
+    public class EmailRecipientsService : IEmailRecipientsService
     {
-        public OperationDataResult<EmailRecipientsListModel> GetEmailRecipients(
+        private readonly ILogger<EmailRecipientsService> _logger;
+        private readonly IUserService _userService;
+        private readonly ILocalizationService _localizationService;
+        private readonly BaseDbContext _dbContext;
+
+        public EmailRecipientsService(
+            ILogger<EmailRecipientsService> logger,
+            IUserService userService,
+            ILocalizationService localizationService,
+            BaseDbContext dbContext)
+        {
+            _logger = logger;
+            _userService = userService;
+            _localizationService = localizationService;
+            _dbContext = dbContext;
+        }
+
+        public async Task<OperationDataResult<EmailRecipientsListModel>> GetEmailRecipients(
             EmailRecipientsRequestModel requestModel)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var emailRecipientsModel = new EmailRecipientsListModel();
+                var emailRecipientsQuery = _dbContext.EmailRecipients.AsQueryable();
+                if (!string.IsNullOrEmpty(requestModel.Sort))
+                {
+                    if (requestModel.IsSortDsc)
+                    {
+                        emailRecipientsQuery = emailRecipientsQuery
+                            .CustomOrderByDescending(requestModel.Sort);
+                    }
+                    else
+                    {
+                        emailRecipientsQuery = emailRecipientsQuery
+                            .CustomOrderBy(requestModel.Sort);
+                    }
+                }
+                else
+                {
+                    emailRecipientsQuery = emailRecipientsQuery
+                        .OrderBy(x => x.Id);
+                }
+
+                emailRecipientsModel.Total = await emailRecipientsQuery.CountAsync();
+
+                emailRecipientsQuery = emailRecipientsQuery
+                    .Skip(requestModel.Offset)
+                    .Take(requestModel.PageSize);
+
+                var emailRecipientList = await emailRecipientsQuery
+                    .Select(x => new EmailRecipientModel()
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                        Email = x.Email,
+                        Tags = x.TagRecipients
+                            .Select(u => new EmailRecipientTagModel()
+                            {
+                                Id = u.EmailTag.Id,
+                                Name = u.EmailTag.Name,
+                            }).ToList()
+                    }).ToListAsync();
+
+                emailRecipientsModel.EmailRecipientsList = emailRecipientList;
+
+                return new OperationDataResult<EmailRecipientsListModel>(
+                    true,
+                    emailRecipientsModel);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                _logger.LogError(e.Message);
+                return new OperationDataResult<EmailRecipientsListModel>(false,
+                    _localizationService.GetString(""));
+            }
         }
 
-        public OperationResult UpdateEmailRecipient(
+        public async Task<OperationResult> UpdateEmailRecipient(
             EmailRecipientUpdateModel requestModel)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var emailRecipient = await _dbContext.EmailRecipients
+                    .FirstOrDefaultAsync(x => x.Id == requestModel.Id);
+
+                if (emailRecipient == null)
+                {
+                    return new OperationResult(false,
+                        _localizationService.GetString(""));
+                }
+
+                emailRecipient.Name = requestModel.Name;
+                emailRecipient.Email = requestModel.Email;
+                emailRecipient.UpdatedAt = DateTime.UtcNow;
+                emailRecipient.UpdatedByUserId = _userService.UserId;
+
+                // TODO Update tags for Email recipient
+
+                _dbContext.EmailRecipients.Update(emailRecipient);
+                await _dbContext.SaveChangesAsync();
+
+                return new OperationResult(true,
+                    _localizationService.GetString(""));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                _logger.LogError(e.Message);
+                return new OperationResult(false,
+                    _localizationService.GetString(""));
+            }
         }
 
-        public OperationResult DeleteEmailRecipient(int id)
+        public async Task<OperationResult> DeleteEmailRecipient(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var emailRecipient = await _dbContext.EmailRecipients
+                    .FirstOrDefaultAsync(x => x.Id == id);
+
+                if (emailRecipient == null)
+                {
+                    return new OperationResult(false,
+                        _localizationService.GetString(""));
+                }
+
+                _dbContext.EmailRecipients.Remove(emailRecipient);
+                await _dbContext.SaveChangesAsync();
+
+                return new OperationResult(true,
+                    _localizationService.GetString(""));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                _logger.LogError(e.Message);
+                return new OperationResult(false,
+                    _localizationService.GetString(""));
+            }
         }
 
-        public OperationResult CreateEmailRecipient(EmailRecipientCreateModel createModel)
+        public async Task<OperationResult> CreateEmailRecipient(EmailRecipientCreateModel createModel)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var emailRecipient = new EmailRecipient
+                {
+                    Name = createModel.Name,
+                    Email = createModel.Email,
+                    CreatedAt = DateTime.UtcNow,
+                    CreatedByUserId = _userService.UserId,
+                    UpdatedAt = DateTime.UtcNow,
+                    UpdatedByUserId = _userService.UserId,
+                    Version = 1,
+                };
+
+                emailRecipient.TagRecipients = new List<EmailTagRecipient>(createModel.TagsIds.Count);
+                foreach (var tagId in createModel.TagsIds)
+                {
+                    emailRecipient.TagRecipients.Add(
+                        new EmailTagRecipient
+                        {
+                            CreatedAt = DateTime.UtcNow,
+                            CreatedByUserId = _userService.UserId,
+                            UpdatedAt = DateTime.UtcNow,
+                            UpdatedByUserId = _userService.UserId,
+                            Version = 1,
+                            EmailTagId = tagId,
+                        });
+                }
+
+                await _dbContext.EmailRecipients.AddAsync(emailRecipient);
+                await _dbContext.SaveChangesAsync();
+
+                return new OperationResult(true,
+                    _localizationService.GetString(""));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                _logger.LogError(e.Message);
+                return new OperationResult(false,
+                    _localizationService.GetString(""));
+            }
         }
     }
 }

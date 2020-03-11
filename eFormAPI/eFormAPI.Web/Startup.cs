@@ -56,6 +56,7 @@ using eFormAPI.Web.Infrastructure.Database.Factories;
 
 namespace eFormAPI.Web
 {
+    using Services.Mailing.EmailRecipients;
     using Services.Mailing.EmailTags;
 
     public class Startup
@@ -198,7 +199,7 @@ namespace eFormAPI.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {            
             if (env.IsDevelopment())
             {
@@ -288,6 +289,7 @@ namespace eFormAPI.Web
             services.AddScoped<IPluginPermissionsService, PluginPermissionsService>();
             services.AddScoped<ISiteTagsService, SiteTagsService>();
             services.AddScoped<IEmailTagsService, EmailTagsService>();
+            services.AddScoped<IEmailRecipientsService, EmailRecipientsService>();
         }
 
         private ICollection<PluginPermissionModel> GetPluginsPermissions()

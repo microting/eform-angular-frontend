@@ -21,18 +21,21 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-
-namespace eFormAPI.Web.Infrastructure.Models.Mailing
+namespace eFormAPI.Web.Services.Mailing.EmailRecipients
 {
-    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Infrastructure.Models.Mailing;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
-    public class EmailRecipientCreateModel
+    public interface IEmailRecipientsService
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
+        Task<OperationDataResult<EmailRecipientsListModel>> GetEmailRecipients(
+            EmailRecipientsRequestModel requestModel);
 
-        public List<int> TagsIds { get; set; }
-            = new List<int>();
+        Task<OperationResult> UpdateEmailRecipient(
+            EmailRecipientUpdateModel requestModel);
+
+        Task<OperationResult> DeleteEmailRecipient(int id);
+        Task<OperationResult> CreateEmailRecipient(EmailRecipientCreateModel createModel);
     }
 }
