@@ -14,6 +14,8 @@ export * from './sites/site-delete/site-delete.component';
 export * from './sites/site-tags/site-tags.component';
 export * from './units/units.component';
 export * from './units/units-otp-code/units-otp-code.component';
+export * from './units/unit-create/unit-create.component';
+export * from './units/unit-move/unit-move.component';
 export * from './workers/workers/workers.component';
 export * from './folders/folders/folders.component';
 export * from './folders/folder-create/folder-create.component';

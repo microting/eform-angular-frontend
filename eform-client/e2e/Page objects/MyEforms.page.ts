@@ -57,6 +57,7 @@ class MyEformsPage extends PageWithNavbarPage {
   }
 
   createNewEform(eFormLabel, newTagsList = [], tagAddedNum = 0) {
+    browser.waitForVisible('#spinner-animation', 30000, true);
     this.newEformBtn.click();
     browser.waitForVisible('#eFormXml', 20000);
     // Create replaced xml and insert it in textarea
@@ -69,24 +70,26 @@ class MyEformsPage extends PageWithNavbarPage {
     const addedTags: string[] = newTagsList;
     if (newTagsList.length > 0) {
       this.createEformNewTagInput.setValue(newTagsList.join(','));
-      browser.pause(5000);
+      browser.waitForVisible('#spinner-animation', 30000, true);
     }
     // Add existing tags
     const selectedTags: string[] = [];
     if (tagAddedNum > 0) {
-      browser.pause(5000);
+      browser.waitForVisible('#spinner-animation', 30000, true);
       for (let i = 0; i < tagAddedNum; i++) {
         this.createEformTagSelector.click();
         const selectedTag = $('.ng-option:not(.ng-option-selected)');
         selectedTags.push(selectedTag.getText());
         console.log('selectedTags is ' + JSON.stringify(selectedTags));
         selectedTag.click();
+        browser.waitForVisible('#spinner-animation', 30000, true);
         browser.waitForVisible('#createEformBtn', 10000);
         // browser.pause(5000);
       }
     }
     this.createEformBtn.click();
     // browser.pause(14000);
+    browser.waitForVisible('#spinner-animation', 30000, true);
     browser.waitForVisible('#delete-eform-btn', 20000);
     return {added: addedTags, selected: selectedTags};
   }

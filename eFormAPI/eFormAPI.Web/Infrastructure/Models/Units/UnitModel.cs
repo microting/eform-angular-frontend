@@ -12,6 +12,10 @@ namespace eFormAPI.Web.Infrastructure.Models.Units
         
         public int SiteId { get; set; }
         
+        public int SiteMicrotingUid { get; set; }
+        
+        public string SiteName { get; set; }
+        
         public int MicrotingUid { get; set; }
         
         public int? CustomerNo { get; set; }

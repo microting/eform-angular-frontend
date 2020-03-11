@@ -3,6 +3,8 @@ export class UnitDto {
   createdAt: Date;
   updatedAt: Date;
   siteId: number;
+  siteMicrotingUid: number;
+  siteName: string;
   microtingUid: number;
   customerNo: number;
   otpCode: number;

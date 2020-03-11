@@ -366,6 +366,12 @@
   <data name="UnitParamOTPCouldNotCompleted" xml:space="preserve">
     <value>OTP-Anforderung der Einheit "{0}" konnte nicht abgeschlossen werden</value>
   </data>
+  <data name="UnitWasSuccessfullyCreated" xml:space="preserve">
+    <value>Einheit wurde erfolgreich erstellt</value>
+  </data>
+  <data name="ErrorWhileCreatingUnit" xml:space="preserve">
+    <value>Fehler beim Erstellen der Einheit</value>
+  </data>
   <data name="UserNameOrPasswordIncorrect" xml:space="preserve">
     <value>Benutzername oder Passwort ist falsch</value>
   </data>
@@ -387,7 +393,7 @@
   <data name="UserUserNameWasUpdated" xml:space="preserve">
     <value>Benutzer {0} wurde aktualisiert</value>
   </data>
-  <data name="WorkerParamCantBeDeted" xml:space="preserve">
+  <data name="WorkerParamCantBeDeleted" xml:space="preserve">
     <value>Arbeiter "{0} {1}" kann nicht gelöscht werden</value>
   </data>
   <data name="WorkerParamCantBeUpdated" xml:space="preserve">

@@ -38,6 +38,7 @@ class LoginPage extends Page {
     this.passwordInput.setValue(LoginConstants.password);
     this.loginBtn.click();
     // browser.pause(10000);
+    browser.waitForVisible('#spinner-animation', 30000, true);
     browser.waitForVisible('#newEFormBtn', 60000);
     browser.waitForVisible('#spinner-animation', 30000, true);
     // browser.pause(10000);
