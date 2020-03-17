@@ -1,4 +1,4 @@
-import {ElementDto} from '../../dto/element.dto';
+import {ElementDto} from '../../../dto/element.dto';
 
 export class ReplyElementDto {
   id: number;

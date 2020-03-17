@@ -16,25 +16,31 @@ import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-share
 import {CasesRoutingModule} from './cases.routing';
 import {
   CaseEditComponent,
+  CaseEditConfirmationComponent,
   CaseEditElementComponent,
   CaseEditSwitchComponent,
   CasesTableComponent,
-  CaseEditConfirmationComponent,
+  CasePostNewComponent,
+  CasePostsPageComponent,
+  CasePostViewComponent,
   ElementAudioComponent,
   ElementCheckboxComponent,
-  ElementCommentComponent, ElementContainerComponent,
+  ElementCommentComponent,
+  ElementContainerComponent,
   ElementDateComponent,
   ElementEntitysearchComponent,
-  ElementEntityselectComponent, ElementInfoboxComponent, ElementMultiselectComponent,
+  ElementEntityselectComponent,
+  ElementInfoboxComponent,
+  ElementMultiselectComponent,
   ElementNumberComponent,
   ElementNumberStepperComponent,
   ElementPdfComponent,
+  ElementPictureComponent,
+  ElementSignatureComponent,
   ElementSingleselectComponent,
   ElementTextComponent,
-  RemoveCaseModalComponent,
   ElementTimerComponent,
-  ElementPictureComponent,
-  ElementSignatureComponent
+  RemoveCaseModalComponent
 } from './components';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
@@ -63,6 +69,9 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
     CaseEditSwitchComponent,
     CaseEditElementComponent,
     CaseEditConfirmationComponent,
+    CasePostNewComponent,
+    CasePostsPageComponent,
+    CasePostViewComponent,
     ElementTextComponent,
     ElementNumberComponent,
     ElementNumberStepperComponent,
@@ -80,7 +89,8 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
     RemoveCaseModalComponent,
     ElementContainerComponent,
     ElementPictureComponent,
-    ElementSignatureComponent],
+    ElementSignatureComponent
+  ],
   providers: [
     {provide: OWL_DATE_TIME_FORMATS, useValue: MY_MOMENT_FORMATS},
   ],

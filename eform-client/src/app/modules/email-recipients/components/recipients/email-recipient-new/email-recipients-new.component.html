@@ -1,0 +1,61 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{ 'New Email recipients' | translate }}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <ng-select
+                class="custom"
+                dropdownPosition="'bottom'"
+                [placeholder]="'Tags' | translate"
+                [(ngModel)]="emailRecipientsCreateModel.tagsIds"
+                [bindValue]="'id'"
+                [bindLabel]="'name'"
+                [items]="availableTags"
+                id="createEmailRecipientsMultiSelector"
+                [multiple]="true"></ng-select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="md-form">
+                <input mdbInputDirective [mdbValidate]="false"
+                       type="text" [(ngModel)]="emailRecipientsCreateModel.newTags" name="addTagInput"
+                       class="form-control" id="addTagInput">
+                <label for="addTagInput">{{'New tags' | translate}}</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="md-form">
+                <textarea
+                  mdbInputDirective [mdbValidate]="false"
+                  #textAreaData [(ngModel)]="rawTextareaData"
+                  placeholder="{{ 'Enter name and email addresses separated by coma (test, test@test.com)' | translate }}"
+                  name="emailAddresses" id="emailAddresses" rows="10"
+                  class="md-textarea form-control"></textarea>
+                <label for="emailAddresses">{{ 'Email addresses' | translate }}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success" (click)="createEmailRecipients(textAreaData)"
+                id="emailRecipientsCreateSaveBtn">
+          {{ 'Save' | translate }}
+        </button>
+        <button class="btn btn-accent text-black-50" (click)="frame.hide()" id="emailRecipientsSaveCancelBtn">
+          {{ 'Cancel' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<spinner-pn [spinnerVisibility]="spinnerStatus"></spinner-pn>

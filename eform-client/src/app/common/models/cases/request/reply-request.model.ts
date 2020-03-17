@@ -1,4 +1,4 @@
-import {CaseEditRequest} from './edit-request.model';
+import {CaseEditRequest} from './case-edit/edit-request.model';
 
 export class ReplyRequest {
   id: number;

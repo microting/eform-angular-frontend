@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {CanDeactivateGuard} from 'src/app/common/guards';
+import {AuthGuard, CanDeactivateGuard} from 'src/app/common/guards';
 import {CaseEditComponent, CasesTableComponent} from 'src/app/modules/cases/components';
 
 const routes: Routes = [
@@ -13,7 +13,12 @@ const routes: Routes = [
     path: 'edit/:id/:templateId',
     component: CaseEditComponent,
     canDeactivate: [CanDeactivateGuard]
-  }
+  },
+  // {
+  //   path: 'posts',
+  //   canActivate: [AuthGuard],
+  //   loadChildren: './plugins/plugins.module#PluginsModule'
+  // }
 ];
 
 

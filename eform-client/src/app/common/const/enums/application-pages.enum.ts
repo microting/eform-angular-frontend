@@ -6,5 +6,6 @@ export enum ApplicationPages {
   Security,
   EntitySearch,
   EntitySelect,
-  PluginsSettings
+  PluginsSettings,
+  EmailRecipients
 }

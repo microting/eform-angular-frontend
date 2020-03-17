@@ -1,0 +1,62 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{ 'Tags management' | translate }}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <button class="btn btn-success btn-icon btn-sm m-0 ml-auto"
+                    (click)="createNewTag()"
+                    type="button">
+              <fa-icon icon="plus" [fixedWidth]="true" size="lg"></fa-icon>
+              {{'Add new' | translate}}
+            </button>
+            <div class="panel panel-default w-100 pt-2">
+              <div class="panel-body">
+                <ul class="list-group">
+                  <li class="list-group-item"
+                      *ngFor="let tag of availableTags">
+                    <div class="row">
+                      <div id="entitySelectItemEditNameentityItemUId"
+                           class="col-md-8 col-sm-6 col-xs-6">{{tag.name}}</div>
+                      <div class="col-md-4 col-sm-6 col-xs-6">
+                        <div class="d-flex">
+                          <div class="ml-auto">
+                            <a>
+                              <fa-icon icon="pen" size="lg" [fixedWidth]="true" id="entitySelectEditItemEditBtn"
+                                       (click)="openEditTagNameModal(tag)"></fa-icon>
+                            </a>
+                            <a>
+                              <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true" id="entitySelectEditItemDeleteBtn"
+                                       (click)="deleteTagModal(tag)"></fa-icon>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-accent text-black-50" (click)="frame.hide()" id="emailRecipientsTagsCloseBtn">
+          {{ 'Close' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<spinner-pn [spinnerVisibility]="spinnerStatus"></spinner-pn>
+
+<app-email-recipient-tag-edit #tagEditModal (tagUpdated)="onTagUpdated()"
+                              (tagUpdateCancelled)="onChildrenModalHide()"></app-email-recipient-tag-edit>
+<app-email-recipient-tag-new #tagCreateModal (tagCreated)="onTagCreated()"
+                             (tagCreateCancelled)="onChildrenModalHide()"></app-email-recipient-tag-new>
+<app-email-recipient-tag-delete #tagDeleteModal (tagDeleted)="onTagDeleted()"
+                                (tagDeleteCancelled)="onChildrenModalHide()"></app-email-recipient-tag-delete>
