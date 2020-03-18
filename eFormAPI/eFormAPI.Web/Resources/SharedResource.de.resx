@@ -588,4 +588,7 @@
   <data name="TagUpdatedSuccessfully" xml:space="preserve">
     <value>Tag erfolgreich aktualisiert</value>
   </data>
+  <data name="EmailRecipients" xml:space="preserve">
+    <value>E-Mail-Empfänger</value>
+  </data>
 </root>

@@ -606,4 +606,7 @@
   <data name="TagUpdatedSuccessfully" xml:space="preserve">
     <value>Mærkaten blev opdateret</value>
   </data>
+  <data name="EmailRecipients" xml:space="preserve">
+    <value>E-mail-modtagere</value>
+  </data>
 </root>

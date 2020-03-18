@@ -174,6 +174,9 @@ namespace eFormAPI.Web.Infrastructure.Database
             modelBuilder.Entity<CasePost>()
                 .HasIndex(i => i.CaseId);
 
+            modelBuilder.Entity<CasePost>()
+                .HasIndex(i => i.TemplateId);
+
             // Seed
             modelBuilder.SeedLatest();
             // Identity

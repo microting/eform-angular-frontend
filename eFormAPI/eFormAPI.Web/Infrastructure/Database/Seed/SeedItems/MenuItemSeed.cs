@@ -213,6 +213,17 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                     Position = 5,
                     ParentId = 3,
                     MenuPosition = 1,
+                },
+                new MenuItem
+                {
+                    Id = 18,
+                    Name = "Email Recipients",
+                    LocaleName = "EmailRecipients",
+                    E2EId = "email-recipients",
+                    Link = "/email-recipients",
+                    Position = 8,
+                    ParentId = 3,
+                    MenuPosition = 1,
                 }
             );
             return modelBuilder;

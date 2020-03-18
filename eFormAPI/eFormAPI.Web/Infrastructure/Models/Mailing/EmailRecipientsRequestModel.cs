@@ -24,6 +24,8 @@ SOFTWARE.
 
 namespace eFormAPI.Web.Infrastructure.Models.Mailing
 {
+    using System.Collections.Generic;
+
     public class EmailRecipientsRequestModel
     {
         public string Sort { get; set; }
@@ -31,5 +33,8 @@ namespace eFormAPI.Web.Infrastructure.Models.Mailing
         public int PageSize { get; set; }
         public bool IsSortDsc { get; set; }
         public int Offset { get; set; }
+
+        public List<int> TagIds { get; set; }
+            = new List<int>();
     }
 }

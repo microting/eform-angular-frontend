@@ -28,6 +28,7 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
     using System.Linq;
     using System.Threading.Tasks;
     using Abstractions;
+    using eFormCore;
     using Infrastructure.Database;
     using Infrastructure.Database.Entities.Mailing;
     using Infrastructure.Models.Mailing;
@@ -60,6 +61,11 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
         {
             try
             {
+                var core = new Core();
+
+
+                  //  ..  core.Cas
+
                 var emailRecipientsModel = new EmailRecipientsListModel();
                 var emailRecipientsQuery = _dbContext.EmailRecipients.AsQueryable();
                 if (!string.IsNullOrEmpty(requestModel.Sort))
@@ -79,6 +85,14 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
                 {
                     emailRecipientsQuery = emailRecipientsQuery
                         .OrderBy(x => x.Id);
+                }
+
+                // Tag ids
+                if (requestModel.TagIds.Any())
+                {
+                    emailRecipientsQuery = emailRecipientsQuery
+                        .Where(x => x.TagRecipients.Any(
+                            y => requestModel.TagIds.Contains(y.EmailTagId)));
                 }
 
                 emailRecipientsModel.Total = await emailRecipientsQuery.CountAsync();
