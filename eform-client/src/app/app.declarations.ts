@@ -20,6 +20,7 @@ import {SecurityGroupEformsPermissionsService, SecurityGroupsService} from 'src/
 import {AdminService} from 'src/app/common/services/users';
 import {FoldersService} from './common/services/advanced/folders.service';
 import {PluginPermissionsService, PluginsManagementService} from './common/services/plugins-management';
+import {EmailRecipientsService, EmailRecipientsTagsService} from './common/services/email-recipients';
 // Guards
 
 export let providers = [
@@ -51,6 +52,8 @@ export let providers = [
   EFormService,
   EformTagService,
   EformReportService,
+  EmailRecipientsService,
+  EmailRecipientsTagsService,
   CasesService,
   ImageService,
   SecurityGroupsService,

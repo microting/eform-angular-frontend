@@ -51,6 +51,11 @@ export const routes: Routes = [
         loadChildren: './modules/account-management/account-management.module#AccountManagementModule'
       },
       {
+        path: 'email-recipients',
+        canActivate: [AuthGuard],
+        loadChildren: './modules/email-recipients/email-recipients.module#EmailRecipientsModule'
+      },
+      {
         path: 'security',
         canActivate: [AdminGuard],
         loadChildren: './modules/security/security.module#SecurityModule'
