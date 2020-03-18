@@ -40,16 +40,16 @@ namespace eFormAPI.Web.Controllers.Mailing
             _emailRecipientsService = emailRecipientsService;
         }
 
-        [HttpGet]
-        [Route("api/email-recipients")]
-        public async Task<OperationDataResult<EmailRecipientsListModel>> GetEmailRecipients(EmailRecipientsRequestModel requestModel)
+        [HttpPost]
+        [Route("api/email-recipients/index")]
+        public async Task<OperationDataResult<EmailRecipientsListModel>> GetEmailRecipients([FromBody]EmailRecipientsRequestModel requestModel)
         {
             return await _emailRecipientsService.GetEmailRecipients(requestModel);
         }
 
         [HttpPost]
         [Route("api/email-recipients")]
-        public async Task<OperationResult> CreateEmailRecipient([FromBody] EmailRecipientsCreateModel model)
+        public async Task<OperationResult> CreateEmailRecipients([FromBody] EmailRecipientsCreateModel model)
         {
             return await _emailRecipientsService.CreateEmailRecipient(model);
         }

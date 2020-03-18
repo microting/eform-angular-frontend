@@ -196,27 +196,33 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
                 {
                     var tagIds = new List<int>();
                     // Create tags
-                    var tagNames = createModel.NewTags
+
+                    if (!string.IsNullOrEmpty(createModel.NewTags))
+                    {
+                        var tagNames = createModel.NewTags
                         .Replace(" ", "")
                         .Split(',');
 
-                    foreach (var tagName in tagNames)
-                    {
-                        var emailTag = new EmailTag
+                        foreach (var tagName in tagNames)
                         {
-                            Name = tagName,
-                            CreatedAt = DateTime.UtcNow,
-                            CreatedByUserId = _userService.UserId,
-                            UpdatedAt = DateTime.UtcNow,
-                            UpdatedByUserId = _userService.UserId,
-                            Version = 1,
-                        };
-                        await _dbContext.EmailTags.AddAsync(emailTag);
-                        await _dbContext.SaveChangesAsync();
-                        tagIds.Add(emailTag.Id);
+                            var emailTag = new EmailTag
+                            {
+                                Name = tagName,
+                                CreatedAt = DateTime.UtcNow,
+                                CreatedByUserId = _userService.UserId,
+                                UpdatedAt = DateTime.UtcNow,
+                                UpdatedByUserId = _userService.UserId,
+                                Version = 1,
+                            };
+                            await _dbContext.EmailTags.AddAsync(emailTag);
+                            await _dbContext.SaveChangesAsync();
+                            tagIds.Add(emailTag.Id);
+                        }
                     }
 
+
                     tagIds.AddRange(createModel.TagsIds);
+
 
                     foreach (var recipientCreateModel in createModel.EmailRecipientsList)
                     {
