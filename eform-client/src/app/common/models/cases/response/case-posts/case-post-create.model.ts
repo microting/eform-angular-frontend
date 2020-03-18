@@ -1,9 +1,10 @@
 export class CasePostCreateModel {
-  from: string;
+  from: number;
   toRecipientsIds: number[];
   toTagsIds: number[];
   title: string;
   subject: string;
   text: string;
   attachReport: boolean;
+  attachLinkToCase: boolean;
 }

@@ -13,7 +13,7 @@ import {
 } from 'src/app/common/services/advanced';
 import {AppMenuService, AppSettingsService} from 'src/app/common/services/settings';
 import {AuthService, LocaleService, UserSettingsService} from 'src/app/common/services/auth';
-import {CasesService, ImageService} from 'src/app/common/services/cases';
+import {CasePostsService, CasesService, ImageService} from 'src/app/common/services/cases';
 import {DeviceUserService} from 'src/app/common/services/device-users';
 import {EformReportService, EFormService, EformTagService} from 'src/app/common/services/eform';
 import {SecurityGroupEformsPermissionsService, SecurityGroupsService} from 'src/app/common/services/security';
@@ -55,6 +55,7 @@ export let providers = [
   EmailRecipientsService,
   EmailRecipientsTagsService,
   CasesService,
+  CasePostsService,
   ImageService,
   SecurityGroupsService,
   SecurityGroupEformsPermissionsService,

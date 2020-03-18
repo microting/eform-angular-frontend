@@ -136,4 +136,11 @@ export class EmailRecipientsPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
   }
+
+  tagSelected(id: number) {
+    if (!this.emailRecipientsRequestModel.tagIds.find(x => x === id)) {
+      this.emailRecipientsRequestModel.tagIds = [...this.emailRecipientsRequestModel.tagIds, id];
+      this.getEmailRecipients();
+    }
+  }
 }

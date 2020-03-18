@@ -1,0 +1,121 @@
+<subheader-pn [title]="'Case Posts' | translate">
+  <div class="p-3">
+    <button class="btn btn-accent text-black-50 btn-icon" [routerLink]="['../../../', selectedEformId]"
+            mdbTooltip="{{'Back to overview' | translate}}" mdbWavesEffect>
+      <fa-icon icon="arrow-left" [fixedWidth]="true" size="lg"></fa-icon>
+    </button>
+    <button
+      id="createEmailRecipientBtn"
+      class="btn btn-success"
+      (click)="openCreateModal()">{{ 'New Post' | translate }}
+    </button>
+  </div>
+</subheader-pn>
+
+<div class="container-fluid">
+  <div class="row pl-1">
+    <div class="col-md-4 col-sm-8 ng-select-wrapper">
+
+    </div>
+  </div>
+  <div class="row p-1 mt-4 table-responsive no-gutters" *ngIf="casePostsListModel.total !== 0">
+    <table class="table table-sm table-striped text-center z-depth-1">
+      <thead>
+      <tr>
+        <th scope="col" class="table-header-sortable" id="idTableHeader" (click)="sortTable('Id')">
+          <div class="d-flex align-items-center justify-content-center">
+            ID
+            <i class="material-icons text-black-50">{{getSortIcon('Id')}}</i>
+          </div>
+        </th>
+        <th scope="col" class="table-header-sortable" id="casePostDateTableHeader"
+            (click)="sortTable('Date')">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ 'Date' | translate }}
+            <i class="material-icons text-black-50">{{getSortIcon('Date')}}</i>
+          </div>
+        </th>
+        <th scope="col" class="table-header-sortable" id="casePostSentByTableHeader"
+            (click)="sortTable('SentBy')">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ 'Post created by' | translate }}
+            <i class="material-icons text-black-50">{{getSortIcon('SentBy')}}</i>
+          </div>
+        </th>
+        <th scope="col" class="table-header-sortable" id="casePostEmailTableHeader"
+            (click)="sortTable('SentTo')">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ 'Post sent to' | translate }}
+            <i class="material-icons text-black-50">{{getSortIcon('SentTo')}}</i>
+          </div>
+        </th>
+        <th scope="col">
+          {{ 'Subject' | translate }}
+        </th>
+        <th scope="col">
+          {{ 'Text' | translate }}
+        </th>
+        <th scope="col">
+          {{ 'Actions' | translate }}
+        </th>
+      </tr>
+      </thead>
+      <tbody id="tableBody">
+      <tr *ngFor="let post of casePostsListModel?.casePostsList; let i = index">
+        <td id="casePostId">
+          {{post.id}}
+        </td>
+        <td id="casePostDate">
+          {{post.date | date: 'yyyy/MM/dd'}}
+        </td>
+        <td id="casePostSentBy">
+          {{post.sentBy}}
+        </td>
+        <td id="casePostSentTo">
+          {{post.sentTo}}
+        </td>
+        <td id="casePostSubject">
+          {{post.subject}}
+        </td>
+        <td id="casePostText">
+          {{post.text}}
+        </td>
+        <td>
+          <div class="d-flex flex-row justify-content-center">
+            <button id="casePostViewBtn"
+                    class="btn btn-danger btn-icon mb-2"
+                    mdbTooltip="{{'View Post' | translate}}"
+                    (click)="openViewModal(post.id)">
+              <fa-icon icon="eye" [fixedWidth]="true" size="lg"></fa-icon>
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="row p-1 my-4 mx-2" *ngIf="casePostsListModel.total === 0">
+    <span>{{'No email recipients found' | translate}}</span>
+  </div>
+  <div class="row justify-content-between mr-2 ml-2">
+    <div class="col-md-1">
+      <page-size-pn
+        [pageSize]="localPageSettings.pageSize"
+        (onPageSizeChanged)="localPageSettings.pageSize = $event; casePostsRequestModel.offset = 0;
+        updateLocalPageSettings()"
+      ></page-size-pn>
+    </div>
+    <pagination-pn
+      *ngIf="casePostsListModel?.total > casePostsRequestModel.pageSize"
+      [limit]="casePostsRequestModel.pageSize"
+      [size]="casePostsListModel.total"
+      [offset]="casePostsRequestModel.offset"
+      (onPageChanged)="changePage($event)"
+    ></pagination-pn>
+  </div>
+</div>
+
+<spinner-pn [spinnerVisibility]="spinnerStatus"></spinner-pn>
+
+<app-case-post-new #newPostModal (postCreated)="getCasePosts()"></app-case-post-new>
+<app-case-post-view #viewPostModal></app-case-post-view>

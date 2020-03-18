@@ -7,4 +7,5 @@ export class CasePostViewModel {
   subject: string;
   text: string;
   attachReport: boolean;
+  attachLinkToCase: boolean;
 }

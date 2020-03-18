@@ -43,6 +43,7 @@ import {
   RemoveCaseModalComponent
 } from './components';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {SharedPnModule} from '../../plugins/modules/shared/shared-pn.module';
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
     OwlNativeDateTimeModule,
     OwlMomentDateTimeModule,
     FormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    SharedPnModule
   ],
   declarations: [
     CasesTableComponent,

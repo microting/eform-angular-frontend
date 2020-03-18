@@ -1,4 +1,4 @@
-export class CasePostsRequest {
+export class CasePostsRequestModel {
   public sort: string;
   pageIndex: number;
   pageSize: number;

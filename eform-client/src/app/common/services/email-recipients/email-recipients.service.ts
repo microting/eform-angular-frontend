@@ -7,7 +7,7 @@ import {
   DeviceUserModel,
   EmailRecipientsCreateModel,
   EmailRecipientsListModel,
-  EmailRecipientsRequestModel,
+  EmailRecipientsRequestModel, EmailRecipientTagCommonModel,
   EmailRecipientUpdateModel,
   OperationDataResult,
   OperationResult
@@ -25,7 +25,11 @@ export class EmailRecipientsService extends BaseService {
   }
 
   getEmailRecipients(model: EmailRecipientsRequestModel): Observable<OperationDataResult<EmailRecipientsListModel>> {
-    return this.get<EmailRecipientsListModel>(EmailRecipientsMethods.Main, model);
+    return this.post<EmailRecipientsListModel>(EmailRecipientsMethods.Main + '/index', model);
+  }
+
+  getEmailRecipientsAndTags(): Observable<OperationDataResult<EmailRecipientTagCommonModel[]>> {
+    return this.get<EmailRecipientsListModel>(EmailRecipientsMethods.Main + '/common');
   }
 
   updateEmailRecipient(model: EmailRecipientUpdateModel): Observable<OperationResult> {

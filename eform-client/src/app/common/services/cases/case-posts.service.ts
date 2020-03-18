@@ -6,7 +6,7 @@ import {Observable} from 'rxjs';
 import {
   CasePostCreateModel,
   CasePostsListModel,
-  CasePostsRequest,
+  CasePostsRequestModel,
   CasePostViewModel,
   OperationDataResult,
   OperationResult
@@ -24,7 +24,7 @@ export class CasePostsService extends BaseService {
     super(_http, router, toastrService);
   }
 
-  getAllPosts(model: CasePostsRequest): Observable<OperationDataResult<CasePostsListModel>> {
+  getAllPosts(model: CasePostsRequestModel): Observable<OperationDataResult<CasePostsListModel>> {
     return this.get(CasePostsMethods.Main, model);
   }
 

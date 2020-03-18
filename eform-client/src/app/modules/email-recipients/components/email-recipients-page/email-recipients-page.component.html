@@ -34,25 +34,28 @@
     <table class="table table-sm table-striped text-center z-depth-1">
       <thead>
       <tr>
-        <th scope="col" class="table-header-sortable" id="idTableHeader" (click)="sortTable('id')">
+        <th scope="col" class="table-header-sortable" id="idTableHeader" (click)="sortTable('Id')">
           <div class="d-flex align-items-center justify-content-center">
             ID
-            <i class="material-icons text-black-50">{{getSortIcon('id')}}</i>
+            <i class="material-icons text-black-50">{{getSortIcon('Id')}}</i>
           </div>
         </th>
         <th scope="col" class="table-header-sortable" id="emailRecipientNameTableHeader"
-            (click)="sortTable('name')">
+            (click)="sortTable('Name')">
           <div class="d-flex align-items-center justify-content-center">
             {{ 'Name' | translate }}
-            <i class="material-icons text-black-50">{{getSortIcon('name')}}</i>
+            <i class="material-icons text-black-50">{{getSortIcon('Name')}}</i>
           </div>
         </th>
         <th scope="col" class="table-header-sortable" id="emailRecipientEmailTableHeader"
-            (click)="sortTable('email')">
+            (click)="sortTable('Email')">
           <div class="d-flex align-items-center justify-content-center">
             {{ 'Email' | translate }}
-            <i class="material-icons text-black-50">{{getSortIcon('email')}}</i>
+            <i class="material-icons text-black-50">{{getSortIcon('Email')}}</i>
           </div>
+        </th>
+        <th scope="col">
+          {{ 'Tags' | translate }}
         </th>
         <th scope="col">
           {{ 'Actions' | translate }}
@@ -71,8 +74,12 @@
           {{recipient.email}}
         </td>
         <td id="emailRecipientTags">
-          <ng-container *ngFor="let tag of recipient.tags">
-            {{tag.name}}
+          <ng-container *ngFor="let tag of recipient.tags; let i = index;">
+              <span class="badge badge-primary mb-1" style="cursor: pointer" (click)="tagSelected(tag.id)">
+                <fa-icon icon="tag"></fa-icon>
+              {{tag.name}}
+            </span>
+            <br/>
           </ng-container>
         </td>
         <td>

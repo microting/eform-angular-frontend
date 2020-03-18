@@ -1,0 +1,91 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{'View post' | translate}}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col">
+              <div class="md-form">
+                <input mdbInputDirective
+                       [mdbValidate]="false"
+                       [disabled]="true"
+                       [(ngModel)]="postViewModel.from"
+                       type="text" id="postViewFrom"
+                       name="postViewFrom" class="form-control">
+                <label for="postViewFrom">{{ 'From' | translate }}</label>
+              </div>
+            </div>
+            <div class="row pl-1">
+              <div class="col ng-select-wrapper">
+                <span class="badge badge-primary" *ngFor="let recipient of postViewModel.toRecipients">
+                  {{recipient}}
+                </span>
+                <span class="badge badge-primary" *ngFor="let tag of postViewModel.toRecipientsTags">
+                  <fa-icon icon="tag" [fixedWidth]="true"></fa-icon>
+                  {{tag}}
+                </span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="md-form">
+                  <input mdbInputDirective
+                         [mdbValidate]="false"
+                         [disabled]="true"
+                         [(ngModel)]="postViewModel.subject"
+                         type="text" id="postViewSubject"
+                         name="postViewSubject" class="form-control">
+                  <label for="postViewSubject">{{ 'Subject' | translate }}</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="md-form">
+                  <span class="text-muted">{{ 'Email text' | translate }}</span>
+                  <textarea mdbInputDirective
+                            [mdbValidate]="false"
+                            [(ngModel)]="postViewModel.text"
+                            [disabled]="true"
+                            type="text" id="viewPostEmailText"
+                            name="viewPostEmailText" class="md-textarea form-control"></textarea>
+                  <label for="viewPostEmailText"></label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="mat-checkbox">
+                  <input id="attachLinkToCase" name="attachLinkToCase"
+                         [disabled]="true"
+                         [(ngModel)]="postViewModel.attachLinkToCase"
+                         type="checkbox">
+                  <label for="attachLinkToCase">{{ 'Link to case' | translate }}</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="mat-checkbox">
+                  <input id="attachReport" name="attachReport"
+                         [disabled]="true"
+                         [(ngModel)]="postViewModel.attachReport" type="checkbox">
+                  <label for="attachReport">{{ 'Attach PDF' | translate }}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="viewPostCloseBtn" class="btn btn-accent text-black-50"
+                (click)="frame.hide()">{{'Close' | translate}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>
