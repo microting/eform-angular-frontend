@@ -33,6 +33,7 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
     using Infrastructure.Models.Mailing;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
+    using Microting.eForm.Infrastructure.Constants;
     using Microting.eFormApi.BasePn.Infrastructure.Extensions;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
@@ -127,36 +128,78 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
         public async Task<OperationResult> UpdateEmailRecipient(
             EmailRecipientUpdateModel requestModel)
         {
-            try
+            using (var transaction = await _dbContext.Database.BeginTransactionAsync())
             {
-                var emailRecipient = await _dbContext.EmailRecipients
-                    .FirstOrDefaultAsync(x => x.Id == requestModel.Id);
-
-                if (emailRecipient == null)
+                try
                 {
-                    return new OperationResult(false,
-                        _localizationService.GetString("EmailRecipientNotFound"));
+                    var emailRecipient = await _dbContext.EmailRecipients
+                        .Include(x => x.TagRecipients)
+                        .FirstOrDefaultAsync(x => x.Id == requestModel.Id);
+
+                    if (emailRecipient == null)
+                    {
+                        transaction.Rollback();
+                        return new OperationResult(false,
+                            _localizationService.GetString("EmailRecipientNotFound"));
+                    }
+
+                    emailRecipient.Name = requestModel.Name;
+                    emailRecipient.Email = requestModel.Email;
+                    emailRecipient.UpdatedAt = DateTime.UtcNow;
+                    emailRecipient.UpdatedByUserId = _userService.UserId;
+
+                    // Tags
+                    var tagIds = emailRecipient.TagRecipients
+                        .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                        .Select(x => x.EmailTagId)
+                        .ToList();
+
+                    var tagsForDelete = emailRecipient.TagRecipients
+                        .Where(x => !requestModel.TagsIds.Contains(x.EmailTagId))
+                        .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                        .ToList();
+
+                    var tagsForCreate = requestModel.TagsIds
+                        .Where(x => !tagIds.Contains(x))
+                        .ToList();
+
+                    foreach (var tagRecipient in tagsForDelete)
+                    {
+                        _dbContext.EmailTagRecipients.Remove(tagRecipient);
+                    }
+
+                    foreach (var tagId in tagsForCreate)
+                    {
+
+                        var emailTagRecipient = new EmailTagRecipient
+                        {
+                            CreatedByUserId = _userService.UserId,
+                            UpdatedByUserId = _userService.UserId,
+                            CreatedAt = DateTime.UtcNow,
+                            UpdatedAt = DateTime.UtcNow,
+                            EmailRecipientId = emailRecipient.Id,
+                            EmailTagId = tagId,
+                            Version = 1,
+                        };
+
+                        await _dbContext.EmailTagRecipients.AddAsync(emailTagRecipient);
+                    }
+
+                    _dbContext.EmailRecipients.Update(emailRecipient);
+                    await _dbContext.SaveChangesAsync();
+
+                    transaction.Commit();
+                    return new OperationResult(true,
+                        _localizationService.GetString("EmailRecipientUpdatedSuccessfully"));
                 }
-
-                emailRecipient.Name = requestModel.Name;
-                emailRecipient.Email = requestModel.Email;
-                emailRecipient.UpdatedAt = DateTime.UtcNow;
-                emailRecipient.UpdatedByUserId = _userService.UserId;
-
-                // TODO Update tags for Email recipient
-
-                _dbContext.EmailRecipients.Update(emailRecipient);
-                await _dbContext.SaveChangesAsync();
-
-                return new OperationResult(true,
-                    _localizationService.GetString("EmailRecipientUpdatedSuccessfully"));
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                _logger.LogError(e.Message);
-                return new OperationResult(false,
-                    _localizationService.GetString("ErrorWhileUpdatingEmailRecipient"));
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    _logger.LogError(e.Message);
+                    transaction.Rollback();
+                    return new OperationResult(false,
+                        _localizationService.GetString("ErrorWhileUpdatingEmailRecipient"));
+                }
             }
         }
 
@@ -270,6 +313,45 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
                     return new OperationResult(false,
                         _localizationService.GetString("ErrorWhileCreatingEmailRecipient"));
                 }
+            }
+        }
+
+        public async Task<OperationDataResult<EmailRecipientTagCommonModel[]>> GetEmailRecipientsAndTags()
+        {
+            try
+            {
+                var emailTags = await _dbContext.EmailTags
+                    .AsNoTracking()
+                    .Select(x => new EmailRecipientTagCommonModel
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                        IsTag = true,
+                    }).ToListAsync();
+
+                var emailRecipients = await _dbContext.EmailRecipients
+                    .AsNoTracking()
+                    .Select(x => new EmailRecipientTagCommonModel
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                        IsTag = false,
+                    }).ToListAsync();
+
+                var result = new List<EmailRecipientTagCommonModel>();
+                result.AddRange(emailTags);
+                result.AddRange(emailRecipients);
+
+                return new OperationDataResult<EmailRecipientTagCommonModel[]>(
+                    true,
+                    result.OrderBy(x => x.Name).ToArray());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                _logger.LogError(e.Message);
+                return new OperationDataResult<EmailRecipientTagCommonModel[]>(false,
+                    _localizationService.GetString("ErrorWhileObtainingEmailRecipients"));
             }
         }
     }

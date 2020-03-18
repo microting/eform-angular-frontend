@@ -67,5 +67,13 @@ namespace eFormAPI.Web.Controllers.Mailing
         {
             return await _emailRecipientsService.DeleteEmailRecipient(id);
         }
+
+        [HttpGet]
+        [Route("api/email-recipients/common")]
+        public async Task<OperationDataResult<EmailRecipientTagCommonModel[]>> GetEmailRecipientsAndTags()
+        {
+            return await _emailRecipientsService.GetEmailRecipientsAndTags();
+        }
+
     }
 }

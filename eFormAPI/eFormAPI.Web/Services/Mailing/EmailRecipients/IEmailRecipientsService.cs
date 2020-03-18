@@ -31,11 +31,10 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
     {
         Task<OperationDataResult<EmailRecipientsListModel>> GetEmailRecipients(
             EmailRecipientsRequestModel requestModel);
-
         Task<OperationResult> UpdateEmailRecipient(
             EmailRecipientUpdateModel requestModel);
-
         Task<OperationResult> DeleteEmailRecipient(int id);
         Task<OperationResult> CreateEmailRecipient(EmailRecipientsCreateModel createModel);
+        Task<OperationDataResult<EmailRecipientTagCommonModel[]>> GetEmailRecipientsAndTags();
     }
 }
