@@ -21,18 +21,22 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
 namespace eFormAPI.Web.Infrastructure.Models.Mailing
 {
     using System.Collections.Generic;
 
-    public class EmailRecipientsCreateModel
+    public class CasePostCreateModel
     {
-        public string NewTags { get; set; }
-
-        public List<int> TagsIds { get; set; }
-            = new List<int>();
-
-        public List<EmailRecipientCreateModel> EmailRecipientsList { get; set; }
-            = new List<EmailRecipientCreateModel>();
+        public int From { get; set; }
+        public List<int> ToRecipientsIds { get; set; }
+        public List<int> ToTagsIds { get; set; }
+        public string Title { get; set; }
+        public string Subject { get; set; }
+        public string Text { get; set; }
+        public bool AttachReport { get; set; }
+        public bool AttachLinkToCase { get; set; }
+        public int CaseId { get; set; }
+        public int TemplateId { get; set; }
     }
 }

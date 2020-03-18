@@ -24,6 +24,7 @@ SOFTWARE.
 namespace eFormAPI.Web.Controllers.Mailing
 {
     using System.Threading.Tasks;
+    using Infrastructure.Models.Mailing;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;

@@ -25,6 +25,7 @@ SOFTWARE.
 namespace eFormAPI.Web.Infrastructure.Database.Entities.Mailing
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
 
@@ -39,5 +40,11 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities.Mailing
         public string Text { get; set; }
         public bool LinkToCase { get; set; }
         public bool AttachPdf { get; set; }
+
+        public virtual List<CasePostEmailRecipient> Recipients { get; set; }
+            = new List<CasePostEmailRecipient>();
+
+        public virtual List<CasePostEmailTag> Tags { get; set; }
+            = new List<CasePostEmailTag>();
     }
 }

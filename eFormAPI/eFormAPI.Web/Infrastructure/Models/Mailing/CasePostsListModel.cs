@@ -25,14 +25,14 @@ namespace eFormAPI.Web.Infrastructure.Models.Mailing
 {
     using System.Collections.Generic;
 
-    public class EmailRecipientsCreateModel
+    public class CasePostsListModel
     {
-        public string NewTags { get; set; }
-
-        public List<int> TagsIds { get; set; }
-            = new List<int>();
-
-        public List<EmailRecipientCreateModel> EmailRecipientsList { get; set; }
-            = new List<EmailRecipientCreateModel>();
+        public string EFormName { get; set; }
+        public string Description { get; set; }
+        public string LocationName { get; set; }
+        public string Status { get; set; }
+        public int Total { get; set; }
+        public List<CasePostModel> CasePostsList { get; set; }
+            = new List<CasePostModel>();
     }
 }

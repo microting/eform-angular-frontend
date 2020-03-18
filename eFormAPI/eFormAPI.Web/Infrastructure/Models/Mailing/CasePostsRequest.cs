@@ -23,16 +23,14 @@ SOFTWARE.
 */
 namespace eFormAPI.Web.Infrastructure.Models.Mailing
 {
-    using System.Collections.Generic;
-
-    public class EmailRecipientsCreateModel
+    public class CasePostsRequest
     {
-        public string NewTags { get; set; }
-
-        public List<int> TagsIds { get; set; }
-            = new List<int>();
-
-        public List<EmailRecipientCreateModel> EmailRecipientsList { get; set; }
-            = new List<EmailRecipientCreateModel>();
+        public string Sort { get; set; }
+        public int PageIndex { get; set; }
+        public int PageSize { get; set; }
+        public bool IsSortDsc { get; set; }
+        public int Offset { get; set; }
+        public int? TemplateId { get; set; }
+        public int? CaseId { get; set; }
     }
 }
