@@ -609,4 +609,52 @@
   <data name="EmailRecipients" xml:space="preserve">
     <value>E-mail-modtagere</value>
   </data>
+  <data name="EmailRecipientCreatedSuccessfully" xml:space="preserve">
+    <value>E-mail-modtager oprettet med succes</value>
+  </data>
+  <data name="EmailRecipientNotFound" xml:space="preserve">
+    <value>E-mail-modtager ikke fundet</value>
+  </data>
+  <data name="EmailRecipientRemovedSuccessfully" xml:space="preserve">
+    <value>E-mail-modtager blev fjernet</value>
+  </data>
+  <data name="EmailRecipientUpdatedSuccessfully" xml:space="preserve">
+    <value>E-mail-modtager blev opdateret</value>
+  </data>
+  <data name="EmailTagCreatedSuccessfully" xml:space="preserve">
+    <value>E-mail-tag oprettet med succes</value>
+  </data>
+  <data name="EmailTagNotFound" xml:space="preserve">
+    <value>E-mail-tag ikke fundet</value>
+  </data>
+  <data name="EmailTagRemovedSuccessfully" xml:space="preserve">
+    <value>E-mail-tag blev fjernet</value>
+  </data>
+  <data name="EmailTagUpdatedSuccessfully" xml:space="preserve">
+    <value>E-mail-tag opdateret</value>
+  </data>
+  <data name="ErrorWhileCreatingEmailRecipient" xml:space="preserve">
+    <value>Fejl under oprettelse af e-mail-modtager</value>
+  </data>
+  <data name="ErrorWhileCreatingEmailTag" xml:space="preserve">
+    <value>Fejl under oprettelse af e-mail-tag</value>
+  </data>
+  <data name="ErrorWhileObtainingEmailRecipients" xml:space="preserve">
+    <value>Fejl under hentning af e-mail-modtagere</value>
+  </data>
+  <data name="ErrorWhileObtainingEmailTag" xml:space="preserve">
+    <value>Fejl under opnåelse af e-mail-tag</value>
+  </data>
+  <data name="ErrorWhileRemovingEmailRecipient" xml:space="preserve">
+    <value>Fejl under fjernelse af e-mail-modtager</value>
+  </data>
+  <data name="ErrorWhileRemovingEmailTag" xml:space="preserve">
+    <value>Fejl under fjernelse af e-mail-tag</value>
+  </data>
+  <data name="ErrorWhileUpdatingEmailRecipient" xml:space="preserve">
+    <value>Fejl under opdatering af e-mail-modtager</value>
+  </data>
+  <data name="ErrorWhileUpdatingEmailTag" xml:space="preserve">
+    <value>Fejl under opdatering af e-mail-tag</value>
+  </data>
 </root>

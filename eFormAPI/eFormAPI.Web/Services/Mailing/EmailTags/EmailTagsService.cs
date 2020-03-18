@@ -77,7 +77,7 @@ namespace eFormAPI.Web.Services.Mailing.EmailTags
                 _logger.LogError(e.Message);
                 return new OperationDataResult<CommonDictionaryModel[]>(
                     false,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("ErrorWhileObtainingEmailTag"));
             }
         }
         public async Task<OperationResult> UpdateEmailTag(EmailRecipientTagModel requestModel)
@@ -90,7 +90,7 @@ namespace eFormAPI.Web.Services.Mailing.EmailTags
                 if (emailTag == null)
                 {
                     return new OperationResult(false,
-                        _localizationService.GetString(""));
+                        _localizationService.GetString("EmailTagNotFound"));
                 }
 
                 emailTag.Name = requestModel.Name;
@@ -101,14 +101,14 @@ namespace eFormAPI.Web.Services.Mailing.EmailTags
                 await _dbContext.SaveChangesAsync();
 
                 return new OperationResult(true,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("EmailTagUpdatedSuccessfully"));
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 _logger.LogError(e.Message);
                 return new OperationResult(false,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("ErrorWhileUpdatingEmailTag"));
             }
         }
         public async Task<OperationResult> DeleteEmailTag(int id)
@@ -121,21 +121,21 @@ namespace eFormAPI.Web.Services.Mailing.EmailTags
                 if (emailTag == null)
                 {
                     return new OperationResult(false,
-                        _localizationService.GetString(""));
+                        _localizationService.GetString("EmailTagNotFound"));
                 }
 
                 _dbContext.EmailTags.Remove(emailTag);
                 await _dbContext.SaveChangesAsync();
 
                 return new OperationResult(true,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("EmailTagRemovedSuccessfully"));
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 _logger.LogError(e.Message);
                 return new OperationResult(false,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("ErrorWhileRemovingEmailTag"));
             }
         }
         public async Task<OperationResult> CreateEmailTag(EmailRecipientTagModel requestModel)
@@ -156,14 +156,14 @@ namespace eFormAPI.Web.Services.Mailing.EmailTags
                 await _dbContext.SaveChangesAsync();
 
                 return new OperationResult(true,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("EmailTagCreatedSuccessfully"));
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 _logger.LogError(e.Message);
                 return new OperationResult(false,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("ErrorWhileCreatingEmailTag"));
             }
         }
     }

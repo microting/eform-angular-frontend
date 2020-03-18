@@ -28,7 +28,6 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
     using System.Linq;
     using System.Threading.Tasks;
     using Abstractions;
-    using eFormCore;
     using Infrastructure.Database;
     using Infrastructure.Database.Entities.Mailing;
     using Infrastructure.Models.Mailing;
@@ -61,11 +60,6 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
         {
             try
             {
-                var core = new Core();
-
-
-                  //  ..  core.Cas
-
                 var emailRecipientsModel = new EmailRecipientsListModel();
                 var emailRecipientsQuery = _dbContext.EmailRecipients.AsQueryable();
                 if (!string.IsNullOrEmpty(requestModel.Sort))
@@ -126,7 +120,7 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
                 Console.WriteLine(e);
                 _logger.LogError(e.Message);
                 return new OperationDataResult<EmailRecipientsListModel>(false,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("ErrorWhileObtainingEmailRecipients"));
             }
         }
 
@@ -141,7 +135,7 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
                 if (emailRecipient == null)
                 {
                     return new OperationResult(false,
-                        _localizationService.GetString(""));
+                        _localizationService.GetString("EmailRecipientNotFound"));
                 }
 
                 emailRecipient.Name = requestModel.Name;
@@ -155,14 +149,14 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
                 await _dbContext.SaveChangesAsync();
 
                 return new OperationResult(true,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("EmailRecipientUpdatedSuccessfully"));
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 _logger.LogError(e.Message);
                 return new OperationResult(false,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("ErrorWhileUpdatingEmailRecipient"));
             }
         }
 
@@ -176,21 +170,21 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
                 if (emailRecipient == null)
                 {
                     return new OperationResult(false,
-                        _localizationService.GetString(""));
+                        _localizationService.GetString("EmailRecipientNotFound"));
                 }
 
                 _dbContext.EmailRecipients.Remove(emailRecipient);
                 await _dbContext.SaveChangesAsync();
 
                 return new OperationResult(true,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("EmailRecipientRemovedSuccessfully"));
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 _logger.LogError(e.Message);
                 return new OperationResult(false,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("ErrorWhileRemovingEmailRecipient"));
             }
         }
 
@@ -260,7 +254,7 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
 
                     transaction.Commit();
                     return new OperationResult(true,
-                        _localizationService.GetString(""));
+                        _localizationService.GetString("EmailRecipientCreatedSuccessfully"));
                 }
                 catch (Exception e)
                 {
@@ -268,7 +262,7 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
                     _logger.LogError(e.Message);
                     transaction.Commit();
                     return new OperationResult(false,
-                        _localizationService.GetString(""));
+                        _localizationService.GetString("ErrorWhileCreatingEmailRecipient"));
                 }
             }
         }

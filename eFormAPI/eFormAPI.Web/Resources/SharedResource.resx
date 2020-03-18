@@ -609,4 +609,52 @@
   <data name="EmailRecipients" xml:space="preserve">
     <value>Email Recipients</value>
   </data>
+  <data name="EmailRecipientCreatedSuccessfully" xml:space="preserve">
+    <value>Email recipient created successfully</value>
+  </data>
+  <data name="EmailRecipientNotFound" xml:space="preserve">
+    <value>Email recipient not found</value>
+  </data>
+  <data name="EmailRecipientRemovedSuccessfully" xml:space="preserve">
+    <value>Email recipient removed successfully</value>
+  </data>
+  <data name="EmailRecipientUpdatedSuccessfully" xml:space="preserve">
+    <value>Email recipient updated successfully</value>
+  </data>
+  <data name="EmailTagCreatedSuccessfully" xml:space="preserve">
+    <value>Email tag created successfully</value>
+  </data>
+  <data name="EmailTagNotFound" xml:space="preserve">
+    <value>Email tag not found</value>
+  </data>
+  <data name="EmailTagRemovedSuccessfully" xml:space="preserve">
+    <value>Email tag removed successfully</value>
+  </data>
+  <data name="EmailTagUpdatedSuccessfully" xml:space="preserve">
+    <value>Email tag updated successfully</value>
+  </data>
+  <data name="ErrorWhileCreatingEmailRecipient" xml:space="preserve">
+    <value>Error while creating email recipient</value>
+  </data>
+  <data name="ErrorWhileCreatingEmailTag" xml:space="preserve">
+    <value>Error while creating email tag</value>
+  </data>
+  <data name="ErrorWhileObtainingEmailRecipients" xml:space="preserve">
+    <value>Error while obtaining email recipients</value>
+  </data>
+  <data name="ErrorWhileObtainingEmailTag" xml:space="preserve">
+    <value>Error while obtaining email tag</value>
+  </data>
+  <data name="ErrorWhileRemovingEmailRecipient" xml:space="preserve">
+    <value>Error while removing email recipient</value>
+  </data>
+  <data name="ErrorWhileRemovingEmailTag" xml:space="preserve">
+    <value>Error while removing email tag</value>
+  </data>
+  <data name="ErrorWhileUpdatingEmailRecipient" xml:space="preserve">
+    <value>Error while updating email recipient</value>
+  </data>
+  <data name="ErrorWhileUpdatingEmailTag" xml:space="preserve">
+    <value>Error while updating email tag</value>
+  </data>
 </root>
