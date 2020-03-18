@@ -56,6 +56,7 @@ using eFormAPI.Web.Infrastructure.Database.Factories;
 
 namespace eFormAPI.Web
 {
+    using Services.Mailing.CasePost;
     using Services.Mailing.EmailRecipients;
     using Services.Mailing.EmailTags;
 
@@ -129,7 +130,7 @@ namespace eFormAPI.Web
 
             // Authentication
             services.AddEFormAuth(Configuration, GetPluginsPermissions());
-            // Localiation
+            // Localization
             services.AddTransient<IEformLocalizerFactory, JsonStringLocalizerFactory>();
             services.AddTransient<IStringLocalizerFactory, ResourceManagerStringLocalizerFactory>();
             services.AddTransient<IStringLocalizer, JsonStringLocalizer>();
@@ -290,6 +291,7 @@ namespace eFormAPI.Web
             services.AddScoped<ISiteTagsService, SiteTagsService>();
             services.AddScoped<IEmailTagsService, EmailTagsService>();
             services.AddScoped<IEmailRecipientsService, EmailRecipientsService>();
+            services.AddScoped<ICasePostService, CasePostService>();
         }
 
         private ICollection<PluginPermissionModel> GetPluginsPermissions()

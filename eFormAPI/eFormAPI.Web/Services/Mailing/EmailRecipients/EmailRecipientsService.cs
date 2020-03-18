@@ -180,48 +180,82 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
             }
         }
 
-        public async Task<OperationResult> CreateEmailRecipient(EmailRecipientCreateModel createModel)
+        public async Task<OperationResult> CreateEmailRecipient(EmailRecipientsCreateModel createModel)
         {
-            try
+            using (var transaction = await _dbContext.Database.BeginTransactionAsync())
             {
-                var emailRecipient = new EmailRecipient
+                try
                 {
-                    Name = createModel.Name,
-                    Email = createModel.Email,
-                    CreatedAt = DateTime.UtcNow,
-                    CreatedByUserId = _userService.UserId,
-                    UpdatedAt = DateTime.UtcNow,
-                    UpdatedByUserId = _userService.UserId,
-                    Version = 1,
-                };
+                    var tagIds = new List<int>();
+                    // Create tags
+                    var tagNames = createModel.NewTags
+                        .Replace(" ", "")
+                        .Split(',');
 
-                emailRecipient.TagRecipients = new List<EmailTagRecipient>(createModel.TagsIds.Count);
-                foreach (var tagId in createModel.TagsIds)
-                {
-                    emailRecipient.TagRecipients.Add(
-                        new EmailTagRecipient
+                    foreach (var tagName in tagNames)
+                    {
+                        var emailTag = new EmailTag
                         {
+                            Name = tagName,
                             CreatedAt = DateTime.UtcNow,
                             CreatedByUserId = _userService.UserId,
                             UpdatedAt = DateTime.UtcNow,
                             UpdatedByUserId = _userService.UserId,
                             Version = 1,
-                            EmailTagId = tagId,
-                        });
+                        };
+                        await _dbContext.EmailTags.AddAsync(emailTag);
+                        await _dbContext.SaveChangesAsync();
+                        tagIds.Add(emailTag.Id);
+                    }
+
+                    tagIds.AddRange(createModel.TagsIds);
+
+                    foreach (var recipientCreateModel in createModel.EmailRecipientsList)
+                    {
+                        var emailRecipient = new EmailRecipient
+                        {
+                            Name = recipientCreateModel.Name,
+                            Email = recipientCreateModel.Email,
+                            CreatedAt = DateTime.UtcNow,
+                            CreatedByUserId = _userService.UserId,
+                            UpdatedAt = DateTime.UtcNow,
+                            UpdatedByUserId = _userService.UserId,
+                            Version = 1,
+                            TagRecipients = new List<EmailTagRecipient>(),
+                        };
+
+                        // add new tags
+                        foreach (var tagId in tagIds)
+                        {
+                            emailRecipient.TagRecipients.Add(
+                                new EmailTagRecipient
+                                {
+                                    CreatedAt = DateTime.UtcNow,
+                                    CreatedByUserId = _userService.UserId,
+                                    UpdatedAt = DateTime.UtcNow,
+                                    UpdatedByUserId = _userService.UserId,
+                                    Version = 1,
+                                    EmailTagId = tagId,
+                                });
+                        }
+
+                        await _dbContext.EmailRecipients.AddAsync(emailRecipient);
+                    }
+
+                    await _dbContext.SaveChangesAsync();
+
+                    transaction.Commit();
+                    return new OperationResult(true,
+                        _localizationService.GetString(""));
                 }
-
-                await _dbContext.EmailRecipients.AddAsync(emailRecipient);
-                await _dbContext.SaveChangesAsync();
-
-                return new OperationResult(true,
-                    _localizationService.GetString(""));
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                _logger.LogError(e.Message);
-                return new OperationResult(false,
-                    _localizationService.GetString(""));
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    _logger.LogError(e.Message);
+                    transaction.Commit();
+                    return new OperationResult(false,
+                        _localizationService.GetString(""));
+                }
             }
         }
     }

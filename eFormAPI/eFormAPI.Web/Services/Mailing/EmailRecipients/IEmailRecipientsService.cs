@@ -36,6 +36,6 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
             EmailRecipientUpdateModel requestModel);
 
         Task<OperationResult> DeleteEmailRecipient(int id);
-        Task<OperationResult> CreateEmailRecipient(EmailRecipientCreateModel createModel);
+        Task<OperationResult> CreateEmailRecipient(EmailRecipientsCreateModel createModel);
     }
 }

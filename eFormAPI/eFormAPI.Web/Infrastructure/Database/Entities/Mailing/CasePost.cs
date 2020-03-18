@@ -30,6 +30,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities.Mailing
 
     public class CasePost : BaseEntity
     {
+        public int CaseId { get; set; }
         public DateTime PostDate { get; set; }
         [Required]
         public string Subject { get; set; }

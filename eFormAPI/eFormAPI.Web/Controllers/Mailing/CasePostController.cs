@@ -24,48 +24,40 @@ SOFTWARE.
 namespace eFormAPI.Web.Controllers.Mailing
 {
     using System.Threading.Tasks;
-    using Infrastructure.Models.Mailing;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-    using Services.Mailing.EmailRecipients;
+    using Services.Mailing.CasePost;
 
     [Authorize]
-    public class EmailRecipientsController : Controller
+    public class CasePostController : Controller
     {
-        private readonly IEmailRecipientsService _emailRecipientsService;
+        private readonly ICasePostService _casePostService;
 
-        public EmailRecipientsController(IEmailRecipientsService emailRecipientsService)
+        public CasePostController(ICasePostService casePostService)
         {
-            _emailRecipientsService = emailRecipientsService;
+            _casePostService = casePostService;
         }
 
         [HttpGet]
-        [Route("api/email-recipients")]
-        public async Task<OperationDataResult<EmailRecipientsListModel>> GetEmailRecipients(EmailRecipientsRequestModel requestModel)
+        [Route("api/cases/posts")]
+        public async Task<OperationDataResult<CasePostsListModel>> GetAllPosts(CasePostsRequest requestModel)
         {
-            return await _emailRecipientsService.GetEmailRecipients(requestModel);
+            return await _casePostService.GetAllPosts(requestModel);
+        }
+
+        [HttpGet]
+        [Route("api/cases/posts/view/{id}")]
+        public async Task<OperationDataResult<CasePostViewModel>> GetPostForView(int id)
+        {
+            return await _casePostService.GetPostForView(id);
         }
 
         [HttpPost]
-        [Route("api/email-recipients")]
-        public async Task<OperationResult> CreateEmailRecipient([FromBody] EmailRecipientsCreateModel model)
+        [Route("api/cases/posts")]
+        public async Task<OperationResult> CreatePost([FromBody] CasePostCreateModel model)
         {
-            return await _emailRecipientsService.CreateEmailRecipient(model);
-        }
-
-        [HttpPut]
-        [Route("api/email-recipients")]
-        public async Task<OperationResult> UpdateEmailTag([FromBody] EmailRecipientUpdateModel model)
-        {
-            return await _emailRecipientsService.UpdateEmailRecipient(model);
-        }
-
-        [HttpDelete]
-        [Route("api/email-recipients/{id}")]
-        public async Task<OperationResult> DeleteEmailRecipient(int id)
-        {
-            return await _emailRecipientsService.DeleteEmailRecipient(id);
+            return await _casePostService.CreatePost(model);
         }
     }
 }

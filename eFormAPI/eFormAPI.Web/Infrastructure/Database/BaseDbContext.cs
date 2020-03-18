@@ -171,6 +171,9 @@ namespace eFormAPI.Web.Infrastructure.Database
             modelBuilder.Entity<EmailRecipient>()
                 .HasIndex(i => i.Email);
 
+            modelBuilder.Entity<CasePost>()
+                .HasIndex(i => i.CaseId);
+
             // Seed
             modelBuilder.SeedLatest();
             // Identity
