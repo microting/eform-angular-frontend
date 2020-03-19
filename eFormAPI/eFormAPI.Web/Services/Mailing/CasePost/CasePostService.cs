@@ -24,7 +24,6 @@ SOFTWARE.
 namespace eFormAPI.Web.Services.Mailing.CasePost
 {
     using System;
-    using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
     using Abstractions;
@@ -89,9 +88,6 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                 casePostsQuery = casePostsQuery
                     .Where(x => x.CaseId == requestModel.CaseId);
 
-                casePostsQuery = casePostsQuery
-                    .Where(x => x.TemplateId == requestModel.TemplateId);
-
                 casePostsListModel.Total = await casePostsQuery.CountAsync();
 
                 casePostsQuery = casePostsQuery
@@ -105,25 +101,24 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                         Subject = x.Subject,
                         Text = x.Text,
                         Date = x.PostDate,
-                        
-                        // TODO add fields
+                        From = x.From.Name,
+                        ToRecipients = x.Recipients
+                            .Select(y => y.EmailRecipient.Name)
+                            .ToList(),
+                        ToRecipientsTags = x.Tags
+                            .Select(y => y.EmailTag.Name)
+                            .ToList(),
                     }).ToListAsync();
 
-                // Get data
-                Debugger.Break();
                 var core = await _coreService.GetCore();
                 var caseDto = await core.CaseLookupCaseId(requestModel.CaseId);
                 var templateDto = await core.TemplateItemRead(requestModel.TemplateId);
-                var replyElement = await core.CaseRead((int)caseDto.MicrotingUId, (int)caseDto.CheckUId);
                 var site = await core.SiteRead(caseDto.SiteUId);
-
                 casePostsListModel.EFormName = templateDto.Label;
                 casePostsListModel.LocationName = site.SiteName;
                 casePostsListModel.Status = caseDto.Stat;
                 casePostsListModel.Description = templateDto.Description;
-
                 casePostsListModel.CasePostsList = casePostList;
-
                 return new OperationDataResult<CasePostsListModel>(true, casePostsListModel);
             }
             catch (Exception e)
@@ -131,12 +126,11 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                 Console.WriteLine(e);
                 _logger.LogError(e.Message);
                 return new OperationDataResult<CasePostsListModel>(false,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("ErrorWhileObtainingPosts"));
             }
         }
 
-        public async Task<OperationDataResult<CasePostViewModel>> GetPostForView(
-            int id)
+        public async Task<OperationDataResult<CasePostViewModel>> GetPostForView(int id)
         {
             try
             {
@@ -149,20 +143,21 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                         Subject = x.Subject,
                         AttachReport = x.AttachPdf,
                         AttachLinkToCase = x.LinkToCase,
+                        From = x.From.Name,
+                        Title = x.Title,
                         ToRecipients = x.Recipients
                             .Select(y => y.EmailRecipient.Name)
                             .ToList(),
                         ToRecipientsTags = x.Tags
                             .Select(y => y.EmailTag.Name)
                             .ToList(),
-                        // TODO add fields
                     }).FirstOrDefaultAsync();
 
                 if (casePost == null)
                 {
                     return new OperationDataResult<CasePostViewModel>(
                         false,
-                        _localizationService.GetString(""));
+                        _localizationService.GetString("PostNotFound"));
                 }
 
                 return new OperationDataResult<CasePostViewModel>(true, casePost);
@@ -172,13 +167,12 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                 Console.WriteLine(e);
                 _logger.LogError(e.Message);
                 return new OperationDataResult<CasePostViewModel>(false,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("ErrorWhileObtainingPostViewInfo"));
             }
         }
 
 
-        public async Task<OperationResult> CreatePost(
-            CasePostCreateModel requestModel)
+        public async Task<OperationResult> CreatePost(CasePostCreateModel requestModel)
         {
             using (var transaction = await _dbContext.Database.BeginTransactionAsync())
             {
@@ -195,9 +189,10 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                         LinkToCase = requestModel.AttachLinkToCase,
                         Text = requestModel.Text,
                         Subject = requestModel.Subject,
+                        Title = requestModel.Title,
                         CaseId = requestModel.CaseId,
-                        TemplateId = requestModel.TemplateId,
                         PostDate = DateTime.UtcNow,
+                        FromId = requestModel.From,
                     };
 
                     await _dbContext.CasePosts.AddAsync(casePost);
@@ -238,8 +233,9 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                     await _dbContext.SaveChangesAsync();
 
                     transaction.Commit();
-                    return new OperationResult(true,
-                        _localizationService.GetString(""));
+                    return new OperationResult(
+                        true,
+                        _localizationService.GetString("PostCreatedSuccessfully"));
                 }
                 catch (Exception e)
                 {
@@ -247,7 +243,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                     _logger.LogError(e.Message);
                     transaction.Rollback();
                     return new OperationResult(false,
-                        _localizationService.GetString(""));
+                        _localizationService.GetString("ErrorWhileCreatingPost"));
                 }
             }
         }

@@ -639,4 +639,19 @@
   <data name="ErrorWhileUpdatingEmailTag" xml:space="preserve">
     <value>Fehler beim Aktualisieren des E-Mail-Tags</value>
   </data>
+  <data name="ErrorWhileCreatingPost" xml:space="preserve">
+    <value>Fehler beim Erstellen des Beitrags</value>
+  </data>
+  <data name="ErrorWhileObtainingPosts" xml:space="preserve">
+    <value>Fehler beim Abrufen von Beiträgen</value>
+  </data>
+  <data name="ErrorWhileObtainingPostViewInfo" xml:space="preserve">
+    <value>Fehler beim Abrufen der Post-View-Informationen</value>
+  </data>
+  <data name="PostCreatedSuccessfully" xml:space="preserve">
+    <value>Beitrag erfolgreich erstellt</value>
+  </data>
+  <data name="PostNotFound" xml:space="preserve">
+    <value>Beitrag nicht gefunden</value>
+  </data>
 </root>

@@ -175,7 +175,9 @@ namespace eFormAPI.Web.Infrastructure.Database
                 .HasIndex(i => i.CaseId);
 
             modelBuilder.Entity<CasePost>()
-                .HasIndex(i => i.TemplateId);
+                .HasOne(x => x.From)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
 
             // Seed
             modelBuilder.SeedLatest();

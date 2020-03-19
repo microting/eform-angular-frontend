@@ -31,15 +31,17 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities.Mailing
 
     public class CasePost : BaseEntity
     {
-        public int TemplateId { get; set; }
         public int CaseId { get; set; }
         public DateTime PostDate { get; set; }
         [Required]
         public string Subject { get; set; }
         [Required]
         public string Text { get; set; }
+        public string Title { get; set; }
         public bool LinkToCase { get; set; }
         public bool AttachPdf { get; set; }
+        public int FromId { get; set; }
+        public virtual EmailRecipient From { get; set; }
 
         public virtual List<CasePostEmailRecipient> Recipients { get; set; }
             = new List<CasePostEmailRecipient>();

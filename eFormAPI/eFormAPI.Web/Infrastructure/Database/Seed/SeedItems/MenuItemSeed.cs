@@ -199,7 +199,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                     LocaleName = "PluginsSettings",
                     E2EId = "plugins-settings",
                     Link = "/plugins-settings",
-                    Position = 7,
+                    Position = 8,
                     ParentId = 3,
                     MenuPosition = 1,
                 },
@@ -221,7 +221,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                     LocaleName = "EmailRecipients",
                     E2EId = "email-recipients",
                     Link = "/email-recipients",
-                    Position = 8,
+                    Position = 7,
                     ParentId = 3,
                     MenuPosition = 1,
                 }

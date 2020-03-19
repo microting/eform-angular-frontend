@@ -657,4 +657,19 @@
   <data name="ErrorWhileUpdatingEmailTag" xml:space="preserve">
     <value>Fejl under opdatering af e-mail-tag</value>
   </data>
+  <data name="ErrorWhileCreatingPost" xml:space="preserve">
+    <value>Fejl under oprettelse af indlæg</value>
+  </data>
+  <data name="ErrorWhileObtainingPosts" xml:space="preserve">
+    <value>Fejl under hentning af indlæg</value>
+  </data>
+  <data name="ErrorWhileObtainingPostViewInfo" xml:space="preserve">
+    <value>Fejl under hentning af postvisningsinfo</value>
+  </data>
+  <data name="PostCreatedSuccessfully" xml:space="preserve">
+    <value>Indlæg blev oprettet</value>
+  </data>
+  <data name="PostNotFound" xml:space="preserve">
+    <value>Indlæg ikke fundet</value>
+  </data>
 </root>
