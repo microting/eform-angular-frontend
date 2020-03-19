@@ -110,15 +110,6 @@ export class CasesTableComponent implements OnInit {
     });
   }
 
-  downloadCSV(templateId: number) {
-    this.spinnerStatus = true;
-    this.eFormService.downloadCSVFile(templateId).subscribe(data => {
-      const blob = new Blob([data]);
-      saveAs(blob, `template_${this.currentTemplate.id}.csv`);
-      this.spinnerStatus = false;
-    });
-  }
-
   loadEformPermissions(templateId: number) {
     if (this.securityGroupEformsService.mappedPermissions.length) {
       this.eformPermissionsSimpleModel = this.securityGroupEformsService.mappedPermissions.find(x => x.templateId === templateId);

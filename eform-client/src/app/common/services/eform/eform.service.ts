@@ -76,8 +76,8 @@ export class EFormService extends BaseService {
     return this.post(TemplateColumnMethods.GetColumns, model);
   }
 
-  downloadEformXML(templateId: number): Observable<OperationDataResult<any>> {
-    return this.get<any>(TemplateFilesMethods.DownloadXML + '/' + templateId);
+  downloadEformXML(templateId: number): Observable<any> {
+    return this.getBlobData(TemplateFilesMethods.DownloadXML + '/' + templateId);
   }
 
   downloadEformPDF(templateId: number, caseId: number, fileType: string): Observable<any> {
