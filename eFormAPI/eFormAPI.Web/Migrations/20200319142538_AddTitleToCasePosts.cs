@@ -13,10 +13,18 @@ namespace eFormAPI.Web.Migrations
             {
                 DbConfig.IsMySQL = true;
             }
-            migrationBuilder.RenameColumn(
+            //migrationBuilder.RenameColumn(
+            //    name: "TemplateId",
+            //    table: "CasePosts",
+            //    newName: "FromId");
+            
+            migrationBuilder.DropColumn(
                 name: "TemplateId",
-                table: "CasePosts",
-                newName: "FromId");
+                table: "CasePosts");
+
+            migrationBuilder.AddColumn<int>(
+                name: "FromId",
+                table: "CasePosts");
 
             migrationBuilder.DropIndex(
                 name: "IX_CasePosts_TemplateId",
