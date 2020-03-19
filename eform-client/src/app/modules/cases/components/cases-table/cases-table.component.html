@@ -193,7 +193,7 @@
         <td>
           <div class="d-flex flex-row justify-content-center">
             <button class="btn btn-success btn-icon mb-2" *ngIf="checkEformPermissions(userClaimsEnum.caseRead)"
-                    [routerLink]="['/cases/edit/' + caseModel.id + '/' + currentTemplate.id]"
+                    (click)="downloadCSV(currentTemplate.id)"
                     mdbTooltip="{{ 'Edit Case' | translate }}">
               <fa-icon icon="pen" size="lg" [fixedWidth]="true"></fa-icon>
 

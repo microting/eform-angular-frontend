@@ -83,4 +83,8 @@ export class EFormService extends BaseService {
   downloadEformPDF(templateId: number, caseId: number, fileType: string): Observable<any> {
     return this.getBlobData(TemplateFilesMethods.DownloadPDF + '/' + templateId + '/?caseId=' + caseId + '&fileType=' + fileType);
   }
+
+  downloadCSVFile(templateId: number): Observable<any> {
+    return this.getBlobData(TemplateFilesMethods.GetCsv + '/' + templateId);
+  }
 }
