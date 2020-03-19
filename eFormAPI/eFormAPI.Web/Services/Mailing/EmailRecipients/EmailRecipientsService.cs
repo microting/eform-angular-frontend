@@ -36,6 +36,7 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
     using Microting.eForm.Infrastructure.Constants;
     using Microting.eFormApi.BasePn.Infrastructure.Extensions;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
     public class EmailRecipientsService : IEmailRecipientsService
     {
@@ -351,6 +352,32 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
                 Console.WriteLine(e);
                 _logger.LogError(e.Message);
                 return new OperationDataResult<EmailRecipientTagCommonModel[]>(false,
+                    _localizationService.GetString("ErrorWhileObtainingEmailRecipients"));
+            }
+        }
+
+
+        public async Task<OperationDataResult<CommonDictionaryModel[]>> GetSimpleEmailRecipients()
+        {
+            try
+            {
+                var emailRecipients = await _dbContext.EmailRecipients
+                    .AsNoTracking()
+                    .Select(x => new CommonDictionaryModel
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                    }).ToListAsync();
+
+                return new OperationDataResult<CommonDictionaryModel[]>(
+                    true,
+                    emailRecipients.ToArray());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                _logger.LogError(e.Message);
+                return new OperationDataResult<CommonDictionaryModel[]>(false,
                     _localizationService.GetString("ErrorWhileObtainingEmailRecipients"));
             }
         }

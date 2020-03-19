@@ -28,6 +28,7 @@ namespace eFormAPI.Web.Controllers.Mailing
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
     using Services.Mailing.EmailRecipients;
 
     [Authorize]
@@ -75,5 +76,11 @@ namespace eFormAPI.Web.Controllers.Mailing
             return await _emailRecipientsService.GetEmailRecipientsAndTags();
         }
 
+        [HttpGet]
+        [Route("api/email-recipients/simple")]
+        public async Task<OperationDataResult<CommonDictionaryModel[]>> GetSimpleEmailRecipients()
+        {
+            return await _emailRecipientsService.GetSimpleEmailRecipients();
+        }
     }
 }

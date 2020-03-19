@@ -26,6 +26,7 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
     using System.Threading.Tasks;
     using Infrastructure.Models.Mailing;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
     public interface IEmailRecipientsService
     {
@@ -36,5 +37,6 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
         Task<OperationResult> DeleteEmailRecipient(int id);
         Task<OperationResult> CreateEmailRecipient(EmailRecipientsCreateModel createModel);
         Task<OperationDataResult<EmailRecipientTagCommonModel[]>> GetEmailRecipientsAndTags();
+        Task<OperationDataResult<CommonDictionaryModel[]>> GetSimpleEmailRecipients();
     }
 }
