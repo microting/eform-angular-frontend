@@ -24,6 +24,7 @@ SOFTWARE.
 namespace eFormAPI.Web.Services.Mailing.CasePost
 {
     using System;
+    using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
     using Abstractions;
@@ -32,6 +33,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
     using Infrastructure.Models.Mailing;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
+    using Microting.eFormApi.BasePn.Abstractions;
     using Microting.eFormApi.BasePn.Infrastructure.Extensions;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
@@ -40,6 +42,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
         private readonly ILogger<CasePostService> _logger;
         private readonly IUserService _userService;
         private readonly ILocalizationService _localizationService;
+        private readonly IEFormCoreService _coreService;
         private readonly BaseDbContext _dbContext;
 
         public CasePostService(
@@ -81,17 +84,11 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                         .OrderBy(x => x.Id);
                 }
 
-                if (requestModel.CaseId != null)
-                {
-                    casePostsQuery = casePostsQuery
-                        .Where(x => x.CaseId == requestModel.CaseId);
-                }
+                casePostsQuery = casePostsQuery
+                    .Where(x => x.CaseId == requestModel.CaseId);
 
-                if (requestModel.TemplateId != null)
-                {
-                    casePostsQuery = casePostsQuery
-                        .Where(x => x.TemplateId == requestModel.TemplateId);
-                }
+                casePostsQuery = casePostsQuery
+                    .Where(x => x.TemplateId == requestModel.TemplateId);
 
                 casePostsListModel.Total = await casePostsQuery.CountAsync();
 
@@ -106,8 +103,20 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                         Subject = x.Subject,
                         Text = x.Text,
                         Date = x.PostDate,
+                        
                         // TODO add fields
                     }).ToListAsync();
+
+                // Get data
+                Debugger.Break();
+                var core = await _coreService.GetCore();
+                var caseDto = await core.CaseLookupCaseId(requestModel.CaseId);
+                var templateDto = await core.TemplateItemRead(requestModel.TemplateId);
+                var replyElement = await core.CaseRead(int.Parse(caseDto.CaseUId), (int)caseDto.CheckUId);
+                var site = await core.SiteRead(caseDto.SiteUId);
+
+                casePostsListModel.EFormName = templateDto.Label;
+                casePostsListModel.LocationName = site.SiteName;
 
                 casePostsListModel.CasePostsList = casePostList;
 

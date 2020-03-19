@@ -30,7 +30,7 @@ namespace eFormAPI.Web.Infrastructure.Models.Mailing
         public int PageSize { get; set; }
         public bool IsSortDsc { get; set; }
         public int Offset { get; set; }
-        public int? TemplateId { get; set; }
-        public int? CaseId { get; set; }
+        public int TemplateId { get; set; }
+        public int CaseId { get; set; }
     }
 }
