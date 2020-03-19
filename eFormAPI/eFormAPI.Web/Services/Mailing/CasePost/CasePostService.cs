@@ -49,10 +49,12 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
             ILogger<CasePostService> logger,
             IUserService userService,
             ILocalizationService localizationService,
+            IEFormCoreService coreService,
             BaseDbContext dbContext)
         {
             _logger = logger;
             _userService = userService;
+            _coreService = coreService;
             _localizationService = localizationService;
             _dbContext = dbContext;
         }
@@ -112,11 +114,13 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                 var core = await _coreService.GetCore();
                 var caseDto = await core.CaseLookupCaseId(requestModel.CaseId);
                 var templateDto = await core.TemplateItemRead(requestModel.TemplateId);
-                var replyElement = await core.CaseRead(int.Parse(caseDto.CaseUId), (int)caseDto.CheckUId);
+                var replyElement = await core.CaseRead((int)caseDto.MicrotingUId, (int)caseDto.CheckUId);
                 var site = await core.SiteRead(caseDto.SiteUId);
 
                 casePostsListModel.EFormName = templateDto.Label;
                 casePostsListModel.LocationName = site.SiteName;
+                casePostsListModel.Status = caseDto.Stat;
+                casePostsListModel.Description = templateDto.Description;
 
                 casePostsListModel.CasePostsList = casePostList;
 

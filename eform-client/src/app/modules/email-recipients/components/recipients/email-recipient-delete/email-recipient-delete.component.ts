@@ -33,7 +33,7 @@ export class EmailRecipientDeleteComponent implements OnInit, OnDestroy {
 
   deleteEmailRecipient() {
     this.spinnerStatus = true;
-    this.deleteEmailRecipient$ = this.emailRecipientsService.deleteEmailRecipient(1)
+    this.deleteEmailRecipient$ = this.emailRecipientsService.deleteEmailRecipient(this.selectedEmailRecipient.id)
       .subscribe((data) => {
         if (data && data.success) {
           this.frame.hide();

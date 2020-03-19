@@ -5,6 +5,7 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {EmailRecipientsService} from '../../../../../common/services/email-recipients';
 import {EmailRecipientCreateModel, EmailRecipientsCreateModel} from '../../../../../common/models/email-recipients';
 import {ToastrService} from 'ngx-toastr';
+import {TranslateService} from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
@@ -22,7 +23,9 @@ export class EmailRecipientsNewComponent implements OnInit, OnDestroy {
   rawTextareaData = '';
 
 
-  constructor(private emailRecipientsService: EmailRecipientsService, private toastrService: ToastrService) {
+  constructor(private emailRecipientsService: EmailRecipientsService,
+              private toastrService: ToastrService,
+              private translateService: TranslateService) {
   }
 
   show() {
@@ -60,7 +63,7 @@ export class EmailRecipientsNewComponent implements OnInit, OnDestroy {
           this.spinnerStatus = false;
         });
     } else {
-      this.toastrService.error('nope');
+      this.toastrService.error(this.translateService.instant('Email/name text area should have at least one email/name pair'));
     }
   }
 

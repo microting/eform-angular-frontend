@@ -10,6 +10,7 @@ import {CasePostsService} from '../../../../../common/services/cases';
 import {EmailRecipientsService} from '../../../../../common/services/email-recipients';
 import {EmailRecipientTagCommonModel} from '../../../../../common/models/email-recipients';
 import {ActivatedRoute} from '@angular/router';
+import {CommonDictionaryModel} from '../../../../../common/models/common';
 
 @AutoUnsubscribe()
 @Component({
@@ -25,8 +26,10 @@ export class CasePostsPageComponent implements OnInit, OnDestroy {
   localPageSettings: PageSettingsModel = new PageSettingsModel();
   spinnerStatus = false;
   availableRecipientsAndTags: EmailRecipientTagCommonModel[] = [];
+  availableRecipients: CommonDictionaryModel[] = [];
   getAllSub$: Subscription;
   getTagsSub$: Subscription;
+  getRecipientsSub$: Subscription;
   selectedEformId: number;
   selectedCaseId: number;
 
@@ -45,6 +48,7 @@ export class CasePostsPageComponent implements OnInit, OnDestroy {
 
     this.getLocalPageSettings();
     this.getRecipientsAndTags();
+    this.getRecipients();
   }
 
   getLocalPageSettings() {
@@ -67,7 +71,11 @@ export class CasePostsPageComponent implements OnInit, OnDestroy {
     this.casePostsRequestModel.sort = this.localPageSettings.sort;
     this.casePostsRequestModel.pageSize = this.localPageSettings.pageSize;
 
-    this.getAllSub$ = this.casePostsService.getAllPosts(this.casePostsRequestModel).subscribe((data) => {
+    this.getAllSub$ = this.casePostsService.getAllPosts({
+      ...this.casePostsRequestModel,
+      caseId: this.selectedCaseId,
+      templateId: this.selectedEformId
+    }).subscribe((data) => {
       if (data && data.success) {
         this.casePostsListModel = data.model;
       }
@@ -80,6 +88,16 @@ export class CasePostsPageComponent implements OnInit, OnDestroy {
     this.getTagsSub$ = this.emailRecipientsService.getEmailRecipientsAndTags().subscribe((data) => {
       if (data && data.success) {
         this.availableRecipientsAndTags = data.model;
+      }
+      this.spinnerStatus = false;
+    });
+  }
+
+  getRecipients() {
+    this.spinnerStatus = true;
+    this.getRecipientsSub$ = this.emailRecipientsService.getSimpleEmailRecipients().subscribe((data) => {
+      if (data && data.success) {
+        this.availableRecipients = data.model;
       }
       this.spinnerStatus = false;
     });

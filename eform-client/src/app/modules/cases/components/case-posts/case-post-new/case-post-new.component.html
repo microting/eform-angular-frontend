@@ -18,6 +18,7 @@
                 [bindLabel]="'name'"
                 [bindValue]="'id'"
                 id="newPostFromSelector"></ng-select>
+            </div>
           </div>
           <div class="row pl-1">
             <div class="col ng-select-wrapper">
@@ -61,7 +62,7 @@
               </div>
             </div>
           </div>
-          <div class="row">
+          <div class="row mb-2">
             <div class="col">
               <div class="mat-checkbox">
                 <input id="attachLinkToCase" name="attachLinkToCase" [(ngModel)]="postCreateModel.attachLinkToCase"
@@ -73,7 +74,8 @@
           <div class="row">
             <div class="col">
               <div class="mat-checkbox">
-                <input id="attachReport" name="attachReport" [(ngModel)]="postCreateModel.attachReport" type="checkbox">
+                <input id="attachReport" name="attachReport" [(ngModel)]="postCreateModel.attachReport"
+                       type="checkbox">
                 <label for="attachReport">{{ 'Attach PDF' | translate }}</label>
               </div>
             </div>
@@ -81,7 +83,10 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button id="newTagSaveBtn" class="btn btn-success" (click)="createPost()">{{'Save' | translate}}</button>
+        <button id="newTagSaveBtn" class="btn btn-success"
+                [disabled]="!postCreateModel.from ||
+                !postCreateModel.subject"
+                (click)="createPost()">{{'Save' | translate}}</button>
         <button id="newTagSaveCancelBtn" class="btn btn-accent text-black-50"
                 (click)="frame.hide()">{{'Close' | translate}}</button>
       </div>
@@ -89,4 +94,4 @@
   </div>
 </div>
 
-<eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>>
+<eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>

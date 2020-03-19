@@ -14,22 +14,23 @@
               {{'Add new' | translate}}
             </button>
             <div class="panel panel-default w-100 pt-2">
-              <div class="panel-body">
+              <div class="panel-body scrollable-block">
                 <ul class="list-group">
                   <li class="list-group-item"
                       *ngFor="let tag of availableTags">
                     <div class="row">
-                      <div id="entitySelectItemEditNameentityItemUId"
-                           class="col-md-8 col-sm-6 col-xs-6">{{tag.name}}</div>
+                      <div id="tagName" class="col-md-8 col-sm-6 col-xs-6">
+                        {{tag.name}}
+                      </div>
                       <div class="col-md-4 col-sm-6 col-xs-6">
                         <div class="d-flex">
                           <div class="ml-auto">
                             <a>
-                              <fa-icon icon="pen" size="lg" [fixedWidth]="true" id="entitySelectEditItemEditBtn"
+                              <fa-icon icon="pen" size="lg" [fixedWidth]="true" id="tagEditBtn"
                                        (click)="openEditTagNameModal(tag)"></fa-icon>
                             </a>
                             <a>
-                              <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true" id="entitySelectEditItemDeleteBtn"
+                              <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true" id="tagDeleteBtn"
                                        (click)="deleteTagModal(tag)"></fa-icon>
                             </a>
                           </div>

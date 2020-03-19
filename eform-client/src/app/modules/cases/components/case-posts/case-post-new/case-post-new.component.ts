@@ -17,6 +17,8 @@ export class CasePostNewComponent implements OnInit, OnDestroy {
   @Output() postCreated: EventEmitter<void> = new EventEmitter<void>();
   @Input() availableRecipientsAndTags: EmailRecipientTagCommonModel[] = [];
   @Input() availableRecipients: CommonDictionaryModel[] = [];
+  @Input() caseId: number;
+  @Input() eformId: number;
   postCreateModel: CasePostCreateModel = new CasePostCreateModel;
   spinnerStatus = false;
   createTag$: Subscription;
@@ -34,10 +36,15 @@ export class CasePostNewComponent implements OnInit, OnDestroy {
 
   createPost() {
     this.spinnerStatus = true;
-    this.createTag$ = this.casePostsService.createPost(this.postCreateModel).subscribe((data) => {
+    this.createTag$ = this.casePostsService.createPost({
+      ...this.postCreateModel,
+      caseId: this.caseId,
+      templateId: this.eformId
+    }).subscribe((data) => {
       if (data && data.success) {
         this.frame.hide();
         this.postCreated.emit();
+        this.postCreateModel = new CasePostCreateModel();
       }
       this.spinnerStatus = false;
     });

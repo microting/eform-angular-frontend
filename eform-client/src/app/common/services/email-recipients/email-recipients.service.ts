@@ -4,6 +4,7 @@ import {ToastrService} from 'ngx-toastr';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {
+  CommonDictionaryModel,
   DeviceUserModel,
   EmailRecipientsCreateModel,
   EmailRecipientsListModel,
@@ -30,6 +31,10 @@ export class EmailRecipientsService extends BaseService {
 
   getEmailRecipientsAndTags(): Observable<OperationDataResult<EmailRecipientTagCommonModel[]>> {
     return this.get<EmailRecipientsListModel>(EmailRecipientsMethods.Main + '/common');
+  }
+
+  getSimpleEmailRecipients(): Observable<OperationDataResult<CommonDictionaryModel[]>> {
+    return this.get<CommonDictionaryModel[]>(EmailRecipientsMethods.Main + '/simple');
   }
 
   updateEmailRecipient(model: EmailRecipientUpdateModel): Observable<OperationResult> {
