@@ -3,6 +3,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {FileUploader} from 'ng2-file-upload';
 import {ToastrService} from 'ngx-toastr';
 import {TemplateDto} from 'src/app/common/models/dto';
+import {AuthService} from '../../../../common/services/auth';
 
 @Component({
   selector: 'app-eform-upload-zip-modal',
@@ -12,9 +13,11 @@ import {TemplateDto} from 'src/app/common/models/dto';
 export class EformUploadZipModalComponent implements OnInit {
   @ViewChild('frame') frame;
   selectedTemplate: TemplateDto = new TemplateDto();
-  zipFileUploader: FileUploader = new FileUploader({url: '/api/template-files/upload-eform-zip'});
+  zipFileUploader: FileUploader = new FileUploader({
+    url: '/api/template-files/upload-eform-zip', authToken: 'Bearer ' +
+      JSON.parse(localStorage.getItem('currentAuth')).access_token});
 
-  constructor(private toastrService: ToastrService, private translateService: TranslateService) { }
+  constructor(private toastrService: ToastrService, private translateService: TranslateService, authService: AuthService) { }
 
   ngOnInit() {
     this.zipFileUploader.onBuildItemForm = (item, form) => {
