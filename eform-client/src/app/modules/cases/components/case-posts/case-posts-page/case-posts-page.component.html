@@ -13,12 +13,31 @@
 </subheader-pn>
 
 <div class="container-fluid">
-  <div class="row pl-1">
-    <div class="col-md-4 col-sm-8 ng-select-wrapper">
-
+  <div class="row mt-2">
+    <div class="col-md-4 col-sm-8">
+      <p>
+        <strong>eForm: </strong>
+        <span id="eformLabel">{{casePostsListModel.eFormName}}</span>
+      </p>
+      <p>
+        <strong>{{'eForm conducted by' | translate}}: </strong>
+        <span id="eformConductedBy">{{casePostsListModel.locationName}}</span>
+      </p>
+      <p>
+        <strong>{{'Location' | translate}}: </strong>
+        <span id="eformLocationName">{{casePostsListModel.locationName}}</span>
+      </p>
+      <p>
+        <strong>{{'Description' | translate}}: </strong>
+        <span id="eformDescription">{{casePostsListModel.description}}</span>
+      </p>
+      <p>
+        <strong>{{'Status' | translate}}: </strong>
+        <span id="eformStatus">{{casePostsListModel.status}}</span>
+      </p>
     </div>
   </div>
-  <div class="row p-1 mt-4 table-responsive no-gutters" *ngIf="casePostsListModel.total !== 0">
+  <div class="row p-1 table-responsive no-gutters" *ngIf="casePostsListModel.total !== 0">
     <table class="table table-sm table-striped text-center z-depth-1">
       <thead>
       <tr>
@@ -35,19 +54,11 @@
             <i class="material-icons text-black-50">{{getSortIcon('Date')}}</i>
           </div>
         </th>
-        <th scope="col" class="table-header-sortable" id="casePostSentByTableHeader"
-            (click)="sortTable('SentBy')">
-          <div class="d-flex align-items-center justify-content-center">
-            {{ 'Post created by' | translate }}
-            <i class="material-icons text-black-50">{{getSortIcon('SentBy')}}</i>
-          </div>
+        <th scope="col">
+          {{ 'Post created by' | translate }}
         </th>
-        <th scope="col" class="table-header-sortable" id="casePostEmailTableHeader"
-            (click)="sortTable('SentTo')">
-          <div class="d-flex align-items-center justify-content-center">
-            {{ 'Post sent to' | translate }}
-            <i class="material-icons text-black-50">{{getSortIcon('SentTo')}}</i>
-          </div>
+        <th scope="col">
+          {{ 'Post sent to' | translate }}
         </th>
         <th scope="col">
           {{ 'Subject' | translate }}
@@ -71,10 +82,24 @@
           {{post.date | date: 'HH:mm:ss'}}
         </td>
         <td id="casePostSentBy">
-          {{post.sentBy}}
+          {{post.from}}
         </td>
         <td id="casePostSentTo">
-          {{post.sentTo}}
+          <div *ngFor="let recipient of post.toRecipients">
+                <span class="badge badge-primary">
+                  <fa-icon icon="user" [fixedWidth]="true"></fa-icon>
+                  {{recipient}}
+                </span>
+            <br/>
+          </div>
+
+          <div *ngFor="let tag of post.toRecipientsTags">
+                 <span class="badge badge-primary">
+                  <fa-icon icon="tag" [fixedWidth]="true"></fa-icon>
+                   {{tag}}
+                </span>
+            <br/>
+          </div>
         </td>
         <td id="casePostSubject">
           {{post.subject}}

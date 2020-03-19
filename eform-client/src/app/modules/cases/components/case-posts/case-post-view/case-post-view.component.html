@@ -19,8 +19,8 @@
               </div>
             </div>
           </div>
-          <div class="row pl-1">
-            <div class="col ">
+          <div class="row">
+            <div class="col">
               <div class="d-flex">
                 <div class="mr-4">
                   {{'To' | translate}}:
@@ -38,6 +38,19 @@
                    {{tag}}
                 </span>
                 </h5>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="md-form">
+                <input mdbInputDirective
+                       [mdbValidate]="false"
+                       [disabled]="true"
+                       [(ngModel)]="postViewModel.title"
+                       type="text" id="postViewTitle"
+                       name="postViewTitle" class="form-control">
+                <label for="postViewTitle">{{ 'Title' | translate }}</label>
               </div>
             </div>
           </div>

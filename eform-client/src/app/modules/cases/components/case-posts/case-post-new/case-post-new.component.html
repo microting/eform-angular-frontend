@@ -41,6 +41,18 @@
               <div class="md-form">
                 <input mdbInputDirective
                        [mdbValidate]="false"
+                       [(ngModel)]="postCreateModel.title"
+                       type="text" id="newPostTitle"
+                       name="newPostTitle" class="form-control">
+                <label for="newPostTitle">{{ 'Title' | translate }}</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="md-form">
+                <input mdbInputDirective
+                       [mdbValidate]="false"
                        [(ngModel)]="postCreateModel.subject"
                        type="text" id="newPostSubject"
                        name="newPostSubject" class="form-control">
