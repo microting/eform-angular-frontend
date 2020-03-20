@@ -390,6 +390,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                                 .ToList(),
                             EmailTags = x.Tags
                                 .Select(y => y.EmailTagId)
+                                .ToList()
                         })
                         .FirstOrDefaultAsync();
 

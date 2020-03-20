@@ -268,7 +268,9 @@
   "Email addresses": "Email addresses",
   "Edit tag name": "Edit tag name",
   "Tags management": "Tags management",
-  "Email/name text area should have at least one email/name pair": "Email/name text area should have at least one email/name pair"
+  "Email/name text area should have at least one email/name pair": "Email/name text area should have at least one email/name pair",
+  "SendGrid Key": "SendGrid Key",
+  "SendGrid Information": "SendGrid Information"
 }
 
 

@@ -20,6 +20,7 @@ export class CasePostNewComponent implements OnInit, OnDestroy {
   @Input() caseId: number;
   @Input() eformId: number;
   postCreateModel: CasePostCreateModel = new CasePostCreateModel;
+  selectedTagsAndRecipientsIds: number[] = [];
   spinnerStatus = false;
   createTag$: Subscription;
 
@@ -45,6 +46,7 @@ export class CasePostNewComponent implements OnInit, OnDestroy {
         this.frame.hide();
         this.postCreated.emit();
         this.postCreateModel = new CasePostCreateModel();
+        this.selectedTagsAndRecipientsIds = [];
       }
       this.spinnerStatus = false;
     });
