@@ -52,8 +52,8 @@ namespace eFormAPI.Web.Services.Mailing.EmailService
             try
             {
                 var client = new SendGridClient(_emailSettings.Value.SendGridKey);
-                var fromAddress = new EmailAddress(fromEmail, fromName);
-                var toAddress = new EmailAddress(to);
+                var fromAddress = new EmailAddress(fromEmail.Replace(" ", ""), fromName);
+                var toAddress = new EmailAddress(to.Replace(" ", ""));
                 var msg = MailHelper.CreateSingleEmail(fromAddress, toAddress, subject, text, html);
                 var response = await client.SendEmailAsync(msg);
                 if (((int)response.StatusCode < 200) || ((int)response.StatusCode >= 300))
@@ -79,8 +79,8 @@ namespace eFormAPI.Web.Services.Mailing.EmailService
             try
             {
                 var client = new SendGridClient(_emailSettings.Value.SendGridKey);
-                var fromEmailAddress = new EmailAddress(fromEmail, fromName);
-                var toEmail = new EmailAddress(to);
+                var fromEmailAddress = new EmailAddress(fromEmail.Replace(" ", ""), fromName);
+                var toEmail = new EmailAddress(to.Replace(" ", ""));
                 var msg = MailHelper.CreateSingleEmail(fromEmailAddress, toEmail, subject, text, html);
                 var bytes = File.ReadAllBytes(fileName);
                 var file = Convert.ToBase64String(bytes);
