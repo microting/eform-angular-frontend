@@ -24,18 +24,27 @@ SOFTWARE.
 namespace eFormAPI.Web.Services.Mailing.CasePost
 {
     using System;
+    using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
+    using System.Reflection;
+    using System.Text;
     using System.Threading.Tasks;
+    using System.Xml.Linq;
     using Abstractions;
+    using EmailService;
     using Infrastructure.Database;
     using Infrastructure.Database.Entities.Mailing;
     using Infrastructure.Models;
     using Infrastructure.Models.Mailing;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
+    using Microting.eForm.Dto;
+    using Microting.eForm.Infrastructure.Constants;
     using Microting.eFormApi.BasePn.Abstractions;
     using Microting.eFormApi.BasePn.Infrastructure.Extensions;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    using OpenStack.NetCoreSwiftClient.Extensions;
 
     public class CasePostService : ICasePostService
     {
@@ -43,6 +52,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
         private readonly IUserService _userService;
         private readonly ILocalizationService _localizationService;
         private readonly IEFormCoreService _coreService;
+        private readonly IEmailService _emailService;
         private readonly BaseDbContext _dbContext;
 
         public CasePostService(
@@ -50,13 +60,15 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
             IUserService userService,
             ILocalizationService localizationService,
             IEFormCoreService coreService,
-            BaseDbContext dbContext)
+            BaseDbContext dbContext,
+            IEmailService emailService)
         {
             _logger = logger;
             _userService = userService;
             _coreService = coreService;
             _localizationService = localizationService;
             _dbContext = dbContext;
+            _emailService = emailService;
         }
 
         public async Task<OperationDataResult<CasePostsListModel>> GetAllPosts(
@@ -127,7 +139,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                             _localizationService.GetString("CaseNotFound"));
                     }
 
-                    if (caseEntity?.Site?.MicrotingUid != null)
+                    if (caseEntity.Site?.MicrotingUid != null)
                     {
                         var site = await core.SiteRead((int) caseEntity.Site.MicrotingUid);
                         casePostsListModel.WorkerName = site.SiteName;
@@ -349,6 +361,118 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                     }
 
                     await _dbContext.SaveChangesAsync();
+
+                    // Send email
+                    var from = await _dbContext.EmailRecipients
+                        .AsNoTracking()
+                        .Where(x => x.Id == requestModel.From)
+                        .FirstOrDefaultAsync();
+
+                    var casePostRecipientResult = await _dbContext.CasePosts
+                        .AsNoTracking()
+                        .Where(x => x.Id == casePost.Id)
+                        .Select(x => new
+                        {
+                            Recipients = x.Recipients
+                                .Select(y => y.EmailRecipient)
+                                .ToList(),
+                            EmailTags = x.Tags
+                                .Select(y => y.EmailTagId)
+                        })
+                        .FirstOrDefaultAsync();
+
+                    var emailTagsRecipients = await _dbContext.EmailTagRecipients
+                        .Where(x => casePostRecipientResult.EmailTags.Contains(x.EmailTagId))
+                        .Select(x => x.EmailRecipient)
+                        .ToListAsync();
+
+                    var recipients = new List<EmailRecipient>();
+                    recipients.AddRange(casePostRecipientResult.Recipients);
+                    recipients.AddRange(emailTagsRecipients);
+
+                    var core = await _coreService.GetCore();
+                    var caseDto = await core.CaseLookupCaseId(casePost.CaseId);
+                    if (caseDto?.MicrotingUId == null || caseDto?.CheckUId == null)
+                    {
+                        throw new InvalidOperationException("caseDto not found");
+                    }
+                    var replyElement = await core.CaseRead((int) caseDto.MicrotingUId, (int) caseDto.CheckUId);
+                    var assembly = Assembly.GetExecutingAssembly();
+                    var assemblyName = assembly.GetName().Name;
+                    var stream = assembly.GetManifestResourceStream($"{assemblyName}.Resources.Email.html");
+                    string html;
+                    if (stream == null)
+                    {
+                        throw new InvalidOperationException("Resource not found");
+                    }
+                    using (var reader = new StreamReader(stream, Encoding.UTF8))
+                    {
+                        html = await reader.ReadToEndAsync();
+                    }
+
+                    html = html
+                        .Replace("{{link}}",
+                            $"{await core.GetSdkSetting(Settings.httpServerAddress)}/cases/edit/{casePost.CaseId}/{caseDto.CheckListId}")
+                        .Replace("{{text}}", casePost.Text);
+
+                    foreach (var recipient in recipients
+                        .Where(r => r.WorkflowState != Constants.WorkflowStates.Removed)
+                        .GroupBy(x => new { x.Email, x.Name})
+                        .Select(x=> x.Key)
+                        .ToList())
+                    {
+                        if (casePost.AttachPdf)
+                        {
+                            try
+                            {
+                                // Fix for broken SDK not handling empty customXmlContent well
+                                string customXmlContent = new XElement("FillerElement",
+                                    new XElement("InnerElement", "SomeValue")).ToString();
+
+                                // get report file
+                                var filePath = await core.CaseToPdf(
+                                    casePost.CaseId,
+                                    replyElement.Id.ToString(),
+                                    DateTime.Now.ToString("yyyyMMddHHmmssffff"),
+                                    $"{await core.GetSdkSetting(Settings.httpServerAddress)}/" +
+                                    "api/template-files/get-image/",
+                                    "pdf",
+                                    customXmlContent);
+
+                                if (!File.Exists(filePath))
+                                {
+                                    throw new Exception("Error while creating report file");
+                                }
+
+                                await _emailService.SendFileAsync(
+                                    from.Email,
+                                    from.Name,
+                                    casePost.Subject.IsNullOrEmpty() ? "-" : casePost.Subject,
+                                    recipient.Email,
+                                    filePath,
+                                    html: html);
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e);
+                                await _emailService.SendAsync(
+                                    from.Email,
+                                    from.Name,
+                                    casePost.Subject.IsNullOrEmpty() ? "-" : casePost.Subject,
+                                    recipient.Email,
+                                    html: html);
+                            }
+                        }
+                        else
+                        {
+                            await _emailService.SendAsync(
+                                from.Email,
+                                from.Name,
+                                casePost.Subject.IsNullOrEmpty() ? "-" : casePost.Subject,
+                                recipient.Email,
+                                html: html);
+                        }
+                    }
 
                     transaction.Commit();
                     return new OperationResult(
