@@ -675,4 +675,7 @@
   <data name="CaseNotFound" xml:space="preserve">
     <value>Case not found</value>
   </data>
+  <data name="SendGridKeyShouldBeAddedToSettings" xml:space="preserve">
+    <value>SendGrid key should be added to settings</value>
+  </data>
 </root>

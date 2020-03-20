@@ -33,6 +33,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
     using System.Xml.Linq;
     using Abstractions;
     using EmailService;
+    using Hosting.Helpers.DbOptions;
     using Infrastructure.Database;
     using Infrastructure.Database.Entities.Mailing;
     using Infrastructure.Models;
@@ -44,6 +45,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
     using Microting.eFormApi.BasePn.Abstractions;
     using Microting.eFormApi.BasePn.Infrastructure.Extensions;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
     using OpenStack.NetCoreSwiftClient.Extensions;
 
     public class CasePostService : ICasePostService
@@ -54,6 +56,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
         private readonly IEFormCoreService _coreService;
         private readonly IEmailService _emailService;
         private readonly BaseDbContext _dbContext;
+        private readonly IDbOptions<EmailSettings> _emailSettings;
 
         public CasePostService(
             ILogger<CasePostService> logger,
@@ -61,7 +64,8 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
             ILocalizationService localizationService,
             IEFormCoreService coreService,
             BaseDbContext dbContext,
-            IEmailService emailService)
+            IEmailService emailService,
+            IDbOptions<EmailSettings> emailSettings)
         {
             _logger = logger;
             _userService = userService;
@@ -69,6 +73,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
             _localizationService = localizationService;
             _dbContext = dbContext;
             _emailService = emailService;
+            _emailSettings = emailSettings;
         }
 
         public async Task<OperationDataResult<CasePostsListModel>> GetAllPosts(
@@ -308,6 +313,13 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
             {
                 try
                 {
+                    if (string.IsNullOrEmpty(_emailSettings.Value.SendGridKey))
+                    {
+                        transaction.Rollback();
+                        return new OperationResult(false,
+                            _localizationService.GetString("SendGridKeyShouldBeAddedToSettings"));
+                    }
+
                     var casePost = new CasePost
                     {
                         CreatedAt = DateTime.UtcNow,
@@ -392,8 +404,9 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
 
                     var core = await _coreService.GetCore();
                     var caseDto = await core.CaseLookupCaseId(casePost.CaseId);
-                    if (caseDto?.MicrotingUId == null || caseDto?.CheckUId == null)
+                    if (caseDto?.MicrotingUId == null || caseDto.CheckUId == null)
                     {
+                        transaction.Rollback();
                         throw new InvalidOperationException("caseDto not found");
                     }
                     var replyElement = await core.CaseRead((int) caseDto.MicrotingUId, (int) caseDto.CheckUId);
@@ -403,6 +416,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                     string html;
                     if (stream == null)
                     {
+                        transaction.Rollback();
                         throw new InvalidOperationException("Resource not found");
                     }
                     using (var reader = new StreamReader(stream, Encoding.UTF8))
@@ -410,10 +424,17 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                         html = await reader.ReadToEndAsync();
                     }
 
-                    html = html
-                        .Replace("{{link}}",
-                            $"{await core.GetSdkSetting(Settings.httpServerAddress)}/cases/edit/{casePost.CaseId}/{caseDto.CheckListId}")
-                        .Replace("{{text}}", casePost.Text);
+                    if (casePost.LinkToCase)
+                    {
+                        html = html
+                            .Replace("{{link}}",
+                                $"{await core.GetSdkSetting(Settings.httpServerAddress)}/cases/edit/{casePost.CaseId}/{caseDto.CheckListId}")
+                            .Replace("{{text}}", casePost.Text);
+                    }
+                    else
+                    {
+                        html = casePost.Text;
+                    }
 
                     foreach (var recipient in recipients
                         .Where(r => r.WorkflowState != Constants.WorkflowStates.Removed)
@@ -426,7 +447,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                             try
                             {
                                 // Fix for broken SDK not handling empty customXmlContent well
-                                string customXmlContent = new XElement("FillerElement",
+                                var customXmlContent = new XElement("FillerElement",
                                     new XElement("InnerElement", "SomeValue")).ToString();
 
                                 // get report file

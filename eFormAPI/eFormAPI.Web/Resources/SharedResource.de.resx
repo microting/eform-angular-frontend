@@ -657,4 +657,7 @@
   <data name="CaseNotFound" xml:space="preserve">
     <value>Fall nicht gefunden</value>
   </data>
+  <data name="SendGridKeyShouldBeAddedToSettings" xml:space="preserve">
+    <value>Der SendGrid-Schlüssel sollte zu den Einstellungen hinzugefügt werden</value>
+  </data>
 </root>

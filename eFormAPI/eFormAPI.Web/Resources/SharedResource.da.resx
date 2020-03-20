@@ -675,4 +675,7 @@
   <data name="CaseNotFound" xml:space="preserve">
     <value>Sagen blev ikke fundet</value>
   </data>
+  <data name="SendGridKeyShouldBeAddedToSettings" xml:space="preserve">
+    <value>SendGrid-tasten skal føjes til indstillingerne</value>
+  </data>
 </root>
