@@ -8,6 +8,7 @@ export class InstalledPluginModel {
   pluginId: number;
   name: string;
   version: string;
+  versionAvailable: string;
   baseUrl: string;
   status: number;
 }

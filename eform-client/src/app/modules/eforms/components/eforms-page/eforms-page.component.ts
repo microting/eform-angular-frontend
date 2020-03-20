@@ -11,6 +11,7 @@ import {AuthService, UserSettingsService} from 'src/app/common/services/auth';
 import {EFormService, EformTagService} from 'src/app/common/services/eform';
 import {SecurityGroupEformsPermissionsService} from 'src/app/common/services/security';
 import {FolderDto} from '../../../../common/models/dto/folder.dto';
+import {saveAs} from 'file-saver';
 
 @Component({
   selector: 'app-eform-page',
@@ -130,7 +131,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
         this.templateRequestModel.tagIds = this.templateRequestModel.tagIds.filter(x => x !== e.id);
         this.loadAllTemplates();
       }
-    },(error) => {
+    }, (error) => {
       this.spinnerStatus = false;
     });
   }
@@ -189,10 +190,19 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   }
 
   downloadItem(itemName: string, templateId: number) {
+    this.spinnerStatus = true;
     if (itemName === 'XML') {
-      window.open('/api/template-files/download-eform-xml/' + templateId, '_blank');
+      this.eFormService.downloadEformXML(templateId).subscribe(data => {
+        const blob = new Blob([data]);
+        saveAs(blob, `template_${templateId}.csv`);
+        this.spinnerStatus = false;
+      });
     } else {
-      window.open('/api/template-files/csv/' + templateId, '_blank');
+      this.eFormService.downloadCSVFile(templateId).subscribe(data => {
+        const blob = new Blob([data]);
+        saveAs(blob, `template_${templateId}.csv`);
+        this.spinnerStatus = false;
+      });
     }
   }
 
