@@ -18,6 +18,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace eFormAPI.Web.Services
 {
@@ -63,6 +64,7 @@ namespace eFormAPI.Web.Services
                             Status = (PluginStatus) eformPlugin.Status,
                             Name = loadedPlugin.Name,
                             Version = loadedPlugin.PluginAssembly().GetName().Version.ToString(),
+                            VersionAvailable = await GetLatestPluginVersion("microting", loadedPlugin.PluginId),
                             BaseUrl = loadedPlugin.PluginBaseUrl
                         };
                         result.PluginsList.Add(pluginSettingsModel);
@@ -215,6 +217,36 @@ namespace eFormAPI.Web.Services
                 proc.WaitForExit();
             }
             return result;
+        }
+
+        private async Task<string> GetLatestPluginVersion(string githubUserName, string pluginName)
+        {
+            var httpClient = new HttpClient
+            {
+                BaseAddress = new Uri($"https://api.github.com/repos/{githubUserName}/{pluginName}/tags")
+            };
+
+            httpClient.DefaultRequestHeaders.Add("User-Agent", "ReleaseSearcher");
+
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+            };
+
+            string latestVersion = "";
+
+            using (var response = await httpClient.SendAsync(request))
+            {
+                response.EnsureSuccessStatusCode();
+
+                var responseString = await response.Content.ReadAsStringAsync();
+                JToken responseObj = JRaw.Parse(responseString);
+
+                latestVersion = responseObj.First["name"].ToString();
+
+            }
+
+            return latestVersion.Replace("v", "");
         }
     }
 }
