@@ -31,6 +31,7 @@ namespace eFormAPI.Web.Infrastructure.Models.Plugins
         public string PluginId { get; set; }
         public string Name { get; set; }
         public string Version { get; set; }
+        public string VersionAvailable { get; set; }
         public string BaseUrl { get; set; }
         public PluginStatus Status { get; set; }
         public string ConnectionString { get; set; }
