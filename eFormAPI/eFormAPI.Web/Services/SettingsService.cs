@@ -43,6 +43,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using Castle.Core.Internal;
+using eFormAPI.Web.Hosting.Helpers;
 using eFormAPI.Web.Infrastructure.Models.Settings.Admin;
 using eFormAPI.Web.Infrastructure.Models.Settings.Initial;
 using Microting.eForm.Dto;
@@ -409,6 +410,11 @@ namespace eFormAPI.Web.Services
             }
 
             return new OperationDataResult<string>(true, PathHelper.GetOsVersion().ToString());
+        }
+
+        public async Task<OperationDataResult<string>> GetLatestVersion()
+        {
+            return new OperationDataResult<string>(true, await PluginHelper.GetLatestRepositoryVersion("microting", "eform-angular-frontend"));
         }
 
         public async Task<OperationDataResult<AdminSettingsModel>> GetAdminSettings()
