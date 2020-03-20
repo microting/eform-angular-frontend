@@ -672,4 +672,7 @@
   <data name="PostNotFound" xml:space="preserve">
     <value>Indlæg ikke fundet</value>
   </data>
+  <data name="CaseNotFound" xml:space="preserve">
+    <value>Sagen blev ikke fundet</value>
+  </data>
 </root>

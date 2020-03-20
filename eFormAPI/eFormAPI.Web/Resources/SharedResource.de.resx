@@ -654,4 +654,7 @@
   <data name="PostNotFound" xml:space="preserve">
     <value>Beitrag nicht gefunden</value>
   </data>
+  <data name="CaseNotFound" xml:space="preserve">
+    <value>Fall nicht gefunden</value>
+  </data>
 </root>

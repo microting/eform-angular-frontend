@@ -29,6 +29,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
     using Abstractions;
     using Infrastructure.Database;
     using Infrastructure.Database.Entities.Mailing;
+    using Infrastructure.Models;
     using Infrastructure.Models.Mailing;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
@@ -111,13 +112,130 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                     }).ToListAsync();
 
                 var core = await _coreService.GetCore();
-                var caseDto = await core.CaseLookupCaseId(requestModel.CaseId);
                 var templateDto = await core.TemplateItemRead(requestModel.TemplateId);
-                var site = await core.SiteRead(caseDto.SiteUId);
-                casePostsListModel.EFormName = templateDto.Label;
-                casePostsListModel.LocationName = site.SiteName;
-                casePostsListModel.Status = caseDto.Stat;
-                casePostsListModel.Description = templateDto.Description;
+                using (var dbContext = core.dbContextHelper.GetDbContext())
+                {
+                    var caseEntity = await dbContext.cases
+                        .AsNoTracking()
+                        .Include(x => x.Site)
+                        .SingleOrDefaultAsync(x => x.Id == requestModel.CaseId);
+
+                    if (caseEntity == null)
+                    {
+                        return new OperationDataResult<CasePostsListModel>(
+                            false,
+                            _localizationService.GetString("CaseNotFound"));
+                    }
+
+                    if (caseEntity?.Site?.MicrotingUid != null)
+                    {
+                        var site = await core.SiteRead((int) caseEntity.Site.MicrotingUid);
+                        casePostsListModel.WorkerName = site.SiteName;
+                    }
+
+                    casePostsListModel.EFormName = templateDto.Label;
+
+                    if (!string.IsNullOrEmpty(caseEntity.FieldValue1))
+                    {
+                        casePostsListModel.AdditionalFields.Add(
+                            new KeyValueStringModel
+                            {
+                                Key = templateDto.Field1.Label,
+                                Value = caseEntity.FieldValue1
+                            });
+                    }
+
+                    if (!string.IsNullOrEmpty(caseEntity.FieldValue2))
+                    {
+                        casePostsListModel.AdditionalFields.Add(
+                            new KeyValueStringModel
+                            {
+                                Key = templateDto.Field2.Label,
+                                Value = caseEntity.FieldValue2
+                            });
+                    }
+
+                    if (!string.IsNullOrEmpty(caseEntity.FieldValue3))
+                    {
+                        casePostsListModel.AdditionalFields.Add(
+                            new KeyValueStringModel
+                            {
+                                Key = templateDto.Field3.Label,
+                                Value = caseEntity.FieldValue3
+                            });
+                    }
+
+                    if (!string.IsNullOrEmpty(caseEntity.FieldValue4))
+                    {
+                        casePostsListModel.AdditionalFields.Add(
+                            new KeyValueStringModel
+                            {
+                                Key = templateDto.Field4.Label,
+                                Value = caseEntity.FieldValue4
+                            });
+                    }
+
+                    if (!string.IsNullOrEmpty(caseEntity.FieldValue5))
+                    {
+                        casePostsListModel.AdditionalFields.Add(
+                            new KeyValueStringModel
+                            {
+                                Key = templateDto.Field5.Label,
+                                Value = caseEntity.FieldValue5
+                            });
+                    }
+
+                    if (!string.IsNullOrEmpty(caseEntity.FieldValue6))
+                    {
+                        casePostsListModel.AdditionalFields.Add(
+                            new KeyValueStringModel
+                            {
+                                Key = templateDto.Field6.Label,
+                                Value = caseEntity.FieldValue6
+                            });
+                    }
+
+                    if (!string.IsNullOrEmpty(caseEntity.FieldValue7))
+                    {
+                        casePostsListModel.AdditionalFields.Add(
+                            new KeyValueStringModel
+                            {
+                                Key = templateDto.Field7.Label,
+                                Value = caseEntity.FieldValue7
+                            });
+                    }
+
+                    if (!string.IsNullOrEmpty(caseEntity.FieldValue8))
+                    {
+                        casePostsListModel.AdditionalFields.Add(
+                            new KeyValueStringModel
+                            {
+                                Key = templateDto.Field8.Label,
+                                Value = caseEntity.FieldValue8
+                            });
+                    }
+
+                    if (!string.IsNullOrEmpty(caseEntity.FieldValue9))
+                    {
+                        casePostsListModel.AdditionalFields.Add(
+                            new KeyValueStringModel
+                            {
+                                Key = templateDto.Field9.Label,
+                                Value = caseEntity.FieldValue9
+                            });
+                    }
+
+                    if (!string.IsNullOrEmpty(caseEntity.FieldValue10))
+                    {
+                        casePostsListModel.AdditionalFields.Add(
+                            new KeyValueStringModel
+                            {
+                                Key = templateDto.Field10.Label,
+                                Value = caseEntity.FieldValue10
+                            });
+                    }
+                }
+
                 casePostsListModel.CasePostsList = casePostList;
                 return new OperationDataResult<CasePostsListModel>(true, casePostsListModel);
             }

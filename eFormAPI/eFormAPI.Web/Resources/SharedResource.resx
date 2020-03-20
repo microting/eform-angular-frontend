@@ -672,4 +672,7 @@
   <data name="PostNotFound" xml:space="preserve">
     <value>Post not found</value>
   </data>
+  <data name="CaseNotFound" xml:space="preserve">
+    <value>Case not found</value>
+  </data>
 </root>

@@ -28,10 +28,12 @@ namespace eFormAPI.Web.Infrastructure.Models.Mailing
     public class CasePostsListModel
     {
         public string EFormName { get; set; }
-        public string Description { get; set; }
-        public string LocationName { get; set; }
-        public string Status { get; set; }
+        public string WorkerName { get; set; }
         public int Total { get; set; }
+
+        public List<KeyValueStringModel> AdditionalFields { get; set; }
+            = new List<KeyValueStringModel>();
+
         public List<CasePostModel> CasePostsList { get; set; }
             = new List<CasePostModel>();
     }
