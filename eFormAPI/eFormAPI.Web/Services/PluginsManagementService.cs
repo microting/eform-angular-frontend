@@ -244,7 +244,12 @@ namespace eFormAPI.Web.Services
 
             }
 
-            return latestVersion.Replace("v", "");
+            latestVersion = latestVersion.Replace("v", "");
+            if (latestVersion.Split(".").Count() == 2)
+            {
+                latestVersion += ".0";
+            }
+            return latestVersion;
         }
     }
 }
