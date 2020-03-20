@@ -143,4 +143,9 @@ export class EmailRecipientsPageComponent implements OnInit, OnDestroy {
       this.getEmailRecipients();
     }
   }
+
+  onEmailRecipientCreated() {
+    this.getEmailRecipients();
+    this.getTags();
+  }
 }

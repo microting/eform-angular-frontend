@@ -15,6 +15,10 @@ const routes: Routes = [
     canDeactivate: [CanDeactivateGuard]
   },
   {
+    path: 'posts/:id/:templateId/:postAction',
+    component: CasePostsPageComponent,
+  },
+  {
     path: 'posts/:id/:templateId',
     component: CasePostsPageComponent,
   }

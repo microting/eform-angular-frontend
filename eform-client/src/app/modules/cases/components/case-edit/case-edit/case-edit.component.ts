@@ -80,7 +80,7 @@ export class CaseEditComponent implements OnInit, OnDestroy {
     });
   }
 
-  saveCase() {
+  saveCase(navigateToPosts?: boolean) {
     this.spinnerStatus = true;
     this.requestModels = [];
     this.editElements.forEach(x => {
@@ -95,7 +95,9 @@ export class CaseEditComponent implements OnInit, OnDestroy {
         this.replyElement = new ReplyElementDto();
         this.spinnerStatus = false;
         this.isNoSaveExitAllowed = true;
-        if (this.isSaveClicked) {
+        if (navigateToPosts) {
+          this.router.navigate(['/cases/posts/', this.id , this.currentTemplate.id, 'new']).then();
+        } else if (this.isSaveClicked) {
           this.navigateToReverse();
         }
       }
@@ -158,7 +160,7 @@ export class CaseEditComponent implements OnInit, OnDestroy {
         if (data && data.success) {
           const foundTemplates = this.securityGroupEformsService.mapEformsSimplePermissions(data.model);
           if (foundTemplates.length) {
-            this.eformPermissionsSimpleModel = foundTemplates.find(x => x.templateId == templateId);
+            this.eformPermissionsSimpleModel = foundTemplates.find(x => x.templateId === templateId);
           }
           // this.spinnerStatus = false; // This is commented as loadCase is in 99% of the time the slowest
         }
@@ -168,7 +170,7 @@ export class CaseEditComponent implements OnInit, OnDestroy {
 
   checkEformPermissions(permissionIndex: number) {
     if (this.eformPermissionsSimpleModel.templateId) {
-      return this.eformPermissionsSimpleModel.permissionsSimpleList.find(x => x == UserClaimsEnum[permissionIndex].toString());
+      return this.eformPermissionsSimpleModel.permissionsSimpleList.find(x => x === UserClaimsEnum[permissionIndex].toString());
     } else {
       return this.userClaims[UserClaimsEnum[permissionIndex].toString()];
     }

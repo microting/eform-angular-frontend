@@ -21,19 +21,11 @@
       </p>
       <p>
         <strong>{{'eForm conducted by' | translate}}: </strong>
-        <span id="eformConductedBy">{{casePostsListModel.locationName}}</span>
+        <span id="eformConductedBy">{{casePostsListModel.workerName}}</span>
       </p>
-      <p>
-        <strong>{{'Location' | translate}}: </strong>
-        <span id="eformLocationName">{{casePostsListModel.locationName}}</span>
-      </p>
-      <p>
-        <strong>{{'Description' | translate}}: </strong>
-        <span id="eformDescription">{{casePostsListModel.description}}</span>
-      </p>
-      <p>
-        <strong>{{'Status' | translate}}: </strong>
-        <span id="eformStatus">{{casePostsListModel.status}}</span>
+      <p *ngFor="let field of casePostsListModel.additionalFields">
+        <strong>{{field.key}}: </strong>
+        <span>{{field.value}}</span>
       </p>
     </div>
   </div>
@@ -63,9 +55,9 @@
         <th scope="col">
           {{ 'Subject' | translate }}
         </th>
-        <th scope="col">
-          {{ 'Text' | translate }}
-        </th>
+<!--        <th scope="col">-->
+<!--          {{ 'Text' | translate }}-->
+<!--        </th>-->
         <th scope="col">
           {{ 'Actions' | translate }}
         </th>
@@ -104,9 +96,9 @@
         <td id="casePostSubject">
           {{post.subject}}
         </td>
-        <td id="casePostText">
-          {{post.text}}
-        </td>
+<!--        <td id="casePostText">-->
+<!--          <div class="max-lines" [innerHTML]="post.text"></div>-->
+<!--        </td>-->
         <td>
           <div class="d-flex flex-row justify-content-center">
             <button id="casePostViewBtn"

@@ -125,7 +125,7 @@
 <spinner-pn [spinnerVisibility]="spinnerStatus"></spinner-pn>
 
 <app-email-recipients-new #newRecipientsModal [availableTags]="availableTags"
-                          (emailRecipientsCreated)="getEmailRecipients()"></app-email-recipients-new>
+                          (emailRecipientsCreated)="onEmailRecipientCreated()"></app-email-recipients-new>
 <app-email-recipients-tags #recipientsTagsModal [availableTags]="availableTags"
                            (tagsChanged)="getTags()"></app-email-recipients-tags>
 <app-email-recipient-edit #editRecipientModal [availableTags]="availableTags"

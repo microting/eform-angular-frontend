@@ -14,20 +14,29 @@
         </div>
         <div class="card-body">
           <ul class="list-group">
-              <li *ngFor="let element of replyElement.elementList" style="cursor: pointer;"
-                  (click)="goToSection('#section' + element.id)"
-                  class="list-group-item list-group-item-action waves-light"
-                  routerLinkActive="active"
-                  mdbWavesEffect>
-                <a>
-                  {{element.label}}
-                </a>
-              </li>
+            <li *ngFor="let element of replyElement.elementList" style="cursor: pointer;"
+                (click)="goToSection('#section' + element.id)"
+                class="list-group-item list-group-item-action waves-light"
+                routerLinkActive="active"
+                mdbWavesEffect>
+              <a>
+                {{element.label}}
+              </a>
+            </li>
           </ul>
-          <div class="text-center mt-2" *ngIf="checkEformPermissions(userClaimsEnum.caseUpdate)">
-            <button class="btn btn-ar btn-danger" (click)="saveCase(); this.isSaveClicked = true;" id="submit_form">
-              {{ 'Save' | translate }} <i class="fa fa-spinner fa-spin"></i>
-            </button>
+          <div class="d-flex justify-content-center align-items-center flex-column mt-2"
+               *ngIf="checkEformPermissions(userClaimsEnum.caseUpdate)">
+            <div>
+              <button class="btn btn-ar btn-success" (click)="saveCase(true); this.isSaveClicked = true;"
+                      id="submit_for_with_post">
+                {{ 'Save and create new post' | translate }} <i class="fa fa-spinner fa-spin"></i>
+              </button>
+            </div>
+            <div>
+              <button class="btn btn-ar btn-success" (click)="saveCase(); this.isSaveClicked = true;" id="submit_form">
+                {{ 'Save' | translate }} <i class="fa fa-spinner fa-spin"></i>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -37,4 +46,5 @@
 
 <eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>
 
-<app-case-edit-confirmation (onConfirmationPressed)="confirmExit($event)" #caseConfirmation></app-case-edit-confirmation>
+<app-case-edit-confirmation (onConfirmationPressed)="confirmExit($event)"
+                            #caseConfirmation></app-case-edit-confirmation>

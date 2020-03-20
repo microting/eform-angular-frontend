@@ -30,6 +30,7 @@ export class CasePostsPageComponent implements OnInit, OnDestroy {
   getAllSub$: Subscription;
   getTagsSub$: Subscription;
   getRecipientsSub$: Subscription;
+  activatedRoute$: Subscription;
   selectedEformId: number;
   selectedCaseId: number;
 
@@ -41,9 +42,16 @@ export class CasePostsPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe(params => {
+    this.activatedRoute$ = this.activatedRoute.params.subscribe(params => {
       this.selectedEformId = +params['templateId'];
       this.selectedCaseId = +params['id'];
+      const postAction = params['postAction'];
+
+      if (postAction === 'new') {
+        setTimeout(() => {
+          this.newPostModal.show();
+        }, 1000);
+      }
     });
 
     this.getLocalPageSettings();
