@@ -45,6 +45,9 @@ export class EmailRecipientsNewComponent implements OnInit, OnDestroy {
         const data = line.split(',');
         if (data && data[0] && data[1]) {
           emailRecipients.push({name: data[0], email: data[1]});
+        } else {
+          this.toastrService.error(this.translateService.instant('Email/name text area should have at least one email/name pair'));
+          return;
         }
       }
 

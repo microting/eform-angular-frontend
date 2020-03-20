@@ -36,10 +36,9 @@
                 <textarea
                   mdbInputDirective [mdbValidate]="false"
                   #textAreaData [(ngModel)]="rawTextareaData"
-                  placeholder="{{ 'Enter name and email addresses separated by coma (test, test@test.com)' | translate }}"
                   name="emailAddresses" id="emailAddresses" rows="10"
                   class="md-textarea form-control"></textarea>
-                <label for="emailAddresses">{{ 'Email addresses' | translate }}</label>
+                <label for="emailAddresses">{{ 'Enter name and email addresses separated by coma (test, test@test.com)' | translate }}</label>
               </div>
             </div>
           </div>
