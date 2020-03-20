@@ -1,0 +1,134 @@
+<subheader-pn [title]="'Email Recipients' | translate">
+  <div class="p-3">
+    <button class="btn btn-accent text-black-50 btn-icon" (click)="openTagsModal()"
+            mdbTooltip="{{'Manage tags' | translate}}" mdbWavesEffect>
+      <fa-icon icon="tags" [fixedWidth]="true" size="lg"></fa-icon>
+    </button>
+    <button
+      id="createEmailRecipientBtn"
+      class="btn btn-success"
+      (click)="openCreateModal()">{{ 'Add Recipients' | translate }}
+    </button>
+  </div>
+</subheader-pn>
+
+<div class="container-fluid">
+  <div class="row pl-1">
+    <div class="col-md-4 col-sm-8 ng-select-wrapper">
+      <ng-select
+        class="custom"
+        dropdownPosition="'bottom'"
+        [placeholder]="'Tags' | translate"
+        [items]="availableTags"
+        [(ngModel)]="emailRecipientsRequestModel.tagIds"
+        (add)="saveTag($event)"
+        (remove)="removeSavedTag($event)"
+        [clearable]="false"
+        [bindLabel]="'name'"
+        [bindValue]="'id'"
+        id="tagSelector"
+        [multiple]="true"></ng-select>
+    </div>
+  </div>
+  <div class="row p-1 mt-4 table-responsive no-gutters" *ngIf="emailRecipientsListModel.total !== 0">
+    <table class="table table-sm table-striped text-center z-depth-1">
+      <thead>
+      <tr>
+        <th scope="col" class="table-header-sortable" id="idTableHeader" (click)="sortTable('Id')">
+          <div class="d-flex align-items-center justify-content-center">
+            ID
+            <i class="material-icons text-black-50">{{getSortIcon('Id')}}</i>
+          </div>
+        </th>
+        <th scope="col" class="table-header-sortable" id="emailRecipientNameTableHeader"
+            (click)="sortTable('Name')">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ 'Name' | translate }}
+            <i class="material-icons text-black-50">{{getSortIcon('Name')}}</i>
+          </div>
+        </th>
+        <th scope="col" class="table-header-sortable" id="emailRecipientEmailTableHeader"
+            (click)="sortTable('Email')">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ 'Email' | translate }}
+            <i class="material-icons text-black-50">{{getSortIcon('Email')}}</i>
+          </div>
+        </th>
+        <th scope="col">
+          {{ 'Tags' | translate }}
+        </th>
+        <th scope="col">
+          {{ 'Actions' | translate }}
+        </th>
+      </tr>
+      </thead>
+      <tbody id="tableBody">
+      <tr *ngFor="let recipient of emailRecipientsListModel?.emailRecipientsList; let i = index">
+        <td id="emailRecipientId">
+          {{recipient.id}}
+        </td>
+        <td id="emailRecipientName">
+          {{recipient.name}}
+        </td>
+        <td id="emailRecipientEmail">
+          {{recipient.email}}
+        </td>
+        <td id="emailRecipientTags">
+          <ng-container *ngFor="let tag of recipient.tags; let i = index;">
+              <span class="badge badge-primary mb-1" style="cursor: pointer" (click)="tagSelected(tag.id)">
+                <fa-icon icon="tag"></fa-icon>
+              {{tag.name}}
+            </span>
+            <br/>
+          </ng-container>
+        </td>
+        <td>
+          <div class="d-flex flex-row justify-content-center">
+            <button class="btn btn-accent text-black-50 btn-icon mb-2 " id="emailRecipientEditBtn"
+                    mdbTooltip="{{'Edit email recipient' | translate}}" mdbWavesEffect
+                    (click)="openEditModal(recipient)">
+              <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
+            </button>
+            <button id="emailRecipientDeleteBtn"
+                    class="btn btn-danger btn-icon mb-2 "
+                    mdbTooltip="{{'Delete email recipient' | translate}}"
+                    (click)="openDeleteModal(recipient)">
+              <fa-icon icon="trash-alt" [fixedWidth]="true" size="lg"></fa-icon>
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="row p-1 my-4 mx-2" *ngIf="emailRecipientsListModel.total === 0">
+    <span>{{'No email recipients found' | translate}}</span>
+  </div>
+  <div class="row justify-content-between mr-2 ml-2">
+    <div class="col-md-1">
+      <page-size-pn
+        [pageSize]="localPageSettings.pageSize"
+        (onPageSizeChanged)="localPageSettings.pageSize = $event; emailRecipientsRequestModel.offset = 0;
+        updateLocalPageSettings()"
+      ></page-size-pn>
+    </div>
+    <pagination-pn
+      *ngIf="emailRecipientsListModel?.total > emailRecipientsRequestModel.pageSize"
+      [limit]="emailRecipientsRequestModel.pageSize"
+      [size]="emailRecipientsListModel.total"
+      [offset]="emailRecipientsRequestModel.offset"
+      (onPageChanged)="changePage($event)"
+    ></pagination-pn>
+  </div>
+</div>
+
+<spinner-pn [spinnerVisibility]="spinnerStatus"></spinner-pn>
+
+<app-email-recipients-new #newRecipientsModal [availableTags]="availableTags"
+                          (emailRecipientsCreated)="onEmailRecipientCreated()"></app-email-recipients-new>
+<app-email-recipients-tags #recipientsTagsModal [availableTags]="availableTags"
+                           (tagsChanged)="getTags()"></app-email-recipients-tags>
+<app-email-recipient-edit #editRecipientModal [availableTags]="availableTags"
+                          (emailRecipientUpdated)="getEmailRecipients()"></app-email-recipient-edit>
+<app-email-recipient-delete #deleteRecipientModal [availableTags]="availableTags"
+                            (emailRecipientDeleted)="getEmailRecipients()"></app-email-recipient-delete>

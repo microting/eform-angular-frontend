@@ -13,13 +13,14 @@ import {
 } from 'src/app/common/services/advanced';
 import {AppMenuService, AppSettingsService} from 'src/app/common/services/settings';
 import {AuthService, LocaleService, UserSettingsService} from 'src/app/common/services/auth';
-import {CasesService, ImageService} from 'src/app/common/services/cases';
+import {CasePostsService, CasesService, ImageService} from 'src/app/common/services/cases';
 import {DeviceUserService} from 'src/app/common/services/device-users';
 import {EformReportService, EFormService, EformTagService} from 'src/app/common/services/eform';
 import {SecurityGroupEformsPermissionsService, SecurityGroupsService} from 'src/app/common/services/security';
 import {AdminService} from 'src/app/common/services/users';
 import {FoldersService} from './common/services/advanced/folders.service';
 import {PluginPermissionsService, PluginsManagementService} from './common/services/plugins-management';
+import {EmailRecipientsService, EmailRecipientsTagsService} from './common/services/email-recipients';
 // Guards
 
 export let providers = [
@@ -51,7 +52,10 @@ export let providers = [
   EFormService,
   EformTagService,
   EformReportService,
+  EmailRecipientsService,
+  EmailRecipientsTagsService,
   CasesService,
+  CasePostsService,
   ImageService,
   SecurityGroupsService,
   SecurityGroupEformsPermissionsService,

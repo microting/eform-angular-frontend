@@ -52,11 +52,14 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Localization;
 using Microting.eFormApi.BasePn.Localization.Abstractions;
 using Microting.eFormApi.BasePn.Services;
-using System.Threading.Tasks;
 using eFormAPI.Web.Infrastructure.Database.Factories;
 
 namespace eFormAPI.Web
 {
+    using Services.Mailing.CasePost;
+    using Services.Mailing.EmailRecipients;
+    using Services.Mailing.EmailTags;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -127,7 +130,7 @@ namespace eFormAPI.Web
 
             // Authentication
             services.AddEFormAuth(Configuration, GetPluginsPermissions());
-            // Localiation
+            // Localization
             services.AddTransient<IEformLocalizerFactory, JsonStringLocalizerFactory>();
             services.AddTransient<IStringLocalizerFactory, ResourceManagerStringLocalizerFactory>();
             services.AddTransient<IStringLocalizer, JsonStringLocalizer>();
@@ -197,7 +200,7 @@ namespace eFormAPI.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {            
             if (env.IsDevelopment())
             {
@@ -286,6 +289,9 @@ namespace eFormAPI.Web
             services.AddScoped<IPluginsManagementService, PluginsManagementService>();
             services.AddScoped<IPluginPermissionsService, PluginPermissionsService>();
             services.AddScoped<ISiteTagsService, SiteTagsService>();
+            services.AddScoped<IEmailTagsService, EmailTagsService>();
+            services.AddScoped<IEmailRecipientsService, EmailRecipientsService>();
+            services.AddScoped<ICasePostService, CasePostService>();
         }
 
         private ICollection<PluginPermissionModel> GetPluginsPermissions()

@@ -253,5 +253,18 @@
   "Plugins Marketplace": "Plugins Markedsplads",
   "Plugins Management": "Plugins Management",
   "Warning: you will be logged out when status is changed": "Advarsel: Du logges ud, når status ændres",
-  "Select tags for site": "Vælg tags til webstedet"
+  "Select tags for site": "Vælg tags til webstedet",
+
+  "Add new": "Tilføj ny",
+  "Email Recipients": "Email modtagere",
+  "Manage tags": "Administrer tags",
+  "Add Recipients": "Tilføj modtagere",
+  "Edit email recipient": "Rediger email modtager",
+  "Delete email recipient": "Slet email modtager",
+  "No email recipients found": "Der blev ikke fundet nogen email modtagere",
+  "New Email recipients": "Nye email modtagere",
+  "Email addresses": "Email adresse",
+  "Edit tag name": "Rediger tagnavn",
+  "Tags management": "Styring af tags",
+  "Email/name text area should have at least one email/name pair": "Tekstområdet for email / navn skal have mindst et e-mail / navnepar"
 }

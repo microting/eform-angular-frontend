@@ -21,11 +21,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using eFormAPI.Web.Infrastructure.Database.Entities;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
 {
+    using Entities.Permissions;
+
     public static class PermissionTypeSeed
     {
         public static ModelBuilder AddPermissionTypes(this ModelBuilder modelBuilder)

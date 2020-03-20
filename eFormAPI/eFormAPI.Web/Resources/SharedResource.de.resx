@@ -588,4 +588,73 @@
   <data name="TagUpdatedSuccessfully" xml:space="preserve">
     <value>Tag erfolgreich aktualisiert</value>
   </data>
+  <data name="EmailRecipients" xml:space="preserve">
+    <value>E-Mail-Empfänger</value>
+  </data>
+  <data name="EmailRecipientCreatedSuccessfully" xml:space="preserve">
+    <value>E-Mail-Empfänger erfolgreich erstellt</value>
+  </data>
+  <data name="EmailRecipientNotFound" xml:space="preserve">
+    <value>E-Mail-Empfänger nicht gefunden</value>
+  </data>
+  <data name="EmailRecipientRemovedSuccessfully" xml:space="preserve">
+    <value>E-Mail-Empfänger erfolgreich entfernt</value>
+  </data>
+  <data name="EmailRecipientUpdatedSuccessfully" xml:space="preserve">
+    <value>E-Mail-Empfänger erfolgreich aktualisiert</value>
+  </data>
+  <data name="EmailTagCreatedSuccessfully" xml:space="preserve">
+    <value>E-Mail-Tag erfolgreich erstellt</value>
+  </data>
+  <data name="EmailTagNotFound" xml:space="preserve">
+    <value>E-Mail-Tag nicht gefunden</value>
+  </data>
+  <data name="EmailTagRemovedSuccessfully" xml:space="preserve">
+    <value>E-Mail-Tag erfolgreich entfernt</value>
+  </data>
+  <data name="EmailTagUpdatedSuccessfully" xml:space="preserve">
+    <value>E-Mail-Tag erfolgreich aktualisiert</value>
+  </data>
+  <data name="ErrorWhileCreatingEmailRecipient" xml:space="preserve">
+    <value>Fehler beim Erstellen des E-Mail-Empfängers</value>
+  </data>
+  <data name="ErrorWhileCreatingEmailTag" xml:space="preserve">
+    <value>Fehler beim Erstellen des E-Mail-Tags</value>
+  </data>
+  <data name="ErrorWhileObtainingEmailRecipients" xml:space="preserve">
+    <value>Fehler beim Abrufen der E-Mail-Empfänger</value>
+  </data>
+  <data name="ErrorWhileObtainingEmailTag" xml:space="preserve">
+    <value>Fehler beim Abrufen des E-Mail-Tags</value>
+  </data>
+  <data name="ErrorWhileRemovingEmailRecipient" xml:space="preserve">
+    <value>Fehler beim Entfernen des E-Mail-Empfängers</value>
+  </data>
+  <data name="ErrorWhileRemovingEmailTag" xml:space="preserve">
+    <value>Fehler beim Entfernen des E-Mail-Tags</value>
+  </data>
+  <data name="ErrorWhileUpdatingEmailRecipient" xml:space="preserve">
+    <value>Fehler beim Aktualisieren des E-Mail-Empfängers</value>
+  </data>
+  <data name="ErrorWhileUpdatingEmailTag" xml:space="preserve">
+    <value>Fehler beim Aktualisieren des E-Mail-Tags</value>
+  </data>
+  <data name="ErrorWhileCreatingPost" xml:space="preserve">
+    <value>Fehler beim Erstellen des Beitrags</value>
+  </data>
+  <data name="ErrorWhileObtainingPosts" xml:space="preserve">
+    <value>Fehler beim Abrufen von Beiträgen</value>
+  </data>
+  <data name="ErrorWhileObtainingPostViewInfo" xml:space="preserve">
+    <value>Fehler beim Abrufen der Post-View-Informationen</value>
+  </data>
+  <data name="PostCreatedSuccessfully" xml:space="preserve">
+    <value>Beitrag erfolgreich erstellt</value>
+  </data>
+  <data name="PostNotFound" xml:space="preserve">
+    <value>Beitrag nicht gefunden</value>
+  </data>
+  <data name="CaseNotFound" xml:space="preserve">
+    <value>Fall nicht gefunden</value>
+  </data>
 </root>

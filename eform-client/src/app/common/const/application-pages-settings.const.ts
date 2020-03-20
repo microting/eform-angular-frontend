@@ -32,6 +32,16 @@ export const ApplicationPagesSettings = [
     }
   ),
   new ApplicationPageModel({
+      name: ApplicationPages[ApplicationPages.CasePosts],
+      index: ApplicationPages.CasePosts,
+      settings: new PageSettingsModel({
+        pageSize: 10,
+        sort: 'Id',
+        isSortDsc: false
+      })
+    }
+  ),
+  new ApplicationPageModel({
       name: ApplicationPages[ApplicationPages.AccountManagementUsers],
       index: ApplicationPages.AccountManagementUsers,
       settings: new PageSettingsModel({
@@ -76,5 +86,15 @@ export const ApplicationPagesSettings = [
         isSortDsc: false
       })
     }
-  )
+  ),
+  new ApplicationPageModel({
+      name: ApplicationPages[ApplicationPages.EmailRecipients],
+      index: ApplicationPages.EmailRecipients,
+      settings: new PageSettingsModel({
+        pageSize: 10,
+        sort: 'Id',
+        isSortDsc: false
+      })
+    }
+  ),
 ];

@@ -1,0 +1,109 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{'New post' | translate}}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col ng-select-wrapper">
+              <ng-select
+                class="custom"
+                dropdownPosition="'bottom'"
+                [placeholder]="'From' | translate"
+                [(ngModel)]="postCreateModel.from"
+                [items]="availableRecipients"
+                [clearable]="false"
+                [bindLabel]="'name'"
+                [bindValue]="'id'"
+                id="newPostFromSelector"></ng-select>
+            </div>
+          </div>
+          <div class="row pl-1">
+            <div class="col ng-select-wrapper">
+              <ng-select
+                class="custom"
+                dropdownPosition="'bottom'"
+                [placeholder]="'To' | translate"
+                [items]="availableRecipientsAndTags"
+                (add)="saveRecipientOrTag($event)"
+                (remove)="removeRecipientOrTag($event)"
+                [clearable]="false"
+                [bindLabel]="'name'"
+                [bindValue]="'id'"
+                id="newPostToSelector"
+                [multiple]="true"></ng-select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="md-form">
+                <input mdbInputDirective
+                       [mdbValidate]="false"
+                       [(ngModel)]="postCreateModel.title"
+                       type="text" id="newPostTitle"
+                       name="newPostTitle" class="form-control">
+                <label for="newPostTitle">{{ 'Title' | translate }}</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="md-form">
+                <input mdbInputDirective
+                       [mdbValidate]="false"
+                       [(ngModel)]="postCreateModel.subject"
+                       type="text" id="newPostSubject"
+                       name="newPostSubject" class="form-control">
+                <label for="newPostSubject">{{ 'Subject' | translate }}</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="md-form">
+                <span class="text-muted">{{ 'Email text' | translate }}</span>
+                <!--                <a href="javascript:" style="color: dodgerblue; text-decoration: underline">Open case link</a><br>-->
+                <textarea mdbInputDirective
+                          [mdbValidate]="false"
+                          [(ngModel)]="postCreateModel.text"
+                          type="text" id="newPostEmailText"
+                          name="newPostEmailText" class="md-textarea form-control"></textarea>
+                <label for="newPostEmailText"></label>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col">
+              <div class="mat-checkbox">
+                <input id="attachLinkToCase" name="attachLinkToCase" [(ngModel)]="postCreateModel.attachLinkToCase"
+                       type="checkbox">
+                <label for="attachLinkToCase">{{ 'Link to case' | translate }}</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="mat-checkbox">
+                <input id="attachReport" name="attachReport" [(ngModel)]="postCreateModel.attachReport"
+                       type="checkbox">
+                <label for="attachReport">{{ 'Attach PDF' | translate }}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="newTagSaveBtn" class="btn btn-success"
+                [disabled]="!postCreateModel.from ||
+                !postCreateModel.subject"
+                (click)="createPost()">{{'Save' | translate}}</button>
+        <button id="newTagSaveCancelBtn" class="btn btn-accent text-black-50"
+                (click)="frame.hide()">{{'Close' | translate}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>

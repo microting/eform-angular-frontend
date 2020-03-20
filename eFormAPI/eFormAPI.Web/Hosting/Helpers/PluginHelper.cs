@@ -50,7 +50,6 @@ using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Settings;
 using Microting.eFormApi.BasePn.Services;
 using OpenStack.NetCoreSwiftClient;
-using OpenStack.NetCoreSwiftClient.Extensions;
 using OpenStack.NetCoreSwiftClient.Infrastructure.Models;
 
 namespace eFormAPI.Web.Hosting.Helpers

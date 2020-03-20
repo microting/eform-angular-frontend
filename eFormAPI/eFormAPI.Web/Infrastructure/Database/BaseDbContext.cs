@@ -31,6 +31,10 @@ using Microting.eFormApi.BasePn.Infrastructure.Database.Extensions;
 
 namespace eFormAPI.Web.Infrastructure.Database
 {
+    using Entities.Mailing;
+    using Entities.Permissions;
+    using Entities.Reports;
+
     public class BaseDbContext : IdentityDbContext<EformUser,
         EformRole,
         int,
@@ -63,6 +67,14 @@ namespace eFormAPI.Web.Infrastructure.Database
         public DbSet<PermissionType> PermissionTypes { get; set; }
         public DbSet<EformInGroup> EformInGroups { get; set; }
         public DbSet<EformPermission> EformPermissions { get; set; }
+
+        // Mailing
+        public DbSet<CasePostEmailRecipient> CasePostEmailRecipients { get; set; }
+        public DbSet<CasePostEmailTag> CasePostEmailTags { get; set; }
+        public DbSet<CasePost> CasePosts { get; set; }
+        public DbSet<EmailTagRecipient> EmailTagRecipients { get; set; }
+        public DbSet<EmailRecipient> EmailRecipients { get; set; }
+        public DbSet<EmailTag> EmailTags { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -148,6 +160,24 @@ namespace eFormAPI.Web.Infrastructure.Database
                     p.EformUserId,
                     p.TagId,
                 }).IsUnique();
+
+            // Mailing
+            modelBuilder.Entity<EmailTag>()
+                .HasIndex(i => i.Name);
+
+            modelBuilder.Entity<EmailRecipient>()
+                .HasIndex(i => i.Name);
+
+            modelBuilder.Entity<EmailRecipient>()
+                .HasIndex(i => i.Email);
+
+            modelBuilder.Entity<CasePost>()
+                .HasIndex(i => i.CaseId);
+
+            modelBuilder.Entity<CasePost>()
+                .HasOne(x => x.From)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
 
             // Seed
             modelBuilder.SeedLatest();
