@@ -389,3 +389,4 @@ eFormAPI/eFormAPI\.Web/PluginInstallDaemonQueue
 
 docs/plugins/installing-a-plugin./
 
+*.blob
