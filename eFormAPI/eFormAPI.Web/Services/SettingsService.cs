@@ -432,6 +432,10 @@ namespace eFormAPI.Web.Services
                         Login = _emailSettings.Value.Login,
                         Password = _emailSettings.Value.Password,
                     },
+                    SendGridSettingsModel = new SendGridSettingsModel()
+                    {
+                        ApiKey = _emailSettings.Value.SendGridKey,
+                    },
                     HeaderSettingsModel = new HeaderSettingsModel()
                     {
                         ImageLink = _headerSettings.Value.ImageLink,
@@ -500,6 +504,7 @@ namespace eFormAPI.Web.Services
                     option.SmtpPort = int.Parse(adminSettingsModel.SMTPSettingsModel.Port);
                     option.Login = adminSettingsModel.SMTPSettingsModel.Login;
                     option.Password = adminSettingsModel.SMTPSettingsModel.Password;
+                    option.SendGridKey = adminSettingsModel.SendGridSettingsModel.ApiKey;
                 }, _dbContext);
                 await _headerSettings.UpdateDb((option) =>
                 {

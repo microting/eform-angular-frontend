@@ -27,6 +27,7 @@
                 dropdownPosition="'bottom'"
                 [placeholder]="'To' | translate"
                 [items]="availableRecipientsAndTags"
+                [(ngModel)]="selectedTagsAndRecipientsIds"
                 (add)="saveRecipientOrTag($event)"
                 (remove)="removeRecipientOrTag($event)"
                 [clearable]="false"

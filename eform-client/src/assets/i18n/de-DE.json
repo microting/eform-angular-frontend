@@ -264,5 +264,7 @@
   "Email addresses": "E-mailadressen",
   "Edit tag name": "Tagnaam bewerken",
   "Tags management": "Beheer van tags",
-  "Email/name text area should have at least one email/name pair": "Email / naamtekstgebied moet ten minste één email / naampaar bevatten"
+  "Email/name text area should have at least one email/name pair": "Email / naamtekstgebied moet ten minste één email / naampaar bevatten",
+  "SendGrid Key": "SendGrid Sleutel",
+  "SendGrid Information": "SendGrid Informationen"
 }

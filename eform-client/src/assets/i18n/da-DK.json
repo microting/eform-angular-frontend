@@ -266,5 +266,7 @@
   "Email addresses": "Email adresse",
   "Edit tag name": "Rediger tagnavn",
   "Tags management": "Styring af tags",
-  "Email/name text area should have at least one email/name pair": "Tekstområdet for email / navn skal have mindst et e-mail / navnepar"
+  "Email/name text area should have at least one email/name pair": "Tekstområdet for email / navn skal have mindst et e-mail / navnepar",
+  "SendGrid Key": "SendGrid Nøgle",
+  "SendGrid Information": "SendGrid Information"
 }
