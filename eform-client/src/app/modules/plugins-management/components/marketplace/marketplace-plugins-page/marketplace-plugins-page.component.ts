@@ -11,7 +11,7 @@ import {
   styleUrls: ['./marketplace-plugins-page.component.scss']
 })
 export class MarketplacePluginsPageComponent implements OnInit {
-  @ViewChild('installMarketplacePluginModal') installMarketplacePluginModal;
+  @ViewChild(('installMarketplacePluginModal'), {static: false}) installMarketplacePluginModal;
   marketplacePluginsRequestModel: MarketplacePluginsRequestModel = new MarketplacePluginsRequestModel();
   marketplacePluginsList: MarketplacePluginsModel = new MarketplacePluginsModel();
   spinnerStatus = false;

@@ -9,7 +9,7 @@ import {DeviceUserService} from 'src/app/common/services/device-users';
 })
 export class CreateNewUserModalComponent implements OnInit {
   @Output() onDeviceUserCreated: EventEmitter<void> = new EventEmitter<void>();
-  @ViewChild('frame') frame;
+  @ViewChild(('frame'), {static: false}) frame;
   simpleSiteModel: DeviceUserModel = new DeviceUserModel();
   spinnerStatus = false;
   constructor(private deviceUserService: DeviceUserService) { }

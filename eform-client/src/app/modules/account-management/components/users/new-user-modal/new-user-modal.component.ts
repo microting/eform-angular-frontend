@@ -12,7 +12,7 @@ import {AdminService} from 'src/app/common/services/users';
 export class NewUserModalComponent implements OnInit {
   @Input() availableGroups: SecurityGroupsModel = new SecurityGroupsModel();
   @Output() onUserCreated: EventEmitter<void> = new EventEmitter<void>();
-  @ViewChild('frame') frame;
+  @ViewChild(('frame'), {static: false}) frame;
   newUserModel: UserRegisterModel = new UserRegisterModel;
   spinnerStatus = false;
 

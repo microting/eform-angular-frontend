@@ -10,7 +10,7 @@ import {WorkersService} from 'src/app/common/services/advanced';
 export class WorkerEditComponent implements OnInit {
   @Input() selectedWorkerDto: WorkerDto = new WorkerDto();
   @Output() onWorkerEdited: EventEmitter<void> = new EventEmitter<void>();
-  @ViewChild('frame') frame;
+  @ViewChild(('frame'), {static: false}) frame;
   workerModel: WorkerModel = new WorkerModel();
   spinnerStatus = false;
 

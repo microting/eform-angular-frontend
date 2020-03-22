@@ -8,7 +8,7 @@ import {CasesService} from 'src/app/common/services/cases';
   styleUrls: ['./remove-case-modal.component.scss']
 })
 export class RemoveCaseModalComponent implements OnInit {
-  @ViewChild('frame') frame;
+  @ViewChild(('frame'), {static: false}) frame;
   @Output() onCaseDeleted: EventEmitter<void> = new EventEmitter<void>();
   selectedTemplateId: number;
   selectedCaseModel: CaseModel = new CaseModel();

@@ -13,7 +13,7 @@ import {PermissionGuard} from '../../common/guards';
   styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent implements OnInit {
-  @ViewChild('navigationMenu') menuElement: ElementRef;
+  @ViewChild(('navigationMenu'), {static: false}) menuElement: ElementRef;
   private _menuFlag = false;
   userInfo: UserInfoModel = new UserInfoModel;
   userMenu: any;

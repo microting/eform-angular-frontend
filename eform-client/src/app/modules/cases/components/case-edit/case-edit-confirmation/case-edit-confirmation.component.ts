@@ -7,7 +7,7 @@ import {Subject} from 'rxjs';
   styleUrls: ['./case-edit-confirmation.component.scss']
 })
 export class CaseEditConfirmationComponent implements OnInit {
-  @ViewChild('frame') frame;
+  @ViewChild(('frame'), {static: false}) frame;
   navigateAwaySelection$: Subject<boolean> = new Subject<boolean>();
   @Output() onConfirmationPressed: EventEmitter<boolean> = new EventEmitter<boolean>();
 

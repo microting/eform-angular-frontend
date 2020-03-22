@@ -9,9 +9,9 @@ import {AuthService} from 'src/app/common/services/auth';
 })
 export class UnitsComponent implements OnInit {
 
-  @ViewChild('modalUnitsOtpCode') modalUnitsOtpCode;
-  @ViewChild('modalUnitsCreate') modalUnitsCreate;
-  @ViewChild('modalUnitsMove') modalUnitsMove;
+  @ViewChild(('modalUnitsOtpCode'), {static: false}) modalUnitsOtpCode;
+  @ViewChild(('modalUnitsCreate'), {static: false}) modalUnitsCreate;
+  @ViewChild(('modalUnitsMove'), {static: false}) modalUnitsMove;
   spinnerStatus = false;
   unitModels: Array<UnitDto> = [];
   selectedUnitModel: UnitDto = new UnitDto();

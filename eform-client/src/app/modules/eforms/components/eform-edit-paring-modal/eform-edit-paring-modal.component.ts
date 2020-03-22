@@ -14,7 +14,7 @@ import {FoldersService} from '../../../../common/services/advanced/folders.servi
 })
 export class EformEditParingModalComponent implements OnInit {
 
-  @ViewChild('frame') frame;
+  @ViewChild(('frame'), {static: false}) frame;
   @Output() onDeploymentFinished: EventEmitter<void> = new EventEmitter<void>();
   deployModel: DeployModel = new DeployModel();
   deployViewModel: DeployModel = new DeployModel();

@@ -10,7 +10,7 @@ import {UnitsService} from 'src/app/common/services/advanced';
 export class NewOtpModalComponent implements OnInit {
   @Input() selectedSimpleSite: SiteDto = new SiteDto();
   @Output() onNewOtpRequested: EventEmitter<void> = new EventEmitter<void>();
-  @ViewChild('frame') frame;
+  @ViewChild(('frame'), {static: false}) frame;
   spinnerStatus = false;
 
   constructor(private unitsService: UnitsService) { }

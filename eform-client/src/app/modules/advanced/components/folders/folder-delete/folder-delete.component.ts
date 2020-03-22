@@ -10,7 +10,7 @@ import {FolderDto} from '../../../../../common/models/dto/folder.dto';
 export class FolderDeleteComponent implements OnInit {
  @Input() selectedFolderDto: FolderDto = new FolderDto();
  @Output() onFolderDeleted: EventEmitter<void> = new EventEmitter<void>();
- @ViewChild('frame') frame;
+ @ViewChild(('frame'), {static: false}) frame;
  spinnerStatus = false;
 
   constructor(private folderService: FoldersService) { }

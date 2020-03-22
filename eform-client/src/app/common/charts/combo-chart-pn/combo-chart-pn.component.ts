@@ -73,7 +73,7 @@ export class ComboChartPnComponent extends BaseChartComponent {
   @ContentChild('seriesTooltipTemplate', { static: false }) seriesTooltipTemplate: TemplateRef<any>;
 
   // @ts-ignore
-  @ViewChild(LineSeriesComponent, { static: false }) lineSeriesComponent: LineSeriesComponent;
+  @ViewChild((LineSeriesComponent, { static: false }), {static: false}) lineSeriesComponent: LineSeriesComponent;
 
   dims: ViewDimensions;
   xScale: any;

@@ -28,7 +28,7 @@ export class PellPnComponent implements OnInit, AfterViewInit, OnChanges {
   ngOnInit() {
   }
 
-  @ViewChild('wysiwyg') wysiwyg: ElementRef;
+  @ViewChild(('wysiwyg'), {static: false}) wysiwyg: ElementRef;
 
   ngAfterViewInit() {
     this.wysiwygInit(this.wysiwyg.nativeElement, this.actions);

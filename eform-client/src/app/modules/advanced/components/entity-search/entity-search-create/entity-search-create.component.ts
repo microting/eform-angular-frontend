@@ -13,8 +13,8 @@ import {EntitySearchService} from 'src/app/common/services/advanced';
 })
 export class EntitySearchCreateComponent implements OnInit {
   advEntitySearchableGroupCreateModel: AdvEntitySearchableGroupEditModel = new AdvEntitySearchableGroupEditModel();
-  @ViewChild('frame') frame;
-  @ViewChild('modalSearchEditName') modalSearchEditName;
+  @ViewChild(('frame'), {static: false}) frame;
+  @ViewChild(('modalSearchEditName'), {static: false}) modalSearchEditName;
   @Output() onEntityGroupCreated: EventEmitter<void> = new EventEmitter<void>();
   seletctedItem: AdvEntitySearchableItemModel = new AdvEntitySearchableItemModel();
   spinnerStatus = false;

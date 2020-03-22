@@ -10,7 +10,7 @@ import {SiteTagsUpdateModel} from '../../../../../common/models/advanced/site-ta
   styleUrls: ['./site-tags.component.scss']
 })
 export class SiteTagsComponent implements OnInit {
-  @ViewChild('frame') frame;
+  @ViewChild(('frame'), {static: false}) frame;
   @Output() onTagAdded: EventEmitter<void> = new EventEmitter<void>();
   @Output() onSiteTagsUpdated: EventEmitter<void> = new EventEmitter<void>();
   @Input() availableTags: Array<CommonDictionaryModel> = [];

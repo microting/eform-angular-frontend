@@ -16,7 +16,7 @@ import {saveAs} from 'file-saver';
   templateUrl: './cases-table.component.html'
 })
 export class CasesTableComponent implements OnInit {
-  @ViewChild('modalRemoveCase') modalRemoveCase;
+  @ViewChild(('modalRemoveCase'), {static: false}) modalRemoveCase;
   currentTemplate: TemplateDto = new TemplateDto;
   eformPermissionsSimpleModel: EformPermissionsSimpleModel = new EformPermissionsSimpleModel();
   casesRequestModel: CasesRequestModel = new CasesRequestModel();

@@ -10,10 +10,10 @@ import {EmailRecipientTagDeleteComponent, EmailRecipientTagEditComponent, EmailR
   styleUrls: ['./email-recipients-tags.component.scss']
 })
 export class EmailRecipientsTagsComponent implements OnInit, OnDestroy {
-  @ViewChild('frame') frame;
-  @ViewChild('tagCreateModal') tagCreateModal: EmailRecipientTagNewComponent;
-  @ViewChild('tagEditModal') tagEditModal: EmailRecipientTagEditComponent;
-  @ViewChild('tagDeleteModal') tagDeleteModal: EmailRecipientTagDeleteComponent;
+  @ViewChild(('frame'), {static: false}) frame;
+  @ViewChild(('tagCreateModal'), {static: false}) tagCreateModal: EmailRecipientTagNewComponent;
+  @ViewChild(('tagEditModal'), {static: false}) tagEditModal: EmailRecipientTagEditComponent;
+  @ViewChild(('tagDeleteModal'), {static: false}) tagDeleteModal: EmailRecipientTagDeleteComponent;
   @Input() availableTags: CommonDictionaryModel[] = [];
   @Output() tagsChanged: EventEmitter<void> = new EventEmitter<void>();
   spinnerStatus = false;

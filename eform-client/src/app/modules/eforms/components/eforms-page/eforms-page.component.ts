@@ -20,12 +20,12 @@ import {saveAs} from 'file-saver';
 })
 export class EformsPageComponent implements OnInit, OnDestroy {
 
-  @ViewChild('modalNewEform') newEformModal;
-  @ViewChild('modalCasesColumns') modalCasesColumnsModal;
-  @ViewChild('modalParing') modalPairing;
-  @ViewChild('modalEditTags') modalEditTags;
-  @ViewChild('modalRemoveEform') modalRemoveEform;
-  @ViewChild('modalUploadZip') modalUploadZip;
+  @ViewChild(('modalNewEform'), {static: false}) newEformModal;
+  @ViewChild(('modalCasesColumns'), {static: false}) modalCasesColumnsModal;
+  @ViewChild(('modalParing'), {static: false}) modalPairing;
+  @ViewChild(('modalEditTags'), {static: false}) modalEditTags;
+  @ViewChild(('modalRemoveEform'), {static: false}) modalRemoveEform;
+  @ViewChild(('modalUploadZip'), {static: false}) modalUploadZip;
 
   searchSubject = new Subject();
 

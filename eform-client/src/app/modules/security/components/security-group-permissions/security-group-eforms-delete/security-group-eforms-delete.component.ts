@@ -8,7 +8,7 @@ import {SecurityGroupEformsPermissionsService} from 'src/app/common/services/sec
   styleUrls: ['./security-group-eforms-delete.component.scss']
 })
 export class SecurityGroupEformsDeleteComponent implements OnInit {
-  @ViewChild('frame') frame;
+  @ViewChild(('frame'), {static: false}) frame;
   @Output() onEformDeleted: EventEmitter<void> = new EventEmitter<void>();
   eformSecurityModel: EformPermissionsModel = new EformPermissionsModel();
   groupId: number;

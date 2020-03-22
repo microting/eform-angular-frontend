@@ -9,7 +9,7 @@ import {EFormService} from 'src/app/common/services/eform';
   styleUrls: ['./eform-create-modal.component.scss']
 })
 export class EformCreateModalComponent implements OnInit {
-  @ViewChild('frame') frame;
+  @ViewChild(('frame'), {static: false}) frame;
   @Input() availableTags: Array<CommonDictionaryModel> = [];
   @Output() onEformCreated: EventEmitter<void> = new EventEmitter<void>();
   eFormCreateModel: EFormCreateModel = new EFormCreateModel();

@@ -7,7 +7,7 @@ import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core'
 })
 export class EntitySelectImportListComponent implements OnInit {
   @Output() onImportSubmitted: EventEmitter<string> = new EventEmitter<string>();
-  @ViewChild('frame') frame;
+  @ViewChild(('frame'), {static: false}) frame;
   importString: string;
 
   constructor() { }

@@ -9,7 +9,7 @@ import {SecurityGroupsService} from 'src/app/common/services';
 })
 export class SecurityGroupRemoveComponent implements OnInit {
   @Output() onSecurityGroupRemoved: EventEmitter<void> = new EventEmitter<void>();
-  @ViewChild('frame') frame;
+  @ViewChild(('frame'), {static: false}) frame;
 
   selectedSecurityGroup: SecurityGroupModel = new SecurityGroupModel;
 

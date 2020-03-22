@@ -13,7 +13,7 @@ import {CommonDictionaryModel} from '../../../../../common/models/common';
   styleUrls: ['./case-post-new.component.scss']
 })
 export class CasePostNewComponent implements OnInit, OnDestroy {
-  @ViewChild('frame') frame;
+  @ViewChild(('frame'), {static: false}) frame;
   @Output() postCreated: EventEmitter<void> = new EventEmitter<void>();
   @Input() availableRecipientsAndTags: EmailRecipientTagCommonModel[] = [];
   @Input() availableRecipients: CommonDictionaryModel[] = [];

@@ -13,7 +13,7 @@ import {
   styleUrls: ['./case-edit-element.component.scss']
 })
 export class CaseEditElementComponent implements OnInit {
-  @ViewChildren(CaseEditElementComponent) editElements: QueryList<CaseEditElementComponent>;
+  @ViewChildren((CaseEditElementComponent)) editElements: QueryList<CaseEditElementComponent>;
   @Input() element: ElementDto = new ElementDto();
   requestModel: CaseEditRequest = new CaseEditRequest();
   requestModels: Array<CaseEditRequest> = [];

@@ -9,7 +9,7 @@ import {AdminService} from 'src/app/common/services/users';
   styleUrls: ['./user-edit-modal.component.scss']
 })
 export class UserEditModalComponent implements OnInit {
-  @ViewChild('frame') frame;
+  @ViewChild(('frame'), {static: false}) frame;
   @Input() availableGroups: SecurityGroupsModel = new SecurityGroupsModel();
   @Output() onUserUpdated: EventEmitter<void> = new EventEmitter<void>();
   selectedUserModel: UserRegisterModel = new UserRegisterModel;

@@ -19,8 +19,8 @@ import {CaseEditElementComponent} from '../case-edit-element/case-edit-element.c
   styleUrls: ['./case-edit.component.scss']
 })
 export class CaseEditComponent implements OnInit, OnDestroy {
-  @ViewChildren(CaseEditElementComponent) editElements: QueryList<CaseEditElementComponent>;
-  @ViewChild('caseConfirmation') caseConfirmation;
+  @ViewChildren((CaseEditElementComponent)) editElements: QueryList<CaseEditElementComponent>;
+  @ViewChild(('caseConfirmation'), {static: false}) caseConfirmation;
   activatedRouteSub: Subscription;
   id: number;
   templateId: number;

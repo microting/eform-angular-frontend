@@ -9,7 +9,7 @@ import {FolderCreateModel} from '../../../../../common/models/advanced/folder-cr
 
 export class FolderCreateComponent implements OnInit {
   @Output() FolderCreated: EventEmitter<void> = new EventEmitter<void>();
-  @ViewChild('frame') frame;
+  @ViewChild(('frame'), {static: false}) frame;
   newFolderModel: FolderCreateModel = new FolderCreateModel;
   spinnerStatus = false;
 

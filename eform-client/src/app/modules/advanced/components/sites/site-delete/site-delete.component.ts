@@ -10,7 +10,7 @@ import {SitesService} from 'src/app/common/services/advanced';
 export class SiteDeleteComponent implements OnInit {
   @Input() siteNameDto: SiteNameDto = new SiteNameDto();
   @Output() onSiteRemoved: EventEmitter<void> = new EventEmitter<void>();
-  @ViewChild('frame') frame;
+  @ViewChild(('frame'), {static: false}) frame;
   spinnerStatus = false;
 
   constructor(private sitesService: SitesService) { }

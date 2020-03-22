@@ -10,7 +10,7 @@ import {PluginsManagementService} from '../../../../../common/services/plugins-m
 })
 export class InstalledPluginModalComponent implements OnInit {
   @Input() installedPluginModel: InstalledPluginModel = new InstalledPluginModel();
-  @ViewChild('frame') frame;
+  @ViewChild(('frame'), {static: false}) frame;
   spinnerStatus = false;
 
   constructor(

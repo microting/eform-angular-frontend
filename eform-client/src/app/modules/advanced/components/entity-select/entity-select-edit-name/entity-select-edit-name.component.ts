@@ -8,7 +8,7 @@ import {AdvEntitySelectableItemModel} from 'src/app/common/models/advanced';
 })
 export class EntitySelectEditNameComponent implements OnInit {
   @Output() onItemUpdated: EventEmitter<AdvEntitySelectableItemModel> = new EventEmitter<AdvEntitySelectableItemModel>();
-  @ViewChild('frame') frame;
+  @ViewChild(('frame'), {static: false}) frame;
   @Input() selectedAdvEntitySelectableItemModel: AdvEntitySelectableItemModel = new AdvEntitySelectableItemModel;
   name: string;
   constructor() { }

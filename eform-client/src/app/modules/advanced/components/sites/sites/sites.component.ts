@@ -11,9 +11,9 @@ import {CommonDictionaryModel} from '../../../../../common/models/common';
   templateUrl: './sites.component.html'
 })
 export class SitesComponent implements OnInit {
-  @ViewChild('modalSiteEdit') modalSiteEdit;
-  @ViewChild('modalSiteDelete') modalSiteDelete;
-  @ViewChild('modalSiteTags') modalSiteTags: SiteTagsComponent;
+  @ViewChild(('modalSiteEdit'), {static: false}) modalSiteEdit;
+  @ViewChild(('modalSiteDelete'), {static: false}) modalSiteDelete;
+  @ViewChild(('modalSiteTags'), {static: false}) modalSiteTags: SiteTagsComponent;
   spinnerStatus = false;
   sitesDto: Array<SiteNameDto> = [];
   selectedSiteDto: SiteNameDto = new SiteNameDto();

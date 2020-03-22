@@ -11,7 +11,7 @@ import {FolderModel} from '../../../../../common/models/advanced/folder.model';
 export class FolderEditComponent implements OnInit {
   @Input() selectedFolderDto: FolderDto = new FolderDto();
   @Output() onFolderEdited: EventEmitter<void> = new EventEmitter<void>();
-  @ViewChild('frame') frame;
+  @ViewChild(('frame'), {static: false}) frame;
   folderModel: FolderModel = new FolderModel();
   spinnerStatus = false;
 

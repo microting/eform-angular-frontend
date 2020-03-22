@@ -10,7 +10,7 @@ import {DeviceUserService} from 'src/app/common/services/device-users';
 export class EditDeviceUserModalComponent implements OnInit {
   @Input() selectedDeviceUser: DeviceUserModel = new DeviceUserModel();
   @Output() onUserEdited: EventEmitter<void> = new EventEmitter<void>();
-  @ViewChild('frame') frame;
+  @ViewChild(('frame'), {static: false}) frame;
   spinnerStatus = false;
 
   constructor(private deviceUserService: DeviceUserService) { }

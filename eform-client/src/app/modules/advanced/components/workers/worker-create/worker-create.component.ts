@@ -11,7 +11,7 @@ import {DeviceUserService} from 'src/app/common/services/device-users';
 })
 export class WorkerCreateComponent implements OnInit {
   @Output() WorkerCreated: EventEmitter<void> = new EventEmitter<void>();
-  @ViewChild('frame') frame;
+  @ViewChild(('frame'), {static: false}) frame;
   newWorkerModel: WorkerCreateModel = new WorkerCreateModel;
   simpleSites: Array<SiteDto> = [];
   spinnerStatus = false;
