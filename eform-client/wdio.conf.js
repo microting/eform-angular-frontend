@@ -64,10 +64,10 @@ exports.config = {
   // By default WebdriverIO commands are executed in a synchronous way using
   // the wdio-sync package. If you still want to run your Tests in an async way
   // e.g. using promises you can set the sync option to false.
-  sync: true,
+  //sync: true,
   //
   // Level of logging verbosity: silent | verbose | command | data | result | error
-  logLevel: 'silent',
+  logLevel: 'info',
   //
   // Enables colors for log output.
   coloredLogs: true,
@@ -140,7 +140,7 @@ exports.config = {
   // See the full list at http://mochajs.org/
   mochaOpts: {
     ui: 'bdd',
-    compilers: ['ts:ts-node/register'],
+    //compilers: ['ts:ts-node/register'],
     timeout: 600000
     // requires: ['./test/helpers/common.js']
   },
