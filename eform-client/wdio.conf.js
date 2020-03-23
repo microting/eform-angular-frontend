@@ -1,6 +1,6 @@
 exports.config = {
-  port: 9515,
-  path: '',
+  port: 4444,
+  //path: '',
   runner: 'local',
 
   //
@@ -54,9 +54,12 @@ exports.config = {
     maxInstances: 1,
     //
     browserName: 'chrome',
-    chromeOptions: {
-      args: ['--window-size=1920,1080']
-    }
+    //chromeOptions: {
+    //  args: ['headless', 'disable-gpu'],
+    //},
+    //chromeOptions: {
+    //  args: ['--window-size=1920,1080']
+    //}
   }],
   //
   // ===================
@@ -123,10 +126,10 @@ exports.config = {
   // Services take over a specific job you don't want to take care of. They enhance
   // your test setup with almost no effort. Unlike plugins, they don't add new
   // commands. Instead, they hook themselves up into the test process.
-  services: ['chromedriver'],
-  chromeDriverArgs: ['--whitelisted-ips', '--port=9515', '--url-base=\'/\''], // default for ChromeDriver
-
-  chromeDriverLogs: './',
+  services: ['selenium-standalone'],
+  // chromeDriverArgs: ['--whitelisted-ips', '--port=9515', '--url-base=\'/\''], // default for ChromeDriver
+  //
+  // chromeDriverLogs: './',
 
 
   //
@@ -148,7 +151,7 @@ exports.config = {
   // See the full list at http://mochajs.org/
   mochaOpts: {
     ui: 'bdd',
-    //compilers: ['ts:ts-node/register'],
+    compilers: ['ts:ts-node/register'],
     timeout: 600000
     // requires: ['./test/helpers/common.js']
   },
@@ -182,8 +185,12 @@ exports.config = {
    * @param {Array.<Object>} capabilities list of capabilities details
    * @param {Array.<String>} specs List of spec file paths that are to be run
    */
+  beforeLaunch: function () {
+    require('ts-node/register')
+  },
+
   before: function () {
-    //require('ts-node/register');
+    require('ts-node/register');
     browser.timeouts('implicit', 5000);
   },
   /**
