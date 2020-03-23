@@ -1,7 +1,7 @@
 exports.config = {
+  port: 4444,
+  //path: '',
   runner: 'local',
-  port: 9515, // default for ChromeDriver
-  path: '',
   //
   // ==================
   // Specify Test Files
@@ -70,7 +70,7 @@ exports.config = {
   sync: true,
   //
   // Level of logging verbosity: silent | verbose | command | data | result | error
-  logLevel: 'debug',
+  //logLevel: 'debug',
   //
   // Enables colors for log output.
   coloredLogs: true,
@@ -123,9 +123,9 @@ exports.config = {
   // Services take over a specific job you don't want to take care of. They enhance
   // your test setup with almost no effort. Unlike plugins, they don't add new
   // commands. Instead, they hook themselves up into the test process.
-  services: ['chromedriver'],
-  chromeDriverArgs: ['--whitelisted-ips', '--port=9515', '--url-base=\'/\''], // default for ChromeDriver
-  chromeDriverLogs: './',
+  services: ['selenium-standalone'],
+  //chromeDriverArgs: ['--whitelisted-ips', '--port=9515', '--url-base=\'/\''], // default for ChromeDriver
+  //chromeDriverLogs: './',
   //
   // Framework you want to run your specs with.
   // The following are supported: Mocha, Jasmine, and Cucumber
