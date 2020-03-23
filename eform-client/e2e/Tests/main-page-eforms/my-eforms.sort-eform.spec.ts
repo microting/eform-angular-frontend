@@ -9,7 +9,7 @@ describe('Main page', function () {
     loginPage.login();
   });
   it('should be able to sort by ID', function () {
-    browser.waitForVisible('#spinner-animation', 50000, true);
+    browser.waitForVisible('#spinner-animation', 90000, true);
     myEformsPage.idSortBtn.click();
     browser.pause(5000);
     const idListBefore = $$('#eform-id').map(item => {
@@ -23,7 +23,7 @@ describe('Main page', function () {
     expect(idListBefore).deep.equal(idListAfter.reverse());
   });
   it('should be able to sort by "Created at"', function () {
-    browser.waitForVisible('#spinner-animation', 50000, true);
+    browser.waitForVisible('#spinner-animation', 90000, true);
     myEformsPage.createdAtSortBtn.click();
     browser.pause(5000);
     const createdAtListBefore = $$('#eform-created-at').map(item => {
@@ -37,7 +37,7 @@ describe('Main page', function () {
     expect(createdAtListBefore).deep.equal(createdAtListAfter.reverse());
   });
   it('should be able to sort by "Name eForm"', function () {
-    browser.waitForVisible('#spinner-animation', 50000, true);
+    browser.waitForVisible('#spinner-animation', 90000, true);
     myEformsPage.eformNameSortBtn.click();
     browser.pause(5000);
     const nameEformListBefore = $$('#eform-label').map(item => {
