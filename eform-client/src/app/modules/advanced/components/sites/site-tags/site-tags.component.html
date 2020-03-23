@@ -30,6 +30,7 @@
                        id="newTag" type="text" class="form-control">
                 <label for="newTag">{{ 'New tag' | translate }}</label>
                 <button  class="btn btn-success btn-icon m-0"
+                         id="newTagCreateBtn"
                          (click)="createNewTag(newTagInput.value); newTagInput.value=''"
                          type="button" [disabled]="!newTagInput.value">
                   <fa-icon icon="plus" [fixedWidth]="true" size="lg"></fa-icon>
@@ -39,6 +40,7 @@
             <div class="col-md-12">
               <div class="d-flex align-items-center">
                 <ng-select
+                  id="tagForRemoval"
                   class="input-group"
                   dropdownPosition="'bottom'"
                   [bindValue]="'id'"
@@ -49,6 +51,7 @@
                 <button  class="btn btn-danger btn-icon m-0 mb-1"
                          (click)="removeSiteTag()"
                          [disabled]="!  tagForRemoval"
+                         id="removeTagBtn"
                          type="button">
                   <fa-icon icon="times" [fixedWidth]="true" size="lg"></fa-icon>
                 </button>
@@ -59,7 +62,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-success"
+        <button class="btn btn-success" id="saveTagsBtn"
                 (click)="updateSiteTags()">{{'Save' | translate}}</button>
         <button class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Cancel' | translate}}</button>
       </div>

@@ -15,28 +15,35 @@ import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-share
 import {CasesRoutingModule} from './cases.routing';
 import {
   CaseEditComponent,
+  CaseEditConfirmationComponent,
   CaseEditElementComponent,
   CaseEditSwitchComponent,
   CasesTableComponent,
-  CaseEditConfirmationComponent,
+  CasePostNewComponent,
+  CasePostsPageComponent,
+  CasePostViewComponent,
   ElementAudioComponent,
   ElementCheckboxComponent,
-  ElementCommentComponent, ElementContainerComponent,
+  ElementCommentComponent,
+  ElementContainerComponent,
   ElementDateComponent,
   ElementEntitysearchComponent,
-  ElementEntityselectComponent, ElementInfoboxComponent, ElementMultiselectComponent,
+  ElementEntityselectComponent,
+  ElementInfoboxComponent,
+  ElementMultiselectComponent,
   ElementNumberComponent,
   ElementNumberStepperComponent,
   ElementPdfComponent,
+  ElementPictureComponent,
+  ElementSignatureComponent,
   ElementSingleselectComponent,
   ElementTextComponent,
-  RemoveCaseModalComponent,
   ElementTimerComponent,
-  ElementPictureComponent,
-  ElementSignatureComponent
+  RemoveCaseModalComponent
 } from './components';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {OWL_DATE_TIME_FORMATS, OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime';
+import {SharedPnModule} from '../../plugins/modules/shared/shared-pn.module';
 
 
 @NgModule({
@@ -55,7 +62,8 @@ import {OWL_DATE_TIME_FORMATS, OwlDateTimeModule, OwlNativeDateTimeModule} from 
     OwlNativeDateTimeModule,
     // OwlMomentDateTimeModule,
     FormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    SharedPnModule
   ],
   declarations: [
     CasesTableComponent,
@@ -63,6 +71,9 @@ import {OWL_DATE_TIME_FORMATS, OwlDateTimeModule, OwlNativeDateTimeModule} from 
     CaseEditSwitchComponent,
     CaseEditElementComponent,
     CaseEditConfirmationComponent,
+    CasePostNewComponent,
+    CasePostsPageComponent,
+    CasePostViewComponent,
     ElementTextComponent,
     ElementNumberComponent,
     ElementNumberStepperComponent,
@@ -80,7 +91,8 @@ import {OWL_DATE_TIME_FORMATS, OwlDateTimeModule, OwlNativeDateTimeModule} from 
     RemoveCaseModalComponent,
     ElementContainerComponent,
     ElementPictureComponent,
-    ElementSignatureComponent],
+    ElementSignatureComponent
+  ],
   providers: [
     {provide: OWL_DATE_TIME_FORMATS, useValue: MY_MOMENT_FORMATS},
   ],

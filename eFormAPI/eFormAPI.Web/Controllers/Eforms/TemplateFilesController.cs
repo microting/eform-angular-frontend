@@ -63,8 +63,7 @@ namespace eFormAPI.Web.Controllers.Eforms
 
         [HttpGet]
         [Route("api/template-files/csv/{id}")]
-        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme,
-            Policy = AuthConsts.EformPolicies.Eforms.GetCsv)]
+        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.GetCsv)]
         public async Task<IActionResult> Csv(int id)
         {
             if (!await _permissionsService.CheckEform(id,
@@ -205,8 +204,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         
         [HttpGet]
         [Route("api/template-files/get-pdf-file")]
-        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme,
-            Policy = AuthConsts.EformPolicies.Cases.CaseGetPdf)]
+        [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseGetPdf)]
         public async Task<IActionResult> GetPdfFile(string fileName)
         {
             var core = await _coreHelper.GetCore();
@@ -239,8 +237,7 @@ namespace eFormAPI.Web.Controllers.Eforms
 
         [HttpGet]
         [Route("api/template-files/download-case-pdf/{templateId}")]
-        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme,
-            Policy = AuthConsts.EformPolicies.Cases.CaseGetPdf)]
+        [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseGetPdf)]
         public async Task<IActionResult> DownloadEFormPdf(int templateId, int caseId, string fileType)
         {
             if (!await _permissionsService.CheckEform(templateId,
@@ -277,8 +274,7 @@ namespace eFormAPI.Web.Controllers.Eforms
 
         [HttpGet]
         [Route("api/template-files/download-eform-xml/{templateId}")]
-        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme,
-            Policy = AuthConsts.EformPolicies.Eforms.DownloadXml)]
+        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.DownloadXml)]
         public async Task<IActionResult> DownloadEFormXml(int templateId)
         {
             if (!await _permissionsService.CheckEform(templateId,
@@ -320,8 +316,7 @@ namespace eFormAPI.Web.Controllers.Eforms
 
         [HttpPost]
         [Route("api/template-files/upload-eform-zip")]
-        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme,
-            Policy = AuthConsts.EformPolicies.Eforms.UploadZip)]
+        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UploadZip)]
         public async Task<IActionResult> UploadEformZip(EformZipUploadModel uploadModel)
         {
             if (!await _permissionsService.CheckEform(uploadModel.TemplateId,

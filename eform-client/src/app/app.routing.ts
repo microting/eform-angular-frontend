@@ -51,6 +51,11 @@ export const routes: Routes = [
         loadChildren: () => import('./modules/account-management/account-management.module').then(m => m.AccountManagementModule)
       },
       {
+        path: 'email-recipients',
+        canActivate: [AuthGuard],
+        loadChildren: './modules/email-recipients/email-recipients.module#EmailRecipientsModule'
+      },
+      {
         path: 'security',
         canActivate: [AdminGuard],
         loadChildren: () => import('./modules/security/security.module').then(m => m.SecurityModule)

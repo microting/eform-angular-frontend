@@ -32,6 +32,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Factories
     {
         public BaseDbContext CreateDbContext(string[] args)
         {
+            //args = new[] { "Data Source=.\\SQLEXPRESS;Database=eform-angular-migration;Integrated Security=True" };
             var optionsBuilder = new DbContextOptionsBuilder<BaseDbContext>();
             if (args.Any())
             {

@@ -1,0 +1,28 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{'New tag' | translate}}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="md-form">
+            <input mdbInputDirective
+                   [mdbValidate]="false"
+                   [(ngModel)]="name"
+                   type="text" class="form-control"
+                   id="newTagName">
+            <label for="newTagName">{{'Name' | translate}}</label>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="newTagSaveBtn" class="btn btn-success" (click)="createItem()">{{'Save' | translate}}</button>
+        <button id="newTagSaveCancelBtn" class="btn btn-accent text-black-50"
+                (click)="cancelCreate()">{{'Close' | translate}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>

@@ -251,5 +251,20 @@
   "Plugins Marketplace": "Plugins Marktplaats",
   "Plugins Management": "Plugins Beheer",
   "Warning: you will be logged out when status is changed": "Warnung: Sie werden abgemeldet, wenn sich der status ändert",
-  "Select tags for site": "Tags für die Site auswählen"
+  "Select tags for site": "Tags für die Site auswählen",
+
+  "Add new": "Nieuw toevoegen",
+  "Email Recipients": "Beheer van tags",
+  "Manage tags": "Beheer tags",
+  "Add Recipients": "Ontvangers toevoegen",
+  "Edit email recipient": "E-mailontvanger bewerken",
+  "Delete email recipient": "E-mailontvanger verwijderen",
+  "No email recipients found": "Geen e-mailontvangers gevonden",
+  "New Email recipients": "Nieuwe e-mailontvangers",
+  "Email addresses": "E-mailadressen",
+  "Edit tag name": "Tagnaam bewerken",
+  "Tags management": "Beheer van tags",
+  "Email/name text area should have at least one email/name pair": "Email / naamtekstgebied moet ten minste één email / naampaar bevatten",
+  "SendGrid Key": "SendGrid Sleutel",
+  "SendGrid Information": "SendGrid Informationen"
 }

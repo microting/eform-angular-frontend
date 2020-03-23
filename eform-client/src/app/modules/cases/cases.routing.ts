@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {CanDeactivateGuard} from 'src/app/common/guards';
-import {CaseEditComponent, CasesTableComponent} from 'src/app/modules/cases/components';
+import {CaseEditComponent, CasePostsPageComponent, CasesTableComponent} from './components';
 
 const routes: Routes = [
 
@@ -13,6 +13,14 @@ const routes: Routes = [
     path: 'edit/:id/:templateId',
     component: CaseEditComponent,
     canDeactivate: [CanDeactivateGuard]
+  },
+  {
+    path: 'posts/:id/:templateId/:postAction',
+    component: CasePostsPageComponent,
+  },
+  {
+    path: 'posts/:id/:templateId',
+    component: CasePostsPageComponent,
   }
 ];
 

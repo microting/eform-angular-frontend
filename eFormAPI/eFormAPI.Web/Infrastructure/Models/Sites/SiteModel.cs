@@ -1,4 +1,6 @@
-﻿namespace eFormAPI.Web.Infrastructure.Models.Sites
+﻿using eFormAPI.Web.Infrastructure.Models.Units;
+
+namespace eFormAPI.Web.Infrastructure.Models.Sites
 {
     using System;
     using System.Collections.Generic;
@@ -17,5 +19,7 @@
 
         public List<KeyValueModel> Tags { get; set; }
             = new List<KeyValueModel>();
+        
+        public List<UnitModel> Units { get; set; } = new List<UnitModel>();
     }
 }

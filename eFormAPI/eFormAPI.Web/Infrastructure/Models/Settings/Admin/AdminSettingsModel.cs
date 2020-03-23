@@ -31,6 +31,7 @@ namespace eFormAPI.Web.Infrastructure.Models.Settings.Admin
         public SwiftSettingsModel SwiftSettingsModel { get; set; }
         public S3SettingsModel S3SettingsModel { get; set; }
         public SDKSettingsModel SdkSettingsModel { get; set; }
+        public SendGridSettingsModel SendGridSettingsModel { get; set; }
         public string SiteLink { get; set; }
         public string AssemblyVersion { get; set; }
 
@@ -42,6 +43,7 @@ namespace eFormAPI.Web.Infrastructure.Models.Settings.Admin
             SwiftSettingsModel = new SwiftSettingsModel();
             S3SettingsModel = new S3SettingsModel();
             SdkSettingsModel = new SDKSettingsModel();
+            SendGridSettingsModel = new SendGridSettingsModel();
         }
     }
 }

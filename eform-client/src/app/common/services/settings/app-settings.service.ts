@@ -22,6 +22,7 @@ const SettingsMethods = {
   GetAdminSettings: '/api/settings/admin',
   GetAssemblyVersion: '/api/settings/version',
   GetApplicationHostOs: '/api/settings/hostos',
+  GetLatestVersion: '/api/settings/latest-version',
   ResetLoginPageSettings: '/api/settings/reset-login-page',
   ResetHeaderSettings: '/api/settings/reset-page-header',
   GetLoginPageSettings: '/api/settings/login-page',
@@ -66,5 +67,8 @@ export class AppSettingsService extends BaseService {
   }
   getApplicationHostOs(): Observable<OperationDataResult<string>> {
     return this.get<string>(SettingsMethods.GetApplicationHostOs);
+  }
+  getLatestVersion(): Observable<OperationDataResult<string>> {
+    return this.get<string>(SettingsMethods.GetLatestVersion);
   }
 }

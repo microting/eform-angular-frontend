@@ -4,6 +4,7 @@ import {HeaderSettingsModel} from '../app-parts/header-settings.model';
 import {SwiftSettingsModel} from '../swift-settings.model';
 import {SdkSettingsModel} from '../sdk-settings-model';
 import {S3SettingsModel} from '../s3-settings.model';
+import {SendGridSettingsModel} from '../send-grid-settings.model';
 
 export class AdminSettingsModel {
   loginPageSettingsModel: LoginPageSettingsModel;
@@ -11,6 +12,7 @@ export class AdminSettingsModel {
   headerSettingsModel: HeaderSettingsModel;
   swiftSettingsModel: SwiftSettingsModel;
   s3SettingsModel: S3SettingsModel;
+  sendGridSettingsModel: SendGridSettingsModel;
   sdkSettingsModel: SdkSettingsModel;
   siteLink: string;
   assemblyVersion: string;
@@ -22,5 +24,6 @@ export class AdminSettingsModel {
     this.swiftSettingsModel = new SwiftSettingsModel;
     this.s3SettingsModel = new S3SettingsModel();
     this.sdkSettingsModel = new SdkSettingsModel();
+    this.sendGridSettingsModel = new SendGridSettingsModel();
   }
 }

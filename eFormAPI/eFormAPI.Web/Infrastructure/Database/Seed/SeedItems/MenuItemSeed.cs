@@ -199,7 +199,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                     LocaleName = "PluginsSettings",
                     E2EId = "plugins-settings",
                     Link = "/plugins-settings",
-                    Position = 7,
+                    Position = 8,
                     ParentId = 3,
                     MenuPosition = 1,
                 },
@@ -211,6 +211,17 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                     E2EId = "folders",
                     Link = "/advanced/folders",
                     Position = 5,
+                    ParentId = 3,
+                    MenuPosition = 1,
+                },
+                new MenuItem
+                {
+                    Id = 18,
+                    Name = "Email Recipients",
+                    LocaleName = "EmailRecipients",
+                    E2EId = "email-recipients",
+                    Link = "/email-recipients",
+                    Position = 7,
                     ParentId = 3,
                     MenuPosition = 1,
                 }

@@ -82,6 +82,11 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
             },
             new EformConfigurationValue()
             {
+                Id = "EmailSettings:SendGridKey",
+                Value = ""
+            },
+            new EformConfigurationValue()
+            {
                 Id = "LoginPageSettings:MainText",
                 Value = "eForm Backend"
             },

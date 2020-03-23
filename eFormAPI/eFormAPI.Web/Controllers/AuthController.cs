@@ -22,14 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using System;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
-using eFormAPI.Web.Infrastructure.Helpers;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
@@ -42,8 +38,7 @@ namespace eFormAPI.Web.Controllers
         private readonly IAuthService _authService;
         private readonly ILocalizationService _localizationService;
 
-        public AuthController(IUserService userService,
-            UserManager<EformUser> userManager,
+        public AuthController(
             IAuthService authService,
             ILocalizationService localizationService)
         {

@@ -419,6 +419,30 @@
         </div>
       </div>
     </div>
+
+    <div class="row mt-4">
+      <div class="col-md-6 col-xs-12 mt-1 mb-4 control-block">
+        <div class="card">
+          <div class="card-header card-header-simple">
+            <div class="d-flex justify-content-between align-items-center">
+              {{ 'SendGrid Information' | translate}}
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="container-fluid">
+
+              <div class="md-form input-group">
+                <input mdbInputDirective [mdbValidate]="false"
+                       class="form-control" [(ngModel)]="adminSettingsModel.sendGridSettingsModel.apiKey"
+                       placeholder="12345678909876543210adfecdfefdae" type="text" value=""
+                       name="sendGridKey" id="sendGridKey">
+                <label for="sendGridKey">{{ 'Key' | translate }}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </form>
 </div>
 

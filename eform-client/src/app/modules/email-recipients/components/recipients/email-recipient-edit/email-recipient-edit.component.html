@@ -1,0 +1,58 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{ 'Edit email recipient' | translate }}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <ng-select
+                class="custom"
+                dropdownPosition="'bottom'"
+                [placeholder]="'Tags' | translate"
+                [(ngModel)]="emailRecipientUpdateModel.tagsIds"
+                [bindValue]="'id'"
+                [bindLabel]="'name'"
+                [items]="availableTags"
+                id="editEmailRecipientsMultiSelector"
+                [multiple]="true"></ng-select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="md-form">
+                <input mdbInputDirective [mdbValidate]="false"
+                       type="text" [(ngModel)]="emailRecipientUpdateModel.name" name="editEmailRecipientName"
+                       class="form-control" id="editEmailRecipientName">
+                <label for="editEmailRecipientName">{{'Name' | translate}}</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="md-form">
+                <input mdbInputDirective [mdbValidate]="false"
+                       type="text" [(ngModel)]="emailRecipientUpdateModel.email" name="editEmailRecipientEmail"
+                       class="form-control" id="editEmailRecipientEmail">
+                <label for="editEmailRecipientEmail">{{'Email' | translate}}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success" (click)="updateEmailRecipient()"
+                id="emailRecipientUpdateSaveBtn">
+          {{ 'Save' | translate }}
+        </button>
+        <button class="btn btn-accent text-black-50" (click)="frame.hide()" id="emailRecipientUpdateSaveCancelBtn">
+          {{ 'Cancel' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<spinner-pn [spinnerVisibility]="spinnerStatus"></spinner-pn>

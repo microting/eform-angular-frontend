@@ -1,5 +1,12 @@
 <eform-page-subheader [title]="'Units' | translate">
-
+  <div class="p-3">
+<!--    <button-->
+<!--      class="btn btn-neutral" id="unitMoveBtn" *ngIf="userClaims.workersCreate"-->
+<!--      (click)="openMoveModal()">{{ 'Move unit' | translate }}</button>-->
+    <button
+      class="btn btn-success" id="unitCreateBtn" *ngIf="userClaims.workersCreate"
+      (click)="openCreateModal()">{{ 'Create unit' | translate }}</button>
+  </div>
 </eform-page-subheader>
 
 <!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
@@ -8,19 +15,39 @@
     <table class="table table-sm table-striped text-center z-depth-1">
       <thead>
       <tr>
-        <th scope="col">{{ 'Created at' | translate }}</th>
-        <th scope="col"> {{ 'Updated at' | translate }}</th>
-        <th scope="col">{{ 'Customer' | translate }} No & OTP</th>
         <th scope="col"> Microting UID</th>
+        <th scope="col">{{ 'Location' | translate }}</th>
+        <th scope="col">{{ 'OS' | translate }}</th>
+        <th scope="col">{{ 'OS Version' | translate }}</th>
+        <th scope="col">{{ 'Model' | translate }}</th>
+        <th scope="col">{{ 'InSight Version' | translate }}</th>
+        <th scope="col">{{ 'eForm Version' | translate }}</th>
+        <th scope="col">{{ 'Customer No / OTP' | translate }}</th>
+        <th scope="col" *ngIf="userClaims.sitesDelete || userClaims.sitesUpdate">{{ 'Actions' | translate }}</th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let unitModel of unitModels">
-        <td scope="row">
-          <date-formatter [date]="unitModel.createdAt" [Format]="'datetime'"></date-formatter>
+      <tr *ngFor="let unitModel of unitModels; let i = index">
+        <td>
+          {{unitModel.microtingUid}}
         </td>
         <td>
-          <date-formatter [date]="unitModel.updatedAt" [Format]="'datetime'"></date-formatter>
+          {{unitModel.siteName}}
+        </td>
+        <td>
+          {{unitModel.os}}
+        </td>
+        <td>
+          {{unitModel.osVersion}}
+        </td>
+        <td>
+          {{unitModel.model}}
+        </td>
+        <td>
+          {{unitModel.inSightVersion}}
+        </td>
+        <td>
+          {{unitModel.eFormVersion}}
         </td>
         <td>
           <div class="d-flex flex-row justify-content-center">
@@ -36,7 +63,16 @@
           </div>
         </td>
         <td>
-          {{unitModel.unitUId}}
+          <button class="btn btn-danger btn-icon mb-2 " id="moveBtn_{{i}}" *ngIf="userClaims.sitesDelete"
+                  mdbTooltip="{{'Move unit' | translate}}"
+                  (click)="openMoveModal(unitModel)">
+            <fa-icon icon="dolly" [fixedWidth]="true" size="lg"></fa-icon>
+          </button>
+<!--          <button class="btn btn-danger btn-icon mb-2 " id="deleteBtn_{{i}}" *ngIf="userClaims.sitesDelete"-->
+<!--                  mdbTooltip="{{'Delete site' | translate}}"-->
+<!--                  (click)="openDeleteModal(siteDto)">-->
+<!--            <fa-icon icon="trash-alt" [fixedWidth]="true" size="lg"></fa-icon>-->
+<!--          </button>-->
         </td>
       </tr>
       </tbody>
@@ -46,6 +82,14 @@
 
 <eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>
 
+<app-unit-create
+  (UnitCreated)="loadAllUnits()"
+  #modalUnitsCreate></app-unit-create>
+
+<app-unit-move
+  (UnitMoved)="loadAllUnits()"
+  [selectedUnitModel]="selectedUnitModel"
+  #modalUnitsMove></app-unit-move>
 <app-units-otp-code
   (onUnitOtpRewoked)="loadAllUnits()"
   [selectedUnitModel]="selectedUnitModel"

@@ -10,6 +10,8 @@ import {AuthService} from 'src/app/common/services/auth';
 export class UnitsComponent implements OnInit {
 
   @ViewChild('modalUnitsOtpCode', { static: true }) modalUnitsOtpCode;
+  @ViewChild('modalUnitsCreate', { static: true }) modalUnitsCreate;
+  @ViewChild('modalUnitsMove', { static: true }) modalUnitsMove;
   spinnerStatus = false;
   unitModels: Array<UnitDto> = [];
   selectedUnitModel: UnitDto = new UnitDto();
@@ -31,6 +33,15 @@ export class UnitsComponent implements OnInit {
       }
       this.spinnerStatus = false;
     });
+  }
+
+  openCreateModal() {
+    this.modalUnitsCreate.show();
+  }
+
+  openMoveModal(selectedUnitDto: UnitDto) {
+    this.selectedUnitModel = selectedUnitDto;
+    this.modalUnitsMove.show(selectedUnitDto);
   }
 
   openModalUnitsOtpCode(selectedUnitDto: UnitDto) {

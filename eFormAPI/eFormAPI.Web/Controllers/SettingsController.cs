@@ -136,5 +136,13 @@ namespace eFormAPI.Web.Controllers
             
             return _settingsService.GetApplicationHostOs();
         }
+        
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("api/settings/latest-version")]
+        public Task<OperationDataResult<string>> GetLatestVersion()
+        {
+            return _settingsService.GetLatestVersion();
+        }
     }
 }

@@ -34,7 +34,7 @@
     "@fortawesome/angular-fontawesome": "0.5.0",
     "@fortawesome/fontawesome-svg-core": "1.2.25",
     "@fortawesome/free-solid-svg-icons": "5.11.2",
-    "@microting/ngx-charts": "12.0.4",
+    "@microting/ngx-charts": "12.0.9",
     "@ng-select/ng-select": "3.6.2",
     "@ngx-gallery/core": "4.0.3",
     "@ngx-gallery/gallerize": "4.0.3",

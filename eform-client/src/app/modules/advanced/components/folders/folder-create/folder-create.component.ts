@@ -24,7 +24,6 @@ export class FolderCreateComponent implements OnInit {
 
   createFolder() {
     this.spinnerStatus = true;
-    debugger;
     this.foldersService.createFolder(this.newFolderModel).subscribe((data => {
       if (data && data.success) {
         this.newFolderModel = new FolderCreateModel();

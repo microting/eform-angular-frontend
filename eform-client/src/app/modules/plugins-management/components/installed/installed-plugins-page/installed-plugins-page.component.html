@@ -16,6 +16,7 @@
         <th scope="col">{{ 'ID' }}</th>
         <th scope="col">{{ 'Name' | translate }}</th>
         <th scope="col">{{ 'Version' | translate }}</th>
+        <th scope="col">{{ 'Newest version available' | translate }}</th>
         <th scope="col">{{ 'Actions' | translate }}</th>
       </tr>
       </thead>
@@ -24,6 +25,7 @@
         <td scope="row" id="plugin-id">{{plugin.id}}</td>
         <td id="plugin-name">{{plugin.name}}</td>
         <td id="plugin-version">{{plugin.version}}</td>
+        <td id="plugin-version-available">{{plugin.versionAvailable}}</td>
 
         <td>
           <div class="d-flex flex-row justify-content-center">

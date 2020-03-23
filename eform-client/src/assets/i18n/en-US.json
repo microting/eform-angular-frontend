@@ -237,7 +237,6 @@
   "Edit Settings": "Edit Settings",
   "Connection String": "Connection String",
   "Version": "Version",
-
   "Header Picture": "Header Picture",
   "Preview": "Preview",
   "Number": "Number",
@@ -250,14 +249,28 @@
   "Signature": "Signature",
   "Audio": "Audio",
   "Are you sure you want to install plugin": "Are you sure you want to install plugin",
-  "This may take up to 10 minutes and rewrite current plugin version if it is already exist in the system":   "This may take up to 10 minutes and rewrite current plugin version if it is already exist in the system",
+  "This may take up to 10 minutes and rewrite current plugin version if it is already exist in the system": "This may take up to 10 minutes and rewrite current plugin version if it is already exist in the system",
   "Installation": "Installation",
   "Install": "Install",
   "Marketplace": "Marketplace",
   "Plugins Marketplace": "Plugins Marketplace",
   "Plugins Management": "Plugins Management",
   "Warning: you will be logged out when status is changed": "Warning: you will be logged out when status is changed",
-  "Select tags for site": "Select tags for site"
+  "Select tags for site": "Select tags for site",
+  "Add new": "Add new",
+  "Email Recipients": "Email Recipients",
+  "Manage tags": "Manage tags",
+  "Add Recipients": "Add Recipients",
+  "Edit email recipient": "Edit email recipient",
+  "Delete email recipient": "Delete email recipient",
+  "No email recipients found": "No email recipients found",
+  "New Email recipients": "New Email recipients",
+  "Email addresses": "Email addresses",
+  "Edit tag name": "Edit tag name",
+  "Tags management": "Tags management",
+  "Email/name text area should have at least one email/name pair": "Email/name text area should have at least one email/name pair",
+  "SendGrid Key": "SendGrid Key",
+  "SendGrid Information": "SendGrid Information"
 }
 
 

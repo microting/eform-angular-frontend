@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions.Advanced;
 using eFormAPI.Web.Infrastructure;
+using eFormAPI.Web.Infrastructure.Models.Units;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microting.eForm.Dto;
@@ -44,16 +45,32 @@ namespace eFormAPI.Web.Controllers.Advanced
 
         [HttpGet]
         [Authorize(Policy = AuthConsts.EformPolicies.Units.Read)]
-        public async Task<OperationDataResult<List<UnitDto>>> Index()
+        public Task<OperationDataResult<List<UnitModel>>> Index()
         {
-            return await _unitsService.Index();
+            return _unitsService.Index();
+        }
+
+        [HttpPost]
+        [Route("api/units/create")]
+        [Authorize(Policy = AuthConsts.EformPolicies.Units.Update)]
+        public Task<OperationResult> Create([FromBody] UnitModel model)
+        {
+            return _unitsService.Create(model);
+        }
+
+        [HttpPut]
+        [Route("api/units/update")]
+        [Authorize(Policy = AuthConsts.EformPolicies.Units.Update)]
+        public Task<OperationResult> Update([FromBody] UnitModel model)
+        {
+            return _unitsService.Update(model);
         }
 
         [HttpGet]
         [Authorize(Policy = AuthConsts.EformPolicies.Units.Update)]
-        public async Task<OperationDataResult<UnitDto>> RequestOtp(int id)
+        public Task<OperationDataResult<UnitDto>> RequestOtp(int id)
         {
-            return await _unitsService.RequestOtp(id);
+            return _unitsService.RequestOtp(id);
         }
     }
 }

@@ -25,7 +25,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Amazon.S3;
 using Amazon.S3.Model;
 using eFormAPI.Web.Hosting.Enums;
@@ -49,8 +51,8 @@ using Microting.eFormApi.BasePn.Infrastructure.Delegates;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Settings;
 using Microting.eFormApi.BasePn.Services;
+using Newtonsoft.Json.Linq;
 using OpenStack.NetCoreSwiftClient;
-using OpenStack.NetCoreSwiftClient.Extensions;
 using OpenStack.NetCoreSwiftClient.Infrastructure.Models;
 
 namespace eFormAPI.Web.Hosting.Helpers
@@ -126,6 +128,46 @@ namespace eFormAPI.Web.Hosting.Helpers
             }
 
             return plugins;
+        }
+        
+        public static async Task<string> GetLatestRepositoryVersion(string githubUserName, string pluginName)
+        {
+            var httpClient = new HttpClient
+            {
+                BaseAddress = new Uri($"https://api.github.com/repos/{githubUserName}/{pluginName}/tags")
+            };
+
+            httpClient.DefaultRequestHeaders.Add("User-Agent", "ReleaseSearcher");
+
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+            };
+
+            string latestVersion = "";
+
+            using (var response = await httpClient.SendAsync(request))
+            {
+                response.EnsureSuccessStatusCode();
+
+                var responseString = await response.Content.ReadAsStringAsync();
+                JToken responseObj = JRaw.Parse(responseString);
+
+                latestVersion = responseObj.First["name"].ToString();
+
+            }
+
+            latestVersion = latestVersion.Replace("v", "");
+            if (latestVersion.Split(".").Count() == 2)
+            {
+                latestVersion += ".0";
+            }
+
+            if (pluginName == "eform-angular-frontend")
+            {
+                latestVersion += ".0";
+            }
+            return latestVersion;
         }
 
 

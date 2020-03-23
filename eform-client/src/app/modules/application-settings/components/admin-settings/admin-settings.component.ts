@@ -18,6 +18,7 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
   headerImageLink: string;
   loginPageImageLink: string;
   spinnerStatus: boolean;
+  latestVersion: string;
   adminSettingsModel: AdminSettingsModel = new AdminSettingsModel();
   constructor(private settingsService: AppSettingsService,
               private authService: AuthService,
@@ -31,10 +32,18 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
   }
   ngOnInit() {
     if (this.currentRole === 'admin') {
+      this.getLatestVersion();
       this.getAdminSettings();
       this.initializeUploaders();
     }
+  }
 
+  getLatestVersion() {
+    this.settingsService.getLatestVersion().subscribe(operation => {
+      if (operation && operation.success) {
+        this.latestVersion = operation.model;
+      }
+    });
   }
 
   initializeUploaders() {

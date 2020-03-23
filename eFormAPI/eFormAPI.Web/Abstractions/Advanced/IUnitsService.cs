@@ -23,6 +23,7 @@ SOFTWARE.
 */
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using eFormAPI.Web.Infrastructure.Models.Units;
 using Microting.eForm.Dto;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
@@ -30,7 +31,9 @@ namespace eFormAPI.Web.Abstractions.Advanced
 {
     public interface IUnitsService
     {
-        Task<OperationDataResult<List<UnitDto>>> Index();
+        Task<OperationDataResult<List<UnitModel>>> Index();
+        Task<OperationResult> Create(UnitModel model);
+        Task<OperationResult> Update(UnitModel model);
         Task<OperationDataResult<UnitDto>> RequestOtp(int id);
     }
 }

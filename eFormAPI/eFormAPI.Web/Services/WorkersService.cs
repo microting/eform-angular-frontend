@@ -124,10 +124,10 @@ namespace eFormAPI.Web.Services
                             workerDto.FirstName,
                             workerDto.LastName))
                     : new OperationResult(false,
-                        _localizationService.GetStringWithFormat("WorkerParamCantBeDeted", workerDto.FirstName, workerDto.LastName));
+                        _localizationService.GetStringWithFormat("WorkerParamCantBeDeleted", workerDto.FirstName, workerDto.LastName));
             }
 
-            catch (Exception)
+            catch (Exception ex)
             {
                 return new OperationResult(false,
                     _localizationService.GetStringWithFormat("SiteWithIdCouldNotBeDeleted", id));
