@@ -11,7 +11,7 @@ import {CasePostsService} from '../../../../../common/services/cases';
   styleUrls: ['./case-post-view.component.scss']
 })
 export class CasePostViewComponent implements OnInit, OnDestroy {
-  @ViewChild('frame') frame;
+  @ViewChild('frame', {static: false}) frame;
   postViewModel: CasePostViewModel = new CasePostViewModel();
   getCasePost$: Subscription;
   spinnerStatus = false;

@@ -21,10 +21,10 @@ import {EmailRecipientModel, EmailRecipientsListModel, EmailRecipientsRequestMod
   styleUrls: ['./email-recipients-page.component.scss']
 })
 export class EmailRecipientsPageComponent implements OnInit, OnDestroy {
-  @ViewChild('newRecipientsModal') newRecipientsModal: EmailRecipientsNewComponent;
-  @ViewChild('editRecipientModal') editRecipientModal: EmailRecipientEditComponent;
-  @ViewChild('deleteRecipientModal') deleteRecipientModal: EmailRecipientDeleteComponent;
-  @ViewChild('recipientsTagsModal') recipientTagsModal: EmailRecipientsTagsComponent;
+  @ViewChild('newRecipientsModal', {static: false}) newRecipientsModal: EmailRecipientsNewComponent;
+  @ViewChild('editRecipientModal', {static: false}) editRecipientModal: EmailRecipientEditComponent;
+  @ViewChild('deleteRecipientModal', {static: false}) deleteRecipientModal: EmailRecipientDeleteComponent;
+  @ViewChild('recipientsTagsModal', {static: false}) recipientTagsModal: EmailRecipientsTagsComponent;
   emailRecipientsListModel: EmailRecipientsListModel = new EmailRecipientsListModel();
   emailRecipientsRequestModel: EmailRecipientsRequestModel = new EmailRecipientsRequestModel();
   localPageSettings: PageSettingsModel = new PageSettingsModel();

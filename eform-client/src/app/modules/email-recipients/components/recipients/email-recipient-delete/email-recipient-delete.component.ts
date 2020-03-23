@@ -12,7 +12,7 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
   styleUrls: ['./email-recipient-delete.component.scss']
 })
 export class EmailRecipientDeleteComponent implements OnInit, OnDestroy {
-  @ViewChild('frame') frame;
+  @ViewChild('frame', {static: false}) frame;
   @Input() availableTags: CommonDictionaryModel[] = [];
   @Output() emailRecipientDeleted: EventEmitter<void> = new EventEmitter<void>();
   selectedEmailRecipient: EmailRecipientModel = new EmailRecipientModel;

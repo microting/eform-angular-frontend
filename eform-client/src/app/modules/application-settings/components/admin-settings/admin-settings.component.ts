@@ -32,7 +32,7 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
   }
   ngOnInit() {
     if (this.currentRole === 'admin') {
-      this.getLatestVersion();
+      // this.getLatestVersion();
       this.getAdminSettings();
       this.initializeUploaders();
     }

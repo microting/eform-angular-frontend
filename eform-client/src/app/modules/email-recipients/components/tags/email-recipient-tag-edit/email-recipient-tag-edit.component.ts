@@ -12,7 +12,7 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./email-recipient-tag-edit.component.scss']
 })
 export class EmailRecipientTagEditComponent implements OnInit, OnDestroy {
-  @ViewChild('frame') frame;
+  @ViewChild('frame', {static: false}) frame;
   @Output() tagUpdated: EventEmitter<void> = new EventEmitter<void>();
   @Output() tagUpdateCancelled: EventEmitter<void> = new EventEmitter<void>();
   tagModel: EmailRecipientTagModel = new EmailRecipientTagModel();
