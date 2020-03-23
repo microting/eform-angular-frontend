@@ -57,7 +57,7 @@ class MyEformsPage extends PageWithNavbarPage {
   }
 
   createNewEform(eFormLabel, newTagsList = [], tagAddedNum = 0) {
-    browser.waitForVisible('#spinner-animation', 30000, true);
+    browser.waitForVisible('#spinner-animation', 50000, true);
     this.newEformBtn.click();
     browser.waitForVisible('#eFormXml', 20000);
     // Create replaced xml and insert it in textarea
