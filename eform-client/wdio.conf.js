@@ -73,7 +73,7 @@ exports.config = {
   //sync: true,
   //
   // Level of logging verbosity: silent | verbose | command | data | result | error
-  logLevel: 'debug',
+  //logLevel: 'info',
   //
   // Enables colors for log output.
   coloredLogs: true,
@@ -191,7 +191,7 @@ exports.config = {
 
   before: function () {
     require('ts-node/register');
-    browser.timeouts('implicit', 5000);
+    //browser.timeouts('implicit', 5000);
   },
   /**
    * Runs before a WebdriverIO command gets executed.
