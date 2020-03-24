@@ -60,8 +60,6 @@ export class CasePostsPageComponent implements OnInit, OnDestroy {
     this.getRecipientsAndTags();
     this.getRecipients();
 
-    debugger;
-
     this.currentUserFullName = this.authService.currentUserFullName;
   }
 
