@@ -66,7 +66,7 @@ describe('Entity Search', function () {
     const newItemNames = 'f\ng\nh\ni\nj';
     searchableLists.entitySearchEditBtn.click();
     $('#editName').waitForDisplayed(20000);
-    searchableLists.entitySearchEditNameBox.clearElement();
+    searchableLists.entitySearchEditNameBox.clearValue();
     searchableLists.entitySearchEditNameBox.addValue(newName);
     browser.pause(2000);
     searchableLists.entitySearchItemDeleteBtn.click();

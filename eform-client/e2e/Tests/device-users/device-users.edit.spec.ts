@@ -55,10 +55,10 @@ describe('Device users page', function () {
     // browser.pause(4000);
     $('#editFirstNameInput').waitForDisplayed(10000);
     deviceUsersPage.editFirstNameInput.click();
-    deviceUsersPage.editFirstNameInput.clearElement();
+    deviceUsersPage.editFirstNameInput.clearValue();
     deviceUsersPage.editFirstNameInput.setValue(newName);
     deviceUsersPage.editLastNameInput.click();
-    deviceUsersPage.editLastNameInput.clearElement();
+    deviceUsersPage.editLastNameInput.clearValue();
     deviceUsersPage.editLastNameInput.setValue(newSurname);
     deviceUsersPage.cancelEditBtn.click();
     // browser.pause(12000);

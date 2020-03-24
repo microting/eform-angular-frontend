@@ -19,10 +19,10 @@ export class UserAdministration extends  PageWithNavbarPage {
     public setNewName(firstName: string, lastName: string) {
     this.editUserBtn.click();
     $('#editFirstName').waitForDisplayed(2000);
-    this.firstNameBox.clearElement();
+    this.firstNameBox.clearValue();
     browser.pause(500);
     this.firstNameBox.addValue(firstName);
-    this.lastNameBox.clearElement();
+    this.lastNameBox.clearValue();
     browser.pause(500);
     this.lastNameBox.addValue(lastName);
     browser.pause(500);
@@ -31,10 +31,10 @@ export class UserAdministration extends  PageWithNavbarPage {
     public revertToOldName(firstName: string, lastName: string) {
       this.editUserBtn.click();
       $('#editFirstName').waitForDisplayed(2000);
-      this.firstNameBox.clearElement();
+      this.firstNameBox.clearValue();
       browser.pause(500);
       this.firstNameBox.addValue(firstName);
-      this.lastNameBox.clearElement();
+      this.lastNameBox.clearValue();
       browser.pause(500);
       this.lastNameBox.addValue(lastName);
       browser.pause(500);

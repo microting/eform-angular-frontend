@@ -230,7 +230,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
     $('#spinner-animation').waitForDisplayed(50000, true);
     this.entitySelectEditBtn.click();
     $('#editName').waitForDisplayed(200000);
-    this.entitySelectEditName.clearElement();
+    this.entitySelectEditName.clearValue();
     this.entitySelectEditName.addValue(newName);
     browser.pause(2000);
     this.entitySelectEditSaveBtn.click();
@@ -240,7 +240,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
     $('#spinner-animation').waitForDisplayed(50000, true);
     this.entitySelectEditBtn.click();
     $('#editName').waitForDisplayed(200000);
-    this.entitySelectEditName.clearElement();
+    this.entitySelectEditName.clearValue();
     this.entitySelectEditName.addValue(newName);
     browser.pause(2000);
     this.entitySelectEditCancelBtn.click();
@@ -250,7 +250,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
     $('#spinner-animation').waitForDisplayed(50000, true);
     this.entitySelectEditBtn.click();
     $('#editName').waitForDisplayed(200000);
-    this.entitySelectEditName.clearElement();
+    this.entitySelectEditName.clearValue();
     this.entitySelectEditName.addValue(newName);
     browser.pause(2000);
     this.editItemName(newItemName);
@@ -269,7 +269,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
     $('#spinner-animation').waitForDisplayed(50000, true);
     this.entitySelectEditBtn.click();
     $('#editName').waitForDisplayed(200000);
-    this.entitySelectEditName.clearElement();
+    this.entitySelectEditName.clearValue();
     this.entitySelectEditName.addValue(newName);
     browser.pause(2000);
     this.editItemName(newItemName);
@@ -280,7 +280,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
     $('#spinner-animation').waitForDisplayed(50000, true);
     this.entitySelectEditBtn.click();
     $('#editName').waitForDisplayed(200000);
-    this.entitySelectEditName.clearElement();
+    this.entitySelectEditName.clearValue();
     this.entitySelectEditName.addValue(newName);
     browser.pause(2000);
     this.editItemName_Cancels(newItemName);
@@ -291,7 +291,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
     $('#spinner-animation').waitForDisplayed(50000, true);
     this.entitySelectEditBtn.click();
     $('#editName').waitForDisplayed(200000);
-    this.entitySelectEditName.clearElement();
+    this.entitySelectEditName.clearValue();
     this.entitySelectEditName.addValue(newName);
     browser.pause(2000);
     this.editItemName_Cancels(newItemName);
@@ -321,7 +321,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
   public editItemName(newItemName) {
     this.entityItemEditBtn.click();
     browser.pause(4000);
-    this.entityItemEditNameBox.clearElement();
+    this.entityItemEditNameBox.clearValue();
     this.entityItemEditNameBox.addValue(newItemName);
     this.entityItemEditSaveBtn.click();
     browser.pause(2000);
@@ -330,7 +330,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
     const firstItem = this.getFirstItemObject();
     firstItem.editBtn.click();
     $('#entityItemEditNameBox').waitForDisplayed(20000);
-    this.entityItemEditNameBox.clearElement();
+    this.entityItemEditNameBox.clearValue();
     this.entityItemEditNameBox.addValue(newItemName);
     this.entityItemEditCancelBtn.click();
     browser.pause(2000);

@@ -92,7 +92,7 @@ describe('Entity Select', function () {
     const newItemNames = 'f\ng\nh\ni\nj';
     selectableLists.entitySelectEditBtn.click();
     $('#editName').waitForDisplayed(200000);
-    selectableLists.entitySelectEditName.clearElement();
+    selectableLists.entitySelectEditName.clearValue();
     selectableLists.entitySelectEditName.addValue(newName);
     browser.pause(2000);
     selectableLists.entityItemDeleteBtn.click();

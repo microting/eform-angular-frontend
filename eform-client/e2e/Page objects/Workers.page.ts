@@ -58,10 +58,10 @@ export class Workers extends PageWithNavbarPage {
     worker.editBtn.click();
     // browser.pause(8000);
     $('#firstNameEdit').waitForDisplayed(8000);
-    this.firstNameEditBox.clearElement();
+    this.firstNameEditBox.clearValue();
     this.firstNameEditBox.addValue(firstName);
     browser.pause(2000);
-    this.lastNameEditBox.clearElement();
+    this.lastNameEditBox.clearValue();
     this.lastNameEditBox.addValue(lastName);
     browser.pause(2000);
     this.workerEditSaveBtn.click();

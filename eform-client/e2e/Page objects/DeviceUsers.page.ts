@@ -101,12 +101,12 @@ class DeviceUsersPage extends PageWithNavbarPage {
     $('#editFirstNameInput').waitForDisplayed(10000);
     if (name != null) {
       this.editFirstNameInput.click();
-      this.editFirstNameInput.clearElement();
+      this.editFirstNameInput.clearValue();
       this.editFirstNameInput.setValue(name);
     }
     if (surname != null) {
       this.editLastNameInput.click();
-      this.editLastNameInput.clearElement();
+      this.editLastNameInput.clearValue();
       this.editLastNameInput.setValue(surname);
     }
     this.saveEditBtn.click();

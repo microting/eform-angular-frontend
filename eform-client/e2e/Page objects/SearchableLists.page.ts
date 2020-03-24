@@ -201,7 +201,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
     $('#spinner-animation').waitForDisplayed(50000, true);
     this.entitySearchEditBtn.click();
     $('#editName').waitForDisplayed(200000);
-    this.entitySearchEditNameBox.clearElement();
+    this.entitySearchEditNameBox.clearValue();
     this.entitySearchEditNameBox.addValue(newName);
     browser.pause(2000);
     this.entitySearchEditSaveBtn.click();
@@ -211,7 +211,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
     $('#spinner-animation').waitForDisplayed(50000, true);
     this.entitySearchEditBtn.click();
     $('#editName').waitForDisplayed(200000);
-    this.entitySearchEditNameBox.clearElement();
+    this.entitySearchEditNameBox.clearValue();
     this.entitySearchEditNameBox.addValue(newName);
     browser.pause(2000);
     this.entitySearchEditCancelBtn.click();
@@ -220,7 +220,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
   public editSearchableListNameAndItem(newName, newItemName) {
     this.entitySearchEditBtn.click();
     $('#editName').waitForDisplayed(200000);
-    this.entitySearchEditNameBox.clearElement();
+    this.entitySearchEditNameBox.clearValue();
     this.entitySearchEditNameBox.addValue(newName);
     browser.pause(2000);
     this.editItemName(newItemName);
@@ -239,7 +239,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
     $('#spinner-animation').waitForDisplayed(50000, true);
     this.entitySearchEditBtn.click();
     $('#editName').waitForDisplayed(200000);
-    this.entitySearchEditNameBox.clearElement();
+    this.entitySearchEditNameBox.clearValue();
     this.entitySearchEditNameBox.addValue(newName);
     browser.pause(2000);
     this.editItemName(newItemName);
@@ -250,7 +250,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
     $('#spinner-animation').waitForDisplayed(50000, true);
     this.entitySearchEditBtn.click();
     $('#editName').waitForDisplayed(200000);
-    this.entitySearchEditNameBox.clearElement();
+    this.entitySearchEditNameBox.clearValue();
     this.entitySearchEditNameBox.addValue(newName);
     browser.pause(2000);
     this.editItemName_Cancels(newItemName);
@@ -261,7 +261,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
     $('#spinner-animation').waitForDisplayed(50000, true);
     this.entitySearchEditBtn.click();
     $('#editName').waitForDisplayed(200000);
-    this.entitySearchEditNameBox.clearElement();
+    this.entitySearchEditNameBox.clearValue();
     this.entitySearchEditNameBox.addValue(newName);
     browser.pause(2000);
     this.editItemName_Cancels(newItemName);
@@ -291,7 +291,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
   public editItemName(newItemName) {
     this.entitySearchItemEditBtn.click();
     browser.pause(4000);
-    this.entitySearchEditItemNameBox.clearElement();
+    this.entitySearchEditItemNameBox.clearValue();
     this.entitySearchEditItemNameBox.addValue(newItemName);
     this.entitySearchEditItemSaveBtn.click();
     browser.pause(2000);
@@ -300,7 +300,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
     const firstItem = this.getFirstItemObject();
     firstItem.editBtn.click();
     $('#entityItemEditNameBox').waitForDisplayed(20000);
-    this.entitySearchEditItemNameBox.clearElement();
+    this.entitySearchEditItemNameBox.clearValue();
     this.entitySearchEditItemNameBox.addValue(newItemName);
     this.entitySearchEditItemSaveBtn.click();
     browser.pause(2000);
