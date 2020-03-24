@@ -19,6 +19,8 @@ export class CasePostNewComponent implements OnInit, OnDestroy {
   @Input() availableRecipients: CommonDictionaryModel[] = [];
   @Input() caseId: number;
   @Input() eformId: number;
+  @Input() currentUserFullName: string;
+  @Input() pdfReportEnabled: boolean;
   postCreateModel: CasePostCreateModel = new CasePostCreateModel;
   selectedTagsAndRecipientsIds: number[] = [];
   spinnerStatus = false;

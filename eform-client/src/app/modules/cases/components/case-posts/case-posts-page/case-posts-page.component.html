@@ -15,18 +15,18 @@
 <div class="container-fluid">
   <div class="row mt-2">
     <div class="col-md-4 col-sm-8">
-      <p>
+      <h5>
         <strong>eForm: </strong>
         <span id="eformLabel">{{casePostsListModel.eFormName}}</span>
-      </p>
-      <p>
+      </h5>
+      <h5>
         <strong>{{'eForm conducted by' | translate}}: </strong>
         <span id="eformConductedBy">{{casePostsListModel.workerName}}</span>
-      </p>
-      <p *ngFor="let field of casePostsListModel.additionalFields">
+      </h5>
+      <h5 *ngFor="let field of casePostsListModel.additionalFields">
         <strong>{{field.key}}: </strong>
         <span>{{field.value}}</span>
-      </p>
+      </h5>
     </div>
   </div>
   <div class="row p-1 table-responsive no-gutters" *ngIf="casePostsListModel.total !== 0">
@@ -55,9 +55,9 @@
         <th scope="col">
           {{ 'Subject' | translate }}
         </th>
-<!--        <th scope="col">-->
-<!--          {{ 'Text' | translate }}-->
-<!--        </th>-->
+        <th scope="col">
+          {{ 'Text' | translate }}
+        </th>
         <th scope="col">
           {{ 'Actions' | translate }}
         </th>
@@ -96,9 +96,9 @@
         <td id="casePostSubject">
           {{post.subject}}
         </td>
-<!--        <td id="casePostText">-->
-<!--          <div class="max-lines" [innerHTML]="post.text"></div>-->
-<!--        </td>-->
+        <td id="casePostText" class="w-50">
+          <p style="white-space:pre-wrap;">{{post.text}}</p>
+        </td>
         <td>
           <div class="d-flex flex-row justify-content-center">
             <button id="casePostViewBtn"
@@ -137,8 +137,12 @@
 <spinner-pn [spinnerVisibility]="spinnerStatus"></spinner-pn>
 
 <app-case-post-new #newPostModal (postCreated)="getCasePosts()"
+                   [pdfReportEnabled]="casePostsListModel.jasperExportEnabled"
+                   [currentUserFullName]="currentUserFullName"
                    [availableRecipients]="availableRecipients"
                    [availableRecipientsAndTags]="availableRecipientsAndTags"
                    [eformId]="selectedEformId"
                    [caseId]="selectedCaseId"></app-case-post-new>
-<app-case-post-view #viewPostModal></app-case-post-view>
+<app-case-post-view #viewPostModal
+                    [pdfReportEnabled]="casePostsListModel.jasperExportEnabled"
+                    [currentUserFullName]="currentUserFullName"></app-case-post-view>
