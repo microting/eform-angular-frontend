@@ -5,16 +5,16 @@ export class PasswordSettings extends PageWithNavbarPage {
     super();
   }
   public get oldPasswordField() {
-    return browser.element('#oldPassword');
+    return $('#oldPassword');
   }
   public get newPasswordField() {
-    return browser.element('#newPassword');
+    return $('#newPassword');
   }
   public get newPasswordConfirmationField() {
-    return browser.element('#newPasswordConfirmation');
+    return $('#newPasswordConfirmation');
   }
   public get saveBtn() {
-    return browser.element('#changePasswordSaveBtn');
+    return $('#changePasswordSaveBtn');
   }
   public setNewPassword() {
     this.oldPasswordField.addValue('Qq1234567$');

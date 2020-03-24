@@ -11,7 +11,7 @@ describe('Device users page should add new device user', function () {
     loginPage.open('/');
     loginPage.login();
     myEformsPage.Navbar.goToDeviceUsersPage();
-    browser.waitForVisible('#newDeviceUserBtn', 20000);
+    $('#newDeviceUserBtn').waitForDisplayed(20000);
     // browser.pause(8000);
   });
   it('with first name and last name', function () {
@@ -32,16 +32,16 @@ describe('Device users page should not add new device user', function () {
     browser.refresh();
     myEformsPage.Navbar.goToDeviceUsersPage();
     // browser.pause(8000);
-    // browser.waitForVisible('#newDeviceUserBtn', 20000);
+    // $('#newDeviceUserBtn').waitForDisplayed(20000);
   });
   it('with only first name', function () {
-    // browser.waitForVisible('#newDeviceUserBtn', 20000);
+    // $('#newDeviceUserBtn').waitForDisplayed(20000);
     const name = generateRandmString();
     // browser.refresh();
     browser.pause(8000);
-    browser.waitForVisible('#newDeviceUserBtn', 20000);
+    $('#newDeviceUserBtn').waitForDisplayed(20000);
     deviceUsersPage.newDeviceUserBtn.click();
-    browser.waitForVisible('#firstName', 10000);
+    $('#firstName').waitForDisplayed(10000);
     deviceUsersPage.createFirstNameInput.setValue(name);
     expect(deviceUsersPage.saveCreateBtn.isEnabled(),
       'Create button in modal window while creating new device user is active when only name is provided').equal(false);
@@ -51,9 +51,9 @@ describe('Device users page should not add new device user', function () {
     // browser.waitForEnabled('#newDeviceUserBtn', 20000);
     const lastName = generateRandmString();
     // browser.refresh();
-    browser.waitForVisible('#newDeviceUserBtn', 20000);
+    $('#newDeviceUserBtn').waitForDisplayed(20000);
     deviceUsersPage.newDeviceUserBtn.click();
-    browser.waitForVisible('#firstName', 10000);
+    $('#firstName').waitForDisplayed(10000);
     deviceUsersPage.createLastNameInput.setValue(lastName);
     expect(deviceUsersPage.saveCreateBtn.isEnabled(),
       'Create button in modal window while creating new device user is active when only last name is provided').equal(false);
@@ -61,9 +61,9 @@ describe('Device users page should not add new device user', function () {
   });
   it('without first and last names', function () {
     // browser.refresh();
-    browser.waitForVisible('#newDeviceUserBtn', 20000);
+    $('#newDeviceUserBtn').waitForDisplayed(20000);
     deviceUsersPage.newDeviceUserBtn.click();
-    browser.waitForVisible('#firstName', 10000);
+    $('#firstName').waitForDisplayed(10000);
     expect(deviceUsersPage.saveCreateBtn.isEnabled(),
       'Create button in modal window while creating new device user is active when both first name and last name are not provided').equal(
         false);
@@ -72,11 +72,11 @@ describe('Device users page should not add new device user', function () {
   it('if cancel was clicked', function () {
     const rowCountBeforeCreation = deviceUsersPage.rowNum;
     // browser.refresh();
-    browser.waitForVisible('#newDeviceUserBtn', 20000);
+    $('#newDeviceUserBtn').waitForDisplayed(20000);
     deviceUsersPage.newDeviceUserBtn.click();
-    browser.waitForVisible('#firstName', 10000);
+    $('#firstName').waitForDisplayed(10000);
     deviceUsersPage.cancelCreateBtn.click();
-    browser.waitForVisible('#newDeviceUserBtn', 10000);
+    $('#newDeviceUserBtn').waitForDisplayed(10000);
     const rowCountAfterCreation = deviceUsersPage.rowNum;
     expect(rowCountAfterCreation, 'Number of rows has changed after cancel').equal(rowCountBeforeCreation);
     browser.refresh();
@@ -84,7 +84,7 @@ describe('Device users page should not add new device user', function () {
   it('should clean up', function(){
     const lastDeviceUser = deviceUsersPage.getFirstRowObject();
     lastDeviceUser.deleteBtn.click();
-    browser.waitForVisible('#saveDeleteBtn', 10000);
+    $('#saveDeleteBtn').waitForDisplayed(10000);
     deviceUsersPage.saveDeleteBtn.click();
     browser.pause(4000);
     browser.refresh();

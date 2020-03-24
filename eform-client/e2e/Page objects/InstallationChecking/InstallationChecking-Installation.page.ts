@@ -8,73 +8,73 @@ export class InstallationCheckingInstallationPage extends Page {
     return $$('#tableBody > tr').length;
   }
   public installationCheckingDropDown() {
-    browser.element(`//*[contains(@class, 'dropdown')]//*[contains(text(), 'Planlægning')]`).click();
+    $(`//*[contains(@class, 'dropdown')]//*[contains(text(), 'Planlægning')]`).click();
   }
   public get installationBtn() {
-    return browser.element('#installationchecking-pn-installation');
+    return $('#installationchecking-pn-installation');
   }
   public get installationCreateBtn() {
-    return browser.element('#createInstallationBtn');
+    return $('#createInstallationBtn');
   }
   public get installationAssignBtn() {
-    return browser.element('#installationAssignBtn');
+    return $('#installationAssignBtn');
   }
   public get installationAssignBtnSave() {
-    return browser.element('#installationAssignBtnSave');
+    return $('#installationAssignBtnSave');
   }
   public get installationAssignBtnSaveCancel() {
-    return browser.element('#installationAssignBtnSaveCancel');
+    return $('#installationAssignBtnSaveCancel');
   }
   public get installationRetractBtn() {
-    return browser.element('#installationRetractBtn');
+    return $('#installationRetractBtn');
   }
   public get installationRetractSaveBtn() {
-    return browser.element('#installationRetractSaveBtn');
+    return $('#installationRetractSaveBtn');
   }
   public get installationRetractSaveCancelBtn() {
-    return browser.element('#installationRetractSaveCancelBtn');
+    return $('#installationRetractSaveCancelBtn');
   }
   public get installationCreateNameBox() {
-    return browser.element('#createInstallationName');
+    return $('#createInstallationName');
   }
   public get installationAssignCheckbox() {
-    return browser.element('#assignCheckbox');
+    return $('#assignCheckbox');
   }
   public get installationCreateSiteCheckbox() {
-    return browser.element('#checkbox');
+    return $('#checkbox');
   }
   public get installationCreateSaveBtn() {
-    return browser.element('#installationCreateSaveBtn');
+    return $('#installationCreateSaveBtn');
   }
   public get installationCreateCancelBtn() {
-    return browser.element('#installationCreateCancelBtn');
+    return $('#installationCreateCancelBtn');
   }
   public get installationUpdateNameBox() {
-    return browser.element('#updateInstallationName');
+    return $('#updateInstallationName');
   }
   public get installationUpdateSiteCheckbox() {
-    return browser.element('#checkbox');
+    return $('#checkbox');
   }
   public get installationUpdateSaveBtn() {
-    return browser.element('#installationUpdateSaveBtn');
+    return $('#installationUpdateSaveBtn');
   }
   public get installationUpdateCancelBtn() {
-    return browser.element('#installationUpdateCancelBtn');
+    return $('#installationUpdateCancelBtn');
   }
   public get installationDeleteId() {
-    return browser.element('#selectedInstallationId');
+    return $('#selectedInstallationId');
   }
   public get installationDeleteName() {
-    return browser.element('#selectedInstallationName');
+    return $('#selectedInstallationName');
   }
   public get installationDeleteDeleteBtn() {
-    return browser.element('#installationDeleteDeleteBtn');
+    return $('#installationDeleteDeleteBtn');
   }
   public get installationDeleteCancelBtn() {
-    return browser.element('#installationDeleteCancelBtn');
+    return $('#installationDeleteCancelBtn');
   }
   public get page2Object() {
-    return browser.element(`//*[div]//*[contains(@class, 'd-flex justify-content-center')]//*[ul]//*[contains(@class, 'page-item')]//*[contains(text(), '2')]`);
+    return $(`//*[div]//*[contains(@class, 'd-flex justify-content-center')]//*[ul]//*[contains(@class, 'page-item')]//*[contains(text(), '2')]`);
   }
   goToInstallationsPage() {
     this.installationCheckingDropDown();
@@ -119,7 +119,7 @@ export class InstallationCheckingInstallationPage extends Page {
   }
 
   public  getCustomerSearchField() {
-    return browser.element('#selectCustomer .ng-input > input');
+    return $('#selectCustomer .ng-input > input');
   }
   public getCustomerListOfChoices() {
     return browser.$$('#selectCustomer .ng-option');
@@ -129,7 +129,7 @@ export class InstallationCheckingInstallationPage extends Page {
   }
 
   public  getDeviceUserSearchField() {
-    return browser.element('#selectDeviceUser .ng-input > input');
+    return $('#selectDeviceUser .ng-input > input');
   }
   public getDeviceUserListOfChoices() {
     return browser.$$('#selectDeviceUser .ng-option');

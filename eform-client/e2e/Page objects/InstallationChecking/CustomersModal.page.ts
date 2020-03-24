@@ -7,99 +7,99 @@ export class CustomersModalPage extends Page {
   }
 
   public get createBtn() {
-    return browser.element('#createCustomerBtn');
+    return $('#createCustomerBtn');
   }
 
   public get cancelCreateBtn() {
-    return browser.element('#cancelCreateCustomerBtn');
+    return $('#cancelCreateCustomerBtn');
   }
 
   public get saveEditBtn() {
-    return browser.element('#saveEditBtn');
+    return $('#saveEditBtn');
   }
 
   public get cancelEditBtn() {
-    return browser.element('#cancelEditBtn');
+    return $('#cancelEditBtn');
   }
 
   public get saveDeleteBtn() {
-    return browser.element('#customerSaveDeleteBtn');
+    return $('#customerSaveDeleteBtn');
   }
 
   public get cancelDeleteBtn() {
-    return browser.element('#customerDeleteCancelBtn');
+    return $('#customerDeleteCancelBtn');
   }
 
   public get createCreatedByInput() {
-    return browser.element('#createCreatedBy');
+    return $('#createCreatedBy');
   }
 
   public get editCreatedByInput() {
-    return browser.element('#editCreatedBy');
+    return $('#editCreatedBy');
   }
 
   public get createCustomerNo() {
-    return browser.element('#createCustomerNo');
+    return $('#createCustomerNo');
   }
 
   public get editCustomerNo() {
-    return browser.element('#editCustomerNo');
+    return $('#editCustomerNo');
   }
 
   public get createContactPerson() {
-    return browser.element('#createContactPerson');
+    return $('#createContactPerson');
   }
 
   public get editContactPerson() {
-    return browser.element('#editContactPerson');
+    return $('#editContactPerson');
   }
 
   public get createCompanyName() {
-    return browser.element('#createCompanyName');
+    return $('#createCompanyName');
   }
 
   public get editCompanyName() {
-    return browser.element('#editCompanyName');
+    return $('#editCompanyName');
   }
 
   public get createCompanyAddress() {
-    return browser.element('#createCompanyAddress');
+    return $('#createCompanyAddress');
   }
 
   public get editCompanyAddress() {
-    return browser.element('#editCompanyAddress');
+    return $('#editCompanyAddress');
   }
 
   public get createZipCode() {
-    return browser.element('#createZipCode');
+    return $('#createZipCode');
   }
 
   public get editZipCode() {
-    return browser.element('#editZipCode');
+    return $('#editZipCode');
   }
 
   public get createCityName() {
-    return browser.element('#createCityName');
+    return $('#createCityName');
   }
 
   public get editCityName() {
-    return browser.element('#editCityName');
+    return $('#editCityName');
   }
 
   public get createPhone() {
-    return browser.element('#createPhone');
+    return $('#createPhone');
   }
 
   public get editPhone() {
-    return browser.element('#editPhone');
+    return $('#editPhone');
   }
 
   public get createEmail() {
-    return browser.element('#createEmail');
+    return $('#createEmail');
   }
 
   public get editEmail() {
-    return browser.element('#editEmail');
+    return $('#editEmail');
   }
 
   public createCustomer(data: any) {

@@ -7,51 +7,51 @@ class LoginPage extends Page {
   }
 
   public get mainText() {
-    return browser.element('#loginMainText');
+    return $('#loginMainText');
   }
 
   public get secondaryText() {
-    return browser.element('#loginSecondaryText');
+    return $('#loginSecondaryText');
   }
 
   public get image() {
-    return browser.element('#loginImage');
+    return $('#loginImage');
   }
 
   public get usernameInput() {
-    return browser.element('#username');
+    return $('#username');
   }
 
   public get passwordInput() {
-    return browser.element('#password');
+    return $('#password');
   }
 
   public get loginBtn() {
-    return browser.element('#loginBtn');
+    return $('#loginBtn');
   }
 
   public login(): void {
-    browser.waitForVisible('#username', 60000);
-    browser.waitForVisible('#spinner-animation', 50000, true);
+    $('#username').waitForDisplayed(60000);
+    $('#spinner-animation').waitForDisplayed(50000, true);
     // browser.pause(10000);
     this.usernameInput.setValue(LoginConstants.username);
     this.passwordInput.setValue(LoginConstants.password);
     this.loginBtn.click();
     // browser.pause(10000);
-    browser.waitForVisible('#spinner-animation', 50000, true);
-    browser.waitForVisible('#newEFormBtn', 60000);
-    browser.waitForVisible('#spinner-animation', 50000, true);
+    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#newEFormBtn').waitForDisplayed(60000);
+    $('#spinner-animation').waitForDisplayed(50000, true);
     // browser.pause(10000);
   }
   public loginWithNewPassword(): void {
     // browser.pause(10000);
-    browser.waitForVisible('#username', 60000);
-    browser.waitForVisible('#spinner-animation', 50000, true);
+    $('#username').waitForDisplayed(60000);
+    $('#spinner-animation').waitForDisplayed(50000, true);
     this.usernameInput.setValue(LoginConstants.username);
     this.passwordInput.setValue(LoginConstants.newPassword);
     this.loginBtn.click();
-    browser.waitForVisible('#newEFormBtn', 60000);
-    browser.waitForVisible('#spinner-animation', 50000, true);
+    $('#newEFormBtn').waitForDisplayed(60000);
+    $('#spinner-animation').waitForDisplayed(50000, true);
     // browser.pause(10000);
   }
 }

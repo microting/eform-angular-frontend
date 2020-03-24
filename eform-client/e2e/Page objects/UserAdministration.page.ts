@@ -5,20 +5,20 @@ export class UserAdministration extends  PageWithNavbarPage {
     super();
   }
     public get editUserBtn() {
-    return browser.element('#userAdministrationEditBtn');
+    return $('#userAdministrationEditBtn');
     }
     public get firstNameBox() {
-    return browser.element('#editFirstName');
+    return $('#editFirstName');
     }
     public get lastNameBox() {
-    return browser.element('#editLastName');
+    return $('#editLastName');
     }
     public get saveBtn() {
-    return browser.element('#editUserSaveBtn');
+    return $('#editUserSaveBtn');
     }
     public setNewName(firstName: string, lastName: string) {
     this.editUserBtn.click();
-    browser.waitForVisible('#editFirstName', 2000);
+    $('#editFirstName').waitForDisplayed(2000);
     this.firstNameBox.clearElement();
     browser.pause(500);
     this.firstNameBox.addValue(firstName);
@@ -30,7 +30,7 @@ export class UserAdministration extends  PageWithNavbarPage {
     }
     public revertToOldName(firstName: string, lastName: string) {
       this.editUserBtn.click();
-      browser.waitForVisible('#editFirstName', 2000);
+      $('#editFirstName').waitForDisplayed(2000);
       this.firstNameBox.clearElement();
       browser.pause(500);
       this.firstNameBox.addValue(firstName);

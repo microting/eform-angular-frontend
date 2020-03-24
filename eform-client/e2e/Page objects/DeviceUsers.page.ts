@@ -9,15 +9,15 @@ class DeviceUsersPage extends PageWithNavbarPage {
   }
 
   public get newDeviceUserBtn() {
-    return browser.element('#newDeviceUserBtn');
+    return $('#newDeviceUserBtn');
   }
 
   public get createFirstNameInput() {
-    return browser.element('#firstName');
+    return $('#firstName');
   }
 
   public get createLastNameInput() {
-    return browser.element('#lastName');
+    return $('#lastName');
   }
 
   getFirstRowObject(): DeviceUsersRowObject {
@@ -25,35 +25,35 @@ class DeviceUsersPage extends PageWithNavbarPage {
   }
 
   public get saveCreateBtn() {
-    return browser.element('#saveCreateBtn');
+    return $('#saveCreateBtn');
   }
 
   public get cancelCreateBtn() {
-    return browser.element('#cancelCreateBtn');
+    return $('#cancelCreateBtn');
   }
 
   public get editFirstNameInput() {
-    return browser.element('#editFirstNameInput');
+    return $('#editFirstNameInput');
   }
 
   public get editLastNameInput() {
-    return browser.element('#editLastNameInput');
+    return $('#editLastNameInput');
   }
 
   public get saveEditBtn() {
-    return browser.element('#saveEditBtn');
+    return $('#saveEditBtn');
   }
 
   public get cancelEditBtn() {
-    return browser.element('#cancelEditBtn');
+    return $('#cancelEditBtn');
   }
 
   public get saveDeleteBtn() {
-    return browser.element('#saveDeleteBtn');
+    return $('#saveDeleteBtn');
   }
 
   public get cancelDeleteBtn() {
-    return browser.element('#cancelDeleteBtn');
+    return $('#cancelDeleteBtn');
   }
 
   public get rowNum(): number {
@@ -75,7 +75,7 @@ class DeviceUsersPage extends PageWithNavbarPage {
   public createNewDeviceUser(firstName: string, lastName: string) {
     this.newDeviceUserBtn.click();
     // browser.pause(6000);
-    browser.waitForVisible('#firstName', 10000);
+    $('#firstName').waitForDisplayed(10000);
     this.createFirstNameInput.setValue(firstName);
     this.createLastNameInput.setValue(lastName);
     this.saveCreateBtn.click();
@@ -84,7 +84,7 @@ class DeviceUsersPage extends PageWithNavbarPage {
 
   public createDeviceUserFromScratch(name: string, surname: string) {
     myEformsPage.Navbar.goToDeviceUsersPage();
-    browser.waitForVisible('#newDeviceUserBtn', 20000);;
+    $('#newDeviceUserBtn').waitForDisplayed(20000);;
     const rowCountBeforeCreation = deviceUsersPage.rowNum;
     browser.pause(2000);
     deviceUsersPage.createNewDeviceUser(name, surname);
@@ -98,7 +98,7 @@ class DeviceUsersPage extends PageWithNavbarPage {
   public editDeviceUser(deviceUser: DeviceUsersRowObject, name = '', surname = '') {
     deviceUser.editBtn.click();
     // browser.pause(5000);
-    browser.waitForVisible('#editFirstNameInput', 10000);
+    $('#editFirstNameInput').waitForDisplayed(10000);
     if (name != null) {
       this.editFirstNameInput.click();
       this.editFirstNameInput.clearElement();
@@ -111,7 +111,7 @@ class DeviceUsersPage extends PageWithNavbarPage {
     }
     this.saveEditBtn.click();
     // browser.pause(12000);
-    browser.waitForVisible('#newDeviceUserBtn', 20000);
+    $('#newDeviceUserBtn').waitForDisplayed(20000);
   }
 }
 

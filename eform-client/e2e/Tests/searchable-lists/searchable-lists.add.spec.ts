@@ -11,7 +11,7 @@ describe('Entity Search', function () {
   });
   it('should go to entity search page', function () {
     searchableLists.goToEntitySearchPage();
-    browser.waitForVisible('#createEntitySearchBtn', 20000);
+    $('#createEntitySearchBtn').waitForDisplayed(20000);
   });
   it('should create a new searchable list', function () {
     const name = Guid.create().toString();

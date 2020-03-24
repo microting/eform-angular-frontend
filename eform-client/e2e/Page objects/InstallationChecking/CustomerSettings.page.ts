@@ -6,35 +6,35 @@ export class CustomersSettingsPage extends Page {
   }
 
   public get deleteCustomerBtn() {
-    return browser.element('#cancelCreateBtn');
+    return $('#cancelCreateBtn');
   }
 
   public get saveEditBtn() {
-    return browser.element('#saveEditBtn');
+    return $('#saveEditBtn');
   }
 
   public get cancelEditBtn() {
-    return browser.element('#cancelEditBtn');
+    return $('#cancelEditBtn');
   }
 
   public get saveDeleteBtn() {
-    return browser.element('#saveDeleteBtn');
+    return $('#saveDeleteBtn');
   }
 
   public get cancelDeleteBtn() {
-    return browser.element('#cancelDeleteBtn');
+    return $('#cancelDeleteBtn');
   }
   public getCheckboxById(id: string) {
-    return browser.element('#checkbox' + id);
+    return $('#checkbox' + id);
   }
 
   public clickCheckboxById(id: string) {
-    const el = browser.element('#mat-checkbox' + id);
+    const el = $('#mat-checkbox' + id);
     el.click();
     browser.pause(5000);
   }
   public  getSearchField() {
-    return browser.element('.ng-input > input');
+    return $('.ng-input > input');
   }
   public getListOfChoices() {
     return browser.$$('.ng-option');

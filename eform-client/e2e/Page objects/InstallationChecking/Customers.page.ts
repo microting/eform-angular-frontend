@@ -114,20 +114,20 @@ export class CustomersPage extends PageWithNavbarPage {
   }
 
   public get newCustomerBtn() {
-    return browser.element('#newCustomerBtn');
+    return $('#newCustomerBtn');
   }
 
   public get customersSettingsBtn() {
-    return browser.element('#firstName');
+    return $('#firstName');
   }
 
   public get importCustomersSettingsBtn() {
-    return browser.element('#lastName');
+    return $('#lastName');
   }
 
   // same purpose as previous method?
   public  importCustomerBtn() {
-    return browser.element('#importCustomer');
+    return $('#importCustomer');
   }
 
   public  goToImportBtn() {
@@ -136,23 +136,23 @@ export class CustomersPage extends PageWithNavbarPage {
   }
 
   public get saveImportCustomersBtn() {
-    return browser.element('#saveCreateBtn');
+    return $('#saveCreateBtn');
   }
 
   public get cancelImportCustomersBtn() {
-    return browser.element('#saveCreateBtn');
+    return $('#saveCreateBtn');
   }
 
   public get deleteCustomerBtn() {
-    return browser.element('#cancelCreateBtn');
+    return $('#cancelCreateBtn');
   }
 
   public get editCustomerBtn() {
-    return browser.element('#editCustomerBtn');
+    return $('#editCustomerBtn');
   }
 
   public get customersButton() {
-    return browser.element('#customers-pn');
+    return $('#customers-pn');
   }
 
   public get settingsCustomerBtn() {
@@ -171,7 +171,7 @@ export class CustomersPage extends PageWithNavbarPage {
   }
 
   public get saveDeleteBtn() {
-    return browser.element('#customerSaveDeleteBtn');
+    return $('#customerSaveDeleteBtn');
   }
 }
 

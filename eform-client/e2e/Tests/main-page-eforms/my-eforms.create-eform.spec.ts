@@ -16,7 +16,7 @@ describe('My eforms', function () {
     expect(eform.tags.length).equal(0);
     eform.deleteBtn.click();
     // browser.pause(10000);
-    browser.waitForVisible('#eFormDeleteDeleteBtn', 20000);
+    $('#eFormDeleteDeleteBtn').waitForDisplayed(20000);
     $$('.btn-danger')[2].click();
     eform = myEformsPage.getFirstMyEformsRowObj();
     expect(eform.id === null);
@@ -30,7 +30,7 @@ describe('My eforms', function () {
     expect(eform.tags.length).equal(1);
     expect(eform.tags[0].getText()).equal(createdTag);
     eform.deleteBtn.click();
-    browser.waitForVisible('#eFormDeleteDeleteBtn', 20000);
+    $('#eFormDeleteDeleteBtn').waitForDisplayed(20000);
     // browser.pause(10000);
     $$('.btn-danger')[2].click();
     eform = myEformsPage.getFirstMyEformsRowObj();
@@ -49,7 +49,7 @@ describe('My eforms', function () {
     expect(eform.tags.length).equal(createdTags.length);
     expect(tagsTexts).to.include.members(createdTags);
     eform.deleteBtn.click();
-    browser.waitForVisible('#eFormDeleteDeleteBtn', 20000);
+    $('#eFormDeleteDeleteBtn').waitForDisplayed(20000);
     // browser.pause(7000);
     $$('.btn-danger')[2].click();
     browser.pause(7000);
@@ -74,7 +74,7 @@ describe('My eforms', function () {
     expect(tagsTexts).to.include.members(createdTags);
     expect(tagsTexts).to.include.members(addedAndSelectedTags.selected);
     eform.deleteBtn.click();
-    browser.waitForVisible('#eFormDeleteDeleteBtn', 20000);
+    $('#eFormDeleteDeleteBtn').waitForDisplayed(20000);
     // browser.pause(7000);
     $$('.btn-danger')[2].click();
     browser.pause(7000);
@@ -93,7 +93,7 @@ describe('My eforms', function () {
     expect(eform.tags.length).equal(tagAddedNum);
     expect(tagsTexts).to.include.members(addedAndSelectedTags.selected);
     eform.deleteBtn.click();
-    browser.waitForVisible('#eFormDeleteDeleteBtn', 20000);
+    $('#eFormDeleteDeleteBtn').waitForDisplayed(20000);
     // browser.pause(7000);
     $$('.btn-danger')[2].click();
     browser.pause(7000);
@@ -112,7 +112,7 @@ describe('My eforms', function () {
     expect(eform.tags.length).equal(tagAddedNum);
     expect(tagsTexts).to.include.members(addedAndSelectedTags.selected);
     eform.deleteBtn.click();
-    browser.waitForVisible('#eFormDeleteDeleteBtn', 20000);
+    $('#eFormDeleteDeleteBtn').waitForDisplayed(20000);
     // browser.pause(10000);
     $$('.btn-danger')[2].click();
     eform = myEformsPage.getFirstMyEformsRowObj();

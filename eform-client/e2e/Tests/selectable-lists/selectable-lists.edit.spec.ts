@@ -13,7 +13,7 @@ describe('Entity Select', function () {
   });
   it('should go to entity select page.', function () {
     selectableLists.goToEntitySelectPage();
-    browser.waitForVisible('#entitySelectCreateBtn', 20000);
+    $('#entitySelectCreateBtn').waitForDisplayed(20000);
   });
   it('should make a new selectable list, with no items.', function () {
     const name = Guid.create().toString();
@@ -91,7 +91,7 @@ describe('Entity Select', function () {
     const newName = 'New List Name';
     const newItemNames = 'f\ng\nh\ni\nj';
     selectableLists.entitySelectEditBtn.click();
-    browser.waitForVisible('#editName', 200000);
+    $('#editName').waitForDisplayed(200000);
     selectableLists.entitySelectEditName.clearElement();
     selectableLists.entitySelectEditName.addValue(newName);
     browser.pause(2000);

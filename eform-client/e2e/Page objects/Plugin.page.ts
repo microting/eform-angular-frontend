@@ -7,22 +7,22 @@ class PluginPage extends Page {
   }
 
   public ClickDropdown(id) {
-    return browser.element(`#${id}`).click();
+    return $(`#${id}`).click();
   }
 
   public get saveBtn() {
-    return browser.element('#saveBtn');
+    return $('#saveBtn');
   }
 
   public get pluginSettingsBtn() {
-    return browser.element(`//*[@id= 'plugin-status']//button`);
+    return $(`//*[@id= 'plugin-status']//button`);
   }
 
   public get pluginOKBtn() {
-    return browser.element('#pluginOKBtn');
+    return $('#pluginOKBtn');
   }
   public get pluginSettingsLink() {
-    return browser.element('#plugin-settings-link');
+    return $('#plugin-settings-link');
   }
 
   public save() {
@@ -31,7 +31,7 @@ class PluginPage extends Page {
 
   public selectValue(dropdownId, id, value) {
     this.ClickDropdown(dropdownId);
-    browser.element(`//*[@id="${id}"]//*[text()="${value}"]`).click();
+    $(`//*[@id="${id}"]//*[text()="${value}"]`).click();
     browser.pause(4000);
   }
 }

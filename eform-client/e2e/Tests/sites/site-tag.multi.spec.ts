@@ -13,12 +13,12 @@ describe('Site tags', function () {
     loginPage.open('/');
     loginPage.login();
     myEformsPage.Navbar.goToDeviceUsersPage();
-    browser.waitForVisible('#newDeviceUserBtn', 20000);
+    $('#newDeviceUserBtn').waitForDisplayed(20000);
     deviceUsersPage.createDeviceUserFromScratch('John', 'Smith');
     sitesPage.Navbar.goToSites();
   });
   it('should create new tag', function () {
-    browser.waitForVisible('#editSiteTagsBtn_0', 20000);
+    $('#editSiteTagsBtn_0').waitForDisplayed(20000);
     const site = sitesPage.getFirstRowObject();
     console.log(JSON.stringify(site));
     sitesPage.createTag(site, tagName);
@@ -31,7 +31,7 @@ describe('Site tags', function () {
     const site = sitesPage.getFirstRowObject();
     // browser.pause(8000);
     site.siteTagsEditBtn.click();
-    browser.waitForVisible('#newTag', 20000);
+    $('#newTag').waitForDisplayed(20000);
     // browser.pause(8000);
     const tagNotSelected = sitesPage.tagNotSelected(tagName);
     // browser.pause(4000);
@@ -43,7 +43,7 @@ describe('Site tags', function () {
     const site = sitesPage.getFirstRowObject();
     // browser.pause(8000);
     site.siteTagsEditBtn.click();
-    browser.waitForVisible('#newTag', 20000);
+    $('#newTag').waitForDisplayed(20000);
     const firstTag = sitesPage.getFirstAvailableTag;
     firstTag.click();
     sitesPage.updateTagsBtn.click();
@@ -52,11 +52,11 @@ describe('Site tags', function () {
     browser.refresh();
   });
   it('should delete tag', function () {
-    browser.waitForVisible('#editSiteTagsBtn_0', 20000);
+    $('#editSiteTagsBtn_0').waitForDisplayed(20000);
     const site = sitesPage.getFirstRowObject();
     // browser.pause(8000);
     site.siteTagsEditBtn.click();
-    browser.waitForVisible('#newTag', 20000);
+    $('#newTag').waitForDisplayed(20000);
     sitesPage.tagRemovalSelector.click();
     browser.pause(2000);
     const tagsForRemoval = sitesPage.getTagsListOfChoises();

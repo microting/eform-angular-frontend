@@ -6,34 +6,34 @@ export class Workers extends PageWithNavbarPage {
     super();
   }
   public get firstNameBox() {
-    return browser.element('#firstName');
+    return $('#firstName');
   }
   public get lastNameBox() {
-    return browser.element('#lastName');
+    return $('#lastName');
   }
   public get firstNameEditBox() {
-    return browser.element('#firstNameEdit');
+    return $('#firstNameEdit');
   }
   public get lastNameEditBox() {
-    return browser.element('#lastNameEdit');
+    return $('#lastNameEdit');
   }
   public get workerCreateBtn() {
-    return browser.element('#workerCreateBtn');
+    return $('#workerCreateBtn');
   }
   public get workerSaveBtn() {
-    return browser.element('#workerSaveBtn');
+    return $('#workerSaveBtn');
   }
   public get workerEditBtn() {
-    return browser.element('#workerEditBtn');
+    return $('#workerEditBtn');
   }
   public get workerEditSaveBtn() {
-    return browser.element('#workerEditSaveBtn');
+    return $('#workerEditSaveBtn');
   }
   public get workerSelect() {
-    return browser.element('#workerSelector');
+    return $('#workerSelector');
   }
   public get firstElement() {
-    return browser.element(`//*[contains(@class, 'custom')]//*[contains(text(), 'Gurkemine Ralphine')]`);
+    return $(`//*[contains(@class, 'custom')]//*[contains(text(), 'Gurkemine Ralphine')]`);
   }
   public get rowNum(): number {
     return $$('#tableBody > tr').length;
@@ -44,7 +44,7 @@ export class Workers extends PageWithNavbarPage {
   public createNewWorker(firstName: string, lastName: string) {
     this.workerCreateBtn.click();
     // browser.pause(8000);
-    browser.waitForVisible('#firstName', 10000);
+    $('#firstName').waitForDisplayed(10000);
     this.workerSelect.click();
     browser.pause(1000);
     this.firstElement.click();
@@ -57,7 +57,7 @@ export class Workers extends PageWithNavbarPage {
   public editWorker(worker: WorkersRowObject, firstName: string, lastName: string) {
     worker.editBtn.click();
     // browser.pause(8000);
-    browser.waitForVisible('#firstNameEdit', 8000);
+    $('#firstNameEdit').waitForDisplayed(8000);
     this.firstNameEditBox.clearElement();
     this.firstNameEditBox.addValue(firstName);
     browser.pause(2000);

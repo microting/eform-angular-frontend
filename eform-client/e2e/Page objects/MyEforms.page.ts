@@ -7,7 +7,7 @@ class MyEformsPage extends PageWithNavbarPage {
   }
 
   public get newEformBtn() {
-    return browser.element('#newEFormBtn');
+    return $('#newEFormBtn');
   }
 
   public getRowNum(): number {
@@ -15,41 +15,41 @@ class MyEformsPage extends PageWithNavbarPage {
   }
 
   public get idSortBtn() {
-    return browser.element('#idSort');
+    return $('#idSort');
   }
 
   public get createdAtSortBtn() {
-    return browser.element('#createdAtSort');
+    return $('#createdAtSort');
   }
 
   public get eformNameSortBtn() {
-    return browser.element('#nameEFormSort');
+    return $('#nameEFormSort');
   }
 
   public get eformFilter() {
-    return browser.element('#labelInput');
+    return $('#labelInput');
   }
 
 
   // Create eform modal
   public get createEformTagSelector() {
-    return browser.element('#createEFormMultiSelector');
+    return $('#createEFormMultiSelector');
   }
 
   public get createEformNewTagInput() {
-    return browser.element('#addTagInput');
+    return $('#addTagInput');
   }
 
   public get xmlTextArea() {
-    return browser.element('#eFormXml');
+    return $('#eFormXml');
   }
 
   public get createEformBtn() {
-    return browser.element('#createEformBtn');
+    return $('#createEformBtn');
   }
 
   public get cancelCreateEformBtn() {
-    return browser.element('#cancelCreateEformBtn');
+    return $('#cancelCreateEformBtn');
   }
 
   getFirstMyEformsRowObj(): MyEformsRowObject {
@@ -59,7 +59,7 @@ class MyEformsPage extends PageWithNavbarPage {
   createNewEform(eFormLabel, newTagsList = [], tagAddedNum = 0) {
     browser.waitForVisible('#spinner-animation', 50000, true);
     this.newEformBtn.click();
-    browser.waitForVisible('#eFormXml', 20000);
+    $('#eFormXml').waitForDisplayed(20000);
     // Create replaced xml and insert it in textarea
     const xml = XMLForEform.XML.replace('TEST_LABEL', eFormLabel);
     browser.execute(function (xmlText) {
@@ -83,14 +83,14 @@ class MyEformsPage extends PageWithNavbarPage {
         console.log('selectedTags is ' + JSON.stringify(selectedTags));
         selectedTag.click();
         browser.waitForVisible('#spinner-animation', 50000, true);
-        browser.waitForVisible('#createEformBtn', 10000);
+        $('#createEformBtn').waitForDisplayed(10000);
         // browser.pause(5000);
       }
     }
     this.createEformBtn.click();
     // browser.pause(14000);
     browser.waitForVisible('#spinner-animation', 50000, true);
-    browser.waitForVisible('#delete-eform-btn', 20000);
+    $('#delete-eform-btn').waitForDisplayed(20000);
     return {added: addedTags, selected: selectedTags};
   }
 }

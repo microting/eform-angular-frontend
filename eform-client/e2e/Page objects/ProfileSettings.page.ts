@@ -6,23 +6,23 @@ export class ProfileSettings extends PageWithNavbarPage {
   }
 
 public get languageSelector() {
-    return browser.element('#ProfileLanguageSelector');
+    return $('#ProfileLanguageSelector');
 }
 
 public get saveBtn() {
-    return browser.element('#ProfileSettingsSaveBtn');
+    return $('#ProfileSettingsSaveBtn');
 }
 
 public saveProfileSettings() {
     this.saveBtn.click();
     // browser.pause(12000);
-  browser.waitForVisible('#sign-out-dropdown', 20000);
+  $('#sign-out-dropdown').waitForDisplayed(20000);
   browser.pause(1000);
 }
 public chooseLanguage(language: string) {
     this.languageSelector.click();
     browser.pause(2000);
-  browser.element(`//*[@id="ProfileLanguageSelector"]//*[text()="${language}"]`).click();
+  $(`//*[@id="ProfileLanguageSelector"]//*[text()="${language}"]`).click();
     browser.pause(1000);
 }
 }

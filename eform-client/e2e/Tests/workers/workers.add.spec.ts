@@ -13,7 +13,7 @@ describe('Workers page ', function () {
     deviceUsersPage.createNewDeviceUser('Gurkemine', 'Ralphine');
     browser.pause(3000);
     myEformsPage.Navbar.goToWorkers();
-    browser.waitForVisible('#workerCreateBtn ', 8000);
+    $('#workerCreateBtn ').waitForDisplayed(8000);
   });
   it('should add new Worker with first and last name', function () {
     const name = 'Monty';

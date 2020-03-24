@@ -11,7 +11,7 @@ describe('Entity Search', function () {
   });
   it('should go to entity search page', function () {
     searchableLists.goToEntitySearchPage();
-    browser.waitForVisible('#createEntitySearchBtn', 20000);
+    $('#createEntitySearchBtn').waitForDisplayed(20000);
   });
   it('should create a new searchable list with only name', function () {
     const name = Guid.create().toString();
@@ -40,7 +40,7 @@ describe('Entity Search', function () {
   it('should delete item from list.', function () {
     searchableLists.deleteItemFromList();
     searchableLists.entitySearchEditBtn.click();
-    browser.waitForVisible('#editName', 20000);
+    $('#editName').waitForDisplayed(20000);
     expect(searchableLists.items).equal(0);
     searchableLists.entitySearchEditCancelBtn.click();
     searchableLists.cleanup();

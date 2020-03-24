@@ -74,14 +74,14 @@
     "@types/d3": "5.7.2",
     "@types/mocha": "5.2.5",
     "@types/node": "8.9.5",
-    "@types/webdriverio": "4.13.3",
-    "@wdio/cli": "5.16.10",
-    "@wdio/local-runner": "5.16.10",
+    "@wdio/cli": "5.22.4",
+    "@wdio/local-runner": "^5.22.4",
     "@wdio/mocha-framework": "^5.18.7",
-    "wdio-selenium-standalone-service": "0.0.12",
+    "@wdio/spec-reporter": "^5.22.4",
+    "@wdio/sync": "^5.20.1",
     "angular-mocks": "1.7.9",
     "chai": "4.2.0",
-    "chromedriver": "2.44.0",
+    "chromedriver": "^80.0.1",
     "codelyzer": "5.2.0",
     "guid-typescript": "1.0.9",
     "path": "0.12.7",
@@ -89,9 +89,7 @@
     "ts-node": "8.5.4",
     "tslint": "5.20.1",
     "typescript": "3.5.3",
-    "wdio-chromedriver-service": "^0.1.5",
-    "wdio-mocha-framework": "^0.6.4",
-    "wdio-spec-reporter": "0.1.5",
-    "webdriverio": "4.14.1"
+    "wdio-chromedriver-service": "^5.0.2",
+    "webdriverio": "5.22.4"
   }
 }

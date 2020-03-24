@@ -8,19 +8,19 @@ export class ApplicationSettingsPage extends PageWithNavbarPage {
   }
 
   public get saveBtn() {
-    return browser.element('#applicationSettingsSaveBtn');
+    return $('#applicationSettingsSaveBtn');
   }
 
   public get siteHeaderMainText() {
-    return browser.element('#main-header-text');
+    return $('#main-header-text');
   }
 
   public get siteHeaderSecondaryText() {
-    return browser.element('#secondary-header-text');
+    return $('#secondary-header-text');
   }
 
   public get siteHeaderImage() {
-    return browser.element('#site-header-image');
+    return $('#site-header-image');
   }
 
 
@@ -35,31 +35,31 @@ export class ApplicationSettingsPage extends PageWithNavbarPage {
 
 class LoginPageSettings {
   public get mainTextInput() {
-    return browser.element('#mainTextLoginPage');
+    return $('#mainTextLoginPage');
   }
 
   public get secondaryTextInput() {
-    return browser.element('#secondaryTextLoginPage');
+    return $('#secondaryTextLoginPage');
   }
 
   public get imageUploadBtn() {
-    return browser.element('#loginPageImageUploadBtn');
+    return $('#loginPageImageUploadBtn');
   }
 
   public get mainTextVisibilityToggleBtn() {
-    return browser.element('#loginPageMainTextVisibilityToggler');
+    return $('#loginPageMainTextVisibilityToggler');
   }
 
   public get secondaryTextVisibilityToggleBtn() {
-    return browser.element('#loginPageSecondaryTextVisibilityToggler');
+    return $('#loginPageSecondaryTextVisibilityToggler');
   }
 
   public get imageVisibilityToggler() {
-    return browser.element('#loginPageImageVisibilityToggler');
+    return $('#loginPageImageVisibilityToggler');
   }
 
   public get resetBtn() {
-    return browser.element('#loginPageReset');
+    return $('#loginPageReset');
   }
 
   public reset() {
@@ -72,31 +72,31 @@ class LoginPageSettings {
 
 class SiteHeaderSettings {
   public get mainTextInput() {
-    return browser.element('#headerSettingsMainText');
+    return $('#headerSettingsMainText');
   }
 
   public get secondaryTextInput() {
-    return browser.element('#headerSettingsSecondaryText');
+    return $('#headerSettingsSecondaryText');
   }
 
   public get imageUploadBtn() {
-    return browser.element('#siteHeaderUploadBtn');
+    return $('#siteHeaderUploadBtn');
   }
 
   public get mainTextVisibilityToggleBtn() {
-    return browser.element('#siteHeaderMainTextToggler');
+    return $('#siteHeaderMainTextToggler');
   }
 
   public get secondaryTextVisibilityToggleBtn() {
-    return browser.element('#siteHeaderSecondaryTextToggler');
+    return $('#siteHeaderSecondaryTextToggler');
   }
 
   public get imageVisibilityToggler() {
-    return browser.element('#siteHeaderImageVisibilityToggler');
+    return $('#siteHeaderImageVisibilityToggler');
   }
 
   public get resetBtn() {
-    return browser.element('#siteHeaderReset');
+    return $('#siteHeaderReset');
   }
 
   public reset() {

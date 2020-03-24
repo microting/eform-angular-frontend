@@ -6,27 +6,27 @@ class SitesPage extends PageWithNavbarPage {
   }
 
   public get editTagsBtn() {
-    return browser.element('#newDeviceUserBtn');
+    return $('#newDeviceUserBtn');
   }
 
   public get newTagInput() {
-    return browser.element('#newTag');
+    return $('#newTag');
   }
 
   public get newTagCreateBtn() {
-    return browser.element('#newTagCreateBtn');
+    return $('#newTagCreateBtn');
   }
 
   public get siteTagSelector() {
-    return browser.element('#tagSelector');
+    return $('#tagSelector');
   }
 
   public get updateTagsBtn() {
-    return browser.element('#saveTagsBtn');
+    return $('#saveTagsBtn');
   }
 
   public get tagRemovalSelector() {
-    return browser.element('#tagForRemoval');
+    return $('#tagForRemoval');
   }
 
   public getTagsListOfChoises() {
@@ -34,7 +34,7 @@ class SitesPage extends PageWithNavbarPage {
   }
 
   public get removeTagBtn() {
-    return browser.element('#removeTagBtn');
+    return $('#removeTagBtn');
   }
 
   getFirstRowObject(): SitesRowObject {
@@ -73,27 +73,27 @@ class SitesPage extends PageWithNavbarPage {
   }
 
   public get saveCreateBtn() {
-    return browser.element('#saveCreateBtn');
+    return $('#saveCreateBtn');
   }
 
   public get cancelCreateBtn() {
-    return browser.element('#cancelCreateBtn');
+    return $('#cancelCreateBtn');
   }
 
   public get saveEditBtn() {
-    return browser.element('#saveEditBtn');
+    return $('#saveEditBtn');
   }
 
   public get cancelEditBtn() {
-    return browser.element('#cancelEditBtn');
+    return $('#cancelEditBtn');
   }
 
   public get saveDeleteBtn() {
-    return browser.element('#saveDeleteBtn');
+    return $('#saveDeleteBtn');
   }
 
   public get cancelDeleteBtn() {
-    return browser.element('#cancelDeleteBtn');
+    return $('#cancelDeleteBtn');
   }
 
   public get rowNum(): number {

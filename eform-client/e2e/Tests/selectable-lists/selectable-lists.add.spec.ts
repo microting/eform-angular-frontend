@@ -12,7 +12,7 @@ describe('Entity Select', function () {
   });
   it('should go to entity select page.', function () {
     selectableLists.goToEntitySelectPage();
-    browser.waitForVisible('#entitySelectCreateBtn', 20000);
+    $('#entitySelectCreateBtn').waitForDisplayed(20000);
   });
   it('should make a new selectable list, with no items.', function () {
     const name = Guid.create().toString();

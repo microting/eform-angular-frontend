@@ -8,10 +8,10 @@ export class InstallationsPage extends Page {
     return $$('#tableBody > tr').length;
   }
   public InstallationCheckingDropDown() {
-    browser.element(`//*[contains(@class, 'dropdown')]//*[contains(text(), 'Planlægning')]`).click();
+    $(`//*[contains(@class, 'dropdown')]//*[contains(text(), 'Planlægning')]`).click();
   }
   public get InstallationsBtn() {
-    return browser.element('#installationchecking-pn-installation');
+    return $('#installationchecking-pn-installation');
   }
   goToInstallationsPage() {
     this.InstallationCheckingDropDown();

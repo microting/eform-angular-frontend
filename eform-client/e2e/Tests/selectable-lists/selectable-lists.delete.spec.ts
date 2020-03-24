@@ -12,7 +12,7 @@ describe('Entity Select', function () {
   });
   it('should go to entity select page.', function () {
     selectableLists.goToEntitySelectPage();
-    browser.waitForVisible('#entitySelectCreateBtn', 20000);
+    $('#entitySelectCreateBtn').waitForDisplayed(20000);
   });
   it('should make a new selectable list, with no items.', function () {
     const name = Guid.create().toString();
@@ -40,7 +40,7 @@ describe('Entity Select', function () {
   it('should delete item in list', function () {
     selectableLists.deleteItemFromList();
     selectableLists.entitySelectEditBtn.click();
-    browser.waitForVisible('#editName', 20000);
+    $('#editName').waitForDisplayed(20000);
     expect(selectableLists.items).equal(0);
     selectableLists.entitySelectEditCancelBtn.click();
     selectableLists.cleanup();

@@ -18,7 +18,7 @@ describe('Application settings page - site header section', function () {
     applicationSettingsPage.save();
     browser.refresh();
     // browser.pause(10000);
-    browser.waitForVisible('#sign-out-dropdown', 40000);
+    $('#sign-out-dropdown').waitForDisplayed(40000);
     browser.pause(4000);
     applicationSettingsPage.Navbar.logout();
     expect(loginPage.loginBtn.isVisible()).equal(true);
@@ -32,7 +32,7 @@ describe('Application settings page - site header section', function () {
     applicationSettingsPage.save();
     browser.refresh();
     // browser.pause(8000);
-    browser.waitForVisible('#sign-out-dropdown', 20000);
+    $('#sign-out-dropdown').waitForDisplayed(20000);
     browser.pause(1000);    applicationSettingsPage.Navbar.logout();
     expect(loginPage.loginBtn.isVisible()).equal(true);
     expect(loginPage.secondaryText.getText(),
@@ -45,7 +45,7 @@ describe('Application settings page - site header section', function () {
     applicationSettingsPage.save();
     browser.refresh();
     // browser.pause(8000);
-    browser.waitForVisible('#sign-out-dropdown', 20000);
+    $('#sign-out-dropdown').waitForDisplayed(20000);
     browser.pause(1000);    applicationSettingsPage.Navbar.logout();
     expect(loginPage.loginBtn.isVisible()).equal(true);
     expect(loginPage.mainText.isVisible(),
@@ -58,7 +58,7 @@ describe('Application settings page - site header section', function () {
     applicationSettingsPage.save();
     browser.refresh();
     // browser.pause(8000);
-    browser.waitForVisible('#sign-out-dropdown', 20000);
+    $('#sign-out-dropdown').waitForDisplayed(20000);
     browser.pause(1000);    applicationSettingsPage.Navbar.logout();
     expect(loginPage.loginBtn.isVisible()).equal(true);
     expect(loginPage.secondaryText.isVisible(),
@@ -71,7 +71,7 @@ describe('Application settings page - site header section', function () {
     applicationSettingsPage.save();
     browser.refresh();
     // browser.pause(8000);
-    browser.waitForVisible('#sign-out-dropdown', 20000);
+    $('#sign-out-dropdown').waitForDisplayed(20000);
     browser.pause(1000);    applicationSettingsPage.Navbar.logout();
     expect(loginPage.loginBtn.isVisible()).equal(true);
     expect(loginPage.image.isVisible(),

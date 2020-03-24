@@ -7,53 +7,53 @@ class DatabasePage extends Page {
   }
 
   public get passwordInput() {
-    return browser.element('#password');
+    return $('#password');
   }
 
   public get emailInput() {
-    return browser.element('#email');
+    return $('#email');
   }
 
   public get firstNameInput() {
-    return browser.element('#firstName');
+    return $('#firstName');
   }
 
   public get lastNameInput() {
-    return browser.element('#lastName');
+    return $('#lastName');
   }
 
   public get customerNo() {
-    return browser.element('#customerNo');
+    return $('#customerNo');
   }
 
   public SqlServer(sqlserver) {
     this.sqlserverDropdown.click();
-    browser.element(`//*[@id="sqlServerSelector"]//*[text()="${sqlserver}"]`).element('..').element('..').click();
+    //$(`//*[@id="sqlServerSelector"]//*[text()="${sqlserver}"]`).ELEMENT('..').ELEMENT('..').click();
   }
 
   public get port() {
-    return browser.element('#port');
+    return $('#port');
   }
 
   public get tokenInput() {
-    return browser.element('#token');
+    return $('#token');
   }
 
   public get authenticationType() {
-    return browser.element('#auth2');
+    return $('#auth2');
   }
 
   public get languageDropdown() {
-    return browser.element('#languageSelector');
+    return $('#languageSelector');
   }
 
 
   public get sqlserverDropdown() {
-    return browser.element('#sqlServerSelector');
+    return $('#sqlServerSelector');
   }
 
   public get saveBtn() {
-    return browser.element('#save');
+    return $('#save');
   }
 
   public save() {
@@ -62,7 +62,7 @@ class DatabasePage extends Page {
 
   public selectLanguage(language) {
     this.languageDropdown.click();
-    browser.element(`//*[@id="languageSelector"]//*[text()="${language}"]`).element('..').element('..').click();
+    //$(`//*[@id="languageSelector"]//*[text()="${language}"]`).element('..').element('..').click();
   }
 
   public configure(language) {
