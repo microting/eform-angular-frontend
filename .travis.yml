@@ -35,6 +35,7 @@ script:
   - dotnet build eFormAPI/eFormAPI.sln
   - dotnet test -v n eFormAPI/eFormAPI.Web.Tests/eFormAPI.Web.Tests.csproj
   - dotnet test -v n eFormAPI/eFormAPI.Web.Integration.Tests/eFormAPI.Web.Integration.Tests.csproj
+	- mkdir -p /home/travis/build/microting/eform-angular-frontend/eform-client/errorShots
   - cd eform-client && npm install
   - npm start &
   - sleep 40
@@ -43,11 +44,6 @@ script:
   - npm run testheadless
   - sleep 40
   - npm run $TEST_SUITE
-  - touch ~/.aws/config || true
-  - echo "[default]" >> ~/.aws/config || true
-  - echo "aws_access_key_id=$AWS_ACCESS_KEY_ID" >> ~/.aws/config || true
-  - echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> ~/.aws/config || true
-  - echo "region=$AWS_DEFAULT_REGION" >> ~/.aws/config || true
   - aws s3 sync errorShots/ s3://$S3_STORAGE_FOLDER/$TRAVIS_BUILD_NUMBER || true
 after_success:
 - echo dotnet test and npm test succeeded
