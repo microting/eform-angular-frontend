@@ -35,7 +35,7 @@ script:
   - dotnet build eFormAPI/eFormAPI.sln
   - dotnet test -v n eFormAPI/eFormAPI.Web.Tests/eFormAPI.Web.Tests.csproj
   - dotnet test -v n eFormAPI/eFormAPI.Web.Integration.Tests/eFormAPI.Web.Integration.Tests.csproj
-	- mkdir -p /home/travis/build/microting/eform-angular-frontend/eform-client/errorShots
+  - mkdir -p /home/travis/build/microting/eform-angular-frontend/eform-client/errorShots
   - cd eform-client && npm install
   - npm start &
   - sleep 40
