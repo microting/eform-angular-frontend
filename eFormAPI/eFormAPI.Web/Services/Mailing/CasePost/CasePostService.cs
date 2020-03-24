@@ -125,7 +125,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                             .Select(y => $"{y.FirstName} {y.LastName}")
                             .FirstOrDefault(),
                         ToRecipients = x.Recipients
-                            .Select(y => y.EmailRecipient.Name)
+                            .Select(y => $"{y.EmailRecipient.Name} ({y.EmailRecipient.Email})")
                             .ToList(),
                         ToRecipientsTags = x.Tags
                             .Select(y => y.EmailTag.Name)
@@ -282,10 +282,8 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                         Subject = x.Subject,
                         AttachReport = x.AttachPdf,
                         AttachLinkToCase = x.LinkToCase,
-                        From = x.From.Name,
-                        Title = x.Title,
                         ToRecipients = x.Recipients
-                            .Select(y => y.EmailRecipient.Name)
+                            .Select(y => $"{y.EmailRecipient.Name} ({y.EmailRecipient.Email})")
                             .ToList(),
                         ToRecipientsTags = x.Tags
                             .Select(y => y.EmailTag.Name)
@@ -335,10 +333,8 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                         LinkToCase = requestModel.AttachLinkToCase,
                         Text = requestModel.Text,
                         Subject = requestModel.Subject,
-                        Title = requestModel.Title,
                         CaseId = requestModel.CaseId,
                         PostDate = DateTime.UtcNow,
-                        FromId = requestModel.From,
                     };
 
                     await _dbContext.CasePosts.AddAsync(casePost);

@@ -335,7 +335,7 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
                     .Select(x => new EmailRecipientTagCommonModel
                     {
                         Id = x.Id,
-                        Name = x.Name,
+                        Name = $"{x.Name} ({x.Email})",
                         IsTag = false,
                     }).ToListAsync();
 
@@ -366,7 +366,7 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
                     .Select(x => new CommonDictionaryModel
                     {
                         Id = x.Id,
-                        Name = x.Name,
+                        Name = $"{x.Name} ({x.Email})",
                     }).ToListAsync();
 
                 return new OperationDataResult<CommonDictionaryModel[]>(
