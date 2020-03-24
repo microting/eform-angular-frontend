@@ -90,12 +90,15 @@ namespace eFormAPI.Web.Services
 
         public OperationResult ConnectionStringExist()
         {
+            Log.LogEvent("SettingsService.ConnectionStringExist: called");
             var connectionString = _connectionStringsSdk.Value.SdkConnection;
             if (!string.IsNullOrEmpty(connectionString))
             {
+                Log.LogEvent("SettingsService.ConnectionStringExist: we have the file");
                 return new OperationResult(true);
             }
 
+            Log.LogEvent("SettingsService.ConnectionStringExist: we don't have the file");
             return new OperationResult(false,
                 _localizationService.GetString("ConnectionStringDoesNotExist"));
         }

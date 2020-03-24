@@ -57,7 +57,10 @@ exports.config = {
     //
     browserName: 'chrome',
     'goog:chromeOptions': {
-      args: ['headless', 'disable-gpu'],
+      args: [
+        'headless',
+        'window-size=1920,1080',
+        'disable-gpu'],
     },
     // If outputDir is provided WebdriverIO can capture driver session logs
     // it is possible to configure which logTypes to include/exclude.
@@ -225,8 +228,39 @@ exports.config = {
    * Function to be executed after a test (in Mocha/Jasmine) or a step (in Cucumber) ends.
    * @param {Object} test test details
    */
-  // afterTest: function (test) {
-  // },
+  afterTest(test) {
+    const path = require('path');
+
+    // if test passed, ignore, else take and save screenshot.
+    if (test.passed) {
+      return;
+    }
+
+    /*
+     * get the current date and clean it
+     * const date = (new Date()).toString().replace(/\s/g, '-').replace(/-\(\w+\)/, '');
+     */
+    //const { browserName } = browser.desiredCapabilities;
+    const timestamp = new Date().toLocaleString('iso', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    }).replace(/[ ]/g, '--').replace(':', '-');
+
+    // get current test title and clean it, to use it as file name
+    const filename = encodeURIComponent(
+      `${
+        test.fullTitle.replace(/\s+/g, '-')
+      }-chrome-${timestamp}`.replace(/[/]/g, '__')
+    ).replace(/%../, '.');
+
+    const filePath = path.resolve(this.screenshotPath, `${filename}.png`);
+
+    browser.saveScreenshot(filePath);
+  },
   /**
    * Hook that gets executed after the suite has ended
    * @param {Object} suite suite details

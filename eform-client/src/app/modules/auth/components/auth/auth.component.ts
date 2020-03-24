@@ -28,6 +28,7 @@ export class AuthComponent implements OnInit {
   }
 
   checkConnectionString() {
+    console.log('checkConnectionString called');
     if (!this.isConnectionStringExist(false)) {
       setTimeout(() => {
         this.isConnectionStringExist(true);
@@ -36,6 +37,7 @@ export class AuthComponent implements OnInit {
   }
 
   isConnectionStringExist(secondCheck: boolean) {
+    console.log('isConnectionStringExist called');
     this.spinnerStatus = true;
     this.settingsService.connectionStringExist().subscribe((result) => {
       if (result && !result.success) {

@@ -66,8 +66,10 @@ namespace eFormAPI.Web.Services
 
         public async Task<OperationDataResult<TemplateListModel>> Index(TemplateRequestModel templateRequestModel)
         {
+            Log.LogEvent("TemplateService.Index: called");
             try
             {
+                Log.LogEvent("TemplateService.Index: try section");
                 var core = await _coreHelper.GetCore();
                 List<Template_Dto> templatesDto = await core.TemplateItemReadAll(false,
                     "",
@@ -130,6 +132,7 @@ namespace eFormAPI.Web.Services
             }
             catch (Exception ex)
             {
+                Log.LogEvent("TemplateService.Index: catch section");
                 Log.LogException($"TemplatesService.Index: Got exception {ex.Message}");
                 Log.LogException($"TemplatesService.Index: Got stacktrace {ex.StackTrace}");
                 if (ex.Message.Contains("PrimeDb"))

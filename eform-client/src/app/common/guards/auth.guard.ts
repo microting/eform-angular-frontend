@@ -7,6 +7,7 @@ export class AuthGuard implements CanActivate {
 
   canActivate(): boolean {
     if (!localStorage.getItem('currentAuth')) {
+      console.log('Let\'s kick the user out auth.guard');
       this.router.navigate(['/auth']).then();
       return false;
     }

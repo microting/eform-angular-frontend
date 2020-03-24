@@ -7,6 +7,7 @@ export class AdminGuard implements CanActivate {
   constructor(private router: Router) { }
   canActivate(): boolean {
     if (!localStorage.getItem('currentAuth')) {
+      console.log('Let\'s kick the user out admin.guard');
       this.router.navigate(['/auth']).then();
       return false;
     } else {

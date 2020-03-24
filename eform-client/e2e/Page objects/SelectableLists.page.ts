@@ -315,7 +315,6 @@ export class SelectableListsPage extends PageWithNavbarPage {
       browser.pause(4000);
       this.entitySelectDeleteDeleteBtn.click();
       browser.pause(1000);
-      browser.refresh();
     }
   }
   public editItemName(newItemName) {
@@ -347,7 +346,6 @@ export class SelectableListsPage extends PageWithNavbarPage {
       browser.pause(4000);
       this.entitySelectDeleteDeleteBtn.click();
       browser.pause(1000);
-      browser.refresh();
     }
   }
 }

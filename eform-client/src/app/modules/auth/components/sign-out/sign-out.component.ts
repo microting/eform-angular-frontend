@@ -20,6 +20,7 @@ export class SignOutComponent implements OnInit, AfterViewChecked {
 
   signOut() {
     localStorage.removeItem('currentAuth');
+    console.log('Let\'s kick the user out sign-out.component');
     // this.cookieService.delete('.AspNetCore.Identity.Application');
     this.router.navigate(['/auth']).then();
   }

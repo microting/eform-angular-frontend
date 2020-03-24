@@ -120,6 +120,7 @@ export class BaseService {
 
   private logOutWhenTokenFalse() {
     localStorage.clear();
+    console.log('Let\'s kick the user out base.service');
     this.router.navigate(['/auth']).then();
   }
 
