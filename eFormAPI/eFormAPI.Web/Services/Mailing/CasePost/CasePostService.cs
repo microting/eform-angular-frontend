@@ -113,6 +113,17 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                     .Skip(requestModel.Offset)
                     .Take(requestModel.PageSize);
 
+
+                var core = await _coreService.GetCore();
+                var templateDto = await core.TemplateItemRead(requestModel.TemplateId);
+                var caseDto = await core.CaseLookupCaseId(requestModel.CaseId);
+                if (caseDto?.MicrotingUId == null || caseDto.CheckUId == null)
+                {
+                    throw new InvalidOperationException("caseDto not found");
+                }
+
+                var replyElement = await core.CaseRead((int) caseDto.MicrotingUId, (int) caseDto.CheckUId);
+
                 var casePostList = await casePostsQuery
                     .Select(x => new CasePostModel()
                     {
@@ -120,6 +131,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                         Subject = x.Subject,
                         Text = x.Text,
                         Date = x.PostDate,
+                        JasperExportEnabled = replyElement.JasperExportEnabled,
                         From = _dbContext.Users
                             .Where(y => y.Id == x.CreatedByUserId)
                             .Select(y => $"{y.FirstName} {y.LastName}")
@@ -130,10 +142,9 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                         ToRecipientsTags = x.Tags
                             .Select(y => y.EmailTag.Name)
                             .ToList(),
+                        
                     }).ToListAsync();
 
-                var core = await _coreService.GetCore();
-                var templateDto = await core.TemplateItemRead(requestModel.TemplateId);
                 using (var dbContext = core.dbContextHelper.GetDbContext())
                 {
                     var caseEntity = await dbContext.cases
