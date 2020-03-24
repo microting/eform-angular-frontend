@@ -145,7 +145,7 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
                     }
 
                     emailRecipient.Name = requestModel.Name;
-                    emailRecipient.Email = requestModel.Email;
+                    emailRecipient.Email = requestModel.Email.Replace(" ", "");
                     emailRecipient.UpdatedAt = DateTime.UtcNow;
                     emailRecipient.UpdatedByUserId = _userService.UserId;
 
@@ -273,7 +273,7 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
                         var emailRecipient = new EmailRecipient
                         {
                             Name = recipientCreateModel.Name,
-                            Email = recipientCreateModel.Email,
+                            Email = recipientCreateModel.Email.Replace(" ", ""),
                             CreatedAt = DateTime.UtcNow,
                             CreatedByUserId = _userService.UserId,
                             UpdatedAt = DateTime.UtcNow,
