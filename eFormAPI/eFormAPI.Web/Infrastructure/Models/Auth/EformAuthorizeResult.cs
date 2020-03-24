@@ -21,23 +21,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System.Threading.Tasks;
-using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
-
-namespace eFormAPI.Web.Abstractions
+namespace eFormAPI.Web.Infrastructure.Models.Auth
 {
-    using Infrastructure.Models.Auth;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
 
-    public interface IAuthService
+    public class EformAuthorizeResult : AuthorizeResult
     {
-        Task<OperationDataResult<EformAuthorizeResult>> AuthenticateUser(LoginModel model);
-        Task<OperationDataResult<EformAuthorizeResult>> RefreshToken();
-        Task<OperationResult> DeleteGoogleAuthenticatorInfo();
-        Task<OperationDataResult<GoogleAuthenticatorModel>> GetGoogleAuthenticator(LoginModel loginModel);
-        Task<OperationDataResult<GoogleAuthInfoModel>> GetGoogleAuthenticatorInfo();
-        Task<OperationResult> LogOut();
-        OperationDataResult<bool> TwoFactorAuthForceInfo();
-        Task<OperationResult> UpdateGoogleAuthenticatorInfo(GoogleAuthInfoModel requestModel);
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
     }
 }

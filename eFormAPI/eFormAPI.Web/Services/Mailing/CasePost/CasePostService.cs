@@ -34,6 +34,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
     using Abstractions;
     using EmailService;
     using Hosting.Helpers.DbOptions;
+    using Infrastructure.Const;
     using Infrastructure.Database;
     using Infrastructure.Database.Entities.Mailing;
     using Infrastructure.Models;
@@ -119,7 +120,10 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                         Subject = x.Subject,
                         Text = x.Text,
                         Date = x.PostDate,
-                        From = x.From.Name,
+                        From = _dbContext.Users
+                            .Where(y => y.Id == x.CreatedByUserId)
+                            .Select(y => $"{y.FirstName} {y.LastName}")
+                            .FirstOrDefault(),
                         ToRecipients = x.Recipients
                             .Select(y => y.EmailRecipient.Name)
                             .ToList(),
@@ -375,10 +379,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                     await _dbContext.SaveChangesAsync();
 
                     // Send email
-                    var from = await _dbContext.EmailRecipients
-                        .AsNoTracking()
-                        .Where(x => x.Id == requestModel.From)
-                        .FirstOrDefaultAsync();
+                    var currentUser = await _userService.GetCurrentUserAsync();
 
                     var casePostRecipientResult = await _dbContext.CasePosts
                         .AsNoTracking()
@@ -467,8 +468,8 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                                 }
 
                                 await _emailService.SendFileAsync(
-                                    from.Email,
-                                    from.Name,
+                                    EformEmailConst.FromEmail,
+                                    $"{currentUser.FirstName} {currentUser.LastName}",
                                     casePost.Subject.IsNullOrEmpty() ? "-" : casePost.Subject,
                                     recipient.Email,
                                     filePath,
@@ -478,8 +479,8 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                             {
                                 Console.WriteLine(e);
                                 await _emailService.SendAsync(
-                                    from.Email,
-                                    from.Name,
+                                    EformEmailConst.FromEmail,
+                                    $"{currentUser.FirstName} {currentUser.LastName}",
                                     casePost.Subject.IsNullOrEmpty() ? "-" : casePost.Subject,
                                     recipient.Email,
                                     html: html);
@@ -488,8 +489,8 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                         else
                         {
                             await _emailService.SendAsync(
-                                from.Email,
-                                from.Name,
+                                EformEmailConst.FromEmail,
+                                $"{currentUser.FirstName} {currentUser.LastName}",
                                 casePost.Subject.IsNullOrEmpty() ? "-" : casePost.Subject,
                                 recipient.Email,
                                 html: html);
