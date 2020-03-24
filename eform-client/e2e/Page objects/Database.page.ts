@@ -28,7 +28,7 @@ class DatabasePage extends Page {
 
   public SqlServer(sqlserver) {
     this.sqlserverDropdown.click();
-    //$(`//*[@id="sqlServerSelector"]//*[text()="${sqlserver}"]`).ELEMENT('..').ELEMENT('..').click();
+    $(`//*[@id="sqlServerSelector"]//*[text()="${sqlserver}"]`).$('..').$('..').click();
   }
 
   public get port() {
@@ -62,7 +62,7 @@ class DatabasePage extends Page {
 
   public selectLanguage(language) {
     this.languageDropdown.click();
-    //$(`//*[@id="languageSelector"]//*[text()="${language}"]`).element('..').element('..').click();
+    $(`//*[@id="languageSelector"]//*[text()="${language}"]`).$('..').$('..').click();
   }
 
   public configure(language) {

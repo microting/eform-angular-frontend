@@ -47,7 +47,7 @@ export class Navbar {
   }
 
   public clickOnHeaderMenuItem(headerMenuItem) {
-    return $(`//*[@id="header"]//*[text()="${headerMenuItem}"]`).element('..').element('..');
+    return $(`//*[@id="header"]//*[text()="${headerMenuItem}"]`).$('..').$('..');
   }
   public verifyHeaderMenuItem(headerMenuItem) {
     return browser.getText(`//*[@id="header"]//*[contains(text(), '${headerMenuItem}')]`);
