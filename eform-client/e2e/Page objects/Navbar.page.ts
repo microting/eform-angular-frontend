@@ -65,17 +65,17 @@ export class Navbar {
   public goToProfileSettings() {
     this.clickOnHeaderMenuItem('John Smith').click();
     this.settingsBtn.click();
-    browser.pause(8000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public goToApplicationSettings() {
     this.advancedDropdown();
     this.applicationSettingsBtn();
-    browser.pause(15000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public goToWorkers() {
     this.advancedDropdown();
     this.workersBtn.click();
-    browser.pause(15000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public goToSites() {
     this.advancedDropdown();
@@ -86,25 +86,25 @@ export class Navbar {
   public goToUserAdministration() {
     this.clickOnHeaderMenuItem('John Smith').click();
     this.userAdministrationBtn.click();
-    browser.pause(8000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public goToPasswordSettings() {
     this.clickOnHeaderMenuItem('John Smith').click();
     this.changePasswordBtn.click();
-    browser.pause(8000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public goToDeviceUsersPage() {
     this.deviceUsersBtn.click();
-    browser.pause(20000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public goToEntitySelect() {
     this.advancedDropdown();
     this.entitySelectBtn.click();
-    browser.pause(20000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public goToEntitySearch() {
     this.advancedDropdown();
     this.entitySearchBtn.click();
-    browser.pause(20000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
 }

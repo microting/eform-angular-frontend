@@ -18,16 +18,18 @@ describe('Site tags', function () {
     sitesPage.Navbar.goToSites();
   });
   it('should create new tag', function () {
+    $('#spinner-animation').waitForDisplayed(90000, true);
     $('#editSiteTagsBtn_0').waitForDisplayed(20000);
     const site = sitesPage.getFirstRowObject();
-    console.log(JSON.stringify(site));
+    //console.log(JSON.stringify(site));
     sitesPage.createTag(site, tagName);
     const tagExist = sitesPage.tagExists(tagName);
     browser.pause(4000);
     expect(tagExist, true);
-    browser.refresh();
   });
   it('should cancel assign tag', function () {
+    loginPage.open('/advanced/sites');
+    $('#spinner-animation').waitForDisplayed(90000, true);
     const site = sitesPage.getFirstRowObject();
     // browser.pause(8000);
     site.siteTagsEditBtn.click();
@@ -36,9 +38,10 @@ describe('Site tags', function () {
     const tagNotSelected = sitesPage.tagNotSelected(tagName);
     // browser.pause(4000);
     expect(tagNotSelected, true);
-    browser.refresh();
   });
   it('should assign tag', function () {
+    loginPage.open('/advanced/sites');
+    $('#spinner-animation').waitForDisplayed(90000, true);
     // browser.pause(5000);
     const site = sitesPage.getFirstRowObject();
     // browser.pause(8000);
@@ -49,9 +52,10 @@ describe('Site tags', function () {
     sitesPage.updateTagsBtn.click();
     // browser.pause(10000);
     expect(site.assignedTag, tagName);
-    browser.refresh();
   });
   it('should delete tag', function () {
+    loginPage.open('/advanced/sites');
+    $('#spinner-animation').waitForDisplayed(90000, true);
     $('#editSiteTagsBtn_0').waitForDisplayed(20000);
     const site = sitesPage.getFirstRowObject();
     // browser.pause(8000);
@@ -67,6 +71,5 @@ describe('Site tags', function () {
     const tagExist = sitesPage.tagExists(tagName);
     browser.pause(4000);
     expect(tagExist, false);
-    browser.refresh();
   });
 });

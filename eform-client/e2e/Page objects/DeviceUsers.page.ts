@@ -79,14 +79,15 @@ class DeviceUsersPage extends PageWithNavbarPage {
     this.createFirstNameInput.setValue(firstName);
     this.createLastNameInput.setValue(lastName);
     this.saveCreateBtn.click();
-    browser.pause(16000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#newDeviceUserBtn').waitForDisplayed(20000);
   }
 
   public createDeviceUserFromScratch(name: string, surname: string) {
     myEformsPage.Navbar.goToDeviceUsersPage();
-    $('#newDeviceUserBtn').waitForDisplayed(20000);;
+    $('#newDeviceUserBtn').waitForDisplayed(20000);
     const rowCountBeforeCreation = deviceUsersPage.rowNum;
-    browser.pause(2000);
+    //browser.pause(2000);
     deviceUsersPage.createNewDeviceUser(name, surname);
     const rowCountAfterCreation = deviceUsersPage.rowNum;
     expect(rowCountAfterCreation, 'Number of rows hasn\'t changed after creating new user').equal(rowCountBeforeCreation + 1);
