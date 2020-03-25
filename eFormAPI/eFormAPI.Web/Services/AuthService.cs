@@ -44,13 +44,12 @@ using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
-using eFormAPI.Web.Hosting.Helpers;
-using eFormAPI.Web.Infrastructure.Database;
-using Microting.eFormApi.BasePn;
 using OtpSharp;
 
 namespace eFormAPI.Web.Services
 {
+    using Infrastructure.Models.Auth;
+
     public class AuthService : IAuthService
     {
         private readonly IOptions<EformTokenOptions> _tokenOptions;
@@ -64,8 +63,6 @@ namespace eFormAPI.Web.Services
         private readonly UserManager<EformUser> _userManager;
         private readonly RoleManager<EformRole> _roleManager;
         private readonly SignInManager<EformUser> _signInManager;
-        private readonly BaseDbContext _dbContext;
-        private readonly List<IEformPlugin> _loadedPlugins;
 
         public AuthService(IOptions<EformTokenOptions> tokenOptions,
             ILogger<AuthService> logger,
@@ -77,8 +74,7 @@ namespace eFormAPI.Web.Services
             ILocalizationService localizationService,
             IClaimsService claimsService,
             IUserClaimsPrincipalFactory<EformUser> userClaimsPrincipalFactory, 
-            IHttpContextAccessor httpContextAccessor, 
-            BaseDbContext dbContext)
+            IHttpContextAccessor httpContextAccessor)
         {
             _tokenOptions = tokenOptions;
             _logger = logger;
@@ -91,15 +87,13 @@ namespace eFormAPI.Web.Services
             _claimsService = claimsService;
             _userClaimsPrincipalFactory = userClaimsPrincipalFactory;
             _httpContextAccessor = httpContextAccessor;
-            _dbContext = dbContext;
-            _loadedPlugins = PluginHelper.GetAllPlugins();
         }
 
-        public async Task<OperationDataResult<AuthorizeResult>> AuthenticateUser(LoginModel model)
+        public async Task<OperationDataResult<EformAuthorizeResult>> AuthenticateUser(LoginModel model)
         {
             Log.LogEvent("AuthService.AuthenticateUser: called");
             if (string.IsNullOrEmpty(model.Username) || string.IsNullOrEmpty(model.Password))
-                return new OperationDataResult<AuthorizeResult>(false, "Empty username or password");
+                return new OperationDataResult<EformAuthorizeResult>(false, "Empty username or password");
 
             var signInResult =
                 await _signInManager.PasswordSignInAsync(model.Username, model.Password, true, lockoutOnFailure: true);
@@ -108,23 +102,23 @@ namespace eFormAPI.Web.Services
             {
                 if (signInResult.IsLockedOut)
                 {
-                    return new OperationDataResult<AuthorizeResult>(false,
+                    return new OperationDataResult<EformAuthorizeResult>(false,
                         "Locked Out. Please, try again after 10 mins");
                 }
 
                 // Credentials are invalid, or account doesn't exist
-                return new OperationDataResult<AuthorizeResult>(false, "Incorrect password.");
+                return new OperationDataResult<EformAuthorizeResult>(false, "Incorrect password.");
             }
 
             var user = await _userService.GetByUsernameAsync(model.Username);
             if (user == null)
-                return new OperationDataResult<AuthorizeResult>(false,
+                return new OperationDataResult<EformAuthorizeResult>(false,
                     $"User with username {model.Username} not found");
 
             // Confirmed email check
             if (!user.EmailConfirmed)
             {
-                return new OperationDataResult<AuthorizeResult>(false, $"Email {user.Email} not confirmed");
+                return new OperationDataResult<EformAuthorizeResult>(false, $"Email {user.Email} not confirmed");
             }
 
             // TwoFactor check
@@ -136,12 +130,12 @@ namespace eFormAPI.Web.Services
                 // check input params
                 if (string.IsNullOrEmpty(psk) || string.IsNullOrEmpty(code))
                 {
-                    return new OperationDataResult<AuthorizeResult>(false, "PSK or code is empty");
+                    return new OperationDataResult<EformAuthorizeResult>(false, "PSK or code is empty");
                 }
 
                 if (psk != user.GoogleAuthenticatorSecretKey)
                 {
-                    return new OperationDataResult<AuthorizeResult>(false, "PSK is invalid");
+                    return new OperationDataResult<EformAuthorizeResult>(false, "PSK is invalid");
                 }
 
                 // check code
@@ -149,7 +143,7 @@ namespace eFormAPI.Web.Services
                 var isCodeValid = otp.VerifyTotp(code, out var timeStepMatched, new VerificationWindow(300, 300));
                 if (!isCodeValid)
                 {
-                    return new OperationDataResult<AuthorizeResult>(false, "Invalid code");
+                    return new OperationDataResult<EformAuthorizeResult>(false, "Invalid code");
                 }
 
                 // update user entity
@@ -159,7 +153,7 @@ namespace eFormAPI.Web.Services
                     var updateResult = _userManager.UpdateAsync(user).Result;
                     if (!updateResult.Succeeded)
                     {
-                        return new OperationDataResult<AuthorizeResult>(false, "PSK or code is empty");
+                        return new OperationDataResult<EformAuthorizeResult>(false, "PSK or code is empty");
                     }
                 }
             }
@@ -168,33 +162,35 @@ namespace eFormAPI.Web.Services
             var roleList = _userManager.GetRolesAsync(user).Result;
             if (!roleList.Any())
             {
-                return new OperationDataResult<AuthorizeResult>(false, $"Role for user {model.Username} not found");
+                return new OperationDataResult<EformAuthorizeResult>(false, $"Role for user {model.Username} not found");
             }
 
-            return new OperationDataResult<AuthorizeResult>(true, new AuthorizeResult
+            return new OperationDataResult<EformAuthorizeResult>(true, new EformAuthorizeResult
             {
                 Id = user.Id,
                 access_token = token,
                 userName = user.UserName,
-                role = roleList.FirstOrDefault()
+                role = roleList.FirstOrDefault(),
+                FirstName = user.FirstName,
+                LastName = user.LastName,
             });
         }
 
-        public async Task<OperationDataResult<AuthorizeResult>> RefreshToken()
+        public async Task<OperationDataResult<EformAuthorizeResult>> RefreshToken()
         {
             var user = await _userService.GetByIdAsync(_userService.UserId);
             if (user == null)
-                return new OperationDataResult<AuthorizeResult>(false,
+                return new OperationDataResult<EformAuthorizeResult>(false,
                     $"User with id {_userService.UserId} not found");
 
             var token = await GenerateToken(user);
             var roleList = _userManager.GetRolesAsync(user).Result;
             if (!roleList.Any())
             {
-                return new OperationDataResult<AuthorizeResult>(false, $"Role for user {_userService.UserId} not found");
+                return new OperationDataResult<EformAuthorizeResult>(false, $"Role for user {_userService.UserId} not found");
             }
 
-            return new OperationDataResult<AuthorizeResult>(true, new AuthorizeResult
+            return new OperationDataResult<EformAuthorizeResult>(true, new EformAuthorizeResult
             {
                 Id = user.Id,
                 access_token = token,

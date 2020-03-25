@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {CasePostViewModel} from '../../../../../common/models/cases';
@@ -12,6 +12,8 @@ import {CasePostsService} from '../../../../../common/services/cases';
 })
 export class CasePostViewComponent implements OnInit, OnDestroy {
   @ViewChild('frame', {static: false}) frame;
+  @Input() currentUserFullName: string;
+  @Input() pdfReportAvailable: boolean;
   postViewModel: CasePostViewModel = new CasePostViewModel();
   getCasePost$: Subscription;
   spinnerStatus = false;

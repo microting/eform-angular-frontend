@@ -93,6 +93,14 @@ export class AuthService extends BaseService {
     return '';
   }
 
+  get currentUserFullName(): string {
+    const auth: UserInfoModel = JSON.parse(localStorage.getItem('currentAuth'));
+    if (auth) {
+      return auth.firstName + ' ' + auth.lastName;
+    }
+    return '';
+  }
+
   get userClaims(): UserClaimsModel {
     const accessToken = JSON.parse(localStorage.getItem('currentAuth')).access_token;
     return new UserClaimsModel(new JwtHelper().decodeToken(accessToken));
