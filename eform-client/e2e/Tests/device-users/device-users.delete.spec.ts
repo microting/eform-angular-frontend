@@ -12,8 +12,10 @@ describe('Device users page', function () {
   });
   it('should not delete if cancel was clicked', function () {
     const rowNumBeforeDelete = deviceUsersPage.rowNum;
+    $('#deviceUserId').waitForDisplayed(20000);
     const lastDeviceUser = deviceUsersPage.getDeviceUser(rowNumBeforeDelete);
     lastDeviceUser.deleteBtn.waitForDisplayed(5000);
+    lastDeviceUser.deleteBtn.waitForClickable({ timeout: 20000});
     lastDeviceUser.deleteBtn.click();
     $('#spinner-animation').waitForDisplayed(90000, true);
     deviceUsersPage.cancelDeleteBtn.click();
@@ -25,6 +27,7 @@ describe('Device users page', function () {
     loginPage.open('/');
     myEformsPage.Navbar.goToDeviceUsersPage();
     const rowNumBeforeDelete = deviceUsersPage.rowNum;
+    $('#deviceUserId').waitForDisplayed(20000);
     const lastDeviceUser = deviceUsersPage.getDeviceUser(rowNumBeforeDelete);
     lastDeviceUser.deleteBtn.waitForDisplayed(5000);
     lastDeviceUser.deleteBtn.click();

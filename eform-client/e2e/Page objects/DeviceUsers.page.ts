@@ -49,10 +49,14 @@ class DeviceUsersPage extends PageWithNavbarPage {
   }
 
   public get saveDeleteBtn() {
+    $('#saveDeleteBtn').waitForDisplayed(20000);
+    $('#saveDeleteBtn').waitForClickable({ timeout: 20000});
     return $('#saveDeleteBtn');
   }
 
   public get cancelDeleteBtn() {
+    $('#cancelDeleteBtn').waitForDisplayed(20000);
+    $('#cancelDeleteBtn').waitForClickable({ timeout: 20000});
     return $('#cancelDeleteBtn');
   }
 
