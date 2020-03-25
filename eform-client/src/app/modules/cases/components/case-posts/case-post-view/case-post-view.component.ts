@@ -13,7 +13,7 @@ import {CasePostsService} from '../../../../../common/services/cases';
 export class CasePostViewComponent implements OnInit, OnDestroy {
   @ViewChild('frame') frame;
   @Input() currentUserFullName: string;
-  @Input() pdfReportEnabled: boolean;
+  @Input() pdfReportAvailable: boolean;
   postViewModel: CasePostViewModel = new CasePostViewModel();
   getCasePost$: Subscription;
   spinnerStatus = false;
