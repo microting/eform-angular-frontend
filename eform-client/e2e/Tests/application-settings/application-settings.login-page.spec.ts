@@ -10,18 +10,17 @@ describe('Application settings page - site header section', function () {
   });
   it('should change main text', function () {
     loginPage.login();
-    browser.pause(4000);
     myEformsPage.Navbar.goToApplicationSettings();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(50000, true);
     applicationSettingsPage.LoginPage.mainTextInput.setValue(ApplicationSettingsConstants.LoginPage.customMainText);
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(50000, true);
     applicationSettingsPage.save();
-    browser.refresh();
+    //browser.refresh();
     // browser.pause(10000);
     $('#sign-out-dropdown').waitForDisplayed(40000);
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(50000, true);
     applicationSettingsPage.Navbar.logout();
-    expect(loginPage.loginBtn.isVisible()).equal(true);
+    expect(loginPage.loginBtn.isDisplayed()).equal(true);
     expect(loginPage.mainText.getText(),
       'Error while changing main text on login page').to.equal(ApplicationSettingsConstants.LoginPage.customMainText);
   });
@@ -30,11 +29,12 @@ describe('Application settings page - site header section', function () {
     myEformsPage.Navbar.goToApplicationSettings();
     applicationSettingsPage.LoginPage.secondaryTextInput.setValue(ApplicationSettingsConstants.LoginPage.customSecondaryText);
     applicationSettingsPage.save();
-    browser.refresh();
+    //browser.refresh();
     // browser.pause(8000);
     $('#sign-out-dropdown').waitForDisplayed(20000);
-    browser.pause(1000);    applicationSettingsPage.Navbar.logout();
-    expect(loginPage.loginBtn.isVisible()).equal(true);
+    $('#spinner-animation').waitForDisplayed(50000, true);
+    applicationSettingsPage.Navbar.logout();
+    expect(loginPage.loginBtn.isDisplayed()).equal(true);
     expect(loginPage.secondaryText.getText(),
       'Error while changing secondary text on login page').to.equal(ApplicationSettingsConstants.LoginPage.customSecondaryText);
   });
@@ -43,12 +43,13 @@ describe('Application settings page - site header section', function () {
     myEformsPage.Navbar.goToApplicationSettings();
     applicationSettingsPage.LoginPage.mainTextVisibilityToggleBtn.click();
     applicationSettingsPage.save();
-    browser.refresh();
+    //browser.refresh();
     // browser.pause(8000);
     $('#sign-out-dropdown').waitForDisplayed(20000);
-    browser.pause(1000);    applicationSettingsPage.Navbar.logout();
-    expect(loginPage.loginBtn.isVisible()).equal(true);
-    expect(loginPage.mainText.isVisible(),
+    $('#spinner-animation').waitForDisplayed(50000, true);
+    applicationSettingsPage.Navbar.logout();
+    expect(loginPage.loginBtn.isDisplayed()).equal(true);
+    expect(loginPage.mainText.isDisplayed(),
       'Error while toggling visibility of main text on login page').to.equal(false);
   });
   it('should hide secondary text', function () {
@@ -56,12 +57,13 @@ describe('Application settings page - site header section', function () {
     myEformsPage.Navbar.goToApplicationSettings();
     applicationSettingsPage.LoginPage.secondaryTextVisibilityToggleBtn.click();
     applicationSettingsPage.save();
-    browser.refresh();
+    //browser.refresh();
     // browser.pause(8000);
     $('#sign-out-dropdown').waitForDisplayed(20000);
-    browser.pause(1000);    applicationSettingsPage.Navbar.logout();
-    expect(loginPage.loginBtn.isVisible()).equal(true);
-    expect(loginPage.secondaryText.isVisible(),
+    $('#spinner-animation').waitForDisplayed(50000, true);
+    applicationSettingsPage.Navbar.logout();
+    expect(loginPage.loginBtn.isDisplayed()).equal(true);
+    expect(loginPage.secondaryText.isDisplayed(),
       'Error while toggling visibility of secondary text on login page').to.equal(false);
   });
   it('should hide image', function () {
@@ -69,12 +71,12 @@ describe('Application settings page - site header section', function () {
     myEformsPage.Navbar.goToApplicationSettings();
     applicationSettingsPage.LoginPage.imageVisibilityToggler.click();
     applicationSettingsPage.save();
-    browser.refresh();
+    //browser.refresh();
     // browser.pause(8000);
     $('#sign-out-dropdown').waitForDisplayed(20000);
     browser.pause(1000);    applicationSettingsPage.Navbar.logout();
-    expect(loginPage.loginBtn.isVisible()).equal(true);
-    expect(loginPage.image.isVisible(),
+    expect(loginPage.loginBtn.isDisplayed()).equal(true);
+    expect(loginPage.image.isDisplayed(),
       'Error while toggling visibility of image on login page').to.equal(false);
   });
   it('should reset main text', function () {
@@ -82,7 +84,7 @@ describe('Application settings page - site header section', function () {
     myEformsPage.Navbar.goToApplicationSettings();
     applicationSettingsPage.LoginPage.reset();
     applicationSettingsPage.Navbar.logout();
-    expect(loginPage.loginBtn.isVisible()).equal(true);
+    expect(loginPage.loginBtn.isDisplayed()).equal(true);
     expect(loginPage.mainText.getText(),
       'Error while resetting main text on login page').to.equal(ApplicationSettingsConstants.LoginPage.originalMainText);
   });
@@ -91,15 +93,15 @@ describe('Application settings page - site header section', function () {
       'Error while resetting secondary text on login page').to.equal(ApplicationSettingsConstants.LoginPage.originalSecondaryText);
   });
   it('should reset main text visibility', function () {
-    expect(loginPage.mainText.isVisible(),
+    expect(loginPage.mainText.isDisplayed(),
       'Error while refreshing visibility of main text on login page').to.equal(true);
   });
   it('should reset secondary text visibility', function () {
-    expect(loginPage.secondaryText.isVisible(),
+    expect(loginPage.secondaryText.isDisplayed(),
       'Error while refreshing visibility of secondary text on login page').to.equal(true);
   });
   it('should reset image visibility', function () {
-    expect(loginPage.image.isVisible(),
+    expect(loginPage.image.isDisplayed(),
       'Error while refreshing visibility of image on login page').to.equal(true);
   });
 });

@@ -11,6 +11,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
     return $$('//app-entity-select-edit//ul//li').length;
   }
   public get entitySelectCreateBtn() {
+    $('#entitySelectCreateBtn').waitForDisplayed(20000);
     return $('#entitySelectCreateBtn');
   }
 
@@ -19,10 +20,12 @@ export class SelectableListsPage extends PageWithNavbarPage {
   }
 
   public get entitySelectCreateName() {
+    $('#createName').waitForDisplayed(20000);
     return $('#createName');
   }
 
   public get entitySelectCreateImportListBtn() {
+    $('#importEntitySelectBtn').waitForDisplayed(20000);
     return $('#importEntitySelectBtn');
   }
 
@@ -30,23 +33,28 @@ export class SelectableListsPage extends PageWithNavbarPage {
     return $('#createEntityItemName');
   }
   public get entitySelectCreateSingleItemBtn() {
+    $('#addSingleEntitySelectableItem').waitForDisplayed(20000);
     return $('#addSingleEntitySelectableItem');
   }
 
   public get entitySelectCreateSingleItemEditBtn() {
+    $('#entitySelectCreateSingleItemEdit').waitForDisplayed(20000);
     return $('#entitySelectCreateSingleItemEdit');
   }
 
   public get entitySelectCreateSaveBtn() {
+    $('#createEntitySelectSaveBtn').waitForDisplayed(20000);
     return $('#createEntitySelectSaveBtn');
   }
 
   public get entitySelectCreateCancelBtn() {
+    $('#createEntitySelectCancelBtn').waitForDisplayed(20000);
     return $('#createEntitySelectCancelBtn');
   }
 
   public get entitySelectEditBtn() {
-    return $('#entitySelectEditBtn');
+    $('#entitySelectEditBtn_0').waitForDisplayed(20000);
+    return $('#entitySelectEditBtn_0');
   }
 
   public get entitySelectDeleteBtn() {
@@ -54,10 +62,12 @@ export class SelectableListsPage extends PageWithNavbarPage {
   }
 
   public get entitySelectEditName() {
+    $('#editName').waitForDisplayed(20000);
     return $('#editName');
   }
 
   public get entitySelectEditImportListBtn() {
+    $('#editEntitySelectImportBtn').waitForDisplayed(20000);
     return $('#editEntitySelectImportBtn');
   }
 
@@ -70,14 +80,17 @@ export class SelectableListsPage extends PageWithNavbarPage {
   }
 
   public get entitySelectEditSaveBtn() {
+    $('#editEntitySelectSaveBtn').waitForDisplayed(20000);
     return $('#editEntitySelectSaveBtn');
   }
 
   public get entitySelectEditCancelBtn() {
+    $('#editEntitySelectCancelBtn').waitForDisplayed(20000);
     return $('#editEntitySelectCancelBtn');
   }
 
   public get entitySelectImportTextArea() {
+    $('#entityImportTextArea').waitForDisplayed(20000);
     return $('#entityImportTextArea');
   }
   public get entitySelectImportTextAreaEdit() {
@@ -94,6 +107,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
   }
 
   public get entitySelectDeleteDeleteBtn() {
+    $('#entitySelectDeleteDeleteBtn').waitForDisplayed(20000);
     return $('#entitySelectDeleteDeleteBtn');
   }
 
@@ -102,10 +116,12 @@ export class SelectableListsPage extends PageWithNavbarPage {
   }
 
   public get entitySelectEditItemNameBox() {
+    $('#entitySelectItemEditNameBox').waitForDisplayed(20000);
     return $('#entitySelectItemEditNameBox');
   }
 
   public get entitySelectEditItemSaveBtn() {
+    $('#entitySelectItemSaveBtn').waitForDisplayed(20000);
     return $('#entitySelectItemSaveBtn');
   }
 
@@ -150,40 +166,40 @@ export class SelectableListsPage extends PageWithNavbarPage {
     this.entitySelectCreateBtn.click();
     $('#createName').waitForDisplayed(20000);
     this.entitySelectCreateName.addValue(name);
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySelectCreateSaveBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public createSelectableList_OneItem(name, itemName) {
     $('#spinner-animation').waitForDisplayed(50000, true);
     this.entitySelectCreateBtn.click();
     $('#createName').waitForDisplayed(20000);
     this.entitySelectCreateName.addValue(name);
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySelectCreateSingleItemBtn.click();
-    browser.pause(1000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySelectCreateSingleItemEditBtn.click();
-    browser.pause(1000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySelectEditItemNameBox.addValue(itemName);
     this.entitySelectEditItemSaveBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySelectCreateSaveBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public createSelectableList_MultipleItems(name, itemNames) {
     $('#spinner-animation').waitForDisplayed(50000, true);
     this.entitySelectCreateBtn.click();
     $('#createName').waitForDisplayed(20000);
     this.entitySelectCreateName.addValue(name);
-    browser.pause(2000);
-    this.entitySelectCreateImportListBtn.click();
     browser.pause(1000);
+    this.entitySelectCreateImportListBtn.click();
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySelectImportTextArea.addValue(itemNames);
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySelectImportSaveBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySelectCreateSaveBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
 
   public createSelectableList_NoItem_Cancels(name) {
@@ -191,40 +207,40 @@ export class SelectableListsPage extends PageWithNavbarPage {
     this.entitySelectCreateBtn.click();
     $('#createName').waitForDisplayed(20000);
     this.entitySelectCreateName.addValue(name);
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySelectCreateCancelBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public createSelectableList_OneItem_Cancels(name, itemName) {
     $('#spinner-animation').waitForDisplayed(50000, true);
     this.entitySelectCreateBtn.click();
     $('#createName').waitForDisplayed(20000);
     this.entitySelectCreateName.addValue(name);
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySelectCreateSingleItemBtn.click();
-    browser.pause(1000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySelectCreateSingleItemEditBtn.click();
-    browser.pause(1000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySelectEditItemNameBox.addValue(itemName);
     this.entitySelectEditItemSaveBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySelectCreateCancelBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public createSelectableList_MultipleItems_Cancels(name, itemNames) {
     $('#spinner-animation').waitForDisplayed(50000, true);
     this.entitySelectCreateBtn.click();
     $('#createName').waitForDisplayed(20000);
     this.entitySelectCreateName.addValue(name);
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySelectCreateImportListBtn.click();
-    browser.pause(1000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySelectImportTextArea.addValue(itemNames);
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySelectImportSaveBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySelectCreateCancelBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public editSelectableListNameOnly(newName) {
     $('#spinner-animation').waitForDisplayed(50000, true);
@@ -232,9 +248,9 @@ export class SelectableListsPage extends PageWithNavbarPage {
     $('#editName').waitForDisplayed(200000);
     this.entitySelectEditName.clearValue();
     this.entitySelectEditName.addValue(newName);
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySelectEditSaveBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public editSelectableListNameOnly_Cancels(newName) {
     $('#spinner-animation').waitForDisplayed(50000, true);
@@ -242,9 +258,9 @@ export class SelectableListsPage extends PageWithNavbarPage {
     $('#editName').waitForDisplayed(200000);
     this.entitySelectEditName.clearValue();
     this.entitySelectEditName.addValue(newName);
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySelectEditCancelBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public editSelectableListNameAndItem(newName, newItemName) {
     $('#spinner-animation').waitForDisplayed(50000, true);
@@ -252,10 +268,10 @@ export class SelectableListsPage extends PageWithNavbarPage {
     $('#editName').waitForDisplayed(200000);
     this.entitySelectEditName.clearValue();
     this.entitySelectEditName.addValue(newName);
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.editItemName(newItemName);
     this.entitySelectEditSaveBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public editSelectableListOnlyItem(newItemName) {
     $('#spinner-animation').waitForDisplayed(50000, true);
@@ -263,7 +279,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
     $('#editName').waitForDisplayed(200000);
     this.editItemName(newItemName);
     this.entitySelectEditSaveBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public editSelectableListNameAndItem_Cancels(newName, newItemName) {
     $('#spinner-animation').waitForDisplayed(50000, true);
@@ -271,10 +287,10 @@ export class SelectableListsPage extends PageWithNavbarPage {
     $('#editName').waitForDisplayed(200000);
     this.entitySelectEditName.clearValue();
     this.entitySelectEditName.addValue(newName);
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.editItemName(newItemName);
     this.entitySelectEditCancelBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public editSelectableListNameAndItem_CancelsBoth(newName, newItemName) {
     $('#spinner-animation').waitForDisplayed(50000, true);
@@ -282,10 +298,10 @@ export class SelectableListsPage extends PageWithNavbarPage {
     $('#editName').waitForDisplayed(200000);
     this.entitySelectEditName.clearValue();
     this.entitySelectEditName.addValue(newName);
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.editItemName_Cancels(newItemName);
     this.entitySelectEditCancelBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public editSelectableListNameAndItem_CancelsItemName(newName, newItemName) {
     $('#spinner-animation').waitForDisplayed(50000, true);
@@ -293,37 +309,38 @@ export class SelectableListsPage extends PageWithNavbarPage {
     $('#editName').waitForDisplayed(200000);
     this.entitySelectEditName.clearValue();
     this.entitySelectEditName.addValue(newName);
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.editItemName_Cancels(newItemName);
     this.entitySelectEditSaveBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public deleteItemFromList() {
     $('#spinner-animation').waitForDisplayed(50000, true);
     this.entitySelectEditBtn.click();
     $('#editName').waitForDisplayed(200000);
     this.deleteItem();
-    browser.pause(1000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySelectEditSaveBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public deleteList() {
     const deleteList = this.getFirstRowObject();
     if (deleteList != null) {
-      browser.pause(8000);
+      $('#spinner-animation').waitForDisplayed(90000, true);
       deleteList.deleteBtn.click();
-      browser.pause(4000);
+      $('#spinner-animation').waitForDisplayed(90000, true);
       this.entitySelectDeleteDeleteBtn.click();
-      browser.pause(1000);
+      $('#spinner-animation').waitForDisplayed(90000, true);
     }
   }
   public editItemName(newItemName) {
     this.entityItemEditBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
+    this.entityItemEditNameBox.waitForDisplayed(20000);
     this.entityItemEditNameBox.clearValue();
     this.entityItemEditNameBox.addValue(newItemName);
     this.entityItemEditSaveBtn.click();
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public editItemName_Cancels(newItemName) {
     const firstItem = this.getFirstItemObject();
@@ -332,20 +349,20 @@ export class SelectableListsPage extends PageWithNavbarPage {
     this.entityItemEditNameBox.clearValue();
     this.entityItemEditNameBox.addValue(newItemName);
     this.entityItemEditCancelBtn.click();
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public deleteItem() {
     this.entityItemDeleteBtn.click();
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public cleanup() {
     const deleteObject = this.getFirstRowObject();
     if (deleteObject != null) {
-      browser.pause(8000);
+      $('#spinner-animation').waitForDisplayed(90000, true);
       deleteObject.deleteBtn.click();
-      browser.pause(4000);
+      $('#spinner-animation').waitForDisplayed(90000, true);
       this.entitySelectDeleteDeleteBtn.click();
-      browser.pause(1000);
+      $('#spinner-animation').waitForDisplayed(90000, true);
     }
   }
 }
@@ -354,16 +371,16 @@ export default selectableLists;
 
 export class SelectableListRowObject {
   constructor(rowNumber) {
-    if ($$('#entitySelectMicrotingUUID')[rowNumber - 1]) {
-      this.id = $$('#entitySelectMicrotingUUID')[rowNumber - 1];
+    if ($$('#entitySelectMicrotingUUID_' + (rowNumber - 1))[0]) {
+      this.id = $$('#entitySelectMicrotingUUID_' + (rowNumber - 1))[0];
       try {
-        this.name = $$('#entitySelectName')[rowNumber - 1].getText();
+        this.name = $$('#entitySelectName_' + (rowNumber - 1))[0].getText();
       } catch (e) {}
       try {
-        this.deleteBtn = $$('#entitySelectDeleteBtn')[rowNumber - 1];
+        this.deleteBtn = $$('#entitySelectDeleteBtn_' + (rowNumber - 1))[0];
       } catch (e) {}
       try {
-        this.editBtn = $$('#entitySelectEditBtn')[rowNumber - 1];
+        this.editBtn = $$('#entitySelectEditBtn_' + (rowNumber - 1))[0];
       } catch (e) {}
     }
   }
@@ -374,13 +391,13 @@ export class SelectableListRowObject {
 }
 export class EntitySelectItemRowObject {
   constructor(rowNumber) {
-    if ($$('#entitySelectItemEditNameentityItemUId')[rowNumber - 1]) {
-      this.name = $$('#entitySelectItemEditNameentityItemUId')[rowNumber - 1].getText();
+    if ($$('#entitySelectItemEditNameentityItemUId_' + (rowNumber - 1))[0]) {
+      this.name = $$('#entitySelectItemEditNameentityItemUId_' + (rowNumber - 1))[0].getText();
       try {
-        this.editBtn = $$('#entitySelectEditItemEditBtn')[rowNumber - 1];
+        this.editBtn = $$('#entitySelectEditItemEditBtn_' + (rowNumber - 1))[0];
       } catch (e) {}
       try {
-        this.deleteBtn = $$('#entitySelectEditItemDeleteBtn')[rowNumber - 1];
+        this.deleteBtn = $$('#entitySelectEditItemDeleteBtn_' + (rowNumber - 1))[0];
       } catch (e) {}
     }
   }

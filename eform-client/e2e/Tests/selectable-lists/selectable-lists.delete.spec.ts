@@ -29,13 +29,15 @@ describe('Entity Select', function () {
     const name = Guid.create().toString();
     const itemName = Guid.create().toString();
     selectableLists.createSelectableList_OneItem(name, itemName);
+    $('#entitySelectMicrotingUUID_0').waitForDisplayed(20000);
     const selectableList = selectableLists.getFirstRowObject();
     expect(selectableList.name).equal(name);
     selectableList.editBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#entitySelectItemEditNameentityItemUId').waitForDisplayed(20000);
     expect(selectableLists.firstEntityItemName.getText()).equal(itemName);
     selectableLists.entitySelectEditCancelBtn.click();
-    browser.pause(8000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   });
   it('should delete item in list', function () {
     selectableLists.deleteItemFromList();

@@ -20,7 +20,7 @@ describe('Entity Select', function () {
     const selectableList = selectableLists.getFirstRowObject();
     expect(selectableList.name).equal(name);
     selectableLists.cleanup();
-    browser.pause(8000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   });
   it('should not make a new list, with no items', function () {
     const name = Guid.create().toString();
@@ -31,15 +31,17 @@ describe('Entity Select', function () {
     const name = Guid.create().toString();
     const itemName = Guid.create().toString();
     selectableLists.createSelectableList_OneItem(name, itemName);
+    $('#entitySelectMicrotingUUID_0').waitForDisplayed(20000);
     const selectableList = selectableLists.getFirstRowObject();
     expect(selectableList.name).equal(name);
     selectableList.editBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#entitySelectItemEditNameentityItemUId').waitForDisplayed(20000);
     expect(selectableLists.firstEntityItemName.getText()).equal(itemName);
     selectableLists.entitySelectEditCancelBtn.click();
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     selectableLists.cleanup();
-    browser.pause(8000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   });
   it('should not make a new list with one item', function () {
     const name = Guid.create().toString();
@@ -51,27 +53,29 @@ describe('Entity Select', function () {
     const name = Guid.create().toString();
     const itemNames = ['a \n', 'b\n', 'c\n', 'd\n', 'e'];
     selectableLists.createSelectableList_MultipleItems(name, itemNames);
+    $('#entitySelectMicrotingUUID_0').waitForDisplayed(20000);
     const selectableList = selectableLists.getFirstRowObject();
     selectableList.editBtn.click();
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#entitySelectItemEditNameentityItemUId').waitForDisplayed(20000);
     expect(selectableLists.firstEntityItemName.getText()).equal('a');
     selectableLists.entityItemDeleteBtn.click();
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     expect(selectableLists.firstEntityItemName.getText()).equal('b');
     selectableLists.entityItemDeleteBtn.click();
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     expect(selectableLists.firstEntityItemName.getText()).equal('c');
     selectableLists.entityItemDeleteBtn.click();
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     expect(selectableLists.firstEntityItemName.getText()).equal('d');
     selectableLists.entityItemDeleteBtn.click();
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     expect(selectableLists.firstEntityItemName.getText()).equal('e');
     selectableLists.entityItemDeleteBtn.click();
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     selectableLists.entitySelectEditCancelBtn.click();
     selectableLists.cleanup();
-    browser.pause(8000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   });
   it('should not make a new lest with multiple items', function () {
     const name = Guid.create().toString();
