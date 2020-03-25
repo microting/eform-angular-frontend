@@ -11,12 +11,12 @@ describe('Main page', function () {
   it('should be able to sort by ID', function () {
     $('#spinner-animation').waitForDisplayed(90000, true);
     myEformsPage.idSortBtn.click();
-    browser.pause(5000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     const idListBefore = $$('#eform-id').map(item => {
       return item.getText();
     });
     myEformsPage.idSortBtn.click();
-    browser.pause(5000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     const idListAfter = $$('#eform-id').map(item => {
       return item.getText();
     });
@@ -25,12 +25,12 @@ describe('Main page', function () {
   it('should be able to sort by "Created at"', function () {
     $('#spinner-animation').waitForDisplayed(90000, true);
     myEformsPage.createdAtSortBtn.click();
-    browser.pause(5000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     const createdAtListBefore = $$('#eform-created-at').map(item => {
       return new Date(item.getText());
     });
     myEformsPage.createdAtSortBtn.click();
-    browser.pause(5000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     const createdAtListAfter = $$('#eform-created-at').map(item => {
       return new Date(item.getText());
     });
@@ -39,12 +39,12 @@ describe('Main page', function () {
   it('should be able to sort by "Name eForm"', function () {
     $('#spinner-animation').waitForDisplayed(90000, true);
     myEformsPage.eformNameSortBtn.click();
-    browser.pause(5000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     const nameEformListBefore = $$('#eform-label').map(item => {
       return item.getText();
     });
     myEformsPage.eformNameSortBtn.click();
-    browser.pause(5000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     const nameEformListAfter = $$('#eform-label').map(item => {
       return item.getText();
     });

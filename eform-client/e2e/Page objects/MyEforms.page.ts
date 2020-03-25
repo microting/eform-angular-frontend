@@ -80,7 +80,7 @@ class MyEformsPage extends PageWithNavbarPage {
         this.createEformTagSelector.click();
         const selectedTag = $('.ng-option:not(.ng-option-selected)');
         selectedTags.push(selectedTag.getText());
-        console.log('selectedTags is ' + JSON.stringify(selectedTags));
+        //console.log('selectedTags is ' + JSON.stringify(selectedTags));
         selectedTag.click();
         $('#spinner-animation').waitForDisplayed(50000, true);
         $('#createEformBtn').waitForDisplayed(10000);

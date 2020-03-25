@@ -9,6 +9,7 @@ describe('My eforms', function () {
     loginPage.login();
   });
   it('should create eform without any tags', function () {
+    $('#spinner-animation').waitForDisplayed(90000, true);
     const newEformLabel = Guid.create().toString();
     myEformsPage.createNewEform(newEformLabel);
     let eform = myEformsPage.getFirstMyEformsRowObj();
@@ -22,6 +23,7 @@ describe('My eforms', function () {
     expect(eform.id === null);
   });
   it('should create eform simultaneously with creating 1 tag', function () {
+    $('#spinner-animation').waitForDisplayed(90000, true);
     const newEformLabel = Guid.create().toString();
     const createdTag = Guid.create().toString();
     myEformsPage.createNewEform(newEformLabel, [createdTag]);
@@ -31,13 +33,13 @@ describe('My eforms', function () {
     expect(eform.tags[0].getText()).equal(createdTag);
     eform.deleteBtn.click();
     $('#eFormDeleteDeleteBtn').waitForDisplayed(20000);
-    // browser.pause(10000);
     $$('.btn-danger')[2].click();
     eform = myEformsPage.getFirstMyEformsRowObj();
     expect(eform.id === null);
 
   });
   it('should create eform simultaneously with creating 2 tags', function () {
+    $('#spinner-animation').waitForDisplayed(90000, true);
     const newEformLabel = Guid.create().toString();
     const createdTags = [Guid.create().toString(), Guid.create().toString()];
     const addedAndSelectedTags = myEformsPage.createNewEform(newEformLabel, createdTags);
@@ -57,8 +59,8 @@ describe('My eforms', function () {
     expect(eform.id === null);
   });
   it('should create eform with creating 1 tag and using 1 already prepared tag', function () {
-    browser.refresh();
-    browser.pause(8000);
+    loginPage.open('/');
+    $('#spinner-animation').waitForDisplayed(90000, true);
     let eform = myEformsPage.getFirstMyEformsRowObj();
     expect(eform.id === null);
     const newEformLabel = Guid.create().toString();
@@ -82,6 +84,7 @@ describe('My eforms', function () {
     expect(eform.id === null);
   });
   it('should create eform while adding 1 already prepared tag', function () {
+    $('#spinner-animation').waitForDisplayed(90000, true);
     const newEformLabel = Guid.create().toString();
     const tagAddedNum = 1;
     const addedAndSelectedTags = myEformsPage.createNewEform(newEformLabel, undefined, tagAddedNum);
@@ -101,6 +104,7 @@ describe('My eforms', function () {
     expect(eform.id === null);
   });
   it('should create eform while adding more than 2 already prepared tags', function () {
+    $('#spinner-animation').waitForDisplayed(90000, true);
     const newEformLabel = Guid.create().toString();
     const tagAddedNum = 2;
     const addedAndSelectedTags = myEformsPage.createNewEform(newEformLabel, undefined, tagAddedNum);
@@ -119,6 +123,7 @@ describe('My eforms', function () {
     expect(eform.id === null);
   });
   it('should not create eform if xml is empty', function () {
+    $('#spinner-animation').waitForDisplayed(90000, true);
     myEformsPage.newEformBtn.click();
     browser.pause(5000);
     expect(myEformsPage.createEformBtn.isEnabled()).equal(false);
