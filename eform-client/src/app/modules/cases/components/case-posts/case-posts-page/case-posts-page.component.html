@@ -15,18 +15,17 @@
 <div class="container-fluid">
   <div class="row mt-2">
     <div class="col-md-4 col-sm-8">
-      <h5>
         <strong>eForm: </strong>
         <span id="eformLabel">{{casePostsListModel.eFormName}}</span>
-      </h5>
-      <h5>
+      <br/>
         <strong>{{'eForm conducted by' | translate}}: </strong>
         <span id="eformConductedBy">{{casePostsListModel.workerName}}</span>
-      </h5>
-      <h5 *ngFor="let field of casePostsListModel.additionalFields">
+      <br/>
+      <ng-container *ngFor="let field of casePostsListModel.additionalFields">
         <strong>{{field.key}}: </strong>
         <span>{{field.value}}</span>
-      </h5>
+        <br/>
+      </ng-container>
     </div>
   </div>
   <div class="row p-1 table-responsive no-gutters" *ngIf="casePostsListModel.total !== 0">
@@ -137,12 +136,12 @@
 <spinner-pn [spinnerVisibility]="spinnerStatus"></spinner-pn>
 
 <app-case-post-new #newPostModal (postCreated)="getCasePosts()"
-                   [pdfReportEnabled]="casePostsListModel.jasperExportEnabled"
+                   [pdfReportAvailable]="casePostsListModel.pdfReportAvailable"
                    [currentUserFullName]="currentUserFullName"
                    [availableRecipients]="availableRecipients"
                    [availableRecipientsAndTags]="availableRecipientsAndTags"
                    [eformId]="selectedEformId"
                    [caseId]="selectedCaseId"></app-case-post-new>
 <app-case-post-view #viewPostModal
-                    [pdfReportEnabled]="casePostsListModel.jasperExportEnabled"
+                    [pdfReportAvailable]="casePostsListModel.pdfReportAvailable"
                     [currentUserFullName]="currentUserFullName"></app-case-post-view>

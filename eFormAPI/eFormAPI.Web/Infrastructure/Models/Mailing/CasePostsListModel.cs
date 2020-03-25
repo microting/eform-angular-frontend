@@ -30,6 +30,7 @@ namespace eFormAPI.Web.Infrastructure.Models.Mailing
         public string EFormName { get; set; }
         public string WorkerName { get; set; }
         public int Total { get; set; }
+        public bool PdfReportAvailable { get; set; }
 
         public List<KeyValueStringModel> AdditionalFields { get; set; }
             = new List<KeyValueStringModel>();

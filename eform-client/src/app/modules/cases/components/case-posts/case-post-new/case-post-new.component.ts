@@ -20,7 +20,7 @@ export class CasePostNewComponent implements OnInit, OnDestroy {
   @Input() caseId: number;
   @Input() eformId: number;
   @Input() currentUserFullName: string;
-  @Input() pdfReportEnabled: boolean;
+  @Input() pdfReportAvailable: boolean;
   postCreateModel: CasePostCreateModel = new CasePostCreateModel;
   selectedTagsAndRecipientsIds: number[] = [];
   spinnerStatus = false;

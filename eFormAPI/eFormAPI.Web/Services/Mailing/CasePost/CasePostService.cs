@@ -123,6 +123,10 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                 }
 
                 var replyElement = await core.CaseRead((int) caseDto.MicrotingUId, (int) caseDto.CheckUId);
+                if (replyElement.DocxExportEnabled || replyElement.JasperExportEnabled)
+                {
+                    casePostsListModel.PdfReportAvailable = true;
+                }
 
                 var casePostList = await casePostsQuery
                     .Select(x => new CasePostModel()
@@ -131,7 +135,6 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                         Subject = x.Subject,
                         Text = x.Text,
                         Date = x.PostDate,
-                        JasperExportEnabled = replyElement.JasperExportEnabled,
                         From = _dbContext.Users
                             .Where(y => y.Id == x.CreatedByUserId)
                             .Select(y => $"{y.FirstName} {y.LastName}")
