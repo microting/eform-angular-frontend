@@ -18,7 +18,7 @@ describe('Device users page should add new device user', function () {
     const name = Guid.create().toString();
     const surname = Guid.create().toString();
     const rowCountBeforeCreation = deviceUsersPage.rowNum;
-    browser.pause(2000);
+    //browser.pause(2000);
     deviceUsersPage.createNewDeviceUser(name, surname);
     const rowCountAfterCreation = deviceUsersPage.rowNum;
     expect(rowCountAfterCreation, 'Number of rows hasn\'t changed after creating new user').equal(rowCountBeforeCreation + 1);
@@ -29,7 +29,8 @@ describe('Device users page should add new device user', function () {
 });
 describe('Device users page should not add new device user', function () {
   afterEach(function () {
-    browser.refresh();
+    //browser.refresh();
+    loginPage.open('/');
     myEformsPage.Navbar.goToDeviceUsersPage();
     // browser.pause(8000);
     // $('#newDeviceUserBtn').waitForDisplayed(20000);
@@ -38,14 +39,15 @@ describe('Device users page should not add new device user', function () {
     // $('#newDeviceUserBtn').waitForDisplayed(20000);
     const name = generateRandmString();
     // browser.refresh();
-    browser.pause(8000);
+    //browser.pause(8000);
     $('#newDeviceUserBtn').waitForDisplayed(20000);
+    $('#newDeviceUserBtn').waitForClickable({ timeout: 20000});
     deviceUsersPage.newDeviceUserBtn.click();
     $('#firstName').waitForDisplayed(10000);
     deviceUsersPage.createFirstNameInput.setValue(name);
     expect(deviceUsersPage.saveCreateBtn.isEnabled(),
       'Create button in modal window while creating new device user is active when only name is provided').equal(false);
-    browser.refresh();
+    //browser.refresh();
   });
   it('with only last name', function () {
     // browser.waitForEnabled('#newDeviceUserBtn', 20000);
@@ -57,7 +59,7 @@ describe('Device users page should not add new device user', function () {
     deviceUsersPage.createLastNameInput.setValue(lastName);
     expect(deviceUsersPage.saveCreateBtn.isEnabled(),
       'Create button in modal window while creating new device user is active when only last name is provided').equal(false);
-    browser.refresh();
+    //browser.refresh();
   });
   it('without first and last names', function () {
     // browser.refresh();
@@ -67,7 +69,7 @@ describe('Device users page should not add new device user', function () {
     expect(deviceUsersPage.saveCreateBtn.isEnabled(),
       'Create button in modal window while creating new device user is active when both first name and last name are not provided').equal(
         false);
-    browser.refresh();
+    //browser.refresh();
   });
   it('if cancel was clicked', function () {
     const rowCountBeforeCreation = deviceUsersPage.rowNum;
@@ -79,7 +81,7 @@ describe('Device users page should not add new device user', function () {
     $('#newDeviceUserBtn').waitForDisplayed(10000);
     const rowCountAfterCreation = deviceUsersPage.rowNum;
     expect(rowCountAfterCreation, 'Number of rows has changed after cancel').equal(rowCountBeforeCreation);
-    browser.refresh();
+    //browser.refresh();
   });
   it('should clean up', function(){
     const lastDeviceUser = deviceUsersPage.getFirstRowObject();
@@ -87,7 +89,7 @@ describe('Device users page should not add new device user', function () {
     $('#saveDeleteBtn').waitForDisplayed(10000);
     deviceUsersPage.saveDeleteBtn.click();
     browser.pause(4000);
-    browser.refresh();
+    //browser.refresh();
     expect(deviceUsersPage.rowNum).equal(0);
   });
 });

@@ -13,22 +13,24 @@ describe('Device users page', function () {
   it('should not delete if cancel was clicked', function () {
     const rowNumBeforeDelete = deviceUsersPage.rowNum;
     const lastDeviceUser = deviceUsersPage.getDeviceUser(rowNumBeforeDelete);
-    lastDeviceUser.deleteBtn.waitForVisible(5000);
+    lastDeviceUser.deleteBtn.waitForDisplayed(5000);
     lastDeviceUser.deleteBtn.click();
-    browser.pause(8000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     deviceUsersPage.cancelDeleteBtn.click();
-    browser.pause(8000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     const rowNumAfterCancelDelete = deviceUsersPage.rowNum;
     expect(rowNumBeforeDelete).equal(rowNumAfterCancelDelete);
   });
   it('should delete user', function () {
+    loginPage.open('/');
+    myEformsPage.Navbar.goToDeviceUsersPage();
     const rowNumBeforeDelete = deviceUsersPage.rowNum;
     const lastDeviceUser = deviceUsersPage.getDeviceUser(rowNumBeforeDelete);
-    lastDeviceUser.deleteBtn.waitForVisible(5000);
+    lastDeviceUser.deleteBtn.waitForDisplayed(5000);
     lastDeviceUser.deleteBtn.click();
-    browser.pause(6000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     deviceUsersPage.saveDeleteBtn.click();
-    browser.pause(6000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     const rowNumAfterDelete = deviceUsersPage.rowNum;
     expect(rowNumBeforeDelete, 'User deleted incorrectly').equal(rowNumAfterDelete + 1);
   });

@@ -17,27 +17,32 @@ describe('Device users page', function () {
   });
   it('should change first name', function () {
     const newName = Guid.create().toString();
+    $('#deviceUserFirstName').waitForDisplayed(20000);
     const lastDeviceUserBeforeEdit = deviceUsersPage.getDeviceUser(deviceUsersPage.rowNum);
     deviceUsersPage.editDeviceUser(lastDeviceUserBeforeEdit, newName, null);
     browser.pause(2000);
     const lastDeviceUserAfterEdit = deviceUsersPage.getDeviceUser(deviceUsersPage.rowNum);
     $('#newDeviceUserBtn').waitForDisplayed(20000);
     expect(lastDeviceUserAfterEdit.firstName, 'First name has changed incorrectly').equal(newName);
-    expect(lastDeviceUserAfterEdit.lastName, 'Last name has changed after changing only first name').equal(lastDeviceUserBeforeEdit.lastName);
+    expect(lastDeviceUserAfterEdit.lastName,
+      'Last name has changed after changing only first name').equal(lastDeviceUserBeforeEdit.lastName);
   });
   it('should change last name', function () {
     const newSurname = Guid.create().toString();
+    $('#deviceUserFirstName').waitForDisplayed(20000);
     const lastDeviceUserBeforeEdit = deviceUsersPage.getDeviceUser(deviceUsersPage.rowNum);
     deviceUsersPage.editDeviceUser(lastDeviceUserBeforeEdit, null, newSurname);
     browser.pause(2000);
     const lastDeviceUserAfterEdit = deviceUsersPage.getDeviceUser(deviceUsersPage.rowNum);
     $('#newDeviceUserBtn').waitForDisplayed(20000);
     expect(lastDeviceUserAfterEdit.lastName, 'Last name has changed incorrectly').equal(newSurname);
-    expect(lastDeviceUserAfterEdit.firstName, 'First name has changed after changing only last name').equal(lastDeviceUserBeforeEdit.firstName);
+    expect(lastDeviceUserAfterEdit.firstName,
+      'First name has changed after changing only last name').equal(lastDeviceUserBeforeEdit.firstName);
   });
   it('should change first name and last name', function () {
     const newName = Guid.create().toString();
     const newSurname = Guid.create().toString();
+    $('#deviceUserFirstName').waitForDisplayed(20000);
     const lastDeviceUserBeforeEdit = deviceUsersPage.getDeviceUser(deviceUsersPage.rowNum);
     deviceUsersPage.editDeviceUser(lastDeviceUserBeforeEdit, newName, newSurname);
     browser.pause(2000);
