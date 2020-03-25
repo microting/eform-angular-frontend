@@ -28,10 +28,8 @@ namespace eFormAPI.Web.Infrastructure.Models.Mailing
     public class CasePostViewModel
     {
         public int Id { get; set; }
-        public string From { get; set; }
         public List<string> ToRecipients { get; set; }
         public List<string> ToRecipientsTags { get; set; }
-        public string Title { get; set; }
         public string Subject { get; set; }
         public string Text { get; set; }
         public bool AttachReport { get; set; }

@@ -31,7 +31,6 @@ namespace eFormAPI.Web.Infrastructure.Models.Mailing
         public int From { get; set; }
         public List<int> ToRecipientsIds { get; set; }
         public List<int> ToTagsIds { get; set; }
-        public string Title { get; set; }
         public string Subject { get; set; }
         public string Text { get; set; }
         public bool AttachReport { get; set; }

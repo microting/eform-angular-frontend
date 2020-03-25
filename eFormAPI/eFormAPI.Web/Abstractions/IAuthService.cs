@@ -27,10 +27,12 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
 
 namespace eFormAPI.Web.Abstractions
 {
+    using Infrastructure.Models.Auth;
+
     public interface IAuthService
     {
-        Task<OperationDataResult<AuthorizeResult>> AuthenticateUser(LoginModel model);
-        Task<OperationDataResult<AuthorizeResult>> RefreshToken();
+        Task<OperationDataResult<EformAuthorizeResult>> AuthenticateUser(LoginModel model);
+        Task<OperationDataResult<EformAuthorizeResult>> RefreshToken();
         Task<OperationResult> DeleteGoogleAuthenticatorInfo();
         Task<OperationDataResult<GoogleAuthenticatorModel>> GetGoogleAuthenticator(LoginModel loginModel);
         Task<OperationDataResult<GoogleAuthInfoModel>> GetGoogleAuthenticatorInfo();

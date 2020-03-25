@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {PageSettingsModel} from '../../../../../common/models/settings';
 import {Subscription} from 'rxjs';
-import {UserSettingsService} from '../../../../../common/services/auth';
+import {AuthService, UserSettingsService} from '../../../../../common/services/auth';
 import {ApplicationPages} from '../../../../../common/const';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {CasePostNewComponent, CasePostViewComponent} from '../..';
@@ -31,6 +31,7 @@ export class CasePostsPageComponent implements OnInit, OnDestroy {
   getTagsSub$: Subscription;
   getRecipientsSub$: Subscription;
   activatedRoute$: Subscription;
+  currentUserFullName: string;
   selectedEformId: number;
   selectedCaseId: number;
 
@@ -38,7 +39,8 @@ export class CasePostsPageComponent implements OnInit, OnDestroy {
   constructor(private userSettingsService: UserSettingsService,
               private casePostsService: CasePostsService,
               private emailRecipientsService: EmailRecipientsService,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private authService: AuthService) {
   }
 
   ngOnInit(): void {
@@ -57,6 +59,8 @@ export class CasePostsPageComponent implements OnInit, OnDestroy {
     this.getLocalPageSettings();
     this.getRecipientsAndTags();
     this.getRecipients();
+
+    this.currentUserFullName = this.authService.currentUserFullName;
   }
 
   getLocalPageSettings() {

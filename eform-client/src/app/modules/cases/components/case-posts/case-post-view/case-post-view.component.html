@@ -12,10 +12,10 @@
                 <input mdbInputDirective
                        [mdbValidate]="false"
                        [disabled]="true"
-                       [(ngModel)]="postViewModel.from"
-                       type="text" id="postViewFrom"
-                       name="postViewFrom" class="form-control">
-                <label for="postViewFrom">{{ 'From' | translate }}</label>
+                       [(ngModel)]="currentUserFullName"
+                       type="text" id="postViewCreatedBy"
+                       name="postViewCreatedBy" class="form-control">
+                <label for="postViewCreatedBy">{{ 'Created by' | translate }}</label>
               </div>
             </div>
           </div>
@@ -47,19 +47,6 @@
                 <input mdbInputDirective
                        [mdbValidate]="false"
                        [disabled]="true"
-                       [(ngModel)]="postViewModel.title"
-                       type="text" id="postViewTitle"
-                       name="postViewTitle" class="form-control">
-                <label for="postViewTitle">{{ 'Title' | translate }}</label>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="md-form">
-                <input mdbInputDirective
-                       [mdbValidate]="false"
-                       [disabled]="true"
                        [(ngModel)]="postViewModel.subject"
                        type="text" id="postViewSubject"
                        name="postViewSubject" class="form-control">
@@ -70,14 +57,13 @@
           <div class="row">
             <div class="col">
               <div class="md-form">
-                <span class="text-muted">{{ 'Email text' | translate }}</span>
                 <textarea mdbInputDirective
                           [mdbValidate]="false"
                           [(ngModel)]="postViewModel.text"
                           [disabled]="true"
                           type="text" id="viewPostEmailText"
                           name="viewPostEmailText" class="md-textarea form-control"></textarea>
-                <label for="viewPostEmailText"></label>
+                <label for="viewPostEmailText">{{ 'Email text' | translate }}</label>
               </div>
             </div>
           </div>
@@ -92,7 +78,7 @@
               </div>
             </div>
           </div>
-          <div class="row">
+          <div class="row" *ngIf="pdfReportEnabled">
             <div class="col">
               <div class="mat-checkbox">
                 <input id="attachReport" name="attachReport"

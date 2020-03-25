@@ -34,6 +34,7 @@ namespace eFormAPI.Web.Infrastructure.Models.Mailing
         public string From { get; set; }
         public string Subject { get; set; }
         public string Text { get; set; }
+        public bool JasperExportEnabled { get; set; }
 
         public List<string> ToRecipients { get; set; }
             = new List<string>();

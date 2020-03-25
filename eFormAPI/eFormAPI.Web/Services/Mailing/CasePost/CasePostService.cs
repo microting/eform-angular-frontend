@@ -34,6 +34,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
     using Abstractions;
     using EmailService;
     using Hosting.Helpers.DbOptions;
+    using Infrastructure.Const;
     using Infrastructure.Database;
     using Infrastructure.Database.Entities.Mailing;
     using Infrastructure.Models;
@@ -112,6 +113,17 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                     .Skip(requestModel.Offset)
                     .Take(requestModel.PageSize);
 
+
+                var core = await _coreService.GetCore();
+                var templateDto = await core.TemplateItemRead(requestModel.TemplateId);
+                var caseDto = await core.CaseLookupCaseId(requestModel.CaseId);
+                if (caseDto?.MicrotingUId == null || caseDto.CheckUId == null)
+                {
+                    throw new InvalidOperationException("caseDto not found");
+                }
+
+                var replyElement = await core.CaseRead((int) caseDto.MicrotingUId, (int) caseDto.CheckUId);
+
                 var casePostList = await casePostsQuery
                     .Select(x => new CasePostModel()
                     {
@@ -119,17 +131,20 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                         Subject = x.Subject,
                         Text = x.Text,
                         Date = x.PostDate,
-                        From = x.From.Name,
+                        JasperExportEnabled = replyElement.JasperExportEnabled,
+                        From = _dbContext.Users
+                            .Where(y => y.Id == x.CreatedByUserId)
+                            .Select(y => $"{y.FirstName} {y.LastName}")
+                            .FirstOrDefault(),
                         ToRecipients = x.Recipients
-                            .Select(y => y.EmailRecipient.Name)
+                            .Select(y => $"{y.EmailRecipient.Name} ({y.EmailRecipient.Email})")
                             .ToList(),
                         ToRecipientsTags = x.Tags
                             .Select(y => y.EmailTag.Name)
                             .ToList(),
+                        
                     }).ToListAsync();
 
-                var core = await _coreService.GetCore();
-                var templateDto = await core.TemplateItemRead(requestModel.TemplateId);
                 using (var dbContext = core.dbContextHelper.GetDbContext())
                 {
                     var caseEntity = await dbContext.cases
@@ -278,10 +293,8 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                         Subject = x.Subject,
                         AttachReport = x.AttachPdf,
                         AttachLinkToCase = x.LinkToCase,
-                        From = x.From.Name,
-                        Title = x.Title,
                         ToRecipients = x.Recipients
-                            .Select(y => y.EmailRecipient.Name)
+                            .Select(y => $"{y.EmailRecipient.Name} ({y.EmailRecipient.Email})")
                             .ToList(),
                         ToRecipientsTags = x.Tags
                             .Select(y => y.EmailTag.Name)
@@ -331,10 +344,8 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                         LinkToCase = requestModel.AttachLinkToCase,
                         Text = requestModel.Text,
                         Subject = requestModel.Subject,
-                        Title = requestModel.Title,
                         CaseId = requestModel.CaseId,
                         PostDate = DateTime.UtcNow,
-                        FromId = requestModel.From,
                     };
 
                     await _dbContext.CasePosts.AddAsync(casePost);
@@ -375,10 +386,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                     await _dbContext.SaveChangesAsync();
 
                     // Send email
-                    var from = await _dbContext.EmailRecipients
-                        .AsNoTracking()
-                        .Where(x => x.Id == requestModel.From)
-                        .FirstOrDefaultAsync();
+                    var currentUser = await _userService.GetCurrentUserAsync();
 
                     var casePostRecipientResult = await _dbContext.CasePosts
                         .AsNoTracking()
@@ -467,8 +475,8 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                                 }
 
                                 await _emailService.SendFileAsync(
-                                    from.Email,
-                                    from.Name,
+                                    EformEmailConst.FromEmail,
+                                    $"{currentUser.FirstName} {currentUser.LastName}",
                                     casePost.Subject.IsNullOrEmpty() ? "-" : casePost.Subject,
                                     recipient.Email,
                                     filePath,
@@ -478,8 +486,8 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                             {
                                 Console.WriteLine(e);
                                 await _emailService.SendAsync(
-                                    from.Email,
-                                    from.Name,
+                                    EformEmailConst.FromEmail,
+                                    $"{currentUser.FirstName} {currentUser.LastName}",
                                     casePost.Subject.IsNullOrEmpty() ? "-" : casePost.Subject,
                                     recipient.Email,
                                     html: html);
@@ -488,8 +496,8 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                         else
                         {
                             await _emailService.SendAsync(
-                                from.Email,
-                                from.Name,
+                                EformEmailConst.FromEmail,
+                                $"{currentUser.FirstName} {currentUser.LastName}",
                                 casePost.Subject.IsNullOrEmpty() ? "-" : casePost.Subject,
                                 recipient.Email,
                                 html: html);
