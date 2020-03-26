@@ -358,6 +358,8 @@ export class SelectableListsPage extends PageWithNavbarPage {
     $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public cleanup() {
+    $('#entitySelectDeleteBtn_0').waitForDisplayed(20000);
+    $('#entitySelectDeleteBtn_0').waitForClickable({timeout: 20000});
     const deleteObject = this.getFirstRowObject();
     if (deleteObject != null) {
       $('#spinner-animation').waitForDisplayed(90000, true);
