@@ -7,6 +7,8 @@ class MyEformsPage extends PageWithNavbarPage {
   }
 
   public get newEformBtn() {
+    $('#newEFormBtn').waitForDisplayed(20000);
+    $('#newEFormBtn').waitForClickable({timeout: 20000});
     return $('#newEFormBtn');
   }
 
