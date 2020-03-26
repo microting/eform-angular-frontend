@@ -81,11 +81,13 @@ export class SelectableListsPage extends PageWithNavbarPage {
 
   public get entitySelectEditSaveBtn() {
     $('#editEntitySelectSaveBtn').waitForDisplayed(20000);
+    $('#editEntitySelectSaveBtn').waitForClickable({ timeout: 20000});
     return $('#editEntitySelectSaveBtn');
   }
 
   public get entitySelectEditCancelBtn() {
     $('#editEntitySelectCancelBtn').waitForDisplayed(20000);
+    $('#editEntitySelectCancelBtn').waitForClickable({ timeout: 20000});
     return $('#editEntitySelectCancelBtn');
   }
 
