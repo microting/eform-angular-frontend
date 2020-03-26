@@ -54,6 +54,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
 
   public get entitySelectEditBtn() {
     $('#entitySelectEditBtn_0').waitForDisplayed(20000);
+    $('#entitySelectEditBtn_0').waitForClickable({timeout: 20000});
     return $('#entitySelectEditBtn_0');
   }
 
@@ -96,7 +97,10 @@ export class SelectableListsPage extends PageWithNavbarPage {
     return $('#entityImportTextArea');
   }
   public get entitySelectImportTextAreaEdit() {
-    return $(`//app-entity-select-edit//textarea`);
+    const ele = $(`//app-entity-select-edit//textarea`);
+    ele.waitForDisplayed(20000);
+    ele.waitForClickable({ timeout: 20000});
+    return ele;
   }
   public get entitySelectImportSaveBtn() {
     return $('#entityImportSaveBtn');
@@ -268,6 +272,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
     $('#spinner-animation').waitForDisplayed(50000, true);
     this.entitySelectEditBtn.click();
     $('#editName').waitForDisplayed(200000);
+    $('#editName').waitForClickable({timeout: 200000});
     this.entitySelectEditName.clearValue();
     this.entitySelectEditName.addValue(newName);
     $('#spinner-animation').waitForDisplayed(90000, true);
@@ -339,6 +344,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
     this.entityItemEditBtn.click();
     $('#spinner-animation').waitForDisplayed(90000, true);
     this.entityItemEditNameBox.waitForDisplayed(20000);
+    this.entityItemEditNameBox.waitForClickable({timeout: 20000});
     this.entityItemEditNameBox.clearValue();
     this.entityItemEditNameBox.addValue(newItemName);
     this.entityItemEditSaveBtn.click();

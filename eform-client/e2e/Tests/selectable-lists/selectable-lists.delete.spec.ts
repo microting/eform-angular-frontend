@@ -21,7 +21,11 @@ describe('Entity Select', function () {
     expect(selectableList.name).equal(name);
   });
   it('should delete the list', function () {
+    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#entitySelectMicrotingUUID_0').waitForDisplayed(20000);
     selectableLists.deleteList();
+    $('#spinner-animation').waitForDisplayed(90000, true);
+    browser.pause(1000);
     const selectableList = selectableLists.getFirstRowObject();
     expect(selectableLists.rowNum).equal(0);
   });
