@@ -8,7 +8,9 @@ env:
 
 dist: bionic
 language: csharp
-cache: npm
+cache:
+  directories:
+  - eform-client/node_modules
 mono: none
 dotnet: 2.2
 addons:
