@@ -8,6 +8,7 @@ env:
 
 dist: bionic
 language: csharp
+cache: npm
 mono: none
 dotnet: 2.2
 addons:
