@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {format} from 'date-fns';
 import {FieldValueDto} from 'src/app/common/models';
 import {LocaleService} from 'src/app/common/services/auth';
-import {DateTimeAdapter} from 'ng-pick-datetime';
+import {DateTimeAdapter} from 'ng-pick-datetime-ex';
 
 @Component({
   selector: 'element-date',

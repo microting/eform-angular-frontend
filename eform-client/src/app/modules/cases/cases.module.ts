@@ -42,7 +42,7 @@ import {
   RemoveCaseModalComponent
 } from './components';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {OWL_DATE_TIME_FORMATS, OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime';
+import {OWL_DATE_TIME_FORMATS, OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime-ex';
 import {SharedPnModule} from '../../plugins/modules/shared/shared-pn.module';
 
 
