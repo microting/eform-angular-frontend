@@ -35,7 +35,10 @@ class MyEformsPage extends PageWithNavbarPage {
 
   // Create eform modal
   public get createEformTagSelector() {
-    return $('#createEFormMultiSelector');
+    const ele = $('#createEFormMultiSelector');
+    ele.waitForDisplayed(20000);
+    ele.waitForClickable({timeout: 20000});
+    return ele;
   }
 
   public get createEformNewTagInput() {
@@ -43,7 +46,10 @@ class MyEformsPage extends PageWithNavbarPage {
   }
 
   public get xmlTextArea() {
-    return $('#eFormXml');
+    const ele = $('#eFormXml');
+    ele.waitForDisplayed(20000);
+    ele.waitForClickable({timeout: 20000});
+    return ele;
   }
 
   public get createEformBtn() {
