@@ -34,7 +34,10 @@ export class SearchableListsPage extends PageWithNavbarPage {
     return $('#createName');
   }
   public get entitySearchCreateImportBtn() {
-    return $('#importEntitySearchBtn');
+    const ele = $('#importEntitySearchBtn');
+    ele.waitForDisplayed(20000);
+    ele.waitForClickable({ timeout: 20000});
+    return ele;
   }
   public get entitySearchCreateSingleItemBtn() {
     return $('#addSingleEntitySearchableItem');
@@ -204,11 +207,9 @@ export class SearchableListsPage extends PageWithNavbarPage {
     this.createEntitySearchBtn.click();
     $('#createName').waitForDisplayed(20000);
     this.entitySearchCreateName.addValue(name);
-    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySearchCreateImportBtn.click();
     $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySearchCreateImportItemTextArea.addValue(itemNames);
-    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySearchCreateImportItemSaveBtn.click();
     $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySearchCreateSaveBtn.click();
