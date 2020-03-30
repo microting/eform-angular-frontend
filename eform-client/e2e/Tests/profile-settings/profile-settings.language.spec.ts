@@ -13,7 +13,7 @@ describe('Profile Settings', function () {
   it('should set language to English', function () {
     profileSettings.chooseLanguage('English');
     profileSettings.saveProfileSettings();
-    browser.refresh();
+    //browser.refresh();
     expect(myEformsPage.Navbar.verifyHeaderMenuItem('My eForms')).equal('My eForms');
     expect(myEformsPage.Navbar.verifyHeaderMenuItem('Device Users')).equal('Device Users');
     expect(myEformsPage.Navbar.verifyHeaderMenuItem('Advanced')).equal('Advanced');
@@ -21,7 +21,7 @@ describe('Profile Settings', function () {
   it('should set language to German', function () {
     profileSettings.chooseLanguage('German');
     profileSettings.saveProfileSettings();
-    browser.refresh();
+    //browser.refresh();
     expect(myEformsPage.Navbar.verifyHeaderMenuItem('Meine eForms')).equal('Meine eForms');
     expect(myEformsPage.Navbar.verifyHeaderMenuItem('Gerätebenutzer')).equal('Gerätebenutzer');
     expect(myEformsPage.Navbar.verifyHeaderMenuItem('Fortgeschritten')).equal('Fortgeschritten');
@@ -29,7 +29,7 @@ describe('Profile Settings', function () {
   it('should set language to Danish', function () {
     profileSettings.chooseLanguage('Danish');
     profileSettings.saveProfileSettings();
-    browser.refresh();
+    //browser.refresh();
     expect(myEformsPage.Navbar.verifyHeaderMenuItem('Mine eForms')).equal('Mine eForms');
     expect(myEformsPage.Navbar.verifyHeaderMenuItem('Enhedsbrugere')).equal('Enhedsbrugere');
     expect(myEformsPage.Navbar.verifyHeaderMenuItem('Avanceret')).equal('Avanceret');

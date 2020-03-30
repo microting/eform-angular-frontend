@@ -14,6 +14,8 @@ exports.config = {
 
     'e2e/Tests/application-settings/application-settings.login-page.spec.ts',
     'e2e/Tests/application-settings/application-settings.site-header.spec.ts',
+    'e2e/Tests/profile-settings/profile-settings.language.spect.ts',
+    'e2e/Tests/user-administration/user-administration.name-change.spec.ts',
     // 'e2e/Tests/device-users/device-users.add.spec.ts',
     // 'e2e/Tests/device-users/device-users.edit.spec.ts',
     // 'e2e/Tests/device-users/device-users.delete.spec.ts',

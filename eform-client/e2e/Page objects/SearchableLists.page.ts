@@ -285,7 +285,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
       browser.pause(4000);
       this.entitySearchDeleteDeleteBtn.click();
       browser.pause(1000);
-      browser.refresh();
+      //browser.refresh();
     }
   }
   public editItemName(newItemName) {
@@ -317,7 +317,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
       browser.pause(4000);
       this.entitySearchDeleteDeleteBtn.click();
       browser.pause(1000);
-      browser.refresh();
+      //browser.refresh();
     }
   }
 }

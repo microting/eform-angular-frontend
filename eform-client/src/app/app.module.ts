@@ -8,11 +8,11 @@ import {TranslateModule} from '@ngx-translate/core';
 import { LightboxModule } from '@ngx-gallery/lightbox';
 import {DragulaModule} from 'ng2-dragula';
 import {ToastrModule} from 'ngx-toastr';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import {library} from '@fortawesome/fontawesome-svg-core';
 // import { faTrashAlt,  faTable, faFileUpload, faReceipt, faFilePdf, faPen,
 //          faEye, faEyeSlash, faUndo, faClipboardList, faLockOpen} from '@fortawesome/free-solid-svg-icons';
-import {fas} from '@fortawesome/free-solid-svg-icons';
+import { faCoffee, fas } from '@fortawesome/free-solid-svg-icons';
 // import { far } from '@fortawesome/free-regular-svg-icons';
 
 import {MDBBootstrapModule} from 'port/angular-bootstrap-md';
@@ -67,11 +67,8 @@ import {NgxChartsModule} from '@microting/ngx-charts';
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor() {
-    // Font Awesome
-    // library.add(faTrashAlt,  faTable, faFileUpload, faReceipt, faFilePdf, faPen, faEye, faEyeSlash, faUndo, faClipboardList, faLockOpen);
-    library.add(fas);
-
-    // library.add(...importedIcons);
+  constructor(library: FaIconLibrary) {
+    library.addIconPacks(fas);
+    library.addIcons(faCoffee);
   }
 }
