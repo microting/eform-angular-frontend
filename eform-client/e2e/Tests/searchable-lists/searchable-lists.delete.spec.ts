@@ -18,12 +18,12 @@ describe('Entity Search', function () {
     searchableLists.createSearchableList_NoItem(name);
     const searchableList = searchableLists.getFirstRowObject();
     expect(searchableList.name).equal(name);
-    browser.pause(8000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   });
   it('should delete the list', function () {
     searchableLists.deleteList();
     expect(searchableLists.rowNum).equal(0);
-    browser.pause(8000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   });
   it('should create a new searchable list with name and one item', function () {
     const name = Guid.create().toString();
@@ -32,10 +32,10 @@ describe('Entity Search', function () {
     const searchableList = searchableLists.getFirstRowObject();
     expect(searchableList.name).equal(name);
     searchableList.editBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     expect(searchableLists.firstEntityItemName.getText()).equal(itemName);
     searchableLists.entitySearchEditCancelBtn.click();
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   });
   it('should delete item from list.', function () {
     searchableLists.deleteItemFromList();
@@ -44,7 +44,7 @@ describe('Entity Search', function () {
     expect(searchableLists.items).equal(0);
     searchableLists.entitySearchEditCancelBtn.click();
     searchableLists.cleanup();
-    browser.pause(8000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   });
   it('should make a new searchable list with multiple items', function () {
     const name = Guid.create().toString();
@@ -52,11 +52,11 @@ describe('Entity Search', function () {
     searchableLists.createSearchableList_MultipleItems(name, itemNames);
     const searchableList = searchableLists.getFirstRowObject();
     expect(searchableList.name).equal(name);
-    browser.pause(8000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   });
   it('should delete a list with multiple items.', function () {
     searchableLists.deleteList();
     expect(searchableLists.rowNum).equal(0);
-    browser.pause(8000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   });
 });

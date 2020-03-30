@@ -19,7 +19,7 @@ describe('Entity Search', function () {
     const searchableList = searchableLists.getFirstRowObject();
     expect(searchableList.name).equal(name);
     searchableLists.cleanup();
-    browser.pause(8000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   });
   it('should not create a new searchable list', function () {
     const name = Guid.create().toString();
@@ -33,12 +33,12 @@ describe('Entity Search', function () {
     const searchableList = searchableLists.getFirstRowObject();
     expect(searchableList.name).equal(name);
     searchableList.editBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     expect(searchableLists.firstEntityItemName.getText()).equal(itemName);
     searchableLists.entitySearchEditCancelBtn.click();
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     searchableLists.cleanup();
-    browser.pause(8000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   });
   it('should not make a new searchable list with one item', function () {
     const name = Guid.create().toString();
@@ -53,25 +53,25 @@ describe('Entity Search', function () {
     const searchableList = searchableLists.getFirstRowObject();
     expect(searchableList.name).equal(name);
     searchableList.editBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     expect(searchableLists.firstEntityItemName.getText()).equal('a');
     searchableLists.entitySearchItemDeleteBtn.click();
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     expect(searchableLists.firstEntityItemName.getText()).equal('b');
     searchableLists.entitySearchItemDeleteBtn.click();
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     expect(searchableLists.firstEntityItemName.getText()).equal('c');
     searchableLists.entitySearchItemDeleteBtn.click();
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     expect(searchableLists.firstEntityItemName.getText()).equal('d');
     searchableLists.entitySearchItemDeleteBtn.click();
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     expect(searchableLists.firstEntityItemName.getText()).equal('e');
     searchableLists.entitySearchItemDeleteBtn.click();
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     searchableLists.entitySearchEditCancelBtn.click();
     searchableLists.cleanup();
-    browser.pause(8000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   });
   it('should not create a searchable list with multiple items', function () {
     const name = Guid.create().toString();
