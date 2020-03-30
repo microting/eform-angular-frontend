@@ -106,7 +106,10 @@ export class SelectableListsPage extends PageWithNavbarPage {
     return $('#entityImportSaveBtn');
   }
   public get entitySelectImportEditSaveBtn() {
-    return $(`//app-entity-select-edit//app-entity-select-import-list//button[1]`);
+    const ele = $(`//app-entity-select-edit//app-entity-select-import-list//button[1]`);
+    ele.waitForDisplayed(20000);
+    ele.waitForClickable({ timeout: 20000});
+    return ele;
   }
   public get  entitySelectImportCancelBtn() {
     return $('#entityImportCancelBtn');
@@ -159,9 +162,11 @@ export class SelectableListsPage extends PageWithNavbarPage {
     return $(`//app-entity-select-edit//button[@id= 'entitySelectItemCancelBtn']`);
   }
   getFirstRowObject(): SelectableListRowObject {
+    browser.pause(500);
     return new SelectableListRowObject(1);
   }
   getFirstItemObject(): EntitySelectItemRowObject {
+    browser.pause(500);
     return new EntitySelectItemRowObject(1);
   }
   public goToEntitySelectPage() {

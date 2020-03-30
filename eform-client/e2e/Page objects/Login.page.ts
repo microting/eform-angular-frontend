@@ -27,7 +27,10 @@ class LoginPage extends Page {
   }
 
   public get loginBtn() {
-    return $('#loginBtn');
+    const ele = $('#loginBtn');
+    ele.waitForDisplayed(20000);
+    ele.waitForClickable({timeout: 20000});
+    return ele;
   }
 
   public login(): void {

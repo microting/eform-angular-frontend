@@ -11,13 +11,18 @@ export class SearchableListsPage extends PageWithNavbarPage {
     return $$('//app-entity-search-edit//ul//li').length;
   }
   getFirstRowObject(): SearchableListRowObject {
+    browser.pause(500);
     return new SearchableListRowObject(1);
   }
   getFirstItemObject(): EntitySearchItemRowObject {
+    browser.pause(500);
     return new EntitySearchItemRowObject(1);
   }
   public get firstEntityItemName() {
-    return $(`//app-entity-search-edit//ul//li[1]//div[2]`);
+    const ele = $(`//app-entity-search-edit//ul//li[1]//div[2]`);
+    ele.waitForDisplayed(20000);
+    ele.waitForClickable({ timeout: 20000});
+    return ele;
   }
   public get createEntitySearchBtn() {
     return $('#createEntitySearchBtn');
@@ -38,28 +43,52 @@ export class SearchableListsPage extends PageWithNavbarPage {
     return $('#entitySearchCreateSingleItemEdit');
   }
   public get entitySearchCreateItemNameBox() {
-    return $(`//app-entity-search-create//app-entity-search-edit-name//input[@id= 'entitySearchItemEditNameBox']`);
+    const ele = $(`//app-entity-search-create//app-entity-search-edit-name//input[@id= 'entitySearchItemEditNameBox']`);
+    ele.waitForDisplayed(20000);
+    ele.waitForClickable({ timeout: 20000});
+    return ele;
   }
   public get entitySearchCreateItemSaveBtn() {
-    return $(`//app-entity-search-create//app-entity-search-edit-name//button[@id= 'entitySearchItemSaveBtn']`);
+    const ele = $(`//app-entity-search-create//app-entity-search-edit-name//button[@id= 'entitySearchItemSaveBtn']`);
+    ele.waitForDisplayed(20000);
+    ele.waitForClickable({ timeout: 20000});
+    return ele;
   }
   public get entitySearchCreateItemCancelBtn() {
-    return $(`//app-entity-search-create//app-entity-search-edit-name//button[@id= 'entitySearchItemCancelBtn']`);
+    const ele = $(`//app-entity-search-create//app-entity-search-edit-name//button[@id= 'entitySearchItemCancelBtn']`);
+    ele.waitForDisplayed(20000);
+    ele.waitForClickable({ timeout: 20000});
+    return ele;
   }
   public get entitySearchCreateImportItemTextArea() {
-    return $(`//app-entity-search-create//app-entity-search-import-list//textarea`);
+    const ele = $(`//app-entity-search-create//app-entity-search-import-list//textarea`);
+    ele.waitForDisplayed(20000);
+    ele.waitForClickable({ timeout: 20000});
+    return ele;
   }
   public get entitySearchCreateImportItemSaveBtn() {
-    return $(`//app-entity-search-create//app-entity-search-import-list//button[@id= 'entitySearchImportSaveBtn']`);
+    const ele = $(`//app-entity-search-create//app-entity-search-import-list//button[@id= 'entitySearchImportSaveBtn']`);
+    ele.waitForDisplayed(20000);
+    ele.waitForClickable({ timeout: 20000});
+    return ele;
   }
   public get entitySearchCreateImportItemCancelBtn() {
-    return $(`//app-entity-search-create//app-entity-search-import-list//button[@id= 'entitySearchImportCancelBtn']`);
+    const ele = $(`//app-entity-search-create//app-entity-search-import-list//button[@id= 'entitySearchImportCancelBtn']`);
+    ele.waitForDisplayed(20000);
+    ele.waitForClickable({ timeout: 20000});
+    return ele;
   }
   public get entitySearchCreateSaveBtn() {
-    return $('#entitySearchCreateSaveBtn');
+    const ele = $('#entitySearchCreateSaveBtn');
+    ele.waitForDisplayed(20000);
+    ele.waitForClickable({ timeout: 20000});
+    return ele;
   }
   public get entitySearchCreateCancelBtn() {
-    return $('#entitySearchCreateCancelBtn');
+    const ele = $('#entitySearchCreateCancelBtn');
+    ele.waitForDisplayed(20000);
+    ele.waitForClickable({ timeout: 20000});
+    return ele;
   }
   public get entitySearchEditBtn() {
     return $('#entitySearchUpdateBtn');
@@ -80,34 +109,64 @@ export class SearchableListsPage extends PageWithNavbarPage {
     return $(`//app-entity-search-edit//ul//li[1]//div[3]//a[2]`);
   }
   public get entitySearchEditItemNameBox() {
-    return $(`//app-entity-search-edit//app-entity-search-edit-name//input[@id= 'entitySearchItemEditNameBox']`);
+    const ele = $(`//app-entity-search-edit//app-entity-search-edit-name//input[@id= 'entitySearchItemEditNameBox']`);
+    ele.waitForDisplayed(20000);
+    ele.waitForClickable({ timeout: 20000});
+    return ele;
   }
   public get entitySearchEditItemSaveBtn() {
-    return $(`//app-entity-search-edit//app-entity-search-edit-name//button[@id= 'entitySearchItemSaveBtn']`);
+    const ele = $(`//app-entity-search-edit//app-entity-search-edit-name//button[@id= 'entitySearchItemSaveBtn']`);
+    ele.waitForDisplayed(20000);
+    ele.waitForClickable({ timeout: 20000});
+    return ele;
   }
   public get entitySearchEditItemCancelBtn() {
-    return $(`//app-entity-search-edit//app-entity-search-edit-name//button[@id= 'entitySearchItemCancelBtn']`);
+    const ele = $(`//app-entity-search-edit//app-entity-search-edit-name//button[@id= 'entitySearchItemCancelBtn']`);
+    ele.waitForDisplayed(20000);
+    ele.waitForClickable({ timeout: 20000});
+    return ele;
   }
   public get entitySearchEditImportItemTextArea() {
-    return $(`//app-entity-search-edit//app-entity-search-import-list//textarea`);
+    const ele = $(`//app-entity-search-edit//app-entity-search-import-list//textarea`);
+    ele.waitForDisplayed(20000);
+    ele.waitForClickable({ timeout: 20000});
+    return ele;
   }
   public get entitySearchEditImportItemSaveBtn() {
-    return $(`//app-entity-search-edit//app-entity-search-import-list//button[@id= 'entitySearchImportSaveBtn']`);
+    const ele = $(`//app-entity-search-edit//app-entity-search-import-list//button[@id= 'entitySearchImportSaveBtn']`);
+    ele.waitForDisplayed(20000);
+    ele.waitForClickable({ timeout: 20000});
+    return ele;
   }
   public get entitySearchEditImportItemCancelBtn() {
-    return $(`//app-entity-search-edit//app-entity-search-import-list//button[@id= 'entitySearchImportCancelBtn']`);
+    const ele = $(`//app-entity-search-edit//app-entity-search-import-list//button[@id= 'entitySearchImportCancelBtn']`);
+    ele.waitForDisplayed(20000);
+    ele.waitForClickable({ timeout: 20000});
+    return ele;
   }
   public get entitySearchEditSaveBtn() {
-    return $('#entitySearchUpdateSaveBtn');
+    const ele = $('#entitySearchUpdateSaveBtn');
+    ele.waitForDisplayed(20000);
+    ele.waitForClickable({ timeout: 20000});
+    return ele;
   }
   public get entitySearchEditCancelBtn() {
-    return $('#entitySearchUpdateCancelBtn');
+    const ele = $('#entitySearchUpdateCancelBtn');
+    ele.waitForDisplayed(20000);
+    ele.waitForClickable({ timeout: 20000});
+    return ele;
   }
   public get entitySearchDeleteBtn() {
-    return $('#entitySearchDeleteBtn');
+    const ele = $('#entitySearchDeleteBtn');
+    ele.waitForDisplayed(20000);
+    ele.waitForClickable({ timeout: 20000});
+    return ele;
   }
   public get entitySearchDeleteDeleteBtn() {
-    return $('#entitySearchDeleteDeleteBtn');
+    const ele = $('#entitySearchDeleteDeleteBtn');
+    ele.waitForDisplayed(20000);
+    ele.waitForClickable({ timeout: 20000});
+    return ele;
   }
   public get entitySearchDeleteCancelBtn() {
     return $('#entitySearchDeleteCancelBtn');
@@ -120,40 +179,40 @@ export class SearchableListsPage extends PageWithNavbarPage {
     this.createEntitySearchBtn.click();
     $('#createName').waitForDisplayed(20000);
     this.entitySearchCreateName.addValue(name);
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySearchCreateSaveBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public createSearchableList_OneItem(name, itemName) {
     $('#spinner-animation').waitForDisplayed(50000, true);
     this.createEntitySearchBtn.click();
     $('#createName').waitForDisplayed(20000);
     this.entitySearchCreateName.addValue(name);
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySearchCreateSingleItemBtn.click();
-    browser.pause(1000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySearchCreateSingleItemEditBtn.click();
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySearchCreateItemNameBox.addValue(itemName);
     this.entitySearchCreateItemSaveBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySearchCreateSaveBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public createSearchableList_MultipleItems(name, itemNames) {
     $('#spinner-animation').waitForDisplayed(50000, true);
     this.createEntitySearchBtn.click();
     $('#createName').waitForDisplayed(20000);
     this.entitySearchCreateName.addValue(name);
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySearchCreateImportBtn.click();
-    browser.pause(1000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySearchCreateImportItemTextArea.addValue(itemNames);
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySearchCreateImportItemSaveBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySearchCreateSaveBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
 
   public createSearchableList_NoItem_Cancels(name) {
@@ -161,40 +220,40 @@ export class SearchableListsPage extends PageWithNavbarPage {
     this.createEntitySearchBtn.click();
     $('#createName').waitForDisplayed(20000);
     this.entitySearchCreateName.addValue(name);
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySearchCreateCancelBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public createSearchableList_OneItem_Cancels(name, itemName) {
     $('#spinner-animation').waitForDisplayed(50000, true);
     this.createEntitySearchBtn.click();
     $('#createName').waitForDisplayed(20000);
     this.entitySearchCreateName.addValue(name);
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySearchCreateSingleItemBtn.click();
-    browser.pause(1000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySearchCreateSingleItemEditBtn.click();
-    browser.pause(1000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySearchCreateItemNameBox.addValue(itemName);
     this.entitySearchCreateItemSaveBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySearchCreateCancelBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public createSearchableList_MultipleItems_Cancels(name, itemNames) {
     $('#spinner-animation').waitForDisplayed(50000, true);
     this.createEntitySearchBtn.click();
     $('#createName').waitForDisplayed(20000);
     this.entitySearchCreateName.addValue(name);
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySearchCreateImportBtn.click();
-    browser.pause(1000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySearchCreateImportItemTextArea.addValue(itemNames);
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySearchCreateImportItemSaveBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySearchCreateCancelBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
 
   public editSearchableListNameOnly(newName) {
@@ -203,9 +262,9 @@ export class SearchableListsPage extends PageWithNavbarPage {
     $('#editName').waitForDisplayed(200000);
     this.entitySearchEditNameBox.clearValue();
     this.entitySearchEditNameBox.addValue(newName);
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySearchEditSaveBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public editSearchableListNameOnly_Cancels(newName) {
     $('#spinner-animation').waitForDisplayed(50000, true);
@@ -213,19 +272,19 @@ export class SearchableListsPage extends PageWithNavbarPage {
     $('#editName').waitForDisplayed(200000);
     this.entitySearchEditNameBox.clearValue();
     this.entitySearchEditNameBox.addValue(newName);
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySearchEditCancelBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public editSearchableListNameAndItem(newName, newItemName) {
     this.entitySearchEditBtn.click();
     $('#editName').waitForDisplayed(200000);
     this.entitySearchEditNameBox.clearValue();
     this.entitySearchEditNameBox.addValue(newName);
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.editItemName(newItemName);
     this.entitySearchEditSaveBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public editSearchableListOnlyItem(newItemName) {
     $('#spinner-animation').waitForDisplayed(50000, true);
@@ -233,7 +292,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
     $('#editName').waitForDisplayed(200000);
     this.editItemName(newItemName);
     this.entitySearchEditSaveBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public editSearchableListNameAndItem_Cancels(newName, newItemName) {
     $('#spinner-animation').waitForDisplayed(50000, true);
@@ -241,10 +300,10 @@ export class SearchableListsPage extends PageWithNavbarPage {
     $('#editName').waitForDisplayed(200000);
     this.entitySearchEditNameBox.clearValue();
     this.entitySearchEditNameBox.addValue(newName);
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.editItemName(newItemName);
     this.entitySearchEditCancelBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public editSearchableListNameAndItem_CancelsBoth(newName, newItemName) {
     $('#spinner-animation').waitForDisplayed(50000, true);
@@ -252,10 +311,10 @@ export class SearchableListsPage extends PageWithNavbarPage {
     $('#editName').waitForDisplayed(200000);
     this.entitySearchEditNameBox.clearValue();
     this.entitySearchEditNameBox.addValue(newName);
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.editItemName_Cancels(newItemName);
     this.entitySearchEditCancelBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public editSearchableListNameAndItem_CancelsItemName(newName, newItemName) {
     $('#spinner-animation').waitForDisplayed(50000, true);
@@ -263,38 +322,38 @@ export class SearchableListsPage extends PageWithNavbarPage {
     $('#editName').waitForDisplayed(200000);
     this.entitySearchEditNameBox.clearValue();
     this.entitySearchEditNameBox.addValue(newName);
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.editItemName_Cancels(newItemName);
     this.entitySearchEditSaveBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public deleteItemFromList() {
     $('#spinner-animation').waitForDisplayed(50000, true);
     this.entitySearchEditBtn.click();
     $('#editName').waitForDisplayed(200000);
     this.deleteItem();
-    browser.pause(1000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySearchEditSaveBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public deleteList() {
     const deleteList = this.getFirstRowObject();
     if (deleteList != null) {
-      browser.pause(8000);
+      $('#spinner-animation').waitForDisplayed(90000, true);
       deleteList.deleteBtn.click();
-      browser.pause(4000);
+      $('#spinner-animation').waitForDisplayed(90000, true);
       this.entitySearchDeleteDeleteBtn.click();
-      browser.pause(1000);
+      $('#spinner-animation').waitForDisplayed(90000, true);
       //browser.refresh();
     }
   }
   public editItemName(newItemName) {
     this.entitySearchItemEditBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     this.entitySearchEditItemNameBox.clearValue();
     this.entitySearchEditItemNameBox.addValue(newItemName);
     this.entitySearchEditItemSaveBtn.click();
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public editItemName_Cancels(newItemName) {
     const firstItem = this.getFirstItemObject();
@@ -303,20 +362,20 @@ export class SearchableListsPage extends PageWithNavbarPage {
     this.entitySearchEditItemNameBox.clearValue();
     this.entitySearchEditItemNameBox.addValue(newItemName);
     this.entitySearchEditItemSaveBtn.click();
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public deleteItem() {
     this.entitySearchItemDeleteBtn.click();
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
   public cleanup() {
     const deleteObject = this.getFirstRowObject();
     if (deleteObject != null) {
-      browser.pause(8000);
+      $('#spinner-animation').waitForDisplayed(90000, true);
       deleteObject.deleteBtn.click();
-      browser.pause(4000);
+      $('#spinner-animation').waitForDisplayed(90000, true);
       this.entitySearchDeleteDeleteBtn.click();
-      browser.pause(1000);
+      $('#spinner-animation').waitForDisplayed(90000, true);
       //browser.refresh();
     }
   }
