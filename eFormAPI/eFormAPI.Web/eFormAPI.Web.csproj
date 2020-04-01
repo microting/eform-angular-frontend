@@ -34,7 +34,7 @@
     <PackageReference Include="AWSSDK.Core" Version="3.3.104.34" />
     <PackageReference Include="AWSSDK.S3" Version="3.3.110.32" />
     <PackageReference Include="AWSSDK.SQS" Version="3.3.102.73" />
-    <PackageReference Include="Microting.eForm" Version="3.1.61" />
+    <PackageReference Include="Microting.eForm" Version="3.1.62" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.6" />
     <PackageReference Include="SharpZipLib.NETStandard" Version="1.0.7" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0005" />
@@ -45,7 +45,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.6" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="1.2.51" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="1.2.52" />
     <PackageReference Include="sendgrid" Version="9.12.0" />
   </ItemGroup>
 
