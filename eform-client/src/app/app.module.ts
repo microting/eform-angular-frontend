@@ -31,6 +31,7 @@ import {
 // import {assertLessThan} from '@angular/core/src/render3/assert';
 // import {importedIcons} from 'src/app/common/const';
 import {NgxChartsModule} from '@microting/ngx-charts';
+import {OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime-ex';
 @NgModule({
   declarations: [
     // Layouts
@@ -60,7 +61,10 @@ import {NgxChartsModule} from '@microting/ngx-charts';
     FontAwesomeModule,
     NgxChartsModule,
     // Modules
-    PluginsModule
+    PluginsModule,
+
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
   ],
   schemas: [NO_ERRORS_SCHEMA],
   providers: [providers],
