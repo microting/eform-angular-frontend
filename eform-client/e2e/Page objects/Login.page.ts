@@ -57,6 +57,10 @@ class LoginPage extends Page {
     $('#spinner-animation').waitForDisplayed(50000, true);
     // browser.pause(10000);
   }
+
+  public randomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 }
 
 const loginPage = new LoginPage();
