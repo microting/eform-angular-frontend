@@ -90,7 +90,8 @@ su ubuntu -c \
 echo "################## END CLONING ##################"
 
 cd eform-angular-frontend/eform-client
-npm i -g @angular/cli
+su ubuntu -c \
+"npm i -g @angular/cli"
 su ubuntu -c \
 "npm i && GENERATE_SOURCEMAP=false npm run build"
 
