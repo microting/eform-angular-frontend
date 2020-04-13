@@ -65,7 +65,7 @@
     "ngx-papaparse": "4.0.4",
     "ngx-slimscroll": "7.1.0",
     "ngx-toastr": "11.2.1",
-    "rxjs": "6.5.3",
+    "rxjs": "6.5.5",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },
