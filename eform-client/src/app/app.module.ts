@@ -15,7 +15,7 @@ import {library} from '@fortawesome/fontawesome-svg-core';
 import { faCoffee, fas } from '@fortawesome/free-solid-svg-icons';
 // import { far } from '@fortawesome/free-regular-svg-icons';
 
-import {MDBBootstrapModule} from 'port/angular-bootstrap-md';
+import {MDBBootstrapModule} from 'angular-bootstrap-md';
 import {providers} from 'src/app/app.declarations';
 import {AppRoutingModule} from 'src/app/app.routing';
 import {translateConfig} from 'src/app/common/helpers';

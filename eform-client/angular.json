@@ -29,8 +29,6 @@
               { "glob": "favicon.ico", "input": "src/", "output": "/" }
             ],
             "styles": [
-              "port/angular-bootstrap-md/scss/bootstrap/bootstrap.scss",
-              "port/angular-bootstrap-md/scss/mdb-free.scss",
               "node_modules/ngx-toastr/toastr.css",
               "src/scss/styles.scss"
             ],

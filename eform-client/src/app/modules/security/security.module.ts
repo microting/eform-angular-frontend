@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {TranslateModule} from '@ngx-translate/core';
-import {MDBBootstrapModule} from 'port/angular-bootstrap-md';
+import {MDBBootstrapModule} from 'angular-bootstrap-md';
 import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
 import {
   SecurityGroupGeneralPermissionsService} from 'src/app/common/services';
