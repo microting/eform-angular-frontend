@@ -10,7 +10,6 @@
             <div class="col">
               <div class="md-form">
                 <input mdbInput
-                       [mdbValidate]="false"
                        [disabled]="true"
                        [(ngModel)]="currentUserFullName"
                        type="text" id="postViewCreatedBy"
@@ -45,7 +44,6 @@
             <div class="col">
               <div class="md-form">
                 <input mdbInput
-                       [mdbValidate]="false"
                        [disabled]="true"
                        [(ngModel)]="postViewModel.subject"
                        type="text" id="postViewSubject"
@@ -58,7 +56,6 @@
             <div class="col">
               <div class="md-form">
                 <textarea mdbInput
-                          [mdbValidate]="false"
                           [(ngModel)]="postViewModel.text"
                           [disabled]="true"
                           type="text" id="viewPostEmailText"

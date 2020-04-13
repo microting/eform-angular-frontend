@@ -6,8 +6,7 @@
   <div class="row d-flex justify-content-between">
       <div class="col-md-2">
         <div class="md-form">
-          <input mdbInput [mdbValidate]="false"
-                 (input)="getAvailableEformsWithNameFilter($event.target.value)"
+          <input mdbInput (input)="getAvailableEformsWithNameFilter($event.target.value)"
                  type="text"
                  class="form-control input-sm" id="labelInput">
           <label for="labelInput">{{'Search' | translate}}</label>

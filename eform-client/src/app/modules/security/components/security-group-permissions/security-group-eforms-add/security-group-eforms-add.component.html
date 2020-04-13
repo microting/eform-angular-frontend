@@ -8,8 +8,7 @@
         <div class="row">
           <div class="col-md-6">
             <div class="md-form">
-              <input mdbInput [mdbValidate]="false"
-                     type="text" (input)="onLabelInputChanged($event.target.value)"
+              <input mdbInput type="text" (input)="onLabelInputChanged($event.target.value)"
                      class="form-control input-sm" id="labelInput">
               <label for="labelInput">{{'Search' | translate}}</label>
             </div>

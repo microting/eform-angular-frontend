@@ -3,7 +3,6 @@
 
   <input mdbInput
          [owlDateTime]="dt1"
-         [mdbValidate]="false"
          [(ngModel)]="fieldValueObj.value"
          (dateTimeChange)="onDateSelected($event)"
          type="text" id="dateElement{{fieldValueObj.fieldId}}"

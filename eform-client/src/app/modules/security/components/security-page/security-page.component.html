@@ -11,8 +11,7 @@
   <div class="row pl-1">
     <div class="col-md-2">
       <div class="md-form">
-        <input mdbInput [mdbValidate]="false"
-               type="text" (input)="onLabelInputChanged($event.target.value)"
+        <input mdbInput type="text" (input)="onLabelInputChanged($event.target.value)"
                class="form-control input-sm" id="searchInput">
         <label for="searchInput">{{'Search' | translate}}</label>
       </div>

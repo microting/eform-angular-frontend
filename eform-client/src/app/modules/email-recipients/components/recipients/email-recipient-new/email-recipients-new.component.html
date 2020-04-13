@@ -23,8 +23,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="md-form">
-                <input mdbInput [mdbValidate]="false"
-                       type="text" [(ngModel)]="emailRecipientsCreateModel.newTags" name="addTagInput"
+                <input mdbInput type="text" [(ngModel)]="emailRecipientsCreateModel.newTags" name="addTagInput"
                        class="form-control" id="addTagInput">
                 <label for="addTagInput">{{'New tags' | translate}}</label>
               </div>
@@ -34,8 +33,7 @@
             <div class="col-md-12">
               <div class="md-form">
                 <textarea
-                  mdbInput [mdbValidate]="false"
-                  #textAreaData [(ngModel)]="rawTextareaData"
+                  mdbInput #textAreaData [(ngModel)]="rawTextareaData"
                   name="emailAddresses" id="emailAddresses" rows="10"
                   class="md-textarea form-control"></textarea>
                 <label for="emailAddresses">{{ 'Enter name and email addresses separated by coma (test, test@test.com)' | translate }}</label>

@@ -15,7 +15,6 @@
     <div class="col-md-2">
       <div class="md-form">
         <input mdbInput
-               [mdbValidate]="false"
                (ngModelChange)="onSearchChanged($event)"
                [ngModel]="advEntitySearchableGroupListRequestModel.nameFilter"
                type="text" class="form-control" id="labelInput">

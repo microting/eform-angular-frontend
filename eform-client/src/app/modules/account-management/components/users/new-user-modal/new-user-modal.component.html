@@ -11,7 +11,6 @@
               <div class="col-md-6">
                 <div class="md-form">
                   <input mdbInput
-                         [mdbValidate]="false"
                          class="form-control" type="text"
                          [(ngModel)]="newUserModel.firstName" id="createFirstName"
                          name="createFirstName">
@@ -21,7 +20,6 @@
               <div class="col-md-6">
                 <div class="md-form">
                   <input mdbInput
-                         [mdbValidate]="false"
                          class="form-control" type="text"
                          [(ngModel)]="newUserModel.lastName"
                          name="createLastName" id="createLastName">
@@ -33,7 +31,6 @@
               <div class="col-md-6">
                 <div class="md-form">
                   <input mdbInput
-                         [mdbValidate]="false"
                          class="form-control"
                          required #createEmail="ngModel" type="text"
                          [(ngModel)]="newUserModel.email" id="createEmail"
@@ -44,7 +41,6 @@
               <div class="col-md-6">
                 <div class="md-form">
                   <input mdbInput
-                         [mdbValidate]="false"
                          class="form-control"
                          required type="password"
                          [(ngModel)]="newUserModel.password" id="createPassword"
