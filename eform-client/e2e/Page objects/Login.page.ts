@@ -28,33 +28,33 @@ class LoginPage extends Page {
 
   public get loginBtn() {
     const ele = $('#loginBtn');
-    ele.waitForDisplayed(20000);
+    ele.waitForDisplayed({timeout: 20000});
     ele.waitForClickable({timeout: 20000});
     return ele;
   }
 
   public login(): void {
-    $('#username').waitForDisplayed(60000);
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#username').waitForDisplayed({timeout: 60000});
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     // browser.pause(10000);
     this.usernameInput.setValue(LoginConstants.username);
     this.passwordInput.setValue(LoginConstants.password);
     this.loginBtn.click();
     // browser.pause(10000);
-    $('#spinner-animation').waitForDisplayed(50000, true);
-    $('#newEFormBtn').waitForDisplayed(60000);
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
+    $('#newEFormBtn').waitForDisplayed({timeout: 60000});
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     // browser.pause(10000);
   }
   public loginWithNewPassword(): void {
     // browser.pause(10000);
-    $('#username').waitForDisplayed(60000);
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#username').waitForDisplayed({timeout: 60000});
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     this.usernameInput.setValue(LoginConstants.username);
     this.passwordInput.setValue(LoginConstants.newPassword);
     this.loginBtn.click();
-    $('#newEFormBtn').waitForDisplayed(60000);
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#newEFormBtn').waitForDisplayed({timeout: 60000});
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     // browser.pause(10000);
   }
 

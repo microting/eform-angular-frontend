@@ -12,13 +12,13 @@ describe('Application settings page - site header section', function () {
   });
   it('should change main text', function () {
     myEformsPage.Navbar.goToApplicationSettings();
-    $('#mainTextLoginPage').waitForDisplayed(120000);
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#mainTextLoginPage').waitForDisplayed({timeout: 120000});
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     applicationSettingsPage.SiteHeader.mainTextInput.setValue(ApplicationSettingsConstants.SiteHeader.customMainText);
     applicationSettingsPage.save();
     //browser.refresh();
-    $('#sign-out-dropdown').waitForDisplayed(120000);
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#sign-out-dropdown').waitForDisplayed({timeout: 120000});
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     expect(applicationSettingsPage.siteHeaderMainText.getText(),
       'Error while editing site header main text').equal(ApplicationSettingsConstants.SiteHeader.customMainText);
   });
@@ -26,8 +26,8 @@ describe('Application settings page - site header section', function () {
     applicationSettingsPage.SiteHeader.secondaryTextInput.setValue(ApplicationSettingsConstants.SiteHeader.customSecondaryText);
     applicationSettingsPage.save();
     //browser.refresh();
-    $('#sign-out-dropdown').waitForDisplayed(20000);
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#sign-out-dropdown').waitForDisplayed({timeout: 20000});
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     expect(applicationSettingsPage.siteHeaderSecondaryText.getText(),
       'Error while editing site header secondary text').equal(ApplicationSettingsConstants.SiteHeader.customSecondaryText);
   });
@@ -35,8 +35,8 @@ describe('Application settings page - site header section', function () {
     applicationSettingsPage.SiteHeader.mainTextVisibilityToggleBtn.click();
     applicationSettingsPage.save();
     //browser.refresh();
-    $('#sign-out-dropdown').waitForDisplayed(20000);
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#sign-out-dropdown').waitForDisplayed({timeout: 20000});
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     expect(applicationSettingsPage.siteHeaderMainText.isDisplayed(),
       'Error while hiding site header main text').equal(false);
   });
@@ -44,8 +44,8 @@ describe('Application settings page - site header section', function () {
     applicationSettingsPage.SiteHeader.secondaryTextVisibilityToggleBtn.click();
     applicationSettingsPage.save();
     //browser.refresh();
-    $('#sign-out-dropdown').waitForDisplayed(20000);
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#sign-out-dropdown').waitForDisplayed({timeout: 20000});
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     expect(applicationSettingsPage.siteHeaderSecondaryText.isDisplayed(),
       'Error while hiding site header secondary text').equal(false);
   });
@@ -53,17 +53,17 @@ describe('Application settings page - site header section', function () {
     applicationSettingsPage.SiteHeader.imageVisibilityToggler.click();
     applicationSettingsPage.save();
     loginPage.open('/application-settings');
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     //browser.refresh();
-    $('#sign-out-dropdown').waitForDisplayed(20000);
+    $('#sign-out-dropdown').waitForDisplayed({timeout: 20000});
     expect(applicationSettingsPage.siteHeaderImage.isDisplayed(),
       'Error while hiding site header image').equal(false);
   });
   it('should reset site header main text', function () {
     applicationSettingsPage.SiteHeader.reset();
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     loginPage.open('/application-settings');
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     expect(applicationSettingsPage.siteHeaderMainText.isDisplayed(),
       'Error while resetting site header main text').equal(true);
   });

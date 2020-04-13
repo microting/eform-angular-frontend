@@ -11,7 +11,7 @@ describe('Entity Search', function () {
   });
   it('should go to entity search page', function () {
     searchableLists.goToEntitySearchPage();
-    $('#createEntitySearchBtn').waitForDisplayed(20000);
+    $('#createEntitySearchBtn').waitForDisplayed({timeout: 20000});
   });
   it('should create a new searchable list', function () {
     const name = Guid.create().toString();
@@ -19,7 +19,7 @@ describe('Entity Search', function () {
     const searchableList = searchableLists.getFirstRowObject();
     expect(searchableList.name).equal(name);
     searchableLists.cleanup();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   });
   it('should not create a new searchable list', function () {
     const name = Guid.create().toString();
@@ -33,12 +33,12 @@ describe('Entity Search', function () {
     const searchableList = searchableLists.getFirstRowObject();
     expect(searchableList.name).equal(name);
     searchableList.editBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     expect(searchableLists.firstEntityItemName.getText()).equal(itemName);
     searchableLists.entitySearchEditCancelBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     searchableLists.cleanup();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   });
   it('should not make a new searchable list with one item', function () {
     const name = Guid.create().toString();
@@ -53,25 +53,25 @@ describe('Entity Search', function () {
     const searchableList = searchableLists.getFirstRowObject();
     expect(searchableList.name).equal(name);
     searchableList.editBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     expect(searchableLists.firstEntityItemName.getText()).equal('a');
     searchableLists.entitySearchItemDeleteBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     expect(searchableLists.firstEntityItemName.getText()).equal('b');
     searchableLists.entitySearchItemDeleteBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     expect(searchableLists.firstEntityItemName.getText()).equal('c');
     searchableLists.entitySearchItemDeleteBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     expect(searchableLists.firstEntityItemName.getText()).equal('d');
     searchableLists.entitySearchItemDeleteBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     expect(searchableLists.firstEntityItemName.getText()).equal('e');
     searchableLists.entitySearchItemDeleteBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     searchableLists.entitySearchEditCancelBtn.click();
     searchableLists.cleanup();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   });
   it('should not create a searchable list with multiple items', function () {
     const name = Guid.create().toString();

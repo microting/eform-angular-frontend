@@ -20,7 +20,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
   }
   public get firstEntityItemName() {
     const ele = $(`//app-entity-search-edit//ul//li[1]//div[2]`);
-    ele.waitForDisplayed(20000);
+    ele.waitForDisplayed({timeout: 20000});
     ele.waitForClickable({ timeout: 20000});
     return ele;
   }
@@ -35,7 +35,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
   }
   public get entitySearchCreateImportBtn() {
     const ele = $('#importEntitySearchBtn');
-    ele.waitForDisplayed(20000);
+    ele.waitForDisplayed({timeout: 20000});
     ele.waitForClickable({ timeout: 20000});
     return ele;
   }
@@ -47,49 +47,49 @@ export class SearchableListsPage extends PageWithNavbarPage {
   }
   public get entitySearchCreateItemNameBox() {
     const ele = $(`//app-entity-search-create//app-entity-search-edit-name//input[@id= 'entitySearchItemEditNameBox']`);
-    ele.waitForDisplayed(20000);
+    ele.waitForDisplayed({timeout: 20000});
     ele.waitForClickable({ timeout: 20000});
     return ele;
   }
   public get entitySearchCreateItemSaveBtn() {
     const ele = $(`//app-entity-search-create//app-entity-search-edit-name//button[@id= 'entitySearchItemSaveBtn']`);
-    ele.waitForDisplayed(20000);
+    ele.waitForDisplayed({timeout: 20000});
     ele.waitForClickable({ timeout: 20000});
     return ele;
   }
   public get entitySearchCreateItemCancelBtn() {
     const ele = $(`//app-entity-search-create//app-entity-search-edit-name//button[@id= 'entitySearchItemCancelBtn']`);
-    ele.waitForDisplayed(20000);
+    ele.waitForDisplayed({timeout: 20000});
     ele.waitForClickable({ timeout: 20000});
     return ele;
   }
   public get entitySearchCreateImportItemTextArea() {
     const ele = $(`//app-entity-search-create//app-entity-search-import-list//textarea`);
-    ele.waitForDisplayed(20000);
+    ele.waitForDisplayed({timeout: 20000});
     ele.waitForClickable({ timeout: 20000});
     return ele;
   }
   public get entitySearchCreateImportItemSaveBtn() {
     const ele = $(`//app-entity-search-create//app-entity-search-import-list//button[@id= 'entitySearchImportSaveBtn']`);
-    ele.waitForDisplayed(20000);
+    ele.waitForDisplayed({timeout: 20000});
     ele.waitForClickable({ timeout: 20000});
     return ele;
   }
   public get entitySearchCreateImportItemCancelBtn() {
     const ele = $(`//app-entity-search-create//app-entity-search-import-list//button[@id= 'entitySearchImportCancelBtn']`);
-    ele.waitForDisplayed(20000);
+    ele.waitForDisplayed({timeout: 20000});
     ele.waitForClickable({ timeout: 20000});
     return ele;
   }
   public get entitySearchCreateSaveBtn() {
     const ele = $('#entitySearchCreateSaveBtn');
-    ele.waitForDisplayed(20000);
+    ele.waitForDisplayed({timeout: 20000});
     ele.waitForClickable({ timeout: 20000});
     return ele;
   }
   public get entitySearchCreateCancelBtn() {
     const ele = $('#entitySearchCreateCancelBtn');
-    ele.waitForDisplayed(20000);
+    ele.waitForDisplayed({timeout: 20000});
     ele.waitForClickable({ timeout: 20000});
     return ele;
   }
@@ -113,61 +113,61 @@ export class SearchableListsPage extends PageWithNavbarPage {
   }
   public get entitySearchEditItemNameBox() {
     const ele = $(`//app-entity-search-edit//app-entity-search-edit-name//input[@id= 'entitySearchItemEditNameBox']`);
-    ele.waitForDisplayed(20000);
+    ele.waitForDisplayed({timeout: 20000});
     ele.waitForClickable({ timeout: 20000});
     return ele;
   }
   public get entitySearchEditItemSaveBtn() {
     const ele = $(`//app-entity-search-edit//app-entity-search-edit-name//button[@id= 'entitySearchItemSaveBtn']`);
-    ele.waitForDisplayed(20000);
+    ele.waitForDisplayed({timeout: 20000});
     ele.waitForClickable({ timeout: 20000});
     return ele;
   }
   public get entitySearchEditItemCancelBtn() {
     const ele = $(`//app-entity-search-edit//app-entity-search-edit-name//button[@id= 'entitySearchItemCancelBtn']`);
-    ele.waitForDisplayed(20000);
+    ele.waitForDisplayed({timeout: 20000});
     ele.waitForClickable({ timeout: 20000});
     return ele;
   }
   public get entitySearchEditImportItemTextArea() {
     const ele = $(`//app-entity-search-edit//app-entity-search-import-list//textarea`);
-    ele.waitForDisplayed(20000);
+    ele.waitForDisplayed({timeout: 20000});
     ele.waitForClickable({ timeout: 20000});
     return ele;
   }
   public get entitySearchEditImportItemSaveBtn() {
     const ele = $(`//app-entity-search-edit//app-entity-search-import-list//button[@id= 'entitySearchImportSaveBtn']`);
-    ele.waitForDisplayed(20000);
+    ele.waitForDisplayed({timeout: 20000});
     ele.waitForClickable({ timeout: 20000});
     return ele;
   }
   public get entitySearchEditImportItemCancelBtn() {
     const ele = $(`//app-entity-search-edit//app-entity-search-import-list//button[@id= 'entitySearchImportCancelBtn']`);
-    ele.waitForDisplayed(20000);
+    ele.waitForDisplayed({timeout: 20000});
     ele.waitForClickable({ timeout: 20000});
     return ele;
   }
   public get entitySearchEditSaveBtn() {
     const ele = $('#entitySearchUpdateSaveBtn');
-    ele.waitForDisplayed(20000);
+    ele.waitForDisplayed({timeout: 20000});
     ele.waitForClickable({ timeout: 20000});
     return ele;
   }
   public get entitySearchEditCancelBtn() {
     const ele = $('#entitySearchUpdateCancelBtn');
-    ele.waitForDisplayed(20000);
+    ele.waitForDisplayed({timeout: 20000});
     ele.waitForClickable({ timeout: 20000});
     return ele;
   }
   public get entitySearchDeleteBtn() {
     const ele = $('#entitySearchDeleteBtn');
-    ele.waitForDisplayed(20000);
+    ele.waitForDisplayed({timeout: 20000});
     ele.waitForClickable({ timeout: 20000});
     return ele;
   }
   public get entitySearchDeleteDeleteBtn() {
     const ele = $('#entitySearchDeleteDeleteBtn');
-    ele.waitForDisplayed(20000);
+    ele.waitForDisplayed({timeout: 20000});
     ele.waitForClickable({ timeout: 20000});
     return ele;
   }
@@ -178,205 +178,205 @@ export class SearchableListsPage extends PageWithNavbarPage {
     this.Navbar.goToEntitySearch();
   }
   public createSearchableList_NoItem(name: string) {
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     this.createEntitySearchBtn.click();
-    $('#createName').waitForDisplayed(20000);
+    $('#createName').waitForDisplayed({timeout: 20000});
     this.entitySearchCreateName.addValue(name);
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchCreateSaveBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
   public createSearchableList_OneItem(name, itemName) {
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     this.createEntitySearchBtn.click();
-    $('#createName').waitForDisplayed(20000);
+    $('#createName').waitForDisplayed({timeout: 20000});
     this.entitySearchCreateName.addValue(name);
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchCreateSingleItemBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchCreateSingleItemEditBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchCreateItemNameBox.addValue(itemName);
     this.entitySearchCreateItemSaveBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchCreateSaveBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
   public createSearchableList_MultipleItems(name, itemNames) {
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     this.createEntitySearchBtn.click();
-    $('#createName').waitForDisplayed(20000);
+    $('#createName').waitForDisplayed({timeout: 20000});
     this.entitySearchCreateName.addValue(name);
     this.entitySearchCreateImportBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchCreateImportItemTextArea.addValue(itemNames);
     this.entitySearchCreateImportItemSaveBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchCreateSaveBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
 
   public createSearchableList_NoItem_Cancels(name) {
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     this.createEntitySearchBtn.click();
-    $('#createName').waitForDisplayed(20000);
+    $('#createName').waitForDisplayed({timeout: 20000});
     this.entitySearchCreateName.addValue(name);
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchCreateCancelBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
   public createSearchableList_OneItem_Cancels(name, itemName) {
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     this.createEntitySearchBtn.click();
-    $('#createName').waitForDisplayed(20000);
+    $('#createName').waitForDisplayed({timeout: 20000});
     this.entitySearchCreateName.addValue(name);
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchCreateSingleItemBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchCreateSingleItemEditBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchCreateItemNameBox.addValue(itemName);
     this.entitySearchCreateItemSaveBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchCreateCancelBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
   public createSearchableList_MultipleItems_Cancels(name, itemNames) {
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     this.createEntitySearchBtn.click();
-    $('#createName').waitForDisplayed(20000);
+    $('#createName').waitForDisplayed({timeout: 20000});
     this.entitySearchCreateName.addValue(name);
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchCreateImportBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchCreateImportItemTextArea.addValue(itemNames);
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchCreateImportItemSaveBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchCreateCancelBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
 
   public editSearchableListNameOnly(newName) {
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     this.entitySearchEditBtn.click();
-    $('#editName').waitForDisplayed(200000);
+    $('#editName').waitForDisplayed({timeout: 200000});
     this.entitySearchEditNameBox.clearValue();
     this.entitySearchEditNameBox.addValue(newName);
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchEditSaveBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
   public editSearchableListNameOnly_Cancels(newName) {
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     this.entitySearchEditBtn.click();
-    $('#editName').waitForDisplayed(200000);
+    $('#editName').waitForDisplayed({timeout: 200000});
     this.entitySearchEditNameBox.clearValue();
     this.entitySearchEditNameBox.addValue(newName);
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchEditCancelBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
   public editSearchableListNameAndItem(newName, newItemName) {
     this.entitySearchEditBtn.click();
-    $('#editName').waitForDisplayed(200000);
+    $('#editName').waitForDisplayed({timeout: 200000});
     this.entitySearchEditNameBox.clearValue();
     this.entitySearchEditNameBox.addValue(newName);
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.editItemName(newItemName);
     this.entitySearchEditSaveBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
   public editSearchableListOnlyItem(newItemName) {
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     this.entitySearchEditBtn.click();
-    $('#editName').waitForDisplayed(200000);
+    $('#editName').waitForDisplayed({timeout: 200000});
     this.editItemName(newItemName);
     this.entitySearchEditSaveBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
   public editSearchableListNameAndItem_Cancels(newName, newItemName) {
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     this.entitySearchEditBtn.click();
-    $('#editName').waitForDisplayed(200000);
+    $('#editName').waitForDisplayed({timeout: 200000});
     this.entitySearchEditNameBox.clearValue();
     this.entitySearchEditNameBox.addValue(newName);
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.editItemName(newItemName);
     this.entitySearchEditCancelBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
   public editSearchableListNameAndItem_CancelsBoth(newName, newItemName) {
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     this.entitySearchEditBtn.click();
-    $('#editName').waitForDisplayed(200000);
+    $('#editName').waitForDisplayed({timeout: 200000});
     this.entitySearchEditNameBox.clearValue();
     this.entitySearchEditNameBox.addValue(newName);
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.editItemName_Cancels(newItemName);
     this.entitySearchEditCancelBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
   public editSearchableListNameAndItem_CancelsItemName(newName, newItemName) {
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     this.entitySearchEditBtn.click();
-    $('#editName').waitForDisplayed(200000);
+    $('#editName').waitForDisplayed({timeout: 200000});
     this.entitySearchEditNameBox.clearValue();
     this.entitySearchEditNameBox.addValue(newName);
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.editItemName_Cancels(newItemName);
     this.entitySearchEditSaveBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
   public deleteItemFromList() {
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     this.entitySearchEditBtn.click();
-    $('#editName').waitForDisplayed(200000);
+    $('#editName').waitForDisplayed({timeout: 200000});
     this.deleteItem();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchEditSaveBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
   public deleteList() {
     const deleteList = this.getFirstRowObject();
     if (deleteList != null) {
-      $('#spinner-animation').waitForDisplayed(90000, true);
+      $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
       deleteList.deleteBtn.click();
-      $('#spinner-animation').waitForDisplayed(90000, true);
+      $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
       this.entitySearchDeleteDeleteBtn.click();
-      $('#spinner-animation').waitForDisplayed(90000, true);
+      $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
       //browser.refresh();
     }
   }
   public editItemName(newItemName) {
     this.entitySearchItemEditBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchEditItemNameBox.clearValue();
     this.entitySearchEditItemNameBox.addValue(newItemName);
     this.entitySearchEditItemSaveBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
   public editItemName_Cancels(newItemName) {
     const firstItem = this.getFirstItemObject();
     firstItem.editBtn.click();
-    $('#entityItemEditNameBox').waitForDisplayed(20000);
+    $('#entityItemEditNameBox').waitForDisplayed({timeout: 20000});
     this.entitySearchEditItemNameBox.clearValue();
     this.entitySearchEditItemNameBox.addValue(newItemName);
     this.entitySearchEditItemSaveBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
   public deleteItem() {
     this.entitySearchItemDeleteBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
   public cleanup() {
     const deleteObject = this.getFirstRowObject();
     if (deleteObject != null) {
-      $('#spinner-animation').waitForDisplayed(90000, true);
+      $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
       deleteObject.deleteBtn.click();
-      $('#spinner-animation').waitForDisplayed(90000, true);
+      $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
       this.entitySearchDeleteDeleteBtn.click();
-      $('#spinner-animation').waitForDisplayed(90000, true);
+      $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
       //browser.refresh();
     }
   }

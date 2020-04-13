@@ -43,7 +43,7 @@ class SitesPage extends PageWithNavbarPage {
 
   public tagExists(tagName: string) {
     //browser.pause(5000);
-    $('#tagSelector').waitForDisplayed(20000);
+    $('#tagSelector').waitForDisplayed({timeout: 20000});
     this.siteTagSelector.click();
     const selectedTag = $('#tagSelector .ng-option');
     selectedTag.getText();
@@ -67,7 +67,7 @@ class SitesPage extends PageWithNavbarPage {
   public createTag(site: SitesRowObject, tagName: string) {
     // browser.pause(8000);
     site.siteTagsEditBtn.click();
-    $('#tagSelector').waitForDisplayed(20000);
+    $('#tagSelector').waitForDisplayed({timeout: 20000});
     // browser.pause(8000);
     sitesPage.newTagInput.setValue(tagName);
     // browser.pause(4000);

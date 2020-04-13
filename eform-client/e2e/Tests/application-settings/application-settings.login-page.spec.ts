@@ -11,14 +11,14 @@ describe('Application settings page - site header section', function () {
   it('should change main text', function () {
     loginPage.login();
     myEformsPage.Navbar.goToApplicationSettings();
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     applicationSettingsPage.LoginPage.mainTextInput.setValue(ApplicationSettingsConstants.LoginPage.customMainText);
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     applicationSettingsPage.save();
     //browser.refresh();
     // browser.pause(10000);
-    $('#sign-out-dropdown').waitForDisplayed(40000);
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#sign-out-dropdown').waitForDisplayed({timeout: 40000});
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     applicationSettingsPage.Navbar.logout();
     expect(loginPage.loginBtn.isDisplayed()).equal(true);
     expect(loginPage.mainText.getText(),
@@ -31,8 +31,8 @@ describe('Application settings page - site header section', function () {
     applicationSettingsPage.save();
     //browser.refresh();
     // browser.pause(8000);
-    $('#sign-out-dropdown').waitForDisplayed(20000);
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#sign-out-dropdown').waitForDisplayed({timeout: 20000});
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     applicationSettingsPage.Navbar.logout();
     expect(loginPage.loginBtn.isDisplayed()).equal(true);
     expect(loginPage.secondaryText.getText(),
@@ -45,8 +45,8 @@ describe('Application settings page - site header section', function () {
     applicationSettingsPage.save();
     //browser.refresh();
     // browser.pause(8000);
-    $('#sign-out-dropdown').waitForDisplayed(20000);
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#sign-out-dropdown').waitForDisplayed({timeout: 20000});
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     applicationSettingsPage.Navbar.logout();
     expect(loginPage.loginBtn.isDisplayed()).equal(true);
     expect(loginPage.mainText.isDisplayed(),
@@ -59,8 +59,8 @@ describe('Application settings page - site header section', function () {
     applicationSettingsPage.save();
     //browser.refresh();
     // browser.pause(8000);
-    $('#sign-out-dropdown').waitForDisplayed(20000);
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#sign-out-dropdown').waitForDisplayed({timeout: 20000});
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     applicationSettingsPage.Navbar.logout();
     expect(loginPage.loginBtn.isDisplayed()).equal(true);
     expect(loginPage.secondaryText.isDisplayed(),
@@ -73,7 +73,7 @@ describe('Application settings page - site header section', function () {
     applicationSettingsPage.save();
     //browser.refresh();
     // browser.pause(8000);
-    $('#sign-out-dropdown').waitForDisplayed(20000);
+    $('#sign-out-dropdown').waitForDisplayed({timeout: 20000});
     browser.pause(1000);    applicationSettingsPage.Navbar.logout();
     expect(loginPage.loginBtn.isDisplayed()).equal(true);
     expect(loginPage.image.isDisplayed(),

@@ -16,7 +16,7 @@ public get saveBtn() {
 public saveProfileSettings() {
     this.saveBtn.click();
     // browser.pause(12000);
-  $('#sign-out-dropdown').waitForDisplayed(20000);
+  $('#sign-out-dropdown').waitForDisplayed({timeout: 20000});
   browser.pause(1000);
 }
 public chooseLanguage(language: string) {

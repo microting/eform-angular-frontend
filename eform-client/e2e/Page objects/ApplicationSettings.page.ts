@@ -29,7 +29,7 @@ export class ApplicationSettingsPage extends PageWithNavbarPage {
 
   public save() {
     this.saveBtn.click();
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
   }
 }
 
@@ -64,7 +64,7 @@ class LoginPageSettings {
 
   public reset() {
     this.resetBtn.click();
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     //browser.refresh();
     //browser.pause(10000);
   }
@@ -101,7 +101,7 @@ class SiteHeaderSettings {
 
   public reset() {
     this.resetBtn.click();
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     //browser.refresh();
   }
 }

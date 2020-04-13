@@ -63,7 +63,10 @@ exports.config = {
         //
         browserName: 'chrome',
         'goog:chromeOptions': {
-          args: ['disable-gpu'],
+          args: [
+            'disable-gpu',
+            'window-size=1920,1080'
+          ],
         },
         // If outputDir is provided WebdriverIO can capture driver session logs
         // it is possible to configure which logTypes to include/exclude.
@@ -141,7 +144,7 @@ exports.config = {
     mochaOpts: {
       ui: 'bdd',
       require: 'ts-node/register',
-      compilers: ['ts:ts-node/register'],
+      compilers: ['tsconfig-paths/register'],
       timeout: 60000
     },
     //

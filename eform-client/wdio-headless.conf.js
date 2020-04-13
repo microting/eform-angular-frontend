@@ -150,9 +150,9 @@ exports.config = {
   // See the full list at http://mochajs.org/
   mochaOpts: {
     ui: 'bdd',
-    compilers: ['ts:ts-node/register'],
-    timeout: 600000
-    // requires: ['./test/helpers/common.js']
+    require: 'ts-node/register',
+    compilers: ['tsconfig-paths/register'],
+    timeout: 60000
   },
   //
   // =====

@@ -12,7 +12,7 @@ describe('Entity Select', function () {
   });
   it('should go to entity select page.', function () {
     selectableLists.goToEntitySelectPage();
-    $('#entitySelectCreateBtn').waitForDisplayed(20000);
+    $('#entitySelectCreateBtn').waitForDisplayed({timeout: 20000});
   });
   it('should make a new selectable list, with no items.', function () {
     const name = Guid.create().toString();
@@ -21,10 +21,10 @@ describe('Entity Select', function () {
     expect(selectableList.name).equal(name);
   });
   it('should delete the list', function () {
-    $('#spinner-animation').waitForDisplayed(90000, true);
-    $('#entitySelectMicrotingUUID_0').waitForDisplayed(20000);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    $('#entitySelectMicrotingUUID_0').waitForDisplayed({timeout: 20000});
     selectableLists.deleteList();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     browser.pause(1000);
     const selectableList = selectableLists.getFirstRowObject();
     expect(selectableLists.rowNum).equal(0);
@@ -33,20 +33,20 @@ describe('Entity Select', function () {
     const name = Guid.create().toString();
     const itemName = Guid.create().toString();
     selectableLists.createSelectableList_OneItem(name, itemName);
-    $('#entitySelectMicrotingUUID_0').waitForDisplayed(20000);
+    $('#entitySelectMicrotingUUID_0').waitForDisplayed({timeout: 20000});
     const selectableList = selectableLists.getFirstRowObject();
     expect(selectableList.name).equal(name);
     selectableList.editBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
-    $('#entitySelectItemEditNameentityItemUId').waitForDisplayed(20000);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    $('#entitySelectItemEditNameentityItemUId').waitForDisplayed({timeout: 20000});
     expect(selectableLists.firstEntityItemName.getText()).equal(itemName);
     selectableLists.entitySelectEditCancelBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   });
   it('should delete item in list', function () {
     selectableLists.deleteItemFromList();
     selectableLists.entitySelectEditBtn.click();
-    $('#editName').waitForDisplayed(20000);
+    $('#editName').waitForDisplayed({timeout: 20000});
     expect(selectableLists.items).equal(0);
     selectableLists.entitySelectEditCancelBtn.click();
     selectableLists.cleanup();

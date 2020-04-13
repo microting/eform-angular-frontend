@@ -1,6 +1,6 @@
 export class Navbar {
   public advancedDropdown() {
-    $('#advanced').waitForDisplayed(60000);
+    $('#advanced').waitForDisplayed({timeout: 60000});
     this.clickOnHeaderMenuItem('Avanceret').click();
     // return $('#advanced');
 
@@ -65,46 +65,46 @@ export class Navbar {
   public goToProfileSettings() {
     this.clickOnHeaderMenuItem('John Smith').click();
     this.settingsBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
   public goToApplicationSettings() {
     this.advancedDropdown();
     this.applicationSettingsBtn();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
   public goToWorkers() {
     this.advancedDropdown();
     this.workersBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
   public goToSites() {
     this.advancedDropdown();
     this.sitesBtn.click();
     // browser.pause(15000);
-    $('#spinner-animation').waitForDisplayed(30000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
   }
   public goToUserAdministration() {
     this.clickOnHeaderMenuItem('John Smith').click();
     this.userAdministrationBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
   public goToPasswordSettings() {
     this.clickOnHeaderMenuItem('John Smith').click();
     this.changePasswordBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
   public goToDeviceUsersPage() {
     this.deviceUsersBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
   public goToEntitySelect() {
     this.advancedDropdown();
     this.entitySelectBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
   public goToEntitySearch() {
     this.advancedDropdown();
     this.entitySearchBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
 }

@@ -13,13 +13,13 @@ describe('Site tags', function () {
     loginPage.open('/');
     loginPage.login();
     myEformsPage.Navbar.goToDeviceUsersPage();
-    $('#newDeviceUserBtn').waitForDisplayed(20000);
+    $('#newDeviceUserBtn').waitForDisplayed({timeout: 20000});
     deviceUsersPage.createDeviceUserFromScratch('John', 'Smith');
     sitesPage.Navbar.goToSites();
   });
   it('should create new tag', function () {
-    $('#spinner-animation').waitForDisplayed(90000, true);
-    $('#editSiteTagsBtn_0').waitForDisplayed(20000);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    $('#editSiteTagsBtn_0').waitForDisplayed({timeout: 20000});
     const site = sitesPage.getFirstRowObject();
     //console.log(JSON.stringify(site));
     sitesPage.createTag(site, tagName);
@@ -29,11 +29,11 @@ describe('Site tags', function () {
   });
   it('should cancel assign tag', function () {
     loginPage.open('/advanced/sites');
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     const site = sitesPage.getFirstRowObject();
     // browser.pause(8000);
     site.siteTagsEditBtn.click();
-    $('#newTag').waitForDisplayed(20000);
+    $('#newTag').waitForDisplayed({timeout: 20000});
     // browser.pause(8000);
     const tagNotSelected = sitesPage.tagNotSelected(tagName);
     // browser.pause(4000);
@@ -41,12 +41,12 @@ describe('Site tags', function () {
   });
   it('should assign tag', function () {
     loginPage.open('/advanced/sites');
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     // browser.pause(5000);
     const site = sitesPage.getFirstRowObject();
     // browser.pause(8000);
     site.siteTagsEditBtn.click();
-    $('#newTag').waitForDisplayed(20000);
+    $('#newTag').waitForDisplayed({timeout: 20000});
     const firstTag = sitesPage.getFirstAvailableTag;
     firstTag.click();
     sitesPage.updateTagsBtn.click();
@@ -55,12 +55,12 @@ describe('Site tags', function () {
   });
   it('should delete tag', function () {
     loginPage.open('/advanced/sites');
-    $('#spinner-animation').waitForDisplayed(90000, true);
-    $('#editSiteTagsBtn_0').waitForDisplayed(20000);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    $('#editSiteTagsBtn_0').waitForDisplayed({timeout: 20000});
     const site = sitesPage.getFirstRowObject();
     // browser.pause(8000);
     site.siteTagsEditBtn.click();
-    $('#newTag').waitForDisplayed(20000);
+    $('#newTag').waitForDisplayed({timeout: 20000});
     sitesPage.tagRemovalSelector.click();
     browser.pause(2000);
     const tagsForRemoval = sitesPage.getTagsListOfChoises();

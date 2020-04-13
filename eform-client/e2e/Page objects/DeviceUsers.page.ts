@@ -49,13 +49,13 @@ class DeviceUsersPage extends PageWithNavbarPage {
   }
 
   public get saveDeleteBtn() {
-    $('#saveDeleteBtn').waitForDisplayed(20000);
+    $('#saveDeleteBtn').waitForDisplayed({timeout: 20000});
     $('#saveDeleteBtn').waitForClickable({ timeout: 20000});
     return $('#saveDeleteBtn');
   }
 
   public get cancelDeleteBtn() {
-    $('#cancelDeleteBtn').waitForDisplayed(20000);
+    $('#cancelDeleteBtn').waitForDisplayed({timeout: 20000});
     $('#cancelDeleteBtn').waitForClickable({ timeout: 20000});
     return $('#cancelDeleteBtn');
   }
@@ -79,17 +79,17 @@ class DeviceUsersPage extends PageWithNavbarPage {
   public createNewDeviceUser(firstName: string, lastName: string) {
     this.newDeviceUserBtn.click();
     // browser.pause(6000);
-    $('#firstName').waitForDisplayed(10000);
+    $('#firstName').waitForDisplayed({timeout: 10000});
     this.createFirstNameInput.setValue(firstName);
     this.createLastNameInput.setValue(lastName);
     this.saveCreateBtn.click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
-    $('#newDeviceUserBtn').waitForDisplayed(20000);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    $('#newDeviceUserBtn').waitForDisplayed({timeout: 20000});
   }
 
   public createDeviceUserFromScratch(name: string, surname: string) {
     myEformsPage.Navbar.goToDeviceUsersPage();
-    $('#newDeviceUserBtn').waitForDisplayed(20000);
+    $('#newDeviceUserBtn').waitForDisplayed({timeout: 20000});
     const rowCountBeforeCreation = deviceUsersPage.rowNum;
     //browser.pause(2000);
     deviceUsersPage.createNewDeviceUser(name, surname);
@@ -103,7 +103,7 @@ class DeviceUsersPage extends PageWithNavbarPage {
   public editDeviceUser(deviceUser: DeviceUsersRowObject, name = '', surname = '') {
     deviceUser.editBtn.click();
     // browser.pause(5000);
-    $('#editFirstNameInput').waitForDisplayed(10000);
+    $('#editFirstNameInput').waitForDisplayed({timeout: 10000});
     if (name != null) {
       this.editFirstNameInput.click();
       this.editFirstNameInput.clearValue();
@@ -116,7 +116,7 @@ class DeviceUsersPage extends PageWithNavbarPage {
     }
     this.saveEditBtn.click();
     // browser.pause(12000);
-    $('#newDeviceUserBtn').waitForDisplayed(20000);
+    $('#newDeviceUserBtn').waitForDisplayed({timeout: 20000});
   }
 }
 

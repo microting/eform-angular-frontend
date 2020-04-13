@@ -44,7 +44,7 @@ export class Workers extends PageWithNavbarPage {
   public createNewWorker(firstName: string, lastName: string) {
     this.workerCreateBtn.click();
     // browser.pause(8000);
-    $('#firstName').waitForDisplayed(10000);
+    $('#firstName').waitForDisplayed({timeout: 10000});
     this.workerSelect.click();
     browser.pause(1000);
     this.firstElement.click();
@@ -57,7 +57,7 @@ export class Workers extends PageWithNavbarPage {
   public editWorker(worker: WorkersRowObject, firstName: string, lastName: string) {
     worker.editBtn.click();
     // browser.pause(8000);
-    $('#firstNameEdit').waitForDisplayed(8000);
+    $('#firstNameEdit').waitForDisplayed({timeout: 8000});
     this.firstNameEditBox.clearValue();
     this.firstNameEditBox.addValue(firstName);
     browser.pause(2000);

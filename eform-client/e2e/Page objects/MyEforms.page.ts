@@ -7,7 +7,7 @@ class MyEformsPage extends PageWithNavbarPage {
   }
 
   public get newEformBtn() {
-    $('#newEFormBtn').waitForDisplayed(20000);
+    $('#newEFormBtn').waitForDisplayed({timeout: 20000});
     $('#newEFormBtn').waitForClickable({timeout: 20000});
     return $('#newEFormBtn');
   }
@@ -36,7 +36,7 @@ class MyEformsPage extends PageWithNavbarPage {
   // Create eform modal
   public get createEformTagSelector() {
     const ele = $('#createEFormMultiSelector');
-    ele.waitForDisplayed(20000);
+    ele.waitForDisplayed({timeout: 20000});
     ele.waitForClickable({timeout: 20000});
     return ele;
   }
@@ -47,7 +47,7 @@ class MyEformsPage extends PageWithNavbarPage {
 
   public get xmlTextArea() {
     const ele = $('#eFormXml');
-    ele.waitForDisplayed(20000);
+    ele.waitForDisplayed({timeout: 20000});
     ele.waitForClickable({timeout: 20000});
     return ele;
   }
@@ -65,9 +65,9 @@ class MyEformsPage extends PageWithNavbarPage {
   }
 
   createNewEform(eFormLabel, newTagsList = [], tagAddedNum = 0) {
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     this.newEformBtn.click();
-    $('#eFormXml').waitForDisplayed(20000);
+    $('#eFormXml').waitForDisplayed({timeout: 20000});
     // Create replaced xml and insert it in textarea
     const xml = XMLForEform.XML.replace('TEST_LABEL', eFormLabel);
     browser.execute(function (xmlText) {
@@ -78,27 +78,27 @@ class MyEformsPage extends PageWithNavbarPage {
     const addedTags: string[] = newTagsList;
     if (newTagsList.length > 0) {
       this.createEformNewTagInput.setValue(newTagsList.join(','));
-      $('#spinner-animation').waitForDisplayed(50000, true);
+      $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     }
     // Add existing tags
     const selectedTags: string[] = [];
     if (tagAddedNum > 0) {
-      $('#spinner-animation').waitForDisplayed(50000, true);
+      $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
       for (let i = 0; i < tagAddedNum; i++) {
         this.createEformTagSelector.click();
         const selectedTag = $('.ng-option:not(.ng-option-selected)');
         selectedTags.push(selectedTag.getText());
         //console.log('selectedTags is ' + JSON.stringify(selectedTags));
         selectedTag.click();
-        $('#spinner-animation').waitForDisplayed(50000, true);
-        $('#createEformBtn').waitForDisplayed(10000);
+        $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
+        $('#createEformBtn').waitForDisplayed({timeout: 10000});
         // browser.pause(5000);
       }
     }
     this.createEformBtn.click();
     // browser.pause(14000);
-    $('#spinner-animation').waitForDisplayed(50000, true);
-    $('#delete-eform-btn').waitForDisplayed(20000);
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
+    $('#delete-eform-btn').waitForDisplayed({timeout: 20000});
     return {added: addedTags, selected: selectedTags};
   }
 }
