@@ -9,12 +9,9 @@ import {
   PaginationPnComponent,
   PellPnComponent,
   SpinnerPnComponent,
-  SubheaderPnComponent,
-  ComboChartPnComponent,
-  ComboSeriesVerticalComponent
+  SubheaderPnComponent
 } from './components';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
-import { BarChartPnComponent } from './components/bar-chart-pn/bar-chart-pn.component';
 
 @NgModule({
   imports: [
@@ -29,11 +26,8 @@ import { BarChartPnComponent } from './components/bar-chart-pn/bar-chart-pn.comp
     PaginationPnComponent,
     SubheaderPnComponent,
     PellPnComponent,
-    PageSizePnComponent,
-    ComboChartPnComponent,
-    ComboSeriesVerticalComponent,
-    BarChartPnComponent],
-  exports: [SpinnerPnComponent, PaginationPnComponent, SubheaderPnComponent, PellPnComponent, PageSizePnComponent, ComboChartPnComponent, BarChartPnComponent],
+    PageSizePnComponent],
+  exports: [SpinnerPnComponent, PaginationPnComponent, SubheaderPnComponent, PellPnComponent, PageSizePnComponent],
   providers: [SharedPnService]
 })
 export class SharedPnModule { }
