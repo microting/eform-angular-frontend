@@ -30,7 +30,7 @@
           <div class="card-body">
             <div class="container-fluid">
               <div class="md-form input-group">
-                <input mdbInputDirective
+                <input mdbInput
                        [mdbValidate]="false"
                        [(ngModel)]="adminSettingsModel.loginPageSettingsModel.mainText"
                        type="text" #mainTextLoginPage="ngModel" name="mainTextLoginPage"
@@ -53,7 +53,7 @@
               </div>
 
               <div class="md-form input-group">
-                <input mdbInputDirective
+                <input mdbInput
                        [mdbValidate]="false"
                        [(ngModel)]="adminSettingsModel.loginPageSettingsModel.secondaryText"
                        type="text" #secondaryTextLoginPage="ngModel"
@@ -129,7 +129,7 @@
             <div class="container-fluid">
 
               <div class="md-form input-group">
-                <input mdbInputDirective class="form-control"
+                <input mdbInput class="form-control"
                        [mdbValidate]="false"
                        [(ngModel)]="adminSettingsModel.headerSettingsModel.mainText"
                        type="text"
@@ -151,7 +151,7 @@
               </div>
 
               <div class="md-form input-group">
-                <input mdbInputDirective [mdbValidate]="false"
+                <input mdbInput [mdbValidate]="false"
                        class="form-control" [(ngModel)]="adminSettingsModel.headerSettingsModel.secondaryText"
                        type="text"
                        name="headerSettingsSecondaryText" id="headerSettingsSecondaryText">
@@ -220,7 +220,7 @@
             <div class="container-fluid">
 
               <div class="md-form input-group">
-                <input mdbInputDirective [mdbValidate]="false"
+                <input mdbInput [mdbValidate]="false"
                        class="form-control" [(ngModel)]="adminSettingsModel.sdkSettingsModel.customerNo"
                        type="text" name="customerNo"
                        id="customerNo">
@@ -228,7 +228,7 @@
               </div>
 
               <div class="md-form input-group">
-                <input mdbInputDirective [mdbValidate]="false"
+                <input mdbInput [mdbValidate]="false"
                        class="form-control"
                        [(ngModel)]="adminSettingsModel.sdkSettingsModel.logLevel"
                        type="text" name="logLevel" id="logLevel">
@@ -236,14 +236,14 @@
               </div>
 
               <div class="md-form input-group">
-                <input mdbInputDirective [mdbValidate]="false"
+                <input mdbInput [mdbValidate]="false"
                        class="form-control" [(ngModel)]="adminSettingsModel.sdkSettingsModel.logLimit"
                        type="text" name="logLimit" id="logLimit">
                 <label for="logLimit">{{ 'Log limit' | translate }}</label>
               </div>
 
               <div class="md-form input-group">
-                <input mdbInputDirective [mdbValidate]="false"
+                <input mdbInput [mdbValidate]="false"
                        class="form-control" [(ngModel)]="adminSettingsModel.sdkSettingsModel.fileLocationPicture"
                        type="text" value=""
                        name="fileLocationPicture" id="fileLocationPicture">
@@ -251,7 +251,7 @@
               </div>
 
               <div class="md-form input-group">
-                <input mdbInputDirective [mdbValidate]="false"
+                <input mdbInput [mdbValidate]="false"
                        class="form-control" [(ngModel)]="adminSettingsModel.sdkSettingsModel.fileLocationPdf"
                        type="text" value=""
                        name="fileLocationPdf" id="fileLocationPdf">
@@ -259,7 +259,7 @@
               </div>
 
               <div class="md-form input-group">
-                <input mdbInputDirective [mdbValidate]="false"
+                <input mdbInput [mdbValidate]="false"
                        class="form-control" [(ngModel)]="adminSettingsModel.sdkSettingsModel.fileLocationReports"
                        type="text" value=""
                        name="fileLocationReports" id="fileLocationReports">
@@ -267,7 +267,7 @@
               </div>
 
               <div class="md-form input-group">
-                <input mdbInputDirective [mdbValidate]="false"
+                <input mdbInput [mdbValidate]="false"
                        class="form-control" [(ngModel)]="adminSettingsModel.sdkSettingsModel.httpServerAddress"
                        type="text" value=""
                        name="httpServerAddress" id="httpServerAddress">
@@ -291,7 +291,7 @@
             <div class="container-fluid">
 
               <div class="md-form input-group">
-                <input mdbInputDirective [mdbValidate]="false"
+                <input mdbInput [mdbValidate]="false"
                        class="form-control" [(ngModel)]="adminSettingsModel.smtpSettingsModel.host"
                        placeholder="smtp.gmail.com" type="text" name="host"
                        id="host">
@@ -299,7 +299,7 @@
               </div>
 
               <div class="md-form input-group">
-                <input mdbInputDirective [mdbValidate]="false"
+                <input mdbInput [mdbValidate]="false"
                        class="form-control"
                        [(ngModel)]="adminSettingsModel.smtpSettingsModel.port"
                        placeholder="1433"
@@ -308,14 +308,14 @@
               </div>
 
               <div class="md-form input-group">
-                <input mdbInputDirective [mdbValidate]="false"
+                <input mdbInput [mdbValidate]="false"
                        class="form-control" [(ngModel)]="adminSettingsModel.smtpSettingsModel.login"
                        placeholder="userName" type="text" name="login" id="login">
                 <label for="login">{{ 'Login' | translate }}</label>
               </div>
 
               <div class="md-form input-group">
-                <input mdbInputDirective [mdbValidate]="false"
+                <input mdbInput [mdbValidate]="false"
                        class="form-control" [(ngModel)]="adminSettingsModel.smtpSettingsModel.password"
                        placeholder="12345678909876543210adfecdfefdae" type="password" value=""
                        name="password" id="password">
@@ -336,7 +336,7 @@
             <div class="container-fluid">
 
               <div class="md-form input-group">
-                <input mdbInputDirective [mdbValidate]="false"
+                <input mdbInput [mdbValidate]="false"
                        class="form-control" [(ngModel)]="adminSettingsModel.swiftSettingsModel.swiftEnabled"
                        placeholder="false" type="text" name="swiftEnabled"
                        id="swiftEnabled">
@@ -344,7 +344,7 @@
               </div>
 
               <div class="md-form input-group" *ngIf="adminSettingsModel.swiftSettingsModel.swiftEnabled">
-                <input mdbInputDirective [mdbValidate]="false"
+                <input mdbInput [mdbValidate]="false"
                        class="form-control"
                        [(ngModel)]="adminSettingsModel.swiftSettingsModel.swiftUserName"
                        placeholder="eformsdk"
@@ -353,14 +353,14 @@
               </div>
 
               <div class="md-form input-group" *ngIf="adminSettingsModel.swiftSettingsModel.swiftEnabled">
-                <input mdbInputDirective [mdbValidate]="false"
+                <input mdbInput [mdbValidate]="false"
                        class="form-control" [(ngModel)]="adminSettingsModel.swiftSettingsModel.swiftPassword"
                        placeholder="eformsdktosecretpassword" type="password" name="swiftPassword" id="swiftPassword">
                 <label for="swiftPassword">{{ 'Password' | translate }}</label>
               </div>
 
               <div class="md-form input-group" *ngIf="adminSettingsModel.swiftSettingsModel.swiftEnabled">
-                <input mdbInputDirective [mdbValidate]="false"
+                <input mdbInput [mdbValidate]="false"
                        class="form-control" [(ngModel)]="adminSettingsModel.swiftSettingsModel.swiftEndpoint"
                        placeholder="http://172.16.4.4:8080/swift/v1" type="text" value=""
                        name="swiftEndpoint" id="swiftEndpoint">
@@ -368,7 +368,7 @@
               </div>
 
               <div class="md-form input-group" *ngIf="adminSettingsModel.swiftSettingsModel.swiftEnabled">
-                <input mdbInputDirective [mdbValidate]="false"
+                <input mdbInput [mdbValidate]="false"
                        class="form-control" [(ngModel)]="adminSettingsModel.swiftSettingsModel.keystoneEndpoint"
                        placeholder="http://172.16.4.4:5000/v2.0" type="text" value=""
                        name="keystoneEndpoint" id="keystoneEndpoint">
@@ -376,7 +376,7 @@
               </div>
 
               <div class="md-form input-group">
-                <input mdbInputDirective [mdbValidate]="false"
+                <input mdbInput [mdbValidate]="false"
                        class="form-control" [(ngModel)]="adminSettingsModel.s3SettingsModel.s3Enabled"
                        placeholder="false" type="text"  name="s3Enabled"
                        id="s3Enabled">
@@ -384,7 +384,7 @@
               </div>
 
               <div class="md-form input-group" *ngIf="adminSettingsModel.s3SettingsModel.s3Enabled">
-                <input mdbInputDirective [mdbValidate]="false"
+                <input mdbInput [mdbValidate]="false"
                        class="form-control" [(ngModel)]="adminSettingsModel.s3SettingsModel.s3AccessKeyId"
                        placeholder="false" type="text"  name="s3AccessKeyId"
                        id="s3AccessKeyId">
@@ -392,7 +392,7 @@
               </div>
 
               <div class="md-form input-group" *ngIf="adminSettingsModel.s3SettingsModel.s3Enabled">
-                <input mdbInputDirective [mdbValidate]="false"
+                <input mdbInput [mdbValidate]="false"
                        class="form-control" [(ngModel)]="adminSettingsModel.s3SettingsModel.s3SecrectAccessKey"
                        placeholder="false" type="password" name="s3SecrectAccessKey"
                        id="s3SecrectAccessKey">
@@ -400,7 +400,7 @@
               </div>
 
               <div class="md-form input-group" *ngIf="adminSettingsModel.s3SettingsModel.s3Enabled">
-                <input mdbInputDirective [mdbValidate]="false"
+                <input mdbInput [mdbValidate]="false"
                        class="form-control" [(ngModel)]="adminSettingsModel.s3SettingsModel.s3Endpoint"
                        placeholder="false" type="text" name="s3Endpoint"
                        id="s3Endpoint">
@@ -408,7 +408,7 @@
               </div>
 
               <div class="md-form input-group" *ngIf="adminSettingsModel.s3SettingsModel.s3Enabled">
-                <input mdbInputDirective [mdbValidate]="false"
+                <input mdbInput [mdbValidate]="false"
                        class="form-control" [(ngModel)]="adminSettingsModel.s3SettingsModel.s3BucketName"
                        placeholder="false" type="password" name="s3BucketName"
                        id="s3BucketName">
@@ -432,7 +432,7 @@
             <div class="container-fluid">
 
               <div class="md-form input-group">
-                <input mdbInputDirective [mdbValidate]="false"
+                <input mdbInput [mdbValidate]="false"
                        class="form-control" [(ngModel)]="adminSettingsModel.sendGridSettingsModel.apiKey"
                        placeholder="12345678909876543210adfecdfefdae" type="text" value=""
                        name="sendGridKey" id="sendGridKey">

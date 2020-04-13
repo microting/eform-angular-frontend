@@ -10,7 +10,7 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="md-form">
-                  <input mdbInputDirective
+                  <input mdbInput
                          [mdbValidate]="false"
                          class="form-control" type="text"
                          [(ngModel)]="selectedUserModel.firstName" id="editFirstName"
@@ -20,7 +20,7 @@
               </div>
               <div class="col-md-6">
                 <div class="md-form">
-                  <input mdbInputDirective
+                  <input mdbInput
                          [mdbValidate]="false"
                          class="form-control" type="text"
                          [(ngModel)]="selectedUserModel.lastName"
@@ -32,7 +32,7 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="md-form">
-                  <input mdbInputDirective
+                  <input mdbInput
                          [mdbValidate]="false"
                          class="form-control"
                          required #emailEdit="ngModel" type="text"
@@ -43,7 +43,7 @@
               </div>
               <div class="col-md-6">
                 <div class="md-form">
-                  <input mdbInputDirective
+                  <input mdbInput
                          [mdbValidate]="false"
                          class="form-control"
                          #createPassword="ngModel" type="text"
