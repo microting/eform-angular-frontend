@@ -40,9 +40,9 @@ script:
   - mkdir -p /home/travis/build/microting/eform-angular-frontend/eform-client/errorShots
   - cd eform-client && npm install
   - npm start &
-  - sleep 60
+  - sleep 75
   - dotnet run --project ../eFormAPI/eFormAPI.Web/eFormAPI.Web.csproj > dotnet_log 2>&1 &
-  - sleep 40
+  - sleep 75
   - npm run testheadless
   - npm run $TEST_SUITE
   - aws s3 sync errorShots/ s3://$S3_STORAGE_FOLDER/$TRAVIS_BUILD_NUMBER || true
