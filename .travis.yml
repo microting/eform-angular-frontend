@@ -40,6 +40,7 @@ script:
   - mkdir -p /home/travis/build/microting/eform-angular-frontend/eform-client/errorShots
   - cd eform-client && npm install
   - npm start &
+  - sleep 60
   - dotnet run --project ../eFormAPI/eFormAPI.Web/eFormAPI.Web.csproj > dotnet_log 2>&1 &
   - sleep 40
   - npm run testheadless
