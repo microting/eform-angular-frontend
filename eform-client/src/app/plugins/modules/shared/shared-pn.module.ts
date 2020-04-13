@@ -13,7 +13,7 @@ import {
   ComboChartPnComponent,
   ComboSeriesVerticalComponent
 } from './components';
-import {NgxChartsModule} from '@microting/ngx-charts';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
 import { BarChartPnComponent } from './components/bar-chart-pn/bar-chart-pn.component';
 
 @NgModule({
