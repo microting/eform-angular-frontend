@@ -18,8 +18,8 @@ addons:
 services:
 - mysql
 script:
-  - nvm install 11.0.0
-  - nvm use 11.0.0
+  - nvm install 12.16.2
+  - nvm use 12.16.2
   - pip install --user awscli
   - echo 'deb http://www.rabbitmq.com/debian/ testing main' | sudo tee /etc/apt/sources.list.d/rabbitmq.list
   - wget -O- https://www.rabbitmq.com/rabbitmq-release-signing-key.asc | sudo apt-key add -
