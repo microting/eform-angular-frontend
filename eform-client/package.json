@@ -43,7 +43,7 @@
     "@swimlane/ngx-charts": "13.0.2",
     "@types/dragula": "2.1.33",
     "@types/file-saver": "2.0.1",
-    "angular-bootstrap-md": "^8.10.1",
+    "angular-bootstrap-md": "^9.0.1",
     "angular-calendar": "0.28.2",
     "angular2-uuid": "1.1.1",
     "chart.js": "2.9.3",
