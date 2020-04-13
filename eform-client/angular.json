@@ -10,13 +10,14 @@
       "prefix": "app",
       "schematics": {
         "@schematics/angular:component": {
-          "styleext": "scss"
+          "style": "scss"
         }
       },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -24,12 +25,26 @@
             "tsConfig": "src/tsconfig.app.json",
             "showCircularDependencies": false,
             "assets": [
-              { "glob": "**/*", "input": "src/assets/", "output": "/assets/" },
-              { "glob": "**/assets/**", "input": "src/app/plugins/modules", "output": "/assets/" },
-              { "glob": "favicon.ico", "input": "src/", "output": "/" }
+              {
+                "glob": "**/*",
+                "input": "src/assets/",
+                "output": "/assets/"
+              },
+              {
+                "glob": "**/assets/**",
+                "input": "src/app/plugins/modules",
+                "output": "/assets/"
+              },
+              {
+                "glob": "favicon.ico",
+                "input": "src/",
+                "output": "/"
+              }
             ],
             "styles": [
               "node_modules/ngx-toastr/toastr.css",
+              "node_modules/angular-bootstrap-md/assets/scss/bootstrap/bootstrap.scss",
+              "node_modules/angular-bootstrap-md/assets/scss/mdb.scss",
               "src/scss/styles.scss"
             ],
             "scripts": [
@@ -38,6 +53,12 @@
           },
           "configurations": {
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -132,5 +153,8 @@
       }
     }
   },
-  "defaultProject": "eform-angular"
+  "defaultProject": "eform-angular",
+  "cli": {
+    "analytics": "067abb0b-3798-4fd0-b9dc-ad2ae4b91cdf"
+  }
 }

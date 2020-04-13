@@ -12,7 +12,7 @@ import {EmailRecipientModel, EmailRecipientUpdateModel} from '../../../../../com
   styleUrls: ['./email-recipient-edit.component.scss']
 })
 export class EmailRecipientEditComponent implements OnInit, OnDestroy {
-  @ViewChild('frame', {static: false}) frame;
+  @ViewChild('frame') frame;
   @Input() availableTags: CommonDictionaryModel[] = [];
   @Output() emailRecipientUpdated: EventEmitter<void> = new EventEmitter<void>();
   emailRecipientUpdateModel: EmailRecipientUpdateModel = new EmailRecipientUpdateModel;

@@ -19,8 +19,8 @@ import {CommonDictionaryModel} from '../../../../../common/models/common';
   styleUrls: ['./case-posts-page.component.scss']
 })
 export class CasePostsPageComponent implements OnInit, OnDestroy {
-  @ViewChild('newPostModal', {static: false}) newPostModal: CasePostNewComponent;
-  @ViewChild('viewPostModal', {static: false}) viewPostModal: CasePostViewComponent;
+  @ViewChild('newPostModal') newPostModal: CasePostNewComponent;
+  @ViewChild('viewPostModal') viewPostModal: CasePostViewComponent;
   casePostsListModel: CasePostsListModel = new CasePostsListModel();
   casePostsRequestModel: CasePostsRequestModel = new CasePostsRequestModel();
   localPageSettings: PageSettingsModel = new PageSettingsModel();

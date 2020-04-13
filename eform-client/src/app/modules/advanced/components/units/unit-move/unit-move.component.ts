@@ -12,7 +12,7 @@ import {DeviceUserService} from 'src/app/common/services/device-users';
 export class UnitMoveComponent implements OnInit, AfterContentInit {
   @Output() UnitMoved: EventEmitter<void> = new EventEmitter<void>();
   @Input() selectedUnitModel: UnitDto = new UnitDto();
-  @ViewChild('frame', {static: false}) frame;
+  @ViewChild('frame') frame;
   unitModel: UnitModel = new UnitModel;
   simpleSites: Array<SiteDto> = [];
   spinnerStatus = false;

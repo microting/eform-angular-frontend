@@ -11,7 +11,7 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
   styleUrls: ['./email-recipient-tag-delete.component.scss']
 })
 export class EmailRecipientTagDeleteComponent implements OnInit, OnDestroy {
-  @ViewChild('frame', {static: false}) frame;
+  @ViewChild('frame') frame;
   @Output() tagDeleted: EventEmitter<void> = new EventEmitter<void>();
   @Output() tagDeleteCancelled: EventEmitter<void> = new EventEmitter<void>();
   tagModel: EmailRecipientTagModel = new EmailRecipientTagModel();

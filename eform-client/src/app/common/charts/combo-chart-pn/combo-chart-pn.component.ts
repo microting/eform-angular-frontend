@@ -68,12 +68,12 @@ export class ComboChartPnComponent extends BaseChartComponent {
   @Output() deactivate: EventEmitter<any> = new EventEmitter();
 
   // @ts-ignore
-  @ContentChild('tooltipTemplate', { static: false }) tooltipTemplate: TemplateRef<any>;
+  @ContentChild('tooltipTemplate') tooltipTemplate: TemplateRef<any>;
   // @ts-ignore
-  @ContentChild('seriesTooltipTemplate', { static: false }) seriesTooltipTemplate: TemplateRef<any>;
+  @ContentChild('seriesTooltipTemplate') seriesTooltipTemplate: TemplateRef<any>;
 
   // @ts-ignore
-  @ViewChild(LineSeriesComponent, { static: false }) lineSeriesComponent: LineSeriesComponent;
+  @ViewChild(LineSeriesComponent) lineSeriesComponent: LineSeriesComponent;
 
   dims: ViewDimensions;
   xScale: any;

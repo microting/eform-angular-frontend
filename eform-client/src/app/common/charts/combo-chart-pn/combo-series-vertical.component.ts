@@ -84,7 +84,7 @@ export class ComboSeriesVerticalComponent implements OnChanges {
   @Output() bandwidth = new EventEmitter();
 
   // @ts-ignore
-  @ContentChild('tooltipTemplate', { static: false }) tooltipTemplate: TemplateRef<any>;
+  @ContentChild('tooltipTemplate') tooltipTemplate: TemplateRef<any>;
 
 
 

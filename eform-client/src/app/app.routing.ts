@@ -53,7 +53,7 @@ export const routes: Routes = [
       {
         path: 'email-recipients',
         canActivate: [AuthGuard],
-        loadChildren: './modules/email-recipients/email-recipients.module#EmailRecipientsModule'
+        loadChildren: () => import('./modules/email-recipients/email-recipients.module').then(m => m.EmailRecipientsModule)
       },
       {
         path: 'security',

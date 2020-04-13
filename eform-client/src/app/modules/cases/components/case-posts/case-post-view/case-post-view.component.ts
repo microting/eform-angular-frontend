@@ -11,7 +11,7 @@ import {CasePostsService} from '../../../../../common/services/cases';
   styleUrls: ['./case-post-view.component.scss']
 })
 export class CasePostViewComponent implements OnInit, OnDestroy {
-  @ViewChild('frame', {static: false}) frame;
+  @ViewChild('frame') frame;
   @Input() currentUserFullName: string;
   @Input() pdfReportAvailable: boolean;
   postViewModel: CasePostViewModel = new CasePostViewModel();

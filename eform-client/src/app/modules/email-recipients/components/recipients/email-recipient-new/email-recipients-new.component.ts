@@ -14,7 +14,7 @@ import {TranslateService} from '@ngx-translate/core';
   styleUrls: ['./email-recipients-new.component.scss']
 })
 export class EmailRecipientsNewComponent implements OnInit, OnDestroy {
-  @ViewChild('frame', {static: false}) frame;
+  @ViewChild('frame') frame;
   @Input() availableTags: CommonDictionaryModel[] = [];
   @Output() emailRecipientsCreated: EventEmitter<void> = new EventEmitter<void>();
   emailRecipientsCreateModel: EmailRecipientsCreateModel = new EmailRecipientsCreateModel();

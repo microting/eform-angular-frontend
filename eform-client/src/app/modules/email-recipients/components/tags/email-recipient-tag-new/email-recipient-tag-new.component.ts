@@ -10,7 +10,7 @@ import {EmailRecipientsTagsService} from '../../../../../common/services/email-r
   styleUrls: ['./email-recipient-tag-new.component.scss']
 })
 export class EmailRecipientTagNewComponent implements OnInit, OnDestroy {
-  @ViewChild('frame', {static: false}) frame;
+  @ViewChild('frame') frame;
   @Output() tagCreated: EventEmitter<void> = new EventEmitter<void>();
   @Output() tagCreateCancelled: EventEmitter<void> = new EventEmitter<void>();
   name = '';
