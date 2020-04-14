@@ -62,6 +62,18 @@ export class BaseService {
       );
   }
 
+  protected uploadFiles<T>(method: string, files: any[], params?: any, responseType?: any): Observable<any> {
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+      formData.append(`files`, files[i]);
+    }
+    return this.http.post(method, formData, {headers: this.setHeaders('formData'), params: this.setParams(params), responseType: responseType})
+      .pipe(
+        map((response) => response),
+        catchError(err => this.handleError(err))
+      );
+  }
+
   private setHeaders(contentType?: string) {
     let headers = new HttpHeaders();
     if (contentType === 'formData') {
