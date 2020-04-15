@@ -61,10 +61,12 @@ class DeviceUsersPage extends PageWithNavbarPage {
   }
 
   public get rowNum(): number {
+    browser.pause(500);
     return $$('#tableBody > tr').length;
   }
 
   getDeviceUser(num): DeviceUsersRowObject {
+    browser.pause(500);
     return new DeviceUsersRowObject(num);
   }
 
