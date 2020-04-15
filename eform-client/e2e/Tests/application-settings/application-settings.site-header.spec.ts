@@ -32,34 +32,38 @@ describe('Application settings page - site header section', function () {
       'Error while editing site header secondary text').equal(ApplicationSettingsConstants.SiteHeader.customSecondaryText);
   });
   it('should hide main text', function () {
+    myEformsPage.Navbar.goToApplicationSettings();
     applicationSettingsPage.SiteHeader.mainTextVisibilityToggleBtn.click();
     applicationSettingsPage.save();
-    //browser.refresh();
+    loginPage.open('/');
     $('#sign-out-dropdown').waitForDisplayed({timeout: 20000});
     $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     expect(applicationSettingsPage.siteHeaderMainText.isDisplayed(),
       'Error while hiding site header main text').equal(false);
   });
   it('should hide secondary text', function () {
+    myEformsPage.Navbar.goToApplicationSettings();
     applicationSettingsPage.SiteHeader.secondaryTextVisibilityToggleBtn.click();
     applicationSettingsPage.save();
-    //browser.refresh();
+    loginPage.open('/');
     $('#sign-out-dropdown').waitForDisplayed({timeout: 20000});
     $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     expect(applicationSettingsPage.siteHeaderSecondaryText.isDisplayed(),
       'Error while hiding site header secondary text').equal(false);
   });
   it('should hide image', function () {
+    myEformsPage.Navbar.goToApplicationSettings();
     applicationSettingsPage.SiteHeader.imageVisibilityToggler.click();
     applicationSettingsPage.save();
     loginPage.open('/application-settings');
     $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
-    //browser.refresh();
     $('#sign-out-dropdown').waitForDisplayed({timeout: 20000});
+    loginPage.open('/');
     expect(applicationSettingsPage.siteHeaderImage.isDisplayed(),
       'Error while hiding site header image').equal(false);
   });
   it('should reset site header main text', function () {
+    myEformsPage.Navbar.goToApplicationSettings();
     applicationSettingsPage.SiteHeader.reset();
     $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     loginPage.open('/application-settings');
