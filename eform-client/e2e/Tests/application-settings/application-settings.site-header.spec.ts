@@ -12,12 +12,12 @@ describe('Application settings page - site header section', function () {
   });
   it('should change main text', function () {
     myEformsPage.Navbar.goToApplicationSettings();
-    $('#mainTextLoginPage').waitForDisplayed(120000);
+    $('#mainTextLoginPage').waitForDisplayed(12000);
     $('#spinner-animation').waitForDisplayed(50000, true);
     applicationSettingsPage.SiteHeader.mainTextInput.setValue(ApplicationSettingsConstants.SiteHeader.customMainText);
     applicationSettingsPage.save();
     //browser.refresh();
-    $('#sign-out-dropdown').waitForDisplayed(120000);
+    $('#sign-out-dropdown').waitForDisplayed(12000);
     $('#spinner-animation').waitForDisplayed(50000, true);
     expect(applicationSettingsPage.siteHeaderMainText.getText(),
       'Error while editing site header main text').equal(ApplicationSettingsConstants.SiteHeader.customMainText);
@@ -41,6 +41,7 @@ describe('Application settings page - site header section', function () {
       'Error while hiding site header main text').equal(false);
   });
   it('should hide secondary text', function () {
+    myEformsPage.Navbar.goToApplicationSettings();
     applicationSettingsPage.SiteHeader.secondaryTextVisibilityToggleBtn.click();
     applicationSettingsPage.save();
     loginPage.open('/');
@@ -50,6 +51,7 @@ describe('Application settings page - site header section', function () {
       'Error while hiding site header secondary text').equal(false);
   });
   it('should hide image', function () {
+    myEformsPage.Navbar.goToApplicationSettings();
     applicationSettingsPage.SiteHeader.imageVisibilityToggler.click();
     applicationSettingsPage.save();
     loginPage.open('/application-settings');
@@ -60,6 +62,7 @@ describe('Application settings page - site header section', function () {
       'Error while hiding site header image').equal(false);
   });
   it('should reset site header main text', function () {
+    myEformsPage.Navbar.goToApplicationSettings();
     applicationSettingsPage.SiteHeader.reset();
     $('#spinner-animation').waitForDisplayed(50000, true);
     loginPage.open('/application-settings');
