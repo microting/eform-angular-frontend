@@ -58,7 +58,7 @@ describe('Entity Search', function () {
     searchableLists.deleteList();
     loginPage.open('/');
     searchableLists.goToEntitySearchPage();
-    $('#spinner-animation').waitForDisplayed(50000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     expect(searchableLists.rowNum).equal(0);
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   });
