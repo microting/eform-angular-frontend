@@ -12,15 +12,21 @@ export class ApplicationSettingsPage extends PageWithNavbarPage {
   }
 
   public get siteHeaderMainText() {
-    return $('#main-header-text');
+    const ele = $('#main-header-text');
+    ele.waitForDisplayed(30000);
+    return ele;
   }
 
   public get siteHeaderSecondaryText() {
-    return $('#secondary-header-text');
+    const ele = $('#secondary-header-text');
+    ele.waitForDisplayed(30000);
+    return ele;
   }
 
   public get siteHeaderImage() {
-    return $('#site-header-image');
+    const ele = $('#site-header-image');
+    ele.waitForDisplayed(30000);
+    return ele;
   }
 
 
