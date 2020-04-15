@@ -8,7 +8,7 @@ export class Navbar {
 
   public applicationSettingsBtn() {
     const ele = $(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Applikationsindstillinger')]`);
-    ele.waitForDisplayed(20000);
+    ele.waitForDisplayed({timeout: 20000});
     ele.click();
   }
 
