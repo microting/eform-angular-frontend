@@ -278,8 +278,10 @@ export class SearchableListsPage extends PageWithNavbarPage {
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
   public editSearchableListNameAndItem(newName, newItemName) {
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchEditBtn.click();
     $('#editName').waitForDisplayed({timeout: 200000});
+    $('#editName').waitForClickable({timeout: 200000});
     this.entitySearchEditNameBox.clearValue();
     this.entitySearchEditNameBox.addValue(newName);
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
