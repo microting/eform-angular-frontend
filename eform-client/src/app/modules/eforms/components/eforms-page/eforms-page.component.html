@@ -1,6 +1,7 @@
 <eform-page-subheader [title]="'My eForms' | translate">
   <div class="p-3">
     <button
+      mdbBtn
       class="btn btn-success"
       mdbTooltip="{{ 'Create eForm' | translate }}" id="newEFormBtn" *ngIf="userClaims.eFormsCreate"
       (click)="openNewEformModal()">{{ 'New eForm' | translate }}
@@ -35,7 +36,7 @@
     </div>
   </div>
   <div class="row p-1 table-responsive no-gutters">
-    <table class="table table-sm table-striped text-center z-depth-1">
+    <table mdbTable striped="true" hover="true" small="true" class="z-depth-1">
       <thead>
       <tr>
         <th scope="col" class="table-header-sortable" id="idSort"
