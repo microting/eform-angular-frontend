@@ -7,7 +7,9 @@ export class Navbar {
   }
 
   public applicationSettingsBtn() {
-    $(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Applikationsindstillinger')]`).click();
+    const ele = $(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Applikationsindstillinger')]`);
+    ele.waitForDisplayed(20000);
+    ele.click();
   }
 
   public clickonSubMenuItem(menuItem) {
@@ -68,6 +70,7 @@ export class Navbar {
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
   public goToApplicationSettings() {
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     this.advancedDropdown();
     this.applicationSettingsBtn();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
