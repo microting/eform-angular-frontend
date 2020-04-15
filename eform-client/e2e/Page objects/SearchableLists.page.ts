@@ -5,9 +5,11 @@ export class SearchableListsPage extends PageWithNavbarPage {
     super();
   }
   public get rowNum(): number {
+    browser.pause(500);
     return $$('#tableBody > tr').length;
   }
   public get items(): number {
+    browser.pause(500);
     return $$('//app-entity-search-edit//ul//li').length;
   }
   getFirstRowObject(): SearchableListRowObject {
