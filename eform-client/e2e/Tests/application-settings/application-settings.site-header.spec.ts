@@ -34,7 +34,7 @@ describe('Application settings page - site header section', function () {
   it('should hide main text', function () {
     applicationSettingsPage.SiteHeader.mainTextVisibilityToggleBtn.click();
     applicationSettingsPage.save();
-    //browser.refresh();
+    loginPage.open('/');
     $('#sign-out-dropdown').waitForDisplayed(20000);
     $('#spinner-animation').waitForDisplayed(50000, true);
     expect(applicationSettingsPage.siteHeaderMainText.isDisplayed(),
@@ -43,7 +43,7 @@ describe('Application settings page - site header section', function () {
   it('should hide secondary text', function () {
     applicationSettingsPage.SiteHeader.secondaryTextVisibilityToggleBtn.click();
     applicationSettingsPage.save();
-    //browser.refresh();
+    loginPage.open('/');
     $('#sign-out-dropdown').waitForDisplayed(20000);
     $('#spinner-animation').waitForDisplayed(50000, true);
     expect(applicationSettingsPage.siteHeaderSecondaryText.isDisplayed(),
@@ -54,7 +54,7 @@ describe('Application settings page - site header section', function () {
     applicationSettingsPage.save();
     loginPage.open('/application-settings');
     $('#spinner-animation').waitForDisplayed(50000, true);
-    //browser.refresh();
+    loginPage.open('/');
     $('#sign-out-dropdown').waitForDisplayed(20000);
     expect(applicationSettingsPage.siteHeaderImage.isDisplayed(),
       'Error while hiding site header image').equal(false);
