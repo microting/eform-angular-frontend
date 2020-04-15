@@ -13,19 +13,19 @@ export class ApplicationSettingsPage extends PageWithNavbarPage {
 
   public get siteHeaderMainText() {
     const ele = $('#main-header-text');
-    ele.waitForDisplayed(30000);
+    ele.waitForDisplayed({timeout: 30000});
     return ele;
   }
 
   public get siteHeaderSecondaryText() {
     const ele = $('#secondary-header-text');
-    ele.waitForDisplayed(30000);
+    ele.waitForDisplayed({timeout: 30000});
     return ele;
   }
 
   public get siteHeaderImage() {
     const ele = $('#site-header-image');
-    ele.waitForDisplayed(30000);
+    ele.waitForDisplayed({timeout: 30000});
     return ele;
   }
 
