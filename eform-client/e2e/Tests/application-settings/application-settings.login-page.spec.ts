@@ -20,7 +20,7 @@ describe('Application settings page - site header section', function () {
     $('#sign-out-dropdown').waitForDisplayed({timeout: 40000});
     $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     applicationSettingsPage.Navbar.logout();
-    $('#username').waitForDisplayed(60000);
+    $('#username').waitForDisplayed({timeout: 20000});
     expect(loginPage.loginBtn.isDisplayed()).equal(true);
     expect(loginPage.mainText.getText(),
       'Error while changing main text on login page').to.equal(ApplicationSettingsConstants.LoginPage.customMainText);
@@ -35,7 +35,7 @@ describe('Application settings page - site header section', function () {
     $('#sign-out-dropdown').waitForDisplayed({timeout: 20000});
     $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     applicationSettingsPage.Navbar.logout();
-    $('#username').waitForDisplayed(60000);
+    $('#username').waitForDisplayed({timeout: 20000});
     expect(loginPage.loginBtn.isDisplayed()).equal(true);
     expect(loginPage.secondaryText.getText(),
       'Error while changing secondary text on login page').to.equal(ApplicationSettingsConstants.LoginPage.customSecondaryText);
@@ -50,7 +50,7 @@ describe('Application settings page - site header section', function () {
     $('#sign-out-dropdown').waitForDisplayed({timeout: 20000});
     $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     applicationSettingsPage.Navbar.logout();
-    $('#username').waitForDisplayed(60000);
+    $('#username').waitForDisplayed({timeout: 20000});
     expect(loginPage.loginBtn.isDisplayed()).equal(true);
     expect(loginPage.mainText.isDisplayed(),
       'Error while toggling visibility of main text on login page').to.equal(false);
@@ -65,7 +65,7 @@ describe('Application settings page - site header section', function () {
     $('#sign-out-dropdown').waitForDisplayed({timeout: 20000});
     $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     applicationSettingsPage.Navbar.logout();
-    $('#username').waitForDisplayed(60000);
+    $('#username').waitForDisplayed({timeout: 20000});
     expect(loginPage.loginBtn.isDisplayed()).equal(true);
     expect(loginPage.secondaryText.isDisplayed(),
       'Error while toggling visibility of secondary text on login page').to.equal(false);
