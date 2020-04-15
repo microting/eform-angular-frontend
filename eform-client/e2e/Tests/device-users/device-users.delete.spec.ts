@@ -20,6 +20,8 @@ describe('Device users page', function () {
     $('#spinner-animation').waitForDisplayed(90000, true);
     deviceUsersPage.cancelDeleteBtn.click();
     $('#spinner-animation').waitForDisplayed(90000, true);
+    loginPage.open('/');
+    myEformsPage.Navbar.goToDeviceUsersPage();
     const rowNumAfterCancelDelete = deviceUsersPage.rowNum;
     expect(rowNumBeforeDelete).equal(rowNumAfterCancelDelete);
   });
@@ -34,6 +36,8 @@ describe('Device users page', function () {
     $('#spinner-animation').waitForDisplayed(90000, true);
     deviceUsersPage.saveDeleteBtn.click();
     $('#spinner-animation').waitForDisplayed(90000, true);
+    loginPage.open('/');
+    myEformsPage.Navbar.goToDeviceUsersPage();
     const rowNumAfterDelete = deviceUsersPage.rowNum;
     expect(rowNumBeforeDelete, 'User deleted incorrectly').equal(rowNumAfterDelete + 1);
   });
