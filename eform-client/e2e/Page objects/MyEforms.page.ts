@@ -61,6 +61,7 @@ class MyEformsPage extends PageWithNavbarPage {
   }
 
   getFirstMyEformsRowObj(): MyEformsRowObject {
+    browser.pause(500);
     return new MyEformsRowObject(1);
   }
 

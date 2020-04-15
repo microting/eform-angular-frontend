@@ -54,7 +54,7 @@ describe('My eforms', function () {
     $('#eFormDeleteDeleteBtn').waitForDisplayed({timeout: 20000});
     // browser.pause(7000);
     $$('.btn-danger')[2].click();
-    browser.pause(7000);
+    //browser.pause(7000);
     eform = myEformsPage.getFirstMyEformsRowObj();
     expect(eform.id === null);
   });
@@ -79,7 +79,7 @@ describe('My eforms', function () {
     $('#eFormDeleteDeleteBtn').waitForDisplayed({timeout: 20000});
     // browser.pause(7000);
     $$('.btn-danger')[2].click();
-    browser.pause(7000);
+    //browser.pause(7000);
     eform = myEformsPage.getFirstMyEformsRowObj();
     expect(eform.id === null);
   });
@@ -99,7 +99,7 @@ describe('My eforms', function () {
     $('#eFormDeleteDeleteBtn').waitForDisplayed({timeout: 20000});
     // browser.pause(7000);
     $$('.btn-danger')[2].click();
-    browser.pause(7000);
+    //browser.pause(7000);
     eform = myEformsPage.getFirstMyEformsRowObj();
     expect(eform.id === null);
   });
