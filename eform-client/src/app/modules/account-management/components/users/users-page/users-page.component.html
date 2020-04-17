@@ -48,7 +48,7 @@
               <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
 
             </button>
-            <button class="btn btn-danger btn-icon mb-2 " *ngIf="userClaims.usersDelete"
+            <button mdbBtn class="btn-danger btn-icon mb-2 " *ngIf="userClaims.usersDelete"
                     mdbTooltip="{{'Delete User' | translate}}"
                     (click)="openRemoveUserModal(userInfoModel)">
               <fa-icon icon="trash-alt" [fixedWidth]="true" size="lg"></fa-icon>

@@ -75,10 +75,10 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-success" [disabled]="!createForm.form.valid" type="submit"
+        <button mdbBtn class="btn-success" [disabled]="!createForm.form.valid" type="submit"
                 (click)="createUser()">{{ 'Create' | translate }}
         </button>
-        <button class="btn btn-accent text-black-50" (click)="frame.hide()" type="button">{{'Cancel' | translate}}</button>
+        <button mdbBtn class="btn-accent text-black-50" (click)="frame.hide()" type="button">{{'Cancel' | translate}}</button>
       </div>
     </div>
   </div>

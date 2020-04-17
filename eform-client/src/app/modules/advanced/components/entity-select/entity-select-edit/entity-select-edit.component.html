@@ -11,7 +11,7 @@
             <div class="col-md-12">
               <div class="md-form">
                 <input mdbInput
-                       [mdbValidate]="false" required
+                        required
                        [(ngModel)]="advEntitySelectableGroupEditModel.name"
                        id="editName" type="text" class="form-control"
                        [disabled]="advEntitySelectableGroupEditModel.isLocked">
@@ -24,10 +24,10 @@
             <div class="mr-auto">
             </div>
             <div class="d-inline-flex">
-              <button class="btn btn-success btn-icon" (click)="modalSelectImportList.show()" id="editEntitySelectImportBtn">
+              <button mdbBtn class="btn-success btn-icon" (click)="modalSelectImportList.show()" id="editEntitySelectImportBtn">
                 <i class="material-icons">format_list_bulleted</i>
               </button>
-              <button class="btn btn-success btn-icon" (click)="addNewAdvEntitySelectableItem()" id="editEntitySelectCreateItem">
+              <button mdbBtn class="btn-success btn-icon" (click)="addNewAdvEntitySelectableItem()" id="editEntitySelectCreateItem">
                 <i class="material-icons">add</i>
               </button>
             </div>

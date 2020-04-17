@@ -31,10 +31,10 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-success" id="workerEditSaveBtn"
+        <button mdbBtn class="btn-success" id="workerEditSaveBtn"
                 [disabled]="!selectedWorkerDto.firstName || !selectedWorkerDto.lastName"
                 (click)="updateSingle()">{{'Save' | translate}}</button>
-        <button class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Cancel' | translate}}</button>
+        <button mdbBtn class="btn-accent text-black-50" (click)="frame.hide()">{{'Cancel' | translate}}</button>
       </div>
     </div>
   </div>

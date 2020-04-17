@@ -63,12 +63,12 @@
           </div>
         </td>
         <td>
-          <button class="btn btn-danger btn-icon mb-2 " id="moveBtn_{{i}}" *ngIf="userClaims.sitesDelete"
+          <button mdbBtn class="btn-danger btn-icon mb-2 " id="moveBtn_{{i}}" *ngIf="userClaims.sitesDelete"
                   mdbTooltip="{{'Move unit' | translate}}"
                   (click)="openMoveModal(unitModel)">
             <fa-icon icon="dolly" [fixedWidth]="true" size="lg"></fa-icon>
           </button>
-<!--          <button class="btn btn-danger btn-icon mb-2 " id="deleteBtn_{{i}}" *ngIf="userClaims.sitesDelete"-->
+<!--          <button mdbBtn class="btn-danger btn-icon mb-2 " id="deleteBtn_{{i}}" *ngIf="userClaims.sitesDelete"-->
 <!--                  mdbTooltip="{{'Delete site' | translate}}"-->
 <!--                  (click)="openDeleteModal(siteDto)">-->
 <!--            <fa-icon icon="trash-alt" [fixedWidth]="true" size="lg"></fa-icon>-->

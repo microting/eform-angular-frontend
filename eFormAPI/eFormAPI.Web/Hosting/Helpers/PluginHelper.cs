@@ -133,51 +133,51 @@ namespace eFormAPI.Web.Hosting.Helpers
         public static async Task<string> GetLatestRepositoryVersion(string githubUserName, string pluginName)
         {
             string latestVersion = "";
-            try
-            {
-                var httpClient = new HttpClient
-                {
-                    BaseAddress = new Uri($"https://api.github.com/repos/{githubUserName}/{pluginName}/tags")
-                };
-
-                httpClient.DefaultRequestHeaders.Add("User-Agent", "ReleaseSearcher");
-
-                var request = new HttpRequestMessage
-                {
-                    Method = HttpMethod.Get,
-                };
-
-                using (var response = await httpClient.SendAsync(request))
-                {
-                    response.EnsureSuccessStatusCode();
-
-                    var responseString = await response.Content.ReadAsStringAsync();
-                    JToken responseObj = JRaw.Parse(responseString);
-
-                    latestVersion = responseObj.First["name"].ToString();
-
-                }
-
-                latestVersion = latestVersion.Replace("v", "");
-                if (latestVersion.Split(".").Count() == 2)
-                {
-                    latestVersion += ".0";
-                }
-
-                if (pluginName == "eform-angular-frontend")
-                {
-                    latestVersion += ".0";
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(
-                    $"[ERR] PluginHelper.GetLatestRepositoryVersion: Unable to get latest version for {pluginName} from github");
-                Console.WriteLine($"[ERR] PluginHelper.GetLatestRepositoryVersion: Exception was {ex.Message}");
-
-                Console.ForegroundColor = ConsoleColor.Gray;
-            }
+            // try
+            // {
+            //     var httpClient = new HttpClient
+            //     {
+            //         BaseAddress = new Uri($"https://api.github.com/repos/{githubUserName}/{pluginName}/tags")
+            //     };
+            //
+            //     httpClient.DefaultRequestHeaders.Add("User-Agent", "ReleaseSearcher");
+            //
+            //     var request = new HttpRequestMessage
+            //     {
+            //         Method = HttpMethod.Get,
+            //     };
+            //
+            //     using (var response = await httpClient.SendAsync(request))
+            //     {
+            //         response.EnsureSuccessStatusCode();
+            //
+            //         var responseString = await response.Content.ReadAsStringAsync();
+            //         JToken responseObj = JRaw.Parse(responseString);
+            //
+            //         latestVersion = responseObj.First["name"].ToString();
+            //
+            //     }
+            //
+            //     latestVersion = latestVersion.Replace("v", "");
+            //     if (latestVersion.Split(".").Count() == 2)
+            //     {
+            //         latestVersion += ".0";
+            //     }
+            //
+            //     if (pluginName == "eform-angular-frontend")
+            //     {
+            //         latestVersion += ".0";
+            //     }
+            // }
+            // catch (Exception ex)
+            // {
+            //     Console.ForegroundColor = ConsoleColor.Red;
+            //     Console.WriteLine(
+            //         $"[ERR] PluginHelper.GetLatestRepositoryVersion: Unable to get latest version for {pluginName} from github");
+            //     Console.WriteLine($"[ERR] PluginHelper.GetLatestRepositoryVersion: Exception was {ex.Message}");
+            //
+            //     Console.ForegroundColor = ConsoleColor.Gray;
+            // }
             
             return latestVersion;
         }

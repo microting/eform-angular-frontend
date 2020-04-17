@@ -27,13 +27,13 @@
           <div class="d-flex justify-content-center align-items-center flex-column mt-2"
                *ngIf="checkEformPermissions(userClaimsEnum.caseUpdate)">
             <div>
-              <button class="btn btn-ar btn-success" (click)="saveCase(true); this.isSaveClicked = true;"
+              <button mdbBtn class="btn-ar btn-success" (click)="saveCase(true); this.isSaveClicked = true;"
                       id="submit_for_with_post">
                 {{ 'Save and create new post' | translate }} <i class="fa fa-spinner fa-spin"></i>
               </button>
             </div>
             <div>
-              <button class="btn btn-ar btn-success" (click)="saveCase(); this.isSaveClicked = true;" id="submit_form">
+              <button mdbBtn class="btn-ar btn-success" (click)="saveCase(); this.isSaveClicked = true;" id="submit_form">
                 {{ 'Save' | translate }} <i class="fa fa-spinner fa-spin"></i>
               </button>
             </div>

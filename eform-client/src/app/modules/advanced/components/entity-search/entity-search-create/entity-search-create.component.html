@@ -11,7 +11,7 @@
             <div class="col-md-12">
               <div class="md-form">
                 <input mdbInput
-                       [mdbValidate]="false" required
+                        required
                        [(ngModel)]="advEntitySearchableGroupCreateModel.name"
                        id="createName" type="text" class="form-control">
                 <label for="createName">{{'Name' | translate}}</label>
@@ -26,7 +26,7 @@
               <button id="importEntitySearchBtn" class="btn btn-success btn-icon" (click)="modalSearchImportList.show()">
                 <i class="material-icons">format_list_bulleted</i>
               </button>
-              <button class="btn btn-success btn-icon" (click)="addNewAdvEntitySelectableItem()" id="addSingleEntitySearchableItem">
+              <button mdbBtn class="btn-success btn-icon" (click)="addNewAdvEntitySelectableItem()" id="addSingleEntitySearchableItem">
                 <i class="material-icons">add</i>
               </button>
             </div>

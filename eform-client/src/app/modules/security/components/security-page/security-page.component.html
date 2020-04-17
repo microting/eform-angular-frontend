@@ -40,24 +40,24 @@
         </td>
         <td>
           <div class="d-flex flex-row justify-content-center">
-            <button class="btn btn-accent text-black-50 btn-icon mb-2"
+            <button mdbBtn class="btn-accent text-black-50 btn-icon mb-2"
                     [routerLink]="['update-group', securityGroup.id]"
                     mdbTooltip="{{'Edit Group' | translate}}">
               <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
-            <button class="btn btn-success btn-icon mb-2"
+            <button mdbBtn class="btn-success btn-icon mb-2"
                     [routerLink]="['group/' + securityGroup.id + '/eforms-permissions']"
                     mdbTooltip="{{'Eforms Permissions' | translate}}">
               <fa-icon icon="clipboard-list" [fixedWidth]="true" size="lg"></fa-icon>
 
             </button>
-            <button class="btn btn-success btn-icon mb-2 "
+            <button mdbBtn class="btn-success btn-icon mb-2 "
                     [routerLink]="['group/' + securityGroup.id + '/general-permissions']"
                     mdbTooltip="{{'General Permissions' | translate}}">
               <fa-icon icon="lock-open" [fixedWidth]="true" size="lg"></fa-icon>
 
             </button>
-            <button class="btn btn-danger btn-icon mb-2 "
+            <button mdbBtn class="btn-danger btn-icon mb-2 "
                     mdbTooltip="{{'Delete Group' | translate}}" (click)="openDeleteModal(securityGroup)">
               <fa-icon icon="trash-alt" [fixedWidth]="true" size="lg"></fa-icon>
 

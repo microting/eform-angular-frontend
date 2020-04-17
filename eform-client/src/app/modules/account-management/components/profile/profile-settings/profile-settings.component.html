@@ -33,7 +33,7 @@
               <p><strong>{{googleAuthInfoModel.psk}}</strong></p>
             </div>
             <div class="p-0">
-              <button class="btn btn-ar btn-danger" id="deleteGoogleAuthenticatorInfo"
+              <button mdbBtn class="btn-ar btn-danger" id="deleteGoogleAuthenticatorInfo"
                       mdbTooltip="{{ 'Remove google authenticator secret key' | translate }}"
                       (click)="deleteGoogleAuthenticatorInfo()">
                 {{ 'Remove PSK' | translate }}

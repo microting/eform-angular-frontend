@@ -1,6 +1,6 @@
 <subheader-pn [title]="'Email Recipients' | translate">
   <div class="p-3">
-    <button class="btn btn-accent text-black-50 btn-icon" (click)="openTagsModal()"
+    <button mdbBtn class="btn-accent text-black-50 btn-icon" (click)="openTagsModal()"
             mdbTooltip="{{'Manage tags' | translate}}" mdbWavesEffect>
       <fa-icon icon="tags" [fixedWidth]="true" size="lg"></fa-icon>
     </button>
@@ -84,7 +84,7 @@
         </td>
         <td>
           <div class="d-flex flex-row justify-content-center">
-            <button class="btn btn-accent text-black-50 btn-icon mb-2 " id="emailRecipientEditBtn"
+            <button mdbBtn class="btn-accent text-black-50 btn-icon mb-2 " id="emailRecipientEditBtn"
                     mdbTooltip="{{'Edit email recipient' | translate}}" mdbWavesEffect
                     (click)="openEditModal(recipient)">
               <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>

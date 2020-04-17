@@ -37,13 +37,13 @@
         <td id="eform-label">{{eform.label}}</td>
         <td>
           <div class="d-flex flex-row justify-content-center">
-            <button class="btn btn-success btn-icon mb-2" (click)="openEformEditPermissionsModal(eform)"
+            <button mdbBtn class="btn-success btn-icon mb-2" (click)="openEformEditPermissionsModal(eform)"
                     mdbTooltip="{{'Eform Permissions' | translate}}">
               <i class="material-icons">
                 lock_open
               </i>
             </button>
-            <button class="btn btn-danger btn-icon mb-2 " id="delete-eform-btn" (click)="openEformDeleteFromGroupModal(eform)"
+            <button mdbBtn class="btn-danger btn-icon mb-2 " id="delete-eform-btn" (click)="openEformDeleteFromGroupModal(eform)"
                     mdbTooltip="{{ 'Delete eForm' | translate }}">
               <i class="material-icons">
                 delete_forever

@@ -13,7 +13,9 @@ export class Navbar {
   }
 
   public clickonSubMenuItem(menuItem) {
-    $(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), '${menuItem}')]`).click();
+    const ele = $(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), '${menuItem}')]`);
+    ele.waitForDisplayed({timeout: 20000});
+    ele.click();
   }
   // public get userDropdown() {
   //   return $('#userDropdown');

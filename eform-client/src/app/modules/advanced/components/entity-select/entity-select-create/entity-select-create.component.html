@@ -11,7 +11,7 @@
             <div class="col-md-12">
               <div class="md-form">
                 <input mdbInput
-                       [mdbValidate]="false" required
+                        required
                        [(ngModel)]="advEntitySelectableGroupCreateModel.name"
                        id="createName" type="text" class="form-control">
                 <label for="createName">{{'Name' | translate}}</label>
@@ -26,7 +26,7 @@
               <button id="importEntitySelectBtn" class="btn btn-success btn-icon" (click)="modalSelectImportList.show()">
                 <fa-icon icon="list-ul" size="lg" [fixedWidth]="true"></fa-icon>
               </button>
-              <button class="btn btn-success btn-icon" (click)="addNewAdvEntitySelectableItem()" id="addSingleEntitySelectableItem">
+              <button mdbBtn class="btn-success btn-icon" (click)="addNewAdvEntitySelectableItem()" id="addSingleEntitySelectableItem">
                 <fa-icon icon="plus" size="lg" [fixedWidth]="true"></fa-icon>
               </button>
             </div>

@@ -50,12 +50,12 @@
         </td>
         <td *ngIf="userClaims.sitesDelete || userClaims.sitesUpdate">
           <div class="d-flex flex-row justify-content-center">
-            <button class="btn btn-accent text-black-50 btn-icon mb-2 " id="editBtn_{{i}}" *ngIf="userClaims.sitesUpdate"
+            <button mdbBtn class="btn-accent text-black-50 btn-icon mb-2 " id="editBtn_{{i}}" *ngIf="userClaims.sitesUpdate"
                     mdbTooltip="{{'Edit Site' | translate}}" mdbWavesEffect
                     (click)="openEditModal(siteDto)">
               <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
-            <button class="btn btn-danger btn-icon mb-2 " id="deleteBtn_{{i}}" *ngIf="userClaims.sitesDelete"
+            <button mdbBtn class="btn-danger btn-icon mb-2 " id="deleteBtn_{{i}}" *ngIf="userClaims.sitesDelete"
                     mdbTooltip="{{'Delete site' | translate}}"
                     (click)="openDeleteModal(siteDto)">
               <fa-icon icon="trash-alt" [fixedWidth]="true" size="lg"></fa-icon>

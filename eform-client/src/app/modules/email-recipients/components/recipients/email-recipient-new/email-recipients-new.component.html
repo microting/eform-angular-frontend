@@ -43,11 +43,11 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-success" (click)="createEmailRecipients(textAreaData)"
+        <button mdbBtn class="btn-success" (click)="createEmailRecipients(textAreaData)"
                 id="emailRecipientsCreateSaveBtn">
           {{ 'Save' | translate }}
         </button>
-        <button class="btn btn-accent text-black-50" (click)="frame.hide()" id="emailRecipientsSaveCancelBtn">
+        <button mdbBtn class="btn-accent text-black-50" (click)="frame.hide()" id="emailRecipientsSaveCancelBtn">
           {{ 'Cancel' | translate }}
         </button>
       </div>

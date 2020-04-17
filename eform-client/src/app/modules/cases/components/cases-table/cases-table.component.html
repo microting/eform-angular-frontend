@@ -193,17 +193,17 @@
         </td>
         <td>
           <div class="d-flex flex-row justify-content-center">
-            <button class="btn btn-success btn-icon mb-2" *ngIf="checkEformPermissions(userClaimsEnum.caseRead)"
+            <button mdbBtn class="btn-success btn-icon mb-2" *ngIf="checkEformPermissions(userClaimsEnum.caseRead)"
                     [routerLink]="['/cases/edit/' + caseModel.id + '/' + currentTemplate.id]"
                     mdbTooltip="{{ 'Edit Case' | translate }}">
               <fa-icon icon="pen" size="lg" [fixedWidth]="true"></fa-icon>
             </button>
-            <button class="btn btn-success btn-icon mb-2" *ngIf="checkEformPermissions(userClaimsEnum.caseRead)"
+            <button mdbBtn class="btn-success btn-icon mb-2" *ngIf="checkEformPermissions(userClaimsEnum.caseRead)"
                     [routerLink]="['/cases/posts/' + caseModel.id + '/' + currentTemplate.id]"
                     mdbTooltip="{{ 'Posts' | translate }}">
               <fa-icon icon="sticky-note" size="lg" [fixedWidth]="true"></fa-icon>
             </button>
-            <button class="btn btn-success btn-icon mb-2"
+            <button mdbBtn class="btn-success btn-icon mb-2"
                     *ngIf="checkEformPermissions(userClaimsEnum.caseGetPdf)
                     && (currentTemplate.jasperExportEnabled || currentTemplate.docxExportEnabled)"
                     (click)="downloadFile(caseModel.id, 'pdf')"
@@ -211,14 +211,14 @@
               <fa-icon icon="file-pdf" size="lg" [fixedWidth]="true"></fa-icon>
 
             </button>
-            <button class="btn btn-success btn-icon mb-2"
+            <button mdbBtn class="btn-success btn-icon mb-2"
                     *ngIf="checkEformPermissions(userClaimsEnum.caseGetPdf) && currentTemplate.docxExportEnabled"
                     (click)="downloadFile(caseModel.id, 'docx')"
                     mdbTooltip="{{ 'Download Docx' | translate }}">
               <fa-icon icon="file-word" size="lg" [fixedWidth]="true"></fa-icon>
 
             </button>
-            <button class="btn btn-danger btn-icon mb-2 " *ngIf="checkEformPermissions(userClaimsEnum.caseDelete)"
+            <button mdbBtn class="btn-danger btn-icon mb-2 " *ngIf="checkEformPermissions(userClaimsEnum.caseDelete)"
                     mdbTooltip="{{ 'Delete Case' | translate }}"
                     (click)="onDeleteClicked(caseModel)">
               <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true"></fa-icon>
