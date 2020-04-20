@@ -2,7 +2,7 @@
   "name": "eform-angular",
   "version": "2.0.0",
   "scripts": {
-    "ng": "node --max-http-header-size=100000 ng",
+    "ng": "node --max-http-header-size=100000 --max_old_space_size=8192 ng",
     "start": "ng serve --proxy-config proxy.config.json",
     "start-port": "ng serve --port 4300 --proxy-config proxy.config.json",
     "build": "ng build --prod",
