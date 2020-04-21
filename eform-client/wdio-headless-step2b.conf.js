@@ -230,11 +230,11 @@ exports.config = {
    * Function to be executed after a test (in Mocha/Jasmine) or a step (in Cucumber) ends.
    * @param {Object} test test details
    */
-  afterTest(test) {
+  afterTest(test, context, { error, result, duration, passed, retries }) {
     const path = require('path');
 
     // if test passed, ignore, else take and save screenshot.
-    if (test.passed) {
+    if (passed) {
       return;
     }
 

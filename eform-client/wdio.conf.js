@@ -1,14 +1,5 @@
 exports.config = {
-  //
-  // ====================
-  // Runner Configuration
-  // ====================
-  //
-  // WebdriverIO allows it to run your tests in arbitrary locations (e.g. locally or
-  // on a remote machine).
   runner: 'local',
-  //
-  // Override default path ('/wd/hub') for chromedriver service.
   path: '/',
   //
   // ==================
@@ -46,9 +37,9 @@ exports.config = {
   // set maxInstances to 1; wdio will spawn 3 processes. Therefore, if you have 10 spec
   // files and you set maxInstances to 10, all spec files will get tested at the same time
   // and 30 processes will get spawned. The property handles how many capabilities
-  // from the same test should run tests.
+  // from the same test should run Tests.
   //
-  maxInstances: 10,
+  maxInstances: 1,
   //
   // If you have trouble getting all important capabilities together, check out the
   // Sauce Labs platform configurator - a great tool to configure your capabilities:
@@ -64,7 +55,7 @@ exports.config = {
     browserName: 'chrome',
     'goog:chromeOptions': {
       args: [
-        'headless',
+        // 'headless',
         'window-size=1920,1080',
         'disable-gpu'],
     },
@@ -234,11 +225,11 @@ exports.config = {
    * Function to be executed after a test (in Mocha/Jasmine) or a step (in Cucumber) ends.
    * @param {Object} test test details
    */
-  afterTest(test) {
+  afterTest(test, context, { error, result, duration, passed, retries }) {
     const path = require('path');
 
     // if test passed, ignore, else take and save screenshot.
-    if (test.passed) {
+    if (passed) {
       return;
     }
 

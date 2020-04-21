@@ -28,6 +28,7 @@
     "@angular/compiler": "^9.1.1",
     "@angular/core": "^9.1.1",
     "@angular/forms": "^9.1.1",
+    "@angular/localize": "^9.1.2",
     "@angular/platform-browser": "^9.1.1",
     "@angular/platform-browser-dynamic": "^9.1.1",
     "@angular/router": "^9.1.1",
@@ -88,6 +89,7 @@
     "chai": "4.2.0",
     "chromedriver": "81.0.0",
     "codelyzer": "^5.1.2",
+    "fs-extra": "^9.0.0",
     "guid-typescript": "1.0.9",
     "path": "0.12.7",
     "run-sequence": "2.2.1",
@@ -95,7 +97,7 @@
     "tsconfig-paths": "^3.9.0",
     "tslint": "6.1.1",
     "typescript": "3.8.3",
-    "wdio-chromedriver-service": "6.0.1",
+    "wdio-chromedriver-service": "^6.0.2",
     "webdriverio": "6.0.15"
   }
 }
