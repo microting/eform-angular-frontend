@@ -91,9 +91,9 @@ echo "################## END CLONING ##################"
 
 cd eform-angular-frontend/eform-client
 su ubuntu -c \
-"npm i -g @angular/cli@8.3.18"
+"npm i"
 su ubuntu -c \
-"export NODE_OPTIONS=--max_old_space_size=8192 && npm i && GENERATE_SOURCEMAP=false npm run build"
+"export NODE_OPTIONS=--max_old_space_size=8192;time GENERATE_SOURCEMAP=false npm run build"
 
 cd ../eFormAPI/eFormAPI.Web/
 echo "################## START GITVERSION ##################"
