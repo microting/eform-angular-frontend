@@ -3,6 +3,7 @@ export class AdvEntitySearchableItemModel {
   description: string;
   entityItemUId: string;
   workflowState: string;
+  displayIndex: number;
 
   constructor(name?: string) {
     this.name = name;

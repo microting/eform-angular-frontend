@@ -147,7 +147,7 @@ namespace eFormAPI.Web.Services
                     else
                     {
                         await core.EntityItemUpdate(entityItem.Id, entityItem.Name, entityItem.Description,
-                            entityItem.EntityItemUId, entityItem.DisplayIndex);
+                            nextItemUid.ToString(), entityItem.DisplayIndex);
                         currentIds.Add(entityItem.Id);
                     }
 

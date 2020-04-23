@@ -46,6 +46,7 @@ export class EntitySearchEditComponent implements OnInit {
         this.advEntitySearchableGroupEditModel.name = data.model.name;
         this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels = data.model.entityGroupItemLst;
         this.advEntitySearchableGroupEditModel.groupUid = this.selectedGroupId;
+        this.advEntitySearchableGroupEditModel.isLocked = data.model.isLocked;
       }
       this.spinnerStatus = false;
     });
@@ -64,20 +65,22 @@ export class EntitySearchEditComponent implements OnInit {
 
   addNewAdvEntitySelectableItem() {
     const item = new AdvEntitySelectableItemModel();
-    item.entityItemUId = this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels.length.toString();
+    item.entityItemUId = (this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels.length + 1).toString();
+    item.displayIndex = this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels.length + 1;
     this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels.push(item);
   }
 
   deleteAdvEntitySelectableItem(itemId: string) {
     this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels =
       this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels
-        .filter(x => x.entityItemUId != itemId);
+        .filter(x => x.entityItemUId !== itemId);
     this.actualizeAdvEntitySelectableItemPositions();
   }
 
   actualizeAdvEntitySelectableItemPositions() {
     for (let i = 0; i < this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels.length; i++) {
       this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels[i].entityItemUId = i.toString();
+      this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels[i].displayIndex = i;
     }
   }
 
@@ -87,7 +90,7 @@ export class EntitySearchEditComponent implements OnInit {
 
   updateItem(itemModel: AdvEntitySearchableItemModel) {
     this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels
-      .find(x => x.entityItemUId == itemModel.entityItemUId).name = itemModel.name;
+      .find(x => x.entityItemUId === itemModel.entityItemUId).name = itemModel.name;
   }
 
   importAdvEntitySelectableGroup(importString: string) {
