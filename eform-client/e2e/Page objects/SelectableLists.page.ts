@@ -142,7 +142,9 @@ export class SelectableListsPage extends PageWithNavbarPage {
     return $(`//app-entity-select-edit//ul//li[1]//div[2]`);
   }
   public get entityItemEditBtn() {
-    return $('#entitySelectEditItemEditBtn');
+    const ele = $('#entitySelectEditItemEditBtn_0');
+    ele.waitForDisplayed({timeout: 20000});
+    return ele;
   }
   public get entityItemDeleteBtn() {
     return $('//app-entity-select-edit//ul//li[1]//div[3]//a[2]');
@@ -280,7 +282,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
     $('#editName').waitForClickable({timeout: 200000});
     this.entitySelectEditName.clearValue();
     this.entitySelectEditName.addValue(newName);
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    // $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.editItemName(newItemName);
     this.entitySelectEditSaveBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
