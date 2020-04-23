@@ -41,22 +41,22 @@
                     (dragulaModelChange)="dragulaPositionChanged()">
                   <!--list item-->
                   <li class="list-group-item"
-                      *ngFor="let entityItem of advEntitySelectableGroupEditModel.advEntitySelectableItemModels">
+                      *ngFor="let entityItem of advEntitySelectableGroupEditModel.advEntitySelectableItemModels; let i = index">
                     <div class="row">
                       <div class="col-md-1">
                         <a>
                           <fa-icon icon="grip-lines" size="lg" [fixedWidth]="true"></fa-icon>
                         </a>
                       </div>
-                      <div id="entitySelectItemEditNameentityItemUId" class="col-md-9">{{entityItem.name}}</div>
+                      <div id="entitySelectItemEditNameentityItemUId_{{i}}" class="col-md-9">{{entityItem.name}}</div>
                       <div class="col-md-2">
                         <fa-icon icon="exclamation-triangle" size="lg" [fixedWidth]="true" *ngIf="!entityItem.name"
                                  mdbTooltip="{{'Name is required' | translate}}!"></fa-icon>
                         <a class="pull-right">
-                          <fa-icon icon="pen" size="lg" [fixedWidth]="true" id="entitySelectEditItemEditBtn"
+                          <fa-icon icon="pen" size="lg" [fixedWidth]="true" id="entitySelectEditItemEditBtn_{{i}}"
                                    (click)="openModalSelectEditName(entityItem)"></fa-icon> </a>
                         <a class="pull-right">
-                          <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true" id="entitySelectEditItemDeleteBtn"
+                          <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true" id="entitySelectEditItemDeleteBtn_{{i}}"
                                    (click)="deleteAdvEntitySelectableItem(entityItem.entityItemUId)"></fa-icon>
                         </a>
                       </div>
