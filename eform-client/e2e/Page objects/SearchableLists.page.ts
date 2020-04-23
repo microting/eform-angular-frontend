@@ -408,14 +408,14 @@ export class SearchableListRowObject {
 }
 export class EntitySearchItemRowObject {
   constructor(rowNumber) {
-    if ($$('#entitySearchItemEditNameentityItemUId')[rowNumber - 1]) {
-     this.id = $$('#entitySearchItemEditNameentityItemUId')[rowNumber - 1];
-      this.name = $$('#entitySearchItemEditNameentityItemUId')[rowNumber - 1].getText();
+    if ($$('#entitySearchItemEditNameentityItemUId_' + (rowNumber - 1))[0]) {
+     this.id = $$('#entitySearchItemEditNameentityItemUId_' + (rowNumber - 1))[0];
+      this.name = $$('#entitySearchItemEditNameentityItemUId_' + (rowNumber - 1))[0].getText();
       try {
-        this.editBtn = $$('#entitySearchEditItemEditBtn')[rowNumber - 1];
+        this.editBtn = $$('#entitySearchEditItemEditBtn_' + (rowNumber - 1))[0];
       } catch (e) {}
       try {
-        this.deleteBtn = $$('#entitySearchEditItemDeleteBtn')[rowNumber - 1];
+        this.deleteBtn = $$('#entitySearchEditItemDeleteBtn_' + (rowNumber - 1))[0];
       } catch (e) {}
     }
   }

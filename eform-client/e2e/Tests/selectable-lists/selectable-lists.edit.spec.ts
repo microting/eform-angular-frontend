@@ -40,7 +40,7 @@ describe('Entity Select', function () {
     expect(selectableList.name).equal(name);
     selectableList.editBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-    $('#entitySelectItemEditNameentityItemUId').waitForDisplayed({timeout: 20000});
+    $('#entitySelectItemEditNameentityItemUId_0').waitForDisplayed({timeout: 20000});
     expect(selectableLists.firstEntityItemName.getText()).equal(itemName);
     selectableLists.entitySelectEditCancelBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
@@ -54,7 +54,7 @@ describe('Entity Select', function () {
     expect(selectableList.name).equal(newName);
     selectableList.editBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-    $('#entitySelectItemEditNameentityItemUId').waitForDisplayed({timeout: 20000});
+    $('#entitySelectItemEditNameentityItemUId_0').waitForDisplayed({timeout: 20000});
     expect(selectableLists.firstEntityItemName.getText()).equal(newItemName);
     selectableLists.entitySelectEditCancelBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
@@ -70,7 +70,7 @@ describe('Entity Select', function () {
     expect(selectableList.name).equal(name);
     selectableList.editBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-    $('#entitySelectItemEditNameentityItemUId').waitForDisplayed({timeout: 20000});
+    $('#entitySelectItemEditNameentityItemUId_0').waitForDisplayed({timeout: 20000});
     expect(selectableLists.firstEntityItemName.getText()).equal(itemName);
     selectableLists.entitySelectEditCancelBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
@@ -82,7 +82,7 @@ describe('Entity Select', function () {
     const selectableList = selectableLists.getFirstRowObject();
     selectableList.editBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-    $('#entitySelectItemEditNameentityItemUId').waitForDisplayed({timeout: 20000});
+    $('#entitySelectItemEditNameentityItemUId_0').waitForDisplayed({timeout: 20000});
     expect(selectableLists.firstEntityItemName.getText()).equal(newItemName);
     selectableLists.entitySelectEditCancelBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
@@ -129,7 +129,7 @@ describe('Entity Select', function () {
     let selectableList = selectableLists.getFirstRowObject();
     selectableList.editBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-    $('#entitySelectItemEditNameentityItemUId').waitForDisplayed({timeout: 20000});
+    $('#entitySelectItemEditNameentityItemUId_0').waitForDisplayed({timeout: 20000});
     expect(selectableLists.firstEntityItemName.getText()).equal('f');
     selectableLists.entityItemDeleteBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
