@@ -133,7 +133,6 @@ namespace eFormAPI.Web.Services
                     await core.EntityGroupUpdate(entityGroup);
                 }
 
-                var nextItemUid = entityGroup.EntityGroupItemLst.Count;
                 var currentIds = new List<int>();
 
                 foreach (var entityItem in editModel.AdvEntitySearchableItemModels)
@@ -141,17 +140,15 @@ namespace eFormAPI.Web.Services
                     if (string.IsNullOrEmpty(entityItem.MicrotingUUID))
                     {
                         var et = await core.EntitySearchItemCreate(entityGroup.Id, entityItem.Name,
-                            entityItem.Description, nextItemUid.ToString());
+                            entityItem.Description, entityItem.DisplayIndex.ToString());
                         currentIds.Add(et.Id);
                     }
                     else
                     {
                         await core.EntityItemUpdate(entityItem.Id, entityItem.Name, entityItem.Description,
-                            nextItemUid.ToString(), entityItem.DisplayIndex);
+                            entityItem.DisplayIndex.ToString(), entityItem.DisplayIndex);
                         currentIds.Add(entityItem.Id);
                     }
-
-                    nextItemUid++;
                 }
 
                 foreach (var entityItem in entityGroup.EntityGroupItemLst)

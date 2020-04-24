@@ -135,7 +135,6 @@ namespace eFormAPI.Web.Services
                     await core.EntityGroupUpdate(entityGroup);
                 }
 
-                var nextItemUid = entityGroup.EntityGroupItemLst.Count;
                 var currentIds = new List<int>();
 
                 foreach (var entityItem in editModel.AdvEntitySelectableItemModels)
@@ -152,8 +151,6 @@ namespace eFormAPI.Web.Services
                             entityItem.DisplayIndex.ToString(), entityItem.DisplayIndex);
                         currentIds.Add(entityItem.Id);
                     }
-
-                    nextItemUid++;
                 }
                 
                 foreach (var entityItem in entityGroup.EntityGroupItemLst)
