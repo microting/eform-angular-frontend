@@ -143,13 +143,13 @@ namespace eFormAPI.Web.Services
                     if (string.IsNullOrEmpty(entityItem.MicrotingUUID))
                     {
                         var et = core.EntitySelectItemCreate(entityGroup.Id, entityItem.Name,
-                            entityItem.DisplayIndex, nextItemUid.ToString());
+                            entityItem.DisplayIndex, entityItem.DisplayIndex.ToString());
                         currentIds.Add(et.Id);
                     }
                     else
                     {
                         await core.EntityItemUpdate(entityItem.Id, entityItem.Name, entityItem.Description,
-                            nextItemUid.ToString(), entityItem.DisplayIndex);
+                            entityItem.DisplayIndex.ToString(), entityItem.DisplayIndex);
                         currentIds.Add(entityItem.Id);
                     }
 
