@@ -97,7 +97,10 @@ export class EntitySearchEditComponent implements OnInit {
     if (importString) {
       const lines = importString.split('\n');
       for (let i = 0; i < lines.length; i++) {
-        this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels.push(new AdvEntitySelectableItemModel(lines[i]));
+        const obj = new AdvEntitySelectableItemModel(lines[i]);
+        obj.displayIndex = i;
+        obj.entityItemUId = String(i);
+        this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels.push(obj);
       }
     }
   }
