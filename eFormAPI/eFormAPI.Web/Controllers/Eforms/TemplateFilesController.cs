@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 using System;
+using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -75,8 +76,10 @@ namespace eFormAPI.Web.Controllers.Eforms
             var core = await _coreHelper.GetCore();
             var fileName = $"{id}_{DateTime.Now.Ticks}.csv";
             var filePath = PathHelper.GetOutputPath(fileName);
+            CultureInfo cultureInfo = new CultureInfo("de-DE");
+            TimeZoneInfo timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Europe/Copenhagen");
             var fullPath = await core.CasesToCsv(id, null, null, filePath,
-                $"{await core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", ",", "");
+                $"{await core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", ",", "", false, cultureInfo, timeZoneInfo);
             var fileStream = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
             return File(fileStream, "application/octet-stream", fileName);
         }
