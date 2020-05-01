@@ -78,7 +78,6 @@ export class CasePostsPageComponent implements OnInit, OnDestroy {
 
 
   getCasePosts() {
-    this.spinnerStatus = true;
     this.casePostsRequestModel.isSortDsc = this.localPageSettings.isSortDsc;
     this.casePostsRequestModel.sort = this.localPageSettings.sort;
     this.casePostsRequestModel.pageSize = this.localPageSettings.pageSize;
@@ -91,27 +90,22 @@ export class CasePostsPageComponent implements OnInit, OnDestroy {
       if (data && data.success) {
         this.casePostsListModel = data.model;
       }
-      this.spinnerStatus = false;
     });
   }
 
   getRecipientsAndTags() {
-    this.spinnerStatus = true;
     this.getTagsSub$ = this.emailRecipientsService.getEmailRecipientsAndTags().subscribe((data) => {
       if (data && data.success) {
         this.availableRecipientsAndTags = data.model;
       }
-      this.spinnerStatus = false;
     });
   }
 
   getRecipients() {
-    this.spinnerStatus = true;
     this.getRecipientsSub$ = this.emailRecipientsService.getSimpleEmailRecipients().subscribe((data) => {
       if (data && data.success) {
         this.availableRecipients = data.model;
       }
-      this.spinnerStatus = false;
     });
   }
 

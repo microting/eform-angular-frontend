@@ -26,7 +26,6 @@ export class EformCreateModalComponent implements OnInit {
   }
 
   createTemplate() {
-    this.spinnerStatus = true;
     if (!this.eFormCreateModel.newTag) {
       delete this.eFormCreateModel.newTag;
     }
@@ -36,7 +35,6 @@ export class EformCreateModalComponent implements OnInit {
         this.eFormCreateModel = new EFormCreateModel;
         this.frame.hide();
       }
-      this.spinnerStatus = false;
     }));
   }
 }

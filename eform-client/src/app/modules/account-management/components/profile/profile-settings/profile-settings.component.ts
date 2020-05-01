@@ -111,7 +111,6 @@ export class ProfileSettingsComponent implements OnInit {
     this.spinnerStatusCounter(1);
     this.userSettingsService.updateUserSettings(this.userSettingsModel).subscribe(((data) => {
       this.localeService.updateUserLocale(this.userSettingsModel.locale);
-      this.spinnerStatus = false;
       window.location.reload();
     }), error => {
       this.spinnerStatusCounter(-1);
@@ -122,9 +121,7 @@ export class ProfileSettingsComponent implements OnInit {
     // console.log('current spinner count is ' + this.spinnerCounter + ' we got a new counter number ' + counter);
     this.spinnerCounter += counter;
     if (this.spinnerCounter === 0) {
-      this.spinnerStatus = false;
     } else {
-      this.spinnerStatus = true;
     }
   }
 }

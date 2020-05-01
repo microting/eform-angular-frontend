@@ -23,13 +23,11 @@ export class EditDeviceUserModalComponent implements OnInit {
   }
 
   updateSingle() {
-    this.spinnerStatus = true;
     this.deviceUserService.updateSingleDeviceUser(this.selectedDeviceUser).subscribe(operation => {
       if (operation && operation.success) {
         this.onUserEdited.emit();
         this.frame.hide();
       }
-      this.spinnerStatus = false;
     });
   }
 }

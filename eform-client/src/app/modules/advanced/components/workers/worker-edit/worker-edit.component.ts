@@ -24,7 +24,6 @@ export class WorkerEditComponent implements OnInit {
   }
 
   updateSingle() {
-    this.spinnerStatus = true;
     this.workerModel.id = this.selectedWorkerDto.workerUId;
     this.workerModel.userFirstName = this.selectedWorkerDto.firstName;
     this.workerModel.userLastName = this.selectedWorkerDto.lastName;
@@ -33,7 +32,6 @@ export class WorkerEditComponent implements OnInit {
         this.onWorkerEdited.emit();
         this.frame.hide();
       }
-      this.spinnerStatus = false;
     });
   }
 }

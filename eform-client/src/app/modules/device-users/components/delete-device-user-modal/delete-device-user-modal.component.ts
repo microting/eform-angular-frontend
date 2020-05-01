@@ -23,13 +23,11 @@ export class DeleteDeviceUserModalComponent implements OnInit {
   }
 
   deleteSingle() {
-    this.spinnerStatus = true;
     this.deviceUserService.deleteSingleDeviceUser(this.selectedDeviceUser.siteId).subscribe(operation => {
       if (operation && operation.success) {
         this.onUserDeleted.emit();
         this.frame.hide();
       }
-      this.spinnerStatus = false;
     });
   }
 }

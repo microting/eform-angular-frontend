@@ -23,7 +23,6 @@ export class EntitySelectRemoveComponent implements OnInit {
   }
 
   deleteSelectedAdvEntitySelectableGroup() {
-    this.spinnerStatus = true;
     this.entitySelectService.deleteEntitySelectableGroup(this.selectedGroupModel.microtingUUID).subscribe((data) => {
       if (data && data.success) {
         this.frame.hide();

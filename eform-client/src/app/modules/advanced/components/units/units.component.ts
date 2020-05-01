@@ -26,12 +26,10 @@ export class UnitsComponent implements OnInit {
   }
 
   loadAllUnits() {
-    this.spinnerStatus = true;
     this.unitsService.getAllUnits().subscribe(operation => {
       if (operation && operation.success) {
         this.unitModels = operation.model;
       }
-      this.spinnerStatus = false;
     });
   }
 

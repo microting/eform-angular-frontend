@@ -34,7 +34,6 @@ export class EformEditTagsModalComponent implements OnInit {
 
   createNewTag(name: string) {
     if (name) {
-      this.spinnerStatus = true;
       this.eFormTagService.createTag(name).subscribe((operation => {
         if (operation && operation.success) {
           this.onTagAdded.emit();
@@ -44,7 +43,6 @@ export class EformEditTagsModalComponent implements OnInit {
   }
 
   updateTemplateTags() {
-    this.spinnerStatus = true;
     const templateTagsUpdateModel = new TemplateTagsUpdateModel();
     templateTagsUpdateModel.templateId = this.selectedTemplateDto.id;
     templateTagsUpdateModel.tagsIds = this.selectedTemplateTagsIds;
@@ -57,7 +55,6 @@ export class EformEditTagsModalComponent implements OnInit {
   }
 
   removeTemplateTag() {
-    this.spinnerStatus = true;
     this.eFormTagService.deleteTag(this.tagForRemoval).subscribe((operation => {
       if (operation && operation.success) {
         this.onTagAdded.emit();

@@ -28,7 +28,6 @@ export class InstalledPluginModalComponent implements OnInit {
   }
 
   updatePluginStatus(status: number) {
-    this.spinnerStatus = true;
     const newModel = new InstalledPluginUpdateModel();
     newModel.id = this.installedPluginModel.id;
     newModel.pluginId = this.installedPluginModel.pluginId;
@@ -39,7 +38,6 @@ export class InstalledPluginModalComponent implements OnInit {
         localStorage.removeItem('currentAuth');
         window.location.reload();
       }
-      this.spinnerStatus = false;
     });
   }
 }

@@ -34,18 +34,15 @@ export class SiteTagsComponent implements OnInit {
 
   createNewTag(name: string) {
     if (name) {
-      this.spinnerStatus = true;
       this.siteTagService.createTag(name).subscribe((operation => {
         if (operation && operation.success) {
           this.onTagAdded.emit();
         }
-        this.spinnerStatus = false;
       }));
     }
   }
 
   updateSiteTags() {
-    this.spinnerStatus = true;
     const siteTagsUpdateModel = new SiteTagsUpdateModel();
     siteTagsUpdateModel.siteId = this.selectedSite.id;
     siteTagsUpdateModel.tagsIds = this.selectedSiteTagsIds;
@@ -54,18 +51,15 @@ export class SiteTagsComponent implements OnInit {
         this.onSiteTagsUpdated.emit();
         this.frame.hide();
       }
-      this.spinnerStatus = false;
     }));
   }
 
   removeSiteTag() {
-    this.spinnerStatus = true;
     this.siteTagService.deleteTag(this.tagForRemoval).subscribe((operation => {
       if (operation && operation.success) {
         this.onTagAdded.emit();
         this.tagForRemoval = null;
       }
-      this.spinnerStatus = false;
     }));
   }
 }

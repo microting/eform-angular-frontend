@@ -26,13 +26,11 @@ export class RemoveCaseModalComponent implements OnInit {
   }
 
   submitCaseDelete() {
-    this.spinnerStatus = true;
     this.casesService.deleteCase(this.selectedCaseModel.id, this.selectedTemplateId).subscribe((data => {
       if (data && data.success) {
         this.onCaseDeleted.emit();
         this.frame.hide();
       }
-      this.spinnerStatus = false;
     }));
   }
 }

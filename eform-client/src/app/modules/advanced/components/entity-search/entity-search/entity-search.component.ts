@@ -48,7 +48,6 @@ export class EntitySearchComponent implements OnInit {
   }
 
   getEntitySearchableGroupList() {
-    this.spinnerStatus = true;
     this.advEntitySearchableGroupListRequestModel.isSortDsc = this.localPageSettings.isSortDsc;
     this.advEntitySearchableGroupListRequestModel.sort = this.localPageSettings.sort;
     this.advEntitySearchableGroupListRequestModel.pageSize = this.localPageSettings.pageSize;

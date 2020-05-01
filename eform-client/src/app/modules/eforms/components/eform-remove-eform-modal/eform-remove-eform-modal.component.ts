@@ -23,13 +23,11 @@ export class EformRemoveEformModalComponent implements OnInit {
   }
 
   deleteEfrom() {
-    this.spinnerStatus = true;
     this.eFormService.deleteSingle(this.selectedTemplateDto.id).subscribe(operation => {
       if (operation && operation.success) {
         this.onEFormDeleted.emit();
         this.frame.hide();
       }
-      this.spinnerStatus = false;
     });
   }
 }

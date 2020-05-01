@@ -23,14 +23,12 @@ export class FolderCreateComponent implements OnInit {
   }
 
   createFolder() {
-    this.spinnerStatus = true;
     this.foldersService.createFolder(this.newFolderModel).subscribe((data => {
       if (data && data.success) {
         this.newFolderModel = new FolderCreateModel();
         this.FolderCreated.emit();
         this.frame.hide();
       }
-      this.spinnerStatus = false;
     }));
   }
 

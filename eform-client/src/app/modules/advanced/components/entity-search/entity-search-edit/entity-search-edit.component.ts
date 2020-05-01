@@ -40,7 +40,6 @@ export class EntitySearchEditComponent implements OnInit {
   }
 
   loadEntityGroup() {
-    this.spinnerStatus = true;
     this.entitySearchService.getEntitySearchableGroup(this.selectedGroupId).subscribe((data) => {
       if (data && data.success) {
         this.advEntitySearchableGroupEditModel.name = data.model.name;
@@ -48,18 +47,15 @@ export class EntitySearchEditComponent implements OnInit {
         this.advEntitySearchableGroupEditModel.groupUid = this.selectedGroupId;
         this.advEntitySearchableGroupEditModel.isLocked = data.model.isLocked;
       }
-      this.spinnerStatus = false;
     });
   }
 
   updateEntitySearchableGroup() {
-    this.spinnerStatus = true;
     this.entitySearchService.updateEntitySearchableGroup(this.advEntitySearchableGroupEditModel).subscribe((data) => {
       if (data && data.success) {
         this.onEntityGroupEdited.emit();
         this.frame.hide();
       }
-      this.spinnerStatus = false;
     });
   }
 

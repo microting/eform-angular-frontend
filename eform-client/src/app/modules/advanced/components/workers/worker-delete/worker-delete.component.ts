@@ -23,13 +23,11 @@ export class WorkerDeleteComponent implements OnInit {
   }
 
   deleteWorker() {
-    this.spinnerStatus = true;
     this.workersService.deleteSingleWorker(this.selectedWorkerDto.workerUId).subscribe(operation => {
       if (operation && operation.success) {
         this.frame.hide();
         this.onWorkerDeleted.emit();
       }
-      this.spinnerStatus = false;
     });
   }
 

@@ -23,13 +23,11 @@ export class FolderDeleteComponent implements OnInit {
   }
 
   deleteFolder() {
-    this.spinnerStatus = true;
     this.folderService.deleteSingleFolder(this.selectedFolderDto.id).subscribe(operation => {
       if (operation && operation.success) {
         this.frame.hide();
         this.onFolderDeleted.emit();
       }
-      this.spinnerStatus = false;
     });
   }
 }

@@ -23,9 +23,7 @@ export class NewOtpModalComponent implements OnInit {
   }
 
   requestOtp() {
-    this.spinnerStatus = true;
     this.unitsService.requestOtp(this.selectedSimpleSite.unitId).subscribe(operation => {
-      this.spinnerStatus = false;
       if (operation && operation.success) {
         this.frame.hide();
         this.onNewOtpRequested.emit();

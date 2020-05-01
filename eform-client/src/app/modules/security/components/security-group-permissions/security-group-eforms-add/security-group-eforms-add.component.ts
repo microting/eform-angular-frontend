@@ -27,12 +27,10 @@ export class SecurityGroupEformsAddComponent implements OnInit {
 
   addEformToGroup(eformId: number) {
     this.eformBindGroupModel.eformId = eformId;
-    this.spinnerStatus = true;
     this.securityGroupEformsService.addEformToGroup(this.eformBindGroupModel).subscribe((data) => {
       if (data && data.success) {
         this.onEformBound.emit();
       }
-      this.spinnerStatus = false;
     });
   }
 

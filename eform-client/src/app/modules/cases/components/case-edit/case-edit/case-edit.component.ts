@@ -76,12 +76,10 @@ export class CaseEditComponent implements OnInit, OnDestroy {
       if (operation && operation.success) {
         this.replyElement = operation.model;
       }
-      this.spinnerStatus = false;
     });
   }
 
   saveCase(navigateToPosts?: boolean) {
-    this.spinnerStatus = true;
     this.requestModels = [];
     this.editElements.forEach(x => {
       x.extractData();
@@ -93,7 +91,6 @@ export class CaseEditComponent implements OnInit, OnDestroy {
     this.casesService.updateCase(this.replyRequest, this.currentTemplate.id).subscribe(operation => {
       if (operation && operation.success) {
         this.replyElement = new ReplyElementDto();
-        this.spinnerStatus = false;
         this.isNoSaveExitAllowed = true;
         if (navigateToPosts) {
           this.router.navigate(['/cases/posts/', this.id , this.currentTemplate.id, 'new']).then();
@@ -101,13 +98,11 @@ export class CaseEditComponent implements OnInit, OnDestroy {
           this.navigateToReverse();
         }
       }
-      this.spinnerStatus = false;
     });
   }
 
   loadTemplateInfo() {
     if (this.templateId) {
-      this.spinnerStatus = true;
       this.eFormService.getSingle(this.templateId).subscribe(operation => {
         if (operation && operation.success) {
           this.currentTemplate = operation.model;
@@ -155,7 +150,6 @@ export class CaseEditComponent implements OnInit, OnDestroy {
     if (this.securityGroupEformsService.mappedPermissions.length) {
       this.eformPermissionsSimpleModel = this.securityGroupEformsService.mappedPermissions.find(x => x.templateId == templateId);
     } else {
-      this.spinnerStatus = true;
       this.securityGroupEformsService.getEformsSimplePermissions().subscribe((data => {
         if (data && data.success) {
           const foundTemplates = this.securityGroupEformsService.mapEformsSimplePermissions(data.model);

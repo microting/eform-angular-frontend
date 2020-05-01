@@ -42,13 +42,11 @@ export class SecurityGroupEformsPermissionsComponent implements OnInit {
   }
 
   getAvailableEforms() {
-    this.spinnerStatus = true;
     this.securityGroupEformsService.getAvailableEformsForGroup(this.templateRequestModel, this.selectedGroupId)
       .subscribe((data) => {
         if (data && data.success) {
           this.templateListModel = data.model;
         }
-        this.spinnerStatus = false;
       });
   }
 
@@ -58,13 +56,11 @@ export class SecurityGroupEformsPermissionsComponent implements OnInit {
   }
 
   getSecurityGroupEfroms() {
-    this.spinnerStatus = true;
     this.eformsSecurityRequestModel = this.selectedGroupId;
     this.securityGroupEformsService.getGroupEforms(this.selectedGroupId).subscribe((data) => {
       if (data && data.success) {
         this.eformSecurityModel = data.model;
       }
-      this.spinnerStatus = false;
     });
   }
 

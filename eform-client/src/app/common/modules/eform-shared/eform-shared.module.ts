@@ -7,7 +7,6 @@ import {TranslateModule} from '@ngx-translate/core';
 import {
   EformPageSubheaderComponent,
   EformPaginationComponent,
-  EformSpinnerComponent,
   EformPageSizeComponent,
   StatusBarComponent,
   DateFormatterComponent} from './components';
@@ -22,7 +21,6 @@ import {
   declarations: [
     EformPageSubheaderComponent,
     EformPaginationComponent,
-    EformSpinnerComponent,
     EformPageSizeComponent,
     StatusBarComponent,
     DateFormatterComponent
@@ -30,7 +28,6 @@ import {
   exports: [
     EformPageSubheaderComponent,
     EformPaginationComponent,
-    EformSpinnerComponent,
     EformPageSizeComponent,
     StatusBarComponent,
     DateFormatterComponent

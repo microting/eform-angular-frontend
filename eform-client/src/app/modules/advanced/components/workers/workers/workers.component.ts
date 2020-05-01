@@ -46,12 +46,10 @@ export class WorkersComponent implements OnInit {
   }
 
   loadAllWorkers() {
-    this.spinnerStatus = true;
     this.workersService.getAllWorkers().subscribe((operation) => {
       if (operation && operation.success) {
         this.workersDto = operation.model;
       }
-      this.spinnerStatus = false;
     });
   }
 }

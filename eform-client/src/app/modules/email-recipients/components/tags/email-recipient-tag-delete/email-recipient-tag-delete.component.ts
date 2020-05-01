@@ -31,14 +31,12 @@ export class EmailRecipientTagDeleteComponent implements OnInit, OnDestroy {
   }
 
   deleteTag() {
-    this.spinnerStatus = true;
     this.deleteTag$ = this.tagsService.deleteEmailRecipientTag(this.tagModel.id)
       .subscribe((data) => {
         if (data && data.success) {
           this.frame.hide();
           this.tagDeleted.emit();
         }
-        this.spinnerStatus = false;
       });
   }
 

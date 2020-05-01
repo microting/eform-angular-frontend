@@ -37,7 +37,6 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.spinnerStatus = true;
     this.authService.login(new LoginRequestModel(this.formLogin.getRawValue()))
       .subscribe((result: AuthResponseModel) => {
           // Set auth
@@ -46,19 +45,16 @@ export class LoginComponent implements OnInit {
           this.userSettings.getUserSettings().subscribe((data) => {
             localStorage.setItem('locale', data.model.locale);
             this.router.navigate(['/']).then();
-            this.spinnerStatus = false;
           });
         },
         (error) => {
           this.error = error;
-          this.spinnerStatus = false;
         },
       );
   }
 
   submitLoginForm(): void {
     const loginRequestModel = new LoginRequestModel(this.formLogin.getRawValue());
-    this.spinnerStatus = true;
     this.authService.loginAndGetGoogleAuthKey(loginRequestModel)
       .subscribe((result) => {
         if (result.success) {
@@ -71,7 +67,6 @@ export class LoginComponent implements OnInit {
             this.login();
           }
         }
-        this.spinnerStatus = false;
       });
   }
 

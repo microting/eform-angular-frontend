@@ -28,13 +28,11 @@ export class EmailRecipientTagNewComponent implements OnInit, OnDestroy {
   }
 
   createItem() {
-    this.spinnerStatus = true;
     this.createTag$ = this.tagsService.createEmailRecipientTag({id: 0, name: this.name}).subscribe((data) => {
       if (data && data.success) {
         this.frame.hide();
         this.tagCreated.emit();
       }
-      this.spinnerStatus = false;
     });
   }
 

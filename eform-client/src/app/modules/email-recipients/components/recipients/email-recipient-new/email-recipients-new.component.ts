@@ -50,8 +50,6 @@ export class EmailRecipientsNewComponent implements OnInit, OnDestroy {
           return;
         }
       }
-
-      this.spinnerStatus = true;
       this.createEmailRecipients$ = this.emailRecipientsService.createEmailRecipients({
         ...this.emailRecipientsCreateModel,
         emailRecipientsList: emailRecipients
@@ -63,7 +61,6 @@ export class EmailRecipientsNewComponent implements OnInit, OnDestroy {
             this.emailRecipientsCreateModel = new EmailRecipientsCreateModel();
             this.emailRecipientsCreated.emit();
           }
-          this.spinnerStatus = false;
         });
     } else {
       this.toastrService.error(this.translateService.instant('Email/name text area should have at least one email/name pair'));

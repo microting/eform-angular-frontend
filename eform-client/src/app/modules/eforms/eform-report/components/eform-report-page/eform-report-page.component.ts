@@ -30,7 +30,6 @@ export class EformReportPageComponent implements OnInit {
   }
 
   getReport() {
-    this.spinnerStatus = true;
     this.eformReportService.getSingle(this.selectedEformId).subscribe((data) => {
       if (data && data.success) {
         this.fullReportModel = data.model;
@@ -39,7 +38,6 @@ export class EformReportPageComponent implements OnInit {
   }
 
   updateReport() {
-    this.spinnerStatus = true;
     this.eformReportService.updateSingle(this.fullReportModel).subscribe((data) => {
       if (data && data.success) {
         this.router.navigate(['/']).then();

@@ -38,7 +38,6 @@ export class AuthComponent implements OnInit {
 
   isConnectionStringExist(secondCheck: boolean) {
     console.log('isConnectionStringExist called');
-    this.spinnerStatus = true;
     this.settingsService.connectionStringExist().subscribe((result) => {
       if (result && !result.success) {
         if (secondCheck) {
@@ -56,7 +55,6 @@ export class AuthComponent implements OnInit {
   }
 
   getSettings() {
-    this.spinnerStatus = true;
     this.settingsService.getLoginPageSettings().subscribe((data) => {
       if (data && data.success) {
         this.loginPageSettings = this.settingsService.loginPageSettingsModel = data.model;
@@ -70,10 +68,8 @@ export class AuthComponent implements OnInit {
   }
 
   getTwoFactorInfo() {
-    this.spinnerStatus = true;
     this.authService.twoFactorAuthInfo().subscribe((data) => {
       this.twoFactorForced = data.model;
-      this.spinnerStatus = false;
     });
   }
 }

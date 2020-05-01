@@ -28,7 +28,6 @@ export class EformColumnsModalComponent implements OnInit {
   }
 
   getColumnsForTemplate() {
-    this.spinnerStatus = true;
     this.eFormService.getTemplateColumns(this.selectedTemplateDto.id).subscribe((operation) => {
       if (operation && operation.success) {
         this.columnModels = operation.model;
@@ -42,13 +41,11 @@ export class EformColumnsModalComponent implements OnInit {
   }
 
   updateColumns() {
-    this.spinnerStatus = true;
     this.columnEditModel.templateId = this.selectedTemplateDto.id;
     this.eFormService.updateTemplateColumns(this.columnEditModel).subscribe((data => {
       if (data && data.success) {
         this.frame.hide();
       }
-      this.spinnerStatus = false;
     }));
   }
 }

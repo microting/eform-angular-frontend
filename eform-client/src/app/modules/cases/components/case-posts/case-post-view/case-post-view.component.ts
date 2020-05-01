@@ -27,13 +27,11 @@ export class CasePostViewComponent implements OnInit, OnDestroy {
   }
 
   getPost(postId: number) {
-    this.spinnerStatus = true;
     this.getCasePost$ = this.casePostsService.getPostForView(postId).subscribe((data) => {
       if (data && data.success) {
         this.postViewModel = data.model;
         this.frame.show();
       }
-      this.spinnerStatus = false;
     });
   }
 

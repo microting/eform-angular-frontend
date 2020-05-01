@@ -29,13 +29,11 @@ export class EmailRecipientTagEditComponent implements OnInit, OnDestroy {
   }
 
   updateItem() {
-    this.spinnerStatus = true;
     this.updateTag$ = this.tagsService.updateEmailRecipientTag(this.tagModel).subscribe((data) => {
       if (data && data.success) {
         this.frame.hide();
         this.tagUpdated.emit();
       }
-      this.spinnerStatus = false;
     });
   }
 

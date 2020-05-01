@@ -43,12 +43,10 @@ export class FoldersComponent implements OnInit {
   }
 
   loadAllFolders() {
-    this.spinnerStatus = true;
     this.foldersService.getAllFolders().subscribe((operation) => {
       if (operation && operation.success) {
         this.foldersDto = operation.model;
       }
-      this.spinnerStatus = false;
     });
   }
 }

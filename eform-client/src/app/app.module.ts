@@ -27,6 +27,7 @@ import {
   NavigationComponent,
   SimpleLayoutComponent,
   FullLayoutComponent,
+  SpinnerComponent,
 } from './components';
 // import {assertLessThan} from '@angular/core/src/render3/assert';
 // import {importedIcons} from 'src/app/common/const';
@@ -41,7 +42,8 @@ import {OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime-ex';
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    NavigationComponent
+    NavigationComponent,
+    SpinnerComponent
   ],
   imports: [
     // Libs

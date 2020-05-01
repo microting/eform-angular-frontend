@@ -59,28 +59,23 @@ export class UsersPageComponent implements OnInit {
   }
 
   getTwoFactorInfo() {
-    this.spinnerStatus = true;
     this.authService.twoFactorAuthInfo().subscribe((data) => {
       this.isChecked = data.model;
-      this.spinnerStatus = false;
     }, () => this.spinnerStatus = false);
   }
 
   getUserInfoList() {
-    this.spinnerStatus = true;
     this.paginationModel.pageSize = this.localPageSettings.pageSize;
     this.adminService.getAllUsers(this.paginationModel).subscribe((data) => {
       if (data && data.model) {
         this.userInfoModelList = data.model;
       }
-      this.spinnerStatus = false;
     });
   }
 
   getSecurityGroups() {
     const securityGroupRequestModel = new SecurityGroupsRequestModel();
     securityGroupRequestModel.pageSize = 10000;
-    this.spinnerStatus = true;
     this.securityGroupsService.getAllSecurityGroups(securityGroupRequestModel).subscribe((data) => {
       if (data && data.success) {
         this.securityGroups = data.model;
@@ -116,16 +111,13 @@ export class UsersPageComponent implements OnInit {
   }
 
   checked(e: any) {
-    this.spinnerStatus = true;
     if (e.target && e.target.checked) {
       this.adminService.enableTwoFactorAuth().subscribe(() => {
         this.isChecked = true;
-        this.spinnerStatus = false;
       }, () => this.spinnerStatus = false);
     } else if (e.target && !e.target.checked) {
       this.adminService.disableTwoFactorAuth().subscribe(() => {
         this.isChecked = false;
-        this.spinnerStatus = false;
       }, () => this.spinnerStatus = false);
     } else {
       return;

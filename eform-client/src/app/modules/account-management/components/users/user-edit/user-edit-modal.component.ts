@@ -27,7 +27,6 @@ export class UserEditModalComponent implements OnInit {
   }
 
   getUserInfo(selectedId: number) {
-    this.spinnerStatus = true;
     this.adminService.getUser(selectedId).subscribe((data) => {
       if (data && data.model) {
         this.selectedUserModel = data.model;
@@ -36,7 +35,6 @@ export class UserEditModalComponent implements OnInit {
   }
 
   updateUser() {
-    this.spinnerStatus = true;
     this.adminService.updateUser(this.selectedUserModel).subscribe((data) => {
       if (data && data.success) {
         this.onUserUpdated.emit();

@@ -26,7 +26,6 @@ export class NewUserModalComponent implements OnInit {
   }
 
   createUser() {
-    this.spinnerStatus = true;
     this.adminService.createUser(this.newUserModel).subscribe((data) => {
       if (data && data.success) {
         this.newUserModel = new UserRegisterModel;

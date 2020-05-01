@@ -36,13 +36,11 @@ export class SecurityPageComponent implements OnInit {
   }
 
   getSecurityGroups() {
-    this.spinnerStatus = true;
     this.securityGroupsRequestModel.pageSize = this.localPageSettings.pageSize;
     this.securityGroupsService.getAllSecurityGroups(this.securityGroupsRequestModel).subscribe((data) => {
       if (data && data.success) {
         this.securityGroups = data.model;
       }
-      this.spinnerStatus = false;
     });
   }
 

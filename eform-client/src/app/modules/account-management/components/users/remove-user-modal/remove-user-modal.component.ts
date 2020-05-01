@@ -23,7 +23,6 @@ export class RemoveUserModalComponent implements OnInit {
   }
 
   deleteUser() {
-    this.spinnerStatus = true;
     this.adminService.deleteUser(this.selectedUser.id).subscribe((data) => {
       if (data.success) {
         this.onUserDeleted.emit();

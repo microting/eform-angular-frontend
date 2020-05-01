@@ -44,12 +44,10 @@ export class SitesComponent implements OnInit {
   }
 
   loadAllSites() {
-    this.spinnerStatus = true;
     this.sitesService.getAllSites().subscribe(operation => {
       if (operation && operation.success) {
         this.sitesDto = operation.model;
       }
-      this.spinnerStatus = false;
     });
   }
 
@@ -59,14 +57,11 @@ export class SitesComponent implements OnInit {
   }
 
   loadAllTags() {
-    this.spinnerStatus = true;
     this.siteTagsService.getAvailableTags().subscribe((data) => {
       if (data && data.success) {
         this.availableTags = data.model;
       }
-      this.spinnerStatus = false;
     }, (error) => {
-      this.spinnerStatus = false;
     });
   }
 }

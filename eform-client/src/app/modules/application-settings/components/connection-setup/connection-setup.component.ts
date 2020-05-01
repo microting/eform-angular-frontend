@@ -43,7 +43,6 @@ export class ConnectionSetupComponent implements OnInit {
   }
 
   updateConnectionString() {
-    this.spinnerStatus = true;
     this.settingsService.updateConnectionString(this.settingsModel).subscribe(operation => {
       if (operation && operation.success) {
         this.router.navigate(['/login']).then();

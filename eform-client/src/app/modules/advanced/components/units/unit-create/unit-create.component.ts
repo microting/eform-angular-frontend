@@ -37,14 +37,12 @@ export class UnitCreateComponent implements OnInit {
   createUnit() {
     // this.newWorkerModel.customerNo =
     //   this.simpleSites.find(x => x.siteId === this.newWorkerModel.siteId).customerNo;
-    this.spinnerStatus = true;
     this.unitsService.createUnit(this.unitModel).subscribe((data => {
       if (data && data.success) {
     //     this.newWorkerModel = new WorkerCreateModel;
         this.UnitCreated.emit();
         this.frame.hide();
       }
-      this.spinnerStatus = false;
     }));
   }
 }

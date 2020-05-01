@@ -47,12 +47,10 @@ export class InstalledPluginsPageComponent implements OnInit {
   }
 
   getInstalledPlugins() {
-    this.spinnerStatus = true;
     this.pluginManagementService.getInstalledPlugins(this.installedPluginsRequestModel).subscribe((data) => {
       if (data && data.success) {
         this.installedPluginsModel = data.model;
       }
-      this.spinnerStatus = false;
     });
   }
 
@@ -67,7 +65,6 @@ export class InstalledPluginsPageComponent implements OnInit {
   // }
 
   showPermissionsModal(installedPlugin: InstalledPluginModel) {
-    this.spinnerStatus = true;
     this.pluginPermissionsService.getPluginPermissions(installedPlugin.id).subscribe(data => {
       if (data && data.success) {
         this.pluginPermissionsService.getPluginGroupPermissions(installedPlugin.id).subscribe(groupData => {
@@ -84,7 +81,6 @@ export class InstalledPluginsPageComponent implements OnInit {
           }
 
           this.editPluginPermissionsModal.show({pluginId: installedPlugin.id, groupPermissions: groupData.model});
-          this.spinnerStatus = false;
         });
       }
     });
@@ -95,12 +91,10 @@ export class InstalledPluginsPageComponent implements OnInit {
   // }
 
   updatePluginPermissions(model: PluginGroupPermissionsUpdateModel) {
-    this.spinnerStatus = true;
     this.pluginPermissionsService.updatePluginGroupPermissions(model).subscribe((data) => {
       if (data && data.success) {
         this.editPluginPermissionsModal.hide();
       }
-      this.spinnerStatus = false;
     });
   }
 
