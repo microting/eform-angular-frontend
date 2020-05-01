@@ -36,18 +36,14 @@ class LoginPage extends Page {
   public login(): void {
     $('#username').waitForDisplayed({timeout: 60000});
     $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
-    // browser.pause(10000);
     this.usernameInput.setValue(LoginConstants.username);
     this.passwordInput.setValue(LoginConstants.password);
     this.loginBtn.click();
-    // browser.pause(10000);
     $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     $('#newEFormBtn').waitForDisplayed({timeout: 60000});
     $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
-    // browser.pause(10000);
   }
   public loginWithNewPassword(): void {
-    // browser.pause(10000);
     $('#username').waitForDisplayed({timeout: 60000});
     $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     this.usernameInput.setValue(LoginConstants.username);
@@ -55,7 +51,6 @@ class LoginPage extends Page {
     this.loginBtn.click();
     $('#newEFormBtn').waitForDisplayed({timeout: 60000});
     $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
-    // browser.pause(10000);
   }
 
   public randomInt(min, max) {

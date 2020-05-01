@@ -41,7 +41,9 @@ export class Navbar {
     return $(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Lokationer')]`);
   }
   public get deviceUsersBtn() {
-    return this.clickOnHeaderMenuItem2(' Enhedsbrugere ');
+    const ele = this.clickOnHeaderMenuItem2(' Enhedsbrugere ');
+    ele.waitForDisplayed({timeout: 20000});
+    return ele;
   }
   public get entitySelectBtn() {
     return $(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Valgbar Liste')]`);

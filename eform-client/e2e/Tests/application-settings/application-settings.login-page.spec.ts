@@ -16,7 +16,6 @@ describe('Application settings page - site header section', function () {
     $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     applicationSettingsPage.save();
     //browser.refresh();
-    // browser.pause(10000);
     $('#sign-out-dropdown').waitForDisplayed({timeout: 40000});
     $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     applicationSettingsPage.Navbar.logout();

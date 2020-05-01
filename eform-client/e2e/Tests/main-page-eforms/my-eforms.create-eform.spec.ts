@@ -16,7 +16,6 @@ describe('My eforms', function () {
     expect(eform.eFormName).equal(newEformLabel);
     expect(eform.tags.length).equal(0);
     eform.deleteBtn.click();
-    // browser.pause(10000);
     $('#eFormDeleteDeleteBtn').waitForDisplayed({timeout: 20000});
     $$('.btn-danger')[2].click();
     eform = myEformsPage.getFirstMyEformsRowObj();
@@ -117,7 +116,6 @@ describe('My eforms', function () {
     expect(tagsTexts).to.include.members(addedAndSelectedTags.selected);
     eform.deleteBtn.click();
     $('#eFormDeleteDeleteBtn').waitForDisplayed({timeout: 20000});
-    // browser.pause(10000);
     $$('.btn-danger')[2].click();
     eform = myEformsPage.getFirstMyEformsRowObj();
     expect(eform.id === null);

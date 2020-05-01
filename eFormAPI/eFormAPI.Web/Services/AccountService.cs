@@ -103,7 +103,7 @@ namespace eFormAPI.Web.Services
             var timeZone = string.IsNullOrEmpty(user.TimeZone) ? "Europe/Copenhagen" : user.TimeZone;
             var formats = string.IsNullOrEmpty(user.Formats) ? "de-DE" : user.Formats;
             var darkTheme = user.DarkTheme;
-            var locale = string.IsNullOrEmpty(user.Locale) ? "en-US" : user.Locale;
+            var locale = string.IsNullOrEmpty(user.Locale) ? "da-DK" : user.Locale;
 
             return new OperationDataResult<UserSettingsModel>(true, new UserSettingsModel()
             {
