@@ -125,7 +125,7 @@ describe('My eforms', function () {
   it('should not create eform if xml is empty', function () {
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     myEformsPage.newEformBtn.click();
-    browser.pause(5000);
+    browser.pause(500);
     expect(myEformsPage.createEformBtn.isEnabled()).equal(false);
   });
 });

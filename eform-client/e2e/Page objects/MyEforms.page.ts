@@ -53,7 +53,9 @@ class MyEformsPage extends PageWithNavbarPage {
   }
 
   public get createEformBtn() {
-    return $('#createEformBtn');
+    const ele = $('#createEformBtn');
+    ele.waitForDisplayed({timeout: 20000});
+    return ele;
   }
 
   public get cancelCreateEformBtn() {
