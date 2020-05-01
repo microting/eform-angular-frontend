@@ -21,9 +21,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Infrastructure.Models.Settings;
 using eFormAPI.Web.Infrastructure.Models.Settings.User;
 using eFormAPI.Web.Infrastructure.Models.Users;
 using Microsoft.AspNetCore.Authorization;
@@ -117,6 +120,14 @@ namespace eFormAPI.Web.Controllers
             }
 
             return await _accountService.ResetPassword(model);
+        }
+
+        [HttpGet]
+        [Route("api/account/timezones")]
+        [AllowAnonymous]
+        public OperationDataResult<TimeZonesModel> AllTimeZones()
+        {
+            return _accountService.AllTimeZones();
         }
     }
 }

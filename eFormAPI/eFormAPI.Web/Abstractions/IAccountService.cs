@@ -21,7 +21,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using eFormAPI.Web.Infrastructure.Models.Settings;
 using eFormAPI.Web.Infrastructure.Models.Settings.User;
 using eFormAPI.Web.Infrastructure.Models.Users;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
@@ -38,5 +41,6 @@ namespace eFormAPI.Web.Abstractions
         Task<OperationResult> ResetAdminPassword(string code);
         Task<OperationResult> ResetPassword(ResetPasswordModel model);
         Task<OperationResult> UpdateUserSettings(UserSettingsModel model);
+        OperationDataResult<TimeZonesModel> AllTimeZones();
     }
 }
