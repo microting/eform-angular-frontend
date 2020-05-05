@@ -17,7 +17,7 @@ export class ChangePasswordComponent implements OnInit {
 
   updateUserPassword() {
     this.authService.changePassword(this.changePasswordModel).subscribe((data) => {
-    }, () => {this.spinnerStatus = false; });
+    }, () => { });
   }
 
 }
