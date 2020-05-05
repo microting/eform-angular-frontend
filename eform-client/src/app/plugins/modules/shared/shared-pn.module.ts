@@ -8,7 +8,6 @@ import {
   PageSizePnComponent,
   PaginationPnComponent,
   PellPnComponent,
-  SpinnerPnComponent,
   SubheaderPnComponent
 } from './components';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
@@ -22,12 +21,11 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
     NgxChartsModule
   ],
   declarations: [
-    SpinnerPnComponent,
     PaginationPnComponent,
     SubheaderPnComponent,
     PellPnComponent,
     PageSizePnComponent],
-  exports: [SpinnerPnComponent, PaginationPnComponent, SubheaderPnComponent, PellPnComponent, PageSizePnComponent],
+  exports: [PaginationPnComponent, SubheaderPnComponent, PellPnComponent, PageSizePnComponent],
   providers: [SharedPnService]
 })
 export class SharedPnModule { }
