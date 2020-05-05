@@ -11,6 +11,8 @@ import {
   SubheaderPnComponent
 } from './components';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
+import {LoaderInterceptor} from 'src/app/common/interceptors/loader-interceptor.service';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -26,6 +28,10 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
     PellPnComponent,
     PageSizePnComponent],
   exports: [PaginationPnComponent, SubheaderPnComponent, PellPnComponent, PageSizePnComponent],
-  providers: [SharedPnService]
+  providers: [
+    SharedPnService,
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }
+    // TODO 5th May 2020: the above line is not suppose to be here, for some reason some plugins will not work without this line.
+    ]
 })
 export class SharedPnModule { }
