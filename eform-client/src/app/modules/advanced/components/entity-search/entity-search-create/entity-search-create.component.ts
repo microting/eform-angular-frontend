@@ -17,7 +17,6 @@ export class EntitySearchCreateComponent implements OnInit {
   @ViewChild('modalSearchEditName', { static: true }) modalSearchEditName;
   @Output() onEntityGroupCreated: EventEmitter<void> = new EventEmitter<void>();
   seletctedItem: AdvEntitySearchableItemModel = new AdvEntitySearchableItemModel();
-  spinnerStatus = false;
 
   items = [];
 

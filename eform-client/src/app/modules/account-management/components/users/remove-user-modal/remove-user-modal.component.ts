@@ -11,7 +11,6 @@ export class RemoveUserModalComponent implements OnInit {
   @Input() selectedUser: UserInfoModel = new UserInfoModel;
   @Output() onUserDeleted: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('frame', { static: true }) frame;
-  spinnerStatus = false;
 
   constructor(private adminService: AdminService) { }
 
@@ -27,7 +26,7 @@ export class RemoveUserModalComponent implements OnInit {
       if (data.success) {
         this.onUserDeleted.emit();
         this.frame.hide();
-      } this.spinnerStatus = false;
+      }
     });
   }
 }

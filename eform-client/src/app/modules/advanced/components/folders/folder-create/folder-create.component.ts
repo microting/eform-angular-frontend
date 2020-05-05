@@ -11,7 +11,6 @@ export class FolderCreateComponent implements OnInit {
   @Output() FolderCreated: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('frame', { static: true }) frame;
   newFolderModel: FolderCreateModel = new FolderCreateModel;
-  spinnerStatus = false;
 
   constructor(private foldersService: FoldersService) { }
 

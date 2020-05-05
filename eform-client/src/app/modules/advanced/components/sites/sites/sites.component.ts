@@ -14,7 +14,6 @@ export class SitesComponent implements OnInit {
   @ViewChild('modalSiteEdit', { static: true }) modalSiteEdit;
   @ViewChild('modalSiteDelete', { static: true }) modalSiteDelete;
   @ViewChild('modalSiteTags', { static: true }) modalSiteTags: SiteTagsComponent;
-  spinnerStatus = false;
   sitesDto: Array<SiteNameDto> = [];
   selectedSiteDto: SiteNameDto = new SiteNameDto();
   availableTags: Array<CommonDictionaryModel> = [];

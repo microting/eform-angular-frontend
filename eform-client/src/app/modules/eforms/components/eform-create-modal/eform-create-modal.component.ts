@@ -13,7 +13,6 @@ export class EformCreateModalComponent implements OnInit {
   @Input() availableTags: Array<CommonDictionaryModel> = [];
   @Output() onEformCreated: EventEmitter<void> = new EventEmitter<void>();
   eFormCreateModel: EFormCreateModel = new EFormCreateModel();
-  spinnerStatus = false;
 
   constructor(private eFormService: EFormService) {
   }

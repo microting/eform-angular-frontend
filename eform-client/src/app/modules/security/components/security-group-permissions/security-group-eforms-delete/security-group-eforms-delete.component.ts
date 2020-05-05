@@ -12,7 +12,6 @@ export class SecurityGroupEformsDeleteComponent implements OnInit {
   @Output() onEformDeleted: EventEmitter<void> = new EventEmitter<void>();
   eformSecurityModel: EformPermissionsModel = new EformPermissionsModel();
   groupId: number;
-  spinnerStatus = false;
   constructor(private securityGroupEformsService: SecurityGroupEformsPermissionsService) { }
 
   ngOnInit() {

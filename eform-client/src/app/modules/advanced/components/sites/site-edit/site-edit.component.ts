@@ -12,7 +12,6 @@ export class SiteEditComponent implements OnInit {
   @Input() siteNameDto: SiteNameDto = new SiteNameDto();
   @ViewChild('frame', { static: true }) frame;
   siteModel: SiteNameModel = new SiteNameModel();
-  spinnerStatus = false;
 
   constructor(private sitesService: SitesService, private toastrService: ToastrService) { }
 

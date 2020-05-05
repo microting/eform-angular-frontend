@@ -23,7 +23,6 @@ export class InstalledPluginsPageComponent implements OnInit {
   installedPluginsRequestModel: InstalledPluginsRequestModel = new InstalledPluginsRequestModel();
   installedPluginsModel: InstalledPluginsModel = new InstalledPluginsModel();
   securityGroups: SecurityGroupModel[] = [];
-  spinnerStatus = false;
   pluginSettingsUpdateModel: InstalledPluginUpdateModel = new InstalledPluginUpdateModel();
 
   constructor(

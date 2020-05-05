@@ -13,7 +13,6 @@ export class InstalledPluginPermissionsComponent implements OnInit {
   @Input() securityGroups: SecurityGroupModel[] = [];
   pluginGroupPermissions: PluginGroupPermissionsListModel[] = [];
   pluginId: number;
-  spinnerStatus = false;
 
   constructor() { }
 

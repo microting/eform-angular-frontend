@@ -11,7 +11,6 @@ export class FolderDeleteComponent implements OnInit {
  @Input() selectedFolderDto: FolderDto = new FolderDto();
  @Output() onFolderDeleted: EventEmitter<void> = new EventEmitter<void>();
  @ViewChild('frame', { static: true }) frame;
- spinnerStatus = false;
 
   constructor(private folderService: FoldersService) { }
 

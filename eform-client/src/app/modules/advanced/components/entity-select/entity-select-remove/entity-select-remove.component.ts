@@ -11,7 +11,6 @@ export class EntitySelectRemoveComponent implements OnInit {
   @ViewChild('frame', { static: true }) frame;
   @Output() onEntityRemoved: EventEmitter<void> = new EventEmitter<void>();
   selectedGroupModel: AdvEntitySelectableGroupModel = new AdvEntitySelectableGroupModel();
-  spinnerStatus = false;
   constructor(private entitySelectService: EntitySelectService) { }
 
   ngOnInit() {
@@ -27,7 +26,7 @@ export class EntitySelectRemoveComponent implements OnInit {
       if (data && data.success) {
         this.frame.hide();
         this.onEntityRemoved.emit();
-      } this.spinnerStatus = false;
+      }
     });
   }
 

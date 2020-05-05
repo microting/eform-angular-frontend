@@ -25,8 +25,6 @@ export class LoginComponent implements OnInit {
   showAdminResetForm = false;
   error: string;
 
-  spinnerStatus = false;
-
   constructor(private router: Router,
               private authService: AuthService,
               public settingsService: AppSettingsService,

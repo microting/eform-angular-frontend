@@ -15,7 +15,6 @@ export class ElementPictureComponent implements OnChanges {
   geoObjects = [];
   images = [];
   galleryImages: GalleryItem[] = [];
-  spinnerStatus = false;
 
   constructor(private imageService: ImageService, public gallery: Gallery, public lightbox: Lightbox) {
   }

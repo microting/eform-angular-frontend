@@ -41,7 +41,7 @@ export class EntitySelectComponent implements OnInit {
     this.entitySelectService.getEntitySelectableGroupList(this.advEntitySelectableGroupListRequestModel).subscribe((data) => {
       if (data && data.model) {
         this.advEntitySelectableGroupListModel = data.model;
-      } this.spinnerStatus = false;
+      }
     });
   }
 

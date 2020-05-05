@@ -16,7 +16,6 @@ export class CasePostViewComponent implements OnInit, OnDestroy {
   @Input() pdfReportAvailable: boolean;
   postViewModel: CasePostViewModel = new CasePostViewModel();
   getCasePost$: Subscription;
-  spinnerStatus = false;
   constructor(private casePostsService: CasePostsService) { }
 
   ngOnInit() {

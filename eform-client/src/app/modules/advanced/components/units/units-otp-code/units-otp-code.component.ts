@@ -11,7 +11,6 @@ export class UnitsOtpCodeComponent implements OnInit {
   @Input() selectedUnitModel: UnitDto = new UnitDto();
   @Output() onUnitOtpRewoked: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('frame', { static: true }) frame;
-  spinnerStatus = false;
 
   constructor(private unitsService: UnitsService) { }
 

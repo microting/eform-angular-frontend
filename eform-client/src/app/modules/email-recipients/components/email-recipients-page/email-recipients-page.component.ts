@@ -28,7 +28,6 @@ export class EmailRecipientsPageComponent implements OnInit, OnDestroy {
   emailRecipientsListModel: EmailRecipientsListModel = new EmailRecipientsListModel();
   emailRecipientsRequestModel: EmailRecipientsRequestModel = new EmailRecipientsRequestModel();
   localPageSettings: PageSettingsModel = new PageSettingsModel();
-  spinnerStatus = false;
   availableTags: CommonDictionaryModel[] = [];
   getAllSub$: Subscription;
   getTagsSub$: Subscription;

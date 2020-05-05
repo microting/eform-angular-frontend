@@ -15,7 +15,6 @@ export class GoogleAuthenticatorComponent implements OnInit{
   loginRequestModel: LoginRequestModel;
   formGoogleAuth: FormGroup;
   code: AbstractControl;
-  spinnerStatus = false;
 
   constructor(private authService: AuthService,
               private router: Router,

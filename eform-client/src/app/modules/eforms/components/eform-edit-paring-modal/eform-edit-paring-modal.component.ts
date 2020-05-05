@@ -20,7 +20,6 @@ export class EformEditParingModalComponent implements OnInit {
   deployViewModel: DeployModel = new DeployModel();
   selectedTemplateDto: TemplateDto = new TemplateDto();
   sitesDto: Array<SiteNameDto> = [];
-  spinnerStatus = false;
   matchFound = false;
   foldersDto: Array<FolderDto> = [];
   saveButtonDisabled = true;

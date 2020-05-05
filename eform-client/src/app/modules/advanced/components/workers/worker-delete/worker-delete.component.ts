@@ -11,7 +11,6 @@ export class WorkerDeleteComponent implements OnInit {
   @Input() selectedWorkerDto: WorkerDto = new WorkerDto();
   @Output() onWorkerDeleted: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('frame', { static: true }) frame;
-  spinnerStatus = false;
 
   constructor(private workersService: WorkersService) { }
 

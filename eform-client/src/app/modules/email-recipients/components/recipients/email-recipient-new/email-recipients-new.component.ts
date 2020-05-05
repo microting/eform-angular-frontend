@@ -18,7 +18,6 @@ export class EmailRecipientsNewComponent implements OnInit, OnDestroy {
   @Input() availableTags: CommonDictionaryModel[] = [];
   @Output() emailRecipientsCreated: EventEmitter<void> = new EventEmitter<void>();
   emailRecipientsCreateModel: EmailRecipientsCreateModel = new EmailRecipientsCreateModel();
-  spinnerStatus = false;
   createEmailRecipients$: Subscription;
   rawTextareaData = '';
 

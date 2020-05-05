@@ -17,7 +17,6 @@ export class SiteTagsComponent implements OnInit {
   selectedSite: SiteNameDto = new SiteNameDto();
   selectedSiteTagsIds: Array<number> = [];
   tagForRemoval: number;
-  spinnerStatus = false;
 
   constructor(private siteTagService: SiteTagsService) {
   }

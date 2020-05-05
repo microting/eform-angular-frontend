@@ -12,7 +12,6 @@ import {SecurityGroupsService, AdminService} from 'src/app/common/services';
 export class SecurityGroupCreateComponent implements OnInit {
   securityGroupUsers: Array<any> = [];
   securityGroupCreateModel: SecurityGroupCreateModel = new SecurityGroupCreateModel();
-  spinnerStatus = false;
   paginationModel = new PaginationModel(1, 1000, 0);
   users: UserInfoModelList = new UserInfoModelList();
 

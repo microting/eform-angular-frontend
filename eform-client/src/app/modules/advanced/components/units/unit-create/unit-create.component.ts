@@ -14,7 +14,6 @@ export class UnitCreateComponent implements OnInit {
   @ViewChild('frame') frame;
   unitModel: UnitModel = new UnitModel;
   simpleSites: Array<SiteDto> = [];
-  spinnerStatus = false;
 
   constructor(private simpleSitesService: DeviceUserService, private unitsService: UnitsService) { }
 

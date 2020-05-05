@@ -16,7 +16,6 @@ export class EmailRecipientDeleteComponent implements OnInit, OnDestroy {
   @Input() availableTags: CommonDictionaryModel[] = [];
   @Output() emailRecipientDeleted: EventEmitter<void> = new EventEmitter<void>();
   selectedEmailRecipient: EmailRecipientModel = new EmailRecipientModel;
-  spinnerStatus = false;
   deleteEmailRecipient$: Subscription;
 
 

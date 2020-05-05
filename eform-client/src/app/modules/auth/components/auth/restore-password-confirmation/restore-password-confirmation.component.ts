@@ -11,7 +11,6 @@ import {AppSettingsService, AuthService} from 'src/app/common/services';
 })
 export class RestorePasswordConfirmationComponent implements OnInit{
   submitRestoreModel: PasswordRestoreModel = new PasswordRestoreModel();
-  spinnerStatus = false;
 
   constructor(private router: Router,
               private authService: AuthService,

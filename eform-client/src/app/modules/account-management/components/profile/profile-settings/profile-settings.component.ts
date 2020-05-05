@@ -32,7 +32,6 @@ export class ProfileSettingsComponent implements OnInit {
   userSettingsModel: UserSettingsModel = new UserSettingsModel();
   googleAuthInfoModel: GoogleAuthInfoModel = new GoogleAuthInfoModel;
   timeZones: TimezonesModel = new TimezonesModel();
-  spinnerStatus = false;
   spinnerCounter = 0;
 
   constructor(private authService: AuthService,

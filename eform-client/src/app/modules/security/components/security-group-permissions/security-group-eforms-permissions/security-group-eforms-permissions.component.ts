@@ -23,7 +23,6 @@ export class SecurityGroupEformsPermissionsComponent implements OnInit {
   eformSecurityModel: EformsPermissionsModel = new EformsPermissionsModel();
   eformsSecurityRequestModel: EformsPermissionsRequestModel = new EformsPermissionsRequestModel();
   selectedGroupId: number;
-  spinnerStatus = false;
 
   constructor(
     private securityGroupEformsService: SecurityGroupEformsPermissionsService,

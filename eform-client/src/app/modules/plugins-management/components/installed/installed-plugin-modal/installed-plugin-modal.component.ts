@@ -11,7 +11,6 @@ import {PluginsManagementService} from '../../../../../common/services/plugins-m
 export class InstalledPluginModalComponent implements OnInit {
   @Input() installedPluginModel: InstalledPluginModel = new InstalledPluginModel();
   @ViewChild('frame', { static: true }) frame;
-  spinnerStatus = false;
 
   constructor(
     private pluginManagementService: PluginsManagementService) {}

@@ -14,7 +14,6 @@ export class EmailRecipientTagNewComponent implements OnInit, OnDestroy {
   @Output() tagCreated: EventEmitter<void> = new EventEmitter<void>();
   @Output() tagCreateCancelled: EventEmitter<void> = new EventEmitter<void>();
   name = '';
-  spinnerStatus = false;
   createTag$: Subscription;
 
   constructor(private tagsService: EmailRecipientsTagsService) {

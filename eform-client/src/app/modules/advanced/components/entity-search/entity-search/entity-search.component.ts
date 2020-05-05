@@ -54,7 +54,7 @@ export class EntitySearchComponent implements OnInit {
     this.entitySearchService.getEntitySearchableGroupList(this.advEntitySearchableGroupListRequestModel).subscribe((data) => {
       if (data && data.model) {
         this.advEntitySearchableGroupListModel = data.model;
-      } this.spinnerStatus = false;
+      }
     });
   }
 

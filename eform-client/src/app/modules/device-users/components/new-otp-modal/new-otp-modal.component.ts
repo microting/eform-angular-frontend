@@ -11,7 +11,6 @@ export class NewOtpModalComponent implements OnInit {
   @Input() selectedSimpleSite: SiteDto = new SiteDto();
   @Output() onNewOtpRequested: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('frame', { static: true }) frame;
-  spinnerStatus = false;
 
   constructor(private unitsService: UnitsService) { }
 

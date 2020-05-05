@@ -23,7 +23,6 @@ export class CasesTableComponent implements OnInit {
   caseListModel: CaseListModel = new CaseListModel();
   localPageSettings: PageSettingsModel = new PageSettingsModel();
   id: number;
-  spinnerStatus = false;
 
   get userClaims() { return this.authService.userClaims; }
   get userClaimsEnum() { return UserClaimsEnum; }

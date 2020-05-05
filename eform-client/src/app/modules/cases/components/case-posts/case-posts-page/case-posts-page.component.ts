@@ -24,7 +24,6 @@ export class CasePostsPageComponent implements OnInit, OnDestroy {
   casePostsListModel: CasePostsListModel = new CasePostsListModel();
   casePostsRequestModel: CasePostsRequestModel = new CasePostsRequestModel();
   localPageSettings: PageSettingsModel = new PageSettingsModel();
-  spinnerStatus = false;
   availableRecipientsAndTags: EmailRecipientTagCommonModel[] = [];
   availableRecipients: CommonDictionaryModel[] = [];
   getAllSub$: Subscription;

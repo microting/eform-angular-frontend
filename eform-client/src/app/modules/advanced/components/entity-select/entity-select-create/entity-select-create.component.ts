@@ -16,7 +16,6 @@ export class EntitySelectCreateComponent implements OnInit {
   @ViewChild('modalSelectEditName', { static: true }) modalSelectEditName;
   @Output() onEntityGroupCreated: EventEmitter<void> = new EventEmitter<void>();
   seletctedItem: AdvEntitySelectableItemModel = new AdvEntitySelectableItemModel();
-  spinnerStatus = false;
 
   items = [];
 

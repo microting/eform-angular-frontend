@@ -14,7 +14,6 @@ export class SecurityGroupEformsAddComponent implements OnInit {
   @Output() onEformBound: EventEmitter<void> = new EventEmitter<void>();
   @Output() onSearchInputChanged: EventEmitter<string> = new EventEmitter<string>();
   eformBindGroupModel: EformBindGroupModel = new EformBindGroupModel();
-  spinnerStatus = false;
   constructor(private securityGroupEformsService: SecurityGroupEformsPermissionsService) { }
 
   ngOnInit() {

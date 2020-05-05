@@ -12,8 +12,6 @@ export class SecurityGroupRemoveComponent implements OnInit {
   @ViewChild('frame', { static: true }) frame;
 
   selectedSecurityGroup: SecurityGroupModel = new SecurityGroupModel;
-
-  spinnerStatus = false;
   constructor(private securityGroupService: SecurityGroupsService) { }
 
   ngOnInit() {

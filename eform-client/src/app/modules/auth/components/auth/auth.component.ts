@@ -13,7 +13,6 @@ export class AuthComponent implements OnInit {
   loginPageSettings: LoginPageSettingsModel = new LoginPageSettingsModel;
   loginImage: any;
   twoFactorForced = false;
-  spinnerStatus = false;
 
   constructor(private router: Router,
               private authService: AuthService,
@@ -47,7 +46,7 @@ export class AuthComponent implements OnInit {
       } else if (result && result.success) {
         this.getSettings();
         this.getTwoFactorInfo();
-      } this.spinnerStatus = false;
+      }
       return true;
     },
         error => false);
@@ -63,7 +62,7 @@ export class AuthComponent implements OnInit {
         } else if (!this.loginPageSettings.imageLink) {
           this.loginImage = '../../../assets/images/eform-phone.jpg';
         }
-      } this.spinnerStatus = false;
+      }
     });
   }
 

@@ -11,7 +11,6 @@ export class EditDeviceUserModalComponent implements OnInit {
   @Input() selectedDeviceUser: DeviceUserModel = new DeviceUserModel();
   @Output() onUserEdited: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('frame', { static: true }) frame;
-  spinnerStatus = false;
 
   constructor(private deviceUserService: DeviceUserService) { }
 

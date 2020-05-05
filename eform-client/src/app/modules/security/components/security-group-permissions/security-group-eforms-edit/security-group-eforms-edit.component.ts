@@ -11,7 +11,6 @@ export class SecurityGroupEformsEditComponent implements OnInit {
   @ViewChild('frame', { static: true }) frame;
   @Output() onEformUpdated: EventEmitter<void> = new EventEmitter<void>();
   eformSecurityModel: EformPermissionsModel = new EformPermissionsModel();
-  spinnerStatus = false;
   constructor(private securityGroupEformsService: SecurityGroupEformsPermissionsService) { }
 
   ngOnInit() {

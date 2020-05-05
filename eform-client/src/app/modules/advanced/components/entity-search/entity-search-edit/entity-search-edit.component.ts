@@ -18,7 +18,6 @@ export class EntitySearchEditComponent implements OnInit {
   @Output() onEntityGroupEdited: EventEmitter<void> = new EventEmitter<void>();
   selectedItem: AdvEntitySearchableItemModel = new AdvEntitySearchableItemModel();
   selectedGroupId: string;
-  spinnerStatus = false;
 
   items = [];
 

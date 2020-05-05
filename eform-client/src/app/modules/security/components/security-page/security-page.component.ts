@@ -13,7 +13,6 @@ export class SecurityPageComponent implements OnInit {
   securityGroups: SecurityGroupsModel = new SecurityGroupsModel();
   securityGroupsRequestModel: SecurityGroupsRequestModel = new SecurityGroupsRequestModel();
   localPageSettings: PageSettingsModel = new PageSettingsModel();
-  spinnerStatus = false;
 
   constructor(private securityGroupsService: SecurityGroupsService, public userSettingsService: UserSettingsService) {
   }

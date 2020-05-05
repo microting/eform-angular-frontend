@@ -11,7 +11,6 @@ export class CreateNewUserModalComponent implements OnInit {
   @Output() onDeviceUserCreated: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('frame', { static: true }) frame;
   simpleSiteModel: DeviceUserModel = new DeviceUserModel();
-  spinnerStatus = false;
   constructor(private deviceUserService: DeviceUserService) { }
 
   ngOnInit() {

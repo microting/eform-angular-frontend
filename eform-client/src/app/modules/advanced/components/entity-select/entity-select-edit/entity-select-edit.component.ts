@@ -17,7 +17,6 @@ export class EntitySelectEditComponent implements OnInit {
   @Output() onEntityGroupEdited: EventEmitter<void> = new EventEmitter<void>();
   selectedItem: AdvEntitySelectableItemModel = new AdvEntitySelectableItemModel();
   selectedGroupId: string;
-  spinnerStatus = false;
 
   items = [];
 

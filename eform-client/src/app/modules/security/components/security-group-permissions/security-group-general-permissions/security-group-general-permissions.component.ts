@@ -16,7 +16,6 @@ export class SecurityGroupGeneralPermissionsComponent implements OnInit {
   selectedGroupId: number;
   securityGroupGeneralPermissionsModel: SecurityGroupGeneralPermissionsModel = new SecurityGroupGeneralPermissionsModel();
   securityGroupGeneralPermissionsUpdateModel: SecurityGroupGeneralPermissionsUpdateModel = new SecurityGroupGeneralPermissionsUpdateModel();
-  spinnerStatus = false;
 
   constructor(
     private securityGroupGeneralPermissionsService: SecurityGroupGeneralPermissionsService,

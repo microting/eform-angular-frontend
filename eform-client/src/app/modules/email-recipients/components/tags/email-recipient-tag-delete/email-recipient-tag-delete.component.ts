@@ -15,7 +15,6 @@ export class EmailRecipientTagDeleteComponent implements OnInit, OnDestroy {
   @Output() tagDeleted: EventEmitter<void> = new EventEmitter<void>();
   @Output() tagDeleteCancelled: EventEmitter<void> = new EventEmitter<void>();
   tagModel: EmailRecipientTagModel = new EmailRecipientTagModel();
-  spinnerStatus = false;
   deleteTag$: Subscription;
 
 

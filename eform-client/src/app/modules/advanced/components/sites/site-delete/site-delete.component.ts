@@ -11,7 +11,6 @@ export class SiteDeleteComponent implements OnInit {
   @Input() siteNameDto: SiteNameDto = new SiteNameDto();
   @Output() onSiteRemoved: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('frame', { static: true }) frame;
-  spinnerStatus = false;
 
   constructor(private sitesService: SitesService) { }
 

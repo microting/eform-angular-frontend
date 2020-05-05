@@ -18,7 +18,6 @@ export class SecurityGroupUpdateComponent implements OnInit {
   securityGroupModel: SecurityGroupModel = new SecurityGroupModel();
   securityGroupUpdateModel: SecurityGroupUpdateModel = new SecurityGroupUpdateModel();
   selectedGroupId: number;
-  spinnerStatus = false;
   paginationModel = new PaginationModel(1, 1000, 0);
   users: UserInfoModelList = new UserInfoModelList();
 

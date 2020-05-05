@@ -17,7 +17,6 @@ export class EmailRecipientTagEditComponent implements OnInit, OnDestroy {
   @Output() tagUpdateCancelled: EventEmitter<void> = new EventEmitter<void>();
   tagModel: EmailRecipientTagModel = new EmailRecipientTagModel();
   updateTag$: Subscription;
-  spinnerStatus = false;
   constructor(private tagsService: EmailRecipientsTagsService) { }
 
   ngOnInit() {

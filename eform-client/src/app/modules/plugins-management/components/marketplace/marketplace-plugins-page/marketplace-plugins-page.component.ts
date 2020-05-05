@@ -14,7 +14,6 @@ export class MarketplacePluginsPageComponent implements OnInit {
   @ViewChild('installMarketplacePluginModal', { static: true }) installMarketplacePluginModal;
   marketplacePluginsRequestModel: MarketplacePluginsRequestModel = new MarketplacePluginsRequestModel();
   marketplacePluginsList: MarketplacePluginsModel = new MarketplacePluginsModel();
-  spinnerStatus = false;
 
   constructor(private pluginManagementService: PluginsManagementService) {
   }

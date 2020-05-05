@@ -12,7 +12,6 @@ export class WorkerEditComponent implements OnInit {
   @Output() onWorkerEdited: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('frame', { static: true }) frame;
   workerModel: WorkerModel = new WorkerModel();
-  spinnerStatus = false;
 
   constructor(private workersService: WorkersService) { }
 

@@ -11,7 +11,6 @@ export class DeleteDeviceUserModalComponent implements OnInit {
   @Input() selectedDeviceUser: SiteDto = new SiteDto();
   @Output() onUserDeleted: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('frame', { static: true }) frame;
-  spinnerStatus = false;
 
   constructor(private deviceUserService: DeviceUserService) { }
 

@@ -28,8 +28,6 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   @ViewChild('modalUploadZip', { static: true }) modalUploadZip;
 
   searchSubject = new Subject();
-
-  spinnerStatus = false;
   localPageSettings: PageSettingsModel = new PageSettingsModel();
   templateRequestModel: TemplateRequestModel = new TemplateRequestModel;
   templateListModel: TemplateListModel = new TemplateListModel();
@@ -142,7 +140,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
     this.securityGroupEformsService.getEformsSimplePermissions().subscribe((data) => {
       if (data && data.success) {
         this.eformPermissionsSimpleModel = this.securityGroupEformsService.mapEformsSimplePermissions(data.model);
-      } this.spinnerStatus = false;
+      }
     }, (error) => {
     });
   }

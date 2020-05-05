@@ -12,7 +12,6 @@ import {AuthService} from 'src/app/common/services/auth/index';
 export class RestorePasswordComponent implements OnInit{
   formRestore: FormGroup;
   email: AbstractControl;
-  spinnerStatus = false;
 
   constructor(private router: Router,
               private authService: AuthService,

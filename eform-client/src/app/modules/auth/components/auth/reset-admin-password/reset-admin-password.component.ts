@@ -12,7 +12,6 @@ import {AuthService, LocaleService, UserSettingsService} from 'src/app/common/se
 export class ResetAdminPasswordComponent implements OnInit {
   formReset: FormGroup;
   secretKey: AbstractControl;
-  spinnerStatus = false;
 
   constructor(private router: Router,
               private authService: AuthService,

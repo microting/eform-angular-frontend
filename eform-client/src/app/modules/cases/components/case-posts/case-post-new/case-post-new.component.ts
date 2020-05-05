@@ -23,7 +23,6 @@ export class CasePostNewComponent implements OnInit, OnDestroy {
   @Input() pdfReportAvailable: boolean;
   postCreateModel: CasePostCreateModel = new CasePostCreateModel;
   selectedTagsAndRecipientsIds: number[] = [];
-  spinnerStatus = false;
   createTag$: Subscription;
 
 

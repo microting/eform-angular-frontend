@@ -12,7 +12,6 @@ export class RemoveCaseModalComponent implements OnInit {
   @Output() onCaseDeleted: EventEmitter<void> = new EventEmitter<void>();
   selectedTemplateId: number;
   selectedCaseModel: CaseModel = new CaseModel();
-  spinnerStatus = false;
 
   constructor(private casesService: CasesService) { }
 

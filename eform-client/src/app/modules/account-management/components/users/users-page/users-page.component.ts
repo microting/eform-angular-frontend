@@ -79,7 +79,7 @@ export class UsersPageComponent implements OnInit {
     this.securityGroupsService.getAllSecurityGroups(securityGroupRequestModel).subscribe((data) => {
       if (data && data.success) {
         this.securityGroups = data.model;
-      } this.spinnerStatus = false;
+      }
     });
   }
 

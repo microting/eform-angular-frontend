@@ -13,7 +13,6 @@ export class FolderEditComponent implements OnInit {
   @Output() onFolderEdited: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('frame', { static: true }) frame;
   folderModel: FolderModel = new FolderModel();
-  spinnerStatus = false;
 
 
   constructor(private foldersService: FoldersService) { }

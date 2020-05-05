@@ -33,8 +33,6 @@ export class CaseEditComponent implements OnInit, OnDestroy {
 
   isNoSaveExitAllowed = false;
   isSaveClicked = false;
-
-  spinnerStatus = false;
   reverseRoute: string;
 
   get userClaims() {
@@ -109,7 +107,7 @@ export class CaseEditComponent implements OnInit, OnDestroy {
           this.loadEformPermissions(this.currentTemplate.id);
           this.loadCase();
         }
-        // this.spinnerStatus = false; // This is commented as loadCase is in 99% of the time the slowest
+        // // This is commented as loadCase is in 99% of the time the slowest
       });
     }
   }
@@ -156,7 +154,7 @@ export class CaseEditComponent implements OnInit, OnDestroy {
           if (foundTemplates.length) {
             this.eformPermissionsSimpleModel = foundTemplates.find(x => x.templateId === templateId);
           }
-          // this.spinnerStatus = false; // This is commented as loadCase is in 99% of the time the slowest
+          // // This is commented as loadCase is in 99% of the time the slowest
         }
       }));
     }

@@ -13,7 +13,6 @@ export class UserEditModalComponent implements OnInit {
   @Input() availableGroups: SecurityGroupsModel = new SecurityGroupsModel();
   @Output() onUserUpdated: EventEmitter<void> = new EventEmitter<void>();
   selectedUserModel: UserRegisterModel = new UserRegisterModel;
-  spinnerStatus = false;
 
   constructor(private adminService: AdminService) {
   }
@@ -30,7 +29,7 @@ export class UserEditModalComponent implements OnInit {
     this.adminService.getUser(selectedId).subscribe((data) => {
       if (data && data.model) {
         this.selectedUserModel = data.model;
-      } this.spinnerStatus = false;
+      }
     });
   }
 
@@ -39,7 +38,7 @@ export class UserEditModalComponent implements OnInit {
       if (data && data.success) {
         this.onUserUpdated.emit();
         this.frame.hide();
-      } this.spinnerStatus = false;
+      }
     });
   }
 
