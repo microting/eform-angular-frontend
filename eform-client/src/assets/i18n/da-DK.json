@@ -268,5 +268,10 @@
   "Tags management": "Styring af tags",
   "Email/name text area should have at least one email/name pair": "Tekstområdet for email / navn skal have mindst et e-mail / navnepar",
   "SendGrid Key": "SendGrid Nøgle",
-  "SendGrid Information": "SendGrid Information"
+  "SendGrid Information": "SendGrid Information",
+  "Saved locally": "Oprettet lokalt",
+  "Ready for server": "Klar til server",
+  "Received by server": "Modtager af server",
+  "Retrieved by device": "Modtaget af enhed",
+  "Completed": "Udført"
 }
