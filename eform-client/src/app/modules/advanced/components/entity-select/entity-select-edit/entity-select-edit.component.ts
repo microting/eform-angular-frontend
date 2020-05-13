@@ -17,7 +17,6 @@ export class EntitySelectEditComponent implements OnInit {
   @Output() onEntityGroupEdited: EventEmitter<void> = new EventEmitter<void>();
   selectedItem: AdvEntitySelectableItemModel = new AdvEntitySelectableItemModel();
   selectedGroupId: string;
-  spinnerStatus = false;
 
   items = [];
 
@@ -39,7 +38,6 @@ export class EntitySelectEditComponent implements OnInit {
   }
 
   loadEntityGroup() {
-    this.spinnerStatus = true;
     this.entitySelectService.getEntitySelectableGroup(this.selectedGroupId).subscribe((data) => {
       if (data && data.success) {
         this.advEntitySelectableGroupEditModel.name = data.model.name;
@@ -47,18 +45,15 @@ export class EntitySelectEditComponent implements OnInit {
         this.advEntitySelectableGroupEditModel.groupUid = this.selectedGroupId;
         this.advEntitySelectableGroupEditModel.isLocked = data.model.isLocked;
       }
-      this.spinnerStatus = false;
     });
   }
 
   updateEntitySelectableGroup() {
-    this.spinnerStatus = true;
     this.entitySelectService.updateEntitySelectableGroup(this.advEntitySelectableGroupEditModel).subscribe((data) => {
       if (data && data.success) {
         this.onEntityGroupEdited.emit();
         this.frame.hide();
       }
-      this.spinnerStatus = false;
     });
   }
 

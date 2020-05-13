@@ -9,7 +9,6 @@ import {AuthService} from 'src/app/common/services/auth';
 })
 export class ChangePasswordComponent implements OnInit {
   changePasswordModel: ChangePasswordModel = new ChangePasswordModel;
-  spinnerStatus = false;
   constructor(private authService: AuthService) {
   }
 
@@ -17,10 +16,8 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   updateUserPassword() {
-    this.spinnerStatus = true;
     this.authService.changePassword(this.changePasswordModel).subscribe((data) => {
-      this.spinnerStatus = false;
-    }, () => {this.spinnerStatus = false; });
+    }, () => { });
   }
 
 }

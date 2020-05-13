@@ -14,7 +14,6 @@ export class EmailRecipientTagNewComponent implements OnInit, OnDestroy {
   @Output() tagCreated: EventEmitter<void> = new EventEmitter<void>();
   @Output() tagCreateCancelled: EventEmitter<void> = new EventEmitter<void>();
   name = '';
-  spinnerStatus = false;
   createTag$: Subscription;
 
   constructor(private tagsService: EmailRecipientsTagsService) {
@@ -28,13 +27,11 @@ export class EmailRecipientTagNewComponent implements OnInit, OnDestroy {
   }
 
   createItem() {
-    this.spinnerStatus = true;
     this.createTag$ = this.tagsService.createEmailRecipientTag({id: 0, name: this.name}).subscribe((data) => {
       if (data && data.success) {
         this.frame.hide();
         this.tagCreated.emit();
       }
-      this.spinnerStatus = false;
     });
   }
 

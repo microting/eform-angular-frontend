@@ -15,7 +15,7 @@
     </div>
   </div>
   <div class="row p-1 table-responsive no-gutters">
-    <table class="table table-sm table-striped text-center z-depth-1">
+    <table mdbTable striped="true" hover="true" small="true" class="z-depth-1 text-center">
       <thead>
       <tr>
         <th class="table-header-sortable"
@@ -246,7 +246,5 @@
     </div>
   </div>
 </div>
-
-<eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>
 
 <app-remove-case-modal (onCaseDeleted)="loadAllCases()" #modalRemoveCase></app-remove-case-modal>

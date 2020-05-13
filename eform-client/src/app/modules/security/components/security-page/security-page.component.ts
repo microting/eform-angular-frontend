@@ -13,7 +13,6 @@ export class SecurityPageComponent implements OnInit {
   securityGroups: SecurityGroupsModel = new SecurityGroupsModel();
   securityGroupsRequestModel: SecurityGroupsRequestModel = new SecurityGroupsRequestModel();
   localPageSettings: PageSettingsModel = new PageSettingsModel();
-  spinnerStatus = false;
 
   constructor(private securityGroupsService: SecurityGroupsService, public userSettingsService: UserSettingsService) {
   }
@@ -36,13 +35,11 @@ export class SecurityPageComponent implements OnInit {
   }
 
   getSecurityGroups() {
-    this.spinnerStatus = true;
     this.securityGroupsRequestModel.pageSize = this.localPageSettings.pageSize;
     this.securityGroupsService.getAllSecurityGroups(this.securityGroupsRequestModel).subscribe((data) => {
       if (data && data.success) {
         this.securityGroups = data.model;
       }
-      this.spinnerStatus = false;
     });
   }
 

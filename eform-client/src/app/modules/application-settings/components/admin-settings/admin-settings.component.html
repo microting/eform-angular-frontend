@@ -86,9 +86,9 @@
                   <p>{{ 'Proportions' | translate }} - 1:1.5</p>
                 </div>
                 <div class="align-self-center align-self-end mb-3">
-                  <button mdbBtn class="btn-primary" *ngIf="loginPageImageUploader?.queue?.length == 0" id="loginPageImageUploadBtn"
+                  <button mdbBtn type="button" color="primary" size="sm" *ngIf="loginPageImageUploader?.queue?.length == 0" id="loginPageImageUploadBtn"
                           (click)="loginPagefileInput.click()">{{'Upload' | translate}}</button>
-                  <button mdbBtn class="btn-warning" *ngIf="loginPageImageUploader?.queue?.length > 0"
+                  <button mdbBtn type="button" color="warning" size="sm" *ngIf="loginPageImageUploader?.queue?.length > 0"
                           (click)="loginPagefileInput.click()">{{'Pending' | translate}}</button>
                   <input class="input-invisible"
                          type="file" ng2FileSelect #loginPagefileInput
@@ -179,9 +179,9 @@
                   <p>{{ 'Proportions' | translate }} - 2:1</p>
                 </div>
                 <div class="align-self-center align-self-end">
-                  <button mdbBtn class="btn-primary" *ngIf="headerImageUploader?.queue?.length == 0" id="siteHeaderUploadBtn"
+                  <button mdbBtn type="button" color="primary" size="sm" *ngIf="headerImageUploader?.queue?.length == 0" id="siteHeaderUploadBtn"
                           (click)="headerImageUploaderInput.click()">{{'Upload' | translate}}</button>
-                  <button mdbBtn class="btn-warning" *ngIf="headerImageUploader?.queue?.length > 0"
+                  <button mdbBtn type="button" color="warning" size="sm" *ngIf="headerImageUploader?.queue?.length > 0"
                           (click)="headerImageUploaderInput.click()">{{'Pending' | translate}}</button>
                   <input class="input-invisible"
                          type="file" ng2FileSelect [uploader]="headerImageUploader" #headerImageUploaderInput
@@ -419,5 +419,3 @@
     </div>
   </form>
 </div>
-
-<eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>

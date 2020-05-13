@@ -11,7 +11,6 @@ export class SiteDeleteComponent implements OnInit {
   @Input() siteNameDto: SiteNameDto = new SiteNameDto();
   @Output() onSiteRemoved: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('frame', { static: true }) frame;
-  spinnerStatus = false;
 
   constructor(private sitesService: SitesService) { }
 
@@ -23,13 +22,11 @@ export class SiteDeleteComponent implements OnInit {
   }
 
   deleteSingle() {
-    this.spinnerStatus = true;
     this.sitesService.deleteSingleSite(this.siteNameDto.id).subscribe(operation => {
       if (operation && operation.success) {
         this.onSiteRemoved.emit();
         this.frame.hide();
       }
-      this.spinnerStatus = false;
     });
   }
 

@@ -20,7 +20,6 @@ export class EformEditParingModalComponent implements OnInit {
   deployViewModel: DeployModel = new DeployModel();
   selectedTemplateDto: TemplateDto = new TemplateDto();
   sitesDto: Array<SiteNameDto> = [];
-  spinnerStatus = false;
   matchFound = false;
   foldersDto: Array<FolderDto> = [];
   saveButtonDisabled = true;
@@ -42,11 +41,9 @@ export class EformEditParingModalComponent implements OnInit {
   loadAllSites() {
     if (this.userClaims.eFormsPairingRead) {
       this.sitesService.getAllSitesForPairing().subscribe(operation => {
-        this.spinnerStatus = true;
         if (operation && operation.success) {
           this.sitesDto = operation.model;
         }
-        this.spinnerStatus = false;
       });
     }
   }
@@ -97,19 +94,16 @@ export class EformEditParingModalComponent implements OnInit {
   }
 
   submitDeployment() {
-    this.spinnerStatus = true;
     this.deployModel.id = this.selectedTemplateDto.id;
     this.eFormService.deploySingle(this.deployModel).subscribe(operation => {
       if (operation && operation.success) {
         this.frame.hide();
         this.onDeploymentFinished.emit();
       }
-      this.spinnerStatus = false;
     });
   }
 
   loadAllFolders() {
-    this.spinnerStatus = true;
     this.foldersService.getAllFolders().subscribe((operation) => {
       if (operation && operation.success) {
         this.foldersDto = operation.model;
@@ -117,7 +111,6 @@ export class EformEditParingModalComponent implements OnInit {
           this.saveButtonDisabled = false;
         }
       }
-      this.spinnerStatus = false;
     });
   }
 }

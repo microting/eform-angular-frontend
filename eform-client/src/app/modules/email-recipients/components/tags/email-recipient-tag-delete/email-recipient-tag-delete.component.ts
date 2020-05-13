@@ -15,7 +15,6 @@ export class EmailRecipientTagDeleteComponent implements OnInit, OnDestroy {
   @Output() tagDeleted: EventEmitter<void> = new EventEmitter<void>();
   @Output() tagDeleteCancelled: EventEmitter<void> = new EventEmitter<void>();
   tagModel: EmailRecipientTagModel = new EmailRecipientTagModel();
-  spinnerStatus = false;
   deleteTag$: Subscription;
 
 
@@ -31,14 +30,12 @@ export class EmailRecipientTagDeleteComponent implements OnInit, OnDestroy {
   }
 
   deleteTag() {
-    this.spinnerStatus = true;
     this.deleteTag$ = this.tagsService.deleteEmailRecipientTag(this.tagModel.id)
       .subscribe((data) => {
         if (data && data.success) {
           this.frame.hide();
           this.tagDeleted.emit();
         }
-        this.spinnerStatus = false;
       });
   }
 

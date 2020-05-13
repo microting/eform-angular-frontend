@@ -38,7 +38,7 @@ describe('Entity Select', function () {
     expect(selectableList.name).equal(name);
     selectableList.editBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-    $('#entitySelectItemEditNameentityItemUId').waitForDisplayed({timeout: 20000});
+    $('#entitySelectItemEditNameentityItemUId_0').waitForDisplayed({timeout: 20000});
     expect(selectableLists.firstEntityItemName.getText()).equal(itemName);
     selectableLists.entitySelectEditCancelBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});

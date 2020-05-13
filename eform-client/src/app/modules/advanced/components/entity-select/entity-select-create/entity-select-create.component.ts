@@ -16,7 +16,6 @@ export class EntitySelectCreateComponent implements OnInit {
   @ViewChild('modalSelectEditName', { static: true }) modalSelectEditName;
   @Output() onEntityGroupCreated: EventEmitter<void> = new EventEmitter<void>();
   seletctedItem: AdvEntitySelectableItemModel = new AdvEntitySelectableItemModel();
-  spinnerStatus = false;
 
   items = [];
 
@@ -37,14 +36,12 @@ export class EntitySelectCreateComponent implements OnInit {
   }
 
   createEntitySelectableGroup() {
-    this.spinnerStatus = true;
     this.entitySelectService.createEntitySelectableGroup(this.advEntitySelectableGroupCreateModel).subscribe((data) => {
       if (data && data.success) {
         this.onEntityGroupCreated.emit();
         this.frame.hide();
         this.advEntitySelectableGroupCreateModel = new AdvEntitySelectableGroupEditModel();
       }
-      this.spinnerStatus = false;
     });
   }
 

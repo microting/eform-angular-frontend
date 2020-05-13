@@ -21,10 +21,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Hosting.Helpers.DbOptions;
+using eFormAPI.Web.Infrastructure.Models.Settings;
 using eFormAPI.Web.Infrastructure.Models.Settings.User;
 using eFormAPI.Web.Infrastructure.Models.Users;
 using Microsoft.AspNetCore.Authorization;
@@ -96,20 +100,34 @@ namespace eFormAPI.Web.Services
                 return new OperationDataResult<UserSettingsModel>(false, _localizationService.GetString("UserNotFound"));
             }
 
-            var locale = user.Locale;
-            if (string.IsNullOrEmpty(locale))
-            {
-                locale = _appSettings.Value.DefaultLocale;
-                if (locale == null)
-                {
-                    locale = "en-US";
-                }
-            }
+            var timeZone = string.IsNullOrEmpty(user.TimeZone) ? "Europe/Copenhagen" : user.TimeZone;
+            var formats = string.IsNullOrEmpty(user.Formats) ? "de-DE" : user.Formats;
+            var darkTheme = user.DarkTheme;
+            var locale = string.IsNullOrEmpty(user.Locale) ? "da-DK" : user.Locale;
 
             return new OperationDataResult<UserSettingsModel>(true, new UserSettingsModel()
             {
-                Locale = locale
+                Locale = locale,
+                DarkTheme = darkTheme,
+                Formats = formats,
+                TimeZone = timeZone
             });
+        }
+
+        public OperationDataResult<TimeZonesModel> AllTimeZones()
+        {
+            TimeZonesModel timeZones = new TimeZonesModel();
+            timeZones.TimeZoneModels = new List<TimeZoneModel>();
+            foreach (TimeZoneInfo timeZoneInfo in TimeZoneInfo.GetSystemTimeZones().OrderBy(x => x.Id))
+            {
+                TimeZoneModel timeZoneModel = new TimeZoneModel()
+                {
+                    Id = timeZoneInfo.Id,
+                    Name = timeZoneInfo.Id
+                };
+                timeZones.TimeZoneModels.Add(timeZoneModel);
+            }
+            return new OperationDataResult<TimeZonesModel>(true, timeZones);
         }
 
         public async Task<OperationResult> UpdateUserSettings(UserSettingsModel model)
@@ -121,8 +139,11 @@ namespace eFormAPI.Web.Services
             }
 
             user.Locale = model.Locale;
+            user.TimeZone = model.TimeZone;
+            user.Formats = model.Formats;
+            user.DarkTheme = model.DarkTheme;
             var updateResult = await _userManager.UpdateAsync(user);
-            if (!updateResult.Succeeded)
+                if (!updateResult.Succeeded)
             {
                 return new OperationResult(false,
                     $"Error while updating user settings: {string.Join(", ", updateResult.Errors.Select(x => x.Description).ToArray())}");

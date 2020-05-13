@@ -18,7 +18,6 @@ export class EformEditTagsModalComponent implements OnInit {
   selectedTemplateDto: TemplateDto = new TemplateDto();
   selectedTemplateTagsIds: Array<number> = [];
   tagForRemoval: number;
-  spinnerStatus = false;
 
   constructor(private eFormTagService: EformTagService) { }
 
@@ -34,17 +33,15 @@ export class EformEditTagsModalComponent implements OnInit {
 
   createNewTag(name: string) {
     if (name) {
-      this.spinnerStatus = true;
       this.eFormTagService.createTag(name).subscribe((operation => {
         if (operation && operation.success) {
           this.onTagAdded.emit();
-        } this.spinnerStatus = false;
+        }
       }));
     }
   }
 
   updateTemplateTags() {
-    this.spinnerStatus = true;
     const templateTagsUpdateModel = new TemplateTagsUpdateModel();
     templateTagsUpdateModel.templateId = this.selectedTemplateDto.id;
     templateTagsUpdateModel.tagsIds = this.selectedTemplateTagsIds;
@@ -52,17 +49,16 @@ export class EformEditTagsModalComponent implements OnInit {
       if (operation && operation.success) {
         this.onEFormTagsUpdated.emit();
         this.frame.hide();
-      } this.spinnerStatus = false;
+      }
     }));
   }
 
   removeTemplateTag() {
-    this.spinnerStatus = true;
     this.eFormTagService.deleteTag(this.tagForRemoval).subscribe((operation => {
       if (operation && operation.success) {
         this.onTagAdded.emit();
         this.tagForRemoval = null;
-      } this.spinnerStatus = false;
+      }
     }));
   }
 

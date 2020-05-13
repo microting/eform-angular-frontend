@@ -73,7 +73,6 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
   }
 
   getAdminSettings() {
-    this.spinnerStatus = true;
     this.settingsService.getAdminSettings().subscribe(operation => {
       if (operation && operation.success) {
         this.adminSettingsModel = operation.model;
@@ -89,17 +88,13 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
         } else {
           this.loginPageImageLink = '../../../assets/images/eform-phone.jpg';
         }
-
-        this.spinnerStatus = false;
       } else {
-        this.spinnerStatus = false;
       }
     });
 
   }
 
   updateAdminSettings() {
-    this.spinnerStatus = true;
 
     if (this.headerImageUploader.queue.length > 0) {
       this.headerImageUploader.queue[0].upload();
@@ -115,29 +110,24 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
         this.loginPageImageUploader.clearQueue();
         this.eventBrokerService.emit<void>('get-header-settings', null);
       } else {
-        this.spinnerStatus = false;
       }
     });
   }
 
   resetLoginPageSettings() {
-    this.spinnerStatus = true;
     this.settingsService.resetLoginPageSettings().subscribe(operation => {
       if (operation && operation.success) {
         this.getAdminSettings();
       } else {
-        this.spinnerStatus = false;
       }
     });
   }
 
   resetHeaderSettings() {
-    this.spinnerStatus = true;
     this.settingsService.resetHeaderSettings().subscribe(operation => {
       if (operation && operation.success) {
         this.getAdminSettings();
       } else {
-        this.spinnerStatus = false;
       }
     });
   }

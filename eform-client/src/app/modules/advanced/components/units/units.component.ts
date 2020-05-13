@@ -12,7 +12,6 @@ export class UnitsComponent implements OnInit {
   @ViewChild('modalUnitsOtpCode', { static: true }) modalUnitsOtpCode;
   @ViewChild('modalUnitsCreate', { static: true }) modalUnitsCreate;
   @ViewChild('modalUnitsMove', { static: true }) modalUnitsMove;
-  spinnerStatus = false;
   unitModels: Array<UnitDto> = [];
   selectedUnitModel: UnitDto = new UnitDto();
 
@@ -26,12 +25,10 @@ export class UnitsComponent implements OnInit {
   }
 
   loadAllUnits() {
-    this.spinnerStatus = true;
     this.unitsService.getAllUnits().subscribe(operation => {
       if (operation && operation.success) {
         this.unitModels = operation.model;
       }
-      this.spinnerStatus = false;
     });
   }
 

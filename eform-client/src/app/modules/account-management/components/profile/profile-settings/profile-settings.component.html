@@ -1,8 +1,7 @@
 <eform-page-subheader [title]="'Profile Settings' | translate">
   <div class="p-3">
-    <button
+    <button mdbBtn type="button" color="success" size="lg"
       id = "ProfileSettingsSaveBtn"
-      class="btn btn-success"
       (click)="updateUserProfileSettings()"
       mdbTooltip="Save settings">{{ 'Save' | translate }}
     </button>
@@ -12,12 +11,11 @@
 <div class="container-fluid mt-4">
   <div class="row mb-4">
     <div class="col-md-6" *ngIf="userRole == 'admin'">
-      <div class="card" >
-        <div class="card-header card-header-simple">
+      <mdb-card>
+        <mdb-card-header>
           {{ 'Google Authenticator' | translate}}
-        </div>
-        <div class="card-body">
-
+        </mdb-card-header>
+        <mdb-card-body>
             <div class="mat-checkbox mb-1">
               <input id="2fauthForsed" (change)="isTwoFactorEnabledCheckBoxChanged($event)"
                      [checked]="googleAuthInfoModel.isTwoFactorEnabled" [value]="googleAuthInfoModel.isTwoFactorEnabled"
@@ -40,29 +38,49 @@
               </button>
             </div>
           </ng-container>
-        </div>
-      </div>
+        </mdb-card-body>
+      </mdb-card>
     </div>
     <div class="col-md-6">
-      <div class="card">
-        <div class="card-header card-header-simple">
+      <mdb-card class="card">
+        <mdb-card-header>
           {{ 'General' | translate}}
-        </div>
-        <div class="card-body">
+        </mdb-card-header>
+        <mdb-card-body>
           <div class="container-fluid">
-            <ng-select
-              id = "ProfileLanguageSelector"
-              [placeholder]="'Language' | translate"
-              [bindLabel]="'text'"
-              [bindValue]="'id'"
-              [clearable]="false"
-              [(ngModel)]="userSettingsModel.locale"
-              [items]="languages"></ng-select>
+            <div class="row">
+              <ng-select
+                id = "ProfileLanguageSelector"
+                [placeholder]="'Language' | translate"
+                [bindLabel]="'text'"
+                [bindValue]="'id'"
+                [clearable]="false"
+                [(ngModel)]="userSettingsModel.locale"
+                [items]="languages"></ng-select>
+            </div>
+            <div class="row">
+              <ng-select
+                id = "ProfileFormatSelector"
+                [placeholder]="'Formats' | translate"
+                [bindLabel]="'text'"
+                [bindValue]="'id'"
+                [clearable]="false"
+                [(ngModel)]="userSettingsModel.formats"
+                [items]="countries"></ng-select>
+            </div>
+            <div class="row">
+              <ng-select
+                id = "ProfileTimeZoneSelector"
+                [placeholder]="'Timezone' | translate"
+                [bindLabel]="'name'"
+                [bindValue]="'id'"
+                [clearable]="false"
+                [(ngModel)]="userSettingsModel.timeZone"
+                [items]="timeZones.timeZoneModels"></ng-select>
+            </div>
           </div>
-        </div>
-      </div>
+        </mdb-card-body>
+      </mdb-card>
     </div>
   </div>
 </div>
-
-<eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>

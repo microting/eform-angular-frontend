@@ -5,7 +5,7 @@
 <!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
 <div class="container-fluid">
   <div class="row p-1 table-responsive no-gutters">
-    <table class="table table-sm table-striped text-center z-depth-1">
+    <table mdbTable striped="true" hover="true" small="true" class="z-depth-1 text-center">
       <thead>
       <tr>
         <th scope="col"> Microting UID</th>
@@ -37,7 +37,7 @@
         <td>
           <div class="d-flex justify-content-center">
             <div>
-              <a class="btn btn-sm btn-success p-1 mb-2"
+              <a mdbBtn type="button" color="success" size="sm"
                  id="editSiteTagsBtn_{{i}}"
                  mdbTooltip="{{ 'Edit tags' | translate }}" (click)="openEditTagsModal(siteDto)">
                 {{ 'Edit tags' | translate }}
@@ -67,8 +67,6 @@
     </table>
   </div>
 </div>
-
-<eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>
 
 <app-site-edit
   [siteNameDto]="selectedSiteDto"

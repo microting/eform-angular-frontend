@@ -11,7 +11,6 @@ export class EntitySearchRemoveComponent implements OnInit {
   @ViewChild('frame', { static: true }) frame;
   @Output() onEntityRemoved: EventEmitter<void> = new EventEmitter<void>();
   selectedGroupModel: AdvEntitySearchableGroupModel = new AdvEntitySearchableGroupModel();
-  spinnerStatus = false;
   constructor(private entitySearchService: EntitySearchService) { }
 
   ngOnInit() {
@@ -23,12 +22,11 @@ export class EntitySearchRemoveComponent implements OnInit {
   }
 
   deleteSelectedAdvEntitySearchableGroup() {
-    this.spinnerStatus = true;
     this.entitySearchService.deleteEntitySearchableGroup(this.selectedGroupModel.microtingUUID).subscribe((data) => {
       if (data && data.success) {
         this.frame.hide();
         this.onEntityRemoved.emit();
-      } this.spinnerStatus = false;
+      }
     });
   }
 

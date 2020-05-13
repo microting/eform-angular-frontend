@@ -53,12 +53,10 @@ export class DeviceUsersPageComponent implements OnInit {
   }
 
   loadAllSimpleSites() {
-    this.spinnerStatus = true;
     this.deviceUsersService.getAllDeviceUsers().subscribe(operation => {
       if (operation && operation.success) {
         this.sitesDto = operation.model;
       }
-      this.spinnerStatus = false;
     });
   }
 

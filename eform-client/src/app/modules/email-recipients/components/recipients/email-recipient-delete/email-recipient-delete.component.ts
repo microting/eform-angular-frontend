@@ -16,7 +16,6 @@ export class EmailRecipientDeleteComponent implements OnInit, OnDestroy {
   @Input() availableTags: CommonDictionaryModel[] = [];
   @Output() emailRecipientDeleted: EventEmitter<void> = new EventEmitter<void>();
   selectedEmailRecipient: EmailRecipientModel = new EmailRecipientModel;
-  spinnerStatus = false;
   deleteEmailRecipient$: Subscription;
 
 
@@ -32,14 +31,12 @@ export class EmailRecipientDeleteComponent implements OnInit, OnDestroy {
   }
 
   deleteEmailRecipient() {
-    this.spinnerStatus = true;
     this.deleteEmailRecipient$ = this.emailRecipientsService.deleteEmailRecipient(this.selectedEmailRecipient.id)
       .subscribe((data) => {
         if (data && data.success) {
           this.frame.hide();
           this.emailRecipientDeleted.emit();
         }
-        this.spinnerStatus = false;
       });
   }
 

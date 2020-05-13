@@ -14,7 +14,6 @@ export class SecurityGroupEformsAddComponent implements OnInit {
   @Output() onEformBound: EventEmitter<void> = new EventEmitter<void>();
   @Output() onSearchInputChanged: EventEmitter<string> = new EventEmitter<string>();
   eformBindGroupModel: EformBindGroupModel = new EformBindGroupModel();
-  spinnerStatus = false;
   constructor(private securityGroupEformsService: SecurityGroupEformsPermissionsService) { }
 
   ngOnInit() {
@@ -27,12 +26,10 @@ export class SecurityGroupEformsAddComponent implements OnInit {
 
   addEformToGroup(eformId: number) {
     this.eformBindGroupModel.eformId = eformId;
-    this.spinnerStatus = true;
     this.securityGroupEformsService.addEformToGroup(this.eformBindGroupModel).subscribe((data) => {
       if (data && data.success) {
         this.onEformBound.emit();
       }
-      this.spinnerStatus = false;
     });
   }
 

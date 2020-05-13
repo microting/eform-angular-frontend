@@ -21,6 +21,9 @@ import {AdminService} from 'src/app/common/services/users';
 import {FoldersService} from './common/services/advanced/folders.service';
 import {PluginPermissionsService, PluginsManagementService} from './common/services/plugins-management';
 import {EmailRecipientsService, EmailRecipientsTagsService} from './common/services/email-recipients';
+import {LoaderService} from './common/services/loeader.service';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {LoaderInterceptor} from 'src/app/common/interceptors/loader-interceptor.service';
 // Guards
 
 export let providers = [
@@ -60,6 +63,8 @@ export let providers = [
   SecurityGroupsService,
   SecurityGroupEformsPermissionsService,
   PluginPermissionsService,
+  LoaderService,
+  { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
   // Helpers
   EventBrokerService,
   DatePipe,

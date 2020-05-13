@@ -18,6 +18,7 @@ import {
   UserInfoModel
 } from 'src/app/common/models';
 import {BaseService} from '../base.service';
+import {TimezonesModel} from 'src/app/common/models/common/timezones.model';
 
 export let AuthMethods = {
   Login: 'api/auth/token',
@@ -32,7 +33,8 @@ export let AuthMethods = {
   LoginAndGetGoogleAuthKey: 'api/auth/google-auth-key',
   GetGoogleAuthenticatorInfo: 'api/auth/google-auth-info',
   UpdateGoogleAuthenticatorInfo: 'api/auth/google-auth-info',
-  DeleteGoogleAuthenticatorInfo: 'api/auth/google-auth-info'
+  DeleteGoogleAuthenticatorInfo: 'api/auth/google-auth-info',
+  TimeZones: 'api/account/timezones'
 };
 
 @Injectable()
@@ -130,5 +132,9 @@ export class AuthService extends BaseService {
 
   deleteGoogleAuthenticatorInfo(): Observable<OperationResult> {
     return this.delete(AuthMethods.GetGoogleAuthenticatorInfo);
+  }
+
+  allTimeZones(): Observable<OperationDataResult<TimezonesModel>> {
+    return this.get(AuthMethods.TimeZones);
   }
 }

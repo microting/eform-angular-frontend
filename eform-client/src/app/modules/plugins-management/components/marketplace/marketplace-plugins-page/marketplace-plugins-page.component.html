@@ -10,7 +10,7 @@
 <!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
 <div class="container-fluid mt-4">
   <div class="row p-1 table-responsive no-gutters">
-    <table class="table table-sm table-striped text-center z-depth-1">
+    <table mdbTable striped="true" hover="true" small="true" class="z-depth-1 text-center">
       <tr>
         <th>{{ 'ID' }}</th>
         <th>{{ 'Name' | translate }}</th>
@@ -30,7 +30,6 @@
         </td>
       </tr>
     </table>
-    <eform-spinner [spinnerVisibility]="false"></eform-spinner>
   </div>
 </div>
 

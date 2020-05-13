@@ -14,7 +14,6 @@ export class SitesComponent implements OnInit {
   @ViewChild('modalSiteEdit', { static: true }) modalSiteEdit;
   @ViewChild('modalSiteDelete', { static: true }) modalSiteDelete;
   @ViewChild('modalSiteTags', { static: true }) modalSiteTags: SiteTagsComponent;
-  spinnerStatus = false;
   sitesDto: Array<SiteNameDto> = [];
   selectedSiteDto: SiteNameDto = new SiteNameDto();
   availableTags: Array<CommonDictionaryModel> = [];
@@ -44,12 +43,10 @@ export class SitesComponent implements OnInit {
   }
 
   loadAllSites() {
-    this.spinnerStatus = true;
     this.sitesService.getAllSites().subscribe(operation => {
       if (operation && operation.success) {
         this.sitesDto = operation.model;
       }
-      this.spinnerStatus = false;
     });
   }
 
@@ -59,14 +56,11 @@ export class SitesComponent implements OnInit {
   }
 
   loadAllTags() {
-    this.spinnerStatus = true;
     this.siteTagsService.getAvailableTags().subscribe((data) => {
       if (data && data.success) {
         this.availableTags = data.model;
       }
-      this.spinnerStatus = false;
     }, (error) => {
-      this.spinnerStatus = false;
     });
   }
 }

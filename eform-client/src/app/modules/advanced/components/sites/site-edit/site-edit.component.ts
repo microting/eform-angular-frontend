@@ -12,7 +12,6 @@ export class SiteEditComponent implements OnInit {
   @Input() siteNameDto: SiteNameDto = new SiteNameDto();
   @ViewChild('frame', { static: true }) frame;
   siteModel: SiteNameModel = new SiteNameModel();
-  spinnerStatus = false;
 
   constructor(private sitesService: SitesService, private toastrService: ToastrService) { }
 
@@ -24,7 +23,6 @@ export class SiteEditComponent implements OnInit {
   }
 
   updateSingle() {
-    this.spinnerStatus = true;
     this.siteModel.id = this.siteNameDto.id;
     this.siteModel.siteName = this.siteNameDto.siteName;
     this.sitesService.updateSingleSite(this.siteModel).subscribe(operation => {
@@ -32,7 +30,6 @@ export class SiteEditComponent implements OnInit {
         this.frame.hide();
         this.toastrService.success('Site successfully updated');
       }
-      this.spinnerStatus = false;
     });
   }
 

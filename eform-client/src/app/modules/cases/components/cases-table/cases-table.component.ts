@@ -23,7 +23,6 @@ export class CasesTableComponent implements OnInit {
   caseListModel: CaseListModel = new CaseListModel();
   localPageSettings: PageSettingsModel = new PageSettingsModel();
   id: number;
-  spinnerStatus = false;
 
   get userClaims() { return this.authService.userClaims; }
   get userClaimsEnum() { return UserClaimsEnum; }
@@ -77,7 +76,6 @@ export class CasesTableComponent implements OnInit {
   }
 
   loadAllCases() {
-    this.spinnerStatus = true;
     this.casesRequestModel.templateId = this.id;
     this.casesRequestModel.isSortDsc = this.localPageSettings.isSortDsc;
     this.casesRequestModel.sort = this.localPageSettings.sort;
@@ -86,27 +84,22 @@ export class CasesTableComponent implements OnInit {
       if (operation && operation.success) {
         this.caseListModel = operation.model;
       }
-      this.spinnerStatus = false;
     });
   }
 
   loadTemplateData() {
     this.eFormService.getSingle(this.id).subscribe(operation => {
-      this.spinnerStatus = true;
       if (operation && operation.success) {
         this.currentTemplate = operation.model;
         this.loadEformPermissions(this.currentTemplate.id);
       }
-      this.spinnerStatus = false;
     });
   }
 
   downloadFile(caseId: number, fileType: string) {
-    this.spinnerStatus = true;
     this.eFormService.downloadEformPDF(this.currentTemplate.id, caseId, fileType).subscribe(data => {
       const blob = new Blob([data]);
       saveAs(blob, `template_${this.currentTemplate.id}.${fileType}`);
-      this.spinnerStatus = false;
     });
   }
 
@@ -114,14 +107,12 @@ export class CasesTableComponent implements OnInit {
     if (this.securityGroupEformsService.mappedPermissions.length) {
       this.eformPermissionsSimpleModel = this.securityGroupEformsService.mappedPermissions.find(x => x.templateId === templateId);
     } else {
-      this.spinnerStatus = true;
       this.securityGroupEformsService.getEformsSimplePermissions().subscribe((data => {
         if (data && data.success) {
           const foundTemplates = this.securityGroupEformsService.mapEformsSimplePermissions(data.model);
           if (foundTemplates.length) {
             this.eformPermissionsSimpleModel = foundTemplates.find(x => x.templateId === templateId);
           }
-          this.spinnerStatus = false;
         }
       }));
     }

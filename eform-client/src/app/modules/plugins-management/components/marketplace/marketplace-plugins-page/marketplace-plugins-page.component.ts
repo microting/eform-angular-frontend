@@ -14,7 +14,6 @@ export class MarketplacePluginsPageComponent implements OnInit {
   @ViewChild('installMarketplacePluginModal', { static: true }) installMarketplacePluginModal;
   marketplacePluginsRequestModel: MarketplacePluginsRequestModel = new MarketplacePluginsRequestModel();
   marketplacePluginsList: MarketplacePluginsModel = new MarketplacePluginsModel();
-  spinnerStatus = false;
 
   constructor(private pluginManagementService: PluginsManagementService) {
   }
@@ -24,13 +23,11 @@ export class MarketplacePluginsPageComponent implements OnInit {
   }
 
   getMarketplacePlugins() {
-    this.spinnerStatus = true;
     this.pluginManagementService.getMarketplacePlugins(this.marketplacePluginsRequestModel)
       .subscribe((data) => {
       if (data && data.success) {
         this.marketplacePluginsList = data.model;
       }
-      this.spinnerStatus = false;
     });
   }
 
@@ -39,12 +36,10 @@ export class MarketplacePluginsPageComponent implements OnInit {
   }
 
   installPlugin(model: MarketplacePluginModel) {
-    this.spinnerStatus = true;
     this.pluginManagementService.installMarketplacePlugin(model.pluginId).subscribe((data) => {
       if (data && data.success) {
         this.installMarketplacePluginModal.hide();
       }
-      this.spinnerStatus = false;
     });
   }
 }

@@ -5,19 +5,18 @@
 [![Dependencies Status](https://david-dm.org/microting/eform-angular-frontend/stable/dev-status.svg?path=eform-client)](https://david-dm.org/microting/eform-angular-frontend/stable?path=eform-client&type=dev)
 [![Maintainability](https://api.codeclimate.com/v1/badges/383f012a79c7bea1101e/maintainability)](https://codeclimate.com/github/microting/eform-angular-frontend/maintainability)
 
-eForm Backend is created using Angular \(6.1.10\) and C\#
+eForm Backend is created using Angular \(9.1.1\) and C\# .Net Core 2.2
 
 ## Supported Platforms
 
-| OS | .Net Standard 2.0 | NET Framework 4.6.1 | MS SQL 2016+ | MySQL/MariaDB |
-| :--- | :---: | :---: | :---: | :---: |
-| OSX 10.14.2 | X |  | X | X |
-| Windows 10 | X | X | X | X |
-| Windows Server 2016 | X | X | X | X |
-| Ubuntu 19.04 | X |  | X | X |
-| Ubuntu 18.10 | X |  | X | X |
-| Ubuntu 18.04 | X |  | X | X |
-| Ubuntu 16.04 | X |  | X | X |
+| OS | .Net Standard 2.2 | MySQL/MariaDB |
+| :--- | :---: | :---: |
+| OSX 10.14.2 | X | X |
+| Ubuntu 19.10 | X | X |
+| Ubuntu 19.04 | X | X |
+| Ubuntu 18.10 | X | X |
+| Ubuntu 18.04 | X | X |
+| Ubuntu 16.04 | X | X |
 
 ## Translating eForm Angular Frontend
 
@@ -108,7 +107,7 @@ This project has adopted the [Microting Open Source Code of Conduct](https://www
 
 The MIT License \(MIT\)
 
-Copyright \(c\) 2007-2019 Microting A/S
+Copyright \(c\) 2007-2020 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files \(the "Software"\), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

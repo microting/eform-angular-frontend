@@ -13,7 +13,6 @@ import {EformReportService} from 'src/app/common/services/eform';
 export class EformReportPageComponent implements OnInit {
   selectedEformId: number;
   fullReportModel: EformFullReportModel = new EformFullReportModel();
-  spinnerStatus = false;
 
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
@@ -30,20 +29,18 @@ export class EformReportPageComponent implements OnInit {
   }
 
   getReport() {
-    this.spinnerStatus = true;
     this.eformReportService.getSingle(this.selectedEformId).subscribe((data) => {
       if (data && data.success) {
         this.fullReportModel = data.model;
-      } this.spinnerStatus = false;
+      }
     });
   }
 
   updateReport() {
-    this.spinnerStatus = true;
     this.eformReportService.updateSingle(this.fullReportModel).subscribe((data) => {
       if (data && data.success) {
         this.router.navigate(['/']).then();
-      } this.spinnerStatus = false;
+      }
     });
   }
 

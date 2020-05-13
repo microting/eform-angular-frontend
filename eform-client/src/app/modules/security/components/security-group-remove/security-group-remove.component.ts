@@ -12,8 +12,6 @@ export class SecurityGroupRemoveComponent implements OnInit {
   @ViewChild('frame', { static: true }) frame;
 
   selectedSecurityGroup: SecurityGroupModel = new SecurityGroupModel;
-
-  spinnerStatus = false;
   constructor(private securityGroupService: SecurityGroupsService) { }
 
   ngOnInit() {
@@ -25,13 +23,11 @@ export class SecurityGroupRemoveComponent implements OnInit {
   }
 
   deleteSingle() {
-    this.spinnerStatus = true;
     this.securityGroupService.deleteSecurityGroup(this.selectedSecurityGroup.id).subscribe(data => {
       if (data && data.success) {
         this.frame.hide();
         this.onSecurityGroupRemoved.emit();
       }
-      this.spinnerStatus = false;
     });
   }
 

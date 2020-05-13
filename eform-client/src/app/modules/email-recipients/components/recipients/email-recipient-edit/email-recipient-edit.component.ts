@@ -16,7 +16,6 @@ export class EmailRecipientEditComponent implements OnInit, OnDestroy {
   @Input() availableTags: CommonDictionaryModel[] = [];
   @Output() emailRecipientUpdated: EventEmitter<void> = new EventEmitter<void>();
   emailRecipientUpdateModel: EmailRecipientUpdateModel = new EmailRecipientUpdateModel;
-  spinnerStatus = false;
   updateEmailRecipient$: Subscription;
 
 
@@ -32,7 +31,6 @@ export class EmailRecipientEditComponent implements OnInit, OnDestroy {
   }
 
   updateEmailRecipient() {
-    this.spinnerStatus = true;
     this.updateEmailRecipient$ = this.emailRecipientsService.updateEmailRecipient(this.emailRecipientUpdateModel)
       .subscribe((data) => {
       if (data && data.success) {
@@ -40,7 +38,6 @@ export class EmailRecipientEditComponent implements OnInit, OnDestroy {
         this.emailRecipientUpdated.emit();
         this.emailRecipientUpdateModel = new EmailRecipientUpdateModel;
       }
-      this.spinnerStatus = false;
     });
   }
 

@@ -4,6 +4,7 @@ import {EventBrokerService} from 'src/app/common/helpers';
 import {GoogleAuthInfoModel} from 'src/app/common/models/auth';
 import {UserSettingsModel} from 'src/app/common/models/settings';
 import {AuthService, LocaleService, UserSettingsService} from 'src/app/common/services/auth';
+import {TimezonesModel} from 'src/app/common/models/common/timezones.model';
 
 @Component({
   selector: 'app-profile-settings',
@@ -21,9 +22,17 @@ export class ProfileSettingsComponent implements OnInit {
     {id: 'de-DE', text: 'German'}
   ];
 
+  countries = [
+    {id: 'da-DK', text: 'Denmark'},
+    {id: 'de-DE', text: 'Germany'},
+    {id: 'en-GB', text: 'United Kingdom'},
+    {id: 'en-US', text: 'United States'}
+  ];
+
   userSettingsModel: UserSettingsModel = new UserSettingsModel();
   googleAuthInfoModel: GoogleAuthInfoModel = new GoogleAuthInfoModel;
-  spinnerStatus = false;
+  timeZones: TimezonesModel = new TimezonesModel();
+  spinnerCounter = 0;
 
   constructor(private authService: AuthService,
               private router: Router,
@@ -34,6 +43,7 @@ export class ProfileSettingsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getTimeZones();
     this.getGoogleAuthenticatorInfo();
     this.getUserSettings();
 
@@ -41,16 +51,30 @@ export class ProfileSettingsComponent implements OnInit {
   }
 
   getGoogleAuthenticatorInfo() {
+    this.spinnerStatusCounter(1);
     this.authService.getGoogleAuthenticatorInfo().subscribe((data) => {
       if (data && data.model) {
         this.googleAuthInfoModel = data.model;
+        this.spinnerStatusCounter(-1);
       }
     });
   }
 
+  getTimeZones() {
+    this.spinnerStatusCounter(1);
+    this.authService.allTimeZones().subscribe((data) => {
+      if (data && data.model) {
+        this.timeZones = data.model;
+      }
+      this.spinnerStatusCounter(-1);
+    });
+  }
+
   getUserSettings() {
+    this.spinnerStatusCounter(1);
     this.userSettingsService.getUserSettings().subscribe((data) => {
       this.userSettingsModel = data.model;
+      this.spinnerStatusCounter(-1);
     });
   }
 
@@ -62,34 +86,41 @@ export class ProfileSettingsComponent implements OnInit {
     } else {
       return;
     }
-    this.spinnerStatus = true;
+    this.spinnerStatusCounter(1);
     this.authService.updateGoogleAuthenticatorInfo(this.googleAuthInfoModel).subscribe((data) => {
       if (data.success) {
         localStorage.removeItem('currentAuth');
         this.router.navigate(['/login']).then();
       }
-      this.spinnerStatus = false;
+      this.spinnerStatusCounter(-1);
     });
   }
 
   deleteGoogleAuthenticatorInfo() {
-    this.spinnerStatus = true;
+    this.spinnerStatusCounter(1);
     this.authService.deleteGoogleAuthenticatorInfo().subscribe((data) => {
       if (data && data.success) {
         this.googleAuthInfoModel.psk = null;
       }
-      this.spinnerStatus = false;
+      this.spinnerStatusCounter(-1);
     });
   }
 
   updateUserProfileSettings() {
-    this.spinnerStatus = true;
+    this.spinnerStatusCounter(1);
     this.userSettingsService.updateUserSettings(this.userSettingsModel).subscribe(((data) => {
       this.localeService.updateUserLocale(this.userSettingsModel.locale);
-      this.spinnerStatus = false;
       window.location.reload();
     }), error => {
-      this.spinnerStatus = false;
+      this.spinnerStatusCounter(-1);
     });
+  }
+
+  spinnerStatusCounter(counter: number) {
+    // console.log('current spinner count is ' + this.spinnerCounter + ' we got a new counter number ' + counter);
+    this.spinnerCounter += counter;
+    if (this.spinnerCounter === 0) {
+    } else {
+    }
   }
 }

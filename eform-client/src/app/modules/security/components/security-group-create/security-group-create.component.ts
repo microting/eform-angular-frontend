@@ -12,7 +12,6 @@ import {SecurityGroupsService, AdminService} from 'src/app/common/services';
 export class SecurityGroupCreateComponent implements OnInit {
   securityGroupUsers: Array<any> = [];
   securityGroupCreateModel: SecurityGroupCreateModel = new SecurityGroupCreateModel();
-  spinnerStatus = false;
   paginationModel = new PaginationModel(1, 1000, 0);
   users: UserInfoModelList = new UserInfoModelList();
 
@@ -26,12 +25,10 @@ export class SecurityGroupCreateComponent implements OnInit {
   }
 
   getUsers() {
-    this.spinnerStatus = true;
     this.adminService.getAllUsers(this.paginationModel).subscribe((data) => {
       if (data && data.success) {
         this.users = data.model;
       }
-      this.spinnerStatus = false;
     });
   }
 
@@ -57,7 +54,6 @@ export class SecurityGroupCreateComponent implements OnInit {
   createSecurityGroup() {
     this.securityGroupCreateModel.userIds = this.securityGroupUsers.map(x => x.id);
     this.securityGroupsService.createSecurityGroup(this.securityGroupCreateModel).subscribe(() => {
-      this.spinnerStatus = false;
       this.router.navigate(['/security']);
     });
   }

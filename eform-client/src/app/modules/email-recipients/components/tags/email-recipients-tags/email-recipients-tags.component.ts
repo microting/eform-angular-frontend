@@ -16,7 +16,6 @@ export class EmailRecipientsTagsComponent implements OnInit, OnDestroy {
   @ViewChild('tagDeleteModal') tagDeleteModal: EmailRecipientTagDeleteComponent;
   @Input() availableTags: CommonDictionaryModel[] = [];
   @Output() tagsChanged: EventEmitter<void> = new EventEmitter<void>();
-  spinnerStatus = false;
 
 
   constructor() {

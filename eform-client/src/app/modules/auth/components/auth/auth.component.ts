@@ -13,7 +13,6 @@ export class AuthComponent implements OnInit {
   loginPageSettings: LoginPageSettingsModel = new LoginPageSettingsModel;
   loginImage: any;
   twoFactorForced = false;
-  spinnerStatus = false;
 
   constructor(private router: Router,
               private authService: AuthService,
@@ -38,7 +37,6 @@ export class AuthComponent implements OnInit {
 
   isConnectionStringExist(secondCheck: boolean) {
     console.log('isConnectionStringExist called');
-    this.spinnerStatus = true;
     this.settingsService.connectionStringExist().subscribe((result) => {
       if (result && !result.success) {
         if (secondCheck) {
@@ -48,7 +46,7 @@ export class AuthComponent implements OnInit {
       } else if (result && result.success) {
         this.getSettings();
         this.getTwoFactorInfo();
-      } this.spinnerStatus = false;
+      }
       return true;
     },
         error => false);
@@ -56,7 +54,6 @@ export class AuthComponent implements OnInit {
   }
 
   getSettings() {
-    this.spinnerStatus = true;
     this.settingsService.getLoginPageSettings().subscribe((data) => {
       if (data && data.success) {
         this.loginPageSettings = this.settingsService.loginPageSettingsModel = data.model;
@@ -65,15 +62,13 @@ export class AuthComponent implements OnInit {
         } else if (!this.loginPageSettings.imageLink) {
           this.loginImage = '../../../assets/images/eform-phone.jpg';
         }
-      } this.spinnerStatus = false;
+      }
     });
   }
 
   getTwoFactorInfo() {
-    this.spinnerStatus = true;
     this.authService.twoFactorAuthInfo().subscribe((data) => {
       this.twoFactorForced = data.model;
-      this.spinnerStatus = false;
     });
   }
 }

@@ -11,7 +11,6 @@ export class EformRemoveEformModalComponent implements OnInit {
   @ViewChild('frame', { static: true }) frame;
   @Output() onEFormDeleted: EventEmitter<void> = new EventEmitter();
   selectedTemplateDto: TemplateDto = new TemplateDto();
-  spinnerStatus = false;
   constructor(private eFormService: EFormService) { }
 
   ngOnInit() {
@@ -23,13 +22,11 @@ export class EformRemoveEformModalComponent implements OnInit {
   }
 
   deleteEfrom() {
-    this.spinnerStatus = true;
     this.eFormService.deleteSingle(this.selectedTemplateDto.id).subscribe(operation => {
       if (operation && operation.success) {
         this.onEFormDeleted.emit();
         this.frame.hide();
       }
-      this.spinnerStatus = false;
     });
   }
 }

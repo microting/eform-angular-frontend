@@ -11,7 +11,6 @@ import {PluginsManagementService} from '../../../../../common/services/plugins-m
 export class InstalledPluginModalComponent implements OnInit {
   @Input() installedPluginModel: InstalledPluginModel = new InstalledPluginModel();
   @ViewChild('frame', { static: true }) frame;
-  spinnerStatus = false;
 
   constructor(
     private pluginManagementService: PluginsManagementService) {}
@@ -28,7 +27,6 @@ export class InstalledPluginModalComponent implements OnInit {
   }
 
   updatePluginStatus(status: number) {
-    this.spinnerStatus = true;
     const newModel = new InstalledPluginUpdateModel();
     newModel.id = this.installedPluginModel.id;
     newModel.pluginId = this.installedPluginModel.pluginId;
@@ -39,7 +37,6 @@ export class InstalledPluginModalComponent implements OnInit {
         localStorage.removeItem('currentAuth');
         window.location.reload();
       }
-      this.spinnerStatus = false;
     });
   }
 }

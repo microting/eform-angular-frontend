@@ -10,23 +10,33 @@ class SitesPage extends PageWithNavbarPage {
   }
 
   public get newTagInput() {
-    return $('#newTag');
+    const ele = $('#newTag');
+    ele.waitForDisplayed({timeout: 20000});
+    return ele;
   }
 
   public get newTagCreateBtn() {
-    return $('#newTagCreateBtn');
+    const ele = $('#newTagCreateBtn');
+    ele.waitForDisplayed({timeout: 20000});
+    return ele;
   }
 
   public get siteTagSelector() {
-    return $('#tagSelector');
+    const ele = $('#tagSelector');
+    ele.waitForDisplayed({timeout: 20000});
+    return ele;
   }
 
   public get updateTagsBtn() {
-    return $('#saveTagsBtn');
+    const ele = $('#saveTagsBtn');
+    ele.waitForDisplayed({timeout: 20000});
+    return ele;
   }
 
   public get tagRemovalSelector() {
-    return $('#tagForRemoval');
+    const ele = $('#tagForRemoval');
+    ele.waitForDisplayed({timeout: 20000});
+    return ele;
   }
 
   public getTagsListOfChoises() {
@@ -34,15 +44,17 @@ class SitesPage extends PageWithNavbarPage {
   }
 
   public get removeTagBtn() {
-    return $('#removeTagBtn');
+    const ele = $('#removeTagBtn');
+    ele.waitForDisplayed({timeout: 20000});
+    return ele;
   }
 
   getFirstRowObject(): SitesRowObject {
+    browser.pause(500);
     return new SitesRowObject(1);
   }
 
   public tagExists(tagName: string) {
-    //browser.pause(5000);
     $('#tagSelector').waitForDisplayed({timeout: 20000});
     this.siteTagSelector.click();
     const selectedTag = $('#tagSelector .ng-option');
@@ -51,7 +63,6 @@ class SitesPage extends PageWithNavbarPage {
   }
 
   public tagNotSelected(tagName: string) {
-    browser.pause(5000);
     this.siteTagSelector.click();
     const availableTag = $('.ng-option:not(.ng-option-selected)');
     availableTag.getText();
@@ -59,18 +70,14 @@ class SitesPage extends PageWithNavbarPage {
   }
 
   public get getFirstAvailableTag() {
-    browser.pause(5000);
     this.siteTagSelector.click();
     return $('.ng-option:not(.ng-option-selected)');
   }
 
   public createTag(site: SitesRowObject, tagName: string) {
-    // browser.pause(8000);
     site.siteTagsEditBtn.click();
     $('#tagSelector').waitForDisplayed({timeout: 20000});
-    // browser.pause(8000);
     sitesPage.newTagInput.setValue(tagName);
-    // browser.pause(4000);
     sitesPage.newTagCreateBtn.click();
   }
 
@@ -103,6 +110,7 @@ class SitesPage extends PageWithNavbarPage {
   }
 
   getSite(num): SitesRowObject {
+    browser.pause(500);
     return new SitesRowObject(num);
   }
 

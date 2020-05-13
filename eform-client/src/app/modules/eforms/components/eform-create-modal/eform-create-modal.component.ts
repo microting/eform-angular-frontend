@@ -13,7 +13,6 @@ export class EformCreateModalComponent implements OnInit {
   @Input() availableTags: Array<CommonDictionaryModel> = [];
   @Output() onEformCreated: EventEmitter<void> = new EventEmitter<void>();
   eFormCreateModel: EFormCreateModel = new EFormCreateModel();
-  spinnerStatus = false;
 
   constructor(private eFormService: EFormService) {
   }
@@ -26,7 +25,6 @@ export class EformCreateModalComponent implements OnInit {
   }
 
   createTemplate() {
-    this.spinnerStatus = true;
     if (!this.eFormCreateModel.newTag) {
       delete this.eFormCreateModel.newTag;
     }
@@ -36,7 +34,6 @@ export class EformCreateModalComponent implements OnInit {
         this.eFormCreateModel = new EFormCreateModel;
         this.frame.hide();
       }
-      this.spinnerStatus = false;
     }));
   }
 }

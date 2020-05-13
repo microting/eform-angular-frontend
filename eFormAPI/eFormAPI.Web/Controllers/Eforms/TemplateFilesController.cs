@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 using System;
+using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -64,7 +65,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         [HttpGet]
         [Route("api/template-files/csv/{id}")]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.GetCsv)]
-        public async Task<IActionResult> Csv(int id)
+        public async Task<IActionResult> Csv(int id, string start, string end, bool utcTime)
         {
             if (!await _permissionsService.CheckEform(id,
                 AuthConsts.EformClaims.EformsClaims.GetCsv))
@@ -75,8 +76,22 @@ namespace eFormAPI.Web.Controllers.Eforms
             var core = await _coreHelper.GetCore();
             var fileName = $"{id}_{DateTime.Now.Ticks}.csv";
             var filePath = PathHelper.GetOutputPath(fileName);
-            var fullPath = await core.CasesToCsv(id, null, null, filePath,
-                $"{await core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", ",", "");
+            CultureInfo cultureInfo = new CultureInfo("de-DE");
+            TimeZoneInfo timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Europe/Copenhagen");
+            string fullPath = "";
+            if (!string.IsNullOrEmpty(start) && !string.IsNullOrEmpty(end))
+            {
+                fullPath = await core.CasesToCsv(id, DateTime.Parse(start), DateTime.Parse(end), filePath,
+                    $"{await core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", ",",
+                    "", utcTime, cultureInfo, timeZoneInfo);
+            }
+            else
+            {
+                fullPath = await core.CasesToCsv(id, null, null, filePath,
+                    $"{await core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", ",",
+                    "", utcTime, cultureInfo, timeZoneInfo);
+            }
+
             var fileStream = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
             return File(fileStream, "application/octet-stream", fileName);
         }

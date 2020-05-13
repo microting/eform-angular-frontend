@@ -18,7 +18,6 @@ export class SecurityGroupUpdateComponent implements OnInit {
   securityGroupModel: SecurityGroupModel = new SecurityGroupModel();
   securityGroupUpdateModel: SecurityGroupUpdateModel = new SecurityGroupUpdateModel();
   selectedGroupId: number;
-  spinnerStatus = false;
   paginationModel = new PaginationModel(1, 1000, 0);
   users: UserInfoModelList = new UserInfoModelList();
 
@@ -38,25 +37,21 @@ export class SecurityGroupUpdateComponent implements OnInit {
   }
 
   getSecurityGroup(id: number) {
-    this.spinnerStatus = true;
     this.securityGroupsService.getSecurityGroup(id).subscribe((data) => {
       if (data && data.success) {
         this.securityGroupModel = data.model;
         this.getUsers();
       }
-      this.spinnerStatus = false;
     });
   }
 
   getUsers() {
-    this.spinnerStatus = true;
     this.adminService.getAllUsers(this.paginationModel).subscribe((data) => {
       if (data && data.success) {
         this.users = data.model;
         this.users.userList =
           this.users.userList.filter(y => !this.securityGroupModel.usersList.some(x => x.id === y.id));
       }
-      this.spinnerStatus = false;
     });
 
   }
@@ -81,12 +76,10 @@ export class SecurityGroupUpdateComponent implements OnInit {
   }
 
   updateSecurityGroup() {
-    this.spinnerStatus = true;
     this.securityGroupUpdateModel.userIds = this.securityGroupModel.usersList.map(x => x.id);
     this.securityGroupUpdateModel.id = this.selectedGroupId;
     this.securityGroupUpdateModel.name = this.securityGroupModel.name;
     this.securityGroupsService.updateSecurityGroup(this.securityGroupUpdateModel).subscribe(() => {
-      this.spinnerStatus = false;
       this.router.navigate(['/security']);
     });
   }

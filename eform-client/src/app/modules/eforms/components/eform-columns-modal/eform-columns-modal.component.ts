@@ -11,7 +11,6 @@ import {EFormService} from 'src/app/common/services/eform';
 })
 export class EformColumnsModalComponent implements OnInit {
   @ViewChild('frame', { static: true }) frame;
-  spinnerStatus = false;
   selectedTemplateDto: TemplateDto = new TemplateDto();
   columnEditModel: UpdateColumnsModel = new UpdateColumnsModel;
   columnModels: Array<TemplateColumnModel> = [];
@@ -28,7 +27,6 @@ export class EformColumnsModalComponent implements OnInit {
   }
 
   getColumnsForTemplate() {
-    this.spinnerStatus = true;
     this.eFormService.getTemplateColumns(this.selectedTemplateDto.id).subscribe((operation) => {
       if (operation && operation.success) {
         this.columnModels = operation.model;
@@ -37,18 +35,16 @@ export class EformColumnsModalComponent implements OnInit {
             this.columnEditModel = result.model;
           }
         });
-      } this.spinnerStatus = false;
+      }
     });
   }
 
   updateColumns() {
-    this.spinnerStatus = true;
     this.columnEditModel.templateId = this.selectedTemplateDto.id;
     this.eFormService.updateTemplateColumns(this.columnEditModel).subscribe((data => {
       if (data && data.success) {
         this.frame.hide();
       }
-      this.spinnerStatus = false;
     }));
   }
 }

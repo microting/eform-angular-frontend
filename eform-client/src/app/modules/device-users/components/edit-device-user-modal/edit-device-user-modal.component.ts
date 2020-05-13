@@ -11,7 +11,6 @@ export class EditDeviceUserModalComponent implements OnInit {
   @Input() selectedDeviceUser: DeviceUserModel = new DeviceUserModel();
   @Output() onUserEdited: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('frame', { static: true }) frame;
-  spinnerStatus = false;
 
   constructor(private deviceUserService: DeviceUserService) { }
 
@@ -23,13 +22,11 @@ export class EditDeviceUserModalComponent implements OnInit {
   }
 
   updateSingle() {
-    this.spinnerStatus = true;
     this.deviceUserService.updateSingleDeviceUser(this.selectedDeviceUser).subscribe(operation => {
       if (operation && operation.success) {
         this.onUserEdited.emit();
         this.frame.hide();
       }
-      this.spinnerStatus = false;
     });
   }
 }

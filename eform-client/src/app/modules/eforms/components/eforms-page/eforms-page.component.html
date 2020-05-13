@@ -88,7 +88,7 @@
         <td>
           <div class="d-flex justify-content-center">
             <div>
-              <a class="btn btn-sm btn-success p-1 mb-2"
+              <a mdbBtn type="button" color="success" size="sm"
                  *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eFormsUpdateTags)"
                  id="eform-edit-btn"
                  mdbTooltip="{{ 'Edit tags' | translate }}" (click)="openEditTagsModal(templateDto)">
@@ -109,7 +109,7 @@
               && checkEformPermissions(templateDto.id, userClaimsEnum.eFormsPairingUpdate)
               && !templateDto.isLocked"
                       id="eform-pairing-btn"
-                      class="btn btn-success btn-sm p-1 mb-2" (click)="openPairingModal(templateDto)"
+                      mdbBtn type="button" color="success" size="sm" (click)="openPairingModal(templateDto)"
                       mdbTooltip="{{ 'Click to edit eForm pairing with user(s)' | translate }}">
                 {{ 'Edit pairing' | translate }}
               </button>
@@ -117,7 +117,7 @@
               && checkEformPermissions(templateDto.id, userClaimsEnum.eFormsPairingUpdate)
               && !templateDto.isLocked"
                       id="eform-add-btn"
-                      class="btn btn-btn-accent btn-sm text-black-50 p-1 mb-2" (click)="openPairingModal(templateDto)"
+                      mdbBtn type="button" size="sm" (click)="openPairingModal(templateDto)"
                       mdbTooltip="{{ 'Click to pair eForm with user(s)' | translate }}">
                 {{ 'Pair eForm' | translate }}
               </button>
@@ -191,8 +191,6 @@
 
   <!--pagination(if required)-->
 </div>
-
-<eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>
 
 <app-eform-create-modal [availableTags]="availableTags" (onEformCreated)="loadAllTemplates()"
                         #modalNewEform></app-eform-create-modal>

@@ -16,7 +16,6 @@ export class SecurityGroupGeneralPermissionsComponent implements OnInit {
   selectedGroupId: number;
   securityGroupGeneralPermissionsModel: SecurityGroupGeneralPermissionsModel = new SecurityGroupGeneralPermissionsModel();
   securityGroupGeneralPermissionsUpdateModel: SecurityGroupGeneralPermissionsUpdateModel = new SecurityGroupGeneralPermissionsUpdateModel();
-  spinnerStatus = false;
 
   constructor(
     private securityGroupGeneralPermissionsService: SecurityGroupGeneralPermissionsService,
@@ -35,7 +34,6 @@ export class SecurityGroupGeneralPermissionsComponent implements OnInit {
   }
 
   getSecurityGroupGeneralPermissions() {
-    this.spinnerStatus = true;
     this.securityGroupGeneralPermissionsService.getGeneralPermissions(this.selectedGroupId).subscribe((data) => {
       if (data && data.success) {
         this.securityGroupGeneralPermissionsModel = data.model;
@@ -43,12 +41,10 @@ export class SecurityGroupGeneralPermissionsComponent implements OnInit {
           return b.permissions.length - a.permissions.length;
         });
       }
-      this.spinnerStatus = false;
     });
   }
 
   updateSecurityGroupGeneralPermissions() {
-    this.spinnerStatus = true;
     this.securityGroupGeneralPermissionsUpdateModel.groupId = this.selectedGroupId;
     this.securityGroupGeneralPermissionsUpdateModel.permissions = flatten(this.securityGroupGeneralPermissionsModel.permissionTypes
       .map(x => x.permissions));
@@ -56,7 +52,6 @@ export class SecurityGroupGeneralPermissionsComponent implements OnInit {
       if (data && data.success) {
         this.router.navigate(['/security']).then();
       }
-      this.spinnerStatus = false;
     });
   }
 

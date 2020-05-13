@@ -24,7 +24,7 @@ describe('Site tags', function () {
     //console.log(JSON.stringify(site));
     sitesPage.createTag(site, tagName);
     const tagExist = sitesPage.tagExists(tagName);
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     expect(tagExist, true);
   });
   it('should cancel assign tag', function () {
@@ -50,7 +50,6 @@ describe('Site tags', function () {
     const firstTag = sitesPage.getFirstAvailableTag;
     firstTag.click();
     sitesPage.updateTagsBtn.click();
-    // browser.pause(10000);
     expect(site.assignedTag, tagName);
   });
   it('should delete tag', function () {
@@ -62,14 +61,14 @@ describe('Site tags', function () {
     site.siteTagsEditBtn.click();
     $('#newTag').waitForDisplayed({timeout: 20000});
     sitesPage.tagRemovalSelector.click();
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     const tagsForRemoval = sitesPage.getTagsListOfChoises();
     tagsForRemoval[0].click();
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     sitesPage.removeTagBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     const tagExist = sitesPage.tagExists(tagName);
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     expect(tagExist, false);
   });
 });

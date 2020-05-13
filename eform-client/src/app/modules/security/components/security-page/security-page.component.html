@@ -18,7 +18,7 @@
     </div>
   </div>
   <div class="row p-1 mt-2 table-responsive no-gutters">
-    <table class="table table-sm table-striped text-center z-depth-1">
+    <table mdbTable striped="true" hover="true" small="true" class="z-depth-1 text-center">
       <thead>
       <tr>
         <th scope="col">{{ 'ID' | translate }}</th>
@@ -86,7 +86,5 @@
     </div>
   </div>
 </div>
-
-<eform-spinner [spinnerVisibility]="spinnerStatus"></eform-spinner>
 
 <app-security-group-remove #modalGroupDelete (onSecurityGroupRemoved)="getSecurityGroups()"></app-security-group-remove>

@@ -53,8 +53,6 @@
   </div>
 </div>
 
-<spinner-pn [spinnerVisibility]="spinnerStatus"></spinner-pn>
-
 <app-email-recipient-tag-edit #tagEditModal (tagUpdated)="onTagUpdated()"
                               (tagUpdateCancelled)="onChildrenModalHide()"></app-email-recipient-tag-edit>
 <app-email-recipient-tag-new #tagCreateModal (tagCreated)="onTagCreated()"

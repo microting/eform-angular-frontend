@@ -28,8 +28,6 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   @ViewChild('modalUploadZip', { static: true }) modalUploadZip;
 
   searchSubject = new Subject();
-
-  spinnerStatus = false;
   localPageSettings: PageSettingsModel = new PageSettingsModel();
   templateRequestModel: TemplateRequestModel = new TemplateRequestModel;
   templateListModel: TemplateListModel = new TemplateListModel();
@@ -82,11 +80,9 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   }
 
   loadAllTemplates() {
-    this.spinnerStatus = true;
     this.templateRequestModel.sort = this.localPageSettings.sort;
     this.templateRequestModel.isSortDsc = this.localPageSettings.isSortDsc;
     this.eFormService.getAll(this.templateRequestModel).subscribe(operation => {
-      this.spinnerStatus = false;
       if (operation && operation.success) {
         this.templateListModel = operation.model;
       }
@@ -95,14 +91,12 @@ export class EformsPageComponent implements OnInit, OnDestroy {
 
   loadAllTags() {
     if (this.userClaims.eFormsReadTags) {
-      this.spinnerStatus = true;
       this.eFormTagService.getAvailableTags().subscribe((data) => {
         if (data && data.success) {
           this.availableTags = data.model;
           this.loadSelectedUserTags();
         }
       }, (error) => {
-        this.spinnerStatus = false;
       });
     } else {
       this.loadAllTemplates();
@@ -113,49 +107,41 @@ export class EformsPageComponent implements OnInit, OnDestroy {
     const savedTagModel = new SavedTagModel();
     savedTagModel.tagId = e.id;
     savedTagModel.tagName = e.name;
-    this.spinnerStatus = true;
     this.eFormTagService.addSavedTag(savedTagModel).subscribe((data) => {
       if (data && data.success) {
         this.templateRequestModel.tagIds.push(e.id);
         this.loadAllTemplates();
       }
     }, (error) => {
-      this.spinnerStatus = false;
     });
   }
 
   removeSavedTag(e: any) {
-    this.spinnerStatus = true;
     this.eFormTagService.deleteSavedTag(e.value.id).subscribe(data => {
       if (data && data.success) {
         this.templateRequestModel.tagIds = this.templateRequestModel.tagIds.filter(x => x !== e.id);
         this.loadAllTemplates();
       }
     }, (error) => {
-      this.spinnerStatus = false;
     });
   }
 
   loadSelectedUserTags() {
-    this.spinnerStatus = true;
     this.eFormTagService.getSavedTags().subscribe((data) => {
       if (data && data.success) {
         this.templateRequestModel.tagIds = data.model.tagList.map(x => x.tagId);
         this.loadAllTemplates();
       }
     }, (error) => {
-      this.spinnerStatus = false;
     });
   }
 
   loadEformsPermissions() {
-    this.spinnerStatus = false;
     this.securityGroupEformsService.getEformsSimplePermissions().subscribe((data) => {
       if (data && data.success) {
         this.eformPermissionsSimpleModel = this.securityGroupEformsService.mapEformsSimplePermissions(data.model);
-      } this.spinnerStatus = false;
+      }
     }, (error) => {
-      this.spinnerStatus = false;
     });
   }
 
@@ -190,18 +176,15 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   }
 
   downloadItem(itemName: string, templateId: number) {
-    this.spinnerStatus = true;
     if (itemName === 'XML') {
       this.eFormService.downloadEformXML(templateId).subscribe(data => {
         const blob = new Blob([data]);
         saveAs(blob, `template_${templateId}.csv`);
-        this.spinnerStatus = false;
       });
     } else {
       this.eFormService.downloadCSVFile(templateId).subscribe(data => {
         const blob = new Blob([data]);
         saveAs(blob, `template_${templateId}.csv`);
-        this.spinnerStatus = false;
       });
     }
   }

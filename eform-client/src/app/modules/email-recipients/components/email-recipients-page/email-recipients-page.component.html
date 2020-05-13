@@ -31,7 +31,7 @@
     </div>
   </div>
   <div class="row p-1 mt-4 table-responsive no-gutters" *ngIf="emailRecipientsListModel.total !== 0">
-    <table class="table table-sm table-striped text-center z-depth-1">
+    <table mdbTable striped="true" hover="true" small="true" class="z-depth-1 text-center">
       <thead>
       <tr>
         <th scope="col" class="table-header-sortable" id="idTableHeader" (click)="sortTable('Id')">
@@ -121,8 +121,6 @@
     ></pagination-pn>
   </div>
 </div>
-
-<spinner-pn [spinnerVisibility]="spinnerStatus"></spinner-pn>
 
 <app-email-recipients-new #newRecipientsModal [availableTags]="availableTags"
                           (emailRecipientsCreated)="onEmailRecipientCreated()"></app-email-recipients-new>

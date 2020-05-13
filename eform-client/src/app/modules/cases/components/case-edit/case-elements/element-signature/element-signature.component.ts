@@ -14,7 +14,6 @@ export class ElementSignatureComponent implements OnChanges {
   @Input() fieldValues: Array<FieldValueDto> = [];
   images = [];
   galleryImages: GalleryItem[] = [];
-  spinnerStatus = false;
 
   constructor(public gallery: Gallery, public lightbox: Lightbox) { }
 

@@ -11,7 +11,6 @@ export class SecurityGroupEformsEditComponent implements OnInit {
   @ViewChild('frame', { static: true }) frame;
   @Output() onEformUpdated: EventEmitter<void> = new EventEmitter<void>();
   eformSecurityModel: EformPermissionsModel = new EformPermissionsModel();
-  spinnerStatus = false;
   constructor(private securityGroupEformsService: SecurityGroupEformsPermissionsService) { }
 
   ngOnInit() {
@@ -23,12 +22,10 @@ export class SecurityGroupEformsEditComponent implements OnInit {
   }
 
   updateEformGroupPermissions() {
-    this.spinnerStatus = true;
     this.securityGroupEformsService.updateGroupEformPermissions(this.eformSecurityModel).subscribe((data) => {
       if (data && data.success) {
         this.onEformUpdated.emit();
       }
-      this.spinnerStatus = false;
       this.frame.hide();
     });
   }

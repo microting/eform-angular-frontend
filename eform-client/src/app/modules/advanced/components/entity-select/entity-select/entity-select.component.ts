@@ -35,14 +35,13 @@ export class EntitySelectComponent implements OnInit {
   }
 
   getEntitySelectableGroupList() {
-    this.spinnerStatus = true;
     this.advEntitySelectableGroupListRequestModel.isSortDsc = this.localPageSettings.isSortDsc;
     this.advEntitySelectableGroupListRequestModel.sort = this.localPageSettings.sort;
     this.advEntitySelectableGroupListRequestModel.pageSize = this.localPageSettings.pageSize;
     this.entitySelectService.getEntitySelectableGroupList(this.advEntitySelectableGroupListRequestModel).subscribe((data) => {
       if (data && data.model) {
         this.advEntitySelectableGroupListModel = data.model;
-      } this.spinnerStatus = false;
+      }
     });
   }
 

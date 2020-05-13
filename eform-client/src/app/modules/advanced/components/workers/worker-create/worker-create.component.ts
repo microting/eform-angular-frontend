@@ -14,7 +14,6 @@ export class WorkerCreateComponent implements OnInit {
   @ViewChild('frame', { static: true }) frame;
   newWorkerModel: WorkerCreateModel = new WorkerCreateModel;
   simpleSites: Array<SiteDto> = [];
-  spinnerStatus = false;
 
   constructor(private simpleSitesService: DeviceUserService, private workersService: WorkersService) { }
 
@@ -35,14 +34,12 @@ export class WorkerCreateComponent implements OnInit {
   createWorker() {
     this.newWorkerModel.customerNo =
       this.simpleSites.find(x => x.siteId === this.newWorkerModel.siteId).customerNo;
-    this.spinnerStatus = true;
     this.workersService.createWorker(this.newWorkerModel).subscribe((data => {
       if (data && data.success) {
         this.newWorkerModel = new WorkerCreateModel;
         this.WorkerCreated.emit();
         this.frame.hide();
       }
-      this.spinnerStatus = false;
     }));
   }
 }

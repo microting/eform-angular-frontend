@@ -16,7 +16,6 @@ describe('My eforms', function () {
     expect(eform.eFormName).equal(newEformLabel);
     expect(eform.tags.length).equal(0);
     eform.deleteBtn.click();
-    // browser.pause(10000);
     $('#eFormDeleteDeleteBtn').waitForDisplayed({timeout: 20000});
     $$('.btn-danger')[2].click();
     eform = myEformsPage.getFirstMyEformsRowObj();
@@ -117,7 +116,6 @@ describe('My eforms', function () {
     expect(tagsTexts).to.include.members(addedAndSelectedTags.selected);
     eform.deleteBtn.click();
     $('#eFormDeleteDeleteBtn').waitForDisplayed({timeout: 20000});
-    // browser.pause(10000);
     $$('.btn-danger')[2].click();
     eform = myEformsPage.getFirstMyEformsRowObj();
     expect(eform.id === null);
@@ -125,7 +123,7 @@ describe('My eforms', function () {
   it('should not create eform if xml is empty', function () {
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     myEformsPage.newEformBtn.click();
-    browser.pause(5000);
+    browser.pause(500);
     expect(myEformsPage.createEformBtn.isEnabled()).equal(false);
   });
 });

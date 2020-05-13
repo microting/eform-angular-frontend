@@ -11,7 +11,6 @@ export class FolderDeleteComponent implements OnInit {
  @Input() selectedFolderDto: FolderDto = new FolderDto();
  @Output() onFolderDeleted: EventEmitter<void> = new EventEmitter<void>();
  @ViewChild('frame', { static: true }) frame;
- spinnerStatus = false;
 
   constructor(private folderService: FoldersService) { }
 
@@ -23,13 +22,11 @@ export class FolderDeleteComponent implements OnInit {
   }
 
   deleteFolder() {
-    this.spinnerStatus = true;
     this.folderService.deleteSingleFolder(this.selectedFolderDto.id).subscribe(operation => {
       if (operation && operation.success) {
         this.frame.hide();
         this.onFolderDeleted.emit();
       }
-      this.spinnerStatus = false;
     });
   }
 }

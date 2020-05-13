@@ -14,7 +14,6 @@ export class NewUserModalComponent implements OnInit {
   @Output() onUserCreated: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('frame', { static: true }) frame;
   newUserModel: UserRegisterModel = new UserRegisterModel;
-  spinnerStatus = false;
 
   constructor(private adminService: AdminService) { }
 
@@ -26,13 +25,12 @@ export class NewUserModalComponent implements OnInit {
   }
 
   createUser() {
-    this.spinnerStatus = true;
     this.adminService.createUser(this.newUserModel).subscribe((data) => {
       if (data && data.success) {
         this.newUserModel = new UserRegisterModel;
         this.onUserCreated.emit();
         this.frame.hide();
-      } this.spinnerStatus = false;
+      }
     });
   }
 

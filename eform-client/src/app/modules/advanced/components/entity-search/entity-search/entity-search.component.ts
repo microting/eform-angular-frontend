@@ -48,14 +48,13 @@ export class EntitySearchComponent implements OnInit {
   }
 
   getEntitySearchableGroupList() {
-    this.spinnerStatus = true;
     this.advEntitySearchableGroupListRequestModel.isSortDsc = this.localPageSettings.isSortDsc;
     this.advEntitySearchableGroupListRequestModel.sort = this.localPageSettings.sort;
     this.advEntitySearchableGroupListRequestModel.pageSize = this.localPageSettings.pageSize;
     this.entitySearchService.getEntitySearchableGroupList(this.advEntitySearchableGroupListRequestModel).subscribe((data) => {
       if (data && data.model) {
         this.advEntitySearchableGroupListModel = data.model;
-      } this.spinnerStatus = false;
+      }
     });
   }
 

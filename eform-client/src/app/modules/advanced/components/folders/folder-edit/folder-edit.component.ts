@@ -13,7 +13,6 @@ export class FolderEditComponent implements OnInit {
   @Output() onFolderEdited: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('frame', { static: true }) frame;
   folderModel: FolderModel = new FolderModel();
-  spinnerStatus = false;
 
 
   constructor(private foldersService: FoldersService) { }
@@ -25,7 +24,6 @@ export class FolderEditComponent implements OnInit {
   }
 
   updateFolder() {
-    this.spinnerStatus = true;
     this.folderModel.id = this.selectedFolderDto.id;
     this.folderModel.description = this.selectedFolderDto.description;
     this.folderModel.name = this.selectedFolderDto.name;
@@ -34,7 +32,6 @@ export class FolderEditComponent implements OnInit {
         this.onFolderEdited.emit();
         this.frame.hide();
       }
-      this.spinnerStatus = false;
     });
   }
 }

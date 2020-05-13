@@ -28,7 +28,6 @@ export class EmailRecipientsPageComponent implements OnInit, OnDestroy {
   emailRecipientsListModel: EmailRecipientsListModel = new EmailRecipientsListModel();
   emailRecipientsRequestModel: EmailRecipientsRequestModel = new EmailRecipientsRequestModel();
   localPageSettings: PageSettingsModel = new PageSettingsModel();
-  spinnerStatus = false;
   availableTags: CommonDictionaryModel[] = [];
   getAllSub$: Subscription;
   getTagsSub$: Subscription;
@@ -59,7 +58,6 @@ export class EmailRecipientsPageComponent implements OnInit, OnDestroy {
 
 
   getEmailRecipients() {
-    this.spinnerStatus = true;
     this.emailRecipientsRequestModel.isSortDsc = this.localPageSettings.isSortDsc;
     this.emailRecipientsRequestModel.sort = this.localPageSettings.sort;
     this.emailRecipientsRequestModel.pageSize = this.localPageSettings.pageSize;
@@ -68,17 +66,14 @@ export class EmailRecipientsPageComponent implements OnInit, OnDestroy {
       if (data && data.success) {
         this.emailRecipientsListModel = data.model;
       }
-      this.spinnerStatus = false;
     });
   }
 
   getTags() {
-    this.spinnerStatus = true;
     this.getTagsSub$ = this.tagsService.getEmailRecipientsTags().subscribe((data) => {
       if (data && data.success) {
         this.availableTags = data.model;
       }
-      this.spinnerStatus = false;
     });
   }
 

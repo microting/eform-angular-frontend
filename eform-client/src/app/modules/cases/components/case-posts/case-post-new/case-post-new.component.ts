@@ -23,7 +23,6 @@ export class CasePostNewComponent implements OnInit, OnDestroy {
   @Input() pdfReportAvailable: boolean;
   postCreateModel: CasePostCreateModel = new CasePostCreateModel;
   selectedTagsAndRecipientsIds: number[] = [];
-  spinnerStatus = false;
   createTag$: Subscription;
 
 
@@ -38,7 +37,6 @@ export class CasePostNewComponent implements OnInit, OnDestroy {
   }
 
   createPost() {
-    this.spinnerStatus = true;
     this.createTag$ = this.casePostsService.createPost({
       ...this.postCreateModel,
       caseId: this.caseId,
@@ -50,7 +48,6 @@ export class CasePostNewComponent implements OnInit, OnDestroy {
         this.postCreateModel = new CasePostCreateModel();
         this.selectedTagsAndRecipientsIds = [];
       }
-      this.spinnerStatus = false;
     });
   }
 

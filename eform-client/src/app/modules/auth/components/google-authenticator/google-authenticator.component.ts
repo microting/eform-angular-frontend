@@ -15,7 +15,6 @@ export class GoogleAuthenticatorComponent implements OnInit{
   loginRequestModel: LoginRequestModel;
   formGoogleAuth: FormGroup;
   code: AbstractControl;
-  spinnerStatus = false;
 
   constructor(private authService: AuthService,
               private router: Router,
@@ -40,16 +39,13 @@ export class GoogleAuthenticatorComponent implements OnInit{
   }
 
   submitGoogleAuthForm() {
-    this.spinnerStatus = true;
     this.loginRequestModel.code = this.code.value;
     this.authService.login(this.loginRequestModel)
       .subscribe((result: AuthResponseModel) => {
           localStorage.setItem('currentAuth', JSON.stringify(result));
-          this.spinnerStatus = false;
           this.router.navigate(['/']).then();
         },
         (error) => {
-          this.spinnerStatus = false;
           this.toastrService.error(error.error.error);
         },
       );

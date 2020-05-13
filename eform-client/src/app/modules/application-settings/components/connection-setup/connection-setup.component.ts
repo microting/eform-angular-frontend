@@ -9,7 +9,6 @@ import {AppSettingsService} from 'src/app/common/services/settings';
   styleUrls: ['./connection-setup.component.scss']
 })
 export class ConnectionSetupComponent implements OnInit {
-  spinnerStatus = false;
   settingsModel: SettingsModel = new SettingsModel();
 
   languages = [
@@ -43,11 +42,10 @@ export class ConnectionSetupComponent implements OnInit {
   }
 
   updateConnectionString() {
-    this.spinnerStatus = true;
     this.settingsService.updateConnectionString(this.settingsModel).subscribe(operation => {
       if (operation && operation.success) {
         this.router.navigate(['/login']).then();
-      } this.spinnerStatus = false;
+      }
     });
   }
 
