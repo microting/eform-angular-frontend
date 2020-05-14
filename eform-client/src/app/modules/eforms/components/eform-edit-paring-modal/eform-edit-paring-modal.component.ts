@@ -55,10 +55,10 @@ export class EformEditParingModalComponent implements OnInit {
   }
 
   show(templateDto: TemplateDto) {
+    this.saveButtonDisabled = true;
     this.selectedTemplateDto = templateDto;
     this.deployModel = new DeployModel();
     this.deployViewModel = new DeployModel();
-    this.fillCheckboxes();
     this.loadAllFolders();
     this.frame.show();
   }
@@ -85,7 +85,11 @@ export class EformEditParingModalComponent implements OnInit {
           this.deployModel.deployCheckboxes.push(deployObject);
         }
       }
+      this.deployModel.folderId = this.selectedTemplateDto.folderId;
       this.deployViewModel.id = this.selectedTemplateDto.id;
+      if (this.foldersDto.length > 0 && this.deployModel.folderId !== null) {
+        this.saveButtonDisabled = false;
+      }
       deployObject.id = siteDto.siteUId;
       deployObject.isChecked = this.matchFound === true;
       this.matchFound = false;
@@ -97,6 +101,7 @@ export class EformEditParingModalComponent implements OnInit {
     this.deployModel.id = this.selectedTemplateDto.id;
     this.eFormService.deploySingle(this.deployModel).subscribe(operation => {
       if (operation && operation.success) {
+        this.deployModel = new DeployModel();
         this.frame.hide();
         this.onDeploymentFinished.emit();
       }
@@ -107,6 +112,7 @@ export class EformEditParingModalComponent implements OnInit {
     this.foldersService.getAllFolders().subscribe((operation) => {
       if (operation && operation.success) {
         this.foldersDto = operation.model;
+        this.fillCheckboxes();
         if (this.foldersDto.length === 0) {
           this.saveButtonDisabled = false;
         }

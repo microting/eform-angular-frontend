@@ -350,11 +350,14 @@ namespace eFormAPI.Web.Services
                 // this will let the eForm be deployed until end date or we actively retract it.
                 if (deployModel.FolderId != null)
                 {
-                    mainElement.CheckListFolderName = deployModel.FolderId.ToString();
+                    using (var dbContext = core.dbContextHelper.GetDbContext())
+                    {
+                        mainElement.CheckListFolderName = dbContext.folders.Single(x => x.Id == deployModel.FolderId).MicrotingUid.ToString();
+                    }
                 }
                 mainElement.EndDate = DateTime.Now.AddYears(10).ToUniversalTime();
                 mainElement.StartDate = DateTime.Now.ToUniversalTime();
-                await core.CaseCreate(mainElement, "", sitesToBeDeployedTo, "");
+                await core.CaseCreate(mainElement, "", sitesToBeDeployedTo, "", deployModel.FolderId);
             }
 
             foreach (var siteUId in sitesToBeRetractedFrom)
