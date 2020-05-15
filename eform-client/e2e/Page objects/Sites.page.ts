@@ -27,6 +27,10 @@ class SitesPage extends PageWithNavbarPage {
     return ele;
   }
 
+  public siteTagSearchField() {
+    return $(`#tagSelector .ng-input > input`);
+  }
+
   public get updateTagsBtn() {
     const ele = $('#saveTagsBtn');
     ele.waitForDisplayed({timeout: 20000});
@@ -39,8 +43,8 @@ class SitesPage extends PageWithNavbarPage {
     return ele;
   }
 
-  public getTagsListOfChoises() {
-    return browser.$$('#tagForRemoval .ng-option');
+  public siteTagListOfOptions() {
+    return $$(`#tagSelector .ng-option`);
   }
 
   public get removeTagBtn() {
@@ -79,6 +83,24 @@ class SitesPage extends PageWithNavbarPage {
     $('#tagSelector').waitForDisplayed({timeout: 20000});
     sitesPage.newTagInput.setValue(tagName);
     sitesPage.newTagCreateBtn.click();
+  }
+
+  public createAndAssignTag(tagName: string, sitesRows: number[]) {
+    const firstSite = this.getFirstRowObject();
+    this.createTag(firstSite, tagName);
+    $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
+    this.cancelCreateBtn.click();
+    for (const siteRow of sitesRows) {
+      this.getSite(siteRow).siteTagsEditBtn.click();
+      $('#newTag').waitForDisplayed({timeout: 20000});
+      this.siteTagSearchField().addValue(tagName);
+      const siteTagChoice = this.siteTagListOfOptions()[0];
+      siteTagChoice.waitForDisplayed({timeout: 30000});
+      siteTagChoice.waitForClickable({timeout: 30000});
+      siteTagChoice.click();
+      sitesPage.updateTagsBtn.click();
+      $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    }
   }
 
   public get saveCreateBtn() {
