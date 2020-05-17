@@ -27,6 +27,10 @@ class SitesPage extends PageWithNavbarPage {
     return ele;
   }
 
+  public siteTagRemovalListOfOptions() {
+    return $$(`#tagForRemoval .ng-option`);
+  }
+
   public siteTagSearchField() {
     return $(`#tagSelector .ng-input > input`);
   }
