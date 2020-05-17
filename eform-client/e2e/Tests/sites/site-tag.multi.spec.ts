@@ -62,7 +62,7 @@ describe('Site tags', function () {
     $('#newTag').waitForDisplayed({timeout: 20000});
     sitesPage.tagRemovalSelector.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-    const tagsForRemoval = sitesPage.getTagsListOfChoises();
+    const tagsForRemoval = sitesPage.siteTagRemovalListOfOptions();
     tagsForRemoval[0].click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     sitesPage.removeTagBtn.click();
