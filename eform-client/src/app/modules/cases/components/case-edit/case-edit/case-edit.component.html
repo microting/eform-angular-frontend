@@ -8,22 +8,26 @@
       <app-case-edit-element [element]="elem" *ngFor="let elem of replyElement.elementList"></app-case-edit-element>
     </div>
     <div class="col-md-3">
-      <div class="card sticky-top z-depth-3 mb-4 mt-4" style="width: 100%; z-index: 1">
-        <div class="card-header text-center">
+      <mdb-card class="sticky-top mb-4 mt-4" style="width: 100%; z-index: 1">
+        <mdb-card-header>
           {{replyElement.label}}
-        </div>
-        <div class="card-body">
-          <ul class="list-group">
+        </mdb-card-header>
+        <mdb-card-body>
+          <ul class="list-group list-group-flush">
             <li *ngFor="let element of replyElement.elementList" style="cursor: pointer;"
-                (click)="goToSection('#section' + element.id)"
                 class="list-group-item list-group-item-action waves-light"
                 routerLinkActive="active"
                 mdbWavesEffect>
-              <a>
+              <a (click)="goToSection('#section' + element.id)">
                 {{element.label}}
               </a>
+              <ng-container *ngIf="element.elementList">
+                <app-case-edit-nav [element]="element"></app-case-edit-nav>
+              </ng-container>
             </li>
           </ul>
+        </mdb-card-body>
+        <mdb-card-footer>
           <div class="d-flex justify-content-center align-items-center flex-column mt-2"
                *ngIf="checkEformPermissions(userClaimsEnum.caseUpdate)">
             <div>
@@ -31,15 +35,13 @@
                       id="submit_for_with_post">
                 {{ 'Save and create new post' | translate }} <i class="fa fa-spinner fa-spin"></i>
               </button>
-            </div>
-            <div>
               <button mdbBtn class="btn-ar btn-success" (click)="saveCase(); this.isSaveClicked = true;" id="submit_form">
                 {{ 'Save' | translate }} <i class="fa fa-spinner fa-spin"></i>
               </button>
             </div>
           </div>
-        </div>
-      </div>
+        </mdb-card-footer>
+      </mdb-card>
     </div>
   </div>
 </div>
