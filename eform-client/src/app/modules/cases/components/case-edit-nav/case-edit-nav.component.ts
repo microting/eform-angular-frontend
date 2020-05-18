@@ -15,6 +15,7 @@ export class CaseEditNavComponent implements OnInit {
     window.location.hash = location;
     setTimeout(() => {
       document.querySelector(location).parentElement.scrollIntoView();
+      return true;
     });
   }
 }

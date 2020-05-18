@@ -116,6 +116,7 @@ export class CaseEditComponent implements OnInit, OnDestroy {
     window.location.hash = location;
     setTimeout(() => {
       document.querySelector(location).parentElement.scrollIntoView();
+      return true;
     });
   }
 
