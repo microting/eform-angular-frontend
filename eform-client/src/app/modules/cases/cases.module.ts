@@ -108,7 +108,9 @@ import {SharedPnModule} from '../../plugins/modules/shared/shared-pn.module';
     ElementMultiselectComponent,
     ElementContainerComponent,
     ElementEntitysearchComponent,
-    ElementEntityselectComponent
+    ElementEntityselectComponent,
+    CaseEditNavComponent,
+    CaseEditElementComponent
   ]
 })
 export class CasesModule {
