@@ -1,14 +1,17 @@
 <div class="md-form md-form-case-elem" [owlDateTimeTrigger]="dt1">
-  <fa-icon icon="calendar-day" size="lg" [fixedWidth]="true"></fa-icon>
+  <div class="md-form" [owlDateTimeTrigger]="dt1">
+    <i class="material-icons prefix">calendar_today</i>
+    <input mdbInput
+           [owlDateTime]="dt1"
 
-  <input mdbInput
-         [owlDateTime]="dt1"
-         [(ngModel)]="fieldValueObj.value"
-         (dateTimeChange)="onDateSelected($event)"
-         type="text" id="dateElement{{fieldValueObj.fieldId}}"
-         name="dateElement{{fieldValueObj.fieldId}}" class="form-control">
-  <label for="dateElement{{fieldValueObj.fieldId}}">{{'Selected date' | translate}}</label>
+           [ngModel]="fieldValueObj.value"
+           (dateTimeChange)="onDateSelected($event)"
+           type="text"
+           id="startDate"
+           name="startDate"
+           class="form-control">
+    <label for="startDate">{{'Start date*' | translate}}</label>
+    <owl-date-time
+      [pickerType]="'calendar'" #dt1></owl-date-time>
+  </div>
 </div>
-
-<owl-date-time
-  [pickerType]="'calendar'" #dt1></owl-date-time>

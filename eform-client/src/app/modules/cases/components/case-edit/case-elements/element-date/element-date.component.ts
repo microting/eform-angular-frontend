@@ -27,6 +27,6 @@ export class ElementDateComponent {
   }
 
   onDateSelected(e: any) {
-    this.fieldValueObj.value = format(e.value, 'YYYY-MM-DD');
+    this.fieldValueObj.value = format(e.value, 'yyyy-MM-dd');
   }
 }
