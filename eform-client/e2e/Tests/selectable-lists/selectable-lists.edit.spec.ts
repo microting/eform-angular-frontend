@@ -45,19 +45,18 @@ describe('Entity Select', function () {
     selectableLists.entitySelectEditCancelBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   });
-  it('should edit the list name, and item name', function () {
-    const newName = 'New List Name';
+  it('should only edit item name', function () {
     const newItemName = 'New Item Name';
-    selectableLists.editSelectableListNameAndItem(newName, newItemName);
+    selectableLists.editSelectableListOnlyItem(newItemName);
     $('#entitySelectMicrotingUUID_0').waitForDisplayed({timeout: 20000});
     const selectableList = selectableLists.getFirstRowObject();
-    expect(selectableList.name).equal(newName);
     selectableList.editBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     $('#entitySelectItemEditNameentityItemUId_0').waitForDisplayed({timeout: 20000});
     expect(selectableLists.firstEntityItemName.getText()).equal(newItemName);
     selectableLists.entitySelectEditCancelBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    $('#entitySelectMicrotingUUID_0').waitForDisplayed({timeout: 20000});
     selectableLists.cleanup();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   });
@@ -75,18 +74,19 @@ describe('Entity Select', function () {
     selectableLists.entitySelectEditCancelBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   });
-  it('should only edit item name', function () {
+  it('should edit the list name, and item name', function () {
+    const newName = 'New List Name';
     const newItemName = 'New Item Name';
-    selectableLists.editSelectableListOnlyItem(newItemName);
+    selectableLists.editSelectableListNameAndItem(newName, newItemName);
     $('#entitySelectMicrotingUUID_0').waitForDisplayed({timeout: 20000});
     const selectableList = selectableLists.getFirstRowObject();
+    expect(selectableList.name).equal(newName);
     selectableList.editBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     $('#entitySelectItemEditNameentityItemUId_0').waitForDisplayed({timeout: 20000});
     expect(selectableLists.firstEntityItemName.getText()).equal(newItemName);
     selectableLists.entitySelectEditCancelBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-    $('#entitySelectMicrotingUUID_0').waitForDisplayed({timeout: 20000});
     selectableLists.cleanup();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   });

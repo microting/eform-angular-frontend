@@ -128,8 +128,12 @@ export class SelectableListsPage extends PageWithNavbarPage {
   }
 
   public get entitySelectEditItemNameBox() {
-    $('#entitySelectItemEditNameBox').waitForDisplayed({timeout: 20000});
-    return $('#entitySelectItemEditNameBox');
+    const ele = $(`//app-entity-select-create//input[@id= 'entitySelectItemEditNameBox']`);
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({timeout: 20000});
+    return ele;
+    // $('#entitySelectItemEditNameBox').waitForDisplayed({timeout: 20000});
+    // return $('#entitySelectItemEditNameBox');
   }
 
   public get entitySelectEditItemSaveBtn() {
@@ -155,7 +159,10 @@ export class SelectableListsPage extends PageWithNavbarPage {
   }
 
   public get entityItemEditNameBox() {
-    return $(`//app-entity-select-edit//input[@id= 'entitySelectItemEditNameBox']`);
+    const ele = $(`//app-entity-select-edit//input[@id= 'entitySelectItemEditNameBox']`);
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({timeout: 20000});
+    return ele;
   }
 
   public setEntityItemEditNameBoxValue(name: string) {
@@ -395,8 +402,6 @@ export class SelectableListsPage extends PageWithNavbarPage {
   public editItemName(newItemName) {
     this.entityItemEditBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-    this.entityItemEditNameBox.waitForDisplayed({timeout: 20000});
-    this.entityItemEditNameBox.waitForClickable({timeout: 20000});
     this.entityItemEditNameBox.setValue(newItemName);
     // this.setEntityItemEditNameBoxValue(newItemName);
     browser.pause(1500);
