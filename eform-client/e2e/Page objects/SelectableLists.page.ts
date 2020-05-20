@@ -402,6 +402,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
   public editItemName(newItemName) {
     this.entityItemEditBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    browser.pause(1000);
     this.entityItemEditNameBox.setValue(newItemName);
     // this.setEntityItemEditNameBoxValue(newItemName);
     browser.pause(1500);
