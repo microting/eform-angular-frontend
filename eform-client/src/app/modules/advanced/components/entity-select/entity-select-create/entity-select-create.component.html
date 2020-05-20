@@ -51,12 +51,12 @@
                       <div>
                         <fa-icon icon="exclamation-triangle" size="lg" [fixedWidth]="true"*ngIf="!entityItem.name"
                                  mdbTooltip="{{'Name is required' | translate}}!"></fa-icon>
-                        <a>
-                          <fa-icon icon="pen" size="lg" [fixedWidth]="true" id="entitySelectCreateSingleItemEdit"
+                        <a id="entitySelectCreateSingleItemEdit">
+                          <fa-icon icon="pen" size="lg" [fixedWidth]="true"
                                    (click)="openModalSelectEditName(entityItem)"></fa-icon>
                         </a>
-                        <a>
-                          <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true" id="entitySelectCreateSingleItemDelete"
+                        <a id="entitySelectCreateSingleItemDelete">
+                          <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true"
                                    (click)="deleteAdvEntitySelectableItem(entityItem.entityItemUId)"></fa-icon>
                         </a>
                       </div>

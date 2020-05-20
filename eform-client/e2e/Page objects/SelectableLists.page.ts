@@ -154,20 +154,20 @@ export class SelectableListsPage extends PageWithNavbarPage {
   }
 
   public get entityItemEditNameBox() {
-    return $('#entitySelectItemEditNameBox');
+    return $(`//app-entity-select-edit//input[@id= 'entitySelectItemEditNameBox']`);
   }
 
   public get entityItemList() {
     return $(`//app-entity-select-edit//ul`);
   }
   public get entityItemEditSaveBtn() {
-    const ele = $('#entitySelectItemSaveBtn');
+    const ele = $(`//app-entity-select-edit//button[@id= 'entitySelectItemSaveBtn']`);
     ele.waitForDisplayed({timeout: 20000});
     ele.waitForClickable({timeout: 20000});
     return ele;
   }
   public get entityItemEditCancelBtn() {
-    const ele = $('#entitySelectItemCancelBtn');
+    const ele = $(`//app-entity-select-edit//button[@id= 'entitySelectItemCancelBtn']`);
     ele.waitForDisplayed({timeout: 20000});
     ele.waitForClickable({timeout: 20000});
     return ele;
