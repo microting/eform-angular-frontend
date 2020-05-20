@@ -63,8 +63,10 @@ export class SelectableListsPage extends PageWithNavbarPage {
   }
 
   public get entitySelectEditName() {
-    $('#editName').waitForDisplayed({timeout: 20000});
-    return $('#editName');
+    const ele = $('#editName');
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({timeout: 20000});
+    return ele;
   }
 
   public get entitySelectEditImportListBtn() {

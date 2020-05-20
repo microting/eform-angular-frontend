@@ -99,7 +99,10 @@ export class SearchableListsPage extends PageWithNavbarPage {
     return $('#entitySearchUpdateBtn');
   }
   public get entitySearchEditNameBox() {
-    return $('#editName');
+    const ele = $('#editName');
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({timeout: 20000});
+    return ele;
   }
   public get entitySearchEditImportBtn() {
     return $('#editEntitySearchImportBtn');
