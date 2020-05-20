@@ -183,7 +183,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
     $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     this.createEntitySearchBtn.click();
     $('#createName').waitForDisplayed({timeout: 20000});
-    this.entitySearchCreateName.addValue(name);
+    this.entitySearchCreateName.setValue(name);
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchCreateSaveBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
@@ -192,13 +192,13 @@ export class SearchableListsPage extends PageWithNavbarPage {
     $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     this.createEntitySearchBtn.click();
     $('#createName').waitForDisplayed({timeout: 20000});
-    this.entitySearchCreateName.addValue(name);
+    this.entitySearchCreateName.setValue(name);
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchCreateSingleItemBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchCreateSingleItemEditBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-    this.entitySearchCreateItemNameBox.addValue(itemName);
+    this.entitySearchCreateItemNameBox.setValue(itemName);
     this.entitySearchCreateItemSaveBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchCreateSaveBtn.click();
@@ -208,10 +208,10 @@ export class SearchableListsPage extends PageWithNavbarPage {
     $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     this.createEntitySearchBtn.click();
     $('#createName').waitForDisplayed({timeout: 20000});
-    this.entitySearchCreateName.addValue(name);
+    this.entitySearchCreateName.setValue(name);
     this.entitySearchCreateImportBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-    this.entitySearchCreateImportItemTextArea.addValue(itemNames);
+    this.entitySearchCreateImportItemTextArea.setValue(itemNames);
     this.entitySearchCreateImportItemSaveBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchCreateSaveBtn.click();
@@ -222,7 +222,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
     $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     this.createEntitySearchBtn.click();
     $('#createName').waitForDisplayed({timeout: 20000});
-    this.entitySearchCreateName.addValue(name);
+    this.entitySearchCreateName.setValue(name);
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchCreateCancelBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
@@ -231,13 +231,13 @@ export class SearchableListsPage extends PageWithNavbarPage {
     $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     this.createEntitySearchBtn.click();
     $('#createName').waitForDisplayed({timeout: 20000});
-    this.entitySearchCreateName.addValue(name);
+    this.entitySearchCreateName.setValue(name);
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchCreateSingleItemBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchCreateSingleItemEditBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-    this.entitySearchCreateItemNameBox.addValue(itemName);
+    this.entitySearchCreateItemNameBox.setValue(itemName);
     this.entitySearchCreateItemSaveBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchCreateCancelBtn.click();
@@ -247,11 +247,11 @@ export class SearchableListsPage extends PageWithNavbarPage {
     $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     this.createEntitySearchBtn.click();
     $('#createName').waitForDisplayed({timeout: 20000});
-    this.entitySearchCreateName.addValue(name);
+    this.entitySearchCreateName.setValue(name);
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchCreateImportBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-    this.entitySearchCreateImportItemTextArea.addValue(itemNames);
+    this.entitySearchCreateImportItemTextArea.setValue(itemNames);
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchCreateImportItemSaveBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
@@ -265,7 +265,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
     $('#editName').waitForDisplayed({timeout: 200000});
     this.entitySearchEditNameBox.clearValue();
     browser.pause(500);
-    this.entitySearchEditNameBox.addValue(newName);
+    this.entitySearchEditNameBox.setValue(newName);
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchEditSaveBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
@@ -276,7 +276,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
     $('#editName').waitForDisplayed({timeout: 200000});
     this.entitySearchEditNameBox.clearValue();
     browser.pause(500);
-    this.entitySearchEditNameBox.addValue(newName);
+    this.entitySearchEditNameBox.setValue(newName);
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchEditCancelBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
@@ -288,7 +288,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
     $('#editName').waitForClickable({timeout: 200000});
     this.entitySearchEditNameBox.clearValue();
     browser.pause(500);
-    this.entitySearchEditNameBox.addValue(newName);
+    this.entitySearchEditNameBox.setValue(newName);
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.editItemName(newItemName);
     this.entitySearchEditSaveBtn.click();
@@ -308,7 +308,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
     $('#editName').waitForDisplayed({timeout: 200000});
     this.entitySearchEditNameBox.clearValue();
     browser.pause(500);
-    this.entitySearchEditNameBox.addValue(newName);
+    this.entitySearchEditNameBox.setValue(newName);
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.editItemName(newItemName);
     this.entitySearchEditCancelBtn.click();
@@ -320,7 +320,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
     $('#editName').waitForDisplayed({timeout: 200000});
     this.entitySearchEditNameBox.clearValue();
     browser.pause(500);
-    this.entitySearchEditNameBox.addValue(newName);
+    this.entitySearchEditNameBox.setValue(newName);
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.editItemName_Cancels(newItemName);
     this.entitySearchEditCancelBtn.click();
@@ -332,7 +332,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
     $('#editName').waitForDisplayed({timeout: 200000});
     this.entitySearchEditNameBox.clearValue();
     browser.pause(500);
-    this.entitySearchEditNameBox.addValue(newName);
+    this.entitySearchEditNameBox.setValue(newName);
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.editItemName_Cancels(newItemName);
     this.entitySearchEditSaveBtn.click();
@@ -363,7 +363,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     this.entitySearchEditItemNameBox.clearValue();
     browser.pause(500);
-    this.entitySearchEditItemNameBox.addValue(newItemName);
+    this.entitySearchEditItemNameBox.setValue(newItemName);
     this.entitySearchEditItemSaveBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
@@ -373,7 +373,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
     $('#entityItemEditNameBox').waitForDisplayed({timeout: 20000});
     this.entitySearchEditItemNameBox.clearValue();
     browser.pause(500);
-    this.entitySearchEditItemNameBox.addValue(newItemName);
+    this.entitySearchEditItemNameBox.setValue(newItemName);
     this.entitySearchEditItemSaveBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
