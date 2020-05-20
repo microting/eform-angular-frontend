@@ -96,7 +96,10 @@ export class SearchableListsPage extends PageWithNavbarPage {
     return ele;
   }
   public get entitySearchEditBtn() {
-    return $('#entitySearchUpdateBtn');
+    const ele = $('#entitySearchUpdateBtn');
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({ timeout: 20000});
+    return ele;
   }
   public get entitySearchEditNameBox() {
     const ele = $('#editName');

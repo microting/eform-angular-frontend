@@ -146,6 +146,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
   public get entityItemEditBtn() {
     const ele = $('#entitySelectEditItemEditBtn_0');
     ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({timeout: 20000});
     return ele;
   }
   public get entityItemDeleteBtn() {
@@ -153,17 +154,23 @@ export class SelectableListsPage extends PageWithNavbarPage {
   }
 
   public get entityItemEditNameBox() {
-    return $(`//app-entity-select-edit//input[@id= 'entitySelectItemEditNameBox']`);
+    return $('#entitySelectItemEditNameBox');
   }
 
   public get entityItemList() {
     return $(`//app-entity-select-edit//ul`);
   }
   public get entityItemEditSaveBtn() {
-    return $(`//app-entity-select-edit//button[@id= 'entitySelectItemSaveBtn']`);
+    const ele = $('#entitySelectItemSaveBtn');
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({timeout: 20000});
+    return ele;
   }
   public get entityItemEditCancelBtn() {
-    return $(`//app-entity-select-edit//button[@id= 'entitySelectItemCancelBtn']`);
+    const ele = $('#entitySelectItemCancelBtn');
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({timeout: 20000});
+    return ele;
   }
   getFirstRowObject(): SelectableListRowObject {
     browser.pause(500);
