@@ -158,6 +158,17 @@ export class SelectableListsPage extends PageWithNavbarPage {
     return $(`//app-entity-select-edit//input[@id= 'entitySelectItemEditNameBox']`);
   }
 
+  public setEntityItemEditNameBoxValue(name: string) {
+    const ele = $(`//app-entity-select-edit//input[@id= 'entitySelectItemEditNameBox']`);
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({timeout: 20000});
+    ele.setValue(name);
+    ele.waitUntil(function () {
+      return this.getText() === name; }, {
+      timeout: 5000
+    });
+  }
+
   public get entityItemList() {
     return $(`//app-entity-select-edit//ul`);
   }
@@ -387,8 +398,9 @@ export class SelectableListsPage extends PageWithNavbarPage {
     this.entityItemEditNameBox.waitForDisplayed({timeout: 20000});
     this.entityItemEditNameBox.waitForClickable({timeout: 20000});
     this.entityItemEditNameBox.setValue(newItemName);
-    browser.pause(500);
-    expect(this.entityItemEditNameBox.getValue()).equal(newItemName);
+    // this.setEntityItemEditNameBoxValue(newItemName);
+    browser.pause(1500);
+    // expect(this.entityItemEditNameBox.getText()).equal(newItemName);
     this.entityItemEditSaveBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
