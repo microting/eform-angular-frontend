@@ -32,7 +32,7 @@ export class EntitySelectService extends BaseService {
     return this.post<AdvEntitySelectableGroupListModel>(AdvSelectableEntityMethods.GetAll, model);
   }
 
-  getEntitySelectableGroup(id: string): Observable<OperationDataResult<AdvEntitySelectableGroupModel>> {
+  getEntitySelectableGroup(id: number): Observable<OperationDataResult<AdvEntitySelectableGroupModel>> {
     return this.get<AdvEntitySelectableGroupModel>(AdvSelectableEntityMethods.GetSingle + '/' + id);
   }
 

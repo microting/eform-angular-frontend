@@ -53,13 +53,13 @@
         <td id="entitySelectName_{{i}}"> {{advEntitySelectableGroup.name}}</td>
         <td *ngIf="(userClaims.entitySelectUpdate || userClaims.entitySelectDelete)">
           <div class="d-flex flex-row justify-content-center">
-            <button id="entitySelectEditBtn_{{i}}" class="btn btn-accent btn-icon text-black-50 mb-2 "
+            <button mdbBtn id="entitySelectEditBtn_{{i}}" class="btn btn-accent btn-icon text-black-50 mb-2 "
                     *ngIf="userClaims.entitySelectUpdate && (!advEntitySelectableGroup.isLocked || advEntitySelectableGroup.name.includes('editable'))"
                     mdbTooltip="{{'Edit' | translate}}"
-                    (click)="openModalSelectEdit(advEntitySelectableGroup)">
+                    [routerLink]="['/advanced/entity-select/' + advEntitySelectableGroup.microtingUUID]">
               <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
-            <button id="entitySelectDeleteBtn_{{i}}" class="btn btn-danger btn-icon mb-2 "
+            <button mdbBtn id="entitySelectDeleteBtn_{{i}}" class="btn btn-danger btn-icon mb-2 "
                     *ngIf="userClaims.entitySelectDelete && !advEntitySelectableGroup.isLocked"
                     mdbTooltip="{{'Remove' | translate}}"
                     (click)="openModalSelectRemove(advEntitySelectableGroup)">
@@ -89,10 +89,6 @@
         (onPageChanged)="changePage($event)"></eform-pagination>
     </div>
   </div>
-
-
 </div>
 
-<app-entity-select-create (onEntityGroupCreated)="getEntitySelectableGroupList()" #modalSelectCreate></app-entity-select-create>
 <app-entity-select-remove (onEntityRemoved)="getEntitySelectableGroupList()" #modalSelectRemove></app-entity-select-remove>
-<app-entity-select-edit (onEntityGroupEdited)="getEntitySelectableGroupList()" #modalSelectEdit></app-entity-select-edit>

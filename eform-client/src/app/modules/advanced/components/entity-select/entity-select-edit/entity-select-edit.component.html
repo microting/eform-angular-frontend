@@ -1,11 +1,15 @@
-<div mdbModal class="modal fade" #frame="mdbModal">
-  <div class="modal-dialog modal-lg modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>{{'Edit selectable list' | translate}}</h3>
-      </div>
-      <div class="modal-body">
-        <div class="container-fluid">
+<eform-page-subheader [title]="'Edit selectable list' | translate">
+  <div class="p-3">
+    <button mdbBtn id="editEntitySelectSaveBtn" class="btn btn-success" (click)="updateEntitySelectableGroup()">{{'Save' | translate}}</button>
+    <button mdbBtn id="editEntitySelectCancelBtn" class="btn btn-accent text-black-50" (click)="goBack()">{{'Cancel' | translate}}</button>
+  </div>
+</eform-page-subheader>
+<br>
+<div class="container-fluid">
+  <div class="row">
+    <div  class="col-md-12 col-xs-12" role="main">
+      <mdb-card>
+        <mdb-card-body>
 
           <div class="row">
             <div class="col-md-12">
@@ -67,12 +71,10 @@
               </div>
             </div>
           </div>
-
-        </div>
-      </div>
+        </mdb-card-body>
+      </mdb-card>
       <div class="modal-footer">
-        <button id="editEntitySelectSaveBtn" class="btn btn-success" (click)="updateEntitySelectableGroup()">{{'Save' | translate}}</button>
-        <button id="editEntitySelectCancelBtn" class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Close' | translate}}</button>
+
       </div>
     </div>
   </div>

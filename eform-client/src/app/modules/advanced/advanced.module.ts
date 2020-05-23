@@ -35,20 +35,22 @@ import {
 import { FolderEditComponent } from './components/folders/folder-edit/folder-edit.component';
 import { FolderDeleteComponent } from './components/folders/folder-delete/folder-delete.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {MDBBootstrapModule} from 'angular-bootstrap-md/lib/free/mdb-free.module';
 
 
 @NgModule({
-  imports: [
-    AdvancedRoutingModule,
-    CommonModule,
-    MDBBootstrapModule,
-    TranslateModule,
-    EformSharedModule,
-    NgSelectModule,
-    FormsModule,
-    DragulaModule,
-    FontAwesomeModule
-  ],
+    imports: [
+        AdvancedRoutingModule,
+        CommonModule,
+        MDBBootstrapModule,
+        TranslateModule,
+        EformSharedModule,
+        NgSelectModule,
+        FormsModule,
+        DragulaModule,
+        FontAwesomeModule,
+        MDBBootstrapModule
+    ],
   declarations: [
     EntitySearchComponent,
     EntitySelectComponent,
