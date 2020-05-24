@@ -1,11 +1,12 @@
 <eform-page-subheader [title]="'Selectable lists' | translate">
   <div class="p-3">
     <button
+      mdbBtn
       id="entitySelectCreateBtn"
       class="btn btn-success" *ngIf="userClaims.entitySelectCreate"
       mdbTooltip="{{ 'Create new selectable list' | translate }}"
       [routerLink]="['/advanced/entity-select/create']">
-    >{{ 'New list' | translate }}
+      {{ 'New list' | translate }}
     </button>
   </div>
 </eform-page-subheader>

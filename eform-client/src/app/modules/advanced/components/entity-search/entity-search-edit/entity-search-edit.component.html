@@ -1,12 +1,15 @@
-<div mdbModal class="modal fade" #frame="mdbModal">
-  <div class="modal-dialog modal-lg modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>{{'Edit searchable list' | translate}}</h3>
-      </div>
-      <div class="modal-body">
-        <div class="container-fluid">
-
+<eform-page-subheader [title]="'Edit searchable list' | translate">
+  <div class="p-3">
+    <button id="entitySearchUpdateSaveBtn" class="btn btn-success" (click)="updateEntitySearchableGroup()">{{'Save' | translate}}</button>
+    <button id="entitySearchUpdateCancelBtn" class="btn btn-accent text-black-50" (click)="goBack()">{{'Cancel' | translate}}</button>
+  </div>
+</eform-page-subheader>
+<br>
+<div class="container-fluid">
+  <div class="row">
+    <div  class="col-md-12 col-xs-12" role="main">
+      <mdb-card>
+        <mdb-card-body>
           <div class="row">
             <div class="col-md-12">
               <div class="md-form">
@@ -68,13 +71,8 @@
               </div>
             </div>
           </div>
-
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button id="entitySearchUpdateSaveBtn" class="btn btn-success" (click)="updateEntitySearchableGroup()">{{'Save' | translate}}</button>
-        <button id="entitySearchUpdateCancelBtn" class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Close' | translate}}</button>
-      </div>
+        </mdb-card-body>
+      </mdb-card>
     </div>
   </div>
 </div>
