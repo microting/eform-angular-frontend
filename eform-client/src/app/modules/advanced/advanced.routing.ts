@@ -4,7 +4,7 @@ import {UserClaimsEnum} from 'src/app/common/const';
 import {ClaimsGuard} from 'src/app/common/guards/claims.guard';
 import {
   EntitySearchComponent,
-  EntitySelectComponent, EntitySelectEditComponent,
+  EntitySelectComponent, EntitySelectCreateComponent, EntitySelectEditComponent,
   FoldersComponent,
   SiteEditComponent,
   SitesComponent,
@@ -57,8 +57,14 @@ const routes: Routes = [
     data: {requiredClaim: UserClaimsEnum.entitySelectRead}
   },
   {
-    path: 'entity-select/:id',
+    path: 'entity-select/edit/:id',
     component: EntitySelectEditComponent,
+    canActivate: [ClaimsGuard],
+    data: {requiredClaim: UserClaimsEnum.entitySelectUpdate}
+  },
+  {
+    path: 'entity-select/create',
+    component: EntitySelectCreateComponent,
     canActivate: [ClaimsGuard],
     data: {requiredClaim: UserClaimsEnum.entitySelectUpdate}
   },

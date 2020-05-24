@@ -4,7 +4,8 @@
       id="entitySelectCreateBtn"
       class="btn btn-success" *ngIf="userClaims.entitySelectCreate"
       mdbTooltip="{{ 'Create new selectable list' | translate }}"
-      (click)="openModalSelectCreate()">{{ 'New list' | translate }}
+      [routerLink]="['/advanced/entity-select/create']">
+    >{{ 'New list' | translate }}
     </button>
   </div>
 </eform-page-subheader>
@@ -56,7 +57,7 @@
             <button mdbBtn id="entitySelectEditBtn_{{i}}" class="btn btn-accent btn-icon text-black-50 mb-2 "
                     *ngIf="userClaims.entitySelectUpdate && (!advEntitySelectableGroup.isLocked || advEntitySelectableGroup.name.includes('editable'))"
                     mdbTooltip="{{'Edit' | translate}}"
-                    [routerLink]="['/advanced/entity-select/' + advEntitySelectableGroup.microtingUUID]">
+                    [routerLink]="['/advanced/entity-select/edit/' + advEntitySelectableGroup.microtingUUID]">
               <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
             <button mdbBtn id="entitySelectDeleteBtn_{{i}}" class="btn btn-danger btn-icon mb-2 "

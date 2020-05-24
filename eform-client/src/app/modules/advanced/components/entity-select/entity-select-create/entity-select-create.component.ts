@@ -4,6 +4,7 @@ import {
   AdvEntitySelectableItemModel
 } from 'src/app/common/models/advanced';
 import {EntitySelectService} from 'src/app/common/services/advanced';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-entity-select-create',
@@ -19,7 +20,8 @@ export class EntitySelectCreateComponent implements OnInit {
 
   items = [];
 
-  constructor(private entitySelectService: EntitySelectService) { }
+  constructor(private entitySelectService: EntitySelectService,
+              private location: Location) { }
 
   ngOnInit() {
   }
@@ -39,10 +41,18 @@ export class EntitySelectCreateComponent implements OnInit {
     this.entitySelectService.createEntitySelectableGroup(this.advEntitySelectableGroupCreateModel).subscribe((data) => {
       if (data && data.success) {
         this.onEntityGroupCreated.emit();
-        this.frame.hide();
+        // this.frame.hide();
         this.advEntitySelectableGroupCreateModel = new AdvEntitySelectableGroupEditModel();
+        this.location.back();
       }
     });
+  }
+
+  goBack() {
+    // window.history.back();
+    this.location.back();
+
+    console.log( 'goBack()...' );
   }
 
   addNewAdvEntitySelectableItem() {
