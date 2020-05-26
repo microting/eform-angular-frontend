@@ -12,33 +12,6 @@ body {
   height: 100%;
 }
 
-// Modal y fix
-.modal-open .modal {
-  overflow-y: auto;
-  -ms-overflow-style: none;  // IE 10+
-  overflow: -moz-scrollbars-none;  // Firefox
-  &::-webkit-scrollbar {
-    display: none;  // Safari and Chrome
-  }
-}
-
-
-
-.md-form {
-  &.md-form-case-elem {
-    margin-top: 0.3rem;
-    margin-bottom: 0;
-  }
-  &.md-form-no-spacing {
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-  &.md-form-sm {
-    margin: 1rem !important;
-    padding: 0 !important;
-  }
-}
-
 .footer-version {
   color: gray;
   font-size: 0.8em;
@@ -46,9 +19,12 @@ body {
 
 .tooltip { pointer-events: none !important; }
 
-
 .scrollable-block {
   max-height: 400px;
   overflow: auto;
   overflow-x: hidden;
+}
+
+.advanced-pie-legend-wrapper {
+  position: absolute !important;
 }

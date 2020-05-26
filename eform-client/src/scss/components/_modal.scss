@@ -1,0 +1,9 @@
+// Modal y fix
+.modal-open .modal {
+  overflow-y: auto;
+  -ms-overflow-style: none;  // IE 10+
+  overflow: -moz-scrollbars-none;  // Firefox
+  &::-webkit-scrollbar {
+    display: none;  // Safari and Chrome
+  }
+}
