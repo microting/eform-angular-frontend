@@ -28,11 +28,12 @@ export class EntitySearchService extends BaseService {
     super(_http, router, toastrService);
   }
 
-  getEntitySearchableGroupList(model: AdvEntitySearchableGroupListRequestModel): Observable<OperationDataResult<AdvEntitySearchableGroupListModel>> {
+  getEntitySearchableGroupList(model: AdvEntitySearchableGroupListRequestModel):
+    Observable<OperationDataResult<AdvEntitySearchableGroupListModel>> {
     return this.post<AdvEntitySearchableGroupListModel>(AdvSearchableEntityMethods.GetAll, model);
   }
 
-  getEntitySearchableGroup(id: string): Observable<OperationDataResult<AdvEntitySearchableGroupModel>> {
+  getEntitySearchableGroup(id: number): Observable<OperationDataResult<AdvEntitySearchableGroupModel>> {
     return this.get<AdvEntitySearchableGroupModel>(AdvSearchableEntityMethods.GetSingle + '/' + id);
   }
 

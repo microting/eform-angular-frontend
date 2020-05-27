@@ -11,7 +11,6 @@ exports.config = {
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
   specs: [
-
     'e2e/Tests/application-settings/application-settings.login-page.spec.ts',
     'e2e/Tests/application-settings/application-settings.site-header.spec.ts',
     'e2e/Tests/profile-settings/profile-settings.language.spect.ts',

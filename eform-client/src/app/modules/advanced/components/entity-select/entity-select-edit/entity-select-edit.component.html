@@ -1,12 +1,15 @@
-<div mdbModal class="modal fade" #frame="mdbModal">
-  <div class="modal-dialog modal-lg modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>{{'Edit selectable list' | translate}}</h3>
-      </div>
-      <div class="modal-body">
-        <div class="container-fluid">
-
+<eform-page-subheader [title]="'Edit selectable list' | translate">
+  <div class="p-3">
+    <button mdbBtn id="editEntitySelectSaveBtn" class="btn btn-success btn-small-height" (click)="updateEntitySelectableGroup()">{{'Save' | translate}}</button>
+    <button mdbBtn id="editEntitySelectCancelBtn" class="btn btn-accent text-black-50 btn-small-height" (click)="goBack()">{{'Cancel' | translate}}</button>
+  </div>
+</eform-page-subheader>
+<br>
+<div class="container-fluid">
+  <div class="row">
+    <div  class="col-md-12 col-xs-12" role="main">
+      <mdb-card>
+        <mdb-card-body>
           <div class="row">
             <div class="col-md-12">
               <div class="md-form">
@@ -52,11 +55,11 @@
                       <div class="col-md-2">
                         <fa-icon icon="exclamation-triangle" size="lg" [fixedWidth]="true" *ngIf="!entityItem.name"
                                  mdbTooltip="{{'Name is required' | translate}}!"></fa-icon>
-                        <a class="pull-right">
-                          <fa-icon icon="pen" size="lg" [fixedWidth]="true" id="entitySelectEditItemEditBtn_{{i}}"
+                        <a class="pull-right" id="entitySelectEditItemEditBtn_{{i}}">
+                          <fa-icon icon="pen" size="lg" [fixedWidth]="true"
                                    (click)="openModalSelectEditName(entityItem)"></fa-icon> </a>
-                        <a class="pull-right">
-                          <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true" id="entitySelectEditItemDeleteBtn_{{i}}"
+                        <a class="pull-right" id="entitySelectEditItemDeleteBtn_{{i}}">
+                          <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true"
                                    (click)="deleteAdvEntitySelectableItem(entityItem.entityItemUId)"></fa-icon>
                         </a>
                       </div>
@@ -67,13 +70,8 @@
               </div>
             </div>
           </div>
-
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button id="editEntitySelectSaveBtn" class="btn btn-success" (click)="updateEntitySelectableGroup()">{{'Save' | translate}}</button>
-        <button id="editEntitySelectCancelBtn" class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Close' | translate}}</button>
-      </div>
+        </mdb-card-body>
+      </mdb-card>
     </div>
   </div>
 </div>

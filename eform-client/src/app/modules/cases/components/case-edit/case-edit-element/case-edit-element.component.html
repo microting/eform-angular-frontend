@@ -1,9 +1,10 @@
-<section id="section{{element.id}}" *ngIf="element.dataItemList">
-  <div class="card z-depth-3 mb-4 mt-4" style="width: 100%">
-    <div class="card-header">
-      <h5>{{element.label}}</h5>
-    </div>
-    <div class="card-body">
+<section id="section{{element.id}}">
+<!--<section id="section{{element.id}}" *ngIf="element.dataItemList">-->
+  <mdb-card class="mb-4 mt-4" style="width: 100%">
+    <mdb-card-header>
+      <p class="h4">{{element.label}}</p>
+    </mdb-card-header>
+    <mdb-card-body>
       <div>
         <div *ngIf="element.approvalEnabled" (click)="element.status = 'approved'">
           <label class="md-radio block">
@@ -30,11 +31,12 @@
       </div>
       <app-case-edit-switch [dataItemList]="element.dataItemList"></app-case-edit-switch>
       <div class="mt-1 mb-1" *ngIf="element.extraFieldsEnabled"> ExtraFieldsEnabled</div>
-    </div>
-  </div>
+
+      <ng-container *ngIf="element.elementList">
+          <app-case-edit-element [element]="elem" *ngFor="let elem of element.elementList"></app-case-edit-element>
+      </ng-container>
+    </mdb-card-body>
+  </mdb-card>
 </section>
-<ng-container *ngIf="element.elementList">
-  <app-case-edit-element [element]="elem" *ngFor="let elem of element.elementList"></app-case-edit-element>
-</ng-container>
 
 

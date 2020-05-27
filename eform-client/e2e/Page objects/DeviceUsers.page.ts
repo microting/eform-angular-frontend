@@ -105,7 +105,7 @@ class DeviceUsersPage extends PageWithNavbarPage {
   public editDeviceUser(deviceUser: DeviceUsersRowObject, name = '', surname = '') {
     deviceUser.editBtn.click();
     // browser.pause(5000);
-    $('#editFirstNameInput').waitForDisplayed({timeout: 10000});
+    $('#editFirstNameInput').waitForDisplayed({timeout: 20000});
     if (name != null) {
       this.editFirstNameInput.click();
       this.editFirstNameInput.clearValue();

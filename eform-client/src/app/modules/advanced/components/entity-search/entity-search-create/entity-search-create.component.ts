@@ -4,7 +4,8 @@ import {
   AdvEntitySearchableItemModel,
   AdvEntitySelectableItemModel
 } from 'src/app/common/models/advanced';
-import {EntitySearchService} from 'src/app/common/services/advanced';
+import {EntitySearchService, EntitySelectService} from 'src/app/common/services/advanced';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-entity-search-create',
@@ -20,7 +21,8 @@ export class EntitySearchCreateComponent implements OnInit {
 
   items = [];
 
-  constructor(private entitySearchService: EntitySearchService) { }
+  constructor(private entitySearchService: EntitySearchService,
+              private location: Location) { }
 
   ngOnInit() {
   }
@@ -41,9 +43,17 @@ export class EntitySearchCreateComponent implements OnInit {
       if (data && data.success) {
         this.onEntityGroupCreated.emit();
         this.advEntitySearchableGroupCreateModel = new AdvEntitySearchableGroupEditModel();
-        this.frame.hide();
+        // this.frame.hide();
+        this.location.back();
       }
     });
+  }
+
+  goBack() {
+    // window.history.back();
+    this.location.back();
+
+    console.log( 'goBack()...' );
   }
 
   addNewAdvEntitySelectableItem() {

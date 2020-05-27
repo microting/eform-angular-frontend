@@ -14,6 +14,7 @@ export class TemplateDto {
   hasCases: Boolean;
   deployedSites: Array<SiteNameDto>;
   tags: Array<KeyValueModel> = [];
+  folderId: number;
 
   field1: FieldDto;
   field2: FieldDto;

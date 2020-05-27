@@ -18,7 +18,7 @@ export class UserAdministration extends  PageWithNavbarPage {
     }
     public setNewName(firstName: string, lastName: string) {
     this.editUserBtn.click();
-    $('#editFirstName').waitForDisplayed({timeout: 2000});
+    $('#editFirstName').waitForDisplayed({timeout: 20000});
     this.firstNameBox.clearValue();
     browser.pause(500);
     this.firstNameBox.addValue(firstName);
@@ -30,7 +30,7 @@ export class UserAdministration extends  PageWithNavbarPage {
     }
     public revertToOldName(firstName: string, lastName: string) {
       this.editUserBtn.click();
-      $('#editFirstName').waitForDisplayed({timeout: 2000});
+      $('#editFirstName').waitForDisplayed({timeout: 20000});
       this.firstNameBox.clearValue();
       browser.pause(500);
       this.firstNameBox.addValue(firstName);

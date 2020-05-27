@@ -1,5 +1,5 @@
-<div mdbModal class="modal fade" #frame="mdbModal">
-  <div class="modal-dialog modal-md">
+<div mdbModal class="modal fade" #frame="mdbModal" role="dialog" [config]="{backdrop: false, ignoreBackdropClick: true}">
+  <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h3>{{'Edit selectable element' | translate}}</h3>
@@ -16,8 +16,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button id="entitySelectItemSaveBtn" class="btn btn-success" (click)="updateItem()">{{'Save' | translate}}</button>
-        <button id="entitySelectItemCancelBtn" class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Close' | translate}}</button>
+        <button mdbBtn id="entitySelectItemSaveBtn" class="btn-success btn-small-height" (click)="updateItem()">{{'Save' | translate}}</button>
+        <button mdbBtn id="entitySelectItemCancelBtn" class="btn-accent text-black-50 btn-small-height" (click)="frame.hide()">{{'Close' | translate}}</button>
       </div>
     </div>
   </div>

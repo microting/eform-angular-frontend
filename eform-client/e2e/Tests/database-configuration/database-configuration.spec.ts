@@ -7,7 +7,9 @@ const expect = require('chai').expect;
 describe('Database', function () {
   it('should be configured successfully', function () {
     databasePage.open('/');
+    $('#save').waitForDisplayed({timeout: 90000});
     $('#languageSelector').waitForDisplayed({timeout: 90000});
+    browser.pause(1000);
     expect(databasePage.firstNameInput.isDisplayed()).equal(true);
     expect(databasePage.lastNameInput.isDisplayed()).equal(true);
     expect(databasePage.emailInput.isDisplayed()).equal(true);
@@ -19,7 +21,7 @@ describe('Database', function () {
     expect(databasePage.languageDropdown.isDisplayed()).equal(true);
     if (databasePage.saveBtn.isExisting()) {
       databasePage.configure(DatabaseConfigurationConstants.languageOptions.danish);
-      browser.pause(10000);
+      browser.pause(1000);
       databasePage.save();
       $('#loginBtn').waitForDisplayed({timeout: 90000});
       // browser.pause(45000);

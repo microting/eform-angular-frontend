@@ -60,6 +60,8 @@ namespace eFormAPI.Web.Infrastructure.Models
         
         public bool IsLocked { get; set; }
 
+        public int? FolderId { get; set; }
+
         public static implicit operator TemplateDto(Microting.eForm.Dto.Template_Dto templateDto)
         {
             return new TemplateDto()
@@ -87,7 +89,8 @@ namespace eFormAPI.Web.Infrastructure.Models
                 Field10 = templateDto.Field10,
                 JasperExportEnabled = templateDto.JasperExportEnabled,
                 DocxExportEnabled = templateDto.DocxExportEnabled,
-                Tags = templateDto.Tags
+                Tags = templateDto.Tags,
+                FolderId = templateDto.FolderId
             };
         }
 

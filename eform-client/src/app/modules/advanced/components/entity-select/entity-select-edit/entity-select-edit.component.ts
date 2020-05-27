@@ -4,6 +4,8 @@ import {
   AdvEntitySelectableItemModel,
 } from 'src/app/common/models/advanced';
 import {EntitySelectService} from 'src/app/common/services/advanced';
+import {ActivatedRoute} from '@angular/router';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-entity-select-edit',
@@ -16,20 +18,27 @@ export class EntitySelectEditComponent implements OnInit {
   @ViewChild('modalSelectEditName', { static: true }) modalSelectEditName;
   @Output() onEntityGroupEdited: EventEmitter<void> = new EventEmitter<void>();
   selectedItem: AdvEntitySelectableItemModel = new AdvEntitySelectableItemModel();
-  selectedGroupId: string;
+  selectedGroupId: number;
 
   items = [];
 
-  constructor(private entitySelectService: EntitySelectService) { }
+  constructor(private activateRoute: ActivatedRoute,
+              private entitySelectService: EntitySelectService,
+              private location: Location) {
+    const activatedRouteSub = this.activateRoute.params.subscribe(params => {
+      this.selectedGroupId = +params['id'];
+    });
+  }
 
   ngOnInit() {
+    // this.selectedGroupId = params['id'];
+    this.selectedItem = new AdvEntitySelectableItemModel();
+    // this.frame.show();
+    this.loadEntityGroup();
   }
 
   show(groupId: string) {
-    this.selectedGroupId = groupId;
-    this.selectedItem = new AdvEntitySelectableItemModel();
-    this.frame.show();
-    this.loadEntityGroup();
+    // this.id = +params['id'];
   }
 
   openModalSelectEditName(itemModel: AdvEntitySelectableItemModel) {
@@ -52,9 +61,16 @@ export class EntitySelectEditComponent implements OnInit {
     this.entitySelectService.updateEntitySelectableGroup(this.advEntitySelectableGroupEditModel).subscribe((data) => {
       if (data && data.success) {
         this.onEntityGroupEdited.emit();
-        this.frame.hide();
+        this.location.back();
       }
     });
+  }
+
+  goBack() {
+    // window.history.back();
+    this.location.back();
+
+    console.log( 'goBack()...' );
   }
 
   addNewAdvEntitySelectableItem() {

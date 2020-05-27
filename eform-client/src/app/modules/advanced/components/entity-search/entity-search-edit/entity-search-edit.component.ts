@@ -4,7 +4,9 @@ import {
   AdvEntitySearchableItemModel,
   AdvEntitySelectableItemModel
 } from 'src/app/common/models/advanced';
-import {EntitySearchService} from 'src/app/common/services/advanced';
+import {EntitySearchService, EntitySelectService} from 'src/app/common/services/advanced';
+import {Location} from '@angular/common';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-entity-search-edit',
@@ -17,20 +19,26 @@ export class EntitySearchEditComponent implements OnInit {
   @ViewChild('modalSearchEditName', { static: true }) modalSearchEditName;
   @Output() onEntityGroupEdited: EventEmitter<void> = new EventEmitter<void>();
   selectedItem: AdvEntitySearchableItemModel = new AdvEntitySearchableItemModel();
-  selectedGroupId: string;
+  selectedGroupId: number;
 
   items = [];
 
-  constructor(private entitySearchService: EntitySearchService) { }
-
-  ngOnInit() {
+  constructor(private activateRoute: ActivatedRoute,
+              private entitySearchService: EntitySearchService,
+              private location: Location) {
+    const activatedRouteSub = this.activateRoute.params.subscribe(params => {
+      this.selectedGroupId = +params['id'];
+    });
   }
 
-  show(groupId: string) {
-    this.selectedGroupId = groupId;
+  ngOnInit() {
+    // this.selectedGroupId = groupId;
     this.selectedItem = new AdvEntitySearchableItemModel();
-    this.frame.show();
+    // this.frame.show();
     this.loadEntityGroup();
+  }
+
+  show(groupId: number) {
   }
 
   openModalSearchEditName(itemModel: AdvEntitySearchableItemModel) {
@@ -53,9 +61,17 @@ export class EntitySearchEditComponent implements OnInit {
     this.entitySearchService.updateEntitySearchableGroup(this.advEntitySearchableGroupEditModel).subscribe((data) => {
       if (data && data.success) {
         this.onEntityGroupEdited.emit();
-        this.frame.hide();
+        this.location.back();
+        // this.frame.hide();
       }
     });
+  }
+
+  goBack() {
+    // window.history.back();
+    this.location.back();
+
+    console.log( 'goBack()...' );
   }
 
   addNewAdvEntitySelectableItem() {
