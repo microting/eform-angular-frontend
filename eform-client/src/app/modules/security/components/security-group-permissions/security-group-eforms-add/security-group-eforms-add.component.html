@@ -15,7 +15,7 @@
           </div>
         </div>
         <div class="row p-1 table-responsive no-gutters">
-          <table class="table table-sm text-center z-depth-1">
+          <table mdbTable striped="true" hover="true" small="true" class="z-depth-1 text-center">
             <thead>
             <tr>
               <th>ID</th>
@@ -40,7 +40,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button id="cancelCreateEformBtn" class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Close' |
+        <button mdbBtn id="cancelCreateEformBtn" class="btn-accent text-black-50 btn-small-height" (click)="frame.hide()">{{'Close' |
           translate}}
         </button>
       </div>

@@ -3,8 +3,8 @@
 <!--    <button-->
 <!--      class="btn btn-neutral" id="unitMoveBtn" *ngIf="userClaims.workersCreate"-->
 <!--      (click)="openMoveModal()">{{ 'Move unit' | translate }}</button>-->
-    <button
-      class="btn btn-success" id="unitCreateBtn" *ngIf="userClaims.workersCreate"
+    <button mdbBtn
+      class="btn-success btn-small-height" id="unitCreateBtn" *ngIf="userClaims.workersCreate"
       (click)="openCreateModal()">{{ 'Create unit' | translate }}</button>
   </div>
 </eform-page-subheader>
@@ -63,7 +63,7 @@
           </div>
         </td>
         <td>
-          <button mdbBtn class="btn-danger btn-icon mb-2 " id="moveBtn_{{i}}" *ngIf="userClaims.sitesDelete"
+          <button mdbBtn class="btn-danger btn-icon mb-2 btn-small-height" id="moveBtn_{{i}}" *ngIf="userClaims.sitesDelete"
                   mdbTooltip="{{'Move unit' | translate}}"
                   (click)="openMoveModal(unitModel)">
             <fa-icon icon="dolly" [fixedWidth]="true" size="lg"></fa-icon>

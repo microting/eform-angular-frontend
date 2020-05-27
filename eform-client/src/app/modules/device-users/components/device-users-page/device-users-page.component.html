@@ -1,7 +1,8 @@
 <eform-page-subheader [title]="'Device Users' | translate">
   <div class="p-3">
     <button
-      class="btn btn-success" id="newDeviceUserBtn" *ngIf="userClaims.deviceUsersCreate"
+      mdbBtn
+      class="btn-success btn-small-height" id="newDeviceUserBtn" *ngIf="userClaims.deviceUsersCreate"
       mdbTooltip="{{'Create Device User' | translate}}"
       (click)="createNewUserModal.show()">{{'New Device User' | translate}}
     </button>
