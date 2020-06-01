@@ -78,10 +78,10 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button id="newTagSaveBtn" class="btn btn-success"
+        <button mdbBtn id="newTagSaveBtn" class="btn-success btn-small-height"
                 [disabled]="!postCreateModel.subject"
                 (click)="createPost()">{{'Save' | translate}}</button>
-        <button id="newTagSaveCancelBtn" class="btn btn-accent text-black-50"
+        <button mdbBtn id="newTagSaveCancelBtn" class="btn-accent text-black-50 btn-small-height"
                 (click)="frame.hide()">{{'Close' | translate}}</button>
       </div>
     </div>

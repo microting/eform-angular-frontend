@@ -5,8 +5,9 @@
       <fa-icon icon="arrow-left" [fixedWidth]="true" size="lg"></fa-icon>
     </button>
     <button
+      mdbBtn
       id="createEmailRecipientBtn"
-      class="btn btn-success"
+      class="btn-success btn-small-height"
       (click)="openCreateModal()">{{ 'New Post' | translate }}
     </button>
   </div>
@@ -29,7 +30,7 @@
     </div>
   </div>
   <div class="row p-1 table-responsive no-gutters" *ngIf="casePostsListModel.total !== 0">
-    <table class="table table-sm table-striped text-center z-depth-1">
+    <table mdbTable striped="true" hover="true" small="true" class="z-depth-1 text-center">
       <thead>
       <tr>
         <th scope="col" class="table-header-sortable" id="idTableHeader" (click)="sortTable('Id')">
