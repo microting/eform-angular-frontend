@@ -21,25 +21,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System.Collections.Generic;
-using System.Security.Claims;
-using System.Threading.Tasks;
-
-namespace eFormAPI.Web.Abstractions.Security
+namespace eFormAPI.Web.Services.Cache.AuthCache
 {
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
+    using Infrastructure.Models.Auth;
 
-    public interface IClaimsService
+    public interface IAuthCacheService
     {
-        Task UpdateAuthenticatedUsers(List<int> securityGroups);
-        Task<List<Claim>> GetUserPermissions(int userId, bool isAdmin);
-        Task<List<Claim>> GetAllAuthClaims();
-        Task<List<Claim>> GetUserClaims(int userId);
-        Task<List<string>> GetUserClaimsNames(int userId);
-        Task<OperationResult> SetPluginGroupPermissions(int id, ICollection<PluginGroupPermissionsListModel> permissions);
-        Task<OperationDataResult<ICollection<PluginPermissionModel>>> GetPluginPermissions(int id);
-        Task<OperationDataResult<ICollection<PluginGroupPermissionsListModel>>> GetPluginGroupPermissions(int id);
-
+        AuthItem TryGetValue(int userId);
+        void Set(AuthItem authItem, int userId);
+        void Remove(int userId);
     }
 }

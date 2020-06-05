@@ -155,6 +155,7 @@ namespace eFormAPI.Web.Services
         public async Task<OperationResult> ChangePassword(ChangePasswordModel model)
         {
             var user = await _userService.GetCurrentUserAsync();
+
             var result = await _userManager.ChangePasswordAsync(
                 user,
                 model.OldPassword,

@@ -5,37 +5,37 @@ using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
-using eFormAPI.Web.Abstractions;
-
 
 namespace eFormAPI.Web.Controllers
 {
+    using Abstractions.Security;
+
     [Authorize(Roles = EformRole.Admin)]
     public class PluginsPermissionsController : Controller
     {
-        private readonly IPluginPermissionsService _pluginPermissionsService;
+        private readonly IClaimsService _claimsService;
 
-        public PluginsPermissionsController(IPluginPermissionsService pluginPermissionsService)
+        public PluginsPermissionsController(IClaimsService claimsService)
         {
-            _pluginPermissionsService = pluginPermissionsService;
+            _claimsService = claimsService;
         }
 
         [HttpGet("api/plugins-permissions/{id}")]
         public async Task<OperationDataResult<ICollection<PluginPermissionModel>>> GetPluginPermissions(int id)
         {
-            return await _pluginPermissionsService.GetPluginPermissions(id);
+            return await _claimsService.GetPluginPermissions(id);
         }
 
         [HttpGet("api/plugins-permissions/group-permissions/{id}")]
         public async Task<OperationDataResult<ICollection<PluginGroupPermissionsListModel>>> GetPluginGroupPermissions(int id)
         {
-            return await _pluginPermissionsService.GetPluginGroupPermissions(id);
+            return await _claimsService.GetPluginGroupPermissions(id);
         }
 
         [HttpPut("api/plugins-permissions/group-permissions/{id}")]
         public async Task<OperationResult> SetPluginGroupPermissions(int id, [FromBody]ICollection<PluginGroupPermissionsListModel> permissions)
         {
-            return await _pluginPermissionsService.SetPluginGroupPermissions(id, permissions);
+            return await _claimsService.SetPluginGroupPermissions(id, permissions);
         }
     }
 }

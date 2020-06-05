@@ -34,21 +34,25 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Services.Security
 {
+    using System.Collections.Generic;
     using Infrastructure.Database.Entities.Permissions;
 
     public class PermissionsService : IPermissionsService
     {
         private readonly ILocalizationService _localizationService;
         private readonly ILogger<PermissionsService> _logger;
+        private readonly IClaimsService _claimsService;
         private readonly BaseDbContext _dbContext;
 
         public PermissionsService(BaseDbContext dbContext,
             ILocalizationService localizationService,
-            ILogger<PermissionsService> logger)
+            ILogger<PermissionsService> logger,
+            IClaimsService claimsService)
         {
             _dbContext = dbContext;
             _localizationService = localizationService;
             _logger = logger;
+            _claimsService = claimsService;
         }
 
         public async Task<OperationDataResult<PermissionsModel>> GetGroupPermissions(int groupId)
@@ -144,6 +148,10 @@ namespace eFormAPI.Web.Services.Security
                     }
 
                     await _dbContext.SaveChangesAsync();
+
+                    // Update claims in memory store
+                    await _claimsService.UpdateAuthenticatedUsers(new List<int> { requestModel.GroupId });
+
                     transaction.Commit();
                 }
 

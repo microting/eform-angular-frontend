@@ -21,19 +21,16 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
-using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.eFormApi.BasePn.Infrastructure.Helpers;
-
-namespace eFormAPI.Web.Abstractions
+namespace eFormAPI.Web.Infrastructure.Models.Auth
 {
-    public interface IPluginPermissionsService
+    using System.Collections.Generic;
+    using System.Security.Claims;
+
+    public class AuthItem
     {
-        Task<OperationDataResult<ICollection<PluginPermissionModel>>> GetPluginPermissions(int id);
-        Task<OperationDataResult<ICollection<PluginGroupPermissionsListModel>>> GetPluginGroupPermissions(int id);
-        Task<OperationResult> SetPluginGroupPermissions(int id, ICollection<PluginGroupPermissionsListModel> permissions);
-        Task<PluginPermissionsManager> GetPermissionsManager(int pluginId);
+        public long TimeStamp { get; set; }
+
+        public List<Claim> Claims { get; set; }
+            = new List<Claim>();
     }
 }
