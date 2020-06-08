@@ -32,7 +32,6 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Controllers
 {
-    [Authorize]
     public class SettingsController : Controller
     {
         private readonly ISettingsService _settingsService;
@@ -76,6 +75,7 @@ namespace eFormAPI.Web.Controllers
 
 
         [HttpGet]
+        [Authorize]
         [Route("api/settings/page-header")]
         public OperationDataResult<HeaderSettingsModel> GetPageHeaderSettings()
         {
@@ -83,8 +83,8 @@ namespace eFormAPI.Web.Controllers
         }
 
 
-        [HttpGet]
         [Authorize(Roles = EformRole.Admin)]
+        [HttpGet]
         [Route("api/settings/admin")]
         public async Task<OperationDataResult<AdminSettingsModel>> GetAdminSettings()
         {
@@ -92,8 +92,8 @@ namespace eFormAPI.Web.Controllers
         }
 
 
-        [HttpPost]
         [Authorize(Roles = EformRole.Admin)]
+        [HttpPost]
         [Route("api/settings/admin")]
         public async Task<OperationResult> UpdateAdminSettings([FromBody] AdminSettingsModel adminSettingsModel)
         {
@@ -120,24 +120,25 @@ namespace eFormAPI.Web.Controllers
 
         #endregion
 
-        [HttpGet]
         [AllowAnonymous]
+        [HttpGet]
         [Route("api/settings/version")]
         public OperationDataResult<string> GetApplicationVersion()
         {
             return _settingsService.GetAssemblyVersion();
         }
         
-        [HttpGet]
         [AllowAnonymous]
+        [HttpGet]
         [Route("api/settings/hostos")]
         public OperationDataResult<string> GetApplicationHostOs()
         {
+            
             return _settingsService.GetApplicationHostOs();
         }
         
-        [HttpGet]
         [AllowAnonymous]
+        [HttpGet]
         [Route("api/settings/latest-version")]
         public Task<OperationDataResult<string>> GetLatestVersion()
         {

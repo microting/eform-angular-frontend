@@ -31,6 +31,7 @@ using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Security;
 using eFormAPI.Web.Infrastructure;
 using ICSharpCode.SharpZipLib.Zip;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -46,7 +47,6 @@ using Settings = Microting.eForm.Dto.Settings;
 
 namespace eFormAPI.Web.Controllers.Eforms
 {
-    [Authorize]
     public class TemplateFilesController : Controller
     {
         private readonly IEFormCoreService _coreHelper;
@@ -97,6 +97,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [Route("api/template-files/get-image/{fileName}.{ext}")]
         public async Task<IActionResult> GetImage(string fileName, string ext, string noCache = "noCache")
         {
@@ -104,11 +105,13 @@ namespace eFormAPI.Web.Controllers.Eforms
         }
         
         [HttpGet]
+        [AllowAnonymous]
         [Route("api/template-files/get-pdf/{fileName}.{ext}")]
         public async Task<IActionResult> GetPdf(string fileName, string ext, string noCache = "noCache")
         {
             return await GetFile(fileName, ext, "pdf", noCache);
         }
+        
         
         private async Task<IActionResult> GetFile(string fileName, string ext, string fileType, string noCache = "noCache")
         {
