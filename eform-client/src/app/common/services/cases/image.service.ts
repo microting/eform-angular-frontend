@@ -3,10 +3,11 @@ import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {Observable} from 'rxjs';
-import {OperationResult} from 'src/app/common/models';
+import {OperationDataResult, OperationResult} from 'src/app/common/models';
 import {BaseService} from 'src/app/common/services/base.service';
 
 export let ImageMethods = {
+  GetImage: '/api/template-files/get-image',
   Rotate: '/api/template-files/rotate-image',
   Delete: '/api/template-files/delete-image',
 };
@@ -26,6 +27,10 @@ export class ImageService extends BaseService {
       + '?&fileName=' + fileName
       + '&fieldId=' + fieldId
       + '&uploadedObjId=' + uploadedObjId);
+  }
+
+  getImage(fileName: string): Observable<any> {
+    return this.getBlobData(`${ImageMethods.Delete}/${fileName}`);
   }
 
 }

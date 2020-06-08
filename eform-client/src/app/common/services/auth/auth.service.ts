@@ -48,6 +48,41 @@ export class AuthService extends BaseService {
     super(_http, router, toastrService);
   }
 
+  get bearerToken(): string {
+    const user: AuthResponseModel = JSON.parse(localStorage.getItem('currentAuth'));
+    return 'Bearer ' + user.access_token;
+  }
+
+  get isAuth(): boolean {
+    const auth = localStorage.getItem('currentAuth');
+    if (auth) {
+      return true;
+    } else {
+      return false;
+    }
+
+  }
+
+  get currentRole(): string {
+    const auth: UserInfoModel = JSON.parse(localStorage.getItem('currentAuth'));
+    if (auth && auth.role) {
+      return auth.role;
+    }
+    return '';
+  }
+
+  get currentUserFullName(): string {
+    const auth: UserInfoModel = JSON.parse(localStorage.getItem('currentAuth'));
+    if (auth) {
+      return auth.firstName + ' ' + auth.lastName;
+    }
+    return '';
+  }
+
+  get userClaims(): UserClaimsModel {
+    return JSON.parse(localStorage.getItem('userClaims'));
+  }
+
   login(loginInfo: LoginRequestModel): Observable<AuthResponseModel> {
     let body = new HttpParams();
     body = body.append('username', loginInfo.username);
@@ -80,37 +115,6 @@ export class AuthService extends BaseService {
     return this.post(AuthMethods.EmailRecoveryLink, {email: rawValue.email}).pipe(map((result) => {
       return result;
     }));
-  }
-
-  get isAuth(): boolean {
-    const auth = localStorage.getItem('currentAuth');
-    if (auth) {
-      return true;
-    } else {
-      return false;
-    }
-
-  }
-
-  get currentRole(): string {
-    const auth: UserInfoModel = JSON.parse(localStorage.getItem('currentAuth'));
-    if (auth && auth.role) {
-      return auth.role;
-    }
-    return '';
-  }
-
-  get currentUserFullName(): string {
-    const auth: UserInfoModel = JSON.parse(localStorage.getItem('currentAuth'));
-    if (auth) {
-      return auth.firstName + ' ' + auth.lastName;
-    }
-    return '';
-  }
-
-  get userClaims(): UserClaimsModel {
-    // TODO : CHECK
-    return JSON.parse(localStorage.getItem('userClaims'));
   }
 
   obtainUserClaims(): Observable<OperationDataResult<{ [key: string]: string }>> {
