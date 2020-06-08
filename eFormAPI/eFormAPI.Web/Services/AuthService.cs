@@ -250,7 +250,7 @@ namespace eFormAPI.Web.Services
                 var token = new JwtSecurityToken(_tokenOptions.Value.Issuer,
                     _tokenOptions.Value.Issuer,
                     claims.ToArray(),
-                    expires: DateTime.Now.AddHours(1), // TODO token expiration time
+                    expires: DateTime.Now.AddHours(24),
                     signingCredentials: credentials);
 
                 return new JwtSecurityTokenHandler().WriteToken(token);
@@ -272,6 +272,12 @@ namespace eFormAPI.Web.Services
                 }
 
                 var auth = _authCacheService.TryGetValue(_userService.UserId);
+
+                if (auth == null)
+                {
+                    // TODO if user info is null
+                    return new OperationDataResult<Dictionary<string, string>>(true, result);
+                }
 
                 foreach (var authClaim in auth.Claims)
                 {

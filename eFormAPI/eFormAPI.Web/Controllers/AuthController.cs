@@ -69,8 +69,6 @@ namespace eFormAPI.Web.Controllers
             return _authService.LogOut();
         }
 
-
-
         [HttpGet]
         [Route("api/auth/claims")]
         public OperationResult GetCurrentUserClaims()
