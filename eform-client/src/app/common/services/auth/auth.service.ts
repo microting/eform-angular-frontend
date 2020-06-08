@@ -2,9 +2,8 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, interval, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {JwtHelper} from 'src/app/common/helpers';
 
 import {
   AuthResponseModel,
@@ -14,15 +13,19 @@ import {
   LoginRequestModel,
   OperationDataResult,
   OperationResult,
-  PasswordRestoreModel, UserClaimsModel,
+  PasswordRestoreModel,
+  UserClaimsModel,
   UserInfoModel
 } from 'src/app/common/models';
 import {BaseService} from '../base.service';
 import {TimezonesModel} from 'src/app/common/models/common/timezones.model';
+import {normalizeUserClaimNames} from 'src/app/common/helpers';
 
 export let AuthMethods = {
   Login: 'api/auth/token',
+  RefreshToken: 'api/auth/token/refresh',
   Logout: 'api/auth/logout',
+  Claims: 'api/auth/claims',
   CheckToken: '/auth/is-token-actual',
   Restore: '/auth/restore',
   ChangePassword: 'api/account/change-password',
@@ -39,6 +42,8 @@ export let AuthMethods = {
 
 @Injectable()
 export class AuthService extends BaseService {
+  userClaimsUpdated: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
   constructor(private _http: HttpClient, router: Router, toastrService: ToastrService) {
     super(_http, router, toastrService);
   }
@@ -104,8 +109,20 @@ export class AuthService extends BaseService {
   }
 
   get userClaims(): UserClaimsModel {
-    const accessToken = JSON.parse(localStorage.getItem('currentAuth')).access_token;
-    return new UserClaimsModel(new JwtHelper().decodeToken(accessToken));
+    // TODO : CHECK
+    return JSON.parse(localStorage.getItem('userClaims'));
+  }
+
+  obtainUserClaims(): Observable<OperationDataResult<{ [key: string]: string }>> {
+    return this.get(AuthMethods.Claims).pipe(map((result) => {
+      return {...result, model: normalizeUserClaimNames(result.model)};
+    }));
+  }
+
+  refreshToken(): Observable<OperationDataResult<AuthResponseModel>> {
+    return this.get(AuthMethods.RefreshToken).pipe(map((result) => {
+      return result;
+    }));
   }
 
   changePassword(model: ChangePasswordModel): Observable<any> {

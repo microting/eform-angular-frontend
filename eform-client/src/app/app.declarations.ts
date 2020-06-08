@@ -24,6 +24,7 @@ import {EmailRecipientsService, EmailRecipientsTagsService} from './common/servi
 import {LoaderService} from './common/services/loeader.service';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {LoaderInterceptor} from 'src/app/common/interceptors/loader-interceptor.service';
+import {UserClaimsInterceptor} from 'src/app/common/interceptors/user-claims.interceptor';
 // Guards
 
 export let providers = [
@@ -65,6 +66,7 @@ export let providers = [
   PluginPermissionsService,
   LoaderService,
   { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
+  { provide: HTTP_INTERCEPTORS, useClass: UserClaimsInterceptor, multi: true },
   // Helpers
   EventBrokerService,
   DatePipe,

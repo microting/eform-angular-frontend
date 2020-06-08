@@ -5,6 +5,7 @@ import {ToastrService} from 'ngx-toastr';
 import {AuthResponseModel, GoogleAuthenticatorModel, LoginRequestModel} from 'src/app/common/models/auth';
 import {AppSettingsService} from 'src/app/common/services/settings';
 import {AuthService, LocaleService, UserSettingsService} from 'src/app/common/services/auth';
+import {normalizeUserClaimNames} from 'src/app/common/helpers';
 
 @Component({
   selector: 'app-login',
@@ -40,10 +41,27 @@ export class LoginComponent implements OnInit {
           // Set auth
           localStorage.setItem('currentAuth', JSON.stringify(result));
           // get user settings from db
-          this.userSettings.getUserSettings().subscribe((data) => {
-            localStorage.setItem('locale', data.model.locale);
-            this.router.navigate(['/']).then();
-          });
+          this.getUserSettings();
+        },
+        (error) => {
+          this.error = error;
+        },
+      );
+  }
+
+  getUserSettings() {
+    this.userSettings.getUserSettings().subscribe((data) => {
+      localStorage.setItem('locale', data.model.locale);
+      this.getUserClaims();
+    });
+  }
+
+  getUserClaims() {
+    this.authService.obtainUserClaims()
+      .subscribe((data) => {
+          // set user claims
+          localStorage.setItem('userClaims', JSON.stringify(data.model));
+          this.router.navigate(['/']).then();
         },
         (error) => {
           this.error = error;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {EventBrokerService} from 'src/app/common/helpers';
 import {HeaderSettingsModel} from 'src/app/common/models/settings';
@@ -17,6 +17,7 @@ export class HeaderComponent implements OnInit {
   constructor(private eventBrokerService: EventBrokerService,
               private settingsService: AppSettingsService,
               private router: Router) {
+
     this.brokerListener = eventBrokerService.listen<void>('get-header-settings',
       () => {
         this.getSettings();
