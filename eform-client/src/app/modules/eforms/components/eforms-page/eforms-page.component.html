@@ -3,7 +3,7 @@
     <button
       mdbBtn
       class="btn-success btn-small-height"
-      mdbTooltip="{{ 'Create eForm' | translate }}" id="newEFormBtn" *ngIf="userClaims.eFormsCreate"
+      mdbTooltip="{{ 'Create eForm' | translate }}" id="newEFormBtn" *ngIf="userClaims.eformsCreate"
       (click)="openNewEformModal()">{{ 'New eForm' | translate }}
     </button>
   </div>
@@ -19,7 +19,7 @@
         <label for="labelInput">{{'Label' | translate}}</label>
       </div>
     </div>
-    <div class="col-md-4 ng-select-wrapper" *ngIf="userClaims.eFormsReadTags">
+    <div class="col-md-4 ng-select-wrapper" *ngIf="userClaims.eformsReadTags">
       <ng-select
         class="custom"
         dropdownPosition="'bottom'"

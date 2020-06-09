@@ -25,12 +25,12 @@ export interface UserClaimsModel {
   usersRead: boolean;
   usersUpdate: boolean;
   usersDelete: boolean;
-  eFormsCreate: boolean;
-  eFormsDelete: boolean;
-  eFormsRead: boolean;
-  eFormsUpdateColumns: boolean;
-  eFormsDownloadXml: boolean;
-  eFormsUploadZip: boolean;
+  eformsCreate: boolean;
+  eformsDelete: boolean;
+  eformsRead: boolean;
+  eformsUpdateColumns: boolean;
+  eformsDownloadXml: boolean;
+  eformsUploadZip: boolean;
   casesRead: boolean;
   caseRead: boolean;
   caseUpdate: boolean;
@@ -38,11 +38,11 @@ export interface UserClaimsModel {
   caseGetPdf: boolean;
   caseGetDocx: boolean;
   caseGetPptx: boolean;
-  eFormsPairingUpdate: boolean;
-  eFormsUpdateTags: boolean;
-  eFormsPairingRead: boolean;
-  eFormsReadTags: boolean;
-  eFormsGetCsv: boolean;
-  eFormsReadJasperReport: boolean;
-  eFormsUpdateJasperReport: boolean;
+  eformsPairingUpdate: boolean;
+  eformsUpdateTags: boolean;
+  eformsPairingRead: boolean;
+  eformsReadTags: boolean;
+  eformsGetCsv: boolean;
+  eformsReadJasperReport: boolean;
+  eformsUpdateJasperReport: boolean;
 }
