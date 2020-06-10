@@ -27,6 +27,11 @@ namespace eFormAPI.Web.Infrastructure
     {
         public const string ClaimDefaultValue = "True";
 
+        public const string ClaimLastUpdateKey = "updated_at";
+
+        public const string UpdateHeaderName = "ClaimUpdate";
+        public const string UpdateHeaderValue = "True";
+
         public static class EformClaims
         {
             public static class WorkersClaims

@@ -21,34 +21,33 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using eFormAPI.Web.Abstractions;
-using eFormAPI.Web.Abstractions.Security;
-using eFormAPI.Web.Hosting.Helpers.DbOptions;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
-using Microting.eFormApi.BasePn.Infrastructure.Helpers;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
-using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
-using OtpSharp;
 
 namespace eFormAPI.Web.Services
 {
+    using Cache.AuthCache;
     using Infrastructure.Models.Auth;
+    using System;
+    using System.Collections.Generic;
+    using System.IdentityModel.Tokens.Jwt;
+    using System.Linq;
+    using System.Security.Claims;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Web;
+    using Abstractions;
+    using eFormAPI.Web.Abstractions.Security;
+    using Hosting.Helpers.DbOptions;
+    using Infrastructure;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Options;
+    using Microsoft.IdentityModel.Tokens;
+    using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
+    using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
+    using OtpSharp;
 
     public class AuthService : IAuthService
     {
@@ -56,9 +55,8 @@ namespace eFormAPI.Web.Services
         private readonly IUserService _userService;
         private readonly IDbOptions<ApplicationSettings> _appSettings;
         private readonly IClaimsService _claimsService;
-        private readonly IUserClaimsPrincipalFactory<EformUser> _userClaimsPrincipalFactory;
         private readonly ILocalizationService _localizationService;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IAuthCacheService _authCacheService;
         private readonly ILogger<AuthService> _logger;
         private readonly UserManager<EformUser> _userManager;
         private readonly RoleManager<EformRole> _roleManager;
@@ -73,8 +71,7 @@ namespace eFormAPI.Web.Services
             IUserService userService,
             ILocalizationService localizationService,
             IClaimsService claimsService,
-            IUserClaimsPrincipalFactory<EformUser> userClaimsPrincipalFactory, 
-            IHttpContextAccessor httpContextAccessor)
+            IAuthCacheService authCacheService)
         {
             _tokenOptions = tokenOptions;
             _logger = logger;
@@ -85,8 +82,7 @@ namespace eFormAPI.Web.Services
             _userService = userService;
             _localizationService = localizationService;
             _claimsService = claimsService;
-            _userClaimsPrincipalFactory = userClaimsPrincipalFactory;
-            _httpContextAccessor = httpContextAccessor;
+            _authCacheService = authCacheService;
         }
 
         public async Task<OperationDataResult<EformAuthorizeResult>> AuthenticateUser(LoginModel model)
@@ -95,25 +91,25 @@ namespace eFormAPI.Web.Services
             if (string.IsNullOrEmpty(model.Username) || string.IsNullOrEmpty(model.Password))
                 return new OperationDataResult<EformAuthorizeResult>(false, "Empty username or password");
 
+            var user = await _userService.GetByUsernameAsync(model.Username);
+            if (user == null)
+                return new OperationDataResult<EformAuthorizeResult>(false,
+                    $"User with username {model.Username} not found");
+
             var signInResult =
-                await _signInManager.PasswordSignInAsync(model.Username, model.Password, true, lockoutOnFailure: true);
+                await _signInManager.CheckPasswordSignInAsync(user, model.Password, true);
 
             if (!signInResult.Succeeded && !signInResult.RequiresTwoFactor)
             {
                 if (signInResult.IsLockedOut)
                 {
                     return new OperationDataResult<EformAuthorizeResult>(false,
-                        "Locked Out. Please, try again after 10 mins");
+                        "Locked Out. Please, try again after 10 min");
                 }
 
                 // Credentials are invalid, or account doesn't exist
                 return new OperationDataResult<EformAuthorizeResult>(false, "Incorrect password.");
             }
-
-            var user = await _userService.GetByUsernameAsync(model.Username);
-            if (user == null)
-                return new OperationDataResult<EformAuthorizeResult>(false,
-                    $"User with username {model.Username} not found");
 
             // Confirmed email check
             if (!user.EmailConfirmed)
@@ -140,7 +136,7 @@ namespace eFormAPI.Web.Services
 
                 // check code
                 var otp = new Totp(Base32.FromBase32String(user.GoogleAuthenticatorSecretKey));
-                var isCodeValid = otp.VerifyTotp(code, out var timeStepMatched, new VerificationWindow(300, 300));
+                var isCodeValid = otp.VerifyTotp(code, out _, new VerificationWindow(300, 300));
                 if (!isCodeValid)
                 {
                     return new OperationDataResult<EformAuthorizeResult>(false, "Invalid code");
@@ -162,7 +158,8 @@ namespace eFormAPI.Web.Services
             var roleList = _userManager.GetRolesAsync(user).Result;
             if (!roleList.Any())
             {
-                return new OperationDataResult<EformAuthorizeResult>(false, $"Role for user {model.Username} not found");
+                return new OperationDataResult<EformAuthorizeResult>(false,
+                    $"Role for user {model.Username} not found");
             }
 
             return new OperationDataResult<EformAuthorizeResult>(true, new EformAuthorizeResult
@@ -184,10 +181,11 @@ namespace eFormAPI.Web.Services
                     $"User with id {_userService.UserId} not found");
 
             var token = await GenerateToken(user);
-            var roleList = _userManager.GetRolesAsync(user).Result;
+            var roleList = await _userManager.GetRolesAsync(user);
             if (!roleList.Any())
             {
-                return new OperationDataResult<EformAuthorizeResult>(false, $"Role for user {_userService.UserId} not found");
+                return new OperationDataResult<EformAuthorizeResult>(false,
+                    $"Role for user {_userService.UserId} not found");
             }
 
             return new OperationDataResult<EformAuthorizeResult>(true, new EformAuthorizeResult
@@ -203,11 +201,14 @@ namespace eFormAPI.Web.Services
         {
             if (user != null)
             {
+                var timeStamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
                 var claims = new List<Claim>
                 {
                     new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim(AuthConsts.ClaimLastUpdateKey, timeStamp.ToString()),
                 };
+
                 if (!string.IsNullOrEmpty(user.Locale))
                 {
                     claims.Add(new Claim("locale", user.Locale));
@@ -231,36 +232,26 @@ namespace eFormAPI.Web.Services
                     }
                 }
 
-                // Permissions
-                if (userRoles.Contains(EformRole.Admin))
-                {
-                    claims.AddRange(await _claimsService.GetAllAuthClaims());
-                }
-                else
-                {
-                    claims.AddRange(await _claimsService.GetUserClaims(user.Id));
-                }
+                var userInMemoryClaims = await _claimsService.GetUserPermissions(
+                    user.Id,
+                    userRoles.Contains(EformRole.Admin));
 
-                var principal = await _userClaimsPrincipalFactory.CreateAsync(user);
-                foreach (var claim in claims)
+                // Add to memory
+                var authItem = new AuthItem
                 {
-                    ((ClaimsIdentity) principal.Identity).AddClaim(claim);
-                }
+                    TimeStamp = timeStamp,
+                    Claims = userInMemoryClaims,
+                };
 
-                await _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                    principal, new AuthenticationProperties
-                    {
-                        IsPersistent = true
-                    });
-
+                _authCacheService.Set(authItem, user.Id);
 
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenOptions.Value.SigningKey));
-                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
                 var token = new JwtSecurityToken(_tokenOptions.Value.Issuer,
                     _tokenOptions.Value.Issuer,
                     claims.ToArray(),
-                    expires: DateTime.Now.AddHours(10),
-                    signingCredentials: creds);
+                    expires: DateTime.Now.AddHours(24),
+                    signingCredentials: credentials);
 
                 return new JwtSecurityTokenHandler().WriteToken(token);
             }
@@ -269,11 +260,45 @@ namespace eFormAPI.Web.Services
         }
 
 
-        public async Task<OperationResult> LogOut()
+        public OperationDataResult<Dictionary<string, string>> GetCurrentUserClaims()
         {
             try
             {
-                await _signInManager.SignOutAsync();
+                var result = new Dictionary<string, string>();
+                var userId = _userService.UserId;
+                if (userId < 1)
+                {
+                    throw new Exception("Current user not found!");
+                }
+
+                var auth = _authCacheService.TryGetValue(_userService.UserId);
+
+                if (auth == null)
+                {
+                    // TODO if user info is null
+                    return new OperationDataResult<Dictionary<string, string>>(true, result);
+                }
+
+                foreach (var authClaim in auth.Claims)
+                {
+                    result.Add(authClaim.Type, authClaim.Value);
+                }
+
+                return new OperationDataResult<Dictionary<string, string>>(true, result);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return new OperationDataResult<Dictionary<string, string>>(false, e.Message);
+            }
+        }
+
+        public OperationResult LogOut()
+        {
+            try
+            {
+                _authCacheService.Remove(_userService.UserId);
+                return new OperationResult(true);
             }
             catch (Exception e)
             {
@@ -281,8 +306,6 @@ namespace eFormAPI.Web.Services
                 Console.WriteLine(e);
                 return new OperationResult(false, e.Message);
             }
-
-            return new OperationResult(true);
         }
 
         public OperationDataResult<bool> TwoFactorAuthForceInfo()
@@ -370,7 +393,7 @@ namespace eFormAPI.Web.Services
 
         public async Task<OperationDataResult<GoogleAuthenticatorModel>> GetGoogleAuthenticator(LoginModel loginModel)
         {
-            // try to sign in with user creds
+            // try to sign in with user credentials
             var user = await _userManager.FindByNameAsync(loginModel.Username);
             if (user == null)
             {
@@ -386,7 +409,7 @@ namespace eFormAPI.Web.Services
                 if (signInResult.IsLockedOut)
                 {
                     return new OperationDataResult<GoogleAuthenticatorModel>(false,
-                        "Locked Out. Please, try again after 10 mins");
+                        "Locked Out. Please, try again after 10 min");
                 }
 
                 // Credentials are invalid, or account doesn't exist

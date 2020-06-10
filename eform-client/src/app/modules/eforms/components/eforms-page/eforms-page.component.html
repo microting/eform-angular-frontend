@@ -3,7 +3,7 @@
     <button
       mdbBtn
       class="btn-success btn-small-height"
-      mdbTooltip="{{ 'Create eForm' | translate }}" id="newEFormBtn" *ngIf="userClaims.eFormsCreate"
+      mdbTooltip="{{ 'Create eForm' | translate }}" id="newEFormBtn" *ngIf="userClaims.eformsCreate"
       (click)="openNewEformModal()">{{ 'New eForm' | translate }}
     </button>
   </div>
@@ -19,7 +19,7 @@
         <label for="labelInput">{{'Label' | translate}}</label>
       </div>
     </div>
-    <div class="col-md-4 ng-select-wrapper" *ngIf="userClaims.eFormsReadTags">
+    <div class="col-md-4 ng-select-wrapper" *ngIf="userClaims.eformsReadTags">
       <ng-select
         class="custom"
         dropdownPosition="'bottom'"
@@ -89,12 +89,12 @@
           <div class="d-flex justify-content-center">
             <div>
               <a mdbBtn type="button" color="success" class="btn-small-height btn-success"
-                 *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eFormsUpdateTags)"
+                 *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eformsUpdateTags)"
                  id="eform-edit-btn"
                  mdbTooltip="{{ 'Edit tags' | translate }}" (click)="openEditTagsModal(templateDto)">
                 {{ 'Edit tags' | translate }}
               </a>
-              <ng-container *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eFormsReadTags)">
+              <ng-container *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eformsReadTags)">
                 <p class="paragraph-sm" id="eform-tag" *ngFor="let tag of templateDto.tags">
                   {{tag.value}}
                 </p>
@@ -106,7 +106,7 @@
           <div class="d-flex justify-content-center">
             <div>
               <button *ngIf="templateDto.deployedSites.length > 0
-              && checkEformPermissions(templateDto.id, userClaimsEnum.eFormsPairingUpdate)
+              && checkEformPermissions(templateDto.id, userClaimsEnum.eformsPairingUpdate)
               && !templateDto.isLocked"
                       id="eform-pairing-btn"
                       mdbBtn type="button" class="btn-success btn-small-height" (click)="openPairingModal(templateDto)"
@@ -114,7 +114,7 @@
                 {{ 'Edit pairing' | translate }}
               </button>
               <button *ngIf="templateDto.deployedSites.length == 0
-              && checkEformPermissions(templateDto.id, userClaimsEnum.eFormsPairingUpdate)
+              && checkEformPermissions(templateDto.id, userClaimsEnum.eformsPairingUpdate)
               && !templateDto.isLocked"
                       id="eform-add-btn"
                       mdbBtn type="button" class="btn-small-height" (click)="openPairingModal(templateDto)"
@@ -139,14 +139,14 @@
               <fa-icon icon="briefcase" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
             <button mdbBtn class="btn-success btn-icon mb-2" id="edit-columnts-btn"
-                    *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eFormsUpdateColumns)"
+                    *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eformsUpdateColumns)"
                     (click)="openEditColumnsModal(templateDto)"
                     mdbTooltip="{{ 'Edit columns' | translate }}">
               <fa-icon icon="table" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
             <button mdbBtn class="btn-danger btn-icon mb-2" id="delete-eform-btn"
                     (click)="openEformDeleteModal(templateDto)"
-                    *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eFormsDelete)
+                    *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eformsDelete)
                     && !templateDto.isLocked"
                     mdbTooltip="{{ 'Delete eForm' | translate }}">
               <fa-icon icon="trash-alt" [fixedWidth]="true" size="lg"></fa-icon>
@@ -155,7 +155,7 @@
           <div class="d-flex flex-row justify-content-center">
             <button mdbBtn class="btn-accent text-black-50 btn-icon mb-2"
                     *ngIf="templateDto.hasCases
-                    && checkEformPermissions(templateDto.id, userClaimsEnum.eFormsGetCsv)"
+                    && checkEformPermissions(templateDto.id, userClaimsEnum.eformsGetCsv)"
                     id="download-csv-btn"
                     (click)="downloadItem('CSV', templateDto.id)"
                     mdbTooltip="{{ 'Download' | translate }} CSV">
@@ -163,7 +163,7 @@
             </button>
             <button mdbBtn class="btn-accent text-black-50 btn-icon mb-2"
                     *ngIf="templateDto.hasCases
-                    && checkEformPermissions(templateDto.id, userClaimsEnum.eFormsDownloadXml)"
+                    && checkEformPermissions(templateDto.id, userClaimsEnum.eformsDownloadXml)"
                     id="download-xml-btn"
                     (click)="downloadItem('XML', templateDto.id)"
                     mdbTooltip="{{ 'Download' | translate }} XML">
@@ -171,12 +171,12 @@
             </button>
             <button mdbBtn class="btn-accent text-black-50 btn-icon mb-2" id="upload-zip-btn"
                     (click)="uploadZipFile(templateDto)"
-                    *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eFormsUploadZip)"
+                    *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eformsUploadZip)"
                     mdbTooltip="{{ 'Upload ZIP archive' | translate }}">
               <fa-icon icon="file-upload" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
             <button mdbBtn class="btn-accent text-black-50 btn-icon mb-2" id="eform-report-button"
-                    *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eFormsReadJasperReport)"
+                    *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eformsReadJasperReport)"
                     [routerLink]="['./report', templateDto.id]"
                     mdbTooltip="{{ 'Jasper Report' | translate }}">
               <fa-icon icon="receipt" [fixedWidth]="true" size="lg"></fa-icon>

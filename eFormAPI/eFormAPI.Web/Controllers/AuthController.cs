@@ -56,13 +56,24 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpGet]
-        [Route("api/auth/logout")]
-        public async Task<OperationResult> Logout()
+        [Route("api/auth/token/refresh")]
+        public async Task<OperationResult> RefreshToken()
         {
-            var result = await _authService.LogOut();
-            if (result.Success)
-                Response.Cookies.Delete("Authorization");
-            return new OperationResult(true);
+            return await _authService.RefreshToken();
+        }
+
+        [HttpGet]
+        [Route("api/auth/logout")]
+        public OperationResult Logout()
+        {
+            return _authService.LogOut();
+        }
+
+        [HttpGet]
+        [Route("api/auth/claims")]
+        public OperationResult GetCurrentUserClaims()
+        {
+            return _authService.GetCurrentUserClaims();
         }
 
         [HttpGet]

@@ -41,16 +41,19 @@ namespace eFormAPI.Web.Services.Security
     public class SecurityGroupService : ISecurityGroupService
     {
         private readonly ILogger<SecurityGroupService> _logger;
+        private readonly IClaimsService _claimsService;
         private readonly ILocalizationService _localizationService;
         private readonly BaseDbContext _dbContext;
 
         public SecurityGroupService(BaseDbContext dbContext,
             ILogger<SecurityGroupService> logger, 
-            ILocalizationService localizationService)
+            ILocalizationService localizationService,
+            IClaimsService claimsService)
         {
             _dbContext = dbContext;
             _logger = logger;
             _localizationService = localizationService;
+            _claimsService = claimsService;
         }
 
         public async Task<OperationDataResult<SecurityGroupsModel>> GetSecurityGroups(
@@ -174,6 +177,10 @@ namespace eFormAPI.Web.Services.Security
 
                     await _dbContext.SecurityGroups.AddAsync(securityGroup);
                     await _dbContext.SaveChangesAsync();
+
+                    // Update claims in store
+                    await _claimsService.UpdateAuthenticatedUsers(new List<int> { securityGroup.Id });
+
                     transaction.Commit();
                 }
 
@@ -226,6 +233,10 @@ namespace eFormAPI.Web.Services.Security
 
                     _dbContext.SecurityGroups.Update(securityGroup);
                     await _dbContext.SaveChangesAsync();
+
+                    // Update claims in store
+                    await _claimsService.UpdateAuthenticatedUsers(new List<int> { requestModel.Id });
+
                     transaction.Commit();
                 }
 
@@ -243,25 +254,34 @@ namespace eFormAPI.Web.Services.Security
 
         public async Task<OperationResult> DeleteSecurityGroup(int id)
         {
-            try
+            using (var transaction = await _dbContext.Database.BeginTransactionAsync())
             {
-                SecurityGroup securityGroup = await _dbContext.SecurityGroups.FirstOrDefaultAsync(x => x.Id == id);
-                if (securityGroup == null)
+                try
                 {
-                    return new OperationResult(false, 
-                        _localizationService.GetString("SecurityGroupNotFound"));
-                }
+                    SecurityGroup securityGroup = await _dbContext.SecurityGroups.FirstOrDefaultAsync(x => x.Id == id);
+                    if (securityGroup == null)
+                    {
+                        transaction.Rollback();
+                        return new OperationResult(false,
+                            _localizationService.GetString("SecurityGroupNotFound"));
+                    }
+                    _dbContext.SecurityGroups.Remove(securityGroup);
+                    await _dbContext.SaveChangesAsync();
 
-                _dbContext.SecurityGroups.Remove(securityGroup);
-                await _dbContext.SaveChangesAsync();
-                return new OperationResult(true, 
-                    _localizationService.GetString("SecurityGroupRemovedSuccessfully"));
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e.Message);
-                return new OperationDataResult<SecurityGroupModel>(false, 
-                    _localizationService.GetString("ErrorWhileDeletingSecurityGroup"));
+                    // Update claims in store
+                    await _claimsService.UpdateAuthenticatedUsers(new List<int> {id});
+
+                    transaction.Commit();
+                    return new OperationResult(true,
+                        _localizationService.GetString("SecurityGroupRemovedSuccessfully"));
+                }
+                catch (Exception e)
+                {
+                    transaction.Rollback();
+                    _logger.LogError(e.Message);
+                    return new OperationDataResult<SecurityGroupModel>(false,
+                        _localizationService.GetString("ErrorWhileDeletingSecurityGroup"));
+                }
             }
         }
     }

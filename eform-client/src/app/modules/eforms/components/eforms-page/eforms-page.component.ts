@@ -90,7 +90,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   }
 
   loadAllTags() {
-    if (this.userClaims.eFormsReadTags) {
+    if (this.userClaims.eformsReadTags) {
       this.eFormTagService.getAvailableTags().subscribe((data) => {
         if (data && data.success) {
           this.availableTags = data.model;

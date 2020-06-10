@@ -1,10 +1,9 @@
-import {JwtHelper} from './jwt.helper';
+import {snakeToCamel} from './snake-to-camel.helper';
 
 export class PluginClaimsHelper {
   public static check(claimName: string): boolean {
-    const accessToken = JSON.parse(localStorage.getItem('currentAuth')).access_token;
-    const decodedToken = new JwtHelper().decodeToken(accessToken);
-
-    return decodedToken.hasOwnProperty(claimName) && decodedToken[claimName] === 'True';
+    const userClaims = JSON.parse(localStorage.getItem('userClaims'));
+    const normalizedClaimName = snakeToCamel(claimName);
+    return userClaims.hasOwnProperty(normalizedClaimName) && userClaims[normalizedClaimName] === 'True';
   }
 }
