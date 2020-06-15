@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {AuthResponseModel, GoogleAuthenticatorModel, LoginRequestModel} from 'src/app/common/models/auth';
 import {AppSettingsService} from 'src/app/common/services/settings';
-import {AuthService, LocaleService, UserSettingsService} from 'src/app/common/services/auth';
+import {AuthService, GoogleAuthService, LocaleService, UserSettingsService} from 'src/app/common/services/auth';
 import {normalizeUserClaimNames} from 'src/app/common/helpers';
 
 @Component({
@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private router: Router,
               private authService: AuthService,
+              private googleAuthService: GoogleAuthService,
               public settingsService: AppSettingsService,
               private fb: FormBuilder,
               private toastrService: ToastrService,
@@ -71,7 +72,7 @@ export class LoginComponent implements OnInit {
 
   submitLoginForm(): void {
     const loginRequestModel = new LoginRequestModel(this.formLogin.getRawValue());
-    this.authService.loginAndGetGoogleAuthKey(loginRequestModel)
+    this.googleAuthService.loginAndGetGoogleAuthKey(loginRequestModel)
       .subscribe((result) => {
         if (result.success) {
           // check if two factor is enabled

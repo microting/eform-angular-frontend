@@ -2,23 +2,19 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
-import {BehaviorSubject, interval, Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 import {
   AuthResponseModel,
   ChangePasswordModel,
-  GoogleAuthenticatorModel,
-  GoogleAuthInfoModel,
   LoginRequestModel,
   OperationDataResult,
-  OperationResult,
   PasswordRestoreModel,
   UserClaimsModel,
   UserInfoModel
 } from 'src/app/common/models';
 import {BaseService} from '../base.service';
-import {TimezonesModel} from 'src/app/common/models/common/timezones.model';
 import {normalizeUserClaimNames} from 'src/app/common/helpers';
 
 export let AuthMethods = {
@@ -31,13 +27,7 @@ export let AuthMethods = {
   ChangePassword: 'api/account/change-password',
   RestoreUserPassword: '/api/account/reset-password',
   EmailRecoveryLink: '/api/account/forgot-password',
-  ResetAdminPassword: '/api/account/reset-admin-password',
-  TwoFactorAuthInfo: 'api/auth/two-factor-info',
-  LoginAndGetGoogleAuthKey: 'api/auth/google-auth-key',
-  GetGoogleAuthenticatorInfo: 'api/auth/google-auth-info',
-  UpdateGoogleAuthenticatorInfo: 'api/auth/google-auth-info',
-  DeleteGoogleAuthenticatorInfo: 'api/auth/google-auth-info',
-  TimeZones: 'api/account/timezones'
+  ResetAdminPassword: '/api/account/reset-admin-password'
 };
 
 @Injectable()
@@ -135,27 +125,9 @@ export class AuthService extends BaseService {
     }));
   }
 
-  twoFactorAuthInfo(): Observable<OperationDataResult<boolean>> {
-    return this.get(AuthMethods.TwoFactorAuthInfo);
-  }
-
-  loginAndGetGoogleAuthKey(loginInfo: LoginRequestModel): Observable<OperationDataResult<GoogleAuthenticatorModel>> {
-    return this.post(AuthMethods.LoginAndGetGoogleAuthKey, loginInfo);
-  }
-
-  getGoogleAuthenticatorInfo(): Observable<OperationDataResult<GoogleAuthInfoModel>> {
-    return this.get(AuthMethods.GetGoogleAuthenticatorInfo);
-  }
-
-  updateGoogleAuthenticatorInfo(model: GoogleAuthInfoModel ): Observable<OperationResult> {
-    return this.post(AuthMethods.UpdateGoogleAuthenticatorInfo, model);
-  }
-
-  deleteGoogleAuthenticatorInfo(): Observable<OperationResult> {
-    return this.delete(AuthMethods.GetGoogleAuthenticatorInfo);
-  }
-
-  allTimeZones(): Observable<OperationDataResult<TimezonesModel>> {
-    return this.get(AuthMethods.TimeZones);
+  logout() {
+    localStorage.removeItem('userSession');
+    localStorage.removeItem('currentAuth');
+    this.router.navigate(['/auth']).then();
   }
 }

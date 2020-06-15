@@ -8,7 +8,7 @@ import {
   PaginationModel,
   SecurityGroupsRequestModel, ApplicationPageModel, PageSettingsModel
 } from 'src/app/common/models';
-import {AuthService, SecurityGroupsService, AdminService, UserSettingsService} from 'src/app/common/services';
+import {AuthService, SecurityGroupsService, AdminService, UserSettingsService, GoogleAuthService} from 'src/app/common/services';
 
 @Component({
   selector: 'app-users-page',
@@ -34,6 +34,7 @@ export class UsersPageComponent implements OnInit {
   constructor(
     private adminService: AdminService,
     private authService: AuthService,
+    private googleAuthService: GoogleAuthService,
     private securityGroupsService: SecurityGroupsService,
     public userSettingsService: UserSettingsService
   ) {
@@ -59,7 +60,7 @@ export class UsersPageComponent implements OnInit {
   }
 
   getTwoFactorInfo() {
-    this.authService.twoFactorAuthInfo().subscribe((data) => {
+    this.googleAuthService.twoFactorAuthInfo().subscribe((data) => {
       this.isChecked = data.model;
     }, () => this.spinnerStatus = false);
   }
