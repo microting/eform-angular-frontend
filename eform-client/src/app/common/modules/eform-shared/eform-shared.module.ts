@@ -10,6 +10,7 @@ import {
   EformPageSizeComponent,
   StatusBarComponent,
   DateFormatterComponent} from './components';
+import {AuthImagePipe} from 'src/app/common/pipes';
 
 @NgModule({
   imports: [
@@ -23,14 +24,16 @@ import {
     EformPaginationComponent,
     EformPageSizeComponent,
     StatusBarComponent,
-    DateFormatterComponent
+    DateFormatterComponent,
+    AuthImagePipe
   ],
   exports: [
     EformPageSubheaderComponent,
     EformPaginationComponent,
     EformPageSizeComponent,
     StatusBarComponent,
-    DateFormatterComponent
+    DateFormatterComponent,
+    AuthImagePipe
   ]
 })
 export class EformSharedModule {

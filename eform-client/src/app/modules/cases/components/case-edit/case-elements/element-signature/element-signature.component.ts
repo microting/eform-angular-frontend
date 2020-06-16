@@ -2,7 +2,7 @@ import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild
 import {Gallery, GalleryComponent, GalleryItem, ImageItem} from '@ngx-gallery/core';
 import {Lightbox} from '@ngx-gallery/lightbox';
 import {FieldValueDto} from 'src/app/common/models';
-import {ImageService} from 'src/app/common/services';
+import {TemplateFilesService} from 'src/app/common/services';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription} from 'rxjs';
 
@@ -19,7 +19,7 @@ export class ElementSignatureComponent implements OnChanges, OnDestroy {
   galleryImages: GalleryItem[] = [];
   imageSub$: Subscription;
 
-  constructor(public gallery: Gallery, public lightbox: Lightbox, private imageService: ImageService) { }
+  constructor(public gallery: Gallery, public lightbox: Lightbox, private imageService: TemplateFilesService) { }
 
 
   ngOnChanges(changes: SimpleChanges): void {
