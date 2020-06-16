@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {EventBrokerService} from 'src/app/common/helpers';
 import {GoogleAuthInfoModel} from 'src/app/common/models/auth';
 import {UserSettingsModel} from 'src/app/common/models/settings';
-import {AuthService, LocaleService, UserSettingsService} from 'src/app/common/services/auth';
+import {AuthService, GoogleAuthService, LocaleService, UserSettingsService} from 'src/app/common/services/auth';
 import {TimezonesModel} from 'src/app/common/models/common/timezones.model';
 
 @Component({
@@ -35,6 +35,7 @@ export class ProfileSettingsComponent implements OnInit {
   spinnerCounter = 0;
 
   constructor(private authService: AuthService,
+              private googleAuthService: GoogleAuthService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
               private localeService: LocaleService,
@@ -52,7 +53,7 @@ export class ProfileSettingsComponent implements OnInit {
 
   getGoogleAuthenticatorInfo() {
     this.spinnerStatusCounter(1);
-    this.authService.getGoogleAuthenticatorInfo().subscribe((data) => {
+    this.googleAuthService.getGoogleAuthenticatorInfo().subscribe((data) => {
       if (data && data.model) {
         this.googleAuthInfoModel = data.model;
         this.spinnerStatusCounter(-1);
@@ -62,7 +63,7 @@ export class ProfileSettingsComponent implements OnInit {
 
   getTimeZones() {
     this.spinnerStatusCounter(1);
-    this.authService.allTimeZones().subscribe((data) => {
+    this.googleAuthService.allTimeZones().subscribe((data) => {
       if (data && data.model) {
         this.timeZones = data.model;
       }
@@ -87,7 +88,7 @@ export class ProfileSettingsComponent implements OnInit {
       return;
     }
     this.spinnerStatusCounter(1);
-    this.authService.updateGoogleAuthenticatorInfo(this.googleAuthInfoModel).subscribe((data) => {
+    this.googleAuthService.updateGoogleAuthenticatorInfo(this.googleAuthInfoModel).subscribe((data) => {
       if (data.success) {
         localStorage.removeItem('currentAuth');
         this.router.navigate(['/login']).then();
@@ -98,7 +99,7 @@ export class ProfileSettingsComponent implements OnInit {
 
   deleteGoogleAuthenticatorInfo() {
     this.spinnerStatusCounter(1);
-    this.authService.deleteGoogleAuthenticatorInfo().subscribe((data) => {
+    this.googleAuthService.deleteGoogleAuthenticatorInfo().subscribe((data) => {
       if (data && data.success) {
         this.googleAuthInfoModel.psk = null;
       }

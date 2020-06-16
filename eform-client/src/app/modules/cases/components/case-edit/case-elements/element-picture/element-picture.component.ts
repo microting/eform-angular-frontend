@@ -1,22 +1,26 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {Gallery, GalleryItem, ImageItem} from '@ngx-gallery/core';
 import {Lightbox} from '@ngx-gallery/lightbox';
 import {FieldValueDto} from 'src/app/common/models';
-import {ImageService} from 'src/app/common/services/cases';
+import {TemplateFilesService} from 'src/app/common/services/cases';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
+import {Subscription} from 'rxjs';
 
+@AutoUnsubscribe()
 @Component({
   selector: 'element-picture',
   templateUrl: './element-picture.component.html',
   styleUrls: ['./element-picture.component.scss']
 })
-export class ElementPictureComponent implements OnChanges {
+export class ElementPictureComponent implements OnChanges, OnDestroy {
   @Input() fieldValues: Array<FieldValueDto> = [];
   buttonsLocked = false;
   geoObjects = [];
   images = [];
   galleryImages: GalleryItem[] = [];
+  imageSub$: Subscription;
 
-  constructor(private imageService: ImageService, public gallery: Gallery, public lightbox: Lightbox) {
+  constructor(private imageService: TemplateFilesService, public gallery: Gallery, public lightbox: Lightbox) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -27,16 +31,20 @@ export class ElementPictureComponent implements OnChanges {
             lon: value.longitude,
             lat: value.latitude,
           });
-          this.images.push({
-            src: '/api/template-files/get-image/' + value.uploadedDataObj.fileName,
-            thumbnail: '/api/template-files/get-image/' + value.uploadedDataObj.fileName,
-            fileName: value.uploadedDataObj.fileName,
-            text: value.id.toString(),
-            googleMapsLat: value.latitude,
-            googleMapsLon: value.longitude,
-            googleMapsUrl: 'https://www.google.com/maps/place/' + value.latitude + ',' + value.longitude,
-            fieldId: value.fieldId,
-            uploadedObjId: value.uploadedDataObj.id
+          this.imageSub$ = this.imageService.getImage(value.uploadedDataObj.fileName).subscribe(blob => {
+            const imageUrl = URL.createObjectURL(blob);
+            // TODO: CHECK
+            this.images.push({
+              src: imageUrl,
+              thumbnail: imageUrl,
+              fileName: value.uploadedDataObj.fileName,
+              text: value.id.toString(),
+              googleMapsLat: value.latitude,
+              googleMapsLon: value.longitude,
+              googleMapsUrl: 'https://www.google.com/maps/place/' + value.latitude + ',' + value.longitude,
+              fieldId: value.fieldId,
+              uploadedObjId: value.uploadedDataObj.id
+            });
           });
         }
       });
@@ -91,6 +99,9 @@ export class ElementPictureComponent implements OnChanges {
       this.gallery.ref('lightbox', {counter: false, loadingMode: 'indeterminate'}).load(this.galleryImages);
       this.lightbox.open(i);
     }
+  }
+
+  ngOnDestroy(): void {
   }
 
 }

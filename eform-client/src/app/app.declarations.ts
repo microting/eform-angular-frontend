@@ -7,13 +7,14 @@ import {EventBrokerService} from 'src/app/common/helpers';
 import {
   EntitySearchService,
   EntitySelectService,
-  SitesService, SiteTagsService,
+  SitesService,
+  SiteTagsService,
   UnitsService,
   WorkersService
 } from 'src/app/common/services/advanced';
 import {AppMenuService, AppSettingsService} from 'src/app/common/services/settings';
-import {AuthService, LocaleService, UserSettingsService} from 'src/app/common/services/auth';
-import {CasePostsService, CasesService, ImageService} from 'src/app/common/services/cases';
+import {AuthService, GoogleAuthService, LocaleService, UserSettingsService} from 'src/app/common/services/auth';
+import {CasePostsService, CasesService, TemplateFilesService} from 'src/app/common/services/cases';
 import {DeviceUserService} from 'src/app/common/services/device-users';
 import {EformReportService, EFormService, EformTagService} from 'src/app/common/services/eform';
 import {SecurityGroupEformsPermissionsService, SecurityGroupsService} from 'src/app/common/services/security';
@@ -25,7 +26,7 @@ import {LoaderService} from './common/services/loeader.service';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {LoaderInterceptor} from 'src/app/common/interceptors/loader-interceptor.service';
 import {UserClaimsInterceptor} from 'src/app/common/interceptors/user-claims.interceptor';
-import {AuthImagePipe} from 'src/app/common/pipes';
+import {HttpErrorInterceptor, JwtInterceptor} from 'src/app/common/interceptors';
 // Guards
 
 export let providers = [
@@ -40,6 +41,7 @@ export let providers = [
   CookieService,
   // Services
   AuthService,
+  GoogleAuthService,
   LocaleService,
   UserSettingsService,
   AppSettingsService,
@@ -61,17 +63,18 @@ export let providers = [
   EmailRecipientsTagsService,
   CasesService,
   CasePostsService,
-  ImageService,
+  TemplateFilesService,
   SecurityGroupsService,
   SecurityGroupEformsPermissionsService,
   PluginPermissionsService,
   LoaderService,
+  { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+  { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: UserClaimsInterceptor, multi: true },
   // Helpers
   EventBrokerService,
   DatePipe,
-  AuthImagePipe,
   {
     provide: LocationStrategy,
     useClass: PathLocationStrategy
