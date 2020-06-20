@@ -104,7 +104,7 @@ namespace eFormAPI.Web.Hosting.Extensions
                 {
                     cfg.Cookie.Name = "eFormIdentity";
                     cfg.SlidingExpiration = false;
-                    cfg.Cookie.Expiration = TimeSpan.FromHours(10);
+                    //cfg.Cookie.Expiration = TimeSpan.FromHours(10);
                     cfg.Cookie.MaxAge = TimeSpan.FromHours(10);
                     cfg.ExpireTimeSpan = TimeSpan.FromHours(10);
                     cfg.Events.OnRedirectToLogin = context =>
