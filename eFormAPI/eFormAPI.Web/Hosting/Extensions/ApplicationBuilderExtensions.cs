@@ -35,7 +35,7 @@ namespace eFormAPI.Web.Hosting.Extensions
 {
     public static class ApplicationBuilderExtensions
     {
-        public static void UseAngularMiddleware(this IApplicationBuilder app, IHostingEnvironment env)
+        public static void UseAngularMiddleware(this IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.Use(async (context, next) =>
             {

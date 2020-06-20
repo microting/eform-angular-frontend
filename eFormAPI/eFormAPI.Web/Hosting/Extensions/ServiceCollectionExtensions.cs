@@ -57,7 +57,7 @@ namespace eFormAPI.Web.Hosting.Extensions
             services.Configure<T>(section);
             services.AddTransient<IWritableOptions<T>>(provider =>
             {
-                var environment = provider.GetService<IHostingEnvironment>();
+                var environment = provider.GetService<IWebHostEnvironment>();
                 var options = provider.GetService<IOptionsMonitor<T>>();
                 return new WritableOptions<T>(environment, options, section.Key, file);
             });
@@ -291,7 +291,7 @@ namespace eFormAPI.Web.Hosting.Extensions
             List<IEformPlugin> plugins)
         {
             var mvcBuilder = services.AddMvc()
-                .AddJsonOptions(options => options.SerializerSettings.ContractResolver =
+                .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver =
                     new CamelCasePropertyNamesContractResolver())
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
