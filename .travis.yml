@@ -42,7 +42,7 @@ script:
   - npm start &
   - sleep 75
   - dotnet run --project ../eFormAPI/eFormAPI.Web/eFormAPI.Web.csproj > dotnet_log 2>&1 &
-  - sleep 75
+  - sleep 100
   - npm run testheadless
   - npm run $TEST_SUITE
   - aws s3 sync errorShots/ s3://$S3_STORAGE_FOLDER/$TRAVIS_BUILD_NUMBER || true
