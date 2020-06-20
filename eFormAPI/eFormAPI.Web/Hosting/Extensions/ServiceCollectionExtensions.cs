@@ -293,7 +293,7 @@ namespace eFormAPI.Web.Hosting.Extensions
             var mvcBuilder = services.AddMvc()
                 .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver =
                     new CamelCasePropertyNamesContractResolver())
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             foreach (var plugin in plugins)
             {

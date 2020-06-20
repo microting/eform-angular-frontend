@@ -76,6 +76,9 @@ namespace eFormAPI.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // TODO check if we need this or code needs to be updated.
+            services.AddMvc(options => options.EnableEndpointRouting = false);
+
             // Configuration
             //services.AddSingleton(Configuration);
             services.AddOptions();
