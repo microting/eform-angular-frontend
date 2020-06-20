@@ -12,7 +12,7 @@ cache:
   directories:
   - eform-client/node_modules
 mono: none
-dotnet: 3.1
+dotnet: 3.1.101
 addons:
   chrome: stable
 services:
