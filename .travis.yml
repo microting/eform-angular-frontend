@@ -17,6 +17,7 @@ addons:
   chrome: stable
   mariadb: '10.5'
 script:
+  - sudo mysql -e 'ALTER USER root@localhost IDENTIFIED VIA mysql_native_password'
   - nvm install 12.16.2
   - nvm use 12.16.2
   - pip install --user awscli
