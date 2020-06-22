@@ -35,6 +35,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microting.eForm.Dto;
 using Microting.eForm.Infrastructure.Models;
 using Microting.eFormApi.BasePn.Abstractions;
@@ -395,20 +396,26 @@ namespace eFormAPI.Web.Controllers.Eforms
                             await core.PutFileToStorageSystem(filePath, templateId.ToString() + "_" + uploadModel.File.FileName);
                         }
 
-                        if (Directory.GetFiles(Path.Combine(extractPath, "compact"), "*.docx").Length == 0)
+                        using (var dbContext = core.dbContextHelper.GetDbContext())
                         {
-                            await core.SetJasperExportEnabled(templateId, true);
-                            await core.SetDocxExportEnabled(templateId, false);
-//                            await Startup.Bus.SendLocal(new GenerateJasperFiles(templateId)); // TODO disabled for now 3. dec. 2018
-                            foreach (var file in Directory.GetFiles(extractPath, "*.jasper"))
+                            if (Directory.GetFiles(Path.Combine(extractPath, "compact"), "*.docx").Length == 0)
                             {
-                                System.IO.File.Delete(file);
+                                var cl = await dbContext.check_lists.SingleAsync(x => x.Id == templateId);
+                                cl.JasperExportEnabled = true;
+                                cl.DocxExportEnabled = false;
+                                await cl.Update(dbContext);
+                                foreach (var file in Directory.GetFiles(extractPath, "*.jasper"))
+                                {
+                                    System.IO.File.Delete(file);
+                                }
                             }
-                        }
-                        else
-                        {   await core.SetJasperExportEnabled(templateId, false);
-                            await core.SetDocxExportEnabled(templateId, true);
-                            
+                            else
+                            {
+                                var cl = await dbContext.check_lists.SingleAsync(x => x.Id == templateId);
+                                cl.JasperExportEnabled = false;
+                                cl.DocxExportEnabled = true;
+                                await cl.Update(dbContext);
+                            }
                         }
                         return Ok();
                     }
