@@ -169,6 +169,13 @@
                     mdbTooltip="{{ 'Download' | translate }} XML">
               <fa-icon icon="file-code" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
+            <button mdbBtn class="btn-accent text-black-50 btn-icon mb-2"
+                    *ngIf="templateDto.hasCases && checkEformPermissions(templateDto.id, userClaimsEnum.eformsDownloadExcel)"
+                    id="download-excel-btn"
+                    (click)="openDownloadExcelModal(templateDto)"
+                    mdbTooltip="{{ 'Download' | translate }} Excel">
+              <fa-icon icon="file-excel" [fixedWidth]="true" size="lg"></fa-icon>
+            </button>
             <button mdbBtn class="btn-accent text-black-50 btn-icon mb-2" id="upload-zip-btn"
                     (click)="uploadZipFile(templateDto)"
                     *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eformsUploadZip)"
@@ -200,3 +207,4 @@
                            (onTagAdded)="loadAllTags()" #modalEditTags></app-eform-edit-tags-modal>
 <app-eform-remove-eform-modal (onEFormDeleted)="loadAllTemplates()" #modalRemoveEform></app-eform-remove-eform-modal>
 <app-eform-upload-zip-modal #modalUploadZip></app-eform-upload-zip-modal>
+<app-eform-excel-report-modal #modalExcel></app-eform-excel-report-modal>

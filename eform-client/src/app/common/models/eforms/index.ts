@@ -1,5 +1,6 @@
 export * from './deploy/deploy.model';
 export * from './eform-create.model';
+export * from './eform-download-excel.model';
 export * from './tag/template-tags-update.model';
 export * from './template-list.model';
 export * from './template-request.model';

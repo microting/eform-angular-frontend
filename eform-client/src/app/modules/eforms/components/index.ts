@@ -5,3 +5,5 @@ export * from './eforms-page/eforms-page.component';
 export * from './eform-edit-tags-modal/eform-edit-tags-modal.component';
 export * from './eform-remove-eform-modal/eform-remove-eform-modal.component';
 export * from './eform-upload-zip-modal/eform-upload-zip-modal.component';
+export * from './eform-excel-report-modal/eform-excel-report-modal.component';
+
