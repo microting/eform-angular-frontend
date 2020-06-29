@@ -45,7 +45,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.6" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="1.2.70" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="1.2.71" />
     <PackageReference Include="sendgrid" Version="9.14.0" />
   </ItemGroup>
 
