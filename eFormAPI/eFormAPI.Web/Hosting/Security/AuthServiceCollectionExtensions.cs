@@ -259,6 +259,9 @@ namespace eFormAPI.Web.Hosting.Security
                 options.AddPolicy(AuthConsts.EformPolicies.Eforms.UpdateJasperReport,
                     policy => policy.RequireClaim(AuthConsts.EformClaims.EformsClaims.UpdateJasperReport,
                         AuthConsts.ClaimDefaultValue));
+                options.AddPolicy(AuthConsts.EformPolicies.Eforms.ExportEformExcel,
+                    policy => policy.RequireClaim(AuthConsts.EformClaims.EformsClaims.ExportEformExcel,
+                        AuthConsts.ClaimDefaultValue));
 
                 foreach (var permission in pluginPermissions)
                 {

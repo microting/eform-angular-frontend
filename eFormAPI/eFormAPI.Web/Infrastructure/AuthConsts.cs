@@ -113,6 +113,7 @@ namespace eFormAPI.Web.Infrastructure
                 public const string GetCsv = "eforms_get_csv";
                 public const string ReadJasperReport = "eforms_read_jasper_report";
                 public const string UpdateJasperReport = "eforms_update_jasper_report";
+                public const string ExportEformExcel = "eform_export_eform_excel";
             }
         }
 
@@ -197,6 +198,7 @@ namespace eFormAPI.Web.Infrastructure
                 public const string GetCsv = EformClaims.EformsClaims.GetCsv;
                 public const string ReadJasperReport = EformClaims.EformsClaims.ReadJasperReport;
                 public const string UpdateJasperReport = EformClaims.EformsClaims.UpdateJasperReport;
+                public const string ExportEformExcel = EformClaims.EformsClaims.ExportEformExcel;
             }
         }
 
@@ -302,6 +304,7 @@ namespace eFormAPI.Web.Infrastructure
                     public const int GetCsv = 42;
                     public const int ReadJasperReport = 43;
                     public const int UpdateJasperReport = 44;
+                    public const int ExportEformExcel = 47;
                 }
             }
         }

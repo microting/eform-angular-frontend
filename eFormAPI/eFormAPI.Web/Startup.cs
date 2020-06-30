@@ -55,6 +55,7 @@ namespace eFormAPI.Web
     using Microting.eFormApi.BasePn.Localization.Abstractions;
     using Microting.eFormApi.BasePn.Services;
     using Services;
+    using Services.Export;
     using Services.Mailing.CasePost;
     using Services.Mailing.EmailRecipients;
     using Services.Mailing.EmailService;
@@ -292,6 +293,7 @@ namespace eFormAPI.Web
             services.AddScoped<IEmailTagsService, EmailTagsService>();
             services.AddScoped<IEmailRecipientsService, EmailRecipientsService>();
             services.AddScoped<ICasePostService, CasePostService>();
+            services.AddTransient<IEformExcelExportService, EformExcelExportService>();
         }
 
         private ICollection<PluginPermissionModel> GetPluginsPermissions()

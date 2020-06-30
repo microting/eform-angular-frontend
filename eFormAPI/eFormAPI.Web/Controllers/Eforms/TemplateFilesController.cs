@@ -47,20 +47,33 @@ using Settings = Microting.eForm.Dto.Settings;
 
 namespace eFormAPI.Web.Controllers.Eforms
 {
+    using System.Linq;
+    using Services.Export;
+
+    public class EformDownloadExcelModel
+    {
+        public int TemplateId { get; set; }
+        public DateTime? DateFrom { get; set; }
+        public DateTime? DateTo { get; set; }
+    }
+
     [Authorize]
     public class TemplateFilesController : Controller
     {
         private readonly IEFormCoreService _coreHelper;
         private readonly IEformPermissionsService _permissionsService;
         private readonly ILocalizationService _localizationService;
+        private readonly IEformExcelExportService _eformExcelExportService;
 
         public TemplateFilesController(IEFormCoreService coreHelper,
             ILocalizationService localizationService,
-            IEformPermissionsService permissionsService)
+            IEformPermissionsService permissionsService,
+            IEformExcelExportService eformExcelExportService)
         {
             _coreHelper = coreHelper;
             _localizationService = localizationService;
             _permissionsService = permissionsService;
+            _eformExcelExportService = eformExcelExportService;
         }
 
         [HttpGet]
@@ -112,8 +125,22 @@ namespace eFormAPI.Web.Controllers.Eforms
         {
             return await GetFile(fileName, ext, "pdf", noCache);
         }
-        
-        
+
+        [HttpGet]
+        [Route("api/template-files/download-eform-excel/{templateId}")]
+        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.ExportEformExcel)]
+        public async Task<IActionResult> DownloadExcelEform(EformDownloadExcelModel excelModel)
+        {
+            if (!await _permissionsService.CheckEform(excelModel.TemplateId,
+                AuthConsts.EformClaims.EformsClaims.ExportEformExcel))
+            {
+                return Forbid();
+            }
+
+            var result = await _eformExcelExportService.EformExport(excelModel);
+            return new FileStreamResult(result.Model, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        }
+
         private async Task<IActionResult> GetFile(string fileName, string ext, string fileType, string noCache = "noCache")
         {
             var core = await _coreHelper.GetCore();
@@ -394,6 +421,30 @@ namespace eFormAPI.Web.Controllers.Eforms
                         if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true" || core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
                         {
                             await core.PutFileToStorageSystem(filePath, templateId.ToString() + "_" + uploadModel.File.FileName);
+                        }
+
+                        // Find excel file
+                        var excelFilePath = Directory.GetFiles(extractPath, "*.xlsx").FirstOrDefault();
+                        if (!string.IsNullOrEmpty(excelFilePath))
+                        {
+                            var excelFileName = $"{templateId}_eform_excel.xlsx";
+                            var excelSaveFolder =
+                                Path.Combine(await core.GetSdkSetting(Settings.fileLocationPicture),
+                                    Path.Combine("excel", excelFileName));
+
+                            if (!Directory.Exists(excelSaveFolder))
+                            {
+                                Directory.CreateDirectory(excelSaveFolder);
+                            }
+
+                            if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true" || core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
+                            {
+                                await core.PutFileToStorageSystem(excelFilePath, excelFileName);
+                            }
+                            else
+                            {
+                                System.IO.File.Copy(excelFilePath, excelSaveFolder);
+                            }
                         }
 
                         using (var dbContext = core.dbContextHelper.GetDbContext())

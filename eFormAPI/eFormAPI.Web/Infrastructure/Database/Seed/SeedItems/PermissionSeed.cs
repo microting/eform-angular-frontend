@@ -351,6 +351,13 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                     ClaimName = AuthConsts.EformClaims.EformsClaims.UpdateJasperReport,
                     PermissionName = "Update Jasper Report",
                     PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Eforms,
+                },
+                new Permission()
+                {
+                    Id = AuthConsts.DbIds.Permissions.Eforms.ExportEformExcel,
+                    ClaimName = AuthConsts.EformClaims.EformsClaims.ExportEformExcel,
+                    PermissionName = "Export eForm excel",
+                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Eforms,
                 }
             );
             return modelBuilder;
