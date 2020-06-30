@@ -434,11 +434,12 @@ namespace eFormAPI.Web.Controllers.Eforms
                         }
 
                         // Find excel file
+                        string excelSaveFolder = null;
                         var excelFilePath = Directory.GetFiles(extractPath, "*.xlsx").FirstOrDefault();
                         if (!string.IsNullOrEmpty(excelFilePath))
                         {
                             var excelFileName = $"{templateId}_eform_excel.xlsx";
-                            var excelSaveFolder =
+                            excelSaveFolder =
                                 Path.Combine(await core.GetSdkSetting(Settings.fileLocationPicture),
                                     Path.Combine("excel", excelFileName));
 
@@ -459,7 +460,13 @@ namespace eFormAPI.Web.Controllers.Eforms
 
                         using (var dbContext = core.dbContextHelper.GetDbContext())
                         {
-                            if (Directory.GetFiles(Path.Combine(extractPath, "compact"), "*.docx").Length == 0)
+                            var compactPath = Path.Combine(extractPath, "compact");
+                            if (!Directory.Exists(compactPath))
+                            {
+                                Directory.CreateDirectory(compactPath);
+                            }
+
+                            if (Directory.GetFiles(compactPath, "*.docx").Length == 0)
                             {
                                 var cl = await dbContext.check_lists.SingleAsync(x => x.Id == templateId);
                                 cl.JasperExportEnabled = true;
@@ -477,6 +484,20 @@ namespace eFormAPI.Web.Controllers.Eforms
                                 cl.DocxExportEnabled = true;
                                 await cl.Update(dbContext);
                             }
+
+                            if (!string.IsNullOrEmpty(excelSaveFolder))
+                            {
+                                if (!Directory.Exists(Path.GetDirectoryName(excelSaveFolder)))
+                                {
+                                    Directory.CreateDirectory(Path.GetDirectoryName(excelSaveFolder));
+                                }
+
+                                var cl = await dbContext.check_lists.SingleAsync(x => x.Id == templateId);
+                                cl.ExcelExportEnabled = true;
+                                await cl.Update(dbContext);
+                            }
+
+
                         }
                         return Ok();
                     }
