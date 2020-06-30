@@ -53,8 +53,9 @@ namespace eFormAPI.Web.Infrastructure.Models
         public FieldDto Field10 { get; set; }
 
         public bool JasperExportEnabled { get; set; }
-        
+
         public bool DocxExportEnabled { get; set; }
+        public bool ExcelExportEnabled { get; set; }
 
         public List<KeyValuePair<int, string>> Tags { get; set; }
         
