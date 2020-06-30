@@ -113,16 +113,20 @@
                 using (var package = new ExcelPackage(stream))
                 {
                     var worksheet = package.Workbook.Worksheets.Add("eForm Report");
-                    worksheet.Cells[1, 1].Value = "Total total 123";
 
-                    for (var x = 0; x < dataSet.Count; x++)
+                    for (var y = 0; y < dataSet.Count; y++)
                     {
-                        var dataX = dataSet[x];
-                        for (var y = 0; y < dataX.Count; y++)
+                        var dataX = dataSet[y];
+                        for (var x = 0; x < dataX.Count; x++)
                         {
-                            var dataY = dataX[y];
+                            var dataY = dataX[x];
 
                             worksheet.Cells[x+1, y+1].Value = dataY;
+
+                            if (x == 0)
+                            {
+                                worksheet.Cells[x + 1, y + 1].Style.Font.Bold = true;
+                            }
                         }
                     }
 
