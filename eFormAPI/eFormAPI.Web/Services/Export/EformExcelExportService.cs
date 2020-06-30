@@ -1,7 +1,6 @@
 ﻿namespace eFormAPI.Web.Services.Export
 {
     using System;
-    using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
     using System.Threading.Tasks;
@@ -35,7 +34,7 @@
             try
             {
                 var core = await _coreHelper.GetCore();
-                CultureInfo cultureInfo = new CultureInfo("de-DE");
+                var cultureInfo = new CultureInfo("de-DE");
                 TimeZoneInfo timeZoneInfo;
 
                 try
@@ -50,7 +49,7 @@
                 var customPathForUploadedData = $"{await core.GetSdkSetting(Settings.httpServerAddress)}/" +
                                                 "api/template-files/get-image/";
 
-                List<List<string>> dataSet = await core.GenerateDataSetFromCases(
+                var dataSet = await core.GenerateDataSetFromCases(
                     excelModel.TemplateId,
                     excelModel.DateFrom,
                     excelModel.DateTo,
@@ -61,8 +60,12 @@
                     cultureInfo,
                     timeZoneInfo);
 
-                //if (dataSet == null)
-                //    return null;
+                if (dataSet == null)
+                {
+                    return new OperationDataResult<Stream>(
+                        false,
+                        _localizationService.GetString("DataNotFound"));
+                }
 
                 var fileName = $"{excelModel.TemplateId}_eform_excel.xlsx";
                 var excelSaveFolder =
@@ -77,7 +80,7 @@
                     {
                         return new OperationDataResult<Stream>(
                             false,
-                            "Excel template not found in storage!");
+                            _localizationService.GetString("ExcelTemplateNotFoundInStorage"));
                     }
 
                     stream = swiftResult.ObjectStreamContent;
@@ -90,7 +93,7 @@
                     {
                         return new OperationDataResult<Stream>(
                             false,
-                            "Excel template not found in storage!");
+                            _localizationService.GetString("ExcelTemplateNotFoundInStorage"));
                     }
 
                     stream = s3Result.ResponseStream;
@@ -105,14 +108,14 @@
                     {
                         return new OperationDataResult<Stream>(
                             false,
-                            "Excel template not found in storage!");
+                            _localizationService.GetString("ExcelTemplateNotFoundInStorage"));
                     }
                 }
 
                 Stream result;
                 using (var package = new ExcelPackage(stream))
                 {
-                    var worksheet = package.Workbook.Worksheets.Add("eForm Report");
+                    var worksheet = package.Workbook.Worksheets.Add(_localizationService.GetString("eFormReport"));
 
                     for (var y = 0; y < dataSet.Count; y++)
                     {
@@ -142,7 +145,7 @@
                 _logger.LogError(e, e.Message);
                 return new OperationDataResult<Stream>(
                     false,
-                    "Error while exporting excel file!");
+                    _localizationService.GetString("ErrorWhileExportingExcelFile"));
             }
         }
     }

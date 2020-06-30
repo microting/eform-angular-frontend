@@ -660,4 +660,16 @@
   <data name="SendGridKeyShouldBeAddedToSettings" xml:space="preserve">
     <value>Der SendGrid-Schlüssel sollte zu den Einstellungen hinzugefügt werden</value>
   </data>
+  <data name="DataNotFound" xml:space="preserve">
+    <value>Daten nicht gefunden!</value>
+  </data>
+  <data name="eFormReport" xml:space="preserve">
+    <value>eForm-Bericht</value>
+  </data>
+  <data name="ErrorWhileExportingExcelFile" xml:space="preserve">
+    <value>Fehler beim Exportieren der Excel-Datei!</value>
+  </data>
+  <data name="ExcelTemplateNotFoundInStorage" xml:space="preserve">
+    <value>Excel-Vorlage nicht im Speicher gefunden!</value>
+  </data>
 </root>

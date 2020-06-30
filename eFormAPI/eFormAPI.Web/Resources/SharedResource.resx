@@ -678,4 +678,16 @@
   <data name="SendGridKeyShouldBeAddedToSettings" xml:space="preserve">
     <value>SendGrid key should be added to settings</value>
   </data>
+  <data name="DataNotFound" xml:space="preserve">
+    <value>Data not found!</value>
+  </data>
+  <data name="eFormReport" xml:space="preserve">
+    <value>eForm Report</value>
+  </data>
+  <data name="ErrorWhileExportingExcelFile" xml:space="preserve">
+    <value>Error while exporting excel file!</value>
+  </data>
+  <data name="ExcelTemplateNotFoundInStorage" xml:space="preserve">
+    <value>Excel template not found in storage!</value>
+  </data>
 </root>
