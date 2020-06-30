@@ -128,7 +128,7 @@ namespace eFormAPI.Web.Controllers.Eforms
 
         [HttpGet]
         [Route("api/template-files/download-eform-excel")]
-        //[Authorize(Policy = AuthConsts.EformPolicies.Eforms.ExportEformExcel)]
+        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.ExportEformExcel)]
         public async Task<IActionResult> DownloadExcelEform(EformDownloadExcelModel excelModel)
         {
             if (!await _permissionsService.CheckEform(excelModel.TemplateId,
