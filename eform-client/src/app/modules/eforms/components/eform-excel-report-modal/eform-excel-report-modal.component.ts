@@ -41,7 +41,7 @@ export class EformExcelReportModalComponent implements OnInit, OnDestroy {
     } as EformDownloadExcelModel;
     this.downloadExcelSub$ = this.eFormService.downloadEformExcel(model).subscribe((data => {
       const blob = new Blob([data]);
-      saveAs(blob, `template_${this.selectedTemplate.id}.excel`);
+      saveAs(blob, `template_${this.selectedTemplate.id}.xlsx`);
     }));
   }
 

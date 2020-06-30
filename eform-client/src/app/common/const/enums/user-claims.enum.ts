@@ -47,6 +47,6 @@ export enum UserClaimsEnum {
   eformsUpdateJasperReport,
   caseGetDocx,
   caseGetPptx,
-  eformsDownloadExcel
+  eformExportEformExcel
 }
 

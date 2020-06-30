@@ -170,11 +170,13 @@
               <fa-icon icon="file-code" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
             <button mdbBtn class="btn-accent text-black-50 btn-icon mb-2"
-                    *ngIf="templateDto.hasCases && checkEformPermissions(templateDto.id, userClaimsEnum.eformsDownloadExcel)"
+                    *ngIf="templateDto.excelExportEnabled && templateDto.hasCases
+                    && checkEformPermissions(templateDto.id, userClaimsEnum.eformExportEformExcel)"
                     id="download-excel-btn"
                     (click)="openDownloadExcelModal(templateDto)"
                     mdbTooltip="{{ 'Download' | translate }} Excel">
               <fa-icon icon="file-excel" [fixedWidth]="true" size="lg"></fa-icon>
+
             </button>
             <button mdbBtn class="btn-accent text-black-50 btn-icon mb-2" id="upload-zip-btn"
                     (click)="uploadZipFile(templateDto)"
