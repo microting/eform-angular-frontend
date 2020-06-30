@@ -38,12 +38,11 @@
                 CultureInfo cultureInfo = new CultureInfo("de-DE");
                 TimeZoneInfo timeZoneInfo;
 
-                var timeZones = TimeZoneInfo.GetSystemTimeZones();
-                if (timeZones.Contains(TimeZoneInfo.FromSerializedString("Europe/Copenhagen")))
+                try
                 {
                     timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Europe/Copenhagen");
                 }
-                else
+                catch
                 {
                     timeZoneInfo = TimeZoneInfo.Local;
                 }
@@ -62,8 +61,8 @@
                     cultureInfo,
                     timeZoneInfo);
 
-                if (dataSet == null)
-                    return null;
+                //if (dataSet == null)
+                //    return null;
 
                 var fileName = $"{excelModel.TemplateId}_eform_excel.xlsx";
                 var excelSaveFolder =
@@ -119,6 +118,8 @@
 
                     result = new MemoryStream(package.GetAsByteArray());
                 }
+
+                stream.Dispose();
 
                 return new OperationDataResult<Stream>(true, result);
             }

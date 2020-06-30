@@ -127,8 +127,8 @@ namespace eFormAPI.Web.Controllers.Eforms
         }
 
         [HttpGet]
-        [Route("api/template-files/download-eform-excel/{templateId}")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.ExportEformExcel)]
+        [Route("api/template-files/download-eform-excel")]
+        //[Authorize(Policy = AuthConsts.EformPolicies.Eforms.ExportEformExcel)]
         public async Task<IActionResult> DownloadExcelEform(EformDownloadExcelModel excelModel)
         {
             if (!await _permissionsService.CheckEform(excelModel.TemplateId,
@@ -454,7 +454,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                             }
                             else
                             {
-                                System.IO.File.Copy(excelFilePath, excelSaveFolder);
+                                System.IO.File.Copy(excelFilePath, excelSaveFolder, true);
                             }
                         }
 
@@ -505,7 +505,7 @@ namespace eFormAPI.Web.Controllers.Eforms
 
                 return BadRequest(_localizationService.GetString("InvalidRequest"));
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return BadRequest("Invalid Request!");
             }
