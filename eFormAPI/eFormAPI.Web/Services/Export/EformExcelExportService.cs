@@ -36,7 +36,18 @@
             {
                 var core = await _coreHelper.GetCore();
                 CultureInfo cultureInfo = new CultureInfo("de-DE");
-                TimeZoneInfo timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Europe/Copenhagen");
+                TimeZoneInfo timeZoneInfo;
+
+                var timeZones = TimeZoneInfo.GetSystemTimeZones();
+                if (timeZones.Contains(TimeZoneInfo.FromSerializedString("Europe/Copenhagen")))
+                {
+                    timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Europe/Copenhagen");
+                }
+                else
+                {
+                    timeZoneInfo = TimeZoneInfo.Local;
+                }
+
                 var customPathForUploadedData = $"{await core.GetSdkSetting(Settings.httpServerAddress)}/" +
                                                 "api/template-files/get-image/";
 
