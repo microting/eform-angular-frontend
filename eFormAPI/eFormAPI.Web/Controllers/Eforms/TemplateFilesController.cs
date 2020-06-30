@@ -384,7 +384,17 @@ namespace eFormAPI.Web.Controllers.Eforms
                 var zipArchiveFolder =
                     Path.Combine(await core.GetSdkSetting(Settings.fileLocationJasper),
                         Path.Combine("templates", Path.Combine("zip-archives", templateId.ToString())));
-                
+
+                if (!Directory.Exists(Path.GetDirectoryName(saveFolder)))
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(saveFolder));
+                }
+
+                if (!Directory.Exists(Path.GetDirectoryName(zipArchiveFolder)))
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(zipArchiveFolder));
+                }
+
                 var filePath = Path.Combine(zipArchiveFolder, Path.GetFileName(uploadModel.File.FileName));
                 System.IO.File.Delete(filePath);
 
@@ -432,9 +442,9 @@ namespace eFormAPI.Web.Controllers.Eforms
                                 Path.Combine(await core.GetSdkSetting(Settings.fileLocationPicture),
                                     Path.Combine("excel", excelFileName));
 
-                            if (!Directory.Exists(excelSaveFolder))
+                            if (!Directory.Exists(Path.GetDirectoryName(excelSaveFolder)))
                             {
-                                Directory.CreateDirectory(excelSaveFolder);
+                                Directory.CreateDirectory(Path.GetDirectoryName(excelSaveFolder));
                             }
 
                             if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true" || core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
