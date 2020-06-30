@@ -112,14 +112,24 @@
                 Stream result;
                 using (var package = new ExcelPackage(stream))
                 {
-                    //var worksheet = package.Workbook.Worksheets.Add("Worksheet Name");
-                    var worksheet = package.Workbook.Worksheets[1];
-                    worksheet.Cells[1, 1].Value = "Total total";
+                    var worksheet = package.Workbook.Worksheets.Add("eForm Report");
+                    worksheet.Cells[1, 1].Value = "Total total 123";
+
+                    for (var x = 0; x < dataSet.Count; x++)
+                    {
+                        var dataX = dataSet[x];
+                        for (var y = 0; y < dataX.Count; y++)
+                        {
+                            var dataY = dataX[y];
+
+                            worksheet.Cells[x+1, y+1].Value = dataY;
+                        }
+                    }
+
 
                     result = new MemoryStream(package.GetAsByteArray());
+                    stream.Dispose();
                 }
-
-                stream.Dispose();
 
                 return new OperationDataResult<Stream>(true, result);
             }
