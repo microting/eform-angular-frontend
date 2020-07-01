@@ -396,8 +396,12 @@ namespace eFormAPI.Web.Controllers.Eforms
                 }
 
                 var filePath = Path.Combine(zipArchiveFolder, Path.GetFileName(uploadModel.File.FileName));
-                System.IO.File.Delete(filePath);
 
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+                
                 if (string.IsNullOrEmpty(saveFolder))
                 {
                     return BadRequest("Folder error");
