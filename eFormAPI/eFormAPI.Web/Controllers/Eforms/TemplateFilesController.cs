@@ -47,6 +47,9 @@ using Settings = Microting.eForm.Dto.Settings;
 
 namespace eFormAPI.Web.Controllers.Eforms
 {
+    using System.Linq;
+    using eFormAPI.Web.Infrastructure.Models;
+    using Services.Export;
     public class EformDownloadExcelModel
     {
         public int TemplateId { get; set; }

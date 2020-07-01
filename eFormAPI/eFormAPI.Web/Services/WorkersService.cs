@@ -127,7 +127,7 @@ namespace eFormAPI.Web.Services
                         _localizationService.GetStringWithFormat("WorkerParamCantBeDeleted", workerDto.FirstName, workerDto.LastName));
             }
 
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new OperationResult(false,
                     _localizationService.GetStringWithFormat("SiteWithIdCouldNotBeDeleted", id));
