@@ -50,12 +50,6 @@ namespace eFormAPI.Web.Controllers.Eforms
     using System.Linq;
     using eFormAPI.Web.Infrastructure.Models;
     using Services.Export;
-    public class EformDownloadExcelModel
-    {
-        public int TemplateId { get; set; }
-        public DateTime? DateFrom { get; set; }
-        public DateTime? DateTo { get; set; }
-    }
 
     [Authorize]
     public class TemplateFilesController : Controller
