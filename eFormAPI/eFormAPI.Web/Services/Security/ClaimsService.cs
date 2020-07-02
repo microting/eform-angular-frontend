@@ -235,6 +235,7 @@ namespace eFormAPI.Web.Services.Security
                 new Claim(AuthConsts.EformClaims.EformsClaims.GetCsv, AuthConsts.ClaimDefaultValue),
                 new Claim(AuthConsts.EformClaims.EformsClaims.ReadJasperReport, AuthConsts.ClaimDefaultValue),
                 new Claim(AuthConsts.EformClaims.EformsClaims.UpdateJasperReport, AuthConsts.ClaimDefaultValue),
+                new Claim(AuthConsts.EformClaims.EformsClaims.ExportEformExcel, AuthConsts.ClaimDefaultValue),
             };
 
             claims.AddRange(await GetAllPluginClaims());

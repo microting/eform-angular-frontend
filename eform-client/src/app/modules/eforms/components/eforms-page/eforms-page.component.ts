@@ -10,7 +10,6 @@ import {PageSettingsModel} from 'src/app/common/models/settings';
 import {AuthService, UserSettingsService} from 'src/app/common/services/auth';
 import {EFormService, EformTagService} from 'src/app/common/services/eform';
 import {SecurityGroupEformsPermissionsService} from 'src/app/common/services/security';
-import {FolderDto} from '../../../../common/models/dto/folder.dto';
 import {saveAs} from 'file-saver';
 
 @Component({
@@ -26,6 +25,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   @ViewChild('modalEditTags', { static: true }) modalEditTags;
   @ViewChild('modalRemoveEform', { static: true }) modalRemoveEform;
   @ViewChild('modalUploadZip', { static: true }) modalUploadZip;
+  @ViewChild('modalExcel', { static: true }) modalExcel;
 
   searchSubject = new Subject();
   localPageSettings: PageSettingsModel = new PageSettingsModel();
@@ -195,6 +195,10 @@ export class EformsPageComponent implements OnInit, OnDestroy {
 
   openEditTagsModal(templateDto: TemplateDto) {
     this.modalEditTags.show(templateDto);
+  }
+
+  openDownloadExcelModal(templateDto: TemplateDto) {
+    this.modalExcel.show(templateDto);
   }
 
   checkEformPermissions(templateId: number, permissionIndex: number) {

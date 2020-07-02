@@ -53,8 +53,9 @@ namespace eFormAPI.Web.Infrastructure.Models
         public FieldDto Field10 { get; set; }
 
         public bool JasperExportEnabled { get; set; }
-        
+
         public bool DocxExportEnabled { get; set; }
+        public bool ExcelExportEnabled { get; set; }
 
         public List<KeyValuePair<int, string>> Tags { get; set; }
         
@@ -62,7 +63,7 @@ namespace eFormAPI.Web.Infrastructure.Models
 
         public int? FolderId { get; set; }
 
-        public static implicit operator TemplateDto(Microting.eForm.Dto.Template_Dto templateDto)
+        public static implicit operator TemplateDto(Template_Dto templateDto)
         {
             return new TemplateDto()
             {
@@ -89,6 +90,7 @@ namespace eFormAPI.Web.Infrastructure.Models
                 Field10 = templateDto.Field10,
                 JasperExportEnabled = templateDto.JasperExportEnabled,
                 DocxExportEnabled = templateDto.DocxExportEnabled,
+                ExcelExportEnabled = templateDto.ExcelExportEnabled,
                 Tags = templateDto.Tags,
                 FolderId = templateDto.FolderId
             };

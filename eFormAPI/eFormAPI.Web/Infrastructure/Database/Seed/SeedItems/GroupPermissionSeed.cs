@@ -191,6 +191,12 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                     Id = 24,
                     PermissionId = AuthConsts.DbIds.Permissions.Eforms.UpdateJasperReport,
                     SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins
+                },
+                new GroupPermission()
+                {
+                    Id = 27,
+                    PermissionId = AuthConsts.DbIds.Permissions.Eforms.ExportEformExcel,
+                    SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformAdmins
                 }
             );
             return modelBuilder;

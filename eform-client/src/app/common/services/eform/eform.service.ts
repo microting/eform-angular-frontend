@@ -5,7 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {
   DeployModel,
-  EFormCreateModel,
+  EFormCreateModel, EformDownloadExcelModel,
   OperationDataResult,
   OperationResult, TemplateColumnModel,
   TemplateDto,
@@ -27,6 +27,7 @@ const TemplatesMethods = {
 const TemplateFilesMethods = {
   GetCsv: '/api/template-files/csv',
   DownloadXML: '/api/template-files/download-eform-xml',
+  DownloadExcel: '/api/template-files/download-eform-excel',
   DownloadPDF: '/api/template-files/download-case-pdf'
 };
 
@@ -82,6 +83,10 @@ export class EFormService extends BaseService {
 
   downloadEformPDF(templateId: number, caseId: number, fileType: string): Observable<any> {
     return this.getBlobData(TemplateFilesMethods.DownloadPDF + '/' + templateId + '/?caseId=' + caseId + '&fileType=' + fileType);
+  }
+
+  downloadEformExcel(model: EformDownloadExcelModel): Observable<any> {
+    return this.getBlobData(TemplateFilesMethods.DownloadExcel, model);
   }
 
   downloadCSVFile(templateId: number): Observable<any> {
