@@ -131,7 +131,9 @@ namespace eFormAPI.Web.Services
                     columnsList[0], columnsList[1], columnsList[2], columnsList[3],
                     columnsList[4], columnsList[5], columnsList[6], columnsList[7],
                     columnsList[8], columnsList[9]);
-                var allCases = await core.CaseReadAll(model.TemplateId, null, null);
+                TimeZoneInfo timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Europe/Copenhagen");
+
+                var allCases = await core.CaseReadAll(model.TemplateId, null, null, timeZoneInfo);
                 foreach (var caseObject in allCases)
                 {
                     await core.CaseUpdateFieldValues(caseObject.Id);
