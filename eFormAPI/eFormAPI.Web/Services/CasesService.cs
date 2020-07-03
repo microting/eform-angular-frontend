@@ -23,12 +23,16 @@ SOFTWARE.
 */
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Eforms;
+using eFormAPI.Web.Infrastructure.Database;
 using eFormAPI.Web.Infrastructure.Helpers;
 using eFormAPI.Web.Infrastructure.Models.Cases.Request;
 using eFormAPI.Web.Infrastructure.Models.Cases.Response;
+using Microsoft.AspNetCore.Http;
 using Microting.eForm.Infrastructure.Constants;
 using Microting.eForm.Infrastructure.Models;
 using Microting.eFormApi.BasePn.Abstractions;
@@ -41,22 +45,34 @@ namespace eFormAPI.Web.Services
     {
         private readonly IEFormCoreService _coreHelper;
         private readonly ILocalizationService _localizationService;
+        private readonly BaseDbContext _dbContext;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public CasesService(IEFormCoreService coreHelper,
-            ILocalizationService localizationService)
+            ILocalizationService localizationService, BaseDbContext dbContext,
+            IHttpContextAccessor httpContextAccessor)
         {
             _coreHelper = coreHelper;
+            _dbContext = dbContext;
             _localizationService = localizationService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<OperationDataResult<CaseListModel>> Index(CaseRequestModel requestModel)
         {
             try
             {
+                var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+                var local = _dbContext.Users.Single(x => x.Id == int.Parse(value)).Locale;
+                if (string.IsNullOrEmpty(local))
+                {
+                    local = "Europe/Copenhagen";
+                }
+                TimeZoneInfo timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(local);
                 var core = await _coreHelper.GetCore();
                 var caseList = await core.CaseReadAll(requestModel.TemplateId, null, null,
                     Constants.WorkflowStates.NotRemoved, requestModel.NameFilter,
-                    requestModel.IsSortDsc, requestModel.Sort, requestModel.PageIndex, requestModel.PageSize);
+                    requestModel.IsSortDsc, requestModel.Sort, requestModel.PageIndex, requestModel.PageSize, timeZoneInfo);
                 var model = new CaseListModel()
                 {
                     NumOfElements = caseList.NumOfElements,
