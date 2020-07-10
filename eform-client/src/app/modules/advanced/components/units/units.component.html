@@ -23,6 +23,9 @@
         <th scope="col">{{ 'InSight Version' | translate }}</th>
         <th scope="col">{{ 'eForm Version' | translate }}</th>
         <th scope="col">{{ 'Customer No / OTP' | translate }}</th>
+        <th scope="col">{{ 'Sync delay' | translate }}</th>
+        <th scope="col">{{ 'Sync dialog' | translate }}</th>
+        <th scope="col">{{ 'Push' | translate }}</th>
         <th scope="col" *ngIf="userClaims.sitesDelete || userClaims.sitesUpdate">{{ 'Actions' | translate }}</th>
       </tr>
       </thead>
@@ -61,6 +64,48 @@
               <fa-icon icon="key" size="lg" [fixedWidth]="true"></fa-icon>
             </button>
           </div>
+        </td>
+        <td>
+          <button mdbBtn
+                    *ngIf="!unitModel.syncDelayEnabled"
+                    mdbTooltip="{{'Activate sync delay' | translate}}"
+                    class="btn-accent text-black-50 btn-icon mb-2">
+          <fa-icon icon="toggle-on"></fa-icon>
+        </button>
+          <button mdbBtn
+                  *ngIf="unitModel.syncDelayEnabled"
+                  mdbTooltip="{{'Deactivate sync delay' | translate}}"
+                  class="btn-success text-white btn-icon mb-2">
+            <fa-icon icon="toggle-off"></fa-icon>
+          </button>
+        </td>
+        <td>
+          <button mdbBtn
+                  *ngIf="!unitModel.syncDialog"
+                  mdbTooltip="{{'Activate sync dialog' | translate}}"
+                  class="btn-accent text-black-50 btn-icon mb-2">
+            <fa-icon icon="toggle-on"></fa-icon>
+          </button>
+          <button mdbBtn
+                  *ngIf="unitModel.syncDialog"
+                  mdbTooltip="{{'Deactivate sync dialog' | translate}}"
+                  class="btn-success text-white btn-icon mb-2">
+            <fa-icon icon="toggle-off"></fa-icon>
+          </button>
+        </td>
+        <td>
+          <button mdbBtn
+                  *ngIf="!unitModel.pushEnabled"
+                  mdbTooltip="{{'Activate push' | translate}}"
+                  class="btn-accent text-black-50 btn-icon mb-2">
+            <fa-icon icon="toggle-on"></fa-icon>
+          </button>
+          <button mdbBtn
+                  *ngIf="unitModel.pushEnabled"
+                  mdbTooltip="{{'Deactivate push' | translate}}"
+                  class="btn-success text-white btn-icon mb-2">
+            <fa-icon icon="toggle-off"></fa-icon>
+          </button>
         </td>
         <td>
           <button mdbBtn class="btn-danger btn-icon mb-2 btn-small-height" id="moveBtn_{{i}}" *ngIf="userClaims.sitesDelete"

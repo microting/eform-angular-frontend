@@ -17,4 +17,10 @@ export class UnitDto {
   inSightVersion: string;
   eFormVersionHealth: string;
   inSightVersionHealth: string;
+  syncDialog: boolean;
+  syncDelayEnabled: boolean;
+  syncDefaultDelay: number;
+  syncDelayPrCheckList: number;
+  pushEnabled: boolean;
+
 }

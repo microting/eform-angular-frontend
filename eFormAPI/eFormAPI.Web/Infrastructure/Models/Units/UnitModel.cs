@@ -39,5 +39,15 @@ namespace eFormAPI.Web.Infrastructure.Models.Units
         public string eFormVersionHealth { get; set; }
         
         public string InSightVersionHealth { get; set; }
+        
+        public bool PushEnabled { get; set; }
+        
+        public int SyncDefaultDelay { get; set; }
+        
+        public bool SyncDelayEnabled { get; set; }
+        
+        public int SyncDelayPrCheckList { get; set; }
+        
+        public bool SyncDialog { get; set; }
     }
 }

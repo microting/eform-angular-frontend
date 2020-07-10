@@ -424,6 +424,9 @@ namespace eFormAPI.Web.Services
         {
             try
             {
+                var sdkConnectionString = _connectionStringsSdk.Value.SdkConnection;
+                var adminTool = new AdminTools(sdkConnectionString);
+                await adminTool.DbSetup("");
                 var core = await _coreHelper.GetCore();
 
                 var model = new AdminSettingsModel()
