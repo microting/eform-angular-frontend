@@ -72,12 +72,22 @@ namespace eFormAPI.Web.Services
         public async Task<OperationDataResult<TemplateListModel>> Index(TemplateRequestModel templateRequestModel)
         {
             var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
-            var local = _dbContext.Users.Single(x => x.Id == int.Parse(value)).Locale;
-            if (string.IsNullOrEmpty(local))
+            var timeZone = _dbContext.Users.Single(x => x.Id == int.Parse(value)).TimeZone;
+            if (string.IsNullOrEmpty(timeZone))
             {
-                local = "Europe/Copenhagen";
+                timeZone = "Europe/Copenhagen";
             }
-            TimeZoneInfo timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(local);
+
+            TimeZoneInfo timeZoneInfo;
+
+            try
+            {
+                timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timeZone);
+            }
+            catch
+            {
+                timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("E. Europe Standard Time");
+            }
             Log.LogEvent("TemplateService.Index: called");
             try
             {
