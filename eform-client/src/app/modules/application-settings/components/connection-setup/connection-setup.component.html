@@ -73,45 +73,20 @@
                   <label for="customerNo">Customer no<span class="text-danger">*</span></label>
                 </div>
                 <div class="md-form input-group">
-                  <ng-select
-                    id="sqlServerSelector"
-                    [placeholder]="'SQL Server'"
-                    name="default-sqlserver" #defaultSqlServer="ngModel"
-                    [bindValue]="'id'"
-                    [bindLabel]="'text'"
-                    [clearable]="false"
-                    [(ngModel)]="settingsModel.connectionStringSDK.sqlServerType"
-                    [items]="serverTypes"></ng-select>
-                </div>
-                <div class="md-form input-group" *ngIf="settingsModel.connectionStringSDK.sqlServerType === 'mssql'">
-                  <input mdbInput
-                         [(ngModel)]="settingsModel.connectionStringSDK.host"
-                         placeholder="Server=COMPUTER_NAME\SQLEXPRESS" type="text"
-                         required name="host" id="host1" class="form-control">
-                  <label for="host1">Data Source<span class="text-danger">*</span></label>
-                </div>
-                <div class="md-form input-group" *ngIf="settingsModel.connectionStringSDK.sqlServerType === 'mssql'">
-                  <input mdbInput
-                         [(ngModel)]="settingsModel.connectionStringSDK.auth"
-                         placeholder="User ID=xxx;Password=xxxx;Trusted_Connection=True;"
-                         type="text" name="auth" id="auth1" class="form-control">
-                  <label for="auth1">Authentication type<span class="text-danger">*</span></label>
-                </div>
-                <div class="md-form input-group" *ngIf="settingsModel.connectionStringSDK.sqlServerType === 'mysql'">
                   <input mdbInput
                          [(ngModel)]="settingsModel.connectionStringSDK.host"
                          placeholder="localhost" type="text"
                          required name="host" id="host2" class="form-control">
                   <label for="host2">Server<span class="text-danger">*</span></label>
                 </div>
-                <div class="md-form input-group" *ngIf="settingsModel.connectionStringSDK.sqlServerType === 'mysql'">
+                <div class="md-form input-group">
                   <input mdbInput
                          [(ngModel)]="settingsModel.connectionStringSDK.port"
                          placeholder="3306"
                          type="text" name="port" id="port" class="form-control">
                   <label for="port">Port<span class="text-danger">*</span></label>
                 </div>
-                <div class="md-form input-group" *ngIf="settingsModel.connectionStringSDK.sqlServerType === 'mysql'">
+                <div class="md-form input-group">
                   <input mdbInput
                          [(ngModel)]="settingsModel.connectionStringSDK.auth"
                          placeholder="user = root;password = myPassword"

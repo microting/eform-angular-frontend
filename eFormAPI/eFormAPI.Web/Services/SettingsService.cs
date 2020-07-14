@@ -137,40 +137,40 @@ namespace eFormAPI.Web.Services
             var sdkDbName = dbNamePrefix + customerNo + "_SDK";
             var angularDbName = dbNamePrefix + customerNo + "_Angular";
 
-            if (initialSettingsModel.ConnectionStringSdk.SqlServerType == "mssql")
-            {
-                sdkConnectionString = initialSettingsModel.ConnectionStringSdk.Host +
-                                      ";Database=" +
-                                      sdkDbName + ";" +
-                                      initialSettingsModel
-                                          .ConnectionStringSdk.Auth;
+            // if (initialSettingsModel.ConnectionStringSdk.SqlServerType == "mssql")
+            // {
+            //     sdkConnectionString = initialSettingsModel.ConnectionStringSdk.Host +
+            //                           ";Database=" +
+            //                           sdkDbName + ";" +
+            //                           initialSettingsModel
+            //                               .ConnectionStringSdk.Auth;
+            //
+            //     mainConnectionString = initialSettingsModel.ConnectionStringSdk.Host +
+            //                            ";Database=" +
+            //                            angularDbName + ";" +
+            //                            initialSettingsModel
+            //                                .ConnectionStringSdk.Auth;
+            // }
+            // else
+            // {
+            sdkConnectionString = "host= " +
+                                  initialSettingsModel.ConnectionStringSdk.Host +
+                                  ";Database=" +
+                                  sdkDbName + ";" +
+                                  initialSettingsModel
+                                      .ConnectionStringSdk.Auth +
+                                  "port=" + initialSettingsModel.ConnectionStringSdk.Port +
+                                  ";Convert Zero Datetime = true;SslMode=none;";
 
-                mainConnectionString = initialSettingsModel.ConnectionStringSdk.Host +
-                                       ";Database=" +
-                                       angularDbName + ";" +
-                                       initialSettingsModel
-                                           .ConnectionStringSdk.Auth;
-            }
-            else
-            {
-                sdkConnectionString = "host= " +
-                                      initialSettingsModel.ConnectionStringSdk.Host +
-                                      ";Database=" +
-                                      sdkDbName + ";" +
-                                      initialSettingsModel
-                                          .ConnectionStringSdk.Auth +
-                                      "port=" + initialSettingsModel.ConnectionStringSdk.Port +
-                                      ";Convert Zero Datetime = true;SslMode=none;";
-
-                mainConnectionString = "host= " +
-                                       initialSettingsModel.ConnectionStringSdk.Host +
-                                       ";Database=" +
-                                       angularDbName + ";" +
-                                       initialSettingsModel
-                                           .ConnectionStringSdk.Auth +
-                                       "port=" + initialSettingsModel.ConnectionStringSdk.Port +
-                                       ";Convert Zero Datetime = true;SslMode=none;";
-            }
+            mainConnectionString = "host= " +
+                                   initialSettingsModel.ConnectionStringSdk.Host +
+                                   ";Database=" +
+                                   angularDbName + ";" +
+                                   initialSettingsModel
+                                       .ConnectionStringSdk.Auth +
+                                   "port=" + initialSettingsModel.ConnectionStringSdk.Port +
+                                   ";Convert Zero Datetime = true;SslMode=none;";
+            // }
 
 
             if (!string.IsNullOrEmpty(_connectionStringsSdk.Value.SdkConnection))
