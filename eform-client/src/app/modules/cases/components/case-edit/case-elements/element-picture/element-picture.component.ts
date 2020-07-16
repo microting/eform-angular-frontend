@@ -78,11 +78,16 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
     this.buttonsLocked = true;
     this.imageService.rotateImage(image.fileName).subscribe((operation) => {
       if (operation && operation.success) {
-        this.images = this.images.filter(x => x.fileName !== image.fileName);
-        image.src = image.src + '?noCache=' + Math.floor(Math.random() * 1000).toString();
-        image.thumbnail = image.src;
-        this.images.push(image);
-        this.updateGallery();
+        const fileName = image.fileName + '?noCache=' + Math.floor(Math.random() * 1000).toString();
+        this.imageService.getImage(fileName).subscribe(blob => {
+          const imageUrl = URL.createObjectURL(blob);
+          const currentImage = this.images.find(x => x.fileName === image.fileName);
+          this.images = this.images.filter(x => x.fileName !== image.fileName);
+          currentImage.src = imageUrl;
+          currentImage.thumbnail = image.src;
+          this.images.push(currentImage);
+          this.updateGallery();
+        });
       }
       this.buttonsLocked = false;
     }, () => this.buttonsLocked = false);
