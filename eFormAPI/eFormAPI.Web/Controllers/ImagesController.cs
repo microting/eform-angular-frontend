@@ -34,6 +34,8 @@ using OpenStack.NetCoreSwiftClient.Extensions;
 
 namespace eFormAPI.Web.Controllers
 {
+    using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
+
     [Authorize]
     public class ImagesController : Controller
     {
@@ -48,7 +50,6 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         [Route("api/images/eform-images")]
         public async Task<IActionResult> GetImage(string fileName)
         {
@@ -147,8 +148,7 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpPost]        
-        [AllowAnonymous]
-//        [Authorize(Roles = EformRole.Admin, AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+        [Authorize(Roles = EformRole.Admin)]
         [Route("api/images/login-page-images")]
         public async Task<IActionResult> PostLoginPageImages(IFormFile file)
         {
@@ -190,9 +190,8 @@ namespace eFormAPI.Web.Controllers
             return BadRequest(_localizationService.GetString("InvalidRequest"));
         }
 
-        [HttpPost]       
-        [AllowAnonymous]
-//        [Authorize(Roles = EformRole.Admin, AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+        [HttpPost]
+        [Authorize(Roles = EformRole.Admin)]
         [Route("api/images/eform-images")]
         public async Task<IActionResult> PostEformImages(IFormFile file)
         {

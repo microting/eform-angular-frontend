@@ -21,28 +21,108 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using eFormAPI.Web.Abstractions.Security;
-using eFormAPI.Web.Infrastructure;
-using eFormAPI.Web.Infrastructure.Database;
-using eFormAPI.Web.Abstractions;
-using eFormAPI.Web.Hosting.Enums;
 
 namespace eFormAPI.Web.Services.Security
 {
+    using Cache.AuthCache;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
+    using Microting.eForm.Infrastructure.Constants;
+    using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Security.Claims;
+    using System.Threading.Tasks;
+    using eFormAPI.Web.Abstractions.Security;
+    using Infrastructure;
+    using Infrastructure.Database;
+    using Hosting.Enums;
+    using Hosting.Helpers;
+    using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
+
     public class ClaimsService : IClaimsService
     {
         private readonly BaseDbContext _dbContext;
-        private readonly IPluginPermissionsService _pluginPermissionsService;
+        private readonly IAuthCacheService _authCacheService;
+        private readonly ILogger<ClaimsService> _logger;
 
-        public ClaimsService(BaseDbContext dbContext, IPluginPermissionsService pluginPermissionsService)
+        public ClaimsService(
+            BaseDbContext dbContext,
+            IAuthCacheService authCacheService,
+            ILogger<ClaimsService> logger)
         {
             _dbContext = dbContext;
-            _pluginPermissionsService = pluginPermissionsService;
+            _authCacheService = authCacheService;
+            _logger = logger;
+        }
+
+        public async Task UpdateAuthenticatedUsers(List<int> securityGroups)
+        {
+            try
+            {
+                var groupUsers = await _dbContext.SecurityGroupUsers
+                    .AsNoTracking()
+                    .Where(x => securityGroups.Contains(x.SecurityGroupId))
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Select(x => new
+                    {
+                        UserId = x.EformUserId,
+                        Role = x.EformUser.UserRoles
+                            .Select(y => y.Role.Name)
+                            .FirstOrDefault(),
+                    })
+                    .ToListAsync();
+
+                foreach (var user in groupUsers)
+                {
+                    // try to get auth item
+                    var auth = _authCacheService.TryGetValue(user.UserId);
+
+                    if (auth != null)
+                    {
+                        var isAdmin = user.Role == EformRole.Admin;
+                        var timeStamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
+                        var claims = await GetUserPermissions(user.UserId, isAdmin);
+
+                        auth.Claims = claims;
+                        auth.TimeStamp = timeStamp;
+                        _authCacheService.Set(auth, user.UserId);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                throw;
+            }
+        }
+
+        public async Task<List<Claim>> GetUserPermissions(int userId, bool isAdmin)
+        {
+            try
+            {
+                var memoryClaims = new List<Claim>();
+
+                // Permissions
+                if (isAdmin)
+                {
+                    memoryClaims.AddRange(await GetAllAuthClaims());
+                }
+                else
+                {
+                    memoryClaims.AddRange(await GetUserClaims(userId));
+                }
+
+                return memoryClaims;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                throw;
+            }
         }
 
         public async Task<List<Claim>> GetUserClaims(int userId)
@@ -72,7 +152,7 @@ namespace eFormAPI.Web.Services.Security
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                _logger.LogError(e.Message);
                 throw;
             }
         }
@@ -87,11 +167,12 @@ namespace eFormAPI.Web.Services.Security
                 {
                     result = claims.Select(x => x.Type).ToList();
                 }
+
                 return result;
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                _logger.LogError(e.Message);
                 throw;
             }
         }
@@ -154,20 +235,35 @@ namespace eFormAPI.Web.Services.Security
                 new Claim(AuthConsts.EformClaims.EformsClaims.GetCsv, AuthConsts.ClaimDefaultValue),
                 new Claim(AuthConsts.EformClaims.EformsClaims.ReadJasperReport, AuthConsts.ClaimDefaultValue),
                 new Claim(AuthConsts.EformClaims.EformsClaims.UpdateJasperReport, AuthConsts.ClaimDefaultValue),
+                new Claim(AuthConsts.EformClaims.EformsClaims.ExportEformExcel, AuthConsts.ClaimDefaultValue),
             };
 
-            claims.AddRange(await GetAllPLuginClaims());
+            claims.AddRange(await GetAllPluginClaims());
 
             return claims;
         }
 
-        private async Task<List<Claim>> GetAllPLuginClaims()
+
+        public async Task<OperationResult> SetPluginGroupPermissions(int id, ICollection<PluginGroupPermissionsListModel> permissions)
+        {
+            var permissionsManager = await GetPluginPermissionsManager(id);
+            await permissionsManager.SetPluginGroupPermissions(permissions);
+
+            var securityGroupIds = permissions.Select(x => x.GroupId).ToList();
+
+            // Update claims in memory store
+            await UpdateAuthenticatedUsers(securityGroupIds);
+
+            return new OperationResult(true);
+        }
+
+        private async Task<List<Claim>> GetAllPluginClaims()
         {
             var claims = new List<Claim>();
 
             foreach (var eformPlugin in _dbContext.EformPlugins.Where(p => p.Status == (int)PluginStatus.Enabled).ToList())
             {
-                var permissionManager = await _pluginPermissionsService.GetPermissionsManager(eformPlugin.Id);
+                var permissionManager = await GetPluginPermissionsManager(eformPlugin.Id);
 
                 if (permissionManager == null) continue;
 
@@ -184,7 +280,7 @@ namespace eFormAPI.Web.Services.Security
 
             foreach (var eformPlugin in _dbContext.EformPlugins.Where(p => p.Status == (int)PluginStatus.Enabled).ToList())
             {
-                var permissionManager = await _pluginPermissionsService.GetPermissionsManager(eformPlugin.Id);
+                var permissionManager = await GetPluginPermissionsManager(eformPlugin.Id);
 
                 if (permissionManager == null) continue;
 
@@ -204,6 +300,32 @@ namespace eFormAPI.Web.Services.Security
             }
 
             return claims;
+        }
+
+
+        public async Task<OperationDataResult<ICollection<PluginPermissionModel>>> GetPluginPermissions(int id)
+        {
+            var permissionsManager = await GetPluginPermissionsManager(id);
+            var result = await permissionsManager.GetPluginPermissions();
+
+            return new OperationDataResult<ICollection<PluginPermissionModel>>(true, result);
+        }
+
+        public async Task<OperationDataResult<ICollection<PluginGroupPermissionsListModel>>> GetPluginGroupPermissions(int id)
+        {
+            var permissionsManager = await GetPluginPermissionsManager(id);
+            var result = await permissionsManager.GetPluginGroupPermissions();
+
+            return new OperationDataResult<ICollection<PluginGroupPermissionsListModel>>(true, result);
+        }
+
+        public async Task<PluginPermissionsManager> GetPluginPermissionsManager(int pluginId)
+        {
+            var loadedPlugins = PluginHelper.GetAllPlugins();
+            var eformPlugin = await _dbContext.EformPlugins.FirstOrDefaultAsync(p => p.Id == pluginId);
+            var loadedPlugin = loadedPlugins.FirstOrDefault(x => x.PluginId == eformPlugin.PluginId);
+
+            return loadedPlugin?.GetPermissionsManager(eformPlugin.ConnectionString);
         }
     }
 }

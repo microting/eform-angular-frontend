@@ -35,6 +35,10 @@ class DatabasePage extends Page {
     return $('#port');
   }
 
+  public get host() {
+    return $('#host2');
+  }
+
   public get tokenInput() {
     return $('#token');
   }
@@ -73,8 +77,8 @@ class DatabasePage extends Page {
     this.lastNameInput.setValue(DatabaseConfigurationConstants.lastNAme);
     this.tokenInput.setValue(DatabaseConfigurationConstants.token);
     this.customerNo.setValue(DatabaseConfigurationConstants.customerNo);
-    this.SqlServer(DatabaseConfigurationConstants.sqlServerType.mysql);
     this.port.setValue(DatabaseConfigurationConstants.port);
+    this.host.setValue(DatabaseConfigurationConstants.SqlServer);
     this.authenticationType.setValue(DatabaseConfigurationConstants.authenticationType);
     this.selectLanguage(language);
   }

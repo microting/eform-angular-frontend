@@ -24,6 +24,7 @@ SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Security;
@@ -32,6 +33,7 @@ using eFormAPI.Web.Infrastructure.Database;
 using eFormAPI.Web.Infrastructure.Models;
 using eFormAPI.Web.Infrastructure.Models.EformPermissions;
 using eFormAPI.Web.Infrastructure.Models.Templates;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Abstractions;
@@ -48,17 +50,21 @@ namespace eFormAPI.Web.Services.Security
         private readonly IUserService _userService;
         private readonly IEFormCoreService _coreHelper;
         private readonly ILocalizationService _localizationService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public EformGroupService(ILogger<EformGroupService> logger,
             BaseDbContext dbContext,
             ILocalizationService localizationService,
-            IEFormCoreService coreHelper, IUserService userService)
+            IEFormCoreService coreHelper,
+            IUserService userService,
+            IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
             _dbContext = dbContext;
             _localizationService = localizationService;
             _coreHelper = coreHelper;
             _userService = userService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<OperationDataResult<TemplateListModel>> GetAvailableEforms(
@@ -67,6 +73,23 @@ namespace eFormAPI.Web.Services.Security
         {
             try
             {
+                
+                var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+                var timeZone = _dbContext.Users.Single(x => x.Id == int.Parse(value)).Locale;
+                if (string.IsNullOrEmpty(timeZone))
+                {
+                    timeZone = "Europe/Copenhagen";
+                }
+                TimeZoneInfo timeZoneInfo;
+
+                try
+                {
+                    timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timeZone);
+                }
+                catch
+                {
+                    timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("E. Europe Standard Time");
+                }
                 var result = new TemplateListModel
                 {
                     Templates = new List<TemplateDto>()
@@ -77,7 +100,7 @@ namespace eFormAPI.Web.Services.Security
                     templateRequestModel.NameFilter,
                     templateRequestModel.IsSortDsc,
                     templateRequestModel.Sort,
-                    templateRequestModel.TagIds);
+                    templateRequestModel.TagIds, timeZoneInfo).ConfigureAwait(false);
 
                 var eformsInGroup = await _dbContext.EformInGroups
                     .Where(x => x.SecurityGroupId == groupId)
@@ -146,6 +169,13 @@ namespace eFormAPI.Web.Services.Security
         {
             try
             {
+                var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+                var local = _dbContext.Users.Single(x => x.Id == int.Parse(value)).Locale;
+                if (string.IsNullOrEmpty(local))
+                {
+                    local = "Europe/Copenhagen";
+                }
+                TimeZoneInfo timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(local);
                 var result = new EformsPermissionsModel();
                 var eformClaims = new[]
                 {
@@ -194,7 +224,7 @@ namespace eFormAPI.Web.Services.Security
                     })
                     .ToListAsync();
                 var core = await _coreHelper.GetCore();
-                var templatesDto = await core.TemplateItemReadAll(false);
+                var templatesDto = await core.TemplateItemReadAll(false, timeZoneInfo);
                 foreach (var eformInGroups in eformsInGroup)
                 {
                     var template = templatesDto.FirstOrDefault(x => x.Id == eformInGroups.TemplateId);

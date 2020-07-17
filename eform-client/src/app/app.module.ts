@@ -64,7 +64,6 @@ import {OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime-ex';
     NgxChartsModule,
     // Modules
     PluginsModule,
-
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
   ],

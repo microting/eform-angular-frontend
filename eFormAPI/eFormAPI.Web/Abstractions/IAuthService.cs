@@ -27,6 +27,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
 
 namespace eFormAPI.Web.Abstractions
 {
+    using System.Collections.Generic;
     using Infrastructure.Models.Auth;
 
     public interface IAuthService
@@ -36,7 +37,8 @@ namespace eFormAPI.Web.Abstractions
         Task<OperationResult> DeleteGoogleAuthenticatorInfo();
         Task<OperationDataResult<GoogleAuthenticatorModel>> GetGoogleAuthenticator(LoginModel loginModel);
         Task<OperationDataResult<GoogleAuthInfoModel>> GetGoogleAuthenticatorInfo();
-        Task<OperationResult> LogOut();
+        OperationResult LogOut();
+        OperationDataResult<Dictionary<string, string>> GetCurrentUserClaims();
         OperationDataResult<bool> TwoFactorAuthForceInfo();
         Task<OperationResult> UpdateGoogleAuthenticatorInfo(GoogleAuthInfoModel requestModel);
     }

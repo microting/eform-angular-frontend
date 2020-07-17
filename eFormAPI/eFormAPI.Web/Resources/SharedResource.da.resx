@@ -678,4 +678,16 @@
   <data name="SendGridKeyShouldBeAddedToSettings" xml:space="preserve">
     <value>SendGrid-tasten skal føjes til indstillingerne</value>
   </data>
+  <data name="DataNotFound" xml:space="preserve">
+    <value>Data ikke fundet!</value>
+  </data>
+  <data name="eFormReport" xml:space="preserve">
+    <value>eForm-rapport</value>
+  </data>
+  <data name="ErrorWhileExportingExcelFile" xml:space="preserve">
+    <value>Fejl under eksport af excel-fil!</value>
+  </data>
+  <data name="ExcelTemplateNotFoundInStorage" xml:space="preserve">
+    <value>Excel-skabelon findes ikke i lageret!</value>
+  </data>
 </root>

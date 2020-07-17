@@ -13,13 +13,18 @@ import {AuthService} from 'src/app/common/services/auth';
   styleUrls: ['./admin-settings.component.scss']
 })
 export class AdminSettingsComponent implements OnInit, AfterViewInit {
-  loginPageImageUploader: FileUploader = new FileUploader({url: '/api/images/login-page-images'});
-  headerImageUploader: FileUploader = new FileUploader({url: '/api/images/eform-images'});
+  loginPageImageUploader: FileUploader = new FileUploader(
+    {url: '/api/images/login-page-images', authTokenHeader: this.authService.bearerToken}
+  );
+  headerImageUploader: FileUploader = new FileUploader(
+    {url: '/api/images/eform-images', authTokenHeader: this.authService.bearerToken}
+  );
   headerImageLink: string;
   loginPageImageLink: string;
   spinnerStatus: boolean;
   latestVersion: string;
   adminSettingsModel: AdminSettingsModel = new AdminSettingsModel();
+
   constructor(private settingsService: AppSettingsService,
               private authService: AuthService,
               private eventBrokerService: EventBrokerService) {
@@ -28,8 +33,10 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
   get currentRole(): string {
     return this.authService.currentRole;
   }
+
   ngAfterViewInit() {
   }
+
   ngOnInit() {
     if (this.currentRole === 'admin') {
       // this.getLatestVersion();
@@ -47,6 +54,7 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
   }
 
   initializeUploaders() {
+    // TODO: REWORK
     const re = /(?:\.([^.]+))?$/;
     this.loginPageImageUploader.onAfterAddingFile = f => {
       if (this.loginPageImageUploader.queue.length > 1) {

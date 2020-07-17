@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {LoginPageSettingsModel} from 'src/app/common/models/settings';
 import {AppSettingsService} from 'src/app/common/services/settings';
-import {AuthService, LocaleService} from 'src/app/common/services/auth';
+import {AuthService, GoogleAuthService, LocaleService} from 'src/app/common/services/auth';
 
 @Component({
   selector: 'app-auth',
@@ -16,6 +16,7 @@ export class AuthComponent implements OnInit {
 
   constructor(private router: Router,
               private authService: AuthService,
+              private googleAuthService: GoogleAuthService,
               private settingsService: AppSettingsService,
               private toastrService: ToastrService,
               private localeService: LocaleService) {}
@@ -67,7 +68,7 @@ export class AuthComponent implements OnInit {
   }
 
   getTwoFactorInfo() {
-    this.authService.twoFactorAuthInfo().subscribe((data) => {
+    this.googleAuthService.twoFactorAuthInfo().subscribe((data) => {
       this.twoFactorForced = data.model;
     });
   }

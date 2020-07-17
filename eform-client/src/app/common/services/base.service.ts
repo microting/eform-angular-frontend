@@ -7,15 +7,14 @@ import {catchError, map} from 'rxjs/operators';
 import {AuthResponseModel} from 'src/app/common/models/auth';
 
 export class BaseService {
-  constructor(private http: HttpClient, private router: Router, private toastrService: ToastrService) {
+  constructor(private http: HttpClient, public router: Router, private toastrService: ToastrService) {
   }
 
   protected get<T>(method: string, params?: any): Observable<any> {
     return this.http.get(method,
       {headers: this.setHeaders(), params: this.setParams(params)})
       .pipe(
-        map((response) => this.extractData<T>(response)),
-        catchError(err => this.handleError(err))
+        map((response) => this.extractData<T>(response))
       );
   }
 
@@ -23,24 +22,21 @@ export class BaseService {
     const model = JSON.stringify(body);
     return this.http.post(method, model, {headers: this.setHeaders()})
       .pipe(
-        map((response) => this.extractData<T>(response)),
-        catchError(err => this.handleError(err))
+        map((response) => this.extractData<T>(response))
       );
   }
 
   protected postUrlEncoded<T>(method: string, body: any): Observable<any> {
     return this.http.post(method, body.toString(), {headers: this.setHeaders('application/x-www-form-urlencoded')})
       .pipe(
-        map((response) => this.extractData<T>(response)),
-        catchError(err => this.handleError(err))
+        map((response) => this.extractData<T>(response))
       );
   }
 
   protected delete<T>(method: string): Observable<any> {
     return this.http.delete(method, {headers: this.setHeaders()})
       .pipe(
-        map((response) => this.extractData<T>(response)),
-        catchError(err => this.handleError(err))
+        map((response) => this.extractData<T>(response))
       );
   }
 
@@ -48,8 +44,7 @@ export class BaseService {
     const model = JSON.stringify(body);
     return this.http.put(method, model, {headers: this.setHeaders()})
       .pipe(
-        map((response) => this.extractData<T>(response)),
-        catchError(err => this.handleError(err))
+        map((response) => this.extractData<T>(response))
       );
   }
 
@@ -57,8 +52,7 @@ export class BaseService {
     return this.http.get(method,
       {headers: this.setHeaders(), params: this.setParams(params), responseType: 'blob'})
       .pipe(
-        map((response) => response),
-        catchError(err => this.handleError(err))
+        map((response) => response)
       );
   }
 
@@ -67,10 +61,14 @@ export class BaseService {
     for (let i = 0; i < files.length; i++) {
       formData.append(`files`, files[i]);
     }
-    return this.http.post(method, formData, {headers: this.setHeaders('formData'), params: this.setParams(params), responseType: responseType})
+    return this.http.post(method, formData, {
+      headers: this.setHeaders('formData'),
+      params: this.setParams(params),
+      responseType: responseType
+    })
       .pipe(
         map((response) => response),
-        catchError(err => this.handleError(err))
+        catchError(err => throwError(err))
       );
   }
 
@@ -81,11 +79,6 @@ export class BaseService {
       headers = headers.set('Content-Type', contentType);
     } else {
       headers = headers.set('Content-Type', 'application/json');
-    }
-    const user: AuthResponseModel = JSON.parse(localStorage.getItem('currentAuth'));
-    // check user
-    if (user && user.access_token) {
-      headers = headers.append('Authorization', 'Bearer ' + user.access_token);
     }
     // add localization
     return headers;
@@ -134,44 +127,5 @@ export class BaseService {
     localStorage.clear();
     console.log('Let\'s kick the user out base.service');
     this.router.navigate(['/auth']).then();
-  }
-
-  private handleError(error: Response | any) {
-    let errorMessage = '';
-    // Handle 401 - Unauthorized
-    if (error.status === 400) {
-      let errors;
-      if (error._body) {
-        errors = error._body;
-      } else {
-        errors = error.error;
-      }
-      if (errors && errors.length > 0) {
-        errors.forEach(errorItem => {
-          this.toastrService.error(errorItem.errorMessage, 'Error', {timeOut: 10000});
-          console.error(errorItem);
-        });
-      }
-      return throwError(error);
-    }
-    // Handle 401 - Unauthorized
-    if (error.status === 401) {
-      this.toastrService.warning('401 - Unauthorized');
-      console.error('401 - Unauthorized');
-      this.logOutWhenTokenFalse();
-      console.error(error);
-      return throwError(errorMessage);
-    } else if (error.status === 403) {
-      this.toastrService.warning('403 - Forbidden');
-      console.error('403 - Forbidden');
-      console.error(error);
-      this.router.navigate(['/']).then();
-      return throwError(errorMessage);
-    }
-    const body = error._body || '';
-    errorMessage = `${error.status} - ${error.statusText || ''} ${body}`;
-    console.error(errorMessage);
-    this.toastrService.error(errorMessage, 'Error', {timeOut: 10000});
-    return throwError(errorMessage);
   }
 }

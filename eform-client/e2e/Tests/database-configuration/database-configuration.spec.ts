@@ -17,7 +17,6 @@ describe('Database', function () {
     expect(databasePage.customerNo.isDisplayed()).equal(true);
     expect(databasePage.tokenInput.isDisplayed()).equal(true);
     expect(databasePage.authenticationType.isDisplayed()).equal(true);
-    expect(databasePage.sqlserverDropdown.isDisplayed()).equal(true);
     expect(databasePage.languageDropdown.isDisplayed()).equal(true);
     if (databasePage.saveBtn.isExisting()) {
       databasePage.configure(DatabaseConfigurationConstants.languageOptions.danish);

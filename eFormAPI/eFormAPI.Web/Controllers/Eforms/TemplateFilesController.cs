@@ -1,4 +1,4 @@
-﻿/*
+/*
 The MIT License (MIT)
 
 Copyright (c) 2007 - 2019 Microting A/S
@@ -31,7 +31,6 @@ using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Security;
 using eFormAPI.Web.Infrastructure;
 using ICSharpCode.SharpZipLib.Zip;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -48,19 +47,27 @@ using Settings = Microting.eForm.Dto.Settings;
 
 namespace eFormAPI.Web.Controllers.Eforms
 {
+    using System.Linq;
+    using eFormAPI.Web.Infrastructure.Models;
+    using Services.Export;
+
+    [Authorize]
     public class TemplateFilesController : Controller
     {
         private readonly IEFormCoreService _coreHelper;
         private readonly IEformPermissionsService _permissionsService;
         private readonly ILocalizationService _localizationService;
+        private readonly IEformExcelExportService _eformExcelExportService;
 
         public TemplateFilesController(IEFormCoreService coreHelper,
             ILocalizationService localizationService,
-            IEformPermissionsService permissionsService)
+            IEformPermissionsService permissionsService,
+            IEformExcelExportService eformExcelExportService)
         {
             _coreHelper = coreHelper;
             _localizationService = localizationService;
             _permissionsService = permissionsService;
+            _eformExcelExportService = eformExcelExportService;
         }
 
         [HttpGet]
@@ -112,8 +119,22 @@ namespace eFormAPI.Web.Controllers.Eforms
         {
             return await GetFile(fileName, ext, "pdf", noCache);
         }
-        
-        
+
+        [HttpGet]
+        [Route("api/template-files/download-eform-excel")]
+        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.ExportEformExcel)]
+        public async Task<IActionResult> DownloadExcelEform(EformDownloadExcelModel excelModel)
+        {
+            if (!await _permissionsService.CheckEform(excelModel.TemplateId,
+                AuthConsts.EformClaims.EformsClaims.ExportEformExcel))
+            {
+                return Forbid();
+            }
+
+            var result = await _eformExcelExportService.EformExport(excelModel);
+            return new FileStreamResult(result.Model, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        }
+
         private async Task<IActionResult> GetFile(string fileName, string ext, string fileType, string noCache = "noCache")
         {
             var core = await _coreHelper.GetCore();
@@ -357,10 +378,24 @@ namespace eFormAPI.Web.Controllers.Eforms
                 var zipArchiveFolder =
                     Path.Combine(await core.GetSdkSetting(Settings.fileLocationJasper),
                         Path.Combine("templates", Path.Combine("zip-archives", templateId.ToString())));
-                
-                var filePath = Path.Combine(zipArchiveFolder, Path.GetFileName(uploadModel.File.FileName));
-                System.IO.File.Delete(filePath);
 
+                if (!Directory.Exists(Path.GetDirectoryName(saveFolder)))
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(saveFolder));
+                }
+
+                if (!Directory.Exists(Path.GetDirectoryName(zipArchiveFolder)))
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(zipArchiveFolder));
+                }
+
+                var filePath = Path.Combine(zipArchiveFolder, Path.GetFileName(uploadModel.File.FileName));
+
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+                
                 if (string.IsNullOrEmpty(saveFolder))
                 {
                     return BadRequest("Folder error");
@@ -396,15 +431,46 @@ namespace eFormAPI.Web.Controllers.Eforms
                             await core.PutFileToStorageSystem(filePath, templateId.ToString() + "_" + uploadModel.File.FileName);
                         }
 
+
+                        // Find excel file
+                        string excelSaveFolder = null;
+                        var excelFilePath = Directory.GetFiles(extractPath, "*.xlsx").FirstOrDefault();
+                        if (!string.IsNullOrEmpty(excelFilePath))
+                        {
+                            var excelFileName = $"{templateId}_eform_excel.xlsx";
+                            excelSaveFolder =
+                                Path.Combine(await core.GetSdkSetting(Settings.fileLocationPicture),
+                                    Path.Combine("excel", excelFileName));
+
+                            if (!Directory.Exists(Path.GetDirectoryName(excelSaveFolder)))
+                            {
+                                Directory.CreateDirectory(Path.GetDirectoryName(excelSaveFolder));
+                            }
+
+                            if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true" || core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
+                            {
+                                await core.PutFileToStorageSystem(excelFilePath, excelFileName);
+                            }
+                            else
+                            {
+                                System.IO.File.Copy(excelFilePath, excelSaveFolder, true);
+                            }
+                        }
+
                         using (var dbContext = core.dbContextHelper.GetDbContext())
                         {
-                            if (Directory.GetFiles(Path.Combine(extractPath, "compact"), "*.docx").Length == 0)
+                            var compactPath = Path.Combine(extractPath, "compact");
+                            if (!Directory.Exists(compactPath))
+                            {
+                                Directory.CreateDirectory(compactPath);
+                            }
+
+                            if (Directory.GetFiles(compactPath, "*.docx").Length == 0)
                             {
                                 var cl = await dbContext.check_lists.SingleAsync(x => x.Id == templateId);
                                 cl.JasperExportEnabled = true;
                                 cl.DocxExportEnabled = false;
                                 await cl.Update(dbContext);
-//                            await Startup.Bus.SendLocal(new GenerateJasperFiles(templateId)); // TODO disabled for now 3. dec. 2018
                                 foreach (var file in Directory.GetFiles(extractPath, "*.jasper"))
                                 {
                                     System.IO.File.Delete(file);
@@ -417,6 +483,20 @@ namespace eFormAPI.Web.Controllers.Eforms
                                 cl.DocxExportEnabled = true;
                                 await cl.Update(dbContext);
                             }
+
+                            if (!string.IsNullOrEmpty(excelSaveFolder))
+                            {
+                                if (!Directory.Exists(Path.GetDirectoryName(excelSaveFolder)))
+                                {
+                                    Directory.CreateDirectory(Path.GetDirectoryName(excelSaveFolder));
+                                }
+
+                                var cl = await dbContext.check_lists.SingleAsync(x => x.Id == templateId);
+                                cl.ExcelExportEnabled = true;
+                                await cl.Update(dbContext);
+                            }
+
+
                         }
                         return Ok();
                     }
@@ -424,7 +504,7 @@ namespace eFormAPI.Web.Controllers.Eforms
 
                 return BadRequest(_localizationService.GetString("InvalidRequest"));
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return BadRequest("Invalid Request!");
             }

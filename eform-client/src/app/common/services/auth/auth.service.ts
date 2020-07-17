@@ -2,45 +2,75 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {JwtHelper} from 'src/app/common/helpers';
 
 import {
   AuthResponseModel,
   ChangePasswordModel,
-  GoogleAuthenticatorModel,
-  GoogleAuthInfoModel,
   LoginRequestModel,
   OperationDataResult,
-  OperationResult,
-  PasswordRestoreModel, UserClaimsModel,
+  PasswordRestoreModel,
+  UserClaimsModel,
   UserInfoModel
 } from 'src/app/common/models';
 import {BaseService} from '../base.service';
-import {TimezonesModel} from 'src/app/common/models/common/timezones.model';
+import {normalizeUserClaimNames} from 'src/app/common/helpers';
 
 export let AuthMethods = {
   Login: 'api/auth/token',
+  RefreshToken: 'api/auth/token/refresh',
   Logout: 'api/auth/logout',
+  Claims: 'api/auth/claims',
   CheckToken: '/auth/is-token-actual',
   Restore: '/auth/restore',
   ChangePassword: 'api/account/change-password',
   RestoreUserPassword: '/api/account/reset-password',
   EmailRecoveryLink: '/api/account/forgot-password',
-  ResetAdminPassword: '/api/account/reset-admin-password',
-  TwoFactorAuthInfo: 'api/auth/two-factor-info',
-  LoginAndGetGoogleAuthKey: 'api/auth/google-auth-key',
-  GetGoogleAuthenticatorInfo: 'api/auth/google-auth-info',
-  UpdateGoogleAuthenticatorInfo: 'api/auth/google-auth-info',
-  DeleteGoogleAuthenticatorInfo: 'api/auth/google-auth-info',
-  TimeZones: 'api/account/timezones'
+  ResetAdminPassword: '/api/account/reset-admin-password'
 };
 
 @Injectable()
 export class AuthService extends BaseService {
+  userClaimsUpdated: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
   constructor(private _http: HttpClient, router: Router, toastrService: ToastrService) {
     super(_http, router, toastrService);
+  }
+
+  get bearerToken(): string {
+    const user: AuthResponseModel = JSON.parse(localStorage.getItem('currentAuth'));
+    return 'Bearer ' + user.access_token;
+  }
+
+  get isAuth(): boolean {
+    const auth = localStorage.getItem('currentAuth');
+    if (auth) {
+      return true;
+    } else {
+      return false;
+    }
+
+  }
+
+  get currentRole(): string {
+    const auth: UserInfoModel = JSON.parse(localStorage.getItem('currentAuth'));
+    if (auth && auth.role) {
+      return auth.role;
+    }
+    return '';
+  }
+
+  get currentUserFullName(): string {
+    const auth: UserInfoModel = JSON.parse(localStorage.getItem('currentAuth'));
+    if (auth) {
+      return auth.firstName + ' ' + auth.lastName;
+    }
+    return '';
+  }
+
+  get userClaims(): UserClaimsModel {
+    return JSON.parse(localStorage.getItem('userClaims'));
   }
 
   login(loginInfo: LoginRequestModel): Observable<AuthResponseModel> {
@@ -77,35 +107,16 @@ export class AuthService extends BaseService {
     }));
   }
 
-  get isAuth(): boolean {
-    const auth = localStorage.getItem('currentAuth');
-    if (auth) {
-      return true;
-    } else {
-      return false;
-    }
-
+  obtainUserClaims(): Observable<OperationDataResult<{ [key: string]: string }>> {
+    return this.get(AuthMethods.Claims).pipe(map((result) => {
+      return {...result, model: normalizeUserClaimNames(result.model)};
+    }));
   }
 
-  get currentRole(): string {
-    const auth: UserInfoModel = JSON.parse(localStorage.getItem('currentAuth'));
-    if (auth && auth.role) {
-      return auth.role;
-    }
-    return '';
-  }
-
-  get currentUserFullName(): string {
-    const auth: UserInfoModel = JSON.parse(localStorage.getItem('currentAuth'));
-    if (auth) {
-      return auth.firstName + ' ' + auth.lastName;
-    }
-    return '';
-  }
-
-  get userClaims(): UserClaimsModel {
-    const accessToken = JSON.parse(localStorage.getItem('currentAuth')).access_token;
-    return new UserClaimsModel(new JwtHelper().decodeToken(accessToken));
+  refreshToken(): Observable<OperationDataResult<AuthResponseModel>> {
+    return this.get(AuthMethods.RefreshToken).pipe(map((result) => {
+      return result;
+    }));
   }
 
   changePassword(model: ChangePasswordModel): Observable<any> {
@@ -114,27 +125,9 @@ export class AuthService extends BaseService {
     }));
   }
 
-  twoFactorAuthInfo(): Observable<OperationDataResult<boolean>> {
-    return this.get(AuthMethods.TwoFactorAuthInfo);
-  }
-
-  loginAndGetGoogleAuthKey(loginInfo: LoginRequestModel): Observable<OperationDataResult<GoogleAuthenticatorModel>> {
-    return this.post(AuthMethods.LoginAndGetGoogleAuthKey, loginInfo);
-  }
-
-  getGoogleAuthenticatorInfo(): Observable<OperationDataResult<GoogleAuthInfoModel>> {
-    return this.get(AuthMethods.GetGoogleAuthenticatorInfo);
-  }
-
-  updateGoogleAuthenticatorInfo(model: GoogleAuthInfoModel ): Observable<OperationResult> {
-    return this.post(AuthMethods.UpdateGoogleAuthenticatorInfo, model);
-  }
-
-  deleteGoogleAuthenticatorInfo(): Observable<OperationResult> {
-    return this.delete(AuthMethods.GetGoogleAuthenticatorInfo);
-  }
-
-  allTimeZones(): Observable<OperationDataResult<TimezonesModel>> {
-    return this.get(AuthMethods.TimeZones);
+  logout() {
+    localStorage.removeItem('userSession');
+    localStorage.removeItem('currentAuth');
+    this.router.navigate(['/auth']).then();
   }
 }

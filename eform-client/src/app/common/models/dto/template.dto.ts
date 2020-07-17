@@ -30,4 +30,5 @@ export class TemplateDto {
 
   jasperExportEnabled: boolean;
   docxExportEnabled: boolean;
+  excelExportEnabled: boolean;
 }

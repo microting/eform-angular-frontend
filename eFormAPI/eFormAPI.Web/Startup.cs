@@ -59,10 +59,43 @@ using Microsoft.OpenApi.Models;
 
 namespace eFormAPI.Web
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using Abstractions;
+    using Abstractions.Advanced;
+    using Abstractions.Eforms;
+    using Abstractions.Security;
+    using Hosting.Extensions;
+    using Hosting.Security;
+    using Infrastructure.Database;
+    using Infrastructure.Database.Factories;
+    using Infrastructure.Models.Settings.Plugins;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http.Features;
+    using Microsoft.AspNetCore.HttpOverrides;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Identity.UI.Services;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Localization;
+    using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.PlatformAbstractions;
+    using Microsoft.OpenApi.Models;
+    using Microting.eFormApi.BasePn.Abstractions;
+    using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
+    using Microting.eFormApi.BasePn.Localization;
+    using Microting.eFormApi.BasePn.Localization.Abstractions;
+    using Microting.eFormApi.BasePn.Services;
+    using Services;
+    using Services.Export;
     using Services.Mailing.CasePost;
     using Services.Mailing.EmailRecipients;
     using Services.Mailing.EmailService;
     using Services.Mailing.EmailTags;
+    using Services.Security;
 
     public class Startup
     {
@@ -118,23 +151,6 @@ namespace eFormAPI.Web
             services.AddIdentity<EformUser, EformRole>()
                 .AddEntityFrameworkStores<BaseDbContext>()
                 .AddDefaultTokenProviders();
-            // Identity configuration
-            services.Configure<IdentityOptions>(options =>
-            {
-                // Password settings
-                options.Password.RequireDigit = false;
-                options.Password.RequiredLength = 6;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireLowercase = false;
-                // Lockout settings
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
-                options.Lockout.MaxFailedAccessAttempts = 10;
-                options.Lockout.AllowedForNewUsers = true;
-                // User settings
-                options.User.RequireUniqueEmail = true;
-            });
-
             // Authentication
             services.AddEFormAuth(Configuration, GetPluginsPermissions());
             // Localization
@@ -194,7 +210,7 @@ namespace eFormAPI.Web
                     Type = SecuritySchemeType.ApiKey,
                     Scheme = "Bearer"
                 });
-                
+
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement()
                 {
                     {
@@ -214,7 +230,9 @@ namespace eFormAPI.Web
                     }
                 });
             });
-            
+
+
+
             ConnectServices(services);
             
             // plugins
@@ -251,7 +269,6 @@ namespace eFormAPI.Web
                 //loggerFactory.AddDebug();
             }
 
-
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseAuthentication();
@@ -266,7 +283,7 @@ namespace eFormAPI.Web
             });
             
             if (env.IsDevelopment())
-            { 
+            {
                 // Since swagger is not accessible from outside the local server we do not need to disable it for production.
                 app.UseSwagger();
                 app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "API V1"); });
@@ -303,18 +320,18 @@ namespace eFormAPI.Web
             services.AddScoped<ISettingsService, SettingsService>();
             services.AddScoped<ITemplatesService, TemplatesService>();
             services.AddScoped<ISecurityGroupService, SecurityGroupService>();
-            services.AddScoped<IClaimsService, ClaimsService>();
+            services.AddTransient<IClaimsService, ClaimsService>();
             services.AddScoped<IPermissionsService, PermissionsService>();
             services.AddScoped<IMenuService, MenuService>();
             services.AddScoped<IEformGroupService, EformGroupService>();
             services.AddScoped<IEformPermissionsService, EformPermissionsService>();
             services.AddScoped<IEformReportsService, EformReportsService>();
             services.AddScoped<IPluginsManagementService, PluginsManagementService>();
-            services.AddScoped<IPluginPermissionsService, PluginPermissionsService>();
             services.AddScoped<ISiteTagsService, SiteTagsService>();
             services.AddScoped<IEmailTagsService, EmailTagsService>();
             services.AddScoped<IEmailRecipientsService, EmailRecipientsService>();
             services.AddScoped<ICasePostService, CasePostService>();
+            services.AddTransient<IEformExcelExportService, EformExcelExportService>();
         }
 
         private ICollection<PluginPermissionModel> GetPluginsPermissions()

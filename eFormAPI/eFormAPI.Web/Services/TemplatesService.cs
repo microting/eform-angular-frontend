@@ -24,6 +24,7 @@ SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Eforms;
@@ -31,6 +32,7 @@ using eFormAPI.Web.Infrastructure.Database;
 using eFormAPI.Web.Infrastructure.Models;
 using eFormAPI.Web.Infrastructure.Models.Templates;
 using eFormCore;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
@@ -50,22 +52,42 @@ namespace eFormAPI.Web.Services
         private readonly ILocalizationService _localizationService;
         private readonly IUserService _userService;
         private readonly BaseDbContext _dbContext;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public TemplatesService(
             IEFormCoreService coreHelper,
             ILocalizationService localizationService,
             IUserService userService, BaseDbContext dbContext,
-            IOptions<ConnectionStringsSdk> connectionStringsSdk)
+            IOptions<ConnectionStringsSdk> connectionStringsSdk,
+            IHttpContextAccessor httpContextAccessor)
         {
             _coreHelper = coreHelper;
             _localizationService = localizationService;
             _userService = userService;
             _dbContext = dbContext;
             _connectionStringsSdk = connectionStringsSdk;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<OperationDataResult<TemplateListModel>> Index(TemplateRequestModel templateRequestModel)
         {
+            var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+            var timeZone = _dbContext.Users.Single(x => x.Id == int.Parse(value)).TimeZone;
+            if (string.IsNullOrEmpty(timeZone))
+            {
+                timeZone = "Europe/Copenhagen";
+            }
+
+            TimeZoneInfo timeZoneInfo;
+
+            try
+            {
+                timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timeZone);
+            }
+            catch
+            {
+                timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("E. Europe Standard Time");
+            }
             Log.LogEvent("TemplateService.Index: called");
             try
             {
@@ -76,7 +98,8 @@ namespace eFormAPI.Web.Services
                     templateRequestModel.NameFilter,
                     templateRequestModel.IsSortDsc,
                     templateRequestModel.Sort,
-                    templateRequestModel.TagIds);
+                    templateRequestModel.TagIds,
+                    timeZoneInfo);
 
                 var model = new TemplateListModel
                 {
@@ -86,7 +109,7 @@ namespace eFormAPI.Web.Services
                 };
 
                 var eformIds = new List<int>();
-                List<string> plugins = await _dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
+                //List<string> plugins = await _dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
 
                 if (!_userService.IsInRole(EformRole.Admin))
                 {
@@ -107,6 +130,7 @@ namespace eFormAPI.Web.Services
                             if (eformIds.Contains(templateDto.Id))
                             {
                                 await templateDto.CheckForLock(_dbContext);
+                                templateDto.CreatedAt = TimeZoneInfo.ConvertTimeFromUtc((DateTime)templateDto.CreatedAt, timeZoneInfo);
                                 model.Templates.Add(templateDto);
                             }
                         }
@@ -116,6 +140,7 @@ namespace eFormAPI.Web.Services
                         foreach (TemplateDto templateDto in templatesDto)
                         {
                             await templateDto.CheckForLock(_dbContext);
+                            templateDto.CreatedAt = TimeZoneInfo.ConvertTimeFromUtc((DateTime)templateDto.CreatedAt, timeZoneInfo);
                             model.Templates.Add(templateDto);
                         }
                     }
@@ -125,6 +150,7 @@ namespace eFormAPI.Web.Services
                     foreach (TemplateDto templateDto in templatesDto)
                     {
                         await templateDto.CheckForLock(_dbContext);
+                        templateDto.CreatedAt = TimeZoneInfo.ConvertTimeFromUtc((DateTime)templateDto.CreatedAt, timeZoneInfo);
                         model.Templates.Add(templateDto);
                     }
                 }

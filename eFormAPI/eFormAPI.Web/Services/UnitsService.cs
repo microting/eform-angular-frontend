@@ -70,7 +70,12 @@ namespace eFormAPI.Web.Services
                     eFormVersion = "0.0.0",
                     InSightVersion = "0.0.0",
                     eFormVersionHealth = "",
-                    InSightVersionHealth = ""
+                    InSightVersionHealth = "",
+                    PushEnabled = t.PushEnabled,
+                    SyncDialog = t.SyncDialog,
+                    SyncDefaultDelay = t.SyncDefaultDelay,
+                    SyncDelayEnabled = t.SyncDelayEnabled,
+                    SyncDelayPrCheckList = t.SyncDelayPrCheckList
                 }).ToListAsync().ConfigureAwait(false);
 
                 return new OperationDataResult<List<UnitModel>>(true, units);
