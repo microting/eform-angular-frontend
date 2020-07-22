@@ -111,7 +111,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         {
             return await GetFile(fileName, ext,"image", noCache);
         }
-        
+
         [HttpGet]
         [AllowAnonymous]
         [Route("api/template-files/get-pdf/{fileName}.{ext}")]
@@ -142,9 +142,9 @@ namespace eFormAPI.Web.Controllers.Eforms
             var filePath = Path.Combine(await core.GetSdkSetting(Settings.fileLocationPicture),fullFileName);   ;
             if (fileType == "pdf")
             {
-                filePath = Path.Combine(await core.GetSdkSetting(Settings.fileLocationPdf),fullFileName);   
+                filePath = Path.Combine(await core.GetSdkSetting(Settings.fileLocationPdf),fullFileName);
             }
-            
+
             switch (ext)
             {
                 case "png":
@@ -161,14 +161,14 @@ namespace eFormAPI.Web.Controllers.Eforms
                     fileType = "application/pdf";
                     break;
             }
-            
+
             if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true")
             {
                 var ss = await core.GetFileFromSwiftStorage($"{fileName}.{ext}");
-                    
+
                 Response.ContentType = ss.ContentType;
                 Response.ContentLength = ss.ContentLength;
-                
+
                 return File(ss.ObjectStreamContent, ss.ContentType.IfNullOrEmpty($"{fileType}"));
             }
 
@@ -180,9 +180,9 @@ namespace eFormAPI.Web.Controllers.Eforms
 
                 return File(ss.ResponseStream, ss.Headers["Content-Type"]);
             }
-            
+
             if (!System.IO.File.Exists(filePath))
-            {                
+            {
                 return NotFound($"Trying to find file at location: {filePath}");
             }
 
@@ -213,9 +213,9 @@ namespace eFormAPI.Web.Controllers.Eforms
                     return RotateImageLocal(filePath);
                 }
             }
-            
+
         }
-        
+
         [HttpGet]
         [Route("api/template-files/delete-image")]
         [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseUpdate)]
@@ -238,7 +238,7 @@ namespace eFormAPI.Web.Controllers.Eforms
 
             return new OperationResult(true, _localizationService.GetString("ImageDeletedSuccessfully"));
         }
-        
+
         [HttpGet]
         [Route("api/template-files/get-pdf-file")]
         [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseGetPdf)]
@@ -260,7 +260,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                 {
                     return NotFound();
                 }
-                
+
             }
             var filePath = Path.Combine(await core.GetSdkSetting(Settings.fileLocationPdf), fileName + ".pdf");
             if (!System.IO.File.Exists(filePath))
@@ -286,11 +286,11 @@ namespace eFormAPI.Web.Controllers.Eforms
             try
             {
                 var core = await _coreHelper.GetCore();
-                
+
                 // Fix for broken SDK not handling empty customXmlContent well
                 string customXmlContent = new XElement("FillerElement",
                     new XElement("InnerElement", "SomeValue")).ToString();
-                
+
                 var filePath = await core.CaseToPdf(caseId, templateId.ToString(),
                     DateTime.Now.ToString("yyyyMMddHHmmssffff"),
                     $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", fileType, customXmlContent);
@@ -330,7 +330,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                 {
                     var filePath = await core.CaseToJasperXml(caseDto, replyElement, (int)caseId,
                         DateTime.Now.ToString("yyyyMMddHHmmssffff"),
-                        $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", 
+                        $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/",
                         "");
                     if (!System.IO.File.Exists(filePath))
                     {
@@ -395,7 +395,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                 {
                     System.IO.File.Delete(filePath);
                 }
-                
+
                 if (string.IsNullOrEmpty(saveFolder))
                 {
                     return BadRequest("Folder error");
@@ -430,8 +430,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                         {
                             await core.PutFileToStorageSystem(filePath, templateId.ToString() + "_" + uploadModel.File.FileName);
                         }
-
-
+                        
                         // Find excel file
                         string excelSaveFolder = null;
                         var excelFilePath = Directory.GetFiles(extractPath, "*.xlsx").FirstOrDefault();
@@ -509,7 +508,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                 return BadRequest("Invalid Request!");
             }
         }
-        
+
         private async Task<OperationResult> RotateImageSwift(string fileName)
         {
             var core = await _coreHelper.GetCore();
@@ -520,7 +519,7 @@ namespace eFormAPI.Web.Controllers.Eforms
 
             fileStream.Close();
             fileStream.Dispose();
-                
+
             result.ObjectStreamContent.Close();
             result.ObjectStreamContent.Dispose();
             try
@@ -544,7 +543,7 @@ namespace eFormAPI.Web.Controllers.Eforms
             {
                 System.IO.File.Delete(filePath);
             }
-                    
+
             return new OperationResult(true, _localizationService.GetString("ImageRotatedSuccessfully"));
         }
 
@@ -558,7 +557,7 @@ namespace eFormAPI.Web.Controllers.Eforms
 
             fileStream.Close();
             fileStream.Dispose();
-                
+
             result.ResponseStream.Close();
             result.ResponseStream.Dispose();
             try
@@ -582,15 +581,15 @@ namespace eFormAPI.Web.Controllers.Eforms
             {
                 System.IO.File.Delete(filePath);
             }
-                    
+
             return new OperationResult(true, _localizationService.GetString("ImageRotatedSuccessfully"));
         }
-        
+
         private OperationResult RotateImageLocal(string filePath)
         {
             if (!System.IO.File.Exists(filePath))
             {
-                
+
                 return new OperationResult(false, _localizationService.GetString("FileNotFound"));
             }
 
