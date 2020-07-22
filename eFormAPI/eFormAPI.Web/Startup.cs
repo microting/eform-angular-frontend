@@ -29,6 +29,7 @@ using eFormAPI.Web.Abstractions.Advanced;
 using eFormAPI.Web.Abstractions.Eforms;
 using eFormAPI.Web.Abstractions.Security;
 using eFormAPI.Web.Hosting.Extensions;
+using eFormAPI.Web.Hosting.Security;
 using eFormAPI.Web.Infrastructure.Database;
 using eFormAPI.Web.Infrastructure.Models.Settings.Plugins;
 using eFormAPI.Web.Services;
