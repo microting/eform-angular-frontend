@@ -22,6 +22,41 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Abstractions.Advanced;
+using eFormAPI.Web.Abstractions.Eforms;
+using eFormAPI.Web.Abstractions.Security;
+using eFormAPI.Web.Hosting.Extensions;
+using eFormAPI.Web.Infrastructure.Database;
+using eFormAPI.Web.Infrastructure.Models.Settings.Plugins;
+using eFormAPI.Web.Services;
+using eFormAPI.Web.Services.Security;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Identity;
+using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.PlatformAbstractions;
+using Microsoft.Extensions.Localization;
+using Microting.eFormApi.BasePn.Abstractions;
+using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
+using Microting.eFormApi.BasePn.Localization;
+using Microting.eFormApi.BasePn.Localization.Abstractions;
+using Microting.eFormApi.BasePn.Services;
+using eFormAPI.Web.Infrastructure.Database.Factories;
+using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
+
 namespace eFormAPI.Web
 {
     using System.Collections.Generic;
@@ -74,6 +109,9 @@ namespace eFormAPI.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // TODO check if we need this or code needs to be updated.
+            services.AddMvc(options => options.EnableEndpointRouting = false);
+
             // Configuration
             //services.AddSingleton(Configuration);
             services.AddOptions();
@@ -196,20 +234,20 @@ namespace eFormAPI.Web
 
 
             ConnectServices(services);
-            
+
             // plugins
             services.AddEFormPlugins(Program.Plugins);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {            
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
             if (env.IsDevelopment())
             {
                 app.UseForwardedHeaders(new ForwardedHeadersOptions
                 {
                     ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto,
-                    // IIS is also tagging a X-Forwarded-For header on, so we need to increase this limit, 
+                    // IIS is also tagging a X-Forwarded-For header on, so we need to increase this limit,
                     // otherwise the X-Forwarded-For we are passing along from the browser will be ignored
                     ForwardLimit = 2
                 });
@@ -243,7 +281,7 @@ namespace eFormAPI.Web
                     "default",
                     "api/{controller=Home}/{action=Index}/{id?}");
             });
-            
+
             if (env.IsDevelopment())
             {
                 // Since swagger is not accessible from outside the local server we do not need to disable it for production.
@@ -298,7 +336,7 @@ namespace eFormAPI.Web
 
         private ICollection<PluginPermissionModel> GetPluginsPermissions()
         {
-            
+
             var permissions = new List<PluginPermissionModel>();
             if (Configuration.MyConnectionString() != "...")
             {

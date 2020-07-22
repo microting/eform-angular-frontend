@@ -261,7 +261,7 @@ namespace eFormAPI.Web.Services.Security
         {
             var claims = new List<Claim>();
 
-            foreach (var eformPlugin in _dbContext.EformPlugins.Where(p => p.Status == (int) PluginStatus.Enabled))
+            foreach (var eformPlugin in _dbContext.EformPlugins.Where(p => p.Status == (int)PluginStatus.Enabled).ToList())
             {
                 var permissionManager = await GetPluginPermissionsManager(eformPlugin.Id);
 
@@ -278,7 +278,7 @@ namespace eFormAPI.Web.Services.Security
         {
             var claims = new List<Claim>();
 
-            foreach (var eformPlugin in _dbContext.EformPlugins.Where(p => p.Status == (int) PluginStatus.Enabled))
+            foreach (var eformPlugin in _dbContext.EformPlugins.Where(p => p.Status == (int)PluginStatus.Enabled).ToList())
             {
                 var permissionManager = await GetPluginPermissionsManager(eformPlugin.Id);
 

@@ -210,7 +210,7 @@ namespace eFormAPI.Web.Hosting.Helpers
                 List<string> pluginList;
 
 
-                string path = Path.Combine(directory, "netcoreapp2.2");
+                string path = Path.Combine(directory, "netcoreapp3.1");
                 if (Directory.Exists(path))
                 {
                     pluginList = Directory.GetFiles(path)

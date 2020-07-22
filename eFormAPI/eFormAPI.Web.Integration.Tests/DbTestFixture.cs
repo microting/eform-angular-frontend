@@ -28,6 +28,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace eFormAPI.Web.Integration.Tests
 {
@@ -58,7 +59,7 @@ namespace eFormAPI.Web.Integration.Tests
         }
 
         [SetUp]
-        public void Setup()
+        public async Task Setup()
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
@@ -76,7 +77,7 @@ namespace eFormAPI.Web.Integration.Tests
 
             try
             {
-                ClearDb();
+                await ClearDb();
             }
             catch
             {
@@ -89,15 +90,15 @@ namespace eFormAPI.Web.Integration.Tests
         }
 
         [TearDown]
-        public void TearDown()
+        public async Task TearDown()
         {
 
-            ClearDb();
+            await ClearDb();
 
             DbContext.Dispose();
         }
 
-        public void ClearDb()
+        public async Task ClearDb()
         {
 
             Console.WriteLine("ClearDb called.");
@@ -132,7 +133,7 @@ namespace eFormAPI.Web.Integration.Tests
                         sqlCmd = $"DELETE FROM [{modelName}]";
                     }
 #pragma warning disable EF1000 // Possible SQL injection vulnerability.
-                    DbContext.Database.ExecuteSqlCommand(sqlCmd);
+                    await DbContext.Database.ExecuteSqlRawAsync(sqlCmd);
 #pragma warning restore EF1000 // Possible SQL injection vulnerability.
 
                 }
