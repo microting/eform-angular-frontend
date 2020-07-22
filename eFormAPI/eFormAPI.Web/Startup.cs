@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using System;
 using System.Linq;
 using System.Collections.Generic;
 using eFormAPI.Web.Abstractions;
@@ -39,7 +38,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
-using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -54,49 +52,16 @@ using Microting.eFormApi.BasePn.Localization;
 using Microting.eFormApi.BasePn.Localization.Abstractions;
 using Microting.eFormApi.BasePn.Services;
 using eFormAPI.Web.Infrastructure.Database.Factories;
+using eFormAPI.Web.Services.Export;
+using eFormAPI.Web.Services.Mailing.CasePost;
+using eFormAPI.Web.Services.Mailing.EmailRecipients;
+using eFormAPI.Web.Services.Mailing.EmailService;
+using eFormAPI.Web.Services.Mailing.EmailTags;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
 namespace eFormAPI.Web
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using Abstractions;
-    using Abstractions.Advanced;
-    using Abstractions.Eforms;
-    using Abstractions.Security;
-    using Hosting.Extensions;
-    using Hosting.Security;
-    using Infrastructure.Database;
-    using Infrastructure.Database.Factories;
-    using Infrastructure.Models.Settings.Plugins;
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http.Features;
-    using Microsoft.AspNetCore.HttpOverrides;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Identity.UI.Services;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Localization;
-    using Microsoft.Extensions.Logging;
-    using Microsoft.Extensions.PlatformAbstractions;
-    using Microsoft.OpenApi.Models;
-    using Microting.eFormApi.BasePn.Abstractions;
-    using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
-    using Microting.eFormApi.BasePn.Localization;
-    using Microting.eFormApi.BasePn.Localization.Abstractions;
-    using Microting.eFormApi.BasePn.Services;
-    using Services;
-    using Services.Export;
-    using Services.Mailing.CasePost;
-    using Services.Mailing.EmailRecipients;
-    using Services.Mailing.EmailService;
-    using Services.Mailing.EmailTags;
-    using Services.Security;
-
     public class Startup
     {
         public Startup(IConfiguration configuration)
