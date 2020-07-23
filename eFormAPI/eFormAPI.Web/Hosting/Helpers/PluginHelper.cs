@@ -207,22 +207,7 @@ namespace eFormAPI.Web.Hosting.Helpers
             var directories = Directory.EnumerateDirectories(pluginsDir);
             foreach (var directory in directories)
             {
-                List<string> pluginList;
-
-
-                string path = Path.Combine(directory, "netcoreapp3.1");
-                if (Directory.Exists(path))
-                {
-                    pluginList = Directory.GetFiles(path)
-                        .Where(x => x.EndsWith("Pn.dll") && Path.GetFileName(x) != "eFormApi.BasePn.dll")
-                        .ToList();    
-                }
-                else
-                {
-                    pluginList = Directory.GetFiles(directory)
-                        .Where(x => x.EndsWith("Pn.dll") && Path.GetFileName(x) != "eFormApi.BasePn.dll")
-                        .ToList();
-                }
+                var pluginList = Directory.GetFiles(directory, "*.Pn.dll", SearchOption.AllDirectories); 
 
                 foreach (var pluginFile in pluginList)
                 {
