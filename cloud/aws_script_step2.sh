@@ -285,7 +285,7 @@ su ubuntu -c \
 	export GITVERSION=`git describe --abbrev=0 --tags | cut -d "v" -f 2`
 	echo $GITVERSION
 su ubuntu -c \
-"dotnet publish -o out /p:Version=$GITVERSION --runtime linux-x64 --configuration Release"
+"dotnet publish -o MicrotingService/out /p:Version=$GITVERSION --runtime linux-x64 --configuration Release"
 
 	cp /var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/out/connection.json /var/www/microting/eform-debian-service/MicrotingService/out/
 
