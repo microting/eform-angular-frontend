@@ -49,7 +49,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.6" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
-    <PackageReference Include="Microting.eForm" Version="4.0.5" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.1" />
     <PackageReference Include="SharpZipLib.NETStandard" Version="1.0.7" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0005" />
@@ -59,7 +58,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.6" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="2.0.3" />
     <PackageReference Include="EPPlus.Core" Version="1.5.4" />
     <PackageReference Include="sendgrid" Version="9.18.0" />
   </ItemGroup>
@@ -72,6 +70,11 @@
 
   <ItemGroup>
     <Folder Include="Plugins" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\eform-sdk-dotnet\eFormCore\Microting.eForm.csproj" />
+    <ProjectReference Include="..\..\..\eFormApi.BasePn\eFormApi.BasePn\eFormApi.BasePn.csproj" />
   </ItemGroup>
 
 </Project>
