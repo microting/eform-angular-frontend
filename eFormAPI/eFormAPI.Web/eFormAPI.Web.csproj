@@ -50,6 +50,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.6" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
     <PackageReference Include="Microting.eForm" Version="4.0.6" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="2.0.5" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.1" />
     <PackageReference Include="SharpZipLib.NETStandard" Version="1.0.7" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0005" />
@@ -71,11 +72,6 @@
 
   <ItemGroup>
     <Folder Include="Plugins" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\eform-sdk-dotnet\eFormCore\Microting.eForm.csproj" />
-    <ProjectReference Include="..\..\..\eFormApi.BasePn\eFormApi.BasePn\eFormApi.BasePn.csproj" />
   </ItemGroup>
 
 </Project>
