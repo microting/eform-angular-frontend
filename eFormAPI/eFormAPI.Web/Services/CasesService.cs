@@ -38,6 +38,7 @@ using Microting.eForm.Infrastructure.Models;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Delegates.CaseUpdate;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 
 namespace eFormAPI.Web.Services
 {
@@ -82,9 +83,11 @@ namespace eFormAPI.Web.Services
 
                 return new OperationDataResult<CaseListModel>(true, model);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new OperationDataResult<CaseListModel>(false, _localizationService.GetString("CaseLoadingFailed"));
+                Log.LogException(ex.Message);
+                Log.LogException(ex.StackTrace);
+                return new OperationDataResult<CaseListModel>(false, _localizationService.GetString("CaseLoadingFailed") + $" Exception: {ex.Message}");
             }
         }
 
@@ -103,9 +106,11 @@ namespace eFormAPI.Web.Services
                     ? new OperationDataResult<ReplyElement>(true, theCase)
                     : new OperationDataResult<ReplyElement>(false);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new OperationDataResult<ReplyElement>(false);
+                Log.LogException(ex.Message);
+                Log.LogException(ex.StackTrace);
+                return new OperationDataResult<ReplyElement>(false, ex.Message);
             }
         }
 
@@ -119,9 +124,11 @@ namespace eFormAPI.Web.Services
                     ? new OperationResult(true, _localizationService.GetStringWithFormat("CaseParamDeletedSuccessfully", id))
                     : new OperationResult(false, _localizationService.GetString("CaseCouldNotBeRemoved"));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new OperationResult(false, _localizationService.GetString("CaseCouldNotBeRemoved"));
+                Log.LogException(ex.Message);
+                Log.LogException(ex.StackTrace);
+                return new OperationResult(false, _localizationService.GetString("CaseCouldNotBeRemoved") + $" Exception: {ex.Message}");
             }
         }
 
@@ -138,9 +145,11 @@ namespace eFormAPI.Web.Services
                     fieldValueList.AddRange(CaseUpdateHelper.GetFieldList(element));
                 });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new OperationResult(false, _localizationService.GetString("CaseCouldNotBeUpdated"));
+                Log.LogException(ex.Message);
+                Log.LogException(ex.StackTrace);
+                return new OperationResult(false, _localizationService.GetString("CaseCouldNotBeUpdated") + $" Exception: {ex.Message}");
             }
 
             try
@@ -160,9 +169,11 @@ namespace eFormAPI.Web.Services
 
                 return new OperationResult(true, _localizationService.GetString("CaseHasBeenUpdated"));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new OperationResult(false, _localizationService.GetString("CaseCouldNotBeUpdated"));
+                Log.LogException(ex.Message);
+                Log.LogException(ex.StackTrace);
+                return new OperationResult(false, _localizationService.GetString("CaseCouldNotBeUpdated") + $" Exception: {ex.Message}");
             }
         }
     }
