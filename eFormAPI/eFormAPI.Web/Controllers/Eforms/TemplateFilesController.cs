@@ -25,11 +25,13 @@ SOFTWARE.
 using System;
 using System.Globalization;
 using System.IO;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Security;
 using eFormAPI.Web.Infrastructure;
+using eFormAPI.Web.Infrastructure.Database;
 using ICSharpCode.SharpZipLib.Zip;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -58,16 +60,22 @@ namespace eFormAPI.Web.Controllers.Eforms
         private readonly IEformPermissionsService _permissionsService;
         private readonly ILocalizationService _localizationService;
         private readonly IEformExcelExportService _eformExcelExportService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly BaseDbContext _dbContext;
 
         public TemplateFilesController(IEFormCoreService coreHelper,
             ILocalizationService localizationService,
             IEformPermissionsService permissionsService,
-            IEformExcelExportService eformExcelExportService)
+            IEformExcelExportService eformExcelExportService,
+            BaseDbContext dbContext,
+            IHttpContextAccessor httpContextAccessor)
         {
             _coreHelper = coreHelper;
+            _dbContext = dbContext;
             _localizationService = localizationService;
             _permissionsService = permissionsService;
             _eformExcelExportService = eformExcelExportService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpGet]
@@ -85,7 +93,23 @@ namespace eFormAPI.Web.Controllers.Eforms
             var fileName = $"{id}_{DateTime.Now.Ticks}.csv";
             var filePath = PathHelper.GetOutputPath(fileName);
             CultureInfo cultureInfo = new CultureInfo("de-DE");
-            TimeZoneInfo timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Europe/Copenhagen");
+            var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+            var timeZone = _dbContext.Users.Single(x => x.Id == int.Parse(value)).TimeZone;
+            if (string.IsNullOrEmpty(timeZone))
+            {
+                timeZone = "Europe/Copenhagen";
+            }
+
+            TimeZoneInfo timeZoneInfo;
+
+            try
+            {
+                timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timeZone);
+            }
+            catch
+            {
+                timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("E. Europe Standard Time");
+            }
             string fullPath = "";
             if (!string.IsNullOrEmpty(start) && !string.IsNullOrEmpty(end))
             {
