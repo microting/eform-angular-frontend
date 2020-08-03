@@ -528,7 +528,9 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
             try
             {
                 var casePostsListModel = new CasePostsCommonModel();
-                var casePostsQuery = _dbContext.CasePosts.AsQueryable();
+                var casePostsQuery = _dbContext.CasePosts
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .AsQueryable();
 
                 if (requestModel.CaseId != null)
                 {
