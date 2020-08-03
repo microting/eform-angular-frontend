@@ -538,8 +538,15 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
 
                 if (requestModel.TemplateId != null)
                 {
-                    // get all cases for template
-                    // TODO search by cases
+                    var core = await _coreService.GetCore();
+                    await using var microtingDbContext = core.dbContextHelper.GetDbContext();
+                    var casesIds = await microtingDbContext.cases
+                        .Where(x => x.CheckListId == requestModel.TemplateId)
+                        .Select(x => x.Id)
+                        .ToListAsync();
+
+                    casePostsQuery = casePostsQuery
+                        .Where(x => casesIds.Contains(x.CaseId));
                 }
 
                 casePostsListModel.Total = await casePostsQuery.CountAsync();
