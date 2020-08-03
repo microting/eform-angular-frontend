@@ -558,7 +558,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                 casePostsListModel.Entities = await casePostsQuery
                     .Select(x => new CasePostCommonModel()
                     {
-                        Id = x.Id,
+                        Id = x.CaseId,
                         Subject = x.Subject,
                         Text = x.Text,
                         PostDate = x.PostDate,
