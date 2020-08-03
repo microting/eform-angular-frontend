@@ -47,9 +47,10 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
     using Microting.eFormApi.BasePn.Infrastructure.Extensions;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
     using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Application.CasePosts;
     using OpenStack.NetCoreSwiftClient.Extensions;
 
-    public class CasePostService : ICasePostService
+    public class CasePostService : ICasePostService, ICasePostBaseService
     {
         private readonly ILogger<CasePostService> _logger;
         private readonly IUserService _userService;
@@ -82,7 +83,6 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
         {
             try
             {
-
                 var casePostsListModel = new CasePostsListModel();
                 var casePostsQuery = _dbContext.CasePosts.AsQueryable();
                 if (!string.IsNullOrEmpty(requestModel.Sort))
@@ -520,6 +520,60 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                     return new OperationResult(false,
                         _localizationService.GetString("ErrorWhileCreatingPost"));
                 }
+            }
+        }
+
+        public async Task<OperationDataResult<CasePostsCommonModel>> GetCommonPosts(CasePostsRequestCommonModel requestModel)
+        {
+            try
+            {
+                var casePostsListModel = new CasePostsCommonModel();
+                var casePostsQuery = _dbContext.CasePosts.AsQueryable();
+
+                if (requestModel.CaseId != null)
+                {
+                    casePostsQuery = casePostsQuery
+                        .Where(x => x.CaseId == requestModel.CaseId);
+                }
+
+                if (requestModel.TemplateId != null)
+                {
+                    // get all cases for template
+                    // TODO search by cases
+                }
+
+                casePostsListModel.Total = await casePostsQuery.CountAsync();
+
+                casePostsQuery = casePostsQuery
+                    .Skip(requestModel.Offset)
+                    .Take(requestModel.PageSize);
+
+                casePostsListModel.Entities = await casePostsQuery
+                    .Select(x => new CasePostCommonModel()
+                    {
+                        Id = x.Id,
+                        Subject = x.Subject,
+                        Text = x.Text,
+                        PostDate = x.PostDate,
+                        ToRecipients = x.Recipients
+                            .Select(y => $"{y.EmailRecipient.Name} ({y.EmailRecipient.Email})")
+                            .ToList(),
+                        ToRecipientsTags = x.Tags
+                            .Select(y => y.EmailTag.Name)
+                            .ToList(),
+                    }).ToListAsync();
+
+                return new OperationDataResult<CasePostsCommonModel>(
+                    true,
+                    casePostsListModel);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                _logger.LogError(e.Message);
+                return new OperationDataResult<CasePostsCommonModel>(
+                    false,
+                    _localizationService.GetString("ErrorWhileObtainingPosts"));
             }
         }
     }

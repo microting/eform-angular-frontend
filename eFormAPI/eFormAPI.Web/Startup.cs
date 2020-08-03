@@ -297,6 +297,7 @@ namespace eFormAPI.Web
             services.AddScoped<IEmailTagsService, EmailTagsService>();
             services.AddScoped<IEmailRecipientsService, EmailRecipientsService>();
             services.AddScoped<ICasePostService, CasePostService>();
+            services.AddScoped<ICasePostBaseService, CasePostService>();
             services.AddTransient<IEformExcelExportService, EformExcelExportService>();
         }
 
