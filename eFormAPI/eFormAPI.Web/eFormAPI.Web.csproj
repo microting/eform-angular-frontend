@@ -30,17 +30,28 @@
     <EmbeddedResource Include="Resources\Email.html" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <ResolveStaticWebAssetsInputsDependsOn>RemoveIdentityAssets</ResolveStaticWebAssetsInputsDependsOn>
+  </PropertyGroup>
+
+  <Target Name="RemoveIdentityAssets">
+    <ItemGroup>
+      <StaticWebAsset Remove="@(StaticWebAsset)" Condition="%(SourceId) == 'Microsoft.AspNetCore.Identity.UI'" />
+    </ItemGroup>
+  </Target>
+
   <ItemGroup>
-    <PackageReference Include="AWSSDK.Core" Version="3.3.107.26" />
-    <PackageReference Include="AWSSDK.S3" Version="3.3.111.27" />
-    <PackageReference Include="AWSSDK.SQS" Version="3.3.103.13" />
+    <PackageReference Include="AWSSDK.Core" Version="3.3.107.30" />
+    <PackageReference Include="AWSSDK.S3" Version="3.3.111.32" />
+    <PackageReference Include="AWSSDK.SQS" Version="3.3.103.17" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.6" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.6" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.6" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
-    <PackageReference Include="Microting.eForm" Version="4.0.5" />
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.1" />
+    <PackageReference Include="Microting.eForm" Version="4.0.11" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="2.0.11" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.2" />
     <PackageReference Include="SharpZipLib.NETStandard" Version="1.0.7" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0005" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.1" />
@@ -49,9 +60,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.6" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="2.0.3" />
     <PackageReference Include="EPPlus.Core" Version="1.5.4" />
-    <PackageReference Include="sendgrid" Version="9.18.0" />
+    <PackageReference Include="sendgrid" Version="9.19.0" />
   </ItemGroup>
 
   <ItemGroup>

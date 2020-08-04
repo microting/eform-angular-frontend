@@ -79,7 +79,7 @@
                   <img
                     class="p-3"
                     height="112" width="90"
-                    src="{{loginPageImageLink}}">
+                    [src]="loginPageImageLink | authImage | async">
                 </div>
                 <div class="align-self-center">
                   <p>{{ 'Recommended parameters' | translate }}:</p>
@@ -172,7 +172,7 @@
                   <p class="mb-0 align-self-center">{{ 'Logo' | translate }}</p>
                   <img
                     class="p-3" width="150"
-                    src="{{headerImageLink}}">
+                    [src]="headerImageLink | authImage | async">
                 </div>
                 <div class="align-self-center">
                   <p>{{ 'Recommended parameters' | translate }}:</p>

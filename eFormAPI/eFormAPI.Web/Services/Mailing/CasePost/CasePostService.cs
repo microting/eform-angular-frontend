@@ -47,9 +47,10 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
     using Microting.eFormApi.BasePn.Infrastructure.Extensions;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
     using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Application.CasePosts;
     using OpenStack.NetCoreSwiftClient.Extensions;
 
-    public class CasePostService : ICasePostService
+    public class CasePostService : ICasePostService, ICasePostBaseService
     {
         private readonly ILogger<CasePostService> _logger;
         private readonly IUserService _userService;
@@ -82,7 +83,6 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
         {
             try
             {
-
                 var casePostsListModel = new CasePostsListModel();
                 var casePostsQuery = _dbContext.CasePosts.AsQueryable();
                 if (!string.IsNullOrEmpty(requestModel.Sort))
@@ -349,6 +349,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                         Subject = requestModel.Subject,
                         CaseId = requestModel.CaseId,
                         PostDate = DateTime.UtcNow,
+                        WorkflowState = Constants.WorkflowStates.Created,
                     };
 
                     await _dbContext.CasePosts.AddAsync(casePost);
@@ -365,6 +366,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                             UpdatedByUserId = _userService.UserId,
                             CasePostId = casePost.Id,
                             EmailTagId = tagsId,
+                            WorkflowState = Constants.WorkflowStates.Created,
                         };
 
                         await _dbContext.CasePostEmailTags.AddAsync(casePostEmailTag);
@@ -381,6 +383,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                             UpdatedByUserId = _userService.UserId,
                             CasePostId = casePost.Id,
                             EmailRecipientId = recipientId,
+                            WorkflowState = Constants.WorkflowStates.Created,
                         };
 
                         await _dbContext.CasePostEmailRecipients.AddAsync(casePostEmailRecipient);
@@ -520,6 +523,70 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                     return new OperationResult(false,
                         _localizationService.GetString("ErrorWhileCreatingPost"));
                 }
+            }
+        }
+
+        public async Task<OperationDataResult<CasePostsCommonModel>> GetCommonPosts(CasePostsRequestCommonModel requestModel)
+        {
+            try
+            {
+                var casePostsListModel = new CasePostsCommonModel();
+                var casePostsQuery = _dbContext.CasePosts
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .AsQueryable();
+
+                if (requestModel.CaseId != null)
+                {
+                    casePostsQuery = casePostsQuery
+                        .Where(x => x.CaseId == requestModel.CaseId);
+                }
+
+                if (requestModel.TemplateId != null)
+                {
+                    var core = await _coreService.GetCore();
+                    await using var microtingDbContext = core.dbContextHelper.GetDbContext();
+                    var casesIds = await microtingDbContext.cases
+                        .Where(x => x.CheckListId == requestModel.TemplateId)
+                        .Select(x => x.Id)
+                        .ToListAsync();
+
+                    casePostsQuery = casePostsQuery
+                        .Where(x => casesIds.Contains(x.CaseId));
+                }
+
+                casePostsListModel.Total = await casePostsQuery.CountAsync();
+
+                casePostsQuery = casePostsQuery
+                    .Skip(requestModel.Offset)
+                    .Take(requestModel.PageSize);
+
+                casePostsListModel.Entities = await casePostsQuery
+                    .Select(x => new CasePostCommonModel()
+                    {
+                        CaseId = x.CaseId,
+                        PostId = x.Id,
+                        Subject = x.Subject,
+                        Text = x.Text,
+                        PostDate = x.PostDate,
+                        ToRecipients = x.Recipients
+                            .Select(y => $"{y.EmailRecipient.Name} ({y.EmailRecipient.Email})")
+                            .ToList(),
+                        ToRecipientsTags = x.Tags
+                            .Select(y => y.EmailTag.Name)
+                            .ToList(),
+                    }).ToListAsync();
+
+                return new OperationDataResult<CasePostsCommonModel>(
+                    true,
+                    casePostsListModel);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                _logger.LogError(e.Message);
+                return new OperationDataResult<CasePostsCommonModel>(
+                    false,
+                    _localizationService.GetString("ErrorWhileObtainingPosts"));
             }
         }
     }
