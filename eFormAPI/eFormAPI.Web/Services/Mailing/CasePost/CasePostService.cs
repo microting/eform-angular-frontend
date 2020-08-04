@@ -349,6 +349,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                         Subject = requestModel.Subject,
                         CaseId = requestModel.CaseId,
                         PostDate = DateTime.UtcNow,
+                        WorkflowState = Constants.WorkflowStates.Created,
                     };
 
                     await _dbContext.CasePosts.AddAsync(casePost);
@@ -365,6 +366,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                             UpdatedByUserId = _userService.UserId,
                             CasePostId = casePost.Id,
                             EmailTagId = tagsId,
+                            WorkflowState = Constants.WorkflowStates.Created,
                         };
 
                         await _dbContext.CasePostEmailTags.AddAsync(casePostEmailTag);
@@ -381,6 +383,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                             UpdatedByUserId = _userService.UserId,
                             CasePostId = casePost.Id,
                             EmailRecipientId = recipientId,
+                            WorkflowState = Constants.WorkflowStates.Created,
                         };
 
                         await _dbContext.CasePostEmailRecipients.AddAsync(casePostEmailRecipient);
@@ -560,7 +563,8 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                 casePostsListModel.Entities = await casePostsQuery
                     .Select(x => new CasePostCommonModel()
                     {
-                        Id = x.CaseId,
+                        CaseId = x.CaseId,
+                        PostId = x.Id,
                         Subject = x.Subject,
                         Text = x.Text,
                         PostDate = x.PostDate,
