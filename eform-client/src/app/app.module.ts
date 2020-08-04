@@ -33,6 +33,7 @@ import {
 // import {importedIcons} from 'src/app/common/const';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime-ex';
+import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
 @NgModule({
   declarations: [
     // Layouts
@@ -45,28 +46,29 @@ import {OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime-ex';
     NavigationComponent,
     SpinnerComponent
   ],
-  imports: [
-    // Libs
-    AppRoutingModule,
-    BrowserModule,
-    MDBBootstrapModule.forRoot(),
-    TranslateModule.forRoot(translateConfig),
-    HttpClientModule,
-    BrowserAnimationsModule,
-    ToastrModule.forRoot(
-      {preventDuplicates: true}
-    ),
-    DragulaModule.forRoot(),
-    GalleryModule,
-    LightboxModule,
-    GallerizeModule,
-    FontAwesomeModule,
-    NgxChartsModule,
-    // Modules
-    PluginsModule,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule,
-  ],
+    imports: [
+        // Libs
+        AppRoutingModule,
+        BrowserModule,
+        MDBBootstrapModule.forRoot(),
+        TranslateModule.forRoot(translateConfig),
+        HttpClientModule,
+        BrowserAnimationsModule,
+        ToastrModule.forRoot(
+            {preventDuplicates: true}
+        ),
+        DragulaModule.forRoot(),
+        GalleryModule,
+        LightboxModule,
+        GallerizeModule,
+        FontAwesomeModule,
+        NgxChartsModule,
+        // Modules
+        PluginsModule,
+        OwlDateTimeModule,
+        OwlNativeDateTimeModule,
+        EformSharedModule,
+    ],
   schemas: [NO_ERRORS_SCHEMA],
   providers: [providers],
   bootstrap: [AppComponent]

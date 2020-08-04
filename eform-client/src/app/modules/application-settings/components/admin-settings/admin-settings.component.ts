@@ -1,7 +1,7 @@
 import {Component, HostBinding, OnInit, ViewChild, AfterViewInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UUID} from 'angular2-uuid';
-import {FileItem, FileUploader} from 'ng2-file-upload';
+import {FileItem, FileUploader, FileUploaderOptions} from 'ng2-file-upload';
 import {EventBrokerService} from 'src/app/common/helpers';
 import {AdminSettingsModel} from 'src/app/common/models/settings';
 import {AppSettingsService} from 'src/app/common/services/settings';
@@ -14,10 +14,10 @@ import {AuthService} from 'src/app/common/services/auth';
 })
 export class AdminSettingsComponent implements OnInit, AfterViewInit {
   loginPageImageUploader: FileUploader = new FileUploader(
-    {url: '/api/images/login-page-images', authTokenHeader: this.authService.bearerToken}
+    {url: '/api/images/login-page-images'}
   );
   headerImageUploader: FileUploader = new FileUploader(
-    {url: '/api/images/eform-images', authTokenHeader: this.authService.bearerToken}
+    {url: '/api/images/eform-images'}
   );
   headerImageLink: string;
   loginPageImageLink: string;
@@ -43,6 +43,15 @@ export class AdminSettingsComponent implements OnInit, AfterViewInit {
       this.getAdminSettings();
       this.initializeUploaders();
     }
+
+    const authHeader: Array<{
+      name: string;
+      value: string;
+    }> = [];
+    authHeader.push({name: 'Authorization', value: this.authService.bearerToken});
+    const uploadOptions = <FileUploaderOptions>{headers : authHeader};
+    this.loginPageImageUploader.setOptions(uploadOptions);
+    this.headerImageUploader.setOptions(uploadOptions);
   }
 
   getLatestVersion() {
