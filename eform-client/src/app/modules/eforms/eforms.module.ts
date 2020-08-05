@@ -18,7 +18,7 @@ import {
   EformUploadZipModalComponent
 } from './components';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {OwlDateTimeModule} from 'ng-pick-datetime-ex';
+import {OwlDateTimeModule} from '@danielmoncada/angular-datetime-picker';
 
 @NgModule({
   imports: [
