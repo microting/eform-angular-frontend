@@ -102,8 +102,43 @@ namespace eFormAPI.Web.Services.Export
                         {
                             var dataY = dataX[x];
 
-                            worksheet.Cells[x+1, y+1].Value = dataY;
-
+                            if (x != 0)
+                            {
+                                switch (y)
+                                {
+                                    case 0:
+                                    case 10:
+                                        worksheet.Cells[x+1, y+1].Value = int.Parse(dataY);
+                                        break;
+                                    case 1:
+                                        worksheet.Cells[x+1, y+1].Value = dataY;
+                                        worksheet.Cells[x+1, y+1].Style.Numberformat.Format = "yyyy-MM-dd";
+                                        break;
+                                    case 2:
+                                        worksheet.Cells[x+1, y+1].Value = dataY;
+                                        worksheet.Cells[x+1, y+1].Style.Numberformat.Format = "HH:mm:ss";
+                                        break;
+                                    case 6:
+                                        worksheet.Cells[x+1, y+1].Value = dataY;
+                                        worksheet.Cells[x+1, y+1].Style.Numberformat.Format = "yyyy";
+                                        break;
+                                    case 7:
+                                        worksheet.Cells[x+1, y+1].Value = dataY;
+                                        worksheet.Cells[x+1, y+1].Style.Numberformat.Format = "yyyy-MM-dd HH:mm:ss";
+                                        break;
+                                    default:
+                                        int i;
+                                        if (int.TryParse(dataY, out  i))
+                                        {
+                                            worksheet.Cells[x+1, y+1].Value = i;
+                                        }
+                                        else
+                                        {
+                                            worksheet.Cells[x+1, y+1].Value = dataY;
+                                        }
+                                        break;
+                                }
+                            }
                             if (x == 0)
                             {
                                 worksheet.Cells[x + 1, y + 1].Style.Font.Bold = true;
