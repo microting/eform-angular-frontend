@@ -1,4 +1,6 @@
-﻿namespace eFormAPI.Web.Services.Export
+﻿using System.Linq;
+
+namespace eFormAPI.Web.Services.Export
 {
     using System;
     using System.Globalization;
@@ -68,55 +70,30 @@
                         _localizationService.GetString("DataNotFound"));
                 }
 
-                var fileName = $"{excelModel.TemplateId}_eform_excel.xlsx";
                 var excelSaveFolder =
-                    Path.Combine(await core.GetSdkSetting(Settings.fileLocationPicture),
-                        Path.Combine("excel", fileName));
+                    Path.Combine(await core.GetSdkSetting(Settings.fileLocationJasper),
+                        Path.Combine("templates", $"{excelModel.TemplateId}", "compact", $"{excelModel.TemplateId}.xlsx"));
 
                 Stream stream;
-                if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true")
+                if (File.Exists(excelSaveFolder))
                 {
-                    var swiftResult = await core.GetFileFromSwiftStorage(fileName);
-                    if (!swiftResult.IsSuccess)
-                    {
-                        return new OperationDataResult<Stream>(
-                            false,
-                            _localizationService.GetString("ExcelTemplateNotFoundInStorage"));
-                    }
-
-                    stream = swiftResult.ObjectStreamContent;
-                }
-                else if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
-                {
-                    var s3Result = await core.GetFileFromS3Storage(fileName);
-
-                    if (s3Result == null)
-                    {
-                        return new OperationDataResult<Stream>(
-                            false,
-                            _localizationService.GetString("ExcelTemplateNotFoundInStorage"));
-                    }
-
-                    stream = s3Result.ResponseStream;
+                    stream = File.Open(excelSaveFolder, FileMode.Open);
                 }
                 else
                 {
-                    if (File.Exists(excelSaveFolder))
-                    {
-                        stream = File.Open(excelSaveFolder, FileMode.Open);
-                    }
-                    else
-                    {
-                        return new OperationDataResult<Stream>(
-                            false,
-                            _localizationService.GetString("ExcelTemplateNotFoundInStorage"));
-                    }
+                    return new OperationDataResult<Stream>(
+                        false,
+                        _localizationService.GetString("ExcelTemplateNotFoundInStorage"));
                 }
 
                 Stream result;
                 using (var package = new ExcelPackage(stream))
                 {
-                    var worksheet = package.Workbook.Worksheets.Add(_localizationService.GetString("eFormReport"));
+                    if (package.Workbook.Worksheets.Any(x => x.Name.Contains($"Data_{excelModel.TemplateId}")))
+                    {
+                        package.Workbook.Worksheets.Delete($"Data_{excelModel.TemplateId}");
+                    }
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets.Add($"Data_{excelModel.TemplateId}");
 
                     for (var y = 0; y < dataSet.Count; y++)
                     {
@@ -133,7 +110,6 @@
                             }
                         }
                     }
-
 
                     result = new MemoryStream(package.GetAsByteArray());
                     stream.Dispose();
