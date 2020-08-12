@@ -119,8 +119,8 @@ namespace eFormAPI.Web.Services.Export
                                         worksheet.Cells[x+1, y+1].Style.Numberformat.Format = "HH:mm:ss";
                                         break;
                                     case 6:
-                                        worksheet.Cells[x+1, y+1].Value = dataY;
-                                        worksheet.Cells[x+1, y+1].Style.Numberformat.Format = "yyyy";
+                                        worksheet.Cells[x+1, y+1].Value = int.Parse(dataY);
+                                        // worksheet.Cells[x+1, y+1].Style.Numberformat.Format = "yyyy"; // This does not work, for some reason with Excel.
                                         break;
                                     case 7:
                                         worksheet.Cells[x+1, y+1].Value = dataY;
@@ -141,6 +141,7 @@ namespace eFormAPI.Web.Services.Export
                             }
                             if (x == 0)
                             {
+                                worksheet.Cells[x+1, y+1].Value = dataY;
                                 worksheet.Cells[x + 1, y + 1].Style.Font.Bold = true;
                             }
                         }
