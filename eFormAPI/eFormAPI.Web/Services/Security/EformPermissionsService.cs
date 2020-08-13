@@ -31,6 +31,8 @@ using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 
 namespace eFormAPI.Web.Services.Security
 {
+    using Microting.eFormApi.BasePn.Abstractions;
+
     public class EformPermissionsService : IEformPermissionsService
     {
         private readonly BaseDbContext _dbContext;

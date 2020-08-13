@@ -40,6 +40,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 namespace eFormAPI.Web.Services
 {
     using Infrastructure.Database.Entities.Permissions;
+    using Microting.eFormApi.BasePn.Abstractions;
 
     public class AdminService : IAdminService
     {
