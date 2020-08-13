@@ -1,4 +1,6 @@
-﻿namespace eFormAPI.Web.Services.Export
+﻿using System.Linq;
+
+namespace eFormAPI.Web.Services.Export
 {
     using System;
     using System.Globalization;
@@ -68,55 +70,30 @@
                         _localizationService.GetString("DataNotFound"));
                 }
 
-                var fileName = $"{excelModel.TemplateId}_eform_excel.xlsx";
                 var excelSaveFolder =
-                    Path.Combine(await core.GetSdkSetting(Settings.fileLocationPicture),
-                        Path.Combine("excel", fileName));
+                    Path.Combine(await core.GetSdkSetting(Settings.fileLocationJasper),
+                        Path.Combine("templates", $"{excelModel.TemplateId}", "compact", $"{excelModel.TemplateId}.xlsx"));
 
                 Stream stream;
-                if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true")
+                if (File.Exists(excelSaveFolder))
                 {
-                    var swiftResult = await core.GetFileFromSwiftStorage(fileName);
-                    if (!swiftResult.IsSuccess)
-                    {
-                        return new OperationDataResult<Stream>(
-                            false,
-                            _localizationService.GetString("ExcelTemplateNotFoundInStorage"));
-                    }
-
-                    stream = swiftResult.ObjectStreamContent;
-                }
-                else if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
-                {
-                    var s3Result = await core.GetFileFromS3Storage(fileName);
-
-                    if (s3Result == null)
-                    {
-                        return new OperationDataResult<Stream>(
-                            false,
-                            _localizationService.GetString("ExcelTemplateNotFoundInStorage"));
-                    }
-
-                    stream = s3Result.ResponseStream;
+                    stream = File.Open(excelSaveFolder, FileMode.Open);
                 }
                 else
                 {
-                    if (File.Exists(excelSaveFolder))
-                    {
-                        stream = File.Open(excelSaveFolder, FileMode.Open);
-                    }
-                    else
-                    {
-                        return new OperationDataResult<Stream>(
-                            false,
-                            _localizationService.GetString("ExcelTemplateNotFoundInStorage"));
-                    }
+                    return new OperationDataResult<Stream>(
+                        false,
+                        _localizationService.GetString("ExcelTemplateNotFoundInStorage"));
                 }
 
                 Stream result;
                 using (var package = new ExcelPackage(stream))
                 {
-                    var worksheet = package.Workbook.Worksheets.Add(_localizationService.GetString("eFormReport"));
+                    if (package.Workbook.Worksheets.Any(x => x.Name.Contains($"Data_{excelModel.TemplateId}")))
+                    {
+                        package.Workbook.Worksheets.Delete($"Data_{excelModel.TemplateId}");
+                    }
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets.Add($"Data_{excelModel.TemplateId}");
 
                     for (var y = 0; y < dataSet.Count; y++)
                     {
@@ -125,15 +102,50 @@
                         {
                             var dataY = dataX[x];
 
-                            worksheet.Cells[x+1, y+1].Value = dataY;
-
+                            if (x != 0)
+                            {
+                                switch (y)
+                                {
+                                    case 0:
+                                    case 10:
+                                        worksheet.Cells[x+1, y+1].Value = int.Parse(dataY);
+                                        break;
+                                    case 1:
+                                        worksheet.Cells[x+1, y+1].Value = dataY;
+                                        worksheet.Cells[x+1, y+1].Style.Numberformat.Format = "yyyy-MM-dd";
+                                        break;
+                                    case 2:
+                                        worksheet.Cells[x+1, y+1].Value = dataY;
+                                        worksheet.Cells[x+1, y+1].Style.Numberformat.Format = "HH:mm:ss";
+                                        break;
+                                    case 6:
+                                        worksheet.Cells[x+1, y+1].Value = int.Parse(dataY);
+                                        // worksheet.Cells[x+1, y+1].Style.Numberformat.Format = "yyyy"; // This does not work, for some reason with Excel.
+                                        break;
+                                    case 7:
+                                        worksheet.Cells[x+1, y+1].Value = dataY;
+                                        worksheet.Cells[x+1, y+1].Style.Numberformat.Format = "yyyy-MM-dd HH:mm:ss";
+                                        break;
+                                    default:
+                                        int i;
+                                        if (int.TryParse(dataY, out  i))
+                                        {
+                                            worksheet.Cells[x+1, y+1].Value = i;
+                                        }
+                                        else
+                                        {
+                                            worksheet.Cells[x+1, y+1].Value = dataY;
+                                        }
+                                        break;
+                                }
+                            }
                             if (x == 0)
                             {
+                                worksheet.Cells[x+1, y+1].Value = dataY;
                                 worksheet.Cells[x + 1, y + 1].Style.Font.Bold = true;
                             }
                         }
                     }
-
 
                     result = new MemoryStream(package.GetAsByteArray());
                     stream.Dispose();

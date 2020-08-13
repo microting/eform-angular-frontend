@@ -386,6 +386,11 @@ namespace eFormAPI.Web.Controllers.Eforms
                 return Forbid();
             }
 
+            if (!uploadModel.File.FileName.Contains(".zip"))
+            {
+                return BadRequest(_localizationService.GetString("InvalidRequest"));
+            }
+
             try
             {
                 var core = await _coreHelper.GetCore();
@@ -437,58 +442,20 @@ namespace eFormAPI.Web.Controllers.Eforms
                     var extractPath = Path.Combine(saveFolder);
                     if (System.IO.File.Exists(filePath))
                     {
-                        if (!Directory.Exists(extractPath))
-                        {
-                            Directory.CreateDirectory(extractPath);
-                        }
-                        else
-                        {
-                            FoldersHelper.ClearFolder(extractPath);
-                        }
+                        Directory.CreateDirectory(extractPath);
 
                         // extract
                         var fastZip = new FastZip();
                         // Will always overwrite if target filenames already exist
                         fastZip.ExtractZip(filePath, extractPath, null);
-                        if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true" || core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
-                        {
-                            await core.PutFileToStorageSystem(filePath, templateId.ToString() + "_" + uploadModel.File.FileName);
-                        }
+                        string reportType = "";
+                        bool statusOk = false;
                         
-                        // Find excel file
-                        string excelSaveFolder = null;
-                        var excelFilePath = Directory.GetFiles(extractPath, "*.xlsx").FirstOrDefault();
-                        if (!string.IsNullOrEmpty(excelFilePath))
-                        {
-                            var excelFileName = $"{templateId}_eform_excel.xlsx";
-                            excelSaveFolder =
-                                Path.Combine(await core.GetSdkSetting(Settings.fileLocationPicture),
-                                    Path.Combine("excel", excelFileName));
-
-                            if (!Directory.Exists(Path.GetDirectoryName(excelSaveFolder)))
-                            {
-                                Directory.CreateDirectory(Path.GetDirectoryName(excelSaveFolder));
-                            }
-
-                            if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true" || core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
-                            {
-                                await core.PutFileToStorageSystem(excelFilePath, excelFileName);
-                            }
-                            else
-                            {
-                                System.IO.File.Copy(excelFilePath, excelSaveFolder, true);
-                            }
-                        }
-
                         using (var dbContext = core.dbContextHelper.GetDbContext())
                         {
                             var compactPath = Path.Combine(extractPath, "compact");
-                            if (!Directory.Exists(compactPath))
-                            {
-                                Directory.CreateDirectory(compactPath);
-                            }
 
-                            if (Directory.GetFiles(compactPath, "*.docx").Length == 0)
+                            if (Directory.GetFiles(compactPath, "*.jrxml").Length != 0)
                             {
                                 var cl = await dbContext.check_lists.SingleAsync(x => x.Id == templateId);
                                 cl.JasperExportEnabled = true;
@@ -498,38 +465,51 @@ namespace eFormAPI.Web.Controllers.Eforms
                                 {
                                     System.IO.File.Delete(file);
                                 }
+
+                                reportType = "jasper";
+
+                                statusOk = true;
                             }
-                            else
+                            if (Directory.GetFiles(compactPath, "*.docx").Length != 0)
                             {
                                 var cl = await dbContext.check_lists.SingleAsync(x => x.Id == templateId);
                                 cl.JasperExportEnabled = false;
                                 cl.DocxExportEnabled = true;
                                 await cl.Update(dbContext);
+
+                                reportType = "docx";
+
+                                statusOk = true;
                             }
 
-                            if (!string.IsNullOrEmpty(excelSaveFolder))
+                            var files = Directory.GetFiles(compactPath, "*.xlsx");
+                            if (files.Length != 0)
                             {
-                                if (!Directory.Exists(Path.GetDirectoryName(excelSaveFolder)))
-                                {
-                                    Directory.CreateDirectory(Path.GetDirectoryName(excelSaveFolder));
-                                }
-
                                 var cl = await dbContext.check_lists.SingleAsync(x => x.Id == templateId);
                                 cl.ExcelExportEnabled = true;
                                 await cl.Update(dbContext);
+
+                                reportType = "xlxs";
+
+                                statusOk = true;
                             }
-
-
                         }
-                        return Ok();
+
+                        if (statusOk)
+                        {
+                            if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true" || core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
+                            {
+                                await core.PutFileToStorageSystem(filePath, $"{templateId}_{reportType}_{uploadModel.File.FileName}");
+                            }
+                            return Ok();
+                        }
                     }
                 }
-
                 return BadRequest(_localizationService.GetString("InvalidRequest"));
             }
             catch (Exception e)
             {
-                return BadRequest("Invalid Request!");
+                return BadRequest($"Invalid Request! Exception: {e.Message}");
             }
         }
 
