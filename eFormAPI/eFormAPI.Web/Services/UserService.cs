@@ -23,7 +23,6 @@ SOFTWARE.
 */
 using System.Security.Claims;
 using System.Threading.Tasks;
-using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Infrastructure.Database;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -32,6 +31,10 @@ using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 
 namespace eFormAPI.Web.Services
 {
+    using System;
+    using System.Linq;
+    using Microting.eFormApi.BasePn.Abstractions;
+
     public class UserService : IUserService
     {
         private readonly UserManager<EformUser> _userManager;
@@ -78,6 +81,95 @@ namespace eFormAPI.Web.Services
         public async Task<EformUser> GetCurrentUserAsync()
         {
             return await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == UserId);
+        }
+
+        public async Task<TimeZoneInfo> GetCurrentUserTimeZoneInfo()
+        {
+            if (UserId < 1)
+            {
+                throw new Exception("User not authorized!");
+            }
+
+            return await GetTimeZoneInfo(UserId);
+        }
+
+        public async Task<TimeZoneInfo> GetTimeZoneInfo(int userId)
+        {
+
+            var timeZone = await _dbContext.Users
+                .AsNoTracking()
+                .Where(x => x.Id == userId)
+                .Select(x => x.TimeZone)
+                .FirstOrDefaultAsync();
+
+            if (string.IsNullOrEmpty(timeZone))
+            {
+                timeZone = "Europe/Copenhagen";
+            }
+
+            TimeZoneInfo timeZoneInfo;
+            try
+            {
+                timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timeZone);
+            }
+            catch
+            {
+                timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("E. Europe Standard Time");
+            }
+
+            return timeZoneInfo;
+        }
+
+        public async Task<string> GetCurrentUserLocale()
+        {
+            if (UserId < 1)
+            {
+                throw new Exception("User not authorized!");
+            }
+
+            return await GetUserLocale(UserId);
+        }
+
+        public async Task<string> GetUserLocale(int userId)
+        {
+            var locale = await _dbContext.Users
+                .AsNoTracking()
+                .Where(x => x.Id == userId)
+                .Select(x => x.Locale)
+                .FirstOrDefaultAsync();
+
+            if (string.IsNullOrEmpty(locale))
+            {
+                locale = "da-DK";
+            }
+
+            return locale;
+        }
+
+        public async Task<string> GetCurrentUserFormats()
+        {
+            if (UserId < 1)
+            {
+                throw new Exception("User not authorized!");
+            }
+
+            return await GetUserFormats(UserId);
+        }
+
+        public async Task<string> GetUserFormats(int userId)
+        {
+            var formats = await _dbContext.Users
+                .AsNoTracking()
+                .Where(x => x.Id == userId)
+                .Select(x => x.Formats)
+                .FirstOrDefaultAsync();
+
+            if (string.IsNullOrEmpty(formats))
+            {
+                formats = "";
+            }
+
+            return formats;
         }
 
         public Task AddPasswordAsync(EformUser user, string password)
