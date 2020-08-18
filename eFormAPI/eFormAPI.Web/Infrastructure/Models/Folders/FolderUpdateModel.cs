@@ -21,16 +21,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Infrastructure.Models
+namespace eFormAPI.Web.Infrastructure.Models.Folders
 {
-    public class FolderNameModel
+    public class FolderUpdateModel
     {
         public int Id { get; set; }
-        
         public string Name { get; set; }
-        
         public string Description { get; set; }
-        
         public int? ParentId { get; set; }
     }
 }

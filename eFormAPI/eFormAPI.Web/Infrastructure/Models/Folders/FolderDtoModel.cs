@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2020 Microting A/S
+Copyright (c) 2007 - 2019 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,21 +21,21 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Abstractions.Advanced
+namespace eFormAPI.Web.Infrastructure.Models.Folders
 {
-    using Infrastructure.Models.Folders;
+    using System;
     using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
-    public interface IFoldersService
+    public class FolderDtoModel
     {
-        Task<OperationDataResult<List<FolderDtoModel>>> Index();
-        Task<OperationDataResult<List<FolderDtoModel>>> List();
-        Task<OperationResult> Create(FolderCreateModel createModel);
-        Task<OperationDataResult<FolderDtoModel>> Edit(int id);
-        Task<OperationResult> Update(FolderUpdateModel folderUpdateModel);
-        Task<OperationResult> Delete(int id);
-        
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public int? ParentId { get; set; }
+        public DateTime? CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
+        public int? MicrotingUId { get; set; }
+        public List<FolderDtoModel> Children { get; set; }
+            = new List<FolderDtoModel>();
     }
 }

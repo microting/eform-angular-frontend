@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2019 Microting A/S
+Copyright (c) 2007 - 2020 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -26,14 +26,14 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions.Advanced;
 using eFormAPI.Web.Infrastructure;
-using eFormAPI.Web.Infrastructure.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microting.eForm.Dto;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Controllers.Advanced
 {
+    using Infrastructure.Models.Folders;
+
     [Authorize]
     public class FoldersController: Controller
     {
@@ -45,40 +45,47 @@ namespace eFormAPI.Web.Controllers.Advanced
         }
 
         [HttpGet]
-        [Route("api/folders/index")]
+        [Route("api/folders")]
         [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
-        public async Task<OperationDataResult<List<FolderDto>>> Index()
+        public async Task<OperationDataResult<List<FolderDtoModel>>> Index()
         {
             return await _foldersService.Index();
         }
-        
-        
-        [HttpPost]
-        [Route("api/folders/create")]
-        [Authorize(Policy = AuthConsts.EformPolicies.Workers.Create)]
-        public async Task<OperationResult> Сreate([FromBody] FolderNameModel model)
+
+        [HttpGet]
+        [Route("api/folders/list")]
+        [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
+        public async Task<OperationDataResult<List<FolderDtoModel>>> List()
         {
-            return await _foldersService.Сreate(model);
+            return await _foldersService.List();
+        }
+
+        [HttpPost]
+        [Route("api/folders")]
+        [Authorize(Policy = AuthConsts.EformPolicies.Workers.Create)]
+        public async Task<OperationResult> Create([FromBody] FolderCreateModel createModel)
+        {
+            return await _foldersService.Create(createModel);
         }
 
         [HttpGet]
-        [Route("api/folders/edit")]
+        [Route("api/folders/{id}")]
         [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
-        public async Task<OperationDataResult<FolderDto>> Read(int id)
+        public async Task<OperationDataResult<FolderDtoModel>> Read(int id)
         {
             return await _foldersService.Edit(id);
         }
 
-        [HttpPost]
-        [Route("api/folders/update")]
+        [HttpPut]
+        [Route("api/folders")]
         [Authorize(Policy = AuthConsts.EformPolicies.Sites.Update)]
-        public async Task<OperationResult> Update([FromBody] FolderNameModel folderNameModel)
+        public async Task<OperationResult> Update([FromBody] FolderUpdateModel folderUpdateModel)
         {
-            return await _foldersService.Update(folderNameModel);
+            return await _foldersService.Update(folderUpdateModel);
         }
 
-        [HttpGet]
-        [Route("api/folders/delete/{id}")]
+        [HttpDelete]
+        [Route("api/folders/{id}")]
         [Authorize(Policy = AuthConsts.EformPolicies.Sites.Delete)]
         public async Task<OperationResult> Delete(int id)
         {
