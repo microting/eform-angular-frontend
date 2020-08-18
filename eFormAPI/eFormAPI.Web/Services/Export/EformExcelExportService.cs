@@ -95,7 +95,7 @@ namespace eFormAPI.Web.Services.Export
                     Path.Combine(await core.GetSdkSetting(Settings.fileLocationJasper),
                         Path.Combine("templates", $"{excelModel.TemplateId}", "compact", $"{excelModel.TemplateId}.xlsx"));
 
-                string timeStamp = DateTime.UtcNow.ToString("yyyyMMdd") + "_" + DateTime.UtcNow.ToString("hhmmss");
+                string timeStamp = $"{DateTime.UtcNow:yyyyMMdd}_{DateTime.UtcNow:hhmmss}";
 
                 string resultDocument = Path.Combine(await core.GetSdkSetting(Settings.fileLocationJasper).ConfigureAwait(false), "results",
                     $"{timeStamp}_{excelModel.TemplateId}.xlsx");
