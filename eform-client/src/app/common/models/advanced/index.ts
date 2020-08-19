@@ -12,7 +12,6 @@ export * from './adv-entity-selectable-group-edit.model';
 export * from './adv-entity-selectable-item.model';
 export * from './worker-create.model';
 export * from  './unit.model';
-export * from './simple-tree-node.model';
 
 
 

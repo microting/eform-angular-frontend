@@ -5,4 +5,3 @@ export * from './eform-page-size/eform-page-size.component';
 export * from './status-bar/status-bar.component';
 export * from './date-formatter/date-formatter.component';
 export * from './eform-tree-view-picker/eform-tree-view-picker.component';
-export {SimpleTreeNode} from 'src/app/common/models/advanced/simple-tree-node.model';
