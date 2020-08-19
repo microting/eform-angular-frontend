@@ -61,7 +61,7 @@ export class EformTreeViewPickerComponent implements OnChanges, OnDestroy {
           foundNode.setActiveAndVisible();
         }, 500);
       } else {
-        this.tree.treeModel.setActiveNode(null, null);
+        this.tree ? this.tree.treeModel.setActiveNode(null, null) : '';
       }
     }
   }
