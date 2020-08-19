@@ -36,6 +36,5 @@ namespace eFormAPI.Web.Abstractions.Advanced
         Task<OperationDataResult<FolderDtoModel>> Edit(int id);
         Task<OperationResult> Update(FolderUpdateModel folderUpdateModel);
         Task<OperationResult> Delete(int id);
-        
     }
 }

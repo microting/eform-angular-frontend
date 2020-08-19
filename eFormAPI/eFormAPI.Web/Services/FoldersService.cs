@@ -34,6 +34,7 @@ namespace eFormAPI.Web.Services
     using System.Threading.Tasks;
     using Abstractions;
     using Abstractions.Advanced;
+    using Microsoft.Extensions.Logging;
     using Microting.eFormApi.BasePn.Abstractions;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
@@ -41,12 +42,14 @@ namespace eFormAPI.Web.Services
     {
         private readonly IEFormCoreService _coreHelper;
         private readonly ILocalizationService _localizationService;
-        
+        private readonly ILogger<FoldersService> _logger;
         public FoldersService(IEFormCoreService coreHelper, 
-            ILocalizationService localizationService)
+            ILocalizationService localizationService,
+            ILogger<FoldersService> logger)
         {
             _coreHelper = coreHelper;
             _localizationService = localizationService;
+            _logger = logger;
         }
 
         public async Task<OperationDataResult<List<FolderDtoModel>>> List()
@@ -72,8 +75,10 @@ namespace eFormAPI.Web.Services
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                _logger.LogError(e, e.Message);
+                return new OperationDataResult<List<FolderDtoModel>>(
+                    false,
+                    _localizationService.GetString("ErrorWhileObtainingFoldersInfo"));
             }
         }
 
@@ -101,16 +106,28 @@ namespace eFormAPI.Web.Services
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                _logger.LogError(e, e.Message);
+                return new OperationDataResult<List<FolderDtoModel>>(
+                    false,
+                    _localizationService.GetString("ErrorWhileObtainingFoldersInfo"));
             }
         }
 
         public async Task<OperationResult> Create(FolderCreateModel createModel)
         {
-            var core = await _coreHelper.GetCore();
-            await core.FolderCreate(createModel.Name, createModel.Description, createModel.ParentId);
-            return new OperationResult(true);
+            try
+            {
+                var core = await _coreHelper.GetCore();
+                await core.FolderCreate(createModel.Name, createModel.Description, createModel.ParentId);
+                return new OperationResult(true);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                return new OperationResult(
+                    false,
+                    _localizationService.GetString("ErrorWhileCreatingFolder"));
+            }
         }
 
         public async Task<OperationDataResult<FolderDtoModel>> Edit(int id)
@@ -137,17 +154,17 @@ namespace eFormAPI.Web.Services
                 {
                     return new OperationDataResult<FolderDtoModel>(
                         false,
-                        _localizationService.GetString(""));
+                        _localizationService.GetString("FolderNotFound"));
                 }
 
                 return new OperationDataResult<FolderDtoModel>(true, folder);
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                _logger.LogError(e, e.Message);
                 return new OperationDataResult<FolderDtoModel>(
                     false,
-                    _localizationService.GetString(""));
+                    _localizationService.GetString("ErrorWhileObtainingFoldersInfo"));
             }
         }
 
@@ -164,10 +181,13 @@ namespace eFormAPI.Web.Services
 
                 return new OperationResult(true);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {   
-                _coreHelper.LogException(ex.Message);
-                return new OperationResult(false);
+                _coreHelper.LogException(e.Message);
+                _logger.LogError(e, e.Message);
+                return new OperationResult(
+                    false,
+                    _localizationService.GetString("ErrorWhileUpdatingFolder"));
             }
         }
 
@@ -180,8 +200,12 @@ namespace eFormAPI.Web.Services
                 return new OperationResult(true);
             }
             catch (Exception e)
-            {                
-                return new OperationResult(false);
+            {
+                _coreHelper.LogException(e.Message);
+                _logger.LogError(e, e.Message);
+                return new OperationResult(
+                    false,
+                    _localizationService.GetString("ErrorWhileRemovingFolder"));
             }
         }
     }
