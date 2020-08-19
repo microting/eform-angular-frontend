@@ -7,7 +7,6 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { SimpleTreeNode } from 'src/app/common/models';
 import { FolderDto } from 'src/app/common/models/dto/folder.dto';
 import { ITreeState, TreeComponent } from '@circlon/angular-tree-component';
 
