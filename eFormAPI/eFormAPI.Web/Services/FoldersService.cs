@@ -179,7 +179,7 @@ namespace eFormAPI.Web.Services
                 await core.FolderDelete(id);
                 return new OperationResult(true);
             }
-            catch
+            catch (Exception e)
             {                
                 return new OperationResult(false);
             }

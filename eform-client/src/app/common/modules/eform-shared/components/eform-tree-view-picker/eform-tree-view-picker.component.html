@@ -1,0 +1,97 @@
+<ng-container>
+  <a
+    class="float-right page-link mb-2"
+    *ngIf="collapsed"
+    (click)="tree.treeModel.expandAll(); collapsed = !collapsed"
+  >
+    <fa-icon icon="angle-double-right" size="lg" [fixedWidth]="true"></fa-icon>
+  </a>
+  <a
+    class="float-right page-link mb-2"
+    *ngIf="!collapsed"
+    (click)="tree.treeModel.collapseAll(); collapsed = !collapsed"
+  >
+    <fa-icon icon="angle-double-down" size="lg" [fixedWidth]="true"></fa-icon>
+  </a>
+</ng-container>
+
+<tree-root #tree [nodes]="nodes" [options]="options" [(state)]="state">
+  <ng-template
+    #treeNodeWrapperTemplate
+    let-node
+    let-index="index"
+    let-templates="templates"
+  >
+    <div
+      style="display: flex; align-items: center;"
+      class="node-wrapper"
+      [style.padding-left]="node.getNodePadding()"
+    >
+      <div
+        (click)="node.toggleExpanded()"
+        *ngIf="node.hasChildren"
+      >
+        <fa-icon
+          *ngIf="node?.isCollapsed"
+          icon="folder"
+          size="lg"
+          [ngClass]="{'text-black-50': !node.isActive}"
+        ></fa-icon>
+        <fa-icon
+          *ngIf="node?.isExpanded"
+          icon="folder-open"
+          size="lg"
+          [ngClass]="{'text-black-50': !node.isActive}"
+        ></fa-icon>
+      </div>
+      <div *ngIf="!node.hasChildren" [ngClass]="{'text-black-50': !node.isActive}">
+        <fa-icon icon="folder-open" size="lg"></fa-icon>
+      </div>
+      <div
+        class="node-content-wrapper"
+        [class.node-content-wrapper-active]="node.isActive"
+        (click)="node.mouseAction('click', $event); selected(node.data, node.isActive)"
+        (dblclick)="node.mouseAction('dblClick', $event)"
+        (contextmenu)="node.mouseAction('contextMenu', $event)"
+      >
+        <tree-node-content
+          [node]="node"
+          [index]="index"
+          [template]="treeNodeTemplate"
+        ></tree-node-content>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #treeNodeTemplate let-node let-index="index">
+    <div class="d-flex align-items-center">
+      <span
+        >{{ node.data.name }}
+        <ng-container *ngIf="node.data.description">
+          - {{ node.data.description }}</ng-container
+        ></span
+      >
+      <div class="ml-3 text-black-50" *ngIf="node.isActive && showActions">
+        <fa-icon
+          *ngIf="showCreateAction"
+          (click)="createChild($event, node.data)"
+          icon="plus"
+          size="lg"
+        ></fa-icon>
+        <fa-icon
+          *ngIf="showEditAction"
+          (click)="edit($event, node.data)"
+          class="ml-2"
+          icon="pen"
+          size="lg"
+        ></fa-icon>
+        <fa-icon
+          *ngIf="showDeleteAction"
+          (click)="delete($event, node.data)"
+          class="ml-2"
+          icon="trash-alt"
+          size="lg"
+        ></fa-icon>
+      </div>
+    </div>
+  </ng-template>
+</tree-root>

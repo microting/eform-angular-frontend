@@ -7,14 +7,11 @@ import {OperationDataResult, OperationResult} from 'src/app/common/models';
 import {BaseService} from 'src/app/common/services/base.service';
 import {FolderCreateModel} from '../../models/advanced/folder-create.model';
 import {FolderDto} from '../../models/dto/folder.dto';
-import {FolderModel} from '../../models/advanced/folder.model';
+import {FolderUpdateModel} from '../../models/advanced/folderUpdateModel';
 
 const FoldersMethods = {
-  GetAll: '/api/folders/index',
-  GetSingle: '/api/folders/edit',
-  UpdateSingle: '/api/folders/update',
-  CreateSingle: '/api/folders/create',
-  DeleteSingle: '/api/folders/delete'
+  Folders: '/api/folders',
+  FoldersList: '/api/folders/list',
 };
 
 @Injectable()
@@ -24,23 +21,27 @@ export class FoldersService extends BaseService {
   }
 
   getAllFolders(): Observable<OperationDataResult<Array<FolderDto>>> {
-    return this.get<Array<FolderDto>>(FoldersMethods.GetAll);
+    return this.get<Array<FolderDto>>(FoldersMethods.Folders);
+  }
+
+  getAllFoldersList(): Observable<OperationDataResult<Array<FolderDto>>> {
+    return this.get<Array<FolderDto>>(FoldersMethods.FoldersList);
   }
 
   getSingleFolder(id: number): Observable<OperationDataResult<FolderDto>> {
-    return this.get<FolderDto>(FoldersMethods.GetSingle + '/' + id);
+    return this.get<FolderDto>(FoldersMethods.Folders + '/' + id);
   }
 
-  updateSingleFolder(model: FolderModel): Observable<OperationResult> {
-    return this.post<FolderModel>(FoldersMethods.UpdateSingle, model);
+  updateSingleFolder(model: FolderUpdateModel): Observable<OperationResult> {
+    return this.put<FolderUpdateModel>(FoldersMethods.Folders, model);
   }
 
   deleteSingleFolder(id: number): Observable<OperationResult> {
-    return this.get(FoldersMethods.DeleteSingle + '/' + id);
+    return this.delete(FoldersMethods.Folders + '/' + id);
   }
 
   createFolder(model: FolderCreateModel): Observable<OperationResult> {
-    return this.post<FolderCreateModel>(FoldersMethods.CreateSingle, model);
+    return this.post<FolderCreateModel>(FoldersMethods.Folders, model);
   }
 
 }
