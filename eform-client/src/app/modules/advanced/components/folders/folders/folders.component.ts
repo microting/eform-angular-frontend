@@ -17,12 +17,18 @@ export class FoldersComponent implements OnInit {
 
   selectedFolder: FolderDto = new FolderDto();
   spinnerStatus = true;
+  foldersFlatList: Array<FolderDto> = [];
   foldersDto: Array<FolderDto> = [];
 
   get userClaims() { return this.authService.userClaims; }
 
   ngOnInit(): void {
+    this.getInitialData();
+  }
+
+  getInitialData() {
     this.loadAllFolders();
+    this.loadAllFoldersList();
   }
 
   constructor(private foldersService: FoldersService,
@@ -30,12 +36,11 @@ export class FoldersComponent implements OnInit {
               private authService: AuthService) {
   }
 
-  openCreateModal() {
-    this.modalFolderCreate.show();
+  openCreateModal(selectedFolder?: FolderDto) {
+    this.modalFolderCreate.show(selectedFolder);
   }
   openEditModal(selectedFolder: FolderDto) {
-    this.selectedFolder = selectedFolder;
-    this.modalFolderEdit.show();
+    this.modalFolderEdit.show(selectedFolder);
   }
   openDeleteModal(selectedFolder: FolderDto) {
     this.selectedFolder = selectedFolder;
@@ -46,6 +51,14 @@ export class FoldersComponent implements OnInit {
     this.foldersService.getAllFolders().subscribe((operation) => {
       if (operation && operation.success) {
         this.foldersDto = operation.model;
+      }
+    });
+  }
+
+  loadAllFoldersList() {
+    this.foldersService.getAllFoldersList().subscribe((operation) => {
+      if (operation && operation.success) {
+        this.foldersFlatList = operation.model;
       }
     });
   }

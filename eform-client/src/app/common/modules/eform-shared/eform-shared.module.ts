@@ -5,19 +5,27 @@ import {NgSelectModule} from '@ng-select/ng-select';
 import {TranslateModule} from '@ngx-translate/core';
 
 import {
+  DateFormatterComponent,
+  EformPageSizeComponent,
   EformPageSubheaderComponent,
   EformPaginationComponent,
-  EformPageSizeComponent,
+  EformTreeViewPickerComponent,
   StatusBarComponent,
-  DateFormatterComponent} from './components';
+} from './components';
 import {AuthImagePipe} from 'src/app/common/pipes';
+import {TreeModule} from '@circlon/angular-tree-component';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {WavesModule} from 'angular-bootstrap-md';
 
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule,
     NgSelectModule,
-    FormsModule
+    FormsModule,
+    TreeModule,
+    FontAwesomeModule,
+    WavesModule,
   ],
   declarations: [
     EformPageSubheaderComponent,
@@ -25,7 +33,8 @@ import {AuthImagePipe} from 'src/app/common/pipes';
     EformPageSizeComponent,
     StatusBarComponent,
     DateFormatterComponent,
-    AuthImagePipe
+    AuthImagePipe,
+    EformTreeViewPickerComponent,
   ],
   exports: [
     EformPageSubheaderComponent,
@@ -33,8 +42,8 @@ import {AuthImagePipe} from 'src/app/common/pipes';
     EformPageSizeComponent,
     StatusBarComponent,
     DateFormatterComponent,
-    AuthImagePipe
-  ]
+    EformTreeViewPickerComponent,
+    AuthImagePipe,
+  ],
 })
-export class EformSharedModule {
-}
+export class EformSharedModule {}

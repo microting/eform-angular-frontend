@@ -690,4 +690,19 @@
   <data name="ExcelTemplateNotFoundInStorage" xml:space="preserve">
     <value>Excel template not found in storage!</value>
   </data>
+  <data name="ErrorWhileCreatingFolder" xml:space="preserve">
+    <value>Error while creating folder</value>
+  </data>
+  <data name="ErrorWhileObtainingFoldersInfo" xml:space="preserve">
+    <value>Error while obtaining folders info</value>
+  </data>
+  <data name="ErrorWhileRemovingFolder" xml:space="preserve">
+    <value>Error while removing folder</value>
+  </data>
+  <data name="ErrorWhileUpdatingFolder" xml:space="preserve">
+    <value>Error while updating folder</value>
+  </data>
+  <data name="FolderNotFound" xml:space="preserve">
+    <value>Folder not found</value>
+  </data>
 </root>

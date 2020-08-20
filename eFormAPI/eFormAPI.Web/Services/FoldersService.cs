@@ -22,65 +22,172 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using eFormAPI.Web.Abstractions;
-using eFormAPI.Web.Abstractions.Advanced;
-using eFormAPI.Web.Infrastructure.Models;
-using Microting.eForm.Dto;
-using Microting.eFormApi.BasePn.Abstractions;
-using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-
 namespace eFormAPI.Web.Services
 {
+    using System.Linq;
+    using Infrastructure.Helpers;
+    using Infrastructure.Models.Folders;
+    using Microsoft.EntityFrameworkCore;
+    using Microting.eForm.Infrastructure.Constants;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Abstractions;
+    using Abstractions.Advanced;
+    using Microsoft.Extensions.Logging;
+    using Microting.eFormApi.BasePn.Abstractions;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+
     public class FoldersService : IFoldersService
     {
         private readonly IEFormCoreService _coreHelper;
         private readonly ILocalizationService _localizationService;
-        
+        private readonly ILogger<FoldersService> _logger;
         public FoldersService(IEFormCoreService coreHelper, 
-            ILocalizationService localizationService)
+            ILocalizationService localizationService,
+            ILogger<FoldersService> logger)
         {
             _coreHelper = coreHelper;
             _localizationService = localizationService;
-        }
-        
-        public async Task<OperationDataResult<List<FolderDto>>> Index()
-        {
-            _coreHelper.LogEvent("");
-            var core = await _coreHelper.GetCore();
-            var folderDtos = await core.FolderGetAll(false);
-            return new OperationDataResult<List<FolderDto>>(true, folderDtos);
+            _logger = logger;
         }
 
-        public async Task<OperationResult> Сreate(FolderNameModel model)
+        public async Task<OperationDataResult<List<FolderDtoModel>>> List()
         {
-            var core = await _coreHelper.GetCore();
-            await core.FolderCreate(model.Name, model.Description, model.ParentId);
-            return new OperationResult(true);
+            try
+            {
+                var core = await _coreHelper.GetCore();
+                await using var dbContext = core.dbContextHelper.GetDbContext();
+                var folders = await dbContext.folders
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Select(x => new FolderDtoModel
+                    {
+                        Id = x.Id,
+                        CreatedAt = x.CreatedAt,
+                        Description = x.Description,
+                        MicrotingUId = x.MicrotingUid,
+                        Name = x.Name,
+                        ParentId = x.ParentId,
+                        UpdatedAt = x.UpdatedAt,
+                    }).ToListAsync();
+
+                return new OperationDataResult<List<FolderDtoModel>>(true, folders);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                return new OperationDataResult<List<FolderDtoModel>>(
+                    false,
+                    _localizationService.GetString("ErrorWhileObtainingFoldersInfo"));
+            }
         }
 
-        public async Task<OperationDataResult<FolderDto>> Edit(int id)
+        public async Task<OperationDataResult<List<FolderDtoModel>>> Index()
         {
-            var core = await _coreHelper.GetCore();
-            var folder = await core.FolderRead(id);
-            return new OperationDataResult<FolderDto>(true, folder);
+            try
+            {
+                var core = await _coreHelper.GetCore();
+                await using var dbContext = core.dbContextHelper.GetDbContext();
+                var folders = await dbContext.folders
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Select(x => new FolderDtoModel
+                    {
+                        Id = x.Id,
+                        CreatedAt = x.CreatedAt,
+                        Description = x.Description,
+                        MicrotingUId = x.MicrotingUid,
+                        Name = x.Name,
+                        ParentId = x.ParentId,
+                        UpdatedAt = x.UpdatedAt,
+                    }).ToListAsync();
+
+                var treeResult = folders.BuildTree().ToList();
+                return new OperationDataResult<List<FolderDtoModel>>(true, treeResult);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                return new OperationDataResult<List<FolderDtoModel>>(
+                    false,
+                    _localizationService.GetString("ErrorWhileObtainingFoldersInfo"));
+            }
         }
 
-        public async Task<OperationResult> Update(FolderNameModel folderNameModel)
+        public async Task<OperationResult> Create(FolderCreateModel createModel)
+        {
+            try
+            {
+                var core = await _coreHelper.GetCore();
+                await core.FolderCreate(createModel.Name, createModel.Description, createModel.ParentId);
+                return new OperationResult(true);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                return new OperationResult(
+                    false,
+                    _localizationService.GetString("ErrorWhileCreatingFolder"));
+            }
+        }
+
+        public async Task<OperationDataResult<FolderDtoModel>> Edit(int id)
+        {
+            try
+            {
+                var core = await _coreHelper.GetCore();
+                await using var dbContext = core.dbContextHelper.GetDbContext();
+                var folder = await dbContext.folders
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Where(x => x.Id == id)
+                    .Select(x => new FolderDtoModel
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                        CreatedAt = x.CreatedAt,
+                        Description = x.Description,
+                        MicrotingUId = x.MicrotingUid,
+                        ParentId = x.ParentId,
+                        UpdatedAt = x.UpdatedAt,
+                    }).FirstOrDefaultAsync();
+
+                if (folder == null)
+                {
+                    return new OperationDataResult<FolderDtoModel>(
+                        false,
+                        _localizationService.GetString("FolderNotFound"));
+                }
+
+                return new OperationDataResult<FolderDtoModel>(true, folder);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                return new OperationDataResult<FolderDtoModel>(
+                    false,
+                    _localizationService.GetString("ErrorWhileObtainingFoldersInfo"));
+            }
+        }
+
+        public async Task<OperationResult> Update(FolderUpdateModel folderUpdateModel)
         {
             var core = await _coreHelper.GetCore();
             try
             {
-                await core.FolderUpdate(folderNameModel.Id, folderNameModel.Name, folderNameModel.Description,
-                    folderNameModel.ParentId);                
+                await core.FolderUpdate(
+                    folderUpdateModel.Id,
+                    folderUpdateModel.Name,
+                    folderUpdateModel.Description,
+                    folderUpdateModel.ParentId);
+
                 return new OperationResult(true);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {   
-                _coreHelper.LogException(ex.Message);
-                return new OperationResult(false);
+                _coreHelper.LogException(e.Message);
+                _logger.LogError(e, e.Message);
+                return new OperationResult(
+                    false,
+                    _localizationService.GetString("ErrorWhileUpdatingFolder"));
             }
         }
 
@@ -92,9 +199,13 @@ namespace eFormAPI.Web.Services
                 await core.FolderDelete(id);
                 return new OperationResult(true);
             }
-            catch
-            {                
-                return new OperationResult(false);
+            catch (Exception e)
+            {
+                _coreHelper.LogException(e.Message);
+                _logger.LogError(e, e.Message);
+                return new OperationResult(
+                    false,
+                    _localizationService.GetString("ErrorWhileRemovingFolder"));
             }
         }
     }

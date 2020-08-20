@@ -672,4 +672,19 @@
   <data name="ExcelTemplateNotFoundInStorage" xml:space="preserve">
     <value>Excel-Vorlage nicht im Speicher gefunden!</value>
   </data>
+  <data name="ErrorWhileCreatingFolder" xml:space="preserve">
+    <value>Fehler beim Erstellen des Ordners</value>
+  </data>
+  <data name="ErrorWhileObtainingFoldersInfo" xml:space="preserve">
+    <value>Fehler beim Abrufen der Ordnerinformationen</value>
+  </data>
+  <data name="ErrorWhileRemovingFolder" xml:space="preserve">
+    <value>Fehler beim Entfernen des Ordners</value>
+  </data>
+  <data name="ErrorWhileUpdatingFolder" xml:space="preserve">
+    <value>Fehler beim Aktualisieren des Ordners</value>
+  </data>
+  <data name="FolderNotFound" xml:space="preserve">
+    <value>Ordner nicht gefunden</value>
+  </data>
 </root>

@@ -1,19 +1,28 @@
-<div mdbModal class="modal fade" #frame="mdbModal">
+<div mdbModal class="modal fade" #frame="mdbModal" (onHide)="hide()">
   <div class="modal-dialog modal-lg modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
-        <h3>{{'Create Folder' | translate}}</h3>
+        <h3 *ngIf="selectedParentFolder">{{'Create Nested Folder' | translate}}</h3>
+        <h3 *ngIf="!selectedParentFolder">{{'Create Folder' | translate}}</h3>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6" *ngIf="selectedParentFolder">
+              <div class="md-form">
+                <input mdbInput
+                       name="parentName" [ngModel]="selectedParentFolder?.name" [disabled]="true"
+                       id="parentName" type="text" class="form-control">
+                <label for="parentName">{{'Parent Name' | translate}}</label>
+              </div>
+            </div>
+            <div [ngClass]="{'col-md-6': selectedParentFolder, 'col-md-12': !selectedParentFolder}">
               <div class="md-form">
                 <input mdbInput
                        name="name" [(ngModel)]="newFolderModel.name"
                        required
                        id="name" type="text" class="form-control">
-                <label for="name">{{'Name: ' | translate}}</label>
+                <label for="name">{{'Name' | translate}}</label>
               </div>
             </div>
           </div>
@@ -24,7 +33,7 @@
                        name="description" [(ngModel)]="newFolderModel.description"
                        required
                        id="description" type="text" class="form-control">
-                <label for="description">{{'Description: ' | translate}}</label>
+                <label for="description">{{'Description' | translate}}</label>
               </div>
             </div>
           </div>

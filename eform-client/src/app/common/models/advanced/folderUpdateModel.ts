@@ -1,4 +1,4 @@
-export class FolderModel {
+export class FolderUpdateModel {
   id: number;
   name: string;
   description: string;

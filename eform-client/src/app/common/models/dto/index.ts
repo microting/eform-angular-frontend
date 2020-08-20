@@ -3,6 +3,7 @@ export * from './worker.dto';
 export * from './site-name.dto';
 export * from './template.dto';
 export * from './site.dto';
+export * from './folder.dto';
 
 
 export * from './element.dto';
