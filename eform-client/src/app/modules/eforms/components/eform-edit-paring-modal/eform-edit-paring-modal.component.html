@@ -13,6 +13,7 @@
               </div>
               <div class="card-body">
                 <app-eform-tree-view-picker
+                  [lockSelectedNode]="eformDeployed"
                   [nodes]="foldersDto"
                   [focusedNodeId]="deployModel.folderId"
                   [showActions]="false"

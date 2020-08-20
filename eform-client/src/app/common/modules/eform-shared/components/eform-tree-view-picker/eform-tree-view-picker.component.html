@@ -47,7 +47,7 @@
       <div *ngIf="!node.hasChildren" [ngClass]="{'text-black-50': !node.isActive}">
         <fa-icon icon="folder-open" size="lg"></fa-icon>
       </div>
-      <div
+      <div *ngIf="!lockSelectedNode"
         class="node-content-wrapper"
         [class.node-content-wrapper-active]="node.isActive"
         (click)="node.mouseAction('click', $event); selected(node.data, node.isActive)"
@@ -60,10 +60,20 @@
           [template]="treeNodeTemplate"
         ></tree-node-content>
       </div>
+      <div *ngIf="lockSelectedNode"
+        class="node-content-wrapper"
+        [class.node-content-wrapper-active]="node.isActive"
+      >
+        <tree-node-content
+          [node]="node"
+          [index]="index"
+          [template]="treeNodeTemplate"
+        ></tree-node-content>
+      </div>
     </div>
   </ng-template>
   <ng-template #treeNodeTemplate let-node let-index="index">
-    <div class="d-flex align-items-center">
+    <div class="d-flex align-items-center" [ngStyle]="{'cursor': lockSelectedNode ? 'not-allowed' : 'pointer'}">
       <span
         >{{ node.data.name }}
         <ng-container *ngIf="node.data.description">

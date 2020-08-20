@@ -20,7 +20,7 @@ import { FolderDto } from 'src/app/common/models/dto';
 })
 export class EformEditParingModalComponent implements OnInit {
   @ViewChild('frame', { static: true }) frame;
-  @Output() onDeploymentFinished: EventEmitter<void> = new EventEmitter<void>();
+  @Output() deploymentFinished: EventEmitter<void> = new EventEmitter<void>();
   deployModel: DeployModel = new DeployModel();
   deployViewModel: DeployModel = new DeployModel();
   selectedTemplateDto: TemplateDto = new TemplateDto();
@@ -28,6 +28,7 @@ export class EformEditParingModalComponent implements OnInit {
   matchFound = false;
   foldersDto: Array<FolderDto> = [];
   saveButtonDisabled = true;
+  eformDeployed = false;
 
   get userClaims() {
     return this.authService.userClaims;
@@ -57,6 +58,7 @@ export class EformEditParingModalComponent implements OnInit {
   show(templateDto: TemplateDto) {
     this.saveButtonDisabled = true;
     this.selectedTemplateDto = templateDto;
+    this.eformDeployed = templateDto.deployedSites.length > 0;
     this.deployModel = new DeployModel();
     this.deployViewModel = new DeployModel();
     this.loadAllFolders();
@@ -105,7 +107,7 @@ export class EformEditParingModalComponent implements OnInit {
       if (operation && operation.success) {
         this.deployModel = new DeployModel();
         this.frame.hide();
-        this.onDeploymentFinished.emit();
+        this.deploymentFinished.emit();
       }
     });
   }

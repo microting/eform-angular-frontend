@@ -204,7 +204,7 @@
 <app-eform-create-modal [availableTags]="availableTags" (onEformCreated)="loadAllTemplates()"
                         #modalNewEform></app-eform-create-modal>
 <app-eform-column-modal #modalCasesColumns></app-eform-column-modal>
-<app-eform-edit-paring-modal (onDeploymentFinished)="loadAllTemplates()" #modalParing></app-eform-edit-paring-modal>
+<app-eform-edit-paring-modal (deploymentFinished)="loadAllTemplates()" #modalParing></app-eform-edit-paring-modal>
 <app-eform-edit-tags-modal [availableTags]="availableTags" (onEFormTagsUpdated)="loadAllTemplates()"
                            (onTagAdded)="loadAllTags()" #modalEditTags></app-eform-edit-tags-modal>
 <app-eform-remove-eform-modal (onEFormDeleted)="loadAllTemplates()" #modalRemoveEform></app-eform-remove-eform-modal>
