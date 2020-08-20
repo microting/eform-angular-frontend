@@ -690,4 +690,19 @@
   <data name="ExcelTemplateNotFoundInStorage" xml:space="preserve">
     <value>Excel-skabelon findes ikke i lageret!</value>
   </data>
+  <data name="ErrorWhileCreatingFolder" xml:space="preserve">
+    <value>Fejl under oprettelse af mappe</value>
+  </data>
+  <data name="ErrorWhileObtainingFoldersInfo" xml:space="preserve">
+    <value>Fejl under hentning af mappens info</value>
+  </data>
+  <data name="ErrorWhileRemovingFolder" xml:space="preserve">
+    <value>Fejl under fjernelse af mappe</value>
+  </data>
+  <data name="ErrorWhileUpdatingFolder" xml:space="preserve">
+    <value>Fejl under opdatering af mappe</value>
+  </data>
+  <data name="FolderNotFound" xml:space="preserve">
+    <value>Mappe ikke fundet</value>
+  </data>
 </root>

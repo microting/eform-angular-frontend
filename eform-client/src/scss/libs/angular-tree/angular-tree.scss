@@ -1,0 +1,37 @@
+@import '~@circlon/angular-tree-component/css/angular-tree-component.css';
+
+.tree {
+  width: 300px;
+}
+
+.node-content-wrapper {
+  padding: 5px 5px 5px 5px;
+  margin-left: 5px;
+  //display: flex;
+  //flex-wrap: wrap;
+  //align-items: baseline;
+}
+
+.node-content-wrapper-active {
+  background: transparent !important;
+  transition: all .3s ease-out;
+  box-shadow:  0 -1px 0 0 white inset, 0 -2px 0 0 grey inset ;
+}
+
+.node-content-wrapper {
+  &:hover {
+    background: transparent !important;
+    transition: all .3s ease-out;
+    box-shadow:  0 -1px 0 0 white inset, 0 -2px 0 0 grey inset ;
+  }
+}
+
+//.node-content-wrapper {
+//  flex-grow: 1;
+//  position: relative;
+//}
+//
+//.pull-right {
+//  position: absolute;
+//  right: 10px;
+//}
