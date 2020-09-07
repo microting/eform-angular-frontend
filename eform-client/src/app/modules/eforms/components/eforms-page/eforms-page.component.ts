@@ -179,12 +179,12 @@ export class EformsPageComponent implements OnInit, OnDestroy {
     if (itemName === 'XML') {
       this.eFormService.downloadEformXML(templateId).subscribe(data => {
         const blob = new Blob([data]);
-        saveAs(blob, `template_${templateId}.csv`);
+        saveAs(blob, `eForm_${templateId}.xml`);
       });
     } else {
       this.eFormService.downloadCSVFile(templateId).subscribe(data => {
         const blob = new Blob([data]);
-        saveAs(blob, `template_${templateId}.csv`);
+        saveAs(blob, `eForm_${templateId}.csv`);
       });
     }
   }
