@@ -211,7 +211,7 @@
               <fa-icon icon="file-pdf" size="lg" [fixedWidth]="true"></fa-icon>
 
             </button>
-            <button mdbBtn class="btn-success btn-icon mb-2"
+            <button mdbBtn class="btn-info btn-icon mb-2"
                     *ngIf="checkEformPermissions(userClaimsEnum.caseGetPdf) && currentTemplate.docxExportEnabled"
                     (click)="downloadFile(caseModel.id, 'docx')"
                     mdbTooltip="{{ 'Download Docx' | translate }}">
