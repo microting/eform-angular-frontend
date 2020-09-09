@@ -18,6 +18,15 @@ exports.config = {
     // 'e2e/Tests/device-users/device-users.add.spec.ts',
     // 'e2e/Tests/device-users/device-users.edit.spec.ts',
     // 'e2e/Tests/device-users/device-users.delete.spec.ts',
+    'e2e/Tests/folders/folder-list/folder-list.delete.spec.ts',
+    'e2e/Tests/folders/folder-list/folder-list.edit.spec.ts',
+    'e2e/Tests/folders/folder-child/folder-child.add.spec.ts',
+    'e2e/Tests/folders/folder-child/folder-child.delete.spec.ts',
+    'e2e/Tests/folders/folder-child/folder-child.edit.spec.ts',
+    'e2e/Tests/folders/folder-tree/folder-tree.add.spec.ts',
+    'e2e/Tests/folders/folder-tree/folder-tree.delete.spec.ts',
+    'e2e/Tests/folders/folder-tree/folder-tree.edit.spec.ts',
+    'e2e/Tests/eforms/eforms.add.spec.ts'
   ],
   suites: {
     settings: [
