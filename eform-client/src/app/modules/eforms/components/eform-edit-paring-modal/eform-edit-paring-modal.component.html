@@ -33,7 +33,7 @@
           </thead>
           <tbody id="pairingModalTableBody">
           <tr *ngFor="let siteDto of sitesDto">
-            <td class="align-middle">{{siteDto.siteUId}}</td>
+            <td id="microtingId" class="align-middle">{{siteDto.siteUId}}</td>
             <td class="align-middle">{{siteDto.siteName}}</td>
             <td class="align-middle">
               <ng-container *ngFor="let checkboxModel of deployViewModel.deployCheckboxes">
@@ -41,7 +41,7 @@
                   <input id="checkbox{{checkboxModel.id}}" (change)="addToArray($event, checkboxModel.id)"
                          [checked]="checkboxModel.isChecked" [value]="checkboxModel.isChecked" color="primary"
                          type="checkbox">
-                  <label for="checkbox{{checkboxModel.id}}"></label>
+                  <label id="checkboxLabel{{checkboxModel.id}}" for="checkbox{{checkboxModel.id}}"></label>
                 </div>
               </ng-container>
             </td>
@@ -51,8 +51,8 @@
       </div>
       <div class="modal-footer">
         <button mdbBtn class="btn-success btn-small-height" (click)="submitDeployment()"
-                [disabled]="!deployModel.folderId">{{'Save'}}</button>
-        <button mdbBtn class="btn-accent text-black-50 btn-small-height" (click)="frame.hide()">{{'Cancel'}}</button>
+                [disabled]="!deployModel.folderId" id="saveParingBtn">{{'Save'}}</button>
+        <button mdbBtn class="btn-accent text-black-50 btn-small-height" id="cancelParingBtn" (click)="frame.hide()">{{'Cancel'}}</button>
       </div>
     </div>
   </div>

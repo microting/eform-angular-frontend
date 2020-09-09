@@ -12,8 +12,8 @@
                 <input mdbInput
                        required
                        [(ngModel)]="folderModel.name"
-                       id="nameEdit" type="text" class="form-control">
-                <label for="nameEdit">{{'Name' | translate}}</label>
+                       id="editNameInput" type="text" class="form-control">
+                <label for="editNameInput">{{'Name' | translate}}</label>
               </div>
             </div>
           </div>
@@ -23,18 +23,18 @@
                 <input mdbInput
                        required
                        [(ngModel)]="folderModel.description"
-                       id="descriptionEdit" type="text" class="form-control">
-                <label for="descriptionEdit">{{'Description' | translate}}</label>
+                       id="editDescriptionInput" type="text" class="form-control">
+                <label for="editDescriptionInput">{{'Description' | translate}}</label>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button mdbBtn class="btn-success btn-small-height" id="folderEditSaveBtn"
+        <button mdbBtn class="btn-success btn-small-height" id="saveEditBtn"
                 [disabled]="!folderModel.name || !folderModel.description"
                 (click)="updateFolder()">{{'Save' | translate}}</button>
-        <button mdbBtn class="btn-accent text-black-50 btn-small-height" (click)="frame.hide()">{{'Cancel' | translate}}</button>
+        <button mdbBtn id="cancelEditBtn" class="btn-accent text-black-50 btn-small-height" (click)="frame.hide()">{{'Cancel' | translate}}</button>
       </div>
     </div>
   </div>
