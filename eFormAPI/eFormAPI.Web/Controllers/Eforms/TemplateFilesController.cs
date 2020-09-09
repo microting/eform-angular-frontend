@@ -33,6 +33,7 @@ using eFormAPI.Web.Abstractions.Security;
 using eFormAPI.Web.Infrastructure;
 using eFormAPI.Web.Infrastructure.Database;
 using ICSharpCode.SharpZipLib.Zip;
+using ImageMagick;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -43,8 +44,6 @@ using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using OpenStack.NetCoreSwiftClient.Extensions;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Processing;
 using Settings = Microting.eForm.Dto.Settings;
 
 namespace eFormAPI.Web.Controllers.Eforms
@@ -528,10 +527,11 @@ namespace eFormAPI.Web.Controllers.Eforms
             result.ObjectStreamContent.Dispose();
             try
             {
-                var img = Image.Load(filePath);
-                img.Mutate(x => x.Rotate(RotateMode.Rotate90));
-                img.Save(filePath);
-                img.Dispose();
+                using (var image = new MagickImage(filePath))
+                {
+                    image.Rotate(90);
+                    image.Write(filePath);
+                }
                 await core.PutFileToStorageSystem(filePath, fileName);
             }
             catch (Exception e)
@@ -566,10 +566,11 @@ namespace eFormAPI.Web.Controllers.Eforms
             result.ResponseStream.Dispose();
             try
             {
-                var img = Image.Load(filePath);
-                img.Mutate(x => x.Rotate(RotateMode.Rotate90));
-                img.Save(filePath);
-                img.Dispose();
+                using (var image = new MagickImage(filePath))
+                {
+                    image.Rotate(90);
+                    image.Write(filePath);
+                }
                 await core.PutFileToStorageSystem(filePath, fileName);
             }
             catch (Exception e)
@@ -599,10 +600,11 @@ namespace eFormAPI.Web.Controllers.Eforms
 
             try
             {
-                var img = Image.Load(filePath);
-                img.Mutate(x => x.Rotate(RotateMode.Rotate90));
-                img.Save(filePath);
-                img.Dispose();
+                using (var image = new MagickImage(filePath))
+                {
+                    image.Rotate(90);
+                    image.Write(filePath);
+                }
             }
             catch (Exception e)
             {
