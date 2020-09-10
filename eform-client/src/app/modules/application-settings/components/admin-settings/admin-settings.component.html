@@ -76,7 +76,7 @@
               <div class="d-flex flex-wrap">
                 <div class="mr-auto">
                   <p class="mb-0 align-self-center">{{ 'Image' | translate }}</p>
-                  <img
+                  <img *ngIf="loginPageImageLink"
                     class="p-3"
                     height="112" width="90"
                     [src]="loginPageImageLink | authImage | async">
@@ -100,8 +100,7 @@
                     id="loginPageImageVisibilityToggler"
                     [class.btn-success]="adminSettingsModel.loginPageSettingsModel.imageLinkVisible"
                     [class.btn-danger]="!adminSettingsModel.loginPageSettingsModel.imageLinkVisible"
-                    (click)="adminSettingsModel.loginPageSettingsModel.imageLinkVisible
-            = !adminSettingsModel.loginPageSettingsModel.imageLinkVisible">
+                    (click)="adminSettingsModel.loginPageSettingsModel.imageLinkVisible = !adminSettingsModel.loginPageSettingsModel.imageLinkVisible">
                     <fa-icon icon="eye" [fixedWidth]="true" size="lg" *ngIf="adminSettingsModel.loginPageSettingsModel.imageLinkVisible"></fa-icon>
 
                     <fa-icon icon="eye-slash" [fixedWidth]="true" size="lg" *ngIf="!adminSettingsModel.loginPageSettingsModel.imageLinkVisible"></fa-icon>
@@ -170,7 +169,7 @@
               <div class="d-flex flex-wrap">
                 <div class="mr-auto">
                   <p class="mb-0 align-self-center">{{ 'Logo' | translate }}</p>
-                  <img
+                  <img *ngIf="headerImageLink"
                     class="p-3" width="150"
                     [src]="headerImageLink | authImage | async">
                 </div>
@@ -270,47 +269,47 @@
     </div>
 
     <div class="row mt-4">
-      <div class="col-md-6 col-xs-12 mt-1 mb-4 control-block">
-        <div class="card">
-          <div class="card-header card-header-simple">
-            <div class="d-flex justify-content-between align-items-center">
-              {{ 'SMTP Information' | translate}}
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="container-fluid">
+<!--      <div class="col-md-6 col-xs-12 mt-1 mb-4 control-block">-->
+<!--        <div class="card">-->
+<!--          <div class="card-header card-header-simple">-->
+<!--            <div class="d-flex justify-content-between align-items-center">-->
+<!--              {{ 'SMTP Information' | translate}}-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="card-body">-->
+<!--            <div class="container-fluid">-->
 
-              <div class="md-form input-group">
-                <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.smtpSettingsModel.host"
-                       placeholder="smtp.gmail.com" type="text" name="host"
-                       id="host">
-                <label for="host">{{ 'Host' | translate }}</label>
-              </div>
+<!--              <div class="md-form input-group">-->
+<!--                <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.smtpSettingsModel.host"-->
+<!--                       placeholder="smtp.gmail.com" type="text" name="host"-->
+<!--                       id="host">-->
+<!--                <label for="host">{{ 'Host' | translate }}</label>-->
+<!--              </div>-->
 
-              <div class="md-form input-group">
-                <input mdbInput class="form-control"
-                       [(ngModel)]="adminSettingsModel.smtpSettingsModel.port"
-                       placeholder="1433"
-                       type="text" name="port" id="port">
-                <label for="port">{{ 'Port' | translate }}</label>
-              </div>
+<!--              <div class="md-form input-group">-->
+<!--                <input mdbInput class="form-control"-->
+<!--                       [(ngModel)]="adminSettingsModel.smtpSettingsModel.port"-->
+<!--                       placeholder="1433"-->
+<!--                       type="text" name="port" id="port">-->
+<!--                <label for="port">{{ 'Port' | translate }}</label>-->
+<!--              </div>-->
 
-              <div class="md-form input-group">
-                <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.smtpSettingsModel.login"
-                       placeholder="userName" type="text" name="login" id="login">
-                <label for="login">{{ 'Login' | translate }}</label>
-              </div>
+<!--              <div class="md-form input-group">-->
+<!--                <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.smtpSettingsModel.login"-->
+<!--                       placeholder="userName" type="text" name="login" id="login">-->
+<!--                <label for="login">{{ 'Login' | translate }}</label>-->
+<!--              </div>-->
 
-              <div class="md-form input-group">
-                <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.smtpSettingsModel.password"
-                       placeholder="12345678909876543210adfecdfefdae" type="password" value=""
-                       name="password" id="password">
-                <label>{{ 'Password' | translate }}</label>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+<!--              <div class="md-form input-group">-->
+<!--                <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.smtpSettingsModel.password"-->
+<!--                       placeholder="12345678909876543210adfecdfefdae" type="password" value=""-->
+<!--                       name="password" id="password">-->
+<!--                <label>{{ 'Password' | translate }}</label>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
       <div class="col-md-6 col-xs-12 mt-1 mb-4 control-block">
         <div class="card">
           <div class="card-header card-header-simple">
@@ -394,9 +393,9 @@
           </div>
         </div>
       </div>
-    </div>
+<!--    </div>-->
 
-    <div class="row mt-4">
+<!--    <div class="row mt-4">-->
       <div class="col-md-6 col-xs-12 mt-1 mb-4 control-block">
         <div class="card">
           <div class="card-header card-header-simple">
@@ -409,7 +408,7 @@
 
               <div class="md-form input-group">
                 <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.sendGridSettingsModel.apiKey"
-                       placeholder="12345678909876543210adfecdfefdae" type="text" value=""
+                       placeholder="12345678909876543210adfecdfefdae" type="password" value=""
                        name="sendGridKey" id="sendGridKey">
                 <label for="sendGridKey">{{ 'Key' | translate }}</label>
               </div>

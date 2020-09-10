@@ -64,7 +64,7 @@
   "Download CSV": "Download CSV",
   "Delete eForm": "Slet eForm",
   "Upload ZIP archive": "Upload ZIP-arkiv",
-  "Upload template ZIP": "Upload skabelon ZIP",
+  "Upload template ZIP": "Upload eForm ZIP",
   "Uploading progress": "Overførselsstatus",
   "Save eForm": "Gem eForm",
   "Device user": "Enhedsbruger",
@@ -74,8 +74,8 @@
   "Field": "Felt",
   "Are you sure you want to delete": "Er du sikker på, at du vil slette",
   "Creation Date": "Oprettelsesdato",
-  "Select tags for template": "Vælg tags til skabelon",
-  "Template tags": "Skabelontags",
+  "Select tags for template": "Vælg tags for eForm",
+  "Template tags": "eFormtags",
   "New tag": "Nyt tag",
   "Tag list": "Tag liste",
   "Delete": "Slet",
@@ -273,5 +273,6 @@
   "Ready for server": "Klar til server",
   "Received by server": "Modtaget af server",
   "Retrieved by device": "Modtaget af enhed",
-  "Completed": "Udført"
+  "Completed": "Udført",
+  "Save": "Gem"
 }
