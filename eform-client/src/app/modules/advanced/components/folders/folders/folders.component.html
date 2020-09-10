@@ -22,7 +22,7 @@
         (editNode)="openEditModal($event)"
         (deleteNode)="openDeleteModal($event)"
       ></app-eform-tree-view-picker>
-      <p class="mt-2" style="cursor: pointer" (click)="openCreateModal()" *ngIf="userClaims.workersCreate">
+      <p class="mt-2" style="cursor: pointer" id="newFolderBtn" (click)="openCreateModal()" *ngIf="userClaims.workersCreate">
         <fa-icon class="mr-2 text-black-50" icon="plus" size="lg"></fa-icon>
         {{ 'Add New' | translate }}
       </p>
@@ -52,9 +52,9 @@
           </th>
         </tr>
       </thead>
-      <tbody>
+      <tbody id="tableBody">
         <tr *ngFor="let folderDto of foldersFlatList">
-          <td>{{ folderDto.id }}</td>
+          <td id="folderId" >{{ folderDto.id }}</td>
           <td>{{ folderDto.microtingUId }}</td>
           <td>
             <date-formatter
@@ -68,8 +68,8 @@
               [Format]="'datetime'"
             ></date-formatter>
           </td>
-          <td>{{ folderDto.name }}</td>
-          <td>{{ folderDto.description }}</td>
+          <td id="folderName" >{{ folderDto.name }}</td>
+          <td id="folderDescription" >{{ folderDto.description }}</td>
           <td *ngIf="userClaims.workersDelete || userClaims.workersUpdate">
             <div class="d-flex flex-row justify-content-center">
               <button

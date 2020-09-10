@@ -12,8 +12,9 @@ class MyEformsPage extends PageWithNavbarPage {
     return $('#newEFormBtn');
   }
 
-  public getRowNum(): number {
-    return 10;
+  public get rowNum(): number {
+    browser.pause(500);
+    return $$('#eform-id').length;
   }
 
   public get idSortBtn() {
@@ -31,7 +32,6 @@ class MyEformsPage extends PageWithNavbarPage {
   public get eformFilter() {
     return $('#labelInput');
   }
-
 
   // Create eform modal
   public get createEformTagSelector() {
@@ -65,6 +65,11 @@ class MyEformsPage extends PageWithNavbarPage {
   getFirstMyEformsRowObj(): MyEformsRowObject {
     browser.pause(500);
     return new MyEformsRowObject(1);
+  }
+
+  getEformRowObj(num): MyEformsRowObject {
+    browser.pause(500);
+    return new MyEformsRowObject(num);
   }
 
   createNewEform(eFormLabel, newTagsList = [], tagAddedNum = 0) {
@@ -120,7 +125,7 @@ class MyEformsRowObject {
         this.eFormName = $$('#eform-label')[rowNum - 1].getText();
       } catch (e) {}
       this.tags = $$(`//*[@id="mainPageEFormsTableBody"]/tr[${rowNum}]//*[@id="eform-tag"]`);
-      this.pairs = $$(`//*[@id="mainPageEFormsTableBody"]/tr[${rowNum}]//*[@id="eform-tag"]`);
+      this.pairs = $$(`//*[@id="mainPageEFormsTableBody"]/tr[${rowNum}]//*[@id="eform-pair"]`);
       this.editTagsBtn = $$('#eform-edit-btn')[rowNum - 1];
       this.pairEformBtn = $$('#eform-pairing-btn')[rowNum - 1];
       this.editColumnsBtn = $$('#edit-columnts-btn')[rowNum - 1];
