@@ -24,6 +24,7 @@ export class EformTreeViewPickerComponent implements OnChanges, OnDestroy {
   @Input() showDeleteAction = true;
   @Input() focusedNodeId: number;
   @Input() lockSelectedNode = false;
+  @Input() showCollapseButton = true;
   @Output() createNode: EventEmitter<FolderDto> = new EventEmitter<FolderDto>();
   @Output() editNode: EventEmitter<FolderDto> = new EventEmitter<FolderDto>();
   @Output() deleteNode: EventEmitter<FolderDto> = new EventEmitter<FolderDto>();

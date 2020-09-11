@@ -32,7 +32,7 @@
       </div>
       <div class="modal-footer">
         <button mdbBtn class="btn-success btn-small-height" id="saveEditBtn"
-                [disabled]="!folderModel.name || !folderModel.description"
+                [disabled]="!folderModel.name"
                 (click)="updateFolder()">{{'Save' | translate}}</button>
         <button mdbBtn id="cancelEditBtn" class="btn-accent text-black-50 btn-small-height" (click)="frame.hide()">{{'Cancel' | translate}}</button>
       </div>
