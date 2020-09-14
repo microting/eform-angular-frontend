@@ -17,6 +17,7 @@
                   [nodes]="foldersDto"
                   [focusedNodeId]="deployModel.folderId"
                   [showActions]="false"
+                  [allowSelectingParents]="false"
                   (nodeSelected)="folderSelected($event)"
                 ></app-eform-tree-view-picker>
               </div>
