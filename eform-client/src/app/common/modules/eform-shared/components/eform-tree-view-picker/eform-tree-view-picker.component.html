@@ -28,8 +28,8 @@
       [style.padding-left]="node.getNodePadding()"
     >
       <div id="folderTreeOpenClose"
-        (click)="node.toggleExpanded()"
-        *ngIf="node.hasChildren"
+           (click)="node.toggleExpanded()"
+           *ngIf="node.hasChildren"
       >
         <fa-icon
           *ngIf="node?.isCollapsed"
@@ -47,12 +47,13 @@
       <div id="folderTreeOpenClose" *ngIf="!node.hasChildren" [ngClass]="{'text-black-50': !node.isActive}">
         <fa-icon icon="folder-open" size="lg"></fa-icon>
       </div>
-      <div *ngIf="!lockSelectedNode"
-        class="node-content-wrapper"
-        [class.node-content-wrapper-active]="node.isActive"
-        (click)="node.mouseAction('click', $event); selected(node.data, node.isActive)"
-        (dblclick)="node.mouseAction('dblClick', $event)"
-        (contextmenu)="node.mouseAction('contextMenu', $event)"
+      <div *ngIf="(allowSelectingParents || !node.hasChildren) && !lockSelectedNode"
+           class="node-content-wrapper"
+           [class.node-content-wrapper-active]="node.isActive"
+           (click)="node.mouseAction('click', $event);
+           selected(node.data, node.isActive)"
+           (dblclick)="node.mouseAction('dblClick', $event)"
+           (contextmenu)="node.mouseAction('contextMenu', $event)"
       >
         <tree-node-content
           [node]="node"
@@ -60,9 +61,10 @@
           [template]="treeNodeTemplate"
         ></tree-node-content>
       </div>
-      <div *ngIf="lockSelectedNode"
-        class="node-content-wrapper"
-        [class.node-content-wrapper-active]="node.isActive"
+      <div *ngIf="(!allowSelectingParents && node.hasChildren) || lockSelectedNode"
+           class="node-content-wrapper"
+           (click)="node.toggleExpanded()"
+           [class.node-content-wrapper-active]="node.isActive"
       >
         <tree-node-content
           [node]="node"
@@ -73,8 +75,10 @@
     </div>
   </ng-template>
   <ng-template #treeNodeTemplate let-node let-index="index">
-    <div id="folderTreeId" class="d-flex align-items-center" [ngStyle]="{'cursor': lockSelectedNode ? 'not-allowed' : 'pointer'}">
-      <span id="folderTreeName" >{{ node.data.name }}</span><pre> _ </pre>
+    <div id="folderTreeId" class="d-flex align-items-center"
+         [ngStyle]="{'cursor': lockSelectedNode ? 'not-allowed' : 'pointer'}">
+      <span id="folderTreeName">{{ node.data.name }}</span>
+      <pre> _ </pre>
       <span id="folderTreeDescription" *ngIf="node.data.description">{{ node.data.description }}</span>
       <div class="ml-3 text-black-50" *ngIf="node.isActive && showActions">
         <fa-icon
