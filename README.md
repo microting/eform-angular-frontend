@@ -1,6 +1,6 @@
 # eForm Angular Frontend
 
-[![Build Status](https://travis-ci.org/microting/eform-angular-frontend.svg?branch=master)](https://travis-ci.org/microting/eform-angular-frontend) 
+[![Build Status](https://travis-ci.org/microting/eform-angular-frontend.svg?branch=master)](https://travis-ci.org/microting/eform-angular-frontend)
 [![Dependencies Status](https://david-dm.org/microting/eform-angular-frontend/stable/status.svg?path=eform-client)](https://david-dm.org/microting/eform-angular-frontend/stable?path=eform-client)
 [![Dependencies Status](https://david-dm.org/microting/eform-angular-frontend/stable/dev-status.svg?path=eform-client)](https://david-dm.org/microting/eform-angular-frontend/stable?path=eform-client&type=dev)
 [![Maintainability](https://api.codeclimate.com/v1/badges/383f012a79c7bea1101e/maintainability)](https://codeclimate.com/github/microting/eform-angular-frontend/maintainability)
@@ -24,7 +24,7 @@ eForm Backend is created using Angular \(9.1.1\) and C\# .Net Core 2.2
 | :--- | :---: | :---: |
 | English | 100% | 100% |
 | Danish | 100% | 100% |
-| German | 90% | 90% |
+| German | 90% | 100% |
 
 If you want to contribute with a translation to another language, please start by cloning the repository and create a copy of [SharedResource.resx](https://github.com/microting/eform-angular-frontend/blob/master/eFormAPI/eFormAPI.Web/Resources/SharedResource.resx) and name it SharedResource.XX.resx where XX is the language code. For the Angular part, please create a copy of [en-US.json](https://github.com/microting/eform-angular-frontend/blob/master/eform-client/src/assets/i18n/en-US.json) and follow pattern on [ISO 639-1 standard language codes](https://www.andiamo.co.uk/resources/iso-language-codes/)
 
@@ -44,13 +44,13 @@ To work with the C\# part we recommend to use either:
 To work with Angular code, recommended to use either:
 
 * [**WebStorm**](https://www.jetbrains.com/webstorm/)
-* [**VS Code**](https://code.visualstudio.com). 
+* [**VS Code**](https://code.visualstudio.com).
 
 If you're going to use VS Code you're need to install several plugins.
 
 1. [Angular Essentials](https://marketplace.visualstudio.com/items?itemName=johnpapa.angular-essentials)  - for Angular intellisense.
 2. [Angular Snippets](https://marketplace.visualstudio.com/items?itemName=Mikael.Angular-BeastCode)  - for Angular snippets.
-3. [Angular Language Service](https://marketplace.visualstudio.com/items?itemName=johnpapa.angular-essentials) 
+3. [Angular Language Service](https://marketplace.visualstudio.com/items?itemName=johnpapa.angular-essentials)
 4. [Chrome Augury extention](https://augury.angular.io/) - to observe variables and changes in a real time.
 
 After installing, run **cmd** navigate to front-end **eform-client** folder and type **npm i**, after that **npm start**. This will start **Webpack** development server that will reload on any change in the front-end code.
@@ -114,4 +114,3 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
