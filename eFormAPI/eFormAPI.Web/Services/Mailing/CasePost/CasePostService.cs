@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2019 Microting A/S
+Copyright (c) 2007 - 2020 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -128,6 +128,9 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                     casePostsListModel.PdfReportAvailable = true;
                 }
 
+                casePostsListModel.CaseId = requestModel.CaseId;
+                casePostsListModel.CaseDoneAt = replyElement.DoneAt;
+
                 var casePostList = await casePostsQuery
                     .Select(x => new CasePostModel()
                     {
@@ -170,103 +173,103 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
 
                     casePostsListModel.EFormName = templateDto.Label;
 
-                    if (!string.IsNullOrEmpty(caseEntity.FieldValue1))
+                    if (templateDto.Field1 != null)
                     {
                         casePostsListModel.AdditionalFields.Add(
                             new KeyValueStringModel
                             {
                                 Key = templateDto.Field1.Label,
-                                Value = caseEntity.FieldValue1
+                                Value = caseEntity.FieldValue1 == "null" ? "" : caseEntity.FieldValue1
                             });
                     }
 
-                    if (!string.IsNullOrEmpty(caseEntity.FieldValue2))
+                    if (templateDto.Field2 != null)
                     {
                         casePostsListModel.AdditionalFields.Add(
                             new KeyValueStringModel
                             {
                                 Key = templateDto.Field2.Label,
-                                Value = caseEntity.FieldValue2
+                                Value = caseEntity.FieldValue2 == "null" ? "" : caseEntity.FieldValue2
                             });
                     }
 
-                    if (!string.IsNullOrEmpty(caseEntity.FieldValue3))
+                    if (templateDto.Field3 != null)
                     {
                         casePostsListModel.AdditionalFields.Add(
                             new KeyValueStringModel
                             {
                                 Key = templateDto.Field3.Label,
-                                Value = caseEntity.FieldValue3
+                                Value = caseEntity.FieldValue3 == "null" ? "" : caseEntity.FieldValue3
                             });
                     }
 
-                    if (!string.IsNullOrEmpty(caseEntity.FieldValue4))
+                    if (templateDto.Field4 != null)
                     {
                         casePostsListModel.AdditionalFields.Add(
                             new KeyValueStringModel
                             {
                                 Key = templateDto.Field4.Label,
-                                Value = caseEntity.FieldValue4
+                                Value = caseEntity.FieldValue4 == "null" ? "" : caseEntity.FieldValue4
                             });
                     }
 
-                    if (!string.IsNullOrEmpty(caseEntity.FieldValue5))
+                    if (templateDto.Field5 != null)
                     {
                         casePostsListModel.AdditionalFields.Add(
                             new KeyValueStringModel
                             {
                                 Key = templateDto.Field5.Label,
-                                Value = caseEntity.FieldValue5
+                                Value = caseEntity.FieldValue5 == "null" ? "" : caseEntity.FieldValue5
                             });
                     }
 
-                    if (!string.IsNullOrEmpty(caseEntity.FieldValue6))
+                    if (templateDto.Field6 != null)
                     {
                         casePostsListModel.AdditionalFields.Add(
                             new KeyValueStringModel
                             {
                                 Key = templateDto.Field6.Label,
-                                Value = caseEntity.FieldValue6
+                                Value = caseEntity.FieldValue6 == "null" ? "" : caseEntity.FieldValue6
                             });
                     }
 
-                    if (!string.IsNullOrEmpty(caseEntity.FieldValue7))
+                    if (templateDto.Field7 != null)
                     {
                         casePostsListModel.AdditionalFields.Add(
                             new KeyValueStringModel
                             {
                                 Key = templateDto.Field7.Label,
-                                Value = caseEntity.FieldValue7
+                                Value = caseEntity.FieldValue7 == "null" ? "" : caseEntity.FieldValue7
                             });
                     }
 
-                    if (!string.IsNullOrEmpty(caseEntity.FieldValue8))
+                    if (templateDto.Field8 != null)
                     {
                         casePostsListModel.AdditionalFields.Add(
                             new KeyValueStringModel
                             {
                                 Key = templateDto.Field8.Label,
-                                Value = caseEntity.FieldValue8
+                                Value = caseEntity.FieldValue8 == "null" ? "" : caseEntity.FieldValue8
                             });
                     }
 
-                    if (!string.IsNullOrEmpty(caseEntity.FieldValue9))
+                    if (templateDto.Field9 != null)
                     {
                         casePostsListModel.AdditionalFields.Add(
                             new KeyValueStringModel
                             {
                                 Key = templateDto.Field9.Label,
-                                Value = caseEntity.FieldValue9
+                                Value = caseEntity.FieldValue9 == "null" ? "" : caseEntity.FieldValue9
                             });
                     }
 
-                    if (!string.IsNullOrEmpty(caseEntity.FieldValue10))
+                    if (templateDto.Field10 != null)
                     {
                         casePostsListModel.AdditionalFields.Add(
                             new KeyValueStringModel
                             {
                                 Key = templateDto.Field10.Label,
-                                Value = caseEntity.FieldValue10
+                                Value = caseEntity.FieldValue10 == "null" ? "" : caseEntity.FieldValue10
                             });
                     }
                 }

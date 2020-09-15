@@ -88,11 +88,12 @@
         <td>
           <div class="d-flex justify-content-center">
             <div>
-              <a mdbBtn type="button" color="success" class="btn-small-height btn-success"
+              <a mdbBtn type="button" color="success" class="btn-icon btn-success"
                  *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eformsUpdateTags)"
                  id="eform-edit-btn"
                  mdbTooltip="{{ 'Edit tags' | translate }}" (click)="openEditTagsModal(templateDto)">
-                {{ 'Edit tags' | translate }}
+                <fa-icon icon="tags" size="lg" [fixedWidth]="true"></fa-icon>
+<!--                {{ 'Edit tags' | translate }}-->
               </a>
               <ng-container *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eformsReadTags)">
                 <p class="paragraph-sm" id="eform-tag" *ngFor="let tag of templateDto.tags">
@@ -109,17 +110,19 @@
               && checkEformPermissions(templateDto.id, userClaimsEnum.eformsPairingUpdate)
               && !templateDto.isLocked"
                       id="eform-pairing-btn"
-                      mdbBtn type="button" class="btn-success btn-small-height" (click)="openPairingModal(templateDto)"
+                      mdbBtn type="button" class="btn-success btn-icon" (click)="openPairingModal(templateDto)"
                       mdbTooltip="{{ 'Click to edit eForm pairing with user(s)' | translate }}">
-                {{ 'Edit pairing' | translate }}
+<!--                {{ 'Edit pairing' | translate }}-->
+                <fa-icon icon="link" size="lg" [fixedWidth]="true"></fa-icon>
               </button>
               <button *ngIf="templateDto.deployedSites.length == 0
               && checkEformPermissions(templateDto.id, userClaimsEnum.eformsPairingUpdate)
               && !templateDto.isLocked"
                       id="eform-add-btn"
-                      mdbBtn type="button" class="btn-small-height" (click)="openPairingModal(templateDto)"
+                      mdbBtn type="button" class="btn-icon" (click)="openPairingModal(templateDto)"
                       mdbTooltip="{{ 'Click to pair eForm with user(s)' | translate }}">
-                {{ 'Pair eForm' | translate }}
+<!--                {{ 'Pair eForm' | translate }}-->
+                <fa-icon icon="link" size="lg" [fixedWidth]="true"></fa-icon>
               </button>
 <!--              <ng-container *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eFormsPairingRead)">-->
 <!--                <p class="paragraph-sm" id="eform-paired-username" *ngFor="let deployedSite of templateDto.deployedSites">-->
@@ -184,12 +187,12 @@
                     mdbTooltip="{{ 'Upload ZIP archive' | translate }}">
               <fa-icon icon="file-upload" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
-            <button mdbBtn class="btn-accent text-black-50 btn-icon mb-2" id="eform-report-button"
-                    *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eformsReadJasperReport)"
-                    [routerLink]="['./report', templateDto.id]"
-                    mdbTooltip="{{ 'Jasper Report' | translate }}">
-              <fa-icon icon="receipt" [fixedWidth]="true" size="lg"></fa-icon>
-            </button>
+<!--            <button mdbBtn class="btn-accent text-black-50 btn-icon mb-2" id="eform-report-button"-->
+<!--                    *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eformsReadJasperReport)"-->
+<!--                    [routerLink]="['./report', templateDto.id]"-->
+<!--                    mdbTooltip="{{ 'Jasper Report' | translate }}">-->
+<!--              <fa-icon icon="receipt" [fixedWidth]="true" size="lg"></fa-icon>-->
+<!--            </button>-->
           </div>
         </td>
       </tr>
