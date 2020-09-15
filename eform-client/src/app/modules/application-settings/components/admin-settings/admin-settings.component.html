@@ -209,7 +209,7 @@
         <div class="card">
           <div class="card-header card-header-simple">
             <div class="d-flex justify-content-between align-items-center">
-              {{ 'SDK Information' | translate}}
+              {{ 'SDK information' | translate}}
             </div>
           </div>
           <div class="card-body">
@@ -222,38 +222,38 @@
                 <label for="customerNo">{{ 'Customer no' | translate }}</label>
               </div>
 
-              <div class="md-form input-group">
-                <input mdbInput class="form-control"
-                       [(ngModel)]="adminSettingsModel.sdkSettingsModel.logLevel"
-                       type="text" name="logLevel" id="logLevel">
-                <label for="logLevel">{{ 'Log level' | translate }}</label>
-              </div>
+<!--              <div class="md-form input-group">-->
+<!--                <input mdbInput class="form-control"-->
+<!--                       [(ngModel)]="adminSettingsModel.sdkSettingsModel.logLevel"-->
+<!--                       type="text" name="logLevel" id="logLevel">-->
+<!--                <label for="logLevel">{{ 'Log level' | translate }}</label>-->
+<!--              </div>-->
 
-              <div class="md-form input-group">
-                <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.sdkSettingsModel.logLimit"
-                       type="text" name="logLimit" id="logLimit">
-                <label for="logLimit">{{ 'Log limit' | translate }}</label>
-              </div>
+<!--              <div class="md-form input-group">-->
+<!--                <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.sdkSettingsModel.logLimit"-->
+<!--                       type="text" name="logLimit" id="logLimit">-->
+<!--                <label for="logLimit">{{ 'Log limit' | translate }}</label>-->
+<!--              </div>-->
 
               <div class="md-form input-group">
                 <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.sdkSettingsModel.fileLocationPicture"
                        type="text" value=""
                        name="fileLocationPicture" id="fileLocationPicture">
-                <label>{{ 'Filelocation Picture' | translate }}</label>
+                <label>{{ 'File location picture' | translate }}</label>
               </div>
 
               <div class="md-form input-group">
                 <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.sdkSettingsModel.fileLocationPdf"
                        type="text" value=""
                        name="fileLocationPdf" id="fileLocationPdf">
-                <label>{{ 'Filelocation PDF' | translate }}</label>
+                <label>{{ 'File location PDF' | translate }}</label>
               </div>
 
               <div class="md-form input-group">
                 <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.sdkSettingsModel.fileLocationReports"
                        type="text" value=""
                        name="fileLocationReports" id="fileLocationReports">
-                <label>{{ 'Filelocation Jasper report files' | translate }}</label>
+                <label>{{ 'File location Jasper report files' | translate }}</label>
               </div>
 
               <div class="md-form input-group">
@@ -324,7 +324,7 @@
                 <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.swiftSettingsModel.swiftEnabled"
                        placeholder="false" type="text" name="swiftEnabled"
                        id="swiftEnabled">
-                <label for="swiftEnabled">{{ 'Swift Enabled' | translate }}</label>
+                <label for="swiftEnabled">{{ 'Swift enabled' | translate }}</label>
               </div>
 
               <div class="md-form input-group" *ngIf="adminSettingsModel.swiftSettingsModel.swiftEnabled">
@@ -345,49 +345,49 @@
                 <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.swiftSettingsModel.swiftEndpoint"
                        placeholder="http://172.16.4.4:8080/swift/v1" type="text" value=""
                        name="swiftEndpoint" id="swiftEndpoint">
-                <label for="swiftEndpoint">{{ 'Swift Endpoint' | translate }}</label>
+                <label for="swiftEndpoint">{{ 'Swift endpoint' | translate }}</label>
               </div>
 
               <div class="md-form input-group" *ngIf="adminSettingsModel.swiftSettingsModel.swiftEnabled">
                 <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.swiftSettingsModel.keystoneEndpoint"
                        placeholder="http://172.16.4.4:5000/v2.0" type="text" value=""
                        name="keystoneEndpoint" id="keystoneEndpoint">
-                <label for="keystoneEndpoint">{{ 'Keystone Endpoint' | translate }}</label>
+                <label for="keystoneEndpoint">{{ 'Keystone endpoint' | translate }}</label>
               </div>
 
               <div class="md-form input-group">
                 <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.s3SettingsModel.s3Enabled"
                        placeholder="false" type="text"  name="s3Enabled"
                        id="s3Enabled">
-                <label for="swiftEnabled">{{ 'S3 Enabled' | translate }}</label>
+                <label for="swiftEnabled">{{ 'S3 enabled' | translate }}</label>
               </div>
 
               <div class="md-form input-group" *ngIf="adminSettingsModel.s3SettingsModel.s3Enabled">
                 <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.s3SettingsModel.s3AccessKeyId"
                        placeholder="false" type="text"  name="s3AccessKeyId"
                        id="s3AccessKeyId">
-                <label for="swiftEnabled">{{ 'S3 AccessKey' | translate }}</label>
+                <label for="swiftEnabled">{{ 'S3 accessKey' | translate }}</label>
               </div>
 
               <div class="md-form input-group" *ngIf="adminSettingsModel.s3SettingsModel.s3Enabled">
                 <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.s3SettingsModel.s3SecrectAccessKey"
                        placeholder="false" type="password" name="s3SecrectAccessKey"
                        id="s3SecrectAccessKey">
-                <label for="swiftEnabled">{{ 'S3 SecretAccessKey' | translate }}</label>
+                <label for="swiftEnabled">{{ 'S3 secretAccessKey' | translate }}</label>
               </div>
 
               <div class="md-form input-group" *ngIf="adminSettingsModel.s3SettingsModel.s3Enabled">
                 <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.s3SettingsModel.s3Endpoint"
                        placeholder="false" type="text" name="s3Endpoint"
                        id="s3Endpoint">
-                <label for="swiftEnabled">{{ 'S3 Endpoint' | translate }}</label>
+                <label for="swiftEnabled">{{ 'S3 endpoint' | translate }}</label>
               </div>
 
               <div class="md-form input-group" *ngIf="adminSettingsModel.s3SettingsModel.s3Enabled">
                 <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.s3SettingsModel.s3BucketName"
                        placeholder="false" type="password" name="s3BucketName"
                        id="s3BucketName">
-                <label for="swiftEnabled">{{ 'S3 Bucket name' | translate }}</label>
+                <label for="swiftEnabled">{{ 'S3 bucket name' | translate }}</label>
               </div>
             </div>
           </div>

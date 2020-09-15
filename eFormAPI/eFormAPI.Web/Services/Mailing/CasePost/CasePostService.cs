@@ -128,6 +128,9 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                     casePostsListModel.PdfReportAvailable = true;
                 }
 
+                casePostsListModel.CaseId = requestModel.CaseId;
+                casePostsListModel.CaseDoneAt = replyElement.DoneAt;
+
                 var casePostList = await casePostsQuery
                     .Select(x => new CasePostModel()
                     {

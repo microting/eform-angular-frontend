@@ -7,10 +7,11 @@
       <div class="modal-body">
         <div class="container-fluid">
           <h1 class="text-danger">{{'WARNING' | translate}}!</h1>
-          <p>
-            {{'When pressing OK, you will deactivate the current unit associated with this location' | translate }}.
-            {{'You will se the new OTP code once you click OK' | translate}}.
-          </p>
+          <ul>
+            <li>{{ 'When pressing OK, you will deactivate the current device paired with this location' | translate }}.</li>
+            <li>{{ 'If there is data on the current device, this data will be lost after pressing OK' | translate }}</li>
+            <li>{{ 'You will se the new OTP code once you click OK' | translate}}.</li>
+          </ul>
         </div>
       </div>
       <div class="modal-footer">
