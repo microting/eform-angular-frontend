@@ -21,6 +21,8 @@ export class CasePostNewComponent implements OnInit, OnDestroy {
   @Input() eformId: number;
   @Input() currentUserFullName: string;
   @Input() pdfReportAvailable: boolean;
+  @Input() eFormName: string;
+  @Input() doneAt: string;
   postCreateModel: CasePostCreateModel = new CasePostCreateModel;
   selectedTagsAndRecipientsIds: number[] = [];
   createTag$: Subscription;
