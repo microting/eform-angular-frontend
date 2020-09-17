@@ -31,19 +31,22 @@ namespace eFormAPI.Web.Infrastructure.Helpers
     {
         public static IList<FolderDtoModel> BuildTree(this List<FolderDtoModel> source)
         {
-            var groups = source.GroupBy(i => i.ParentId);
-            var roots = groups.FirstOrDefault(g => g.Key.HasValue == false).ToList();
-
-            if (roots.Count > 0)
+            if (source.Any())
             {
-                var dict = groups.Where(g => g.Key.HasValue).ToDictionary(g => g.Key.Value, g => g.ToList());
-                foreach (var item in roots)
-                {
-                    AddChildren(item, dict);
-                }
-            }
+                var groups = source.GroupBy(i => i.ParentId);
+                var roots = groups.FirstOrDefault(g => g.Key.HasValue == false).ToList();
 
-            return roots;
+                if (roots.Count > 0)
+                {
+                    var dict = groups.Where(g => g.Key.HasValue).ToDictionary(g => g.Key.Value, g => g.ToList());
+                    foreach (var item in roots)
+                    {
+                        AddChildren(item, dict);
+                    }
+                }
+                return roots;
+            }
+            return new List<FolderDtoModel>();
         }
 
         private static void AddChildren(FolderDtoModel node, IDictionary<int, List<FolderDtoModel>> source)
