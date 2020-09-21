@@ -25,6 +25,7 @@ export class CasesTableComponent implements OnInit {
   id: number;
 
   get userClaims() { return this.authService.userClaims; }
+  get userRole() { return this.authService.currentRole; }
   get userClaimsEnum() { return UserClaimsEnum; }
 
   constructor(private activateRoute: ActivatedRoute,

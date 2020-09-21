@@ -41,6 +41,7 @@
                 <input mdbInput
                        [(ngModel)]="postCreateModel.subject"
                        type="text" id="newPostSubject"
+                       value="{{eFormName}} - {{doneAt | date: 'yyyy/MM/dd HH:mm:ss'}} - {{caseId}}"
                        name="newPostSubject" class="form-control">
                 <label for="newPostSubject">{{ 'Subject' | translate }}</label>
               </div>
