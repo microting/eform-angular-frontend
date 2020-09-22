@@ -4,7 +4,7 @@ import profileSettings from '../../Page objects/ProfileSettings.page';
 
 const expect = require('chai').expect;
 
-describe('Profile Settings', function () {
+describe('Profile settings', function () {
   before(function () {
     loginPage.open('/');
     loginPage.login();

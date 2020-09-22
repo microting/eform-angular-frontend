@@ -8,4 +8,6 @@ export class CasePostsListModel {
   additionalFields: KeyValue<string, string>[];
   total: number;
   casePostsList: CasePostModel[];
+  caseDoneAt: string;
+  caseId: number;
 }

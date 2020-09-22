@@ -42,7 +42,8 @@
         </th>
         <th class="table-header-sortable"
             (click)="sortTable('created_at')"
-            rowspan="1" colspan="1">
+            rowspan="1" colspan="1"
+            *ngIf="userRole == 'admin'">
           <div class="d-flex align-items-center justify-content-center">
             {{ 'Data accessible at' | translate }}
             <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'created_at'">unfold_more</i>
@@ -160,7 +161,7 @@
         <td>
           <date-formatter [date]="caseModel.doneAt" [Format]="'datetime'"></date-formatter>
         </td>
-        <td>
+        <td *ngIf="userRole == 'admin'">
           <date-formatter [date]="caseModel.createdAt" [Format]="'datetime'"></date-formatter>
         </td>
         <td> {{caseModel.workerName}}</td>
