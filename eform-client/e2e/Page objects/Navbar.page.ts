@@ -5,12 +5,6 @@ export class Navbar {
     // return $('#advanced');
   }
 
-  public workOrdersDropdown() {
-    $('#work-orders-pn').waitForDisplayed({timeout: 60000});
-    this.clickOnHeaderMenuItem('Work orders').click();
-    // return $('#advanced');
-  }
-
   public applicationSettingsBtn() {
     const ele = $(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Applikationsindstillinger')]`);
     ele.waitForDisplayed({timeout: 20000});
@@ -48,14 +42,8 @@ export class Navbar {
   public get foldersBtn() {
     return $(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Folders')]`);
   }
-  public get ordersBtn() {
-    return $(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Orders')]`);
-  }
   public get pluginsBtn() {
     return $(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Plugins')]`);
-  }
-  public get workOrderSettingsBtn() {
-    return $$('#plugin-settings-link')[$$('#plugin-settings-link').length - 1];
   }
   public get deviceUsersBtn() {
     const ele = this.clickOnHeaderMenuItem2(' Enhedsbrugere ');
@@ -137,19 +125,10 @@ export class Navbar {
     // browser.pause(15000);
     $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
   }
-  public goToOrdersPage() {
-    this.workOrdersDropdown();
-    this.ordersBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
-  }
   public goToPluginsPage() {
     this.advancedDropdown();
     this.pluginsBtn.click();
     // browser.pause(15000);
     $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
-  }
-  public goToWorkOrdersSettingsPage() {
-    this.workOrderSettingsBtn.waitForDisplayed({timeout: 20000});
-    this.workOrderSettingsBtn.click();
   }
 }

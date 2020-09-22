@@ -59,10 +59,6 @@ exports.config = {
     // 'e2e/Tests/folders/folder-tree/folder-tree.delete.spec.ts',
     // 'e2e/Tests/folders/folder-tree/folder-tree.edit.spec.ts',
     // 'e2e/Tests/eforms/eforms.add.spec.ts'
-
-     'e2e/Tests/work-orders/work-orders-settings/work-orders-settings.site.spec.ts',
-     'e2e/Tests/work-orders/work-orders-settings/work-orders-settings.folder.spec.ts',
-     'e2e/Tests/work-orders/work-orders-page/work-orders.get.spec.ts'
   ],
   suites: {
     settings: [

@@ -27,6 +27,7 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {LoaderInterceptor} from 'src/app/common/interceptors/loader-interceptor.service';
 import {UserClaimsInterceptor} from 'src/app/common/interceptors/user-claims.interceptor';
 import {HttpErrorInterceptor, JwtInterceptor} from 'src/app/common/interceptors';
+import {GALLERY_CONFIG} from '@ngx-gallery/core';
 // Guards
 
 export let providers = [
@@ -72,6 +73,12 @@ export let providers = [
   { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: UserClaimsInterceptor, multi: true },
+  {
+    provide: GALLERY_CONFIG,
+    useValue: {
+      counterPosition: 'bottom'
+    }
+  },
   // Helpers
   EventBrokerService,
   DatePipe,
