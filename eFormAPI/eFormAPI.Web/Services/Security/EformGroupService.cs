@@ -73,23 +73,8 @@ namespace eFormAPI.Web.Services.Security
         {
             try
             {
-                
-                var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
-                var timeZone = _dbContext.Users.Single(x => x.Id == int.Parse(value)).Locale;
-                if (string.IsNullOrEmpty(timeZone))
-                {
-                    timeZone = "Europe/Copenhagen";
-                }
-                TimeZoneInfo timeZoneInfo;
+                TimeZoneInfo timeZoneInfo = await _userService.GetCurrentUserTimeZoneInfo();
 
-                try
-                {
-                    timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timeZone);
-                }
-                catch
-                {
-                    timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("E. Europe Standard Time");
-                }
                 var result = new TemplateListModel
                 {
                     Templates = new List<TemplateDto>()
@@ -169,13 +154,7 @@ namespace eFormAPI.Web.Services.Security
         {
             try
             {
-                var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
-                var local = _dbContext.Users.Single(x => x.Id == int.Parse(value)).Locale;
-                if (string.IsNullOrEmpty(local))
-                {
-                    local = "Europe/Copenhagen";
-                }
-                TimeZoneInfo timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(local);
+                TimeZoneInfo timeZoneInfo = await _userService.GetCurrentUserTimeZoneInfo();
                 var result = new EformsPermissionsModel();
                 var eformClaims = new[]
                 {
@@ -203,26 +182,46 @@ namespace eFormAPI.Web.Services.Security
                         GroupName = e.SecurityGroup.Name,
                         EformInGroupId = e.Id,
                         TemplateId = e.TemplateId,
-                        Permissions = _dbContext.Permissions
-                            .Where(x => eformClaims.Contains(x.ClaimName))
-                            .Select(x => new EformPermissionModel()
-                            {
-                                Id = x.Id,
-                                EformPermissionId = e.EformPermissions
-                                    .Where(w => w.EformInGroupId == e.Id
-                                                && w.PermissionId == x.Id)
-                                    .Select(w => w.Id)
-                                    .FirstOrDefault(),
-                                ClaimName = x.ClaimName,
-                                PermissionName = x.PermissionName,
-                                PermissionType = x.PermissionType.Name,
-                                PermissionTypeId = x.PermissionTypeId,
-                                IsEnabled = _dbContext.EformPermissions.Any(g =>
-                                    g.EformInGroup.SecurityGroupId == groupId
-                                    && g.PermissionId == x.Id && g.EformInGroupId == e.Id)
-                            }).ToList()
+                        // Permissions = _dbContext.Permissions
+                        //     .Where(x => eformClaims.Contains(x.ClaimName))
+                        //     .Select(x => new EformPermissionModel()
+                        //     {
+                        //         Id = x.Id,
+                        //         EformPermissionId = e.EformPermissions
+                        //             .Where(w => w.EformInGroupId == e.Id
+                        //                         && w.PermissionId == x.Id)
+                        //             .Select(w => w.Id)
+                        //             .FirstOrDefault(),
+                        //         ClaimName = x.ClaimName,
+                        //         PermissionName = x.PermissionName,
+                        //         PermissionType = x.PermissionType.Name,
+                        //         PermissionTypeId = x.PermissionTypeId,
+                        //         IsEnabled = _dbContext.EformPermissions.Any(g =>
+                        //             g.EformInGroup.SecurityGroupId == groupId
+                        //             && g.PermissionId == x.Id && g.EformInGroupId == e.Id)
+                        //     }).ToList()
                     })
                     .ToListAsync();
+                foreach (EformPermissionsModel eformPermissionsModel in eformsInGroup)
+                {
+                    eformPermissionsModel.Permissions = await _dbContext.Permissions
+                        .Where(x => eformClaims.Contains(x.ClaimName))
+                        .Select(x => new EformPermissionModel()
+                        {
+                            Id = x.Id,
+                            ClaimName = x.ClaimName,
+                            PermissionName = x.PermissionName,
+                            PermissionType = x.PermissionType.Name,
+                            PermissionTypeId = x.PermissionTypeId,
+                        }).ToListAsync();
+                    foreach (EformPermissionModel permission in eformPermissionsModel.Permissions)
+                    {
+                        permission.IsEnabled = _dbContext.EformPermissions.Any(g =>
+                            g.EformInGroup.SecurityGroupId == groupId
+                            && g.PermissionId == permission.Id
+                            && g.EformInGroupId == eformPermissionsModel.EformInGroupId);
+                    }
+                }
                 var core = await _coreHelper.GetCore();
                 var templatesDto = await core.TemplateItemReadAll(false, timeZoneInfo);
                 foreach (var eformInGroups in eformsInGroup)

@@ -21,6 +21,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
+using System;
+
 namespace eFormAPI.Web.Infrastructure.Models.Mailing
 {
     using System.Collections.Generic;
@@ -28,6 +31,8 @@ namespace eFormAPI.Web.Infrastructure.Models.Mailing
     public class CasePostsListModel
     {
         public string EFormName { get; set; }
+        public DateTime CaseDoneAt { get; set; }
+        public int CaseId { get; set; }
         public string WorkerName { get; set; }
         public int Total { get; set; }
         public bool PdfReportAvailable { get; set; }
