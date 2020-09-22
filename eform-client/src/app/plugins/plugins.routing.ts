@@ -4,11 +4,6 @@ import {AuthGuard} from 'src/app/common/guards';
 
 export const routes: Routes = [
   // INSERT ROUTES HERE
-  {
-    path: 'work-orders-pn',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./modules/workorders-pn/work-orders-pn.module').then(m => m.WorkOrdersPnModule)
-  }
 ];
 
 @NgModule({
