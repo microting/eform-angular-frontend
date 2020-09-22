@@ -101,7 +101,12 @@ namespace eFormAPI.Web.Services
                         UpdatedAt = x.UpdatedAt,
                     }).ToListAsync();
 
-                var treeResult = folders.BuildTree().ToList();
+                var treeResult = new List<FolderDtoModel>();
+
+                if (folders.Count > 0)
+                {
+                    treeResult = folders.BuildTree().ToList();
+                }
                 return new OperationDataResult<List<FolderDtoModel>>(true, treeResult);
             }
             catch (Exception e)

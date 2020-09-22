@@ -18,6 +18,7 @@
       <app-eform-tree-view-picker
         [nodes]="foldersDto"
         [showActions]="true"
+        [showCollapseButton]="foldersDto.length > 0"
         (createNode)="openCreateModal($event)"
         (editNode)="openEditModal($event)"
         (deleteNode)="openDeleteModal($event)"
