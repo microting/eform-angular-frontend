@@ -91,9 +91,6 @@ export class EformEditParingModalComponent implements OnInit {
       }
       this.deployModel.folderId = this.selectedTemplateDto.folderId;
       this.deployViewModel.id = this.selectedTemplateDto.id;
-      if (this.foldersDto.length > 0 && this.deployModel.folderId !== null) {
-        this.saveButtonDisabled = false;
-      }
       deployObject.id = siteDto.siteUId;
       deployObject.isChecked = this.matchFound === true;
       this.matchFound = false;
@@ -116,10 +113,10 @@ export class EformEditParingModalComponent implements OnInit {
     this.foldersService.getAllFolders().subscribe((operation) => {
       if (operation && operation.success) {
         this.foldersDto = operation.model;
-        this.fillCheckboxes();
-        if (this.foldersDto.length === 0) {
+        if (this.foldersDto.length === 0 || (this.foldersDto.length > 0 && this.deployModel.folderId !== null)) {
           this.saveButtonDisabled = false;
         }
+        this.fillCheckboxes();
       }
     });
   }
