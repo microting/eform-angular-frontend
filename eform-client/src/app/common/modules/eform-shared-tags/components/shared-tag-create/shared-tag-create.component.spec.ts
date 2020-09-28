@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EmailRecipientTagNewComponent } from './email-recipient-tag-new.component';
+import { SharedTagCreateComponent } from './shared-tag-create.component';
 
 describe('EmailRecipientTagNewComponent', () => {
-  let component: EmailRecipientTagNewComponent;
-  let fixture: ComponentFixture<EmailRecipientTagNewComponent>;
+  let component: SharedTagCreateComponent;
+  let fixture: ComponentFixture<SharedTagCreateComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EmailRecipientTagNewComponent ]
+      declarations: [ SharedTagCreateComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EmailRecipientTagNewComponent);
+    fixture = TestBed.createComponent(SharedTagCreateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -12,17 +12,19 @@ import {
   EmailRecipientEditComponent,
   EmailRecipientsNewComponent,
   EmailRecipientsPageComponent,
-  EmailRecipientsTagsComponent,
-  EmailRecipientTagDeleteComponent,
-  EmailRecipientTagEditComponent
+  EmailRecipientsTagsComponent
 } from './components';
 import {SharedPnModule} from '../../plugins/modules/shared/shared-pn.module';
-import { EmailRecipientTagNewComponent } from './components/tags/email-recipient-tag-new/email-recipient-tag-new.component';
+import {EformSharedTagsModule} from 'src/app/common/modules/eform-shared-tags/eform-shared-tags.module';
 
 @NgModule({
   declarations: [
-    EmailRecipientsPageComponent, EmailRecipientsNewComponent, EmailRecipientEditComponent,
-    EmailRecipientsTagsComponent, EmailRecipientDeleteComponent, EmailRecipientTagEditComponent, EmailRecipientTagDeleteComponent, EmailRecipientTagNewComponent],
+    EmailRecipientsPageComponent,
+    EmailRecipientsNewComponent,
+    EmailRecipientEditComponent,
+    EmailRecipientsTagsComponent,
+    EmailRecipientDeleteComponent
+  ],
   imports: [
     CommonModule,
     EformSharedModule,
@@ -33,8 +35,8 @@ import { EmailRecipientTagNewComponent } from './components/tags/email-recipient
     FormsModule,
     FontAwesomeModule,
     EmailRecipientsRouting,
-    SharedPnModule
-  ]
+    SharedPnModule,
+    EformSharedTagsModule,
+  ],
 })
-export class EmailRecipientsModule {
-}
+export class EmailRecipientsModule {}

@@ -8,7 +8,7 @@
         <div class="container-fluid">
           <div class="row">
             <button mdbBtn class="btn-success btn-icon btn-sm m-0 ml-auto"
-                    (click)="createNewTag()"
+                    (click)="showCreateTagModal()"
                     type="button">
               <fa-icon icon="plus" [fixedWidth]="true" size="lg"></fa-icon>
               {{'Add new' | translate}}
@@ -27,11 +27,11 @@
                           <div class="ml-auto">
                             <a>
                               <fa-icon icon="pen" size="lg" [fixedWidth]="true" id="tagEditBtn"
-                                       (click)="openEditTagNameModal(tag)"></fa-icon>
+                                       (click)="showEditTagModal(tag)"></fa-icon>
                             </a>
                             <a>
                               <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true" id="tagDeleteBtn"
-                                       (click)="deleteTagModal(tag)"></fa-icon>
+                                       (click)="showDeleteTagModal(tag)"></fa-icon>
                             </a>
                           </div>
                         </div>
@@ -45,7 +45,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button mdbBtn class="btn-accent text-black-50 btn-small-height" (click)="frame.hide()" id="emailRecipientsTagsCloseBtn">
+        <button mdbBtn class="btn-accent text-black-50 btn-small-height" (click)="frame.hide()"
+                id="emailRecipientsTagsCloseBtn">
           {{ 'Close' | translate }}
         </button>
       </div>
@@ -53,9 +54,9 @@
   </div>
 </div>
 
-<app-email-recipient-tag-edit #tagEditModal (tagUpdated)="onTagUpdated()"
-                              (tagUpdateCancelled)="onChildrenModalHide()"></app-email-recipient-tag-edit>
-<app-email-recipient-tag-new #tagCreateModal (tagCreated)="onTagCreated()"
-                             (tagCreateCancelled)="onChildrenModalHide()"></app-email-recipient-tag-new>
-<app-email-recipient-tag-delete #tagDeleteModal (tagDeleted)="onTagDeleted()"
-                                (tagDeleteCancelled)="onChildrenModalHide()"></app-email-recipient-tag-delete>
+<app-shared-tag-edit #tagEditModal (tagUpdate)="onTagUpdate($event)"
+                     (tagUpdateCancelled)="onChildrenModalHide()"></app-shared-tag-edit>
+<app-shared-tag-create #tagCreateModal (tagCreate)="onTagCreate($event)"
+                       (tagCreateCancelled)="onChildrenModalHide()"></app-shared-tag-create>
+<app-shared-tag-delete #tagDeleteModal (tagDelete)="onTagDelete($event)"
+                       (tagDeleteCancelled)="onChildrenModalHide()"></app-shared-tag-delete>
