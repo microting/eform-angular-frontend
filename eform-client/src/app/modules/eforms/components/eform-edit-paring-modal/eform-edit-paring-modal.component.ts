@@ -91,7 +91,7 @@ export class EformEditParingModalComponent implements OnInit {
       }
       this.deployModel.folderId = this.selectedTemplateDto.folderId;
       this.deployViewModel.id = this.selectedTemplateDto.id;
-      if (this.foldersDto.length > 0 && this.deployModel.folderId !== null) {
+      if (this.foldersDto.length === 0 || (this.foldersDto.length > 0 && this.deployModel.folderId)) {
         this.saveButtonDisabled = false;
       }
       deployObject.id = siteDto.siteUId;
@@ -117,9 +117,6 @@ export class EformEditParingModalComponent implements OnInit {
       if (operation && operation.success) {
         this.foldersDto = operation.model;
         this.fillCheckboxes();
-        if (this.foldersDto.length === 0) {
-          this.saveButtonDisabled = false;
-        }
       }
     });
   }

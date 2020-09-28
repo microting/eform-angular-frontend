@@ -65,7 +65,7 @@
             <a mdbBtn *ngIf="plugin.status == statusEnum.Enabled"
                class="btn-accent text-black-50 btn-icon mb-2"
                mdbTooltip="{{'Plugin Settings Page' | translate}}"
-               href="/plugins/{{plugin.baseUrl}}/settings"
+               routerLink="/plugins/{{plugin.baseUrl}}/settings"
                style="margin: .375rem"
                mdbWavesEffect id="plugin-settings-link">
               <fa-icon icon="cog" [fixedWidth]="true" size="lg"></fa-icon>
