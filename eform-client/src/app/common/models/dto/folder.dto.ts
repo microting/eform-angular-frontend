@@ -4,6 +4,7 @@ export class FolderDto {
   id: number;
   name: string;
   description?: string;
+  parent?: FolderDto;
   parentId?: number;
   microtingUId?: number;
   children?: FolderDto[];

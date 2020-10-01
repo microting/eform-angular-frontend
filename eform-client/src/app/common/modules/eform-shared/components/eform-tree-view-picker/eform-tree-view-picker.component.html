@@ -51,7 +51,7 @@
            class="node-content-wrapper"
            [class.node-content-wrapper-active]="node.isActive"
            (click)="node.mouseAction('click', $event);
-           selected(node.data, node.isActive)"
+           selected(node.data, node.parent, node.isActive)"
            (dblclick)="node.mouseAction('dblClick', $event)"
            (contextmenu)="node.mouseAction('contextMenu', $event)"
       >
