@@ -51,8 +51,8 @@ export class EformTreeViewPickerComponent implements OnChanges, OnDestroy {
     this.deleteNode.emit(node);
   }
 
-  selected(node: FolderDto, isNodeActive: boolean) {
-    this.nodeSelected.emit(isNodeActive ? node : null);
+  selected(node: FolderDto, parent: any, isNodeActive: boolean) {
+    this.nodeSelected.emit(isNodeActive ? {...node, parent: parent.data.virtual ? null : parent.data} : null);
   }
 
   ngOnChanges(changes: SimpleChanges): void {

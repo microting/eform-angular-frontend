@@ -10,3 +10,5 @@ export * from './common';
 export * from './operation.models';
 export * from './security';
 export * from './email-recipients';
+export * from './tags';
+
