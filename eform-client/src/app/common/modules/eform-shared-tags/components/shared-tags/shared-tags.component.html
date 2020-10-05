@@ -8,6 +8,7 @@
         <div class="container-fluid">
           <div class="row">
             <button mdbBtn class="btn-success btn-icon btn-sm m-0 ml-auto"
+                    id="newTagBtn"
                     (click)="showCreateTagModal()"
                     type="button">
               <fa-icon icon="plus" [fixedWidth]="true" size="lg"></fa-icon>
@@ -15,10 +16,10 @@
             </button>
             <div class="panel panel-default w-100 pt-2">
               <div class="panel-body scrollable-block">
-                <ul class="list-group">
+                <ul class="list-group" id="tagsList">
                   <li class="list-group-item"
                       *ngFor="let tag of availableTags">
-                    <div class="row">
+                    <div class="row" id="tagRow">
                       <div id="tagName" class="col-md-8 col-sm-6 col-xs-6">
                         {{tag.name}}
                       </div>
@@ -26,11 +27,11 @@
                         <div class="d-flex">
                           <div class="ml-auto">
                             <a>
-                              <fa-icon icon="pen" size="lg" [fixedWidth]="true" id="tagEditBtn"
+                              <fa-icon icon="pen" size="lg" [fixedWidth]="true" id="editTagBtn"
                                        (click)="showEditTagModal(tag)"></fa-icon>
                             </a>
                             <a>
-                              <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true" id="tagDeleteBtn"
+                              <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true" id="deleteTagBtn"
                                        (click)="showDeleteTagModal(tag)"></fa-icon>
                             </a>
                           </div>
@@ -46,7 +47,7 @@
       </div>
       <div class="modal-footer">
         <button mdbBtn class="btn-accent text-black-50 btn-small-height" (click)="frame.hide()"
-                id="emailRecipientsTagsCloseBtn">
+                id="tagsModalCloseBtn">
           {{ 'Close' | translate }}
         </button>
       </div>
