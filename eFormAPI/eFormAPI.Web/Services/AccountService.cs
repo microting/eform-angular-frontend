@@ -45,6 +45,9 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
 
 namespace eFormAPI.Web.Services
 {
+    using Infrastructure.Database;
+    using Microsoft.EntityFrameworkCore;
+
     public class AccountService : IAccountService
     {
         private readonly IEFormCoreService _coreHelper;
@@ -54,6 +57,7 @@ namespace eFormAPI.Web.Services
         private readonly ILogger<AccountService> _logger;
         private readonly ILocalizationService _localizationService;
         private readonly UserManager<EformUser> _userManager;
+        private readonly BaseDbContext _dbContext;
 
         public AccountService(IEFormCoreService coreHelper,
             UserManager<EformUser> userManager,
@@ -61,7 +65,8 @@ namespace eFormAPI.Web.Services
             IDbOptions<ApplicationSettings> appSettings, 
             ILogger<AccountService> logger,
             ILocalizationService localizationService, 
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            BaseDbContext dbContext)
         {
             _coreHelper = coreHelper;
             _userManager = userManager;
@@ -70,6 +75,7 @@ namespace eFormAPI.Web.Services
             _logger = logger;
             _localizationService = localizationService;
             _emailSender = emailSender;
+            _dbContext = dbContext;
         }
 
         public async Task<UserInfoViewModel> GetUserInfo()
@@ -105,12 +111,19 @@ namespace eFormAPI.Web.Services
             var darkTheme = user.DarkTheme;
             var locale = string.IsNullOrEmpty(user.Locale) ? "da-DK" : user.Locale;
 
+            var securityGroupRedirectLink = await _dbContext.SecurityGroupUsers
+                .Where(x => x.EformUserId == user.Id)
+                .OrderByDescending(x => x.CreatedAt)
+                .Select(x => x.SecurityGroup.RedirectLink)
+                .FirstOrDefaultAsync();
+
             return new OperationDataResult<UserSettingsModel>(true, new UserSettingsModel()
             {
                 Locale = locale,
                 DarkTheme = darkTheme,
                 Formats = formats,
-                TimeZone = timeZone
+                TimeZone = timeZone,
+                LoginRedirectUrl = securityGroupRedirectLink,
             });
         }
 

@@ -33,6 +33,7 @@ namespace eFormAPI.Web.Abstractions.Security
         Task<OperationDataResult<SecurityGroupModel>> GetSecurityGroup(int id);
         Task<OperationDataResult<SecurityGroupsModel>> GetSecurityGroups(SecurityGroupRequestModel requestModel);
         Task<OperationResult> UpdateSecurityGroup(SecurityGroupUpdateModel requestModel);
+        Task<OperationResult> UpdateSecurityGroupSettings(SecurityGroupSettingsUpdateModel requestModel);
         Task<OperationResult> DeleteSecurityGroup(int id);
     }
 }

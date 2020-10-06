@@ -30,8 +30,10 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities.Permissions
 
     public class SecurityGroup : BaseEntity
     {
-        [StringLength(250)] 
+        [StringLength(250)]
         public string Name { get; set; }
+
+        public string RedirectLink { get; set; }
 
         public virtual ICollection<SecurityGroupUser> SecurityGroupUsers { get; set; }
             = new List<SecurityGroupUser>();
