@@ -137,22 +137,6 @@ namespace eFormAPI.Web.Services
             var sdkDbName = dbNamePrefix + customerNo + "_SDK";
             var angularDbName = dbNamePrefix + customerNo + "_Angular";
 
-            // if (initialSettingsModel.ConnectionStringSdk.SqlServerType == "mssql")
-            // {
-            //     sdkConnectionString = initialSettingsModel.ConnectionStringSdk.Host +
-            //                           ";Database=" +
-            //                           sdkDbName + ";" +
-            //                           initialSettingsModel
-            //                               .ConnectionStringSdk.Auth;
-            //
-            //     mainConnectionString = initialSettingsModel.ConnectionStringSdk.Host +
-            //                            ";Database=" +
-            //                            angularDbName + ";" +
-            //                            initialSettingsModel
-            //                                .ConnectionStringSdk.Auth;
-            // }
-            // else
-            // {
             sdkConnectionString = "host= " +
                                   initialSettingsModel.ConnectionStringSdk.Host +
                                   ";Database=" +
@@ -170,7 +154,6 @@ namespace eFormAPI.Web.Services
                                        .ConnectionStringSdk.Auth +
                                    "port=" + initialSettingsModel.ConnectionStringSdk.Port +
                                    ";Convert Zero Datetime = true;SslMode=none;";
-            // }
 
 
             if (!string.IsNullOrEmpty(_connectionStringsSdk.Value.SdkConnection))
@@ -207,16 +190,8 @@ namespace eFormAPI.Web.Services
             var dbContextOptionsBuilder = new DbContextOptionsBuilder<BaseDbContext>();
             try
             {
-                if (mainConnectionString.ToLower().Contains("convert zero datetime"))
-                {
-                    dbContextOptionsBuilder.UseMySql(mainConnectionString, b =>
-                        b.MigrationsAssembly("eFormAPI.Web"));
-                }
-                else
-                {
-                    dbContextOptionsBuilder.UseSqlServer(mainConnectionString, b =>
-                        b.MigrationsAssembly("eFormAPI.Web"));
-                }
+                dbContextOptionsBuilder.UseMySql(mainConnectionString, b =>
+                    b.MigrationsAssembly("eFormAPI.Web"));
 
                 using (var dbContext = new BaseDbContext(dbContextOptionsBuilder.Options))
                 {

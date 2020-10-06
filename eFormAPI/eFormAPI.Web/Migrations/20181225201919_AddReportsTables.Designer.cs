@@ -41,7 +41,7 @@ namespace eFormAPI.Web.Migrations
         {
 #pragma warning disable 612, 618
             string autoIDGenStrategy = "SqlServer:ValueGenerationStrategy";
-            object autoIDGenStrategyValue = SqlServerValueGenerationStrategy.IdentityColumn;
+            object autoIDGenStrategyValue = MySqlValueGenerationStrategy.IdentityColumn;
             if (DbConfig.IsMySQL)
             {
                 autoIDGenStrategy = "MySql:ValueGenerationStrategy";
@@ -50,7 +50,7 @@ namespace eFormAPI.Web.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {

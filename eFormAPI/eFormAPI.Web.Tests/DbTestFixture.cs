@@ -43,14 +43,14 @@ namespace eFormAPI.Web.Tests
 
             DbContextOptionsBuilder<BaseDbContext> dbContextOptionsBuilder = new DbContextOptionsBuilder<BaseDbContext>();
 
-            if (ConnectionString.ToLower().Contains("convert zero datetime"))
-            {
+            // if (ConnectionString.ToLower().Contains("convert zero datetime"))
+            // {
                 dbContextOptionsBuilder.UseMySql(connectionStr);
-            }
-            else
-            {
-                dbContextOptionsBuilder.UseSqlServer(connectionStr);
-            }
+            // }
+            // else
+            // {
+                // dbContextOptionsBuilder.UseSqlServer(connectionStr);
+            // }
             dbContextOptionsBuilder.UseLazyLoadingProxies(true);
             DbContext = new BaseDbContext(dbContextOptionsBuilder.Options);
 
