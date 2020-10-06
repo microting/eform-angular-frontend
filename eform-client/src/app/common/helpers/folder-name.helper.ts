@@ -12,7 +12,7 @@ export function composeFolderName(
   }
 
   const composedName = folderNameString
-    ? `${folderNameString} - ${foundFolder.name}`
+    ? `${foundFolder.name} - ${folderNameString}`
     : foundFolder.name;
 
   if (!foundFolder.parentId) {
