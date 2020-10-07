@@ -55,6 +55,8 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('locale', data.model.locale);
       if (data.model.loginRedirectUrl) {
         localStorage.setItem('loginRedirectUrl', data.model.loginRedirectUrl);
+      } else {
+        localStorage.removeItem('loginRedirectUrl');
       }
       this.getUserClaims(data.model.loginRedirectUrl);
     });
@@ -63,10 +65,9 @@ export class LoginComponent implements OnInit {
   getUserClaims(redirectUrl: string | null) {
     this.authService.obtainUserClaims()
       .subscribe((data) => {
-          debugger;
           // set user claims
           localStorage.setItem('userClaims', JSON.stringify(data.model));
-          this.router.navigate([`/${redirectUrl ? redirectUrl : ''}`]).then();
+          this.router.navigate([`/${redirectUrl ? redirectUrl : '/'}`]).then();
         },
         (error) => {
           this.error = error;

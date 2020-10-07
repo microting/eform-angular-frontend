@@ -92,6 +92,7 @@ export class SecurityPageComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         if (data && data.success) {
           this.getSecurityGroups();
+          this.modalGroupSettings.hide();
         }
       });
   }
