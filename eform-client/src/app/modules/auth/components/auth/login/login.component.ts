@@ -53,16 +53,20 @@ export class LoginComponent implements OnInit {
   getUserSettings() {
     this.userSettings.getUserSettings().subscribe((data) => {
       localStorage.setItem('locale', data.model.locale);
-      this.getUserClaims();
+      if (data.model.loginRedirectUrl) {
+        localStorage.setItem('loginRedirectUrl', data.model.loginRedirectUrl);
+      }
+      this.getUserClaims(data.model.loginRedirectUrl);
     });
   }
 
-  getUserClaims() {
+  getUserClaims(redirectUrl: string | null) {
     this.authService.obtainUserClaims()
       .subscribe((data) => {
+          debugger;
           // set user claims
           localStorage.setItem('userClaims', JSON.stringify(data.model));
-          this.router.navigate(['/']).then();
+          this.router.navigate([`/${redirectUrl ? redirectUrl : ''}`]).then();
         },
         (error) => {
           this.error = error;

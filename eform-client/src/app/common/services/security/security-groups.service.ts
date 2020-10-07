@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {Observable} from 'rxjs';
-import {OperationDataResult, OperationResult} from 'src/app/common/models';
+import {OperationDataResult, OperationResult, SecurityGroupSettingsUpdateModel} from 'src/app/common/models';
 import {
   SecurityGroupModel,
   SecurityGroupsRequestModel,
@@ -13,7 +13,8 @@ import {
 import {BaseService} from 'src/app/common/services/base.service';
 
 const SecurityGroupMethods = {
-  SecurityGroups: '/api/security/groups'
+  SecurityGroups: '/api/security/groups',
+  SecurityGroupSettings: '/api/security/groups/settings',
 };
 
 @Injectable()
@@ -36,6 +37,10 @@ export class SecurityGroupsService extends BaseService {
 
   updateSecurityGroup(model: SecurityGroupUpdateModel): Observable<OperationResult> {
     return this.put<any>(SecurityGroupMethods.SecurityGroups, model);
+  }
+
+  updateSecurityGroupSettings(settingsUpdateModel: SecurityGroupSettingsUpdateModel): Observable<OperationResult> {
+    return this.put<any>(SecurityGroupMethods.SecurityGroupSettings, settingsUpdateModel);
   }
 
   deleteSecurityGroup(id: number): Observable<OperationResult> {

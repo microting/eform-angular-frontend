@@ -10,4 +10,5 @@ export class SecurityGroupModel {
   name: string;
   userAmount: number;
   usersList: Array<SecurityGroupUserModel> = [];
+  redirectLink: string;
 }

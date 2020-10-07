@@ -56,12 +56,14 @@
                     [routerLink]="['group/' + securityGroup.id + '/general-permissions']"
                     mdbTooltip="{{'General Permissions' | translate}}">
               <fa-icon icon="lock-open" [fixedWidth]="true" size="lg"></fa-icon>
-
+            </button>
+            <button mdbBtn  class="btn-accent text-black-50 btn-icon mb-2"
+                    mdbTooltip="{{'Group settings' | translate}}" (click)="openSettingsModal(securityGroup)">
+              <fa-icon icon="cog" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
             <button mdbBtn class="btn-danger btn-icon mb-2 "
                     mdbTooltip="{{'Delete Group' | translate}}" (click)="openDeleteModal(securityGroup)">
               <fa-icon icon="trash-alt" [fixedWidth]="true" size="lg"></fa-icon>
-
             </button>
           </div>
         </td>
@@ -89,3 +91,5 @@
 </div>
 
 <app-security-group-remove #modalGroupDelete (onSecurityGroupRemoved)="getSecurityGroups()"></app-security-group-remove>
+<app-security-group-settings #modalGroupSettings
+                             (settingsUpdate)="updateSecurityGroupSettings($event)"></app-security-group-settings>
