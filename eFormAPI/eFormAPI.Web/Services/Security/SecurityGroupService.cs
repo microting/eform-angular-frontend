@@ -95,6 +95,7 @@ namespace eFormAPI.Web.Services.Security
                 {
                     Id = x.Id,
                     Name = x.Name,
+                    RedirectLink = x.RedirectLink,
                     UserAmount = x.SecurityGroupUsers.Count,
                     UsersList = x.SecurityGroupUsers.Select(u => new SecurityGroupUserModel()
                     {
@@ -126,6 +127,7 @@ namespace eFormAPI.Web.Services.Security
                     {
                         Id = x.Id,
                         Name = x.Name,
+                        RedirectLink = x.RedirectLink,
                         UserAmount = x.SecurityGroupUsers.Count,
                         UsersList = x.SecurityGroupUsers.Select(u => new SecurityGroupUserModel()
                         {
@@ -251,6 +253,34 @@ namespace eFormAPI.Web.Services.Security
             }
         }
 
+        public async Task<OperationResult> UpdateSecurityGroupSettings(SecurityGroupSettingsUpdateModel requestModel)
+        {
+            try
+            {
+                SecurityGroup securityGroup = await _dbContext.SecurityGroups
+                    .FirstOrDefaultAsync(x => x.Id == requestModel.Id);
+
+                if (securityGroup == null)
+                {
+                    return new OperationDataResult<SecurityGroupsModel>(false,
+                        _localizationService.GetString("SecurityGroupNotFound"));
+                }
+
+                securityGroup.RedirectLink = requestModel.RedirectLink;
+
+                _dbContext.SecurityGroups.Update(securityGroup);
+                await _dbContext.SaveChangesAsync();
+
+                return new OperationResult(true,
+                    _localizationService.GetString("SecurityGroupUpdatedSuccessfully"));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return new OperationDataResult<SecurityGroupsModel>(false,
+                    _localizationService.GetString("ErrorWhileUpdatingSecurityGroup"));
+            }
+        }
 
         public async Task<OperationResult> DeleteSecurityGroup(int id)
         {

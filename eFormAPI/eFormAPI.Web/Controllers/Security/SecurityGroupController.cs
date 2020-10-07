@@ -74,6 +74,14 @@ namespace eFormAPI.Web.Controllers.Security
             return await _securityGroupService.UpdateSecurityGroup(model);
         }
 
+        [HttpPut]
+        [Route("api/security/groups/settings")]
+        [Authorize(Roles = EformRole.Admin)]
+        public async Task<OperationResult> UpdateSecurityGroupSettings([FromBody] SecurityGroupSettingsUpdateModel requestModel)
+        {
+            return await _securityGroupService.UpdateSecurityGroupSettings(requestModel);
+        }
+
         [HttpDelete]
         [Route("api/security/groups/{id}")]
         [Authorize(Roles = EformRole.Admin)]

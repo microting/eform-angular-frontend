@@ -29,5 +29,6 @@ namespace eFormAPI.Web.Infrastructure.Models.Settings.User
         public bool DarkTheme { get; set; }
         public string Formats { get; set; }
         public string TimeZone { get; set; }
+        public string LoginRedirectUrl { get; set; }
     }
 }
