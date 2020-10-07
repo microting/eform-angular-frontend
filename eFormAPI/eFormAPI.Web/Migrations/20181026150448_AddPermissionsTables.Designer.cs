@@ -41,7 +41,7 @@ namespace eFormAPI.Web.Migrations
         {
 #pragma warning disable 612, 618
             string autoIDGenStrategy = "SqlServer:ValueGenerationStrategy";
-            object autoIDGenStrategyValue = SqlServerValueGenerationStrategy.IdentityColumn;
+            object autoIDGenStrategyValue = MySqlValueGenerationStrategy.IdentityColumn;
             if (DbConfig.IsMySQL)
             {
                 autoIDGenStrategy = "MySql:ValueGenerationStrategy";

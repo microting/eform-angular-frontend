@@ -79,7 +79,6 @@ namespace eFormAPI.Web
             services.AddMvc(options => options.EnableEndpointRouting = false);
 
             // Configuration
-            //services.AddSingleton(Configuration);
             services.AddOptions();
             services.AddLogging(loggingBuilder =>
             {
@@ -87,16 +86,9 @@ namespace eFormAPI.Web
                 loggingBuilder.AddConsole();
                 loggingBuilder.AddDebug();
             });
-            // Entity framework
-//#if DEBUG
-//            services.AddEntityFrameworkMySql()
-//                .AddDbContext<BaseDbContext>(
-//                o => o.UseMySql(@"Server = localhost; port = 3306; Database = angular-tests; user = root; Convert Zero Datetime = true;",
-//                    b => b.MigrationsAssembly("eFormAPI.Web")));
-//#else
             if (!string.IsNullOrEmpty(Configuration.MyConnectionString()))
             {
-                if (Configuration.MyConnectionString().ToLower().Contains("convert zero datetime"))
+                if (Configuration.MyConnectionString() != "...")
                 {
                     services.AddEntityFrameworkMySql()
                         .AddDbContext<BaseDbContext>(o => o.UseMySql(Configuration.MyConnectionString(),
@@ -104,13 +96,14 @@ namespace eFormAPI.Web
                 }
                 else
                 {
-                    services.AddEntityFrameworkSqlServer()
-                        .AddDbContext<BaseDbContext>(o => o.UseSqlServer(Configuration.MyConnectionString(),
+                    // We use this hack to get the project started and we actually don't use this connection, but it's needed for the service to start.
+                    // Once we have the correct connectionstring in the connection.json, we restart the server and the above method is used.
+                    services.AddEntityFrameworkMySql()
+                        .AddDbContext<BaseDbContext>(o => o.UseMySql("server=localhost;",
                             b => b.MigrationsAssembly("eFormAPI.Web")));
                 }
             }
 
-//#endif
             // plugins
             services.AddEFormPluginsDbContext(Configuration, Program.Plugins);
             // Identity services
