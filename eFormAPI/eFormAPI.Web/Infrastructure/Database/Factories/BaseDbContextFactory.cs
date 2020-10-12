@@ -35,7 +35,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Factories
         {
             var defaultCs = "Server = localhost; port = 3306; Database = eform-angular-migration; user = root; Convert Zero Datetime = true;";
             var optionsBuilder = new DbContextOptionsBuilder<BaseDbContext>();
-            optionsBuilder.UseMySql(args.Any() ? args[0]: defaultCs);
+            optionsBuilder.UseMySql(args.Any() ? (args[0] == "..." ? defaultCs : args[0]) : defaultCs);
             optionsBuilder.UseLazyLoadingProxies(true);
 
             return new BaseDbContext(optionsBuilder.Options);
