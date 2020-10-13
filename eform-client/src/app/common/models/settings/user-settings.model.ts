@@ -3,4 +3,5 @@ export class UserSettingsModel {
   formats: string;
   timeZone: string;
   darkTheme: boolean;
+  loginRedirectUrl: string;
 }

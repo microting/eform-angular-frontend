@@ -3,6 +3,8 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using eFormAPI.Web.Infrastructure.Database;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microting.eForm;
 
 namespace eFormAPI.Web.Migrations
 {
@@ -12,7 +14,6 @@ namespace eFormAPI.Web.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
             #pragma warning disable 612, 618
-
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
