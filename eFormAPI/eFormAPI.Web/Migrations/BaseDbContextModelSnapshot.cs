@@ -2,7 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eFormAPI.Web.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microting.eForm;
@@ -15,9 +14,6 @@ namespace eFormAPI.Web.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
             #pragma warning disable 612, 618
-            string autoIDGenStrategy = "MySql:ValueGenerationStrategy";
-            object autoIDGenStrategyValue = MySqlValueGenerationStrategy.IdentityColumn;
-
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
