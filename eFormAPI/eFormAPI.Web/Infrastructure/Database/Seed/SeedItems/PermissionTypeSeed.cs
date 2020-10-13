@@ -77,6 +77,11 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 {
                     Id = AuthConsts.DbIds.PermissionTypes.Eforms,
                     Name = "Eforms"
+                },
+                new PermissionType
+                {
+                    Id = AuthConsts.DbIds.PermissionTypes.EmailRecipients,
+                    Name = "EmailRecipients"
                 });
             return modelBuilder;
         }

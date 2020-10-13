@@ -179,6 +179,24 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                     PermissionId = AuthConsts.DbIds.Permissions.Cases.CaseGetPdf,
                     SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformUsers
                 },
+                new GroupPermission()
+                {
+                    Id = 28,
+                    PermissionId = AuthConsts.DbIds.Permissions.EmailRecipients.Create,
+                    SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformUsers
+                },
+                new GroupPermission()
+                {
+                    Id = 29,
+                    PermissionId = AuthConsts.DbIds.Permissions.EmailRecipients.Delete,
+                    SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformUsers
+                },
+                new GroupPermission()
+                {
+                    Id = 30,
+                    PermissionId = AuthConsts.DbIds.Permissions.EmailRecipients.Read,
+                    SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformUsers
+                },
                 // eForm admin group
                 new GroupPermission()
                 {

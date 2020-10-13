@@ -253,6 +253,12 @@ namespace eFormAPI.Web.Services
                         }
 
                         break;
+                    case "Email Recipients":
+                        if (claims.Contains(AuthConsts.EformClaims.EmailRecipientsClaims.Read))
+                        {
+                            newList.Add(menuItem);
+                        }
+                        break;
                     case "Security":
                         break;
                     case "Application Settings":

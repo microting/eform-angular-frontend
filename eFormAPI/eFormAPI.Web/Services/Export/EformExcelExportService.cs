@@ -73,10 +73,14 @@ namespace eFormAPI.Web.Services.Export
                 var customPathForUploadedData = $"{await core.GetSdkSetting(Settings.httpServerAddress)}/" +
                                                 "api/template-files/get-image/";
 
+                TimeSpan ts = new TimeSpan(0, 0, 0);
+                DateTime startDate = excelModel.DateFrom.Date + ts;
+                ts = new TimeSpan(23, 59, 59);
+                DateTime endDate = excelModel.DateTo.Date + ts;
                 var dataSet = await core.GenerateDataSetFromCases(
                     excelModel.TemplateId,
-                    excelModel.DateFrom,
-                    excelModel.DateTo,
+                    startDate,
+                    endDate,
                     customPathForUploadedData,
                     ",",
                     "",
