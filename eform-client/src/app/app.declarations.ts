@@ -28,6 +28,7 @@ import {LoaderInterceptor} from 'src/app/common/interceptors/loader-interceptor.
 import {UserClaimsInterceptor} from 'src/app/common/interceptors/user-claims.interceptor';
 import {HttpErrorInterceptor, JwtInterceptor} from 'src/app/common/interceptors';
 import {GALLERY_CONFIG} from '@ngx-gallery/core';
+import {NavigationMenuService} from 'src/app/common/services';
 // Guards
 
 export let providers = [
@@ -68,6 +69,7 @@ export let providers = [
   SecurityGroupsService,
   SecurityGroupEformsPermissionsService,
   PluginPermissionsService,
+  NavigationMenuService,
   LoaderService,
   { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },

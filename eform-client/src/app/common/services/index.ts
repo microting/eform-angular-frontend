@@ -7,3 +7,4 @@ export * from './cases';
 export * from './security';
 export * from './plugins-management';
 export * from './email-recipients';
+export * from './navigation-menu';
