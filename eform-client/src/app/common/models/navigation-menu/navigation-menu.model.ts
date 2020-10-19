@@ -7,14 +7,25 @@ export class NavigationMenuTemplateModel {
   id: number;
   name: string;
   pluginId: number | null;
-  child: { id: number; name: string; link: string }[];
+  collapsed: boolean;
+  items: NavigationMenuTemplateItemModel[];
+}
+
+export class NavigationMenuTemplateItemModel {
+  id: number;
+  name: string;
+  link: string;
 }
 
 export class NavigationMenuItemModel {
   id: number;
   name: string;
   isDropdown: boolean;
-  link: string;
+  collapsed = true;
+  link: string | null;
   children: NavigationMenuItemModel[] | null;
+  relatedPluginId: number | null;
+  relatedTemplateItemId: number | null;
+  parentId: number | null;
   position: number;
 }

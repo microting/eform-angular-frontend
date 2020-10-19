@@ -1,83 +1,102 @@
-<subheader-pn [title]="'Navigation menu' | translate"></subheader-pn>
+<subheader-pn [title]="'Navigation menu' | translate">
+  <div class="p-3">
+    <button
+      mdbBtn
+      class="btn-success btn-small-height"
+      id="navigationMenuSaveBtn"
+      (click)="updateNavigationMenu()"
+    >
+      {{ 'Save' | translate }}
+    </button>
+  </div>
+</subheader-pn>
 
 <div class="container-fluid">
   <div class="row mt-4">
     <div class="col-3">
-      <mdb-card class="mb-3">
-        <mdb-card-header> Main App</mdb-card-header>
-        <mdb-card-body dragula="MENU_ITEMS" id="mainMenu">
-          <mdb-card *ngFor="let mainItem of mainAppItems" class="mb-2">
-            <mdb-card-header>
-              <div class="d-flex justify-content-between align-items-center">
-                <div>
-                  <i
-                    class="material-icons md-36 dragula-handle align-middle"
-                    style="cursor: all-scroll"
-                  >
-                    drag_handle
-                  </i>
-                  {{ mainItem }}
-                </div>
+      <mdb-card
+        class="mb-3"
+        *ngFor="let menuTemplate of navigationMenuModel.menuTemplates"
+      >
+        <mdb-card-header> {{ menuTemplate.name }}</mdb-card-header>
+        <mdb-card-body
+          dragula="MENU_ITEMS"
+          id="mainMenu"
+          [(dragulaModel)]="menuTemplate.items"
+        >
+          <ng-container
+            *ngFor="let menuTemplateItem of menuTemplate.items; let i = index"
+          >
+            <mdb-card class="mb-2 mt-2">
+              <mdb-card-header>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <i
+                      class="material-icons md-36 dragula-handle align-middle"
+                      style="cursor: all-scroll"
+                    >
+                      drag_handle
+                    </i>
+                    {{ menuTemplateItem.name }}
+                  </div>
 
-                <!--              <div-->
-                <!--                (click)="collapse.toggle(); fieldChanged(!dashboardItem.collapsed, itemFields.collapsed);"-->
-                <!--                style="cursor: pointer">-->
-                <!--                <fa-icon icon="angle-right" size="lg" [fixedWidth]="true" *ngIf="dashboardItem.collapsed"></fa-icon>-->
-                <!--                <fa-icon icon="angle-down" size="lg" [fixedWidth]="true" *ngIf="!dashboardItem.collapsed"></fa-icon>-->
+                  <!--              <div-->
+                  <!--                (click)="collapse.toggle(); fieldChanged(!dashboardItem.collapsed, itemFields.collapsed);"-->
+                  <!--                style="cursor: pointer">-->
+                  <!--                <fa-icon icon="angle-right" size="lg" [fixedWidth]="true" *ngIf="dashboardItem.collapsed"></fa-icon>-->
+                  <!--                <fa-icon icon="angle-down" size="lg" [fixedWidth]="true" *ngIf="!dashboardItem.collapsed"></fa-icon>-->
+                  <!--              </div>-->
+                  <fa-icon
+                    icon="angle-down"
+                    size="lg"
+                    [fixedWidth]="true"
+                  ></fa-icon>
+                </div>
+              </mdb-card-header>
+              <mdb-card-body>
+                <!--              <div class="md-form">-->
+                <!--                <input-->
+                <!--                  mdbInput-->
+                <!--                  [ngModel]="menuTemplateItem.name"-->
+                <!--                  type="text"-->
+                <!--                  id="templateMenuItemName"-->
+                <!--                  name="menuItemName"-->
+                <!--                  class="form-control"-->
+                <!--                />-->
+                <!--                <label for="templateMenuItemName">{{-->
+                <!--                  'Name' | translate-->
+                <!--                }}</label>-->
                 <!--              </div>-->
-                <fa-icon
-                  icon="angle-down"
-                  size="lg"
-                  [fixedWidth]="true"
-                ></fa-icon>
-              </div>
-            </mdb-card-header>
-            <mdb-card-body>
-              <div class="md-form">
-                <input
-                  mdbInput
-                  type="text"
-                  id="templateMenuItemName"
-                  name="menuItemName"
-                  class="form-control"
-                />
-                <label for="templateMenuItemName">{{
-                  'Name' | translate
-                }}</label>
-              </div>
-              <div class="md-form">
-                <input
-                  mdbInput
-                  type="text"
-                  id="templateMenuItemLink"
-                  name="templateMenuItemLink"
-                  class="form-control"
-                />
-                <label for="templateMenuItemLink">{{
-                  'Link' | translate
-                }}</label>
-              </div>
-            </mdb-card-body>
-          </mdb-card>
-        </mdb-card-body>
-      </mdb-card>
-      <mdb-card *ngFor="let plugin of plugins" class="mb-3">
-        <mdb-card-header>
-          {{ plugin.pluginName }}
-        </mdb-card-header>
-        <mdb-card-body>
-          <mdb-card *ngFor="let pluginItem of plugin.pluginItems" class="mb-2">
-            <mdb-card-header>
-              {{ pluginItem }}
-            </mdb-card-header>
-          </mdb-card>
+                <div class="md-form">
+                  <input
+                    mdbInput
+                    [disabled]="true"
+                    [ngModel]="menuTemplateItem.link"
+                    type="text"
+                    id="templateMenuItemLink{{ i }}"
+                    name="templateMenuItemLink{{ i }}"
+                    class="form-control"
+                  />
+                  <label for="templateMenuItemLink{{ i }}">{{
+                    'Link' | translate
+                  }}</label>
+                </div>
+              </mdb-card-body>
+            </mdb-card>
+          </ng-container>
         </mdb-card-body>
       </mdb-card>
     </div>
     <div class="col-9">
-      <mdb-card dragula="MENU_ITEMS">
-        <mdb-card-body>
-          <mdb-card>
+      <mdb-card>
+        <mdb-card-body
+          dragula="MENU_ITEMS"
+          [(dragulaModel)]="navigationMenuModel.actualMenu"
+        >
+          <mdb-card
+            *ngFor="let menuItem of navigationMenuModel.actualMenu"
+            class="mb-2 mt-2"
+          >
             <mdb-card-header>
               <i
                 class="material-icons md-36 dragula-handle align-middle"
@@ -85,10 +104,17 @@
               >
                 drag_handle
               </i>
-              Advanced
+              {{ menuItem.name }}
             </mdb-card-header>
-            <mdb-card-body dragula="MENU_ITEMS">
-              <mdb-card>
+            <mdb-card-body
+              dragula="MENU_ITEMS"
+              *ngIf="menuItem.isDropdown"
+              [(dragulaModel)]="menuItem.children"
+            >
+              <mdb-card
+                *ngFor="let menuItemChild of menuItem.children"
+                class="mb-2 mt-2"
+              >
                 <mdb-card-header>
                   <i
                     class="material-icons md-36 dragula-handle align-middle"
@@ -96,18 +122,7 @@
                   >
                     drag_handle
                   </i>
-                  Device Users
-                </mdb-card-header>
-              </mdb-card>
-              <mdb-card class="mt-3">
-                <mdb-card-header>
-                  <i
-                    class="material-icons md-36 dragula-handle align-middle"
-                    style="cursor: all-scroll"
-                  >
-                    drag_handle
-                  </i>
-                  Mailing
+                  {{ menuItemChild.name }}
                 </mdb-card-header>
               </mdb-card>
             </mdb-card-body>
@@ -116,35 +131,4 @@
       </mdb-card>
     </div>
   </div>
-  <!--  <div class="row pl-1">-->
-  <!--    <div class="col-md-4 col-sm-8 ng-select-wrapper">-->
-  <!--      <ng-select-->
-  <!--        class="custom"-->
-  <!--        dropdownPosition="'bottom'"-->
-  <!--        [placeholder]="'Tags' | translate"-->
-  <!--        [items]="availableTags"-->
-  <!--        [(ngModel)]="planningsRequestModel.tagIds"-->
-  <!--        (add)="saveTag($event)"-->
-  <!--        (remove)="removeSavedTag($event)"-->
-  <!--        [clearable]="false"-->
-  <!--        [bindLabel]="'name'"-->
-  <!--        [bindValue]="'id'"-->
-  <!--        id="tagSelector"-->
-  <!--        [multiple]="true"></ng-select>-->
-  <!--    </div>-->
-  <!--    <div class="col-md-2">-->
-  <!--      <div class="md-form">-->
-  <!--        <input mdbInput type="text" (input)="onNameFilterChanged($event.target.value)"-->
-  <!--               class="form-control input-sm" id="nameFilterInput">-->
-  <!--        <label for="nameFilterInput">{{'Name' | translate}}</label>-->
-  <!--      </div>-->
-  <!--    </div>-->
-  <!--    <div class="col-md-2">-->
-  <!--      <div class="md-form">-->
-  <!--        <input mdbInput type="text" (input)="onDescriptionFilterChanged($event.target.value)"-->
-  <!--               class="form-control input-sm" id="descriptionFilterInput">-->
-  <!--        <label for="descriptionFilterInput">{{'Description' | translate}}</label>-->
-  <!--      </div>-->
-  <!--    </div>-->
-  <!--  </div>-->
 </div>

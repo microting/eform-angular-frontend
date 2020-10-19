@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {OperationDataResult, OperationResult} from 'src/app/common/models';
 import {BaseService} from 'src/app/common/services/base.service';
+import {NavigationMenuItemModel, NavigationMenuModel} from 'src/app/common/models/navigation-menu';
 
 const NavigationMenuMethods = {
   Menu: '/api/navigation-menu',
@@ -16,20 +17,20 @@ export class NavigationMenuService extends BaseService {
     super(_http, router, toastrService);
   }
 
-  getNavigationMenu(): Observable<OperationDataResult<any>> {
-    return this.get<any>(NavigationMenuMethods.Menu);
+  getNavigationMenu(): Observable<OperationDataResult<NavigationMenuModel>> {
+    return this.get<NavigationMenuModel>(NavigationMenuMethods.Menu);
   }
 
-  updateNavigationMenu(model: any): Observable<OperationResult> {
+  updateNavigationMenu(model: NavigationMenuItemModel[]): Observable<OperationResult> {
     return this.put<any>(NavigationMenuMethods.Menu, model);
   }
 
-  deleteNavigationMenu(id: number): Observable<OperationResult> {
-    return this.delete(NavigationMenuMethods.Menu + '/' + id);
-  }
+  // deleteNavigationMenuItem(id: number): Observable<OperationResult> {
+  //   return this.delete(NavigationMenuMethods.Menu + '/' + id);
+  // }
 
-  createNavigationMenu(model: any): Observable<OperationResult> {
-    return this.post<any>(NavigationMenuMethods.Menu, model);
-  }
+  // createNavigationMenu(model: any): Observable<OperationResult> {
+  //   return this.post<any>(NavigationMenuMethods.Menu, model);
+  // }
 
 }
