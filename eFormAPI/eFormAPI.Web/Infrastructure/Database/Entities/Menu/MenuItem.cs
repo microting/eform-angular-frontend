@@ -21,27 +21,21 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using eFormAPI.Web.Infrastructure.Database.Seed.SeedItems;
-using Microsoft.EntityFrameworkCore;
 
-namespace eFormAPI.Web.Infrastructure.Database.Seed
+namespace eFormAPI.Web.Infrastructure.Database.Entities.Menu
 {
-    public static class EformSeed
-    {
-        public static ModelBuilder SeedLatest(this ModelBuilder modelBuilder)
-        {
-            modelBuilder.AddPermissionTypes()
-                .AddDefaultSecurityGroups()
-                .AddPermissions()
-                .AddDefaultGroupPermission()
-                .AddDefaultTemplates()
-                .AddDefaultMenuEnglishTranslations()
-                .AddDefaultMenuDanishTranslations()
-                .AddDefaultMenuGermanTranslations()
-                .AddDefaultMenu()
-                .AddConfigurationDefault();
+    using System.Collections.Generic;
+    using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
 
-            return modelBuilder;
-        }
+    public class MenuItem : BaseEntity
+    {
+        public int Position { get; set; }
+        public int MenuTemplateId { get; set; }
+        public virtual MenuTemplate MenuTemplate { get; set; }
+        public int? ParentId { get; set; }
+        public virtual MenuItem Parent { get; set; }
+
+        public List<MenuItem> ChildItems
+            = new List<MenuItem>();
     }
 }

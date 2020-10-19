@@ -21,30 +21,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
 
-namespace eFormAPI.Web.Infrastructure.Database.Entities
+namespace eFormAPI.Web.Infrastructure.Const
 {
-    public class MenuItem : BaseEntity
+    public static class LocaleNames
     {
-        [StringLength(250)] 
-        public string Name { get; set; }
-
-        [StringLength(250)] 
-        public string LocaleName { get; set; }
-
-        public string Link { get; set; }
-        public string E2EId { get; set; }
-
-        public int Position { get; set; }
-        public int MenuPosition { get; set; } // 1 = Left, 0 = Right
-
-        public int? ParentId { get; set; }
-        public virtual MenuItem Parent { get; set; }
-
-        public List<MenuItem> ChildItems
-            = new List<MenuItem>();
+        public const string English = "en-US";
+        public const string Danish = "da";
+        public const string German = "de-DE";
     }
 }

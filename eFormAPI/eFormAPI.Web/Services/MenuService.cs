@@ -39,6 +39,8 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Services
 {
+    using Infrastructure.Database.Entities.Menu;
+    using Infrastructure.Helpers;
     using Microting.eFormApi.BasePn.Abstractions;
 
     public class MenuService : IMenuService
@@ -136,6 +138,100 @@ namespace eFormAPI.Web.Services
                                     E2EId = x.E2EId
                                 }).ToList()
                         }
+                    ).ToList();
+                // Create result
+                var result = new MenuModel();
+                orderedRight.ForEach(menuItem =>
+                {
+                    if (menuItem.MenuItems.Any())
+                    {
+                        result.RightMenu.Add(menuItem);
+                    }
+                    else if (!string.IsNullOrEmpty(menuItem.Link))
+                    {
+                        result.RightMenu.Add(menuItem);
+                    }
+                });
+                orderedLeft.ForEach(menuItem =>
+                {
+                    if (menuItem.MenuItems.Any())
+                    {
+                        result.LeftMenu.Add(menuItem);
+                    }
+                    else if (!string.IsNullOrEmpty(menuItem.Link))
+                    {
+                        result.LeftMenu.Add(menuItem);
+                    }
+                });
+                // Add menu from plugins
+                if (Program.Plugins.Any())
+                {
+                    foreach (var plugin in Program.Plugins)
+                    {
+                        var pluginMenu = plugin.HeaderMenu(_serviceProvider);
+                        result.LeftMenu.AddRange(pluginMenu.LeftMenu);
+                        result.RightMenu.AddRange(pluginMenu.RightMenu);
+                    }
+                }
+
+                return new OperationDataResult<MenuModel>(true, result);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                _logger.LogError(e.Message);
+                return new OperationDataResult<MenuModel>(false,
+                    _localizationService.GetString("ErrorWhileObtainingUserMenu"));
+            }
+        }
+
+
+        public async Task<OperationDataResult<MenuModel>> GetRightMenu()
+        {
+            try
+            {
+                var menuItems = EformMenuHelper.GetRightMenu();
+                var userClaims = await _claimsService.GetUserClaimsNames(_userService.UserId);
+                if (!_userService.IsInRole(EformRole.Admin))
+                {
+                    menuItems = FilterMenuForUser(menuItems, userClaims);
+                }
+
+                // Add user first and last name
+                foreach (var menuItem in menuItems)
+                {
+                    if (menuItem.Name == "user")
+                    {
+                        var user = await _userService.GetCurrentUserAsync();
+                        menuItem.Name = $"{user.FirstName} {user.LastName}";
+                    }
+                }
+
+
+                var orderedRight = menuItems
+                    .Where(p => p.Parent == null && p.MenuPosition == 2)
+                    .OrderBy(p => p.Position)
+                    .Select(p => new MenuItemModel()
+                    {
+                        Name = p.LocaleName.IsNullOrEmpty()
+                                ? p.Name
+                                : _localizationService.GetString(p.LocaleName),
+                        Position = p.Position,
+                        E2EId = p.E2EId,
+                        Link = p.Link,
+                        MenuItems = menuItems
+                                .Where(c => c.ParentId == p.Id && p.MenuPosition == 2)
+                                .OrderBy(c => c.Position)
+                                .Select(x => new MenuItemModel()
+                                {
+                                    Name = x.LocaleName.IsNullOrEmpty()
+                                        ? x.Name
+                                        : _localizationService.GetString(x.LocaleName),
+                                    Position = x.Position,
+                                    Link = x.Link,
+                                    E2EId = x.E2EId
+                                }).ToList()
+                    }
                     ).ToList();
                 // Create result
                 var result = new MenuModel();

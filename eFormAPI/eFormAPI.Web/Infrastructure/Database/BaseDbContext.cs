@@ -32,6 +32,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Database.Extensions;
 namespace eFormAPI.Web.Infrastructure.Database
 {
     using Entities.Mailing;
+    using Entities.Menu;
     using Entities.Permissions;
     using Entities.Reports;
 
@@ -49,11 +50,15 @@ namespace eFormAPI.Web.Infrastructure.Database
         }
 
         // Common
-        public DbSet<MenuItem> MenuItems { get; set; }
         public DbSet<SavedTag> SavedTags { get; set; }
         public DbSet<EformConfigurationValue> ConfigurationValues { get; set; }
         public DbSet<EformPlugin> EformPlugins { get; set; }
-        
+
+        // Menu
+        public DbSet<MenuItem> MenuItems { get; set; }
+        public DbSet<MenuTemplate> MenuTemplates { get; set; }
+        public DbSet<MenuTranslation> MenuTranslations { get; set; }
+
         // Reports
         public DbSet<EformReport> EformReports { get; set; }
         public DbSet<EformReportElement> EformReportElements { get; set; }
@@ -83,6 +88,10 @@ namespace eFormAPI.Web.Infrastructure.Database
             modelBuilder.Entity<EformPlugin>()
                 .HasIndex(p => p.PluginId)
                 .IsUnique();
+
+            // Menu
+            modelBuilder.Entity<MenuTranslation>()
+                .HasIndex(p => p.LocaleName);
 
             // Reports
             modelBuilder.Entity<EformReport>()

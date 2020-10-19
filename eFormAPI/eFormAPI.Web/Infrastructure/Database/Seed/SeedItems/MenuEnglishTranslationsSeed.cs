@@ -24,97 +24,97 @@ SOFTWARE.
 
 namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
 {
+    using System.Collections.Generic;
     using Const;
     using Entities.Menu;
     using Microsoft.EntityFrameworkCore;
 
-    public static class MenuItemSeed
+    public static class MenuEnglishTranslationsSeed
     {
-        public static ModelBuilder AddDefaultMenu(this ModelBuilder modelBuilder)
+        public static ModelBuilder AddDefaultMenuEnglishTranslations(this ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<MenuItem>().HasData(
-                new MenuItem
+            var entities = new List<MenuTranslation>()
+            {
+                new MenuTranslation
                 {
                     Id = 1,
+                    Name = "My eForms",
                     MenuTemplateId = MenuTemplateIds.MyEforms,
-                    Position = 0,
                 },
-                new MenuItem
+                new MenuTranslation
                 {
                     Id = 2,
-                    MenuTemplateId = MenuTemplateIds.DeviceUsers,
-                    Position = 1,
+                    Name = "Device Users",
+                    MenuTemplateId = MenuTemplateIds.DeviceUsers
                 },
-                new MenuItem
+                new MenuTranslation
                 {
                     Id = 3,
-                    MenuTemplateId = MenuTemplateIds.Advanced,
-                    Position = 2,
+                    Name = "Advanced",
+                    MenuTemplateId = MenuTemplateIds.Advanced
                 },
-                new MenuItem
+                new MenuTranslation
                 {
                     Id = 4,
-                    MenuTemplateId = MenuTemplateIds.Sites,
-                    Position = 0,
-                    ParentId = 3,
+                    Name = "Sites",
+                    MenuTemplateId = MenuTemplateIds.Sites
                 },
-                new MenuItem
+                new MenuTranslation
                 {
                     Id = 5,
-                    MenuTemplateId = MenuTemplateIds.Workers,
-                    Position = 1,
-                    ParentId = 3,
+                    Name = "Workers",
+                    MenuTemplateId = MenuTemplateIds.Workers
                 },
-                new MenuItem
+                new MenuTranslation
                 {
                     Id = 6,
-                    MenuTemplateId = MenuTemplateIds.Units,
-                    Position = 2,
-                    ParentId = 3,
+                    Name = "Units",
+                    MenuTemplateId = MenuTemplateIds.Units
                 },
-                new MenuItem
+                new MenuTranslation
                 {
                     Id = 7,
-                    MenuTemplateId = MenuTemplateIds.SearchableList,
-                    Position = 3,
-                    ParentId = 3,
+                    Name = "Searchable List",
+                    MenuTemplateId = MenuTemplateIds.SearchableList
                 },
-                new MenuItem
+                new MenuTranslation
                 {
                     Id = 8,
-                    MenuTemplateId = MenuTemplateIds.SelectableList,
-                    Position = 4,
-                    ParentId = 3,
+                    Name = "Selectable list",
+                    MenuTemplateId = MenuTemplateIds.SelectableList
                 },
-                new MenuItem
+                new MenuTranslation
                 {
                     Id = 9,
-                    MenuTemplateId = MenuTemplateIds.ApplicationSettings,
-                    Position = 6,
-                    ParentId = 3,
+                    Name = "Application Settings",
+                    MenuTemplateId = MenuTemplateIds.ApplicationSettings
                 },
-                new MenuItem
+                new MenuTranslation
                 {
                     Id = 10,
-                    MenuTemplateId = MenuTemplateIds.PluginsSettings,
-                    Position = 8,
-                    ParentId = 3,
+                    Name = "Plugins Settings",
+                    MenuTemplateId = MenuTemplateIds.PluginsSettings
                 },
-                new MenuItem
+                new MenuTranslation
                 {
                     Id = 11,
-                    MenuTemplateId = MenuTemplateIds.Folders,
-                    Position = 5,
-                    ParentId = 3,
+                    Name = "Folders",
+                    MenuTemplateId = MenuTemplateIds.Folders
                 },
-                new MenuItem
+                new MenuTranslation
                 {
                     Id = 12,
-                    MenuTemplateId = MenuTemplateIds.EmailRecipients,
-                    Position = 7,
-                    ParentId = 3,
+                    Name = "Email Recipients",
+                    MenuTemplateId = MenuTemplateIds.EmailRecipients
                 }
-            );
+            };
+
+            foreach (var menuTranslation in entities)
+            {
+                menuTranslation.LocaleName = LocaleNames.English;
+            }
+
+            modelBuilder.Entity<MenuTranslation>().HasData(entities);
             return modelBuilder;
         }
     }
