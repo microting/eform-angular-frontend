@@ -6,6 +6,7 @@ import {TranslateModule} from '@ngx-translate/core';
 
 import {
   DateFormatterComponent,
+  EformCollapseToggleComponent,
   EformPageSizeComponent,
   EformPageSubheaderComponent,
   EformPaginationComponent,
@@ -35,6 +36,7 @@ import {WavesModule} from 'angular-bootstrap-md';
     DateFormatterComponent,
     AuthImagePipe,
     EformTreeViewPickerComponent,
+    EformCollapseToggleComponent,
   ],
   exports: [
     EformPageSubheaderComponent,
@@ -44,6 +46,7 @@ import {WavesModule} from 'angular-bootstrap-md';
     DateFormatterComponent,
     EformTreeViewPickerComponent,
     AuthImagePipe,
+    EformCollapseToggleComponent,
   ],
 })
 export class EformSharedModule {}

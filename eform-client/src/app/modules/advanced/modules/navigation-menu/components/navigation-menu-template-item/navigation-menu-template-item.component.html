@@ -11,23 +11,11 @@
         {{ item.name }}
       </div>
 
-      <div
-        (click)="collapse.toggle(); this.item.collapsed = !this.item.collapsed"
-        style="cursor: pointer"
-      >
-        <fa-icon
-          icon="angle-right"
-          size="lg"
-          [fixedWidth]="true"
-          *ngIf="this.item.collapsed"
-        ></fa-icon>
-        <fa-icon
-          icon="angle-down"
-          size="lg"
-          [fixedWidth]="true"
-          *ngIf="!this.item.collapsed"
-        ></fa-icon>
-      </div>
+      <app-eform-collapse-toggle
+        [collapse]="collapse"
+        [collapsed]="this.item.collapsed"
+        (collapseUpdate)="this.item.collapsed = $event"
+      ></app-eform-collapse-toggle>
     </div>
   </div>
 
