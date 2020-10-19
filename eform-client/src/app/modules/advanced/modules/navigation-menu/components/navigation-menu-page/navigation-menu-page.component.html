@@ -27,8 +27,29 @@
           <ng-container
             *ngFor="let menuTemplateItem of menuTemplate.items; let i = index"
           >
-            <mdb-card class="mb-2 mt-2">
-              <mdb-card-header>
+            <app-navigation-menu-template-item
+              [item]="menuTemplateItem"
+              [itemIndex]="i"
+            ></app-navigation-menu-template-item>
+          </ng-container>
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+    <div class="col-9">
+      <div class="card">
+        <div
+          class="card-body"
+          dragula="MENU_ITEMS"
+          [(dragulaModel)]="navigationMenuModel.actualMenu"
+        >
+          <ng-container
+            *ngFor="
+              let menuItem of navigationMenuModel.actualMenu;
+              let y = index
+            "
+          >
+            <div class="card mb-2 mt-2" *ngIf="menuItem.isDropdown">
+              <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center">
                   <div>
                     <i
@@ -37,98 +58,58 @@
                     >
                       drag_handle
                     </i>
-                    {{ menuTemplateItem.name }}
+                    {{ menuItem.name }}
                   </div>
-
-                  <!--              <div-->
-                  <!--                (click)="collapse.toggle(); fieldChanged(!dashboardItem.collapsed, itemFields.collapsed);"-->
-                  <!--                style="cursor: pointer">-->
-                  <!--                <fa-icon icon="angle-right" size="lg" [fixedWidth]="true" *ngIf="dashboardItem.collapsed"></fa-icon>-->
-                  <!--                <fa-icon icon="angle-down" size="lg" [fixedWidth]="true" *ngIf="!dashboardItem.collapsed"></fa-icon>-->
-                  <!--              </div>-->
-                  <fa-icon
-                    icon="angle-down"
-                    size="lg"
-                    [fixedWidth]="true"
-                  ></fa-icon>
-                </div>
-              </mdb-card-header>
-              <mdb-card-body>
-                <!--              <div class="md-form">-->
-                <!--                <input-->
-                <!--                  mdbInput-->
-                <!--                  [ngModel]="menuTemplateItem.name"-->
-                <!--                  type="text"-->
-                <!--                  id="templateMenuItemName"-->
-                <!--                  name="menuItemName"-->
-                <!--                  class="form-control"-->
-                <!--                />-->
-                <!--                <label for="templateMenuItemName">{{-->
-                <!--                  'Name' | translate-->
-                <!--                }}</label>-->
-                <!--              </div>-->
-                <div class="md-form">
-                  <input
-                    mdbInput
-                    [disabled]="true"
-                    [ngModel]="menuTemplateItem.link"
-                    type="text"
-                    id="templateMenuItemLink{{ i }}"
-                    name="templateMenuItemLink{{ i }}"
-                    class="form-control"
-                  />
-                  <label for="templateMenuItemLink{{ i }}">{{
-                    'Link' | translate
-                  }}</label>
-                </div>
-              </mdb-card-body>
-            </mdb-card>
-          </ng-container>
-        </mdb-card-body>
-      </mdb-card>
-    </div>
-    <div class="col-9">
-      <mdb-card>
-        <mdb-card-body
-          dragula="MENU_ITEMS"
-          [(dragulaModel)]="navigationMenuModel.actualMenu"
-        >
-          <mdb-card
-            *ngFor="let menuItem of navigationMenuModel.actualMenu"
-            class="mb-2 mt-2"
-          >
-            <mdb-card-header>
-              <i
-                class="material-icons md-36 dragula-handle align-middle"
-                style="cursor: all-scroll"
-              >
-                drag_handle
-              </i>
-              {{ menuItem.name }}
-            </mdb-card-header>
-            <mdb-card-body
-              dragula="MENU_ITEMS"
-              *ngIf="menuItem.isDropdown"
-              [(dragulaModel)]="menuItem.children"
-            >
-              <mdb-card
-                *ngFor="let menuItemChild of menuItem.children"
-                class="mb-2 mt-2"
-              >
-                <mdb-card-header>
-                  <i
-                    class="material-icons md-36 dragula-handle align-middle"
-                    style="cursor: all-scroll"
+                  <div
+                    (click)="
+                      collapse.toggle();
+                      menuItem.collapsed = !menuItem.collapsed
+                    "
+                    style="cursor: pointer"
                   >
-                    drag_handle
-                  </i>
-                  {{ menuItemChild.name }}
-                </mdb-card-header>
-              </mdb-card>
-            </mdb-card-body>
-          </mdb-card>
-        </mdb-card-body>
-      </mdb-card>
+                    <fa-icon
+                      icon="angle-right"
+                      size="lg"
+                      [fixedWidth]="true"
+                      *ngIf="menuItem.collapsed"
+                    ></fa-icon>
+                    <fa-icon
+                      icon="angle-down"
+                      size="lg"
+                      [fixedWidth]="true"
+                      *ngIf="!menuItem.collapsed"
+                    ></fa-icon>
+                  </div>
+                </div>
+              </div>
+              <div mdbCollapse #collapse="bs-collapse">
+                <!-- Dropdown body -->
+                <div
+                  class="card-body"
+                  dragula="MENU_ITEMS"
+                  *ngIf="menuItem.isDropdown"
+                  [(dragulaModel)]="menuItem.children"
+                >
+                  <ng-container *ngFor="let menuItemChild of menuItem.children">
+                    <app-navigation-menu-item
+                      [item]="menuItemChild"
+                      [itemIndex]="y"
+                    ></app-navigation-menu-item>
+                  </ng-container>
+                </div>
+                <!-- /Dropdown body -->
+              </div>
+            </div>
+            <!-- Common item body -->
+            <app-navigation-menu-item
+              [item]="menuItem"
+              [itemIndex]="y"
+              *ngIf="!menuItem.isDropdown"
+            ></app-navigation-menu-item>
+            <!-- /Common item body -->
+          </ng-container>
+        </div>
+      </div>
     </div>
   </div>
 </div>

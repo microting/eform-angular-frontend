@@ -21,7 +21,7 @@ export class NavigationMenuPageComponent implements OnInit {
         children: [],
         relatedTemplateItemId: 1,
         parentId: null,
-        collapsed: false
+        collapsed: false,
       },
       {
         id: 2,
@@ -41,7 +41,7 @@ export class NavigationMenuPageComponent implements OnInit {
             children: [],
             relatedTemplateItemId: 3,
             parentId: 2,
-            collapsed: false
+            collapsed: false,
           },
           {
             id: 4,
@@ -53,12 +53,12 @@ export class NavigationMenuPageComponent implements OnInit {
             children: [],
             relatedTemplateItemId: 4,
             parentId: 2,
-            collapsed: false
-          }
+            collapsed: false,
+          },
         ],
         relatedTemplateItemId: null,
         parentId: null,
-        collapsed: false
+        collapsed: false,
       },
     ],
     menuTemplates: [
@@ -67,24 +67,39 @@ export class NavigationMenuPageComponent implements OnInit {
         name: 'Main application',
         pluginId: null,
         items: [
-          { id: 1, link: 'eforms', name: 'Eforms' },
-          { id: 2, link: 'device-users', name: 'Device users' },
-          { id: 3, link: 'sites', name: 'Sites' },
-          { id: 4, link: 'entity-select', name: 'Entity select' },
-          { id: 5, link: 'entity-search', name: 'Entity search' },
-          { id: 6, link: 'mailing', name: 'Mailing' },
+          { id: 1, link: 'eforms', name: 'Eforms', collapsed: false },
+          {
+            id: 2,
+            link: 'device-users',
+            name: 'Device users',
+            collapsed: false,
+          },
+          { id: 3, link: 'sites', name: 'Sites', collapsed: false },
+          {
+            id: 4,
+            link: 'entity-select',
+            name: 'Entity select',
+            collapsed: false,
+          },
+          {
+            id: 5,
+            link: 'entity-search',
+            name: 'Entity search',
+            collapsed: false,
+          },
+          { id: 6, link: 'mailing', name: 'Mailing', collapsed: false },
         ],
-        collapsed: false
+        collapsed: false,
       },
       {
         id: 2,
         pluginId: 1,
         name: 'Items planning',
         items: [
-          { id: 1, link: 'plannings', name: 'Plannings' },
-          { id: 2, link: 'reports', name: 'Reports' },
+          { id: 1, link: 'plannings', name: 'Plannings', collapsed: false },
+          { id: 2, link: 'reports', name: 'Reports', collapsed: false },
         ],
-        collapsed: false
+        collapsed: false,
       },
     ],
   };

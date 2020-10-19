@@ -15,6 +15,7 @@ export class NavigationMenuTemplateItemModel {
   id: number;
   name: string;
   link: string;
+  collapsed: boolean;
 }
 
 export class NavigationMenuItemModel {

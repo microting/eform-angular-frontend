@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {NavigationMenuTemplateItemModel} from 'src/app/common/models/navigation-menu';
 
 @Component({
   selector: 'app-navigation-menu-template-item',
@@ -6,7 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navigation-menu-template-item.component.scss']
 })
 export class NavigationMenuTemplateItemComponent implements OnInit {
-
+  @Input() item: NavigationMenuTemplateItemModel = new NavigationMenuTemplateItemModel();
+  @Input() itemIndex = 0;
   constructor() { }
 
   ngOnInit(): void {
