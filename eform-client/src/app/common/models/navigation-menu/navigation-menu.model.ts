@@ -22,7 +22,7 @@ export class NavigationMenuItemModel {
   id: number;
   name: string;
   isDropdown: boolean;
-  collapsed = true;
+  collapsed: boolean;
   link: string | null;
   children: NavigationMenuItemModel[] | null;
   relatedPluginId: number | null;

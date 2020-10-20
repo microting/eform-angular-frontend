@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navigation-menu-custom.component.scss']
 })
 export class NavigationMenuCustomComponent implements OnInit {
+  collapsed = false;
 
   constructor() { }
 

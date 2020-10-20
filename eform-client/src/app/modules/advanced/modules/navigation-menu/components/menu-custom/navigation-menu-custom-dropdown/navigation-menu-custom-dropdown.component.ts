@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navigation-menu-custom-dropdown.component.scss']
 })
 export class NavigationMenuCustomDropdownComponent implements OnInit {
+  collapsed = true;
 
   constructor() { }
 

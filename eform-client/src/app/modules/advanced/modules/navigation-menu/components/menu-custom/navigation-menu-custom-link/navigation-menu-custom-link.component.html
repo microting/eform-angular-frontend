@@ -1,0 +1,21 @@
+<mdb-card
+  class="mb-3"
+>
+  <mdb-card-header>
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        {{ 'Link' | translate }}
+      </div>
+      <app-eform-collapse-toggle
+        [collapse]="collapse"
+        [collapsed]="collapsed"
+        (collapseUpdate)="collapsed = $event"
+      ></app-eform-collapse-toggle>
+    </div>
+  </mdb-card-header>
+  <div mdbCollapse #collapse="bs-collapse">
+    <div class="card-body">
+
+    </div>
+  </div>
+</mdb-card>

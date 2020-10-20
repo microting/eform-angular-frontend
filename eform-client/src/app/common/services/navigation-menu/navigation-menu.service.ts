@@ -25,12 +25,4 @@ export class NavigationMenuService extends BaseService {
     return this.put<any>(NavigationMenuMethods.Menu, model);
   }
 
-  // deleteNavigationMenuItem(id: number): Observable<OperationResult> {
-  //   return this.delete(NavigationMenuMethods.Menu + '/' + id);
-  // }
-
-  // createNavigationMenu(model: any): Observable<OperationResult> {
-  //   return this.post<any>(NavigationMenuMethods.Menu, model);
-  // }
-
 }
