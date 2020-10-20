@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {NavigationMenuItemModel} from 'src/app/common/models/navigation-menu';
 
 @Component({
   selector: 'app-navigation-menu-custom',
@@ -7,10 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavigationMenuCustomComponent implements OnInit {
   collapsed = false;
+  @Output() addCustomLinkToMenu: EventEmitter<NavigationMenuItemModel> = new EventEmitter<NavigationMenuItemModel>();
+  @Output() addCustomDropdownToMenu: EventEmitter<NavigationMenuItemModel> = new EventEmitter<NavigationMenuItemModel>();
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  onAddLinkToMenu(model: NavigationMenuItemModel) {
+    this.addCustomLinkToMenu.emit(model);
+  }
+
+  onAddDropdownToMenu(model: NavigationMenuItemModel) {
+    this.addCustomDropdownToMenu.emit(model);
+  }
 }

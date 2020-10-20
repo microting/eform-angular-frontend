@@ -1,66 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DragulaService } from 'ng2-dragula';
-import { NavigationMenuModel } from 'src/app/common/models/navigation-menu';
+import {
+  NavigationMenuItemModel,
+  NavigationMenuModel,
+} from 'src/app/common/models/navigation-menu';
+import { NavigationMenuService } from 'src/app/common/services';
+import { Subscription } from 'rxjs';
+import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 
+@AutoUnsubscribe()
 @Component({
   selector: 'app-navigation-menu-page',
   templateUrl: './navigation-menu-page.component.html',
   styleUrls: ['./navigation-menu-page.component.scss'],
 })
-export class NavigationMenuPageComponent implements OnInit {
+export class NavigationMenuPageComponent implements OnInit, OnDestroy {
   testActualMenu: any = [];
+  navigationMenuSub$: Subscription;
+  updateNavigationMenuSub$: Subscription;
   navigationMenuModel: NavigationMenuModel = {
-    actualMenu: [
-      // {
-      //   id: 1,
-      //   isDropdown: false,
-      //   position: 0,
-      //   link: 'eforms',
-      //   name: 'Eforms',
-      //   relatedPluginId: null,
-      //   children: [],
-      //   relatedTemplateItemId: 1,
-      //   parentId: null,
-      //   collapsed: false,
-      // },
-      // {
-      //   id: 2,
-      //   isDropdown: true,
-      //   position: 1,
-      //   link: null,
-      //   name: 'Advanced',
-      //   relatedPluginId: null,
-      //   children: [
-      //     {
-      //       id: 3,
-      //       isDropdown: false,
-      //       position: 0,
-      //       link: 'sites',
-      //       name: 'Sites',
-      //       relatedPluginId: null,
-      //       children: [],
-      //       relatedTemplateItemId: 3,
-      //       parentId: 2,
-      //       collapsed: false,
-      //     },
-      //     {
-      //       id: 4,
-      //       isDropdown: false,
-      //       position: 1,
-      //       link: 'mailing',
-      //       name: 'Mailing',
-      //       relatedPluginId: null,
-      //       children: [],
-      //       relatedTemplateItemId: 4,
-      //       parentId: 2,
-      //       collapsed: false,
-      //     },
-      //   ],
-      //   relatedTemplateItemId: null,
-      //   parentId: null,
-      //   collapsed: false,
-      // },
-    ],
+    actualMenu: [],
     menuTemplates: [
       {
         id: 1,
@@ -103,36 +62,11 @@ export class NavigationMenuPageComponent implements OnInit {
       },
     ],
   };
-  menuItemsCollapsed = false;
-  mainAppItems: string[] = [
-    'Eforms',
-    'Device Users',
-    'Sites',
-    'Entity Search',
-    'Entity Select',
-    'Mailing',
-    'Plugins',
-    'Application Settings',
-  ];
 
-  plugins: {
-    id: number;
-    pluginName: string;
-    pluginItems: string[];
-  }[] = [
-    {
-      id: 1,
-      pluginName: 'Items Planning',
-      pluginItems: ['Plannings', 'Reports'],
-    },
-    {
-      id: 2,
-      pluginName: 'Work orders',
-      pluginItems: ['Orders', 'Reports'],
-    },
-  ];
-
-  constructor(private dragulaService: DragulaService) {
+  constructor(
+    private dragulaService: DragulaService,
+    private navigationMenuService: NavigationMenuService
+  ) {
     dragulaService.createGroup('MENU_ITEMS', {
       moves: (el, container, handle) => {
         return handle.classList.contains('dragula-handle');
@@ -141,19 +75,53 @@ export class NavigationMenuPageComponent implements OnInit {
         return source.id === 'mainMenu' || source.id === 'pluginMenu';
       },
       copyItem: (data: any) => {
+        debugger;
         return data;
       },
       accepts: (el, target, source, sibling) => {
+        debugger;
         // To avoid dragging from right to left container
-        return target.id !== 'mainMenu' && target.id !== 'pluginMenu';
+        return (
+          ((target.classList.contains('dragula-dropdown') &&
+            !el.classList.contains('dragula-dropdown')) ||
+            // (!target.classList.contains('dragula-dropdown') &&
+            //   !el.classList.contains('dragula-dropdown')) ||
+            (!target.classList.contains('dragula-dropdown') &&
+              el.classList.contains('dragula-dropdown'))) &&
+          target.id !== 'mainMenu' &&
+          target.id !== 'pluginMenu'
+        );
+        // return (target.id !== 'mainMenu' && target.id !== 'pluginMenu');
       },
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // this.getNavigationMenu();
+  }
+
+  getNavigationMenu() {
+    this.navigationMenuSub$ = this.navigationMenuService
+      .getNavigationMenu()
+      .subscribe((data) => {
+        if (data && data.success) {
+          this.navigationMenuModel = data.model;
+        }
+      });
+  }
 
   updateNavigationMenu() {
-    debugger;
-    const x = this.navigationMenuModel.actualMenu;
+    this.updateNavigationMenuSub$ = this.navigationMenuService
+      .updateNavigationMenu(this.navigationMenuModel.actualMenu)
+      .subscribe(() => {});
   }
+
+  manualAddItemToMenu(model: NavigationMenuItemModel) {
+    this.navigationMenuModel.actualMenu = [
+      ...this.navigationMenuModel.actualMenu,
+      model,
+    ];
+  }
+
+  ngOnDestroy(): void {}
 }

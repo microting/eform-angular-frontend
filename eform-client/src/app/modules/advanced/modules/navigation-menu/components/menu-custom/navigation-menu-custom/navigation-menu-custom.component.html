@@ -15,8 +15,9 @@
   </mdb-card-header>
   <div mdbCollapse #collapse="bs-collapse">
     <div class="card-body">
-      <app-navigation-menu-custom-dropdown></app-navigation-menu-custom-dropdown>
-      <app-navigation-menu-custom-link></app-navigation-menu-custom-link>
+      <app-navigation-menu-custom-dropdown
+        (addDropdownToMenu)="onAddDropdownToMenu($event)"></app-navigation-menu-custom-dropdown>
+      <app-navigation-menu-custom-link (addLinkToMenu)="onAddLinkToMenu($event)"></app-navigation-menu-custom-link>
     </div>
   </div>
 </mdb-card>

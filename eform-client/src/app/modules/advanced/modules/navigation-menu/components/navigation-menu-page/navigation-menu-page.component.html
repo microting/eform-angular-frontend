@@ -31,7 +31,8 @@
           </div>
         </mdb-card-header>
         <div mdbCollapse #collapse="bs-collapse">
-          <div class="card-body"
+          <div
+            class="card-body"
             dragula="MENU_ITEMS"
             id="mainMenu"
             [(dragulaModel)]="menuTemplate.items"
@@ -47,7 +48,10 @@
           </div>
         </div>
       </mdb-card>
-      <app-navigation-menu-custom></app-navigation-menu-custom>
+      <app-navigation-menu-custom
+        (addCustomLinkToMenu)="manualAddItemToMenu($event)"
+        (addCustomDropdownToMenu)="manualAddItemToMenu($event)"
+      ></app-navigation-menu-custom>
     </div>
     <div class="col-9">
       <div class="card">
@@ -62,7 +66,7 @@
               let y = index
             "
           >
-            <div class="card mb-2 mt-2" *ngIf="menuItem.isDropdown">
+            <div class="card mb-2 mt-2 dragula-dropdown" *ngIf="menuItem.isDropdown">
               <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center">
                   <div>

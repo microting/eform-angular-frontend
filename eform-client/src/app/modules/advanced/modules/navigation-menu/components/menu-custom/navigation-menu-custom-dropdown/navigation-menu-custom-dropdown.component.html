@@ -15,7 +15,38 @@
   </mdb-card-header>
   <div mdbCollapse #collapse="bs-collapse">
     <div class="card-body">
-
+      <div class="md-form">
+        <input
+          mdbInput
+          type="text"
+          id="customDropdownName"
+          name="customDropdownName"
+          [(ngModel)]="customDropdownModel.name"
+          class="form-control"
+        />
+        <label for="customDropdownName">{{
+          'Name' | translate
+          }}</label>
+      </div>
+      <div class="ng-select-wrapper">
+        <ng-select
+          class="custom"
+          dropdownPosition="'bottom'"
+          [placeholder]="'Tags' | translate"
+          [items]="[{id: 1, name: 'Items Planning'}]"
+          [(ngModel)]="customDropdownModel.relatedPluginId"
+          [clearable]="true"
+          [bindLabel]="'name'"
+          [bindValue]="'id'"
+          id="tagSelector"></ng-select>
+      </div>
+      <div class="d-flex flex-row justify-content-end">
+        <button mdbBtn class="btn btn-success btn-icon" [disabled]="!customDropdownModel.name"
+                (click)="addToMenu()"
+                mdbTooltip="{{'Add to menu' | translate}}">
+          <fa-icon icon="arrow-right" [fixedWidth]="true" size="lg"></fa-icon>
+        </button>
+      </div>
     </div>
   </div>
 </mdb-card>
