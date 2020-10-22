@@ -1,6 +1,4 @@
-<mdb-card
-  class="mb-3"
->
+<mdb-card class="mb-3">
   <mdb-card-header>
     <div class="d-flex justify-content-between align-items-center">
       <div>
@@ -15,9 +13,46 @@
   </mdb-card-header>
   <div mdbCollapse #collapse="bs-collapse">
     <div class="card-body">
-      <app-navigation-menu-custom-dropdown
-        (addDropdownToMenu)="onAddDropdownToMenu($event)"></app-navigation-menu-custom-dropdown>
-      <app-navigation-menu-custom-link (addLinkToMenu)="onAddLinkToMenu($event)"></app-navigation-menu-custom-link>
+      <mdb-card
+        class="mb-2"
+      >
+        <mdb-card-header>
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              {{ 'Dropdown' | translate }}
+            </div>
+            <fa-icon (click)="showDropdownAddModal()"
+              icon="plus"
+              style="cursor: pointer"
+              mdbTooltip="{{ 'Add to menu' | translate }}"
+            ></fa-icon>
+          </div>
+        </mdb-card-header>
+      </mdb-card>
+      <mdb-card
+        class="mb-3"
+      >
+        <mdb-card-header>
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              {{ 'Link' | translate }}
+            </div>
+            <fa-icon (click)="showCustomLinkAddModal()"
+              icon="plus"
+              style="cursor: pointer"
+              mdbTooltip="{{ 'Add to menu' | translate }}"
+            ></fa-icon>
+          </div>
+        </mdb-card-header>
+      </mdb-card>
     </div>
   </div>
 </mdb-card>
+
+<app-navigation-menu-custom-dropdown #customDropdownModal
+  (addDropdownToMenu)="onAddDropdownToMenu($event)"
+></app-navigation-menu-custom-dropdown>
+
+<app-navigation-menu-custom-link #customLinkModal
+  (addLinkToMenu)="onAddLinkToMenu($event)"
+></app-navigation-menu-custom-link>
