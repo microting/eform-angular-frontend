@@ -7,6 +7,7 @@ import {
 import { NavigationMenuService } from 'src/app/common/services';
 import { Subscription } from 'rxjs';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
+import { NavigationMenuItemTypeEnum } from 'src/app/common/const';
 
 @AutoUnsubscribe()
 @Component({
@@ -26,27 +27,48 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
         name: 'Main application',
         pluginId: null,
         items: [
-          { id: 1, link: 'eforms', name: 'Eforms', collapsed: false },
+          {
+            id: 1,
+            link: 'eforms',
+            name: 'Eforms',
+            collapsed: false,
+            translations: [],
+          },
           {
             id: 2,
             link: 'device-users',
             name: 'Device users',
             collapsed: false,
+            translations: [],
           },
-          { id: 3, link: 'sites', name: 'Sites', collapsed: false },
+          {
+            id: 3,
+            link: 'sites',
+            name: 'Sites',
+            collapsed: false,
+            translations: [],
+          },
           {
             id: 4,
             link: 'entity-select',
             name: 'Entity select',
             collapsed: false,
+            translations: [],
           },
           {
             id: 5,
             link: 'entity-search',
             name: 'Entity search',
             collapsed: false,
+            translations: [],
           },
-          { id: 6, link: 'mailing', name: 'Mailing', collapsed: false },
+          {
+            id: 6,
+            link: 'mailing',
+            name: 'Mailing',
+            collapsed: false,
+            translations: [],
+          },
         ],
         collapsed: false,
       },
@@ -55,13 +77,29 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
         pluginId: 1,
         name: 'Items planning',
         items: [
-          { id: 1, link: 'plannings', name: 'Plannings', collapsed: false },
-          { id: 2, link: 'reports', name: 'Reports', collapsed: false },
+          {
+            id: 1,
+            link: 'plannings',
+            name: 'Plannings',
+            collapsed: false,
+            translations: [],
+          },
+          {
+            id: 2,
+            link: 'reports',
+            name: 'Reports',
+            collapsed: false,
+            translations: [],
+          },
         ],
         collapsed: false,
       },
     ],
   };
+
+  get menuItemTypes() {
+    return NavigationMenuItemTypeEnum;
+  }
 
   constructor(
     private dragulaService: DragulaService,
@@ -82,14 +120,13 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
         debugger;
         // To avoid dragging from right to left container
         return (
-          ((target.classList.contains('dragula-dropdown') &&
-            !el.classList.contains('dragula-dropdown')) ||
-            // (!target.classList.contains('dragula-dropdown') &&
-            //   !el.classList.contains('dragula-dropdown')) ||
-            (!target.classList.contains('dragula-dropdown') &&
-              el.classList.contains('dragula-dropdown'))) &&
-          target.id !== 'mainMenu' &&
-          target.id !== 'pluginMenu'
+          // ((target.classList.contains('dragula-dropdown') &&
+          //   !el.classList.contains('dragula-dropdown')) ||
+          //   // (!target.classList.contains('dragula-dropdown') &&
+          //   //   !el.classList.contains('dragula-dropdown')) ||
+          //   (!target.classList.contains('dragula-dropdown') &&
+          //     el.classList.contains('dragula-dropdown'))) &&
+          target.id !== 'mainMenu' && target.id !== 'pluginMenu'
         );
         // return (target.id !== 'mainMenu' && target.id !== 'pluginMenu');
       },
@@ -124,4 +161,6 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {}
+
+  onItemDelete(model: NavigationMenuItemModel) {}
 }

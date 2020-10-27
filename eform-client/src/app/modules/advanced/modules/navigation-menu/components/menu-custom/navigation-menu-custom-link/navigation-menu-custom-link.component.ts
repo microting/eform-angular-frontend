@@ -1,5 +1,12 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { NavigationMenuItemModel } from 'src/app/common/models/navigation-menu';
+import { NavigationMenuItemTypeEnum } from 'src/app/common/const';
 
 @Component({
   selector: 'app-navigation-menu-custom-link',
@@ -7,21 +14,34 @@ import { NavigationMenuItemModel } from 'src/app/common/models/navigation-menu';
   styleUrls: ['./navigation-menu-custom-link.component.scss'],
 })
 export class NavigationMenuCustomLinkComponent implements OnInit {
-  @ViewChild('collapse') collapse: any;
   @Output() addLinkToMenu: EventEmitter<
     NavigationMenuItemModel
   > = new EventEmitter<NavigationMenuItemModel>();
-  collapsed = true;
   customLinkModel: NavigationMenuItemModel = new NavigationMenuItemModel();
+
+  @ViewChild('frame', { static: true }) frame;
 
   constructor() {}
 
   ngOnInit(): void {}
 
-  addToMenu() {
-    this.addLinkToMenu.emit({ ...this.customLinkModel });
+  addCustomLink() {
+    this.addLinkToMenu.emit({
+      ...this.customLinkModel,
+      id: Math.floor(Math.random() * 1000),
+      type: NavigationMenuItemTypeEnum.Link,
+      isVirtual: true,
+    });
     this.customLinkModel = new NavigationMenuItemModel();
-    this.collapsed = true;
-    this.collapse.toggle();
+    this.frame.hide();
+  }
+
+  show() {
+    this.frame.show();
+  }
+
+  cancelAddCustomLink() {
+    this.frame.hide();
+    this.customLinkModel = new NavigationMenuItemModel();
   }
 }

@@ -11,11 +11,12 @@
         {{ item.name }}
       </div>
 
-      <app-eform-collapse-toggle
-        [collapse]="collapse"
-        [collapsed]="this.item.collapsed"
-        (collapseUpdate)="this.item.collapsed = $event"
-      ></app-eform-collapse-toggle>
+      <fa-icon icon="pen" [fixedWidth]="true"></fa-icon>
+<!--      <app-eform-collapse-toggle-->
+<!--        [collapse]="collapse"-->
+<!--        [collapsed]="this.item.collapsed"-->
+<!--        (collapseUpdate)="this.item.collapsed = $event"-->
+<!--      ></app-eform-collapse-toggle>-->
 
     </div>
   </div>
@@ -34,10 +35,11 @@
         />
         <label for="templateMenuItemLink{{ itemIndex }}">{{
           'Link' | translate
-        }}</label>
+          }}</label>
       </div>
       <div class="d-flex flex-row justify-content-end">
         <button mdbBtn class="btn btn-danger btn-icon"
+                (click)="showRemoveModal()"
                 mdbTooltip="{{'Remove' | translate}}">
           <fa-icon icon="trash-alt" [fixedWidth]="true" size="lg"></fa-icon>
         </button>
@@ -45,3 +47,6 @@
     </div>
   </div>
 </div>
+
+<app-navigation-menu-item-delete #menuItemDeleteModal
+                                 (itemDelete)="onItemDelete($event)"></app-navigation-menu-item-delete>

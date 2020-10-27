@@ -1,53 +1,57 @@
-<mdb-card
-  class="mb-3"
->
-  <mdb-card-header>
-    <div class="d-flex justify-content-between align-items-center">
-      <div>
-        {{ 'Link' | translate }}
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{'New custom link' | translate}}</h3>
       </div>
-      <app-eform-collapse-toggle
-        [collapse]="collapse"
-        [collapsed]="collapsed"
-        (collapseUpdate)="collapsed = $event"
-      ></app-eform-collapse-toggle>
-    </div>
-  </mdb-card-header>
-  <div mdbCollapse #collapse="bs-collapse">
-    <div class="card-body">
-      <div class="md-form">
-        <input
-          mdbInput
-          type="text"
-          id="customLinkName"
-          name="customLinkName"
-          [(ngModel)]="customLinkModel.name"
-          class="form-control"
-        />
-        <label for="customLinkName">{{
-          'Name' | translate
-          }}</label>
+      <div class="modal-body">
+        <div class="container-fluid">
+
+          <div class="row">
+            <div class="col">
+              <div class="md-form">
+                <input
+                  mdbInput
+                  type="text"
+                  id="customLinkName"
+                  name="customLinkName"
+                  [(ngModel)]="customLinkModel.name"
+                  class="form-control"
+                />
+                <label for="customLinkName">{{
+                  'Name' | translate
+                  }}</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="md-form">
+                <input
+                  mdbInput
+                  type="text"
+                  id="customLinkLink"
+                  name="customLinkLink"
+                  [(ngModel)]="customLinkModel.link"
+                  class="form-control"
+                />
+                <label for="customLinkLink">{{
+                  'Link' | translate
+                  }}</label>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
       </div>
-      <div class="md-form">
-        <input
-          mdbInput
-          type="text"
-          id="customLinkLink"
-          name="customLinkLink"
-          [(ngModel)]="customLinkModel.link"
-          class="form-control"
-        />
-        <label for="customLinkLink">{{
-          'Link' | translate
-          }}</label>
-      </div>
-      <div class="d-flex flex-row justify-content-end">
-        <button mdbBtn class="btn btn-success btn-icon" [disabled]="!customLinkModel.link || !customLinkModel.name"
-                (click)="addToMenu()"
-                mdbTooltip="{{'Add to menu' | translate}}">
-          <fa-icon icon="arrow-right" [fixedWidth]="true" size="lg"></fa-icon>
-        </button>
+      <div class="modal-footer">
+        <button mdbBtn class="btn-success btn-small-height" id="customLinkCreateBtn"
+                [disabled]="!customLinkModel.link || !customLinkModel.name"
+                (click)="addCustomLink()">{{'Add' | translate}}</button>
+        <button mdbBtn class="btn-accent text-black-50 btn-small-height" id="customLinkCancelCreateBtn"
+                (click)="cancelAddCustomLink()">{{'Close' | translate}}</button>
       </div>
     </div>
   </div>
-</mdb-card>
+</div>

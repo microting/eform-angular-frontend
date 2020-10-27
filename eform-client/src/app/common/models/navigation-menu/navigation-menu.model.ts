@@ -1,3 +1,5 @@
+import {NavigationMenuItemTypeEnum} from 'src/app/common/const';
+
 export class NavigationMenuModel {
   menuTemplates: NavigationMenuTemplateModel[];
   actualMenu: NavigationMenuItemModel[];
@@ -16,12 +18,13 @@ export class NavigationMenuTemplateItemModel {
   name: string;
   link: string;
   collapsed: boolean;
+  translations: NavigationMenuTranslationModel[];
 }
 
 export class NavigationMenuItemModel {
   id: number;
   name: string;
-  isDropdown: boolean;
+  type: NavigationMenuItemTypeEnum;
   collapsed: boolean;
   link: string | null;
   children: NavigationMenuItemModel[] | null;
@@ -29,4 +32,13 @@ export class NavigationMenuItemModel {
   relatedTemplateItemId: number | null;
   parentId: number | null;
   position: number;
+  isVirtual: boolean;
+  translations: NavigationMenuTranslationModel[];
+}
+
+export class NavigationMenuTranslationModel {
+  id: number;
+  languageName: string;
+  locale: string;
+  translationString: string;
 }

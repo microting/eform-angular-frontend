@@ -5,20 +5,20 @@ import {
   NavigationMenuCustomDropdownComponent,
   NavigationMenuCustomLinkComponent,
   NavigationMenuItemComponent,
-  NavigationMenuItemDeleteComponent,
+  NavigationMenuItemDeleteComponent, NavigationMenuItemEditComponent,
   NavigationMenuPageComponent,
   NavigationMenuTemplateItemComponent,
 } from './components';
 import { NavigationMenuRouting } from './navigation-menu.routing';
 import { SharedPnModule } from 'src/app/plugins/modules/shared/shared-pn.module';
 import {
-  ButtonsModule,
-  CardsModule,
-  CollapseModule,
-  InputsModule,
-  TableModule,
-  TooltipModule,
-  WavesModule,
+    ButtonsModule,
+    CardsModule,
+    CollapseModule,
+    InputsModule, ModalModule,
+    TableModule,
+    TooltipModule,
+    WavesModule,
 } from 'angular-bootstrap-md';
 import { TranslateModule } from '@ngx-translate/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -36,6 +36,7 @@ import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-sha
     NavigationMenuCustomDropdownComponent,
     NavigationMenuCustomLinkComponent,
     NavigationMenuItemDeleteComponent,
+    NavigationMenuItemEditComponent,
   ],
   imports: [
     CommonModule,
@@ -54,6 +55,7 @@ import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-sha
     CollapseModule,
     EformSharedModule,
     WavesModule,
+    ModalModule,
   ],
 })
 export class NavigationMenuModule {}
