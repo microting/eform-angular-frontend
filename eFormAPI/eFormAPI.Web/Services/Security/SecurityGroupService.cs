@@ -37,6 +37,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 namespace eFormAPI.Web.Services.Security
 {
     using Infrastructure.Database.Entities.Permissions;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
     public class SecurityGroupService : ISecurityGroupService
     {
@@ -56,6 +57,26 @@ namespace eFormAPI.Web.Services.Security
             _claimsService = claimsService;
         }
 
+        public async Task<OperationDataResult<List<CommonDictionaryModel>>> GetSecurityGroupsDictionary()
+        {
+            try
+            {
+                var result = await _dbContext.SecurityGroups.Select(x => new CommonDictionaryModel
+                {
+                    Id = x.Id,
+                    Name = x.Name
+                })
+                 .ToListAsync();
+
+                return new OperationDataResult<List<CommonDictionaryModel>>(true, result);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return new OperationDataResult<List<CommonDictionaryModel>>(false,
+                    _localizationService.GetString("ErrorWhileObtainingSecurityGroups"));
+            }
+        }
         public async Task<OperationDataResult<SecurityGroupsModel>> GetSecurityGroups(
             SecurityGroupRequestModel requestModel)
         {

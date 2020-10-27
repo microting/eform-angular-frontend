@@ -21,6 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions.Security;
 using eFormAPI.Web.Infrastructure;
@@ -29,6 +30,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
 namespace eFormAPI.Web.Controllers.Security
 {
@@ -49,6 +51,15 @@ namespace eFormAPI.Web.Controllers.Security
         {
             return await _securityGroupService.GetSecurityGroups(requestModel);
         }
+
+        [HttpGet]
+        [Route("api/security/groups/dictionary")]
+        [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Read)]
+        public async Task<OperationDataResult<List<CommonDictionaryModel>>> GetSecurityGroupsDictionary()
+        {
+            return await _securityGroupService.GetSecurityGroupsDictionary();
+        }
+
 
         [HttpGet]
         [Route("api/security/groups/{id}")]
