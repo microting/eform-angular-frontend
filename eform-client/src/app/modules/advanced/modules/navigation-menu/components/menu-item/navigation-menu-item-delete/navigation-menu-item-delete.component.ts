@@ -1,5 +1,15 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import { NavigationMenuItemModel } from 'src/app/common/models/navigation-menu';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import {
+  NavigationMenuItemIndexedModel,
+  NavigationMenuItemModel,
+} from 'src/app/common/models/navigation-menu';
 import { NavigationMenuItemTypeEnum } from 'src/app/common/const';
 
 @Component({
@@ -9,8 +19,12 @@ import { NavigationMenuItemTypeEnum } from 'src/app/common/const';
 })
 export class NavigationMenuItemDeleteComponent implements OnInit {
   @ViewChild('frame', { static: true }) frame;
-  @Output() itemDelete: EventEmitter<NavigationMenuItemModel> = new EventEmitter<NavigationMenuItemModel>();
+  @Output() itemDeleteConfirm: EventEmitter<
+    NavigationMenuItemIndexedModel
+  > = new EventEmitter<NavigationMenuItemIndexedModel>();
   item: NavigationMenuItemModel = new NavigationMenuItemModel();
+  firstLevelIndex: number;
+  secondLevelIndex: number;
 
   get menuItemType() {
     return NavigationMenuItemTypeEnum;
@@ -20,13 +34,24 @@ export class NavigationMenuItemDeleteComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  show(model: NavigationMenuItemModel) {
+  show(
+    model: NavigationMenuItemModel,
+    firstLevelIndex: number,
+    secondLevelIndex?: number
+  ) {
     this.item = model;
+    this.firstLevelIndex = firstLevelIndex;
+    this.secondLevelIndex = secondLevelIndex;
     this.frame.show();
   }
 
   deleteMenuItem() {
-    this.itemDelete.emit(this.item);
+    this.itemDeleteConfirm.emit({
+      item: this.item,
+      firstLevelIndex: this.firstLevelIndex,
+      secondLevelIndex: this.secondLevelIndex,
+    });
+    this.frame.hide();
   }
 
   cancelDelete() {

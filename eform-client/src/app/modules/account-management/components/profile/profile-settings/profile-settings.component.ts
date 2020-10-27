@@ -5,6 +5,7 @@ import {GoogleAuthInfoModel} from 'src/app/common/models/auth';
 import {UserSettingsModel} from 'src/app/common/models/settings';
 import {AuthService, GoogleAuthService, LocaleService, UserSettingsService} from 'src/app/common/services/auth';
 import {TimezonesModel} from 'src/app/common/models/common/timezones.model';
+import {applicationLanguages} from 'src/app/common/const/application-languages.const';
 
 @Component({
   selector: 'app-profile-settings',
@@ -16,11 +17,9 @@ export class ProfileSettingsComponent implements OnInit {
   test = true;
   get userRole() { return this.authService.currentRole; }
 
-  languages = [
-    {id: 'en-US', text: 'English'},
-    {id: 'da-DK', text: 'Danish'},
-    {id: 'de-DE', text: 'German'}
-  ];
+  get languages() {
+    return applicationLanguages;
+  }
 
   countries = [
     {id: 'da-DK', text: 'Denmark'},

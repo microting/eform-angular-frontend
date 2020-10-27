@@ -1,12 +1,14 @@
 import {
   Component,
-  EventEmitter,
+  EventEmitter, Input,
   OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
 import { NavigationMenuItemModel } from 'src/app/common/models/navigation-menu';
 import { NavigationMenuItemTypeEnum } from 'src/app/common/const';
+import { applicationLanguages } from 'src/app/common/const/application-languages.const';
+import {CommonDictionaryModel} from 'src/app/common/models';
 
 @Component({
   selector: 'app-navigation-menu-custom-dropdown',
@@ -19,12 +21,20 @@ export class NavigationMenuCustomDropdownComponent implements OnInit {
     NavigationMenuItemModel
   > = new EventEmitter<NavigationMenuItemModel>();
   customDropdownModel: NavigationMenuItemModel = new NavigationMenuItemModel();
+  @Input() availableSecurityGroups: CommonDictionaryModel[] = [
+    {
+      id: 1,
+      name: 'Test',
+      description: ''
+    },
+  ];
 
   constructor() {}
 
   ngOnInit(): void {}
 
   show() {
+    this.customDropdownModel = this.generateLanguages(this.customDropdownModel);
     this.frame.show();
   }
 
@@ -35,12 +45,25 @@ export class NavigationMenuCustomDropdownComponent implements OnInit {
       type: NavigationMenuItemTypeEnum.Dropdown,
       isVirtual: true,
       children: [],
+      name: 'Dropdown',
     });
-    this.customDropdownModel = new NavigationMenuItemModel();
+    this.hide();
   }
 
-  cancelAddCustomDropdown() {
+  hide() {
     this.frame.hide();
-    this.customDropdownModel = new NavigationMenuItemModel();
+    this.customDropdownModel = this.generateLanguages(
+      new NavigationMenuItemModel()
+    );
+  }
+
+  generateLanguages(model: NavigationMenuItemModel) {
+    model = {
+      ...model,
+      translations: applicationLanguages.map((x) => {
+        return { id: x.id, localeName: x.locale, name: '', language: x.text };
+      }),
+    };
+    return model;
   }
 }

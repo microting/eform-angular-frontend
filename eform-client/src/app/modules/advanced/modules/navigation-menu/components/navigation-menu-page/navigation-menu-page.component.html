@@ -63,7 +63,7 @@
           <ng-container
             *ngFor="
               let menuItem of navigationMenuModel.actualMenu;
-              let y = index
+              let firstLevelIndex = index
             "
           >
             <div
@@ -80,9 +80,27 @@
                       drag_handle
                     </i>
                     {{ menuItem.name }}
+                    {{
+                      menuItem.translations.length > 0
+                        ? '/ ' + menuItem.translations[0].name
+                        : ' '
+                    }}
                   </div>
-                  <div>
-                    <fa-icon icon="pen" [fixedWidth]="true"></fa-icon>
+                  <div class="d-flex justify-content-end align-items-center">
+                    <fa-icon
+                      icon="pen"
+                      class="mr-2"
+                      [fixedWidth]="true"
+                      (click)="onItemEdit(menuItem, firstLevelIndex)"
+                      style="cursor: pointer"
+                    ></fa-icon>
+                    <fa-icon
+                      icon="trash-alt"
+                      class="mr-2"
+                      [fixedWidth]="true"
+                      (click)="onItemEdit(menuItem, firstLevelIndex)"
+                      style="cursor: pointer"
+                    ></fa-icon>
                     <app-eform-collapse-toggle
                       [collapse]="collapse"
                       [collapsed]="menuItem.collapsed"
@@ -99,22 +117,30 @@
                   *ngIf="menuItem.type === menuItemTypes.Dropdown"
                   [(dragulaModel)]="menuItem.children"
                 >
-                  <ng-container *ngFor="let menuItemChild of menuItem.children">
+                  <ng-container
+                    *ngFor="
+                      let menuItemChild of menuItem.children;
+                      let secondLevelIndex = index
+                    "
+                  >
                     <app-navigation-menu-item
-                      (itemDelete)="onItemDelete($event)"
+                      (itemDelete)="onItemDelete($event, firstLevelIndex, secondLevelIndex)"
+                      (itemEdit)="onItemEdit($event, firstLevelIndex, secondLevelIndex)"
                       [item]="menuItemChild"
-                      [itemIndex]="y"
+                      [firstLevelIndex]="firstLevelIndex"
+                      [secondLevelIndex]="secondLevelIndex"
                     ></app-navigation-menu-item>
                   </ng-container>
                 </div>
                 <!-- /Dropdown body -->
               </div>
             </div>
-            <!-- Common item body -->
+            <!-- Common item body not dropdown -->
             <app-navigation-menu-item
-              (itemDelete)="onItemDelete($event)"
+              (itemDelete)="onItemDelete($event, firstLevelIndex)"
+              (itemEdit)="onItemEdit($event, firstLevelIndex)"
               [item]="menuItem"
-              [itemIndex]="y"
+              [firstLevelIndex]="firstLevelIndex"
               *ngIf="menuItem.type !== menuItemTypes.Dropdown"
             ></app-navigation-menu-item>
             <!-- /Common item body -->
@@ -124,3 +150,14 @@
     </div>
   </div>
 </div>
+
+<app-navigation-menu-item-edit
+  #editMenuItemModal
+  (itemEditConfirm)="onItemEditConfirm($event)"
+  [availableSecurityGroups]="securityGroups"
+></app-navigation-menu-item-edit>
+
+<app-navigation-menu-item-delete
+  #deleteMenuItemModal
+  (itemDeleteConfirm)="onItemDeleteConfirm($event)"
+></app-navigation-menu-item-delete>

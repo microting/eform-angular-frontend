@@ -1,13 +1,21 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DragulaService } from 'ng2-dragula';
 import {
+  NavigationMenuItemIndexedModel,
   NavigationMenuItemModel,
   NavigationMenuModel,
 } from 'src/app/common/models/navigation-menu';
-import { NavigationMenuService } from 'src/app/common/services';
+import {
+  NavigationMenuService,
+  SecurityGroupsService,
+} from 'src/app/common/services';
 import { Subscription } from 'rxjs';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { NavigationMenuItemTypeEnum } from 'src/app/common/const';
+import { NavigationMenuItemEditComponent } from '../menu-item/navigation-menu-item-edit/navigation-menu-item-edit.component';
+import { NavigationMenuItemDeleteComponent } from '../menu-item/navigation-menu-item-delete/navigation-menu-item-delete.component';
+import { CommonDictionaryModel } from 'src/app/common/models';
+import * as R from 'ramda';
 
 @AutoUnsubscribe()
 @Component({
@@ -16,86 +24,146 @@ import { NavigationMenuItemTypeEnum } from 'src/app/common/const';
   styleUrls: ['./navigation-menu-page.component.scss'],
 })
 export class NavigationMenuPageComponent implements OnInit, OnDestroy {
-  testActualMenu: any = [];
+  @ViewChild('deleteMenuItemModal')
+  deleteMenuItemModal: NavigationMenuItemDeleteComponent;
+  @ViewChild('editMenuItemModal')
+  editMenuItemModal: NavigationMenuItemEditComponent;
   navigationMenuSub$: Subscription;
   updateNavigationMenuSub$: Subscription;
-  navigationMenuModel: NavigationMenuModel = {
-    actualMenu: [],
-    menuTemplates: [
-      {
-        id: 1,
-        name: 'Main application',
-        pluginId: null,
-        items: [
-          {
-            id: 1,
-            link: 'eforms',
-            name: 'Eforms',
-            collapsed: false,
-            translations: [],
-          },
-          {
-            id: 2,
-            link: 'device-users',
-            name: 'Device users',
-            collapsed: false,
-            translations: [],
-          },
-          {
-            id: 3,
-            link: 'sites',
-            name: 'Sites',
-            collapsed: false,
-            translations: [],
-          },
-          {
-            id: 4,
-            link: 'entity-select',
-            name: 'Entity select',
-            collapsed: false,
-            translations: [],
-          },
-          {
-            id: 5,
-            link: 'entity-search',
-            name: 'Entity search',
-            collapsed: false,
-            translations: [],
-          },
-          {
-            id: 6,
-            link: 'mailing',
-            name: 'Mailing',
-            collapsed: false,
-            translations: [],
-          },
-        ],
-        collapsed: false,
-      },
-      {
-        id: 2,
-        pluginId: 1,
-        name: 'Items planning',
-        items: [
-          {
-            id: 1,
-            link: 'plannings',
-            name: 'Plannings',
-            collapsed: false,
-            translations: [],
-          },
-          {
-            id: 2,
-            link: 'reports',
-            name: 'Reports',
-            collapsed: false,
-            translations: [],
-          },
-        ],
-        collapsed: false,
-      },
-    ],
-  };
+  securityGroupsSub$: Subscription;
+  securityGroups: CommonDictionaryModel[] = [];
+  navigationMenuModel: NavigationMenuModel = new NavigationMenuModel();
+  // navigationMenuModel: NavigationMenuModel = {
+  //   actualMenu: [],
+  //   menuTemplates: [
+  //     {
+  //       id: 1,
+  //       name: 'Main application',
+  //       items: [
+  //         {
+  //           id: 1,
+  //           link: 'eforms',
+  //           name: 'Eforms',
+  //           collapsed: false,
+  //           translations: [
+  //             {
+  //               id: 1,
+  //               name: 'Eforms',
+  //               language: 'English',
+  //               localeName: 'en-US',
+  //             },
+  //           ],
+  //         },
+  //         {
+  //           id: 2,
+  //           link: 'device-users',
+  //           name: 'Device users',
+  //           collapsed: false,
+  //           translations: [
+  //             {
+  //               id: 1,
+  //               name: 'Device users',
+  //               language: 'English',
+  //               localeName: 'en-US',
+  //             },
+  //           ],
+  //         },
+  //         {
+  //           id: 3,
+  //           link: 'sites',
+  //           name: 'Sites',
+  //           collapsed: false,
+  //           translations: [
+  //             {
+  //               id: 1,
+  //               name: 'Sites',
+  //               language: 'English',
+  //               localeName: 'en-US',
+  //             },
+  //           ],
+  //         },
+  //         {
+  //           id: 4,
+  //           link: 'entity-select',
+  //           name: 'Entity select',
+  //           collapsed: false,
+  //           translations: [
+  //             {
+  //               id: 1,
+  //               name: 'Entity select',
+  //               language: 'English',
+  //               localeName: 'en-US',
+  //             },
+  //           ],
+  //         },
+  //         {
+  //           id: 5,
+  //           link: 'entity-search',
+  //           name: 'Entity search',
+  //           collapsed: false,
+  //           translations: [
+  //             {
+  //               id: 1,
+  //               name: 'Entity search',
+  //               language: 'English',
+  //               localeName: 'en-US',
+  //             },
+  //           ],
+  //         },
+  //         {
+  //           id: 6,
+  //           link: 'mailing',
+  //           name: 'Mailing',
+  //           collapsed: false,
+  //           translations: [
+  //             {
+  //               id: 1,
+  //               name: 'Mailing',
+  //               language: 'English',
+  //               localeName: 'en-US',
+  //             },
+  //           ],
+  //         },
+  //       ],
+  //       collapsed: false,
+  //     },
+  //     {
+  //       id: 2,
+  //       name: 'Items planning',
+  //       items: [
+  //         {
+  //           id: 1,
+  //           link: 'plannings',
+  //           name: 'Plannings',
+  //           collapsed: false,
+  //           translations: [
+  //             {
+  //               id: 1,
+  //               name: 'Eforms',
+  //               language: 'English',
+  //               localeName: 'en-US',
+  //             },
+  //           ],
+  //         },
+  //         {
+  //           id: 2,
+  //           link: 'reports',
+  //           name: 'Reports',
+  //           collapsed: false,
+  //           translations: [
+  //             {
+  //               id: 1,
+  //               name: 'Eforms',
+  //               language: 'English',
+  //               localeName: 'en-US',
+  //             },
+  //           ],
+  //         },
+  //       ],
+  //       collapsed: false,
+  //     },
+  //   ],
+  // };
 
   get menuItemTypes() {
     return NavigationMenuItemTypeEnum;
@@ -103,7 +171,8 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private dragulaService: DragulaService,
-    private navigationMenuService: NavigationMenuService
+    private navigationMenuService: NavigationMenuService,
+    private securityGroupsService: SecurityGroupsService
   ) {
     dragulaService.createGroup('MENU_ITEMS', {
       moves: (el, container, handle) => {
@@ -112,12 +181,10 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
       copy: (el, source) => {
         return source.id === 'mainMenu' || source.id === 'pluginMenu';
       },
-      copyItem: (data: any) => {
-        debugger;
-        return data;
+      copyItem: (data: NavigationMenuItemModel) => {
+        return { ...data, type: NavigationMenuItemTypeEnum.Link };
       },
       accepts: (el, target, source, sibling) => {
-        debugger;
         // To avoid dragging from right to left container
         return (
           // ((target.classList.contains('dragula-dropdown') &&
@@ -134,7 +201,18 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // this.getNavigationMenu();
+    this.getNavigationMenu();
+    this.getSecurityGroups();
+  }
+
+  getSecurityGroups() {
+    this.securityGroupsSub$ = this.securityGroupsService
+      .getSecurityGroupsDictionary()
+      .subscribe((data) => {
+        if (data && data.success) {
+          this.securityGroups = data.model;
+        }
+      });
   }
 
   getNavigationMenu() {
@@ -162,5 +240,60 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {}
 
-  onItemDelete(model: NavigationMenuItemModel) {}
+  onItemDelete(
+    model: NavigationMenuItemModel,
+    firstLevelIndex: number,
+    secondLevelIndex?: number | null
+  ) {
+    this.deleteMenuItemModal.show(model, firstLevelIndex, secondLevelIndex);
+  }
+
+  onItemEdit(
+    model: NavigationMenuItemModel,
+    firstLevelIndex: number,
+    secondLevelIndex?: number | null
+  ) {
+    this.editMenuItemModal.show(model, firstLevelIndex, secondLevelIndex);
+  }
+
+  onItemEditConfirm(model: NavigationMenuItemIndexedModel) {
+    if (model.secondLevelIndex) {
+      this.navigationMenuModel.actualMenu = R.update(
+        model.firstLevelIndex,
+        R.update(
+          model.secondLevelIndex,
+          model.item,
+          this.navigationMenuModel.actualMenu[model.firstLevelIndex]
+        ),
+        this.navigationMenuModel.actualMenu
+      );
+    } else {
+      this.navigationMenuModel.actualMenu = R.update(
+        model.firstLevelIndex,
+        model.item,
+        this.navigationMenuModel.actualMenu
+      );
+    }
+  }
+
+  onItemDeleteConfirm(model: NavigationMenuItemIndexedModel) {
+    if (model.secondLevelIndex) {
+      this.navigationMenuModel.actualMenu = R.update(
+        model.firstLevelIndex,
+        R.remove(
+          model.secondLevelIndex,
+          1,
+          this.navigationMenuModel.actualMenu[model.firstLevelIndex].children
+        ),
+        this.navigationMenuModel.actualMenu
+      );
+    } else {
+      this.navigationMenuModel.actualMenu = R.remove(
+        model.firstLevelIndex,
+        1,
+        this.navigationMenuModel.actualMenu
+      );
+    }
+    // Remove item from array
+  }
 }

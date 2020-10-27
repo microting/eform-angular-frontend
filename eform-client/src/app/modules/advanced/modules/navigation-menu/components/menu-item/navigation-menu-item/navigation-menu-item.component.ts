@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {NavigationMenuItemModel} from 'src/app/common/models/navigation-menu';
-import {NavigationMenuItemDeleteComponent} from '../navigation-menu-item-delete/navigation-menu-item-delete.component';
 
 @Component({
   selector: 'app-navigation-menu-item',
@@ -8,20 +7,21 @@ import {NavigationMenuItemDeleteComponent} from '../navigation-menu-item-delete/
   styleUrls: ['./navigation-menu-item.component.scss']
 })
 export class NavigationMenuItemComponent implements OnInit {
-  @ViewChild('menuItemDeleteModal') menuItemDeleteModal: NavigationMenuItemDeleteComponent;
   @Input() item: NavigationMenuItemModel = new NavigationMenuItemModel();
-  @Input() itemIndex = 0;
+  @Input() firstLevelIndex: number;
+  @Input() secondLevelIndex: number | null;
   @Output() itemDelete: EventEmitter<NavigationMenuItemModel> = new EventEmitter<NavigationMenuItemModel>();
+  @Output() itemEdit: EventEmitter<NavigationMenuItemModel> = new EventEmitter<NavigationMenuItemModel>();
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  showRemoveModal() {
-
+  delete() {
+    this.itemDelete.emit(this.item);
   }
 
-  onItemDelete(model: NavigationMenuItemModel) {
-    this.itemDelete.emit(model);
+  edit() {
+    this.itemEdit.emit(this.item);
   }
 }

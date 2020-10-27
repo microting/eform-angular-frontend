@@ -1,16 +1,32 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {NavigationMenuItemModel} from 'src/app/common/models/navigation-menu';
-import {NavigationMenuItemTypeEnum} from 'src/app/common/const';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import {
+  NavigationMenuItemIndexedModel,
+  NavigationMenuItemModel,
+} from 'src/app/common/models/navigation-menu';
+import { NavigationMenuItemTypeEnum } from 'src/app/common/const';
+import { CommonDictionaryModel } from 'src/app/common/models';
 
 @Component({
   selector: 'app-navigation-menu-item-edit',
   templateUrl: './navigation-menu-item-edit.component.html',
-  styleUrls: ['./navigation-menu-item-edit.component.scss']
+  styleUrls: ['./navigation-menu-item-edit.component.scss'],
 })
 export class NavigationMenuItemEditComponent implements OnInit {
   @ViewChild('frame', { static: true }) frame;
-  @Output() itemUpdate: EventEmitter<NavigationMenuItemModel> = new EventEmitter<NavigationMenuItemModel>();
+  @Input() availableSecurityGroups: CommonDictionaryModel[] = [];
+  @Output() itemEditConfirm: EventEmitter<
+    NavigationMenuItemIndexedModel
+  > = new EventEmitter<NavigationMenuItemIndexedModel>();
   item: NavigationMenuItemModel = new NavigationMenuItemModel();
+  firstLevelIndex: number;
+  secondLevelIndex: number | null;
 
   get menuItemType() {
     return NavigationMenuItemTypeEnum;
@@ -20,17 +36,32 @@ export class NavigationMenuItemEditComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  show(model: NavigationMenuItemModel) {
+  show(
+    model: NavigationMenuItemModel,
+    firstLevelIndex: number,
+    secondLevelIndex?: number
+  ) {
     this.item = model;
+    this.firstLevelIndex = firstLevelIndex;
+    this.secondLevelIndex = secondLevelIndex;
     this.frame.show();
   }
 
-  deleteMenuItem() {
-    this.itemUpdate.emit(this.item);
+  updateItem() {
+    this.itemEditConfirm.emit({
+      item: this.item,
+      firstLevelIndex: this.firstLevelIndex,
+      secondLevelIndex: this.secondLevelIndex,
+    });
+    this.frame.hide();
   }
 
-  cancelDelete() {
+  cancelUpdate() {
     this.frame.hide();
     this.item = new NavigationMenuItemModel();
+  }
+
+  hide() {
+    this.frame.hide();
   }
 }
