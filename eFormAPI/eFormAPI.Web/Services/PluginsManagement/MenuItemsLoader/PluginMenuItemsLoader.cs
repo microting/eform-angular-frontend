@@ -21,19 +21,41 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System.Threading.Tasks;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
-using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using eFormAPI.Web.Services.NavigationMenu;
-using System.Collections.Generic;
-using eFormAPI.Web.Infrastructure.Database.Entities.Menu;
 
-namespace eFormAPI.Web.Abstractions
+namespace eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader
 {
-    public interface IMenuService
+    using eFormAPI.Web.Infrastructure.Database;
+    using System.Collections.Generic;
+
+    public class PluginMenuItemsLoader
     {
-        Task<OperationDataResult<MenuModel>> GetCurrentUserMenu();
-        Task<OperationDataResult<NavigationMenuModel>> GetCurrentNavigationMenu();
-        Task<OperationResult> UpdateCurrentUserMenu(List<NavigationMenuItemModel> menuItemModels);
+        private readonly BaseDbContext _dbContext;
+        private readonly List<AbstractLoader> _loaders;
+        private readonly string _pluginId;
+
+        public PluginMenuItemsLoader(BaseDbContext dbContext, string pluginId)
+        {
+            _dbContext = dbContext;
+            _pluginId = pluginId;
+            _loaders = new List<AbstractLoader>()
+            {
+                new SimpleLinkLoader(_dbContext),
+                new IsNotSimpleLinkLoader(_dbContext)
+            };
+        }
+
+        public void Load(List<PluginMenuItemModel> menuItems)
+        {
+            foreach(var menuItem in menuItems)
+            {
+                foreach(var loader in _loaders)
+                {
+                    if (loader.IsExecute(menuItem))
+                    {
+                        loader.Load(menuItem, _pluginId, null);
+                    }
+                }
+            }
+        }
     }
 }

@@ -21,19 +21,32 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System.Threading.Tasks;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
-using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using eFormAPI.Web.Services.NavigationMenu;
-using System.Collections.Generic;
-using eFormAPI.Web.Infrastructure.Database.Entities.Menu;
 
-namespace eFormAPI.Web.Abstractions
+namespace eFormAPI.Web.Services.NavigationMenu.Builder
 {
-    public interface IMenuService
+    using eFormAPI.Web.Infrastructure.Database;
+    using eFormAPI.Web.Infrastructure.Database.Entities.Menu;
+
+    public class SimpleLinkBehavior : AbstractBehavior
     {
-        Task<OperationDataResult<MenuModel>> GetCurrentUserMenu();
-        Task<OperationDataResult<NavigationMenuModel>> GetCurrentNavigationMenu();
-        Task<OperationResult> UpdateCurrentUserMenu(List<NavigationMenuItemModel> menuItemModels);
+        public SimpleLinkBehavior(BaseDbContext dbContext, NavigationMenuItemModel menuItemModel, int? parentId = null) 
+            : base(dbContext, menuItemModel, parentId)
+        {
+
+        }
+        public override bool IsExecute()
+            => MenuItemModel.Type == MenuItemTypeEnum.Link;
+
+        public override void Setup(MenuItem menuItem)
+        {
+            menuItem.MenuTemplateId = MenuItemModel.RelatedTemplateItemId.Value; // должно быть значение
+            menuItem.ParentId = _parentId;
+
+            _dbContext.MenuItems.Add(menuItem);
+            _dbContext.SaveChanges();
+
+            //Set translation for menu item
+            SetTranslations(menuItem.Id);
+        }
     }
 }

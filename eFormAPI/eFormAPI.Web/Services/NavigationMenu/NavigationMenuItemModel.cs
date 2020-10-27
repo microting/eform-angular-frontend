@@ -21,19 +21,28 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System.Threading.Tasks;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
-using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using eFormAPI.Web.Services.NavigationMenu;
-using System.Collections.Generic;
-using eFormAPI.Web.Infrastructure.Database.Entities.Menu;
 
-namespace eFormAPI.Web.Abstractions
+namespace eFormAPI.Web.Services.NavigationMenu
 {
-    public interface IMenuService
+    using eFormAPI.Web.Infrastructure.Database.Entities.Menu;
+    using System.Collections.Generic;
+
+    public class NavigationMenuItemModel
     {
-        Task<OperationDataResult<MenuModel>> GetCurrentUserMenu();
-        Task<OperationDataResult<NavigationMenuModel>> GetCurrentNavigationMenu();
-        Task<OperationResult> UpdateCurrentUserMenu(List<NavigationMenuItemModel> menuItemModels);
+        public int Id { get; set; }
+        public string Link { get; set; }
+        public MenuItemTypeEnum Type { get; set; }
+        public int? RelatedTemplateItemId { get; set; }
+        public int? ParentId { get; set; }
+        public int Position { get; set; }
+
+        public List<int> SecurityGroupsIds { get; set; }
+            = new List<int>();
+        public List<NavigationMenuItemModel> Children { get; set; } 
+            = new List<NavigationMenuItemModel>();
+
+        public List<NavigationMenuTranslationModel> Translations { get; set; }
+            = new List<NavigationMenuTranslationModel>();
+
     }
 }

@@ -105,7 +105,7 @@ namespace eFormAPI.Web
             }
 
             // plugins
-            services.AddEFormPluginsDbContext(Configuration, Program.Plugins);
+            services.AddEFormPluginsDbContext(Configuration, Program.EnabledPlugins);
             // Identity services
             services.AddIdentity<EformUser, EformRole>()
                 .AddEntityFrameworkStores<BaseDbContext>()
@@ -118,7 +118,7 @@ namespace eFormAPI.Web
             services.AddTransient<IStringLocalizer, JsonStringLocalizer>();
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             // MVC and API services with Plugins
-            services.AddEFormMvc(Program.Plugins);
+            services.AddEFormMvc(Program.EnabledPlugins);
             // Writable options
             services.ConfigureWritable<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"),
                 "connection.json");
@@ -131,7 +131,7 @@ namespace eFormAPI.Web
             services.ConfigureDbOptions<EformTokenOptions>(Configuration.GetSection("EformTokenOptions"));
             services.ConfigureDbOptions<PluginStoreSettings>(Configuration.GetSection("PluginStoreSettings"));
             // Database plugins options
-            foreach (var plugin in Program.Plugins)
+            foreach (var plugin in Program.EnabledPlugins)
             {
                 plugin.ConfigureOptionsServices(
                     services,
@@ -195,7 +195,7 @@ namespace eFormAPI.Web
             ConnectServices(services);
 
             // plugins
-            services.AddEFormPlugins(Program.Plugins);
+            services.AddEFormPlugins(Program.EnabledPlugins);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -249,7 +249,7 @@ namespace eFormAPI.Web
             }
 
             // Plugins
-            app.UseEFormPlugins(Program.Plugins);
+            app.UseEFormPlugins(Program.EnabledPlugins);
             // Route all unknown requests to app root
             app.UseAngularMiddleware(env);
         }
@@ -307,7 +307,7 @@ namespace eFormAPI.Web
                         .AsNoTracking()
                         .Where(x => x.ConnectionString != "..."))
                     {
-                        var plugin = Program.Plugins.FirstOrDefault(p => p.PluginId == eformPlugin.PluginId);
+                        var plugin = Program.EnabledPlugins.FirstOrDefault(p => p.PluginId == eformPlugin.PluginId);
                         if (plugin != null)
                         {
                             var permissionsManager = plugin.GetPermissionsManager(eformPlugin.ConnectionString);

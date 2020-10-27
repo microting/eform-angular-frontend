@@ -29,13 +29,22 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities.Menu
 
     public class MenuItem : BaseEntity
     {
+        public string Link { get; set; }
+        public MenuItemTypeEnum Type { get; set; }
         public int Position { get; set; }
-        public int MenuTemplateId { get; set; }
+        public int? MenuTemplateId { get; set; }
         public virtual MenuTemplate MenuTemplate { get; set; }
         public int? ParentId { get; set; }
         public virtual MenuItem Parent { get; set; }
 
-        public List<MenuItem> ChildItems
+        public virtual List<MenuItem> ChildItems { get; set; }
             = new List<MenuItem>();
+
+        public virtual List<MenuItemTranslation> Translations { get; set; }
+            = new List<MenuItemTranslation>();
+
+        public virtual List<MenuItemSecurityGroup> MenuItemSecurityGroups { get; set; }
+            = new List<MenuItemSecurityGroup>();
+
     }
 }

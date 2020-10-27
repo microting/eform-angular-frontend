@@ -21,26 +21,27 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Castle.Core.Internal;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Security;
 using eFormAPI.Web.Infrastructure;
 using eFormAPI.Web.Infrastructure.Database;
-using eFormAPI.Web.Infrastructure.Database.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace eFormAPI.Web.Services
 {
+    using eFormAPI.Web.Hosting.Enums;
+    using eFormAPI.Web.Infrastructure.Const;
+    using eFormAPI.Web.Services.NavigationMenu;
+    using eFormAPI.Web.Services.NavigationMenu.Builder;
     using Infrastructure.Database.Entities.Menu;
-    using Infrastructure.Helpers;
     using Microting.eFormApi.BasePn.Abstractions;
 
     public class MenuService : IMenuService
@@ -67,203 +68,290 @@ namespace eFormAPI.Web.Services
             _serviceProvider = serviceProvider;
         }
 
-        public async Task<OperationDataResult<MenuModel>> GetCurrentUserMenu()
+        public async Task<OperationResult> UpdateCurrentUserMenu(List<NavigationMenuItemModel> menuItemModels)
+        {
+            // Step 1. Firstly remove all menu items from database
+            var actualMenu = await _dbContext.MenuItems.ToListAsync();
+
+            _dbContext.MenuItems.RemoveRange(actualMenu);
+            _dbContext.SaveChanges();
+
+            // Step 2. Traversal collection and add to database depend on menu item type 
+            for(int i = 0; i < menuItemModels.Count; i++)
+            {
+                var menuItemBuilder = new MenuItemBuilder(_dbContext, menuItemModels[i], i);
+
+                menuItemBuilder.Build();
+            }
+
+            return new OperationResult(true);
+        }
+
+        public async Task<OperationDataResult<NavigationMenuModel>> GetCurrentNavigationMenu()
         {
             try
             {
-                var menuItems = await _dbContext.MenuItems.ToListAsync();
+                var menuItems = await _dbContext.MenuItems
+                    .Include(x => x.MenuTemplate)
+                        .ThenInclude(x => x.EformPlugin)
+                    .ToListAsync();
+
                 var userClaims = await _claimsService.GetUserClaimsNames(_userService.UserId);
+
                 if (!_userService.IsInRole(EformRole.Admin))
                 {
                     menuItems = FilterMenuForUser(menuItems, userClaims);
                 }
 
-                // Add user first and last name
-                foreach (var menuItem in menuItems)
+                var user = await _userService.GetCurrentUserAsync();
+
+                var menuTemplates = new List<NavigationMenuTemplateModel>()
                 {
-                    if (menuItem.Name == "user")
+                    new NavigationMenuTemplateModel
                     {
-                        var user = await _userService.GetCurrentUserAsync();
-                        menuItem.Name = $"{user.FirstName} {user.LastName}";
+                        Id = 1,
+                        Name = "Main application",
+                        Items = _dbContext.MenuTemplates
+                        .Where(x => x.EformPluginId == null && !string.IsNullOrEmpty(x.DefaultLink))
+                        .Select(p => new NavigationMenuTemplateItemModel
+                        {
+                            Id = p.Id,
+                            E2EId = p.E2EId,
+                            Link = p.DefaultLink,
+                            Translations = _dbContext.MenuTemplateTranslations
+                                .Where(x => x.MenuTemplateId == p.Id)
+                                .Select(p => new NavigationMenuTranslationModel
+                                {
+                                    Id = p.Id,
+                                    Name = p.Name,
+                                    LocaleName = p.LocaleName,
+                                    Language = p.Language,
+       
+                                 })
+                                .ToList(),
+                        })
+                        .ToList()
                     }
+                };
+
+                var enablePlugins = _dbContext.EformPlugins
+                    .Where(x => x.Status == (int)PluginStatus.Enabled)
+                    .ToList();
+
+                if (enablePlugins.Any())
+                {
+                    menuTemplates.AddRange(enablePlugins.Select(x => new NavigationMenuTemplateModel()
+                    {
+                        Id = x.Id,
+                        Name = Program.EnabledPlugins.Single(p => p.PluginId == x.PluginId).Name,// changed plugin
+                        Items = _dbContext.MenuTemplates
+                            .Where(p => p.EformPluginId == x.Id && !string.IsNullOrEmpty(p.DefaultLink))
+                            .Select(p => new NavigationMenuTemplateItemModel
+                            {
+                                Id = p.Id,
+                                E2EId = p.E2EId,
+                                Link = p.DefaultLink,
+                                Translations = _dbContext.MenuTemplateTranslations
+                                .Where(x => x.MenuTemplateId == p.Id)
+                                .Select(p => new NavigationMenuTranslationModel
+                                {
+                                    Id = p.Id,
+                                    Name = p.Name,
+                                    LocaleName = p.LocaleName,
+                                    Language = p.Language,
+                                })
+                                .ToList(),
+                            })
+                            .ToList()
+                    }));
                 }
 
-                var orderedLeft = menuItems
-                    .Where(p => p.Parent == null && p.MenuPosition == 1)
-                    .OrderBy(p => p.Position)
-                    .Select(p => new MenuItemModel()
-                        {
-                            Name = p.LocaleName.IsNullOrEmpty()
-                                ? p.Name
-                                : _localizationService.GetString(p.LocaleName),
-                            Position = p.Position,
-                            E2EId = p.E2EId,
-                            Link = p.Link,
-                            MenuItems = menuItems
-                                .Where(c => c.ParentId == p.Id && p.MenuPosition == 1)
-                                .OrderBy(c => c.Position)
-                                .Select(x => new MenuItemModel()
-                                {
-                                    Name = x.LocaleName.IsNullOrEmpty()
-                                        ? x.Name
-                                        : _localizationService.GetString(x.LocaleName),
-                                    Position = x.Position,
-                                    Link = x.Link,
-                                    E2EId = x.E2EId
-                                }).ToList()
-                        }
-                    ).ToList();
+                var actualMenu = menuItems
+                    .Where(x => x.ParentId == null)
+                    .OrderBy(x => x.Position)
+                    .Select(x => new NavigationMenuItemModel
+                    {
+                        Id = x.Id,
+                        Type = x.Type,
+                        Link = x.Link,
+                        RelatedTemplateItemId = x.MenuTemplateId,
+                        ParentId = x.ParentId,
+                        Position = x.Position,
+                        Translations = _dbContext.MenuItemTranslations
+                            .Where(p => p.MenuItemId == x.Id)
+                            .Select(p => new NavigationMenuTranslationModel
+                            {
+                                Id = p.Id,
+                                Name = p.Name,
+                                LocaleName = p.LocaleName,
+                                Language = p.Language,
+                            })
+                            .ToList(),
+                        SecurityGroupsIds = _dbContext.MenuItemSecurityGroups
+                            .Where(p => p.MenuItemId == x.Id)
+                            .Select(p => p.SecurityGroupId)
+                            .ToList(),
+                        Children = menuItems.Where(p => p.ParentId == x.Id)
+                            .OrderBy(p => p.Position)
+                            .Select(p => new NavigationMenuItemModel
+                            {
+                                Id = p.Id,
+                                Type = p.Type,
+                                Link = p.Link,
+                                RelatedTemplateItemId = p.MenuTemplateId,
+                                ParentId = p.ParentId,
+                                Position = p.Position,
+                                Translations = _dbContext.MenuItemTranslations
+                                    .Where(k => k.MenuItemId == p.Id)
+                                    .Select(k => new NavigationMenuTranslationModel
+                                    {
+                                        Id = k.Id,
+                                        Name = k.Name,
+                                        LocaleName = k.LocaleName,
+                                        Language = k.Language,
+                                    })
+                                    .ToList(),
+                                SecurityGroupsIds = _dbContext.MenuItemSecurityGroups
+                                    .Where(k => k.MenuItemId == p.Id)
+                                    .Select(k => k.SecurityGroupId)
+                                    .ToList(),
+                            })
+                            .ToList()
+                    })
+                    .ToList();
 
-                var orderedRight = menuItems
-                    .Where(p => p.Parent == null && p.MenuPosition == 2)
-                    .OrderBy(p => p.Position)
-                    .Select(p => new MenuItemModel()
-                        {
-                            Name = p.LocaleName.IsNullOrEmpty()
-                                ? p.Name
-                                : _localizationService.GetString(p.LocaleName),
-                            Position = p.Position,
-                            E2EId = p.E2EId,
-                            Link = p.Link,
-                            MenuItems = menuItems
-                                .Where(c => c.ParentId == p.Id && p.MenuPosition == 2)
-                                .OrderBy(c => c.Position)
-                                .Select(x => new MenuItemModel()
-                                {
-                                    Name = x.LocaleName.IsNullOrEmpty()
-                                        ? x.Name
-                                        : _localizationService.GetString(x.LocaleName),
-                                    Position = x.Position,
-                                    Link = x.Link,
-                                    E2EId = x.E2EId
-                                }).ToList()
-                        }
-                    ).ToList();
-                // Create result
-                var result = new MenuModel();
-                orderedRight.ForEach(menuItem =>
+                var result = new NavigationMenuModel()
                 {
-                    if (menuItem.MenuItems.Any())
-                    {
-                        result.RightMenu.Add(menuItem);
-                    }
-                    else if (!string.IsNullOrEmpty(menuItem.Link))
-                    {
-                        result.RightMenu.Add(menuItem);
-                    }
-                });
-                orderedLeft.ForEach(menuItem =>
-                {
-                    if (menuItem.MenuItems.Any())
-                    {
-                        result.LeftMenu.Add(menuItem);
-                    }
-                    else if (!string.IsNullOrEmpty(menuItem.Link))
-                    {
-                        result.LeftMenu.Add(menuItem);
-                    }
-                });
-                // Add menu from plugins
-                if (Program.Plugins.Any())
-                {
-                    foreach (var plugin in Program.Plugins)
-                    {
-                        var pluginMenu = plugin.HeaderMenu(_serviceProvider);
-                        result.LeftMenu.AddRange(pluginMenu.LeftMenu);
-                        result.RightMenu.AddRange(pluginMenu.RightMenu);
-                    }
-                }
+                    MenuTemplates = menuTemplates,
+                    ActualMenu = actualMenu,
+                };
 
-                return new OperationDataResult<MenuModel>(true, result);
+                return new OperationDataResult<NavigationMenuModel>(true, result);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 _logger.LogError(e.Message);
-                return new OperationDataResult<MenuModel>(false,
+                return new OperationDataResult<NavigationMenuModel>(false,
                     _localizationService.GetString("ErrorWhileObtainingUserMenu"));
             }
         }
 
-
-        public async Task<OperationDataResult<MenuModel>> GetRightMenu()
+        public async Task<OperationDataResult<MenuModel>> GetCurrentUserMenu()
         {
             try
             {
-                var menuItems = EformMenuHelper.GetRightMenu();
+                var menuItemsForFilter = await _dbContext.MenuItems
+                    .Include(x => x.MenuTemplate)
+                        .ThenInclude(x => x.EformPlugin)
+                    .ToListAsync();
+
+                var currentUser = await _userService.GetCurrentUserAsync();
+
+                var currentLocale = string.IsNullOrEmpty(currentUser.Locale) 
+                    ? LocaleNames.English 
+                    : currentUser.Locale;
+
+                // Get all user claims and filter menu for user
                 var userClaims = await _claimsService.GetUserClaimsNames(_userService.UserId);
+
                 if (!_userService.IsInRole(EformRole.Admin))
                 {
-                    menuItems = FilterMenuForUser(menuItems, userClaims);
+                    menuItemsForFilter = FilterMenuForUser(menuItemsForFilter, userClaims);
                 }
+
+                var menuItems = menuItemsForFilter
+                    .Where(x => x.ParentId == null)
+                    .OrderBy(x => x.Position)
+                    .Select(x => new MenuItemModel()
+                    {
+                        Name = _dbContext.MenuItemTranslations.First(d => d.MenuItemId == x.Id && d.LocaleName == currentLocale).Name,
+                        LocaleName = currentLocale,
+                        E2EId = x.MenuTemplateId != null ? x.MenuTemplate.E2EId : null,
+                        Link = x.Link,
+                        Guards = x.Type == MenuItemTypeEnum.Link
+                            ? _dbContext.MenuTemplatePermissions
+                                    .Include(x => x.Permission)
+                                    .Where(d => d.MenuTemplateId == x.MenuTemplateId)
+                                    .Select(x => x.Permission.ClaimName)
+                                    .ToList()
+                            : new List<string>(),
+                        Position = x.Position,
+                        MenuItems = _dbContext.MenuItems
+                        .Include(p => p.MenuTemplate)
+                        .Where(p => p.ParentId == x.Id)
+                        .OrderBy(p => p.Position)
+                        .Select(p => new MenuItemModel()
+                        {
+                            Name = _dbContext.MenuItemTranslations.First(d => d.MenuItemId == p.Id && d.LocaleName == currentLocale).Name,
+                            //LocaleName = _dbContext.MenuItemTranslations.First(d => d.MenuItemId == p.Id && d.LocaleName == currentLocale).LocaleName,
+                            LocaleName = currentLocale,
+                            E2EId = p.MenuTemplateId != null ? p.MenuTemplate.E2EId : null,
+                            Link = p.Link,
+                            Guards = p.Type == MenuItemTypeEnum.Link
+                            ? _dbContext.MenuTemplatePermissions
+                                    .Include(x => x.Permission)
+                                    .Where(d => d.MenuTemplateId == p.MenuTemplateId)
+                                    .Select(x => x.Permission.ClaimName)
+                                    .ToList()
+                            : new List<string>(),
+                            Position = p.Position,
+                        })
+                        .ToList()
+                    })
+                    .ToList();
+
+                var orderedRightMenu = RightMenuStorage.GetRightMenu().Select(x => new MenuItemModel
+                {
+                    Name = x.Translations.FirstOrDefault(x => x.LocaleName == currentLocale)?.Name ?? x.Name,
+                    LocaleName = currentLocale,
+                    E2EId = x.MenuTemplate != null
+                            ? x.MenuTemplate.E2EId
+                            : null,
+                    Link = x.Link,
+                    Guards = x.Type == MenuItemTypeEnum.Link
+                            ? x.MenuTemplate.Permissions.Select(x => x.ClaimName).ToList()
+                            : new List<string>(),
+                    Position = x.Position,
+                    MenuItems = x.ChildItems.Select(d => new MenuItemModel
+                    {
+                        Name = d.Translations.First(x => x.LocaleName == currentLocale).Name,
+                        LocaleName = currentLocale,
+                        E2EId = d.MenuTemplate != null
+                            ? d.MenuTemplate.E2EId
+                            : null,
+                        Link = d.Link,
+                        Guards = d.Type == MenuItemTypeEnum.Link
+                            ? d.MenuTemplate.Permissions.Select(x => x.ClaimName).ToList()
+                            : new List<string>(),
+                        Position = d.Position,
+                    })
+                        .ToList()
+                }).ToList();
 
                 // Add user first and last name
-                foreach (var menuItem in menuItems)
+                foreach (var rightMenuItem in orderedRightMenu)
                 {
-                    if (menuItem.Name == "user")
+                    if (rightMenuItem.Name == "user")
                     {
                         var user = await _userService.GetCurrentUserAsync();
-                        menuItem.Name = $"{user.FirstName} {user.LastName}";
+                        rightMenuItem.Name = $"{user.FirstName} {user.LastName}";
                     }
                 }
-
-
-                var orderedRight = menuItems
-                    .Where(p => p.Parent == null && p.MenuPosition == 2)
-                    .OrderBy(p => p.Position)
-                    .Select(p => new MenuItemModel()
-                    {
-                        Name = p.LocaleName.IsNullOrEmpty()
-                                ? p.Name
-                                : _localizationService.GetString(p.LocaleName),
-                        Position = p.Position,
-                        E2EId = p.E2EId,
-                        Link = p.Link,
-                        MenuItems = menuItems
-                                .Where(c => c.ParentId == p.Id && p.MenuPosition == 2)
-                                .OrderBy(c => c.Position)
-                                .Select(x => new MenuItemModel()
-                                {
-                                    Name = x.LocaleName.IsNullOrEmpty()
-                                        ? x.Name
-                                        : _localizationService.GetString(x.LocaleName),
-                                    Position = x.Position,
-                                    Link = x.Link,
-                                    E2EId = x.E2EId
-                                }).ToList()
-                    }
-                    ).ToList();
                 // Create result
-                var result = new MenuModel();
-                orderedRight.ForEach(menuItem =>
+                var result = new MenuModel
                 {
-                    if (menuItem.MenuItems.Any())
-                    {
-                        result.RightMenu.Add(menuItem);
-                    }
-                    else if (!string.IsNullOrEmpty(menuItem.Link))
-                    {
-                        result.RightMenu.Add(menuItem);
-                    }
-                });
-                orderedLeft.ForEach(menuItem =>
-                {
-                    if (menuItem.MenuItems.Any())
-                    {
-                        result.LeftMenu.Add(menuItem);
-                    }
-                    else if (!string.IsNullOrEmpty(menuItem.Link))
-                    {
-                        result.LeftMenu.Add(menuItem);
-                    }
-                });
+                    LeftMenu = menuItems,
+                    RightMenu = orderedRightMenu,
+                };
+                
                 // Add menu from plugins
-                if (Program.Plugins.Any())
+                if (Program.EnabledPlugins.Any())
                 {
-                    foreach (var plugin in Program.Plugins)
+                    foreach (var plugin in Program.EnabledPlugins)
                     {
                         var pluginMenu = plugin.HeaderMenu(_serviceProvider);
-                        result.LeftMenu.AddRange(pluginMenu.LeftMenu);
+                        //result.LeftMenu.AddRange(pluginMenu.LeftMenu);
                         result.RightMenu.AddRange(pluginMenu.RightMenu);
                     }
                 }
@@ -282,80 +370,123 @@ namespace eFormAPI.Web.Services
         private List<MenuItem> FilterMenuForUser(IEnumerable<MenuItem> items, ICollection<string> claims)
         {
             var newList = new List<MenuItem>();
+
+            var currentUser = _userService.GetCurrentUserAsync().GetAwaiter().GetResult();
+
             foreach (var menuItem in items)
             {
-                switch (menuItem.Name)
+                if(menuItem.Type == MenuItemTypeEnum.Dropdown || menuItem.Type == MenuItemTypeEnum.CustomLink)
                 {
-                    case "Device Users":
-                        if (claims.Contains(AuthConsts.EformClaims.DeviceUsersClaims.Read))
-                        {
-                            newList.Add(menuItem);
-                        }
+                    var menuItemSecurityGroups = _dbContext.MenuItemSecurityGroups
+                        .Where(x => x.MenuItemId == menuItem.Id)
+                        .Select(x => x.SecurityGroupId)
+                        .ToList();
 
-                        break;
-                    case "Sites":
-                        if (claims.Contains(AuthConsts.EformClaims.SitesClaims.Read))
+                    if(menuItemSecurityGroups.Any())
+                    {
+                        foreach(var securityGroupId in menuItemSecurityGroups)
                         {
-                            newList.Add(menuItem);
+                            if(_dbContext.SecurityGroupUsers.Any(x => x.SecurityGroupId == securityGroupId && x.EformUserId == currentUser.Id))
+                            {
+                                newList.Add(menuItem);
+                                break;
+                            }
                         }
+                    }
+                }
+                else
+                {
+                    var menuItemEnglishName = menuItem.Translations
+                        .FirstOrDefault(x => x.LocaleName == LocaleNames.English && x.MenuItemId == menuItem.Id)?.Name;
 
-                        break;
-                    case "Workers":
-                        if (claims.Contains(AuthConsts.EformClaims.WorkersClaims.Read))
-                        {
+                    switch (menuItemEnglishName)
+                    {
+                        case "Device Users":
+                            if (claims.Contains(AuthConsts.EformClaims.DeviceUsersClaims.Read))
+                            {
+                                newList.Add(menuItem);
+                            }
+
+                            break;
+                        case "Sites":
+                            if (claims.Contains(AuthConsts.EformClaims.SitesClaims.Read))
+                            {
+                                newList.Add(menuItem);
+                            }
+
+                            break;
+                        case "Workers":
+                            if (claims.Contains(AuthConsts.EformClaims.WorkersClaims.Read))
+                            {
+                                newList.Add(menuItem);
+                            }
+
+                            break;
+                        case "Units":
+                            if (claims.Contains(AuthConsts.EformClaims.UnitsClaims.Read))
+                            {
+                                newList.Add(menuItem);
+                            }
+
+                            break;
+                        case "Searchable List":
+                            if (claims.Contains(AuthConsts.EformClaims.EntitySearchClaims.Read))
+                            {
+                                newList.Add(menuItem);
+                            }
+
+                            break;
+                        case "Selectable list":
+                            if (claims.Contains(AuthConsts.EformClaims.EntitySelectClaims.Read))
+                            {
+                                newList.Add(menuItem);
+                            }
+
+                            break;
+                        case "User Management":
+                            if (claims.Contains(AuthConsts.EformClaims.UserManagementClaims.Read))
+                            {
+                                newList.Add(menuItem);
+                            }
+
+                            break;
+                        case "Plugins Settings":
+                            if (_userService.IsAdmin())
+                            {
+                                newList.Add(menuItem);
+                            }
+
+                            break;
+                        case "Folders":
+                            if (claims.Contains(AuthConsts.EformClaims.SitesClaims.Read))
+                            {
+                                newList.Add(menuItem);
+                            }
+
+                            break;
+                        case "Security":
+                            break;
+                        case "Application Settings":
+                            break;
+                        default:
                             newList.Add(menuItem);
-                        }
+                            break;
+                    }
 
-                        break;
-                    case "Units":
-                        if (claims.Contains(AuthConsts.EformClaims.UnitsClaims.Read))
-                        {
-                            newList.Add(menuItem);
-                        }
+                    //var menuItemPermissionsClaim = _dbContext.MenuTemplatePermissions
+                    //    .Include(x => x.Permission)
+                    //    .Where(x => x.MenuTemplateId == menuItem.MenuTemplateId)
+                    //    .Select(x => x.Permission.ClaimName)
+                    //    .ToList();
 
-                        break;
-                    case "SearchableList":
-                        if (claims.Contains(AuthConsts.EformClaims.EntitySearchClaims.Read))
-                        {
-                            newList.Add(menuItem);
-                        }
-
-                        break;
-                    case "Selectable list":
-                        if (claims.Contains(AuthConsts.EformClaims.EntitySelectClaims.Read))
-                        {
-                            newList.Add(menuItem);
-                        }
-
-                        break;
-                    case "User Management":
-                        if (claims.Contains(AuthConsts.EformClaims.UserManagementClaims.Read))
-                        {
-                            newList.Add(menuItem);
-                        }
-
-                        break;
-                    case "Plugins Settings":
-                        if (_userService.IsAdmin())
-                        {
-                            newList.Add(menuItem);
-                        }
-
-                        break;
-                    case "Folders":
-                        if (claims.Contains(AuthConsts.EformClaims.SitesClaims.Read))
-                        {
-                            newList.Add(menuItem);
-                        }
-
-                        break;
-                    case "Security":
-                        break;
-                    case "Application Settings":
-                        break;
-                    default:
-                        newList.Add(menuItem);
-                        break;
+                    //foreach (var permission in menuItemPermissionsClaim)
+                    //{
+                    //    if (claims.Contains(permission))
+                    //    {
+                    //        newList.Add(menuItem);
+                    //        break;
+                    //    }
+                    //}
                 }
             }
 

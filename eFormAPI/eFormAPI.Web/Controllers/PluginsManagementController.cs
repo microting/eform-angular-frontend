@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Hosting.Enums;
 using eFormAPI.Web.Infrastructure.Models.Plugins;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

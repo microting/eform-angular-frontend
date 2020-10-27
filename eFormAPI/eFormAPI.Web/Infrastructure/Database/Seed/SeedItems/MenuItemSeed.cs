@@ -36,81 +36,105 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 new MenuItem
                 {
                     Id = 1,
+                    Link = "/",
                     MenuTemplateId = MenuTemplateIds.MyEforms,
+                    Type = MenuItemTypeEnum.Link,
                     Position = 0,
                 },
                 new MenuItem
                 {
                     Id = 2,
+                    Link = "/device-users",
                     MenuTemplateId = MenuTemplateIds.DeviceUsers,
+                    Type = MenuItemTypeEnum.Link,
                     Position = 1,
                 },
                 new MenuItem
                 {
                     Id = 3,
+                    Link = "",
                     MenuTemplateId = MenuTemplateIds.Advanced,
+                    Type = MenuItemTypeEnum.Dropdown,
                     Position = 2,
                 },
                 new MenuItem
                 {
                     Id = 4,
+                    Link = "/advanced/sites",
                     MenuTemplateId = MenuTemplateIds.Sites,
+                    Type = MenuItemTypeEnum.Link,
                     Position = 0,
                     ParentId = 3,
                 },
                 new MenuItem
                 {
                     Id = 5,
+                    Link = "/advanced/workers",
                     MenuTemplateId = MenuTemplateIds.Workers,
+                    Type = MenuItemTypeEnum.Link,
                     Position = 1,
                     ParentId = 3,
                 },
                 new MenuItem
                 {
                     Id = 6,
+                    Link = "/advanced/units",
                     MenuTemplateId = MenuTemplateIds.Units,
+                    Type = MenuItemTypeEnum.Link,
                     Position = 2,
                     ParentId = 3,
                 },
                 new MenuItem
                 {
                     Id = 7,
+                    Link = "/advanced/entity-search",
                     MenuTemplateId = MenuTemplateIds.SearchableList,
+                    Type = MenuItemTypeEnum.Link,
                     Position = 3,
                     ParentId = 3,
                 },
                 new MenuItem
                 {
                     Id = 8,
+                    Link = "/advanced/entity-select",
                     MenuTemplateId = MenuTemplateIds.SelectableList,
+                    Type = MenuItemTypeEnum.Link,
                     Position = 4,
                     ParentId = 3,
                 },
                 new MenuItem
                 {
                     Id = 9,
+                    Link = "/advanced/application-settings",
                     MenuTemplateId = MenuTemplateIds.ApplicationSettings,
+                    Type = MenuItemTypeEnum.Link,
                     Position = 6,
                     ParentId = 3,
                 },
                 new MenuItem
                 {
                     Id = 10,
+                    Link = "/advanced/plugins-settings",
                     MenuTemplateId = MenuTemplateIds.PluginsSettings,
+                    Type = MenuItemTypeEnum.Link,
                     Position = 8,
                     ParentId = 3,
                 },
                 new MenuItem
                 {
                     Id = 11,
+                    Link = "/advanced/folders",
                     MenuTemplateId = MenuTemplateIds.Folders,
+                    Type = MenuItemTypeEnum.Link,
                     Position = 5,
                     ParentId = 3,
                 },
                 new MenuItem
                 {
                     Id = 12,
+                    Link = "/email-recipients",
                     MenuTemplateId = MenuTemplateIds.EmailRecipients,
+                    Type = MenuItemTypeEnum.Link,
                     Position = 7,
                     ParentId = 3,
                 }

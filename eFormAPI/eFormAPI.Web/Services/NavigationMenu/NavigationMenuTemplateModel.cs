@@ -21,20 +21,16 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Infrastructure.Database.Entities.Menu
+
+namespace eFormAPI.Web.Services.NavigationMenu
 {
-    using System.ComponentModel.DataAnnotations;
-    using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
+    using System.Collections.Generic;
 
-    public class MenuTranslation : BaseEntity
+    public class NavigationMenuTemplateModel
     {
-        [StringLength(250)]
+        public int Id { get; set; }
         public string Name { get; set; }
-
-        [StringLength(7)]
-        public string LocaleName { get; set; }
-
-        public int MenuTemplateId { get; set; }
-        public virtual MenuTemplate MenuTemplate { get; set; }
+        public List<NavigationMenuTemplateItemModel> Items { get; set; } 
+            = new List<NavigationMenuTemplateItemModel>();
     }
 }

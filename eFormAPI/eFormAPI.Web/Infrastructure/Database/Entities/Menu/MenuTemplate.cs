@@ -29,12 +29,15 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities.Menu
 
     public class MenuTemplate : BaseEntity
     {
-        public string Link { get; set; }
+        public string DefaultLink { get; set; }
         public string E2EId { get; set; }
         public int? EformPluginId { get; set; }
         public virtual EformPlugin EformPlugin { get; set; }
-
-        public List<MenuTranslation> Translations
-            = new List<MenuTranslation>();
+        public virtual List<MenuItem> MenuItems { get; set; }
+           = new List<MenuItem>();
+        public virtual List<MenuTemplateTranslation> Translations { get; set; }
+            = new List<MenuTemplateTranslation>();
+        public virtual List<MenuTemplatePermission> MenuTemplatePermissions { get; set; }
+            = new List<MenuTemplatePermission>();
     }
 }

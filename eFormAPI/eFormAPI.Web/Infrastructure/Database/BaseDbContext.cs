@@ -57,7 +57,12 @@ namespace eFormAPI.Web.Infrastructure.Database
         // Menu
         public DbSet<MenuItem> MenuItems { get; set; }
         public DbSet<MenuTemplate> MenuTemplates { get; set; }
-        public DbSet<MenuTranslation> MenuTranslations { get; set; }
+        public DbSet<MenuItemTranslation> MenuItemTranslations { get; set; }
+        public DbSet<MenuTemplateTranslation> MenuTemplateTranslations { get; set; }
+        public DbSet<MenuItemSecurityGroup> MenuItemSecurityGroups { get; set; }
+        public DbSet<MenuTemplatePermission> MenuTemplatePermissions { get; set; }
+
+        //public DbSet<MenuTranslation> MenuTranslations { get; set; }
 
         // Reports
         public DbSet<EformReport> EformReports { get; set; }
@@ -90,7 +95,13 @@ namespace eFormAPI.Web.Infrastructure.Database
                 .IsUnique();
 
             // Menu
-            modelBuilder.Entity<MenuTranslation>()
+            //modelBuilder.Entity<MenuTranslation>()
+            //    .HasIndex(p => p.LocaleName);
+
+            modelBuilder.Entity<MenuItemTranslation>()
+                .HasIndex(p => p.LocaleName);
+
+            modelBuilder.Entity<MenuTemplateTranslation>()
                 .HasIndex(p => p.LocaleName);
 
             // Reports
@@ -182,6 +193,82 @@ namespace eFormAPI.Web.Infrastructure.Database
 
             modelBuilder.Entity<CasePost>()
                 .HasIndex(i => i.CaseId);
+
+            modelBuilder.Entity<MenuItemSecurityGroup>()
+                .HasIndex(t => new { t.MenuItemId, t.SecurityGroupId })
+                .IsUnique();
+
+            modelBuilder.Entity<MenuItemSecurityGroup>()
+                .HasOne(sc => sc.MenuItem)
+                .WithMany(s => s.MenuItemSecurityGroups)
+                .HasForeignKey(sc => sc.MenuItemId);
+
+            modelBuilder.Entity<MenuItemSecurityGroup>()
+                .HasOne(sc => sc.SecurityGroup)
+                .WithMany(c => c.MenuItemSecurityGroups)
+                .HasForeignKey(sc => sc.SecurityGroupId);
+
+            modelBuilder.Entity<MenuTemplatePermission>()
+             .HasIndex(t => new { t.MenuTemplateId, t.PermissionId })
+             .IsUnique();
+
+            modelBuilder.Entity<MenuTemplatePermission>()
+                .HasOne(sc => sc.MenuTemplate)
+                .WithMany(s => s.MenuTemplatePermissions)
+                .HasForeignKey(sc => sc.MenuTemplateId);
+
+            modelBuilder.Entity<MenuTemplatePermission>()
+                .HasOne(sc => sc.Permission)
+                .WithMany(c => c.MenuTemplatePermissions)
+                .HasForeignKey(sc => sc.PermissionId);
+
+
+            modelBuilder.Entity<MenuTemplateTranslation>()
+                .HasOne<MenuTemplate>(e => e.MenuTemplate)
+                .WithMany(d => d.Translations)
+                .HasForeignKey(e => e.MenuTemplateId)
+                .IsRequired(true)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<MenuItemTranslation>()
+               .HasOne<MenuItem>(e => e.MenuItem)
+               .WithMany(d => d.Translations)
+               .HasForeignKey(e => e.MenuItemId)
+               .IsRequired(true)
+               .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<MenuItemSecurityGroup>()
+                .HasOne<MenuItem>(e => e.MenuItem)
+                .WithMany(d => d.MenuItemSecurityGroups)
+                .HasForeignKey(e => e.MenuItemId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<MenuTemplatePermission>()
+                 .HasOne<Permission>(x => x.Permission)
+                 .WithMany(d => d.MenuTemplatePermissions)
+                 .HasForeignKey(d => d.PermissionId)
+                 .OnDelete(DeleteBehavior.Cascade);
+
+            // if we drop menu template, then dropped all records in table MenuTemplatePermissions
+            modelBuilder.Entity<MenuTemplate>()
+                .HasMany<MenuTemplatePermission>(x => x.MenuTemplatePermissions)
+                .WithOne(x => x.MenuTemplate)
+                .HasForeignKey(x => x.MenuTemplateId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<MenuItem>()
+                .HasOne<MenuTemplate>(e => e.MenuTemplate)
+                .WithMany(d => d.MenuItems)
+                .HasForeignKey(e => e.MenuTemplateId)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            // if we drop parent, then dropped all his children
+            modelBuilder.Entity<MenuItem>()
+              .HasOne<MenuItem>(x => x.Parent)
+              .WithMany(d => d.ChildItems)
+              .HasForeignKey(d => d.ParentId)
+              .OnDelete(DeleteBehavior.Cascade);
 
             // Seed
             modelBuilder.SeedLatest();

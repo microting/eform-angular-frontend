@@ -21,19 +21,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System.Threading.Tasks;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
-using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using eFormAPI.Web.Services.NavigationMenu;
-using System.Collections.Generic;
-using eFormAPI.Web.Infrastructure.Database.Entities.Menu;
 
-namespace eFormAPI.Web.Abstractions
+namespace eFormAPI.Web.Services.PluginsManagement
 {
-    public interface IMenuService
+    using System.Collections.Generic;
+
+    public class PluginMenuTemplateModel
     {
-        Task<OperationDataResult<MenuModel>> GetCurrentUserMenu();
-        Task<OperationDataResult<NavigationMenuModel>> GetCurrentNavigationMenu();
-        Task<OperationResult> UpdateCurrentUserMenu(List<NavigationMenuItemModel> menuItemModels);
+        public string DefaultLink { get; set; }
+        public string E2EId { get; set; }
+
+        public List<PluginMenuTranslationModel> Translations
+          = new List<PluginMenuTranslationModel>();
+        public List<PluginPermissionModel> Permissions { get; set; }
+           = new List<PluginPermissionModel>();
     }
 }

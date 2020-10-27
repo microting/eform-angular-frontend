@@ -29,92 +29,93 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
     using Entities.Menu;
     using Microsoft.EntityFrameworkCore;
 
-    public static class MenuDanishTranslationsSeed
+    public static class MenuTemplateGermanTranslationsSeed
     {
-        public static ModelBuilder AddDefaultMenuDanishTranslations(this ModelBuilder modelBuilder)
+        public static ModelBuilder AddMenuTemplateGermanTranslations(this ModelBuilder modelBuilder)
         {
-            var entities = new List<MenuTranslation>()
+            var entities = new List<MenuTemplateTranslation>()
             {
-                new MenuTranslation
+                new MenuTemplateTranslation
                 {
-                    Id = 13,
-                    Name = "My eForms",
-                    MenuTemplateId = MenuTemplateIds.DeviceUsers,
+                    Id = 25,
+                    Name = "Meine eForms",
+                    MenuTemplateId = MenuTemplateIds.MyEforms,
                 },
-                new MenuTranslation
+                new MenuTemplateTranslation
                 {
-                    Id = 14,
-                    Name = "Device Users",
+                    Id = 26,
+                    Name = "Gerätebenutzer ",
                     MenuTemplateId = MenuTemplateIds.DeviceUsers
                 },
-                new MenuTranslation
+                new MenuTemplateTranslation
                 {
-                    Id = 15,
-                    Name = "Advanced",
+                    Id = 27,
+                    Name = "Fortgeschritten",
                     MenuTemplateId = MenuTemplateIds.Advanced
                 },
-                new MenuTranslation
+                new MenuTemplateTranslation
                 {
-                    Id = 16,
-                    Name = "Sites",
+                    Id = 28,
+                    Name = "Standorte",
                     MenuTemplateId = MenuTemplateIds.Sites
                 },
-                new MenuTranslation
+                new MenuTemplateTranslation
                 {
-                    Id = 17,
-                    Name = "Workers",
+                    Id = 29,
+                    Name = "Mitarbeiter",
                     MenuTemplateId = MenuTemplateIds.Workers
                 },
-                new MenuTranslation
+                new MenuTemplateTranslation
                 {
-                    Id = 18,
-                    Name = "Units",
+                    Id = 30,
+                    Name = "Einheiten",
                     MenuTemplateId = MenuTemplateIds.Units
                 },
-                new MenuTranslation
+                new MenuTemplateTranslation
                 {
-                    Id = 19,
-                    Name = "SearchableList",
+                    Id = 31,
+                    Name = "Durchsuchbare Listen",
                     MenuTemplateId = MenuTemplateIds.SearchableList
                 },
-                new MenuTranslation
+                new MenuTemplateTranslation
                 {
-                    Id = 20,
-                    Name = "Selectable list",
+                    Id = 32,
+                    Name = "Auswählbare Liste",
                     MenuTemplateId = MenuTemplateIds.SelectableList
                 },
-                new MenuTranslation
+                new MenuTemplateTranslation
                 {
-                    Id = 21,
-                    Name = "Application Settings",
+                    Id = 33,
+                    Name = "Anwendungseinstellungen",
                     MenuTemplateId = MenuTemplateIds.ApplicationSettings
                 },
-                new MenuTranslation
+                new MenuTemplateTranslation
                 {
-                    Id = 22,
-                    Name = "Plugins Settings",
+                    Id = 34,
+                    Name = "Plugins",
                     MenuTemplateId = MenuTemplateIds.PluginsSettings
                 },
-                new MenuTranslation
+                new MenuTemplateTranslation
                 {
-                    Id = 23,
+                    Id = 35,
                     Name = "Folders",
                     MenuTemplateId = MenuTemplateIds.Folders
                 },
-                new MenuTranslation
+                new MenuTemplateTranslation
                 {
-                    Id = 24,
-                    Name = "Email Recipients",
+                    Id = 36,
+                    Name = "E-Mail-Empfänger",
                     MenuTemplateId = MenuTemplateIds.EmailRecipients
                 }
             };
 
             foreach (var menuTranslation in entities)
             {
-                menuTranslation.LocaleName = LocaleNames.Danish;
+                menuTranslation.LocaleName = LocaleNames.German;
+                menuTranslation.Language = LanguageNames.German;
             }
 
-            modelBuilder.Entity<MenuTranslation>().HasData(entities);
+            modelBuilder.Entity<MenuTemplateTranslation>().HasData(entities);
             return modelBuilder;
         }
     }

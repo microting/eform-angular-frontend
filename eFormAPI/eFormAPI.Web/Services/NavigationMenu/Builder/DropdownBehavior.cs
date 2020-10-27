@@ -22,27 +22,38 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Infrastructure.Database.Entities.Permissions
+namespace eFormAPI.Web.Services.NavigationMenu.Builder
 {
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
+    using eFormAPI.Web.Infrastructure.Database;
     using eFormAPI.Web.Infrastructure.Database.Entities.Menu;
-    using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
 
-    public class Permission : BaseEntity
+    public class DropdownBehavior : AbstractBehavior
     {
-        [StringLength(250)] 
-        public string PermissionName { get; set; }
-        [StringLength(250)] 
-        public string ClaimName { get; set; }
+        public DropdownBehavior(BaseDbContext dbContext, NavigationMenuItemModel menuItemModel, int? parentId = null) 
+            : base(dbContext, menuItemModel, parentId)
+        {
+        }
 
-        public int PermissionTypeId { get; set; }
-        public virtual PermissionType PermissionType { get; set; }
+        public override bool IsExecute()
+          => MenuItemModel.Type == MenuItemTypeEnum.Dropdown;
 
-        public List<GroupPermission> GroupPermissions
-            = new List<GroupPermission>();
+        public override void Setup(MenuItem menuItem)
+        {
+            menuItem.MenuTemplateId = null; // because menuitem is dropdown
+            menuItem.ParentId = null; // null is always
 
-        public virtual List<MenuTemplatePermission> MenuTemplatePermissions { get; set; }
-            = new List<MenuTemplatePermission>();
+            _dbContext.MenuItems.Add(menuItem);
+            _dbContext.SaveChanges();
+
+            //Set translation for menu item
+            SetTranslations(menuItem.Id);
+
+            for (int i = 0; i < MenuItemModel.Children.Count; i++)
+            {
+                var menuItemBuilder = new MenuItemBuilder(_dbContext, MenuItemModel.Children[i], i, menuItem.Id);
+
+                menuItemBuilder.Build();
+            }
+        }
     }
 }
