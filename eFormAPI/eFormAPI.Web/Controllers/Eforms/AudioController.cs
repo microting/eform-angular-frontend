@@ -46,8 +46,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         
         [HttpGet]
         [Route("api/audio/eform-audio")]
-        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, 
-            Policy = AuthConsts.EformPolicies.Cases.CasesRead)]
+        [Authorize(Policy = AuthConsts.EformPolicies.Cases.CasesRead)]
         public async Task<IActionResult> GetAudio(string fileName)
         {
             var core = await _coreHelper.GetCore();
