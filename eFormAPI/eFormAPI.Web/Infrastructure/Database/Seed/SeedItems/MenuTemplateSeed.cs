@@ -36,14 +36,14 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 new MenuTemplate
                 {
                     Id = MenuTemplateIds.MyEforms,
-                    Name = "MyEforms",
+                    Name = "My Eforms",
                     E2EId = "my-eforms",
                     DefaultLink = "/",
                 },
                 new MenuTemplate
                 {
                     Id = MenuTemplateIds.DeviceUsers,
-                    Name = "DeviceUsers",
+                    Name = "Device Users",
                     E2EId = "device-users",
                     DefaultLink = "/device-users",
                 },
@@ -78,28 +78,28 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 new MenuTemplate
                 {
                     Id = MenuTemplateIds.SearchableList,
-                    Name = "SearchableList",
+                    Name = "Searchable List",
                     E2EId = "search",
                     DefaultLink = "/advanced/entity-search",
                 },
                 new MenuTemplate
                 {
                     Id = MenuTemplateIds.SelectableList,
-                    Name = "SelectableList",
+                    Name = "Selectable List",
                     E2EId = "selectable-list",
                     DefaultLink = "/advanced/entity-select",
                 },
                 new MenuTemplate
                 {
                     Id = MenuTemplateIds.ApplicationSettings,
-                    Name = "ApplicationSettings",
+                    Name = "Application Settings",
                     E2EId = "application-settings",
                     DefaultLink = "/application-settings",
                 },
                 new MenuTemplate
                 {
                     Id = MenuTemplateIds.PluginsSettings,
-                    Name = "PluginsSettings",
+                    Name = "Plugins Settings",
                     E2EId = "plugins-settings",
                     DefaultLink = "/plugins-settings",
                 },
@@ -113,7 +113,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 new MenuTemplate
                 {
                     Id = MenuTemplateIds.EmailRecipients,
-                    Name = "EmailRecipients",
+                    Name = "Email Recipients",
                     E2EId = "email-recipients",
                     DefaultLink = "/email-recipients",
                 }

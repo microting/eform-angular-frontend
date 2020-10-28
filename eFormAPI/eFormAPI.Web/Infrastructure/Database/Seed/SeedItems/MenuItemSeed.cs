@@ -36,6 +36,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 new MenuItem
                 {
                     Id = 1,
+                    Name = "My Eforms",
                     Link = "/",
                     MenuTemplateId = MenuTemplateIds.MyEforms,
                     Type = MenuItemTypeEnum.Link,
@@ -44,6 +45,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 new MenuItem
                 {
                     Id = 2,
+                    Name = "Device Users",
                     Link = "/device-users",
                     MenuTemplateId = MenuTemplateIds.DeviceUsers,
                     Type = MenuItemTypeEnum.Link,
@@ -52,6 +54,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 new MenuItem
                 {
                     Id = 3,
+                    Name = "Advanced",
                     Link = "",
                     MenuTemplateId = MenuTemplateIds.Advanced,
                     Type = MenuItemTypeEnum.Dropdown,
@@ -60,6 +63,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 new MenuItem
                 {
                     Id = 4,
+                    Name = "Sites",
                     Link = "/advanced/sites",
                     MenuTemplateId = MenuTemplateIds.Sites,
                     Type = MenuItemTypeEnum.Link,
@@ -69,6 +73,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 new MenuItem
                 {
                     Id = 5,
+                    Name = "Workers",
                     Link = "/advanced/workers",
                     MenuTemplateId = MenuTemplateIds.Workers,
                     Type = MenuItemTypeEnum.Link,
@@ -78,6 +83,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 new MenuItem
                 {
                     Id = 6,
+                    Name = "Units",
                     Link = "/advanced/units",
                     MenuTemplateId = MenuTemplateIds.Units,
                     Type = MenuItemTypeEnum.Link,
@@ -87,6 +93,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 new MenuItem
                 {
                     Id = 7,
+                    Name = "Searchable List",
                     Link = "/advanced/entity-search",
                     MenuTemplateId = MenuTemplateIds.SearchableList,
                     Type = MenuItemTypeEnum.Link,
@@ -96,6 +103,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 new MenuItem
                 {
                     Id = 8,
+                    Name = "Selectable List",
                     Link = "/advanced/entity-select",
                     MenuTemplateId = MenuTemplateIds.SelectableList,
                     Type = MenuItemTypeEnum.Link,
@@ -105,6 +113,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 new MenuItem
                 {
                     Id = 9,
+                    Name = "Application Settings",
                     Link = "/advanced/application-settings",
                     MenuTemplateId = MenuTemplateIds.ApplicationSettings,
                     Type = MenuItemTypeEnum.Link,
@@ -114,6 +123,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 new MenuItem
                 {
                     Id = 10,
+                    Name = "Plugin Settings",
                     Link = "/advanced/plugins-settings",
                     MenuTemplateId = MenuTemplateIds.PluginsSettings,
                     Type = MenuItemTypeEnum.Link,
@@ -123,6 +133,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 new MenuItem
                 {
                     Id = 11,
+                    Name = "Folders",
                     Link = "/advanced/folders",
                     MenuTemplateId = MenuTemplateIds.Folders,
                     Type = MenuItemTypeEnum.Link,
@@ -132,6 +143,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 new MenuItem
                 {
                     Id = 12,
+                    Name = "Email Recipients",
                     Link = "/email-recipients",
                     MenuTemplateId = MenuTemplateIds.EmailRecipients,
                     Type = MenuItemTypeEnum.Link,

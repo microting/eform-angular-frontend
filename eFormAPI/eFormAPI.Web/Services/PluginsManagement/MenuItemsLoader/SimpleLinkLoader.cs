@@ -110,6 +110,7 @@ namespace eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader
 
             var newMenuItem = new MenuItem()
             {
+                Name = MenuItem.Name,
                 Link = MenuItem.Link,
                 Type = MenuItem.Type,
                 Position = MenuItem.Position,

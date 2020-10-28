@@ -142,6 +142,86 @@ namespace eFormAPI.Web
                         },
                         ChildItems = new List<PluginMenuItemModel>()
                         {
+                             new PluginMenuItemModel
+                            {
+                            Link = "/plugins/items-planning-pn/plannings",
+                            Type = MenuItemTypeEnum.Link,
+                            Position = 0,
+                            MenuTemplate = new PluginMenuTemplateModel()
+                        {
+                            E2EId = "items-planning-pn-plannings1",
+                            DefaultLink = "/plugins/items-planning-pn/plannings",
+                            Permissions = new List<Services.PluginsManagement.PluginPermissionModel>()
+                            {
+                                new Services.PluginsManagement.PluginPermissionModel
+                                {
+                                    ClaimName = "itemsPlanningPluginAccess",
+                                    PermissionName = "Access ItemsPlanning Plugin",
+                                    PermissionTypeName = "Plannings",
+                                },
+                                new Services.PluginsManagement.PluginPermissionModel
+                                {
+                                     ClaimName = "planningsCreate",
+                                    PermissionName = "Create Notification Rules",
+                                    PermissionTypeName = "Plannings",
+                                },
+                                new Services.PluginsManagement.PluginPermissionModel
+                                {
+                                     ClaimName = "planningEdit",
+                                    PermissionName = "Edit Planning",
+                                    PermissionTypeName = "Plannings",
+                                },
+                                new Services.PluginsManagement.PluginPermissionModel
+                                {
+                                    ClaimName = "planningsGet",
+                                    PermissionName = "Obtain plannings",
+                                    PermissionTypeName = "Plannings",
+                                }
+                            },
+                            Translations = new List<PluginMenuTranslationModel>
+                            {
+                                new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.English,
+                                    Name = "Planning",
+                                    Language = LanguageNames.English,
+                                },
+                                new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.German,
+                                    Name = "Planung",
+                                    Language = LanguageNames.German,
+                                },
+                                new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.Danish,
+                                    Name = "Planlægning",
+                                    Language = LanguageNames.Danish,
+                                },
+                            }
+                            },
+                            Translations = new List<PluginMenuTranslationModel>
+                            {
+                                new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.English,
+                                    Name = "Planning",
+                                    Language = LanguageNames.English,
+                                },
+                                new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.German,
+                                    Name = "German",
+                                    Language = LanguageNames.German,
+                                },
+                                new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.Danish,
+                                    Name = "Dania",
+                                    Language = LanguageNames.Danish,
+                                },
+                            }
+                            },
                             new PluginMenuItemModel
                             {
                             Link = "/plugins/items-planning-pn/plannings",
@@ -282,7 +362,6 @@ namespace eFormAPI.Web
                                 //var pluginMenu = enablePlugin.HeaderMenu(scope.ServiceProvider);
                                 var pluginManagmentService = scope.ServiceProvider.GetRequiredService<IPluginsManagementService>();
 
-                                await pluginManagmentService.RemoveNavigationMenuOfPlugin(enablePlugin.PluginId);
                                 await pluginManagmentService.LoadNavigationMenuDuringStartProgram(enablePlugin.PluginId);
                                 //var pluginMenuItemsLoader = new PluginMenuItemsLoader(dbContext, enablePlugin.PluginId);
 

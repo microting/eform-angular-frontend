@@ -176,6 +176,7 @@ namespace eFormAPI.Web.Services
                     .Select(x => new NavigationMenuItemModel
                     {
                         Id = x.Id,
+                        Name = x.Name,
                         Type = x.Type,
                         Link = x.Link,
                         RelatedTemplateItemId = x.MenuTemplateId,
@@ -200,6 +201,7 @@ namespace eFormAPI.Web.Services
                             .Select(p => new NavigationMenuItemModel
                             {
                                 Id = p.Id,
+                                Name = p.Name,
                                 Type = p.Type,
                                 Link = p.Link,
                                 RelatedTemplateItemId = p.MenuTemplateId,

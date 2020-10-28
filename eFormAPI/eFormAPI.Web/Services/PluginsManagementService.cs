@@ -248,6 +248,61 @@ namespace eFormAPI.Web.Services
                         },
                         ChildItems = new List<PluginMenuItemModel>()
                         {
+                              new PluginMenuItemModel
+                            {
+                            Link = "/plugins/items-planning-pn/plannings",
+                            Type = MenuItemTypeEnum.Link,
+                            Position = 0,
+                            MenuTemplate = new PluginMenuTemplateModel()
+                        {
+                            Name = "Planning1",
+                            E2EId = "items-planning-pn-plannings1",
+                            DefaultLink = "/plugins/items-planning-pn/plannings",
+                            Permissions = new List<PluginPermissionModel>(),
+                            Translations = new List<PluginMenuTranslationModel>
+                            {
+                                new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.English,
+                                    Name = "Planning",
+                                    Language = LanguageNames.English,
+                                },
+                                new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.German,
+                                    Name = "Planung",
+                                    Language = LanguageNames.German,
+                                },
+                                new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.Danish,
+                                    Name = "Planlægning",
+                                    Language = LanguageNames.Danish,
+                                },
+                            }
+                            },
+                            Translations = new List<PluginMenuTranslationModel>
+                            {
+                                new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.English,
+                                    Name = "Planning",
+                                    Language = LanguageNames.English,
+                                },
+                                new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.German,
+                                    Name = "German",
+                                    Language = LanguageNames.German,
+                                },
+                                new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.Danish,
+                                    Name = "Dania",
+                                    Language = LanguageNames.Danish,
+                                },
+                            }
+                            },
                             new PluginMenuItemModel
                             {
                             Link = "/plugins/items-planning-pn/plannings",
@@ -387,10 +442,122 @@ namespace eFormAPI.Web.Services
                     }
                 };
 
-            // Load to database all navigation menu from plugin by id
-            var pluginMenuItemsLoader = new PluginMenuItemsLoader(_dbContext, pluginId);
+            // get all menu templates from plugin 
+            var menuTemplatesFromPlugin = new List<PluginMenuTemplateModel>();
 
-            pluginMenuItemsLoader.Load(pluginMenu);
+            foreach (var pluginMenuItem in pluginMenu)
+            {
+                if(pluginMenuItem.Type == MenuItemTypeEnum.Link)
+                {
+                    menuTemplatesFromPlugin.Add(pluginMenuItem.MenuTemplate);
+                }
+                
+                if(pluginMenuItem.Type == MenuItemTypeEnum.Dropdown)
+                {
+                    foreach(var childMenuItem in pluginMenuItem.ChildItems)
+                    {
+                        if (childMenuItem.Type == MenuItemTypeEnum.Link)
+                        {
+                            menuTemplatesFromPlugin.Add(childMenuItem.MenuTemplate);
+                        }
+                    }
+                }
+            }
+
+            var menuTemplatesFromDatabase = _dbContext.MenuTemplates
+                .Where(x => x.EformPluginId == eformPlugin.Id)
+                .ToList();
+
+            if(menuTemplatesFromDatabase.Any())
+            {
+               if(menuTemplatesFromPlugin.Count() != menuTemplatesFromDatabase.Count())
+               {
+                    foreach(var menuTemplateFromPlugin in menuTemplatesFromPlugin)
+                    {
+                        // get all templates name that in database
+                        var menuTemplatesFromDatabaseNames = menuTemplatesFromDatabase.Select(x => x.E2EId).ToList();
+
+                        // if template from plugin is not contains in database
+                        if (!menuTemplatesFromDatabaseNames.Contains(menuTemplateFromPlugin.E2EId))
+                        {
+                            // add to database menu templates from plugin
+                            var menuTemplateToDatabase = new MenuTemplate()
+                            {
+                                Name = menuTemplateFromPlugin.Name,
+                                E2EId = menuTemplateFromPlugin.E2EId,
+                                DefaultLink = menuTemplateFromPlugin.DefaultLink,
+                                EformPluginId = eformPlugin.Id,
+                            };
+
+                            _dbContext.MenuTemplates.Add(menuTemplateToDatabase);
+                            _dbContext.SaveChanges();
+
+                            foreach (var translation in menuTemplateFromPlugin.Translations)
+                            {
+                                var menuTemplateTranslation = new MenuTemplateTranslation
+                                {
+                                    Language = translation.Language,
+                                    LocaleName = translation.LocaleName,
+                                    Name = translation.Name,
+                                    MenuTemplateId = menuTemplateToDatabase.Id,
+                                };
+
+                                _dbContext.MenuTemplateTranslations.Add(menuTemplateTranslation);
+                                _dbContext.SaveChanges();
+                            }
+
+                            if (menuTemplateFromPlugin.Permissions.Any())
+                            {
+                                foreach (var itemPermission in menuTemplateFromPlugin.Permissions)
+                                {
+                                    PermissionType newPermissionType = null;
+
+                                    var permissionType = _dbContext.PermissionTypes.FirstOrDefault(x => x.Name == itemPermission.PermissionTypeName);
+
+                                    if (permissionType == null)
+                                    {
+                                        newPermissionType = new PermissionType
+                                        {
+                                            Name = itemPermission.PermissionTypeName,
+                                        };
+
+                                        _dbContext.PermissionTypes.Add(newPermissionType);
+                                        _dbContext.SaveChanges();
+                                    }
+
+                                    var permission = new Permission
+                                    {
+                                        PermissionName = itemPermission.PermissionName,
+                                        ClaimName = itemPermission.ClaimName,
+                                        PermissionTypeId = newPermissionType == null
+                                            ? permissionType.Id
+                                            : newPermissionType.Id
+                                    };
+
+                                    _dbContext.Permissions.Add(permission);
+                                    _dbContext.SaveChanges();
+
+                                    var menuTemplatePermission = new MenuTemplatePermission
+                                    {
+                                        MenuTemplateId = menuTemplateToDatabase.Id,
+                                        PermissionId = permission.Id,
+                                    };
+
+                                    _dbContext.MenuTemplatePermissions.Add(menuTemplatePermission);
+                                    _dbContext.SaveChanges();
+                                }
+                            }
+                        }
+                    }
+               }
+            }
+            else
+            {
+                // Load to database all navigation menu from plugin by id
+                var pluginMenuItemsLoader = new PluginMenuItemsLoader(_dbContext, pluginId);
+
+                pluginMenuItemsLoader.Load(pluginMenu);
+            }
 
             return new OperationResult(true);
         }

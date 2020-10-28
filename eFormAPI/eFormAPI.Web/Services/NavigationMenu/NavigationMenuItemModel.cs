@@ -30,6 +30,7 @@ namespace eFormAPI.Web.Services.NavigationMenu
     public class NavigationMenuItemModel
     {
         public int Id { get; set; }
+        public string Name { get; set; }
         public string Link { get; set; }
         public MenuItemTypeEnum Type { get; set; }
         public int? RelatedTemplateItemId { get; set; }
