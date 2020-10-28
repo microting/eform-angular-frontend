@@ -60,7 +60,7 @@ namespace eFormAPI.Web.Controllers
 
         [HttpPut]
         [Route("api/navigation-menu")]
-        public Task<OperationDataResult<NavigationMenuModel>> UpdateCurrentUserMenu(List<NavigationMenuItemModel> menuItemModels)
+        public Task<OperationDataResult<NavigationMenuModel>> UpdateCurrentUserMenu([FromBody]List<NavigationMenuItemModel> menuItemModels)
         {
             //var actualMenu = new List<NavigationMenuItemModel>()
             //    {

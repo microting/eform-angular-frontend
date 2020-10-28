@@ -16,6 +16,7 @@ import { NavigationMenuItemEditComponent } from '../menu-item/navigation-menu-it
 import { NavigationMenuItemDeleteComponent } from '../menu-item/navigation-menu-item-delete/navigation-menu-item-delete.component';
 import { CommonDictionaryModel } from 'src/app/common/models';
 import * as R from 'ramda';
+import { EventBrokerService } from 'src/app/common/helpers';
 
 @AutoUnsubscribe()
 @Component({
@@ -172,7 +173,8 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
   constructor(
     private dragulaService: DragulaService,
     private navigationMenuService: NavigationMenuService,
-    private securityGroupsService: SecurityGroupsService
+    private securityGroupsService: SecurityGroupsService,
+    private eventBrokerService: EventBrokerService
   ) {
     dragulaService.createGroup('MENU_ITEMS', {
       moves: (el, container, handle) => {
@@ -225,10 +227,16 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
       });
   }
 
+  getHeaderNavigationMenu() {
+    this.eventBrokerService.emit<void>('get-navigation-menu', null);
+  }
+
   updateNavigationMenu() {
     this.updateNavigationMenuSub$ = this.navigationMenuService
       .updateNavigationMenu(this.navigationMenuModel.actualMenu)
-      .subscribe(() => {});
+      .subscribe(() => {
+        this.getHeaderNavigationMenu();
+      });
   }
 
   manualAddItemToMenu(model: NavigationMenuItemModel) {
@@ -277,6 +285,7 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
   }
 
   onItemDeleteConfirm(model: NavigationMenuItemIndexedModel) {
+    debugger;
     if (model.secondLevelIndex) {
       this.navigationMenuModel.actualMenu = R.update(
         model.firstLevelIndex,

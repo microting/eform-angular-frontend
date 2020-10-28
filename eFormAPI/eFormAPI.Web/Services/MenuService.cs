@@ -130,14 +130,15 @@ namespace eFormAPI.Web.Services
        
                                  })
                                 .ToList(),
+                            RelatedTemplateItemId = 1
                         })
                         .ToList()
                     }
                 };
 
-                var enablePlugins = _dbContext.EformPlugins
+                var enablePlugins = await _dbContext.EformPlugins
                     .Where(x => x.Status == (int)PluginStatus.Enabled)
-                    .ToList();
+                    .ToListAsync();
 
                 if (enablePlugins.Any())
                 {
@@ -163,6 +164,7 @@ namespace eFormAPI.Web.Services
                                     Language = p.Language,
                                 })
                                 .ToList(),
+                                RelatedTemplateItemId = p.Id
                             })
                             .ToList()
                     }));

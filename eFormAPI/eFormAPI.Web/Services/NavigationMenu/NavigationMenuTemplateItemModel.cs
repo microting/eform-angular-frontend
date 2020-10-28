@@ -32,7 +32,7 @@ namespace eFormAPI.Web.Services.NavigationMenu
         public string Name { get; set; }
         public string E2EId { get; set; }
         public string Link { get; set; }
-
+        public int? RelatedTemplateItemId { get; set; }
         public List<NavigationMenuTranslationModel> Translations { get; set; }
             = new List<NavigationMenuTranslationModel>();
     }
