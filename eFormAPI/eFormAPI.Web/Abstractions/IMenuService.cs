@@ -34,6 +34,6 @@ namespace eFormAPI.Web.Abstractions
     {
         Task<OperationDataResult<MenuModel>> GetCurrentUserMenu();
         Task<OperationDataResult<NavigationMenuModel>> GetCurrentNavigationMenu();
-        Task<OperationResult> UpdateCurrentUserMenu(List<NavigationMenuItemModel> menuItemModels);
+        Task<OperationDataResult<NavigationMenuModel>> UpdateCurrentUserMenu(List<NavigationMenuItemModel> menuItemModels);
     }
 }

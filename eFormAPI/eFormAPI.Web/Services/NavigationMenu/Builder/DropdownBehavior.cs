@@ -48,6 +48,18 @@ namespace eFormAPI.Web.Services.NavigationMenu.Builder
             //Set translation for menu item
             SetTranslations(menuItem.Id);
 
+            foreach (var securityGroupId in MenuItemModel.SecurityGroupsIds)
+            {
+                var menuItemSecurityGroup = new MenuItemSecurityGroup()
+                {
+                    SecurityGroupId = securityGroupId,
+                    MenuItemId = menuItem.Id,
+                };
+
+                _dbContext.MenuItemSecurityGroups.Add(menuItemSecurityGroup);
+                _dbContext.SaveChanges();
+            }
+
             for (int i = 0; i < MenuItemModel.Children.Count; i++)
             {
                 var menuItemBuilder = new MenuItemBuilder(_dbContext, MenuItemModel.Children[i], i, menuItem.Id);

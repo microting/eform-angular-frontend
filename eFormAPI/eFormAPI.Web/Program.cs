@@ -27,10 +27,15 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using Castle.Core.Internal;
+using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Hosting.Helpers;
 using eFormAPI.Web.Hosting.Settings;
+using eFormAPI.Web.Infrastructure.Const;
 using eFormAPI.Web.Infrastructure.Database;
+using eFormAPI.Web.Infrastructure.Database.Entities.Menu;
 using eFormAPI.Web.Infrastructure.Database.Factories;
+using eFormAPI.Web.Services.PluginsManagement;
+using eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -55,6 +60,7 @@ namespace eFormAPI.Web
         {
             var host = BuildWebHost(args);
             MigrateDb(host);
+            LoadNavigationMenuEnabledPlugins(host);
             host.RunAsync(_cancelTokenSource.Token)
                 .Wait();
 
@@ -83,7 +89,215 @@ namespace eFormAPI.Web
             _cancelTokenSource.Cancel();
         }
 
-       // public static ReloadDbConfiguration ReloadDbConfigurationDelegate { get; set; }
+        // public static ReloadDbConfiguration ReloadDbConfigurationDelegate { get; set; }
+
+        public static async void LoadNavigationMenuEnabledPlugins(IWebHost webHost)
+        {
+            using (var scope = webHost.Services.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                BaseDbContext dbContext = null;
+                try
+                {
+                    dbContext = scope.ServiceProvider.GetRequiredService<BaseDbContext>();
+                }
+                catch
+                {
+                }
+
+                if (dbContext != null)
+                {
+                    using (dbContext = scope.ServiceProvider.GetRequiredService<BaseDbContext>())
+                    {
+                        try
+                        {
+                            foreach(var enablePlugin in Program.EnabledPlugins)
+                            {
+                                var pluginMenu = new List<PluginMenuItemModel>()
+                                {
+                                    new PluginMenuItemModel
+                    {
+                        Link = "items-planning-pn",
+                        Type = MenuItemTypeEnum.Dropdown,
+                        Position = 0,
+                        Translations = new List<PluginMenuTranslationModel>()
+                        {
+                            new PluginMenuTranslationModel
+                            {
+                                 LocaleName = LocaleNames.English,
+                                 Name = "Items Planning",
+                                 Language = LanguageNames.English,
+                            },
+                            new PluginMenuTranslationModel
+                            {
+                                 LocaleName = LocaleNames.German,
+                                 Name = "Artikelplanung",
+                                 Language = LanguageNames.German,
+                            },
+                            new PluginMenuTranslationModel
+                            {
+                                 LocaleName = LocaleNames.Danish,
+                                 Name = "Elementer planlægning",
+                                 Language = LanguageNames.Danish,
+                            }
+                        },
+                        ChildItems = new List<PluginMenuItemModel>()
+                        {
+                            new PluginMenuItemModel
+                            {
+                            Link = "/plugins/items-planning-pn/plannings",
+                            Type = MenuItemTypeEnum.Link,
+                            Position = 0,
+                            MenuTemplate = new PluginMenuTemplateModel()
+                        {
+                            E2EId = "items-planning-pn-plannings",
+                            DefaultLink = "/plugins/items-planning-pn/plannings",
+                            Permissions = new List<Services.PluginsManagement.PluginPermissionModel>()
+                            {
+                                new Services.PluginsManagement.PluginPermissionModel
+                                {
+                                    ClaimName = "itemsPlanningPluginAccess",
+                                    PermissionName = "Access ItemsPlanning Plugin",
+                                    PermissionTypeName = "Plannings",
+                                },
+                                new Services.PluginsManagement.PluginPermissionModel
+                                {
+                                     ClaimName = "planningsCreate",
+                                    PermissionName = "Create Notification Rules",
+                                    PermissionTypeName = "Plannings",
+                                },
+                                new Services.PluginsManagement.PluginPermissionModel
+                                {
+                                     ClaimName = "planningEdit",
+                                    PermissionName = "Edit Planning",
+                                    PermissionTypeName = "Plannings",
+                                },
+                                new Services.PluginsManagement.PluginPermissionModel
+                                {
+                                    ClaimName = "planningsGet",
+                                    PermissionName = "Obtain plannings",
+                                    PermissionTypeName = "Plannings",
+                                }
+                            },
+                            Translations = new List<PluginMenuTranslationModel>
+                            {
+                                new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.English,
+                                    Name = "Planning",
+                                    Language = LanguageNames.English,
+                                },
+                                new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.German,
+                                    Name = "Planung",
+                                    Language = LanguageNames.German,
+                                },
+                                new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.Danish,
+                                    Name = "Planlægning",
+                                    Language = LanguageNames.Danish,
+                                },
+                            }
+                            },
+                            Translations = new List<PluginMenuTranslationModel>
+                            {
+                                new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.English,
+                                    Name = "Planning",
+                                    Language = LanguageNames.English,
+                                },
+                                new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.German,
+                                    Name = "German",
+                                    Language = LanguageNames.German,
+                                },
+                                new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.Danish,
+                                    Name = "Dania",
+                                    Language = LanguageNames.Danish,
+                                },
+                            }
+                            },
+                            new PluginMenuItemModel
+                            {
+                            Link = "/plugins/items-planning-pn/reports",
+                            Type = MenuItemTypeEnum.Link,
+                            Position = 1,
+                            MenuTemplate = new PluginMenuTemplateModel()
+                            {
+                            E2EId = "items-planning-pn-reports",
+                            DefaultLink = "/plugins/items-planning-pn/reports",
+                            Translations = new List<PluginMenuTranslationModel>
+                            {
+                                new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.English,
+                                    Name = "Reports",
+                                    Language = LanguageNames.English,
+                                },
+                                new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.German,
+                                    Name = "Berichte",
+                                    Language = LanguageNames.German,
+                                },
+                                new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.Danish,
+                                    Name = "Rapporter",
+                                    Language = LanguageNames.Danish,
+                                },
+                            }
+                            },
+                            Translations = new List<PluginMenuTranslationModel>
+                            {
+                                new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.English,
+                                    Name = "Reports",
+                                    Language = LanguageNames.English,
+                                },
+                                new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.German,
+                                    Name = "German",
+                                    Language = LanguageNames.German,
+                                },
+                                new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.Danish,
+                                    Name = "Dania",
+                                    Language = LanguageNames.Danish,
+                                },
+                            }
+                            }
+                        }
+                    }
+                                };
+
+                                //var pluginMenu = enablePlugin.HeaderMenu(scope.ServiceProvider);
+                                var pluginManagmentService = scope.ServiceProvider.GetRequiredService<IPluginsManagementService>();
+
+                                await pluginManagmentService.RemoveNavigationMenuOfPlugin(enablePlugin.PluginId);
+                                await pluginManagmentService.LoadNavigationMenuDuringStartProgram(enablePlugin.PluginId);
+                                //var pluginMenuItemsLoader = new PluginMenuItemsLoader(dbContext, enablePlugin.PluginId);
+
+                                //pluginMenuItemsLoader.Load(pluginMenu);
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+                            logger.LogError(e, "Error while loading navigation menu from enabled plugins");
+                        }
+                    }
+                }
+            }
+        }
 
         public static void MigrateDb(IWebHost webHost)
         {

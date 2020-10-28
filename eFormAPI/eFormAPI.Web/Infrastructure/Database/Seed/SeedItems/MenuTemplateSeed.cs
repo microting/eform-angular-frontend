@@ -36,72 +36,84 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 new MenuTemplate
                 {
                     Id = MenuTemplateIds.MyEforms,
+                    Name = "MyEforms",
                     E2EId = "my-eforms",
                     DefaultLink = "/",
                 },
                 new MenuTemplate
                 {
                     Id = MenuTemplateIds.DeviceUsers,
+                    Name = "DeviceUsers",
                     E2EId = "device-users",
                     DefaultLink = "/device-users",
                 },
                 new MenuTemplate
                 {
                     Id = MenuTemplateIds.Advanced,
+                    Name = "Advanced",
                     E2EId = "advanced",
                     DefaultLink = "",
                 },
                 new MenuTemplate
                 {
                     Id = MenuTemplateIds.Sites,
+                    Name = "Sites",
                     E2EId = "sites",
                     DefaultLink = "/advanced/sites",
                 },
                 new MenuTemplate
                 {
                     Id = MenuTemplateIds.Workers,
+                    Name = "Workers",
                     E2EId = "workers",
                     DefaultLink = "/advanced/workers",
                 },
                 new MenuTemplate
                 {
                     Id = MenuTemplateIds.Units,
+                    Name = "Units",
                     E2EId = "units",
                     DefaultLink = "/advanced/units",
                 },
                 new MenuTemplate
                 {
                     Id = MenuTemplateIds.SearchableList,
+                    Name = "SearchableList",
                     E2EId = "search",
                     DefaultLink = "/advanced/entity-search",
                 },
                 new MenuTemplate
                 {
                     Id = MenuTemplateIds.SelectableList,
+                    Name = "SelectableList",
                     E2EId = "selectable-list",
                     DefaultLink = "/advanced/entity-select",
                 },
                 new MenuTemplate
                 {
                     Id = MenuTemplateIds.ApplicationSettings,
+                    Name = "ApplicationSettings",
                     E2EId = "application-settings",
                     DefaultLink = "/application-settings",
                 },
                 new MenuTemplate
                 {
                     Id = MenuTemplateIds.PluginsSettings,
+                    Name = "PluginsSettings",
                     E2EId = "plugins-settings",
                     DefaultLink = "/plugins-settings",
                 },
                 new MenuTemplate
                 {
                     Id = MenuTemplateIds.Folders,
+                    Name = "Folders",
                     E2EId = "folders",
                     DefaultLink = "/advanced/folders",
                 },
                 new MenuTemplate
                 {
                     Id = MenuTemplateIds.EmailRecipients,
+                    Name = "EmailRecipients",
                     E2EId = "email-recipients",
                     DefaultLink = "/email-recipients",
                 }

@@ -68,7 +68,7 @@ namespace eFormAPI.Web.Services
             _serviceProvider = serviceProvider;
         }
 
-        public async Task<OperationResult> UpdateCurrentUserMenu(List<NavigationMenuItemModel> menuItemModels)
+        public async Task<OperationDataResult<NavigationMenuModel>> UpdateCurrentUserMenu(List<NavigationMenuItemModel> menuItemModels)
         {
             // Step 1. Firstly remove all menu items from database
             var actualMenu = await _dbContext.MenuItems.ToListAsync();
@@ -84,7 +84,7 @@ namespace eFormAPI.Web.Services
                 menuItemBuilder.Build();
             }
 
-            return new OperationResult(true);
+            return new OperationDataResult<NavigationMenuModel>(true, "Navigation menu was succesfully updated");
         }
 
         public async Task<OperationDataResult<NavigationMenuModel>> GetCurrentNavigationMenu()
@@ -116,6 +116,7 @@ namespace eFormAPI.Web.Services
                         .Select(p => new NavigationMenuTemplateItemModel
                         {
                             Id = p.Id,
+                            Name = p.Name,
                             E2EId = p.E2EId,
                             Link = p.DefaultLink,
                             Translations = _dbContext.MenuTemplateTranslations
@@ -149,6 +150,7 @@ namespace eFormAPI.Web.Services
                             .Select(p => new NavigationMenuTemplateItemModel
                             {
                                 Id = p.Id,
+                                Name = p.Name,
                                 E2EId = p.E2EId,
                                 Link = p.DefaultLink,
                                 Translations = _dbContext.MenuTemplateTranslations

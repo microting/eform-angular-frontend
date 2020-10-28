@@ -10,5 +10,9 @@ namespace eFormAPI.Web.Abstractions
         Task<OperationResult> UpdateInstalledPlugins(InstalledPluginUpdateModel updateModel);
         Task<OperationDataResult<PluginsStoreModel>> GetMarketplacePlugins(MarketplacePluginsRequestModel model);
         Task<OperationResult> InstallMarketplacePlugin(string pluginId);
+        Task<OperationResult> RemoveNavigationMenuOfPlugin(string pluginId);
+        Task<OperationResult> LoadNavigationMenuOfPlugin(string pluginId);
+
+        Task<OperationResult> LoadNavigationMenuDuringStartProgram(string pluginId);
     }
 }
