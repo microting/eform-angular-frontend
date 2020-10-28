@@ -255,6 +255,7 @@ namespace eFormAPI.Web.Services
                             Position = 0,
                             MenuTemplate = new PluginMenuTemplateModel()
                         {
+                            Name = "Planning",
                             E2EId = "items-planning-pn-plannings",
                             DefaultLink = "/plugins/items-planning-pn/plannings",
                             Permissions = new List<PluginPermissionModel>()
@@ -335,6 +336,7 @@ namespace eFormAPI.Web.Services
                             Position = 1,
                             MenuTemplate = new PluginMenuTemplateModel()
                             {
+                            Name = "Reports",
                             E2EId = "items-planning-pn-reports",
                             DefaultLink = "/plugins/items-planning-pn/reports",
                             Translations = new List<PluginMenuTranslationModel>

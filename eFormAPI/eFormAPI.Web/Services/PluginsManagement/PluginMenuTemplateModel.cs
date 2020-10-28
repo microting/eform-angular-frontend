@@ -28,6 +28,7 @@ namespace eFormAPI.Web.Services.PluginsManagement
 
     public class PluginMenuTemplateModel
     {
+        public string Name { get; set; }
         public string DefaultLink { get; set; }
         public string E2EId { get; set; }
 

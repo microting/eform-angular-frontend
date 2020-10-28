@@ -43,6 +43,7 @@ namespace eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader
         {
             var menuTemplate = new MenuTemplate()
             {
+                Name = MenuItem.MenuTemplate.Name,
                 E2EId = MenuItem.MenuTemplate.E2EId,
                 DefaultLink = MenuItem.MenuTemplate.DefaultLink,
                 EformPluginId = _dbContext.EformPlugins.Single(x => x.PluginId == pluginId).Id
