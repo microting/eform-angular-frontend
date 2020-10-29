@@ -51,7 +51,7 @@ jobs:
     - name: NPM Install
       run: npm i eform-client
     - name: NPM start
-      run: npm start &
+      run: npm start eform-client &
     - name: Dotnet run
       run: dotnet run --project eFormAPI/eFormAPI.Web/eFormAPI.Web.csproj > dotnet_log 2>&1 &
     - name: Sleep 75 seconds
