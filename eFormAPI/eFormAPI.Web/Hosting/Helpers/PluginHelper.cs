@@ -332,6 +332,7 @@ namespace eFormAPI.Web.Hosting.Helpers
                             typeof(SwiftObjectGetResponse),
                             typeof(SwiftClient)
                         });
+
                     var types = loader
                         .LoadDefaultAssembly()
                         .GetTypes();

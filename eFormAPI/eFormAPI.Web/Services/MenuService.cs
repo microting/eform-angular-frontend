@@ -86,7 +86,8 @@ namespace eFormAPI.Web.Services
                 menuItemBuilder.Build();
             }
 
-            return new OperationDataResult<NavigationMenuModel>(true, "Navigation menu was succesfully updated");
+            return new OperationDataResult<NavigationMenuModel>(true,
+                _localizationService.GetString("NavigationMenuUpdate")); 
         }
 
         public async Task<OperationDataResult<NavigationMenuModel>> GetCurrentNavigationMenu()
@@ -506,21 +507,6 @@ namespace eFormAPI.Web.Services
                             newList.Add(menuItem);
                             break;
                     }
-
-                    //var menuItemPermissionsClaim = _dbContext.MenuTemplatePermissions
-                    //    .Include(x => x.Permission)
-                    //    .Where(x => x.MenuTemplateId == menuItem.MenuTemplateId)
-                    //    .Select(x => x.Permission.ClaimName)
-                    //    .ToList();
-
-                    //foreach (var permission in menuItemPermissionsClaim)
-                    //{
-                    //    if (claims.Contains(permission))
-                    //    {
-                    //        newList.Add(menuItem);
-                    //        break;
-                    //    }
-                    //}
                 }
             }
 
