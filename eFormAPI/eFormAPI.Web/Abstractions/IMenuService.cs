@@ -33,7 +33,9 @@ namespace eFormAPI.Web.Abstractions
     public interface IMenuService
     {
         Task<OperationDataResult<MenuModel>> GetCurrentUserMenu();
+        Task<OperationResult> ResetCurrentUserMenu();
         Task<OperationDataResult<NavigationMenuModel>> GetCurrentNavigationMenu();
         Task<OperationDataResult<NavigationMenuModel>> UpdateCurrentUserMenu(List<NavigationMenuItemModel> menuItemModels);
+       
     }
 }

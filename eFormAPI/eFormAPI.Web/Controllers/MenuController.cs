@@ -62,129 +62,14 @@ namespace eFormAPI.Web.Controllers
         [Route("api/navigation-menu")]
         public Task<OperationDataResult<NavigationMenuModel>> UpdateCurrentUserMenu([FromBody]List<NavigationMenuItemModel> menuItemModels)
         {
-            //var actualMenu = new List<NavigationMenuItemModel>()
-            //    {
-            //        new NavigationMenuItemModel
-            //        {
-            //            Id = 1,
-            //            Type = MenuItemTypeEnum.Dropdown,
-            //            Link = "",
-            //            RelatedTemplateItemId = null,
-            //            ParentId = null,
-            //            SecurityGroupsIds = new List<int>{2},
-            //            Translations = new List<NavigationMenuTranslationModel>()
-            //            {
-            //                new NavigationMenuTranslationModel
-            //                {
-            //                    Name = "Advanced",
-            //                    LocaleName = LocaleNames.English,
-            //                    Language = LanguageNames.English,
-            //                },
-            //                new NavigationMenuTranslationModel
-            //                {
-            //                    Name = "German",
-            //                    LocaleName = LocaleNames.German,
-            //                    Language = LanguageNames.German,
-            //                },
-            //                new NavigationMenuTranslationModel
-            //                {
-            //                    Name = "Danish",
-            //                    LocaleName = LocaleNames.Danish,
-            //                    Language = LanguageNames.Danish,
-            //                }
-            //            },
-            //            Children = new List<NavigationMenuItemModel>()
-            //            {
-            //                new NavigationMenuItemModel
-            //        {
-            //            Type = MenuItemTypeEnum.Link,
-            //            Link = "/advanced/workers",
-            //            RelatedTemplateItemId = 5,
-            //             Translations = new List<NavigationMenuTranslationModel>()
-            //            {
-            //                new NavigationMenuTranslationModel
-            //                {
-            //                    Name = "Workers",
-            //                    LocaleName = LocaleNames.English,
-            //                    Language = LanguageNames.English,
-            //                },
-            //                new NavigationMenuTranslationModel
-            //                {
-            //                    Name = "German",
-            //                    LocaleName = LocaleNames.German,
-            //                    Language = LanguageNames.German,
-            //                },
-            //                new NavigationMenuTranslationModel
-            //                {
-            //                    Name = "Danish",
-            //                    LocaleName = LocaleNames.Danish,
-            //                    Language = LanguageNames.Danish,
-            //                }
-            //            },
-
-            //        },
-            //                     new NavigationMenuItemModel
-            //        {
-            //            Type = MenuItemTypeEnum.Link,
-            //            Link = "/advanced/workers",
-            //            RelatedTemplateItemId = 5,
-            //             Translations = new List<NavigationMenuTranslationModel>()
-            //            {
-            //                new NavigationMenuTranslationModel
-            //                {
-            //                    Name = "Test",
-            //                    LocaleName = LocaleNames.English,
-            //                    Language = LanguageNames.English,
-            //                },
-            //                new NavigationMenuTranslationModel
-            //                {
-            //                    Name = "German",
-            //                    LocaleName = LocaleNames.German,
-            //                    Language = LanguageNames.German,
-            //                },
-            //                new NavigationMenuTranslationModel
-            //                {
-            //                    Name = "Danish",
-            //                    LocaleName = LocaleNames.Danish,
-            //                    Language = LanguageNames.Danish,
-            //                }
-            //            },
-
-            //        },
-
-            //                  new NavigationMenuItemModel
-            //        {
-            //            Type = MenuItemTypeEnum.Link,
-            //            Link = "/advanced/sites",
-            //            RelatedTemplateItemId = 4,
-            //              Translations = new List<NavigationMenuTranslationModel>()
-            //            {
-            //                new NavigationMenuTranslationModel
-            //                {
-            //                    Name = "Sites",
-            //                    LocaleName = LocaleNames.English,
-            //                    Language = LanguageNames.English,
-            //                },
-            //                new NavigationMenuTranslationModel
-            //                {
-            //                    Name = "German",
-            //                    LocaleName = LocaleNames.German,
-            //                    Language = LanguageNames.German,
-            //                },
-            //                new NavigationMenuTranslationModel
-            //                {
-            //                    Name = "Danish",
-            //                    LocaleName = LocaleNames.Danish,
-            //                    Language = LanguageNames.Danish,
-            //                }
-            //            },
-            //        }
-            //    }
-
-            //        }
-            //    };
-
             return _menuService.UpdateCurrentUserMenu(menuItemModels);
+        }
+
+        [HttpPost]
+        [Route("api/navigation-menu/reset")]
+        public Task<OperationResult> ResetCurrentUserMenu()
+        {
+            return _menuService.ResetCurrentUserMenu();
         }
     }
 }

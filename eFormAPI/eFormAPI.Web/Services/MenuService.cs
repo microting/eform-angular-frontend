@@ -41,6 +41,7 @@ namespace eFormAPI.Web.Services
     using eFormAPI.Web.Infrastructure.Const;
     using eFormAPI.Web.Services.NavigationMenu;
     using eFormAPI.Web.Services.NavigationMenu.Builder;
+    using eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader;
     using Infrastructure.Database.Entities.Menu;
     using Microting.eFormApi.BasePn.Abstractions;
     using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
@@ -372,6 +373,32 @@ namespace eFormAPI.Web.Services
                 return new OperationDataResult<MenuModel>(false,
                     _localizationService.GetString("ErrorWhileObtainingUserMenu"));
             }
+        }
+
+        public async Task<OperationResult> ResetCurrentUserMenu()
+        {
+            // Step 1. Firstly remove all menu items from database
+            var actualMenu = await _dbContext.MenuItems.ToListAsync();
+
+            _dbContext.MenuItems.RemoveRange(actualMenu);
+            _dbContext.SaveChanges();
+
+            var defaultMenu = DefaultMenuStorage.GetDefaultMenu();
+
+            _dbContext.MenuItems.AddRange(defaultMenu);
+            _dbContext.SaveChanges();
+
+            foreach(var plugin in Program.EnabledPlugins)
+            {
+                var pluginMenu = plugin.GetNavigationMenu(_serviceProvider);
+
+                // Load to database all navigation menu from plugin by id
+                var pluginMenuItemsLoader = new PluginMenuItemsLoader(_dbContext, plugin.PluginId);
+
+                pluginMenuItemsLoader.Load(pluginMenu);
+            }
+
+            return new OperationResult(true);
         }
 
         private List<MenuItem> FilterMenuForUser(IEnumerable<MenuItem> items, ICollection<string> claims)
