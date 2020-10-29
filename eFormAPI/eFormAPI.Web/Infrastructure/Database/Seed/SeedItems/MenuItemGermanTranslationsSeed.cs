@@ -37,75 +37,81 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
             {
                 new MenuItemTranslation
                 {
-                    Id = 25,
+                    Id = 27,
                     Name = "Meine eForms",
                     MenuItemId = MenuTemplateIds.MyEforms,
                 },
                 new MenuItemTranslation
                 {
-                    Id = 26,
+                    Id = 28,
                     Name = "Gerätebenutzer ",
                     MenuItemId = MenuTemplateIds.DeviceUsers
                 },
                 new MenuItemTranslation
                 {
-                    Id = 27,
+                    Id = 29,
                     Name = "Fortgeschritten",
                     MenuItemId = MenuTemplateIds.Advanced
                 },
                 new MenuItemTranslation
                 {
-                    Id = 28,
+                    Id = 30,
                     Name = "Standorte",
                     MenuItemId = MenuTemplateIds.Sites
                 },
                 new MenuItemTranslation
                 {
-                    Id = 29,
+                    Id = 31,
                     Name = "Mitarbeiter",
                     MenuItemId = MenuTemplateIds.Workers
                 },
                 new MenuItemTranslation
                 {
-                    Id = 30,
+                    Id = 32,
                     Name = "Einheiten",
                     MenuItemId = MenuTemplateIds.Units
                 },
                 new MenuItemTranslation
                 {
-                    Id = 31,
+                    Id = 33,
                     Name = "Durchsuchbare Listen",
                     MenuItemId = MenuTemplateIds.SearchableList
                 },
                 new MenuItemTranslation
                 {
-                    Id = 32,
+                    Id = 34,
                     Name = "Auswählbare Liste",
                     MenuItemId = MenuTemplateIds.SelectableList
                 },
                 new MenuItemTranslation
                 {
-                    Id = 33,
+                    Id = 35,
                     Name = "Anwendungseinstellungen",
                     MenuItemId = MenuTemplateIds.ApplicationSettings
                 },
                 new MenuItemTranslation
                 {
-                    Id = 34,
+                    Id = 36,
                     Name = "Plugins",
                     MenuItemId = MenuTemplateIds.PluginsSettings
                 },
                 new MenuItemTranslation
                 {
-                    Id = 35,
+                    Id = 37,
                     Name = "Folders",
                     MenuItemId = MenuTemplateIds.Folders
                 },
                 new MenuItemTranslation
                 {
-                    Id = 36,
+                    Id = 38,
                     Name = "E-Mail-Empfänger",
                     MenuItemId = MenuTemplateIds.EmailRecipients
+                },
+                 new MenuItemTranslation
+                {
+                    Id = 39,
+                    Name = "Menü-Editor",
+                    MenuItemId = MenuTemplateIds.MenuEditor
                 }
             };
 

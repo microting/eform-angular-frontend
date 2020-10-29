@@ -46,7 +46,7 @@ namespace eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader
         {
             var newMenuItem = new MenuItem()
             {
-                Name = MenuItem.Name,
+                Name = MenuItem.Type == MenuItemTypeEnum.Dropdown ? "Dropdown" : MenuItem.Name,
                 Link = MenuItem.Link,
                 Type = MenuItem.Type,
                 Position = MenuItem.ChildItems.Any()

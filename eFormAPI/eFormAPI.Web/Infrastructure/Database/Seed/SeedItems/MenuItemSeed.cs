@@ -55,7 +55,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 new MenuItem
                 {
                     Id = 3,
-                    Name = "Advanced",
+                    Name = "Dropdown",
                     Link = "",
                     MenuTemplateId = MenuTemplateIds.Advanced,
                     Type = MenuItemTypeEnum.Dropdown,
@@ -125,7 +125,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 {
                     Id = 10,
                     Name = "Plugin Settings",
-                    Link = "/advanced/plugins-settings",
+                    Link = "/plugins-settings",
                     MenuTemplateId = MenuTemplateIds.PluginsSettings,
                     Type = MenuItemTypeEnum.Link,
                     Position = 8,
@@ -149,6 +149,16 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                     MenuTemplateId = MenuTemplateIds.EmailRecipients,
                     Type = MenuItemTypeEnum.Link,
                     Position = 7,
+                    ParentId = 3,
+                },
+                new MenuItem
+                {
+                    Id = 13,
+                    Name = "Menu Editor",
+                    Link = "/advanced/navigation-menu",
+                    MenuTemplateId = MenuTemplateIds.MenuEditor,
+                    Type = MenuItemTypeEnum.Link,
+                    Position = 9,
                     ParentId = 3,
                 }
             );

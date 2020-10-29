@@ -40,6 +40,7 @@ namespace eFormAPI.Web.Services.NavigationMenu.Builder
 
         public override void Setup(MenuItem menuItem)
         {
+            menuItem.Name = MenuItemModel.Name;
             menuItem.MenuTemplateId = MenuItemModel.RelatedTemplateItemId.Value; // должно быть значение
             menuItem.ParentId = _parentId;
 

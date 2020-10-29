@@ -37,75 +37,81 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
             {
                 new MenuItemTranslation
                 {
-                    Id = 13,
+                    Id = 14,
                     Name = "Mine eForms",
                     MenuItemId = MenuTemplateIds.MyEforms,
                 },
                 new MenuItemTranslation
                 {
-                    Id = 14,
+                    Id = 15,
                     Name = "Enhedsbrugere",
                     MenuItemId = MenuTemplateIds.DeviceUsers
                 },
                 new MenuItemTranslation
                 {
-                    Id = 15,
+                    Id = 16,
                     Name = "Avanceret",
                     MenuItemId = MenuTemplateIds.Advanced
                 },
                 new MenuItemTranslation
                 {
-                    Id = 16,
+                    Id = 17,
                     Name = "Lokationer",
                     MenuItemId = MenuTemplateIds.Sites
                 },
                 new MenuItemTranslation
                 {
-                    Id = 17,
+                    Id = 18,
                     Name = "Medarbejder",
                     MenuItemId = MenuTemplateIds.Workers
                 },
                 new MenuItemTranslation
                 {
-                    Id = 18,
+                    Id = 19,
                     Name = "Enheder",
                     MenuItemId = MenuTemplateIds.Units
                 },
                 new MenuItemTranslation
                 {
-                    Id = 19,
+                    Id = 20,
                     Name = "Søgbar Lister",
                     MenuItemId = MenuTemplateIds.SearchableList
                 },
                 new MenuItemTranslation
                 {
-                    Id = 20,
+                    Id = 21,
                     Name = "Valgbar Liste",
                     MenuItemId = MenuTemplateIds.SelectableList
                 },
                 new MenuItemTranslation
                 {
-                    Id = 21,
+                    Id = 22,
                     Name = "Applikationsindstillinger",
                     MenuItemId = MenuTemplateIds.ApplicationSettings
                 },
                 new MenuItemTranslation
                 {
-                    Id = 22,
+                    Id = 23,
                     Name = "Plugins",
                     MenuItemId = MenuTemplateIds.PluginsSettings
                 },
                 new MenuItemTranslation
                 {
-                    Id = 23,
+                    Id = 24,
                     Name = "Folders",
                     MenuItemId = MenuTemplateIds.Folders
                 },
                 new MenuItemTranslation
                 {
-                    Id = 24,
+                    Id = 25,
                     Name = "E-mail-modtagere",
                     MenuItemId = MenuTemplateIds.EmailRecipients
+                },
+                  new MenuItemTranslation
+                {
+                    Id = 26,
+                    Name = "Menu Editor",
+                    MenuItemId = MenuTemplateIds.MenuEditor
                 }
             };
 

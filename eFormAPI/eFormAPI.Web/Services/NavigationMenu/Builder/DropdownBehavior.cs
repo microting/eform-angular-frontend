@@ -40,6 +40,7 @@ namespace eFormAPI.Web.Services.NavigationMenu.Builder
 
         public override void Setup(MenuItem menuItem)
         {
+            menuItem.Name = "Dropdown";
             menuItem.MenuTemplateId = null; // because menuitem is dropdown
             menuItem.ParentId = null; // null is always
 

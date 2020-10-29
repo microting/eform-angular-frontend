@@ -106,6 +106,12 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                     Id = 12,
                     Name = "Email Recipients",
                     MenuTemplateId = MenuTemplateIds.EmailRecipients
+                },
+                 new MenuTemplateTranslation
+                {
+                    Id = 37,
+                    Name = "Menu Editor",
+                    MenuTemplateId = MenuTemplateIds.MenuEditor
                 }
             };
 
