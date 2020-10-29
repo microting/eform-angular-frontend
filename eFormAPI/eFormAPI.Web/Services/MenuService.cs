@@ -496,7 +496,12 @@ namespace eFormAPI.Web.Services
                             {
                                 newList.Add(menuItem);
                             }
-
+                            break;
+                        case "Email Recipients":
+                            if (claims.Contains(AuthConsts.EformClaims.EmailRecipientsClaims.Read))
+                            {
+                                newList.Add(menuItem);
+                            }
                             break;
                         case "Security":
                             break;
@@ -506,20 +511,6 @@ namespace eFormAPI.Web.Services
                             newList.Add(menuItem);
                             break;
                     }
-                        break;
-                    case "Email Recipients":
-                        if (claims.Contains(AuthConsts.EformClaims.EmailRecipientsClaims.Read))
-                        {
-                            newList.Add(menuItem);
-                        }
-                        break;
-                    case "Security":
-                        break;
-                    case "Application Settings":
-                        break;
-                    default:
-                        newList.Add(menuItem);
-                        break;
                 }
             }
 
