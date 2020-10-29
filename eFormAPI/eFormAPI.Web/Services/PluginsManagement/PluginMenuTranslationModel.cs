@@ -24,10 +24,10 @@ SOFTWARE.
 
 namespace eFormAPI.Web.Services.PluginsManagement
 {
-    public class PluginMenuTranslationModel
-    {
-        public string Name { get; set; }
-        public string LocaleName { get; set; }
-        public string Language { get; set; }
-    }
+    //public class PluginMenuTranslationModel
+    //{
+    //    public string Name { get; set; }
+    //    public string LocaleName { get; set; }
+    //    public string Language { get; set; }
+    //}
 }

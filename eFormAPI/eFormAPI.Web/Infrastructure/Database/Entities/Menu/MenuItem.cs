@@ -26,6 +26,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities.Menu
 {
     using System.Collections.Generic;
     using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
 
     public class MenuItem : BaseEntity
     {

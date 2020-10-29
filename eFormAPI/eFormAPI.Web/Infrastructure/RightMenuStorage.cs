@@ -2,10 +2,12 @@
 using eFormAPI.Web.Infrastructure.Database.Entities.Menu;
 using eFormAPI.Web.Services.PluginsManagement;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PluginPermissionModel = Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu.PluginPermissionModel;
 
 namespace eFormAPI.Web.Infrastructure
 {
@@ -38,27 +40,27 @@ namespace eFormAPI.Web.Infrastructure
                             {
                                 DefaultLink =  "/account-management/users",
                                 E2EId = "user-management-menu",
-                                Permissions = new List<Services.PluginsManagement.PluginPermissionModel>
+                                Permissions = new List<PluginPermissionModel>
                                 {
-                                    new Services.PluginsManagement.PluginPermissionModel
+                                    new PluginPermissionModel
                                     {
                                         ClaimName = AuthConsts.EformClaims.UserManagementClaims.Read,
                                         PermissionName = "Read",
                                         PermissionTypeName = "User management",
                                     },
-                                    new Services.PluginsManagement.PluginPermissionModel
+                                    new PluginPermissionModel
                                     {
                                         ClaimName = AuthConsts.EformClaims.UserManagementClaims.Create,
                                         PermissionName = "Create",
                                         PermissionTypeName = "User management",
                                     },
-                                    new Services.PluginsManagement.PluginPermissionModel
+                                    new PluginPermissionModel
                                     {
                                         ClaimName = AuthConsts.EformClaims.UserManagementClaims.Delete,
                                         PermissionName = "Delete",
                                         PermissionTypeName = "User management",
                                     },
-                                    new Services.PluginsManagement.PluginPermissionModel
+                                    new PluginPermissionModel
                                     {
                                         ClaimName = AuthConsts.EformClaims.UserManagementClaims.Update,
                                         PermissionName = "Update",

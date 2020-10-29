@@ -27,6 +27,7 @@ namespace eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader
     using eFormAPI.Web.Infrastructure.Database;
     using eFormAPI.Web.Infrastructure.Database.Entities.Menu;
     using eFormAPI.Web.Infrastructure.Database.Entities.Permissions;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
     using System.Linq;
 
     public class SimpleLinkLoader : AbstractLoader

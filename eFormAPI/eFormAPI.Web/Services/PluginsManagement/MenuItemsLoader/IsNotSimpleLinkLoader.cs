@@ -26,6 +26,7 @@ namespace eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader
 {
     using eFormAPI.Web.Infrastructure.Database;
     using eFormAPI.Web.Infrastructure.Database.Entities.Menu;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
     using System.Collections.Generic;
     using System.Linq;
 

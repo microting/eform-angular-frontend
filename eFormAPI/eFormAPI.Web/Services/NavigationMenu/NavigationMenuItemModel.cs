@@ -25,6 +25,7 @@ SOFTWARE.
 namespace eFormAPI.Web.Services.NavigationMenu
 {
     using eFormAPI.Web.Infrastructure.Database.Entities.Menu;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
     using System.Collections.Generic;
 
     public class NavigationMenuItemModel

@@ -24,10 +24,10 @@ SOFTWARE.
 
 namespace eFormAPI.Web.Infrastructure.Database.Entities.Menu
 {
-    public enum MenuItemTypeEnum
-    {
-        Link = 1, 
-        CustomLink = 2,
-        Dropdown = 3
-    }
+    //public enum MenuItemTypeEnum
+    //{
+    //    Link = 1, 
+    //    CustomLink = 2,
+    //    Dropdown = 3
+    //}
 }

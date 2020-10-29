@@ -24,21 +24,21 @@ SOFTWARE.
 
 namespace eFormAPI.Web.Services.PluginsManagement
 {
-    using eFormAPI.Web.Infrastructure.Database.Entities.Menu;
-    using System.Collections.Generic;
+    //using eFormAPI.Web.Infrastructure.Database.Entities.Menu;
+    //using System.Collections.Generic;
 
-    public class PluginMenuItemModel
-    {
-        public string Link { get; set; }
-        public string Name { get; set; }
-        public MenuItemTypeEnum Type { get; set; }
-        public int Position { get; set; }
-        public PluginMenuTemplateModel MenuTemplate { get; set; }
+    //public class PluginMenuItemModel
+    //{
+    //    public string Link { get; set; }
+    //    public string Name { get; set; }
+    //    public MenuItemTypeEnum Type { get; set; }
+    //    public int Position { get; set; }
+    //    public PluginMenuTemplateModel MenuTemplate { get; set; }
 
-        public List<PluginMenuItemModel> ChildItems
-           = new List<PluginMenuItemModel>();
-        public List<PluginMenuTranslationModel> Translations { get; set; }
-            = new List<PluginMenuTranslationModel>();
+    //    public List<PluginMenuItemModel> ChildItems
+    //       = new List<PluginMenuItemModel>();
+    //    public List<PluginMenuTranslationModel> Translations { get; set; }
+    //        = new List<PluginMenuTranslationModel>();
 
-    }
+    //}
 }

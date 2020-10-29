@@ -24,10 +24,10 @@ SOFTWARE.
 
 namespace eFormAPI.Web.Services.PluginsManagement
 {
-    public class PluginPermissionModel
-    {
-        public string ClaimName { get; set; }
-        public string PermissionName { get; set; }
-        public string PermissionTypeName { get; set; }
-    }
+    //public class PluginPermissionModel
+    //{
+    //    public string ClaimName { get; set; }
+    //    public string PermissionName { get; set; }
+    //    public string PermissionTypeName { get; set; }
+    //}
 }

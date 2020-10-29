@@ -25,6 +25,7 @@ SOFTWARE.
 namespace eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader
 {
     using eFormAPI.Web.Infrastructure.Database;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
     using System.Collections.Generic;
 
     public class PluginMenuItemsLoader

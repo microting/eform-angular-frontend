@@ -43,6 +43,7 @@ namespace eFormAPI.Web.Services
     using eFormAPI.Web.Services.NavigationMenu.Builder;
     using Infrastructure.Database.Entities.Menu;
     using Microting.eFormApi.BasePn.Abstractions;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
 
     public class MenuService : IMenuService
     {

@@ -26,6 +26,7 @@ namespace eFormAPI.Web.Services.NavigationMenu.Builder
 {
     using eFormAPI.Web.Infrastructure.Database;
     using eFormAPI.Web.Infrastructure.Database.Entities.Menu;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
 
     public class SimpleLinkBehavior : AbstractBehavior
     {
