@@ -88,7 +88,8 @@ describe('Device users page should not add new device user', function () {
     lastDeviceUser.deleteBtn.click();
     $('#saveDeleteBtn').waitForDisplayed({timeout: 10000});
     deviceUsersPage.saveDeleteBtn.click();
-    browser.pause(4000);
+    loginPage.open('/');
+    myEformsPage.Navbar.goToDeviceUsersPage();
     //browser.refresh();
     expect(deviceUsersPage.rowNum).equal(0);
   });
