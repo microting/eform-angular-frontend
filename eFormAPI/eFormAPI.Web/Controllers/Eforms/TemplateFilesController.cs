@@ -128,7 +128,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [Route("api/template-files/get-image/{fileName}.{ext}")]
         public async Task<IActionResult> GetImage(string fileName, string ext, string noCache = "noCache")
         {
@@ -136,7 +136,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [Route("api/template-files/get-pdf/{fileName}.{ext}")]
         public async Task<IActionResult> GetPdf(string fileName, string ext, string noCache = "noCache")
         {

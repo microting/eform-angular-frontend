@@ -13,7 +13,7 @@ export default {
   },
   token: 'abc1234567890abc1234567890abcdef',
   initialCatalogueMain: 'eFormMain',
-  authenticationType: 'user = root;',
+  authenticationType: 'user = root; password = secretpassword;',
   languageOptions: {
     english: 'English',
     danish: 'Danish'

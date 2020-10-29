@@ -12,7 +12,7 @@ import {
   EformTreeViewPickerComponent,
   StatusBarComponent,
 } from './components';
-import {AuthImagePipe} from 'src/app/common/pipes';
+import {AuthImagePipe, AuthAudioPipe, SafeHtmlPipe} from 'src/app/common/pipes';
 import {TreeModule} from '@circlon/angular-tree-component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {WavesModule} from 'angular-bootstrap-md';
@@ -34,6 +34,8 @@ import {WavesModule} from 'angular-bootstrap-md';
     StatusBarComponent,
     DateFormatterComponent,
     AuthImagePipe,
+    AuthAudioPipe,
+    SafeHtmlPipe,
     EformTreeViewPickerComponent,
   ],
   exports: [
@@ -44,6 +46,8 @@ import {WavesModule} from 'angular-bootstrap-md';
     DateFormatterComponent,
     EformTreeViewPickerComponent,
     AuthImagePipe,
+    AuthAudioPipe,
+    SafeHtmlPipe,
   ],
 })
 export class EformSharedModule {}
