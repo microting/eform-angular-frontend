@@ -1,6 +1,6 @@
 # eForm Angular Frontend
 
-[![Build Status](https://travis-ci.org/microting/eform-angular-frontend.svg?branch=master)](https://travis-ci.org/microting/eform-angular-frontend)
+![.NET Core](https://github.com/microting/eform-angular-frontend/workflows/.NET%20Core/badge.svg)
 [![Dependencies Status](https://david-dm.org/microting/eform-angular-frontend/stable/status.svg?path=eform-client)](https://david-dm.org/microting/eform-angular-frontend/stable?path=eform-client)
 [![Dependencies Status](https://david-dm.org/microting/eform-angular-frontend/stable/dev-status.svg?path=eform-client)](https://david-dm.org/microting/eform-angular-frontend/stable?path=eform-client&type=dev)
 [![Maintainability](https://api.codeclimate.com/v1/badges/383f012a79c7bea1101e/maintainability)](https://codeclimate.com/github/microting/eform-angular-frontend/maintainability)

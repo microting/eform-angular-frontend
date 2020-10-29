@@ -1,0 +1,62 @@
+name: .NET Core
+
+on:
+  push:
+    branches: [ master, stable ]
+  pull_request:
+    branches: [ master, stable ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: mirromutth/mysql-action@v1.1
+      with:
+        host port: 3306 # Optional, default value is 3306. The port of host
+        container port: 3306 # Optional, default value is 3306. The port of container
+        character set server: 'utf8' # Optional, default value is 'utf8mb4'. The '--character-set-server' option for mysqld
+        collation server: 'utf8_general_ci' # Optional, default value is 'utf8mb4_general_ci'. The '--collation-server' option for mysqld
+        mysql version: '8.0' # Optional, default value is "latest". The version of the MySQL
+        mysql database: 'some_test' # Optional, default value is "test". The specified database which will be create
+        mysql root password: 'secretpassword'
+        mysql user: 'developer' # Required if "mysql root password" is empty, default is empty. The superuser for the specified database. Can use secrets, too
+        mysql password: 'password' # Required if "mysql user" exists. The password for the "mysql user"
+    - uses: getong/rabbitmq-action@v1.2
+      with:
+        rabbitmq version: '3.8.2-management-alpine'
+        host port: 5672
+        rabbitmq user: 'admin'
+        rabbitmq password: 'password'
+        rabbitmq vhost: 'vhost_name'
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.301
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.16.2'
+    - name: Install dependencies
+      run: dotnet restore eFormAPI/eFormAPI.sln
+    - name: Get the version
+      id: get_version
+      run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3 | cut -d "v" -f 2)
+    - name: Build
+      run: dotnet build eFormAPI/eFormAPI.sln
+    - name: Unit Tests
+      run: dotnet test --no-restore -c Release -v n eFormAPI/eFormAPI.Web.Tests/eFormAPI.Web.Tests.csproj
+    - name: Integration Tests
+      run: dotnet test --no-restore -c Release -v n eFormAPI/eFormAPI.Web.Integration.Tests/eFormAPI.Web.Integration.Tests.csproj
+    - name: NPM Install
+      run: cd eform-client && npm install
+    - name: NPM start
+      run: cd eform-client && npm start &
+    - name: Dotnet run
+      run: dotnet run --project eFormAPI/eFormAPI.Web/eFormAPI.Web.csproj > dotnet_log 2>&1 &
+    - name: Sleep 75 seconds
+      run: sleep 75
+    - name: Configuration testing
+      run: cd eform-client && npm run testheadless
+    - name: testheadless2a
+      run: cd eform-client && npm run testheadless2a

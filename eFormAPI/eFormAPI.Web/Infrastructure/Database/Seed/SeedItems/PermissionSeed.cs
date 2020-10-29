@@ -358,6 +358,27 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                     ClaimName = AuthConsts.EformClaims.EformsClaims.ExportEformExcel,
                     PermissionName = "Export eForm excel",
                     PermissionTypeId = AuthConsts.DbIds.PermissionTypes.Eforms,
+                },
+                new Permission()
+                {
+                    Id = AuthConsts.DbIds.Permissions.EmailRecipients.Create,
+                    ClaimName = AuthConsts.EformClaims.EmailRecipientsClaims.Create,
+                    PermissionName = "Create e-mail recipients",
+                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.EmailRecipients,
+                },
+                new Permission()
+                {
+                    Id = AuthConsts.DbIds.Permissions.EmailRecipients.Delete,
+                    ClaimName = AuthConsts.EformClaims.EmailRecipientsClaims.Delete,
+                    PermissionName = "Delete e-mail recipients",
+                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.EmailRecipients,
+                },
+                new Permission()
+                {
+                    Id = AuthConsts.DbIds.Permissions.EmailRecipients.Read,
+                    ClaimName = AuthConsts.EformClaims.EmailRecipientsClaims.Read,
+                    PermissionName = "Read e-mail recipients",
+                    PermissionTypeId = AuthConsts.DbIds.PermissionTypes.EmailRecipients,
                 }
             );
             return modelBuilder;
