@@ -6,7 +6,13 @@
       </div>
       <div class="modal-body">
         <div class="container-fluid">
-          <div class="row" *ngIf="item.type === menuItemType.CustomLink || item.type === menuItemType.Dropdown">
+          <div
+            class="row"
+            *ngIf="
+              item.type === menuItemType.CustomLink ||
+              item.type === menuItemType.Dropdown
+            "
+          >
             <div class="col-md-12">
               <ng-select
                 class="custom"
@@ -21,7 +27,13 @@
               ></ng-select>
             </div>
           </div>
-          <div class="row" *ngIf="item.type === menuItemType.CustomLink || item.type === menuItemType.Link">
+          <div
+            class="row"
+            *ngIf="
+              item.type === menuItemType.CustomLink ||
+              item.type === menuItemType.Link
+            "
+          >
             <div class="col">
               <div class="md-form">
                 <input
@@ -39,25 +51,36 @@
           <div
             class="row"
             *ngFor="
-              let translation of item.translations;
-              let i = index
+              let translationControls of translationsArray.controls;
+              let translationIndex = index
             "
           >
-            <div class="col">
-              <div class="md-form">
-                <input
-                  mdbInput
-                  type="text"
-                  id="editItemTranslation{{ i }}"
-                  name="editItemTranslation{{ i }}"
-                  [(ngModel)]="translation.name"
-                  class="form-control"
-                />
-                <label for="editItemTranslation{{ i }}">{{
-                  translation.language
-                  }}</label>
+            <ng-container [formGroup]="translationControls">
+              <div class="col">
+                <div class="md-form">
+                  <input
+                    mdbInput
+                    type="text"
+                    id="editItemTranslation{{ firstLevelIndex }}_{{
+                      secondLevelIndex ? secondLevelIndex : 0
+                    }}_{{ translationIndex }}"
+                    name="editItemTranslation{{ firstLevelIndex }}_{{
+                      secondLevelIndex ? secondLevelIndex : 0
+                    }}_{{ translationIndex }}"
+                    formControlName="name"
+                    class="form-control"
+                  />
+                  <label
+                    for="editItemTranslation{{ firstLevelIndex }}_{{
+                      secondLevelIndex ? secondLevelIndex : 0
+                    }}_{{ translationIndex }}"
+                    >
+                   {{ translationControls.get('language').value }}
+                  </label
+                  >
+                </div>
               </div>
-            </div>
+            </ng-container>
           </div>
         </div>
       </div>
@@ -76,7 +99,7 @@
           id="editItemSaveCancelBtn"
           (click)="hide()"
         >
-          {{ 'Close' | translate }}
+          {{ 'Cancel' | translate }}
         </button>
       </div>
     </div>

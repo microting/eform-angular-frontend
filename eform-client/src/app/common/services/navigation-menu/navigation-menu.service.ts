@@ -9,6 +9,7 @@ import {NavigationMenuItemModel, NavigationMenuModel} from 'src/app/common/model
 
 const NavigationMenuMethods = {
   Menu: '/api/navigation-menu',
+  MenuReset: '/api/navigation-menu/reset',
 };
 
 @Injectable()
@@ -23,6 +24,10 @@ export class NavigationMenuService extends BaseService {
 
   updateNavigationMenu(model: NavigationMenuItemModel[]): Observable<OperationResult> {
     return this.put<any>(NavigationMenuMethods.Menu, model);
+  }
+
+  restNavigationMenu(): Observable<OperationResult> {
+    return this.post<any>(NavigationMenuMethods.MenuReset, {});
   }
 
 }

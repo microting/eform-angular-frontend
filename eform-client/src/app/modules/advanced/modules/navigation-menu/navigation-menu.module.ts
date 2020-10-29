@@ -24,8 +24,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DragulaModule } from 'ng2-dragula';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
+import { NavigationMenuResetComponent } from './components/navigation-menu-reset/navigation-menu-reset.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-sha
     NavigationMenuCustomLinkComponent,
     NavigationMenuItemDeleteComponent,
     NavigationMenuItemEditComponent,
+    NavigationMenuResetComponent,
   ],
   imports: [
     CommonModule,
@@ -56,6 +58,7 @@ import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-sha
     EformSharedModule,
     WavesModule,
     ModalModule,
+    ReactiveFormsModule,
   ],
 })
 export class NavigationMenuModule {}

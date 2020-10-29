@@ -61,7 +61,6 @@ export class EmailRecipientsTagsComponent implements OnInit, OnDestroy {
     this.createTag$ = this.tagsService
       .createEmailRecipientTag(model)
       .subscribe((data) => {
-        debugger;
         if (data && data.success) {
           this.tagsModal.tagCreateModal.hide();
           this.tagsModal.show();

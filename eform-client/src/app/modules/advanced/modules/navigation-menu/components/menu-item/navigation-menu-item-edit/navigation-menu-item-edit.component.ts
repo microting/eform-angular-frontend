@@ -12,6 +12,7 @@ import {
 } from 'src/app/common/models/navigation-menu';
 import { NavigationMenuItemTypeEnum } from 'src/app/common/const';
 import { CommonDictionaryModel } from 'src/app/common/models';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-navigation-menu-item-edit',
@@ -27,6 +28,7 @@ export class NavigationMenuItemEditComponent implements OnInit {
   item: NavigationMenuItemModel = new NavigationMenuItemModel();
   firstLevelIndex: number;
   secondLevelIndex: number | null;
+  translationsArray: FormArray = new FormArray([]);
 
   get menuItemType() {
     return NavigationMenuItemTypeEnum;
@@ -42,6 +44,17 @@ export class NavigationMenuItemEditComponent implements OnInit {
     secondLevelIndex?: number
   ) {
     this.item = model;
+    this.translationsArray.clear();
+    for (const translation of model.translations) {
+      this.translationsArray.push(
+        new FormGroup({
+          id: new FormControl(translation.id),
+          name: new FormControl(translation.name),
+          localeName: new FormControl(translation.localeName),
+          language: new FormControl(translation.language),
+        })
+      );
+    }
     this.firstLevelIndex = firstLevelIndex;
     this.secondLevelIndex = secondLevelIndex;
     this.frame.show();
@@ -49,7 +62,10 @@ export class NavigationMenuItemEditComponent implements OnInit {
 
   updateItem() {
     this.itemEditConfirm.emit({
-      item: this.item,
+      item: {
+        ...this.item,
+        translations: this.translationsArray.getRawValue(),
+      },
       firstLevelIndex: this.firstLevelIndex,
       secondLevelIndex: this.secondLevelIndex,
     });

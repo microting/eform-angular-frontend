@@ -9,6 +9,7 @@ import {NavigationMenuTemplateItemModel} from 'src/app/common/models/navigation-
 export class NavigationMenuTemplateItemComponent implements OnInit {
   @Input() item: NavigationMenuTemplateItemModel = new NavigationMenuTemplateItemModel();
   @Input() itemIndex = 0;
+  @Input() templateIndex = 0;
   constructor() { }
 
   ngOnInit(): void {

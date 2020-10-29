@@ -1,5 +1,10 @@
 <subheader-pn [title]="'Navigation menu' | translate">
   <div class="p-3">
+    <button mdbBtn class="btn-danger btn-icon mb-2 "
+            mdbTooltip="{{ 'Reset' | translate }}"
+            (click)="showResetNavigationMenuModal()">
+      <fa-icon icon="undo" [fixedWidth]="true" size="lg"></fa-icon>
+    </button>
     <button
       mdbBtn
       class="btn-success btn-small-height"
@@ -16,7 +21,7 @@
     <div class="col-3">
       <mdb-card
         class="mb-3"
-        *ngFor="let menuTemplate of navigationMenuModel.menuTemplates"
+        *ngFor="let menuTemplate of navigationMenuModel.menuTemplates; let templateIndex = index;"
       >
         <mdb-card-header>
           <div class="d-flex justify-content-between align-items-center">
@@ -32,23 +37,25 @@
         </mdb-card-header>
         <div mdbCollapse #collapse="bs-collapse">
           <div
-            class="card-body"
+            class="card-body dragula-template"
             dragula="MENU_ITEMS"
             id="mainMenu"
             [(dragulaModel)]="menuTemplate.items"
           >
             <ng-container
-              *ngFor="let menuTemplateItem of menuTemplate.items; let i = index"
+              *ngFor="let menuTemplateItem of menuTemplate.items; let itemIndex = index;"
             >
               <app-navigation-menu-template-item
                 [item]="menuTemplateItem"
-                [itemIndex]="i"
+                [itemIndex]="itemIndex"
+                [templateIndex]="templateIndex"
               ></app-navigation-menu-template-item>
             </ng-container>
           </div>
         </div>
       </mdb-card>
       <app-navigation-menu-custom
+        [availableSecurityGroups]="securityGroups"
         (addCustomLinkToMenu)="manualAddItemToMenu($event)"
         (addCustomDropdownToMenu)="manualAddItemToMenu($event)"
       ></app-navigation-menu-custom>
@@ -56,7 +63,7 @@
     <div class="col-9">
       <div class="card">
         <div
-          class="card-body"
+          class="card-body dragula-item"
           dragula="MENU_ITEMS"
           [(dragulaModel)]="navigationMenuModel.actualMenu"
         >
@@ -98,7 +105,7 @@
                       icon="trash-alt"
                       class="mr-2"
                       [fixedWidth]="true"
-                      (click)="onItemEdit(menuItem, firstLevelIndex)"
+                      (click)="onItemDelete(menuItem, firstLevelIndex)"
                       style="cursor: pointer"
                     ></fa-icon>
                     <app-eform-collapse-toggle
@@ -112,7 +119,7 @@
               <div mdbCollapse #collapse="bs-collapse">
                 <!-- Dropdown body -->
                 <div
-                  class="card-body"
+                  class="card-body dragula-dropdown"
                   dragula="MENU_ITEMS"
                   *ngIf="menuItem.type === menuItemTypes.Dropdown"
                   [(dragulaModel)]="menuItem.children"
@@ -124,8 +131,12 @@
                     "
                   >
                     <app-navigation-menu-item
-                      (itemDelete)="onItemDelete($event, firstLevelIndex, secondLevelIndex)"
-                      (itemEdit)="onItemEdit($event, firstLevelIndex, secondLevelIndex)"
+                      (itemDelete)="
+                        onItemDelete($event, firstLevelIndex, secondLevelIndex)
+                      "
+                      (itemEdit)="
+                        onItemEdit($event, firstLevelIndex, secondLevelIndex)
+                      "
                       [item]="menuItemChild"
                       [firstLevelIndex]="firstLevelIndex"
                       [secondLevelIndex]="secondLevelIndex"
@@ -161,3 +172,8 @@
   #deleteMenuItemModal
   (itemDeleteConfirm)="onItemDeleteConfirm($event)"
 ></app-navigation-menu-item-delete>
+
+<app-navigation-menu-reset
+  #resetMenuModal
+  (resetMenuConfirm)="onResetMenuConfirm()"
+></app-navigation-menu-reset>
