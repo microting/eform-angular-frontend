@@ -26,6 +26,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities.Permissions
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using eFormAPI.Web.Infrastructure.Database.Entities.Menu;
     using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
 
     public class SecurityGroup : BaseEntity
@@ -40,5 +41,8 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities.Permissions
 
         public virtual ICollection<EformInGroup> EformsInGroup { get; set; }
             = new List<EformInGroup>();
+
+        public virtual List<MenuItemSecurityGroup> MenuItemSecurityGroups { get; set; }
+           = new List<MenuItemSecurityGroup>();
     }
 }

@@ -26,6 +26,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities.Permissions
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using eFormAPI.Web.Infrastructure.Database.Entities.Menu;
     using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
 
     public class Permission : BaseEntity
@@ -40,5 +41,8 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities.Permissions
 
         public List<GroupPermission> GroupPermissions
             = new List<GroupPermission>();
+
+        public virtual List<MenuTemplatePermission> MenuTemplatePermissions { get; set; }
+            = new List<MenuTemplatePermission>();
     }
 }

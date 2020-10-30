@@ -21,30 +21,22 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
 
-namespace eFormAPI.Web.Infrastructure.Database.Entities
+namespace eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader
 {
-    public class MenuItem : BaseEntity
+    using eFormAPI.Web.Infrastructure.Database;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
+
+    public abstract class AbstractLoader
     {
-        [StringLength(250)] 
-        public string Name { get; set; }
+        private readonly BaseDbContext _dbContext;
+        public AbstractLoader(BaseDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
 
-        [StringLength(250)] 
-        public string LocaleName { get; set; }
+        public abstract bool IsExecute(PluginMenuItemModel menuItem);
 
-        public string Link { get; set; }
-        public string E2EId { get; set; }
-
-        public int Position { get; set; }
-        public int MenuPosition { get; set; } // 1 = Left, 0 = Right
-
-        public int? ParentId { get; set; }
-        public virtual MenuItem Parent { get; set; }
-
-        public List<MenuItem> ChildItems
-            = new List<MenuItem>();
+        public abstract void Load(PluginMenuItemModel menuItem, string pluginId, int? parentId);
     }
 }

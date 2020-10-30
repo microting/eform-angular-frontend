@@ -129,7 +129,78 @@ namespace eFormAPI.Web.Hosting.Helpers
 
             return plugins;
         }
-        
+
+        public static List<IEformPlugin> GetDisablePlugins(string connectionString)
+        {
+            // Load info from database
+            List<EformPlugin> eformPlugins = null;
+            var contextFactory = new BaseDbContextFactory();
+            using (var dbContext = contextFactory.CreateDbContext(new[] { connectionString }))
+            {
+                try
+                {
+                    eformPlugins = dbContext.EformPlugins
+                        .AsNoTracking()
+                        .ToList();
+                }
+                catch
+                {
+                }
+            }
+
+            var plugins = new List<IEformPlugin>();
+            // create plugin loaders
+            if (eformPlugins != null)
+            {
+                using (var dbContext = contextFactory.CreateDbContext(new[] { connectionString }))
+                {
+                    var dbNameSection = Regex.Match(connectionString, @"(Database=\w*;)").Groups[0].Value;
+                    var dbPrefix = Regex.Match(connectionString, @"Database=(\d*)_").Groups[1].Value;
+
+                    foreach (var plugin in GetAllPlugins())
+                    {
+                        var eformPlugin = eformPlugins.FirstOrDefault(x => x.PluginId == plugin.PluginId);
+                        if (eformPlugin != null)
+                        {
+                            //                            if (eformPlugin.ConnectionString.IsNullOrEmpty())
+                            //                            {
+                            //                                eformPlugin.ConnectionString = "";
+                            //                            }
+                            if (!eformPlugin.ConnectionString.Contains("PersistSecurityInfo=true;"))
+                            {
+                                var aPlugin =
+                                    dbContext.EformPlugins.SingleOrDefault(x => x.PluginId == plugin.PluginId);
+                                if (aPlugin != null) aPlugin.ConnectionString += "PersistSecurityInfo=true;";
+                                dbContext.SaveChanges();
+                            }
+
+                            if (eformPlugin.Status == (int)PluginStatus.Disabled)
+                            {
+                                plugins.Add(plugin);
+                            }
+                        }
+                        else
+                        {
+                            var pluginDbName = $"Database={dbPrefix}_{plugin.PluginId};";
+                            var pluginConnectionString =
+                                connectionString.Replace(dbNameSection, pluginDbName) +
+                                "PersistSecurityInfo=true;";
+                            var newPlugin = new EformPlugin
+                            {
+                                PluginId = plugin.PluginId,
+                                ConnectionString = pluginConnectionString,
+                                Status = (int)PluginStatus.Disabled
+                            };
+                            dbContext.EformPlugins.Add(newPlugin);
+                            dbContext.SaveChanges();
+                        }
+                    }
+                }
+            }
+
+            return plugins;
+        }
+
         public static async Task<string> GetLatestRepositoryVersion(string githubUserName, string pluginName)
         {
             string latestVersion = "";
@@ -261,6 +332,7 @@ namespace eFormAPI.Web.Hosting.Helpers
                             typeof(SwiftObjectGetResponse),
                             typeof(SwiftClient)
                         });
+
                     var types = loader
                         .LoadDefaultAssembly()
                         .GetTypes();
@@ -270,7 +342,7 @@ namespace eFormAPI.Web.Hosting.Helpers
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("[INF] Found plugin : " + type.Name);
-                        var plugin = (IEformPlugin) Activator.CreateInstance(type);
+                        var plugin = (IEformPlugin)Activator.CreateInstance(type);
                         plugins.Add(plugin);
                     }
                 }

@@ -34,6 +34,15 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed
                 .AddDefaultSecurityGroups()
                 .AddPermissions()
                 .AddDefaultGroupPermission()
+                .AddDefaultTemplates()
+                .AddMenuTemplateEnglishTranslations()
+                .AddMenuTemplateDanishTranslations()
+                .AddMenuTemplateGermanTranslations()
+                .AddMenuTemplatePermissions()
+                .AddDefaultMenuTranslations()
+                //.AddDefaultMenuEnglishTranslations()
+                //.AddDefaultMenuDanishTranslations()
+                //.AddDefaultMenuGermanTranslations()
                 .AddDefaultMenu()
                 .AddConfigurationDefault();
 

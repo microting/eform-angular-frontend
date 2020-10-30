@@ -1,0 +1,17 @@
+<div
+  (click)="onCollapse()"
+  style="cursor: pointer"
+>
+  <fa-icon
+    icon="angle-right"
+    size="lg"
+    [fixedWidth]="true"
+    *ngIf="collapsed"
+  ></fa-icon>
+  <fa-icon
+    icon="angle-down"
+    size="lg"
+    [fixedWidth]="true"
+    *ngIf="!collapsed"
+  ></fa-icon>
+</div>

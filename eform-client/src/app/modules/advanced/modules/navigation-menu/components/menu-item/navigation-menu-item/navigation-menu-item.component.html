@@ -1,0 +1,33 @@
+<div class="card mb-2 mt-2">
+  <div class="card-header">
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <i
+          class="material-icons md-36 dragula-handle align-middle"
+          style="cursor: all-scroll"
+        >
+          drag_handle
+        </i>
+        {{ item.name }}
+        {{
+          item.translations.length > 0 ? '/ ' + item.translations[0].name : ' '
+        }}
+      </div>
+      <div>
+        <fa-icon
+          icon="pen"
+          class="mr-2"
+          [fixedWidth]="true"
+          style="cursor: pointer"
+          (click)="edit()"
+        ></fa-icon>
+        <fa-icon
+          icon="trash-alt"
+          [fixedWidth]="true"
+          style="cursor: pointer"
+          (click)="delete()"
+        ></fa-icon>
+      </div>
+    </div>
+  </div>
+</div>

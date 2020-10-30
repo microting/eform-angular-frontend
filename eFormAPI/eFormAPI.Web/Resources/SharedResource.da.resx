@@ -705,4 +705,7 @@
   <data name="FolderNotFound" xml:space="preserve">
     <value>Mappe ikke fundet</value>
   </data>
+  <data name="NavigationMenuUpdate" xml:space="preserve">
+    <value>Navigationsmenuen blev opdateret.</value>
+  </data>
 </root>
