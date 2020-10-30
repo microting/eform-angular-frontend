@@ -179,6 +179,7 @@ namespace eFormAPI.Web.Services
                     .Select(x => new NavigationMenuItemModel
                     {
                         Id = x.Id,
+                        E2EId = x.E2EId,
                         Name = x.Name,
                         Type = x.Type,
                         Link = x.Link,
@@ -204,6 +205,7 @@ namespace eFormAPI.Web.Services
                             .Select(p => new NavigationMenuItemModel
                             {
                                 Id = p.Id,
+                                E2EId = x.E2EId,
                                 Name = p.Name,
                                 Type = p.Type,
                                 Link = p.Link,
@@ -276,7 +278,7 @@ namespace eFormAPI.Web.Services
                     {
                         Name = _dbContext.MenuItemTranslations.First(d => d.MenuItemId == x.Id && d.LocaleName == currentLocale).Name,
                         LocaleName = currentLocale,
-                        E2EId = x.MenuTemplateId != null ? x.MenuTemplate.E2EId : null,
+                        E2EId = x.E2EId,
                         Link = x.Link,
                         Guards = x.Type == MenuItemTypeEnum.Link
                             ? _dbContext.MenuTemplatePermissions
@@ -295,7 +297,7 @@ namespace eFormAPI.Web.Services
                             Name = _dbContext.MenuItemTranslations.First(d => d.MenuItemId == p.Id && d.LocaleName == currentLocale).Name,
                             //LocaleName = _dbContext.MenuItemTranslations.First(d => d.MenuItemId == p.Id && d.LocaleName == currentLocale).LocaleName,
                             LocaleName = currentLocale,
-                            E2EId = p.MenuTemplateId != null ? p.MenuTemplate.E2EId : null,
+                            E2EId = p.E2EId,
                             Link = p.Link,
                             Guards = p.Type == MenuItemTypeEnum.Link
                             ? _dbContext.MenuTemplatePermissions
@@ -314,9 +316,7 @@ namespace eFormAPI.Web.Services
                 {
                     Name = x.Translations.FirstOrDefault(x => x.LocaleName == currentLocale)?.Name ?? x.Name,
                     LocaleName = currentLocale,
-                    E2EId = x.MenuTemplate != null
-                            ? x.MenuTemplate.E2EId
-                            : null,
+                    E2EId = x.E2EId,
                     Link = x.Link,
                     Guards = x.Type == MenuItemTypeEnum.Link
                             ? x.MenuTemplate.Permissions.Select(x => x.ClaimName).ToList()
@@ -326,9 +326,7 @@ namespace eFormAPI.Web.Services
                     {
                         Name = d.Translations.First(x => x.LocaleName == currentLocale).Name,
                         LocaleName = currentLocale,
-                        E2EId = d.MenuTemplate != null
-                            ? d.MenuTemplate.E2EId
-                            : null,
+                        E2EId = d.E2EId,
                         Link = d.Link,
                         Guards = d.Type == MenuItemTypeEnum.Link
                             ? d.MenuTemplate.Permissions.Select(x => x.ClaimName).ToList()

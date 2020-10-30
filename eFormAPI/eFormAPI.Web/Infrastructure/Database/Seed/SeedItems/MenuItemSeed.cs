@@ -37,6 +37,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 Id = x.Id,
                 Name = x.Name,
                 Link = x.Link,
+                E2EId = x.E2EId,
                 MenuTemplateId = x.MenuTemplateId,
                 Type = x.Type,
                 Position = x.Position,

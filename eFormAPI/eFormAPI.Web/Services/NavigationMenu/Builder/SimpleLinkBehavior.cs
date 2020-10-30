@@ -27,6 +27,7 @@ namespace eFormAPI.Web.Services.NavigationMenu.Builder
     using eFormAPI.Web.Infrastructure.Database;
     using eFormAPI.Web.Infrastructure.Database.Entities.Menu;
     using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
+    using System.Linq;
 
     public class SimpleLinkBehavior : AbstractBehavior
     {
@@ -41,7 +42,8 @@ namespace eFormAPI.Web.Services.NavigationMenu.Builder
         public override void Setup(MenuItem menuItem)
         {
             menuItem.Name = MenuItemModel.Name;
-            menuItem.MenuTemplateId = MenuItemModel.RelatedTemplateItemId.Value; // должно быть значение
+            menuItem.MenuTemplateId = MenuItemModel.RelatedTemplateItemId.Value; // value must be
+            menuItem.E2EId = _dbContext.MenuTemplates.Single(x => x.Id == MenuItemModel.RelatedTemplateItemId).E2EId;
             menuItem.ParentId = _parentId;
 
             _dbContext.MenuItems.Add(menuItem);

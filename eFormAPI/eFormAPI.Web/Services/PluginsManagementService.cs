@@ -357,7 +357,6 @@ namespace eFormAPI.Web.Services
                 _localizationService.GetString("PluginNotFound"));
             }
 
-
             var pluginMenu = plugin.GetNavigationMenu(_serviceProvider);
 
             // Load to database all navigation menu from plugin by id

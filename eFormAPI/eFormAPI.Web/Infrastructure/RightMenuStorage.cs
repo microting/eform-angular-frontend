@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using PluginPermissionModel = Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu.PluginPermissionModel;
 
 namespace eFormAPI.Web.Infrastructure
 {
@@ -19,19 +18,16 @@ namespace eFormAPI.Web.Infrastructure
                 {
                    new PluginMenuItemModel
                 {
-                    Name = "user",
-                    Type = MenuItemTypeEnum.Dropdown,
-                    MenuTemplate = new PluginMenuTemplateModel
-                    {
-                        DefaultLink = "",
-                        E2EId = "sign-out-dropdown",
-                    },
-                    Link = "",
-                    Position = 0,
-                    ChildItems = new List<PluginMenuItemModel>()
+                   E2EId = "sign-out-dropdown",
+                   Name = "user",
+                   Type = MenuItemTypeEnum.Dropdown,
+                   Link = "",
+                   Position = 0,
+                   ChildItems = new List<PluginMenuItemModel>()
                     {
                         new PluginMenuItemModel
                         {
+                            E2EId = "user-management-menu",
                             Name = "User Management",
                             Type = MenuItemTypeEnum.Link,
                             Link = "/account-management/users",
@@ -40,27 +36,27 @@ namespace eFormAPI.Web.Infrastructure
                             {
                                 DefaultLink =  "/account-management/users",
                                 E2EId = "user-management-menu",
-                                Permissions = new List<PluginPermissionModel>
+                                Permissions = new List<PluginMenuTemplatePermissionModel>
                                 {
-                                    new PluginPermissionModel
+                                    new PluginMenuTemplatePermissionModel
                                     {
                                         ClaimName = AuthConsts.EformClaims.UserManagementClaims.Read,
                                         PermissionName = "Read",
                                         PermissionTypeName = "User management",
                                     },
-                                    new PluginPermissionModel
+                                    new PluginMenuTemplatePermissionModel
                                     {
                                         ClaimName = AuthConsts.EformClaims.UserManagementClaims.Create,
                                         PermissionName = "Create",
                                         PermissionTypeName = "User management",
                                     },
-                                    new PluginPermissionModel
+                                    new PluginMenuTemplatePermissionModel
                                     {
                                         ClaimName = AuthConsts.EformClaims.UserManagementClaims.Delete,
                                         PermissionName = "Delete",
                                         PermissionTypeName = "User management",
                                     },
-                                    new PluginPermissionModel
+                                    new PluginMenuTemplatePermissionModel
                                     {
                                         ClaimName = AuthConsts.EformClaims.UserManagementClaims.Update,
                                         PermissionName = "Update",
@@ -92,6 +88,7 @@ namespace eFormAPI.Web.Infrastructure
                         },
                         new PluginMenuItemModel
                         {
+                            E2EId = "settings",
                             Name = "Settings",
                             Type = MenuItemTypeEnum.Link,
                             Link = "/account-management/settings",
@@ -125,6 +122,7 @@ namespace eFormAPI.Web.Infrastructure
                         },
                         new PluginMenuItemModel
                         {
+                            E2EId = "security",
                             Name = "Security",
                             Type = MenuItemTypeEnum.Link,
                             Link = "/security",
@@ -158,6 +156,7 @@ namespace eFormAPI.Web.Infrastructure
                         },
                         new PluginMenuItemModel
                         {
+                            E2EId =  "change-password",
                             Name = "Change password",
                             Type = MenuItemTypeEnum.Link,
                             Link = "/account-management/change-password",
@@ -191,6 +190,7 @@ namespace eFormAPI.Web.Infrastructure
                         },
                         new PluginMenuItemModel
                         {
+                            E2EId = "sign-out",
                             Name = "Logout",
                             Type = MenuItemTypeEnum.Link,
                             Link = "/auth/sign-out",

@@ -31,6 +31,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities.Menu
     public class MenuItem : BaseEntity
     {
         public string Name { get; set; }
+        public string E2EId { get; set; }
         public string Link { get; set; }
         public MenuItemTypeEnum Type { get; set; }
         public int Position { get; set; }
