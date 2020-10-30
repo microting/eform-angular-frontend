@@ -28,6 +28,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
     using Const;
     using Entities.Menu;
     using Microsoft.EntityFrameworkCore;
+    using Microting.eFormApi.BasePn.Infrastructure.Consts;
 
     public static class MenuTemplateEnglishTranslationsSeed
     {

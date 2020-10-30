@@ -1,6 +1,7 @@
 ﻿using eFormAPI.Web.Infrastructure.Const;
 using eFormAPI.Web.Infrastructure.Database.Entities.Menu;
 using eFormAPI.Web.Services.PluginsManagement;
+using Microting.eFormApi.BasePn.Infrastructure.Consts;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
 using System;
