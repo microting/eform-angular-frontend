@@ -22,6 +22,8 @@ jobs:
         mysql root password: 'secretpassword'
         mysql user: 'developer' # Required if "mysql root password" is empty, default is empty. The superuser for the specified database. Can use secrets, too
         mysql password: 'password' # Required if "mysql user" exists. The password for the "mysql user"
+    - name: Sleep 15 seconds
+      run: sleep 15
     - uses: getong/rabbitmq-action@v1.2
       with:
         rabbitmq version: '3.8.2-management-alpine'
