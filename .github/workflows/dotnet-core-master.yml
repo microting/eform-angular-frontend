@@ -60,3 +60,13 @@ jobs:
       run: cd eform-client && npm run testheadless
     - name: testheadless2a
       run: cd eform-client && npm run testheadless2a
+    - name: testheadless2b
+      run: cd eform-client && npm run testheadless2b
+    - name: testheadless2c
+      run: cd eform-client && npm run testheadless2c
+    - name: testheadless2d
+      run: cd eform-client && npm run testheadless2d
+    - name: testheadless2e
+      run: cd eform-client && npm run testheadless2e
+    - name: testheadless2f
+      run: cd eform-client && npm run testheadless2f
