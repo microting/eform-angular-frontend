@@ -175,6 +175,7 @@ namespace eFormAPI.Web.Services
             catch (Exception exception)
             {
                 _logger.LogError(exception.Message);
+                _logger.LogError(exception.StackTrace);
                 if (exception.InnerException != null)
                 {
                     return new OperationResult(false, exception.Message + " - " + exception.InnerException.Message);
@@ -268,6 +269,7 @@ namespace eFormAPI.Web.Services
             catch (Exception exception)
             {
                 _logger.LogError(exception.Message);
+                _logger.LogError(exception.StackTrace);
                 //return new OperationResult(false, 
                 //    _localizationService.GetString("MainConnectionStringIsInvalid"));
 
@@ -312,6 +314,7 @@ namespace eFormAPI.Web.Services
             catch (Exception exception)
             {
                 _logger.LogError(exception.Message);
+                _logger.LogError(exception.StackTrace);
                 if (exception.InnerException != null)
                 {
                     return new OperationResult(false, exception.Message + " - " + exception.InnerException.Message);
