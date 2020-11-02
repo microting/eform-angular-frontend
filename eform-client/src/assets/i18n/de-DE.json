@@ -330,5 +330,14 @@
   "Customer no": "Kunden-Nr",
   "Management": "Management",
   "Update security group": "Sicherheitsgruppe aktualisieren",
-  "eForms permissions": "eForms-Berechtigungen"
+  "eForms permissions": "eForms-Berechtigungen",
+  "Menu editor": "Menu-editor",
+  "Edit menu entry": "Menu-item bewerken",
+  "Link": "Koppeling",
+  "Are you sure you want to delete menu entry": "Weet u zeker dat u het menu-item wilt verwijderen",
+  "New dropdown": "Nieuwe vervolgkeuzelijst",
+  "Dropdown": "Laten vallen",
+  "Security groups": "Beveiligingsgroepen",
+  "Custom": "Op maat",
+  "Add": "Toevoegen"
 }

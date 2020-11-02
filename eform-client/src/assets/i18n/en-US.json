@@ -330,5 +330,14 @@
   "Customer no": "Customer no",
   "Management": "Management",
   "Update security group": "Update security group",
-  "eForms permissions": "eForms permissions"
+  "eForms permissions": "eForms permissions",
+  "Menu editor": "Menu editor",
+  "Edit menu entry": "Edit menu entry",
+  "Link": "Link",
+  "Are you sure you want to delete menu entry": "Are you sure you want to delete menu entry",
+  "New dropdown": "New dropdown",
+  "Dropdown": "Dropdown",
+  "Security groups": "Security groups",
+  "Custom": "Custom",
+  "Add": "Add"
 }
