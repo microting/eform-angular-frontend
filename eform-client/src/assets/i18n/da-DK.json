@@ -330,5 +330,14 @@
   "Customer no": "Kunder nr",
   "Management": "Ledelse",
   "Update security group": "Opdater sikkerhedsgruppe",
-  "eForms permissions": "eForms-tilladelser"
+  "eForms permissions": "eForms-tilladelser",
+  "Menu editor": "Menu editor",
+  "Edit menu entry": "Rediger menuindgang",
+  "Link": "Link",
+  "Are you sure you want to delete menu entry": "Er du sikker på, at du vil slette menupunktet",
+  "New dropdown": "Ny dropdown",
+  "Dropdown": "Dropdown",
+  "Security groups": "Sikkerhedsgrupper",
+  "Custom": "Brugerdefinerede",
+  "Add": "Tilføje"
 }
