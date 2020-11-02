@@ -164,7 +164,7 @@ namespace eFormAPI.Web.Services
 
             try
             {
-                _logger.LogDebug($"connection string is {sdkConnectionString}");
+                Log.LogEvent($"SettingsService.ConnectionStringExist: connection string is {sdkConnectionString}");
                 var adminTools = new AdminTools(sdkConnectionString);
 //                 Setup SDK DB
                 await adminTools.DbSetup(initialSettingsModel.ConnectionStringSdk.Token);
