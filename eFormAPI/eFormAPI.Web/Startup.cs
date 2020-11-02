@@ -92,7 +92,7 @@ namespace eFormAPI.Web
                 {
                     services.AddEntityFrameworkMySql()
                         .AddDbContext<BaseDbContext>(o => o.UseMySql(Configuration.MyConnectionString(),
-                            b => b.MigrationsAssembly("eFormAPI.Web")));
+                            b => b.MigrationsAssembly("eFormAPI.Web").EnableRetryOnFailure()));
                 }
                 else
                 {
@@ -100,7 +100,7 @@ namespace eFormAPI.Web
                     // Once we have the correct connectionstring in the connection.json, we restart the server and the above method is used.
                     services.AddEntityFrameworkMySql()
                         .AddDbContext<BaseDbContext>(o => o.UseMySql("server=localhost;",
-                            b => b.MigrationsAssembly("eFormAPI.Web")));
+                            b => b.MigrationsAssembly("eFormAPI.Web").EnableRetryOnFailure()));
                 }
             }
 
