@@ -320,7 +320,7 @@ namespace eFormAPI.Web.Infrastructure
                 {
                     Id = 9,
                     Name = "Application Settings",
-                    Link = "/advanced/application-settings",
+                    Link = "/application-settings",
                     E2EId = "application-settings",
                     MenuTemplateId = MenuTemplateIds.ApplicationSettings,
                     Type = MenuItemTypeEnum.Link,
