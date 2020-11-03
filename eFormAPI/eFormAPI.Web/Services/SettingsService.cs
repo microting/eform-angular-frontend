@@ -191,7 +191,7 @@ namespace eFormAPI.Web.Services
             try
             {
                 dbContextOptionsBuilder.UseMySql(mainConnectionString, b =>
-                    b.MigrationsAssembly("eFormAPI.Web"));
+                    b.MigrationsAssembly("eFormAPI.Web").EnableRetryOnFailure());
 
                 using (var dbContext = new BaseDbContext(dbContextOptionsBuilder.Options))
                 {

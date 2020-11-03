@@ -258,11 +258,11 @@ namespace eFormAPI.Web.Services
                         .ThenInclude(x => x.EformPlugin)
                     .ToListAsync();
 
-                var currentUser = await _userService.GetCurrentUserAsync();
+                var locale = await _userService.GetCurrentUserLocale();
 
-                var currentLocale = string.IsNullOrEmpty(currentUser.Locale) 
+                var currentLocale = string.IsNullOrEmpty(locale)
                     ? LocaleNames.English 
-                    : currentUser.Locale;
+                    : locale;
 
                 // Get all user claims and filter menu for user
                 var userClaims = await _claimsService.GetUserClaimsNames(_userService.UserId);
