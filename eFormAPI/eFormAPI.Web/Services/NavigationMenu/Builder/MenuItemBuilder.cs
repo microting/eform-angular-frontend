@@ -57,6 +57,7 @@ namespace eFormAPI.Web.Services.NavigationMenu.Builder
                 Position = currentPosition,
                 Type = MenuItemModel.Type,
                 Link = MenuItemModel.Link,
+                E2EId = MenuItemModel.E2EId,
             };
 
             foreach (var behavior in _behaviors)

@@ -392,13 +392,90 @@ namespace eFormAPI.Web.Services
             {
                 var pluginMenu = plugin.GetNavigationMenu(_serviceProvider);
 
-                // Load to database all navigation menu from plugin by id
-                var pluginMenuItemsLoader = new PluginMenuItemsLoader(_dbContext, plugin.PluginId);
-
-                pluginMenuItemsLoader.Load(pluginMenu);
+                int currentPosition = _dbContext.MenuItems.Where(x => x.ParentId == null).Max(x => x.Position) + 1;
+                foreach(var pluginMenuItem in pluginMenu)
+                {
+                    AddToDatabase(pluginMenuItem, null, currentPosition);
+                    currentPosition++;
+                }
             }
 
             return new OperationResult(true);
+        }
+
+        private void AddToDatabase(PluginMenuItemModel pluginMenuItem, int? parentId, int currentPosition)
+        {
+            if (pluginMenuItem.Type == MenuItemTypeEnum.Link)
+            {
+                var newMenuItem = new MenuItem()
+                {
+                    E2EId = pluginMenuItem.E2EId,
+                    Name = pluginMenuItem.Name,
+                    Link = pluginMenuItem.Link,
+                    Type = pluginMenuItem.Type,
+                    Position = currentPosition,
+                    MenuTemplateId = _dbContext.MenuTemplates.First(x => x.E2EId == pluginMenuItem.E2EId).Id,
+                    ParentId = parentId,
+                };
+
+                _dbContext.MenuItems.Add(newMenuItem);
+                _dbContext.SaveChanges();
+
+                foreach (var menuItemTranslation in pluginMenuItem.Translations)
+                {
+                    var translation = new MenuItemTranslation
+                    {
+                        Language = menuItemTranslation.Language,
+                        LocaleName = menuItemTranslation.LocaleName,
+                        Name = menuItemTranslation.Name,
+                        MenuItemId = newMenuItem.Id,
+                    };
+
+                    _dbContext.MenuItemTranslations.Add(translation);
+                    _dbContext.SaveChanges();
+                }
+            }
+            else
+            {
+                var newMenuItem = new MenuItem()
+                {
+                    E2EId = pluginMenuItem.E2EId,
+                    Name = pluginMenuItem.Type == MenuItemTypeEnum.Dropdown ? "Dropdown" : pluginMenuItem.Name,
+                    Link = pluginMenuItem.Link,
+                    Type = pluginMenuItem.Type,
+                    Position = currentPosition,
+                    MenuTemplateId = null,
+                    ParentId = parentId
+                };
+
+                _dbContext.MenuItems.Add(newMenuItem);
+                _dbContext.SaveChanges();
+
+                foreach (var menuItemTranslation in pluginMenuItem.Translations)
+                {
+                    var translation = new MenuItemTranslation
+                    {
+                        Language = menuItemTranslation.Language,
+                        LocaleName = menuItemTranslation.LocaleName,
+                        Name = menuItemTranslation.Name,
+                        MenuItemId = newMenuItem.Id,
+                    };
+
+                    _dbContext.MenuItemTranslations.Add(translation);
+                    _dbContext.SaveChanges();
+                }
+
+                if (pluginMenuItem.ChildItems.Any())
+                {
+                    int childPosition = 0;
+                    foreach (var childMenuItem in pluginMenuItem.ChildItems)
+                    {
+                        AddToDatabase(childMenuItem, newMenuItem.Id, childPosition);
+                        childPosition++;
+                    }
+                }
+            }
+
         }
 
         private List<MenuItem> FilterMenuForUser(IEnumerable<MenuItem> items, ICollection<string> claims)

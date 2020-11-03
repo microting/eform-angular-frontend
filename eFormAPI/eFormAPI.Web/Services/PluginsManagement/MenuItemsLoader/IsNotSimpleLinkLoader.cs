@@ -44,17 +44,30 @@ namespace eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader
 
         public override void Load(PluginMenuItemModel MenuItem, string pluginId, int? parentId)
         {
+            int currentPosition = 0;
+
+            if(MenuItem.Type == MenuItemTypeEnum.Dropdown)
+            {
+                currentPosition = _dbContext.MenuItems
+                                    .Where(x => x.ParentId == null)
+                                    .Max(x => x.Position) + MenuItem.Position + 1;
+            }
+            else
+            {
+                currentPosition = parentId != null
+                                        ? MenuItem.Position
+                                        : _dbContext.MenuItems
+                                            .Where(x => x.ParentId == null)
+                                            .Max(x => x.Position) + MenuItem.Position + 1;
+            }
+
             var newMenuItem = new MenuItem()
             {
                 E2EId = MenuItem.E2EId,
                 Name = MenuItem.Type == MenuItemTypeEnum.Dropdown ? "Dropdown" : MenuItem.Name,
                 Link = MenuItem.Link,
                 Type = MenuItem.Type,
-                Position = MenuItem.ChildItems.Any()
-                               ? _dbContext.MenuItems
-                                    .Where(x => x.ParentId == null)
-                                    .Max(x => x.Position) + MenuItem.Position + 1
-                               : MenuItem.Position,
+                Position = currentPosition,
                 MenuTemplateId = null,
                 ParentId = parentId
             };
