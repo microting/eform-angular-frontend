@@ -111,10 +111,13 @@ namespace eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader
 
             var newMenuItem = new MenuItem()
             {
+                E2EId = MenuItem.E2EId,
                 Name = MenuItem.Name,
                 Link = MenuItem.Link,
                 Type = MenuItem.Type,
-                Position = MenuItem.Position,
+                Position = parentId != null 
+                    ? MenuItem.Position 
+                    : _dbContext.MenuItems.Where(x => x.ParentId == null).Max(x => x.Position) + MenuItem.Position + 1,
                 MenuTemplateId = menuTemplate.Id,
                 ParentId = parentId,
             };
