@@ -60,6 +60,7 @@ namespace eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader
                                             .Where(x => x.ParentId == null)
                                             .Max(x => x.Position) + MenuItem.Position + 1;
             }
+
             var newMenuItem = new MenuItem()
             {
                 E2EId = MenuItem.E2EId,
