@@ -145,9 +145,9 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
         model.item,
         this.navigationMenuModel.actualMenu[model.firstLevelIndex].children
       );
-      this.navigationMenuModel.actualMenu[model.firstLevelIndex].children = {
+      this.navigationMenuModel.actualMenu[model.firstLevelIndex].children = [
         ...updatedChildren,
-      };
+      ];
     } else {
       this.navigationMenuModel.actualMenu = R.update(
         model.firstLevelIndex,
