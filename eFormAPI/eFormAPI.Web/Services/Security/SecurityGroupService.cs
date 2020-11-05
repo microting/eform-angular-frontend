@@ -184,8 +184,8 @@ namespace eFormAPI.Web.Services.Security
                         _localizationService.GetString("SecurityGroupNameIsEmpty"));
                 }
 
-                using (var transaction = await _dbContext.Database.BeginTransactionAsync())
-                {
+                //using (var transaction = await _dbContext.Database.BeginTransactionAsync())
+//                {
                     SecurityGroup securityGroup = new SecurityGroup
                     {
                         Name = requestModel.Name,
@@ -204,8 +204,8 @@ namespace eFormAPI.Web.Services.Security
                     // Update claims in store
                     await _claimsService.UpdateAuthenticatedUsers(new List<int> { securityGroup.Id });
 
-                    transaction.Commit();
-                }
+                    //transaction.Commit();
+//                }
 
                 return new OperationResult(true, 
                     _localizationService.GetString("SecurityGroupCreatedSuccessfully"));
@@ -222,15 +222,15 @@ namespace eFormAPI.Web.Services.Security
         {
             try
             {
-                using (var transaction = await _dbContext.Database.BeginTransactionAsync())
-                {
+                //using (var transaction = await _dbContext.Database.BeginTransactionAsync())
+//                {
                     SecurityGroup securityGroup = await _dbContext.SecurityGroups
                         .Include(x => x.SecurityGroupUsers)
                         .FirstOrDefaultAsync(x => x.Id == requestModel.Id);
 
                     if (securityGroup == null)
                     {
-                        transaction.Rollback();
+                        //transaction.Rollback();
                         return new OperationDataResult<SecurityGroupsModel>(false,
                             _localizationService.GetString("SecurityGroupNotFound"));
                     }
@@ -260,8 +260,8 @@ namespace eFormAPI.Web.Services.Security
                     // Update claims in store
                     await _claimsService.UpdateAuthenticatedUsers(new List<int> { requestModel.Id });
 
-                    transaction.Commit();
-                }
+                    //transaction.Commit();
+//                }
 
                 return new OperationResult(true, 
                     _localizationService.GetString("SecurityGroupUpdatedSuccessfully"));
@@ -305,14 +305,14 @@ namespace eFormAPI.Web.Services.Security
 
         public async Task<OperationResult> DeleteSecurityGroup(int id)
         {
-            using (var transaction = await _dbContext.Database.BeginTransactionAsync())
-            {
+            //using (var transaction = await _dbContext.Database.BeginTransactionAsync())
+//                {
                 try
                 {
                     SecurityGroup securityGroup = await _dbContext.SecurityGroups.FirstOrDefaultAsync(x => x.Id == id);
                     if (securityGroup == null)
                     {
-                        transaction.Rollback();
+                        //transaction.Rollback();
                         return new OperationResult(false,
                             _localizationService.GetString("SecurityGroupNotFound"));
                     }
@@ -322,18 +322,18 @@ namespace eFormAPI.Web.Services.Security
                     // Update claims in store
                     await _claimsService.UpdateAuthenticatedUsers(new List<int> {id});
 
-                    transaction.Commit();
+                    //transaction.Commit();
                     return new OperationResult(true,
                         _localizationService.GetString("SecurityGroupRemovedSuccessfully"));
                 }
                 catch (Exception e)
                 {
-                    transaction.Rollback();
+                    //transaction.Rollback();
                     _logger.LogError(e.Message);
                     return new OperationDataResult<SecurityGroupModel>(false,
                         _localizationService.GetString("ErrorWhileDeletingSecurityGroup"));
                 }
-            }
+            //}
         }
     }
 

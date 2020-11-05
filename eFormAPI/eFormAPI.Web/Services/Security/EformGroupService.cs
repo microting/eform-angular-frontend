@@ -315,8 +315,8 @@ namespace eFormAPI.Web.Services.Security
                     }
                 }
                 
-                using (var transaction = await _dbContext.Database.BeginTransactionAsync())
-                {
+                //using (var transaction = await _dbContext.Database.BeginTransactionAsync())
+//                {
                     var enabledEformPermission = new List<int>();
                     foreach (var eformPermission in requestModel.Permissions)
                     {
@@ -368,8 +368,8 @@ namespace eFormAPI.Web.Services.Security
                     }
 
                     await _dbContext.SaveChangesAsync();
-                    transaction.Commit();
-                }
+                    //transaction.Commit();
+//                }
 
                 return new OperationResult(true, _localizationService.GetString("PermissionForEformHasBeenUpdated"));
             }

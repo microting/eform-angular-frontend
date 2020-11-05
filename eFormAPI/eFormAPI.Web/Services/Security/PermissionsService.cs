@@ -114,8 +114,8 @@ namespace eFormAPI.Web.Services.Security
                         _localizationService.GetString("SecurityGroupNotFound"));
                 }
 
-                using (var transaction = await _dbContext.Database.BeginTransactionAsync())
-                {
+                //using (var transaction = await _dbContext.Database.BeginTransactionAsync())
+//                {
                     var enabledList = requestModel.Permissions
                         .Where(x => x.IsEnabled)
                         .Select(x => x.Id)
@@ -152,8 +152,8 @@ namespace eFormAPI.Web.Services.Security
                     // Update claims in memory store
                     await _claimsService.UpdateAuthenticatedUsers(new List<int> { requestModel.GroupId });
 
-                    transaction.Commit();
-                }
+                    //transaction.Commit();
+//                }
 
                 return new OperationResult(true,
                     _localizationService.GetString("PermissionsUpdatedSuccessfully"));
