@@ -62,4 +62,13 @@ describe('Folder page', function () {
     expect(lastFolderPageAfterEdit.nameTree, 'Name has been changed').equal(lastFolderPageAfterEdit.nameTree);
     expect(lastFolderPageAfterEdit.descriptionTree, 'Description has been changed').equal(lastFolderPageAfterEdit.descriptionTree);
   });
+  it('Should delete folder', function () {
+    $('#folderId').waitForDisplayed({timeout: 20000});
+    const lastFolder = foldersPage.getFolder(1);
+    lastFolder.deleteBtn.waitForDisplayed({timeout: 5000});
+    lastFolder.deleteBtn.click();
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    foldersPage.saveDeleteBtn.click();
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+  });
 });

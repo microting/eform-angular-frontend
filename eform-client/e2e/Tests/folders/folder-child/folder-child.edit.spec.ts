@@ -64,5 +64,27 @@ describe('Create folder', function () {
     expect(childFolderAfterEdit.nameTree, 'Name has been changed').equal(childFolderBeforeEdit.nameTree);
     expect(childFolderAfterEdit.descriptionTree, 'Description has been changed').equal(childFolderBeforeEdit.descriptionTree);
   });
+  it('Should delete folder 1', function () {
+    // Create
+    myEformsPage.Navbar.goToFolderPage();
+    $('#folderId').waitForDisplayed({timeout: 20000});
+    const lastFolder = foldersPage.getFolder(1);
+    lastFolder.deleteBtn.waitForDisplayed({timeout: 5000});
+    lastFolder.deleteBtn.click();
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    foldersPage.saveDeleteBtn.click();
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+  });
+  it('Should delete folder 2', function () {
+    // Create
+    myEformsPage.Navbar.goToFolderPage();
+    $('#folderId').waitForDisplayed({timeout: 20000});
+    const lastFolder = foldersPage.getFolder(1);
+    lastFolder.deleteBtn.waitForDisplayed({timeout: 5000});
+    lastFolder.deleteBtn.click();
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    foldersPage.saveDeleteBtn.click();
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+  });
 });
 
