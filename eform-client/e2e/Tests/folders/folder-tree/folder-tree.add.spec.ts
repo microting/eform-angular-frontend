@@ -52,6 +52,7 @@ describe('Folder should not be created', function () {
   });
   it('Should delete folder', function () {
     // Create
+    loginPage.open('/');
     myEformsPage.Navbar.goToFolderPage();
     $('#folderId').waitForDisplayed({timeout: 20000});
     const lastFolder = foldersPage.getFolder(1);
