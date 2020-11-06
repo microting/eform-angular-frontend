@@ -26,4 +26,17 @@ describe('My eforms', function () {
   it('should be able to filter using several tags', function () {
 
   });
+
+  it('should delete eform', function () {
+    let eform = myEformsPage.getFirstMyEformsRowObj();
+    const tagsTexts = eform.tags.map(el => {
+      return el.getText();
+    });
+    eform.deleteBtn.click();
+    $('#eFormDeleteDeleteBtn').waitForDisplayed({timeout: 20000});
+    // browser.pause(7000);
+    $$('.btn-danger')[2].click();
+    eform = myEformsPage.getFirstMyEformsRowObj();
+    expect(eform.id === null);
+  });
 });
