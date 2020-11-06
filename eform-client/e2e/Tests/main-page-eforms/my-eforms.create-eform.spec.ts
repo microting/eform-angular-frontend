@@ -58,7 +58,8 @@ describe('My eforms', function () {
     expect(eform.id === null);
   });
   it('should create eform with creating 1 tag and using 1 already prepared tag', function () {
-    //loginPage.open('/');
+    myEformsPage.Navbar.goToDeviceUsersPage();
+    loginPage.open('/');
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     let eform = myEformsPage.getFirstMyEformsRowObj();
     expect(eform.id === null);
