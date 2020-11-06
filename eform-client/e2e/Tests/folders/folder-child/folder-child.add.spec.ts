@@ -59,6 +59,7 @@ describe('Folder should not be created', function() {
   });
   it('Should delete folder 1', function () {
     // Create
+    loginPage.open('/');
     myEformsPage.Navbar.goToFolderPage();
     $('#folderId').waitForDisplayed({timeout: 20000});
     const lastFolder = foldersPage.getFolder(1);
@@ -70,6 +71,7 @@ describe('Folder should not be created', function() {
   });
   it('Should delete folder 2', function () {
     // Create
+    loginPage.open('/');
     myEformsPage.Navbar.goToFolderPage();
     $('#folderId').waitForDisplayed({timeout: 20000});
     const lastFolder = foldersPage.getFolder(1);
