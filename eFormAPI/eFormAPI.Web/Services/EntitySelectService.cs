@@ -96,7 +96,7 @@ namespace eFormAPI.Web.Services
             try
             {
                 var core = await _coreHelper.GetCore();
-                var groupCreate = await core.EntityGroupCreate(Constants.FieldTypes.EntitySelect, editModel.Name);
+                var groupCreate = await core.EntityGroupCreate(Constants.FieldTypes.EntitySelect, editModel.Name, editModel.Description);
                 if (editModel.AdvEntitySelectableItemModels.Any())
                 {
                     var entityGroup = await core.EntityGroupRead(groupCreate.MicrotingUUID);
@@ -129,11 +129,13 @@ namespace eFormAPI.Web.Services
                 var core = await _coreHelper.GetCore();
                 var entityGroup = await core.EntityGroupRead(editModel.GroupUid);
                 
-                if (entityGroup.Name != editModel.Name)
-                {
+                entityGroup.Description = editModel.Description;
+                // if (entityGroup.Name != editModel.Name)
+                // {
                     entityGroup.Name = editModel.Name;
                     await core.EntityGroupUpdate(entityGroup);
-                }
+                // }
+
 
                 var currentIds = new List<int>();
 

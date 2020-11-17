@@ -4,4 +4,5 @@ export class AdvEntitySelectableGroupEditModel {
   advEntitySelectableItemModels: Array<AdvEntitySelectableItemModel> = [];
   groupUid: number;
   isLocked: boolean;
+  description: string;
 }
