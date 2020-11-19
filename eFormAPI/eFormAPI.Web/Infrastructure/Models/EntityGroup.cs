@@ -10,6 +10,8 @@ namespace eFormAPI.Web.Infrastructure.Models
 
         public string Name { get; set; }
 
+        public string Description { get; set; }
+
         public string Type { get; set; }
 
         public string MicrotingUUID { get; set; }
@@ -36,7 +38,8 @@ namespace eFormAPI.Web.Infrastructure.Models
                 WorkflowState = entityGroup.WorkflowState,
                 CreatedAt = entityGroup.CreatedAt,
                 UpdatedAt = entityGroup.UpdatedAt,
-                IsLocked = false
+                IsLocked = false,
+                Description = entityGroup.Description
             };
         }
     }
