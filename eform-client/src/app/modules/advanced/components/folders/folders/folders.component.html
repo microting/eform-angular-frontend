@@ -29,78 +29,78 @@
       </p>
     </div>
   </div>
-  <div class="row p-1 table-responsive no-gutters mb-4">
-    <table
-      mdbTable
-      striped="true"
-      hover="true"
-      small="true"
-      class="z-depth-1 text-center"
-    >
-      <thead>
-        <tr>
-          <th scope="col">{{ 'ID' | translate }}</th>
-          <th scope="col">{{ 'Microting UUID' | translate }}</th>
-          <th scope="col">{{ 'Created at' | translate }}</th>
-          <th scope="col">{{ 'Updated at' | translate }}</th>
-          <th scope="col">{{ 'Name' | translate }}</th>
-          <th scope="col">{{ 'Description' | translate }}</th>
-          <th
-            scope="col"
-            *ngIf="userClaims.workersDelete || userClaims.workersUpdate"
-          >
-            {{ 'Actions' | translate }}
-          </th>
-        </tr>
-      </thead>
-      <tbody id="tableBody">
-        <tr *ngFor="let folderDto of foldersFlatList">
-          <td id="folderId" >{{ folderDto.id }}</td>
-          <td>{{ folderDto.microtingUId }}</td>
-          <td>
-            <date-formatter
-              [date]="folderDto.createdAt"
-              [Format]="'datetime'"
-            ></date-formatter>
-          </td>
-          <td>
-            <date-formatter
-              [date]="folderDto.updatedAt"
-              [Format]="'datetime'"
-            ></date-formatter>
-          </td>
-          <td id="folderName" >{{ folderDto.name }}</td>
-          <td id="folderDescription" >{{ folderDto.description }}</td>
-          <td *ngIf="userClaims.workersDelete || userClaims.workersUpdate">
-            <div class="d-flex flex-row justify-content-center">
-              <button
-                id="folderEditBtn"
-                class="btn btn-accent text-black-50 btn-icon mb-2"
-                *ngIf="userClaims.workersUpdate"
-                mdbTooltip="{{ 'Edit Folder' | translate }}"
-                (click)="openEditModal(folderDto)"
-              >
-                <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
-              </button>
-              <button
-                id="folderDeleteBtn"
-                class="btn btn-danger btn-icon mb-2"
-                *ngIf="userClaims.workersDelete"
-                mdbTooltip="{{ 'Delete Folder' | translate }}"
-                (click)="openDeleteModal(folderDto)"
-              >
-                <fa-icon
-                  icon="trash-alt"
-                  [fixedWidth]="true"
-                  size="lg"
-                ></fa-icon>
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+<!--  <div class="row p-1 table-responsive no-gutters mb-4">-->
+<!--    <table-->
+<!--      mdbTable-->
+<!--      striped="true"-->
+<!--      hover="true"-->
+<!--      small="true"-->
+<!--      class="z-depth-1 text-center"-->
+<!--    >-->
+<!--      <thead>-->
+<!--        <tr>-->
+<!--          <th scope="col">{{ 'ID' | translate }}</th>-->
+<!--          <th scope="col">{{ 'Microting UUID' | translate }}</th>-->
+<!--          <th scope="col">{{ 'Created at' | translate }}</th>-->
+<!--          <th scope="col">{{ 'Updated at' | translate }}</th>-->
+<!--          <th scope="col">{{ 'Name' | translate }}</th>-->
+<!--          <th scope="col">{{ 'Description' | translate }}</th>-->
+<!--          <th-->
+<!--            scope="col"-->
+<!--            *ngIf="userClaims.workersDelete || userClaims.workersUpdate"-->
+<!--          >-->
+<!--            {{ 'Actions' | translate }}-->
+<!--          </th>-->
+<!--        </tr>-->
+<!--      </thead>-->
+<!--      <tbody id="tableBody">-->
+<!--        <tr *ngFor="let folderDto of foldersFlatList">-->
+<!--          <td id="folderId" >{{ folderDto.id }}</td>-->
+<!--          <td>{{ folderDto.microtingUId }}</td>-->
+<!--          <td>-->
+<!--            <date-formatter-->
+<!--              [date]="folderDto.createdAt"-->
+<!--              [Format]="'datetime'"-->
+<!--            ></date-formatter>-->
+<!--          </td>-->
+<!--          <td>-->
+<!--            <date-formatter-->
+<!--              [date]="folderDto.updatedAt"-->
+<!--              [Format]="'datetime'"-->
+<!--            ></date-formatter>-->
+<!--          </td>-->
+<!--          <td id="folderName" >{{ folderDto.name }}</td>-->
+<!--          <td id="folderDescription" >{{ folderDto.description }}</td>-->
+<!--          <td *ngIf="userClaims.workersDelete || userClaims.workersUpdate">-->
+<!--            <div class="d-flex flex-row justify-content-center">-->
+<!--              <button-->
+<!--                id="folderEditBtn"-->
+<!--                class="btn btn-accent text-black-50 btn-icon mb-2"-->
+<!--                *ngIf="userClaims.workersUpdate"-->
+<!--                mdbTooltip="{{ 'Edit Folder' | translate }}"-->
+<!--                (click)="openEditModal(folderDto)"-->
+<!--              >-->
+<!--                <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>-->
+<!--              </button>-->
+<!--              <button-->
+<!--                id="folderDeleteBtn"-->
+<!--                class="btn btn-danger btn-icon mb-2"-->
+<!--                *ngIf="userClaims.workersDelete"-->
+<!--                mdbTooltip="{{ 'Delete Folder' | translate }}"-->
+<!--                (click)="openDeleteModal(folderDto)"-->
+<!--              >-->
+<!--                <fa-icon-->
+<!--                  icon="trash-alt"-->
+<!--                  [fixedWidth]="true"-->
+<!--                  size="lg"-->
+<!--                ></fa-icon>-->
+<!--              </button>-->
+<!--            </div>-->
+<!--          </td>-->
+<!--        </tr>-->
+<!--      </tbody>-->
+<!--    </table>-->
+<!--  </div>-->
 </div>
 
 <app-folder-create
