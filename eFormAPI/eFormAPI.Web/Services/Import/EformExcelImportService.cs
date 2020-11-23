@@ -27,6 +27,7 @@ namespace eFormAPI.Web.Services.Import
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using ClosedXML.Excel;
     using Export;
     using Infrastructure.Models.Import;
@@ -52,7 +53,7 @@ namespace eFormAPI.Web.Services.Import
                 var rows = worksheet.RangeUsed()
                     .RowsUsed(); // Skip header row
 
-                foreach (var row in rows)
+                foreach (var row in rows.Skip(1))
                 {
                     var name = row.Cell(1).Value.ToString();
 
