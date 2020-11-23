@@ -67,6 +67,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         }
 
         [HttpPost]
+        [Route("api/templates/import")]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Create)]
         public async Task<OperationResult> Import(IFormFile formFile)
         {
