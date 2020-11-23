@@ -690,4 +690,7 @@
   <data name="NavigationMenuUpdate" xml:space="preserve">
     <value>Das Navigationsmenü wurde erfolgreich aktualisiert.</value>
   </data>
+  <data name="ImportFinishedSuccessfully" xml:space="preserve">
+    <value>Import erfolgreich abgeschlossen</value>
+  </data>
 </root>

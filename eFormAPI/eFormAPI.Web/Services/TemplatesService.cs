@@ -45,6 +45,10 @@ using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 
 namespace eFormAPI.Web.Services
 {
+    using System.IO;
+    using Import;
+    using Microsoft.Extensions.Logging;
+
     public class TemplatesService : ITemplatesService
     {
         private readonly IOptions<ConnectionStringsSdk> _connectionStringsSdk;
@@ -53,13 +57,17 @@ namespace eFormAPI.Web.Services
         private readonly IUserService _userService;
         private readonly BaseDbContext _dbContext;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IEformExcelImportService _eformExcelImportService;
+        private readonly ILogger<TemplatesService> _logger;
 
         public TemplatesService(
             IEFormCoreService coreHelper,
             ILocalizationService localizationService,
             IUserService userService, BaseDbContext dbContext,
             IOptions<ConnectionStringsSdk> connectionStringsSdk,
-            IHttpContextAccessor httpContextAccessor)
+            IHttpContextAccessor httpContextAccessor,
+            IEformExcelImportService eformExcelImportService,
+            ILogger<TemplatesService> logger)
         {
             _coreHelper = coreHelper;
             _localizationService = localizationService;
@@ -67,6 +75,8 @@ namespace eFormAPI.Web.Services
             _dbContext = dbContext;
             _connectionStringsSdk = connectionStringsSdk;
             _httpContextAccessor = httpContextAccessor;
+            _eformExcelImportService = eformExcelImportService;
+            _logger = logger;
         }
 
         public async Task<OperationDataResult<TemplateListModel>> Index(TemplateRequestModel templateRequestModel)
@@ -270,6 +280,61 @@ namespace eFormAPI.Web.Services
             }
             catch (Exception e)
             {
+                return new OperationResult(false, e.Message);
+            }
+        }
+
+        public async Task<OperationResult> Import(Stream excelStream)
+        {
+            try
+            {
+                var core = await _coreHelper.GetCore();
+
+                // Read file
+                var fileResult = _eformExcelImportService.EformImport(excelStream);
+
+                // Process file result
+                foreach (var importExcelModel in fileResult)
+                {
+                    var tags = await core.GetAllTags(false);
+                    var tagIds = new List<int>();
+
+                    // Process tags
+                    foreach (var tag in importExcelModel.Tags)
+                    {
+                        var tagId = tags
+                            .Where(x => string.Equals(x.Name, tag, StringComparison.CurrentCultureIgnoreCase))
+                            .Select(x => x.Id)
+                            .FirstOrDefault();
+
+                        if (tagId < 1)
+                        {
+                            tagId = await core.TagCreate(tag);
+                        }
+
+                        tagIds.Add(tagId);
+                    }
+
+                    // Create eform
+                    var newTemplate = await core.TemplateFromXml(importExcelModel.EformXML);
+                    newTemplate = await core.TemplateUploadData(newTemplate);
+
+                    if (newTemplate == null) throw new Exception(_localizationService.GetString("eFormCouldNotBeCreated"));
+                    
+                    // Set tags to eform
+                    await core.TemplateCreate(newTemplate);
+                    if (tagIds.Any())
+                    {
+                        await core.TemplateSetTags(newTemplate.Id, tagIds);
+                    }
+                }
+
+                return new OperationResult(true,
+                    _localizationService.GetString("ImportFinishedSuccessfully"));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
                 return new OperationResult(false, e.Message);
             }
         }

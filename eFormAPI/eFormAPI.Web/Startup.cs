@@ -63,6 +63,8 @@ using Microsoft.OpenApi.Models;
 
 namespace eFormAPI.Web
 {
+    using Services.Import;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -292,6 +294,7 @@ namespace eFormAPI.Web
             services.AddScoped<ICasePostService, CasePostService>();
             services.AddScoped<ICasePostBaseService, CasePostService>();
             services.AddTransient<IEformExcelExportService, EformExcelExportService>();
+            services.AddTransient<IEformExcelImportService, EformExcelImportService>();
         }
 
         private ICollection<PluginPermissionModel> GetPluginsPermissions()

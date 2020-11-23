@@ -708,4 +708,7 @@
   <data name="NavigationMenuUpdate" xml:space="preserve">
     <value>Navigationsmenuen blev opdateret.</value>
   </data>
+  <data name="ImportFinishedSuccessfully" xml:space="preserve">
+    <value>Importen afsluttet med succes</value>
+  </data>
 </root>
