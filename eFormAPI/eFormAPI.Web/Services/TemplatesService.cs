@@ -296,36 +296,40 @@ namespace eFormAPI.Web.Services
                 // Process file result
                 foreach (var importExcelModel in fileResult)
                 {
-                    var tags = await core.GetAllTags(false);
-                    var tagIds = new List<int>();
-
-                    // Process tags
-                    foreach (var tag in importExcelModel.Tags)
+                    if (!string.IsNullOrEmpty(importExcelModel.Name) || !string.IsNullOrEmpty(importExcelModel.EformXML))
                     {
-                        var tagId = tags
-                            .Where(x => string.Equals(x.Name, tag, StringComparison.CurrentCultureIgnoreCase))
-                            .Select(x => x.Id)
-                            .FirstOrDefault();
+                        var tags = await core.GetAllTags(false);
+                        var tagIds = new List<int>();
 
-                        if (tagId < 1)
+                        // Process tags
+                        foreach (var tag in importExcelModel.Tags)
                         {
-                            tagId = await core.TagCreate(tag);
+                            var tagId = tags
+                                .Where(x => string.Equals(x.Name, tag, StringComparison.CurrentCultureIgnoreCase))
+                                .Select(x => x.Id)
+                                .FirstOrDefault();
+
+                            if (tagId < 1)
+                            {
+                                tagId = await core.TagCreate(tag);
+                            }
+
+                            tagIds.Add(tagId);
                         }
 
-                        tagIds.Add(tagId);
-                    }
+                        // Create eform
+                        var newTemplate = await core.TemplateFromXml(importExcelModel.EformXML);
+                        newTemplate = await core.TemplateUploadData(newTemplate);
 
-                    // Create eform
-                    var newTemplate = await core.TemplateFromXml(importExcelModel.EformXML);
-                    newTemplate = await core.TemplateUploadData(newTemplate);
+                        if (newTemplate == null)
+                            throw new Exception(_localizationService.GetString("eFormCouldNotBeCreated"));
 
-                    if (newTemplate == null) throw new Exception(_localizationService.GetString("eFormCouldNotBeCreated"));
-                    
-                    // Set tags to eform
-                    await core.TemplateCreate(newTemplate);
-                    if (tagIds.Any())
-                    {
-                        await core.TemplateSetTags(newTemplate.Id, tagIds);
+                        // Set tags to eform
+                        await core.TemplateCreate(newTemplate);
+                        if (tagIds.Any())
+                        {
+                            await core.TemplateSetTags(newTemplate.Id, tagIds);
+                        }
                     }
                 }
 

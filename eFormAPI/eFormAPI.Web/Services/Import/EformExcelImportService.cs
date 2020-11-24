@@ -33,6 +33,8 @@ namespace eFormAPI.Web.Services.Import
     using Infrastructure.Models.Import;
     using Microsoft.Extensions.Logging;
 
+
+
     public class EformExcelImportService : IEformExcelImportService
     {
         private readonly ILogger<EformExcelExportService> _logger;
@@ -49,26 +51,25 @@ namespace eFormAPI.Web.Services.Import
             {
                 var result = new List<EformImportExcelModel>();
                 var workbook = new XLWorkbook(excelStream);
-                var worksheet = workbook.Worksheet(3);
-                var rows = worksheet.RangeUsed()
-                    .RowsUsed(); // Skip header row
+                var worksheet = workbook.Worksheet(EformImportExcelConsts.EformsWorksheet);
+                var rows = worksheet.RangeUsed().RowsUsed();
 
-                foreach (var row in rows.Skip(1))
+                foreach (var row in rows.Skip(1)) // Skip header
                 {
-                    var name = row.Cell(1).Value.ToString();
+                    var name = row.Cell(EformImportExcelConsts.EformNameCol).Value.ToString();
 
-                    var tag1 = row.Cell(2).Value.ToString();
-                    var tag2 = row.Cell(3).Value.ToString();
-                    var tag3 = row.Cell(4).Value.ToString();
-                    var tag4 = row.Cell(5).Value.ToString();
-                    var tag5 = row.Cell(6).Value.ToString();
-                    var tag6 = row.Cell(7).Value.ToString();
-                    var tag7 = row.Cell(8).Value.ToString();
-                    var tag8 = row.Cell(9).Value.ToString();
-                    var tag9 = row.Cell(10).Value.ToString();
-                    var tag10 = row.Cell(11).Value.ToString();
+                    var tag1 = row.Cell(EformImportExcelConsts.Tag1Col).Value.ToString();
+                    var tag2 = row.Cell(EformImportExcelConsts.Tag2Col).Value.ToString();
+                    var tag3 = row.Cell(EformImportExcelConsts.Tag3Col).Value.ToString();
+                    var tag4 = row.Cell(EformImportExcelConsts.Tag4Col).Value.ToString();
+                    var tag5 = row.Cell(EformImportExcelConsts.Tag5Col).Value.ToString();
+                    var tag6 = row.Cell(EformImportExcelConsts.Tag6Col).Value.ToString();
+                    var tag7 = row.Cell(EformImportExcelConsts.Tag7Col).Value.ToString();
+                    var tag8 = row.Cell(EformImportExcelConsts.Tag8Col).Value.ToString();
+                    var tag9 = row.Cell(EformImportExcelConsts.Tag9Col).Value.ToString();
+                    var tag10 = row.Cell(EformImportExcelConsts.Tag10Col).Value.ToString();
 
-                    var xml = row.Cell(12).Value.ToString();
+                    var xml = row.Cell(EformImportExcelConsts.EformXMLCol).Value.ToString();
 
                     var item = new EformImportExcelModel
                     {
