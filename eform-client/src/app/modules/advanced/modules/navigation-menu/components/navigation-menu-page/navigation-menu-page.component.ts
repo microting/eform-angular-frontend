@@ -3,7 +3,7 @@ import { DragulaService } from 'ng2-dragula';
 import {
   NavigationMenuItemIndexedModel,
   NavigationMenuItemModel,
-  NavigationMenuModel,
+  NavigationMenuModel, NavigationMenuTranslationModel,
 } from 'src/app/common/models/navigation-menu';
 import {
   NavigationMenuService,
@@ -191,5 +191,9 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
 
   showResetNavigationMenuModal() {
     this.resetMenuModal.show();
+  }
+
+  getMenuTranslation(translations: NavigationMenuTranslationModel[]) {
+    return translations.find(x => x.localeName === localStorage.getItem('locale')).name;
   }
 }
