@@ -46,7 +46,7 @@ describe(' Navigation menu - Drag item', function () {
         indexDropdownInMenu: navigationMenuPage.menuItemsChilds.length - 1
       }];
 
-    array.forEach(data => navigationMenuPage.editTranslationsOnDropdownBodyChilds(data));
+    array.forEach(data => navigationMenuPage.editTranslationsOnDropdownBodyChilds(data)); // editing translations in each dropdown element
 
     navigationMenuPage.clickSaveMenuBtn();
 
