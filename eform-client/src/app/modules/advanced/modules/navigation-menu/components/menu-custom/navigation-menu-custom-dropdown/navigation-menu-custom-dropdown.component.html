@@ -1,5 +1,5 @@
 <div mdbModal class="modal fade" #frame="mdbModal">
-  <div class="modal-dialog modal-md">
+  <div class="modal-dialog modal-md" id="newDropdownModal">
     <div class="modal-content">
       <div class="modal-header">
         <h3>{{'New dropdown' | translate}}</h3>
@@ -26,12 +26,12 @@
                 <input
                   mdbInput
                   type="text"
-                  id="linkTranslation{{i}}"
-                  name="linkTranslation{{i}}"
+                  id="dropdownTranslation{{i}}"
+                  name="dropdownTranslation{{i}}"
                   [(ngModel)]="translation.name"
                   class="form-control"
                 />
-                <label for="linkTranslation{{i}}">{{
+                <label for="dropdownTranslation{{i}}">{{
                   translation.language
                   }}</label>
               </div>

@@ -58,7 +58,11 @@ exports.config = {
     // 'e2e/Tests/folders/folder-tree/folder-tree.add.spec.ts',
     // 'e2e/Tests/folders/folder-tree/folder-tree.delete.spec.ts',
     // 'e2e/Tests/folders/folder-tree/folder-tree.edit.spec.ts',
-    // 'e2e/Tests/eforms/eforms.add.spec.ts'
+    // 'e2e/Tests/eforms/eforms.add.spec.ts',
+    // 'e2e/Tests/navigation-menu/navigation-menu.create-item.spec.ts',
+    // 'e2e/Tests/navigation-menu/navigation-menu.edit-item.spec.ts',
+    // 'e2e/Tests/navigation-menu/navigation-menu.drag-item.spec.ts',
+    // 'e2e/Tests/navigation-menu/navigation-menu.delete-item.spec.ts'
   ],
   suites: {
     settings: [
@@ -101,9 +105,7 @@ exports.config = {
     browserName: 'chrome',
     'goog:chromeOptions': {
       args: [
-        'headless',
-        'window-size=1920,1080',
-        'disable-gpu'],
+        'window-size=1920,1080'],
     },
     // If outputDir is provided WebdriverIO can capture driver session logs
     // it is possible to configure which logTypes to include/exclude.

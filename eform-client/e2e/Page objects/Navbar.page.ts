@@ -45,6 +45,9 @@ export class Navbar {
   public get pluginsBtn() {
     return $(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Plugins')]`);
   }
+  public get menuEditorBtn() {
+    return $(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Menu Editor')]`);
+  }
   public get deviceUsersBtn() {
     const ele = this.clickOnHeaderMenuItem2(' Enhedsbrugere ');
     ele.waitForDisplayed({timeout: 20000});
@@ -129,6 +132,11 @@ export class Navbar {
     this.advancedDropdown();
     this.pluginsBtn.click();
     // browser.pause(15000);
+    $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
+  }
+  public goToMenuEditorPage() {
+    this.advancedDropdown();
+    this.menuEditorBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
   }
 }
