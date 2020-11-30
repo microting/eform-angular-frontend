@@ -35,3 +35,9 @@
   left: auto;
   right: 0;
 }
+
+@media screen and (max-width: 800px) {
+  .dropdown-menu {
+    padding-bottom: 25px;
+  }
+}
