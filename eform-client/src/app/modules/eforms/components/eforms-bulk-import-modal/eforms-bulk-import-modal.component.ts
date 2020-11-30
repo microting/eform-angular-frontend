@@ -34,16 +34,16 @@ export class EformsBulkImportModalComponent implements OnInit {
         this.errors = JSON.parse(response).model.errors;
         this.xlsxEformsFileUploader.clearQueue();
       }
-      if (!this.errors) {
+      if (this.errors && this.errors.length > 0) {
+        this.toastrService.warning(
+          this.translateService.instant('Import has been finished partially')
+        );
+      } else {
         this.xlsxEformsFileUploader.clearQueue();
         this.toastrService.success(
           this.translateService.instant('Import has been finished successfully')
         );
         this.frame.hide();
-      } else {
-        this.toastrService.warning(
-          this.translateService.instant('Import has been finished partially')
-        );
       }
       this.loaderService.isLoading.next(false);
       this.xlsxEformsInput.nativeElement.value = '';
