@@ -44,6 +44,14 @@
             <i class="material-icons" *ngIf="localPageSettings.sort == 'name' && localPageSettings.isSortDsc">expand_more</i>
           </div>
         </th>
+        <th class="table-header-sortable" (click)="sortTable('description')">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ 'Description' | translate }}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'description'">unfold_more</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'description' && !localPageSettings.isSortDsc">expand_less</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort == 'description' && localPageSettings.isSortDsc">expand_more</i>
+          </div>
+        </th>
         <th *ngIf="userClaims.entitySelectUpdate || userClaims.entitySelectDelete">
           {{ 'Actions' | translate }}
         </th>
@@ -53,6 +61,7 @@
       <tr *ngFor="let advEntitySelectableGroup of advEntitySelectableGroupListModel.entityGroups;let i = index;">
         <td scope="row" id="entitySelectMicrotingUUID_{{i}}">{{advEntitySelectableGroup.microtingUUID}}</td>
         <td id="entitySelectName_{{i}}"> {{advEntitySelectableGroup.name}}</td>
+        <td id="entitySelectDescription_{{i}}"> {{advEntitySelectableGroup.description}}</td>
         <td *ngIf="(userClaims.entitySelectUpdate || userClaims.entitySelectDelete)">
           <div class="d-flex flex-row justify-content-center">
             <button mdbBtn id="entitySelectEditBtn_{{i}}" class="btn btn-accent btn-icon text-black-50 mb-2 "

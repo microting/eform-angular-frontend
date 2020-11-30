@@ -119,4 +119,37 @@ describe('Create eform', function () {
     const numAddPairingBtnAfterCancel = $$('#eform-add-btn').length;
     expect(numAddPairingBtnBeforeCancel, 'Pairing was not canceled', numAddPairingBtnAfterCancel);
   });
+  it('should delete user', function () {
+    myEformsPage.Navbar.goToDeviceUsersPage();
+    const rowNumBeforeDelete = deviceUsersPage.rowNum;
+    $('#deviceUserId').waitForDisplayed({timeout: 20000});
+    let lastDeviceUser = deviceUsersPage.getDeviceUser(rowNumBeforeDelete);
+    lastDeviceUser.deleteBtn.waitForDisplayed({timeout: 5000});
+    lastDeviceUser.deleteBtn.click();
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    deviceUsersPage.saveDeleteBtn.click();
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    loginPage.open('/');
+    myEformsPage.Navbar.goToDeviceUsersPage();
+    const rowNumAfterDelete = deviceUsersPage.rowNum;
+    expect(rowNumBeforeDelete, 'User deleted incorrectly').equal(rowNumAfterDelete + 1);
+    lastDeviceUser = deviceUsersPage.getDeviceUser(1);
+    lastDeviceUser.deleteBtn.waitForDisplayed({timeout: 5000});
+    lastDeviceUser.deleteBtn.click();
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    deviceUsersPage.saveDeleteBtn.click();
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+  });
+
+  it('Should delete folder', function () {
+    // Create
+    myEformsPage.Navbar.goToFolderPage();
+    $('#folderId').waitForDisplayed({timeout: 20000});
+    const lastFolder = foldersPage.getFolder(1);
+    lastFolder.deleteBtn.waitForDisplayed({timeout: 5000});
+    lastFolder.deleteBtn.click();
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    foldersPage.saveDeleteBtn.click();
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+  });
 });

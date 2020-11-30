@@ -41,11 +41,11 @@
   </Target>
 
   <ItemGroup>
-    <PackageReference Include="AWSSDK.Core" Version="3.5.1.23" />
-    <PackageReference Include="AWSSDK.S3" Version="3.5.3.1" />
-    <PackageReference Include="AWSSDK.SQS" Version="3.5.0.25" />
+    <PackageReference Include="AWSSDK.Core" Version="3.5.1.41" />
+    <PackageReference Include="AWSSDK.S3" Version="3.5.5.1" />
+    <PackageReference Include="AWSSDK.SQS" Version="3.5.0.41" />
     <PackageReference Include="ClosedXML" Version="0.95.3" />
-    <PackageReference Include="Magick.NET-Q16-x64" Version="7.22.0" />
+    <PackageReference Include="Magick.NET-Q16-x64" Version="7.22.2.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.8" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.8" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.8" />
@@ -55,9 +55,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
-    <PackageReference Include="Microting.eForm" Version="4.0.33" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="2.0.40" />
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.2" />
+    <PackageReference Include="Microting.eForm" Version="4.0.40" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="2.0.47" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.4" />
     <PackageReference Include="SharpZipLib.NETStandard" Version="1.0.7" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
     <PackageReference Include="McMaster.NETCore.Plugins" Version="1.3.1" />

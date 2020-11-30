@@ -328,13 +328,13 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
 
         public async Task<OperationResult> CreatePost(CasePostCreateModel requestModel)
         {
-            using (var transaction = await _dbContext.Database.BeginTransactionAsync())
-            {
+            //using (var transaction = await _dbContext.Database.BeginTransactionAsync())
+//                {
                 try
                 {
                     if (string.IsNullOrEmpty(_emailSettings.Value.SendGridKey))
                     {
-                        transaction.Rollback();
+                        //transaction.Rollback();
                         return new OperationResult(false,
                             _localizationService.GetString("SendGridKeyShouldBeAddedToSettings"));
                     }
@@ -424,7 +424,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                     var caseDto = await core.CaseLookupCaseId(casePost.CaseId);
                     if (caseDto?.MicrotingUId == null || caseDto.CheckUId == null)
                     {
-                        transaction.Rollback();
+                        //transaction.Rollback();
                         throw new InvalidOperationException("caseDto not found");
                     }
                     var replyElement = await core.CaseRead((int) caseDto.MicrotingUId, (int) caseDto.CheckUId);
@@ -434,7 +434,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                     string html;
                     if (stream == null)
                     {
-                        transaction.Rollback();
+                        //transaction.Rollback();
                         throw new InvalidOperationException("Resource not found");
                     }
                     using (var reader = new StreamReader(stream, Encoding.UTF8))
@@ -513,7 +513,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                         }
                     }
 
-                    transaction.Commit();
+                    //transaction.Commit();
                     return new OperationResult(
                         true,
                         _localizationService.GetString("PostCreatedSuccessfully"));
@@ -522,11 +522,11 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                 {
                     Console.WriteLine(e);
                     _logger.LogError(e.Message);
-                    transaction.Rollback();
+                    //transaction.Rollback();
                     return new OperationResult(false,
                         _localizationService.GetString("ErrorWhileCreatingPost"));
                 }
-            }
+            //}
         }
 
         public async Task<OperationDataResult<CasePostsCommonModel>> GetCommonPosts(CasePostsRequestCommonModel requestModel)

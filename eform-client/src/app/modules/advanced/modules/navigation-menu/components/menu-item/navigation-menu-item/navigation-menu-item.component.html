@@ -11,7 +11,7 @@
         </i>
         {{ item.name }}
         {{
-          item.translations.length > 0 ? '/ ' + item.translations[0].name : ' '
+          item.translations.length > 0 ? '/ ' + getMenuTranslation(item.translations) : ' '
         }}
       </div>
       <div>

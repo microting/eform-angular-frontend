@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {NavigationMenuItemModel} from 'src/app/common/models/navigation-menu';
+import {NavigationMenuItemModel, NavigationMenuTranslationModel} from 'src/app/common/models/navigation-menu';
 
 @Component({
   selector: 'app-navigation-menu-item',
@@ -23,5 +23,9 @@ export class NavigationMenuItemComponent implements OnInit {
 
   edit() {
     this.itemEdit.emit(this.item);
+  }
+
+  getMenuTranslation(translations: NavigationMenuTranslationModel[]) {
+    return translations.find(x => x.localeName === localStorage.getItem('locale')).name;
   }
 }

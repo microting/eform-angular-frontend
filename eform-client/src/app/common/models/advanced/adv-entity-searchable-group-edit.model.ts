@@ -4,4 +4,5 @@ export class AdvEntitySearchableGroupEditModel {
   advEntitySearchableItemModels: Array<AdvEntitySearchableItemModel> = [];
   groupUid: number;
   isLocked: boolean;
+  description: string;
 }

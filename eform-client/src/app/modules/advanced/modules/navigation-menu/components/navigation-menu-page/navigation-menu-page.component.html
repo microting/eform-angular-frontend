@@ -93,7 +93,7 @@
                     {{ menuItem.name }}
                     {{
                       menuItem.translations.length > 0
-                        ? '/ ' + menuItem.translations[0].name
+                        ? '/ ' + getMenuTranslation(menuItem.translations, language)
                         : ' '
                     }}
                   </div>

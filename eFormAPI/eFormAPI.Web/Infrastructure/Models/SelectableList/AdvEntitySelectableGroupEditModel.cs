@@ -30,6 +30,7 @@ namespace eFormAPI.Web.Infrastructure.Models.SelectableList
     {
         public string Name { get; set; }
         public string GroupUid { get; set; }
+        public string Description { get; set; }
         public List<EntityItem> AdvEntitySelectableItemModels { get; set; }
     }
 }

@@ -20,6 +20,13 @@
                        [disabled]="advEntitySelectableGroupEditModel.isLocked">
                 <label for="editName">{{'Name' | translate}}</label>
               </div>
+              <div class="md-form">
+                <input mdbInput
+                        required
+                       [(ngModel)]="advEntitySelectableGroupEditModel.description"
+                       id="editDescription" type="text" class="form-control">
+                <label for="editName">{{'Description' | translate}}</label>
+              </div>
             </div>
           </div>
 

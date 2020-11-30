@@ -11,17 +11,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: mirromutth/mysql-action@v1.1
+    - uses: getong/mariadb-action@v1.1
       with:
         host port: 3306 # Optional, default value is 3306. The port of host
         container port: 3306 # Optional, default value is 3306. The port of container
         character set server: 'utf8' # Optional, default value is 'utf8mb4'. The '--character-set-server' option for mysqld
         collation server: 'utf8_general_ci' # Optional, default value is 'utf8mb4_general_ci'. The '--collation-server' option for mysqld
-        mysql version: '8.0' # Optional, default value is "latest". The version of the MySQL
+        mariadb version: '10.4.10' # Optional, default value is "latest". The version of the MariaDB
         mysql database: 'some_test' # Optional, default value is "test". The specified database which will be create
-        mysql root password: 'secretpassword'
+        mysql root password: 'secretpassword' # Required if "mysql user" is empty, default is empty. The root superuser password
         mysql user: 'developer' # Required if "mysql root password" is empty, default is empty. The superuser for the specified database. Can use secrets, too
-        mysql password: 'password' # Required if "mysql user" exists. The password for the "mysql user"
+        mysql password: 'passwordtoo' # Required if "mysql user" exists. The password for the "mysql user"
     - name: Sleep 15 seconds
       run: sleep 15
     - uses: getong/rabbitmq-action@v1.2
@@ -54,6 +54,8 @@ jobs:
       run: cd eform-client && npm install
     - name: NPM start
       run: cd eform-client && npm start &
+    - name: Sleep 75 seconds
+      run: sleep 75
     - name: Dotnet run
       run: dotnet run --project eFormAPI/eFormAPI.Web/eFormAPI.Web.csproj > dotnet_log 2>&1 &
     - name: Sleep 75 seconds

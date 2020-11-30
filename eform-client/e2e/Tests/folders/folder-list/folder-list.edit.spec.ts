@@ -61,5 +61,16 @@ describe('Folder page', function () {
     expect(lastFolderPageAfterEdit.name, 'Name has been changed').equal(lastFolderPageAfterEdit.name);
     expect(lastFolderPageAfterEdit.description, 'Description has been changed').equal(lastFolderPageAfterEdit.description);
   });
+  it('Should delete folder', function () {
+    // Create
+    myEformsPage.Navbar.goToFolderPage();
+    $('#folderId').waitForDisplayed({timeout: 20000});
+    const lastFolder = foldersPage.getFolder(1);
+    lastFolder.deleteBtn.waitForDisplayed({timeout: 5000});
+    lastFolder.deleteBtn.click();
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    foldersPage.saveDeleteBtn.click();
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+  });
 })
 ;

@@ -164,6 +164,7 @@ namespace eFormAPI.Web.Services
 
             try
             {
+                Log.LogEvent($"SettingsService.ConnectionStringExist: connection string is {sdkConnectionString}");
                 var adminTools = new AdminTools(sdkConnectionString);
 //                 Setup SDK DB
                 await adminTools.DbSetup(initialSettingsModel.ConnectionStringSdk.Token);
@@ -175,6 +176,7 @@ namespace eFormAPI.Web.Services
             catch (Exception exception)
             {
                 _logger.LogError(exception.Message);
+                _logger.LogError(exception.StackTrace);
                 if (exception.InnerException != null)
                 {
                     return new OperationResult(false, exception.Message + " - " + exception.InnerException.Message);
@@ -268,6 +270,7 @@ namespace eFormAPI.Web.Services
             catch (Exception exception)
             {
                 _logger.LogError(exception.Message);
+                _logger.LogError(exception.StackTrace);
                 //return new OperationResult(false, 
                 //    _localizationService.GetString("MainConnectionStringIsInvalid"));
 
@@ -312,6 +315,7 @@ namespace eFormAPI.Web.Services
             catch (Exception exception)
             {
                 _logger.LogError(exception.Message);
+                _logger.LogError(exception.StackTrace);
                 if (exception.InnerException != null)
                 {
                     return new OperationResult(false, exception.Message + " - " + exception.InnerException.Message);
