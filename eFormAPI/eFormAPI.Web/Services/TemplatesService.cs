@@ -47,7 +47,9 @@ namespace eFormAPI.Web.Services
 {
     using System.IO;
     using Import;
+    using Infrastructure.Models.Import;
     using Microsoft.Extensions.Logging;
+    using Remotion.Linq.Parsing.Structure.IntermediateModel;
 
     public class TemplatesService : ITemplatesService
     {
@@ -284,14 +286,83 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public async Task<OperationResult> Import(Stream excelStream)
+        public async Task<OperationDataResult<ExcelParseResult>> Import(Stream excelStream)
         {
             try
             {
+                var result = new ExcelParseResult();
                 var core = await _coreHelper.GetCore();
+
+                var timeZone = await _userService.GetCurrentUserTimeZoneInfo();
+                var templatesDto = await core.TemplateItemReadAll(
+                    false,
+                    "",
+                    "",
+                    false,
+                    "",
+                    new List<int>(),
+                    timeZone);
 
                 // Read file
                 var fileResult = _eformExcelImportService.EformImport(excelStream);
+
+                // Validation
+                var excelErrors = new List<ExcelParseErrorModel>();
+
+                foreach (var excelModel in fileResult)
+                {
+                    var templateByName = templatesDto
+                        .FirstOrDefault(x => string.Equals(
+                            x.Label,
+                            excelModel.Name,
+                            StringComparison.CurrentCultureIgnoreCase));
+
+                    if (templateByName != null)
+                    {
+                        var error = new ExcelParseErrorModel
+                        {
+                            Row = excelModel.ExcelRow,
+                            Message = _localizationService.GetStringWithFormat(
+                                "EFormWithNameAlreadyExists",
+                                excelModel.Name)
+                        };
+
+                        excelErrors.Add(error);
+                    }
+                }
+
+                var duplicates = fileResult
+                    .GroupBy(x => x.Name.ToLower())
+                    .Select(x => new
+                    {
+                        x.Key,
+                        Count = x.Count(),
+                    })
+                    .Where(x => x.Count > 1)
+                    .ToList();
+
+                foreach (var duplicateObject in duplicates)
+                {
+                    var error = new ExcelParseErrorModel
+                    {
+                        Row = 0,
+                        Message = _localizationService.GetStringWithFormat(
+                            "EFormWithNameAlreadyExistsInTheImportedDocument",
+                            duplicateObject.Key)
+                    };
+
+                    excelErrors.Add(error);
+                }
+
+
+                result.Errors = excelErrors;
+
+                if (excelErrors.Any())
+                {
+                    return new OperationDataResult<ExcelParseResult>(
+                        true,
+                        result);
+                }
 
                 // Process file result
                 foreach (var importExcelModel in fileResult)
@@ -333,13 +404,14 @@ namespace eFormAPI.Web.Services
                     }
                 }
 
-                return new OperationResult(true,
-                    _localizationService.GetString("ImportFinishedSuccessfully"));
+                result.Message = _localizationService.GetString("ImportFinishedSuccessfully");
+
+                return new OperationDataResult<ExcelParseResult>(true, result);
             }
             catch (Exception e)
             {
                 _logger.LogError(e, e.Message);
-                return new OperationResult(false, e.Message);
+                return new OperationDataResult<ExcelParseResult>(false, e.Message);
             }
         }
 

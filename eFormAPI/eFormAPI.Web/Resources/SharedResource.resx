@@ -711,4 +711,10 @@
   <data name="ImportFinishedSuccessfully" xml:space="preserve">
     <value>Import finished successfully</value>
   </data>
+  <data name="EFormWithNameAlreadyExists" xml:space="preserve">
+    <value>eForm with name {0} already exists</value>
+  </data>
+  <data name="EFormWithNameAlreadyExistsInTheImportedDocument" xml:space="preserve">
+    <value>eForm with name {0} already exists in the imported document</value>
+  </data>
 </root>

@@ -24,11 +24,10 @@ SOFTWARE.
 
 namespace eFormAPI.Web.Infrastructure.Models.Import
 {
-    using Microsoft.AspNetCore.Http;
-
-    public class EformZipUploadModel
+    public class ExcelParseErrorModel
     {
-        public IFormFile File { get; set; }
-        public int TemplateId { get; set; }
+        public int Row { get; set; }
+        public int? Col { get; set; }
+        public string Message { get; set; }
     }
 }

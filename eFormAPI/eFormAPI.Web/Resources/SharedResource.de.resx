@@ -693,4 +693,10 @@
   <data name="ImportFinishedSuccessfully" xml:space="preserve">
     <value>Import erfolgreich abgeschlossen</value>
   </data>
+  <data name="EFormWithNameAlreadyExists" xml:space="preserve">
+    <value>eForm mit dem Namen {0} existiert bereits</value>
+  </data>
+  <data name="EFormWithNameAlreadyExistsInTheImportedDocument" xml:space="preserve">
+    <value>eform mit dem Namen {0} ist bereits im importierten Dokument vorhanden</value>
+  </data>
 </root>

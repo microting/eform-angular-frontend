@@ -31,6 +31,8 @@ namespace eFormAPI.Web.Infrastructure.Models.Import
         public string Name { get; set; }
         public string EformXML { get; set; }
 
+        public int ExcelRow { get; set; }
+
         public List<string> Tags { get; set; }
             = new List<string>();
     }
