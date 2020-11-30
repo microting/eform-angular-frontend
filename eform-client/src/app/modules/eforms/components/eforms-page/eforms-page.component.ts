@@ -26,6 +26,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   @ViewChild('modalRemoveEform', { static: true }) modalRemoveEform;
   @ViewChild('modalUploadZip', { static: true }) modalUploadZip;
   @ViewChild('modalExcel', { static: true }) modalExcel;
+  @ViewChild('modalEformsImport', { static: true }) modalEformsImport;
 
   searchSubject = new Subject();
   localPageSettings: PageSettingsModel = new PageSettingsModel();
@@ -36,6 +37,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
 
   get userClaims() { return this.authService.userClaims; }
   get userClaimsEnum() { return UserClaimsEnum; }
+  get userRole() { return this.authService.currentRole; }
 
   items = [
     'New',
@@ -199,6 +201,11 @@ export class EformsPageComponent implements OnInit, OnDestroy {
 
   openDownloadExcelModal(templateDto: TemplateDto) {
     this.modalExcel.show(templateDto);
+  }
+
+
+  openEformsImportModal() {
+    this.modalEformsImport.show();
   }
 
   checkEformPermissions(templateId: number, permissionIndex: number) {
