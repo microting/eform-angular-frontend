@@ -1,4 +1,4 @@
-<mdb-card class="mb-3">
+<mdb-card class="mb-3" id="menuTemplate">
   <mdb-card-header>
     <div class="d-flex justify-content-between align-items-center">
       <div>
@@ -20,6 +20,7 @@
               {{ 'Dropdown' | translate }}
             </div>
             <fa-icon
+              id="addCustomDropdown"
               (click)="showDropdownAddModal()"
               icon="plus"
               style="cursor: pointer"
@@ -35,6 +36,7 @@
               {{ 'Link' | translate }}
             </div>
             <fa-icon
+              id="addCustomLink"
               (click)="showCustomLinkAddModal()"
               icon="plus"
               style="cursor: pointer"

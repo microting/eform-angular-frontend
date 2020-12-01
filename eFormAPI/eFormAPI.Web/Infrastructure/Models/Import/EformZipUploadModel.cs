@@ -21,28 +21,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System.Threading.Tasks;
-using eFormAPI.Web.Infrastructure.Models;
-using eFormAPI.Web.Infrastructure.Models.Templates;
-using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.eForm.Dto;
-using System.Collections.Generic;
-using Microting.eForm.Infrastructure.Models;
 
-namespace eFormAPI.Web.Abstractions.Eforms
+namespace eFormAPI.Web.Infrastructure.Models.Import
 {
-    using System.IO;
-    using Infrastructure.Models.Import;
+    using Microsoft.AspNetCore.Http;
 
-    public interface ITemplatesService
+    public class EformZipUploadModel
     {
-        Task<OperationResult> Create(EFormXmlModel eFormXmlModel);
-        Task<OperationDataResult<ExcelParseResult>> Import(Stream excelStream);
-        Task<OperationResult> Delete(int id);
-        Task<OperationResult> Deploy(DeployModel deployModel);
-        Task<OperationDataResult<DeployToModel>> DeployTo(int id);
-        Task<OperationDataResult<Template_Dto>> Get(int id);
-        Task<OperationDataResult<List<Field>>> GetFields(int id);
-        Task<OperationDataResult<TemplateListModel>> Index(TemplateRequestModel templateRequestModel);
+        public IFormFile File { get; set; }
+        public int TemplateId { get; set; }
     }
 }

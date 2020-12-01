@@ -50,6 +50,7 @@ namespace eFormAPI.Web.Controllers.Eforms
 {
     using System.Linq;
     using eFormAPI.Web.Infrastructure.Models;
+    using Infrastructure.Models.Import;
     using Services.Export;
 
     [Authorize]
@@ -619,11 +620,5 @@ namespace eFormAPI.Web.Controllers.Eforms
             return new OperationResult(true, _localizationService.GetString("ImageRotatedSuccessfully"));
         }
 
-    }
-
-    public class EformZipUploadModel
-    {
-        public IFormFile File { get; set; }
-        public int TemplateId { get; set; }
     }
 }

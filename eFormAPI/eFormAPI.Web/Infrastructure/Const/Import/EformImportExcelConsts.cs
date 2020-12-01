@@ -21,28 +21,23 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System.Threading.Tasks;
-using eFormAPI.Web.Infrastructure.Models;
-using eFormAPI.Web.Infrastructure.Models.Templates;
-using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.eForm.Dto;
-using System.Collections.Generic;
-using Microting.eForm.Infrastructure.Models;
-
-namespace eFormAPI.Web.Abstractions.Eforms
+namespace eFormAPI.Web.Infrastructure.Const.Import
 {
-    using System.IO;
-    using Infrastructure.Models.Import;
-
-    public interface ITemplatesService
+    public class EformImportExcelConsts
     {
-        Task<OperationResult> Create(EFormXmlModel eFormXmlModel);
-        Task<OperationDataResult<ExcelParseResult>> Import(Stream excelStream);
-        Task<OperationResult> Delete(int id);
-        Task<OperationResult> Deploy(DeployModel deployModel);
-        Task<OperationDataResult<DeployToModel>> DeployTo(int id);
-        Task<OperationDataResult<Template_Dto>> Get(int id);
-        Task<OperationDataResult<List<Field>>> GetFields(int id);
-        Task<OperationDataResult<TemplateListModel>> Index(TemplateRequestModel templateRequestModel);
+        public const int EformsWorksheet = 3;
+        public const int EformNameCol = 1;
+        public const int EformXMLCol = 12;
+
+        public const int Tag1Col = 2;
+        public const int Tag2Col = 3;
+        public const int Tag3Col = 4;
+        public const int Tag4Col = 5;
+        public const int Tag5Col = 6;
+        public const int Tag6Col = 7;
+        public const int Tag7Col = 8;
+        public const int Tag8Col = 9;
+        public const int Tag9Col = 10;
+        public const int Tag10Col = 11;
     }
 }

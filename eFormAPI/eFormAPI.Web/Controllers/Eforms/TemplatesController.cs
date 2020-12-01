@@ -33,6 +33,8 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Controllers.Eforms
 {
+    using Infrastructure.Models.Import;
+
     [Authorize]
     public class TemplatesController : Controller
     {
@@ -63,7 +65,15 @@ namespace eFormAPI.Web.Controllers.Eforms
         {
             return await _templatesService.Create(eFormXmlModel);
         }
-        
+
+        [HttpPost]
+        [Route("api/templates/import")]
+        [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Create)]
+        public async Task<OperationResult> Import(EformExcelUploadModel uploadModel)
+        {
+            return await _templatesService.Import(uploadModel.File.OpenReadStream());
+        }
+
         [HttpGet]
         [Route("api/templates/get/{id}")]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Read)]

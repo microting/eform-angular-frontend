@@ -708,4 +708,13 @@
   <data name="NavigationMenuUpdate" xml:space="preserve">
     <value>Navigationsmenuen blev opdateret.</value>
   </data>
+  <data name="ImportFinishedSuccessfully" xml:space="preserve">
+    <value>Importen afsluttet med succes</value>
+  </data>
+  <data name="EFormWithNameAlreadyExists" xml:space="preserve">
+    <value>eForm med navnet {0} findes allerede</value>
+  </data>
+  <data name="EFormWithNameAlreadyExistsInTheImportedDocument" xml:space="preserve">
+    <value>eForm med navnet {0} findes allerede i det importerede dokument</value>
+  </data>
 </root>
