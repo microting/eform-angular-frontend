@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
@@ -18,6 +18,7 @@ export class EformsBulkImportModalComponent implements OnInit {
     url: '/api/templates/import',
     authToken: this.authService.bearerToken,
   });
+  @Output() importFinished = new EventEmitter<void>();
   errors: { row: number; col: number; message: string }[];
 
   constructor(
@@ -44,6 +45,7 @@ export class EformsBulkImportModalComponent implements OnInit {
           this.translateService.instant('Import has been finished successfully')
         );
         this.frame.hide();
+        this.importFinished.emit();
       }
       this.loaderService.isLoading.next(false);
       this.xlsxEformsInput.nativeElement.value = '';

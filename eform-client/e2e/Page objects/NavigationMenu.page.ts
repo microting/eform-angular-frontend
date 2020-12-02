@@ -52,6 +52,7 @@ class NavigationMenuPage {
   public editTranslationsOnDropdownBodyChilds(data: { indexChildDropdown: number,
     indexDropdownInMenu: number, translations_array: string[] }) {
     this.dropdownBodyChilds(data.indexDropdownInMenu)[data.indexChildDropdown].$('#editBtn').click();
+    $('#editMenuEntry').waitForDisplayed({timeout: 20000});
     data.translations_array.forEach((translation, i) =>
       this.editItemTranslation(data.indexDropdownInMenu, data.indexChildDropdown, i).setValue(translation));
     this.editItemSaveBtn.click();
@@ -74,6 +75,8 @@ class NavigationMenuPage {
 
   public collapseTemplates(indexTemplate) {
     this.dropdownTemplate(indexTemplate).$('app-eform-collapse-toggle').click();
+    // waiting for the menu to open. Menu not have id or any universal selector.
+    browser.pause(1000);
   }
 
   public get mainMenu() {
