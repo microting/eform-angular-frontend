@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using Microting.eForm.Infrastructure;
+
 namespace eFormAPI.Web.Services
 {
     using System.Linq;
@@ -202,6 +204,7 @@ namespace eFormAPI.Web.Services
             try
             {
                 await core.FolderDelete(id);
+                await DeleteChildren(id);
                 return new OperationResult(true);
             }
             catch (Exception e)
@@ -211,6 +214,25 @@ namespace eFormAPI.Web.Services
                 return new OperationResult(
                     false,
                     _localizationService.GetString("ErrorWhileRemovingFolder"));
+            }
+        }
+
+        private async Task DeleteChildren(int id)
+        {
+            var core = await _coreHelper.GetCore();
+            await using MicrotingDbContext dbContext = core.dbContextHelper.GetDbContext();
+            var list = await dbContext.folders.Where(x => x.ParentId == id).ToListAsync();
+            foreach (var folder in list)
+            {
+                await core.FolderDelete(folder.Id);
+                var sublist = await dbContext.folders.Where(x => x.ParentId == folder.Id).ToListAsync();
+                if (sublist.Any())
+                {
+                    foreach (var subfolder in sublist)
+                    {
+                        await DeleteChildren(subfolder.Id);
+                    }
+                }
             }
         }
     }

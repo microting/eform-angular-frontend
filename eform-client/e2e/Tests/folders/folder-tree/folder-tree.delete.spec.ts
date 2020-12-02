@@ -38,7 +38,6 @@ describe('Delete folder', function () {
 
     // Delete
     const rowNumParentsBeforeDelete = foldersPage.rowNumParents;
-    console.log(rowNumParentsBeforeDelete);
     $('#folderTreeName').waitForDisplayed({timeout: 20000});
     $$('#folderTreeName')[rowNumParentsBeforeDelete - 1].click();
     const lastFolder = foldersPage.getFolderFromTree(rowNumParentsBeforeDelete);
@@ -56,7 +55,8 @@ describe('Delete folder', function () {
   it('Should delete folder', function () {
     // Create
     myEformsPage.Navbar.goToFolderPage();
-    $('#folderId').waitForDisplayed({timeout: 20000});
+    $('#folderTreeName').waitForDisplayed({timeout: 20000});
+    $$('#folderTreeName')[0].click();
     const lastFolder = foldersPage.getFolder(1);
     lastFolder.deleteBtn.waitForDisplayed({timeout: 5000});
     lastFolder.deleteBtn.click();
