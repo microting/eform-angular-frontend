@@ -53,6 +53,7 @@ describe('Folder should not be created', function () {
   });
   it('Should delete folder', function () {
     // Create
+    loginPage.open('/');
     myEformsPage.Navbar.goToFolderPage();
     $('#folderTreeName').waitForDisplayed({timeout: 20000});
     $$('#folderTreeName')[0].click();
