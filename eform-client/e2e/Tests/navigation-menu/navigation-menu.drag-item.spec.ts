@@ -63,7 +63,7 @@ describe(' Navigation menu - Drag item', function () {
       2, 0);
     navigationMenuPage.clickSaveMenuBtn();
 
-    const itemsBeforeSwap = ['drag_handle Device Users / test2Eng', 'drag_handle Workers / test0Eng', 'drag_handle Sites / test1Eng'];
+    const itemsBeforeSwap = ['drag_handle Device Users / test2Dan', 'drag_handle Workers / test0Dan', 'drag_handle Sites / test1Dan'];
     navigationMenuPage.dropdownBodyChilds(navigationMenuPage.menuItemsChilds.length - 1).forEach((elem, i) =>
       expect(elem.getText()).eq(itemsBeforeSwap[i])
     );
