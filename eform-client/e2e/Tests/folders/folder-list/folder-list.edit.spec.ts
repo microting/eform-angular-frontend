@@ -72,8 +72,6 @@ describe('Folder page', function () {
   it('Should delete folder', function () {
     loginPage.open('/');
     myEformsPage.Navbar.goToFolderPage();
-    // Create
-    myEformsPage.Navbar.goToFolderPage();
     $('#folderTreeName').waitForDisplayed({timeout: 20000});
     $$('#folderTreeName')[0].click();
     const lastFolder = foldersPage.getFolder(1);
