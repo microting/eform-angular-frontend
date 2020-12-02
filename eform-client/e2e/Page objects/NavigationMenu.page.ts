@@ -74,6 +74,8 @@ class NavigationMenuPage {
 
   public collapseTemplates(indexTemplate) {
     this.dropdownTemplate(indexTemplate).$('app-eform-collapse-toggle').click();
+    // waiting for the menu to open. Menu not have id or any universal selector.
+    browser.pause(1000);
   }
 
   public get mainMenu() {
