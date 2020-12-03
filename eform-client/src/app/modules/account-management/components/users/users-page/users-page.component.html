@@ -1,11 +1,11 @@
-<eform-page-subheader [title]="'User management' | translate">
-<div class="p-3">
-  <button
-    mdbBtn
-    class="btn-success btn-small-height" (click)="openNewUserModal()" *ngIf="userClaims.usersCreate"
-    mdbTooltip="{{'Create user' | translate}}">{{'New User' | translate}}</button>
-</div>
-</eform-page-subheader>
+<subheader-pn>
+  <div class="p-3">
+    <button
+      mdbBtn
+      class="btn-success btn-small-height" (click)="openNewUserModal()" *ngIf="userClaims.usersCreate"
+      mdbTooltip="{{'Create user' | translate}}">{{'New User' | translate}}</button>
+  </div>
+</subheader-pn>
 
 <div class="container-fluid">
   <div class="row" *ngIf="userRole == 'admin'">

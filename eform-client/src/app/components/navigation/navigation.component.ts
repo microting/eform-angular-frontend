@@ -28,9 +28,9 @@ export class NavigationComponent implements OnInit {
               private translateService: TranslateService,
               private eventBrokerService: EventBrokerService,
               private appMenuService: AppMenuService) {
-    this.brokerListener = eventBrokerService.listen<void>('get-navigation-menu',
-      () => {
-        this.getNavigationMenu();
+    this.brokerListener = eventBrokerService.listen('get-navigation-menu',
+      (data: {takeFromCache: boolean}) => {
+        this.getNavigationMenu(data);
       });
   }
 
@@ -41,7 +41,7 @@ export class NavigationComponent implements OnInit {
         this.userSettingsService.getUserSettings().subscribe(((data) => {
           localStorage.setItem('locale', data.model.locale);
           this.initLocaleAsync().then(() => {
-            this.getNavigationMenu();
+            this.getNavigationMenu({takeFromCache: false});
           });
         }));
       });
@@ -72,11 +72,9 @@ export class NavigationComponent implements OnInit {
     this._menuFlag = !this._menuFlag;
   }
 
-  getNavigationMenu() {
-    this.appMenuService.getAppMenu().subscribe((data) => {
-      if (data && data.success) {
-        this.appMenu = data.model;
-      }
+  getNavigationMenu(takeFromCacheObject: {takeFromCache: boolean}) {
+    this.appMenuService.getAppMenu(takeFromCacheObject.takeFromCache).subscribe((data) => {
+      this.appMenu = data;
     });
   }
 }

@@ -1,4 +1,4 @@
-<eform-page-subheader [title]="'Settings' | translate" [subtitle]="adminSettingsModel.assemblyVersion">
+<subheader-pn [subtitle]="adminSettingsModel.assemblyVersion">
   <div class="p-3">
     <button
       mdbBtn
@@ -9,7 +9,7 @@
       mdbTooltip="Save settings">{{ 'Save' | translate }}
     </button>
   </div>
-</eform-page-subheader>
+</subheader-pn>
 
 <div class="container-fluid">
   <form #settingsForm="ngForm">

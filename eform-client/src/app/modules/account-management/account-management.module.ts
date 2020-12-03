@@ -16,20 +16,22 @@ import {
 import {AccountManagementRouting} from './account-management.routing';
 import {TranslateModule} from '@ngx-translate/core';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {SharedPnModule} from 'src/app/plugins/modules/shared/shared-pn.module';
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-    AccountManagementRouting,
-    NgSelectModule,
-    MDBBootstrapModule,
-    EformSharedModule,
-    TranslateModule,
-    ReactiveFormsModule,
-    FormsModule,
-    FontAwesomeModule
-  ],
+    imports: [
+        CommonModule,
+        AccountManagementRouting,
+        NgSelectModule,
+        MDBBootstrapModule,
+        EformSharedModule,
+        TranslateModule,
+        ReactiveFormsModule,
+        FormsModule,
+        FontAwesomeModule,
+        SharedPnModule
+    ],
   declarations: [
     ChangePasswordComponent,
     ProfileSettingsComponent,

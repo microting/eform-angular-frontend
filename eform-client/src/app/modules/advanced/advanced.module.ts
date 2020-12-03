@@ -35,6 +35,7 @@ import {
 import { FolderEditComponent } from './components/folders/folder-edit/folder-edit.component';
 import { FolderDeleteComponent } from './components/folders/folder-delete/folder-delete.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {SharedPnModule} from 'src/app/plugins/modules/shared/shared-pn.module';
 
 @NgModule({
     imports: [
@@ -47,7 +48,8 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
         FormsModule,
         DragulaModule,
         FontAwesomeModule,
-        MDBBootstrapModule
+        MDBBootstrapModule,
+        SharedPnModule
     ],
   declarations: [
     EntitySearchComponent,
