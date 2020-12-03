@@ -20,6 +20,9 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
+  "prettier": {
+    "singleQuote": true
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "^9.1.12",
@@ -67,6 +70,7 @@
     "ngx-papaparse": "4.0.4",
     "ngx-slimscroll": "9.3.0",
     "ngx-toastr": "12.0.1",
+    "ramda": "^0.27.1",
     "rxjs": "6.5.5",
     "tslib": "^1.13.0",
     "zone.js": "~0.10.2"
@@ -87,7 +91,7 @@
     "@wdio/sync": "6.0.15",
     "angular-mocks": "1.7.9",
     "chai": "4.2.0",
-    "chromedriver": "83.0.0",
+    "chromedriver": "86.0.0",
     "codelyzer": "^5.1.2",
     "fs-extra": "^9.0.1",
     "guid-typescript": "1.0.9",

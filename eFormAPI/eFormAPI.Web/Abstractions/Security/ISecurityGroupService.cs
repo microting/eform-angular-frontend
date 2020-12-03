@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2019 Microting A/S
+Copyright (c) 2007 - 2020 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,9 +21,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using eFormAPI.Web.Infrastructure.Models.Permissions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
 namespace eFormAPI.Web.Abstractions.Security
 {
@@ -32,7 +34,10 @@ namespace eFormAPI.Web.Abstractions.Security
         Task<OperationResult> CreateSecurityGroup(SecurityGroupCreateModel requestModel);
         Task<OperationDataResult<SecurityGroupModel>> GetSecurityGroup(int id);
         Task<OperationDataResult<SecurityGroupsModel>> GetSecurityGroups(SecurityGroupRequestModel requestModel);
+        Task<OperationDataResult<List<CommonDictionaryModel>>> GetSecurityGroupsDictionary();
         Task<OperationResult> UpdateSecurityGroup(SecurityGroupUpdateModel requestModel);
+        Task<OperationResult> UpdateSecurityGroupSettings(SecurityGroupSettingsUpdateModel requestModel);
         Task<OperationResult> DeleteSecurityGroup(int id);
+
     }
 }

@@ -676,7 +676,7 @@
     <value>Sagen blev ikke fundet</value>
   </data>
   <data name="SendGridKeyShouldBeAddedToSettings" xml:space="preserve">
-    <value>SendGrid-tasten skal føjes til indstillingerne</value>
+    <value>SendGrid-api nøgle skal føjes til indstillingerne</value>
   </data>
   <data name="DataNotFound" xml:space="preserve">
     <value>Data ikke fundet!</value>
@@ -689,5 +689,32 @@
   </data>
   <data name="ExcelTemplateNotFoundInStorage" xml:space="preserve">
     <value>Excel-skabelon findes ikke i lageret!</value>
+  </data>
+  <data name="ErrorWhileCreatingFolder" xml:space="preserve">
+    <value>Fejl under oprettelse af mappe</value>
+  </data>
+  <data name="ErrorWhileObtainingFoldersInfo" xml:space="preserve">
+    <value>Fejl under hentning af mappens info</value>
+  </data>
+  <data name="ErrorWhileRemovingFolder" xml:space="preserve">
+    <value>Fejl under fjernelse af mappe</value>
+  </data>
+  <data name="ErrorWhileUpdatingFolder" xml:space="preserve">
+    <value>Fejl under opdatering af mappe</value>
+  </data>
+  <data name="FolderNotFound" xml:space="preserve">
+    <value>Mappe ikke fundet</value>
+  </data>
+  <data name="NavigationMenuUpdate" xml:space="preserve">
+    <value>Navigationsmenuen blev opdateret.</value>
+  </data>
+  <data name="ImportFinishedSuccessfully" xml:space="preserve">
+    <value>Importen afsluttet med succes</value>
+  </data>
+  <data name="EFormWithNameAlreadyExists" xml:space="preserve">
+    <value>eForm med navnet {0} findes allerede</value>
+  </data>
+  <data name="EFormWithNameAlreadyExistsInTheImportedDocument" xml:space="preserve">
+    <value>eForm med navnet {0} findes allerede i det importerede dokument</value>
   </data>
 </root>

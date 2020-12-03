@@ -1,32 +1,30 @@
-import {HttpClientModule} from '@angular/common/http';
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {GalleryModule} from '@ngx-gallery/core';
-import {GallerizeModule} from '@ngx-gallery/gallerize';
-import {TranslateModule} from '@ngx-translate/core';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { GalleryModule } from '@ngx-gallery/core';
+import { GallerizeModule } from '@ngx-gallery/gallerize';
+import { TranslateModule } from '@ngx-translate/core';
 import { LightboxModule } from '@ngx-gallery/lightbox';
-import {DragulaModule} from 'ng2-dragula';
-import {ToastrModule} from 'ngx-toastr';
-import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import {library} from '@fortawesome/fontawesome-svg-core';
-// import { faTrashAlt,  faTable, faFileUpload, faReceipt, faFilePdf, faPen,
-//          faEye, faEyeSlash, faUndo, faClipboardList, faLockOpen} from '@fortawesome/free-solid-svg-icons';
+import { DragulaModule } from 'ng2-dragula';
+import { ToastrModule } from 'ngx-toastr';
+import {
+  FaIconLibrary,
+  FontAwesomeModule,
+} from '@fortawesome/angular-fontawesome';
 import { faCoffee, fas } from '@fortawesome/free-solid-svg-icons';
-// import { far } from '@fortawesome/free-regular-svg-icons';
-
-import {MDBBootstrapModule} from 'angular-bootstrap-md';
-import {providers} from 'src/app/app.declarations';
-import {AppRoutingModule} from 'src/app/app.routing';
-import {translateConfig} from 'src/app/common/helpers';
-import {PluginsModule} from 'src/app/plugins/plugins.module';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { providers } from 'src/app/app.declarations';
+import { AppRoutingModule } from 'src/app/app.routing';
+import { translateConfig } from 'src/app/common/helpers';
+import { PluginsModule } from 'src/app/plugins/plugins.module';
 import {
   AppComponent,
   FooterComponent,
+  FullLayoutComponent,
   HeaderComponent,
   NavigationComponent,
   SimpleLayoutComponent,
-  FullLayoutComponent,
   SpinnerComponent,
 } from './components';
 // import {assertLessThan} from '@angular/core/src/render3/assert';
@@ -44,34 +42,32 @@ import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-share
     HeaderComponent,
     FooterComponent,
     NavigationComponent,
-    SpinnerComponent
+    SpinnerComponent,
   ],
-    imports: [
-        // Libs
-        AppRoutingModule,
-        BrowserModule,
-        MDBBootstrapModule.forRoot(),
-        TranslateModule.forRoot(translateConfig),
-        HttpClientModule,
-        BrowserAnimationsModule,
-        ToastrModule.forRoot(
-            {preventDuplicates: true}
-        ),
-        DragulaModule.forRoot(),
-        GalleryModule,
-        LightboxModule,
-        GallerizeModule,
-        FontAwesomeModule,
-        NgxChartsModule,
-        // Modules
-        PluginsModule,
-        OwlDateTimeModule,
-        OwlNativeDateTimeModule,
-        EformSharedModule,
-    ],
+  imports: [
+    // Libs
+    AppRoutingModule,
+    BrowserModule,
+    MDBBootstrapModule.forRoot(),
+    TranslateModule.forRoot(translateConfig),
+    HttpClientModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({ preventDuplicates: true }),
+    DragulaModule.forRoot(),
+    GalleryModule,
+    LightboxModule,
+    GallerizeModule,
+    FontAwesomeModule,
+    NgxChartsModule,
+    // Modules
+    PluginsModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
+    EformSharedModule,
+  ],
   schemas: [NO_ERRORS_SCHEMA],
   providers: [providers],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {
   constructor(library: FaIconLibrary) {

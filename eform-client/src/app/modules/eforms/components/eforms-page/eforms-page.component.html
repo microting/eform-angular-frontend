@@ -1,5 +1,11 @@
 <eform-page-subheader [title]="'My eForms' | translate">
   <div class="p-3">
+    <button mdbBtn class="btn-accent text-black-50 btn-icon"
+            id="importEformsBtn"
+            mdbTooltip="{{ 'Import eforms' | translate }}" *ngIf="userRole === 'admin'"
+            (click)="openEformsImportModal()">
+      <fa-icon icon="file-import" [fixedWidth]="true" size="lg"></fa-icon>
+    </button>
     <button
       mdbBtn
       class="btn-success btn-small-height"
@@ -83,16 +89,19 @@
       <tr *ngFor="let templateDto of templateListModel.templates">
         <td scope="row" id="eform-id">{{templateDto.id}}</td>
         <!--<td id="eform-created-at">{{templateDto.createdAt | date:'dd.MM.y HH:mm:ss'}}</td>-->
-        <td id="eform-created-at"><date-formatter [date]="templateDto.createdAt" [Format]="'datetime'"></date-formatter></td>
+        <td id="eform-created-at">
+          <date-formatter [date]="templateDto.createdAt" [Format]="'datetime'"></date-formatter>
+        </td>
         <td id="eform-label">{{templateDto.label}}</td>
         <td>
           <div class="d-flex justify-content-center">
             <div>
-              <a mdbBtn type="button" color="success" class="btn-small-height btn-success"
+              <a mdbBtn type="button" color="success" class="btn-icon btn-success"
                  *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eformsUpdateTags)"
                  id="eform-edit-btn"
                  mdbTooltip="{{ 'Edit tags' | translate }}" (click)="openEditTagsModal(templateDto)">
-                {{ 'Edit tags' | translate }}
+                <fa-icon icon="tags" size="lg" [fixedWidth]="true"></fa-icon>
+                <!--                {{ 'Edit tags' | translate }}-->
               </a>
               <ng-container *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eformsReadTags)">
                 <p class="paragraph-sm" id="eform-tag" *ngFor="let tag of templateDto.tags">
@@ -109,23 +118,25 @@
               && checkEformPermissions(templateDto.id, userClaimsEnum.eformsPairingUpdate)
               && !templateDto.isLocked"
                       id="eform-pairing-btn"
-                      mdbBtn type="button" class="btn-success btn-small-height" (click)="openPairingModal(templateDto)"
+                      mdbBtn type="button" class="btn-success btn-icon" (click)="openPairingModal(templateDto)"
                       mdbTooltip="{{ 'Click to edit eForm pairing with user(s)' | translate }}">
-                {{ 'Edit pairing' | translate }}
+                <!--                {{ 'Edit pairing' | translate }}-->
+                <fa-icon icon="link" size="lg" [fixedWidth]="true"></fa-icon>
               </button>
               <button *ngIf="templateDto.deployedSites.length == 0
               && checkEformPermissions(templateDto.id, userClaimsEnum.eformsPairingUpdate)
               && !templateDto.isLocked"
                       id="eform-add-btn"
-                      mdbBtn type="button" class="btn-small-height" (click)="openPairingModal(templateDto)"
+                      mdbBtn type="button" class="btn-icon" (click)="openPairingModal(templateDto)"
                       mdbTooltip="{{ 'Click to pair eForm with user(s)' | translate }}">
-                {{ 'Pair eForm' | translate }}
+                <!--                {{ 'Pair eForm' | translate }}-->
+                <fa-icon icon="link" size="lg" [fixedWidth]="true"></fa-icon>
               </button>
-<!--              <ng-container *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eFormsPairingRead)">-->
-<!--                <p class="paragraph-sm" id="eform-paired-username" *ngFor="let deployedSite of templateDto.deployedSites">-->
-<!--                  {{deployedSite.siteName}}-->
-<!--                </p>-->
-<!--              </ng-container>-->
+              <!--              <ng-container *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eFormsPairingRead)">-->
+              <!--                <p class="paragraph-sm" id="eform-paired-username" *ngFor="let deployedSite of templateDto.deployedSites">-->
+              <!--                  {{deployedSite.siteName}}-->
+              <!--                </p>-->
+              <!--              </ng-container>-->
             </div>
           </div>
         </td>
@@ -184,12 +195,12 @@
                     mdbTooltip="{{ 'Upload ZIP archive' | translate }}">
               <fa-icon icon="file-upload" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
-            <button mdbBtn class="btn-accent text-black-50 btn-icon mb-2" id="eform-report-button"
-                    *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eformsReadJasperReport)"
-                    [routerLink]="['./report', templateDto.id]"
-                    mdbTooltip="{{ 'Jasper Report' | translate }}">
-              <fa-icon icon="receipt" [fixedWidth]="true" size="lg"></fa-icon>
-            </button>
+            <!--            <button mdbBtn class="btn-accent text-black-50 btn-icon mb-2" id="eform-report-button"-->
+            <!--                    *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eformsReadJasperReport)"-->
+            <!--                    [routerLink]="['./report', templateDto.id]"-->
+            <!--                    mdbTooltip="{{ 'Jasper Report' | translate }}">-->
+            <!--              <fa-icon icon="receipt" [fixedWidth]="true" size="lg"></fa-icon>-->
+            <!--            </button>-->
           </div>
         </td>
       </tr>
@@ -204,9 +215,10 @@
 <app-eform-create-modal [availableTags]="availableTags" (onEformCreated)="loadAllTemplates()"
                         #modalNewEform></app-eform-create-modal>
 <app-eform-column-modal #modalCasesColumns></app-eform-column-modal>
-<app-eform-edit-paring-modal (onDeploymentFinished)="loadAllTemplates()" #modalParing></app-eform-edit-paring-modal>
+<app-eform-edit-paring-modal (deploymentFinished)="loadAllTemplates()" #modalParing></app-eform-edit-paring-modal>
 <app-eform-edit-tags-modal [availableTags]="availableTags" (onEFormTagsUpdated)="loadAllTemplates()"
                            (onTagAdded)="loadAllTags()" #modalEditTags></app-eform-edit-tags-modal>
 <app-eform-remove-eform-modal (onEFormDeleted)="loadAllTemplates()" #modalRemoveEform></app-eform-remove-eform-modal>
 <app-eform-upload-zip-modal #modalUploadZip></app-eform-upload-zip-modal>
 <app-eform-excel-report-modal #modalExcel></app-eform-excel-report-modal>
+<app-eforms-bulk-import-modal #modalEformsImport></app-eforms-bulk-import-modal>

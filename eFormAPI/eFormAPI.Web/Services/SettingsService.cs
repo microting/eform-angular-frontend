@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2019 Microting A/S
+Copyright (c) 2007 - 2020 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -137,22 +137,6 @@ namespace eFormAPI.Web.Services
             var sdkDbName = dbNamePrefix + customerNo + "_SDK";
             var angularDbName = dbNamePrefix + customerNo + "_Angular";
 
-            // if (initialSettingsModel.ConnectionStringSdk.SqlServerType == "mssql")
-            // {
-            //     sdkConnectionString = initialSettingsModel.ConnectionStringSdk.Host +
-            //                           ";Database=" +
-            //                           sdkDbName + ";" +
-            //                           initialSettingsModel
-            //                               .ConnectionStringSdk.Auth;
-            //
-            //     mainConnectionString = initialSettingsModel.ConnectionStringSdk.Host +
-            //                            ";Database=" +
-            //                            angularDbName + ";" +
-            //                            initialSettingsModel
-            //                                .ConnectionStringSdk.Auth;
-            // }
-            // else
-            // {
             sdkConnectionString = "host= " +
                                   initialSettingsModel.ConnectionStringSdk.Host +
                                   ";Database=" +
@@ -170,7 +154,6 @@ namespace eFormAPI.Web.Services
                                        .ConnectionStringSdk.Auth +
                                    "port=" + initialSettingsModel.ConnectionStringSdk.Port +
                                    ";Convert Zero Datetime = true;SslMode=none;";
-            // }
 
 
             if (!string.IsNullOrEmpty(_connectionStringsSdk.Value.SdkConnection))
@@ -181,6 +164,7 @@ namespace eFormAPI.Web.Services
 
             try
             {
+                Log.LogEvent($"SettingsService.ConnectionStringExist: connection string is {sdkConnectionString}");
                 var adminTools = new AdminTools(sdkConnectionString);
 //                 Setup SDK DB
                 await adminTools.DbSetup(initialSettingsModel.ConnectionStringSdk.Token);
@@ -192,6 +176,7 @@ namespace eFormAPI.Web.Services
             catch (Exception exception)
             {
                 _logger.LogError(exception.Message);
+                _logger.LogError(exception.StackTrace);
                 if (exception.InnerException != null)
                 {
                     return new OperationResult(false, exception.Message + " - " + exception.InnerException.Message);
@@ -207,16 +192,8 @@ namespace eFormAPI.Web.Services
             var dbContextOptionsBuilder = new DbContextOptionsBuilder<BaseDbContext>();
             try
             {
-                if (mainConnectionString.ToLower().Contains("convert zero datetime"))
-                {
-                    dbContextOptionsBuilder.UseMySql(mainConnectionString, b =>
-                        b.MigrationsAssembly("eFormAPI.Web"));
-                }
-                else
-                {
-                    dbContextOptionsBuilder.UseSqlServer(mainConnectionString, b =>
-                        b.MigrationsAssembly("eFormAPI.Web"));
-                }
+                dbContextOptionsBuilder.UseMySql(mainConnectionString, b =>
+                    b.MigrationsAssembly("eFormAPI.Web").EnableRetryOnFailure());
 
                 using (var dbContext = new BaseDbContext(dbContextOptionsBuilder.Options))
                 {
@@ -293,6 +270,7 @@ namespace eFormAPI.Web.Services
             catch (Exception exception)
             {
                 _logger.LogError(exception.Message);
+                _logger.LogError(exception.StackTrace);
                 //return new OperationResult(false, 
                 //    _localizationService.GetString("MainConnectionStringIsInvalid"));
 
@@ -337,6 +315,7 @@ namespace eFormAPI.Web.Services
             catch (Exception exception)
             {
                 _logger.LogError(exception.Message);
+                _logger.LogError(exception.StackTrace);
                 if (exception.InnerException != null)
                 {
                     return new OperationResult(false, exception.Message + " - " + exception.InnerException.Message);

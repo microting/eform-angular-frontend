@@ -98,21 +98,22 @@ import {SharedPnModule} from '../../plugins/modules/shared/shared-pn.module';
   providers: [
     {provide: OWL_DATE_TIME_FORMATS, useValue: MY_MOMENT_FORMATS},
   ],
-  exports: [
-    ElementCommentComponent,
-    ElementNumberStepperComponent,
-    ElementNumberComponent,
-    ElementCheckboxComponent,
-    ElementTextComponent,
-    ElementDateComponent,
-    ElementSingleselectComponent,
-    ElementMultiselectComponent,
-    ElementContainerComponent,
-    ElementEntitysearchComponent,
-    ElementEntityselectComponent,
-    CaseEditNavComponent,
-    CaseEditElementComponent
-  ]
+    exports: [
+        ElementCommentComponent,
+        ElementNumberStepperComponent,
+        ElementNumberComponent,
+        ElementCheckboxComponent,
+        ElementTextComponent,
+        ElementDateComponent,
+        ElementSingleselectComponent,
+        ElementMultiselectComponent,
+        ElementContainerComponent,
+        ElementEntitysearchComponent,
+        ElementEntityselectComponent,
+        CaseEditNavComponent,
+        CaseEditElementComponent,
+        CasePostNewComponent
+    ]
 })
 export class CasesModule {
 }

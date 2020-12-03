@@ -15,7 +15,8 @@ import {
   EformExcelReportModalComponent,
   EformRemoveEformModalComponent,
   EformsPageComponent,
-  EformUploadZipModalComponent
+  EformUploadZipModalComponent,
+  EformsBulkImportModalComponent
 } from './components';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {OwlDateTimeModule} from '@danielmoncada/angular-datetime-picker';
@@ -42,7 +43,8 @@ import {OwlDateTimeModule} from '@danielmoncada/angular-datetime-picker';
     EformEditTagsModalComponent,
     EformRemoveEformModalComponent,
     EformUploadZipModalComponent,
-    EformExcelReportModalComponent
+    EformExcelReportModalComponent,
+    EformsBulkImportModalComponent
   ]
 })
 export class EFormsModule { }

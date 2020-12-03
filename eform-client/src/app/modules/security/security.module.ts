@@ -21,6 +21,7 @@ import {
   SecurityGroupEformsEditComponent, SecurityGroupEformsDeleteComponent
 } from './components';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import { SecurityGroupSettingsComponent } from './components/security-group-settings/security-group-settings.component';
 
 
 
@@ -44,7 +45,8 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
     SecurityGroupEformsPermissionsComponent,
     SecurityGroupEformsAddComponent,
     SecurityGroupEformsEditComponent,
-    SecurityGroupEformsDeleteComponent
+    SecurityGroupEformsDeleteComponent,
+    SecurityGroupSettingsComponent
   ],
   providers: [SecurityGroupGeneralPermissionsService]
 })

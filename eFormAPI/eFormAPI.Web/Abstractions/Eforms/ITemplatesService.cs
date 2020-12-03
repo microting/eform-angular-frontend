@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2019 Microting A/S
+Copyright (c) 2007 - 2020 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -31,9 +31,13 @@ using Microting.eForm.Infrastructure.Models;
 
 namespace eFormAPI.Web.Abstractions.Eforms
 {
+    using System.IO;
+    using Infrastructure.Models.Import;
+
     public interface ITemplatesService
     {
         Task<OperationResult> Create(EFormXmlModel eFormXmlModel);
+        Task<OperationDataResult<ExcelParseResult>> Import(Stream excelStream);
         Task<OperationResult> Delete(int id);
         Task<OperationResult> Deploy(DeployModel deployModel);
         Task<OperationDataResult<DeployToModel>> DeployTo(int id);

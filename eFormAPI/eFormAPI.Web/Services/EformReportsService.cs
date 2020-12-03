@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2019 Microting A/S
+Copyright (c) 2007 - 2020 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -414,8 +414,8 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                using (var transaction = await _dbContext.Database.BeginTransactionAsync())
-                {
+                //using (var transaction = await _dbContext.Database.BeginTransactionAsync())
+//                {
                     try
                     {
                         var eformReport = _dbContext.EformReports
@@ -468,14 +468,14 @@ namespace eFormAPI.Web.Services
                             await _dbContext.SaveChangesAsync();
                         }
 
-                        transaction.Commit();
-                    }
+                        //transaction.Commit();
+                }
                     catch (Exception)
                     {
-                        transaction.Rollback();
+                        //transaction.Rollback();
                         throw;
                     }
-                }
+                //}
 
                 return new OperationResult(true,
                     _localizationService.GetString("ReportUpdatedSuccessfully"));

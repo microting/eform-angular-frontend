@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2019 Microting A/S
+Copyright (c) 2007 - 2020 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -29,5 +29,6 @@ namespace eFormAPI.Web.Infrastructure.Models.Settings.User
         public bool DarkTheme { get; set; }
         public string Formats { get; set; }
         public string TimeZone { get; set; }
+        public string LoginRedirectUrl { get; set; }
     }
 }

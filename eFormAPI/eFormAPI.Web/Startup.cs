@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2019 Microting A/S
+Copyright (c) 2007 - 2020 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -63,6 +63,8 @@ using Microsoft.OpenApi.Models;
 
 namespace eFormAPI.Web
 {
+    using Services.Import;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -79,7 +81,6 @@ namespace eFormAPI.Web
             services.AddMvc(options => options.EnableEndpointRouting = false);
 
             // Configuration
-            //services.AddSingleton(Configuration);
             services.AddOptions();
             services.AddLogging(loggingBuilder =>
             {
@@ -87,32 +88,26 @@ namespace eFormAPI.Web
                 loggingBuilder.AddConsole();
                 loggingBuilder.AddDebug();
             });
-            // Entity framework
-//#if DEBUG
-//            services.AddEntityFrameworkMySql()
-//                .AddDbContext<BaseDbContext>(
-//                o => o.UseMySql(@"Server = localhost; port = 3306; Database = angular-tests; user = root; Convert Zero Datetime = true;",
-//                    b => b.MigrationsAssembly("eFormAPI.Web")));
-//#else
             if (!string.IsNullOrEmpty(Configuration.MyConnectionString()))
             {
-                if (Configuration.MyConnectionString().ToLower().Contains("convert zero datetime"))
+                if (Configuration.MyConnectionString() != "...")
                 {
                     services.AddEntityFrameworkMySql()
                         .AddDbContext<BaseDbContext>(o => o.UseMySql(Configuration.MyConnectionString(),
-                            b => b.MigrationsAssembly("eFormAPI.Web")));
+                            b => b.MigrationsAssembly("eFormAPI.Web").EnableRetryOnFailure()));
                 }
                 else
                 {
-                    services.AddEntityFrameworkSqlServer()
-                        .AddDbContext<BaseDbContext>(o => o.UseSqlServer(Configuration.MyConnectionString(),
-                            b => b.MigrationsAssembly("eFormAPI.Web")));
+                    // We use this hack to get the project started and we actually don't use this connection, but it's needed for the service to start.
+                    // Once we have the correct connectionstring in the connection.json, we restart the server and the above method is used.
+                    services.AddEntityFrameworkMySql()
+                        .AddDbContext<BaseDbContext>(o => o.UseMySql("server=localhost;",
+                            b => b.MigrationsAssembly("eFormAPI.Web").EnableRetryOnFailure()));
                 }
             }
 
-//#endif
             // plugins
-            services.AddEFormPluginsDbContext(Configuration, Program.Plugins);
+            services.AddEFormPluginsDbContext(Configuration, Program.EnabledPlugins);
             // Identity services
             services.AddIdentity<EformUser, EformRole>()
                 .AddEntityFrameworkStores<BaseDbContext>()
@@ -125,7 +120,7 @@ namespace eFormAPI.Web
             services.AddTransient<IStringLocalizer, JsonStringLocalizer>();
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             // MVC and API services with Plugins
-            services.AddEFormMvc(Program.Plugins);
+            services.AddEFormMvc(Program.EnabledPlugins);
             // Writable options
             services.ConfigureWritable<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"),
                 "connection.json");
@@ -138,7 +133,7 @@ namespace eFormAPI.Web
             services.ConfigureDbOptions<EformTokenOptions>(Configuration.GetSection("EformTokenOptions"));
             services.ConfigureDbOptions<PluginStoreSettings>(Configuration.GetSection("PluginStoreSettings"));
             // Database plugins options
-            foreach (var plugin in Program.Plugins)
+            foreach (var plugin in Program.EnabledPlugins)
             {
                 plugin.ConfigureOptionsServices(
                     services,
@@ -202,7 +197,7 @@ namespace eFormAPI.Web
             ConnectServices(services);
 
             // plugins
-            services.AddEFormPlugins(Program.Plugins);
+            services.AddEFormPlugins(Program.EnabledPlugins);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -256,7 +251,7 @@ namespace eFormAPI.Web
             }
 
             // Plugins
-            app.UseEFormPlugins(Program.Plugins);
+            app.UseEFormPlugins(Program.EnabledPlugins);
             // Route all unknown requests to app root
             app.UseAngularMiddleware(env);
         }
@@ -299,6 +294,7 @@ namespace eFormAPI.Web
             services.AddScoped<ICasePostService, CasePostService>();
             services.AddScoped<ICasePostBaseService, CasePostService>();
             services.AddTransient<IEformExcelExportService, EformExcelExportService>();
+            services.AddTransient<IEformExcelImportService, EformExcelImportService>();
         }
 
         private ICollection<PluginPermissionModel> GetPluginsPermissions()
@@ -314,7 +310,7 @@ namespace eFormAPI.Web
                         .AsNoTracking()
                         .Where(x => x.ConnectionString != "..."))
                     {
-                        var plugin = Program.Plugins.FirstOrDefault(p => p.PluginId == eformPlugin.PluginId);
+                        var plugin = Program.EnabledPlugins.FirstOrDefault(p => p.PluginId == eformPlugin.PluginId);
                         if (plugin != null)
                         {
                             var permissionsManager = plugin.GetPermissionsManager(eformPlugin.ConnectionString);

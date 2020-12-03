@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2019 Microting A/S
+Copyright (c) 2007 - 2020 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -236,6 +236,10 @@ namespace eFormAPI.Web.Services.Security
                 new Claim(AuthConsts.EformClaims.EformsClaims.ReadJasperReport, AuthConsts.ClaimDefaultValue),
                 new Claim(AuthConsts.EformClaims.EformsClaims.UpdateJasperReport, AuthConsts.ClaimDefaultValue),
                 new Claim(AuthConsts.EformClaims.EformsClaims.ExportEformExcel, AuthConsts.ClaimDefaultValue),
+                // E-mail recipients
+                new Claim(AuthConsts.EformClaims.EmailRecipientsClaims.Create, AuthConsts.ClaimDefaultValue),
+                new Claim(AuthConsts.EformClaims.EmailRecipientsClaims.Delete, AuthConsts.ClaimDefaultValue),
+                new Claim(AuthConsts.EformClaims.EmailRecipientsClaims.Read, AuthConsts.ClaimDefaultValue),
             };
 
             claims.AddRange(await GetAllPluginClaims());

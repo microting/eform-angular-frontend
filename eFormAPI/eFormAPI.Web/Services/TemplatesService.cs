@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2019 Microting A/S
+Copyright (c) 2007 - 2020 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -45,6 +45,12 @@ using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 
 namespace eFormAPI.Web.Services
 {
+    using System.IO;
+    using Import;
+    using Infrastructure.Models.Import;
+    using Microsoft.Extensions.Logging;
+    using Remotion.Linq.Parsing.Structure.IntermediateModel;
+
     public class TemplatesService : ITemplatesService
     {
         private readonly IOptions<ConnectionStringsSdk> _connectionStringsSdk;
@@ -53,13 +59,17 @@ namespace eFormAPI.Web.Services
         private readonly IUserService _userService;
         private readonly BaseDbContext _dbContext;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IEformExcelImportService _eformExcelImportService;
+        private readonly ILogger<TemplatesService> _logger;
 
         public TemplatesService(
             IEFormCoreService coreHelper,
             ILocalizationService localizationService,
             IUserService userService, BaseDbContext dbContext,
             IOptions<ConnectionStringsSdk> connectionStringsSdk,
-            IHttpContextAccessor httpContextAccessor)
+            IHttpContextAccessor httpContextAccessor,
+            IEformExcelImportService eformExcelImportService,
+            ILogger<TemplatesService> logger)
         {
             _coreHelper = coreHelper;
             _localizationService = localizationService;
@@ -67,6 +77,8 @@ namespace eFormAPI.Web.Services
             _dbContext = dbContext;
             _connectionStringsSdk = connectionStringsSdk;
             _httpContextAccessor = httpContextAccessor;
+            _eformExcelImportService = eformExcelImportService;
+            _logger = logger;
         }
 
         public async Task<OperationDataResult<TemplateListModel>> Index(TemplateRequestModel templateRequestModel)
@@ -271,6 +283,135 @@ namespace eFormAPI.Web.Services
             catch (Exception e)
             {
                 return new OperationResult(false, e.Message);
+            }
+        }
+
+        public async Task<OperationDataResult<ExcelParseResult>> Import(Stream excelStream)
+        {
+            try
+            {
+                var result = new ExcelParseResult();
+                var core = await _coreHelper.GetCore();
+
+                var timeZone = await _userService.GetCurrentUserTimeZoneInfo();
+                var templatesDto = await core.TemplateItemReadAll(
+                    false,
+                    "",
+                    "",
+                    false,
+                    "",
+                    new List<int>(),
+                    timeZone);
+
+                // Read file
+                var fileResult = _eformExcelImportService.EformImport(excelStream);
+
+                // Validation
+                var excelErrors = new List<ExcelParseErrorModel>();
+
+                foreach (var excelModel in fileResult)
+                {
+                    var templateByName = templatesDto
+                        .FirstOrDefault(x => string.Equals(
+                            x.Label,
+                            excelModel.Name,
+                            StringComparison.CurrentCultureIgnoreCase));
+
+                    if (templateByName != null)
+                    {
+                        var error = new ExcelParseErrorModel
+                        {
+                            Row = excelModel.ExcelRow,
+                            Message = _localizationService.GetStringWithFormat(
+                                "EFormWithNameAlreadyExists",
+                                excelModel.Name)
+                        };
+
+                        excelErrors.Add(error);
+                    }
+                }
+
+                var duplicates = fileResult
+                    .GroupBy(x => x.Name.ToLower())
+                    .Select(x => new
+                    {
+                        x.Key,
+                        Count = x.Count(),
+                    })
+                    .Where(x => x.Count > 1)
+                    .ToList();
+
+                foreach (var duplicateObject in duplicates)
+                {
+                    var error = new ExcelParseErrorModel
+                    {
+                        Row = 0,
+                        Message = _localizationService.GetStringWithFormat(
+                            "EFormWithNameAlreadyExistsInTheImportedDocument",
+                            duplicateObject.Key)
+                    };
+
+                    excelErrors.Add(error);
+                }
+
+
+                result.Errors = excelErrors;
+
+                if (excelErrors.Any())
+                {
+                    return new OperationDataResult<ExcelParseResult>(
+                        true,
+                        result);
+                }
+
+                // Process file result
+                foreach (var importExcelModel in fileResult)
+                {
+                    if (!string.IsNullOrEmpty(importExcelModel.Name) || !string.IsNullOrEmpty(importExcelModel.EformXML))
+                    {
+                        var tags = await core.GetAllTags(false);
+                        var tagIds = new List<int>();
+
+                        // Process tags
+                        foreach (var tag in importExcelModel.Tags)
+                        {
+                            var tagId = tags
+                                .Where(x => string.Equals(x.Name, tag, StringComparison.CurrentCultureIgnoreCase))
+                                .Select(x => x.Id)
+                                .FirstOrDefault();
+
+                            if (tagId < 1)
+                            {
+                                tagId = await core.TagCreate(tag);
+                            }
+
+                            tagIds.Add(tagId);
+                        }
+
+                        // Create eform
+                        var newTemplate = await core.TemplateFromXml(importExcelModel.EformXML);
+                        newTemplate = await core.TemplateUploadData(newTemplate);
+
+                        if (newTemplate == null)
+                            throw new Exception(_localizationService.GetString("eFormCouldNotBeCreated"));
+
+                        // Set tags to eform
+                        await core.TemplateCreate(newTemplate);
+                        if (tagIds.Any())
+                        {
+                            await core.TemplateSetTags(newTemplate.Id, tagIds);
+                        }
+                    }
+                }
+
+                result.Message = _localizationService.GetString("ImportFinishedSuccessfully");
+
+                return new OperationDataResult<ExcelParseResult>(true, result);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                return new OperationDataResult<ExcelParseResult>(false, e.Message);
             }
         }
 

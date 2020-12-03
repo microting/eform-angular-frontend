@@ -1,0 +1,63 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{ 'Tags management' | translate }}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <button mdbBtn class="btn-success btn-icon btn-sm m-0 ml-auto"
+                    id="newTagBtn"
+                    (click)="showCreateTagModal()"
+                    type="button">
+              <fa-icon icon="plus" [fixedWidth]="true" size="lg"></fa-icon>
+              {{'Add new' | translate}}
+            </button>
+            <div class="panel panel-default w-100 pt-2">
+              <div class="panel-body scrollable-block">
+                <ul class="list-group" id="tagsList">
+                  <li class="list-group-item"
+                      *ngFor="let tag of availableTags">
+                    <div class="row" id="tagRow">
+                      <div id="tagName" class="col-md-8 col-sm-6 col-xs-6">
+                        {{tag.name}}
+                      </div>
+                      <div class="col-md-4 col-sm-6 col-xs-6">
+                        <div class="d-flex">
+                          <div class="ml-auto">
+                            <a>
+                              <fa-icon icon="pen" size="lg" [fixedWidth]="true" id="editTagBtn"
+                                       (click)="showEditTagModal(tag)"></fa-icon>
+                            </a>
+                            <a>
+                              <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true" id="deleteTagBtn"
+                                       (click)="showDeleteTagModal(tag)"></fa-icon>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button mdbBtn class="btn-accent text-black-50 btn-small-height" (click)="frame.hide()"
+                id="tagsModalCloseBtn">
+          {{ 'Close' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-shared-tag-edit #tagEditModal (tagUpdate)="onTagUpdate($event)"
+                     (tagUpdateCancelled)="onChildrenModalHide()"></app-shared-tag-edit>
+<app-shared-tag-create #tagCreateModal (tagCreate)="onTagCreate($event)"
+                       (tagCreateCancelled)="onChildrenModalHide()"></app-shared-tag-create>
+<app-shared-tag-delete #tagDeleteModal (tagDelete)="onTagDelete($event)"
+                       (tagDeleteCancelled)="onChildrenModalHide()"></app-shared-tag-delete>

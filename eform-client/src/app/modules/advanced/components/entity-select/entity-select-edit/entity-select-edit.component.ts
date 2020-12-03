@@ -50,6 +50,7 @@ export class EntitySelectEditComponent implements OnInit {
     this.entitySelectService.getEntitySelectableGroup(this.selectedGroupId).subscribe((data) => {
       if (data && data.success) {
         this.advEntitySelectableGroupEditModel.name = data.model.name;
+        this.advEntitySelectableGroupEditModel.description = data.model.description;
         this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels = data.model.entityGroupItemLst;
         this.advEntitySelectableGroupEditModel.groupUid = this.selectedGroupId;
         this.advEntitySelectableGroupEditModel.isLocked = data.model.isLocked;

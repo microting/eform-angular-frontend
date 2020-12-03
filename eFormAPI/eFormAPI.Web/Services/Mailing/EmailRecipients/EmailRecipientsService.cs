@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2019 Microting A/S
+Copyright (c) 2007 - 2020 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -34,6 +34,7 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
     using Microting.eForm.Infrastructure.Constants;
+    using Microting.eFormApi.BasePn.Abstractions;
     using Microting.eFormApi.BasePn.Infrastructure.Extensions;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
     using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
@@ -129,8 +130,8 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
         public async Task<OperationResult> UpdateEmailRecipient(
             EmailRecipientUpdateModel requestModel)
         {
-            using (var transaction = await _dbContext.Database.BeginTransactionAsync())
-            {
+            //using (var transaction = await _dbContext.Database.BeginTransactionAsync())
+//                {
                 try
                 {
                     var emailRecipient = await _dbContext.EmailRecipients
@@ -139,7 +140,7 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
 
                     if (emailRecipient == null)
                     {
-                        transaction.Rollback();
+                        //transaction.Rollback();
                         return new OperationResult(false,
                             _localizationService.GetString("EmailRecipientNotFound"));
                     }
@@ -189,7 +190,7 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
                     _dbContext.EmailRecipients.Update(emailRecipient);
                     await _dbContext.SaveChangesAsync();
 
-                    transaction.Commit();
+                    //transaction.Commit();
                     return new OperationResult(true,
                         _localizationService.GetString("EmailRecipientUpdatedSuccessfully"));
                 }
@@ -197,11 +198,11 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
                 {
                     Console.WriteLine(e);
                     _logger.LogError(e.Message);
-                    transaction.Rollback();
+                    //transaction.Rollback();
                     return new OperationResult(false,
                         _localizationService.GetString("ErrorWhileUpdatingEmailRecipient"));
                 }
-            }
+            //}
         }
 
         public async Task<OperationResult> DeleteEmailRecipient(int id)
@@ -234,8 +235,8 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
 
         public async Task<OperationResult> CreateEmailRecipient(EmailRecipientsCreateModel createModel)
         {
-            using (var transaction = await _dbContext.Database.BeginTransactionAsync())
-            {
+            //using (var transaction = await _dbContext.Database.BeginTransactionAsync())
+//                {
                 try
                 {
                     var tagIds = new List<int>();
@@ -302,7 +303,7 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
 
                     await _dbContext.SaveChangesAsync();
 
-                    transaction.Commit();
+                    //transaction.Commit();
                     return new OperationResult(true,
                         _localizationService.GetString("EmailRecipientCreatedSuccessfully"));
                 }
@@ -310,11 +311,11 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
                 {
                     Console.WriteLine(e);
                     _logger.LogError(e.Message);
-                    transaction.Commit();
+                    //transaction.Commit();
                     return new OperationResult(false,
                         _localizationService.GetString("ErrorWhileCreatingEmailRecipient"));
                 }
-            }
+            //}
         }
 
         public async Task<OperationDataResult<EmailRecipientTagCommonModel[]>> GetEmailRecipientsAndTags()

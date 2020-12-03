@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2019 Microting A/S
+Copyright (c) 2007 - 2020 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -33,28 +33,13 @@ namespace eFormAPI.Web.Infrastructure.Database.Factories
     {
         public BaseDbContext CreateDbContext(string[] args)
         {
+            var defaultCs = "Server = localhost; port = 3306; Database = eform-angular-migration; user = root; Convert Zero Datetime = true;";
             var optionsBuilder = new DbContextOptionsBuilder<BaseDbContext>();
-            if (args.Any())
-            {
-                if (!args.FirstOrDefault().Equals("..."))
-                {
-                    optionsBuilder.UseMySql(args.FirstOrDefault(), mysqlOptions =>
-                    {
-                        mysqlOptions.ServerVersion(new Version(10, 4, 0), ServerType.MariaDb);
-                    });
+            optionsBuilder.UseMySql(args.Any() ? ((args[0] == "..." ? defaultCs : args[0])) : defaultCs, b => b.EnableRetryOnFailure());
+            optionsBuilder.UseLazyLoadingProxies(true);
 
-                    optionsBuilder.UseLazyLoadingProxies();
-                    return new BaseDbContext(optionsBuilder.Options);
-                }
-                else
-                {
-                    return new BaseDbContext(optionsBuilder.Options);
-                }
-            }
-            else
-            {
-                throw new ArgumentNullException("Connection string not present");
-            }
+            return new BaseDbContext(optionsBuilder.Options);
+            
 //            optionsBuilder.UseMySql(@"Server = localhost; port = 3306; Database = eform-angular-migration; user = root; Convert Zero Datetime = true;");
 //            dotnet ef migrations add InitialCreate --project eFormAPI.Web --startup-project DBMigrator
         }

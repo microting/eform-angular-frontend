@@ -76,7 +76,7 @@
               <div class="d-flex flex-wrap">
                 <div class="mr-auto">
                   <p class="mb-0 align-self-center">{{ 'Image' | translate }}</p>
-                  <img
+                  <img *ngIf="loginPageImageLink"
                     class="p-3"
                     height="112" width="90"
                     [src]="loginPageImageLink | authImage | async">
@@ -100,8 +100,7 @@
                     id="loginPageImageVisibilityToggler"
                     [class.btn-success]="adminSettingsModel.loginPageSettingsModel.imageLinkVisible"
                     [class.btn-danger]="!adminSettingsModel.loginPageSettingsModel.imageLinkVisible"
-                    (click)="adminSettingsModel.loginPageSettingsModel.imageLinkVisible
-            = !adminSettingsModel.loginPageSettingsModel.imageLinkVisible">
+                    (click)="adminSettingsModel.loginPageSettingsModel.imageLinkVisible = !adminSettingsModel.loginPageSettingsModel.imageLinkVisible">
                     <fa-icon icon="eye" [fixedWidth]="true" size="lg" *ngIf="adminSettingsModel.loginPageSettingsModel.imageLinkVisible"></fa-icon>
 
                     <fa-icon icon="eye-slash" [fixedWidth]="true" size="lg" *ngIf="!adminSettingsModel.loginPageSettingsModel.imageLinkVisible"></fa-icon>
@@ -170,7 +169,7 @@
               <div class="d-flex flex-wrap">
                 <div class="mr-auto">
                   <p class="mb-0 align-self-center">{{ 'Logo' | translate }}</p>
-                  <img
+                  <img *ngIf="headerImageLink"
                     class="p-3" width="150"
                     [src]="headerImageLink | authImage | async">
                 </div>
@@ -210,7 +209,7 @@
         <div class="card">
           <div class="card-header card-header-simple">
             <div class="d-flex justify-content-between align-items-center">
-              {{ 'SDK Information' | translate}}
+              {{ 'SDK information' | translate}}
             </div>
           </div>
           <div class="card-body">
@@ -223,38 +222,38 @@
                 <label for="customerNo">{{ 'Customer no' | translate }}</label>
               </div>
 
-              <div class="md-form input-group">
-                <input mdbInput class="form-control"
-                       [(ngModel)]="adminSettingsModel.sdkSettingsModel.logLevel"
-                       type="text" name="logLevel" id="logLevel">
-                <label for="logLevel">{{ 'Log level' | translate }}</label>
-              </div>
+<!--              <div class="md-form input-group">-->
+<!--                <input mdbInput class="form-control"-->
+<!--                       [(ngModel)]="adminSettingsModel.sdkSettingsModel.logLevel"-->
+<!--                       type="text" name="logLevel" id="logLevel">-->
+<!--                <label for="logLevel">{{ 'Log level' | translate }}</label>-->
+<!--              </div>-->
 
-              <div class="md-form input-group">
-                <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.sdkSettingsModel.logLimit"
-                       type="text" name="logLimit" id="logLimit">
-                <label for="logLimit">{{ 'Log limit' | translate }}</label>
-              </div>
+<!--              <div class="md-form input-group">-->
+<!--                <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.sdkSettingsModel.logLimit"-->
+<!--                       type="text" name="logLimit" id="logLimit">-->
+<!--                <label for="logLimit">{{ 'Log limit' | translate }}</label>-->
+<!--              </div>-->
 
               <div class="md-form input-group">
                 <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.sdkSettingsModel.fileLocationPicture"
                        type="text" value=""
                        name="fileLocationPicture" id="fileLocationPicture">
-                <label>{{ 'Filelocation Picture' | translate }}</label>
+                <label>{{ 'File location picture' | translate }}</label>
               </div>
 
               <div class="md-form input-group">
                 <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.sdkSettingsModel.fileLocationPdf"
                        type="text" value=""
                        name="fileLocationPdf" id="fileLocationPdf">
-                <label>{{ 'Filelocation PDF' | translate }}</label>
+                <label>{{ 'File location PDF' | translate }}</label>
               </div>
 
               <div class="md-form input-group">
                 <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.sdkSettingsModel.fileLocationReports"
                        type="text" value=""
                        name="fileLocationReports" id="fileLocationReports">
-                <label>{{ 'Filelocation Jasper report files' | translate }}</label>
+                <label>{{ 'File location Jasper report files' | translate }}</label>
               </div>
 
               <div class="md-form input-group">
@@ -270,47 +269,47 @@
     </div>
 
     <div class="row mt-4">
-      <div class="col-md-6 col-xs-12 mt-1 mb-4 control-block">
-        <div class="card">
-          <div class="card-header card-header-simple">
-            <div class="d-flex justify-content-between align-items-center">
-              {{ 'SMTP Information' | translate}}
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="container-fluid">
+<!--      <div class="col-md-6 col-xs-12 mt-1 mb-4 control-block">-->
+<!--        <div class="card">-->
+<!--          <div class="card-header card-header-simple">-->
+<!--            <div class="d-flex justify-content-between align-items-center">-->
+<!--              {{ 'SMTP Information' | translate}}-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="card-body">-->
+<!--            <div class="container-fluid">-->
 
-              <div class="md-form input-group">
-                <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.smtpSettingsModel.host"
-                       placeholder="smtp.gmail.com" type="text" name="host"
-                       id="host">
-                <label for="host">{{ 'Host' | translate }}</label>
-              </div>
+<!--              <div class="md-form input-group">-->
+<!--                <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.smtpSettingsModel.host"-->
+<!--                       placeholder="smtp.gmail.com" type="text" name="host"-->
+<!--                       id="host">-->
+<!--                <label for="host">{{ 'Host' | translate }}</label>-->
+<!--              </div>-->
 
-              <div class="md-form input-group">
-                <input mdbInput class="form-control"
-                       [(ngModel)]="adminSettingsModel.smtpSettingsModel.port"
-                       placeholder="1433"
-                       type="text" name="port" id="port">
-                <label for="port">{{ 'Port' | translate }}</label>
-              </div>
+<!--              <div class="md-form input-group">-->
+<!--                <input mdbInput class="form-control"-->
+<!--                       [(ngModel)]="adminSettingsModel.smtpSettingsModel.port"-->
+<!--                       placeholder="1433"-->
+<!--                       type="text" name="port" id="port">-->
+<!--                <label for="port">{{ 'Port' | translate }}</label>-->
+<!--              </div>-->
 
-              <div class="md-form input-group">
-                <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.smtpSettingsModel.login"
-                       placeholder="userName" type="text" name="login" id="login">
-                <label for="login">{{ 'Login' | translate }}</label>
-              </div>
+<!--              <div class="md-form input-group">-->
+<!--                <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.smtpSettingsModel.login"-->
+<!--                       placeholder="userName" type="text" name="login" id="login">-->
+<!--                <label for="login">{{ 'Login' | translate }}</label>-->
+<!--              </div>-->
 
-              <div class="md-form input-group">
-                <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.smtpSettingsModel.password"
-                       placeholder="12345678909876543210adfecdfefdae" type="password" value=""
-                       name="password" id="password">
-                <label>{{ 'Password' | translate }}</label>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+<!--              <div class="md-form input-group">-->
+<!--                <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.smtpSettingsModel.password"-->
+<!--                       placeholder="12345678909876543210adfecdfefdae" type="password" value=""-->
+<!--                       name="password" id="password">-->
+<!--                <label>{{ 'Password' | translate }}</label>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
       <div class="col-md-6 col-xs-12 mt-1 mb-4 control-block">
         <div class="card">
           <div class="card-header card-header-simple">
@@ -325,7 +324,7 @@
                 <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.swiftSettingsModel.swiftEnabled"
                        placeholder="false" type="text" name="swiftEnabled"
                        id="swiftEnabled">
-                <label for="swiftEnabled">{{ 'Swift Enabled' | translate }}</label>
+                <label for="swiftEnabled">{{ 'Swift enabled' | translate }}</label>
               </div>
 
               <div class="md-form input-group" *ngIf="adminSettingsModel.swiftSettingsModel.swiftEnabled">
@@ -346,57 +345,57 @@
                 <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.swiftSettingsModel.swiftEndpoint"
                        placeholder="http://172.16.4.4:8080/swift/v1" type="text" value=""
                        name="swiftEndpoint" id="swiftEndpoint">
-                <label for="swiftEndpoint">{{ 'Swift Endpoint' | translate }}</label>
+                <label for="swiftEndpoint">{{ 'Swift endpoint' | translate }}</label>
               </div>
 
               <div class="md-form input-group" *ngIf="adminSettingsModel.swiftSettingsModel.swiftEnabled">
                 <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.swiftSettingsModel.keystoneEndpoint"
                        placeholder="http://172.16.4.4:5000/v2.0" type="text" value=""
                        name="keystoneEndpoint" id="keystoneEndpoint">
-                <label for="keystoneEndpoint">{{ 'Keystone Endpoint' | translate }}</label>
+                <label for="keystoneEndpoint">{{ 'Keystone endpoint' | translate }}</label>
               </div>
 
               <div class="md-form input-group">
                 <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.s3SettingsModel.s3Enabled"
                        placeholder="false" type="text"  name="s3Enabled"
                        id="s3Enabled">
-                <label for="swiftEnabled">{{ 'S3 Enabled' | translate }}</label>
+                <label for="swiftEnabled">{{ 'S3 enabled' | translate }}</label>
               </div>
 
               <div class="md-form input-group" *ngIf="adminSettingsModel.s3SettingsModel.s3Enabled">
                 <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.s3SettingsModel.s3AccessKeyId"
                        placeholder="false" type="text"  name="s3AccessKeyId"
                        id="s3AccessKeyId">
-                <label for="swiftEnabled">{{ 'S3 AccessKey' | translate }}</label>
+                <label for="swiftEnabled">{{ 'S3 accessKey' | translate }}</label>
               </div>
 
               <div class="md-form input-group" *ngIf="adminSettingsModel.s3SettingsModel.s3Enabled">
                 <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.s3SettingsModel.s3SecrectAccessKey"
                        placeholder="false" type="password" name="s3SecrectAccessKey"
                        id="s3SecrectAccessKey">
-                <label for="swiftEnabled">{{ 'S3 SecretAccessKey' | translate }}</label>
+                <label for="swiftEnabled">{{ 'S3 secretAccessKey' | translate }}</label>
               </div>
 
               <div class="md-form input-group" *ngIf="adminSettingsModel.s3SettingsModel.s3Enabled">
                 <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.s3SettingsModel.s3Endpoint"
                        placeholder="false" type="text" name="s3Endpoint"
                        id="s3Endpoint">
-                <label for="swiftEnabled">{{ 'S3 Endpoint' | translate }}</label>
+                <label for="swiftEnabled">{{ 'S3 endpoint' | translate }}</label>
               </div>
 
               <div class="md-form input-group" *ngIf="adminSettingsModel.s3SettingsModel.s3Enabled">
                 <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.s3SettingsModel.s3BucketName"
                        placeholder="false" type="password" name="s3BucketName"
                        id="s3BucketName">
-                <label for="swiftEnabled">{{ 'S3 Bucket name' | translate }}</label>
+                <label for="swiftEnabled">{{ 'S3 bucket name' | translate }}</label>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+<!--    </div>-->
 
-    <div class="row mt-4">
+<!--    <div class="row mt-4">-->
       <div class="col-md-6 col-xs-12 mt-1 mb-4 control-block">
         <div class="card">
           <div class="card-header card-header-simple">
@@ -409,7 +408,7 @@
 
               <div class="md-form input-group">
                 <input mdbInput class="form-control" [(ngModel)]="adminSettingsModel.sendGridSettingsModel.apiKey"
-                       placeholder="12345678909876543210adfecdfefdae" type="text" value=""
+                       placeholder="12345678909876543210adfecdfefdae" type="password" value=""
                        name="sendGridKey" id="sendGridKey">
                 <label for="sendGridKey">{{ 'Key' | translate }}</label>
               </div>

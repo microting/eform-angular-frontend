@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2019 Microting A/S
+Copyright (c) 2007 - 2020 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -177,6 +177,24 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 {
                     Id = 22,
                     PermissionId = AuthConsts.DbIds.Permissions.Cases.CaseGetPdf,
+                    SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformUsers
+                },
+                new GroupPermission()
+                {
+                    Id = 28,
+                    PermissionId = AuthConsts.DbIds.Permissions.EmailRecipients.Create,
+                    SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformUsers
+                },
+                new GroupPermission()
+                {
+                    Id = 29,
+                    PermissionId = AuthConsts.DbIds.Permissions.EmailRecipients.Delete,
+                    SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformUsers
+                },
+                new GroupPermission()
+                {
+                    Id = 30,
+                    PermissionId = AuthConsts.DbIds.Permissions.EmailRecipients.Read,
                     SecurityGroupId = AuthConsts.DbIds.SecurityGroups.EformUsers
                 },
                 // eForm admin group

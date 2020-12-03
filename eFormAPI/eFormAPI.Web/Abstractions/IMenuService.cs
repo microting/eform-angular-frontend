@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2019 Microting A/S
+Copyright (c) 2007 - 2020 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,11 +24,18 @@ SOFTWARE.
 using System.Threading.Tasks;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using eFormAPI.Web.Services.NavigationMenu;
+using System.Collections.Generic;
+using eFormAPI.Web.Infrastructure.Database.Entities.Menu;
 
 namespace eFormAPI.Web.Abstractions
 {
     public interface IMenuService
     {
         Task<OperationDataResult<MenuModel>> GetCurrentUserMenu();
+        Task<OperationResult> ResetCurrentUserMenu();
+        Task<OperationDataResult<NavigationMenuModel>> GetCurrentNavigationMenu();
+        Task<OperationDataResult<NavigationMenuModel>> UpdateCurrentUserMenu(List<NavigationMenuItemModel> menuItemModels);
+       
     }
 }

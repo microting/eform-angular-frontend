@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2019 Microting A/S
+Copyright (c) 2007 - 2020 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,10 +27,15 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using Castle.Core.Internal;
+using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Hosting.Helpers;
 using eFormAPI.Web.Hosting.Settings;
+using eFormAPI.Web.Infrastructure.Const;
 using eFormAPI.Web.Infrastructure.Database;
+using eFormAPI.Web.Infrastructure.Database.Entities.Menu;
 using eFormAPI.Web.Infrastructure.Database.Factories;
+using eFormAPI.Web.Services.PluginsManagement;
+using eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -48,12 +53,14 @@ namespace eFormAPI.Web
     {
         private static CancellationTokenSource _cancelTokenSource = new CancellationTokenSource();
         private static bool _shouldBeRestarted;
-        public static List<IEformPlugin> Plugins = new List<IEformPlugin>();
+        public static List<IEformPlugin> EnabledPlugins = new List<IEformPlugin>();
+        public static List<IEformPlugin> DisabledPlugins = new List<IEformPlugin>();
 
         public static void Main(string[] args)
         {
             var host = BuildWebHost(args);
             MigrateDb(host);
+            LoadNavigationMenuEnabledPlugins(host);
             host.RunAsync(_cancelTokenSource.Token)
                 .Wait();
 
@@ -82,7 +89,43 @@ namespace eFormAPI.Web
             _cancelTokenSource.Cancel();
         }
 
-       // public static ReloadDbConfiguration ReloadDbConfigurationDelegate { get; set; }
+        // public static ReloadDbConfiguration ReloadDbConfigurationDelegate { get; set; }
+
+        public static async void LoadNavigationMenuEnabledPlugins(IWebHost webHost)
+        {
+            using (var scope = webHost.Services.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                BaseDbContext dbContext = null;
+                try
+                {
+                    dbContext = scope.ServiceProvider.GetRequiredService<BaseDbContext>();
+                }
+                catch
+                {
+                }
+
+                if (dbContext != null)
+                {
+                    using (dbContext = scope.ServiceProvider.GetRequiredService<BaseDbContext>())
+                    {
+                        try
+                        {
+                            foreach(var enablePlugin in Program.EnabledPlugins)
+                            {
+                                var pluginManagmentService = scope.ServiceProvider.GetRequiredService<IPluginsManagementService>();
+
+                                await pluginManagmentService.LoadNavigationMenuDuringStartProgram(enablePlugin.PluginId);
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+                            logger.LogError(e, "Error while loading navigation menu from enabled plugins");
+                        }
+                    }
+                }
+            }
+        }
 
         public static void MigrateDb(IWebHost webHost)
         {
@@ -154,11 +197,12 @@ namespace eFormAPI.Web
                     var defaultConnectionString = mainSettings?.ConnectionStrings?.DefaultConnection;
                     config.AddEfConfiguration(defaultConnectionString);
 
-                    Plugins = PluginHelper.GetPlugins(defaultConnectionString);
+                    EnabledPlugins = PluginHelper.GetPlugins(defaultConnectionString);
+                    DisabledPlugins = PluginHelper.GetDisablePlugins(defaultConnectionString);
                     var contextFactory = new BaseDbContextFactory();
                     using (var dbContext = contextFactory.CreateDbContext(new[] {defaultConnectionString}))
                     {
-                        foreach (var plugin in Plugins)
+                        foreach (var plugin in EnabledPlugins)
                         {
                             var pluginEntity = dbContext.EformPlugins
                                 .FirstOrDefault(x => x.PluginId == plugin.PluginId);

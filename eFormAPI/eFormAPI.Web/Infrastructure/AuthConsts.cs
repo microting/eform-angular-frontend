@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2019 Microting A/S
+Copyright (c) 2007 - 2020 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -115,6 +115,13 @@ namespace eFormAPI.Web.Infrastructure
                 public const string UpdateJasperReport = "eforms_update_jasper_report";
                 public const string ExportEformExcel = "eform_export_eform_excel";
             }
+
+            public static class EmailRecipientsClaims
+            {
+                public const string Create = "email_recipient_create";
+                public const string Delete = "email_recipient_delete";
+                public const string Read = "email_recipient_read";
+            }
         }
 
         public static class EformPolicies
@@ -200,6 +207,13 @@ namespace eFormAPI.Web.Infrastructure
                 public const string UpdateJasperReport = EformClaims.EformsClaims.UpdateJasperReport;
                 public const string ExportEformExcel = EformClaims.EformsClaims.ExportEformExcel;
             }
+
+            public static class EmailRecipients
+            {
+                public const string Create = EformClaims.EmailRecipientsClaims.Create;
+                public const string Delete = EformClaims.EmailRecipientsClaims.Delete;
+                public const string Read = EformClaims.EmailRecipientsClaims.Read;
+            }
         }
 
         public static class DbIds
@@ -221,6 +235,7 @@ namespace eFormAPI.Web.Infrastructure
                 public const int DeviceUsers = 7;
                 public const int Cases = 8;
                 public const int Eforms = 9;
+                public const int EmailRecipients = 10;
             }
 
             public static class Permissions
@@ -305,6 +320,13 @@ namespace eFormAPI.Web.Infrastructure
                     public const int ReadJasperReport = 43;
                     public const int UpdateJasperReport = 44;
                     public const int ExportEformExcel = 47;
+                }
+
+                public static class EmailRecipients
+                {
+                    public const int Create = 49;
+                    public const int Delete = 50;
+                    public const int Read = 51;
                 }
             }
         }

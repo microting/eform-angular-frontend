@@ -12,6 +12,7 @@ import {
   WorkerEditComponent,
   WorkersComponent
 } from './components';
+import {AuthGuard} from 'src/app/common/guards';
 
 const routes: Routes = [
   {
@@ -85,7 +86,12 @@ const routes: Routes = [
     component: FoldersComponent,
     canActivate: [ClaimsGuard],
     data: {requiredClaim: UserClaimsEnum.entitySelectRead}
-  }
+  },
+  {
+    path: 'navigation-menu',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./modules/navigation-menu/navigation-menu.module').then(m => m.NavigationMenuModule)
+  },
 ];
 
 

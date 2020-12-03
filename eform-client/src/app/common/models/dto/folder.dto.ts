@@ -1,9 +1,11 @@
 export class FolderDto {
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
   id: number;
   name: string;
-  description: string;
-  parentId: number;
-  microtingUId: number;
+  description?: string;
+  parent?: FolderDto;
+  parentId?: number;
+  microtingUId?: number;
+  children?: FolderDto[];
 }

@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2019 Microting A/S
+Copyright (c) 2007 - 2020 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using eFormAPI.Web.Infrastructure.Database.Entities.Menu;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
 
 namespace eFormAPI.Web.Infrastructure.Database.Entities
@@ -35,5 +37,8 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities
         public string ConnectionString { get; set; }
 
         public int Status { get; set; }
+
+        public virtual List<MenuTemplate> MenuTemplates { get; set; }
+            = new List<MenuTemplate>();
     }
 }

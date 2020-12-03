@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2019 Microting A/S
+Copyright (c) 2007 - 2020 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -114,8 +114,8 @@ namespace eFormAPI.Web.Services.Security
                         _localizationService.GetString("SecurityGroupNotFound"));
                 }
 
-                using (var transaction = await _dbContext.Database.BeginTransactionAsync())
-                {
+                //using (var transaction = await _dbContext.Database.BeginTransactionAsync())
+//                {
                     var enabledList = requestModel.Permissions
                         .Where(x => x.IsEnabled)
                         .Select(x => x.Id)
@@ -152,8 +152,8 @@ namespace eFormAPI.Web.Services.Security
                     // Update claims in memory store
                     await _claimsService.UpdateAuthenticatedUsers(new List<int> { requestModel.GroupId });
 
-                    transaction.Commit();
-                }
+                    //transaction.Commit();
+//                }
 
                 return new OperationResult(true,
                     _localizationService.GetString("PermissionsUpdatedSuccessfully"));

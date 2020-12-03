@@ -26,6 +26,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   @ViewChild('modalRemoveEform', { static: true }) modalRemoveEform;
   @ViewChild('modalUploadZip', { static: true }) modalUploadZip;
   @ViewChild('modalExcel', { static: true }) modalExcel;
+  @ViewChild('modalEformsImport', { static: true }) modalEformsImport;
 
   searchSubject = new Subject();
   localPageSettings: PageSettingsModel = new PageSettingsModel();
@@ -36,6 +37,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
 
   get userClaims() { return this.authService.userClaims; }
   get userClaimsEnum() { return UserClaimsEnum; }
+  get userRole() { return this.authService.currentRole; }
 
   items = [
     'New',
@@ -179,12 +181,12 @@ export class EformsPageComponent implements OnInit, OnDestroy {
     if (itemName === 'XML') {
       this.eFormService.downloadEformXML(templateId).subscribe(data => {
         const blob = new Blob([data]);
-        saveAs(blob, `template_${templateId}.csv`);
+        saveAs(blob, `eForm_${templateId}.xml`);
       });
     } else {
       this.eFormService.downloadCSVFile(templateId).subscribe(data => {
         const blob = new Blob([data]);
-        saveAs(blob, `template_${templateId}.csv`);
+        saveAs(blob, `eForm_${templateId}.csv`);
       });
     }
   }
@@ -199,6 +201,11 @@ export class EformsPageComponent implements OnInit, OnDestroy {
 
   openDownloadExcelModal(templateDto: TemplateDto) {
     this.modalExcel.show(templateDto);
+  }
+
+
+  openEformsImportModal() {
+    this.modalEformsImport.show();
   }
 
   checkEformPermissions(templateId: number, permissionIndex: number) {

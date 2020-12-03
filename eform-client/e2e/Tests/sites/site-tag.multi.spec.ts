@@ -71,4 +71,16 @@ describe('Site tags', function () {
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     expect(tagExist, false);
   });
+  it('should delete user', function () {
+    loginPage.open('/');
+    myEformsPage.Navbar.goToDeviceUsersPage();
+    const rowNumBeforeDelete = deviceUsersPage.rowNum;
+    $('#deviceUserId').waitForDisplayed({timeout: 20000});
+    const lastDeviceUser = deviceUsersPage.getDeviceUser(rowNumBeforeDelete);
+    lastDeviceUser.deleteBtn.waitForDisplayed({timeout: 5000});
+    lastDeviceUser.deleteBtn.click();
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    deviceUsersPage.saveDeleteBtn.click();
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+  });
 });

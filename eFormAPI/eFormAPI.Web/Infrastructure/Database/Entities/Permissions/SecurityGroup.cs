@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2019 Microting A/S
+Copyright (c) 2007 - 2020 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -26,17 +26,23 @@ namespace eFormAPI.Web.Infrastructure.Database.Entities.Permissions
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using eFormAPI.Web.Infrastructure.Database.Entities.Menu;
     using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
 
     public class SecurityGroup : BaseEntity
     {
-        [StringLength(250)] 
+        [StringLength(250)]
         public string Name { get; set; }
+
+        public string RedirectLink { get; set; }
 
         public virtual ICollection<SecurityGroupUser> SecurityGroupUsers { get; set; }
             = new List<SecurityGroupUser>();
 
         public virtual ICollection<EformInGroup> EformsInGroup { get; set; }
             = new List<EformInGroup>();
+
+        public virtual List<MenuItemSecurityGroup> MenuItemSecurityGroups { get; set; }
+           = new List<MenuItemSecurityGroup>();
     }
 }
