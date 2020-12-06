@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {EventBrokerService, PluginClaimsHelper} from 'src/app/common/helpers';
 import {UserInfoModel, UserMenuModel} from 'src/app/common/models/user';
@@ -6,20 +6,25 @@ import {AppMenuService} from 'src/app/common/services/settings';
 import {AuthService, LocaleService, UserSettingsService} from 'src/app/common/services/auth';
 import {AdminService} from 'src/app/common/services/users';
 import {PermissionGuard} from '../../common/guards';
+import {Subscription} from 'rxjs';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss']
 })
-export class NavigationComponent implements OnInit {
+
+@AutoUnsubscribe()
+export class NavigationComponent implements OnInit, OnDestroy {
   @ViewChild('navigationMenu', { static: true }) menuElement: ElementRef;
   private _menuFlag = false;
   userInfo: UserInfoModel = new UserInfoModel;
-  userMenu: any;
-  navMenu: any;
+  // userMenu: any;
+  // navMenu: any;
   appMenu: UserMenuModel = new UserMenuModel();
   brokerListener: any;
+  getAppMenu$: Subscription;
 
   constructor(private authService: AuthService,
               private adminService: AdminService,
@@ -34,15 +39,21 @@ export class NavigationComponent implements OnInit {
       });
   }
 
+  ngOnDestroy() {
+  }
+
   ngOnInit() {
     if (this.authService.isAuth) {
+      this.getAppMenu$ = this.appMenuService.userMenuBehaviorSubject.subscribe((data) => {
+        this.appMenu = data;
+      });
       this.adminService.getCurrentUserInfo().subscribe((result) => {
         this.userInfo = result;
         this.userSettingsService.getUserSettings().subscribe(((data) => {
           localStorage.setItem('locale', data.model.locale);
-          this.initLocaleAsync().then(() => {
-            this.getNavigationMenu({takeFromCache: false});
-          });
+          // this.initLocaleAsync().then(() => {
+          //   this.getNavigationMenu({takeFromCache: true});
+          // });
         }));
       });
     }
@@ -73,8 +84,6 @@ export class NavigationComponent implements OnInit {
   }
 
   getNavigationMenu(takeFromCacheObject: {takeFromCache: boolean}) {
-    this.appMenuService.getAppMenu(takeFromCacheObject.takeFromCache).subscribe((data) => {
-      this.appMenu = data;
-    });
+    this.appMenuService.getAppMenu(takeFromCacheObject.takeFromCache);
   }
 }

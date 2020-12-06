@@ -116,7 +116,9 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
     ];
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    this.dragulaService.destroy('MENU_ITEMS');
+  }
 
   onItemDelete(
     model: NavigationMenuItemModel,

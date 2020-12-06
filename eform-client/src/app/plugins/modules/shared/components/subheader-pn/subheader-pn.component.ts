@@ -32,17 +32,19 @@ export class SubheaderPnComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.heading.nativeElement.style.fontSize = `${this.heandingSizeRem}rem`;
-    if (!this.title) {
       const href = this.router.url;
-      this.getAppMenu$ = this.appMenuService.getAppMenu().subscribe((data) => {
-        let title = this.searchTitle(href, data.leftMenu);
-        if (!title) {
-          title = this.searchTitle(href, data.rightMenu);
+      this.getAppMenu$ = this.appMenuService.userMenuBehaviorSubject.subscribe((data) => {
+        if (data.rightMenu.length > 0 && data.leftMenu.length > 0) {
+          let title = this.searchTitle(href, data.leftMenu);
+          if (!title) {
+            title = this.searchTitle(href, data.rightMenu);
+          }
+          if (title) {
+            this.getTranslation$ = this.translateService.get(title)
+              .subscribe(result => this.title = result);
+          }
         }
-        this.getTranslation$ = this.translateService.get(title)
-          .subscribe(result => this.title = result);
       });
-    }
   }
   searchTitle(href: string, menuItems: MenuItemModel[]): string {
     for (const menuItem of menuItems) {
