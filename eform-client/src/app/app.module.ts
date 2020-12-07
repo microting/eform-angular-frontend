@@ -27,11 +27,13 @@ import {
   SimpleLayoutComponent,
   SpinnerComponent,
 } from './components';
-// import {assertLessThan} from '@angular/core/src/render3/assert';
-// import {importedIcons} from 'src/app/common/const';
-import {NgxChartsModule} from '@swimlane/ngx-charts';
-import {OwlDateTimeModule, OwlNativeDateTimeModule} from '@danielmoncada/angular-datetime-picker';
-import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import {
+  OwlDateTimeModule,
+  OwlNativeDateTimeModule,
+} from 'ng-pick-datetime-ex';
+import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
+
 @NgModule({
   declarations: [
     // Layouts

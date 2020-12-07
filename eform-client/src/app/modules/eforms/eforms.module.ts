@@ -19,7 +19,7 @@ import {
   EformsBulkImportModalComponent
 } from './components';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {OwlDateTimeModule} from '@danielmoncada/angular-datetime-picker';
+import {OwlDateTimeModule} from 'ng-pick-datetime-ex';
 
 @NgModule({
   imports: [
