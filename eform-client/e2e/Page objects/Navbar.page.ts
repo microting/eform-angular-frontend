@@ -135,7 +135,7 @@ export class Navbar {
     $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
   }
   public goToMenuEditorPage() {
-    this.advancedDropdown();
+    this.clickOnHeaderMenuItem('John Smith').click();
     this.menuEditorBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
   }
