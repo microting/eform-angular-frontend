@@ -38,6 +38,5 @@ namespace eFormAPI.Web.Infrastructure.Const
         public const int PluginsSettings = 10;
         public const int Folders = 11;
         public const int EmailRecipients = 12;
-        public const int MenuEditor = 13;
     }
 }

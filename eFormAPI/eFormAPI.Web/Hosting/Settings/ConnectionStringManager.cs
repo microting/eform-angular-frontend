@@ -51,13 +51,25 @@ namespace eFormAPI.Web.Hosting.Settings
             }
         }
 
-        public static void CreateDefalt(string filePath)
+        public static void CreateDefault(string filePath)
         {
             var mainSettings = new MainSettings()
             {
                 ConnectionStrings = new ConnectionStrings()
                 {
                     DefaultConnection = "...",
+                }
+            };
+            Save(mainSettings, filePath);
+        }
+
+        public static void CreateWithConnectionString(string filePath, string connectionString)
+        {
+            var mainSettings = new MainSettings()
+            {
+                ConnectionStrings = new ConnectionStrings()
+                {
+                    DefaultConnection = connectionString,
                 }
             };
             Save(mainSettings, filePath);

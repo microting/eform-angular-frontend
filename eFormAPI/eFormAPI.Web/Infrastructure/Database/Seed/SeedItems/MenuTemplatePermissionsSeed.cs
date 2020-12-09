@@ -24,8 +24,8 @@ SOFTWARE.
 
 namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
 {
-    using eFormAPI.Web.Infrastructure.Const;
-    using eFormAPI.Web.Infrastructure.Database.Entities.Menu;
+    using Const;
+    using Entities.Menu;
     using Microsoft.EntityFrameworkCore;
 
     public static class MenuTemplatePermissionsSeed

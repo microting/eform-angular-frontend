@@ -89,11 +89,73 @@ namespace eFormAPI.Web.Infrastructure
                         },
                         new PluginMenuItemModel
                         {
+                            Name = "Menu Editor",
+                            Link = "/advanced/navigation-menu",
+                            E2EId = "menu-editor",
+                            MenuTemplate = new PluginMenuTemplateModel
+                            {
+                                DefaultLink = "/advanced/navigation-menu",
+                                E2EId = "menu-editor",
+                                Name = "Menu Editor",
+                                Permissions = new List<PluginMenuTemplatePermissionModel>
+                                {
+                                    new PluginMenuTemplatePermissionModel
+                                    {
+                                        ClaimName = AuthConsts.EformClaims.UserManagementClaims.Read,
+                                        PermissionName = "Read",
+                                        PermissionTypeName = "User management",
+                                    },
+                                    new PluginMenuTemplatePermissionModel
+                                    {
+                                        ClaimName = AuthConsts.EformClaims.UserManagementClaims.Create,
+                                        PermissionName = "Create",
+                                        PermissionTypeName = "User management",
+                                    },
+                                    new PluginMenuTemplatePermissionModel
+                                    {
+                                        ClaimName = AuthConsts.EformClaims.UserManagementClaims.Delete,
+                                        PermissionName = "Delete",
+                                        PermissionTypeName = "User management",
+                                    },
+                                    new PluginMenuTemplatePermissionModel
+                                    {
+                                        ClaimName = AuthConsts.EformClaims.UserManagementClaims.Update,
+                                        PermissionName = "Update",
+                                        PermissionTypeName = "User management",
+                                    }
+                                }
+                              },
+                            Type = MenuItemTypeEnum.Link,
+                            Position = 1,
+                            Translations = new List<PluginMenuTranslationModel>
+                            {
+                              new PluginMenuTranslationModel
+                              {
+                                Name = "Menu Editor",
+                                Language = LanguageNames.English,
+                                LocaleName = LocaleNames.English,
+                              },
+                              new PluginMenuTranslationModel
+                              {
+                                Name = "Menu Editor",
+                                Language = LanguageNames.Danish,
+                                LocaleName = LocaleNames.Danish,
+                              },
+                              new PluginMenuTranslationModel
+                              {
+                                Name = "Menü-Editor",
+                                Language = LanguageNames.German,
+                                LocaleName = LocaleNames.German,
+                              }
+                            }
+                        },
+                        new PluginMenuItemModel
+                        {
                             E2EId = "settings",
                             Name = "Settings",
                             Type = MenuItemTypeEnum.Link,
                             Link = "/account-management/settings",
-                            Position = 1,
+                            Position = 2,
                             MenuTemplate = new PluginMenuTemplateModel
                             {
                                  DefaultLink =   "/account-management/settings",
@@ -127,7 +189,7 @@ namespace eFormAPI.Web.Infrastructure
                             Name = "Security",
                             Type = MenuItemTypeEnum.Link,
                             Link = "/security",
-                            Position = 2,
+                            Position = 3,
                             MenuTemplate = new PluginMenuTemplateModel
                             {
                                 DefaultLink = "/security",
@@ -161,7 +223,7 @@ namespace eFormAPI.Web.Infrastructure
                             Name = "Change password",
                             Type = MenuItemTypeEnum.Link,
                             Link = "/account-management/change-password",
-                            Position = 3,
+                            Position = 4,
                             MenuTemplate = new PluginMenuTemplateModel
                             {
                                 DefaultLink = "/account-management/change-password",
@@ -195,7 +257,7 @@ namespace eFormAPI.Web.Infrastructure
                             Name = "Logout",
                             Type = MenuItemTypeEnum.Link,
                             Link = "/auth/sign-out",
-                            Position = 4,
+                            Position = 5,
                             MenuTemplate = new PluginMenuTemplateModel
                             {
                                 DefaultLink = "/auth/sign-out",
