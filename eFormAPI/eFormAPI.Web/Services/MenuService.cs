@@ -125,12 +125,12 @@ namespace eFormAPI.Web.Services
                             Link = p.DefaultLink,
                             Translations = _dbContext.MenuTemplateTranslations
                                 .Where(x => x.MenuTemplateId == p.Id)
-                                .Select(p => new NavigationMenuTranslationModel
+                                .Select(e => new NavigationMenuTranslationModel
                                 {
-                                    Id = p.Id,
-                                    Name = p.Name,
-                                    LocaleName = p.LocaleName,
-                                    Language = p.Language,
+                                    Id = e.Id,
+                                    Name = e.Name,
+                                    LocaleName = e.LocaleName,
+                                    Language = e.Language,
        
                                  })
                                 .ToList(),
@@ -159,13 +159,13 @@ namespace eFormAPI.Web.Services
                                 E2EId = p.E2EId,
                                 Link = p.DefaultLink,
                                 Translations = _dbContext.MenuTemplateTranslations
-                                .Where(x => x.MenuTemplateId == p.Id)
-                                .Select(p => new NavigationMenuTranslationModel
+                                .Where(y => y.MenuTemplateId == p.Id)
+                                .Select(e => new NavigationMenuTranslationModel
                                 {
-                                    Id = p.Id,
-                                    Name = p.Name,
-                                    LocaleName = p.LocaleName,
-                                    Language = p.Language,
+                                    Id = e.Id,
+                                    Name = e.Name,
+                                    LocaleName = e.LocaleName,
+                                    Language = e.Language,
                                 })
                                 .ToList(),
                                 RelatedTemplateItemId = p.Id
@@ -283,9 +283,9 @@ namespace eFormAPI.Web.Services
                         Link = x.Link,
                         Guards = x.Type == MenuItemTypeEnum.Link
                             ? _dbContext.MenuTemplatePermissions
-                                    .Include(x => x.Permission)
+                                    .Include(y => y.Permission)
                                     .Where(d => d.MenuTemplateId == x.MenuTemplateId)
-                                    .Select(x => x.Permission.ClaimName)
+                                    .Select(y => y.Permission.ClaimName)
                                     .ToList()
                             : new List<string>(),
                         Position = x.Position,
@@ -302,9 +302,9 @@ namespace eFormAPI.Web.Services
                             Link = p.Link,
                             Guards = p.Type == MenuItemTypeEnum.Link
                             ? _dbContext.MenuTemplatePermissions
-                                    .Include(x => x.Permission)
+                                    .Include(y => y.Permission)
                                     .Where(d => d.MenuTemplateId == p.MenuTemplateId)
-                                    .Select(x => x.Permission.ClaimName)
+                                    .Select(y => y.Permission.ClaimName)
                                     .ToList()
                             : new List<string>(),
                             Position = p.Position,
@@ -315,22 +315,22 @@ namespace eFormAPI.Web.Services
 
                 var orderedRightMenu = RightMenuStorage.GetRightMenu().Select(x => new MenuItemModel
                 {
-                    Name = x.Translations.FirstOrDefault(x => x.LocaleName == currentLocale)?.Name ?? x.Name,
+                    Name = x.Translations.FirstOrDefault(y => y.LocaleName == currentLocale)?.Name ?? x.Name,
                     LocaleName = currentLocale,
                     E2EId = x.E2EId,
                     Link = x.Link,
                     Guards = x.Type == MenuItemTypeEnum.Link
-                            ? x.MenuTemplate.Permissions.Select(x => x.ClaimName).ToList()
+                            ? x.MenuTemplate.Permissions.Select(y => y.ClaimName).ToList()
                             : new List<string>(),
                     Position = x.Position,
                     MenuItems = x.ChildItems.Select(d => new MenuItemModel
                     {
-                        Name = d.Translations.First(x => x.LocaleName == currentLocale).Name,
+                        Name = d.Translations.First(y => y.LocaleName == currentLocale).Name,
                         LocaleName = currentLocale,
                         E2EId = d.E2EId,
                         Link = d.Link,
                         Guards = d.Type == MenuItemTypeEnum.Link
-                            ? d.MenuTemplate.Permissions.Select(x => x.ClaimName).ToList()
+                            ? d.MenuTemplate.Permissions.Select(y => y.ClaimName).ToList()
                             : new List<string>(),
                         Position = d.Position,
                     })
