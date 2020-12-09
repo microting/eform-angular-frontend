@@ -20,21 +20,23 @@ import {
 } from './components';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {OwlDateTimeModule} from 'ng-pick-datetime-ex';
+import {SharedPnModule} from 'src/app/plugins/modules/shared/shared-pn.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    EformsRouting,
-    NgSelectModule,
-    MDBBootstrapModule,
-    EformSharedModule,
-    ReactiveFormsModule,
-    FileUploadModule,
-    FormsModule,
-    TranslateModule.forChild(),
-    FontAwesomeModule,
-    OwlDateTimeModule
-  ],
+    imports: [
+        CommonModule,
+        EformsRouting,
+        NgSelectModule,
+        MDBBootstrapModule,
+        EformSharedModule,
+        ReactiveFormsModule,
+        FileUploadModule,
+        FormsModule,
+        TranslateModule.forChild(),
+        FontAwesomeModule,
+        OwlDateTimeModule,
+        SharedPnModule
+    ],
   declarations: [
     EformsPageComponent,
     EformEditParingModalComponent,

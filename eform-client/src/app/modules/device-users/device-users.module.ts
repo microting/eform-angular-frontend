@@ -14,19 +14,21 @@ import {
 import {DeviceUsersRouting} from './device-users.routing';
 import {TranslateModule} from '@ngx-translate/core';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {SharedPnModule} from 'src/app/plugins/modules/shared/shared-pn.module';
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-    DeviceUsersRouting,
-    NgSelectModule,
-    MDBBootstrapModule,
-    EformSharedModule,
-    TranslateModule,
-    FormsModule,
-    FontAwesomeModule
-  ],
+    imports: [
+        CommonModule,
+        DeviceUsersRouting,
+        NgSelectModule,
+        MDBBootstrapModule,
+        EformSharedModule,
+        TranslateModule,
+        FormsModule,
+        FontAwesomeModule,
+        SharedPnModule
+    ],
   declarations: [
     DeviceUsersPageComponent,
     NewOtpModalComponent,

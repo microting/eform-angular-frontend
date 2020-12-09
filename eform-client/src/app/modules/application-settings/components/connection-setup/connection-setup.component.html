@@ -1,4 +1,4 @@
-<eform-page-subheader [title]="'Database connection setup'" [heandingSizeRem]="1.7">
+<subheader-pn [title]="'Database connection setup'" [heandingSizeRem]="1.7">
   <div class="p-2">
     <button
       mdbBtn
@@ -9,13 +9,13 @@
       (click)="updateConnectionString()">Save
     </button>
   </div>
-</eform-page-subheader>
+</subheader-pn>
 
 <div class="container-fluid mb-3">
   <form #settingsForm="ngForm">
     <div class="row">
       <div class="col-md-12 mt-3">
-        <eform-page-subheader [title]="'Admin information'" [heandingSizeRem]="1"></eform-page-subheader>
+        <subheader-pn [title]="'Admin information'" [heandingSizeRem]="1"></subheader-pn>
         <!--Admin block-->
         <div class="row">
           <div class="col-md-6">
@@ -53,8 +53,8 @@
         <!--SDK Connection-->
         <div class="row">
           <div class="col-md-12 mt-3">
-            <eform-page-subheader [title]="'Database connection information'"
-                                  [heandingSizeRem]="1"></eform-page-subheader>
+            <subheader-pn [title]="'Database connection information'"
+                          [heandingSizeRem]="1"></subheader-pn>
 
             <div class="row">
               <div class="col-md-12">
@@ -100,8 +100,8 @@
         <!--language-->
         <div class="row">
           <div class="col-md-12 mt-3">
-            <eform-page-subheader
-              [title]="'Default Language'" [heandingSizeRem]="1"></eform-page-subheader>
+            <subheader-pn
+              [title]="'Default Language'" [heandingSizeRem]="1"></subheader-pn>
             <ng-select
               id="languageSelector"
               [placeholder]="'Language'"

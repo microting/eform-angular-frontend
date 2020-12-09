@@ -1,10 +1,10 @@
-<eform-page-subheader [title]="'Workers' | translate">
+<subheader-pn>
   <div class="p-3">
     <button mdbBtn
       class="btn-success btn-small-height" id="workerCreateBtn" *ngIf="userClaims.workersCreate"
       (click)="openCreateModal()">{{ 'Create Worker' | translate }}</button>
   </div>
-</eform-page-subheader>
+</subheader-pn>
 
 <!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
 <div class="container-fluid">
