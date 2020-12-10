@@ -1,0 +1,33 @@
+version: '3.4'
+services:
+  angular:
+    image: aspnetapp
+    depends_on:
+      - mariadb
+    networks:
+      - frontend
+      - backend
+    ports:
+      - '80:5000'
+    restart: on-failure
+    volumes:
+      - ${PWD}/mybb:/var/www/html
+
+  mariadb:
+    image: mariadb:10.4.10
+    environment:
+      MYSQL_ROOT_PASSWORD: secretpassword
+      MARIADB_ROOT_PASSWORD: secretpassword
+      MARIADB_USER: tester
+      MARIADB_PASSWORD: secretpassword
+    networks:
+      - backend
+    restart: on-failure
+    volumes:
+     - ${PWD}/mariadb104:/var/lib/mysql
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
