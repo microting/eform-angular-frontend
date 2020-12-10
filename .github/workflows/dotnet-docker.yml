@@ -43,7 +43,7 @@ jobs:
       run: dotnet restore eFormAPI/eFormAPI.sln
     - name: Get the version
       id: get_version
-      run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3 | cut -d "v" -f 2)
+      run: echo ::set-output name=VERSION::$(git describe --abbrev=0 --tags | cut -d "v" -f 2)
     - name: Build
       run: dotnet build eFormAPI/eFormAPI.sln
     - name: Unit Tests
