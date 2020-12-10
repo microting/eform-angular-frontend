@@ -8,7 +8,6 @@ import {
   DateFormatterComponent,
   EformCollapseToggleComponent,
   EformPageSizeComponent,
-  EformPageSubheaderComponent,
   EformPaginationComponent,
   EformTreeViewPickerComponent,
   StatusBarComponent,
@@ -29,7 +28,6 @@ import {WavesModule} from 'angular-bootstrap-md';
     WavesModule,
   ],
   declarations: [
-    EformPageSubheaderComponent,
     EformPaginationComponent,
     EformPageSizeComponent,
     StatusBarComponent,
@@ -41,7 +39,6 @@ import {WavesModule} from 'angular-bootstrap-md';
     EformCollapseToggleComponent,
   ],
   exports: [
-    EformPageSubheaderComponent,
     EformPaginationComponent,
     EformPageSizeComponent,
     StatusBarComponent,

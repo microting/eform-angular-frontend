@@ -173,7 +173,9 @@ namespace eFormAPI.Web
                 .AddCommandLine(args)
                 .AddEnvironmentVariables(prefix: "ASPNETCORE_")
                 .Build();
+
             var port = defaultConfig.GetValue("port", 5000);
+            var connectionString = defaultConfig.GetValue("connectionstring", "");
             return WebHost.CreateDefaultBuilder(args)
                 .UseUrls($"http://0.0.0.0:{port}")
                 .UseIISIntegration()
@@ -185,9 +187,15 @@ namespace eFormAPI.Web
 
                     var filePath = Path.Combine(hostContext.HostingEnvironment.ContentRootPath,
                         "connection.json");
+
                     if (!File.Exists(filePath))
                     {
-                        ConnectionStringManager.CreateDefalt(filePath);
+                        ConnectionStringManager.CreateDefault(filePath);
+                    }
+
+                    if (!string.IsNullOrEmpty(connectionString))
+                    {
+                        ConnectionStringManager.CreateWithConnectionString(filePath, connectionString);
                     }
 
                     config.AddJsonFile("connection.json",

@@ -26,21 +26,23 @@ import {
   EformReportHeaderComponent,
   EformReportCropperComponent
 } from './components';
+import {SharedPnModule} from 'src/app/plugins/modules/shared/shared-pn.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    EformReportRouting,
-    EformSharedModule,
-    TranslateModule,
-    PellModule,
-    MDBBootstrapModule,
-    NgSelectModule,
-    EformImportedModule,
-    FormsModule,
-    DragulaModule,
-    ImageCropperModule
-  ],
+    imports: [
+        CommonModule,
+        EformReportRouting,
+        EformSharedModule,
+        TranslateModule,
+        PellModule,
+        MDBBootstrapModule,
+        NgSelectModule,
+        EformImportedModule,
+        FormsModule,
+        DragulaModule,
+        ImageCropperModule,
+        SharedPnModule
+    ],
   declarations: [
     EformReportPageComponent,
     EformReportSwitchComponent,

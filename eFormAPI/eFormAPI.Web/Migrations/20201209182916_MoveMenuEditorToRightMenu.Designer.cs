@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eFormAPI.Web.Infrastructure.Database;
 
 namespace eFormAPI.Web.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    partial class BaseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201209182916_MoveMenuEditorToRightMenu")]
+    partial class MoveMenuEditorToRightMenu
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1636,6 +1638,17 @@ namespace eFormAPI.Web.Migrations
                             DefaultLink = "/email-recipients",
                             E2EId = "email-recipients",
                             Name = "Email Recipients",
+                            UpdatedByUserId = 0,
+                            Version = 0
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedByUserId = 0,
+                            DefaultLink = "/advanced/navigation-menu",
+                            E2EId = "menu-editor",
+                            Name = "Menu Editor",
                             UpdatedByUserId = 0,
                             Version = 0
                         });

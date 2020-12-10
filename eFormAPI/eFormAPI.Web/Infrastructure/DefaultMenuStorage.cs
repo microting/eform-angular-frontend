@@ -467,44 +467,6 @@ namespace eFormAPI.Web.Infrastructure
                             LocaleName = LocaleNames.German,
                         }
                     }
-                },
-                new MenuItem
-                {
-                    Id = 13,
-                    Name = "Menu Editor",
-                    Link = "/advanced/navigation-menu",
-                    E2EId = "menu-editor",
-                    MenuTemplateId = MenuTemplateIds.MenuEditor,
-                    Type = MenuItemTypeEnum.Link,
-                    Position = 9,
-                    ParentId = 3,
-                    Translations = new List<MenuItemTranslation>
-                    {
-                        new MenuItemTranslation
-                        {
-                            Id = 13,
-                            Name = "Menu Editor",
-                            MenuItemId = MenuTemplateIds.MenuEditor,
-                            Language = LanguageNames.English,
-                            LocaleName = LocaleNames.English,
-                        },
-                        new MenuItemTranslation
-                        {
-                            Id = 26,
-                            Name = "Menu Editor",
-                            MenuItemId = MenuTemplateIds.MenuEditor,
-                            Language = LanguageNames.Danish,
-                            LocaleName = LocaleNames.Danish,
-                        },
-                        new MenuItemTranslation
-                        {
-                            Id = 39,
-                            Name = "Menü-Editor",
-                            MenuItemId = MenuTemplateIds.MenuEditor,
-                            Language = LanguageNames.German,
-                            LocaleName = LocaleNames.German,
-                        }
-                    }
                 }
             };
         }

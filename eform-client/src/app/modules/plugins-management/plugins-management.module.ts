@@ -11,19 +11,21 @@ import { InstalledPluginModalComponent, InstalledPluginsPageComponent,
   MarketplacePluginsPageComponent, MarketplacePluginInstallComponent } from './components';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import { InstalledPluginPermissionsComponent } from './components/installed/installed-plugin-permissions/installed-plugin-permissions.component';
+import {SharedPnModule} from 'src/app/plugins/modules/shared/shared-pn.module';
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-    EformSharedModule,
-    MDBBootstrapModule,
-    FormsModule,
-    TranslateModule,
-    NgSelectModule,
-    PluginsManagementRouting,
-    FontAwesomeModule
-  ],
+    imports: [
+        CommonModule,
+        EformSharedModule,
+        MDBBootstrapModule,
+        FormsModule,
+        TranslateModule,
+        NgSelectModule,
+        PluginsManagementRouting,
+        FontAwesomeModule,
+        SharedPnModule
+    ],
   declarations: [InstalledPluginsPageComponent, InstalledPluginModalComponent,
     MarketplacePluginsPageComponent, MarketplacePluginInstallComponent, InstalledPluginPermissionsComponent]
 })

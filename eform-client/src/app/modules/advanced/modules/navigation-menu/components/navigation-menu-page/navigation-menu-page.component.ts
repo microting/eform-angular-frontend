@@ -98,7 +98,7 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
   }
 
   getHeaderNavigationMenu() {
-    this.eventBrokerService.emit<void>('get-navigation-menu', null);
+    this.eventBrokerService.emit('get-navigation-menu', {takeFromCache: false});
   }
 
   updateNavigationMenu() {
@@ -116,7 +116,9 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
     ];
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    this.dragulaService.destroy('MENU_ITEMS');
+  }
 
   onItemDelete(
     model: NavigationMenuItemModel,

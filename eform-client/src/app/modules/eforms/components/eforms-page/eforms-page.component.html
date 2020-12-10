@@ -1,4 +1,4 @@
-<eform-page-subheader [title]="'My eForms' | translate">
+<subheader-pn>
   <div class="p-3">
     <button mdbBtn class="btn-accent text-black-50 btn-icon"
             id="importEformsBtn"
@@ -13,7 +13,7 @@
       (click)="openNewEformModal()">{{ 'New eForm' | translate }}
     </button>
   </div>
-</eform-page-subheader>
+</subheader-pn>
 
 <!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
 <div class="container-fluid">
@@ -221,4 +221,4 @@
 <app-eform-remove-eform-modal (onEFormDeleted)="loadAllTemplates()" #modalRemoveEform></app-eform-remove-eform-modal>
 <app-eform-upload-zip-modal #modalUploadZip></app-eform-upload-zip-modal>
 <app-eform-excel-report-modal #modalExcel></app-eform-excel-report-modal>
-<app-eforms-bulk-import-modal #modalEformsImport></app-eforms-bulk-import-modal>
+<app-eforms-bulk-import-modal (importFinished)="loadAllTemplates()" #modalEformsImport></app-eforms-bulk-import-modal>

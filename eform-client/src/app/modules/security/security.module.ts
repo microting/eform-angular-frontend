@@ -22,20 +22,22 @@ import {
 } from './components';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import { SecurityGroupSettingsComponent } from './components/security-group-settings/security-group-settings.component';
+import {SharedPnModule} from 'src/app/plugins/modules/shared/shared-pn.module';
 
 
 
 @NgModule({
-  imports: [
-    EformSharedModule,
-    CommonModule,
-    SecurityRouting,
-    NgSelectModule,
-    TranslateModule,
-    MDBBootstrapModule,
-    FormsModule,
-    FontAwesomeModule
-  ],
+    imports: [
+        EformSharedModule,
+        CommonModule,
+        SecurityRouting,
+        NgSelectModule,
+        TranslateModule,
+        MDBBootstrapModule,
+        FormsModule,
+        FontAwesomeModule,
+        SharedPnModule
+    ],
   declarations: [
     SecurityPageComponent,
     SecurityGroupCreateComponent,

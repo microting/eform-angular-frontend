@@ -116,16 +116,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                     Name = "Email Recipients",
                     E2EId = "email-recipients",
                     DefaultLink = "/email-recipients",
-                },
-                new MenuTemplate
-                {
-                    Id = MenuTemplateIds.MenuEditor,
-                    Name = "Menu Editor",
-                    E2EId = "menu-editor",
-                    DefaultLink = "/advanced/navigation-menu"
-                } 
-
-
+                }
             );
             return modelBuilder;
         }
