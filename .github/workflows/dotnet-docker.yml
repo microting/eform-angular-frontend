@@ -87,6 +87,8 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: microtingas/angular-frontend:${{ steps.get_version.outputs.VERSION }}
+        tags: |
+        microtingas/angular-frontend:latest
+        microtingas/angular-frontend:${{ steps.get_version.outputs.VERSION }}
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}
