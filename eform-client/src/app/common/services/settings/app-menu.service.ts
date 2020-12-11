@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 
 import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 import {
   OperationDataResult, UserMenuModel
 } from 'src/app/common/models';
@@ -17,26 +17,25 @@ const AppMenuMethods = {
 @Injectable()
 export class AppMenuService extends BaseService {
 
-  public userMenuBehaviorSubject = new BehaviorSubject<UserMenuModel>({leftMenu: [], rightMenu: []});
-
-  private userMenuModel: UserMenuModel;
+  private userMenu: UserMenuModel;
 
   constructor(private _http: HttpClient, router: Router, toastrService: ToastrService) {
     super(_http, router, toastrService);
-    this.getAppMenu();
   }
 
-  getAppMenu(takeFromCache = true): void {
-    if (this.userMenuModel && takeFromCache) {
-      this.userMenuBehaviorSubject.next(this.userMenuModel);
-    } else {
-      this.get(AppMenuMethods.UserMenu)
-        .subscribe((userMenu: OperationDataResult<UserMenuModel>) => {
-          if (userMenu && userMenu.success) {
-            this.userMenuModel = userMenu.model;
-            this.userMenuBehaviorSubject.next(this.userMenuModel);
-          }
-        });
-    }
+  getAppMenu(takeFromCache = true): Observable<UserMenuModel> {
+    return new Observable<UserMenuModel>((observer) => {
+      if (this.userMenu && takeFromCache) {
+        observer.next(this.userMenu);
+      } else {
+        this.get(AppMenuMethods.UserMenu)
+          .subscribe((userMenu: OperationDataResult<UserMenuModel>) => {
+            if (userMenu && userMenu.success) {
+              this.userMenu = userMenu.model;
+              observer.next(userMenu.model);
+            }
+          });
+      }
+    });
   }
 }
