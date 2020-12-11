@@ -17,10 +17,10 @@ export class Navbar {
     return $(`#settings`);
   }
   public get changePasswordBtn() {
-    return $(`change-password`);
+    return $(`#change-password`);
   }
   public get userAdministrationBtn() {
-    return $(`user-management-menu`);
+    return $(`#user-management-menu`);
   }
   public get workersBtn() {
     return $(`#header #workers`);
