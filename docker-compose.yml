@@ -1,9 +1,10 @@
 version: '3.4'
 services:
   angular:
-    image: aspnetapp
+    image: microtingas/angular-frontend:latest
     depends_on:
       - mariadb
+      - rabbitmq
     networks:
       - frontend
       - backend
@@ -25,6 +26,18 @@ services:
     restart: on-failure
     volumes:
      - ${PWD}/mariadb104:/var/lib/mysql
+
+  rabbitmq:
+    image: rabbitmq:3.6.15-management
+    container_name: rabbitmq
+    volumes:
+        - ./rabbitmq/data/:/var/lib/rabbitmq/
+        - ./rabbitmq/logs/:/var/log/rabbitmq/
+    networks:
+      - backend
+    ports:
+        - 5672:5672
+        - 15672:15672
 
 networks:
   frontend:
