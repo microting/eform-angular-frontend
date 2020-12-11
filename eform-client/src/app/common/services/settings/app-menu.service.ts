@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 
 import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {
   OperationDataResult, UserMenuModel
 } from 'src/app/common/models';
@@ -18,24 +18,23 @@ const AppMenuMethods = {
 export class AppMenuService extends BaseService {
 
   private userMenu: UserMenuModel;
-
+  public userMenuBehaviorSubject = new BehaviorSubject<UserMenuModel>({leftMenu: [], rightMenu: []});
   constructor(private _http: HttpClient, router: Router, toastrService: ToastrService) {
     super(_http, router, toastrService);
+    this.getAppMenu();
   }
 
-  getAppMenu(takeFromCache = true): Observable<UserMenuModel> {
-    return new Observable<UserMenuModel>((observer) => {
+  getAppMenu(takeFromCache = true): void {
       if (this.userMenu && takeFromCache) {
-        observer.next(this.userMenu);
+        this.userMenuBehaviorSubject.next(this.userMenu);
       } else {
         this.get(AppMenuMethods.UserMenu)
           .subscribe((userMenu: OperationDataResult<UserMenuModel>) => {
             if (userMenu && userMenu.success) {
               this.userMenu = userMenu.model;
-              observer.next(userMenu.model);
+              this.userMenuBehaviorSubject.next(userMenu.model);
             }
           });
       }
-    });
   }
 }
