@@ -45,10 +45,10 @@ export class Navbar {
     ele.waitForDisplayed({timeout: 20000});
     return ele;
   }
-  public get entitySelectBtn() {
+  public get entitySearchBtn() {
     return $(`#header #search`);
   }
-  public get entitySearchBtn() {
+  public get entitySelectBtn() {
     return $(`#header #selectable-list`);
   }
   public get myEformsBtn() {
