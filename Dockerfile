@@ -7,10 +7,11 @@ RUN npm run build
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build-env
 WORKDIR /app
+ARG GITVERSION
 
 # Copy csproj and restore as distinct layers
 COPY eFormAPI/eFormAPI.Web ./
-RUN dotnet publish -c Release -o out
+RUN dotnet publish -o out /p:Version=$GITVERSION --runtime linux-x64 --configuration Release
 RUN pwd
 
 # Build runtime image
