@@ -50,7 +50,7 @@ export class NavigationComponent implements OnInit, OnDestroy{
         this.userSettingsService.getUserSettings().subscribe(((data) => {
           localStorage.setItem('locale', data.model.locale);
           this.initLocaleAsync().then(() => {
-            this.getNavigationMenu({takeFromCache: false});
+            this.getNavigationMenu({takeFromCache: true});
           });
         }));
       });
