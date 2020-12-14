@@ -1,65 +1,69 @@
 export class Navbar {
-  public advancedDropdown() {
-    $('#advanced').waitForDisplayed({timeout: 60000});
-    this.clickOnHeaderMenuItem('Avanceret').click();
-    // return $('#advanced');
-  }
-
-  public applicationSettingsBtn() {
-    const ele = $(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Applikationsindstillinger')]`);
+  public get applicationSettingsBtn() {
+    const ele = $(`#header #application-settings`);
     ele.waitForDisplayed({timeout: 20000});
-    ele.click();
+    return ele;
+  }
+  public get signOutDropdown() {
+    return $(`#sign-out-dropdown`);
+  }
+  public get advancedBtn() {
+    return $('#advanced');
+  }
+  public get logoutBtn() {
+    return $(`#sign-out`);
+  }
+  public get settingsBtn() {
+    return $(`#settings`);
+  }
+  public get changePasswordBtn() {
+    return $(`#change-password`);
+  }
+  public get userAdministrationBtn() {
+    return $(`#user-management-menu`);
+  }
+  public get workersBtn() {
+    return $(`#header #workers`);
+  }
+  public get sitesBtn() {
+    return $(`#header #sites`);
+  }
+  public get foldersBtn() {
+    return $(`#header #folders`);
+  }
+  public get pluginsBtn() {
+    return $(`#header #plugins-settings`);
+  }
+  public get menuEditorBtn() {
+    return $(`#menu-editor`);
+  }
+  public get securityBtn() {
+    return $(`#security`);
+  }
+  public get deviceUsersBtn() {
+    const ele = $(`#header #device-users`);
+    ele.waitForDisplayed({timeout: 20000});
+    return ele;
+  }
+  public get entitySearchBtn() {
+    return $(`#header #search`);
+  }
+  public get entitySelectBtn() {
+    return $(`#header #selectable-list`);
+  }
+  public get myEformsBtn() {
+    return $('#header #my-eforms');
   }
 
-  public clickonSubMenuItem(menuItem) {
+  public clickOnSubMenuItem(menuItem) {
     const ele = $(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), '${menuItem}')]`);
     ele.waitForDisplayed({timeout: 20000});
     ele.click();
   }
-  // public get userDropdown() {
-  //   return $('#userDropdown');
-  // }
-
-  public get logoutBtn() {
-    // return $('#sign-out');
-    return $(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Log ud')]`);
+  public advancedDropdownClick() {
+    this.advancedBtn.waitForDisplayed({timeout: 60000});
+    this.advancedBtn.click();
   }
-  public get settingsBtn() {
-    return $(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Indstillinger')]`);
-  }
-  public get changePasswordBtn() {
-    return $(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Skift adgangskode')]`);
-  }
-  public get userAdministrationBtn() {
-    return $(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Brugeradministration')]`);
-  }
-  public get workersBtn() {
-    return $(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Medarbejder')]`);
-  }
-  public get sitesBtn() {
-    return $(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Lokationer')]`);
-  }
-  public get foldersBtn() {
-    return $(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Folders')]`);
-  }
-  public get pluginsBtn() {
-    return $(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Plugins')]`);
-  }
-  public get menuEditorBtn() {
-    return $(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Menu Editor')]`);
-  }
-  public get deviceUsersBtn() {
-    const ele = this.clickOnHeaderMenuItem2(' Enhedsbrugere ');
-    ele.waitForDisplayed({timeout: 20000});
-    return ele;
-  }
-  public get entitySelectBtn() {
-    return $(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Valgbar Liste')]`);
-  }
-  public get entitySearchBtn() {
-    return $(`//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), 'Søgbar Liste')]`);
-  }
-
   public clickOnHeaderMenuItem(headerMenuItem) {
     return $(`//*[@id="header"]//*[text()="${headerMenuItem}"]`).$('..').$('..');
   }
@@ -70,41 +74,42 @@ export class Navbar {
   }
 
   public logout() {
-    this.clickOnHeaderMenuItem('John Smith').click();
-    // .click();
-    // this.userDropdown.click();
+    this.signOutDropdown.click();
     this.logoutBtn.click();
   }
 
   public goToProfileSettings() {
-    this.clickOnHeaderMenuItem('John Smith').click();
+    this.signOutDropdown.click();
+    this.settingsBtn.waitForDisplayed({timeout: 5000});
+    this.settingsBtn.waitForClickable({timeout: 5000});
     this.settingsBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
   public goToApplicationSettings() {
-    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
-    this.advancedDropdown();
-    this.applicationSettingsBtn();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    const spinnerAnimation = $('#spinner-animation');
+    spinnerAnimation.waitForDisplayed({timeout: 50000, reverse: true});
+    this.advancedDropdownClick();
+    this.applicationSettingsBtn.click();
+    spinnerAnimation.waitForDisplayed({timeout: 90000, reverse: true});
   }
   public goToWorkers() {
-    this.advancedDropdown();
+    this.advancedDropdownClick();
     this.workersBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
   public goToSites() {
-    this.advancedDropdown();
+    this.advancedDropdownClick();
     this.sitesBtn.click();
     // browser.pause(15000);
     $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
   }
   public goToUserAdministration() {
-    this.clickOnHeaderMenuItem('John Smith').click();
+    this.signOutDropdown.click();
     this.userAdministrationBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
   public goToPasswordSettings() {
-    this.clickOnHeaderMenuItem('John Smith').click();
+    this.signOutDropdown.click();
     this.changePasswordBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
@@ -113,30 +118,39 @@ export class Navbar {
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
   public goToEntitySelect() {
-    this.advancedDropdown();
+    this.advancedDropdownClick();
     this.entitySelectBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
   public goToEntitySearch() {
-    this.advancedDropdown();
+    this.advancedDropdownClick();
     this.entitySearchBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
   public goToFolderPage() {
-    this.advancedDropdown();
+    this.advancedDropdownClick();
     this.foldersBtn.click();
     // browser.pause(15000);
     $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
   }
   public goToPluginsPage() {
-    this.advancedDropdown();
+    this.advancedDropdownClick();
     this.pluginsBtn.click();
     // browser.pause(15000);
     $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
   }
   public goToMenuEditorPage() {
-    this.clickOnHeaderMenuItem('John Smith').click();
+    this.signOutDropdown.click();
     this.menuEditorBtn.click();
+    $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
+  }
+  public goToMyEForms() {
+    this.myEformsBtn.click();
+    $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
+  }
+  public goToSecurity() {
+    this.signOutDropdown.click();
+    this.securityBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
   }
 }

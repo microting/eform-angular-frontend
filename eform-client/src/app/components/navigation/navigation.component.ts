@@ -1,18 +1,21 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {EventBrokerService, PluginClaimsHelper} from 'src/app/common/helpers';
 import {UserInfoModel, UserMenuModel} from 'src/app/common/models/user';
 import {AppMenuService} from 'src/app/common/services/settings';
 import {AuthService, LocaleService, UserSettingsService} from 'src/app/common/services/auth';
 import {AdminService} from 'src/app/common/services/users';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
+import {Subscription} from 'rxjs';
 import {PermissionGuard} from '../../common/guards';
 
+@AutoUnsubscribe()
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss']
 })
-export class NavigationComponent implements OnInit {
+export class NavigationComponent implements OnInit, OnDestroy{
   @ViewChild('navigationMenu', { static: true }) menuElement: ElementRef;
   private _menuFlag = false;
   userInfo: UserInfoModel = new UserInfoModel;
@@ -20,6 +23,7 @@ export class NavigationComponent implements OnInit {
   navMenu: any;
   appMenu: UserMenuModel = new UserMenuModel();
   brokerListener: any;
+  private getAppMenu$: Subscription;
 
   constructor(private authService: AuthService,
               private adminService: AdminService,
@@ -34,7 +38,12 @@ export class NavigationComponent implements OnInit {
       });
   }
 
+  ngOnDestroy() {}
+
   ngOnInit() {
+    this.getAppMenu$ = this.appMenuService.userMenuBehaviorSubject.subscribe((data) => {
+      this.appMenu = data;
+    });
     if (this.authService.isAuth) {
       this.adminService.getCurrentUserInfo().subscribe((result) => {
         this.userInfo = result;
@@ -73,8 +82,6 @@ export class NavigationComponent implements OnInit {
   }
 
   getNavigationMenu(takeFromCacheObject: {takeFromCache: boolean}) {
-    this.appMenuService.getAppMenu(takeFromCacheObject.takeFromCache).subscribe((data) => {
-      this.appMenu = data;
-    });
+    this.appMenuService.getAppMenu(takeFromCacheObject.takeFromCache);
   }
 }
