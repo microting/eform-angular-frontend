@@ -3,35 +3,66 @@ import myEformsPage from '../../Page objects/MyEforms.page';
 import profileSettings from '../../Page objects/ProfileSettings.page';
 
 const expect = require('chai').expect;
-
+const translationsEFormsPageEng: Array<{key: string, value: string}> = [
+  {key: 'subheader-pn h1', value: 'My eForms'},
+  {key: '#newEFormBtn', value: 'NEW EFORM'},
+  {key: '#idSort', value: 'ID\nexpand_less'},
+  {key: '#createdAtSort', value: 'Created at\nunfold_more'},
+  {key: '#nameEFormSort', value: 'eForm Name\nunfold_more'},
+  {key: '#tagsEForm', value: 'Tags'},
+  {key: '#pairingEForm', value: 'Pairing'},
+  {key: '#actionsEForm', value: 'Actions'}
+];
+const translationsEFormsPageGer: Array<{key: string, value: string}> = [
+  {key: 'subheader-pn h1', value: 'Meine eForms'},
+  {key: '#newEFormBtn', value: 'NEUES EFORM'},
+  {key: '#idSort', value: 'ID\nexpand_less'},
+  {key: '#createdAtSort', value: 'Hergestellt in\nunfold_more'},
+  {key: '#nameEFormSort', value: 'eForm-Name\nunfold_more'},
+  {key: '#tagsEForm', value: 'Stichworte'},
+  {key: '#pairingEForm', value: 'Paarung'},
+  {key: '#actionsEForm', value: 'Aktionen'}
+];
+const translationsEFormsPageDan: Array<{key: string, value: string}> = [
+  {key: 'subheader-pn h1', value: 'Mine eForms'},
+  {key: '#newEFormBtn', value: 'NY EFORM'},
+  {key: '#idSort', value: 'ID\nexpand_less'},
+  {key: '#createdAtSort', value: 'Oprettet d.\nunfold_more'},
+  {key: '#nameEFormSort', value: 'eForm Navn\nunfold_more'},
+  {key: '#tagsEForm', value: 'Tags'},
+  {key: '#pairingEForm', value: 'Parring'},
+  {key: '#actionsEForm', value: 'Handlinger'}
+];
 describe('Profile settings', function () {
   before(function () {
     loginPage.open('/');
     loginPage.login();
-   myEformsPage.Navbar.goToProfileSettings();
   });
   it('should set language to English', function () {
+    myEformsPage.Navbar.goToProfileSettings();
     profileSettings.chooseLanguage('English');
     profileSettings.saveProfileSettings();
-    //browser.refresh();
-    expect(myEformsPage.Navbar.verifyHeaderMenuItem('My eForms')).equal('My eForms');
-    expect(myEformsPage.Navbar.verifyHeaderMenuItem('Device Users')).equal('Device Users');
-    expect(myEformsPage.Navbar.verifyHeaderMenuItem('Advanced')).equal('Advanced');
+    myEformsPage.Navbar.goToMyEForms();
+    translationsEFormsPageEng.forEach(translation => expect($(translation.key).getText()).eq(translation.value,
+      `element with selector ${translation.key} must be = ${translation.value}, but element text = ${$(translation.key).getText()}.
+      Language = English`));
   });
   it('should set language to German', function () {
+    myEformsPage.Navbar.goToProfileSettings();
     profileSettings.chooseLanguage('German');
     profileSettings.saveProfileSettings();
-    //browser.refresh();
-    expect(myEformsPage.Navbar.verifyHeaderMenuItem('Meine eForms')).equal('Meine eForms');
-    expect(myEformsPage.Navbar.verifyHeaderMenuItem('Gerätebenutzer')).equal('Gerätebenutzer');
-    expect(myEformsPage.Navbar.verifyHeaderMenuItem('Fortgeschritten')).equal('Fortgeschritten');
+    myEformsPage.Navbar.goToMyEForms();
+    translationsEFormsPageGer.forEach(translation => expect($(translation.key).getText()).eq(translation.value,
+      `element with selector ${translation.key} must be = ${translation.value}, but element text = ${$(translation.key).getText()}.
+      Language = German`));
   });
   it('should set language to Danish', function () {
+    myEformsPage.Navbar.goToProfileSettings();
     profileSettings.chooseLanguage('Danish');
     profileSettings.saveProfileSettings();
-    //browser.refresh();
-    expect(myEformsPage.Navbar.verifyHeaderMenuItem('Mine eForms')).equal('Mine eForms');
-    expect(myEformsPage.Navbar.verifyHeaderMenuItem('Enhedsbrugere')).equal('Enhedsbrugere');
-    expect(myEformsPage.Navbar.verifyHeaderMenuItem('Avanceret')).equal('Avanceret');
+    myEformsPage.Navbar.goToMyEForms();
+    translationsEFormsPageDan.forEach(translation => expect($(translation.key).getText()).eq(translation.value,
+      `element with selector ${translation.key} must be = ${translation.value}, but element text = ${$(translation.key).getText()}.
+      Language = Danish`));
   });
 });
