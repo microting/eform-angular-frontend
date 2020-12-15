@@ -38,8 +38,11 @@ const preventTab = event => {
 export const init = settings => {
   settings.actions = settings.actions
     ? settings.actions.map(action => {
-      if (typeof action === 'string') { return actions[action]; }
-      else if (actions[action.name]) { return { ...actions[action.name], ...action }; }
+      if (typeof action === 'string') {
+        return actions[action];
+      } else if (actions[action.name]) {
+        return { ...actions[action.name], ...action };
+      }
       return action;
     })
     : Object.keys(actions).map(action => actions[action]);
@@ -66,8 +69,12 @@ export const init = settings => {
     actionbar.appendChild(button);
   });
 
-  if (settings.defaultParagraphSeparator) exec('defaultParagraphSeparator', settings.defaultParagraphSeparator)
-  if (settings.styleWithCSS) { exec('styleWithCSS'); }
+  if (settings.defaultParagraphSeparator) {
+    exec('defaultParagraphSeparator', settings.defaultParagraphSeparator);
+  }
+  if (settings.styleWithCSS) {
+    exec('styleWithCSS');
+  }
 
 
   return settings.element;

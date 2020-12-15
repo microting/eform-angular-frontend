@@ -16,8 +16,9 @@ export class ElementCommentComponent {
 
   set fieldValue(val) {
     this.fieldValueObj = val;
-    this.fieldValueObj.value = this.fieldValueObj.value.replace('\n', '<br>');
-    this.fieldValueObj.value = this.fieldValueObj.value.replace('\r', '<br>');
+    let value = this.fieldValueObj.value as any;
+    value = value.replaceAll('\n', '<br>');
+    this.fieldValueObj.value = value.replaceAll('\r', '<br>');
   }
 
   onValueChanged(e: any) {
