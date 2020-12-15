@@ -164,18 +164,18 @@ export default foldersPage;
 
 export class FoldersRowObject {
   constructor(rowNum) {
-    if ($$('#folderId')[rowNum - 1]) {
-      this.folderId = $$('#folderId')[rowNum - 1];
+    if ($$('#folderTreeName')[rowNum - 1]) {
+      // this.folderId = $$('#folderId')[rowNum - 1];
       try {
-        this.name = $$('#folderName')[rowNum - 1].getText();
+        this.name = $$('#folderTreeName')[rowNum - 1].getText();
       } catch (e) {
       }
       try {
-        this.description = $$('#folderDescription')[rowNum - 1].getText();
+        this.description = $$('#folderTreeDescription')[rowNum - 1].getText();
       } catch (e) {
       }
-      this.editBtn = $$('#folderEditBtn')[rowNum - 1];
-      this.deleteBtn = $$('#folderDeleteBtn')[rowNum - 1];
+      this.editBtn = $$('#editFolderTreeBtn')[rowNum - 1];
+      this.deleteBtn = $$('#deleteFolderTreeBtn')[rowNum - 1];
     }
   }
 

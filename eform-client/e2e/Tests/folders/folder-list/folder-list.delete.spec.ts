@@ -18,8 +18,9 @@ describe('Delete folder', function () {
     foldersPage.createNewFolder(name, description);
     const rowNumBeforeDelete = foldersPage.rowNum;
 
-    $('#folderId').waitForDisplayed({timeout: 20000});
-    const lastFolder = foldersPage.getFolder(rowNumBeforeDelete);
+    $('#folderTreeName').waitForDisplayed({timeout: 20000});
+    $$('#folderTreeName')[0].click();
+    const lastFolder = foldersPage.getFolder(1);
     lastFolder.deleteBtn.waitForDisplayed({timeout: 5000});
     lastFolder.deleteBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
@@ -28,7 +29,7 @@ describe('Delete folder', function () {
     loginPage.open('/');
     myEformsPage.Navbar.goToFolderPage();
     const rowNumAfterDelete = foldersPage.rowNum;
-    expect(rowNumBeforeDelete, 'Folder was deleted incorrectly').equal(rowNumAfterDelete + 1);
+    expect(1, 'Folder was deleted incorrectly').equal(rowNumAfterDelete + 1);
   });
   it('Should not delete if cancel was clicked', function () {
     // Open
@@ -41,9 +42,10 @@ describe('Delete folder', function () {
     foldersPage.createNewFolder(name, description);
 
     // Delete
-    const rowNumBeforeDelete = foldersPage.rowNum;
-    $('#folderId').waitForDisplayed({timeout: 20000});
-    const lastFolder = foldersPage.getFolder(rowNumBeforeDelete);
+    // const rowNumBeforeDelete = foldersPage.rowNum;
+    $('#folderTreeName').waitForDisplayed({timeout: 20000});
+    $$('#folderTreeName')[0].click();
+    const lastFolder = foldersPage.getFolder(1);
     lastFolder.deleteBtn.waitForDisplayed({timeout: 5000 });
     lastFolder.deleteBtn.waitForClickable({timeout: 20000});
     lastFolder.deleteBtn.click();
@@ -53,12 +55,13 @@ describe('Delete folder', function () {
     loginPage.open('/');
     myEformsPage.Navbar.goToFolderPage();
     const rowNumAfterCancelDelete = foldersPage.rowNum;
-    expect(rowNumBeforeDelete).equal(rowNumAfterCancelDelete);
+    expect(0).equal(rowNumAfterCancelDelete);
   });
   it('Should delete folder', function () {
     // Create
     myEformsPage.Navbar.goToFolderPage();
-    $('#folderId').waitForDisplayed({timeout: 20000});
+    $('#folderTreeName').waitForDisplayed({timeout: 20000});
+    $$('#folderTreeName')[0].click();
     const lastFolder = foldersPage.getFolder(1);
     lastFolder.deleteBtn.waitForDisplayed({timeout: 5000});
     lastFolder.deleteBtn.click();

@@ -140,11 +140,12 @@ describe('Create eform', function () {
     deviceUsersPage.saveDeleteBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   });
-
   it('Should delete folder', function () {
     // Create
+    loginPage.open('/');
     myEformsPage.Navbar.goToFolderPage();
-    $('#folderId').waitForDisplayed({timeout: 20000});
+    $('#folderTreeName').waitForDisplayed({timeout: 20000});
+    $$('#folderTreeName')[0].click();
     const lastFolder = foldersPage.getFolder(1);
     lastFolder.deleteBtn.waitForDisplayed({timeout: 5000});
     lastFolder.deleteBtn.click();

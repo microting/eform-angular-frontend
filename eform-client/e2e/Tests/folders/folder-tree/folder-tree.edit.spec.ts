@@ -63,7 +63,10 @@ describe('Folder page', function () {
     expect(lastFolderPageAfterEdit.descriptionTree, 'Description has been changed').equal(lastFolderPageAfterEdit.descriptionTree);
   });
   it('Should delete folder', function () {
-    $('#folderId').waitForDisplayed({timeout: 20000});
+    loginPage.open('/');
+    myEformsPage.Navbar.goToFolderPage();
+    $('#folderTreeName').waitForDisplayed({timeout: 20000});
+    $$('#folderTreeName')[0].click();
     const lastFolder = foldersPage.getFolder(1);
     lastFolder.deleteBtn.waitForDisplayed({timeout: 5000});
     lastFolder.deleteBtn.click();
