@@ -94,6 +94,17 @@ class MyEformsPage extends PageWithNavbarPage {
     return new MyEformsRowObject(1);
   }
 
+  getEformsRowObjByNameEForm(nameEform: string): MyEformsRowObject {
+    browser.pause(500);
+    for (let i = 1; i < this.rowNum + 1; i++) {
+      const eform = this.getEformRowObj(i);
+      if (eform.eFormName === nameEform) {
+        return eform;
+      }
+    }
+    return null;
+  }
+
   getEformRowObj(num): MyEformsRowObject {
     browser.pause(500);
     return new MyEformsRowObject(num);
@@ -125,6 +136,8 @@ class MyEformsPage extends PageWithNavbarPage {
         const selectedTag = $('.ng-option:not(.ng-option-selected)');
         selectedTags.push(selectedTag.getText());
         // console.log('selectedTags is ' + JSON.stringify(selectedTags));
+        selectedTag.waitForDisplayed({timeout: 20000});
+        selectedTag.waitForClickable({ timeout: 20000});
         selectedTag.click();
         spinnerAnimation.waitForDisplayed({timeout: 50000, reverse: true});
         $('#createEformBtn').waitForDisplayed({timeout: 10000});
@@ -145,9 +158,22 @@ class MyEformsPage extends PageWithNavbarPage {
     newTagInput.waitForDisplayed({timeout: 20000});
     newTagInput.setValue(nameTag);
     newTagInput.$('..').$('button').click();
-    spinnerAnimation.waitForDisplayed({timeout: 90000});
-    this.tagEditSaveBtn.click();
-    spinnerAnimation.waitForDisplayed({timeout: 90000});
+    spinnerAnimation.waitForDisplayed({timeout: 20000, reverse: true});
+    this.tagEditSaveCancelBtn.click();
+  }
+
+  createNewTags(nameTags: string[]) {
+    const spinnerAnimation = $('#spinner-animation');
+    myEformsPage.getFirstMyEformsRowObj().editTagsBtn.click();
+    const newTagInput = $('#newTag');
+    newTagInput.waitForDisplayed({timeout: 20000});
+    for (let i = 0; i < nameTags.length; i++) {
+      const nameTag = nameTags[i];
+      newTagInput.setValue(nameTag);
+      newTagInput.$('..').$('button').click();
+      spinnerAnimation.waitForDisplayed({timeout: 20000, reverse: true});
+    }
+    this.tagEditSaveCancelBtn.click();
   }
 
   removeTag(nameTag: string) {
@@ -160,17 +186,34 @@ class MyEformsPage extends PageWithNavbarPage {
     ngDropdownPanel.waitForClickable({timeout: 20000});
     ngDropdownPanel.click();
     removeTagSelect.$('..').$('button').click();
-    spinnerAnimation.waitForDisplayed({timeout: 90000});
+    spinnerAnimation.waitForDisplayed({timeout: 20000, reverse: true});
+    this.tagEditSaveCancelBtn.click();
+  }
+
+  removeTags(nameTags: string[]) {
+    const spinnerAnimation = $('#spinner-animation');
+    myEformsPage.getFirstMyEformsRowObj().editTagsBtn.click();
+    const removeTagSelect = $('#removeTagSelect');
+    removeTagSelect.waitForDisplayed({timeout: 20000});
+    for (let i = 0; i < nameTags.length; i++) {
+      const nameTag = nameTags[i];
+      removeTagSelect.$('input').setValue(nameTag);
+      const ngDropdownPanel = $('.ng-option');
+      ngDropdownPanel.waitForClickable({timeout: 20000});
+      ngDropdownPanel.click();
+      removeTagSelect.$('..').$('button').click();
+      spinnerAnimation.waitForDisplayed({timeout: 20000, reverse: true});
+    }
     this.tagEditSaveCancelBtn.click();
   }
 
   enterTagFilter(nameTag: string) {
-    const spinnerAnimation = $('#spinner-animation');
     this.tagSelector.$('input').setValue(nameTag);
     const option = $('ng-dropdown-panel .ng-option');
+    option.waitForDisplayed({timeout: 10000});
     option.waitForClickable({timeout: 10000});
     option.click();
-    spinnerAnimation.waitForDisplayed({timeout: 90000});
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
   }
 }
 
@@ -178,7 +221,7 @@ const myEformsPage = new MyEformsPage();
 export default myEformsPage;
 
 class MyEformsRowObject {
-  constructor(rowNum) {
+  constructor(rowNum: number) {
     if ($$('#eform-id')[rowNum - 1]) {
       this.id = +$$('#eform-id')[rowNum - 1];
       try {
@@ -216,8 +259,10 @@ class MyEformsRowObject {
     this.deleteBtn.click();
     const eFormDeleteDeleteBtn = $('#eFormDeleteDeleteBtn');
     eFormDeleteDeleteBtn.waitForDisplayed({timeout: 20000});
+    eFormDeleteDeleteBtn.waitForClickable({timeout: 20000});
     eFormDeleteDeleteBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000});
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
+    browser.pause(500);
   }
 
   addTag(tag: string) {
@@ -230,7 +275,7 @@ class MyEformsRowObject {
     ngDropdownPanel.waitForClickable({timeout: 20000});
     ngDropdownPanel.click();
     myEformsPage.tagEditSaveBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000});
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
   }
 
   deleteTags(tags: string[]) {
@@ -246,7 +291,7 @@ class MyEformsRowObject {
       }
     }
     myEformsPage.tagEditSaveBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000});
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
   }
 
   pair(folder: FoldersRowObject, users: DeviceUsersRowObject[]) {
@@ -256,9 +301,9 @@ class MyEformsRowObject {
     } else {
      this.addPairEformBtn.click();
     }
-    spinnerAnimation.waitForDisplayed({timeout: 90000});
+    spinnerAnimation.waitForDisplayed({timeout: 90000, reverse: true});
     myEformsPage.cancelParingBtn.waitForDisplayed({timeout: 20000});
-    browser.pause(1000);
+    browser.pause(500);
     const folders = $$('tree-node');
     for (let i = 0; i < folders.length; i++) {
       if (folders[i].$('#folderTreeName').getText() === folder.name
@@ -273,12 +318,12 @@ class MyEformsRowObject {
       checkbox.$('..').click();
     }
     myEformsPage.saveParingBtn.click();
-    spinnerAnimation.waitForDisplayed({timeout: 90000});
+    spinnerAnimation.waitForDisplayed({timeout: 90000, reverse: true});
   }
   unPair (users: DeviceUsersRowObject[]) {
     const spinnerAnimation = $('#spinner-animation');
     this.editPairEformBtn.click();
-    spinnerAnimation.waitForDisplayed({timeout: 20000});
+    spinnerAnimation.waitForDisplayed({timeout: 20000, reverse: true});
     myEformsPage.cancelParingBtn.waitForDisplayed({timeout: 20000});
     for (let i = 0; i < users.length; i++) {
       console.log(i);
@@ -288,6 +333,6 @@ class MyEformsRowObject {
       checkbox.$('..').click();
     }
     myEformsPage.saveParingBtn.click();
-    spinnerAnimation.waitForDisplayed({timeout: 90000});
+    spinnerAnimation.waitForDisplayed({timeout: 90000, reverse: true});
   }
 }

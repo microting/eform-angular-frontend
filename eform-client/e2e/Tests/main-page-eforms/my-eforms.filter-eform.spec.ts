@@ -7,6 +7,7 @@ const testTag1 = 'Test tag';
 const testTag2 = 'Tag for test';
 const countCreateEForm = 3;
 let countRowsBeforeFiltering = 0;
+const namesEForms = new Array<string>();
 describe('My eforms', function () {
   before(function () {
     loginPage.open('/');
@@ -16,7 +17,6 @@ describe('My eforms', function () {
     myEformsPage.idSortBtn.click();
     const spinnerAnimation = $('#spinner-animation');
     spinnerAnimation.waitForDisplayed({timeout: 20000, reverse: true});
-    const namesEForms = new Array<string>();
     for (let i = 0; i < countCreateEForm; i++) {
       const newEForm = generateRandmString();
       myEformsPage.createNewEform(newEForm);
@@ -25,49 +25,37 @@ describe('My eforms', function () {
     const nameEFormForFiltering = namesEForms[1];
     countRowsBeforeFiltering = myEformsPage.rowNum;
     myEformsPage.eformFilter.setValue(nameEFormForFiltering);
-    spinnerAnimation.waitForDisplayed({timeout: 50000});
+    spinnerAnimation.waitForDisplayed({timeout: 50000, reverse: true});
     browser.pause(2000);
-    const eform = myEformsPage.getFirstMyEformsRowObj();
-    expect(eform.eFormName).equal(nameEFormForFiltering);
+    const eform = myEformsPage.getEformsRowObjByNameEForm(nameEFormForFiltering);
+    expect(eform).not.equal(null);
   });
   it('should be able to see all eforms by leaving label input empty', function () {
-    browser.pause(1000);
     myEformsPage.eformFilter.click();
-    browser.keys(['Control', 'a']);
-    browser.keys( 'Control');
-    browser.keys('Delete');
-    const spinnerAnimation = $('#spinner-animation');
-    spinnerAnimation.waitForDisplayed({timeout: 50000});
+    browser.keys(['Control', 'a', 'Control', 'Delete']);
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
+    browser.pause(2000);
     expect(myEformsPage.rowNum).equal(countRowsBeforeFiltering);
   });
   it('should be able to filter using 1 tag', function () {
-    myEformsPage.createNewTag(testTag1);
-    myEformsPage.createNewTag(testTag2);
-    myEformsPage.getEformRowObj(1).addTag(testTag2);
-    const eform = myEformsPage.getEformRowObj(2);
+    myEformsPage.createNewTags([testTag1, testTag2]);
+    myEformsPage.getEformsRowObjByNameEForm(namesEForms[1]).addTag(testTag2);
+    const eform = myEformsPage.getEformsRowObjByNameEForm(namesEForms[2]);
     eform.addTag(testTag1);
-    browser.pause(1000);
     myEformsPage.enterTagFilter(testTag1);
-    browser.pause(500);
     expect(eform.eFormName).eq(myEformsPage.getFirstMyEformsRowObj().eFormName);
   });
   it('should be able to filter using several tags', function () {
     myEformsPage.enterTagFilter(testTag2);
-    browser.pause(1000);
     expect(myEformsPage.rowNum).eq(2);
   });
-
-  it('should delete eform', function () {
+  after(function () {
     myEformsPage.enterTagFilter(testTag1);
     myEformsPage.enterTagFilter(testTag2);
-    myEformsPage.removeTag(testTag1);
-    myEformsPage.removeTag(testTag2);
-    const rowCountBeforeDelete = myEformsPage.rowNum;
-    for (let i = 0; i < countCreateEForm; i++) {
-      myEformsPage.getFirstMyEformsRowObj().deleteEForm();
-      browser.pause(1000);
+    myEformsPage.removeTags([testTag1, testTag2]);
+    for (let i = 0; i < namesEForms.length; i++) {
+      myEformsPage.getEformsRowObjByNameEForm(namesEForms[i]).deleteEForm();
+      browser.pause(500);
     }
-    const rowCountAfterDelete = myEformsPage.rowNum;
-    expect(rowCountBeforeDelete - countCreateEForm).eq(rowCountAfterDelete);
   });
 });

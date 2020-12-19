@@ -213,7 +213,7 @@
   <!--pagination(if required)-->
 </div>
 
-<app-eform-create-modal [availableTags]="availableTags" (onEformCreated)="loadAllTemplates()"
+<app-eform-create-modal [availableTags]="availableTags" (onEformCreated)="loadAllTags()"
                         #modalNewEform></app-eform-create-modal>
 <app-eform-column-modal #modalCasesColumns></app-eform-column-modal>
 <app-eform-edit-paring-modal (deploymentFinished)="loadAllTemplates()" #modalParing></app-eform-edit-paring-modal>
