@@ -14,9 +14,9 @@ exports.config = {
     'e2e/Tests/main-page-eforms/my-eforms.create-eform.spec.ts',
     'e2e/Tests/main-page-eforms/my-eforms.sort-eform.spec.ts',
     'e2e/Tests/main-page-eforms/my-eforms.filter-eform.spec.ts',
-    // 'e2e/Tests/main-page-eforms/my-eforms.tags-eform.spec.ts',
-    // 'e2e/Tests/main-page-eforms/my-eforms.pairing-eform.spec.ts',
-    // 'e2e/Tests/main-page-eforms/my-eforms.delete-eform.spec.ts',
+    'e2e/Tests/main-page-eforms/my-eforms.tags-eform.spec.ts',
+    'e2e/Tests/main-page-eforms/my-eforms.pairing-eform.spec.ts',
+    'e2e/Tests/main-page-eforms/my-eforms.delete-eform.spec.ts',
   ],
   suites: {
     settings: [

@@ -9,42 +9,45 @@ describe('Main page', function () {
     loginPage.login();
   });
   it('should be able to sort by ID', function () {
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    const spinnerAnimation = $('#spinner-animation');
+    spinnerAnimation.waitForDisplayed({timeout: 90000, reverse: true});
     myEformsPage.idSortBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    spinnerAnimation.waitForDisplayed({timeout: 90000, reverse: true});
     const idListBefore = $$('#eform-id').map(item => {
       return item.getText();
     });
     myEformsPage.idSortBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    spinnerAnimation.waitForDisplayed({timeout: 90000, reverse: true});
     const idListAfter = $$('#eform-id').map(item => {
       return item.getText();
     });
     expect(idListBefore).deep.equal(idListAfter.reverse());
   });
   it('should be able to sort by "Created at"', function () {
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    const spinnerAnimation = $('#spinner-animation');
+    spinnerAnimation.waitForDisplayed({timeout: 90000, reverse: true});
     myEformsPage.createdAtSortBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    spinnerAnimation.waitForDisplayed({timeout: 90000, reverse: true});
     const createdAtListBefore = $$('#eform-created-at').map(item => {
       return new Date(item.getText());
     });
     myEformsPage.createdAtSortBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    spinnerAnimation.waitForDisplayed({timeout: 90000, reverse: true});
     const createdAtListAfter = $$('#eform-created-at').map(item => {
       return new Date(item.getText());
     });
     expect(createdAtListBefore).deep.equal(createdAtListAfter.reverse());
   });
   it('should be able to sort by "Name eForm"', function () {
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    const spinnerAnimation = $('#spinner-animation');
+    spinnerAnimation.waitForDisplayed({timeout: 90000, reverse: true});
     myEformsPage.eformNameSortBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    spinnerAnimation.waitForDisplayed({timeout: 90000, reverse: true});
     const nameEformListBefore = $$('#eform-label').map(item => {
       return item.getText();
     });
     myEformsPage.eformNameSortBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    spinnerAnimation.waitForDisplayed({timeout: 90000, reverse: true});
     const nameEformListAfter = $$('#eform-label').map(item => {
       return item.getText();
     });

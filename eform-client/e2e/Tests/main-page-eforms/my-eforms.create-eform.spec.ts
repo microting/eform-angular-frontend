@@ -41,7 +41,6 @@ describe('My eforms', function () {
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     const newEformLabel = Guid.create().toString();
     const createdTags = [Guid.create().toString(), Guid.create().toString()];
-    const addedAndSelectedTags = myEformsPage.createNewEform(newEformLabel, createdTags);
     let eform = myEformsPage.getFirstMyEformsRowObj();
     const tagsTexts = eform.tags.map(el => {
       return el.getText();
@@ -53,7 +52,7 @@ describe('My eforms', function () {
     $('#eFormDeleteDeleteBtn').waitForDisplayed({timeout: 20000});
     // browser.pause(7000);
     $$('.btn-danger')[2].click();
-    //browser.pause(7000);
+    // browser.pause(7000);
     eform = myEformsPage.getFirstMyEformsRowObj();
     expect(eform.id === null);
   });
@@ -79,7 +78,7 @@ describe('My eforms', function () {
     $('#eFormDeleteDeleteBtn').waitForDisplayed({timeout: 20000});
     // browser.pause(7000);
     $$('.btn-danger')[2].click();
-    //browser.pause(7000);
+    // browser.pause(7000);
     eform = myEformsPage.getFirstMyEformsRowObj();
     expect(eform.id === null);
   });
@@ -99,7 +98,7 @@ describe('My eforms', function () {
     $('#eFormDeleteDeleteBtn').waitForDisplayed({timeout: 20000});
     // browser.pause(7000);
     $$('.btn-danger')[2].click();
-    //browser.pause(7000);
+    // browser.pause(7000);
     eform = myEformsPage.getFirstMyEformsRowObj();
     expect(eform.id === null);
   });
