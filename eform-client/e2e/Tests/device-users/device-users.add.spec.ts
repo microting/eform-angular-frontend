@@ -5,6 +5,8 @@ import {generateRandmString} from '../../Helpers/helper-functions';
 
 const expect = require('chai').expect;
 const nameDeviceUser = generateRandmString();
+let countDeviceUsersBeforeCreating = 0;
+
 describe('Device users page should add new device user', function () {
   before(function () {
     loginPage.open('/');
@@ -17,6 +19,7 @@ describe('Device users page should add new device user', function () {
     const surname = generateRandmString();
     const rowCountBeforeCreation = deviceUsersPage.rowNum;
     // browser.pause(2000);
+    countDeviceUsersBeforeCreating = rowCountBeforeCreation;
     deviceUsersPage.createNewDeviceUser(nameDeviceUser, surname);
     const rowCountAfterCreation = deviceUsersPage.rowNum;
     expect(rowCountAfterCreation, 'Number of rows hasn\'t changed after creating new user').equal(rowCountBeforeCreation + 1);
@@ -86,6 +89,6 @@ describe('Device users page should not add new device user', function () {
     loginPage.open('/');
     myEformsPage.Navbar.goToDeviceUsersPage();
     // browser.refresh();
-    expect(deviceUsersPage.rowNum).equal(0);
+    expect(deviceUsersPage.rowNum).equal(countDeviceUsersBeforeCreating);
   });
 });
