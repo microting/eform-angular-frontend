@@ -72,6 +72,16 @@ class DeviceUsersPage extends PageWithNavbarPage {
     return new DeviceUsersRowObject(num);
   }
 
+  getDeviceUserByName(name: string): DeviceUsersRowObject {
+    for (let i = 1; i < this.rowNum + 1; i++) {
+      const deviceUser = this.getDeviceUser(i);
+      if (deviceUser.firstName === name) {
+        return deviceUser;
+      }
+    }
+    return null;
+  }
+
   getDeviceUsersList(maxNum): DeviceUsersRowObject[] {
     const users: DeviceUsersRowObject[] = [];
     for (let i = 1; i <= maxNum; i++) {
