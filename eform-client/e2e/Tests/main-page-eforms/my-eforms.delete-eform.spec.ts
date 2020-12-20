@@ -10,7 +10,7 @@ describe('Main Page', function () {
   });
   it('should create eform', function () {
     myEformsPage.idSortBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000});
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     const rowCountBeforeCreation = myEformsPage.rowNum;
     const newEformLabel = Guid.create().toString();
     myEformsPage.createNewEform(newEformLabel);
