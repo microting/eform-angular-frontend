@@ -73,6 +73,16 @@ class FoldersPage extends PageWithNavbarPage {
     return new FoldersRowObject(num);
   }
 
+  getFolderByName(nameFolder: string): FoldersRowObject {
+    for (let i = 1; i < this.rowNum + 1; i++) {
+      const folder = new FoldersRowObject(i);
+      if (folder.name === nameFolder) {
+        return folder;
+      }
+    }
+    return null;
+  }
+
   getFolderFromTree(num): FoldersTreeRowObject {
     return new FoldersTreeRowObject(num);
   }
@@ -181,6 +191,7 @@ export class FoldersRowObject {
       }
       this.editBtn = this.folderElement.$('#editFolderTreeBtn');
       this.deleteBtn = this.folderElement.$('#deleteFolderTreeBtn');
+      this.createFolderChildBtn = this.folderElement.$('#createFolderChildBtn');
     }
   }
 
@@ -189,6 +200,18 @@ export class FoldersRowObject {
   description;
   editBtn;
   deleteBtn;
+  createFolderChildBtn;
+
+  createChild (name = '', description = '') {
+    this.folderElement.click();
+    this.createFolderChildBtn.waitForDisplayed({timeout: 10000});
+    this.createFolderChildBtn.click();
+    $('#name').waitForDisplayed({timeout: 10000});
+    foldersPage.createNameInput.setValue(name);
+    foldersPage.createDescriptionInput.setValue(description);
+    foldersPage.saveCreateBtn.click();
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+  }
 
   delete () {
     this.folderElement.click();
@@ -197,15 +220,17 @@ export class FoldersRowObject {
     this.deleteBtn.click();
     foldersPage.saveDeleteBtn.waitForClickable({ timeout: 20000});
     foldersPage.saveDeleteBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 20000});
+    $('#spinner-animation').waitForDisplayed({timeout: 2000, reverse: true});
   }
 }
 
 export class FoldersTreeRowObject {
   constructor(rowNum) {
     if ($$('#folderTreeId')[rowNum - 1]) {
-      // this.folderTreeId = $$('#folderTreeId')[rowNum - 1];
-      // console.log(this.folderTreeId);
+      try {
+        this.folderTreeElement = $$('#folderTreeId')[rowNum - 1];
+      } catch (e) {
+      }
       try {
         this.nameTree = $$('#folderTreeName')[rowNum - 1].getText();
       } catch (e) {
@@ -219,7 +244,7 @@ export class FoldersTreeRowObject {
     }
   }
 
-  // folderTreeId;
+  folderTreeElement;
   nameTree;
   descriptionTree;
   editTreeBtn;

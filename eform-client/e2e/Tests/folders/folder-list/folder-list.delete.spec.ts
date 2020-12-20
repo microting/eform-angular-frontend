@@ -1,10 +1,10 @@
 import loginPage from '../../../Page objects/Login.page';
 import myEformsPage from '../../../Page objects/MyEforms.page';
 import foldersPage, {FoldersRowObject} from '../../../Page objects/Folders.page';
-import {Guid} from 'guid-typescript';
+import {generateRandmString} from '../../../Helpers/helper-functions';
 
 const expect = require('chai').expect;
-
+const nameFolderForDelete = generateRandmString();
 describe('Delete folder', function () {
   before(function () {
     loginPage.open('/');
@@ -13,60 +13,46 @@ describe('Delete folder', function () {
   });
   it('Should delete', function () {
     // Create
-    const name = Guid.create().toString();
-    const description = Guid.create().toString();
+    const name = generateRandmString();
+    const description = generateRandmString();
     foldersPage.createNewFolder(name, description);
     const rowNumBeforeDelete = foldersPage.rowNum;
 
     $('#folderTreeName').waitForDisplayed({timeout: 20000});
-    $$('#folderTreeName')[0].click();
-    const lastFolder = foldersPage.getFolder(1);
-    lastFolder.deleteBtn.waitForDisplayed({timeout: 5000});
-    lastFolder.deleteBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-    foldersPage.saveDeleteBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-    loginPage.open('/');
-    myEformsPage.Navbar.goToFolderPage();
+    const folder = foldersPage.getFolderByName(name);
+    folder.delete();
     const rowNumAfterDelete = foldersPage.rowNum;
-    expect(1, 'Folder was deleted incorrectly').equal(rowNumAfterDelete + 1);
+    expect(rowNumBeforeDelete - 1, 'Folder was deleted incorrectly').equal(rowNumAfterDelete);
   });
   it('Should not delete if cancel was clicked', function () {
-    // Open
-    loginPage.open('/');
-    myEformsPage.Navbar.goToFolderPage();
-
     // Create
-    const name = Guid.create().toString();
-    const description = Guid.create().toString();
+    const name = nameFolderForDelete;
+    const description = generateRandmString();
     foldersPage.createNewFolder(name, description);
 
     // Delete
-    // const rowNumBeforeDelete = foldersPage.rowNum;
-    $('#folderTreeName').waitForDisplayed({timeout: 20000});
-    $$('#folderTreeName')[0].click();
-    const lastFolder = foldersPage.getFolder(1);
-    lastFolder.deleteBtn.waitForDisplayed({timeout: 5000 });
-    lastFolder.deleteBtn.waitForClickable({timeout: 20000});
-    lastFolder.deleteBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    const rowNumBeforeDelete = foldersPage.rowNum;
+    const folder = foldersPage.getFolderByName(name);
+    folder.folderElement.waitForDisplayed({timeout: 20000});
+    folder.folderElement.click();
+    folder.deleteBtn.waitForDisplayed({timeout: 5000 });
+    folder.deleteBtn.waitForClickable({timeout: 20000});
+    folder.deleteBtn.click();
+    const spinnerAnimation = $('#spinner-animation');
+    spinnerAnimation.waitForDisplayed({timeout: 90000, reverse: true});
     foldersPage.cancelDeleteBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-    loginPage.open('/');
-    myEformsPage.Navbar.goToFolderPage();
+    spinnerAnimation.waitForDisplayed({timeout: 90000, reverse: true});
+    browser.pause(500);
     const rowNumAfterCancelDelete = foldersPage.rowNum;
-    expect(0).equal(rowNumAfterCancelDelete);
+    expect(rowNumBeforeDelete).equal(rowNumAfterCancelDelete);
   });
   it('Should delete folder', function () {
-    // Create
-    myEformsPage.Navbar.goToFolderPage();
     $('#folderTreeName').waitForDisplayed({timeout: 20000});
-    $$('#folderTreeName')[0].click();
-    const lastFolder = foldersPage.getFolder(1);
-    lastFolder.deleteBtn.waitForDisplayed({timeout: 5000});
-    lastFolder.deleteBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-    foldersPage.saveDeleteBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    const folder = foldersPage.getFolderByName(nameFolderForDelete);
+    folder.folderElement.click();
+    const countFoldersBeforeDelete = foldersPage.rowNum;
+    folder.delete();
+    const countFoldersAfterDelete = foldersPage.rowNum;
+    expect(countFoldersBeforeDelete - 1).eq(countFoldersAfterDelete);
   });
 });
