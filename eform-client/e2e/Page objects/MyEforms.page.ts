@@ -326,7 +326,6 @@ class MyEformsRowObject {
     spinnerAnimation.waitForDisplayed({timeout: 20000, reverse: true});
     myEformsPage.cancelParingBtn.waitForDisplayed({timeout: 20000});
     for (let i = 0; i < users.length; i++) {
-      console.log(i);
       const checkbox = $(`#checkbox${users[i].siteId}`);
       checkbox.scrollIntoView();
       checkbox.$('..').waitForClickable({timeout: 20000});
