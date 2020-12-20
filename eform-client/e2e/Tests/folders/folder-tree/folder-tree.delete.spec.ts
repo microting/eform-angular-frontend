@@ -49,7 +49,6 @@ describe('Delete folder', function () {
     loginPage.open('/');
     myEformsPage.Navbar.goToFolderPage();
     const rowNumParentsAfterCancelDelete = foldersPage.rowNumParents;
-    console.log(rowNumParentsAfterCancelDelete);
     expect(rowNumParentsBeforeDelete).equal(rowNumParentsAfterCancelDelete);
   });
   it('Should delete folder', function () {

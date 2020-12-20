@@ -21,14 +21,11 @@ describe('Main page', function () {
     expect(rowCountBeforeCreation + 1).eq(rowCountAfterCreation);
   });
   it('should not perform any changes by doing nothing and clicking "Save" in tag edit window', function () {
-    const elem = $('#toast-container');
     const eform = myEformsPage.getEformsRowObjByNameEForm(newEformLabel);
-    elem.waitForDisplayed({timeout: 20000, reverse: true});
     eform.editTagsBtn.click();
     myEformsPage.tagEditSaveBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-    elem.waitForDisplayed({timeout: 20000});
-    expect(elem.getText()).eq('Skabelonetiketter blev opdateret med succes');
+    expect(myEformsPage.getEformsRowObjByNameEForm(newEformLabel).tags.length).eq(0);
   });
   it('should create tag', function () {
     const elem = $('#toast-container');
