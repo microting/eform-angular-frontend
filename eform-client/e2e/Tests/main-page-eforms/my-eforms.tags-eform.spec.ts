@@ -29,7 +29,6 @@ describe('Main page', function () {
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     elem.waitForDisplayed({timeout: 20000});
     expect(elem.getText()).eq('Skabelonetiketter blev opdateret med succes');
-    elem.click();
   });
   it('should create tag', function () {
     const elem = $('#toast-container');
@@ -37,7 +36,6 @@ describe('Main page', function () {
     myEformsPage.createNewTag(testTag);
     elem.waitForDisplayed({timeout: 20000});
     expect(elem.getText()).eq(`Tag "${testTag}" oprettet med succes`);
-    elem.click();
   });
   it('should add already prepared tag to eform', function () {
     myEformsPage.getEformsRowObjByNameEForm(newEformLabel).addTag(testTag);
