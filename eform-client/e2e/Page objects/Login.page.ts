@@ -34,23 +34,25 @@ class LoginPage extends Page {
   }
 
   public login(): void {
-    $('#username').waitForDisplayed({timeout: 60000});
-    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
+    this.usernameInput.waitForDisplayed({timeout: 60000});
+    const spinnerAnimation = $('#spinner-animation');
+    spinnerAnimation.waitForDisplayed({timeout: 60000, reverse: true});
     this.usernameInput.setValue(LoginConstants.username);
     this.passwordInput.setValue(LoginConstants.password);
     this.loginBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
+    spinnerAnimation.waitForDisplayed({timeout: 50000, reverse: true});
     $('#newEFormBtn').waitForDisplayed({timeout: 60000});
-    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
+    spinnerAnimation.waitForDisplayed({timeout: 50000, reverse: true});
   }
   public loginWithNewPassword(): void {
-    $('#username').waitForDisplayed({timeout: 60000});
-    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
+    this.usernameInput.waitForDisplayed({timeout: 60000});
+    const spinnerAnimation = $('#spinner-animation');
+    spinnerAnimation.waitForDisplayed({timeout: 50000, reverse: true});
     this.usernameInput.setValue(LoginConstants.username);
     this.passwordInput.setValue(LoginConstants.newPassword);
     this.loginBtn.click();
     $('#newEFormBtn').waitForDisplayed({timeout: 60000});
-    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
+    spinnerAnimation.waitForDisplayed({timeout: 50000, reverse: true});
   }
 
   public randomInt(min, max) {

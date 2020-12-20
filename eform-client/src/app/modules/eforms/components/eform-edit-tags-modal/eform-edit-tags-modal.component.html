@@ -40,6 +40,7 @@
                 <ng-select
                   class="input-group"
                   dropdownPosition="'bottom'"
+                  id="removeTagSelect"
                   [bindValue]="'id'"
                   [bindLabel]="'name'"
                   [(ngModel)]="tagForRemoval"
@@ -47,7 +48,7 @@
                   [items]="availableTags"></ng-select>
                 <button  class="btn btn-danger btn-icon m-0 mb-1"
                          (click)="removeTemplateTag()"
-                         [disabled]="!  tagForRemoval"
+                         [disabled]="!tagForRemoval"
                          type="button">
                   <fa-icon icon="times" [fixedWidth]="true" size="lg"></fa-icon>
                 </button>
@@ -58,9 +59,13 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button mdbBtn class="btn-success btn-small-height"
-                (click)="updateTemplateTags()">{{'Save' | translate}}</button>
-        <button mdbBtn class="btn-accent text-black-50 btn-small-height" (click)="frame.hide()">{{'Cancel' | translate}}</button>
+        <button
+          id="tagEditSaveBtn"
+          mdbBtn class="btn-success btn-small-height"
+          (click)="updateTemplateTags()">{{'Save' | translate}}</button>
+        <button id="tagEditSaveCancelBtn"
+                mdbBtn class="btn-accent text-black-50 btn-small-height"
+                (click)="frame.hide()">{{'Cancel' | translate}}</button>
       </div>
     </div>
   </div>

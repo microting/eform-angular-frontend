@@ -11,12 +11,12 @@ exports.config = {
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
   specs: [
+    // 'e2e/Tests/main-page-eforms/my-eforms.delete-eform.spec.ts',
     'e2e/Tests/main-page-eforms/my-eforms.create-eform.spec.ts',
     'e2e/Tests/main-page-eforms/my-eforms.sort-eform.spec.ts',
     'e2e/Tests/main-page-eforms/my-eforms.filter-eform.spec.ts',
     // 'e2e/Tests/main-page-eforms/my-eforms.tags-eform.spec.ts',
     // 'e2e/Tests/main-page-eforms/my-eforms.pairing-eform.spec.ts',
-    // 'e2e/Tests/main-page-eforms/my-eforms.delete-eform.spec.ts',
   ],
   suites: {
     settings: [
@@ -54,7 +54,7 @@ exports.config = {
     // maxInstances can get overwritten per capability. So if you have an in-house Selenium
     // grid with only 5 firefox instances available you can make sure that not more than
     // 5 instances get started at a time.
-    maxInstances: 5,
+    maxInstances: 1,
     //
     browserName: 'chrome',
     'goog:chromeOptions': {

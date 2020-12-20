@@ -26,7 +26,6 @@ exports.config = {
     'e2e/Tests/folders/folder-tree/folder-tree.add.spec.ts',
     'e2e/Tests/folders/folder-tree/folder-tree.delete.spec.ts',
     'e2e/Tests/folders/folder-tree/folder-tree.edit.spec.ts',
-    'e2e/Tests/eforms/eforms.add.spec.ts',
     'e2e/Tests/navigation-menu/navigation-menu.create-item.spec.ts',
     'e2e/Tests/navigation-menu/navigation-menu.edit-item.spec.ts',
     'e2e/Tests/navigation-menu/navigation-menu.drag-item.spec.ts',

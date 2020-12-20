@@ -129,8 +129,9 @@ export class Navbar {
   }
   public goToFolderPage() {
     this.advancedDropdownClick();
+    this.foldersBtn.waitForDisplayed({timeout: 5000});
+    this.foldersBtn.waitForClickable({timeout: 5000});
     this.foldersBtn.click();
-    // browser.pause(15000);
     $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
   }
   public goToPluginsPage() {

@@ -2,9 +2,9 @@ import loginPage from '../../../Page objects/Login.page';
 import myEformsPage from '../../../Page objects/MyEforms.page';
 import foldersPage, {FoldersRowObject} from '../../../Page objects/Folders.page';
 import {generateRandmString} from '../../../Helpers/helper-functions';
-import {Guid} from 'guid-typescript';
 
 const expect = require('chai').expect;
+const nameFolder = generateRandmString();
 
 describe('Create folder', function () {
   before(function () {
@@ -12,25 +12,24 @@ describe('Create folder', function () {
     loginPage.login();
     myEformsPage.Navbar.goToFolderPage();
     $('#newFolderBtn').waitForDisplayed({timeout: 20000});
-    const name = Guid.create().toString();
-    const description = Guid.create().toString();
-    foldersPage.createNewFolder(name, description);
+    const description = generateRandmString();
+    foldersPage.createNewFolder(nameFolder, description);
   });
   it('Create folder child and change name', function () {
-    const name = Guid.create().toString();
-    const description = Guid.create().toString();
-    const rowCountBeforeCreation = foldersPage.rowNum;
-    const rowParentsCountBeforeCreation = foldersPage.rowNumParents;
-    foldersPage.createFolderChild(rowParentsCountBeforeCreation, name, description);
-    const rowCountAfterCreation = foldersPage.rowNum;
+    const name = generateRandmString();
+    const description = generateRandmString();
+    // const rowCountBeforeCreation = foldersPage.rowNum;
+    // const rowParentsCountBeforeCreation = foldersPage.rowNumParents;
+    foldersPage.getFolderByName(nameFolder).createChild(name, description);
+    // const rowCountAfterCreation = foldersPage.rowNum;
     const rowParentsCountAfterCreation = foldersPage.rowNumParents;
-    const lastFolderAfterEdit = foldersPage.getFolder(rowCountAfterCreation);
+    // const lastFolderAfterEdit = foldersPage.getFolder(rowCountAfterCreation);
     $$('#folderTreeOpenClose')[rowParentsCountAfterCreation - 1].waitForDisplayed({timeout: 20000});
     $$('#folderTreeOpenClose')[rowParentsCountAfterCreation - 1].click();
     browser.pause(1000);
     $$('#folderTreeName')[rowParentsCountAfterCreation].waitForDisplayed({timeout: 20000});
     $$('#folderTreeName')[rowParentsCountAfterCreation].click();
-    const newName = Guid.create().toString();
+    const newName = generateRandmString();
     const childFolder = foldersPage.getFolderFromTree(rowParentsCountAfterCreation);
     foldersPage.editFolderChild(childFolder, newName, null);
     // TODO Add tests for the changes.
@@ -38,15 +37,15 @@ describe('Create folder', function () {
     // expect(lastFolderAfterEdit.name, 'Folder name has not changed', newName);
   });
   it('Should change description', function () {
-    const newDescription = Guid.create().toString();
+    const newDescription = generateRandmString();
     const rowParentsCountBeforeEditing = foldersPage.rowNumParents;
     const childFolder = foldersPage.getFolderFromTree(rowParentsCountBeforeEditing);
     foldersPage.editFolderChild(childFolder, null, newDescription);
     expect(childFolder.descriptionTree, 'Folder description has not changed', newDescription);
   });
   it('Should not change first name and last name if cancel was clicked', function () {
-    const newName = Guid.create().toString();
-    const newDescription = Guid.create().toString();
+    const newName = generateRandmString();
+    const newDescription = generateRandmString();
     const rowParentsCountBeforeEditing = foldersPage.rowNumParents;
     const childFolderBeforeEdit = foldersPage.getFolderFromTree(rowParentsCountBeforeEditing);
     childFolderBeforeEdit.editTreeBtn.click();
@@ -74,12 +73,12 @@ describe('Create folder', function () {
     browser.pause(500);
     $$('#folderTreeName')[1].click();
     browser.pause(500);
-    const lastFolder = foldersPage.getFolder(1);
-    lastFolder.deleteBtn.waitForDisplayed({timeout: 5000});
-    lastFolder.deleteBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    $$('#deleteFolderTreeBtn')[0].waitForDisplayed({timeout: 5000});
+    $$('#deleteFolderTreeBtn')[0].click();
+    const spinnerAnimation = $('#spinner-animation');
+    spinnerAnimation.waitForDisplayed({timeout: 90000, reverse: true});
     foldersPage.saveDeleteBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    spinnerAnimation.waitForDisplayed({timeout: 90000, reverse: true});
   });
   it('Should delete folder 2', function () {
     // Create
@@ -90,9 +89,10 @@ describe('Create folder', function () {
     const lastFolder = foldersPage.getFolder(1);
     lastFolder.deleteBtn.waitForDisplayed({timeout: 5000});
     lastFolder.deleteBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    const spinnerAnimation = $('#spinner-animation');
+    spinnerAnimation.waitForDisplayed({timeout: 90000, reverse: true});
     foldersPage.saveDeleteBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    spinnerAnimation.waitForDisplayed({timeout: 90000, reverse: true});
   });
 });
 

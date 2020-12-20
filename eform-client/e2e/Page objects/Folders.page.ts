@@ -30,15 +30,17 @@ class FoldersPage extends PageWithNavbarPage {
   }
 
   public get saveDeleteBtn() {
-    $('#saveDeleteBtn').waitForDisplayed({timeout: 20000});
-    $('#saveDeleteBtn').waitForClickable({timeout: 20000});
-    return $('#saveDeleteBtn');
+    const saveDeleteBtn = $('#saveDeleteBtn');
+    saveDeleteBtn.waitForDisplayed({timeout: 20000});
+    saveDeleteBtn.waitForClickable({timeout: 20000});
+    return saveDeleteBtn;
   }
 
   public get cancelDeleteBtn() {
-    $('#cancelDeleteBtn').waitForDisplayed({timeout: 20000});
-    $('#cancelDeleteBtn').waitForClickable({timeout: 20000});
-    return $('#cancelDeleteBtn');
+    const ele = $('#cancelDeleteBtn');
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({timeout: 20000});
+    return ele;
   }
 
   public get editNameInput() {
@@ -59,7 +61,7 @@ class FoldersPage extends PageWithNavbarPage {
 
   public get rowNum(): number {
     browser.pause(500);
-    return $$('#tableBody > tr').length;
+    return $$('#folderTreeId').length;
   }
 
   public get rowNumParents(): number {
@@ -69,6 +71,16 @@ class FoldersPage extends PageWithNavbarPage {
 
   getFolder(num): FoldersRowObject {
     return new FoldersRowObject(num);
+  }
+
+  getFolderByName(nameFolder: string): FoldersRowObject {
+    for (let i = 1; i < this.rowNum + 1; i++) {
+      const folder = new FoldersRowObject(i);
+      if (folder.name === nameFolder) {
+        return folder;
+      }
+    }
+    return null;
   }
 
   getFolderFromTree(num): FoldersTreeRowObject {
@@ -164,33 +176,61 @@ export default foldersPage;
 
 export class FoldersRowObject {
   constructor(rowNum) {
-    if ($$('#folderTreeName')[rowNum - 1]) {
-      // this.folderId = $$('#folderId')[rowNum - 1];
+    if ($$('#folderTreeId')[rowNum - 1]) {
       try {
-        this.name = $$('#folderTreeName')[rowNum - 1].getText();
+      this.folderElement = $$('#folderTreeId')[rowNum - 1];
       } catch (e) {
       }
       try {
-        this.description = $$('#folderTreeDescription')[rowNum - 1].getText();
+        this.name = this.folderElement.$('#folderTreeName').getText();
       } catch (e) {
       }
-      this.editBtn = $$('#editFolderTreeBtn')[rowNum - 1];
-      this.deleteBtn = $$('#deleteFolderTreeBtn')[rowNum - 1];
+      try {
+        this.description = this.folderElement.$('#folderTreeDescription').getText();
+      } catch (e) {
+      }
+      this.editBtn = this.folderElement.$('#editFolderTreeBtn');
+      this.deleteBtn = this.folderElement.$('#deleteFolderTreeBtn');
+      this.createFolderChildBtn = this.folderElement.$('#createFolderChildBtn');
     }
   }
 
-  folderId;
+  folderElement;
   name;
   description;
   editBtn;
   deleteBtn;
+  createFolderChildBtn;
+
+  createChild (name = '', description = '') {
+    this.folderElement.click();
+    this.createFolderChildBtn.waitForDisplayed({timeout: 10000});
+    this.createFolderChildBtn.click();
+    $('#name').waitForDisplayed({timeout: 10000});
+    foldersPage.createNameInput.setValue(name);
+    foldersPage.createDescriptionInput.setValue(description);
+    foldersPage.saveCreateBtn.click();
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+  }
+
+  delete () {
+    this.folderElement.click();
+    // browser.pause(500);
+    this.deleteBtn.waitForClickable({ timeout: 20000});
+    this.deleteBtn.click();
+    foldersPage.saveDeleteBtn.waitForClickable({ timeout: 20000});
+    foldersPage.saveDeleteBtn.click();
+    $('#spinner-animation').waitForDisplayed({timeout: 2000, reverse: true});
+  }
 }
 
 export class FoldersTreeRowObject {
   constructor(rowNum) {
     if ($$('#folderTreeId')[rowNum - 1]) {
-      // this.folderTreeId = $$('#folderTreeId')[rowNum - 1];
-      // console.log(this.folderTreeId);
+      try {
+        this.folderTreeElement = $$('#folderTreeId')[rowNum - 1];
+      } catch (e) {
+      }
       try {
         this.nameTree = $$('#folderTreeName')[rowNum - 1].getText();
       } catch (e) {
@@ -204,7 +244,7 @@ export class FoldersTreeRowObject {
     }
   }
 
-  folderTreeId;
+  folderTreeElement;
   nameTree;
   descriptionTree;
   editTreeBtn;

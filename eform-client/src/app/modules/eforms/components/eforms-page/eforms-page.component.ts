@@ -55,7 +55,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
       debounceTime(500)
     ). subscribe(val => {
       this.templateRequestModel.nameFilter = val.toString();
-      this.loadAllTemplates();
+      this.loadAllTags();
     });
   }
 
@@ -148,6 +148,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   }
 
   onLabelInputChanged(label: string) {
+    // debugger;
     this.searchSubject.next(label);
   }
 

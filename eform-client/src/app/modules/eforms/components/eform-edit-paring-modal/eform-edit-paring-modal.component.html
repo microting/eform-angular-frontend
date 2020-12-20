@@ -35,7 +35,7 @@
           <tbody id="pairingModalTableBody">
           <tr *ngFor="let siteDto of sitesDto">
             <td id="microtingId" class="align-middle">{{siteDto.siteUId}}</td>
-            <td class="align-middle">{{siteDto.siteName}}</td>
+            <td id="deviceUserFullName" class="align-middle">{{siteDto.siteName}}</td>
             <td class="align-middle">
               <ng-container *ngFor="let checkboxModel of deployViewModel.deployCheckboxes">
                 <div class="mat-checkbox" *ngIf="checkboxModel.id == siteDto.siteUId">

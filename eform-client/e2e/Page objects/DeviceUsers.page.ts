@@ -49,15 +49,17 @@ class DeviceUsersPage extends PageWithNavbarPage {
   }
 
   public get saveDeleteBtn() {
-    $('#saveDeleteBtn').waitForDisplayed({timeout: 20000});
-    $('#saveDeleteBtn').waitForClickable({ timeout: 20000});
-    return $('#saveDeleteBtn');
+    const ele = $('#saveDeleteBtn');
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({ timeout: 20000});
+    return ele;
   }
 
   public get cancelDeleteBtn() {
-    $('#cancelDeleteBtn').waitForDisplayed({timeout: 20000});
-    $('#cancelDeleteBtn').waitForClickable({ timeout: 20000});
-    return $('#cancelDeleteBtn');
+    const ele = $('#cancelDeleteBtn');
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({ timeout: 20000});
+    return ele;
   }
 
   public get rowNum(): number {
@@ -68,6 +70,16 @@ class DeviceUsersPage extends PageWithNavbarPage {
   getDeviceUser(num): DeviceUsersRowObject {
     browser.pause(500);
     return new DeviceUsersRowObject(num);
+  }
+
+  getDeviceUserByName(name: string): DeviceUsersRowObject {
+    for (let i = 1; i < this.rowNum + 1; i++) {
+      const deviceUser = this.getDeviceUser(i);
+      if (deviceUser.firstName === name) {
+        return deviceUser;
+      }
+    }
+    return null;
   }
 
   getDeviceUsersList(maxNum): DeviceUsersRowObject[] {
@@ -93,7 +105,7 @@ class DeviceUsersPage extends PageWithNavbarPage {
     myEformsPage.Navbar.goToDeviceUsersPage();
     $('#newDeviceUserBtn').waitForDisplayed({timeout: 20000});
     const rowCountBeforeCreation = deviceUsersPage.rowNum;
-    //browser.pause(2000);
+    // browser.pause(2000);
     deviceUsersPage.createNewDeviceUser(name, surname);
     const rowCountAfterCreation = deviceUsersPage.rowNum;
     expect(rowCountAfterCreation, 'Number of rows hasn\'t changed after creating new user').equal(rowCountBeforeCreation + 1);
@@ -128,7 +140,7 @@ export default deviceUsersPage;
 export class DeviceUsersRowObject {
   constructor(rowNum) {
     if ($$('#deviceUserId')[rowNum - 1]) {
-      this.siteId = $$('#deviceUserId')[rowNum - 1];
+      this.siteId = +$$('#deviceUserId')[rowNum - 1].getText();
       try {
         this.firstName = $$('#deviceUserFirstName')[rowNum - 1].getText();
       } catch (e) {}
@@ -140,9 +152,17 @@ export class DeviceUsersRowObject {
     }
   }
 
-  siteId;
-  firstName;
-  lastName;
+  siteId: number;
+  firstName: string;
+  lastName: string;
   editBtn;
   deleteBtn;
+
+  delete () {
+    this.deleteBtn.waitForClickable({ timeout: 20000});
+    this.deleteBtn.click();
+    deviceUsersPage.saveDeleteBtn.waitForClickable({ timeout: 20000});
+    deviceUsersPage.saveDeleteBtn.click();
+    $('#spinner-animation').waitForDisplayed({timeout: 20000});
+  }
 }
