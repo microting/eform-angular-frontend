@@ -63,7 +63,7 @@ namespace eFormAPI.Web.Services
                 var core = await _coreHelper.GetCore();
                 using (var dbContext = core.dbContextHelper.GetDbContext())
                 {
-                    var sites = await dbContext.sites
+                    var sites = await dbContext.Sites
                         .AsNoTracking()
                         .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                         .Select(x => new CommonDictionaryModel
@@ -90,7 +90,7 @@ namespace eFormAPI.Web.Services
                 var core = await _coreHelper.GetCore();
                 using (var dbContext = core.dbContextHelper.GetDbContext())
                 {
-                    var sites = await dbContext.sites
+                    var sites = await dbContext.Sites
                         .AsNoTracking()
                         .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                         .Select(x => new SiteModel
@@ -136,7 +136,7 @@ namespace eFormAPI.Web.Services
                 var core = await _coreHelper.GetCore();
                 using (var dbContext = core.dbContextHelper.GetDbContext())
                 {
-                    var site = await dbContext.sites
+                    var site = await dbContext.Sites
                         .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                         .Where(x => x.Id == id)
                         .Select(x => new SiteModel
@@ -178,7 +178,7 @@ namespace eFormAPI.Web.Services
                 var core = await _coreHelper.GetCore();
                 using (var dbContext = core.dbContextHelper.GetDbContext())
                 {
-                    var site = await dbContext.sites
+                    var site = await dbContext.Sites
                         .Include(x => x.SiteTags)
                         .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                         .Where(x => x.Id == updateModel.Id)
@@ -213,7 +213,7 @@ namespace eFormAPI.Web.Services
                 var core = await _coreHelper.GetCore();
                 using (var dbContext = core.dbContextHelper.GetDbContext())
                 {
-                    var site = await dbContext.sites
+                    var site = await dbContext.Sites
                         .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                         .Where(x => x.Id == id)
                         .FirstOrDefaultAsync();

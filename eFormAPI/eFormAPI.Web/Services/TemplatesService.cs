@@ -519,7 +519,7 @@ namespace eFormAPI.Web.Services
                 {
                     using (var dbContext = core.dbContextHelper.GetDbContext())
                     {
-                        mainElement.CheckListFolderName = dbContext.folders.Single(x => x.Id == deployModel.FolderId).MicrotingUid.ToString();
+                        mainElement.CheckListFolderName = dbContext.Folders.Single(x => x.Id == deployModel.FolderId).MicrotingUid.ToString();
                     }
                 }
                 mainElement.EndDate = DateTime.Now.AddYears(10).ToUniversalTime();

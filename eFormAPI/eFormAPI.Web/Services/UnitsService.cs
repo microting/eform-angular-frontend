@@ -51,7 +51,7 @@ namespace eFormAPI.Web.Services
             var core = await _coreHelper.GetCore();
             using (var dbContext = core.dbContextHelper.GetDbContext())
             {
-                var units = await dbContext.units.AsNoTracking().Select(t => new UnitModel()
+                var units = await dbContext.Units.AsNoTracking().Select(t => new UnitModel()
                 {
                     Id = t.Id,
                     CreatedAt = t.CreatedAt,

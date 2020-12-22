@@ -61,7 +61,7 @@ namespace eFormAPI.Web.Services
                 var core = await _coreHelper.GetCore();
                 using (var dbContext = core.dbContextHelper.GetDbContext())
                 {
-                    var tags = await dbContext.tags
+                    var tags = await dbContext.Tags
                         .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                         .Select(x => new CommonDictionaryModel
                         {
@@ -87,7 +87,7 @@ namespace eFormAPI.Web.Services
                 var core = await _coreHelper.GetCore();
                 using (var dbContext = core.dbContextHelper.GetDbContext())
                 {
-                    var tag = new tags
+                    var tag = new Tag
                     {
                         Name = tagName,
                     };
@@ -118,7 +118,7 @@ namespace eFormAPI.Web.Services
                 var core = await _coreHelper.GetCore();
                 using (var dbContext = core.dbContextHelper.GetDbContext())
                 {
-                    var site = await dbContext.sites
+                    var site = await dbContext.Sites
                         .Include(x => x.SiteTags)
                         .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                         .Where(x => x.Id == siteTagsModel.SiteId)
@@ -162,7 +162,7 @@ namespace eFormAPI.Web.Services
 
                     foreach (var tagIdForCreate in forCreate)
                     {
-                        var siteTag = new site_tags()
+                        var siteTag = new SiteTag()
                         {
                             TagId = tagIdForCreate,
                             SiteId = site.Id,
@@ -189,7 +189,7 @@ namespace eFormAPI.Web.Services
                 var core = await _coreHelper.GetCore();
                 using (var dbContext = core.dbContextHelper.GetDbContext())
                 {
-                    var tag = await dbContext.tags
+                    var tag = await dbContext.Tags
                         .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                         .FirstOrDefaultAsync(x => x.Id == tagId);
 

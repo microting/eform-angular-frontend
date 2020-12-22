@@ -60,7 +60,7 @@ namespace eFormAPI.Web.Services
             {
                 var core = await _coreHelper.GetCore();
                 await using var dbContext = core.dbContextHelper.GetDbContext();
-                var folders = await dbContext.folders
+                var folders = await dbContext.Folders
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                     .Select(x => new FolderDtoModel
                     {
@@ -90,7 +90,7 @@ namespace eFormAPI.Web.Services
             {
                 var core = await _coreHelper.GetCore();
                 await using var dbContext = core.dbContextHelper.GetDbContext();
-                var folders = await dbContext.folders
+                var folders = await dbContext.Folders
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                     .Select(x => new FolderDtoModel
                     {
@@ -143,7 +143,7 @@ namespace eFormAPI.Web.Services
             {
                 var core = await _coreHelper.GetCore();
                 await using var dbContext = core.dbContextHelper.GetDbContext();
-                var folder = await dbContext.folders
+                var folder = await dbContext.Folders
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                     .Where(x => x.Id == id)
                     .Select(x => new FolderDtoModel
@@ -221,11 +221,11 @@ namespace eFormAPI.Web.Services
         {
             var core = await _coreHelper.GetCore();
             await using MicrotingDbContext dbContext = core.dbContextHelper.GetDbContext();
-            var list = await dbContext.folders.Where(x => x.ParentId == id).ToListAsync();
+            var list = await dbContext.Folders.Where(x => x.ParentId == id).ToListAsync();
             foreach (var folder in list)
             {
                 await core.FolderDelete(folder.Id);
-                var sublist = await dbContext.folders.Where(x => x.ParentId == folder.Id).ToListAsync();
+                var sublist = await dbContext.Folders.Where(x => x.ParentId == folder.Id).ToListAsync();
                 if (sublist.Any())
                 {
                     foreach (var subfolder in sublist)
