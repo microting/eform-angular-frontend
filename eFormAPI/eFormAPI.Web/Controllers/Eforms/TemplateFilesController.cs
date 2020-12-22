@@ -457,7 +457,7 @@ namespace eFormAPI.Web.Controllers.Eforms
 
                             if (Directory.GetFiles(compactPath, "*.jrxml").Length != 0)
                             {
-                                var cl = await dbContext.check_lists.SingleAsync(x => x.Id == templateId);
+                                var cl = await dbContext.CheckLists.SingleAsync(x => x.Id == templateId);
                                 cl.JasperExportEnabled = true;
                                 cl.DocxExportEnabled = false;
                                 await cl.Update(dbContext);
@@ -472,7 +472,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                             }
                             if (Directory.GetFiles(compactPath, "*.docx").Length != 0)
                             {
-                                var cl = await dbContext.check_lists.SingleAsync(x => x.Id == templateId);
+                                var cl = await dbContext.CheckLists.SingleAsync(x => x.Id == templateId);
                                 cl.JasperExportEnabled = false;
                                 cl.DocxExportEnabled = true;
                                 await cl.Update(dbContext);
@@ -485,7 +485,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                             var files = Directory.GetFiles(compactPath, "*.xlsx");
                             if (files.Length != 0)
                             {
-                                var cl = await dbContext.check_lists.SingleAsync(x => x.Id == templateId);
+                                var cl = await dbContext.CheckLists.SingleAsync(x => x.Id == templateId);
                                 cl.ExcelExportEnabled = true;
                                 await cl.Update(dbContext);
 

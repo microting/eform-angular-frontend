@@ -153,7 +153,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
 
                 using (var dbContext = core.dbContextHelper.GetDbContext())
                 {
-                    var caseEntity = await dbContext.cases
+                    var caseEntity = await dbContext.Cases
                         .AsNoTracking()
                         .Include(x => x.Site)
                         .SingleOrDefaultAsync(x => x.Id == requestModel.CaseId);
@@ -548,7 +548,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                 {
                     var core = await _coreService.GetCore();
                     await using var microtingDbContext = core.dbContextHelper.GetDbContext();
-                    var casesIds = await microtingDbContext.cases
+                    var casesIds = await microtingDbContext.Cases
                         .Where(x => x.CheckListId == requestModel.TemplateId)
                         .Select(x => x.Id)
                         .ToListAsync();
