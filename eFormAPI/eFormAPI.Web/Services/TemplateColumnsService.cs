@@ -24,10 +24,14 @@ SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Eforms;
+using eFormAPI.Web.Infrastructure.Database;
 using eFormAPI.Web.Infrastructure.Models.Templates;
+using Microsoft.AspNetCore.Http;
+using Microting.eForm.Infrastructure.Data.Entities;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
@@ -37,11 +41,17 @@ namespace eFormAPI.Web.Services
     {
         private readonly IEFormCoreService _coreHelper;
         private readonly ILocalizationService _localizationService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly BaseDbContext _dbContext;
 
-        public TemplateColumnsService(ILocalizationService localizationService, 
+        public TemplateColumnsService(ILocalizationService localizationService,
+            IHttpContextAccessor httpContextAccessor,
+            BaseDbContext dbContext,
             IEFormCoreService coreHelper)
         {
             _localizationService = localizationService;
+            _httpContextAccessor = httpContextAccessor;
+            _dbContext = dbContext;
             _coreHelper = coreHelper;
         }
 
@@ -82,7 +92,11 @@ namespace eFormAPI.Web.Services
             try
             {
                 var core = await _coreHelper.GetCore();
-                var template = await core.TemplateItemRead(templateId);
+
+                var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+                var localeString = _dbContext.Users.Single(x => x.Id == int.Parse(value)).Locale;
+                Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.Name == localeString);
+                var template = await core.TemplateItemRead(templateId, language);
                 var model = new DisplayTemplateColumnsModel()
                 {
                     TemplateId = template.Id,
