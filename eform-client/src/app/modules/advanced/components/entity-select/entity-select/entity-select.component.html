@@ -4,6 +4,7 @@
       mdbBtn
       id="entitySelectCreateBtn"
       class="btn btn-success btn-small-height" *ngIf="userClaims.entitySelectCreate"
+      placement="left"
       mdbTooltip="{{ 'Create new selectable list' | translate }}"
       [routerLink]="['/advanced/entity-select/create']">
       {{ 'New list' | translate }}

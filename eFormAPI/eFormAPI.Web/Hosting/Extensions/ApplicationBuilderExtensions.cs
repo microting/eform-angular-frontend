@@ -90,6 +90,7 @@ namespace eFormAPI.Web.Hosting.Extensions
                 new CultureInfo("en-US"),
                 new CultureInfo("da"),
                 new CultureInfo("de-DE"),
+                new CultureInfo("uk-UA")
             };
             var localizationOptions = new RequestLocalizationOptions
             {
