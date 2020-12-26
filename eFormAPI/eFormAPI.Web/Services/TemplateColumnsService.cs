@@ -95,7 +95,7 @@ namespace eFormAPI.Web.Services
 
                 var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
                 var localeString = _dbContext.Users.Single(x => x.Id == int.Parse(value)).Locale;
-                Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.Name == localeString);
+                Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.Description.ToLower() == localeString.ToLower());
                 var template = await core.TemplateItemRead(templateId, language);
                 var model = new DisplayTemplateColumnsModel()
                 {

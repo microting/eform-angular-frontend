@@ -92,9 +92,9 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
             try
             {
                 var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
-                var localeString = _dbContext.Users.Single(x => x.Id == int.Parse(value)).Locale;
                 var core = await _coreService.GetCore();
-                Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.Name == localeString);
+                var localeString = _dbContext.Users.Single(x => x.Id == int.Parse(value)).Locale;
+                Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.Description.ToLower() == localeString.ToLower());
                 var casePostsListModel = new CasePostsListModel();
                 var casePostsQuery = _dbContext.CasePosts.AsQueryable();
                 if (!string.IsNullOrEmpty(requestModel.Sort))
