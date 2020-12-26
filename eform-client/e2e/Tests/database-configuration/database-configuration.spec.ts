@@ -9,7 +9,8 @@ describe('Database', function () {
     databasePage.open('/');
     $('#save').waitForDisplayed({timeout: 90000});
     $('#languageSelector').waitForDisplayed({timeout: 90000});
-    $('#loginBtn').waitForDisplayed({timeout: 90000});
+    browser.pause(5000);
+    // $('#loginBtn').waitForDisplayed({timeout: 90000});
     $('#languageSelector').waitForDisplayed({timeout: 90000});
     browser.pause(1000);
     expect(databasePage.firstNameInput.isDisplayed()).equal(true);
