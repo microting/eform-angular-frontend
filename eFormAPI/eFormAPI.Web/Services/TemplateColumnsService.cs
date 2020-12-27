@@ -42,16 +42,19 @@ namespace eFormAPI.Web.Services
         private readonly IEFormCoreService _coreHelper;
         private readonly ILocalizationService _localizationService;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IUserService _userService;
         private readonly BaseDbContext _dbContext;
 
         public TemplateColumnsService(ILocalizationService localizationService,
             IHttpContextAccessor httpContextAccessor,
             BaseDbContext dbContext,
+            IUserService userService,
             IEFormCoreService coreHelper)
         {
             _localizationService = localizationService;
             _httpContextAccessor = httpContextAccessor;
             _dbContext = dbContext;
+            _userService = userService;
             _coreHelper = coreHelper;
         }
 
@@ -94,7 +97,7 @@ namespace eFormAPI.Web.Services
                 var core = await _coreHelper.GetCore();
 
                 var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
-                var localeString = _dbContext.Users.Single(x => x.Id == int.Parse(value)).Locale;
+                var localeString = await _userService.GetUserLocale(int.Parse(value));
                 Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.Description.ToLower() == localeString.ToLower());
                 var template = await core.TemplateItemRead(templateId, language);
                 var model = new DisplayTemplateColumnsModel()
