@@ -49,6 +49,14 @@ namespace eFormAPI.Web.Infrastructure
                             MenuItemId = MenuTemplateIds.MyEforms,
                             Language = LanguageNames.German,
                             LocaleName = LocaleNames.German,
+                        },
+                        new MenuItemTranslation
+                        {
+                            Id = 39,
+                            Name = "Мої ЕФорми",
+                            MenuItemId = MenuTemplateIds.MyEforms,
+                            Language = LanguageNames.Ukrainian,
+                            LocaleName = LocaleNames.Ukrainian,
                         }
                     }
                 },
@@ -82,10 +90,18 @@ namespace eFormAPI.Web.Infrastructure
                         new MenuItemTranslation
                         {
                             Id = 28,
-                            Name = "Gerätebenutzer ",
+                            Name = "Gerätebenutzer",
                             MenuItemId = MenuTemplateIds.DeviceUsers,
                             Language = LanguageNames.German,
                             LocaleName = LocaleNames.German,
+                        },
+                        new MenuItemTranslation
+                        {
+                            Id = 40,
+                            Name = "Користувачі пристроїв",
+                            MenuItemId = MenuTemplateIds.DeviceUsers,
+                            Language = LanguageNames.Ukrainian,
+                            LocaleName = LocaleNames.Ukrainian,
                         }
                     }
                 },
@@ -123,6 +139,14 @@ namespace eFormAPI.Web.Infrastructure
                             MenuItemId = MenuTemplateIds.Advanced,
                             Language = LanguageNames.German,
                             LocaleName = LocaleNames.German,
+                        },
+                        new MenuItemTranslation
+                        {
+                            Id = 41,
+                            Name = "Додатково",
+                            MenuItemId = MenuTemplateIds.Advanced,
+                            Language = LanguageNames.Ukrainian,
+                            LocaleName = LocaleNames.Ukrainian,
                         }
                     }
                 },
@@ -161,6 +185,14 @@ namespace eFormAPI.Web.Infrastructure
                             MenuItemId = MenuTemplateIds.Sites,
                             Language = LanguageNames.German,
                             LocaleName = LocaleNames.German,
+                        },
+                        new MenuItemTranslation
+                        {
+                            Id = 42,
+                            Name = "Місця",
+                            MenuItemId = MenuTemplateIds.Sites,
+                            Language = LanguageNames.Ukrainian,
+                            LocaleName = LocaleNames.Ukrainian,
                         }
                     }
                 },
@@ -199,6 +231,14 @@ namespace eFormAPI.Web.Infrastructure
                             MenuItemId = MenuTemplateIds.Workers,
                             Language = LanguageNames.German,
                             LocaleName = LocaleNames.German,
+                        },
+                        new MenuItemTranslation
+                        {
+                            Id = 43,
+                            Name = "Працівники",
+                            MenuItemId = MenuTemplateIds.Workers,
+                            Language = LanguageNames.Ukrainian,
+                            LocaleName = LocaleNames.Ukrainian,
                         }
                     }
                 },
@@ -237,6 +277,14 @@ namespace eFormAPI.Web.Infrastructure
                             MenuItemId = MenuTemplateIds.Units,
                             Language = LanguageNames.German,
                             LocaleName = LocaleNames.German,
+                        },
+                        new MenuItemTranslation
+                        {
+                            Id = 44,
+                            Name = "Юніти",
+                            MenuItemId = MenuTemplateIds.Units,
+                            Language = LanguageNames.Ukrainian,
+                            LocaleName = LocaleNames.Ukrainian,
                         }
                     }
                 },
@@ -275,6 +323,14 @@ namespace eFormAPI.Web.Infrastructure
                             MenuItemId = MenuTemplateIds.SearchableList,
                             Language = LanguageNames.German,
                             LocaleName = LocaleNames.German,
+                        },
+                        new MenuItemTranslation
+                        {
+                            Id = 45,
+                            Name = "Пошуковий список",
+                            MenuItemId = MenuTemplateIds.SearchableList,
+                            Language = LanguageNames.Ukrainian,
+                            LocaleName = LocaleNames.Ukrainian,
                         }
                     }
                 },
@@ -313,6 +369,14 @@ namespace eFormAPI.Web.Infrastructure
                             MenuItemId = MenuTemplateIds.SelectableList,
                             Language = LanguageNames.German,
                             LocaleName = LocaleNames.German,
+                        },
+                        new MenuItemTranslation
+                        {
+                            Id = 46,
+                            Name = "Вибірковий список",
+                            MenuItemId = MenuTemplateIds.SelectableList,
+                            Language = LanguageNames.Ukrainian,
+                            LocaleName = LocaleNames.Ukrainian,
                         }
                     }
                 },
@@ -351,6 +415,14 @@ namespace eFormAPI.Web.Infrastructure
                             MenuItemId = MenuTemplateIds.ApplicationSettings,
                             Language = LanguageNames.German,
                             LocaleName = LocaleNames.German,
+                        },
+                        new MenuItemTranslation
+                        {
+                            Id = 47,
+                            Name = "Налаштування застосунку",
+                            MenuItemId = MenuTemplateIds.ApplicationSettings,
+                            Language = LanguageNames.Ukrainian,
+                            LocaleName = LocaleNames.Ukrainian,
                         }
                     }
                 },
@@ -389,6 +461,14 @@ namespace eFormAPI.Web.Infrastructure
                             MenuItemId = MenuTemplateIds.PluginsSettings,
                             Language = LanguageNames.German,
                             LocaleName = LocaleNames.German,
+                        },
+                        new MenuItemTranslation
+                        {
+                            Id = 48,
+                            Name = "Налаштування плагінів",
+                            MenuItemId = MenuTemplateIds.PluginsSettings,
+                            Language = LanguageNames.Ukrainian,
+                            LocaleName = LocaleNames.Ukrainian,
                         }
                     }
                 },
@@ -427,6 +507,14 @@ namespace eFormAPI.Web.Infrastructure
                             MenuItemId = MenuTemplateIds.Folders,
                             Language = LanguageNames.German,
                             LocaleName = LocaleNames.German,
+                        },
+                        new MenuItemTranslation
+                        {
+                            Id = 49,
+                            Name = "Папки",
+                            MenuItemId = MenuTemplateIds.Folders,
+                            Language = LanguageNames.Ukrainian,
+                            LocaleName = LocaleNames.Ukrainian,
                         }
                     }
                 },
@@ -465,6 +553,14 @@ namespace eFormAPI.Web.Infrastructure
                             MenuItemId = MenuTemplateIds.EmailRecipients,
                             Language = LanguageNames.German,
                             LocaleName = LocaleNames.German,
+                        },
+                        new MenuItemTranslation
+                        {
+                            Id = 50,
+                            Name = "Email одержувачі",
+                            MenuItemId = MenuTemplateIds.EmailRecipients,
+                            Language = LanguageNames.Ukrainian,
+                            LocaleName = LocaleNames.Ukrainian,
                         }
                     }
                 }

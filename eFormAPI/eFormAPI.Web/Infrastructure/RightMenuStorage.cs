@@ -16,15 +16,15 @@ namespace eFormAPI.Web.Infrastructure
         public static List<PluginMenuItemModel> GetRightMenu()
         {
             return new List<PluginMenuItemModel>()
+            {
+                new PluginMenuItemModel
                 {
-                   new PluginMenuItemModel
-                {
-                   E2EId = "sign-out-dropdown",
-                   Name = "user",
-                   Type = MenuItemTypeEnum.Dropdown,
-                   Link = "",
-                   Position = 0,
-                   ChildItems = new List<PluginMenuItemModel>()
+                    E2EId = "sign-out-dropdown",
+                    Name = "user",
+                    Type = MenuItemTypeEnum.Dropdown,
+                    Link = "",
+                    Position = 0,
+                    ChildItems = new List<PluginMenuItemModel>()
                     {
                         new PluginMenuItemModel
                         {
@@ -35,7 +35,7 @@ namespace eFormAPI.Web.Infrastructure
                             Position = 0,
                             MenuTemplate = new PluginMenuTemplateModel
                             {
-                                DefaultLink =  "/account-management/users",
+                                DefaultLink = "/account-management/users",
                                 E2EId = "user-management-menu",
                                 Permissions = new List<PluginMenuTemplatePermissionModel>
                                 {
@@ -81,10 +81,16 @@ namespace eFormAPI.Web.Infrastructure
                                 },
                                 new PluginMenuTranslationModel
                                 {
-                                    Name = "Benutzerverwaltung", 
+                                    Name = "Benutzerverwaltung",
                                     LocaleName = LocaleNames.German,
                                     Language = LanguageNames.German,
                                 },
+                                new PluginMenuTranslationModel
+                                {
+                                    Name = "Керування користувачами",
+                                    LocaleName = LocaleNames.Ukrainian,
+                                    Language = LanguageNames.Ukrainian,
+                                }
                             }
                         },
                         new PluginMenuItemModel
@@ -124,29 +130,35 @@ namespace eFormAPI.Web.Infrastructure
                                         PermissionTypeName = "User management",
                                     }
                                 }
-                              },
+                            },
                             Type = MenuItemTypeEnum.Link,
                             Position = 1,
                             Translations = new List<PluginMenuTranslationModel>
                             {
-                              new PluginMenuTranslationModel
-                              {
-                                Name = "Menu Editor",
-                                Language = LanguageNames.English,
-                                LocaleName = LocaleNames.English,
-                              },
-                              new PluginMenuTranslationModel
-                              {
-                                Name = "Menu Editor",
-                                Language = LanguageNames.Danish,
-                                LocaleName = LocaleNames.Danish,
-                              },
-                              new PluginMenuTranslationModel
-                              {
-                                Name = "Menü-Editor",
-                                Language = LanguageNames.German,
-                                LocaleName = LocaleNames.German,
-                              }
+                                new PluginMenuTranslationModel
+                                {
+                                    Name = "Menu Editor",
+                                    Language = LanguageNames.English,
+                                    LocaleName = LocaleNames.English,
+                                },
+                                new PluginMenuTranslationModel
+                                {
+                                    Name = "Menu Editor",
+                                    Language = LanguageNames.Danish,
+                                    LocaleName = LocaleNames.Danish,
+                                },
+                                new PluginMenuTranslationModel
+                                {
+                                    Name = "Menü-Editor",
+                                    Language = LanguageNames.German,
+                                    LocaleName = LocaleNames.German,
+                                },
+                                new PluginMenuTranslationModel
+                                {
+                                    Name = "Редактор меню",
+                                    Language = LanguageNames.Ukrainian,
+                                    LocaleName = LocaleNames.Ukrainian,
+                                }
                             }
                         },
                         new PluginMenuItemModel
@@ -158,8 +170,8 @@ namespace eFormAPI.Web.Infrastructure
                             Position = 2,
                             MenuTemplate = new PluginMenuTemplateModel
                             {
-                                 DefaultLink =   "/account-management/settings",
-                                 E2EId = "settings",
+                                DefaultLink = "/account-management/settings",
+                                E2EId = "settings",
                             },
                             Translations = new List<PluginMenuTranslationModel>
                             {
@@ -171,16 +183,22 @@ namespace eFormAPI.Web.Infrastructure
                                 },
                                 new PluginMenuTranslationModel
                                 {
-                                    Name = "Indstillinger", 
+                                    Name = "Indstillinger",
                                     LocaleName = LocaleNames.Danish,
                                     Language = LanguageNames.Danish,
                                 },
                                 new PluginMenuTranslationModel
                                 {
-                                    Name = "Einstellungen", 
+                                    Name = "Einstellungen",
                                     LocaleName = LocaleNames.German,
                                     Language = LanguageNames.German,
                                 },
+                                new PluginMenuTranslationModel
+                                {
+                                    Name = "Налаштування",
+                                    LocaleName = LocaleNames.Ukrainian,
+                                    Language = LanguageNames.Ukrainian,
+                                }
                             }
                         },
                         new PluginMenuItemModel
@@ -205,21 +223,27 @@ namespace eFormAPI.Web.Infrastructure
                                 },
                                 new PluginMenuTranslationModel
                                 {
-                                    Name = "Sikkerhed", 
+                                    Name = "Sikkerhed",
                                     LocaleName = LocaleNames.Danish,
                                     Language = LanguageNames.Danish,
                                 },
                                 new PluginMenuTranslationModel
                                 {
-                                    Name = "Sicherheit", 
+                                    Name = "Sicherheit",
                                     LocaleName = LocaleNames.German,
                                     Language = LanguageNames.German,
                                 },
+                                new PluginMenuTranslationModel
+                                {
+                                    Name = "Безпека",
+                                    LocaleName = LocaleNames.Ukrainian,
+                                    Language = LanguageNames.Ukrainian,
+                                }
                             }
                         },
                         new PluginMenuItemModel
                         {
-                            E2EId =  "change-password",
+                            E2EId = "change-password",
                             Name = "Change password",
                             Type = MenuItemTypeEnum.Link,
                             Link = "/account-management/change-password",
@@ -227,7 +251,7 @@ namespace eFormAPI.Web.Infrastructure
                             MenuTemplate = new PluginMenuTemplateModel
                             {
                                 DefaultLink = "/account-management/change-password",
-                                E2EId =  "change-password",
+                                E2EId = "change-password",
                             },
                             Translations = new List<PluginMenuTranslationModel>
                             {
@@ -239,16 +263,22 @@ namespace eFormAPI.Web.Infrastructure
                                 },
                                 new PluginMenuTranslationModel
                                 {
-                                    Name = "Skift adgangskode", 
+                                    Name = "Skift adgangskode",
                                     LocaleName = LocaleNames.Danish,
                                     Language = LanguageNames.Danish,
                                 },
                                 new PluginMenuTranslationModel
                                 {
-                                    Name = "Passwort ändern", 
+                                    Name = "Passwort ändern",
                                     LocaleName = LocaleNames.German,
                                     Language = LanguageNames.German,
                                 },
+                                new PluginMenuTranslationModel
+                                {
+                                    Name = "Змінити пароль",
+                                    LocaleName = LocaleNames.Ukrainian,
+                                    Language = LanguageNames.Ukrainian,
+                                }
                             }
                         },
                         new PluginMenuItemModel
@@ -283,11 +313,17 @@ namespace eFormAPI.Web.Infrastructure
                                     LocaleName = LocaleNames.German,
                                     Language = LanguageNames.German,
                                 },
+                                new PluginMenuTranslationModel
+                                {
+                                    Name = "Вихід із системи",
+                                    LocaleName = LocaleNames.Ukrainian,
+                                    Language = LanguageNames.Ukrainian,
+                                }
                             }
                         },
                     }
                 },
-                };
+            };
         }
     }
 }
