@@ -46,10 +46,14 @@ export class Navbar {
     return ele;
   }
   public get entitySearchBtn() {
-    return $(`#header #search`);
+    const ele = $(`#header #search`);
+    ele.waitForDisplayed({timeout: 20000});
+    return ele;
   }
   public get entitySelectBtn() {
-    return $(`#header #selectable-list`);
+    const ele = $(`#header #selectable-list`);
+    ele.waitForDisplayed({timeout: 20000});
+    return ele;
   }
   public get myEformsBtn() {
     return $('#header #my-eforms');

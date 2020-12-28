@@ -81,7 +81,7 @@ describe('Main page', function () {
   after(function () {
     myEformsPage.getFirstMyEformsRowObj().deleteEForm();
     myEformsPage.Navbar.goToDeviceUsersPage();
-    for (let i = deviceUsersPage.rowNum + 1; i > 1; i--) {
+    for (let i = deviceUsersPage.rowNum; i > 0; i--) {
       const deviceUser = deviceUsersPage.getDeviceUser(i);
       if (deviceUser && (deviceUser.firstName === 'testName1' || deviceUser.firstName === 'testName2')
         && (deviceUser.lastName === 'testLastName1' || deviceUser.lastName === 'testLastName2')) {

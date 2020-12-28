@@ -184,7 +184,7 @@ namespace eFormAPI.Web.Services
 
                 return new OperationResult(false, exception.Message);
 
-                //return new OperationResult(false, 
+                //return new OperationResult(false,
                 //    _localizationService.GetString("SDKConnectionStringIsInvalid"));
             }
 
@@ -239,12 +239,26 @@ namespace eFormAPI.Web.Services
                     }
 
                     // Seed admin and demo users
+                    string timeZoneString = "Europe/Copenhagen";
+
+                    try
+                    {
+                        TimeZoneInfo.FindSystemTimeZoneById(timeZoneString);
+                    }
+                    catch
+                    {
+                        timeZoneString = "E. Europe Standard Time";
+                    }
                     var adminUser = new EformUser()
                     {
                         UserName = initialSettingsModel.AdminSetupModel.Email,
                         Email = initialSettingsModel.AdminSetupModel.Email,
                         FirstName = initialSettingsModel.AdminSetupModel.FirstName,
                         LastName = initialSettingsModel.AdminSetupModel.LastName,
+                        Locale = initialSettingsModel.GeneralAppSetupSettingsModel.DefaultLocale,
+                        TimeZone = timeZoneString,
+                        DarkTheme = false,
+                        Formats = "de-DE",
                         EmailConfirmed = true,
                         TwoFactorEnabled = false,
                         IsGoogleAuthenticatorEnabled = false
@@ -271,7 +285,7 @@ namespace eFormAPI.Web.Services
             {
                 _logger.LogError(exception.Message);
                 _logger.LogError(exception.StackTrace);
-                //return new OperationResult(false, 
+                //return new OperationResult(false,
                 //    _localizationService.GetString("MainConnectionStringIsInvalid"));
 
                 if (exception.InnerException != null)
@@ -305,7 +319,7 @@ namespace eFormAPI.Web.Services
                             options.SdkConnection = sdkConnectionString;
                         }, dbContext);
                 }
-                // Update connection string 
+                // Update connection string
                 _connectionStrings.UpdateFile((options) =>
                 {
                     options.DefaultConnection = mainConnectionString;
@@ -323,7 +337,7 @@ namespace eFormAPI.Web.Services
 
                 return new OperationResult(false, exception.Message);
 
-                //return new OperationResult(false, 
+                //return new OperationResult(false,
                 //    _localizationService.GetString("CouldNotWriteConnectionString"));
             }
 
@@ -343,7 +357,7 @@ namespace eFormAPI.Web.Services
                     MainTextVisible = _loginPageSettings.Value.MainTextVisible,
                     SecondaryText = _loginPageSettings.Value.SecondaryText,
                     SecondaryTextVisible = _loginPageSettings.Value.SecondaryTextVisible,
-                    IsSMTPExists = !_emailSettings.Value.SmtpHost.IsNullOrEmpty() && 
+                    IsSMTPExists = !_emailSettings.Value.SmtpHost.IsNullOrEmpty() &&
                                    !_emailSettings.Value.SmtpPort.ToString().IsNullOrEmpty()
                 };
                 return new OperationDataResult<LoginPageSettingsModel>(true, model);
@@ -512,12 +526,12 @@ namespace eFormAPI.Web.Services
                 await core.SetSdkSetting(Settings.httpServerAddress, adminSettingsModel.SiteLink);
                 await core.SetSdkSetting(Settings.swiftEnabled, adminSettingsModel.SwiftSettingsModel.SwiftEnabled.ToString());
                 await core.SetSdkSetting(Settings.swiftUserName, adminSettingsModel.SwiftSettingsModel.SwiftUserName);
-                
+
                 if (adminSettingsModel.SwiftSettingsModel.SwiftPassword != "SOMESECRETPASSWORD")
                 {
                     await core.SetSdkSetting(Settings.swiftPassword, adminSettingsModel.SwiftSettingsModel.SwiftPassword);
                 }
-                
+
                 await core.SetSdkSetting(Settings.swiftEndPoint, adminSettingsModel.SwiftSettingsModel.SwiftEndpoint);
                 await core.SetSdkSetting(Settings.keystoneEndPoint, adminSettingsModel.SwiftSettingsModel.KeystoneEndpoint);
                 await core.SetSdkSetting(Settings.customerNo, adminSettingsModel.SdkSettingsModel.CustomerNo);
@@ -530,12 +544,12 @@ namespace eFormAPI.Web.Services
                 await core.SetSdkSetting(Settings.s3Enabled, adminSettingsModel.S3SettingsModel.S3Enabled.ToString());
                 await core.SetSdkSetting(Settings.s3AccessKeyId, adminSettingsModel.S3SettingsModel.S3AccessKeyId);
                 await core.SetSdkSetting(Settings.s3BucketName, adminSettingsModel.S3SettingsModel.S3BucketName);
-                
+
                 if (adminSettingsModel.S3SettingsModel.S3SecrectAccessKey != "SOMESECRETPASSWORD")
                 {
-                    await core.SetSdkSetting(Settings.s3SecrectAccessKey, adminSettingsModel.S3SettingsModel.S3SecrectAccessKey);    
+                    await core.SetSdkSetting(Settings.s3SecrectAccessKey, adminSettingsModel.S3SettingsModel.S3SecrectAccessKey);
                 }
-                
+
                 await core.SetSdkSetting(Settings.s3Endpoint, adminSettingsModel.S3SettingsModel.S3Endpoint);
                 return new OperationResult(true, _localizationService.GetString("SettingsUpdatedSuccessfully"));
             }

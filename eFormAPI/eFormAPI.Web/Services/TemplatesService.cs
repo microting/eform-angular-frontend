@@ -40,8 +40,9 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microsoft.Extensions.Options;
 using Microting.eForm.Dto;
-using Microting.eForm.Infrastructure.Models;
+using Microting.eForm.Infrastructure.Data.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+using Field = Microting.eForm.Infrastructure.Models.Field;
 
 namespace eFormAPI.Web.Services
 {
@@ -208,7 +209,11 @@ namespace eFormAPI.Web.Services
             try
             {
                 var core = await _coreHelper.GetCore();
-                var templateDto = await core.TemplateItemRead(id);
+
+                var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+                var localeString = _dbContext.Users.Single(x => x.Id == int.Parse(value)).Locale;
+                Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.Description.ToLower() == localeString.ToLower());
+                var templateDto = await core.TemplateItemRead(id, language);
                 return new OperationDataResult<Template_Dto>(true, templateDto);
             }
             catch (Exception ex)
@@ -242,7 +247,7 @@ namespace eFormAPI.Web.Services
                     _localizationService.GetString("CheckSettingsBeforeProceed"));
             }
         }
-        
+
         public async Task<OperationResult> Create(EFormXmlModel eFormXmlModel)
         {
             try
@@ -418,7 +423,11 @@ namespace eFormAPI.Web.Services
         public async Task<OperationResult> Delete(int id)
         {
             var core = await _coreHelper.GetCore();
-            var templateDto = await core.TemplateItemRead(id);
+
+            var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+            var localeString = _dbContext.Users.Single(x => x.Id == int.Parse(value)).Locale;
+            Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.Description.ToLower() == localeString.ToLower());
+            var templateDto = await core.TemplateItemRead(id, language);
             foreach (var siteUId in templateDto.DeployedSites)
             {
                 await core.CaseDelete(templateDto.Id, siteUId.SiteUId);
@@ -455,7 +464,11 @@ namespace eFormAPI.Web.Services
         public async Task<OperationDataResult<DeployToModel>> DeployTo(int id)
         {
             var core = await _coreHelper.GetCore();
-            var templateDto = await core.TemplateItemRead(id);
+
+            var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+            var localeString = _dbContext.Users.Single(x => x.Id == int.Parse(value)).Locale;
+            Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.Description.ToLower() == localeString.ToLower());
+            var templateDto = await core.TemplateItemRead(id, language);
             var siteNamesDto = await core.Advanced_SiteItemReadAll();
 
             var deployToMode = new DeployToModel()
@@ -474,7 +487,11 @@ namespace eFormAPI.Web.Services
             var sitesToBeDeployedTo = new List<int>();
 
             var core = await _coreHelper.GetCore();
-            var templateDto = await core.TemplateItemRead(deployModel.Id);
+
+            var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+            var localeString = _dbContext.Users.Single(x => x.Id == int.Parse(value)).Locale;
+            Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.Description.ToLower() == localeString.ToLower());
+            var templateDto = await core.TemplateItemRead(deployModel.Id, language);
 
             foreach (var site in templateDto.DeployedSites)
             {
@@ -512,7 +529,7 @@ namespace eFormAPI.Web.Services
             if (sitesToBeDeployedTo.Any())
             {
                 var mainElement = await core.TemplateRead(deployModel.Id);
-                mainElement.Repeated = 0; 
+                mainElement.Repeated = 0;
                 // We set this right now hardcoded,
                 // this will let the eForm be deployed until end date or we actively retract it.
                 if (deployModel.FolderId != null)

@@ -85,6 +85,8 @@ describe('Device users page should not add new device user', function () {
     // browser.refresh();
   });
   it('should clean up', function() {
+    loginPage.open('/');
+    myEformsPage.Navbar.goToDeviceUsersPage();
     deviceUsersPage.getDeviceUserByName(nameDeviceUser).delete();
     loginPage.open('/');
     myEformsPage.Navbar.goToDeviceUsersPage();

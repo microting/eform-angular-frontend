@@ -21,6 +21,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
+using Microting.eForm.Infrastructure.Data.Entities;
+
 namespace eFormAPI.Web.Services.Mailing.CasePost
 {
     using System;
@@ -57,6 +62,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
         private readonly ILocalizationService _localizationService;
         private readonly IEFormCoreService _coreService;
         private readonly IEmailService _emailService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly BaseDbContext _dbContext;
         private readonly IDbOptions<EmailSettings> _emailSettings;
 
@@ -66,12 +72,14 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
             ILocalizationService localizationService,
             IEFormCoreService coreService,
             BaseDbContext dbContext,
+            IHttpContextAccessor httpContextAccessor,
             IEmailService emailService,
             IDbOptions<EmailSettings> emailSettings)
         {
             _logger = logger;
             _userService = userService;
             _coreService = coreService;
+            _httpContextAccessor = httpContextAccessor;
             _localizationService = localizationService;
             _dbContext = dbContext;
             _emailService = emailService;
@@ -83,6 +91,10 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
         {
             try
             {
+                var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+                var core = await _coreService.GetCore();
+                var localeString = _dbContext.Users.Single(x => x.Id == int.Parse(value)).Locale;
+                Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.Description.ToLower() == localeString.ToLower());
                 var casePostsListModel = new CasePostsListModel();
                 var casePostsQuery = _dbContext.CasePosts.AsQueryable();
                 if (!string.IsNullOrEmpty(requestModel.Sort))
@@ -113,9 +125,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                     .Skip(requestModel.Offset)
                     .Take(requestModel.PageSize);
 
-
-                var core = await _coreService.GetCore();
-                var templateDto = await core.TemplateItemRead(requestModel.TemplateId);
+                var templateDto = await core.TemplateItemRead(requestModel.TemplateId, language);
                 var caseDto = await core.CaseLookupCaseId(requestModel.CaseId);
                 if (caseDto?.MicrotingUId == null || caseDto.CheckUId == null)
                 {
@@ -148,7 +158,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                         ToRecipientsTags = x.Tags
                             .Select(y => y.EmailTag.Name)
                             .ToList(),
-                        
+
                     }).ToListAsync();
 
                 using (var dbContext = core.dbContextHelper.GetDbContext())
