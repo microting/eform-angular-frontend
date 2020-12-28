@@ -127,7 +127,7 @@ namespace eFormAPI.Web.Controllers
         {
             return _settingsService.GetAssemblyVersion();
         }
-        
+
         [HttpGet]
         [AllowAnonymous]
         [Route("api/settings/hostos")]
@@ -135,11 +135,11 @@ namespace eFormAPI.Web.Controllers
         {
             return _settingsService.GetApplicationHostOs();
         }
-        
+
         [HttpGet]
         [AllowAnonymous]
         [Route("api/settings/latest-version")]
-        public Task<OperationDataResult<string>> GetLatestVersion()
+        public OperationDataResult<string> GetLatestVersion()
         {
             return _settingsService.GetLatestVersion();
         }

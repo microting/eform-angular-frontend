@@ -72,7 +72,7 @@ namespace eFormAPI.Web.Services
                             Status = (PluginStatus) eformPlugin.Status,
                             Name = loadedPlugin.Name,
                             Version = loadedPlugin.PluginAssembly().GetName().Version.ToString(),
-                            VersionAvailable = await PluginHelper.GetLatestRepositoryVersion("microting", loadedPlugin.PluginId),
+                            VersionAvailable = PluginHelper.GetLatestRepositoryVersion("microting", loadedPlugin.PluginId),
                             BaseUrl = loadedPlugin.PluginBaseUrl
                         };
                         result.PluginsList.Add(pluginSettingsModel);
@@ -85,7 +85,7 @@ namespace eFormAPI.Web.Services
             catch (Exception e)
             {
                 _logger.LogError(e.Message);
-                return new OperationDataResult<InstalledPluginsModel>(false, 
+                return new OperationDataResult<InstalledPluginsModel>(false,
                     _localizationService.GetString("ErrorWhileObtainingPlugins"));
             }
         }
@@ -100,7 +100,7 @@ namespace eFormAPI.Web.Services
 
                 if (eformPlugin == null)
                 {
-                    return new OperationDataResult<InstalledPluginsModel>(false, 
+                    return new OperationDataResult<InstalledPluginsModel>(false,
                         _localizationService.GetString("PluginNotFound"));
                 }
 
@@ -108,7 +108,7 @@ namespace eFormAPI.Web.Services
                 _dbContext.EformPlugins.Update(eformPlugin);
 
                 await _dbContext.SaveChangesAsync();
-               
+
                 if (updateModel.Status == PluginStatus.Enabled)
                 {
                     await LoadNavigationMenuOfPlugin(updateModel.PluginId);
@@ -125,7 +125,7 @@ namespace eFormAPI.Web.Services
             catch (Exception e)
             {
                 _logger.LogError(e.Message);
-                return new OperationDataResult<InstalledPluginsModel>(false, 
+                return new OperationDataResult<InstalledPluginsModel>(false,
                     _localizationService.GetString("ErrorWhileUpdatingPluginSettings"));
             }
         }
@@ -172,7 +172,7 @@ namespace eFormAPI.Web.Services
             _dbContext.RemoveRange(menuTemplates);
             _dbContext.SaveChanges();
 
-            // delete all permissions connected with removed menu templates 
+            // delete all permissions connected with removed menu templates
             foreach (var permissionId in permissionIds)
             {
                 var permission = _dbContext.Permissions.Single(x => x.Id == permissionId);
@@ -181,7 +181,7 @@ namespace eFormAPI.Web.Services
                 _dbContext.SaveChanges();
             }
 
-            // delete all permission types connected with removed permissions 
+            // delete all permission types connected with removed permissions
             foreach (var permissionTypeId in permissionTypeIds)
             {
                 var permissions = _dbContext.Permissions.Where(x => x.PermissionTypeId == permissionTypeId);
@@ -218,7 +218,7 @@ namespace eFormAPI.Web.Services
 
             var pluginMenu = plugin.GetNavigationMenu(_serviceProvider);
 
-            // get all menu templates from plugin 
+            // get all menu templates from plugin
             var menuTemplatesFromPlugin = new List<PluginMenuTemplateModel>();
 
             foreach (var pluginMenuItem in pluginMenu)
@@ -227,7 +227,7 @@ namespace eFormAPI.Web.Services
                 {
                     menuTemplatesFromPlugin.Add(pluginMenuItem.MenuTemplate);
                 }
-                
+
                 if(pluginMenuItem.Type == MenuItemTypeEnum.Dropdown)
                 {
                     foreach(var childMenuItem in pluginMenuItem.ChildItems)
@@ -350,7 +350,7 @@ namespace eFormAPI.Web.Services
             }
 
             var plugin = Program.DisabledPlugins.FirstOrDefault(x => x.PluginId == pluginId);
-           
+
             if (plugin == null)
             {
                 return new OperationDataResult<InstalledPluginsModel>(false,
@@ -419,7 +419,7 @@ namespace eFormAPI.Web.Services
                     return new OperationDataResult<PluginsStoreModel>(false,
                         _localizationService.GetString("PluginNotFound"));
                 }
-                
+
                 var link = plugin.InstallScript;
                 var httpClient = _httpClientFactory.CreateClient();
                 var stream = httpClient.GetStreamAsync(link).Result;
@@ -438,13 +438,13 @@ namespace eFormAPI.Web.Services
                 var filePath = Path.Combine(pluginInstallDirectory, "install.sh");
                 using (var file = new StreamWriter(filePath))
                 {
-                    file.Write(scriptContent);    
+                    file.Write(scriptContent);
                     file.Close();
                 }
-                
+
                 // Execute file
                 //
-              
+
                 var result = Bash("sudo systemctl plugin-install start");
                 return new OperationResult(true, result);
             }

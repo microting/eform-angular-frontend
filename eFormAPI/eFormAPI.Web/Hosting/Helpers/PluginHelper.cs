@@ -102,7 +102,7 @@ namespace eFormAPI.Web.Hosting.Helpers
                                 if (aPlugin != null) aPlugin.ConnectionString += "PersistSecurityInfo=true;";
                                 dbContext.SaveChanges();
                             }
-                            
+
                             if (eformPlugin.Status == (int) PluginStatus.Enabled)
                             {
                                 plugins.Add(plugin);
@@ -112,7 +112,7 @@ namespace eFormAPI.Web.Hosting.Helpers
                         {
                             var pluginDbName = $"Database={dbPrefix}_{plugin.PluginId};";
                             var pluginConnectionString =
-                                connectionString.Replace(dbNameSection, pluginDbName) + 
+                                connectionString.Replace(dbNameSection, pluginDbName) +
                                 "PersistSecurityInfo=true;";
                             var newPlugin = new EformPlugin
                             {
@@ -201,7 +201,7 @@ namespace eFormAPI.Web.Hosting.Helpers
             return plugins;
         }
 
-        public static async Task<string> GetLatestRepositoryVersion(string githubUserName, string pluginName)
+        public static string GetLatestRepositoryVersion(string githubUserName, string pluginName)
         {
             string latestVersion = "";
             // try
@@ -249,7 +249,7 @@ namespace eFormAPI.Web.Hosting.Helpers
             //
             //     Console.ForegroundColor = ConsoleColor.Gray;
             // }
-            
+
             return latestVersion;
         }
 
@@ -278,7 +278,7 @@ namespace eFormAPI.Web.Hosting.Helpers
             var directories = Directory.EnumerateDirectories(pluginsDir);
             foreach (var directory in directories)
             {
-                var pluginList = Directory.GetFiles(directory, "*.Pn.dll", SearchOption.AllDirectories); 
+                var pluginList = Directory.GetFiles(directory, "*.Pn.dll", SearchOption.AllDirectories);
 
                 foreach (var pluginFile in pluginList)
                 {
@@ -319,7 +319,7 @@ namespace eFormAPI.Web.Hosting.Helpers
                             typeof(CoreOptionsExtension),
                             typeof(RelationalEventId),
                             typeof(IDbContextOptionsBuilderInfrastructure),
-                            typeof(ModelSnapshot),       
+                            typeof(ModelSnapshot),
                             typeof(ILazyLoader),
 
                             typeof(IPluginDbOptions<>),
