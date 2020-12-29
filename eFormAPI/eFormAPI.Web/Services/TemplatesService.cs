@@ -490,7 +490,8 @@ namespace eFormAPI.Web.Services
 
             var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
             var localeString = _dbContext.Users.Single(x => x.Id == int.Parse(value)).Locale;
-            Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.Description.ToLower() == localeString.ToLower());
+            await using var dbContext = core.dbContextHelper.GetDbContext();
+            Language language = dbContext.Languages.Single(x => x.Description.ToLower() == localeString.ToLower());
             var templateDto = await core.TemplateItemRead(deployModel.Id, language);
 
             foreach (var site in templateDto.DeployedSites)
@@ -528,20 +529,23 @@ namespace eFormAPI.Web.Services
 
             if (sitesToBeDeployedTo.Any())
             {
-                var mainElement = await core.TemplateRead(deployModel.Id);
-                mainElement.Repeated = 0;
-                // We set this right now hardcoded,
-                // this will let the eForm be deployed until end date or we actively retract it.
-                if (deployModel.FolderId != null)
+                foreach (int i in sitesToBeDeployedTo)
                 {
-                    using (var dbContext = core.dbContextHelper.GetDbContext())
+                    Site site = await dbContext.Sites.SingleAsync(x => x.MicrotingUid == i);
+                    language = await dbContext.Languages.SingleAsync(x => x.Id == site.LanguageId);
+                    var mainElement = await core.ReadeForm(deployModel.Id, language);
+                    mainElement.Repeated = 0;
+                    // We set this right now hardcoded,
+                    // this will let the eForm be deployed until end date or we actively retract it.
+                    if (deployModel.FolderId != null)
                     {
                         mainElement.CheckListFolderName = dbContext.Folders.Single(x => x.Id == deployModel.FolderId).MicrotingUid.ToString();
                     }
+                    mainElement.EndDate = DateTime.Now.AddYears(10).ToUniversalTime();
+                    mainElement.StartDate = DateTime.Now.ToUniversalTime();
+                    await core.CaseCreate(mainElement, "", i, deployModel.FolderId);
+
                 }
-                mainElement.EndDate = DateTime.Now.AddYears(10).ToUniversalTime();
-                mainElement.StartDate = DateTime.Now.ToUniversalTime();
-                await core.CaseCreate(mainElement, "", sitesToBeDeployedTo, "", deployModel.FolderId);
             }
 
             foreach (var siteUId in sitesToBeRetractedFrom)
