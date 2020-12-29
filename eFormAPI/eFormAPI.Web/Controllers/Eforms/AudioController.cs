@@ -45,7 +45,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         {
             _coreHelper = coreHelper;
         }
-        
+
         [HttpGet]
         [Route("api/audio/eform-audio")]
         [Authorize(Policy = AuthConsts.EformPolicies.Cases.CasesRead)]
@@ -92,7 +92,7 @@ namespace eFormAPI.Web.Controllers.Eforms
             }
             catch (Exception ex)
             {
-                return NotFound($"Trying to find file at location: {fileName}");
+                return NotFound($"Trying to find file at location: {fileName}, exception is: {ex.Message}");
             }
         }
     }

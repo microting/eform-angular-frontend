@@ -24,6 +24,7 @@ SOFTWARE.
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using eFormAPI.Web.Infrastructure.Models;
+using eFormAPI.Web.Infrastructure.Models.DeviceUsers;
 using Microting.eForm.Dto;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
@@ -31,9 +32,9 @@ namespace eFormAPI.Web.Abstractions.Advanced
 {
     public interface IDeviceUsersService
     {
-        Task<OperationDataResult<List<SiteDto>>> Index();
+        Task<OperationDataResult<List<DeviceUser>>> Index();
         Task<OperationResult> Create(DeviceUserModel deviceUserModel);
-        Task<OperationDataResult<SiteDto>> Edit(int id);
+        Task<OperationDataResult<DeviceUser>> Edit(int id);
         Task<OperationResult> Update(DeviceUserModel deviceUserModel);
         Task<OperationResult> Delete(int id);
     }

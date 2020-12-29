@@ -19,6 +19,7 @@
         <th scope="col">{{ 'First name' | translate }}</th>
         <th scope="col">{{ 'Last name' | translate }}</th>
         <th scope="col">{{ 'Device ID' | translate }}</th>
+        <th scope="col">{{ 'Language' | translate }}</th>
         <th scope="col">{{ 'Customer no & OTP' | translate }}</th>
         <th scope="col" *ngIf="userClaims.deviceUsersDelete || userClaims.deviceUsersDelete">{{ 'Actions' | translate
           }}
@@ -27,7 +28,7 @@
       </thead>
       <tbody id="tableBody">
       <tr *ngFor="let siteDto of sitesDto">
-        <td id="deviceUserId" scope="row">{{siteDto.siteId}}</td>
+        <td id="deviceUserId" scope="row">{{siteDto.siteUid}}</td>
         <td id="deviceUserFirstName">
           {{siteDto.firstName}}
           <ng-container *ngIf="!siteDto.firstName">
@@ -45,6 +46,9 @@
           <ng-container *ngIf="!siteDto.unitId">
             N/A
           </ng-container>
+        </td>
+        <td>
+          {{siteDto.language}}
         </td>
         <td>
           <div class="d-flex flex-row justify-content-center">

@@ -24,6 +24,7 @@ SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
@@ -31,8 +32,10 @@ using eFormAPI.Web.Abstractions.Eforms;
 using eFormAPI.Web.Infrastructure.Database;
 using eFormAPI.Web.Infrastructure.Helpers;
 using eFormAPI.Web.Infrastructure.Models.Reports;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microting.eForm.Infrastructure.Data.Entities;
 using Microting.eForm.Infrastructure.Models;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
@@ -46,10 +49,14 @@ namespace eFormAPI.Web.Services
         private readonly IEFormCoreService _coreHelper;
         private readonly ILocalizationService _localizationService;
         private readonly BaseDbContext _dbContext;
+        private readonly IUserService _userService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ILogger<EformReportsService> _logger;
 
         public EformReportsService(
             IEFormCoreService coreHelper,
+            IUserService userService,
+            IHttpContextAccessor httpContextAccessor,
             ILocalizationService localizationService,
             BaseDbContext dbContext,
             ILogger<EformReportsService> logger)
@@ -58,6 +65,8 @@ namespace eFormAPI.Web.Services
             _localizationService = localizationService;
             _dbContext = dbContext;
             _logger = logger;
+            _httpContextAccessor = httpContextAccessor;
+            _userService = userService;
         }
 
         private static List<EformReportElementModel> GetReportElementsList(BaseDbContext dbContext,
@@ -72,7 +81,7 @@ namespace eFormAPI.Web.Services
             var elements = new List<Element>();
             var dataElements = new List<DataElement>();
             var groupElements = new List<GroupElement>();
-            
+
             var item = elementList.FirstOrDefault();
             if (item != null)
             {
@@ -294,7 +303,11 @@ namespace eFormAPI.Web.Services
             {
                 var result = new EformReportFullModel();
                 var core = await _coreHelper.GetCore();
-                MainElement template = await core.TemplateRead(templateId);
+                await using var dbContext = core.dbContextHelper.GetDbContext();
+
+                var localeString = await _userService.GetCurrentUserLocale();
+                Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.Description.ToLower() == localeString.ToLower());
+                MainElement template = await core.ReadeForm(templateId, language);
                 if (template == null)
                 {
                     return new OperationDataResult<EformReportFullModel>(false,

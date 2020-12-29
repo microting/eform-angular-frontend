@@ -22,7 +22,7 @@ export class DeleteDeviceUserModalComponent implements OnInit {
   }
 
   deleteSingle() {
-    this.deviceUserService.deleteSingleDeviceUser(this.selectedDeviceUser.siteId).subscribe(operation => {
+    this.deviceUserService.deleteSingleDeviceUser(this.selectedDeviceUser.siteUid).subscribe(operation => {
       if (operation && operation.success) {
         this.onUserDeleted.emit();
         this.frame.hide();

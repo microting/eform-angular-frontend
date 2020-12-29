@@ -1,5 +1,6 @@
 export class SiteDto {
   siteId: number;
+  siteUid: number;
   siteName: string;
   firstName: string;
   lastName: string;
@@ -7,4 +8,7 @@ export class SiteDto {
   unitId: number;
   otpCode: number;
   customerNo: number;
+  languageId: number;
+  language: string;
+  languageDescription: string;
 }
