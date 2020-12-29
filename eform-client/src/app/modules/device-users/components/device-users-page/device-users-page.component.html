@@ -52,7 +52,7 @@
         </td>
         <td>
           <div class="d-flex flex-row justify-content-center">
-            <ng-container *ngIf="siteDto.otpCode != 0">
+            <ng-container *ngIf="siteDto.customerNo && siteDto.otpCode">
               {{siteDto.customerNo}} / {{siteDto.otpCode}}
             </ng-container>
             <ng-container *ngIf="siteDto.otpCode == 0">
@@ -103,3 +103,4 @@
     (onUserEdited)="loadAllSimpleSites()"
     [selectedDeviceUser]="selectedSimpleSite"
     #editDeviceUserModal></app-edit-device-user-modal>
+</div>

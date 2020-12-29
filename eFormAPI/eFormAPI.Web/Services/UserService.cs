@@ -27,6 +27,7 @@ using eFormAPI.Web.Infrastructure.Database;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microting.eFormApi.BasePn.Infrastructure.Consts;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 
 namespace eFormAPI.Web.Services
@@ -140,7 +141,7 @@ namespace eFormAPI.Web.Services
 
             if (string.IsNullOrEmpty(locale))
             {
-                locale = "da-DK";
+                locale = LocaleNames.Danish;
             }
 
             return locale;
