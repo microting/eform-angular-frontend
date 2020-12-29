@@ -23,11 +23,17 @@ SOFTWARE.
 */
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Advanced;
 using eFormAPI.Web.Infrastructure.Models;
+using eFormAPI.Web.Infrastructure.Models.DeviceUsers;
+using Microsoft.EntityFrameworkCore;
 using Microting.eForm.Dto;
+using Microting.eForm.Infrastructure;
+using Microting.eForm.Infrastructure.Constants;
+using Microting.eForm.Infrastructure.Data.Entities;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
@@ -38,29 +44,100 @@ namespace eFormAPI.Web.Services
         private readonly IEFormCoreService _coreHelper;
         private readonly ILocalizationService _localizationService;
 
-        public DeviceUsersService(ILocalizationService localizationService, 
+        public DeviceUsersService(ILocalizationService localizationService,
             IEFormCoreService coreHelper)
         {
             _localizationService = localizationService;
             _coreHelper = coreHelper;
         }
 
-        public async Task<OperationDataResult<List<SiteDto>>> Index()
+        public async Task<OperationDataResult<List<DeviceUser>>> Index()
         {
             var core = await _coreHelper.GetCore();
-            var siteDto = await core.SiteReadAll(false);
-            return new OperationDataResult<List<SiteDto>>(true, siteDto);
+            MicrotingDbContext db = core.dbContextHelper.GetDbContext();
+            List<DeviceUser> deviceUsers = new List<DeviceUser>();
+
+            List<Site> matches = await db.Sites.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed).ToListAsync().ConfigureAwait(false);
+            foreach (Site aSite in matches)
+            {
+                Unit unit = null;
+                Worker worker = null;
+                int? unitCustomerNo = null;
+                int? unitOptCode = null;
+                int? unitMicrotingUid = null;
+                int? workerMicrotingUid = null;
+                string workerFirstName = null;
+                string workerLastName = null;
+                try
+                {
+                    unit = await db.Units.FirstAsync(x => x.SiteId == aSite.Id);
+                    unitCustomerNo = unit.CustomerNo;
+                    unitOptCode = unit.OtpCode ?? 0;
+                    unitMicrotingUid = (int) unit.MicrotingUid;
+                }
+                catch
+                {
+                }
+
+                try
+                {
+                    SiteWorker siteWorker = await db.SiteWorkers.FirstAsync(x => x.SiteId == aSite.Id);
+                    worker = await db.Workers.SingleAsync(x => x.Id == siteWorker.WorkerId);
+                    workerMicrotingUid = worker.MicrotingUid;
+                    workerFirstName = worker.FirstName;
+                    workerLastName = worker.LastName;
+                }
+                catch
+                {
+                }
+
+                if (aSite.LanguageId == 0)
+                {
+                    aSite.LanguageId = db.Languages.Single(x => x.Name == "Danish").Id;
+                    await aSite.Update(db);
+                }
+
+                Language language = db.Languages.Single(x => x.Id == aSite.LanguageId);
+                DeviceUser deviceUser = new DeviceUser()
+                {
+                    CustomerNo = unitCustomerNo,
+                    FirstName = workerFirstName,
+                    LastName = workerLastName,
+                    LanguageId = aSite.LanguageId,
+                    OtpCode = unitOptCode,
+                    SiteId = aSite.Id,
+                    SiteUid = aSite.MicrotingUid,
+                    SiteName = aSite.Name,
+                    UnitId = unitMicrotingUid,
+                    WorkerUid = workerMicrotingUid,
+                    Language = language.Name,
+                    LanguageDescription = language.Description,
+                };
+                deviceUsers.Add(deviceUser);
+            }
+
+            // var siteDto = await core.SiteReadAll(false);
+            return new OperationDataResult<List<DeviceUser>>(true, deviceUsers);
         }
 
         public async Task<OperationResult> Create(DeviceUserModel deviceUserModel)
         {
             var core = await _coreHelper.GetCore();
             var siteName = deviceUserModel.UserFirstName + " " + deviceUserModel.UserLastName;
+            await using var db = core.dbContextHelper.GetDbContext();
+            Language language = db.Languages.Single(x => x.Description == deviceUserModel.LanguageDescription);
 
             try
             {
                 var siteDto = await core.SiteCreate(siteName, deviceUserModel.UserFirstName, deviceUserModel.UserLastName,
                     null);
+
+                if (siteDto != null)
+                {
+                    Site site = await db.Sites.SingleAsync(x => x.MicrotingUid == siteDto.SiteId);
+                    site.LanguageId = language.Id;
+                    await site.Update(db);
+                }
 
                 return siteDto != null
                     ? new OperationResult(true,
@@ -87,14 +164,46 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public async Task<OperationDataResult<SiteDto>> Edit(int id)
+        public async Task<OperationDataResult<DeviceUser>> Edit(int id)
         {
             var core = await _coreHelper.GetCore();
-            var siteDto = await core.SiteRead(id);
+            await using var db = core.dbContextHelper.GetDbContext();
 
-            return siteDto != null
-                ? new OperationDataResult<SiteDto>(true, siteDto)
-                : new OperationDataResult<SiteDto>(false,
+            //var siteDto = await core.SiteRead(id);
+            DeviceUser deviceUser = null;
+            Site site = await db.Sites.SingleOrDefaultAsync(x => x.MicrotingUid == id);
+            if (site == null)
+                return null;
+
+            SiteWorker siteWorker = db.SiteWorkers.Where(x => x.SiteId == site.Id).ToList().First();
+            Worker worker = await db.Workers.SingleAsync(x => x.Id == siteWorker.WorkerId);
+            List<Unit> units = db.Units.Where(x => x.SiteId == site.Id).ToList();
+
+            if (units.Any() && worker != null)
+            {
+                Unit unit = units.First();
+                Language language = db.Languages.Single(x => x.Id == site.LanguageId);
+                deviceUser = new DeviceUser()
+                {
+                    CustomerNo = unit.CustomerNo,
+                    FirstName = worker.FirstName,
+                    Language = language.Name,
+                    LanguageDescription = language.Description,
+                    LanguageId = site.LanguageId,
+                    LastName = worker.LastName,
+                    OtpCode = unit.OtpCode,
+                    SiteId = site.Id,
+                    SiteName = site.Name,
+                    SiteUid = site.MicrotingUid,
+                    UnitId = unit.Id,
+                    UnitUid = unit.MicrotingUid
+                };
+                //return new SiteDto((int)site.MicrotingUid, site.Name, worker.FirstName, worker.LastName, (int)unit.CustomerNo, unit.OtpCode ?? 0, (int)unit.MicrotingUid, worker.MicrotingUid);
+            }
+
+            return deviceUser != null
+                ? new OperationDataResult<DeviceUser>(true, deviceUser)
+                : new OperationDataResult<DeviceUser>(false,
                     _localizationService.GetStringWithFormat("DeviceUserParamCouldNotBeEdited", id));
         }
 
@@ -103,6 +212,8 @@ namespace eFormAPI.Web.Services
             try
             {
                 var core = await _coreHelper.GetCore();
+                await using var db = core.dbContextHelper.GetDbContext();
+                Language language = db.Languages.Single(x => x.Description == deviceUserModel.LanguageDescription);
                 var siteDto = await core.SiteRead(deviceUserModel.Id);
                 if (siteDto.WorkerUid != null)
                 {
@@ -113,6 +224,12 @@ namespace eFormAPI.Web.Services
                         var isUpdated = await core.SiteUpdate(deviceUserModel.Id, fullName, deviceUserModel.UserFirstName,
                             deviceUserModel.UserLastName, workerDto.Email);
 
+                        if (isUpdated)
+                        {
+                            Site site = await db.Sites.SingleAsync(x => x.MicrotingUid == deviceUserModel.Id);
+                            site.LanguageId = language.Id;
+                            await site.Update(db);
+                        }
                         return isUpdated
                             ? new OperationResult(true, _localizationService.GetString("DeviceUserUpdatedSuccessfully"))
                             : new OperationResult(false,

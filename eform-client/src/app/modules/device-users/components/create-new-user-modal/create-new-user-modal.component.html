@@ -24,6 +24,20 @@
               </div>
             </div>
           </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="md-form">
+                <ng-select
+                  id = "ProfileLanguageSelector"
+                  [placeholder]="'Language' | translate"
+                  [bindLabel]="'text'"
+                  [bindValue]="'locale'"
+                  [clearable]="false"
+                  [(ngModel)]="simpleSiteModel.languageDescription"
+                  [items]="languages"></ng-select>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="modal-footer">

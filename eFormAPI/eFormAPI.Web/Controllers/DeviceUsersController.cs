@@ -27,6 +27,7 @@ using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Advanced;
 using eFormAPI.Web.Infrastructure;
 using eFormAPI.Web.Infrastructure.Models;
+using eFormAPI.Web.Infrastructure.Models.DeviceUsers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microting.eForm.Dto;
@@ -40,7 +41,7 @@ namespace eFormAPI.Web.Controllers
         private readonly IDeviceUsersService _deviceUsersService;
         private readonly ILocalizationService _localizationService;
 
-        public DeviceUsersController(IDeviceUsersService deviceUsersService, 
+        public DeviceUsersController(IDeviceUsersService deviceUsersService,
             ILocalizationService localizationService)
         {
             _deviceUsersService = deviceUsersService;
@@ -50,7 +51,7 @@ namespace eFormAPI.Web.Controllers
         [HttpGet]
         [Route("api/device-users/index")]
         [Authorize(Policy = AuthConsts.EformPolicies.DeviceUsers.Read)]
-        public async Task<OperationDataResult<List<SiteDto>>> Index()
+        public async Task<OperationDataResult<List<DeviceUser>>> Index()
         {
             return await _deviceUsersService.Index();
         }
@@ -70,7 +71,7 @@ namespace eFormAPI.Web.Controllers
         [HttpGet]
         [Route("api/device-users/{id}")]
         [Authorize(Policy = AuthConsts.EformPolicies.DeviceUsers.Update)]
-        public async Task<OperationDataResult<SiteDto>> Read(int id)
+        public async Task<OperationDataResult<DeviceUser>> Read(int id)
         {
             return await _deviceUsersService.Edit(id);
         }
