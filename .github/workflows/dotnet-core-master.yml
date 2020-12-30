@@ -22,6 +22,15 @@ jobs:
         mysql root password: 'secretpassword' # Required if "mysql user" is empty, default is empty. The root superuser password
         mysql user: 'developer' # Required if "mysql root password" is empty, default is empty. The superuser for the specified database. Can use secrets, too
         mysql password: 'passwordtoo' # Required if "mysql user" exists. The password for the "mysql user"
+    - name: Slack start job
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      uses: voxmedia/github-action-slack-notify-build@v1
+      id: slack
+      with:
+        channel_id: CC04FGH5K
+        status: STARTED
+        color: good
     - name: Sleep 15 seconds
       run: sleep 15
     - uses: getong/rabbitmq-action@v1.2
@@ -77,3 +86,24 @@ jobs:
     - name: The job has failed
       if: ${{ failure() }}
       run: cat dotnet_log
+    - name: Notify slack success
+      if: ${{ success() }}
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      uses: voxmedia/github-action-slack-notify-build@v1
+      with:
+        message_id: ${{ steps.slack.outputs.message_id }}
+        channel_id: CC04FGH5K
+        status: SUCCESS
+        color: good
+
+    - name: Notify slack fail
+      if: ${{ failure() }}
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      uses: voxmedia/github-action-slack-notify-build@v1
+      with:
+        message_id: ${{ steps.slack.outputs.message_id }}
+        channel_id: CC04FGH5K
+        status: FAILED
+        color: danger
