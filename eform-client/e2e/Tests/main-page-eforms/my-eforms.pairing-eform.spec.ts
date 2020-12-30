@@ -26,7 +26,7 @@ describe('Main page', function () {
     foldersPage.createNewFolder('test folder', 'desc');
     for (let i = 1; i < foldersPage.rowNum + 1; i++) {
       const folder = foldersPage.getFolder(i);
-      if (folder && (folder.name === 'test folder' || folder.description === 'desc')) {
+      if (folder && (folder.name === 'test folder')) {
         folders.push(folder);
       }
     }
@@ -46,7 +46,7 @@ describe('Main page', function () {
     browser.pause(1000);
     expect($('tree-node .node-content-wrapper-active').getText(),
       'Wrong folder selected')
-      .eq(`${folders[0].name}\n _ \n${folders[0].description}`);
+      .eq(`${folders[0].name}`);
     const siteIds = $$('#microtingId');
     for (let i = 0; i < siteIds.length; i++) {
       const index = users.findIndex(user => user.siteId === +siteIds[i].getText());
@@ -92,7 +92,7 @@ describe('Main page', function () {
     myEformsPage.Navbar.goToFolderPage();
     for (let i = 1; i < foldersPage.rowNum + 1; i++) {
       const folder = foldersPage.getFolder(i);
-      if (folder && (folder.name === 'test folder' || folder.description === 'desc')) {
+      if (folder && (folder.name === 'test folder')) {
         folder.delete();
         browser.pause(1000);
       }

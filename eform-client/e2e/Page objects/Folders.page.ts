@@ -60,7 +60,9 @@ class FoldersPage extends PageWithNavbarPage {
   }
 
   public get rowNum(): number {
-    browser.pause(500);
+    if (!$('#folderTreeId').isExisting()) {
+      browser.pause(500);
+    }
     return $$('#folderTreeId').length;
   }
 
@@ -98,20 +100,25 @@ class FoldersPage extends PageWithNavbarPage {
   }
 
   public editFolder(folder: FoldersRowObject, name = '', description = '') {
+    if (!folder.editBtn.isExisting()) {
+      folder.folderElement.click();
+      folder.editBtn.waitForDisplayed({timeout: 20000});
+    }
     folder.editBtn.click();
-    $('#editNameInput').waitForDisplayed({timeout: 20000});
+    this.editNameInput.waitForDisplayed({timeout: 20000});
     if (name != null) {
-      this.editNameInput.click();
+      // this.editNameInput.click();
       this.editNameInput.clearValue();
       this.editNameInput.setValue(name);
     }
     if (description != null) {
-      this.editDescriptionInput.click();
+      // this.editDescriptionInput.click();
       this.editDescriptionInput.clearValue();
       this.editDescriptionInput.setValue(description);
     }
     this.saveEditBtn.click();
-    $('#newFolderBtn').waitForDisplayed({timeout: 20000});
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
+    this.newFolderBtn.waitForDisplayed({timeout: 20000});
   }
 
   public createFolderChild(rowNum, name = '', description = '') {
@@ -154,6 +161,10 @@ class FoldersPage extends PageWithNavbarPage {
   }
 
   public editFolderTree(folder: FoldersTreeRowObject, name = '', description = '') {
+    if (!folder.editTreeBtn.isExisting()) {
+      folder.folderTreeElement.click();
+      folder.editTreeBtn.waitForDisplayed({timeout: 20000});
+    }
     folder.editTreeBtn.click();
     $('#editNameInput').waitForDisplayed({timeout: 20000});
     if (name != null) {
@@ -185,10 +196,10 @@ export class FoldersRowObject {
         this.name = this.folderElement.$('#folderTreeName').getText();
       } catch (e) {
       }
-      try {
-        this.description = this.folderElement.$('#folderTreeDescription').getText();
-      } catch (e) {
-      }
+      // try {
+      //   this.description = this.folderElement.$('#folderTreeDescription').getText();
+      // } catch (e) {
+      // }
       this.editBtn = this.folderElement.$('#editFolderTreeBtn');
       this.deleteBtn = this.folderElement.$('#deleteFolderTreeBtn');
       this.createFolderChildBtn = this.folderElement.$('#createFolderChildBtn');
@@ -197,14 +208,28 @@ export class FoldersRowObject {
 
   folderElement;
   name;
-  description;
+  // description;
   editBtn;
   deleteBtn;
   createFolderChildBtn;
 
+  getDescription(): string {
+    if (!this.editBtn.isExisting()) {
+      this.folderElement.click();
+      this.editBtn.waitForDisplayed({timeout: 20000});
+    }
+    this.editBtn.click();
+    foldersPage.cancelEditBtn.waitForClickable({timeout: 20000});
+    const description =  foldersPage.editDescriptionInput.getValue();
+    foldersPage.cancelEditBtn.click();
+    return description;
+  }
+
   createChild (name = '', description = '') {
+    if (!this.createFolderChildBtn.isExisting()) {
     this.folderElement.click();
-    this.createFolderChildBtn.waitForDisplayed({timeout: 10000});
+    this.createFolderChildBtn.waitForDisplayed({timeout: 20000});
+  }
     this.createFolderChildBtn.click();
     $('#name').waitForDisplayed({timeout: 10000});
     foldersPage.createNameInput.setValue(name);
@@ -214,13 +239,36 @@ export class FoldersRowObject {
   }
 
   delete () {
-    this.folderElement.click();
+    if (!this.deleteBtn.isExisting()) {
+      this.folderElement.click();
+      this.deleteBtn.waitForDisplayed({timeout: 20000});
+    }
     // browser.pause(500);
-    this.deleteBtn.waitForClickable({ timeout: 20000});
     this.deleteBtn.click();
     foldersPage.saveDeleteBtn.waitForClickable({ timeout: 20000});
     foldersPage.saveDeleteBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 2000, reverse: true});
+  }
+  editFolder(name = '', description = '') {
+    if (!this.editBtn.isExisting()) {
+      this.folderElement.click();
+      this.editBtn.waitForDisplayed({timeout: 20000});
+    }
+    this.editBtn.click();
+    foldersPage.editNameInput.waitForDisplayed({timeout: 20000});
+    if (name != null) {
+      // this.editNameInput.click();
+      foldersPage.editNameInput.clearValue();
+      foldersPage.editNameInput.setValue(name);
+    }
+    if (description != null) {
+      // this.editDescriptionInput.click();
+      foldersPage.editDescriptionInput.clearValue();
+      foldersPage.editDescriptionInput.setValue(description);
+    }
+    foldersPage.saveEditBtn.click();
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
+    foldersPage.newFolderBtn.waitForDisplayed({timeout: 20000});
   }
 }
 
@@ -235,10 +283,10 @@ export class FoldersTreeRowObject {
         this.nameTree = $$('#folderTreeName')[rowNum - 1].getText();
       } catch (e) {
       }
-      try {
-        this.descriptionTree = $$('#folderTreeDescription')[rowNum - 1].getText();
-      } catch (e) {
-      }
+      // try {
+      //   this.descriptionTree = $$('#folderTreeDescription')[rowNum - 1].getText();
+      // } catch (e) {
+      // }
       this.editTreeBtn = $('#editFolderTreeBtn');
       this.deleteTreeBtn = $('#deleteFolderTreeBtn');
     }
@@ -246,7 +294,19 @@ export class FoldersTreeRowObject {
 
   folderTreeElement;
   nameTree;
-  descriptionTree;
+  // descriptionTree;
   editTreeBtn;
   deleteTreeBtn;
+
+  getDescription(): string {
+    if (!this.editTreeBtn.isExisting()) {
+      this.folderTreeElement.click();
+      this.editTreeBtn.waitForDisplayed({timeout: 20000});
+    }
+    this.editTreeBtn.click();
+    foldersPage.cancelEditBtn.waitForClickable({timeout: 20000});
+    const description =  foldersPage.editDescriptionInput.getValue();
+    foldersPage.cancelEditBtn.click();
+    return description;
+  }
 }
