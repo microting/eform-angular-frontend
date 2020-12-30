@@ -25,15 +25,6 @@ jobs:
         mysql root password: 'secretpassword'
         mysql user: 'developer'
         mysql password: 'passwordtoo'
-    - name: Slack start job
-      env:
-        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-      uses: voxmedia/github-action-slack-notify-build@v1
-      id: slack
-      with:
-        channel_id: CC04FGH5K
-        status: ${{matrix.test}} STARTED
-        color: good
     - name: Sleep 15 seconds
       run: sleep 15
     - uses: getong/rabbitmq-action@v1.2
@@ -95,24 +86,12 @@ jobs:
         tags: microtingas/angular-frontend:latest,microtingas/angular-frontend:${{ steps.get_version.outputs.VERSION }}
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}
-    - name: Notify slack success
-      if: ${{ success() }}
-      env:
-        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-      uses: voxmedia/github-action-slack-notify-build@v1
-      with:
-        message_id: ${{ steps.slack.outputs.message_id }}
-        channel_id: CC04FGH5K
-        status: ${{matrix.test}} SUCCESS
-        color: good
-
     - name: Notify slack fail
       if: ${{ failure() }}
       env:
         SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
       uses: voxmedia/github-action-slack-notify-build@v1
       with:
-        message_id: ${{ steps.slack.outputs.message_id }}
         channel_id: CC04FGH5K
         status: ${{matrix.test}} FAILED
         color: danger
