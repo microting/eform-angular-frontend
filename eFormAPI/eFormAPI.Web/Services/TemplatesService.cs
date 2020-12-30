@@ -422,38 +422,31 @@ namespace eFormAPI.Web.Services
 
         public async Task<OperationResult> Delete(int id)
         {
-            var core = await _coreHelper.GetCore();
-
-            var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
-            var localeString = _dbContext.Users.Single(x => x.Id == int.Parse(value)).Locale;
-            Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.Description.ToLower() == localeString.ToLower());
-            var templateDto = await core.TemplateItemRead(id, language);
-            foreach (var siteUId in templateDto.DeployedSites)
+            try
             {
-                await core.CaseDelete(templateDto.Id, siteUId.SiteUId);
-            }
+                var core = await _coreHelper.GetCore();
 
-            var result = await core.TemplateDelete(id);
+                await using var dbContext = core.dbContextHelper.GetDbContext();
+                List<CheckListSite> checkListSites = await dbContext.CheckListSites.Where(x => x.CheckListId == id).ToListAsync();
+                foreach (var checkListSite in checkListSites)
+                {
+                    await core.CaseDelete(checkListSite.MicrotingUid);
+                }
 
-            if (result)
-            {
+                CheckList checkList = await dbContext.CheckLists.SingleAsync(x => x.Id == id);
+                await checkList.Delete(dbContext);
+
                 var eformReport = _dbContext.EformReports
                     .FirstOrDefault(x => x.TemplateId == id);
 
                 if (eformReport != null)
                 {
                     _dbContext.EformReports.Remove(eformReport);
-                    _dbContext.SaveChanges();
+                    await _dbContext.SaveChangesAsync();
                 }
-            }
 
-            try
-            {
-                return result
-                    ? new OperationResult(true,
-                        _localizationService.GetStringWithFormat("eFormParamDeletedSuccessfully", templateDto.Label))
-                    : new OperationResult(false,
-                        _localizationService.GetStringWithFormat("eFormParamCouldNotBeDeleted", templateDto.Label));
+                return new OperationResult(true,
+                    _localizationService.GetStringWithFormat("eFormParamDeletedSuccessfully", id));
             }
             catch (Exception)
             {
