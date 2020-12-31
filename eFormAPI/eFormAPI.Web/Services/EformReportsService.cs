@@ -306,7 +306,7 @@ namespace eFormAPI.Web.Services
                 await using var dbContext = core.dbContextHelper.GetDbContext();
 
                 var localeString = await _userService.GetCurrentUserLocale();
-                Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.Description.ToLower() == localeString.ToLower());
+                Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == localeString.ToLower());
                 MainElement template = await core.ReadeForm(templateId, language);
                 if (template == null)
                 {
