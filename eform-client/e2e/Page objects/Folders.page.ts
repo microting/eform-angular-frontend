@@ -71,6 +71,10 @@ class FoldersPage extends PageWithNavbarPage {
     return $$('#folderTreeName').length;
   }
 
+  public get rowChildrenNum() {
+    return $$('.tree-node-level-2').length;
+  }
+
   getFolder(num): FoldersRowObject {
     return new FoldersRowObject(num);
   }
@@ -85,18 +89,32 @@ class FoldersPage extends PageWithNavbarPage {
     return null;
   }
 
-  getFolderFromTree(num): FoldersTreeRowObject {
-    return new FoldersTreeRowObject(num);
+  getFolderRowNumByName(nameFolder: string): number {
+    for (let i = 1; i < this.rowNum + 1; i++) {
+      const folder = new FoldersRowObject(i);
+      if (folder.name === nameFolder) {
+        return i;
+      }
+    }
+    return -1;
   }
 
-  public createNewFolder(name: string, description: string) {
+  getFolderFromTree(numParent, numChild): FoldersTreeRowObject {
+    return new FoldersTreeRowObject(numParent, numChild);
+  }
+
+  public createNewFolder(name: string, description: string, clickCancel = false) {
     this.newFolderBtn.click();
-    $('#name').waitForDisplayed({timeout: 10000});
+    this.createNameInput.waitForDisplayed({timeout: 10000});
     this.createNameInput.setValue(name);
     this.createDescriptionInput.setValue(description);
-    this.saveCreateBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-    $('#newFolderBtn').waitForDisplayed({timeout: 20000});
+    if (!clickCancel) {
+      this.saveCreateBtn.click();
+      $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    } else {
+      this.cancelCreateBtn.click();
+    }
+    foldersPage.newFolderBtn.waitForDisplayed({timeout: 20000});
   }
 
   public editFolder(folder: FoldersRowObject, name = '', description = '') {
@@ -187,19 +205,21 @@ export default foldersPage;
 
 export class FoldersRowObject {
   constructor(rowNum) {
-    if ($$('#folderTreeId')[rowNum - 1]) {
+    if ($$('.tree-node-level-1')[rowNum - 1]) {
+      const element = $$('.tree-node-level-1')[rowNum - 1];
       try {
-      this.folderElement = $$('#folderTreeId')[rowNum - 1];
+        this.folderElement = element.$('#folderTreeId');
       } catch (e) {
       }
       try {
-        this.name = this.folderElement.$('#folderTreeName').getText();
+        this.name = element.$('#folderTreeName').getText();
       } catch (e) {
       }
       // try {
-      //   this.description = this.folderElement.$('#folderTreeDescription').getText();
+      //   this.description = element.$('#folderTreeDescription').getText();
       // } catch (e) {
       // }
+      this.folderTreeOpenClose = element.$('#folderTreeOpenClose');
       this.editBtn = this.folderElement.$('#editFolderTreeBtn');
       this.deleteBtn = this.folderElement.$('#deleteFolderTreeBtn');
       this.createFolderChildBtn = this.folderElement.$('#createFolderChildBtn');
@@ -212,83 +232,110 @@ export class FoldersRowObject {
   editBtn;
   deleteBtn;
   createFolderChildBtn;
+  folderTreeOpenClose;
 
   getDescription(): string {
-    if (!this.editBtn.isExisting()) {
-      this.folderElement.click();
-      this.editBtn.waitForDisplayed({timeout: 20000});
-    }
-    this.editBtn.click();
-    foldersPage.cancelEditBtn.waitForClickable({timeout: 20000});
-    const description =  foldersPage.editDescriptionInput.getValue();
+    this.openEditModal();
+    const description = foldersPage.editDescriptionInput.getValue();
     foldersPage.cancelEditBtn.click();
     return description;
   }
 
-  createChild (name = '', description = '') {
+  createChild(name = '', description = '', clickCancel = false) {
     if (!this.createFolderChildBtn.isExisting()) {
-    this.folderElement.click();
-    this.createFolderChildBtn.waitForDisplayed({timeout: 20000});
-  }
+      this.folderElement.click();
+      this.createFolderChildBtn.waitForDisplayed({timeout: 20000});
+    }
     this.createFolderChildBtn.click();
-    $('#name').waitForDisplayed({timeout: 10000});
+    foldersPage.createNameInput.waitForDisplayed({timeout: 10000});
     foldersPage.createNameInput.setValue(name);
     foldersPage.createDescriptionInput.setValue(description);
-    foldersPage.saveCreateBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    if (!clickCancel) {
+      foldersPage.saveCreateBtn.click();
+      $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    } else {
+      foldersPage.cancelCreateBtn.click();
+    }
+    foldersPage.newFolderBtn.waitForDisplayed({timeout: 20000});
   }
 
-  delete () {
+  delete(clickCancel = false) {
     if (!this.deleteBtn.isExisting()) {
       this.folderElement.click();
       this.deleteBtn.waitForDisplayed({timeout: 20000});
     }
-    // browser.pause(500);
     this.deleteBtn.click();
-    foldersPage.saveDeleteBtn.waitForClickable({ timeout: 20000});
-    foldersPage.saveDeleteBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 2000, reverse: true});
+    if (!clickCancel) {
+      foldersPage.saveDeleteBtn.waitForClickable({timeout: 20000});
+      foldersPage.saveDeleteBtn.click();
+      $('#spinner-animation').waitForDisplayed({timeout: 2000, reverse: true});
+    } else {
+      foldersPage.cancelDeleteBtn.waitForDisplayed({timeout: 20000});
+      foldersPage.cancelDeleteBtn.click();
+    }
+    foldersPage.newFolderBtn.waitForDisplayed({timeout: 20000});
   }
-  editFolder(name = '', description = '') {
+
+  openEditModal() {
     if (!this.editBtn.isExisting()) {
       this.folderElement.click();
       this.editBtn.waitForDisplayed({timeout: 20000});
     }
     this.editBtn.click();
+    foldersPage.cancelEditBtn.waitForDisplayed({timeout: 20000});
+  }
+
+  editFolder(name = '', description = '', clickCancel = false) {
+    this.openEditModal();
     foldersPage.editNameInput.waitForDisplayed({timeout: 20000});
     if (name != null) {
-      // this.editNameInput.click();
       foldersPage.editNameInput.clearValue();
       foldersPage.editNameInput.setValue(name);
     }
     if (description != null) {
-      // this.editDescriptionInput.click();
       foldersPage.editDescriptionInput.clearValue();
       foldersPage.editDescriptionInput.setValue(description);
     }
-    foldersPage.saveEditBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
+    if (!clickCancel) {
+      foldersPage.saveEditBtn.click();
+      $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
+    } else {
+      foldersPage.cancelEditBtn.click();
+    }
     foldersPage.newFolderBtn.waitForDisplayed({timeout: 20000});
+  }
+
+  collapseChildren() {
+    if (this.folderTreeOpenClose.$('fa-icon[icon="folder-open"]')) {
+      this.folderTreeOpenClose.click();
+    }
+  }
+
+  expandChildren() {
+    if (this.folderTreeOpenClose.$('fa-icon[icon="folder"]')) {
+      this.folderTreeOpenClose.click();
+    }
   }
 }
 
 export class FoldersTreeRowObject {
-  constructor(rowNum) {
-    if ($$('#folderTreeId')[rowNum - 1]) {
+  constructor(rowNumFolderParent, rowNumberFolderChildren) {
+    if ($$('.tree-node-level-1')[rowNumFolderParent - 1].$$('.tree-node-level-2')[rowNumberFolderChildren - 1]) {
+      const element = $$('.tree-node-level-1')[rowNumFolderParent - 1].$$('.tree-node-level-2')[rowNumberFolderChildren - 1];
       try {
-        this.folderTreeElement = $$('#folderTreeId')[rowNum - 1];
+        this.folderTreeElement = element.$('#folderTreeId');
       } catch (e) {
       }
       try {
-        this.nameTree = $$('#folderTreeName')[rowNum - 1].getText();
+        this.nameTree = element.$('#folderTreeName').getText();
       } catch (e) {
       }
       // try {
-      //   this.descriptionTree = $$('#folderTreeDescription')[rowNum - 1].getText();
+      //   this.descriptionTree = element.$$('#folderTreeDescription')[rowNumberFolderChildren - 1].getText();
       // } catch (e) {
       // }
-      this.editTreeBtn = $('#editFolderTreeBtn');
-      this.deleteTreeBtn = $('#deleteFolderTreeBtn');
+      this.editTreeBtn = element.$('#editFolderTreeBtn');
+      this.deleteTreeBtn = element.$('#deleteFolderTreeBtn');
     }
   }
 
@@ -299,14 +346,54 @@ export class FoldersTreeRowObject {
   deleteTreeBtn;
 
   getDescription(): string {
+    this.openEditModal();
+    const description = foldersPage.editDescriptionInput.getValue();
+    foldersPage.cancelEditBtn.click();
+    return description;
+  }
+
+  delete(clickCancel = false) {
+    if (!this.deleteTreeBtn.isExisting()) {
+      this.folderTreeElement.click();
+      this.deleteTreeBtn.waitForDisplayed({timeout: 20000});
+    }
+    this.deleteTreeBtn.click();
+    if (!clickCancel) {
+      foldersPage.saveDeleteBtn.waitForClickable({timeout: 20000});
+      foldersPage.saveDeleteBtn.click();
+      $('#spinner-animation').waitForDisplayed({timeout: 2000, reverse: true});
+    } else {
+      foldersPage.cancelDeleteBtn.waitForClickable({timeout: 20000});
+      foldersPage.cancelDeleteBtn.click();
+    }
+    foldersPage.newFolderBtn.waitForDisplayed({timeout: 20000});
+  }
+
+  openEditModal() {
     if (!this.editTreeBtn.isExisting()) {
       this.folderTreeElement.click();
       this.editTreeBtn.waitForDisplayed({timeout: 20000});
     }
     this.editTreeBtn.click();
-    foldersPage.cancelEditBtn.waitForClickable({timeout: 20000});
-    const description =  foldersPage.editDescriptionInput.getValue();
-    foldersPage.cancelEditBtn.click();
-    return description;
+    foldersPage.saveEditBtn.waitForDisplayed({timeout: 20000});
+  }
+
+  editFolderChild(name = '', description = '', clickCancel = false) {
+    this.openEditModal();
+    if (name != null) {
+      foldersPage.editNameInput.clearValue();
+      foldersPage.editNameInput.setValue(name);
+    }
+    if (description != null) {
+      foldersPage.editDescriptionInput.clearValue();
+      foldersPage.editDescriptionInput.setValue(description);
+    }
+    if (!clickCancel) {
+      foldersPage.saveEditBtn.click();
+      $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
+    } else {
+      foldersPage.cancelEditBtn.click();
+    }
+    foldersPage.newFolderBtn.waitForDisplayed({timeout: 20000});
   }
 }

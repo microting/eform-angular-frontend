@@ -21,28 +21,20 @@ describe('Folder page', function () {
     const descriptionBeforeEdit = lastFolderBeforeEdit.getDescription();
     name = generateRandmString();
     lastFolderBeforeEdit.editFolder(name, null);
-    // browser.pause(2000);
     const lastFolderAfterEdit = foldersPage.getFolderByName(name);
-    // newFolderBtn.waitForDisplayed({timeout: 20000});
-    lastFolderAfterEdit.editBtn.click();
-    foldersPage.editNameInput.waitForDisplayed({timeout: 20000});
+    lastFolderAfterEdit.openEditModal();
     expect(foldersPage.editNameInput.getValue(), 'Name has been changed incorrectly').equal(name);
     expect(foldersPage.editDescriptionInput.getValue(),
       'Description has been changed after changing only first name').equal(descriptionBeforeEdit);
     foldersPage.cancelEditBtn.click();
   });
   it('Should change description', function () {
-    loginPage.open('/');
-    myEformsPage.Navbar.goToFolderPage();
     const newDescription = generateRandmString();
     $('#folderTreeName').waitForDisplayed({timeout: 20000});
     const lastFolderBeforeEdit = foldersPage.getFolderByName(name);
     lastFolderBeforeEdit.editFolder(null, newDescription);
-    browser.pause(2000);
-    const lastFolderAfterEdit = foldersPage.getFolderByName(name);
     foldersPage.newFolderBtn.waitForDisplayed({timeout: 20000});
-    lastFolderAfterEdit.editBtn.click();
-    foldersPage.cancelEditBtn.waitForDisplayed({timeout: 20000});
+    foldersPage.getFolderByName(name).openEditModal();
     expect(foldersPage.editDescriptionInput.getValue(), 'Description has been changed incorrectly').equal(newDescription);
     expect(foldersPage.editNameInput.getValue(),
       'Name has been changed after changing only last name').equal(lastFolderBeforeEdit.name);
@@ -54,21 +46,10 @@ describe('Folder page', function () {
     const newName = generateRandmString();
     const newDescription = generateRandmString();
     const lastFolderPageBeforeEdit = foldersPage.getFolderByName(name);
-    lastFolderPageBeforeEdit.editBtn.click();
-    foldersPage.editNameInput.waitForDisplayed({timeout: 10000});
-    foldersPage.editNameInput.clearValue();
-    foldersPage.editNameInput.setValue(newName);
-    const descriptionBeforeEdit = foldersPage.editDescriptionInput.getValue();
-    foldersPage.editDescriptionInput.clearValue();
-    foldersPage.editDescriptionInput.setValue(newDescription);
-    foldersPage.cancelEditBtn.click();
-    foldersPage.newFolderBtn.waitForDisplayed({timeout: 20000});
-    loginPage.open('/');
-    myEformsPage.Navbar.goToFolderPage();
-    folderTreeName.waitForDisplayed({timeout: 20000});
+    const descriptionBeforeEdit = lastFolderPageBeforeEdit.getDescription();
+    lastFolderPageBeforeEdit.editFolder(newName, newDescription, true);
     const lastFolderPageAfterEdit = foldersPage.getFolderByName(name);
-    lastFolderPageAfterEdit.folderElement.click();
-    lastFolderPageAfterEdit.editBtn.click();
+    lastFolderPageAfterEdit.openEditModal();
     expect(foldersPage.editNameInput.getValue(), 'Name has been changed').equal(lastFolderPageAfterEdit.name);
     expect(foldersPage.editDescriptionInput.getValue(), 'Description has been changed').equal(descriptionBeforeEdit);
     foldersPage.cancelEditBtn.click();
