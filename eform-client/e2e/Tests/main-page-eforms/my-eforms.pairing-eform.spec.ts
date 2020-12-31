@@ -14,22 +14,12 @@ describe('Main page', function () {
     // Create 2 device users
     deviceUsersPage.createNewDeviceUser('testName1', 'testLastName1');
     deviceUsersPage.createNewDeviceUser('testName2', 'testLastName2');
-    for (let i = 1; i < deviceUsersPage.rowNum + 1; i++) {
-      const deviceUser = deviceUsersPage.getDeviceUser(i);
-      if (deviceUser && (deviceUser.firstName === 'testName1' || deviceUser.firstName === 'testName2')
-        && (deviceUser.lastName === 'testLastName1' || deviceUser.lastName === 'testLastName2')) {
-        users.push(deviceUser);
-      }
-    }
+    users.push(deviceUsersPage.getDeviceUserByName('testName1'));
+    users.push(deviceUsersPage.getDeviceUserByName('testName2'));
     myEformsPage.Navbar.goToFolderPage();
     // Create folder
     foldersPage.createNewFolder('test folder', 'desc');
-    for (let i = 1; i < foldersPage.rowNum + 1; i++) {
-      const folder = foldersPage.getFolder(i);
-      if (folder && (folder.name === 'test folder')) {
-        folders.push(folder);
-      }
-    }
+    folders.push(foldersPage.getFolderByName('test folder'));
     myEformsPage.Navbar.goToMyEForms();
     // Create e-form
     myEformsPage.createNewEform('test Eform');
@@ -79,23 +69,14 @@ describe('Main page', function () {
     myEformsPage.cancelParingBtn.click();
   });
   after(function () {
-    myEformsPage.getFirstMyEformsRowObj().deleteEForm();
+    myEformsPage.getEformsRowObjByNameEForm('test Eform').deleteEForm();
     myEformsPage.Navbar.goToDeviceUsersPage();
-    for (let i = deviceUsersPage.rowNum; i > 0; i--) {
-      const deviceUser = deviceUsersPage.getDeviceUser(i);
-      if (deviceUser && (deviceUser.firstName === 'testName1' || deviceUser.firstName === 'testName2')
-        && (deviceUser.lastName === 'testLastName1' || deviceUser.lastName === 'testLastName2')) {
-        deviceUser.delete();
-        browser.pause(1000);
-      }
+    for (let i = 0; i < users.length; i++) {
+      deviceUsersPage.getDeviceUserByName(users[i].firstName).delete();
     }
     myEformsPage.Navbar.goToFolderPage();
-    for (let i = 1; i < foldersPage.rowNum + 1; i++) {
-      const folder = foldersPage.getFolder(i);
-      if (folder && (folder.name === 'test folder')) {
-        folder.delete();
-        browser.pause(1000);
-      }
+    for (let i = 0; i < folders.length; i++) {
+      foldersPage.getFolderByName(folders[i].name).delete();
     }
   });
 });
