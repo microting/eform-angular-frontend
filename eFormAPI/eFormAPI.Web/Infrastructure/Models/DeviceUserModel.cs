@@ -29,6 +29,6 @@ namespace eFormAPI.Web.Infrastructure.Models
         public string UserFirstName { get; set; }
         public string UserLastName { get; set; }
         public int Language { get; set; }
-        public string LanguageDescription { get; set; }
+        public string LanguageCode { get; set; }
     }
 }

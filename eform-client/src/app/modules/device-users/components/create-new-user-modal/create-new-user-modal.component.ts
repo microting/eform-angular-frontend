@@ -20,7 +20,7 @@ export class CreateNewUserModalComponent implements OnInit {
   }
 
   show() {
-    this.simpleSiteModel.languageDescription = this.languages[1].locale;
+    this.simpleSiteModel.languageCode = this.languages[1].locale;
     this.frame.show();
   }
 
