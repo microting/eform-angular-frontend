@@ -1166,7 +1166,7 @@ namespace eFormAPI.Web.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedByUserId = 0,
                             Language = "Danish",
-                            LocaleName = "da-DK",
+                            LocaleName = "da",
                             MenuItemId = 1,
                             Name = "Mine eForms",
                             UpdatedByUserId = 0,
@@ -1178,7 +1178,7 @@ namespace eFormAPI.Web.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedByUserId = 0,
                             Language = "Danish",
-                            LocaleName = "da-DK",
+                            LocaleName = "da",
                             MenuItemId = 2,
                             Name = "Enhedsbrugere",
                             UpdatedByUserId = 0,
@@ -1190,7 +1190,7 @@ namespace eFormAPI.Web.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedByUserId = 0,
                             Language = "Danish",
-                            LocaleName = "da-DK",
+                            LocaleName = "da",
                             MenuItemId = 3,
                             Name = "Avanceret",
                             UpdatedByUserId = 0,
@@ -1202,7 +1202,7 @@ namespace eFormAPI.Web.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedByUserId = 0,
                             Language = "Danish",
-                            LocaleName = "da-DK",
+                            LocaleName = "da",
                             MenuItemId = 4,
                             Name = "Lokationer",
                             UpdatedByUserId = 0,
@@ -1214,7 +1214,7 @@ namespace eFormAPI.Web.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedByUserId = 0,
                             Language = "Danish",
-                            LocaleName = "da-DK",
+                            LocaleName = "da",
                             MenuItemId = 5,
                             Name = "Medarbejder",
                             UpdatedByUserId = 0,
@@ -1226,7 +1226,7 @@ namespace eFormAPI.Web.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedByUserId = 0,
                             Language = "Danish",
-                            LocaleName = "da-DK",
+                            LocaleName = "da",
                             MenuItemId = 6,
                             Name = "Enheder",
                             UpdatedByUserId = 0,
@@ -1238,7 +1238,7 @@ namespace eFormAPI.Web.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedByUserId = 0,
                             Language = "Danish",
-                            LocaleName = "da-DK",
+                            LocaleName = "da",
                             MenuItemId = 7,
                             Name = "Søgbar Lister",
                             UpdatedByUserId = 0,
@@ -1250,7 +1250,7 @@ namespace eFormAPI.Web.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedByUserId = 0,
                             Language = "Danish",
-                            LocaleName = "da-DK",
+                            LocaleName = "da",
                             MenuItemId = 8,
                             Name = "Valgbar Liste",
                             UpdatedByUserId = 0,
@@ -1262,7 +1262,7 @@ namespace eFormAPI.Web.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedByUserId = 0,
                             Language = "Danish",
-                            LocaleName = "da-DK",
+                            LocaleName = "da",
                             MenuItemId = 9,
                             Name = "Applikationsindstillinger",
                             UpdatedByUserId = 0,
@@ -1274,7 +1274,7 @@ namespace eFormAPI.Web.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedByUserId = 0,
                             Language = "Danish",
-                            LocaleName = "da-DK",
+                            LocaleName = "da",
                             MenuItemId = 10,
                             Name = "Plugins",
                             UpdatedByUserId = 0,
@@ -1286,7 +1286,7 @@ namespace eFormAPI.Web.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedByUserId = 0,
                             Language = "Danish",
-                            LocaleName = "da-DK",
+                            LocaleName = "da",
                             MenuItemId = 11,
                             Name = "Folders",
                             UpdatedByUserId = 0,
@@ -1298,7 +1298,7 @@ namespace eFormAPI.Web.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedByUserId = 0,
                             Language = "Danish",
-                            LocaleName = "da-DK",
+                            LocaleName = "da",
                             MenuItemId = 12,
                             Name = "E-mail-modtagere",
                             UpdatedByUserId = 0,
@@ -2017,7 +2017,7 @@ namespace eFormAPI.Web.Migrations
                         {
                             Id = 13,
                             Language = "Danish",
-                            LocaleName = "da-DK",
+                            LocaleName = "da",
                             MenuTemplateId = 1,
                             Name = "Mine eForms"
                         },
@@ -2025,7 +2025,7 @@ namespace eFormAPI.Web.Migrations
                         {
                             Id = 14,
                             Language = "Danish",
-                            LocaleName = "da-DK",
+                            LocaleName = "da",
                             MenuTemplateId = 2,
                             Name = "Enhedsbrugere"
                         },
@@ -2033,7 +2033,7 @@ namespace eFormAPI.Web.Migrations
                         {
                             Id = 15,
                             Language = "Danish",
-                            LocaleName = "da-DK",
+                            LocaleName = "da",
                             MenuTemplateId = 3,
                             Name = "Avanceret"
                         },
@@ -2041,7 +2041,7 @@ namespace eFormAPI.Web.Migrations
                         {
                             Id = 16,
                             Language = "Danish",
-                            LocaleName = "da-DK",
+                            LocaleName = "da",
                             MenuTemplateId = 4,
                             Name = "Lokationer"
                         },
@@ -2049,7 +2049,7 @@ namespace eFormAPI.Web.Migrations
                         {
                             Id = 17,
                             Language = "Danish",
-                            LocaleName = "da-DK",
+                            LocaleName = "da",
                             MenuTemplateId = 5,
                             Name = "Medarbejder"
                         },
@@ -2057,7 +2057,7 @@ namespace eFormAPI.Web.Migrations
                         {
                             Id = 18,
                             Language = "Danish",
-                            LocaleName = "da-DK",
+                            LocaleName = "da",
                             MenuTemplateId = 6,
                             Name = "Enheder"
                         },
@@ -2065,7 +2065,7 @@ namespace eFormAPI.Web.Migrations
                         {
                             Id = 19,
                             Language = "Danish",
-                            LocaleName = "da-DK",
+                            LocaleName = "da",
                             MenuTemplateId = 7,
                             Name = "Søgbar Lister"
                         },
@@ -2073,7 +2073,7 @@ namespace eFormAPI.Web.Migrations
                         {
                             Id = 20,
                             Language = "Danish",
-                            LocaleName = "da-DK",
+                            LocaleName = "da",
                             MenuTemplateId = 8,
                             Name = "Valgbar Liste"
                         },
@@ -2081,7 +2081,7 @@ namespace eFormAPI.Web.Migrations
                         {
                             Id = 21,
                             Language = "Danish",
-                            LocaleName = "da-DK",
+                            LocaleName = "da",
                             MenuTemplateId = 9,
                             Name = "Applikationsindstillinger"
                         },
@@ -2089,7 +2089,7 @@ namespace eFormAPI.Web.Migrations
                         {
                             Id = 22,
                             Language = "Danish",
-                            LocaleName = "da-DK",
+                            LocaleName = "da",
                             MenuTemplateId = 10,
                             Name = "Plugins"
                         },
@@ -2097,7 +2097,7 @@ namespace eFormAPI.Web.Migrations
                         {
                             Id = 23,
                             Language = "Danish",
-                            LocaleName = "da-DK",
+                            LocaleName = "da",
                             MenuTemplateId = 11,
                             Name = "Folders"
                         },
@@ -2105,7 +2105,7 @@ namespace eFormAPI.Web.Migrations
                         {
                             Id = 24,
                             Language = "Danish",
-                            LocaleName = "da-DK",
+                            LocaleName = "da",
                             MenuTemplateId = 12,
                             Name = "E-mail-modtagere"
                         },

@@ -89,7 +89,7 @@ namespace eFormAPI.Web.Migrations
                 keyColumn: "Id",
                 keyValue: 25,
                 columns: new[] { "Language", "LocaleName", "MenuItemId", "Name" },
-                values: new object[] { "Danish", "da-DK", 12, "E-mail-modtagere" });
+                values: new object[] { "Danish", "da", 12, "E-mail-modtagere" });
 
             migrationBuilder.UpdateData(
                 table: "MenuItemTranslations",
@@ -200,7 +200,7 @@ namespace eFormAPI.Web.Migrations
                 values: new object[,]
                 {
                     { 37, null, "English", "en-US", 13, "Menu Editor", null, null, null },
-                    { 38, null, "Danish", "da-DK", 13, "Menu Editor", null, null, null },
+                    { 38, null, "Danish", "da", 13, "Menu Editor", null, null, null },
                     { 39, null, "German", "de-DE", 13, "Menü-Editor", null, null, null }
                 });
 
@@ -216,7 +216,7 @@ namespace eFormAPI.Web.Migrations
                 keyColumn: "Id",
                 keyValue: 26,
                 columns: new[] { "Language", "LocaleName", "MenuItemId", "Name" },
-                values: new object[] { "Danish", "da-DK", 13, "Menu Editor" });
+                values: new object[] { "Danish", "da", 13, "Menu Editor" });
 
             migrationBuilder.InsertData(
                 table: "MenuItemTranslations",
@@ -436,7 +436,7 @@ namespace eFormAPI.Web.Migrations
                 values: new object[,]
                 {
                     { 26, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "German", "de-DE", 2, "Gerätebenutzer ", null, 0, 0, null },
-                    { 13, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Danish", "da-DK", 1, "Mine eForms", null, 0, 0, null }
+                    { 13, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Danish", "da", 1, "Mine eForms", null, 0, 0, null }
                 });
 
             migrationBuilder.UpdateData(
