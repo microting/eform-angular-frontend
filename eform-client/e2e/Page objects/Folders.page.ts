@@ -216,9 +216,8 @@ export class FoldersRowObject {
   delete () {
     this.folderElement.click();
     // browser.pause(500);
-    this.deleteBtn.waitForClickable({ timeout: 20000});
+    this.deleteBtn.waitForDisplayed({ timeout: 20000});
     this.deleteBtn.click();
-    foldersPage.saveDeleteBtn.waitForClickable({ timeout: 20000});
     foldersPage.saveDeleteBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 2000, reverse: true});
   }
