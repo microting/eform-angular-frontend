@@ -17,7 +17,7 @@ export class EformMissingTranslationHandler implements MissingTranslationHandler
 //     if (localeId) {
 //       switch (localeId) {
 //         case 'da':
-//           return 'da-DK';
+//           return 'da';
 //         default:
 //           return localeId;
 //       }

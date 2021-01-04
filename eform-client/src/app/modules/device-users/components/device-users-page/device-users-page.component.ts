@@ -36,7 +36,7 @@ export class DeviceUsersPageComponent implements OnInit {
     this.selectedSimpleSite.userFirstName = simpleSiteDto.firstName;
     this.selectedSimpleSite.userLastName = simpleSiteDto.lastName;
     this.selectedSimpleSite.id = simpleSiteDto.siteUid;
-    this.selectedSimpleSite.languageDescription = simpleSiteDto.languageDescription;
+    this.selectedSimpleSite.languageCode = simpleSiteDto.languageCode;
     this.editDeviceUserModal.show();
   }
 

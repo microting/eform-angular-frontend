@@ -16,7 +16,6 @@ describe('Application settings page - site header section', function () {
     $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     applicationSettingsPage.SiteHeader.mainTextInput.setValue(ApplicationSettingsConstants.SiteHeader.customMainText);
     applicationSettingsPage.save();
-    //browser.refresh();
     $('#sign-out-dropdown').waitForDisplayed({timeout: 120000});
     $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     expect(applicationSettingsPage.siteHeaderMainText.getText(),
@@ -25,7 +24,6 @@ describe('Application settings page - site header section', function () {
   it('should change secondary text', function () {
     applicationSettingsPage.SiteHeader.secondaryTextInput.setValue(ApplicationSettingsConstants.SiteHeader.customSecondaryText);
     applicationSettingsPage.save();
-    //browser.refresh();
     $('#sign-out-dropdown').waitForDisplayed({timeout: 20000});
     $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     expect(applicationSettingsPage.siteHeaderSecondaryText.getText(),

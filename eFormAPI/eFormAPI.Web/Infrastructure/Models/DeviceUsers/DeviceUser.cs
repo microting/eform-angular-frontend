@@ -14,6 +14,6 @@ namespace eFormAPI.Web.Infrastructure.Models.DeviceUsers
         public int? WorkerUid { get; set; }
         public int LanguageId { get; set; }
         public string Language { get; set; }
-        public string LanguageDescription { get; set; }
+        public string LanguageCode { get; set; }
     }
 }

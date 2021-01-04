@@ -10,5 +10,5 @@ export class SiteDto {
   customerNo: number;
   languageId: number;
   language: string;
-  languageDescription: string;
+  languageCode: string;
 }

@@ -65,7 +65,7 @@ export class LocaleService extends BaseService {
   initCookies(locale: string) {
     this.translateService.setDefaultLang('en-US');
     let culture = this.buildCookieValue('en-US');
-    if (locale === 'da-DK') {
+    if (locale === 'da') {
       culture = this.buildCookieValue('da');
     } else if (locale) {
       culture = this.buildCookieValue(locale);

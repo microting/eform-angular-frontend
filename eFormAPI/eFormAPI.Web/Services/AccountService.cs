@@ -62,9 +62,9 @@ namespace eFormAPI.Web.Services
         public AccountService(IEFormCoreService coreHelper,
             UserManager<EformUser> userManager,
             IUserService userService,
-            IDbOptions<ApplicationSettings> appSettings, 
+            IDbOptions<ApplicationSettings> appSettings,
             ILogger<AccountService> logger,
-            ILocalizationService localizationService, 
+            ILocalizationService localizationService,
             IEmailSender emailSender,
             BaseDbContext dbContext)
         {
@@ -109,7 +109,7 @@ namespace eFormAPI.Web.Services
             var timeZone = string.IsNullOrEmpty(user.TimeZone) ? "Europe/Copenhagen" : user.TimeZone;
             var formats = string.IsNullOrEmpty(user.Formats) ? "de-DE" : user.Formats;
             var darkTheme = user.DarkTheme;
-            var locale = string.IsNullOrEmpty(user.Locale) ? "da-DK" : user.Locale;
+            var locale = string.IsNullOrEmpty(user.Locale) ? "da" : user.Locale;
 
             var securityGroupRedirectLink = await _dbContext.SecurityGroupUsers
                 .Where(x => x.EformUserId == user.Id)

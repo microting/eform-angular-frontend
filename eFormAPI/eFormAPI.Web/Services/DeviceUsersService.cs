@@ -111,7 +111,7 @@ namespace eFormAPI.Web.Services
                     UnitId = unitMicrotingUid,
                     WorkerUid = workerMicrotingUid,
                     Language = language.Name,
-                    LanguageDescription = language.Description,
+                    LanguageCode = language.LanguageCode,
                 };
                 deviceUsers.Add(deviceUser);
             }
@@ -125,7 +125,7 @@ namespace eFormAPI.Web.Services
             var core = await _coreHelper.GetCore();
             var siteName = deviceUserModel.UserFirstName + " " + deviceUserModel.UserLastName;
             await using var db = core.dbContextHelper.GetDbContext();
-            Language language = db.Languages.Single(x => x.Description == deviceUserModel.LanguageDescription);
+            Language language = db.Languages.Single(x => x.LanguageCode == deviceUserModel.LanguageCode);
 
             try
             {
@@ -188,7 +188,7 @@ namespace eFormAPI.Web.Services
                     CustomerNo = unit.CustomerNo,
                     FirstName = worker.FirstName,
                     Language = language.Name,
-                    LanguageDescription = language.Description,
+                    LanguageCode = language.LanguageCode,
                     LanguageId = site.LanguageId,
                     LastName = worker.LastName,
                     OtpCode = unit.OtpCode,
@@ -213,7 +213,7 @@ namespace eFormAPI.Web.Services
             {
                 var core = await _coreHelper.GetCore();
                 await using var db = core.dbContextHelper.GetDbContext();
-                Language language = db.Languages.Single(x => x.Description == deviceUserModel.LanguageDescription);
+                Language language = db.Languages.Single(x => x.LanguageCode == deviceUserModel.LanguageCode);
                 var siteDto = await core.SiteRead(deviceUserModel.Id);
                 if (siteDto.WorkerUid != null)
                 {

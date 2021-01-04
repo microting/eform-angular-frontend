@@ -3,5 +3,5 @@ export class DeviceUserModel {
   userFirstName: string;
   userLastName: string;
   language: number;
-  languageDescription: string;
+  languageCode: string;
 }

@@ -56,7 +56,7 @@ namespace eFormAPI.Web.Migrations
                 values: new object[,]
                 {
                     { 37, null, "English", "en-US", 13, "Menu Editor", null, null, null },
-                    { 38, null, "Danish", "da-DK", 13, "Menu Editor", null, null, null },
+                    { 38, null, "Danish", "da", 13, "Menu Editor", null, null, null },
                     { 39, null, "German", "de-DE", 13, "Menü-Editor", null, null, null }
                 });
 
@@ -68,7 +68,7 @@ namespace eFormAPI.Web.Migrations
             migrationBuilder.InsertData(
                 table: "MenuItemTranslations",
                 columns: new[] { "Id", "CreatedAt", "CreatedByUserId", "Language", "LocaleName", "MenuItemId", "Name", "UpdatedAt", "UpdatedByUserId", "Version", "WorkflowState" },
-                values: new object[] { 26, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Danish", "da-DK", 13, "Menu Editor", null, 0, 0, null });
+                values: new object[] { 26, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Danish", "da", 13, "Menu Editor", null, 0, 0, null });
 
             migrationBuilder.InsertData(
                 table: "MenuItemTranslations",

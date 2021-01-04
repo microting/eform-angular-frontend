@@ -212,7 +212,7 @@ namespace eFormAPI.Web.Services
 
                 var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
                 var localeString = _dbContext.Users.Single(x => x.Id == int.Parse(value)).Locale;
-                Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.Description.ToLower() == localeString.ToLower());
+                Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == localeString.ToLower());
                 var templateDto = await core.TemplateItemRead(id, language);
                 return new OperationDataResult<Template_Dto>(true, templateDto);
             }
@@ -460,7 +460,7 @@ namespace eFormAPI.Web.Services
 
             var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
             var localeString = _dbContext.Users.Single(x => x.Id == int.Parse(value)).Locale;
-            Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.Description.ToLower() == localeString.ToLower());
+            Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == localeString.ToLower());
             var templateDto = await core.TemplateItemRead(id, language);
             var siteNamesDto = await core.Advanced_SiteItemReadAll();
 
@@ -484,7 +484,7 @@ namespace eFormAPI.Web.Services
             var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
             var localeString = _dbContext.Users.Single(x => x.Id == int.Parse(value)).Locale;
             await using var dbContext = core.dbContextHelper.GetDbContext();
-            Language language = dbContext.Languages.Single(x => x.Description.ToLower() == localeString.ToLower());
+            Language language = dbContext.Languages.Single(x => x.LanguageCode.ToLower() == localeString.ToLower());
             var templateDto = await core.TemplateItemRead(deployModel.Id, language);
 
             foreach (var site in templateDto.DeployedSites)

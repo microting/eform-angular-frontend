@@ -13,7 +13,7 @@ export class ConnectionSetupComponent implements OnInit {
 
   languages = [
     {id: 'en-US', text: 'English'},
-    {id: 'da-DK', text: 'Danish'},
+    {id: 'da', text: 'Danish'},
     {id: 'de-DE', text: 'German'}
   ];
 
