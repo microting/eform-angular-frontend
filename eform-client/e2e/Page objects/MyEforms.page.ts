@@ -307,7 +307,7 @@ class MyEformsRowObject {
     const folders = $$('tree-node');
     for (let i = 0; i < folders.length; i++) {
       if (folders[i].$('#folderTreeName').getText() === folder.name
-        && folders[i].$('#folderTreeDescription').getText() === folder.description) {
+        ) {
         folders[i].$('#folderTreeName').click();
       }
     }

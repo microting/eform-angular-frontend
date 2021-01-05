@@ -78,8 +78,6 @@
     <div id="folderTreeId" class="d-flex align-items-center"
          [ngStyle]="{'cursor': lockSelectedNode ? 'not-allowed' : 'pointer'}">
       <span id="folderTreeName">{{ node.data.name }}</span>
-      <pre> _ </pre>
-      <span id="folderTreeDescription" *ngIf="node.data.description">{{ node.data.description }}</span>
       <div class="ml-3 text-black-50" *ngIf="node.isActive && showActions">
         <fa-icon
           *ngIf="showCreateAction"
