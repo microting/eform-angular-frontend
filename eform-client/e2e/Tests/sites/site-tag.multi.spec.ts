@@ -15,13 +15,12 @@ describe('Site tags', function () {
     myEformsPage.Navbar.goToDeviceUsersPage();
     $('#newDeviceUserBtn').waitForDisplayed({timeout: 20000});
     deviceUsersPage.createDeviceUserFromScratch('John', 'Smith');
-    sitesPage.Navbar.goToSites();
   });
   it('should create new tag', function () {
+    loginPage.open('/advanced/sites');
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     $('#editSiteTagsBtn_0').waitForDisplayed({timeout: 20000});
     const site = sitesPage.getFirstRowObject();
-    //console.log(JSON.stringify(site));
     sitesPage.createTag(site, tagName);
     const tagExist = sitesPage.tagExists(tagName);
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});

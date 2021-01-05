@@ -54,6 +54,7 @@ class SitesPage extends PageWithNavbarPage {
   public get removeTagBtn() {
     const ele = $('#removeTagBtn');
     ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({timeout: 20000});
     return ele;
   }
 
