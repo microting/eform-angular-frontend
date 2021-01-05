@@ -97,12 +97,12 @@ class DeviceUsersPage extends PageWithNavbarPage {
     this.createLastNameInput.setValue(lastName);
     this.saveCreateBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-    $('#newDeviceUserBtn').waitForDisplayed({timeout: 20000});
+    this.newDeviceUserBtn.waitForDisplayed({timeout: 20000});
   }
 
   public createDeviceUserFromScratch(name: string, surname: string) {
     myEformsPage.Navbar.goToDeviceUsersPage();
-    $('#newDeviceUserBtn').waitForDisplayed({timeout: 20000});
+    this.newDeviceUserBtn.waitForDisplayed({timeout: 20000});
     const rowCountBeforeCreation = deviceUsersPage.rowNum;
     // browser.pause(2000);
     deviceUsersPage.createNewDeviceUser(name, surname);
@@ -129,7 +129,7 @@ class DeviceUsersPage extends PageWithNavbarPage {
     }
     this.saveEditBtn.click();
     // browser.pause(12000);
-    $('#newDeviceUserBtn').waitForDisplayed({timeout: 20000});
+    this.newDeviceUserBtn.waitForDisplayed({timeout: 20000});
   }
 }
 
