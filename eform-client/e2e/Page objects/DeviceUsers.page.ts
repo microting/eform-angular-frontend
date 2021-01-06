@@ -68,7 +68,6 @@ class DeviceUsersPage extends PageWithNavbarPage {
   }
 
   getDeviceUser(num): DeviceUsersRowObject {
-    browser.pause(500);
     return new DeviceUsersRowObject(num);
   }
 
@@ -163,6 +162,7 @@ export class DeviceUsersRowObject {
     this.deleteBtn.click();
     deviceUsersPage.saveDeleteBtn.waitForClickable({ timeout: 20000});
     deviceUsersPage.saveDeleteBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 20000});
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
+    deviceUsersPage.newDeviceUserBtn.waitForDisplayed({timeout: 20000});
   }
 }

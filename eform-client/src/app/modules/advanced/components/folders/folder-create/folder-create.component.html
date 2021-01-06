@@ -29,10 +29,12 @@
           <div class="row">
             <div class="col-md-12">
               <div class="md-form">
-                <input mdbInput
-                       name="description" [(ngModel)]="newFolderModel.description"
-                       required
-                       id="description" type="text" class="form-control">
+                <textarea
+                  mdbInput [(ngModel)]="newFolderModel.description"
+                  name="description"
+                  required
+                  id="description" rows="10"
+                  class="md-textarea form-control"></textarea>
                 <label for="description">{{'Description' | translate}}</label>
               </div>
             </div>

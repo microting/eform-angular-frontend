@@ -1,77 +1,52 @@
 import loginPage from '../../../Page objects/Login.page';
 import myEformsPage from '../../../Page objects/MyEforms.page';
-import foldersPage, {FoldersRowObject} from '../../../Page objects/Folders.page';
+import foldersPage from '../../../Page objects/Folders.page';
 import {generateRandmString} from '../../../Helpers/helper-functions';
-import {Guid} from 'guid-typescript';
 
 const expect = require('chai').expect;
+let nameFolder = generateRandmString();
 
 describe('Folder page', function () {
   before(function () {
     loginPage.open('/');
     loginPage.login();
     myEformsPage.Navbar.goToFolderPage();
-    const name = Guid.create().toString();
-    const description = Guid.create().toString();
-    $('#newFolderBtn').waitForDisplayed({timeout: 10000});
-    foldersPage.createNewFolder(name, description);
+    const description = generateRandmString();
+    foldersPage.newFolderBtn.waitForDisplayed({timeout: 10000});
+    foldersPage.createNewFolder(nameFolder, description);
   });
   it('Should change name', function () {
-    const newName = Guid.create().toString();
-    const rowNumParentsBeforeDelete = foldersPage.rowNumParents;
-    $('#folderTreeName').waitForDisplayed({timeout: 20000});
-    $$('#folderTreeName')[rowNumParentsBeforeDelete - 1].click();
-    const lastFolderBeforeEdit = foldersPage.getFolderFromTree(rowNumParentsBeforeDelete);
-    foldersPage.editFolderTree(lastFolderBeforeEdit, newName, null);
-    const lastFolderAfterEdit = foldersPage.getFolderFromTree(foldersPage.rowNumParents);
-    $('#newFolderBtn').waitForDisplayed({timeout: 20000});
-    expect(lastFolderAfterEdit.nameTree, 'Name has been changed incorrectly').equal(newName);
-    expect(lastFolderAfterEdit.descriptionTree,
-      'Description has been changed after changing only first name').equal(lastFolderBeforeEdit.descriptionTree);
+    let folder = foldersPage.getFolderByName(nameFolder);
+    const lastFolderBeforeEditDescription = folder.getDescription();
+    nameFolder = generateRandmString();
+    folder.editFolder(nameFolder, null);
+
+    folder = foldersPage.getFolderByName(nameFolder);
+    const lastFolderAfterEditDescription = folder.getDescription();
+    expect(folder.name, 'Name has been changed incorrectly').equal(nameFolder);
+    expect(lastFolderAfterEditDescription,
+      'Description has been changed after changing only first name').equal(lastFolderBeforeEditDescription);
   });
   it('Should change description', function () {
-    const newDescription = Guid.create().toString();
-    $('#folderTreeName').waitForDisplayed({timeout: 20000});
-    const lastFolderBeforeEdit = foldersPage.getFolderFromTree(foldersPage.rowNumParents);
-    foldersPage.editFolderTree(lastFolderBeforeEdit, null, newDescription);
-    browser.pause(2000);
-    const lastFolderAfterEdit = foldersPage.getFolderFromTree(foldersPage.rowNumParents);
-    $('#newFolderBtn').waitForDisplayed({timeout: 20000});
-    expect(lastFolderAfterEdit.descriptionTree, 'Description has been changed incorrectly').equal(newDescription);
-    expect(lastFolderAfterEdit.nameTree,
-      'Name has been changed after changing only last name').equal(lastFolderBeforeEdit.nameTree);
+    const newDescription = generateRandmString();
+    const folder = foldersPage.getFolderByName(nameFolder);
+    folder.editFolder(null, newDescription);
+    expect(folder.getDescription(), 'Description has been changed incorrectly').equal(newDescription);
+    expect(folder.name, 'Name has been changed after changing only last name').equal(nameFolder);
   });
   it('Should not change first name and last name if cancel was clicked', function () {
-    const newName = Guid.create().toString();
-    const newDescription = Guid.create().toString();
-    const rowNumBeforeEdit = foldersPage.rowNumParents;
-    const lastFolderPageBeforeEdit = foldersPage.getFolderFromTree(rowNumBeforeEdit);
-    lastFolderPageBeforeEdit.editTreeBtn.click();
-    $('#editNameInput').waitForDisplayed({timeout: 10000});
-    foldersPage.editNameInput.click();
-    foldersPage.editNameInput.clearValue();
-    foldersPage.editNameInput.setValue(newName);
-    foldersPage.editDescriptionInput.click();
-    foldersPage.editDescriptionInput.clearValue();
-    foldersPage.editDescriptionInput.setValue(newDescription);
-    foldersPage.cancelEditBtn.click();
-    $('#newFolderBtn').waitForDisplayed({timeout: 20000});
-    const rowNumAfterEdit = foldersPage.rowNumParents;
-    expect(rowNumBeforeEdit).equal(rowNumAfterEdit);
-    const lastFolderPageAfterEdit = foldersPage.getFolderFromTree(rowNumAfterEdit);
-    expect(lastFolderPageAfterEdit.nameTree, 'Name has been changed').equal(lastFolderPageAfterEdit.nameTree);
-    expect(lastFolderPageAfterEdit.descriptionTree, 'Description has been changed').equal(lastFolderPageAfterEdit.descriptionTree);
+    const rowNumBeforeEdit = foldersPage.rowNum;
+    const folder = foldersPage.getFolderByName(nameFolder);
+    const folderBeforeEditDescription = folder.getDescription();
+    folder.editFolder(generateRandmString(), generateRandmString(), true);
+    const rowNumAfterEdit = foldersPage.rowNum;
+    expect(rowNumBeforeEdit, 'Number folder was change').equal(rowNumAfterEdit);
+    const lastFolderPageAfterEdit = foldersPage.getFolderByName(nameFolder);
+    const lastFolderPageAfterEditDescription = lastFolderPageAfterEdit.getDescription();
+    expect(folder.name, 'Name has been changed').equal(lastFolderPageAfterEdit.name);
+    expect(folderBeforeEditDescription, 'Description has been changed').equal(lastFolderPageAfterEditDescription);
   });
   it('Should delete folder', function () {
-    loginPage.open('/');
-    myEformsPage.Navbar.goToFolderPage();
-    $('#folderTreeName').waitForDisplayed({timeout: 20000});
-    $$('#folderTreeName')[0].click();
-    const lastFolder = foldersPage.getFolder(1);
-    lastFolder.deleteBtn.waitForDisplayed({timeout: 5000});
-    lastFolder.deleteBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-    foldersPage.saveDeleteBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    foldersPage.getFolderByName(nameFolder).delete();
   });
 });

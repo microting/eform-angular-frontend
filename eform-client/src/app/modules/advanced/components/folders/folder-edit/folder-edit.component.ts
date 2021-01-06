@@ -21,11 +21,11 @@ export class FolderEditComponent implements OnInit {
   }
 
   show(selectedFolder: FolderDto) {
-    this.frame.show();
     this.folderModel.id = selectedFolder.id;
     this.folderModel.description = selectedFolder.description;
     this.folderModel.name = selectedFolder.name;
     this.folderModel.parentId = selectedFolder.parentId;
+    this.frame.show();
   }
 
   updateFolder() {

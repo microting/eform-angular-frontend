@@ -1,9 +1,10 @@
 import loginPage from '../../../Page objects/Login.page';
 import myEformsPage from '../../../Page objects/MyEforms.page';
-import foldersPage, {FoldersRowObject} from '../../../Page objects/Folders.page';
-import {Guid} from 'guid-typescript';
+import foldersPage from '../../../Page objects/Folders.page';
+import {generateRandmString} from '../../../Helpers/helper-functions';
 
 const expect = require('chai').expect;
+let nameFolder = generateRandmString();
 
 describe('Delete folder', function () {
   before(function () {
@@ -13,54 +14,26 @@ describe('Delete folder', function () {
   });
   it('Should delete', function () {
     // Create
-    const name = Guid.create().toString();
-    const description = Guid.create().toString();
-    foldersPage.createNewFolder(name, description);
-    const rowNumParentsBeforeDelete = foldersPage.rowNumParents;
-    $('#folderTreeName').waitForDisplayed({timeout: 20000});
-    $$('#folderTreeName')[rowNumParentsBeforeDelete - 1].click();
-    const lastFolder = foldersPage.getFolderFromTree(rowNumParentsBeforeDelete);
-    lastFolder.deleteTreeBtn.waitForDisplayed({timeout: 5000});
-    lastFolder.deleteTreeBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-    foldersPage.saveDeleteBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-    loginPage.open('/');
-    myEformsPage.Navbar.goToFolderPage();
-    const rowNumParentsAfterDelete = foldersPage.rowNumParents;
-    expect(rowNumParentsBeforeDelete, 'Folder was deleted incorrectly').equal(rowNumParentsAfterDelete + 1);
+    const description = generateRandmString();
+    foldersPage.createNewFolder(nameFolder, description);
+    const rowNumParentsBeforeDelete = foldersPage.rowNum;
+    foldersPage.getFolderByName(nameFolder).delete();
+    const rowNumParentsAfterDelete = foldersPage.rowNum;
+    expect(rowNumParentsBeforeDelete - 1, 'Folder was deleted incorrectly').equal(rowNumParentsAfterDelete);
   });
   it('Should not delete if cancel was clicked', function () {
     // Create
-    const name = Guid.create().toString();
-    const description = Guid.create().toString();
-    foldersPage.createNewFolder(name, description);
+    nameFolder = generateRandmString();
+    const description = generateRandmString();
+    foldersPage.createNewFolder(nameFolder, description);
 
     // Delete
-    const rowNumParentsBeforeDelete = foldersPage.rowNumParents;
-    $('#folderTreeName').waitForDisplayed({timeout: 20000});
-    $$('#folderTreeName')[rowNumParentsBeforeDelete - 1].click();
-    const lastFolder = foldersPage.getFolderFromTree(rowNumParentsBeforeDelete);
-    lastFolder.deleteTreeBtn.waitForDisplayed({timeout: 5000});
-    lastFolder.deleteTreeBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-    foldersPage.cancelDeleteBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-    loginPage.open('/');
-    myEformsPage.Navbar.goToFolderPage();
-    const rowNumParentsAfterCancelDelete = foldersPage.rowNumParents;
+    const rowNumParentsBeforeDelete = foldersPage.rowNum;
+    foldersPage.getFolderByName(nameFolder).delete(true);
+    const rowNumParentsAfterCancelDelete = foldersPage.rowNum;
     expect(rowNumParentsBeforeDelete).equal(rowNumParentsAfterCancelDelete);
   });
   it('Should delete folder', function () {
-    // Create
-    myEformsPage.Navbar.goToFolderPage();
-    $('#folderTreeName').waitForDisplayed({timeout: 20000});
-    $$('#folderTreeName')[0].click();
-    const lastFolder = foldersPage.getFolder(1);
-    lastFolder.deleteBtn.waitForDisplayed({timeout: 5000});
-    lastFolder.deleteBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-    foldersPage.saveDeleteBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    foldersPage.getFolderByName(nameFolder).delete();
   });
 });
