@@ -6,3 +6,5 @@ export * from './status-bar.model';
 export * from './date-formatter.model';
 export * from './label-value.model';
 export * from './common-image.model';
+export * from './common-translation.model';
+export * from './common-simple-translation.model';
