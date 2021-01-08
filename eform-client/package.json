@@ -86,7 +86,7 @@
     "@types/mocha": "7.0.2",
     "@types/node": "12.12.35",
     "@wdio/cli": "6.0.15",
-    "@wdio/local-runner": "6.0.15",
+    "@wdio/local-runner": "6.11.3",
     "@wdio/mocha-framework": "6.0.15",
     "@wdio/spec-reporter": "6.0.14",
     "@wdio/sync": "6.0.15",
