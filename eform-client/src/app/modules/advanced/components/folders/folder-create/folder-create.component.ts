@@ -32,6 +32,7 @@ export class FolderCreateComponent implements OnInit {
 
   hide() {
     this.selectedParentFolder = null;
+    this.frame.hide();
   }
 
   createFolder() {

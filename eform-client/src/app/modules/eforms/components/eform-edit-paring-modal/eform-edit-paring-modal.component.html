@@ -3,6 +3,9 @@
     <div class="modal-content">
       <div class="modal-header">
         <h3>{{'eForm Pairing'}} {{'for' | translate}} {{selectedTemplateDto.label}}</h3>
+        <button class="close" data-dismiss="modal" (click)="frame.hide()">
+          <span>×</span>
+        </button>
       </div>
       <div class="modal-body table-responsive">
         <div class="row" *ngIf="foldersDto.length > 0">
