@@ -23,13 +23,13 @@
           <div class="row">
             <div class="col-md-12">
               <div class="md-form">
-                <textarea
-                  mdbInput [(ngModel)]="folderModel.description"
+                <p>{{'Description' | translate}}</p>
+                <pell-editor
+                  mdbInput [(value)]="folderModel.description"
                   name="editDescriptionInput"
                   required
                   id="editDescriptionInput" rows="10"
-                  class="md-textarea form-control"></textarea>
-                <label for="editDescriptionInput">{{'Description' | translate}}</label>
+                ></pell-editor>
               </div>
             </div>
           </div>
