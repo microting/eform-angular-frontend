@@ -18,7 +18,7 @@ class FoldersPage extends PageWithNavbarPage {
   }
 
   public get createDescriptionInput() {
-    return $('#description');
+    return $('#description .pell-content');
   }
 
   public get saveCreateBtn() {
@@ -48,7 +48,9 @@ class FoldersPage extends PageWithNavbarPage {
   }
 
   public get editDescriptionInput() {
-    return $('#editDescriptionInput');
+    const ele = $('#editDescriptionInput .pell-content');
+    ele.waitForDisplayed({timeout: 20000});
+    return ele;
   }
 
   public get saveEditBtn() {
@@ -236,7 +238,7 @@ export class FoldersRowObject {
 
   getDescription(): string {
     this.openEditModal();
-    const description = foldersPage.editDescriptionInput.getValue();
+    const description = foldersPage.editDescriptionInput.getText();
     foldersPage.cancelEditBtn.click();
     return description;
   }
@@ -347,7 +349,7 @@ export class FoldersTreeRowObject {
 
   getDescription(): string {
     this.openEditModal();
-    const description = foldersPage.editDescriptionInput.getValue();
+    const description = foldersPage.editDescriptionInput.getText();
     foldersPage.cancelEditBtn.click();
     return description;
   }

@@ -37,7 +37,7 @@ describe('Delete folder', function () {
     const rowNumAfterCancelDelete = foldersPage.rowNum;
     expect(rowNumBeforeDelete).equal(rowNumAfterCancelDelete);
   });
-  it('Should delete folder', function () {
+  after('Should delete folder', function () {
     $('#folderTreeName').waitForDisplayed({timeout: 20000});
     const folder = foldersPage.getFolderByName(nameFolder);
     const countFoldersBeforeDelete = foldersPage.rowNum;
