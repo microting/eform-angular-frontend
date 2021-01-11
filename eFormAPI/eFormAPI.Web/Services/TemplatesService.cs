@@ -86,6 +86,7 @@ namespace eFormAPI.Web.Services
         {
             var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
             var timeZone = _dbContext.Users.Single(x => x.Id == int.Parse(value)).TimeZone;
+
             if (string.IsNullOrEmpty(timeZone))
             {
                 timeZone = "Europe/Copenhagen";
@@ -106,13 +107,15 @@ namespace eFormAPI.Web.Services
             {
                 Log.LogEvent("TemplateService.Index: try section");
                 var core = await _coreHelper.GetCore();
+                var locale = await _userService.GetCurrentUserLocale();
+                Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
                 List<Template_Dto> templatesDto = await core.TemplateItemReadAll(false,
                     "",
                     templateRequestModel.NameFilter,
                     templateRequestModel.IsSortDsc,
                     templateRequestModel.Sort,
                     templateRequestModel.TagIds,
-                    timeZoneInfo);
+                    timeZoneInfo, language);
 
                 var model = new TemplateListModel
                 {
@@ -210,9 +213,7 @@ namespace eFormAPI.Web.Services
             {
                 var core = await _coreHelper.GetCore();
 
-                //var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
                 var locale = await _userService.GetCurrentUserLocale();
-                //var localeString = _dbContext.Users.Single(x => x.Id == int.Parse(value)).Locale;
                 Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
                 var templateDto = await core.TemplateItemRead(id, language);
                 return new OperationDataResult<Template_Dto>(true, templateDto);
@@ -298,6 +299,8 @@ namespace eFormAPI.Web.Services
             {
                 var result = new ExcelParseResult();
                 var core = await _coreHelper.GetCore();
+                var locale = await _userService.GetCurrentUserLocale();
+                Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
 
                 var timeZone = await _userService.GetCurrentUserTimeZoneInfo();
                 var templatesDto = await core.TemplateItemReadAll(
@@ -307,7 +310,7 @@ namespace eFormAPI.Web.Services
                     false,
                     "",
                     new List<int>(),
-                    timeZone);
+                    timeZone, language);
 
                 // Read file
                 var fileResult = _eformExcelImportService.EformImport(excelStream);

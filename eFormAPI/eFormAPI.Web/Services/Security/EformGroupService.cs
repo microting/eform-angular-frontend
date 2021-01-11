@@ -36,6 +36,7 @@ using eFormAPI.Web.Infrastructure.Models.Templates;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microting.eForm.Infrastructure.Data.Entities;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
@@ -80,12 +81,14 @@ namespace eFormAPI.Web.Services.Security
                     Templates = new List<TemplateDto>()
                 };
                 var core = await _coreHelper.GetCore();
+                var locale = await _userService.GetCurrentUserLocale();
+                Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
                 var templatesDto = await core.TemplateItemReadAll(false,
                     "",
                     templateRequestModel.NameFilter,
                     templateRequestModel.IsSortDsc,
                     templateRequestModel.Sort,
-                    templateRequestModel.TagIds, timeZoneInfo).ConfigureAwait(false);
+                    templateRequestModel.TagIds, timeZoneInfo, language).ConfigureAwait(false);
 
                 var eformsInGroup = await _dbContext.EformInGroups
                     .Where(x => x.SecurityGroupId == groupId)
@@ -223,7 +226,9 @@ namespace eFormAPI.Web.Services.Security
                     }
                 }
                 var core = await _coreHelper.GetCore();
-                var templatesDto = await core.TemplateItemReadAll(false, timeZoneInfo);
+                var locale = await _userService.GetCurrentUserLocale();
+                Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
+                var templatesDto = await core.TemplateItemReadAll(false, timeZoneInfo, language);
                 foreach (var eformInGroups in eformsInGroup)
                 {
                     var template = templatesDto.FirstOrDefault(x => x.Id == eformInGroups.TemplateId);
@@ -314,7 +319,7 @@ namespace eFormAPI.Web.Services.Security
                         requestModel.Permissions.Add(permission);
                     }
                 }
-                
+
                 //using (var transaction = await _dbContext.Database.BeginTransactionAsync())
 //                {
                     var enabledEformPermission = new List<int>();
