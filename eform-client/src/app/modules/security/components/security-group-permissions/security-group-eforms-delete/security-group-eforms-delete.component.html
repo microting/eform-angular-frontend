@@ -1,8 +1,11 @@
-<div mdbModal class="modal fade" #frame="mdbModal">
+<div [config]="{ignoreBackdropClick: true}" mdbModal class="modal fade" #frame="mdbModal">
   <div class="modal-dialog modal-md">
     <div class="modal-content">
       <div class="modal-header">
         <h3>{{'Are you sure you want to delete' | translate}}?</h3>
+        <button class="close" data-dismiss="modal" (click)="frame.hide()">
+          <span>×</span>
+        </button>
       </div>
       <div class="modal-body">
         <div class="container-fluid">

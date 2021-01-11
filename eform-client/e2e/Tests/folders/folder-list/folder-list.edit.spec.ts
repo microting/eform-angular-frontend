@@ -22,11 +22,10 @@ describe('Folder page', function () {
     name = generateRandmString();
     lastFolderBeforeEdit.editFolder(name, null);
     const lastFolderAfterEdit = foldersPage.getFolderByName(name);
-    lastFolderAfterEdit.openEditModal();
-    expect(foldersPage.editNameInput.getValue(), 'Name has been changed incorrectly').equal(name);
-    expect(foldersPage.editDescriptionInput.getValue(),
-      'Description has been changed after changing only first name').equal(descriptionBeforeEdit);
-    foldersPage.cancelEditBtn.click();
+    expect(lastFolderAfterEdit.name,
+      'Name has been changed after changing only last name').equal(name);
+    expect(lastFolderAfterEdit.getDescription(),
+      'Description has been changed incorrectly').equal(descriptionBeforeEdit);
   });
   it('Should change description', function () {
     const newDescription = generateRandmString();
@@ -34,11 +33,10 @@ describe('Folder page', function () {
     const lastFolderBeforeEdit = foldersPage.getFolderByName(name);
     lastFolderBeforeEdit.editFolder(null, newDescription);
     foldersPage.newFolderBtn.waitForDisplayed({timeout: 20000});
-    foldersPage.getFolderByName(name).openEditModal();
-    expect(foldersPage.editDescriptionInput.getValue(), 'Description has been changed incorrectly').equal(newDescription);
-    expect(foldersPage.editNameInput.getValue(),
+    const folder = foldersPage.getFolderByName(name);
+    expect(folder.name,
       'Name has been changed after changing only last name').equal(lastFolderBeforeEdit.name);
-    foldersPage.cancelEditBtn.click();
+    expect(folder.getDescription(), 'Description has been changed incorrectly').equal(newDescription);
   });
   it('Should not change name and description if cancel was clicked', function () {
     const folderTreeName = $('#folderTreeName');
@@ -49,10 +47,8 @@ describe('Folder page', function () {
     const descriptionBeforeEdit = lastFolderPageBeforeEdit.getDescription();
     lastFolderPageBeforeEdit.editFolder(newName, newDescription, true);
     const lastFolderPageAfterEdit = foldersPage.getFolderByName(name);
-    lastFolderPageAfterEdit.openEditModal();
-    expect(foldersPage.editNameInput.getValue(), 'Name has been changed').equal(lastFolderPageAfterEdit.name);
-    expect(foldersPage.editDescriptionInput.getValue(), 'Description has been changed').equal(descriptionBeforeEdit);
-    foldersPage.cancelEditBtn.click();
+    expect(lastFolderPageAfterEdit.name, 'Name has been changed').equal(lastFolderPageAfterEdit.name);
+    expect(lastFolderPageAfterEdit.getDescription(), 'Description has been changed').equal(descriptionBeforeEdit);
   });
   it('Should delete folder', function () {
     $('#folderTreeName').waitForDisplayed({timeout: 20000});

@@ -4,6 +4,9 @@
       <div class="modal-header">
         <h3 *ngIf="installedPluginModel.status == statusEnum.Enabled">{{'Deactivate:' | translate}} <br>{{installedPluginModel.name}}</h3>
         <h3 *ngIf="installedPluginModel.status == statusEnum.Disabled">{{'Activate:' | translate}} <br>{{installedPluginModel.name}}</h3>
+        <button class="close" data-dismiss="modal" (click)="frame.hide()">
+          <span>×</span>
+        </button>
       </div>
       <div class="modal-body">
         <div class="container-fluid">

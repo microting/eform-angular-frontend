@@ -1,9 +1,12 @@
-<div mdbModal class="modal fade" #frame="mdbModal" (onHide)="hide()">
+<div [config]="{ignoreBackdropClick: true}" mdbModal class="modal fade" #frame="mdbModal">
   <div class="modal-dialog modal-lg modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
         <h3 *ngIf="selectedParentFolder">{{'Create Nested Folder' | translate}}</h3>
         <h3 *ngIf="!selectedParentFolder">{{'Create folder' | translate}}</h3>
+        <button class="close" data-dismiss="modal" (click)="hide()">
+          <span>×</span>
+        </button>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
@@ -29,13 +32,13 @@
           <div class="row">
             <div class="col-md-12">
               <div class="md-form">
-                <textarea
-                  mdbInput [(ngModel)]="newFolderModel.description"
+                <p>{{'Description' | translate}}</p>
+                <pell-editor
+                  mdbInput [(value)]="newFolderModel.description"
                   name="description"
                   required
                   id="description" rows="10"
-                  class="md-textarea form-control"></textarea>
-                <label for="description">{{'Description' | translate}}</label>
+                  ></pell-editor>
               </div>
             </div>
           </div>
@@ -45,7 +48,7 @@
         <button mdbBtn class="btn-success btn-small-height"
                 [disabled]="!newFolderModel.name || !newFolderModel.description"
                 id="folderSaveBtn" (click)="createFolder()">{{'Create' | translate}}</button>
-        <button mdbBtn class="btn-accent text-black-50 btn-small-height" id="cancelCreateBtn" (click)="frame.hide()">{{'Cancel' | translate}}</button>
+        <button mdbBtn class="btn-accent text-black-50 btn-small-height" id="cancelCreateBtn" (click)="hide()">{{'Cancel' | translate}}</button>
       </div>
     </div>
   </div>

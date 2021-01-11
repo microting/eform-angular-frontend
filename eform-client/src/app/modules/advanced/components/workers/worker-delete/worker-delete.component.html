@@ -1,8 +1,11 @@
-<div mdbModal class="modal fade" #frame="mdbModal">
+<div [config]="{ignoreBackdropClick: true}" mdbModal class="modal fade" #frame="mdbModal">
   <div class="modal-dialog modal-md">
     <div class="modal-content">
       <div class="modal-header">
         <h3>{{'Are you sure you want to delete the worker' | translate}}?</h3>
+        <button class="close" data-dismiss="modal" (click)="frame.hide()">
+          <span>×</span>
+        </button>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
@@ -47,8 +50,10 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button mdbBtn id="deleteWorkerDeleteBtn" class="btn-danger btn-small-height" (click)="deleteWorker()">{{'Delete' | translate}}</button>
-        <button mdbBtn class="btn-accent text-black-50 btn-small-height" (click)="frame.hide()">{{'Cancel' | translate}}</button>
+        <button mdbBtn id="deleteWorkerDeleteBtn" class="btn-danger btn-small-height"
+                (click)="deleteWorker()">{{'Delete' | translate}}</button>
+        <button mdbBtn class="btn-accent text-black-50 btn-small-height"
+                (click)="frame.hide()">{{'Cancel' | translate}}</button>
       </div>
     </div>
   </div>
