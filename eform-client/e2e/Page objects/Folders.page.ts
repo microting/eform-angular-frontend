@@ -18,21 +18,26 @@ class FoldersPage extends PageWithNavbarPage {
   }
 
   public get createDescriptionInput() {
-    return $('#description');
+    return $('#description .pell-content');
   }
 
   public get saveCreateBtn() {
-    return $('#folderSaveBtn');
+    const ele = $('#folderSaveBtn');
+    ele.waitForDisplayed({timeout: 20000});
+    return ele;
   }
 
   public get cancelCreateBtn() {
-    return $('#cancelCreateBtn');
+    const cancelCreateBtn = $('#cancelCreateBtn');
+    cancelCreateBtn.waitForDisplayed({timeout: 20000});
+    cancelCreateBtn.waitForClickable({timeout: 20000});
+    return cancelCreateBtn;
   }
 
   public get saveDeleteBtn() {
     const saveDeleteBtn = $('#saveDeleteBtn');
     saveDeleteBtn.waitForDisplayed({timeout: 20000});
-    saveDeleteBtn.waitForClickable({timeout: 20000});
+    // saveDeleteBtn.waitForClickable({timeout: 20000});
     return saveDeleteBtn;
   }
 
@@ -48,7 +53,9 @@ class FoldersPage extends PageWithNavbarPage {
   }
 
   public get editDescriptionInput() {
-    return $('#editDescriptionInput');
+    const ele = $('#editDescriptionInput .pell-content');
+    ele.waitForDisplayed({timeout: 20000});
+    return ele;
   }
 
   public get saveEditBtn() {
@@ -109,6 +116,7 @@ class FoldersPage extends PageWithNavbarPage {
     this.createNameInput.setValue(name);
     this.createDescriptionInput.setValue(description);
     if (!clickCancel) {
+      this.saveCreateBtn.waitForClickable({timeout: 20000});
       this.saveCreateBtn.click();
       $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     } else {
@@ -236,7 +244,7 @@ export class FoldersRowObject {
 
   getDescription(): string {
     this.openEditModal();
-    const description = foldersPage.editDescriptionInput.getValue();
+    const description = foldersPage.editDescriptionInput.getText();
     foldersPage.cancelEditBtn.click();
     return description;
   }
@@ -347,7 +355,7 @@ export class FoldersTreeRowObject {
 
   getDescription(): string {
     this.openEditModal();
-    const description = foldersPage.editDescriptionInput.getValue();
+    const description = foldersPage.editDescriptionInput.getText();
     foldersPage.cancelEditBtn.click();
     return description;
   }

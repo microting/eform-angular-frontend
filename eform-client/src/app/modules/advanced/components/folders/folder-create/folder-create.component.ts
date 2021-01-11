@@ -27,11 +27,13 @@ export class FolderCreateComponent implements OnInit {
     if (selectedFolder) {
       this.selectedParentFolder = selectedFolder;
     }
+    this.newFolderModel.description = '';
     this.frame.show();
   }
 
   hide() {
     this.selectedParentFolder = null;
+    this.frame.hide();
   }
 
   createFolder() {
