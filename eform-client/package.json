@@ -34,7 +34,7 @@
     "@angular/localize": "^9.1.2",
     "@angular/platform-browser": "^9.1.1",
     "@angular/platform-browser-dynamic": "^9.1.1",
-    "@angular/router": "^9.1.1",
+    "@angular/router": "^11.0.7",
     "@circlon/angular-tree-component": "^9.0.3",
     "@fortawesome/angular-fontawesome": "0.6.1",
     "@fortawesome/fontawesome-svg-core": "1.2.28",
