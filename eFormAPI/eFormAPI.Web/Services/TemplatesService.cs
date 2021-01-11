@@ -214,6 +214,7 @@ namespace eFormAPI.Web.Services
                 var core = await _coreHelper.GetCore();
 
                 var locale = await _userService.GetCurrentUserLocale();
+
                 Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
                 var templateDto = await core.TemplateItemRead(id, language);
                 return new OperationDataResult<Template_Dto>(true, templateDto);
