@@ -210,9 +210,10 @@ namespace eFormAPI.Web.Services
             {
                 var core = await _coreHelper.GetCore();
 
-                var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
-                var localeString = _dbContext.Users.Single(x => x.Id == int.Parse(value)).Locale;
-                Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == localeString.ToLower());
+                //var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+                var locale = await _userService.GetCurrentUserLocale();
+                //var localeString = _dbContext.Users.Single(x => x.Id == int.Parse(value)).Locale;
+                Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
                 var templateDto = await core.TemplateItemRead(id, language);
                 return new OperationDataResult<Template_Dto>(true, templateDto);
             }
