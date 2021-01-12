@@ -132,7 +132,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                     throw new InvalidOperationException("caseDto not found");
                 }
 
-                var replyElement = await core.CaseRead((int) caseDto.MicrotingUId, (int) caseDto.CheckUId);
+                var replyElement = await core.CaseRead((int) caseDto.MicrotingUId, (int) caseDto.CheckUId, language).ConfigureAwait(false);
                 if (replyElement.DocxExportEnabled || replyElement.JasperExportEnabled)
                 {
                     casePostsListModel.PdfReportAvailable = true;
@@ -437,7 +437,9 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                         //transaction.Rollback();
                         throw new InvalidOperationException("caseDto not found");
                     }
-                    var replyElement = await core.CaseRead((int) caseDto.MicrotingUId, (int) caseDto.CheckUId);
+                    var locale = await _userService.GetCurrentUserLocale();
+                    Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
+                    var replyElement = await core.CaseRead((int) caseDto.MicrotingUId, (int) caseDto.CheckUId, language).ConfigureAwait(false);
                     var assembly = Assembly.GetExecutingAssembly();
                     var assemblyName = assembly.GetName().Name;
                     var stream = assembly.GetManifestResourceStream($"{assemblyName}.Resources.Email.html");
@@ -486,7 +488,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                                     $"{await core.GetSdkSetting(Settings.httpServerAddress)}/" +
                                     "api/template-files/get-image/",
                                     "pdf",
-                                    customXmlContent);
+                                    customXmlContent, language);
 
                                 if (!File.Exists(filePath))
                                 {

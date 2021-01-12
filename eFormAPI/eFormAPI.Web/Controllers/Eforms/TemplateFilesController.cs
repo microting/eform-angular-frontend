@@ -39,6 +39,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microting.eForm.Dto;
+using Microting.eForm.Infrastructure.Data.Entities;
 using Microting.eForm.Infrastructure.Models;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
@@ -62,9 +63,11 @@ namespace eFormAPI.Web.Controllers.Eforms
         private readonly IEformExcelExportService _eformExcelExportService;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly BaseDbContext _dbContext;
+        private readonly IUserService _userService;
 
         public TemplateFilesController(IEFormCoreService coreHelper,
             ILocalizationService localizationService,
+            IUserService userService,
             IEformPermissionsService permissionsService,
             IEformExcelExportService eformExcelExportService,
             BaseDbContext dbContext,
@@ -72,6 +75,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         {
             _coreHelper = coreHelper;
             _dbContext = dbContext;
+            _userService = userService;
             _localizationService = localizationService;
             _permissionsService = permissionsService;
             _eformExcelExportService = eformExcelExportService;
@@ -299,7 +303,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         [HttpGet]
         [Route("api/template-files/download-case-pdf/{templateId}")]
         [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseGetPdf)]
-        public async Task<IActionResult> DownloadEFormPdf(int templateId, int caseId, string fileType)
+        public async Task<IActionResult> DownloadEFormPdf(int templateId, int caseId, string fileType, Language language)
         {
             if (!await _permissionsService.CheckEform(templateId,
                 AuthConsts.EformClaims.CasesClaims.CaseGetPdf))
@@ -317,7 +321,7 @@ namespace eFormAPI.Web.Controllers.Eforms
 
                 var filePath = await core.CaseToPdf(caseId, templateId.ToString(),
                     DateTime.Now.ToString("yyyyMMddHHmmssffff"),
-                    $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", fileType, customXmlContent);
+                    $"{core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", fileType, customXmlContent, language);
                 //DateTime.Now.ToString("yyyyMMddHHmmssffff"), $"{core.GetHttpServerAddress()}/" + "api/template-files/get-image?&filename=");
                 if (!System.IO.File.Exists(filePath))
                 {
@@ -349,7 +353,9 @@ namespace eFormAPI.Web.Controllers.Eforms
                 var core = await _coreHelper.GetCore();
                 var caseId = await core.CaseReadFirstId(templateId, "not_revmoed");
                 CaseDto caseDto = await core.CaseLookupCaseId((int)caseId);
-                ReplyElement replyElement = await core.CaseRead((int)caseDto.MicrotingUId, (int)caseDto.CheckUId);
+                var locale = await _userService.GetCurrentUserLocale();
+                Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
+                ReplyElement replyElement = await core.CaseRead((int)caseDto.MicrotingUId, (int)caseDto.CheckUId, language).ConfigureAwait(false);
                 if (caseId != null)
                 {
                     var filePath = await core.CaseToJasperXml(caseDto, replyElement, (int)caseId,
@@ -450,7 +456,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                         fastZip.ExtractZip(filePath, extractPath, null);
                         string reportType = "";
                         bool statusOk = false;
-                        
+
                         using (var dbContext = core.dbContextHelper.GetDbContext())
                         {
                             var compactPath = Path.Combine(extractPath, "compact");
