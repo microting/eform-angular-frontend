@@ -40,6 +40,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microsoft.Extensions.Options;
 using Microting.eForm.Dto;
+using Microting.eForm.Infrastructure;
 using Microting.eForm.Infrastructure.Data.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using Field = Microting.eForm.Infrastructure.Models.Field;
@@ -300,8 +301,9 @@ namespace eFormAPI.Web.Services
             {
                 var result = new ExcelParseResult();
                 var core = await _coreHelper.GetCore();
+                await using MicrotingDbContext dbContext = core.dbContextHelper.GetDbContext();
                 var locale = await _userService.GetCurrentUserLocale();
-                Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
+                Language language = dbContext.Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
 
                 var timeZone = await _userService.GetCurrentUserTimeZoneInfo();
                 var templatesDto = await core.TemplateItemReadAll(
@@ -406,7 +408,16 @@ namespace eFormAPI.Web.Services
                             throw new Exception(_localizationService.GetString("eFormCouldNotBeCreated"));
 
                         // Set tags to eform
-                        await core.TemplateCreate(newTemplate);
+                        int eFormId = await core.TemplateCreate(newTemplate);
+                        var eForm = await dbContext.CheckLists.SingleAsync(x => x.Id == eFormId);
+
+                        eForm.ReportH1 = importExcelModel.ReportH1;
+                        eForm.ReportH2 = importExcelModel.ReportH2;
+                        eForm.ReportH3 = importExcelModel.ReportH3;
+                        eForm.ReportH4 = importExcelModel.ReportH4;
+
+                        await eForm.Update(dbContext);
+
                         if (tagIds.Any())
                         {
                             await core.TemplateSetTags(newTemplate.Id, tagIds);

@@ -35,5 +35,15 @@ namespace eFormAPI.Web.Infrastructure.Models.Import
 
         public List<string> Tags { get; set; }
             = new List<string>();
+
+        public string ReportH1 { get; set; }
+
+        public string ReportH2 { get; set; }
+
+        public string ReportH3 { get; set; }
+
+        public string ReportH4 { get; set; }
+
+        public string ReportH5 { get; set; }
     }
 }
