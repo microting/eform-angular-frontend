@@ -55,8 +55,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
-    <PackageReference Include="Microting.eForm" Version="4.1.25" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="2.0.73" />
+    <PackageReference Include="Microting.eForm" Version="4.1.26" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="2.0.74" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.4" />
     <PackageReference Include="SharpZipLib.NETStandard" Version="1.0.7" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
