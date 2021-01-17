@@ -9,15 +9,24 @@ class DeviceUsersPage extends PageWithNavbarPage {
   }
 
   public get newDeviceUserBtn() {
-    return $('#newDeviceUserBtn');
+    const ele = $('#newDeviceUserBtn');
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({timeout: 20000});
+    return ele;
   }
 
   public get createFirstNameInput() {
-    return $('#firstName');
+    const ele = $('#firstName');
+    ele.waitForDisplayed({timeout: 20000});
+    // ele.waitForClickable({timeout: 20000});
+    return ele;
   }
 
   public get createLastNameInput() {
-    return $('#lastName');
+    const ele = $('#lastName');
+    ele.waitForDisplayed({timeout: 20000});
+    // ele.waitForClickable({timeout: 20000});
+    return ele;
   }
 
   getFirstRowObject(): DeviceUsersRowObject {
@@ -91,8 +100,6 @@ class DeviceUsersPage extends PageWithNavbarPage {
 
   public createNewDeviceUser(firstName: string, lastName: string) {
     this.newDeviceUserBtn.click();
-    // browser.pause(6000);
-    $('#firstName').waitForDisplayed({timeout: 10000});
     this.createFirstNameInput.setValue(firstName);
     this.createLastNameInput.setValue(lastName);
     this.saveCreateBtn.click();
@@ -163,6 +170,6 @@ export class DeviceUsersRowObject {
     deviceUsersPage.saveDeleteBtn.waitForClickable({ timeout: 20000});
     deviceUsersPage.saveDeleteBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
-    deviceUsersPage.newDeviceUserBtn.waitForDisplayed({timeout: 20000});
+    deviceUsersPage.newDeviceUserBtn.waitForDisplayed();
   }
 }
