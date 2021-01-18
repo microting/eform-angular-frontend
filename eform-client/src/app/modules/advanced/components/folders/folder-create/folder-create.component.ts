@@ -28,6 +28,7 @@ export class FolderCreateComponent implements OnInit {
       this.selectedParentFolder = selectedFolder;
     }
     this.newFolderModel.description = '';
+    this.newFolderModel.name = '';
     this.frame.show();
   }
 
@@ -48,5 +49,23 @@ export class FolderCreateComponent implements OnInit {
         this.frame.hide();
       }
     });
+  }
+
+  isDisabled(): boolean {
+    if (this.newFolderModel.name && this.newFolderModel.description) {
+      const div = document.createElement('div');
+      div.innerHTML = this.newFolderModel.description;
+      const description = div.textContent;
+      div.remove();
+      return !(!this.isEmpty(this.newFolderModel.name) && !this.isEmpty(description));
+    }
+    return true;
+  }
+
+  isEmpty(str: string): boolean {
+    if (str) {
+      return str.trim() === '';
+    }
+    return true;
   }
 }

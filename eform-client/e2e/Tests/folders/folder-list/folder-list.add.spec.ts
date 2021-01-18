@@ -23,26 +23,51 @@ describe('Create folder', function () {
     expect(folder.name, 'Name of created user is incorrect').equal(folderName);
     expect(folder.getDescription(), 'Description of created folder is incorrect').equal(description);
   });
-});
-describe('Folder should not be created', function () {
-  it('With name only', function () {
+  it('should not be created without description', function () {
     const name = generateRandmString();
-    foldersPage.newFolderBtn.waitForDisplayed({timeout: 20000});
-    foldersPage.newFolderBtn.click();
-    foldersPage.createNameInput.waitForDisplayed({timeout: 10000});
-    foldersPage.createNameInput.setValue(name);
+    foldersPage.openCreateFolder(name);
     expect(foldersPage.saveCreateBtn.isEnabled(),
       'Create button in modal window while creating new folder is active when only name is provided').equal(false);
-    foldersPage.cancelCreateBtn.click();
-    foldersPage.newFolderBtn.waitForDisplayed({timeout: 20000});
+    foldersPage.closeCreateFolder(true);
   });
-  it('If cancel was clicked', function () {
+  it('should not be created without name', function () {
+    const description = generateRandmString();
+    foldersPage.openCreateFolder(null, description);
+    expect(foldersPage.saveCreateBtn.isEnabled(),
+      'Create button in modal window while creating new folder is active when only name is provided').equal(false);
+    foldersPage.closeCreateFolder(true);
+  });
+  it('should not be created without name and description', function () {
+    foldersPage.openCreateFolder();
+    expect(foldersPage.saveCreateBtn.isEnabled(),
+      'Create button in modal window while creating new folder is active when only name is provided').equal(false);
+    foldersPage.closeCreateFolder(true);
+  });
+  it('should not be created if the description has only spaces', function () {
+    foldersPage.openCreateFolder(generateRandmString(), '    ');
+    expect(foldersPage.saveCreateBtn.isEnabled(),
+      'Create button in modal window while creating new folder is active when only name is provided').equal(false);
+    foldersPage.closeCreateFolder(true);
+  });
+  it('should not be created if the name has only spaces', function () {
+    foldersPage.openCreateFolder('    ', generateRandmString());
+    expect(foldersPage.saveCreateBtn.isEnabled(),
+      'Create button in modal window while creating new folder is active when only name is provided').equal(false);
+    foldersPage.closeCreateFolder(true);
+  });
+  it('should not be created if the name and description has only spaces', function () {
+    foldersPage.openCreateFolder('    ', '  ');
+    expect(foldersPage.saveCreateBtn.isEnabled(),
+      'Create button in modal window while creating new folder is active when only name is provided').equal(false);
+    foldersPage.closeCreateFolder(true);
+  });
+  it('should not be created if cancel was clicked', function () {
     const rowCountBeforeCreation = foldersPage.rowNum;
     foldersPage.createNewFolder(generateRandmString(), generateRandmString(), true);
     const rowCountAfterCreation = foldersPage.rowNum;
     expect(rowCountAfterCreation, 'Number of rows has changed after cancel').equal(rowCountBeforeCreation);
   });
-  after('Should delete folder', function () {
+  after('should delete folder', function () {
     const rowCountBeforeCreation = foldersPage.rowNum;
     foldersPage.getFolderByName(folderName).delete();
     const rowCountAfterCreation = foldersPage.rowNum;

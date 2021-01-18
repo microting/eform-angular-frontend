@@ -46,7 +46,7 @@
       </div>
       <div class="modal-footer">
         <button mdbBtn class="btn-success btn-small-height"
-                [disabled]="!newFolderModel.name || !newFolderModel.description"
+                [disabled]="isDisabled()"
                 id="folderSaveBtn" (click)="createFolder()">{{'Create' | translate}}</button>
         <button mdbBtn class="btn-accent text-black-50 btn-small-height" id="cancelCreateBtn" (click)="hide()">{{'Cancel' | translate}}</button>
       </div>
