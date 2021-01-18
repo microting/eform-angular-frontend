@@ -39,5 +39,9 @@ namespace eFormAPI.Web.Infrastructure.Const.Import
         public const int Tag8Col = 9;
         public const int Tag9Col = 10;
         public const int Tag10Col = 11;
+        public const int ReportH1 = 13;
+        public const int ReportH2 = 14;
+        public const int ReportH3 = 15;
+        public const int ReportH4 = 16;
     }
 }
