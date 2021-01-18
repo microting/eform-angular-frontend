@@ -22,6 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System.Linq;
+using ICSharpCode.SharpZipLib.Zip;
+using Microting.eForm.Infrastructure.Data.Entities;
+
 namespace eFormAPI.Web.Services.Export
 {
     using System;
@@ -39,15 +43,18 @@ namespace eFormAPI.Web.Services.Export
     public class EformExcelExportService : IEformExcelExportService
     {
         private readonly IEFormCoreService _coreHelper;
+        private readonly IUserService _userService;
         private readonly ILocalizationService _localizationService;
         private readonly ILogger<EformExcelExportService> _logger;
 
         public EformExcelExportService(
             IEFormCoreService coreHelper,
+            IUserService userService,
             ILocalizationService localizationService,
             ILogger<EformExcelExportService> logger)
         {
             _coreHelper = coreHelper;
+            _userService = userService;
             _localizationService = localizationService;
             _logger = logger;
         }
@@ -59,6 +66,9 @@ namespace eFormAPI.Web.Services.Export
             {
                 var core = await _coreHelper.GetCore();
                 var cultureInfo = new CultureInfo("de-DE");
+
+                var locale = await _userService.GetCurrentUserLocale();
+                Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
                 TimeZoneInfo timeZoneInfo;
 
                 try
@@ -86,7 +96,7 @@ namespace eFormAPI.Web.Services.Export
                     "",
                     false,
                     cultureInfo,
-                    timeZoneInfo);
+                    timeZoneInfo, language).ConfigureAwait(false);
 
                 if (dataSet == null)
                 {
@@ -95,7 +105,7 @@ namespace eFormAPI.Web.Services.Export
                         _localizationService.GetString("DataNotFound"));
                 }
 
-                var excelSaveFolder =
+                var sourceFileName =
                     Path.Combine(await core.GetSdkSetting(Settings.fileLocationJasper),
                         Path.Combine("templates", $"{excelModel.TemplateId}", "compact", $"{excelModel.TemplateId}.xlsx"));
                 Directory.CreateDirectory(Path.Combine(await core.GetSdkSetting(Settings.fileLocationJasper)
@@ -103,20 +113,55 @@ namespace eFormAPI.Web.Services.Export
 
                 string timeStamp = $"{DateTime.UtcNow:yyyyMMdd}_{DateTime.UtcNow:hhmmss}";
 
-                string resultDocument = Path.Combine(await core.GetSdkSetting(Settings.fileLocationJasper)
-                        .ConfigureAwait(false), "results",
+                string resultDocument = Path.Combine(Path.GetTempPath(), "results",
                     $"{timeStamp}_{excelModel.TemplateId}.xlsx");
 
-                File.Copy(excelSaveFolder, resultDocument);
+                Directory.CreateDirectory(Path.Combine(await core.GetSdkSetting(Settings.fileLocationJasper)
+                    .ConfigureAwait(false), "results"));
 
-                if (!File.Exists(excelSaveFolder))
+                if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
+                {
+                    try
+                    {
+                        var objectResponse = await core.GetFileFromS3Storage($"{excelModel.TemplateId}.xlsx");
+                        await using var fileStream = File.Create(resultDocument);
+                        await objectResponse.ResponseStream.CopyToAsync(fileStream);
+                    }
+                    catch
+                    {
+                        try
+                        {
+                            var objectResponse = await core.GetFileFromS3Storage($"{excelModel.TemplateId}_xlxs_compact.zip");
+                            string zipFileName = Path.Combine(Path.GetTempPath(), $"{excelModel.TemplateId}.zip");
+                            await using var fileStream = File.Create(zipFileName);
+                            await objectResponse.ResponseStream.CopyToAsync(fileStream);
+                            fileStream.Close();
+                            var fastZip = new FastZip();
+                            // Will always overwrite if target filenames already exist
+                            string extractPath = Path.Combine(Path.GetTempPath(), "results");
+                            Directory.CreateDirectory(extractPath);
+                            fastZip.ExtractZip(zipFileName, extractPath, "");
+                            string extractedFile = Path.Combine(extractPath, "compact", $"{excelModel.TemplateId}.xlsx");
+                            await core.PutFileToStorageSystem(extractedFile, $"{excelModel.TemplateId}.xlsx");
+                            File.Move(extractedFile, resultDocument);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                            throw;
+                        }
+                    }
+                }
+
+                //string resultFile = Path.Combine(Path.GetTempPath(), $"{excelModel.TemplateId}.xlsx");
+                if (!File.Exists(resultDocument))
                 {
                     return new OperationDataResult<Stream>(
                         false,
                         _localizationService.GetString("ExcelTemplateNotFoundInStorage"));
                 }
 
-                var wb = new XLWorkbook(excelSaveFolder);
+                var wb = new XLWorkbook(resultDocument);
                 try {
                     var workSheetToDelete = wb.Worksheets.Worksheet($"Data_{excelModel.TemplateId}");
                     workSheetToDelete.Delete();

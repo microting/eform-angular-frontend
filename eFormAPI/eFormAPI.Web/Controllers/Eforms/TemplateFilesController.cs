@@ -99,6 +99,8 @@ namespace eFormAPI.Web.Controllers.Eforms
             CultureInfo cultureInfo = new CultureInfo("de-DE");
             var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
             var timeZone = _dbContext.Users.Single(x => x.Id == int.Parse(value)).TimeZone;
+            var locale = await _userService.GetCurrentUserLocale();
+            Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
             if (string.IsNullOrEmpty(timeZone))
             {
                 timeZone = "Europe/Copenhagen";
@@ -119,13 +121,13 @@ namespace eFormAPI.Web.Controllers.Eforms
             {
                 fullPath = await core.CasesToCsv(id, DateTime.Parse(start), DateTime.Parse(end), filePath,
                     $"{await core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", ",",
-                    "", utcTime, cultureInfo, timeZoneInfo);
+                    "", utcTime, cultureInfo, timeZoneInfo, language);
             }
             else
             {
                 fullPath = await core.CasesToCsv(id, null, null, filePath,
                     $"{await core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", ",",
-                    "", utcTime, cultureInfo, timeZoneInfo);
+                    "", utcTime, cultureInfo, timeZoneInfo, language);
             }
 
             var fileStream = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
@@ -160,7 +162,15 @@ namespace eFormAPI.Web.Controllers.Eforms
             }
 
             var result = await _eformExcelExportService.EformExport(excelModel);
-            return new FileStreamResult(result.Model, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            if (result.Model == null)
+            {
+                return new NotFoundResult();
+            }
+            else
+            {
+                return new FileStreamResult(result.Model,
+                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            }
         }
 
         private async Task<IActionResult> GetFile(string fileName, string ext, string fileType, string noCache = "noCache")
