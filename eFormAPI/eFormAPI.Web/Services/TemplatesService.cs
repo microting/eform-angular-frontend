@@ -85,32 +85,15 @@ namespace eFormAPI.Web.Services
 
         public async Task<OperationDataResult<TemplateListModel>> Index(TemplateRequestModel templateRequestModel)
         {
-            var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
-            var timeZone = _dbContext.Users.Single(x => x.Id == int.Parse(value)).TimeZone;
-
-            if (string.IsNullOrEmpty(timeZone))
-            {
-                timeZone = "Europe/Copenhagen";
-            }
-
-            TimeZoneInfo timeZoneInfo;
-
-            try
-            {
-                timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timeZone);
-            }
-            catch
-            {
-                timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("E. Europe Standard Time");
-            }
+            var timeZoneInfo = await _userService.GetCurrentUserTimeZoneInfo();
             Log.LogEvent("TemplateService.Index: called");
             try
             {
                 Log.LogEvent("TemplateService.Index: try section");
                 var core = await _coreHelper.GetCore();
                 var locale = await _userService.GetCurrentUserLocale();
-                Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
-                List<Template_Dto> templatesDto = await core.TemplateItemReadAll(false,
+                var language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
+                var templatesDto = await core.TemplateItemReadAll(false,
                     "",
                     templateRequestModel.NameFilter,
                     templateRequestModel.IsSortDsc,
@@ -128,7 +111,7 @@ namespace eFormAPI.Web.Services
                 var eformIds = new List<int>();
                 //List<string> plugins = await _dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
 
-                if (!_userService.IsInRole(EformRole.Admin))
+                if (!_userService.IsAdmin())
                 {
                     var isEformsInGroups = await _dbContext.SecurityGroupUsers
                         .Where(x => x.EformUserId == _userService.UserId)
