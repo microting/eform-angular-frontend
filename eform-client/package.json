@@ -56,7 +56,7 @@
     "d3": "5.15.1",
     "date-fns": "2.16.1",
     "dom-to-image": "2.6.0",
-    "extract-zip": "2.0.0",
+    "extract-zip": "2.0.1",
     "fibers": "^4.0.2",
     "file-saver": "2.0.2",
     "glob": "7.1.6",
