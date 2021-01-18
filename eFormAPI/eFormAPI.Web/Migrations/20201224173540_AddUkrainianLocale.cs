@@ -16,21 +16,21 @@ namespace eFormAPI.Web.Migrations
 
             migrationBuilder.InsertData(
                 table: "MenuItemTranslations",
-                columns: new[] { "Id", "CreatedAt", "CreatedByUserId", "Language", "LocaleName", "MenuItemId", "Name", "UpdatedAt", "UpdatedByUserId", "Version", "WorkflowState" },
+                columns: new[] { "CreatedAt", "CreatedByUserId", "Language", "LocaleName", "MenuItemId", "Name", "UpdatedAt", "UpdatedByUserId", "Version", "WorkflowState" },
                 values: new object[,]
                 {
-                    { 39, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Ukrainian", "uk-UA", 1, "Мої ЕФорми", null, 0, 0, null },
-                    { 40, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Ukrainian", "uk-UA", 2, "Користувачі пристроїв", null, 0, 0, null },
-                    { 41, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Ukrainian", "uk-UA", 3, "Додатково", null, 0, 0, null },
-                    { 42, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Ukrainian", "uk-UA", 4, "Місця", null, 0, 0, null },
-                    { 43, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Ukrainian", "uk-UA", 5, "Працівники", null, 0, 0, null },
-                    { 44, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Ukrainian", "uk-UA", 6, "Юніти", null, 0, 0, null },
-                    { 45, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Ukrainian", "uk-UA", 7, "Пошуковий список", null, 0, 0, null },
-                    { 46, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Ukrainian", "uk-UA", 8, "Вибірковий список", null, 0, 0, null },
-                    { 47, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Ukrainian", "uk-UA", 9, "Налаштування застосунку", null, 0, 0, null },
-                    { 48, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Ukrainian", "uk-UA", 10, "Налаштування плагінів", null, 0, 0, null },
-                    { 49, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Ukrainian", "uk-UA", 11, "Папки", null, 0, 0, null },
-                    { 50, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Ukrainian", "uk-UA", 12, "Email одержувачі", null, 0, 0, null }
+                    { new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Ukrainian", "uk-UA", 1, "Мої ЕФорми", null, 0, 0, null },
+                    { new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Ukrainian", "uk-UA", 2, "Користувачі пристроїв", null, 0, 0, null },
+                    { new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Ukrainian", "uk-UA", 3, "Додатково", null, 0, 0, null },
+                    { new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Ukrainian", "uk-UA", 4, "Місця", null, 0, 0, null },
+                    { new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Ukrainian", "uk-UA", 5, "Працівники", null, 0, 0, null },
+                    { new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Ukrainian", "uk-UA", 6, "Юніти", null, 0, 0, null },
+                    { new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Ukrainian", "uk-UA", 7, "Пошуковий список", null, 0, 0, null },
+                    { new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Ukrainian", "uk-UA", 8, "Вибірковий список", null, 0, 0, null },
+                    { new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Ukrainian", "uk-UA", 9, "Налаштування застосунку", null, 0, 0, null },
+                    { new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Ukrainian", "uk-UA", 10, "Налаштування плагінів", null, 0, 0, null },
+                    { new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Ukrainian", "uk-UA", 11, "Папки", null, 0, 0, null },
+                    { new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Ukrainian", "uk-UA", 12, "Email одержувачі", null, 0, 0, null }
                 });
         }
 
