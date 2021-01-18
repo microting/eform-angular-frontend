@@ -483,8 +483,11 @@ namespace eFormAPI.Web.Controllers.Eforms
                                 }
 
                                 reportType = "jasper";
-
-                                statusOk = true;
+                                if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true" || core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
+                                {
+                                    await core.PutFileToStorageSystem(filePath, $"{templateId}_{reportType}_{uploadModel.File.FileName}");
+                                }
+                                return Ok();
                             }
                             if (Directory.GetFiles(compactPath, "*.docx").Length != 0)
                             {
@@ -492,10 +495,9 @@ namespace eFormAPI.Web.Controllers.Eforms
                                 cl.JasperExportEnabled = false;
                                 cl.DocxExportEnabled = true;
                                 await cl.Update(dbContext);
+                                await core.PutFileToStorageSystem(Path.Combine(compactPath, $"{templateId}.docx"), $"{templateId}.docx");
 
-                                reportType = "docx";
-
-                                statusOk = true;
+                                return Ok();
                             }
 
                             var files = Directory.GetFiles(compactPath, "*.xlsx");
@@ -504,21 +506,13 @@ namespace eFormAPI.Web.Controllers.Eforms
                                 var cl = await dbContext.CheckLists.SingleAsync(x => x.Id == templateId);
                                 cl.ExcelExportEnabled = true;
                                 await cl.Update(dbContext);
+                                await core.PutFileToStorageSystem(Path.Combine(compactPath, $"{templateId}.xlsx"), $"{templateId}.xlsx");
 
-                                reportType = "xlxs";
-
-                                statusOk = true;
+                                return Ok();
                             }
                         }
 
-                        if (statusOk)
-                        {
-                            if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true" || core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
-                            {
-                                await core.PutFileToStorageSystem(filePath, $"{templateId}_{reportType}_{uploadModel.File.FileName}");
-                            }
-                            return Ok();
-                        }
+
                     }
                 }
                 return BadRequest(_localizationService.GetString("InvalidRequest"));
