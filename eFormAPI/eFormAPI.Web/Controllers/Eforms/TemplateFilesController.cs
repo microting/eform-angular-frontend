@@ -456,8 +456,6 @@ namespace eFormAPI.Web.Controllers.Eforms
                         var fastZip = new FastZip();
                         // Will always overwrite if target filenames already exist
                         fastZip.ExtractZip(filePath, extractPath, null);
-                        string reportType = "";
-                        bool statusOk = false;
 
                         await using var dbContext = core.dbContextHelper.GetDbContext();
                         var compactPath = Path.Combine(extractPath, "compact");
@@ -473,12 +471,11 @@ namespace eFormAPI.Web.Controllers.Eforms
                                 System.IO.File.Delete(file);
                             }
 
-                            reportType = "jasper";
                             if (core.GetSdkSetting(Settings.swiftEnabled).Result.ToLower() == "true" ||
                                 core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
                             {
                                 await core.PutFileToStorageSystem(filePath,
-                                    $"{templateId}_{reportType}_{uploadModel.File.FileName}");
+                                    $"{templateId}_jasper_{uploadModel.File.FileName}");
                             }
                             return Ok();
                         }
