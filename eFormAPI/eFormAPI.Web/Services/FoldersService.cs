@@ -45,7 +45,7 @@ namespace eFormAPI.Web.Services
         private readonly IEFormCoreService _coreHelper;
         private readonly ILocalizationService _localizationService;
         private readonly ILogger<FoldersService> _logger;
-        public FoldersService(IEFormCoreService coreHelper, 
+        public FoldersService(IEFormCoreService coreHelper,
             ILocalizationService localizationService,
             ILogger<FoldersService> logger)
         {
@@ -183,13 +183,13 @@ namespace eFormAPI.Web.Services
                 await core.FolderUpdate(
                     folderUpdateModel.Id,
                     folderUpdateModel.Name,
-                    folderUpdateModel.Description,
+                    folderUpdateModel.Description.Replace("&nbsp;", " "),
                     folderUpdateModel.ParentId);
 
                 return new OperationResult(true);
             }
             catch (Exception e)
-            {   
+            {
                 _coreHelper.LogException(e.Message);
                 _logger.LogError(e, e.Message);
                 return new OperationResult(

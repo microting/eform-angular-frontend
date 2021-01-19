@@ -30,14 +30,17 @@ export class SharedTagCreateComponent implements OnInit {
 
   hide() {
     this.frame.hide();
+    this.name = '';
   }
 
   createItem() {
     this.tagCreate.emit({ name: this.name } as SharedTagCreateModel);
+    this.name = '';
   }
 
   cancelCreate() {
     this.frame.hide();
     this.tagCreateCancelled.emit();
+    this.name = '';
   }
 }

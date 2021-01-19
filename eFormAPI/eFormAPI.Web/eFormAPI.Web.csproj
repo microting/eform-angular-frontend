@@ -41,7 +41,7 @@
   </Target>
 
   <ItemGroup>
-    <PackageReference Include="AWSSDK.Core" Version="3.5.1.58" />
+    <PackageReference Include="AWSSDK.Core" Version="3.5.1.59" />
     <PackageReference Include="AWSSDK.S3" Version="3.5.7.6" />
     <PackageReference Include="AWSSDK.SQS" Version="3.5.1.7" />
     <PackageReference Include="ClosedXML" Version="0.95.4" />
@@ -55,8 +55,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
-    <PackageReference Include="Microting.eForm" Version="4.1.21" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="2.0.71" />
+    <PackageReference Include="Microting.eForm" Version="4.2.3" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="2.0.80" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.4" />
     <PackageReference Include="SharpZipLib.NETStandard" Version="1.0.7" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />

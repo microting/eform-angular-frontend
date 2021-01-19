@@ -127,6 +127,11 @@ namespace eFormAPI.Web.Services.Import
                         item.Tags.Add(tag10);
                     }
 
+                    item.ReportH1 = row.Cell(EformImportExcelConsts.ReportH1).Value.ToString();
+                    item.ReportH2 = row.Cell(EformImportExcelConsts.ReportH2).Value.ToString();
+                    item.ReportH3 = row.Cell(EformImportExcelConsts.ReportH3).Value.ToString();
+                    item.ReportH4 = row.Cell(EformImportExcelConsts.ReportH4).Value.ToString();
+
                     result.Add(item);
                 }
 
