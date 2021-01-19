@@ -25,6 +25,7 @@ SOFTWARE.
 using System.Linq;
 using ICSharpCode.SharpZipLib.Zip;
 using Microting.eForm.Infrastructure.Data.Entities;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 
 namespace eFormAPI.Web.Services.Export
 {
@@ -124,13 +125,15 @@ namespace eFormAPI.Web.Services.Export
                     try
                     {
                         var objectResponse = await core.GetFileFromS3Storage($"{excelModel.TemplateId}.xlsx");
+                        Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), "results"));
                         await using var fileStream = File.Create(resultDocument);
                         await objectResponse.ResponseStream.CopyToAsync(fileStream);
                     }
-                    catch
+                    catch (Exception exception)
                     {
                         try
                         {
+                            Log.LogException($"EformExcelExportService.EformExport: Got exeption {exception.Message}");
                             var objectResponse = await core.GetFileFromS3Storage($"{excelModel.TemplateId}_xlxs_compact.zip");
                             string zipFileName = Path.Combine(Path.GetTempPath(), $"{excelModel.TemplateId}.zip");
                             await using var fileStream = File.Create(zipFileName);
