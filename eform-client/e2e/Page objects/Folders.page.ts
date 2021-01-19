@@ -17,8 +17,68 @@ class FoldersPage extends PageWithNavbarPage {
     return $('#name');
   }
 
+  public get createDescription() {
+    return $('#description');
+  }
+
   public get createDescriptionInput() {
-    return $('#description .pell-content');
+    return this.createDescription.$('.pell-content');
+  }
+
+  public get createDescriptionInputPellBold () {
+    const ele = this.createDescription.$('button[title="Bold"]');
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({ timeout: 20000});
+    return ele;
+  }
+
+  public get createDescriptionInputPellUnderline () {
+    const ele = this.createDescription.$('button[title="Underline"]');
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({ timeout: 20000});
+    return ele;
+  }
+
+  public get createDescriptionInputPellItalic () {
+    const ele = this.createDescription.$('button[title="Italic"]');
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({ timeout: 20000});
+    return ele;
+  }
+
+  public get createDescriptionInputPellStrikeThrough () {
+    const ele = this.createDescription.$('button[title="Strike-through"]');
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({ timeout: 20000});
+    return ele;
+  }
+
+  public get editDescriptionInputPellBold () {
+    const ele = this.editDescription.$('button[title="Bold"]');
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({ timeout: 20000});
+    return ele;
+  }
+
+  public get editDescriptionInputPellUnderline () {
+    const ele = this.editDescription.$('button[title="Underline"]');
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({ timeout: 20000});
+    return ele;
+  }
+
+  public get editDescriptionInputPellItalic () {
+    const ele = this.editDescription.$('button[title="Italic"]');
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({ timeout: 20000});
+    return ele;
+  }
+
+  public get editDescriptionInputPellStrikeThrough () {
+    const ele = this.editDescription.$('button[title="Strike-through"]');
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({ timeout: 20000});
+    return ele;
   }
 
   public get saveCreateBtn() {
@@ -52,8 +112,14 @@ class FoldersPage extends PageWithNavbarPage {
     return $('#editNameInput');
   }
 
+  public get editDescription() {
+    const ele = $('#editDescriptionInput');
+    ele.waitForDisplayed({timeout: 20000});
+    return ele;
+  }
+
   public get editDescriptionInput() {
-    const ele = $('#editDescriptionInput .pell-content');
+    const ele = this.editDescription.$('.pell-content');
     ele.waitForDisplayed({timeout: 20000});
     return ele;
   }
@@ -223,7 +289,7 @@ export class FoldersRowObject {
     foldersPage.cancelEditBtn.waitForDisplayed({timeout: 20000});
   }
 
-  editFolder(name = '', description = '', clickCancel = false) {
+  editFolder(name?: string, description?: string, clickCancel = false) {
     this.openEditModal();
     foldersPage.editNameInput.waitForDisplayed({timeout: 20000});
     if (name != null) {
@@ -234,6 +300,10 @@ export class FoldersRowObject {
       foldersPage.editDescriptionInput.clearValue();
       foldersPage.editDescriptionInput.setValue(description);
     }
+    this.closeEditModal(clickCancel);
+  }
+
+  closeEditModal(clickCancel = false) {
     if (!clickCancel) {
       foldersPage.saveEditBtn.click();
       $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});

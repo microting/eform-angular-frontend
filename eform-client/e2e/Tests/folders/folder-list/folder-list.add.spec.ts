@@ -1,10 +1,10 @@
 import loginPage from '../../../Page objects/Login.page';
 import myEformsPage from '../../../Page objects/MyEforms.page';
-import foldersPage, {FoldersRowObject} from '../../../Page objects/Folders.page';
+import foldersPage from '../../../Page objects/Folders.page';
 import {generateRandmString} from '../../../Helpers/helper-functions';
 
 const expect = require('chai').expect;
-const folderName = generateRandmString();
+const folderName = [generateRandmString(), generateRandmString(), generateRandmString(), generateRandmString(), generateRandmString()];
 
 describe('Create folder', function () {
   before(function () {
@@ -16,11 +16,11 @@ describe('Create folder', function () {
   it('With name and with description', function () {
     const description = generateRandmString();
     const rowCountBeforeCreation = foldersPage.rowNum;
-    foldersPage.createNewFolder(folderName, description);
+    foldersPage.createNewFolder(folderName[0], description);
     const rowCountAfterCreation = foldersPage.rowNum;
     expect(rowCountAfterCreation, 'Number of rows hasn\'t changed after creating new folder').equal(rowCountBeforeCreation + 1);
-    const folder = foldersPage.getFolderByName(folderName);
-    expect(folder.name, 'Name of created user is incorrect').equal(folderName);
+    const folder = foldersPage.getFolderByName(folderName[0]);
+    expect(folder.name, 'Name of created user is incorrect').equal(folderName[0]);
     expect(folder.getDescription(), 'Description of created folder is incorrect').equal(description);
   });
   it('should not be created without description', function () {
@@ -67,10 +67,60 @@ describe('Create folder', function () {
     const rowCountAfterCreation = foldersPage.rowNum;
     expect(rowCountAfterCreation, 'Number of rows has changed after cancel').equal(rowCountBeforeCreation);
   });
-  after('should delete folder', function () {
+  it('should create new folder with bold description', function () {
+    foldersPage.openCreateFolder(folderName[1]);
+    const description = generateRandmString();
+    foldersPage.createDescriptionInput.addValue(description);
+    browser.keys(['Control', 'KeyA', 'Control']);
+    foldersPage.createDescriptionInputPellBold.click();
+    foldersPage.closeCreateFolder();
+    const foldersRowObject = foldersPage.getFolderByName(folderName[1]);
+    foldersRowObject.openEditModal();
+    expect(foldersPage.editDescriptionInput.getHTML(false), 'save description incorrect').eq(`<b>${description}</b>`);
+    foldersRowObject.closeEditModal(true);
+  });
+  it('should create new folder with underline description', function () {
+    foldersPage.openCreateFolder(folderName[2]);
+    const description = generateRandmString();
+    foldersPage.createDescriptionInput.addValue(description);
+    browser.keys(['Control', 'KeyA', 'Control']);
+    foldersPage.createDescriptionInputPellUnderline.click();
+    foldersPage.closeCreateFolder();
+    const foldersRowObject = foldersPage.getFolderByName(folderName[2]);
+    foldersRowObject.openEditModal();
+    expect(foldersPage.editDescriptionInput.getHTML(false), 'save description incorrect').eq(`<u>${description}</u>`);
+    foldersRowObject.closeEditModal(true);
+  });
+  it('should create new folder with italic description', function () {
+    foldersPage.openCreateFolder(folderName[3]);
+    const description = generateRandmString();
+    foldersPage.createDescriptionInput.addValue(description);
+    browser.keys(['Control', 'KeyA', 'Control']);
+    foldersPage.createDescriptionInputPellItalic.click();
+    foldersPage.closeCreateFolder();
+    const foldersRowObject = foldersPage.getFolderByName(folderName[3]);
+    foldersRowObject.openEditModal();
+    expect(foldersPage.editDescriptionInput.getHTML(false), 'save description incorrect').eq(`<i>${description}</i>`);
+    foldersRowObject.closeEditModal(true);
+  });
+  it('should create new folder with strike-through description', function () {
+    foldersPage.openCreateFolder(folderName[4]);
+    const description = generateRandmString();
+    foldersPage.createDescriptionInput.addValue(description);
+    browser.keys(['Control', 'KeyA', 'Control']);
+    foldersPage.createDescriptionInputPellStrikeThrough.click();
+    foldersPage.closeCreateFolder();
+    const foldersRowObject = foldersPage.getFolderByName(folderName[4]);
+    foldersRowObject.openEditModal();
+    expect(foldersPage.editDescriptionInput.getHTML(false), 'save description incorrect').eq(`<strike>${description}</strike>`);
+    foldersRowObject.closeEditModal(true);
+  });
+  after('should delete folders', function () {
     const rowCountBeforeCreation = foldersPage.rowNum;
-    foldersPage.getFolderByName(folderName).delete();
+    for (let i = 0; i < folderName.length; i++) {
+      foldersPage.getFolderByName(folderName[i]).delete();
+    }
     const rowCountAfterCreation = foldersPage.rowNum;
-    expect(rowCountBeforeCreation - 1, 'Folder not delete').equal(rowCountAfterCreation);
+    expect(rowCountBeforeCreation - folderName.length, 'Folder not delete').equal(rowCountAfterCreation);
   });
 });
