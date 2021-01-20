@@ -4,11 +4,11 @@ import {Guid} from 'guid-typescript';
 
 const expect = require('chai').expect;
 let arrayNamesTag = new Array<string>();
+before(function () {
+  loginPage.open('/');
+  loginPage.login();
+});
 describe('My eforms', function () {
-  before(function () {
-    loginPage.open('/');
-    loginPage.login();
-  });
   it('should create eform without any tags', function () {
     const newEformLabel = Guid.create().toString();
     myEformsPage.createNewEform(newEformLabel);
