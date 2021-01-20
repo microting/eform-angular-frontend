@@ -59,12 +59,14 @@ export class SelectableListsPage extends PageWithNavbarPage {
   public get entitySelectCreateSaveBtn() {
     const ele = $('#createEntitySelectSaveBtn');
     ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({timeout: 20000});
     return ele;
   }
 
   public get entitySelectCreateCancelBtn() {
     const ele = $('#createEntitySelectCancelBtn');
     ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({timeout: 20000});
     return ele;
   }
 
