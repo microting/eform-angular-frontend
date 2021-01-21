@@ -69,7 +69,7 @@ namespace eFormAPI.Web.Services.Export
                 var cultureInfo = new CultureInfo("de-DE");
 
                 var locale = await _userService.GetCurrentUserLocale();
-                Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
+                Language language = core.DbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
                 TimeZoneInfo timeZoneInfo;
 
                 try

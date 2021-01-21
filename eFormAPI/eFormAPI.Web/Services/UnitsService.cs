@@ -49,37 +49,35 @@ namespace eFormAPI.Web.Services
         public async Task<OperationDataResult<List<UnitModel>>> Index()
         {
             var core = await _coreHelper.GetCore();
-            using (var dbContext = core.dbContextHelper.GetDbContext())
+            await using var dbContext = core.DbContextHelper.GetDbContext();
+            var units = await dbContext.Units.AsNoTracking().Select(t => new UnitModel()
             {
-                var units = await dbContext.Units.AsNoTracking().Select(t => new UnitModel()
-                {
-                    Id = t.Id,
-                    CreatedAt = t.CreatedAt,
-                    UpdatedAt = t.UpdatedAt,
-                    CustomerNo = t.CustomerNo,
-                    OtpCode = t.OtpCode,
-                    SiteId = (int)t.SiteId,
-                    SiteMicrotingUid = (int)t.Site.MicrotingUid,
-                    SiteName = t.Site.Name,
-                    Model = t.Model,
-                    Manufacturer = t.Manufacturer,
-                    Note = t.Note,
-                    Os = "",
-                    OsVersion = t.OsVersion,
-                    MicrotingUid = (int)t.MicrotingUid,
-                    eFormVersion = "0.0.0",
-                    InSightVersion = "0.0.0",
-                    eFormVersionHealth = "",
-                    InSightVersionHealth = "",
-                    PushEnabled = t.PushEnabled,
-                    SyncDialog = t.SyncDialog,
-                    SyncDefaultDelay = t.SyncDefaultDelay,
-                    SyncDelayEnabled = t.SyncDelayEnabled,
-                    SyncDelayPrCheckList = t.SyncDelayPrCheckList
-                }).ToListAsync().ConfigureAwait(false);
+                Id = t.Id,
+                CreatedAt = t.CreatedAt,
+                UpdatedAt = t.UpdatedAt,
+                CustomerNo = t.CustomerNo,
+                OtpCode = t.OtpCode,
+                SiteId = (int)t.SiteId,
+                SiteMicrotingUid = (int)t.Site.MicrotingUid,
+                SiteName = t.Site.Name,
+                Model = t.Model,
+                Manufacturer = t.Manufacturer,
+                Note = t.Note,
+                Os = "",
+                OsVersion = t.OsVersion,
+                MicrotingUid = (int)t.MicrotingUid,
+                eFormVersion = "0.0.0",
+                InSightVersion = "0.0.0",
+                eFormVersionHealth = "",
+                InSightVersionHealth = "",
+                PushEnabled = t.PushEnabled,
+                SyncDialog = t.SyncDialog,
+                SyncDefaultDelay = t.SyncDefaultDelay,
+                SyncDelayEnabled = t.SyncDelayEnabled,
+                SyncDelayPrCheckList = t.SyncDelayPrCheckList
+            }).ToListAsync().ConfigureAwait(false);
 
-                return new OperationDataResult<List<UnitModel>>(true, units);
-            }
+            return new OperationDataResult<List<UnitModel>>(true, units);
         }
 
         public async Task<OperationResult> Create(UnitModel model)
@@ -90,7 +88,7 @@ namespace eFormAPI.Web.Services
 
                 if (await core.Advanced_UnitCreate(model.SiteId).ConfigureAwait(false))
                 {
-                    return new OperationResult(true, _localizationService.GetString("UnitWasSuccessfullyCreated"));    
+                    return new OperationResult(true, _localizationService.GetString("UnitWasSuccessfullyCreated"));
                 }
 
                 return new OperationResult(false, _localizationService.GetString("ErrorWhileCreatingUnit"));
@@ -106,12 +104,12 @@ namespace eFormAPI.Web.Services
             try
             {
                 var core = await _coreHelper.GetCore();
-                
+
                 if (await core.Advanced_UnitMove(model.Id, model.SiteId).ConfigureAwait(false))
                 {
-                    return new OperationResult(true, _localizationService.GetString("UnitWasSuccessfullyCreated"));    
+                    return new OperationResult(true, _localizationService.GetString("UnitWasSuccessfullyCreated"));
                 }
-                
+
                 return new OperationResult(false, _localizationService.GetString("ErrorWhileCreatingUnit"));
 
             }

@@ -100,7 +100,7 @@ namespace eFormAPI.Web.Controllers.Eforms
             var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
             var timeZone = _dbContext.Users.Single(x => x.Id == int.Parse(value)).TimeZone;
             var locale = await _userService.GetCurrentUserLocale();
-            Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
+            Language language = core.DbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
             if (string.IsNullOrEmpty(timeZone))
             {
                 timeZone = "Europe/Copenhagen";
@@ -364,7 +364,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                 var caseId = await core.CaseReadFirstId(templateId, "not_revmoed");
                 CaseDto caseDto = await core.CaseLookupCaseId((int)caseId);
                 var locale = await _userService.GetCurrentUserLocale();
-                Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
+                Language language = core.DbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
                 ReplyElement replyElement = await core.CaseRead((int)caseDto.MicrotingUId, (int)caseDto.CheckUId, language).ConfigureAwait(false);
                 if (caseId != null)
                 {
@@ -457,7 +457,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                         // Will always overwrite if target filenames already exist
                         fastZip.ExtractZip(filePath, extractPath, null);
 
-                        await using var dbContext = core.dbContextHelper.GetDbContext();
+                        await using var dbContext = core.DbContextHelper.GetDbContext();
                         var compactPath = Path.Combine(extractPath, "compact");
 
                         if (Directory.GetFiles(compactPath, "*.jrxml").Length != 0)

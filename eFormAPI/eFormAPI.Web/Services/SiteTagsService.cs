@@ -59,18 +59,16 @@ namespace eFormAPI.Web.Services
             try
             {
                 var core = await _coreHelper.GetCore();
-                using (var dbContext = core.dbContextHelper.GetDbContext())
-                {
-                    var tags = await dbContext.Tags
-                        .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                        .Select(x => new CommonDictionaryModel
-                        {
-                            Id = x.Id,
-                            Name = x.Name
-                        }).ToListAsync();
+                await using var dbContext = core.DbContextHelper.GetDbContext();
+                var tags = await dbContext.Tags
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Select(x => new CommonDictionaryModel
+                    {
+                        Id = x.Id,
+                        Name = x.Name
+                    }).ToListAsync();
 
-                    return new OperationDataResult<List<CommonDictionaryModel>>(true, tags);
-                }
+                return new OperationDataResult<List<CommonDictionaryModel>>(true, tags);
             }
             catch (Exception e)
             {
@@ -85,15 +83,13 @@ namespace eFormAPI.Web.Services
             try
             {
                 var core = await _coreHelper.GetCore();
-                using (var dbContext = core.dbContextHelper.GetDbContext())
+                await using var dbContext = core.DbContextHelper.GetDbContext();
+                var tag = new Tag
                 {
-                    var tag = new Tag
-                    {
-                        Name = tagName,
-                    };
+                    Name = tagName,
+                };
 
-                    await tag.Create(dbContext);
-                }
+                await tag.Create(dbContext);
 
                 return new OperationResult(
                     true,
@@ -116,60 +112,58 @@ namespace eFormAPI.Web.Services
             try
             {
                 var core = await _coreHelper.GetCore();
-                using (var dbContext = core.dbContextHelper.GetDbContext())
+                await using var dbContext = core.DbContextHelper.GetDbContext();
+                var site = await dbContext.Sites
+                    .Include(x => x.SiteTags)
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Where(x => x.Id == siteTagsModel.SiteId)
+                    .FirstOrDefaultAsync();
+
+                if (site == null)
                 {
-                    var site = await dbContext.Sites
-                        .Include(x => x.SiteTags)
-                        .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                        .Where(x => x.Id == siteTagsModel.SiteId)
-                        .FirstOrDefaultAsync();
+                    return new OperationResult(
+                        false,
+                        _localizationService.GetStringWithFormat("SiteParamNotFound", siteTagsModel.SiteId));
+                }
 
-                    if (site == null)
+                // Tags
+                var siteTagIds = site.SiteTags
+                    .Where(x=>x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Where(x => x.TagId != null)
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Select(x => (int)x.TagId)
+                    .ToList();
+
+                var forRemove = siteTagIds
+                    .Where(x => !siteTagsModel.TagsIds.Contains(x))
+                    .ToList();
+
+                foreach (var tagIdForRemove in forRemove)
+                {
+                    var siteTag = await dbContext.SiteTags
+                        .FirstOrDefaultAsync(
+                            x => x.TagId == tagIdForRemove
+                                 && x.SiteId == site.Id);
+
+                    if (siteTag != null)
                     {
-                        return new OperationResult(
-                            false,
-                            _localizationService.GetStringWithFormat("SiteParamNotFound", siteTagsModel.SiteId));
+                        await siteTag.Delete(dbContext);
                     }
+                }
 
-                    // Tags
-                    var siteTagIds = site.SiteTags
-                        .Where(x=>x.WorkflowState != Constants.WorkflowStates.Removed)
-                        .Where(x => x.TagId != null)
-                         .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                        .Select(x => (int)x.TagId)
-                        .ToList();
+                var forCreate = siteTagsModel.TagsIds
+                    .Where(x => !siteTagIds.Contains(x))
+                    .ToList();
 
-                    var forRemove = siteTagIds
-                        .Where(x => !siteTagsModel.TagsIds.Contains(x))
-                        .ToList();
-
-                    foreach (var tagIdForRemove in forRemove)
+                foreach (var tagIdForCreate in forCreate)
+                {
+                    var siteTag = new SiteTag()
                     {
-                        var siteTag = await dbContext.SiteTags
-                            .FirstOrDefaultAsync(
-                                x => x.TagId == tagIdForRemove
-                                     && x.SiteId == site.Id);
+                        TagId = tagIdForCreate,
+                        SiteId = site.Id,
+                    };
 
-                        if (siteTag != null)
-                        {
-                            await siteTag.Delete(dbContext);
-                        }
-                    }
-
-                    var forCreate = siteTagsModel.TagsIds
-                        .Where(x => !siteTagIds.Contains(x))
-                        .ToList();
-
-                    foreach (var tagIdForCreate in forCreate)
-                    {
-                        var siteTag = new SiteTag()
-                        {
-                            TagId = tagIdForCreate,
-                            SiteId = site.Id,
-                        };
-
-                        await siteTag.Create(dbContext);
-                    }
+                    await siteTag.Create(dbContext);
                 }
 
                 return new OperationResult(true, _localizationService.GetString("TagUpdatedSuccessfully"));
@@ -187,20 +181,18 @@ namespace eFormAPI.Web.Services
             try
             {
                 var core = await _coreHelper.GetCore();
-                using (var dbContext = core.dbContextHelper.GetDbContext())
+                await using var dbContext = core.DbContextHelper.GetDbContext();
+                var tag = await dbContext.Tags
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .FirstOrDefaultAsync(x => x.Id == tagId);
+
+                if (tag == null)
                 {
-                    var tag = await dbContext.Tags
-                        .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                        .FirstOrDefaultAsync(x => x.Id == tagId);
-
-                    if (tag == null)
-                    {
-                        return new OperationResult(false,
-                            _localizationService.GetString("TagNotFound"));
-                    }
-
-                    await tag.Delete(dbContext);
+                    return new OperationResult(false,
+                        _localizationService.GetString("TagNotFound"));
                 }
+
+                await tag.Delete(dbContext);
 
                 return new OperationResult(
                     true,

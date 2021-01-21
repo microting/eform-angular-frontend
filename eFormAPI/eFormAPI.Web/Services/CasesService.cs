@@ -114,7 +114,7 @@ namespace eFormAPI.Web.Services
                 var microtingUId = caseDto.MicrotingUId;
                 var microtingCheckUId = caseDto.CheckUId;
                 var locale = await _userService.GetCurrentUserLocale();
-                Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
+                Language language = core.DbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
                 var theCase = await core.CaseRead((int)microtingUId, (int)microtingCheckUId, language);
                 theCase.Id = id;
 

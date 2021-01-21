@@ -54,7 +54,7 @@ namespace eFormAPI.Web.Services
         public async Task<OperationDataResult<List<DeviceUser>>> Index()
         {
             var core = await _coreHelper.GetCore();
-            MicrotingDbContext db = core.dbContextHelper.GetDbContext();
+            await using MicrotingDbContext db = core.DbContextHelper.GetDbContext();
             List<DeviceUser> deviceUsers = new List<DeviceUser>();
 
             List<Site> matches = await db.Sites.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed).ToListAsync().ConfigureAwait(false);
@@ -124,7 +124,7 @@ namespace eFormAPI.Web.Services
         {
             var core = await _coreHelper.GetCore();
             var siteName = deviceUserModel.UserFirstName + " " + deviceUserModel.UserLastName;
-            await using var db = core.dbContextHelper.GetDbContext();
+            await using var db = core.DbContextHelper.GetDbContext();
             Language language = db.Languages.Single(x => x.LanguageCode == deviceUserModel.LanguageCode);
 
             try
@@ -167,7 +167,7 @@ namespace eFormAPI.Web.Services
         public async Task<OperationDataResult<DeviceUser>> Edit(int id)
         {
             var core = await _coreHelper.GetCore();
-            await using var db = core.dbContextHelper.GetDbContext();
+            await using var db = core.DbContextHelper.GetDbContext();
 
             //var siteDto = await core.SiteRead(id);
             DeviceUser deviceUser = null;
@@ -212,7 +212,7 @@ namespace eFormAPI.Web.Services
             try
             {
                 var core = await _coreHelper.GetCore();
-                await using var db = core.dbContextHelper.GetDbContext();
+                await using var db = core.DbContextHelper.GetDbContext();
                 Language language = db.Languages.Single(x => x.LanguageCode == deviceUserModel.LanguageCode);
                 var siteDto = await core.SiteRead(deviceUserModel.Id);
                 if (siteDto.WorkerUid != null)

@@ -59,7 +59,7 @@ namespace eFormAPI.Web.Services
             try
             {
                 var core = await _coreHelper.GetCore();
-                await using var dbContext = core.dbContextHelper.GetDbContext();
+                await using var dbContext = core.DbContextHelper.GetDbContext();
                 var folders = await dbContext.Folders
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                     .Select(x => new FolderDtoModel
@@ -89,7 +89,7 @@ namespace eFormAPI.Web.Services
             try
             {
                 var core = await _coreHelper.GetCore();
-                await using var dbContext = core.dbContextHelper.GetDbContext();
+                await using var dbContext = core.DbContextHelper.GetDbContext();
                 var folders = await dbContext.Folders
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                     .Select(x => new FolderDtoModel
@@ -142,7 +142,7 @@ namespace eFormAPI.Web.Services
             try
             {
                 var core = await _coreHelper.GetCore();
-                await using var dbContext = core.dbContextHelper.GetDbContext();
+                await using var dbContext = core.DbContextHelper.GetDbContext();
                 var folder = await dbContext.Folders
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                     .Where(x => x.Id == id)
@@ -220,7 +220,7 @@ namespace eFormAPI.Web.Services
         private async Task DeleteChildren(int id)
         {
             var core = await _coreHelper.GetCore();
-            await using MicrotingDbContext dbContext = core.dbContextHelper.GetDbContext();
+            await using MicrotingDbContext dbContext = core.DbContextHelper.GetDbContext();
             var list = await dbContext.Folders.Where(x => x.ParentId == id).ToListAsync();
             foreach (var folder in list)
             {

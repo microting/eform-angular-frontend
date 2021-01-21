@@ -94,7 +94,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                 var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
                 var core = await _coreService.GetCore();
                 var localeString = _dbContext.Users.Single(x => x.Id == int.Parse(value)).Locale;
-                Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == localeString.ToLower());
+                Language language = core.DbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == localeString.ToLower());
                 var casePostsListModel = new CasePostsListModel();
                 var casePostsQuery = _dbContext.CasePosts.AsQueryable();
                 if (!string.IsNullOrEmpty(requestModel.Sort))
@@ -161,7 +161,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
 
                     }).ToListAsync();
 
-                using (var dbContext = core.dbContextHelper.GetDbContext())
+                using (var dbContext = core.DbContextHelper.GetDbContext())
                 {
                     var caseEntity = await dbContext.Cases
                         .AsNoTracking()
@@ -438,7 +438,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                         throw new InvalidOperationException("caseDto not found");
                     }
                     var locale = await _userService.GetCurrentUserLocale();
-                    Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
+                    Language language = core.DbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
                     var replyElement = await core.CaseRead((int) caseDto.MicrotingUId, (int) caseDto.CheckUId, language).ConfigureAwait(false);
                     var assembly = Assembly.GetExecutingAssembly();
                     var assemblyName = assembly.GetName().Name;
@@ -559,7 +559,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                 if (requestModel.TemplateId != null)
                 {
                     var core = await _coreService.GetCore();
-                    await using var microtingDbContext = core.dbContextHelper.GetDbContext();
+                    await using var microtingDbContext = core.DbContextHelper.GetDbContext();
                     var casesIds = await microtingDbContext.Cases
                         .Where(x => x.CheckListId == requestModel.TemplateId)
                         .Select(x => x.Id)
