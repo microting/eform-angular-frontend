@@ -303,10 +303,10 @@ namespace eFormAPI.Web.Services
             {
                 var result = new EformReportFullModel();
                 var core = await _coreHelper.GetCore();
-                await using var dbContext = core.dbContextHelper.GetDbContext();
+                await using var dbContext = core.DbContextHelper.GetDbContext();
 
                 var localeString = await _userService.GetCurrentUserLocale();
-                Language language = core.dbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == localeString.ToLower());
+                Language language = dbContext.Languages.Single(x => x.LanguageCode.ToLower() == localeString.ToLower());
                 MainElement template = await core.ReadeForm(templateId, language);
                 if (template == null)
                 {

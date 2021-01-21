@@ -61,19 +61,17 @@ namespace eFormAPI.Web.Services
             try
             {
                 var core = await _coreHelper.GetCore();
-                using (var dbContext = core.dbContextHelper.GetDbContext())
-                {
-                    var sites = await dbContext.Sites
-                        .AsNoTracking()
-                        .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                        .Select(x => new CommonDictionaryModel
-                        {
-                            Id = x.Id,
-                            Name = x.Name,
-                        }).ToListAsync();
+                await using var dbContext = core.DbContextHelper.GetDbContext();
+                var sites = await dbContext.Sites
+                    .AsNoTracking()
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Select(x => new CommonDictionaryModel
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                    }).ToListAsync();
 
-                    return new OperationDataResult<List<CommonDictionaryModel>>(true, sites);
-                }
+                return new OperationDataResult<List<CommonDictionaryModel>>(true, sites);
             }
             catch (Exception e)
             {
@@ -88,27 +86,26 @@ namespace eFormAPI.Web.Services
             try
             {
                 var core = await _coreHelper.GetCore();
-                using (var dbContext = core.dbContextHelper.GetDbContext())
-                {
-                    var sites = await dbContext.Sites
-                        .AsNoTracking()
-                        .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                        .Select(x => new SiteModel
+                await using var dbContext = core.DbContextHelper.GetDbContext();
+                var sites = await dbContext.Sites
+                    .AsNoTracking()
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Select(x => new SiteModel
+                    {
+                        Id = x.Id,
+                        SiteName = x.Name,
+                        CreatedAt = x.CreatedAt,
+                        SiteUId = (int) x.MicrotingUid,
+                        UpdatedAt = x.UpdatedAt,
+                        Units = x.Units.Where(z => z.SiteId == x.Id).Select(t => new UnitModel
                         {
-                            Id = x.Id,
-                            SiteName = x.Name,
-                            CreatedAt = x.CreatedAt,
-                            SiteUId = (int) x.MicrotingUid,
-                            UpdatedAt = x.UpdatedAt,
-                            Units = x.Units.Where(z => z.SiteId == x.Id).Select(t => new UnitModel
-                            {
-                                Id = t.Id,
-                                CreatedAt = t.CreatedAt,
-                                UpdatedAt = t.UpdatedAt,
-                                SiteId = (int)t.SiteId,
-                                MicrotingUid = (int)t.MicrotingUid
-                            }).ToList(),
-                            Tags = x.SiteTags
+                            Id = t.Id,
+                            CreatedAt = t.CreatedAt,
+                            UpdatedAt = t.UpdatedAt,
+                            SiteId = (int)t.SiteId,
+                            MicrotingUid = (int)t.MicrotingUid
+                        }).ToList(),
+                        Tags = x.SiteTags
                             .Where(y => y.WorkflowState != Constants.WorkflowStates.Removed)
                             .Where(y => y.Tag.WorkflowState != Constants.WorkflowStates.Removed)
                             .Select(t => new KeyValueModel
@@ -116,10 +113,9 @@ namespace eFormAPI.Web.Services
                                 Key = (int) t.TagId,
                                 Value = t.Tag.Name,
                             }).ToList(),
-                        }).ToListAsync();
+                    }).ToListAsync();
 
-                    return new OperationDataResult<List<SiteModel>>(true, sites);
-                }
+                return new OperationDataResult<List<SiteModel>>(true, sites);
             }
             catch (Exception e)
             {
@@ -134,34 +130,32 @@ namespace eFormAPI.Web.Services
             try
             {
                 var core = await _coreHelper.GetCore();
-                using (var dbContext = core.dbContextHelper.GetDbContext())
-                {
-                    var site = await dbContext.Sites
-                        .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                        .Where(x => x.Id == id)
-                        .Select(x => new SiteModel
-                        {
-                            Id = x.Id,
-                            SiteName = x.Name,
-                            CreatedAt = x.CreatedAt,
-                            SiteUId = (int) x.MicrotingUid,
-                            UpdatedAt = x.UpdatedAt,
-                            Tags = x.SiteTags.Select(t => new KeyValueModel
-                            {
-                                Key = (int) t.TagId,
-                                Value = t.Tag.Name,
-                            }).ToList(),
-                        }).FirstOrDefaultAsync();
-
-                    if (site == null)
+                await using var dbContext = core.DbContextHelper.GetDbContext();
+                var site = await dbContext.Sites
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Where(x => x.Id == id)
+                    .Select(x => new SiteModel
                     {
-                        return new OperationDataResult<SiteModel>(
-                            false,
-                            _localizationService.GetStringWithFormat("SiteParamNotFound", id));
-                    }
+                        Id = x.Id,
+                        SiteName = x.Name,
+                        CreatedAt = x.CreatedAt,
+                        SiteUId = (int) x.MicrotingUid,
+                        UpdatedAt = x.UpdatedAt,
+                        Tags = x.SiteTags.Select(t => new KeyValueModel
+                        {
+                            Key = (int) t.TagId,
+                            Value = t.Tag.Name,
+                        }).ToList(),
+                    }).FirstOrDefaultAsync();
 
-                    return new OperationDataResult<SiteModel>(true, site);
+                if (site == null)
+                {
+                    return new OperationDataResult<SiteModel>(
+                        false,
+                        _localizationService.GetStringWithFormat("SiteParamNotFound", id));
                 }
+
+                return new OperationDataResult<SiteModel>(true, site);
             }
             catch (Exception e)
             {
@@ -176,25 +170,23 @@ namespace eFormAPI.Web.Services
             try
             {
                 var core = await _coreHelper.GetCore();
-                using (var dbContext = core.dbContextHelper.GetDbContext())
+                await using var dbContext = core.DbContextHelper.GetDbContext();
+                var site = await dbContext.Sites
+                    .Include(x => x.SiteTags)
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Where(x => x.Id == updateModel.Id)
+                    .FirstOrDefaultAsync();
+
+                if (site == null)
                 {
-                    var site = await dbContext.Sites
-                        .Include(x => x.SiteTags)
-                        .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                        .Where(x => x.Id == updateModel.Id)
-                        .FirstOrDefaultAsync();
-
-                    if (site == null)
-                    {
-                        return new OperationResult(
-                            false,
-                            _localizationService.GetStringWithFormat("SiteParamNotFound", updateModel.Id));
-                    }
-
-                    site.Name = updateModel.SiteName;
-
-                    await site.Update(dbContext);
+                    return new OperationResult(
+                        false,
+                        _localizationService.GetStringWithFormat("SiteParamNotFound", updateModel.Id));
                 }
+
+                site.Name = updateModel.SiteName;
+
+                await site.Update(dbContext);
 
                 return new OperationResult(true);
             }
@@ -211,25 +203,23 @@ namespace eFormAPI.Web.Services
             try
             {
                 var core = await _coreHelper.GetCore();
-                using (var dbContext = core.dbContextHelper.GetDbContext())
+                await using var dbContext = core.DbContextHelper.GetDbContext();
+                var site = await dbContext.Sites
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Where(x => x.Id == id)
+                    .FirstOrDefaultAsync();
+
+                if (site?.MicrotingUid == null)
                 {
-                    var site = await dbContext.Sites
-                        .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                        .Where(x => x.Id == id)
-                        .FirstOrDefaultAsync();
-
-                    if (site?.MicrotingUid == null)
-                    {
-                        return new OperationResult(false,
-                            _localizationService.GetStringWithFormat("SiteParamNotFound", id));
-                    }
-
-                    return await core.Advanced_SiteItemDelete((int)site.MicrotingUid)
-                        ? new OperationResult(true,
-                            _localizationService.GetStringWithFormat("SiteParamDeletedSuccessfully", site.Name))
-                        : new OperationResult(false,
-                            _localizationService.GetStringWithFormat("SiteParamCouldNotBeDeleted", site.Name));
+                    return new OperationResult(false,
+                        _localizationService.GetStringWithFormat("SiteParamNotFound", id));
                 }
+
+                return await core.Advanced_SiteItemDelete((int)site.MicrotingUid)
+                    ? new OperationResult(true,
+                        _localizationService.GetStringWithFormat("SiteParamDeletedSuccessfully", site.Name))
+                    : new OperationResult(false,
+                        _localizationService.GetStringWithFormat("SiteParamCouldNotBeDeleted", site.Name));
             }
             catch (Exception e)
             {
