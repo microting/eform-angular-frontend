@@ -30,12 +30,8 @@ using Castle.Core.Internal;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Hosting.Helpers;
 using eFormAPI.Web.Hosting.Settings;
-using eFormAPI.Web.Infrastructure.Const;
 using eFormAPI.Web.Infrastructure.Database;
-using eFormAPI.Web.Infrastructure.Database.Entities.Menu;
 using eFormAPI.Web.Infrastructure.Database.Factories;
-using eFormAPI.Web.Services.PluginsManagement;
-using eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -49,6 +45,11 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 
 namespace eFormAPI.Web
 {
+    using Infrastructure.Models;
+    using Infrastructure.Models.Settings.Admin;
+    using Newtonsoft.Json;
+    using Services;
+
     public class Program
     {
         private static CancellationTokenSource _cancelTokenSource = new CancellationTokenSource();
@@ -59,6 +60,14 @@ namespace eFormAPI.Web
         public static void Main(string[] args)
         {
             var host = BuildWebHost(args);
+            InitializeSettings(host);
+
+            if (_shouldBeRestarted)
+            {
+                host = BuildWebHost(args);
+                _shouldBeRestarted = false;
+            }
+
             MigrateDb(host);
             LoadNavigationMenuEnabledPlugins(host);
             host.RunAsync(_cancelTokenSource.Token)
@@ -112,9 +121,9 @@ namespace eFormAPI.Web
                         {
                             foreach(var enablePlugin in Program.EnabledPlugins)
                             {
-                                var pluginManagmentService = scope.ServiceProvider.GetRequiredService<IPluginsManagementService>();
+                                var pluginManagementService = scope.ServiceProvider.GetRequiredService<IPluginsManagementService>();
 
-                                await pluginManagmentService.LoadNavigationMenuDuringStartProgram(enablePlugin.PluginId);
+                                await pluginManagementService.LoadNavigationMenuDuringStartProgram(enablePlugin.PluginId);
                             }
                         }
                         catch (Exception e)
@@ -142,26 +151,76 @@ namespace eFormAPI.Web
 
                 if (dbContext != null)
                 {
-                    using (dbContext = scope.ServiceProvider.GetRequiredService<BaseDbContext>())
+                    using var service = dbContext = scope.ServiceProvider.GetRequiredService<BaseDbContext>();
+                    try
                     {
-                        try
+                        var connectionStrings =
+                            scope.ServiceProvider.GetRequiredService<IOptions<ConnectionStrings>>();
+                        if (connectionStrings.Value.DefaultConnection != "...")
                         {
-                            var connectionStrings =
-                                scope.ServiceProvider.GetRequiredService<IOptions<ConnectionStrings>>();
-                            if (connectionStrings.Value.DefaultConnection != "...")
+                            if (dbContext.Database.GetPendingMigrations().Any())
                             {
-                                if (dbContext.Database.GetPendingMigrations().Any())
-                                {
-                                    Log.LogEvent("Migrating Angular DB");
-                                    dbContext.Database.Migrate();
-                                }
+                                Log.LogEvent("Migrating Angular DB");
+                                dbContext.Database.Migrate();
                             }
                         }
-                        catch (Exception e)
+                    }
+                    catch (Exception e)
+                    {
+                        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+                        logger.LogError(e, "Error while migrating db");
+                    }
+                }
+            }
+        }
+
+        public static async void InitializeSettings(IWebHost webHost)
+        {
+            // Find file
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "init.json");
+            if (File.Exists(filePath))
+            {
+                // Get content
+                var startupContent = File.ReadAllText(filePath);
+                var startup = JsonConvert.DeserializeObject<StartupInitializeModel>(startupContent);
+                // Apply settings
+                using var scope = webHost.Services.GetService<IServiceScopeFactory>().CreateScope();
+                var settingsService = scope.ServiceProvider.GetRequiredService<SettingsService>();
+                var existsResult = settingsService.ConnectionStringExist();
+                if (!existsResult.Success)
+                {
+                    var updateConnectionResult = await settingsService.UpdateConnectionString(startup.InitialSettings);
+                    if (!updateConnectionResult.Success)
+                    {
+                        throw new Exception("Init error: " + updateConnectionResult.Message);
+                    }
+
+                    var adminSettingsUpdateModel = new AdminSettingsModel
+                    {
+                        S3SettingsModel = startup.S3SettingsModel,
+                        SMTPSettingsModel = startup.SMTPSettingsModel,
+                        SdkSettingsModel = startup.SdkSettingsModel,
+                        SendGridSettingsModel = startup.SendGridSettingsModel,
+                        SwiftSettingsModel = startup.SwiftSettingsModel,
+                    };
+
+                    var updateAdminSettingsResult = await settingsService.UpdateAdminSettings(adminSettingsUpdateModel);
+                    if (!updateAdminSettingsResult.Success)
+                    {
+                        throw new Exception("Init error: " + updateAdminSettingsResult.Message);
+                    }
+
+                    // Enable plugins
+                    foreach (var pluginId in startup.PluginsList)
+                    {
+                        var disabledPlugin = DisabledPlugins.FirstOrDefault(x => x.PluginId == pluginId);
+
+                        if (disabledPlugin != null)
                         {
-                            var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-                            logger.LogError(e, "Error while migrating db");
+                            // TODO enable plugin
                         }
+
+                        // Program.Restart(); // restart IF some plugins has been enabled
                     }
                 }
             }

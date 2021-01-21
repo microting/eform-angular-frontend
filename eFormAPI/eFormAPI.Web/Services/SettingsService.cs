@@ -125,7 +125,6 @@ namespace eFormAPI.Web.Services
 
         public async Task<OperationResult> UpdateConnectionString(InitialSettingsModel initialSettingsModel)
         {
-            string sdkConnectionString, mainConnectionString;
             var customerNo = initialSettingsModel.GeneralAppSetupSettingsModel.CustomerNo.ToString();
             var dbNamePrefix = "";
 
@@ -137,23 +136,23 @@ namespace eFormAPI.Web.Services
             var sdkDbName = dbNamePrefix + customerNo + "_SDK";
             var angularDbName = dbNamePrefix + customerNo + "_Angular";
 
-            sdkConnectionString = "host= " +
-                                  initialSettingsModel.ConnectionStringSdk.Host +
-                                  ";Database=" +
-                                  sdkDbName + ";" +
-                                  initialSettingsModel
-                                      .ConnectionStringSdk.Auth +
-                                  "port=" + initialSettingsModel.ConnectionStringSdk.Port +
-                                  ";Convert Zero Datetime = true;SslMode=none;";
+            var sdkConnectionString = "host= " +
+                                         initialSettingsModel.ConnectionStringSdk.Host +
+                                         ";Database=" +
+                                         sdkDbName + ";" +
+                                         initialSettingsModel
+                                             .ConnectionStringSdk.Auth +
+                                         "port=" + initialSettingsModel.ConnectionStringSdk.Port +
+                                         ";Convert Zero Datetime = true;SslMode=none;";
 
-            mainConnectionString = "host= " +
-                                   initialSettingsModel.ConnectionStringSdk.Host +
-                                   ";Database=" +
-                                   angularDbName + ";" +
-                                   initialSettingsModel
-                                       .ConnectionStringSdk.Auth +
-                                   "port=" + initialSettingsModel.ConnectionStringSdk.Port +
-                                   ";Convert Zero Datetime = true;SslMode=none;";
+            var mainConnectionString = "host= " +
+                                          initialSettingsModel.ConnectionStringSdk.Host +
+                                          ";Database=" +
+                                          angularDbName + ";" +
+                                          initialSettingsModel
+                                              .ConnectionStringSdk.Auth +
+                                          "port=" + initialSettingsModel.ConnectionStringSdk.Port +
+                                          ";Convert Zero Datetime = true;SslMode=none;";
 
 
             if (!string.IsNullOrEmpty(_connectionStringsSdk.Value.SdkConnection))
@@ -194,6 +193,7 @@ namespace eFormAPI.Web.Services
             {
                 dbContextOptionsBuilder.UseMySql(mainConnectionString, b =>
                     b.MigrationsAssembly("eFormAPI.Web").EnableRetryOnFailure());
+
 
                 await using var dbContext = new BaseDbContext(dbContextOptionsBuilder.Options);
                 Log.LogEvent("Migrating Angular DB");
@@ -490,60 +490,96 @@ namespace eFormAPI.Web.Services
             try
             {
                 var core = await _coreHelper.GetCore();
-                await _emailSettings.UpdateDb((option) =>
+                if (adminSettingsModel.SMTPSettingsModel != null)
                 {
-                    option.SmtpHost = adminSettingsModel.SMTPSettingsModel.Host;
-                    option.SmtpPort = int.Parse(adminSettingsModel.SMTPSettingsModel.Port);
-                    option.Login = adminSettingsModel.SMTPSettingsModel.Login;
-                    option.Password = adminSettingsModel.SMTPSettingsModel.Password;
-                    option.SendGridKey = adminSettingsModel.SendGridSettingsModel.ApiKey;
-                }, _dbContext);
-                await _headerSettings.UpdateDb((option) =>
-                {
-                    option.ImageLink = adminSettingsModel.HeaderSettingsModel.ImageLink;
-                    option.ImageLinkVisible = adminSettingsModel.HeaderSettingsModel.ImageLinkVisible;
-                    option.MainText = adminSettingsModel.HeaderSettingsModel.MainText;
-                    option.MainTextVisible = adminSettingsModel.HeaderSettingsModel.MainTextVisible;
-                    option.SecondaryText = adminSettingsModel.HeaderSettingsModel.SecondaryText;
-                    option.SecondaryTextVisible = adminSettingsModel.HeaderSettingsModel.SecondaryTextVisible;
-                }, _dbContext);
-                await _loginPageSettings.UpdateDb((option) =>
-                {
-                    option.ImageLink = adminSettingsModel.LoginPageSettingsModel.ImageLink;
-                    option.ImageLinkVisible = adminSettingsModel.LoginPageSettingsModel.ImageLinkVisible;
-                    option.MainText = adminSettingsModel.LoginPageSettingsModel.MainText;
-                    option.MainTextVisible = adminSettingsModel.LoginPageSettingsModel.MainTextVisible;
-                    option.SecondaryText = adminSettingsModel.LoginPageSettingsModel.SecondaryText;
-                    option.SecondaryTextVisible = adminSettingsModel.LoginPageSettingsModel.SecondaryTextVisible;
-                }, _dbContext);
-                await core.SetSdkSetting(Settings.httpServerAddress, adminSettingsModel.SiteLink);
-                await core.SetSdkSetting(Settings.swiftEnabled, adminSettingsModel.SwiftSettingsModel.SwiftEnabled.ToString());
-                await core.SetSdkSetting(Settings.swiftUserName, adminSettingsModel.SwiftSettingsModel.SwiftUserName);
-
-                if (adminSettingsModel.SwiftSettingsModel.SwiftPassword != "SOMESECRETPASSWORD")
-                {
-                    await core.SetSdkSetting(Settings.swiftPassword, adminSettingsModel.SwiftSettingsModel.SwiftPassword);
+                    await _emailSettings.UpdateDb((option) =>
+                    {
+                        option.SmtpHost = adminSettingsModel.SMTPSettingsModel.Host;
+                        option.SmtpPort = int.Parse(adminSettingsModel.SMTPSettingsModel.Port);
+                        option.Login = adminSettingsModel.SMTPSettingsModel.Login;
+                        option.Password = adminSettingsModel.SMTPSettingsModel.Password;
+                        option.SendGridKey = adminSettingsModel.SendGridSettingsModel.ApiKey;
+                    }, _dbContext);
                 }
 
-                await core.SetSdkSetting(Settings.swiftEndPoint, adminSettingsModel.SwiftSettingsModel.SwiftEndpoint);
-                await core.SetSdkSetting(Settings.keystoneEndPoint, adminSettingsModel.SwiftSettingsModel.KeystoneEndpoint);
-                await core.SetSdkSetting(Settings.customerNo, adminSettingsModel.SdkSettingsModel.CustomerNo);
-                await core.SetSdkSetting(Settings.logLevel, adminSettingsModel.SdkSettingsModel.LogLevel);
-                await core.SetSdkSetting(Settings.logLimit, adminSettingsModel.SdkSettingsModel.LogLimit);
-                await core.SetSdkSetting(Settings.fileLocationPicture, adminSettingsModel.SdkSettingsModel.FileLocationPicture);
-                await core.SetSdkSetting(Settings.fileLocationPdf, adminSettingsModel.SdkSettingsModel.FileLocationPdf);
-                await core.SetSdkSetting(Settings.fileLocationJasper, adminSettingsModel.SdkSettingsModel.FileLocationReports);
-                await core.SetSdkSetting(Settings.httpServerAddress, adminSettingsModel.SdkSettingsModel.HttpServerAddress);
-                await core.SetSdkSetting(Settings.s3Enabled, adminSettingsModel.S3SettingsModel.S3Enabled.ToString());
-                await core.SetSdkSetting(Settings.s3AccessKeyId, adminSettingsModel.S3SettingsModel.S3AccessKeyId);
-                await core.SetSdkSetting(Settings.s3BucketName, adminSettingsModel.S3SettingsModel.S3BucketName);
-
-                if (adminSettingsModel.S3SettingsModel.S3SecrectAccessKey != "SOMESECRETPASSWORD")
+                if (adminSettingsModel.HeaderSettingsModel != null)
                 {
-                    await core.SetSdkSetting(Settings.s3SecrectAccessKey, adminSettingsModel.S3SettingsModel.S3SecrectAccessKey);
+                    await _headerSettings.UpdateDb((option) =>
+                    {
+                        option.ImageLink = adminSettingsModel.HeaderSettingsModel.ImageLink;
+                        option.ImageLinkVisible = adminSettingsModel.HeaderSettingsModel.ImageLinkVisible;
+                        option.MainText = adminSettingsModel.HeaderSettingsModel.MainText;
+                        option.MainTextVisible = adminSettingsModel.HeaderSettingsModel.MainTextVisible;
+                        option.SecondaryText = adminSettingsModel.HeaderSettingsModel.SecondaryText;
+                        option.SecondaryTextVisible = adminSettingsModel.HeaderSettingsModel.SecondaryTextVisible;
+                    }, _dbContext);
                 }
 
-                await core.SetSdkSetting(Settings.s3Endpoint, adminSettingsModel.S3SettingsModel.S3Endpoint);
+                if (adminSettingsModel.LoginPageSettingsModel != null)
+                {
+                    await _loginPageSettings.UpdateDb((option) =>
+                    {
+                        option.ImageLink = adminSettingsModel.LoginPageSettingsModel.ImageLink;
+                        option.ImageLinkVisible = adminSettingsModel.LoginPageSettingsModel.ImageLinkVisible;
+                        option.MainText = adminSettingsModel.LoginPageSettingsModel.MainText;
+                        option.MainTextVisible = adminSettingsModel.LoginPageSettingsModel.MainTextVisible;
+                        option.SecondaryText = adminSettingsModel.LoginPageSettingsModel.SecondaryText;
+                        option.SecondaryTextVisible = adminSettingsModel.LoginPageSettingsModel.SecondaryTextVisible;
+                    }, _dbContext);
+                }
+
+                if (!string.IsNullOrEmpty(adminSettingsModel.SiteLink))
+                {
+                    await core.SetSdkSetting(Settings.httpServerAddress, adminSettingsModel.SiteLink);
+                }
+
+                if (adminSettingsModel.SwiftSettingsModel != null)
+                {
+                    await core.SetSdkSetting(
+                        Settings.swiftEnabled,
+                        adminSettingsModel.SwiftSettingsModel.SwiftEnabled.ToString());
+
+                    await core.SetSdkSetting(
+                        Settings.swiftUserName,
+                        adminSettingsModel.SwiftSettingsModel.SwiftUserName);
+
+                    if (adminSettingsModel.SwiftSettingsModel.SwiftPassword != "SOMESECRETPASSWORD")
+                    {
+                        await core.SetSdkSetting(Settings.swiftPassword,
+                            adminSettingsModel.SwiftSettingsModel.SwiftPassword);
+                    }
+
+                    await core.SetSdkSetting(Settings.swiftEndPoint,
+                        adminSettingsModel.SwiftSettingsModel.SwiftEndpoint);
+                    await core.SetSdkSetting(Settings.keystoneEndPoint,
+                        adminSettingsModel.SwiftSettingsModel.KeystoneEndpoint);
+                }
+
+                if (adminSettingsModel.SdkSettingsModel != null)
+                {
+                    await core.SetSdkSetting(Settings.customerNo, adminSettingsModel.SdkSettingsModel.CustomerNo);
+                    await core.SetSdkSetting(Settings.logLevel, adminSettingsModel.SdkSettingsModel.LogLevel);
+                    await core.SetSdkSetting(Settings.logLimit, adminSettingsModel.SdkSettingsModel.LogLimit);
+                    await core.SetSdkSetting(Settings.fileLocationPicture, adminSettingsModel.SdkSettingsModel.FileLocationPicture);
+                    await core.SetSdkSetting(Settings.fileLocationPdf, adminSettingsModel.SdkSettingsModel.FileLocationPdf);
+                    await core.SetSdkSetting(Settings.fileLocationJasper, adminSettingsModel.SdkSettingsModel.FileLocationReports);
+                    await core.SetSdkSetting(Settings.httpServerAddress, adminSettingsModel.SdkSettingsModel.HttpServerAddress);
+                }
+
+                if (adminSettingsModel.S3SettingsModel != null)
+                {
+                    await core.SetSdkSetting(Settings.s3Enabled, adminSettingsModel.S3SettingsModel.S3Enabled.ToString());
+                    await core.SetSdkSetting(Settings.s3AccessKeyId, adminSettingsModel.S3SettingsModel.S3AccessKeyId);
+                    await core.SetSdkSetting(Settings.s3BucketName, adminSettingsModel.S3SettingsModel.S3BucketName);
+
+                    if (adminSettingsModel.S3SettingsModel.S3SecrectAccessKey != "SOMESECRETPASSWORD")
+                    {
+                        await core.SetSdkSetting(Settings.s3SecrectAccessKey, adminSettingsModel.S3SettingsModel.S3SecrectAccessKey);
+                    }
+
+                    await core.SetSdkSetting(Settings.s3Endpoint, adminSettingsModel.S3SettingsModel.S3Endpoint);
+                }
+
                 return new OperationResult(true, _localizationService.GetString("SettingsUpdatedSuccessfully"));
             }
             catch (Exception e)
@@ -568,7 +604,7 @@ namespace eFormAPI.Web.Services
                     option.SecondaryText = "No more paper-forms and back-office data entry";
                     option.SecondaryTextVisible = true;
                 }, _dbContext);
-                return new OperationResult(true, "Login page settings have been reseted successfully");
+                return new OperationResult(true, "Login page settings have been reset successfully");
             }
             catch (Exception e)
             {
@@ -590,7 +626,7 @@ namespace eFormAPI.Web.Services
                     option.SecondaryText = "No more paper-forms and back-office data entry";
                     option.SecondaryTextVisible = true;
                 }, _dbContext);
-                return new OperationResult(true, "Header settings have been reseted successfully");
+                return new OperationResult(true, "Header settings have been reset successfully");
             }
             catch (Exception e)
             {

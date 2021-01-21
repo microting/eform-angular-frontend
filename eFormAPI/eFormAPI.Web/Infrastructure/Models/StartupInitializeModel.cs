@@ -21,14 +21,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace eFormAPI.Web.Infrastructure.Models.Settings
+namespace eFormAPI.Web.Infrastructure.Models
 {
-    public class AdminSettingsModel
+    using System.Collections.Generic;
+    using Settings.Admin;
+    using Settings.Initial;
+
+    public class StartupInitializeModel
     {
-        public string Host { get; set; }
-        public string Port { get; set; }
-        public string Login { get; set; }
-        public string Password { get; set; }
-        public string SiteLink { get; set; }
+        public InitialSettingsModel InitialSettings { get; set; }
+        public SMTPSettingsModel SMTPSettingsModel { get; set; }
+        public SwiftSettingsModel SwiftSettingsModel { get; set; }
+        public S3SettingsModel S3SettingsModel { get; set; }
+        public SDKSettingsModel SdkSettingsModel { get; set; }
+        public SendGridSettingsModel SendGridSettingsModel { get; set; }
+        public List<string> PluginsList { get; set; }
     }
 }

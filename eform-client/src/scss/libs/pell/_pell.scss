@@ -1,3 +1,5 @@
+@import '../../utilities/colors';
+
 .pell {
   border-radius: 5px;
   box-shadow: 0 2px 3px hsla(0, 0%, 4%, 0.1), 0 0 0 1px hsla(0, 0%, 4%, 0.1);
@@ -20,6 +22,12 @@
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   width: 100%;
+  & button:focus {
+    outline: none;
+  }
+  & button:active {
+    background-color: rgb(100, 100, 100, .1);
+  }
 }
 .pell-button {
   background-color: transparent;
