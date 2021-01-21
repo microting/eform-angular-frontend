@@ -34,16 +34,5 @@ namespace eFormAPI.Web.Infrastructure.Models.Settings.Admin
         public SendGridSettingsModel SendGridSettingsModel { get; set; }
         public string SiteLink { get; set; }
         public string AssemblyVersion { get; set; }
-
-        public AdminSettingsModel()
-        {
-            HeaderSettingsModel = new HeaderSettingsModel();
-            LoginPageSettingsModel = new LoginPageSettingsModel();
-            SMTPSettingsModel = new SMTPSettingsModel();
-            SwiftSettingsModel = new SwiftSettingsModel();
-            S3SettingsModel = new S3SettingsModel();
-            SdkSettingsModel = new SDKSettingsModel();
-            SendGridSettingsModel = new SendGridSettingsModel();
-        }
     }
 }
