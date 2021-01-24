@@ -251,7 +251,7 @@ namespace eFormAPI.Web.Hosting.Helpers
             // create plugin loaders
             Console.ForegroundColor = ConsoleColor.Green;
             var pluginsDir = Path.Combine(Directory.GetCurrentDirectory(), "Plugins");
-            Console.WriteLine($"[INF] Trying to discover plugins in folder : {pluginsDir}");
+            Console.WriteLine($@"[INF] Trying to discover plugins in folder : {pluginsDir}");
             if (!Directory.Exists(pluginsDir))
             {
                 try
@@ -261,15 +261,15 @@ namespace eFormAPI.Web.Hosting.Helpers
                 catch
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("[ERR] Unable to create directory for plugins");
+                    Console.WriteLine(@"[ERR] Unable to create directory for plugins");
                     throw new Exception("Unable to create directory for plugins");
                 }
             }
 
-            var directories = Directory.EnumerateDirectories(pluginsDir);
-            foreach (var directory in directories)
-            {
-                var pluginList = Directory.GetFiles(directory, "*.Pn.dll", SearchOption.AllDirectories);
+            //var directories = Directory.EnumerateDirectories(pluginsDir);
+            //foreach (var directory in directories)
+            //{
+                var pluginList = Directory.GetFiles(pluginsDir, "*.Pn.dll", SearchOption.AllDirectories);
 
                 foreach (var pluginFile in pluginList)
                 {
@@ -332,15 +332,15 @@ namespace eFormAPI.Web.Hosting.Helpers
                         .Where(t => typeof(IEformPlugin).IsAssignableFrom(t) && !t.IsAbstract))
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine("[INF] Found plugin : " + type.Name);
+                        Console.WriteLine($@"[INF] Found plugin : {type.Name}");
                         var plugin = (IEformPlugin)Activator.CreateInstance(type);
                         plugins.Add(plugin);
                     }
                 }
-            }
+            //}
 
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"[INF] {plugins.Count} plugins found");
+            Console.WriteLine($@"[INF] {plugins.Count} plugins found");
 
             Console.ForegroundColor = ConsoleColor.Gray;
             return plugins;

@@ -1,4 +1,4 @@
-﻿/*
+/*
 The MIT License (MIT)
 
 Copyright (c) 2007 - 2020 Microting A/S
@@ -215,27 +215,31 @@ namespace eFormAPI.Web
                     var pluginList = PluginHelper.GetAllPlugins();
 
                     // Enable plugins
-                    foreach (var pluginId in startup.PluginsList)
+                    if (startup.PluginsList.Count > 0)
                     {
-                        var pluginObject = pluginList.FirstOrDefault(x => x.PluginId == pluginId);
-                        if (pluginObject != null) 
+                        foreach (var pluginId in startup.PluginsList)
                         {
-                            // code copied from PluginsManagementService.UpdateInstalledPlugins with simplification
-                            var contextFactory = new BaseDbContextFactory();
-                            await using var dbContext = contextFactory.CreateDbContext(new[] { _defaultConnectionString });
-                            var eformPlugin = await dbContext.EformPlugins
-                                .FirstOrDefaultAsync(x => x.PluginId == pluginObject.PluginId);
-
-                            if (eformPlugin != null)
+                            var pluginObject = pluginList.FirstOrDefault(x => x.PluginId == pluginId);
+                            if (pluginObject != null)
                             {
-                                eformPlugin.Status = (int)PluginStatus.Enabled;
-                                dbContext.EformPlugins.Update(eformPlugin);
-                                await dbContext.SaveChangesAsync();
+                                var contextFactory = new BaseDbContextFactory();
+                                await using var dbContext =
+                                    contextFactory.CreateDbContext(new[] {_defaultConnectionString});
+                                var eformPlugin = await dbContext.EformPlugins
+                                    .Where(x => x.Status == (int)PluginStatus.Disabled)
+                                    .FirstOrDefaultAsync(x => x.PluginId == pluginObject.PluginId);
+
+                                if (eformPlugin != null)
+                                {
+                                    eformPlugin.Status = (int)PluginStatus.Enabled;
+                                    dbContext.EformPlugins.Update(eformPlugin);
+                                    await dbContext.SaveChangesAsync();
+                                }
                             }
                         }
 
+                        Restart(); // restart IF some plugins has been enabled}
                     }
-                    Restart(); // restart IF some plugins has been enabled
                 }
             }
         }
