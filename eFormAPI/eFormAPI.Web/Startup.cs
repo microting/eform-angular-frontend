@@ -22,48 +22,47 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using System.Linq;
-using System.Collections.Generic;
-using eFormAPI.Web.Abstractions;
-using eFormAPI.Web.Abstractions.Advanced;
-using eFormAPI.Web.Abstractions.Eforms;
-using eFormAPI.Web.Abstractions.Security;
-using eFormAPI.Web.Hosting.Extensions;
-using eFormAPI.Web.Hosting.Security;
-using eFormAPI.Web.Infrastructure.Database;
-using eFormAPI.Web.Infrastructure.Models.Settings.Plugins;
-using eFormAPI.Web.Services;
-using eFormAPI.Web.Services.Security;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http.Features;
-using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.PlatformAbstractions;
-using Microsoft.Extensions.Localization;
-using Microting.eFormApi.BasePn.Abstractions;
-using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
-using Microting.eFormApi.BasePn.Localization;
-using Microting.eFormApi.BasePn.Localization.Abstractions;
-using Microting.eFormApi.BasePn.Services;
-using eFormAPI.Web.Infrastructure.Database.Factories;
-using eFormAPI.Web.Services.Export;
-using eFormAPI.Web.Services.Mailing.CasePost;
-using eFormAPI.Web.Services.Mailing.EmailRecipients;
-using eFormAPI.Web.Services.Mailing.EmailService;
-using eFormAPI.Web.Services.Mailing.EmailTags;
-using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 
 namespace eFormAPI.Web
 {
     using Services.Import;
+    using System.Linq;
+    using System.Collections.Generic;
+    using Abstractions;
+    using Abstractions.Advanced;
+    using Abstractions.Eforms;
+    using Abstractions.Security;
+    using Hosting.Extensions;
+    using Hosting.Security;
+    using Infrastructure.Database;
+    using Infrastructure.Models.Settings.Plugins;
+    using Services;
+    using Services.Security;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http.Features;
+    using Microsoft.AspNetCore.HttpOverrides;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Identity.UI.Services;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Localization;
+    using Microting.eFormApi.BasePn.Abstractions;
+    using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
+    using Microting.eFormApi.BasePn.Localization;
+    using Microting.eFormApi.BasePn.Localization.Abstractions;
+    using Microting.eFormApi.BasePn.Services;
+    using Infrastructure.Database.Factories;
+    using Services.Export;
+    using Services.Mailing.CasePost;
+    using Services.Mailing.EmailRecipients;
+    using Services.Mailing.EmailService;
+    using Services.Mailing.EmailTags;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.OpenApi.Models;
 
     public class Startup
     {
@@ -72,6 +71,7 @@ namespace eFormAPI.Web
             Configuration = configuration;
         }
 
+        // ReSharper disable once MemberCanBePrivate.Global
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -159,13 +159,15 @@ namespace eFormAPI.Web
                     Description = "API documentation"
                 });
                 //Set the comments path for the swagger json and ui.
-                var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+                //var basePath = PlatformServices.Default.Application.ApplicationBasePath;
                 //var xmlPath = Path.Combine(basePath, "API.doc.xml");
                 //c.IncludeXmlComments(xmlPath);
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description =
-                        "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 12345abcdef\"",
+                        "JWT Authorization header using the Bearer scheme. \r\n" +
+                        "\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n" +
+                        "\r\nExample: \"Bearer 12345abcdef\"",
                     Name = "Authorization",
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.ApiKey,
@@ -304,18 +306,16 @@ namespace eFormAPI.Web
             if (Configuration.MyConnectionString() != "...")
             {
                 var contextFactory = new BaseDbContextFactory();
-                using (var dbContext = contextFactory.CreateDbContext(new[] { Configuration.MyConnectionString() }))
+                using var dbContext = contextFactory.CreateDbContext(new[] { Configuration.MyConnectionString() });
+                foreach (var eformPlugin in dbContext.EformPlugins
+                    .AsNoTracking()
+                    .Where(x => x.ConnectionString != "..."))
                 {
-                    foreach (var eformPlugin in dbContext.EformPlugins
-                        .AsNoTracking()
-                        .Where(x => x.ConnectionString != "..."))
+                    var plugin = Program.EnabledPlugins.FirstOrDefault(p => p.PluginId == eformPlugin.PluginId);
+                    if (plugin != null)
                     {
-                        var plugin = Program.EnabledPlugins.FirstOrDefault(p => p.PluginId == eformPlugin.PluginId);
-                        if (plugin != null)
-                        {
-                            var permissionsManager = plugin.GetPermissionsManager(eformPlugin.ConnectionString);
-                            permissions.AddRange(permissionsManager.GetPluginPermissions().Result);
-                        }
+                        var permissionsManager = plugin.GetPermissionsManager(eformPlugin.ConnectionString);
+                        permissions.AddRange(permissionsManager.GetPluginPermissions().Result);
                     }
                 }
             }

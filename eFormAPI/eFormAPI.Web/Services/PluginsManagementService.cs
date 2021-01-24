@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -9,21 +9,17 @@ using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Hosting.Enums;
 using eFormAPI.Web.Hosting.Helpers;
 using eFormAPI.Web.Hosting.Helpers.DbOptions;
-using eFormAPI.Web.Infrastructure.Const;
 using eFormAPI.Web.Infrastructure.Database;
 using eFormAPI.Web.Infrastructure.Database.Entities.Menu;
 using eFormAPI.Web.Infrastructure.Database.Entities.Permissions;
 using eFormAPI.Web.Infrastructure.Models.Plugins;
 using eFormAPI.Web.Infrastructure.Models.Settings.Plugins;
-using eFormAPI.Web.Services.NavigationMenu;
-using eFormAPI.Web.Services.PluginsManagement;
 using eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace eFormAPI.Web.Services
 {
@@ -71,7 +67,7 @@ namespace eFormAPI.Web.Services
                             PluginId = eformPlugin.PluginId,
                             Status = (PluginStatus) eformPlugin.Status,
                             Name = loadedPlugin.Name,
-                            Version = loadedPlugin.PluginAssembly().GetName().Version.ToString(),
+                            Version = loadedPlugin.PluginAssembly().GetName().Version?.ToString(),
                             VersionAvailable = PluginHelper.GetLatestRepositoryVersion("microting", loadedPlugin.PluginId),
                             BaseUrl = loadedPlugin.PluginBaseUrl
                         };
@@ -95,8 +91,8 @@ namespace eFormAPI.Web.Services
             try
             {
                 var eformPlugin = await _dbContext.EformPlugins
-                    .FirstOrDefaultAsync(x => x.Id == updateModel.Id
-                                         && x.PluginId == updateModel.PluginId);
+                    .Where(x => x.Id == updateModel.Id)
+                    .FirstOrDefaultAsync(x => x.PluginId == updateModel.PluginId);
 
                 if (eformPlugin == null)
                 {
@@ -170,7 +166,7 @@ namespace eFormAPI.Web.Services
             }
 
             _dbContext.RemoveRange(menuTemplates);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
 
             // delete all permissions connected with removed menu templates
             foreach (var permissionId in permissionIds)
@@ -178,7 +174,7 @@ namespace eFormAPI.Web.Services
                 var permission = _dbContext.Permissions.Single(x => x.Id == permissionId);
 
                 _dbContext.Permissions.Remove(permission);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
             }
 
             // delete all permission types connected with removed permissions
@@ -190,7 +186,7 @@ namespace eFormAPI.Web.Services
                 {
                     var permissionType = _dbContext.PermissionTypes.Single(x => x.Id == permissionTypeId);
                     _dbContext.PermissionTypes.Remove(permissionType);
-                    _dbContext.SaveChanges();
+                    await _dbContext.SaveChangesAsync();
                 }
             }
 
@@ -246,7 +242,7 @@ namespace eFormAPI.Web.Services
 
             if(menuTemplatesFromDatabase.Any())
             {
-               if(menuTemplatesFromPlugin.Count() != menuTemplatesFromDatabase.Count())
+               if(menuTemplatesFromPlugin.Count != menuTemplatesFromDatabase.Count)
                {
                     foreach(var menuTemplateFromPlugin in menuTemplatesFromPlugin)
                     {
@@ -265,8 +261,8 @@ namespace eFormAPI.Web.Services
                                 EformPluginId = eformPlugin.Id,
                             };
 
-                            _dbContext.MenuTemplates.Add(menuTemplateToDatabase);
-                            _dbContext.SaveChanges();
+                            await _dbContext.MenuTemplates.AddAsync(menuTemplateToDatabase);
+                            await _dbContext.SaveChangesAsync();
 
                             foreach (var translation in menuTemplateFromPlugin.Translations)
                             {
@@ -278,8 +274,8 @@ namespace eFormAPI.Web.Services
                                     MenuTemplateId = menuTemplateToDatabase.Id,
                                 };
 
-                                _dbContext.MenuTemplateTranslations.Add(menuTemplateTranslation);
-                                _dbContext.SaveChanges();
+                                await _dbContext.MenuTemplateTranslations.AddAsync(menuTemplateTranslation);
+                                await _dbContext.SaveChangesAsync();
                             }
 
                             if (menuTemplateFromPlugin.Permissions.Any())
@@ -297,21 +293,27 @@ namespace eFormAPI.Web.Services
                                             Name = itemPermission.PermissionTypeName,
                                         };
 
-                                        _dbContext.PermissionTypes.Add(newPermissionType);
-                                        _dbContext.SaveChanges();
+                                        await _dbContext.PermissionTypes.AddAsync(newPermissionType);
+                                        await _dbContext.SaveChangesAsync();
                                     }
 
                                     var permission = new Permission
                                     {
                                         PermissionName = itemPermission.PermissionName,
                                         ClaimName = itemPermission.ClaimName,
-                                        PermissionTypeId = newPermissionType == null
-                                            ? permissionType.Id
-                                            : newPermissionType.Id
                                     };
+                                    // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
+                                    if (newPermissionType == null)
+                                    {
+                                        permission.PermissionTypeId = permissionType.Id;
+                                    }
+                                    else
+                                    {
+                                        permission.PermissionTypeId = newPermissionType.Id;
+                                    }
 
-                                    _dbContext.Permissions.Add(permission);
-                                    _dbContext.SaveChanges();
+                                    await _dbContext.Permissions.AddAsync(permission);
+                                    await _dbContext.SaveChangesAsync();
 
                                     var menuTemplatePermission = new MenuTemplatePermission
                                     {
@@ -319,8 +321,8 @@ namespace eFormAPI.Web.Services
                                         PermissionId = permission.Id,
                                     };
 
-                                    _dbContext.MenuTemplatePermissions.Add(menuTemplatePermission);
-                                    _dbContext.SaveChanges();
+                                    await _dbContext.MenuTemplatePermissions.AddAsync(menuTemplatePermission);
+                                    await _dbContext.SaveChangesAsync();
                                 }
                             }
                         }
@@ -340,10 +342,8 @@ namespace eFormAPI.Web.Services
 
         public async Task<OperationResult> LoadNavigationMenuOfPlugin(string pluginId)
         {
-            var eformPlugin = await _dbContext.EformPlugins
-                   .FirstOrDefaultAsync(x => x.PluginId == pluginId);
-
-            if (eformPlugin == null)
+            if (await _dbContext.EformPlugins
+                   .AnyAsync(x => x.PluginId == pluginId))
             {
                 return new OperationDataResult<InstalledPluginsModel>(false,
                     _localizationService.GetString("PluginNotFound"));
@@ -436,9 +436,9 @@ namespace eFormAPI.Web.Services
 
                 const string pluginInstallDirectory = "/var/www/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/PluginInstallDaemonQueue";
                 var filePath = Path.Combine(pluginInstallDirectory, "install.sh");
-                using (var file = new StreamWriter(filePath))
+                await using (var file = new StreamWriter(filePath))
                 {
-                    file.Write(scriptContent);
+                    await file.WriteAsync(scriptContent);
                     file.Close();
                 }
 
@@ -460,20 +460,23 @@ namespace eFormAPI.Web.Services
         {
             var command = cmd;
             var result = "";
-            using (var proc = new Process())
+            using var proc = new Process
             {
-                proc.StartInfo.FileName = "/bin/bash";
-                proc.StartInfo.Arguments = "-c \" " + command + " \"";
-                proc.StartInfo.UseShellExecute = false;
-                proc.StartInfo.RedirectStandardOutput = true;
-                proc.StartInfo.RedirectStandardError = true;
-                proc.Start();
+                StartInfo =
+                {
+                    FileName = "/bin/bash",
+                    Arguments = "-c \" " + command + " \"",
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true
+                }
+            };
+            proc.Start();
 
-                result += proc.StandardOutput.ReadToEnd();
-                result += proc.StandardError.ReadToEnd();
+            result += proc.StandardOutput.ReadToEnd();
+            result += proc.StandardError.ReadToEnd();
 
-                proc.WaitForExit();
-            }
+            proc.WaitForExit();
             return result;
         }
     }

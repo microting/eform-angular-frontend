@@ -21,30 +21,28 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using eFormAPI.Web.Abstractions;
-using eFormAPI.Web.Abstractions.Security;
-using eFormAPI.Web.Infrastructure;
-using eFormAPI.Web.Infrastructure.Database;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
-using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace eFormAPI.Web.Services
 {
-    using eFormAPI.Web.Hosting.Enums;
-    using eFormAPI.Web.Infrastructure.Const;
-    using eFormAPI.Web.Services.NavigationMenu;
-    using eFormAPI.Web.Services.NavigationMenu.Builder;
-    using eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Abstractions;
+    using eFormAPI.Web.Abstractions.Security;
+    using Hosting.Enums;
+    using Infrastructure;
+    using Infrastructure.Database;
+    using NavigationMenu;
+    using NavigationMenu.Builder;
     using Infrastructure.Database.Entities.Menu;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
     using Microting.eFormApi.BasePn.Abstractions;
     using Microting.eFormApi.BasePn.Infrastructure.Consts;
+    using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
     using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
 
     public class MenuService : IMenuService
@@ -77,10 +75,10 @@ namespace eFormAPI.Web.Services
             var actualMenu = await _dbContext.MenuItems.ToListAsync();
 
             _dbContext.MenuItems.RemoveRange(actualMenu);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
 
             // Step 2. Traversal collection and add to database depend on menu item type 
-            for(int i = 0; i < menuItemModels.Count; i++)
+            for(var i = 0; i < menuItemModels.Count; i++)
             {
                 var menuItemBuilder = new MenuItemBuilder(_dbContext, menuItemModels[i], i);
 
@@ -106,9 +104,7 @@ namespace eFormAPI.Web.Services
                 {
                     menuItems = FilterMenuForUser(menuItems, userClaims);
                 }
-
-                var user = await _userService.GetCurrentUserAsync();
-
+                
                 var menuTemplates = new List<NavigationMenuTemplateModel>()
                 {
                     new NavigationMenuTemplateModel
