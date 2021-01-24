@@ -212,30 +212,26 @@ namespace eFormAPI.Web
                         throw new Exception("Init error: " + updateAdminSettingsResult.Message);
                     }
 
-                    var disabledPlugins = PluginHelper.GetDisablePlugins(_defaultConnectionString);
+                    var pluginList = PluginHelper.GetAllPlugins();
+
                     // Enable plugins
                     foreach (var pluginId in startup.PluginsList)
                     {
-                        var disabledPlugin = disabledPlugins.FirstOrDefault(x => x.PluginId == pluginId);
-                        if (disabledPlugin != null) 
+                        var pluginObject = pluginList.FirstOrDefault(x => x.PluginId == pluginId);
+                        if (pluginObject != null) 
                         {
                             // code copied from PluginsManagementService.UpdateInstalledPlugins with simplification
                             var contextFactory = new BaseDbContextFactory();
                             await using var dbContext = contextFactory.CreateDbContext(new[] { _defaultConnectionString });
                             var eformPlugin = await dbContext.EformPlugins
-                                .FirstOrDefaultAsync(x => x.PluginId == disabledPlugin.PluginId);
+                                .FirstOrDefaultAsync(x => x.PluginId == pluginObject.PluginId);
 
-                            eformPlugin.Status = (int)PluginStatus.Enabled;
-                            dbContext.EformPlugins.Update(eformPlugin);
-
-                            await dbContext.SaveChangesAsync();
-
-                            //var pluginMenu = disabledPlugin.GetNavigationMenu(scope.ServiceProvider);
-
-                            //// Load to database all navigation menu from plugin by id
-                            //var pluginMenuItemsLoader = new PluginMenuItemsLoader(dbContext, pluginId);
-
-                            //pluginMenuItemsLoader.Load(pluginMenu);
+                            if (eformPlugin != null)
+                            {
+                                eformPlugin.Status = (int)PluginStatus.Enabled;
+                                dbContext.EformPlugins.Update(eformPlugin);
+                                await dbContext.SaveChangesAsync();
+                            }
                         }
 
                     }
