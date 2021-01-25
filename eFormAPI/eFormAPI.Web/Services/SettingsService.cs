@@ -133,20 +133,26 @@ namespace eFormAPI.Web.Services
                 dbNamePrefix = "Microting_";
             }
 
-            var sdkDbName = $"{dbNamePrefix}{customerNo}_SDK";
-            var angularDbName = $"{dbNamePrefix}{customerNo}_Angular";
+            var sdkDbName = dbNamePrefix + customerNo + "_SDK";
+            var angularDbName = dbNamePrefix + customerNo + "_Angular";
 
-            var sdkConnectionString =
-                $"host= {initialSettingsModel.ConnectionStringSdk.Host};" +
-                $"Database={sdkDbName};{initialSettingsModel.ConnectionStringSdk.Auth}" +
-                $"port={initialSettingsModel.ConnectionStringSdk.Port};" +
-                "Convert Zero Datetime = true;SslMode=none;";
+            var sdkConnectionString = "host= " +
+                                         initialSettingsModel.ConnectionStringSdk.Host +
+                                         ";Database=" +
+                                         sdkDbName + ";" +
+                                         initialSettingsModel
+                                             .ConnectionStringSdk.Auth +
+                                         "port=" + initialSettingsModel.ConnectionStringSdk.Port +
+                                         ";Convert Zero Datetime = true;SslMode=none;";
 
-            var mainConnectionString =
-                $"host= {initialSettingsModel.ConnectionStringSdk.Host};" +
-                $"Database={angularDbName};{initialSettingsModel.ConnectionStringSdk.Auth}" +
-                $"port={initialSettingsModel.ConnectionStringSdk.Port};" +
-                "Convert Zero Datetime = true;SslMode=none;";
+            var mainConnectionString = "host= " +
+                                          initialSettingsModel.ConnectionStringSdk.Host +
+                                          ";Database=" +
+                                          angularDbName + ";" +
+                                          initialSettingsModel
+                                              .ConnectionStringSdk.Auth +
+                                          "port=" + initialSettingsModel.ConnectionStringSdk.Port +
+                                          ";Convert Zero Datetime = true;SslMode=none;";
 
 
             if (!string.IsNullOrEmpty(_connectionStringsSdk.Value.SdkConnection))
@@ -159,10 +165,10 @@ namespace eFormAPI.Web.Services
             {
                 Log.LogEvent($"SettingsService.ConnectionStringExist: connection string is {sdkConnectionString}");
                 var adminTools = new AdminTools(sdkConnectionString);
-                // Setup SDK DB
+                //                 Setup SDK DB
                 await adminTools.DbSetup(initialSettingsModel.ConnectionStringSdk.Token);
-                // var core = await _coreHelper.GetCore();
-                var core = new Core();
+                //                var core = await _coreHelper.GetCore();
+                Core core = new Core();
                 await core.StartSqlOnly(sdkConnectionString);
                 await core.SetSdkSetting(Settings.customerNo, customerNo);
             }
@@ -208,7 +214,7 @@ namespace eFormAPI.Web.Services
 
                 IPasswordHasher<EformUser> hasher = new PasswordHasher<EformUser>();
                 var validator = new UserValidator<EformUser>();
-                var validators = new List<UserValidator<EformUser>> {validator};
+                var validators = new List<UserValidator<EformUser>> { validator };
                 var userManager = new UserManager<EformUser>(userStore, null, hasher, validators, null, null, null,
                     null, null);
 
@@ -223,16 +229,16 @@ namespace eFormAPI.Web.Services
                 var roleManager = new RoleManager<EformRole>(roleStore, null, null, null, null);
                 if (!await roleManager.RoleExistsAsync(EformRole.Admin))
                 {
-                    await roleManager.CreateAsync(new EformRole() {Name = EformRole.Admin});
+                    await roleManager.CreateAsync(new EformRole() { Name = EformRole.Admin });
                 }
 
                 if (!await roleManager.RoleExistsAsync(EformRole.User))
                 {
-                    await roleManager.CreateAsync(new EformRole() {Name = EformRole.User});
+                    await roleManager.CreateAsync(new EformRole() { Name = EformRole.User });
                 }
 
                 // Seed admin and demo users
-                var timeZoneString = "Europe/Copenhagen";
+                string timeZoneString = "Europe/Copenhagen";
 
                 try
                 {
@@ -244,7 +250,7 @@ namespace eFormAPI.Web.Services
                 }
                 var adminUser = new EformUser()
                 {
-                    UserName = initialSettingsModel.AdminSetupModel.UserName,
+                    UserName = initialSettingsModel.AdminSetupModel.Email,
                     Email = initialSettingsModel.AdminSetupModel.Email,
                     FirstName = initialSettingsModel.AdminSetupModel.FirstName,
                     LastName = initialSettingsModel.AdminSetupModel.LastName,
@@ -382,7 +388,7 @@ namespace eFormAPI.Web.Services
         public OperationDataResult<string> GetAssemblyVersion()
         {
             return new OperationDataResult<string>(true, null,
-                Assembly.GetExecutingAssembly().GetName().Version?.ToString());
+                Assembly.GetExecutingAssembly().GetName().Version.ToString());
         }
 
         public OperationDataResult<string> GetApplicationHostOs()
@@ -467,7 +473,7 @@ namespace eFormAPI.Web.Services
                         HttpServerAddress = await core.GetSdkSetting(Settings.httpServerAddress)
                     },
                     SiteLink = await core.GetSdkSetting(Settings.httpServerAddress),
-                    AssemblyVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString()
+                    AssemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString()
                 };
                 return new OperationDataResult<AdminSettingsModel>(true, model);
             }
@@ -611,7 +617,7 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-               await _headerSettings.UpdateDb((option) =>
+                await _headerSettings.UpdateDb((option) =>
                 {
                     option.ImageLink = "";
                     option.ImageLinkVisible = true;

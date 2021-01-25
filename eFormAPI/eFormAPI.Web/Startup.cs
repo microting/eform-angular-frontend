@@ -306,16 +306,18 @@ namespace eFormAPI.Web
             if (Configuration.MyConnectionString() != "...")
             {
                 var contextFactory = new BaseDbContextFactory();
-                using var dbContext = contextFactory.CreateDbContext(new[] { Configuration.MyConnectionString() });
-                foreach (var eformPlugin in dbContext.EformPlugins
-                    .AsNoTracking()
-                    .Where(x => x.ConnectionString != "..."))
+                using (var dbContext = contextFactory.CreateDbContext(new[] { Configuration.MyConnectionString() }))
                 {
-                    var plugin = Program.EnabledPlugins.FirstOrDefault(p => p.PluginId == eformPlugin.PluginId);
-                    if (plugin != null)
+                    foreach (var eformPlugin in dbContext.EformPlugins
+                        .AsNoTracking()
+                        .Where(x => x.ConnectionString != "..."))
                     {
-                        var permissionsManager = plugin.GetPermissionsManager(eformPlugin.ConnectionString);
-                        permissions.AddRange(permissionsManager.GetPluginPermissions().Result);
+                        var plugin = Program.EnabledPlugins.FirstOrDefault(p => p.PluginId == eformPlugin.PluginId);
+                        if (plugin != null)
+                        {
+                            var permissionsManager = plugin.GetPermissionsManager(eformPlugin.ConnectionString);
+                            permissions.AddRange(permissionsManager.GetPluginPermissions().Result);
+                        }
                     }
                 }
             }
