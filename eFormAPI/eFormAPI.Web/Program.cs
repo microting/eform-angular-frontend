@@ -224,7 +224,7 @@ namespace eFormAPI.Web
                             {
                                 var contextFactory = new BaseDbContextFactory();
                                 await using var dbContext =
-                                    contextFactory.CreateDbContext(new[] {_defaultConnectionString});
+                                    contextFactory.CreateDbContext(new[] { _defaultConnectionString });
                                 var eformPlugin = await dbContext.EformPlugins
                                     .Where(x => x.Status == (int)PluginStatus.Disabled)
                                     .FirstOrDefaultAsync(x => x.PluginId == pluginObject.PluginId);
@@ -234,6 +234,16 @@ namespace eFormAPI.Web
                                     eformPlugin.Status = (int)PluginStatus.Enabled;
                                     dbContext.EformPlugins.Update(eformPlugin);
                                     await dbContext.SaveChangesAsync();
+
+
+                                    var pluginMenu = pluginObject.GetNavigationMenu(scope.ServiceProvider);
+
+                                    // Load to database all navigation menu from plugin by id
+                                    var pluginMenuItemsLoader = new PluginMenuItemsLoader(dbContext, pluginId);
+
+                                    pluginMenuItemsLoader.Load(pluginMenu);
+
+
                                 }
                             }
                         }
@@ -256,7 +266,7 @@ namespace eFormAPI.Web
             return WebHost.CreateDefaultBuilder(args)
                 .UseUrls($"http://0.0.0.0:{port}")
                 .UseIISIntegration()
-                .ConfigureAppConfiguration((hostContext, config) => 
+                .ConfigureAppConfiguration((hostContext, config) =>
                 {
                     Log.LogEvent("Delete all default configuration providers");
                     // delete all default configuration providers
