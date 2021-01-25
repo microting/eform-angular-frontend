@@ -313,7 +313,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         [HttpGet]
         [Route("api/template-files/download-case-pdf/{templateId}")]
         [Authorize(Policy = AuthConsts.EformPolicies.Cases.CaseGetPdf)]
-        public async Task<IActionResult> DownloadEFormPdf(int templateId, int caseId, string fileType, Language language)
+        public async Task<IActionResult> DownloadEFormPdf(int templateId, int caseId, string fileType)
         {
             if (!await _permissionsService.CheckEform(templateId,
                 AuthConsts.EformClaims.CasesClaims.CaseGetPdf))
@@ -324,6 +324,8 @@ namespace eFormAPI.Web.Controllers.Eforms
             try
             {
                 var core = await _coreHelper.GetCore();
+                var locale = await _userService.GetCurrentUserLocale();
+                var language = core.DbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
 
                 // Fix for broken SDK not handling empty customXmlContent well
                 string customXmlContent = new XElement("FillerElement",

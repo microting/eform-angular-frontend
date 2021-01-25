@@ -134,6 +134,8 @@ namespace eFormAPI.Web.Services
             try
             {
                 var core = await _coreHelper.GetCore();
+                var locale = await _userService.GetCurrentUserLocale();
+                var language = core.DbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
                 var columnsList = new List<int?>
                 {
                     model.FieldId1,
@@ -158,7 +160,7 @@ namespace eFormAPI.Web.Services
                 var allCases = await core.CaseReadAll(model.TemplateId, null, null, timeZoneInfo);
                 foreach (var caseObject in allCases)
                 {
-                    await core.CaseUpdateFieldValues(caseObject.Id);
+                    await core.CaseUpdateFieldValues(caseObject.Id, language);
                 }
 
                 return columnsUpdateResult

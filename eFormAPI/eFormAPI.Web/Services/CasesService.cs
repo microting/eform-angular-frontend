@@ -153,6 +153,8 @@ namespace eFormAPI.Web.Services
             var checkListValueList = new List<string>();
             var fieldValueList = new List<string>();
             var core = await _coreHelper.GetCore();
+            var locale = await _userService.GetCurrentUserLocale();
+            var language = core.DbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
             try
             {
                 model.ElementList.ForEach(element =>
@@ -171,7 +173,7 @@ namespace eFormAPI.Web.Services
             try
             {
                 await core.CaseUpdate(model.Id, fieldValueList, checkListValueList);
-                await core.CaseUpdateFieldValues(model.Id);
+                await core.CaseUpdateFieldValues(model.Id, language);
 
                 if (CaseUpdateDelegates.CaseUpdateDelegate != null)
                 {
