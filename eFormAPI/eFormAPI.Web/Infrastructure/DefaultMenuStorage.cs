@@ -107,7 +107,7 @@ namespace eFormAPI.Web.Infrastructure
                 },
                 new MenuItem
                 {
-                    Id = 3, 
+                    Id = 3,
                     Name = "Dropdown",
                     Link = "",
                     E2EId = "advanced",

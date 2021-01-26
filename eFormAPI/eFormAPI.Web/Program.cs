@@ -1,4 +1,4 @@
-﻿/*
+/*
 The MIT License (MIT)
 
 Copyright (c) 2007 - 2020 Microting A/S
@@ -21,34 +21,37 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using Castle.Core.Internal;
-using eFormAPI.Web.Abstractions;
-using eFormAPI.Web.Hosting.Helpers;
-using eFormAPI.Web.Hosting.Settings;
-using eFormAPI.Web.Infrastructure.Database;
-using eFormAPI.Web.Infrastructure.Database.Factories;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microting.eFormApi.BasePn;
-using Microting.eFormApi.BasePn.Infrastructure.Helpers;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
+
+
+using System.Threading.Tasks;
 
 namespace eFormAPI.Web
 {
+    using Infrastructure.Database.Factories;
+    using Services.PluginsManagement.MenuItemsLoader;
+    using Microting.eFormApi.BasePn;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Threading;
+    using Abstractions;
+    using Hosting.Enums;
+    using Hosting.Helpers;
+    using Hosting.Settings;
+    using Infrastructure.Database;
+    using Microsoft.AspNetCore;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Options;
+    using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
     using Infrastructure.Models;
     using Infrastructure.Models.Settings.Admin;
     using Newtonsoft.Json;
-    using Services;
 
     public class Program
     {
@@ -56,6 +59,7 @@ namespace eFormAPI.Web
         private static bool _shouldBeRestarted;
         public static List<IEformPlugin> EnabledPlugins = new List<IEformPlugin>();
         public static List<IEformPlugin> DisabledPlugins = new List<IEformPlugin>();
+        private static string _defaultConnectionString;
 
         public static void Main(string[] args)
         {
@@ -92,6 +96,7 @@ namespace eFormAPI.Web
             _cancelTokenSource.Cancel();
         }
 
+        // ReSharper disable once UnusedMember.Global
         public static void Stop()
         {
             _shouldBeRestarted = false;
@@ -102,90 +107,87 @@ namespace eFormAPI.Web
 
         public static async void LoadNavigationMenuEnabledPlugins(IWebHost webHost)
         {
-            using (var scope = webHost.Services.GetService<IServiceScopeFactory>().CreateScope())
+            using var scope = webHost.Services.GetService<IServiceScopeFactory>().CreateScope();
+            BaseDbContext dbContext = null;
+            try
             {
-                BaseDbContext dbContext = null;
+                dbContext = scope.ServiceProvider.GetRequiredService<BaseDbContext>();
+            }
+            catch
+            {
+            }
+
+            if (dbContext != null)
+            {
+                //await using (dbContext = scope.ServiceProvider.GetRequiredService<BaseDbContext>())
+                //{
                 try
                 {
-                    dbContext = scope.ServiceProvider.GetRequiredService<BaseDbContext>();
-                }
-                catch
-                {
-                }
-
-                if (dbContext != null)
-                {
-                    using (dbContext = scope.ServiceProvider.GetRequiredService<BaseDbContext>())
+                    foreach (var enablePlugin in EnabledPlugins)
                     {
-                        try
-                        {
-                            foreach(var enablePlugin in Program.EnabledPlugins)
-                            {
-                                var pluginManagementService = scope.ServiceProvider.GetRequiredService<IPluginsManagementService>();
+                        var pluginManagementService = scope.ServiceProvider.GetRequiredService<IPluginsManagementService>();
 
-                                await pluginManagementService.LoadNavigationMenuDuringStartProgram(enablePlugin.PluginId);
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-                            logger.LogError(e, "Error while loading navigation menu from enabled plugins");
-                        }
+                        await pluginManagementService.LoadNavigationMenuDuringStartProgram(enablePlugin.PluginId);
                     }
                 }
+                catch (Exception e)
+                {
+                    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(e, "Error while loading navigation menu from enabled plugins");
+                }
+                //}
             }
         }
 
         public static void MigrateDb(IWebHost webHost)
         {
-            using (var scope = webHost.Services.GetService<IServiceScopeFactory>().CreateScope())
+            using var scope = webHost.Services.GetService<IServiceScopeFactory>().CreateScope();
+            BaseDbContext dbContext = null;
+            try
             {
-                BaseDbContext dbContext = null;
+                dbContext = scope.ServiceProvider.GetRequiredService<BaseDbContext>();
+            }
+            catch
+            {
+            }
+
+            if (dbContext != null)
+            {
+                using var service = dbContext = scope.ServiceProvider.GetRequiredService<BaseDbContext>();
                 try
                 {
-                    dbContext = scope.ServiceProvider.GetRequiredService<BaseDbContext>();
-                }
-                catch
-                {
-                }
-
-                if (dbContext != null)
-                {
-                    using var service = dbContext = scope.ServiceProvider.GetRequiredService<BaseDbContext>();
-                    try
+                    var connectionStrings =
+                        scope.ServiceProvider.GetRequiredService<IOptions<ConnectionStrings>>();
+                    if (connectionStrings.Value.DefaultConnection != "...")
                     {
-                        var connectionStrings =
-                            scope.ServiceProvider.GetRequiredService<IOptions<ConnectionStrings>>();
-                        if (connectionStrings.Value.DefaultConnection != "...")
+                        if (dbContext.Database.GetPendingMigrations().Any())
                         {
-                            if (dbContext.Database.GetPendingMigrations().Any())
-                            {
-                                Log.LogEvent("Migrating Angular DB");
-                                dbContext.Database.Migrate();
-                            }
+                            Log.LogEvent("Migrating Angular DB");
+                            dbContext.Database.Migrate();
                         }
                     }
-                    catch (Exception e)
-                    {
-                        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-                        logger.LogError(e, "Error while migrating db");
-                    }
+                }
+                catch (Exception e)
+                {
+                    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(e, "Error while migrating db");
                 }
             }
         }
 
-        public static async void InitializeSettings(IWebHost webHost)
+        private static async void InitializeSettings(IWebHost webHost)
         {
             // Find file
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "init.json");
             if (File.Exists(filePath))
             {
+                Log.LogEvent($"Try initialize from {filePath}");
                 // Get content
-                var startupContent = File.ReadAllText(filePath);
+                var startupContent = await File.ReadAllTextAsync(filePath);
                 var startup = JsonConvert.DeserializeObject<StartupInitializeModel>(startupContent);
                 // Apply settings
                 using var scope = webHost.Services.GetService<IServiceScopeFactory>().CreateScope();
-                var settingsService = scope.ServiceProvider.GetRequiredService<SettingsService>();
+                var settingsService = scope.ServiceProvider.GetRequiredService<ISettingsService>();
                 var existsResult = settingsService.ConnectionStringExist();
                 if (!existsResult.Success)
                 {
@@ -210,23 +212,49 @@ namespace eFormAPI.Web
                         throw new Exception("Init error: " + updateAdminSettingsResult.Message);
                     }
 
-                    // Enable plugins
-                    foreach (var pluginId in startup.PluginsList)
-                    {
-                        var disabledPlugin = DisabledPlugins.FirstOrDefault(x => x.PluginId == pluginId);
+                    var pluginList = PluginHelper.GetAllPlugins();
 
-                        if (disabledPlugin != null)
+                    // Enable plugins
+                    if (startup.PluginsList.Count > 0)
+                    {
+                        foreach (var pluginId in startup.PluginsList)
                         {
-                            // TODO enable plugin
+                            var pluginObject = pluginList.FirstOrDefault(x => x.PluginId == pluginId);
+                            if (pluginObject != null)
+                            {
+                                var contextFactory = new BaseDbContextFactory();
+                                await using var dbContext =
+                                    contextFactory.CreateDbContext(new[] { _defaultConnectionString });
+                                var eformPlugin = await dbContext.EformPlugins
+                                    .Where(x => x.Status == (int)PluginStatus.Disabled)
+                                    .FirstOrDefaultAsync(x => x.PluginId == pluginObject.PluginId);
+
+                                if (eformPlugin != null)
+                                {
+                                    eformPlugin.Status = (int)PluginStatus.Enabled;
+                                    dbContext.EformPlugins.Update(eformPlugin);
+                                    await dbContext.SaveChangesAsync();
+
+
+                                    var pluginMenu = pluginObject.GetNavigationMenu(scope.ServiceProvider);
+
+                                    // Load to database all navigation menu from plugin by id
+                                    var pluginMenuItemsLoader = new PluginMenuItemsLoader(dbContext, pluginId);
+
+                                    pluginMenuItemsLoader.Load(pluginMenu);
+
+
+                                }
+                            }
                         }
 
-                        // Program.Restart(); // restart IF some plugins has been enabled
+                        Restart(); // restart IF some plugins has been enabled}
                     }
                 }
             }
         }
 
-        public static IWebHost BuildWebHost(string[] args)
+        private static IWebHost BuildWebHost(string[] args)
         {
             var defaultConfig = new ConfigurationBuilder()
                 .AddCommandLine(args)
@@ -240,6 +268,7 @@ namespace eFormAPI.Web
                 .UseIISIntegration()
                 .ConfigureAppConfiguration((hostContext, config) =>
                 {
+                    Log.LogEvent("Delete all default configuration providers");
                     // delete all default configuration providers
                     config.Sources.Clear();
                     config.SetBasePath(hostContext.HostingEnvironment.ContentRootPath);
@@ -257,29 +286,13 @@ namespace eFormAPI.Web
                         ConnectionStringManager.CreateWithConnectionString(filePath, connectionString);
                     }
 
-                    config.AddJsonFile("connection.json",
-                        optional: true,
-                        reloadOnChange: true);
+                    config.AddJsonFile("connection.json", optional: true, reloadOnChange: true);
                     var mainSettings = ConnectionStringManager.Read(filePath);
-                    var defaultConnectionString = mainSettings?.ConnectionStrings?.DefaultConnection;
-                    config.AddEfConfiguration(defaultConnectionString);
+                    _defaultConnectionString = mainSettings?.ConnectionStrings?.DefaultConnection;
+                    config.AddEfConfiguration(_defaultConnectionString);
 
-                    EnabledPlugins = PluginHelper.GetPlugins(defaultConnectionString);
-                    DisabledPlugins = PluginHelper.GetDisablePlugins(defaultConnectionString);
-                    var contextFactory = new BaseDbContextFactory();
-                    using (var dbContext = contextFactory.CreateDbContext(new[] {defaultConnectionString}))
-                    {
-                        foreach (var plugin in EnabledPlugins)
-                        {
-                            var pluginEntity = dbContext.EformPlugins
-                                .FirstOrDefault(x => x.PluginId == plugin.PluginId);
-
-                            if (pluginEntity != null && !pluginEntity.ConnectionString.IsNullOrEmpty())
-                            {
-                                plugin.AddPluginConfig(config, pluginEntity.ConnectionString);
-                            }
-                        }
-                    }
+                    EnabledPlugins = PluginHelper.GetPlugins(_defaultConnectionString);
+                    DisabledPlugins = PluginHelper.GetDisablePlugins(_defaultConnectionString);
 
                     config.AddEnvironmentVariables();
                 })

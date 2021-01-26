@@ -25,9 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Amazon.S3;
 using Amazon.S3.Model;
 using eFormAPI.Web.Hosting.Enums;
@@ -51,7 +49,6 @@ using Microting.eFormApi.BasePn.Infrastructure.Delegates;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Settings;
 using Microting.eFormApi.BasePn.Services;
-using Newtonsoft.Json.Linq;
 using OpenStack.NetCoreSwiftClient;
 using OpenStack.NetCoreSwiftClient.Infrastructure.Models;
 
@@ -64,7 +61,7 @@ namespace eFormAPI.Web.Hosting.Helpers
             // Load info from database
             List<EformPlugin> eformPlugins = null;
             var contextFactory = new BaseDbContextFactory();
-            using (var dbContext = contextFactory.CreateDbContext(new[] {connectionString}))
+            using (var dbContext = contextFactory.CreateDbContext(new[] { connectionString }))
             {
                 try
                 {
@@ -81,7 +78,7 @@ namespace eFormAPI.Web.Hosting.Helpers
             // create plugin loaders
             if (eformPlugins != null)
             {
-                using (var dbContext = contextFactory.CreateDbContext(new[] {connectionString}))
+                using (var dbContext = contextFactory.CreateDbContext(new[] { connectionString }))
                 {
                     var dbNameSection = Regex.Match(connectionString, @"(Database=\w*;)").Groups[0].Value;
                     var dbPrefix = Regex.Match(connectionString, @"Database=(\d*)_").Groups[1].Value;
@@ -91,19 +88,16 @@ namespace eFormAPI.Web.Hosting.Helpers
                         var eformPlugin = eformPlugins.FirstOrDefault(x => x.PluginId == plugin.PluginId);
                         if (eformPlugin != null)
                         {
-//                            if (eformPlugin.ConnectionString.IsNullOrEmpty())
-//                            {
-//                                eformPlugin.ConnectionString = "";
-//                            }
                             if (!eformPlugin.ConnectionString.Contains("PersistSecurityInfo=true;"))
                             {
                                 var aPlugin =
                                     dbContext.EformPlugins.SingleOrDefault(x => x.PluginId == plugin.PluginId);
-                                if (aPlugin != null) aPlugin.ConnectionString += "PersistSecurityInfo=true;";
+                                if (aPlugin != null)
+                                    aPlugin.ConnectionString += "PersistSecurityInfo=true;";
                                 dbContext.SaveChanges();
                             }
 
-                            if (eformPlugin.Status == (int) PluginStatus.Enabled)
+                            if (eformPlugin.Status == (int)PluginStatus.Enabled)
                             {
                                 plugins.Add(plugin);
                             }
@@ -118,7 +112,7 @@ namespace eFormAPI.Web.Hosting.Helpers
                             {
                                 PluginId = plugin.PluginId,
                                 ConnectionString = pluginConnectionString,
-                                Status = (int) PluginStatus.Disabled
+                                Status = (int)PluginStatus.Disabled
                             };
                             dbContext.EformPlugins.Add(newPlugin);
                             dbContext.SaveChanges();
@@ -162,15 +156,12 @@ namespace eFormAPI.Web.Hosting.Helpers
                         var eformPlugin = eformPlugins.FirstOrDefault(x => x.PluginId == plugin.PluginId);
                         if (eformPlugin != null)
                         {
-                            //                            if (eformPlugin.ConnectionString.IsNullOrEmpty())
-                            //                            {
-                            //                                eformPlugin.ConnectionString = "";
-                            //                            }
                             if (!eformPlugin.ConnectionString.Contains("PersistSecurityInfo=true;"))
                             {
                                 var aPlugin =
                                     dbContext.EformPlugins.SingleOrDefault(x => x.PluginId == plugin.PluginId);
-                                if (aPlugin != null) aPlugin.ConnectionString += "PersistSecurityInfo=true;";
+                                if (aPlugin != null)
+                                    aPlugin.ConnectionString += "PersistSecurityInfo=true;";
                                 dbContext.SaveChanges();
                             }
 
@@ -260,7 +251,7 @@ namespace eFormAPI.Web.Hosting.Helpers
             // create plugin loaders
             Console.ForegroundColor = ConsoleColor.Green;
             var pluginsDir = Path.Combine(Directory.GetCurrentDirectory(), "Plugins");
-            Console.WriteLine($"[INF] Trying to discover plugins in folder : {pluginsDir}");
+            Console.WriteLine($@"[INF] Trying to discover plugins in folder : {pluginsDir}");
             if (!Directory.Exists(pluginsDir))
             {
                 try
@@ -270,15 +261,15 @@ namespace eFormAPI.Web.Hosting.Helpers
                 catch
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("[ERR] Unable to create directory for plugins");
+                    Console.WriteLine(@"[ERR] Unable to create directory for plugins");
                     throw new Exception("Unable to create directory for plugins");
                 }
             }
 
-            var directories = Directory.EnumerateDirectories(pluginsDir);
-            foreach (var directory in directories)
-            {
-                var pluginList = Directory.GetFiles(directory, "*.Pn.dll", SearchOption.AllDirectories);
+            //var directories = Directory.EnumerateDirectories(pluginsDir);
+            //foreach (var directory in directories)
+            //{
+                var pluginList = Directory.GetFiles(pluginsDir, "*.Pn.dll", SearchOption.AllDirectories);
 
                 foreach (var pluginFile in pluginList)
                 {
@@ -341,15 +332,15 @@ namespace eFormAPI.Web.Hosting.Helpers
                         .Where(t => typeof(IEformPlugin).IsAssignableFrom(t) && !t.IsAbstract))
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine("[INF] Found plugin : " + type.Name);
+                        Console.WriteLine($@"[INF] Found plugin : {type.Name}");
                         var plugin = (IEformPlugin)Activator.CreateInstance(type);
                         plugins.Add(plugin);
                     }
                 }
-            }
+            //}
 
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"[INF] {plugins.Count} plugins found");
+            Console.WriteLine($@"[INF] {plugins.Count} plugins found");
 
             Console.ForegroundColor = ConsoleColor.Gray;
             return plugins;

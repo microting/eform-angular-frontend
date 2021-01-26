@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -69,7 +69,7 @@ namespace eFormAPI.Web.Services
                         {
                             Id = eformPlugin.Id,
                             PluginId = eformPlugin.PluginId,
-                            Status = (PluginStatus) eformPlugin.Status,
+                            Status = (PluginStatus)eformPlugin.Status,
                             Name = loadedPlugin.Name,
                             Version = loadedPlugin.PluginAssembly().GetName().Version.ToString(),
                             VersionAvailable = PluginHelper.GetLatestRepositoryVersion("microting", loadedPlugin.PluginId),
@@ -104,7 +104,7 @@ namespace eFormAPI.Web.Services
                         _localizationService.GetString("PluginNotFound"));
                 }
 
-                eformPlugin.Status = (int) updateModel.Status;
+                eformPlugin.Status = (int)updateModel.Status;
                 _dbContext.EformPlugins.Update(eformPlugin);
 
                 await _dbContext.SaveChangesAsync();
@@ -151,7 +151,7 @@ namespace eFormAPI.Web.Services
             var permissionIds = new List<int>();
             var permissionTypeIds = new List<int>();
 
-            foreach(var menuTemplate in menuTemplates)
+            foreach (var menuTemplate in menuTemplates)
             {
                 permissionIds.AddRange(_dbContext.MenuTemplatePermissions.Where(x => x.MenuTemplateId == menuTemplate.Id).Select(x => x.PermissionId).Distinct());
                 permissionTypeIds.AddRange(_dbContext.MenuTemplatePermissions.Include(x => x.Permission).Where(x => x.MenuTemplateId == menuTemplate.Id).Select(x => x.Permission.PermissionTypeId).Distinct());
@@ -161,7 +161,7 @@ namespace eFormAPI.Web.Services
                     .Where(x => x.MenuTemplateId == menuTemplate.Id)
                     .ToListAsync();
 
-                foreach(var menuItem in menuItems)
+                foreach (var menuItem in menuItems)
                 {
                     menuItem.MenuTemplateId = null;
                 }
@@ -223,14 +223,14 @@ namespace eFormAPI.Web.Services
 
             foreach (var pluginMenuItem in pluginMenu)
             {
-                if(pluginMenuItem.Type == MenuItemTypeEnum.Link)
+                if (pluginMenuItem.Type == MenuItemTypeEnum.Link)
                 {
                     menuTemplatesFromPlugin.Add(pluginMenuItem.MenuTemplate);
                 }
 
-                if(pluginMenuItem.Type == MenuItemTypeEnum.Dropdown)
+                if (pluginMenuItem.Type == MenuItemTypeEnum.Dropdown)
                 {
-                    foreach(var childMenuItem in pluginMenuItem.ChildItems)
+                    foreach (var childMenuItem in pluginMenuItem.ChildItems)
                     {
                         if (childMenuItem.Type == MenuItemTypeEnum.Link)
                         {
@@ -244,11 +244,11 @@ namespace eFormAPI.Web.Services
                 .Where(x => x.EformPluginId == eformPlugin.Id)
                 .ToList();
 
-            if(menuTemplatesFromDatabase.Any())
+            if (menuTemplatesFromDatabase.Any())
             {
-               if(menuTemplatesFromPlugin.Count() != menuTemplatesFromDatabase.Count())
-               {
-                    foreach(var menuTemplateFromPlugin in menuTemplatesFromPlugin)
+                if (menuTemplatesFromPlugin.Count() != menuTemplatesFromDatabase.Count())
+                {
+                    foreach (var menuTemplateFromPlugin in menuTemplatesFromPlugin)
                     {
                         // get all templates name that in database
                         var menuTemplatesFromDatabaseNames = menuTemplatesFromDatabase.Select(x => x.E2EId).ToList();
@@ -325,7 +325,7 @@ namespace eFormAPI.Web.Services
                             }
                         }
                     }
-               }
+                }
             }
             else
             {

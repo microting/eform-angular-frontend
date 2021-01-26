@@ -36,5 +36,6 @@ namespace eFormAPI.Web.Infrastructure.Models
         public SDKSettingsModel SdkSettingsModel { get; set; }
         public SendGridSettingsModel SendGridSettingsModel { get; set; }
         public List<string> PluginsList { get; set; }
+            = new List<string>();
     }
 }

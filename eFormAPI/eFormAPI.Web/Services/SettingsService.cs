@@ -165,9 +165,9 @@ namespace eFormAPI.Web.Services
             {
                 Log.LogEvent($"SettingsService.ConnectionStringExist: connection string is {sdkConnectionString}");
                 var adminTools = new AdminTools(sdkConnectionString);
-//                 Setup SDK DB
+                //                 Setup SDK DB
                 await adminTools.DbSetup(initialSettingsModel.ConnectionStringSdk.Token);
-//                var core = await _coreHelper.GetCore();
+                //                var core = await _coreHelper.GetCore();
                 Core core = new Core();
                 await core.StartSqlOnly(sdkConnectionString);
                 await core.SetSdkSetting(Settings.customerNo, customerNo);
@@ -214,7 +214,7 @@ namespace eFormAPI.Web.Services
 
                 IPasswordHasher<EformUser> hasher = new PasswordHasher<EformUser>();
                 var validator = new UserValidator<EformUser>();
-                var validators = new List<UserValidator<EformUser>> {validator};
+                var validators = new List<UserValidator<EformUser>> { validator };
                 var userManager = new UserManager<EformUser>(userStore, null, hasher, validators, null, null, null,
                     null, null);
 
@@ -229,12 +229,12 @@ namespace eFormAPI.Web.Services
                 var roleManager = new RoleManager<EformRole>(roleStore, null, null, null, null);
                 if (!await roleManager.RoleExistsAsync(EformRole.Admin))
                 {
-                    await roleManager.CreateAsync(new EformRole() {Name = EformRole.Admin});
+                    await roleManager.CreateAsync(new EformRole() { Name = EformRole.Admin });
                 }
 
                 if (!await roleManager.RoleExistsAsync(EformRole.User))
                 {
-                    await roleManager.CreateAsync(new EformRole() {Name = EformRole.User});
+                    await roleManager.CreateAsync(new EformRole() { Name = EformRole.User });
                 }
 
                 // Seed admin and demo users
@@ -617,7 +617,7 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-               await _headerSettings.UpdateDb((option) =>
+                await _headerSettings.UpdateDb((option) =>
                 {
                     option.ImageLink = "";
                     option.ImageLinkVisible = true;
