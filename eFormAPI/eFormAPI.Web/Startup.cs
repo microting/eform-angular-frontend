@@ -1,4 +1,4 @@
-﻿/*
+/*
 The MIT License (MIT)
 
 Copyright (c) 2007 - 2020 Microting A/S
@@ -21,7 +21,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-
 
 namespace eFormAPI.Web
 {
@@ -63,6 +62,8 @@ namespace eFormAPI.Web
     using Services.Mailing.EmailTags;
     using Microsoft.Extensions.Hosting;
     using Microsoft.OpenApi.Models;
+    using System.IO;
+    using Microsoft.Extensions.PlatformAbstractions;
 
     public class Startup
     {
@@ -159,9 +160,9 @@ namespace eFormAPI.Web
                     Description = "API documentation"
                 });
                 //Set the comments path for the swagger json and ui.
-                //var basePath = PlatformServices.Default.Application.ApplicationBasePath;
-                //var xmlPath = Path.Combine(basePath, "API.doc.xml");
-                //c.IncludeXmlComments(xmlPath);
+                var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+                var xmlPath = Path.Combine(basePath, "API.doc.xml");
+                c.IncludeXmlComments(xmlPath);
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description =
@@ -297,6 +298,8 @@ namespace eFormAPI.Web
             services.AddScoped<ICasePostBaseService, CasePostService>();
             services.AddTransient<IEformExcelExportService, EformExcelExportService>();
             services.AddTransient<IEformExcelImportService, EformExcelImportService>();
+            services.AddScoped<IEformCaseReportService, EformCaseReportService>();
+            services.AddScoped<IWordService, WordService>();
         }
 
         private ICollection<PluginPermissionModel> GetPluginsPermissions()

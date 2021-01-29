@@ -717,4 +717,10 @@
   <data name="EFormWithNameAlreadyExistsInTheImportedDocument" xml:space="preserve">
     <value>eForm with name {0} already exists in the imported document</value>
   </data>
+  <data name="CasesNotFound" xml:space="preserve">
+    <value>Cases not found</value>
+  </data>
+  <data name="ErrorWhileGeneratingReportFile" xml:space="preserve">
+    <value>Error while generating report file</value>
+  </data>
 </root>

@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2020 Microting A/S
+Copyright (c) 2007 - 2021 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,15 +22,30 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Services.Export
-{
-    using System.IO;
-    using System.Threading.Tasks;
-    using Infrastructure.Models;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
-    public interface IEformExcelExportService
+namespace eFormAPI.Web.Infrastructure.Models.ReportEformCase
+{
+    using System;
+    using System.Collections.Generic;
+    
+    public class ReportEformCaseModel
     {
-        Task<OperationDataResult<Stream>> EformExport(EformDownloadExcelModel excelModel);
+
+        public int Id { get; set; }
+
+        public DateTime? MicrotingSdkCaseDoneAt { get; set; }
+
+        public int MicrotingSdkCaseId { get; set; }
+
+        public int? EFormId { get; set; }
+
+        public string DoneBy { get; set; } // worker name
+        
+        // public int PostsCount { get; set; } 
+
+        public int ImagesCount { get; set; }
+
+        public List<string> CaseFields { get; set; }
+            = new List<string>();
     }
 }
