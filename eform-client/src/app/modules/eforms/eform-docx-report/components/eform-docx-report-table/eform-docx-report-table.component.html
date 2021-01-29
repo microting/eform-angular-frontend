@@ -1,0 +1,56 @@
+<div class="row p-1 mt-2 table-responsive no-gutters">
+  <table
+    mdbTable
+    striped="true"
+    hover="true"
+    small="true"
+    class="z-depth-1 text-center"
+  >
+    <thead>
+      <tr>
+        <th>{{ 'Case Id' | translate }}</th>
+        <th>{{ 'Created at' | translate }}</th>
+        <th>{{ 'Done by' | translate }}</th>
+        <th>{{ 'Item name' | translate }}</th>
+        <th *ngFor="let itemHeader of itemHeaders">{{ itemHeader.value }}</th>
+        <th>{{ 'Actions' | translate }}</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody">
+      <tr *ngFor="let item of items">
+        <td>
+          {{ item.microtingSdkCaseId }}
+        </td>
+        <td>
+          <date-formatter
+            [date]="item.microtingSdkCaseDoneAt"
+            [Format]="'datetime'"
+          ></date-formatter>
+        </td>
+        <td>
+          {{ item.doneBy }}
+        </td>
+        <td>
+          {{ item.itemName }}
+        </td>
+        <ng-container *ngFor="let field of item.caseFields">
+          <td>
+            <div [innerHTML]="field"></div>
+          </td>
+        </ng-container>
+        <td>
+          <button
+            mdbBtn
+            class="btn-success btn-icon mb-2"
+            [routerLink]="[
+              '/cases/edit/' + item.microtingSdkCaseId + '/' + item.eFormId
+            ]"
+            mdbTooltip="{{ 'Edit Case' | translate }}"
+          >
+            <fa-icon icon="pen" size="lg" [fixedWidth]="true"></fa-icon>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
