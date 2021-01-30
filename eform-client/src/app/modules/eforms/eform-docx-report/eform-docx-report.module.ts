@@ -20,6 +20,7 @@ import {
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { OwlDateTimeModule } from 'ng-pick-datetime-ex';
+import { EformDocxReportRouting } from './eform-docx-report.routing'
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { OwlDateTimeModule } from 'ng-pick-datetime-ex';
     OwlDateTimeModule,
     InputsModule,
     CardsModule,
+    EformDocxReportRouting,
   ],
 })
 export class EformDocxReportModule {}

@@ -185,7 +185,7 @@
                     *ngIf="templateDto.hasCases
                     && checkEformPermissions(templateDto.id, userClaimsEnum.casesRead)"
                     id="docx-report-btn"
-                    [routerLink]="['./docx-report', templateDto.id]"
+                    [routerLink]="['/docx-report', templateDto.id]"
                     mdbTooltip="{{ 'Word Report' | translate }}">
               <fa-icon icon="file-word" [fixedWidth]="true" size="lg"></fa-icon>
             </button>

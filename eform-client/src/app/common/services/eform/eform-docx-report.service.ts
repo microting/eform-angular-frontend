@@ -9,7 +9,7 @@ import {BaseService} from 'src/app/common/services/base.service';
 import {EformDocxReportGenerateModel, EformDocxReportModel} from 'src/app/common/models';
 
 export let EformDocxReportServiceMethods = {
-  DocxReport: '/api/templates/'
+  DocxReport: '/api/templates/docx-report'
 };
 
 @Injectable()

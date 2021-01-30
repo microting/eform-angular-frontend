@@ -5,12 +5,12 @@ import { EformDocxReportContainerComponent } from './components';
 
 export const routes: Routes = [
   {
-    path: 'reports',
+    path: 'docx-report/:templateId',
     canActivate: [AuthGuard],
     component: EformDocxReportContainerComponent,
   },
   {
-    path: 'reports/:dateFrom/:dateTo',
+    path: 'docx-report/:dateFrom/:dateTo',
     canActivate: [AuthGuard],
     component: EformDocxReportContainerComponent,
   },
