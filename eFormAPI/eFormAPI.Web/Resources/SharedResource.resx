@@ -723,4 +723,13 @@
   <data name="ErrorWhileGeneratingReportFile" xml:space="preserve">
     <value>Error while generating report file</value>
   </data>
+  <data name="CaseId" xml:space="preserve">
+    <value>Case id</value>
+  </data>
+  <data name="CreatedAt" xml:space="preserve">
+    <value>Created At</value>
+  </data>
+  <data name="DoneBy" xml:space="preserve">
+    <value>Done by</value>
+  </data>
 </root>

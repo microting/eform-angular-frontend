@@ -53,7 +53,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         /// <returns>Report case by eForm model</returns>
         [HttpPost]
         [Route("api/templates/docx-report")]
-        public async Task<OperationDataResult<EFormCasesReportModel>> GetReport([Required] EFormCaseReportRequest eFormCaseReportRequesteFormId)
+        public async Task<OperationDataResult<EFormCasesReportModel>> GetReport([Required][FromBody] EFormCaseReportRequest eFormCaseReportRequesteFormId)
         {
             return await _eformCaseReportService.GetReportEformCases(eFormCaseReportRequesteFormId);
         }
@@ -63,7 +63,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         /// </summary>
         /// <param name="eFormCaseReportRequesteFormId">request model</param>
         /// <returns>Report file which cases by eForm</returns>
-        [HttpPost]
+        [HttpGet]
         [Route("api/templates/docx-report/word")]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task GetReportWord([Required] EFormCaseReportRequest eFormCaseReportRequesteFormId)

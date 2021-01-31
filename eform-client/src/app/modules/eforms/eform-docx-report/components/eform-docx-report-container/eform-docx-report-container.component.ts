@@ -35,13 +35,13 @@ export class EformDocxReportContainerComponent implements OnInit, OnDestroy {
     this.activateRoute.params.subscribe(params => {
       this.dateFrom = params['dateFrom'];
       this.dateTo = params['dateTo'];
-      this.selectedTemplateId = params['eformId'];
+      this.selectedTemplateId = +params['eformId'];
       this.range.push(parseISO(params['dateFrom']));
       this.range.push(parseISO(params['dateTo']));
-      const model = {
-        dateFrom: params['dateFrom'],
-        dateTo: params['dateTo'],
-        templateId: params['eformId']
+      const model: EformDocxReportGenerateModel = {
+        dateFrom: params['dateFrom'].toString(),
+        dateTo: params['dateTo'].toString(),
+        templateId: +params['eformId']
       };
       if (model.dateFrom !== undefined) {
         this.onGenerateReport(model);

@@ -725,4 +725,13 @@
   <data name="ErrorWhileGeneratingReportFile" xml:space="preserve">
     <value>Помилка при створенні файлу звіту</value>
   </data>
+  <data name="CaseId" xml:space="preserve">
+    <value>Кейс id</value>
+  </data>
+  <data name="CreatedAt" xml:space="preserve">
+    <value>Створено в</value>
+  </data>
+  <data name="DoneBy" xml:space="preserve">
+    <value>Зроблено</value>
+  </data>
 </root>

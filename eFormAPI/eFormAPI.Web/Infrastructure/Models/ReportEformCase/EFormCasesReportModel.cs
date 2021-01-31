@@ -46,7 +46,7 @@ namespace eFormAPI.Web.Infrastructure.Models.ReportEformCase
         public List<KeyValuePair<int, string>> ItemHeaders { get; set; } =
             new List<KeyValuePair<int, string>>();
 
-        public List<ReportEformCaseModel> CasesList { get; set; } =
+        public List<ReportEformCaseModel> Items { get; set; } =
             new List<ReportEformCaseModel>();
 
         public DateTime? FromDate { get; set; }

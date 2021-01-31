@@ -31,10 +31,10 @@ namespace eFormAPI.Web.Infrastructure.Models.ReportEformCase
         [Required]
         public int TemplateId { get; set; }
 
-        [DataType(DataType.DateTime)]
-        public DateTime? DateFrom { get; set; }
+        [Required]
+        public string DateFrom { get; set; }
 
-        [DataType(DataType.DateTime)]
-        public DateTime? DateTo { get; set; }
+        [Required]
+        public string DateTo { get; set; }
     }
 }

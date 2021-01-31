@@ -39,7 +39,7 @@ namespace eFormAPI.Web.Services
     using System.IO;
     using Microsoft.Extensions.Logging;
 
-    public class EformCaseReportService: IEformCaseReportService
+    public class EformCaseReportService : IEformCaseReportService
     {
         private readonly IEFormCoreService _coreHelper;
         private readonly ILocalizationService _localizationService;
@@ -83,24 +83,27 @@ namespace eFormAPI.Web.Services
             var casesQueryable = sdkDbContext.Cases
                 .Include(x => x.Worker)
                 .Where(x => x.DoneAt != null)
-                .Where(x => x.CheckListId == template.Id);
-            
-            if(eFormCaseReportRequest.DateFrom != null)
+                .OrderBy(x => x.DoneAt)
+                .Where(x => x.CheckListId == template.Id)
+                .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed);
+
+            if (DateTime.TryParse(eFormCaseReportRequest.DateFrom, out var dateFrom))
             {
-                casesQueryable = casesQueryable.Where(x => x.DoneAt >= eFormCaseReportRequest.DateFrom);
+                casesQueryable = casesQueryable.Where(x => x.DoneAt >= dateFrom);
             }
 
-            if (eFormCaseReportRequest.DateTo != null)
+            if (DateTime.TryParse(eFormCaseReportRequest.DateTo, out var dateTo))
             {
-                casesQueryable = casesQueryable.Where(x => x.DoneAt <= eFormCaseReportRequest.DateTo);
+                dateTo = dateTo.AddHours(23).AddMinutes(59).AddSeconds(59);
+                casesQueryable = casesQueryable.Where(x => x.DoneAt <= dateTo);
             }
 
-            var cases = casesQueryable.ToList();
-
-            if (cases.Count <= 0)
+            if (!casesQueryable.Any()) // if count <= 0
             {
                 return new OperationDataResult<EFormCasesReportModel>(false, _localizationService.GetString("CasesNotFound"));
             }
+
+            var cases = casesQueryable.ToList();
 
             var casesIds = cases.Select(x => x.Id).ToList();
 
@@ -130,12 +133,11 @@ namespace eFormAPI.Web.Services
                     Header5 = template.ReportH5 == template.ReportH4 ? null : template.ReportH5,
                 },
                 DescriptionBlocks = new List<string>(),
-                //Posts = new List<ReportEformCasePostModel>(),
-                CasesList = new List<ReportEformCaseModel>(),
+                Items = new List<ReportEformCaseModel>(),
                 ImageNames = new List<KeyValuePair<List<string>, List<string>>>(),
                 ItemHeaders = new List<KeyValuePair<int, string>>(),
-                FromDate = eFormCaseReportRequest.DateFrom,
-                ToDate = eFormCaseReportRequest.DateTo,
+                FromDate = dateFrom,
+                ToDate = dateTo,
             };
 
             var fields = await core.Advanced_TemplateFieldReadAll(template.Id, language);
@@ -154,132 +156,93 @@ namespace eFormAPI.Web.Services
                 }
             }
 
-            foreach (var oneCase in cases)
+            var imagesForEform = await sdkDbContext.FieldValues
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Where(x => x.Field.FieldTypeId == 5)
+                    .Where(x => casesIds.Contains((int)x.CaseId))
+                    .OrderBy(x => x.CaseId)
+                    .ToListAsync();
+
+            foreach (var imageField in imagesForEform)
             {
-
-                var imagesForEform = await sdkDbContext.FieldValues
-                        .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                        .Where(x => x.Field.FieldTypeId == 5)
-                        .Where(x => casesIds.Contains((int)x.CaseId))
-                        .OrderBy(x => x.CaseId)
-                        .ToListAsync();
-
-                foreach (var imageField in imagesForEform)
+                if (imageField.UploadedDataId != null)
                 {
-                    if (imageField.UploadedDataId != null)
+                    var singleCase = cases.Single(x => x.Id == imageField.CaseId);
+                    if (singleCase.DoneAt != null)
                     {
-                        var bla = cases.Single(x => x.Id == imageField.CaseId);
-                        if (bla.DoneAt != null)
+                        var doneAt = (DateTime)singleCase.DoneAt;
+                        doneAt = TimeZoneInfo.ConvertTimeFromUtc(doneAt, timeZoneInfo);
+                        var label = $"{imageField.CaseId} - {doneAt:yyyy-MM-dd HH:mm:ss};";
+                        var geoTag = "";
+                        if (!string.IsNullOrEmpty((imageField.Latitude)))
                         {
-                            var doneAt = (DateTime)bla.DoneAt;
-                            doneAt = TimeZoneInfo.ConvertTimeFromUtc(doneAt, timeZoneInfo);
-                            var label = $"{imageField.CaseId} - {doneAt:yyyy-MM-dd HH:mm:ss};";
-                            var geoTag = "";
-                            if (!string.IsNullOrEmpty((imageField.Latitude)))
-                            {
-                                geoTag =
-                                    $"https://www.google.com/maps/place/{imageField.Latitude},{imageField.Longitude}";
-                            }
-
-                            var keyList = new List<string> {imageField.CaseId.ToString(), label};
-                            var list = new List<string>();
-                            var uploadedData =
-                                await sdkDbContext.UploadedDatas.SingleAsync(x => x.Id == imageField.UploadedDataId);
-                            list.Add(uploadedData.FileName);
-                            list.Add(geoTag);
-                            result.ImageNames.Add(new KeyValuePair<List<string>, List<string>>(keyList, list));
+                            geoTag =
+                                $"https://www.google.com/maps/place/{imageField.Latitude},{imageField.Longitude}";
                         }
+
+                        var keyList = new List<string> { imageField.CaseId.ToString(), label };
+                        var list = new List<string>();
+                        var uploadedData =
+                            await sdkDbContext.UploadedDatas.SingleAsync(x => x.Id == imageField.UploadedDataId);
+                        list.Add(uploadedData.FileName);
+                        list.Add(geoTag);
+                        result.ImageNames.Add(new KeyValuePair<List<string>, List<string>>(keyList, list));
                     }
                 }
+            }
 
-                // posts
-                /*var casePostRequest = new CasePostsRequestCommonModel
+            // add cases
+            foreach (var caseDto in cases)
+            {
+                var reportEformCaseModel = new ReportEformCaseModel
                 {
-                    Offset = 0,
-                    PageSize = int.MaxValue,
-                    TemplateId = oneCase.CheckListId,
+                    Id = caseDto.Id,
+                    MicrotingSdkCaseId = caseDto.Id,
+                    MicrotingSdkCaseDoneAt = TimeZoneInfo.ConvertTimeFromUtc((DateTime)caseDto.DoneAt, timeZoneInfo),
+                    EFormId = caseDto.CheckListId,
+                    DoneBy = $"{caseDto.Worker.FirstName} {caseDto.Worker.LastName}",
                 };
 
-                var casePostListResult = await _casePostBaseService.GetCommonPosts(casePostRequest);
+                var fieldValues = sdkDbContext.FieldValues
+                    .Where(x => x.CaseId == caseDto.Id)
+                    .Include(x => x.Field)
+                    .Include(x => x.Field.FieldType)
+                    .AsNoTracking()
+                    .ToList();
 
-                if (!casePostListResult.Success)
+
+                foreach (var itemHeader in result.ItemHeaders)
                 {
-                    return new OperationDataResult<EFormCasesReportModel>(
-                        false,
-                        casePostListResult.Message);
-                }
+                    var caseField = fieldValues
+                        .FirstOrDefault(x => x.FieldId == itemHeader.Key);
 
-                foreach (var casePostCommonModel in casePostListResult.Model.Entities)
-                {
-                    result.Posts.Add(new ReportEformCasePostModel
+                    if (caseField != null)
                     {
-                        CaseId = casePostCommonModel.CaseId,
-                        PostId = casePostCommonModel.PostId,
-                        Comment = casePostCommonModel.Text,
-                        SentTo = casePostCommonModel.ToRecipients,
-                        SentToTags = casePostCommonModel.ToRecipientsTags,
-                        PostDate = casePostCommonModel.PostDate
-                    });
-                }*/
-
-                // add cases
-                foreach (var caseDto in cases.OrderBy(x => x.DoneAt))
-                {
-                    var reportEformCaseModel = new ReportEformCaseModel
-                    {
-                        Id = caseDto.Id,
-                        MicrotingSdkCaseId = caseDto.Id,
-                        MicrotingSdkCaseDoneAt = TimeZoneInfo.ConvertTimeFromUtc((DateTime)caseDto.DoneAt, timeZoneInfo),
-                        EFormId = caseDto.CheckListId,
-                        DoneBy = $"{caseDto.Worker.FirstName} {caseDto.Worker.LastName}",
-                    };
-
-                    var fieldValues = sdkDbContext.FieldValues
-                        .Where(x => x.CaseId == oneCase.Id)
-                        .Include(x => x.Field)
-                        .Include(x => x.Field.FieldType)
-                        .AsNoTracking()
-                        .ToList();
-
-
-                    foreach (var itemHeader in result.ItemHeaders)
-                    {
-                        var caseField = fieldValues
-                            .FirstOrDefault(x => x.FieldId == itemHeader.Key);
-
-                        if (caseField != null)
+                        switch (caseField.Field.FieldType.Type)
                         {
-                            switch (caseField.Field.FieldType.Type)
-                            {
-                                case Constants.FieldTypes.MultiSelect:
-                                    reportEformCaseModel.CaseFields.Add(caseField.Value.Replace("|", "<br>"));
-                                    break;
-                                case Constants.FieldTypes.EntitySearch:
-                                case Constants.FieldTypes.EntitySelect:
-                                case Constants.FieldTypes.SingleSelect:
-                                    reportEformCaseModel.CaseFields.Add(caseField.Value);
-                                    break;
-                                default:
-                                    reportEformCaseModel.CaseFields.Add(caseField.Value);
-                                    break;
-                            }
+                            case Constants.FieldTypes.MultiSelect:
+                                reportEformCaseModel.CaseFields.Add(caseField.Value.Replace("|", "<br>"));
+                                break;
+                            case Constants.FieldTypes.EntitySearch:
+                            case Constants.FieldTypes.EntitySelect:
+                            case Constants.FieldTypes.SingleSelect:
+                                reportEformCaseModel.CaseFields.Add(caseField.Value);
+                                break;
+                            default:
+                                reportEformCaseModel.CaseFields.Add(caseField.Value);
+                                break;
                         }
                     }
-
-                    reportEformCaseModel.ImagesCount = await sdkDbContext.FieldValues
-                        .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                        .Where(x => x.Field.FieldTypeId == 5)
-                        .Where(x => x.CaseId == caseDto.Id)
-                        .Select(x => x.Id)
-                        .CountAsync();
-
-                    //reportEformCaseModel.PostsCount = casePostListResult.Model.Entities
-                    //    .Where(x => x.CaseId == caseDto.Id)
-                    //    .Select(x => x.PostId)
-                    //    .Count();
-
-                    result.CasesList.Add(reportEformCaseModel);
                 }
+
+                reportEformCaseModel.ImagesCount = await sdkDbContext.FieldValues
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Where(x => x.Field.FieldTypeId == 5)
+                    .Where(x => x.CaseId == caseDto.Id)
+                    .Select(x => x.Id)
+                    .CountAsync();
+                
+                result.Items.Add(reportEformCaseModel);
             }
 
             return new OperationDataResult<EFormCasesReportModel>(true, result);

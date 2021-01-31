@@ -163,7 +163,7 @@ namespace eFormAPI.Web.Services
                 itemsHtml += $@"<td>{_localizationService.GetString("CaseId")}</td>";
                 itemsHtml += $@"<td>{_localizationService.GetString("CreatedAt")}</td>";
                 itemsHtml += $@"<td>{_localizationService.GetString("DoneBy")}</td>";
-                itemsHtml += $@"<td>{_localizationService.GetString("ItemName")}</td>";
+                //itemsHtml += $@"<td>{_localizationService.GetString("ItemName")}</td>";
 
                 foreach (var itemHeader in reportModel.ItemHeaders)
                 {
@@ -172,7 +172,7 @@ namespace eFormAPI.Web.Services
 
                 itemsHtml += @"</tr>";
 
-                foreach (var dataModel in reportModel.CasesList)
+                foreach (var dataModel in reportModel.Items)
                 {
                     itemsHtml += @"<tr>";
                     itemsHtml += $@"<td>{dataModel.MicrotingSdkCaseId}</td>";
@@ -200,18 +200,18 @@ namespace eFormAPI.Web.Services
                 }
 
                 // pictures
-                foreach (var (key, value) in reportModel.ImageNames)
-                {
-                   itemsHtml +=
-                       $@"<p>{_localizationService.GetString("Picture")}: {key[1]}</p>";
+                //foreach (var (key, value) in reportModel.ImageNames)
+                //{
+                //   itemsHtml +=
+                //       $@"<p>{_localizationService.GetString("Picture")}: {key[1]}</p>";
 
-                   itemsHtml = await InsertImage(value[0], itemsHtml, 700, 650, core, basePicturePath);
+                //   itemsHtml = await InsertImage(value[0], itemsHtml, 700, 650, core, basePicturePath);
 
-                   if (!string.IsNullOrEmpty(value[1]))
-                   {
-                       itemsHtml += $@"<a href=""{value[1]}"">{value[1]}</a>";
-                   }
-                }
+                //   if (!string.IsNullOrEmpty(value[1]))
+                //   {
+                //       itemsHtml += $@"<a href=""{value[1]}"">{value[1]}</a>";
+                //   }
+                //}
 
                 itemsHtml += @"</div>";
                 itemsHtml += "</body>";
