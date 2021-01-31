@@ -714,4 +714,7 @@
   <data name="DoneBy" xml:space="preserve">
     <value>Getan von</value>
   </data>
+  <data name="ReportPeriod" xml:space="preserve">
+    <value>Berichtszeitraum</value>
+  </data>
 </root>

@@ -732,4 +732,7 @@
   <data name="DoneBy" xml:space="preserve">
     <value>Done by</value>
   </data>
+  <data name="ReportPeriod" xml:space="preserve">
+    <value>Report period</value>
+  </data>
 </root>

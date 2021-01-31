@@ -734,4 +734,7 @@
   <data name="DoneBy" xml:space="preserve">
     <value>Зроблено</value>
   </data>
+  <data name="ReportPeriod" xml:space="preserve">
+    <value>Звітний період</value>
+  </data>
 </root>
