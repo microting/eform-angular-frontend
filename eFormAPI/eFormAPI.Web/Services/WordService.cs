@@ -194,24 +194,24 @@ namespace eFormAPI.Web.Services
 
                 itemsHtml += @"<br/>";
 
-                if (!string.IsNullOrEmpty(reportModel.TemplateName))
-                {
-                    itemsHtml += $@"{reportModel.TemplateName}";
-                }
+                // if (!string.IsNullOrEmpty(reportModel.TemplateName))
+                // {
+                //    itemsHtml += $@"{reportModel.TemplateName}";
+                // }
 
                 // pictures
-                //foreach (var (key, value) in reportModel.ImageNames)
-                //{
-                //   itemsHtml +=
-                //       $@"<p>{_localizationService.GetString("Picture")}: {key[1]}</p>";
+                foreach (var (key, value) in reportModel.ImageNames)
+                {
+                    itemsHtml +=
+                        $@"<p>{_localizationService.GetString("Picture")}: {key[1]}</p>";
 
-                //   itemsHtml = await InsertImage(value[0], itemsHtml, 700, 650, core, basePicturePath);
+                    itemsHtml = await InsertImage(value[0], itemsHtml, 700, 650, core, basePicturePath);
 
-                //   if (!string.IsNullOrEmpty(value[1]))
-                //   {
-                //       itemsHtml += $@"<a href=""{value[1]}"">{value[1]}</a>";
-                //   }
-                //}
+                    if (!string.IsNullOrEmpty(value[1]))
+                    {
+                        itemsHtml += $@"<a href=""{value[1]}"">{value[1]}</a>";
+                    }
+                }
 
                 itemsHtml += @"</div>";
                 itemsHtml += "</body>";
