@@ -5,15 +5,10 @@ import { EformDocxReportContainerComponent } from './components';
 
 export const routes: Routes = [
   {
-    path: 'docx-report/:templateId',
+    path: '',
     canActivate: [AuthGuard],
     component: EformDocxReportContainerComponent,
-  },
-  {
-    path: 'docx-report/:dateFrom/:dateTo',
-    canActivate: [AuthGuard],
-    component: EformDocxReportContainerComponent,
-  },
+  }
 ];
 
 @NgModule({
