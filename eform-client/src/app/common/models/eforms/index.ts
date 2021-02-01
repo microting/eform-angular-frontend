@@ -7,3 +7,4 @@ export * from './template-request.model';
 export * from './deploy/deploy-checkbox.model';
 export * from './tag/saved-tag.model';
 export * from './report';
+export * from './docx-report';

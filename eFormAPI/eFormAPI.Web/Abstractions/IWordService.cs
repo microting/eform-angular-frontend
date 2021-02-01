@@ -1,7 +1,7 @@
-/*
+﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2020 Microting A/S
+Copyright (c) 2007 - 2021 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,15 +22,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Services.Export
+namespace eFormAPI.Web.Abstractions
 {
     using System.IO;
     using System.Threading.Tasks;
-    using Infrastructure.Models;
+    using Infrastructure.Models.ReportEformCase;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-
-    public interface IEformExcelExportService
+    public interface IWordService
     {
-        Task<OperationDataResult<Stream>> EformExport(EformDownloadExcelModel excelModel);
+        public Task<OperationDataResult<Stream>> GenerateWordDashboard(EFormCasesReportModel reportModel);
     }
 }

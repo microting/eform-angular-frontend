@@ -719,4 +719,22 @@
   <data name="EFormWithNameAlreadyExistsInTheImportedDocument" xml:space="preserve">
     <value>ЕФорма з ім'ям {0} вже існує в імпортованому документі</value>
   </data>
+  <data name="CasesNotFound" xml:space="preserve">
+    <value>Кейси не знайдено</value>
+  </data>
+  <data name="ErrorWhileGeneratingReportFile" xml:space="preserve">
+    <value>Помилка при створенні файлу звіту</value>
+  </data>
+  <data name="CaseId" xml:space="preserve">
+    <value>Кейс id</value>
+  </data>
+  <data name="CreatedAt" xml:space="preserve">
+    <value>Створено в</value>
+  </data>
+  <data name="DoneBy" xml:space="preserve">
+    <value>Зроблено</value>
+  </data>
+  <data name="ReportPeriod" xml:space="preserve">
+    <value>Звітний період</value>
+  </data>
 </root>

@@ -1,7 +1,7 @@
-/*
+﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2020 Microting A/S
+Copyright (c) 2007 - 2021 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,15 +22,35 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Services.Export
-{
-    using System.IO;
-    using System.Threading.Tasks;
-    using Infrastructure.Models;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
-    public interface IEformExcelExportService
+namespace eFormAPI.Web.Infrastructure.Models.ReportEformCase
+{
+    using System.Collections.Generic;
+    using System;
+
+    public class EFormCasesReportModel
     {
-        Task<OperationDataResult<Stream>> EformExport(EformDownloadExcelModel excelModel);
+        public EformReportHeaders TextHeaders { get; set; }
+
+        public string TemplateName { get; set; }
+
+        public List<string> DescriptionBlocks { get; set; } =
+            new List<string>();
+
+        public List<KeyValuePair<List<string>, List<string>>> ImageNames { get; set; } =
+            new List<KeyValuePair<List<string>, List<string>>>();
+
+        /*public List<ReportEformCasePostModel> Posts { get; set; } =
+            new List<ReportEformCasePostModel>();*/
+
+        public List<KeyValuePair<int, string>> ItemHeaders { get; set; } =
+            new List<KeyValuePair<int, string>>();
+
+        public List<ReportEformCaseModel> Items { get; set; } =
+            new List<ReportEformCaseModel>();
+
+        public DateTime? FromDate { get; set; }
+
+        public DateTime? ToDate { get; set; }
     }
 }

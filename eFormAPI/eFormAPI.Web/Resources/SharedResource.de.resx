@@ -699,4 +699,22 @@
   <data name="EFormWithNameAlreadyExistsInTheImportedDocument" xml:space="preserve">
     <value>eform mit dem Namen {0} ist bereits im importierten Dokument vorhanden</value>
   </data>
+  <data name="CasesNotFound" xml:space="preserve">
+    <value>Fälle nicht gefunden</value>
+  </data>
+  <data name="ErrorWhileGeneratingReportFile" xml:space="preserve">
+    <value>Fehler beim Generieren der Berichtsdatei</value>
+  </data>
+  <data name="CaseId" xml:space="preserve">
+    <value>Fall-Id</value>
+  </data>
+  <data name="CreatedAt" xml:space="preserve">
+    <value>Erstellt bei</value>
+  </data>
+  <data name="DoneBy" xml:space="preserve">
+    <value>Getan von</value>
+  </data>
+  <data name="ReportPeriod" xml:space="preserve">
+    <value>Berichtszeitraum</value>
+  </data>
 </root>

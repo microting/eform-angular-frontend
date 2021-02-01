@@ -16,7 +16,7 @@ import {AppMenuService, AppSettingsService} from 'src/app/common/services/settin
 import {AuthService, GoogleAuthService, LocaleService, UserSettingsService} from 'src/app/common/services/auth';
 import {CasePostsService, CasesService, TemplateFilesService} from 'src/app/common/services/cases';
 import {DeviceUserService} from 'src/app/common/services/device-users';
-import {EformReportService, EFormService, EformTagService} from 'src/app/common/services/eform';
+import {EformDocxReportService, EformReportService, EFormService, EformTagService} from 'src/app/common/services/eform';
 import {SecurityGroupEformsPermissionsService, SecurityGroupsService} from 'src/app/common/services/security';
 import {AdminService} from 'src/app/common/services/users';
 import {FoldersService} from './common/services/advanced/folders.service';
@@ -61,6 +61,7 @@ export let providers = [
   EFormService,
   EformTagService,
   EformReportService,
+  EformDocxReportService,
   EmailRecipientsService,
   EmailRecipientsTagsService,
   CasesService,
