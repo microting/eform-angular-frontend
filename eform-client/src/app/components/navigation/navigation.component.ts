@@ -49,6 +49,7 @@ export class NavigationComponent implements OnInit, OnDestroy{
         this.userInfo = result;
         this.userSettingsService.getUserSettings().subscribe(((data) => {
           localStorage.setItem('locale', data.model.locale);
+          localStorage.setItem('darkTheme', data.model.darkTheme ? 'true' : 'false');
           this.initLocaleAsync().then(() => {
             this.getNavigationMenu({takeFromCache: true});
           });

@@ -78,6 +78,16 @@ export class ProfileSettingsComponent implements OnInit {
     });
   }
 
+  darkTheme(e) {
+    if (e.target && e.target.checked) {
+      this.userSettingsModel.darkTheme = true;
+    } else if (e.target && !e.target.checked) {
+      this.userSettingsModel.darkTheme = false;
+    } else {
+      return;
+    }
+  }
+
   isTwoFactorEnabledCheckBoxChanged(e) {
     if (e.target && e.target.checked) {
       this.googleAuthInfoModel.isTwoFactorEnabled = true;

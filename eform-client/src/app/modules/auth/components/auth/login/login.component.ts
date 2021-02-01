@@ -53,6 +53,7 @@ export class LoginComponent implements OnInit {
   getUserSettings() {
     this.userSettings.getUserSettings().subscribe((data) => {
       localStorage.setItem('locale', data.model.locale);
+      localStorage.setItem('darkTheme', data.model.darkTheme ? 'true' : 'false');
       if (data.model.loginRedirectUrl) {
         localStorage.setItem('loginRedirectUrl', data.model.loginRedirectUrl);
       } else {
