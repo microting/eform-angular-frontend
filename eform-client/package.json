@@ -80,7 +80,7 @@
     "@angular/cli": "10.2.1",
     "@angular/compiler-cli": "^10.2.4",
     "@angular/language-service": "^10.2.4",
-    "@types/chai": "4.2.11",
+    "@types/chai": "4.2.14",
     "@types/d3": "6.2.0",
     "@types/mocha": "7.0.2",
     "@types/node": "12.12.35",
