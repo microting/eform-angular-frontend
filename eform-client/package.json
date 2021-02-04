@@ -15,6 +15,7 @@
     "testheadless2d": "./node_modules/.bin/wdio wdio-headless-step2d.conf.js --disable-gpu --browsers=ChromeHeadless",
     "testheadless2e": "./node_modules/.bin/wdio wdio-headless-step2e.conf.js --disable-gpu --browsers=ChromeHeadless",
     "testheadless2f": "./node_modules/.bin/wdio wdio-headless-step2f.conf.js --disable-gpu --browsers=ChromeHeadless",
+    "testheadless2g": "./node_modules/.bin/wdio wdio-headless-step2g.conf.js --disable-gpu --browsers=ChromeHeadless",
     "testplugin": "./node_modules/.bin/wdio wdio-plugin-step2.conf.js --disable-gpu",
     "testheadlessplugin": "./node_modules/.bin/wdio wdio-headless-plugin-step2.conf.js --disable-gpu --browsers=ChromeHeadless",
     "lint": "ng lint",
