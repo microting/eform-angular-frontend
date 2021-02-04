@@ -1102,7 +1102,7 @@ namespace eFormAPI.Web.Migrations
                             Language = "Danish",
                             LocaleName = "da",
                             MenuItemId = 2,
-                            Name = "Enhedsbrugere",
+                            Name = "Mobilbrugere",
                             UpdatedByUserId = 0,
                             Version = 0
                         },
@@ -1138,7 +1138,7 @@ namespace eFormAPI.Web.Migrations
                             Language = "Danish",
                             LocaleName = "da",
                             MenuItemId = 3,
-                            Name = "Avanceret",
+                            Name = "Admin",
                             UpdatedByUserId = 0,
                             Version = 0
                         },
@@ -2112,7 +2112,7 @@ namespace eFormAPI.Web.Migrations
                             Language = "Danish",
                             LocaleName = "da",
                             MenuTemplateId = 2,
-                            Name = "Enhedsbrugere"
+                            Name = "Mobilbrugere"
                         },
                         new
                         {
@@ -2120,7 +2120,7 @@ namespace eFormAPI.Web.Migrations
                             Language = "Danish",
                             LocaleName = "da",
                             MenuTemplateId = 3,
-                            Name = "Avanceret"
+                            Name = "Admin"
                         },
                         new
                         {
