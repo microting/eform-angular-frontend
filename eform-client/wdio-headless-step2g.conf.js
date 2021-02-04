@@ -11,10 +11,19 @@ exports.config = {
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
   specs: [
-    'e2e/Tests/application-settings/application-settings.login-page.spec.ts',
-    'e2e/Tests/application-settings/application-settings.site-header.spec.ts',
-    'e2e/Tests/profile-settings/profile-settings.language.spect.ts',
-    'e2e/Tests/user-administration/user-administration.name-change.spec.ts',
+    'e2e/Tests/folders/folder-list/folder-list.delete.spec.ts',
+    'e2e/Tests/folders/folder-list/folder-list.edit.spec.ts',
+    'e2e/Tests/folders/folder-child/folder-child.add.spec.ts',
+    'e2e/Tests/folders/folder-child/folder-child.delete.spec.ts',
+    'e2e/Tests/folders/folder-child/folder-child.edit.spec.ts',
+    'e2e/Tests/folders/folder-tree/folder-tree.add.spec.ts',
+    'e2e/Tests/folders/folder-tree/folder-tree.delete.spec.ts',
+    'e2e/Tests/folders/folder-tree/folder-tree.edit.spec.ts',
+    'e2e/Tests/navigation-menu/navigation-menu.create-item.spec.ts',
+    'e2e/Tests/navigation-menu/navigation-menu.edit-item.spec.ts',
+    'e2e/Tests/navigation-menu/navigation-menu.drag-item.spec.ts',
+    'e2e/Tests/navigation-menu/navigation-menu.delete-item.spec.ts',
+    'e2e/Tests/navigation-menu/subheader.spec.ts'
   ],
   suites: {
     settings: [
