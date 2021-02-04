@@ -45,7 +45,7 @@
     "@ngx-gallery/lightbox": "4.0.3",
     "@ngx-translate/core": "12.1.2",
     "@ngx-translate/http-loader": "4.0.0",
-    "@swimlane/ngx-charts": "14.0.0",
+    "@swimlane/ngx-charts": "17.0.0",
     "@types/dragula": "3.7.0",
     "@types/file-saver": "2.0.1",
     "angular-bootstrap-md": "^9.3.0",
