@@ -79,8 +79,12 @@ export class Navbar {
   }
   public verifyHeaderMenuItem(headerMenuItem) {
     return $(`//*[@id="header"]//*[contains(text(), '${headerMenuItem}')]`).getText();
-  }  public clickOnHeaderMenuItem2(headerMenuItem) {
-    return $(`//*[@id="header"]//*[contains(text(), '${headerMenuItem}')]`);
+  }
+  public clickOnHeaderMenuItem2(headerMenuItem) {
+    const ele = $(`//*[@id="header"]//*[contains(text(), '${headerMenuItem}')]`);
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({timeout: 20000});
+    return ele;
   }
 
   public logout() {
