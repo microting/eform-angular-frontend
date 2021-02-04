@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { NavigationMenuTemplateItemComponent } from './navigation-menu-template-item.component';
 
@@ -6,7 +6,7 @@ describe('NavigationMenuTemplateItemComponent', () => {
   let component: NavigationMenuTemplateItemComponent;
   let fixture: ComponentFixture<NavigationMenuTemplateItemComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NavigationMenuTemplateItemComponent ]
     })

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { EformsBulkImportModalComponent } from './eforms-bulk-import-modal.component';
 
@@ -6,7 +6,7 @@ describe('EformsBulkImportModalComponent', () => {
   let component: EformsBulkImportModalComponent;
   let fixture: ComponentFixture<EformsBulkImportModalComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ EformsBulkImportModalComponent ]
     })
