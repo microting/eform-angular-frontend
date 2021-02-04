@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { SharedTagDeleteComponent } from './shared-tag-delete.component';
 
@@ -6,7 +6,7 @@ describe('EmailRecipientTagDeleteComponent', () => {
   let component: SharedTagDeleteComponent;
   let fixture: ComponentFixture<SharedTagDeleteComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ SharedTagDeleteComponent ]
     })
