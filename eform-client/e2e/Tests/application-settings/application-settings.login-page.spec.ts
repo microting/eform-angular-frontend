@@ -80,7 +80,8 @@ describe('Application settings page - site header section', function () {
     applicationSettingsPage.save();
     $('#sign-out-dropdown').waitForDisplayed({timeout: 20000});
     $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
-    browser.pause(1000);    applicationSettingsPage.Navbar.logout();
+    browser.pause(1000);
+    applicationSettingsPage.Navbar.logout();
     expect(loginPage.loginBtn.isDisplayed()).equal(true);
     expect(loginPage.image.isDisplayed(),
       'Error while toggling visibility of image on login page').to.equal(false);

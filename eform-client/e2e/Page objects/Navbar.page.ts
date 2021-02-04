@@ -5,13 +5,19 @@ export class Navbar {
     return ele;
   }
   public get signOutDropdown() {
-    return $(`#sign-out-dropdown`);
+    const ele = $(`#sign-out-dropdown`);
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({timeout: 20000});
+    return ele;
   }
   public get advancedBtn() {
     return $('#advanced');
   }
   public get logoutBtn() {
-    return $(`#sign-out`);
+    const ele = $(`#sign-out`);
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({timeout: 20000});
+    return ele;
   }
   public get settingsBtn() {
     return $(`#settings`);
