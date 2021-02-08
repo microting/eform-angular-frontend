@@ -118,7 +118,10 @@ class NavigationMenuPage {
   }
 
   public editItemTranslation(firstLevelIndex, secondLevelIndex, translationIndex) {
-    return $(`#editItemTranslation${firstLevelIndex}_${secondLevelIndex}_${translationIndex}`);
+    const ele = $(`#editItemTranslation${firstLevelIndex}_${secondLevelIndex}_${translationIndex}`);
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({timeout: 20000});
+    return ele;
   }
 
   public resetMenu() {

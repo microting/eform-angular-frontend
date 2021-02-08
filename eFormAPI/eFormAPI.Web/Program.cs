@@ -308,6 +308,21 @@ namespace eFormAPI.Web
                         }
                     }
 
+                    var contextFactory = new BaseDbContextFactory();
+                    using (var dbContext = contextFactory.CreateDbContext(new[] {_defaultConnectionString}))
+                    {
+                        foreach (var plugin in EnabledPlugins)
+                        {
+                            var pluginEntity = dbContext.EformPlugins
+                                .FirstOrDefault(x => x.PluginId == plugin.PluginId);
+
+                            if (pluginEntity != null && !string.IsNullOrEmpty(pluginEntity.ConnectionString))
+                            {
+                                plugin.AddPluginConfig(config, pluginEntity.ConnectionString);
+                            }
+                        }
+                    }
+
                     config.AddEnvironmentVariables();
                 })
                 .UseStartup<Startup>()

@@ -203,8 +203,8 @@ namespace eFormAPI.Web.Services
             var core = await _coreHelper.GetCore();
             try
             {
-                await core.FolderDelete(id);
                 await DeleteChildren(id);
+                await core.FolderDelete(id);
                 return new OperationResult(true);
             }
             catch (Exception e)
@@ -224,7 +224,6 @@ namespace eFormAPI.Web.Services
             var list = await dbContext.Folders.Where(x => x.ParentId == id).ToListAsync();
             foreach (var folder in list)
             {
-                await core.FolderDelete(folder.Id);
                 var sublist = await dbContext.Folders.Where(x => x.ParentId == folder.Id).ToListAsync();
                 if (sublist.Any())
                 {
@@ -233,6 +232,7 @@ namespace eFormAPI.Web.Services
                         await DeleteChildren(subfolder.Id);
                     }
                 }
+                await core.FolderDelete(folder.Id);
             }
         }
     }

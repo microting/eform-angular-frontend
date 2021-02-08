@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { SharedTagCreateComponent } from './shared-tag-create.component';
 
@@ -6,7 +6,7 @@ describe('EmailRecipientTagNewComponent', () => {
   let component: SharedTagCreateComponent;
   let fixture: ComponentFixture<SharedTagCreateComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ SharedTagCreateComponent ]
     })

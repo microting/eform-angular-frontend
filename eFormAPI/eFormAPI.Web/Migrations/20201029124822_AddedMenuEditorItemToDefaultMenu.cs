@@ -19,14 +19,14 @@ namespace eFormAPI.Web.Migrations
                 keyColumn: "Id",
                 keyValue: 15,
                 columns: new[] { "MenuItemId", "Name" },
-                values: new object[] { 2, "Enhedsbrugere" });
+                values: new object[] { 2, "Mobilbrugere" });
 
             migrationBuilder.UpdateData(
                 table: "MenuItemTranslations",
                 keyColumn: "Id",
                 keyValue: 16,
                 columns: new[] { "MenuItemId", "Name" },
-                values: new object[] { 3, "Avanceret" });
+                values: new object[] { 3, "Admin" });
 
             migrationBuilder.UpdateData(
                 table: "MenuItemTranslations",
@@ -281,14 +281,14 @@ namespace eFormAPI.Web.Migrations
                 keyColumn: "Id",
                 keyValue: 14,
                 columns: new[] { "MenuItemId", "Name" },
-                values: new object[] { 2, "Enhedsbrugere" });
+                values: new object[] { 2, "Mobilbrugere" });
 
             migrationBuilder.UpdateData(
                 table: "MenuItemTranslations",
                 keyColumn: "Id",
                 keyValue: 15,
                 columns: new[] { "MenuItemId", "Name" },
-                values: new object[] { 3, "Avanceret" });
+                values: new object[] { 3, "Admin" });
 
             migrationBuilder.UpdateData(
                 table: "MenuItemTranslations",

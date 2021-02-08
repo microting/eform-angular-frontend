@@ -45,13 +45,13 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 new MenuItemTranslation
                 {
                     Id = 15,
-                    Name = "Enhedsbrugere",
+                    Name = "Mobilbrugere",
                     MenuItemId = MenuTemplateIds.DeviceUsers
                 },
                 new MenuItemTranslation
                 {
                     Id = 16,
-                    Name = "Avanceret",
+                    Name = "Admin",
                     MenuItemId = MenuTemplateIds.Advanced
                 },
                 new MenuItemTranslation

@@ -120,7 +120,8 @@ namespace eFormAPI.Web.Services
                 Constants.FieldTypes.SaveButton
             };
 
-            var templateName = sdkDbContext.CheckListTranslations.Single(x => x.CheckListId == template.Id).Text;
+            var templateName = sdkDbContext.CheckListTranslations
+                .Single(x => x.CheckListId == template.Id && x.LanguageId == language.Id).Text;
             var result = new EFormCasesReportModel()
             {
                 TemplateName = templateName,
@@ -241,7 +242,7 @@ namespace eFormAPI.Web.Services
                     .Where(x => x.CaseId == caseDto.Id)
                     .Select(x => x.Id)
                     .CountAsync();
-                
+
                 result.Items.Add(reportEformCaseModel);
             }
 

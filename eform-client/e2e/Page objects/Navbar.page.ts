@@ -5,13 +5,19 @@ export class Navbar {
     return ele;
   }
   public get signOutDropdown() {
-    return $(`#sign-out-dropdown`);
+    const ele = $(`#sign-out-dropdown`);
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({timeout: 20000});
+    return ele;
   }
   public get advancedBtn() {
     return $('#advanced');
   }
   public get logoutBtn() {
-    return $(`#sign-out`);
+    const ele = $(`#sign-out`);
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({timeout: 20000});
+    return ele;
   }
   public get settingsBtn() {
     return $(`#settings`);
@@ -73,8 +79,12 @@ export class Navbar {
   }
   public verifyHeaderMenuItem(headerMenuItem) {
     return $(`//*[@id="header"]//*[contains(text(), '${headerMenuItem}')]`).getText();
-  }  public clickOnHeaderMenuItem2(headerMenuItem) {
-    return $(`//*[@id="header"]//*[contains(text(), '${headerMenuItem}')]`);
+  }
+  public clickOnHeaderMenuItem2(headerMenuItem) {
+    const ele = $(`//*[@id="header"]//*[contains(text(), '${headerMenuItem}')]`);
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({timeout: 20000});
+    return ele;
   }
 
   public logout() {

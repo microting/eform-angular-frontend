@@ -62,14 +62,15 @@ class LoginPageSettings {
   }
 
   public get resetBtn() {
-    return $('#loginPageReset');
+    const ele = $('#loginPageReset');
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({timeout: 20000});
+    return ele;
   }
 
   public reset() {
     this.resetBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
-    //browser.refresh();
-    //browser.pause(10000);
   }
 }
 

@@ -82,7 +82,7 @@ namespace eFormAPI.Web.Infrastructure
                         new MenuItemTranslation
                         {
                              Id = 15,
-                             Name = "Enhedsbrugere",
+                             Name = "Mobilbrugere",
                              MenuItemId = MenuTemplateIds.DeviceUsers,
                              Language = LanguageNames.Danish,
                              LocaleName = LocaleNames.Danish,
@@ -127,7 +127,7 @@ namespace eFormAPI.Web.Infrastructure
                         new MenuItemTranslation
                         {
                             Id = 16,
-                            Name = "Avanceret",
+                            Name = "Admin",
                             MenuItemId = MenuTemplateIds.Advanced,
                             Language = LanguageNames.Danish,
                             LocaleName = LocaleNames.Danish,

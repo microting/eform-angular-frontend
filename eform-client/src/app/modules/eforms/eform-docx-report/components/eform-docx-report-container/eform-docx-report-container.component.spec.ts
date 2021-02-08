@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { EformDocxReportContainerComponent } from './eform-docx-report-container.component';
 
@@ -6,7 +6,7 @@ describe('EformDocxReportContainerComponent', () => {
   let component: EformDocxReportContainerComponent;
   let fixture: ComponentFixture<EformDocxReportContainerComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ EformDocxReportContainerComponent ]
     })

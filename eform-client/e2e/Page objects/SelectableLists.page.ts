@@ -219,6 +219,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
       $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     } else {
       this.entitySelectCreateCancelBtn.click();
+      $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     }
     this.entitySelectCreateBtn.waitForDisplayed();
   }

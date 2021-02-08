@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { EformTreeViewPickerComponent } from './eform-tree-view-picker.component';
 
@@ -6,7 +6,7 @@ describe('EformTreeViewPickerComponent', () => {
   let component: EformTreeViewPickerComponent;
   let fixture: ComponentFixture<EformTreeViewPickerComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ EformTreeViewPickerComponent ]
     })
