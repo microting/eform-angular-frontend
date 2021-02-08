@@ -84,7 +84,7 @@
     "@angular/language-service": "^11.1.2",
     "@types/chai": "4.2.14",
     "@types/d3": "6.3.0",
-    "@types/mocha": "7.0.2",
+    "@types/mocha": "8.2.0",
     "@types/node": "14.14.25",
     "@wdio/cli": "6.12.1",
     "@wdio/local-runner": "6.12.1",
