@@ -7,11 +7,11 @@ const expect = require('chai').expect;
 describe('Database', function () {
   it('should be configured successfully', function () {
     databasePage.open('/');
-    $('#save').waitForDisplayed({timeout: 90000});
-    $('#languageSelector').waitForDisplayed({timeout: 90000});
+    databasePage.saveBtn.waitForDisplayed({timeout: 90000});
+    databasePage.languageDropdown.waitForDisplayed({timeout: 90000});
     browser.pause(5000);
     // $('#loginBtn').waitForDisplayed({timeout: 90000});
-    $('#languageSelector').waitForDisplayed({timeout: 90000});
+    databasePage.languageDropdown.waitForDisplayed({timeout: 90000});
     browser.pause(1000);
     expect(databasePage.firstNameInput.isDisplayed()).equal(true);
     expect(databasePage.lastNameInput.isDisplayed()).equal(true);

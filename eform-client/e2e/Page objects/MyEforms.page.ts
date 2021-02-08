@@ -320,6 +320,7 @@ class MyEformsRowObject {
     myEformsPage.saveParingBtn.click();
     spinnerAnimation.waitForDisplayed({timeout: 90000, reverse: true});
   }
+
   unPair (users: DeviceUsersRowObject[]) {
     const spinnerAnimation = $('#spinner-animation');
     this.editPairEformBtn.click();
