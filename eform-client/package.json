@@ -41,7 +41,7 @@
     "@circlon/angular-tree-component": "^9.0.3",
     "@fortawesome/angular-fontawesome": "0.8.2",
     "@fortawesome/fontawesome-svg-core": "1.2.34",
-    "@fortawesome/free-solid-svg-icons": "5.13.0",
+    "@fortawesome/free-solid-svg-icons": "5.15.2",
     "@ng-select/ng-select": "6.0.0",
     "@ngx-gallery/core": "4.0.3",
     "@ngx-gallery/gallerize": "4.0.3",
