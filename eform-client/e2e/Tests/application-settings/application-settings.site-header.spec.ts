@@ -33,9 +33,10 @@ describe('Application settings page - site header section', function () {
     myEformsPage.Navbar.goToApplicationSettings();
     applicationSettingsPage.SiteHeader.mainTextVisibilityToggleBtn.click();
     applicationSettingsPage.save();
-    loginPage.open('/');
+    loginPage.open('/application-settings');
     $('#sign-out-dropdown').waitForDisplayed({timeout: 20000});
     $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
+    loginPage.open('/');
     expect(applicationSettingsPage.siteHeaderMainText.isDisplayed(),
       'Error while hiding site header main text').equal(false);
   });
@@ -43,9 +44,10 @@ describe('Application settings page - site header section', function () {
     myEformsPage.Navbar.goToApplicationSettings();
     applicationSettingsPage.SiteHeader.secondaryTextVisibilityToggleBtn.click();
     applicationSettingsPage.save();
-    loginPage.open('/');
+    loginPage.open('/application-settings');
     $('#sign-out-dropdown').waitForDisplayed({timeout: 20000});
     $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
+    loginPage.open('/');
     expect(applicationSettingsPage.siteHeaderSecondaryText.isDisplayed(),
       'Error while hiding site header secondary text').equal(false);
   });
