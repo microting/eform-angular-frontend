@@ -15,11 +15,8 @@ const routes: Routes = [
     },
   },
   {
-    path: 'docx-report/:eformId',
-    loadChildren: () => import('./eform-docx-report/eform-docx-report.module').then(m => m.EformDocxReportModule),
-    data: {
-      eformId: 1
-    },
+    path: 'docx-report',
+    loadChildren: () => import('./eform-docx-report/eform-docx-report.module').then(m => m.EformDocxReportModule)
   },
 ];
 

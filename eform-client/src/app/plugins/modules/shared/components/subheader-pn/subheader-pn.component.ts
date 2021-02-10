@@ -20,6 +20,8 @@ export class SubheaderPnComponent implements OnInit, OnDestroy {
   @Input() title = '';
   @Input() subtitle = '';
   @Input() heandingSizeRem = 2.5;
+  @Input() forceStaticTitle = false;
+
   getAppMenu$: Subscription;
   getTranslation$: Subscription;
 
@@ -46,17 +48,6 @@ export class SubheaderPnComponent implements OnInit, OnDestroy {
         }
       }
     });
-    // if (!this.title) {
-    //   const href = this.router.url;
-    //   this.getAppMenu$ = this.appMenuService.getAppMenu().subscribe((data) => {
-    //     let title = this.searchTitle(href, data.leftMenu);
-    //     if (!title) {
-    //       title = this.searchTitle(href, data.rightMenu);
-    //     }
-    //     this.getTranslation$ = this.translateService.get(title)
-    //       .subscribe(result => this.title = result);
-    //   });
-    // }
   }
   searchTitle(href: string, menuItems: MenuItemModel[]): string {
     for (const menuItem of menuItems) {
@@ -70,6 +61,6 @@ export class SubheaderPnComponent implements OnInit, OnDestroy {
         }
       }
     }
-    return '';
+    return this.title;
   }
 }
