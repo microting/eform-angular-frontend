@@ -5,7 +5,7 @@ import { EformDocxReportContainerComponent } from './components';
 
 export const routes: Routes = [
   {
-    path: '',
+    path: ':eformId',
     canActivate: [AuthGuard],
     component: EformDocxReportContainerComponent,
   }
