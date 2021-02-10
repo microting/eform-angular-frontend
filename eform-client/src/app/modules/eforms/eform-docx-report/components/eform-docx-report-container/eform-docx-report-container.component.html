@@ -39,7 +39,7 @@
       [dateFrom]="dateFrom"
       [dateTo]="dateTo"
     ></app-eform-docx-report-table>
-    <app-eform-docx-report-images
+    <app-eform-docx-report-images *ngIf="reportModel.imageNames.length > 0"
       [imageNames]="reportModel.imageNames"
     ></app-eform-docx-report-images>
   </div>
