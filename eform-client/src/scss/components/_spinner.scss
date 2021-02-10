@@ -3,16 +3,19 @@ $foreground: #FFF;
 .spinner-container{
   position: fixed;
   z-index: 999998;
-  height: 2em;
-  width: 2em;
+  //height: 2em;
+  //width: 2em;
   overflow: visible;
+  width: 15em;
   //margin: auto;
-  top: 50%;
-  left: 50%;
+  top: 42%;
+  left: 42%;
   //bottom: 40%;
   //right: 0;
-  margin-top: -125px;
-  margin-left: -125px;
+  //margin-top: -125px;
+  //margin-top: 10em;
+  //margin-left: 10em;
+  //margin-left: -125px;
   &:before {
     content: '';
     display: block;
