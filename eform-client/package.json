@@ -82,7 +82,7 @@
     "@angular/cli": "11.1.4",
     "@angular/compiler-cli": "^11.1.2",
     "@angular/language-service": "^11.1.2",
-    "@types/chai": "4.2.14",
+    "@types/chai": "4.2.15",
     "@types/d3": "6.3.0",
     "@types/mocha": "8.2.0",
     "@types/node": "14.14.25",
