@@ -1,4 +1,4 @@
-﻿/*
+/*
 The MIT License (MIT)
 
 Copyright (c) 2007 - 2020 Microting A/S
@@ -237,14 +237,15 @@ namespace eFormAPI.Web.Services
                         _localizationService.GetStringWithFormat("UserNotFoundUserName", userRegisterModel.UserName));
                 }
 
-
-                if (_userService.UserId == 1 && !await _userManager.IsInRoleAsync(user, userRegisterModel.Role))
+                // get role
+                var roles = await _userManager.GetRolesAsync(user);
+                if (_userService.UserId == 1 && roles.Any(x => x == userRegisterModel.Role))
                 {
                     return new OperationResult(false, _localizationService.GetString("CantUpdateRoleForPrimaryAdminUser"));
                 }
 
                 var isAdmin = await _userManager.IsInRoleAsync(user, EformRole.Admin);
-                if (!_dbContext.SecurityGroups.Any(x => x.Id == userRegisterModel.GroupId) && !isAdmin)
+                if (!_dbContext.SecurityGroups.Any(x => x.Id == userRegisterModel.GroupId) && !isAdmin && userRegisterModel.Role != EformRole.Admin)
                 {
                     return new OperationResult(false,
                         _localizationService.GetString("SecurityGroupNotFound"));
