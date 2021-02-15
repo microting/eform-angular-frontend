@@ -35,7 +35,14 @@
 <!--        </td>-->
         <ng-container *ngFor="let field of item.caseFields">
           <td>
-            <div [innerHTML]="field"></div>
+            <div *ngIf="field == 'checked'"><fa-icon
+              icon="check"
+              size="lg"
+              [fixedWidth]="true"
+            ></fa-icon></div>
+            <div *ngIf="field != 'checked' && field != 'unchecked'">
+              <div [innerHTML]="field"></div>
+            </div>
           </td>
         </ng-container>
         <td>
