@@ -5,6 +5,7 @@ import {
   EformDocxReportHeaderComponent,
   EformDocxReportImagesComponent,
   EformDocxReportTableComponent,
+  EformDocxReportHeaderEditorComponent
 } from './components';
 import { SharedPnModule } from 'src/app/plugins/modules/shared/shared-pn.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -13,14 +14,14 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
   ButtonsModule,
   CardsModule,
-  InputsModule,
+  InputsModule, ModalModule,
   TableModule,
   TooltipModule,
 } from 'angular-bootstrap-md';
 import { RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { OwlDateTimeModule } from 'ng-pick-datetime-ex';
-import { EformDocxReportRouting } from './eform-docx-report.routing'
+import { EformDocxReportRouting } from './eform-docx-report.routing';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { EformDocxReportRouting } from './eform-docx-report.routing'
     EformDocxReportHeaderComponent,
     EformDocxReportTableComponent,
     EformDocxReportImagesComponent,
+    EformDocxReportHeaderEditorComponent,
   ],
   imports: [
     CommonModule,
@@ -44,6 +46,8 @@ import { EformDocxReportRouting } from './eform-docx-report.routing'
     InputsModule,
     CardsModule,
     EformDocxReportRouting,
+    ModalModule,
+    FormsModule,
   ],
 })
 export class EformDocxReportModule {}
