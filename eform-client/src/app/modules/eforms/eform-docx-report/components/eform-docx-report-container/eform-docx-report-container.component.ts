@@ -121,6 +121,7 @@ export class EformDocxReportContainerComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         if (data && data.success) {
           this.headerEditorModal.hide();
+          this.getReportHeaders(this.selectedTemplateId)
         }
       });
   }
