@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter, ViewChild} from '@angular/core';
 import { EformDocxReportHeadersModel } from 'src/app/common/models';
 
 @Component({
@@ -7,15 +7,25 @@ import { EformDocxReportHeadersModel } from 'src/app/common/models';
   styleUrls: ['./eform-docx-report-header-editor.component.scss'],
 })
 export class EformDocxReportHeaderEditorComponent implements OnInit {
-  @Input()
-  reportHeadersModel: EformDocxReportHeadersModel = new EformDocxReportHeadersModel();
+  @ViewChild('frame', {static: true}) frame;
   @Output()
   updateReportHeaders: EventEmitter<EformDocxReportHeadersModel> = new EventEmitter<EformDocxReportHeadersModel>();
+  reportHeadersModel: EformDocxReportHeadersModel = new EformDocxReportHeadersModel();
   headers = [{}, {}, {}, {}, {}];
 
   constructor() {}
 
   ngOnInit(): void {}
+
+  hide() {
+    this.frame.hide();
+    this.reportHeadersModel = new EformDocxReportHeadersModel();
+  }
+
+  show(model: EformDocxReportHeadersModel) {
+    this.reportHeadersModel = model;
+    this.frame.show();
+  }
 
   updateHeaders() {
     this.updateReportHeaders.emit(this.reportHeadersModel);
