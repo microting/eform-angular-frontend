@@ -1,4 +1,14 @@
-<subheader-pn> </subheader-pn>
+<subheader-pn>
+  <button
+    mdbBtn
+    *ngIf="userRole === 'admin'"
+    id="reportEditHeadersBtn"
+    class="btn-success btn-small-height"
+    (click)="showHeadersEditModal()"
+  >
+    {{ 'Edit headers' | translate }}
+  </button>
+</subheader-pn>
 
 <div class="container-fluid">
   <app-eform-docx-report-header
@@ -44,3 +54,8 @@
     ></app-eform-docx-report-images>
   </div>
 </div>
+
+<app-eform-docx-report-header-editor
+  (updateReportHeaders)="onUpdateReportHeaders($event)"
+  #headerEditorModal
+></app-eform-docx-report-header-editor>

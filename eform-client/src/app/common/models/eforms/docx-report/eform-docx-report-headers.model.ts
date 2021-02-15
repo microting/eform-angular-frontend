@@ -1,4 +1,5 @@
 export class EformDocxReportHeadersModel {
+  templateId: number;
   h1: string;
   h2: string;
   h3: string;

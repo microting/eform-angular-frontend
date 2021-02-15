@@ -27,10 +27,10 @@ export class EformDocxReportService extends BaseService {
     super(_http, router, toastrService);
   }
 
-  getTemplateDocxReportHeaders(): Observable<
+  getTemplateDocxReportHeaders(templateId: number): Observable<
     OperationDataResult<EformDocxReportHeadersModel>
   > {
-    return this.get(EformDocxReportServiceMethods.DocxReportHeaders);
+    return this.get(EformDocxReportServiceMethods.DocxReportHeaders + '/' + templateId);
   }
 
   updateTemplateDocxReportHeaders(
