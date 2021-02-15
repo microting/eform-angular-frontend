@@ -1,6 +1,9 @@
 import loginPage from '../../Page objects/Login.page';
 import myEformsPage from '../../Page objects/MyEforms.page';
-import userAdministration from '../../Page objects/UserAdministration.page';
+import userAdministration, {
+  UserAdministrationObject,
+} from '../../Page objects/UserAdministration.page';
+import { generateRandmString } from '../../Helpers/helper-functions';
 
 const expect = require('chai').expect;
 
@@ -10,19 +13,69 @@ describe('User administration settings', function () {
     loginPage.login();
     myEformsPage.Navbar.goToUserAdministration();
   });
-
   it('should set name to Foo Bar', function () {
-    userAdministration.setNewName('Foo', 'Bar');
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-    expect($(`//*[contains(@class, 'table')]//*[contains(text(), 'Foo Bar')]`).getText()).equal('Foo Bar');
-    // expect(myEformsPage.Navbar.verifyHeaderMenuItem('Device Users')).equal('Device Users');
-    // expect(myEformsPage.Navbar.verifyHeaderMenuItem('Advanced')).equal('Advanced');
+    const user: UserAdministrationObject = {
+      firstName: 'Foo',
+      lastName: 'Bar',
+    };
+    let userObject = userAdministration.getUserByNumber();
+    userObject.edit(user);
+    userObject = userAdministration.getUserByNumber();
+    expect(userObject.fullName).equal('Foo Bar');
   });
   it('should revert to old name', function () {
-    userAdministration.revertToOldName('John', 'Smith');
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-    expect($(`//*[contains(@class, 'table')]//*[contains(text(), 'John Smith')]`).getText()).equal('John Smith');
-    // expect(myEformsPage.Navbar.verifyHeaderMenuItem('Gerätebenutzer')).equal('Gerätebenutzer');
-    // expect(myEformsPage.Navbar.verifyHeaderMenuItem('Fortgeschritten')).equal('Fortgeschritten');
+    const user: UserAdministrationObject = {
+      firstName: 'John',
+      lastName: 'Smith',
+    };
+    let userObject = userAdministration.getUserByNumber();
+    userObject.edit(user);
+    userObject = userAdministration.getUserByNumber();
+    expect(userObject.fullName).equal('John Smith');
+  });
+  it('should create new user', function () {
+    const user: UserAdministrationObject = {
+      firstName: generateRandmString(),
+      lastName: generateRandmString(),
+      group: 'eForm users',
+      role: 'User',
+      email: 'user@user.com',
+      password: generateRandmString(),
+    };
+    const countUserBeforeCreate = userAdministration.rowNum;
+    userAdministration.createNewUser(user);
+    expect(countUserBeforeCreate + 1, 'user not created').eq(
+      userAdministration.rowNum
+    );
+  });
+  it('should change new user role', function () {
+    let userObject = userAdministration.getUserByNumber(2);
+    const user: UserAdministrationObject = {
+      role: 'Admin',
+    };
+    userObject.edit(user);
+    userObject = userAdministration.getUserByNumber(2);
+    expect(userObject.role, 'user role not changed').eq(
+      user.role.toLowerCase()
+    );
+  });
+  it('should revert new user role', function () {
+    let userObject = userAdministration.getUserByNumber(2);
+    const user: UserAdministrationObject = {
+      role: 'User',
+      group: 'eForm users',
+    };
+    userObject.edit(user);
+    userObject = userAdministration.getUserByNumber(2);
+    expect(userObject.role, 'user role not changed').eq(
+      user.role.toLowerCase()
+    );
+  });
+  it('should delete created user', function () {
+    const countUserBeforeDelete = userAdministration.rowNum;
+    userAdministration.getUserByNumber(2).delete();
+    expect(countUserBeforeDelete - 1, 'user not created').eq(
+      userAdministration.rowNum
+    );
   });
 });

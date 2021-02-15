@@ -66,8 +66,6 @@ namespace eFormAPI.Web.Services
             _dbContext = dbContext;
         }
 
-        
-
         public async Task<OperationDataResult<UserInfoModelList>> Index(PaginationModel paginationModel)
         {
             try
@@ -141,7 +139,7 @@ namespace eFormAPI.Web.Services
                     UserName = userRegisterModel.Email,
                     FirstName = userRegisterModel.FirstName,
                     LastName = userRegisterModel.LastName,
-                    EmailConfirmed =  true,
+                    EmailConfirmed = true,
                     TwoFactorEnabled = false,
                     IsGoogleAuthenticatorEnabled = false
                 };
@@ -149,10 +147,8 @@ namespace eFormAPI.Web.Services
                 var result = await _userManager.CreateAsync(user, userRegisterModel.Password);
                 if (!result.Succeeded)
                 {
-                    return new OperationResult(false, string.Join(" ", result.Errors.Select(x=>x.Description).ToArray()));
+                    return new OperationResult(false, string.Join(" ", result.Errors.Select(x => x.Description).ToArray()));
                 }
-
-               
 
                 // change role
                 await _userManager.AddToRoleAsync(user, userRegisterModel.Role);
@@ -161,7 +157,7 @@ namespace eFormAPI.Web.Services
                 {
                     var securityGroupUser = new SecurityGroupUser()
                     {
-                        SecurityGroupId = (int) userRegisterModel.GroupId,
+                        SecurityGroupId = (int)userRegisterModel.GroupId,
                         EformUserId = user.Id
                     };
                     _dbContext.SecurityGroupUsers.Add(securityGroupUser);
@@ -214,7 +210,7 @@ namespace eFormAPI.Web.Services
                     _localizationService.GetString("ErrorWhileObtainUsers"));
             }
         }
-        
+
         public async Task<OperationResult> Update(UserRegisterModel userRegisterModel)
         {
             try
@@ -239,7 +235,7 @@ namespace eFormAPI.Web.Services
 
                 // get role
                 var roles = await _userManager.GetRolesAsync(user);
-                if (_userService.UserId == 1 && roles.Any(x => x == userRegisterModel.Role))
+                if (user.Id == 1 && roles.Any(x => x != userRegisterModel.Role))
                 {
                     return new OperationResult(false, _localizationService.GetString("CantUpdateRoleForPrimaryAdminUser"));
                 }
@@ -265,7 +261,7 @@ namespace eFormAPI.Web.Services
                 var result = await _userManager.UpdateAsync(user);
                 if (!result.Succeeded)
                 {
-                    return new OperationResult(false, string.Join(" ", result.Errors.Select(x=>x.Description).ToArray()));
+                    return new OperationResult(false, string.Join(" ", result.Errors.Select(x => x.Description).ToArray()));
                 }
 
                 // password
@@ -297,7 +293,7 @@ namespace eFormAPI.Web.Services
                     {
                         var securityGroupUser = new SecurityGroupUser()
                         {
-                            SecurityGroupId = (int) userRegisterModel.GroupId,
+                            SecurityGroupId = (int)userRegisterModel.GroupId,
                             EformUserId = user.Id
                         };
                         _dbContext.SecurityGroupUsers.Add(securityGroupUser);
@@ -328,7 +324,7 @@ namespace eFormAPI.Web.Services
                 return new OperationResult(false, _localizationService.GetString("ErrorWhileUpdatingUser"));
             }
         }
-        
+
         public async Task<OperationResult> Delete(int userId)
         {
             try
@@ -353,7 +349,7 @@ namespace eFormAPI.Web.Services
                 var result = await _userManager.DeleteAsync(user);
                 if (!result.Succeeded)
                 {
-                    return new OperationResult(false, string.Join(" ", result.Errors.Select(x=>x.Description).ToArray()));
+                    return new OperationResult(false, string.Join(" ", result.Errors.Select(x => x.Description).ToArray()));
                 }
 
                 return new OperationResult(true, _localizationService.GetStringWithFormat("UserParamWasDeleted", userId));

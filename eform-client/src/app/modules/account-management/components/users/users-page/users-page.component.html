@@ -2,8 +2,14 @@
   <div class="p-3">
     <button
       mdbBtn
-      class="btn-success btn-small-height" (click)="openNewUserModal()" *ngIf="userClaims.usersCreate"
-      mdbTooltip="{{'Create user' | translate}}">{{'New User' | translate}}</button>
+      class="btn-success btn-small-height"
+      (click)="openNewUserModal()"
+      *ngIf="userClaims.usersCreate"
+      mdbTooltip="{{ 'Create user' | translate }}"
+      id="createNewUserBtn"
+    >
+      {{ 'New User' | translate }}
+    </button>
   </div>
 </subheader-pn>
 
@@ -12,52 +18,81 @@
     <div class="col-md-3">
       <div class="p-3">
         <div class="mat-checkbox">
-          <input id="isChecked" (click)="checked($event)"
-                 [checked]="isChecked" [value]="isChecked" color="primary" type="checkbox">
-          <label for="isChecked">{{ 'Force users to use 2-f-auth' | translate }}</label>
+          <input
+            id="isChecked"
+            (click)="checked($event)"
+            [checked]="isChecked"
+            [value]="isChecked"
+            color="primary"
+            type="checkbox"
+          />
+          <label for="isChecked">{{
+            'Force users to use 2-f-auth' | translate
+          }}</label>
         </div>
       </div>
     </div>
   </div>
   <div class="row p-1 table-responsive no-gutters">
-    <table mdbTable striped="true" hover="true" small="true" class="z-depth-1 text-center">
+    <table
+      mdbTable
+      striped="true"
+      hover="true"
+      small="true"
+      class="z-depth-1 text-center"
+    >
       <thead>
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">{{ 'Email' | translate }}</th>
-        <th scope="col">{{ 'Full Name' | translate }}</th>
-        <th scope="col">{{ 'Role' | translate }}</th>
-        <th scope="col" *ngIf="userClaims.usersUpdate || userClaims.usersDelete">{{'Actions' | translate}}</th>
-      </tr>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">{{ 'Email' | translate }}</th>
+          <th scope="col">{{ 'Full Name' | translate }}</th>
+          <th scope="col">{{ 'Role' | translate }}</th>
+          <th
+            scope="col"
+            *ngIf="userClaims.usersUpdate || userClaims.usersDelete"
+          >
+            {{ 'Actions' | translate }}
+          </th>
+        </tr>
       </thead>
-      <tbody>
-      <tr *ngFor="let userInfoModel of userInfoModelList.userList">
-        <td scope="row">{{userInfoModel.id}}</td>
-        <td> {{userInfoModel.email}}</td>
-        <td>
-          {{userInfoModel.firstName}} {{userInfoModel.lastName}}
-        </td>
-        <td>
-          {{userInfoModel.role}}
-        </td>
-        <td *ngIf="userClaims.usersUpdate || userClaims.usersDelete">
-          <div class="d-flex flex-row justify-content-center">
-            <button id="userAdministrationEditBtn"
-              class="btn btn-accent text-black-50 btn-icon mb-2" *ngIf="userClaims.usersUpdate"
-                    mdbTooltip="{{'Edit User' | translate}}"
-                    (click)="openEditModal(userInfoModel.id)">
-              <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
-
-            </button>
-            <button mdbBtn class="btn-danger btn-icon mb-2 " *ngIf="userClaims.usersDelete"
-                    mdbTooltip="{{'Delete user' | translate}}"
-                    (click)="openRemoveUserModal(userInfoModel)">
-              <fa-icon icon="trash-alt" [fixedWidth]="true" size="lg"></fa-icon>
-
-            </button>
-          </div>
-        </td>
-      </tr>
+      <tbody id="userInfoTable">
+        <tr *ngFor="let userInfoModel of userInfoModelList.userList">
+          <td id="userAdministrationId" scope="row">{{ userInfoModel.id }}</td>
+          <td id="userAdministrationEmail">{{ userInfoModel.email }}</td>
+          <td id="userAdministrationFullName">
+            {{ userInfoModel.firstName }} {{ userInfoModel.lastName }}
+          </td>
+          <td id="userAdministrationRole">
+            {{ userInfoModel.role }}
+          </td>
+          <td *ngIf="userClaims.usersUpdate || userClaims.usersDelete">
+            <div class="d-flex flex-row justify-content-center">
+              <button
+                id="userAdministrationEditBtn"
+                class="btn btn-accent text-black-50 btn-icon mb-2"
+                *ngIf="userClaims.usersUpdate"
+                mdbTooltip="{{ 'Edit User' | translate }}"
+                (click)="openEditModal(userInfoModel.id)"
+              >
+                <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
+              </button>
+              <button
+                mdbBtn
+                class="btn-danger btn-icon mb-2"
+                *ngIf="userClaims.usersDelete"
+                mdbTooltip="{{ 'Delete user' | translate }}"
+                (click)="openRemoveUserModal(userInfoModel)"
+                id="userAdministrationDeleteBtn"
+              >
+                <fa-icon
+                  icon="trash-alt"
+                  [fixedWidth]="true"
+                  size="lg"
+                ></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -66,28 +101,40 @@
     <div class="col-md-1">
       <eform-page-size
         [pageSize]="localPageSettings.pageSize"
-        (onPageSizeChanged)="localPageSettings.pageSize = $event; paginationModel.pageIndex = 1;
-        updateLocalPageSettings('pagesSettings')">
+        (onPageSizeChanged)="
+          localPageSettings.pageSize = $event;
+          paginationModel.pageIndex = 1;
+          updateLocalPageSettings('pagesSettings')
+        "
+      >
       </eform-page-size>
     </div>
     <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
-      <eform-pagination *ngIf="userInfoModelList.totalUsers > paginationModel.pageSize"
-                        [limit]="paginationModel.pageSize"
-                        [size]="userInfoModelList.totalUsers"
-                        [offset]="paginationModel.offset"
-                        (onPageChanged)="changePage($event)"></eform-pagination>
+      <eform-pagination
+        *ngIf="userInfoModelList.totalUsers > paginationModel.pageSize"
+        [limit]="paginationModel.pageSize"
+        [size]="userInfoModelList.totalUsers"
+        [offset]="paginationModel.offset"
+        (onPageChanged)="changePage($event)"
+      ></eform-pagination>
     </div>
   </div>
-
 </div>
 
-<app-user-edit-modal (onUserUpdated)="getUserInfoList()"
-                     [availableGroups]="securityGroups"
-                     #userEditModal></app-user-edit-modal>
-<app-new-user-modal (onUserCreated)="getUserInfoList()"
-                    [availableGroups]="securityGroups"
-                    #newUserModal></app-new-user-modal>
-<app-remove-user-modal [selectedUser]="selectedUser"
-                       (onUserDeleted)="getUserInfoList()" #removeUserModal></app-remove-user-modal>
+<app-user-edit-modal
+  (onUserUpdated)="getUserInfoList()"
+  [availableGroups]="securityGroups"
+  #userEditModal
+></app-user-edit-modal>
+<app-new-user-modal
+  (onUserCreated)="getUserInfoList()"
+  [availableGroups]="securityGroups"
+  #newUserModal
+></app-new-user-modal>
+<app-remove-user-modal
+  [selectedUser]="selectedUser"
+  (onUserDeleted)="getUserInfoList()"
+  #removeUserModal
+></app-remove-user-modal>
 <!--<app-create-eform-modal #modalNewEform></app-create-eform-modal>-->
 <!--<app-cases-column-modal #modalCasesColumns></app-cases-column-modal>-->
