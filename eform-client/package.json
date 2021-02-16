@@ -38,7 +38,7 @@
     "@angular/platform-browser": "^11.1.2",
     "@angular/platform-browser-dynamic": "^11.1.2",
     "@angular/router": "^11.1.2",
-    "@circlon/angular-tree-component": "^9.0.3",
+    "@circlon/angular-tree-component": "^11.0.1",
     "@fortawesome/angular-fontawesome": "0.8.2",
     "@fortawesome/fontawesome-svg-core": "1.2.34",
     "@fortawesome/free-solid-svg-icons": "5.15.2",
