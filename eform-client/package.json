@@ -104,6 +104,6 @@
     "tslint": "~6.1.0",
     "typescript": "4.1.5",
     "wdio-chromedriver-service": "^6.0.2",
-    "webdriverio": "7.0.3"
+    "webdriverio": "7.0.4"
   }
 }
