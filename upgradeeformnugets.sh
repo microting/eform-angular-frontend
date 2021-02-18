@@ -8,8 +8,8 @@ if (( "$GIT_STATUS" > 0 )); then
 	dotnet add eFormAPI.Web.csproj package Microting.eForm
 	dotnet add eFormAPI.Web.csproj package Microting.eFormApi.BasePn
 
-	EFORM_VERSION=`dotnet list package | grep 'Microting.eForm ' | cut -c64-71`
-	EFORM_BASEPN_VERSION=`dotnet list package | grep 'Microting.eFormApi.BasePn' | cut -c64-71`
+	EFORM_VERSION=`dotnet list package | grep 'Microting.eForm ' | grep -oP '\d.\d.\d.\s' | sed -n 1p`
+	EFORM_BASEPN_VERSION=`dotnet list package | grep 'Microting.eFormApi.BasePn' | grep -oP '\d.\d.\d.\s' | sed -n 1p`
 
 	COMMIT_MESSAGE="Updating"$'\n'"- Microting.eForm to ${EFORM_VERSION}"$'\n'"- Microting.eFormApi.BasePn to ${EFORM_BASEPN_VERSION}"
 
@@ -20,7 +20,7 @@ if (( "$GIT_STATUS" > 0 )); then
 	else
 		git add .
 		git commit -m "$COMMIT_MESSAGE"
-		CURRENT_GITVERSION=`git describe --abbrev=0 --tags | cut -d "v" -f 2`
+		CURRENT_GITVERSION=`git tag --sort=-creatordate | cut -d "v" -f 2 | sed -n 1p`
 		MAJOR_VERSION=`echo $CURRENT_GITVERSION | cut -d "." -f 1`
 		MINOR_VERSION=`echo $CURRENT_GITVERSION | cut -d "." -f 2`
 		BUILD_VERSION=`echo $CURRENT_GITVERSION | cut -d "." -f 3`
@@ -28,7 +28,7 @@ if (( "$GIT_STATUS" > 0 )); then
 		NEW_GIT_VERSION="v$MAJOR_VERSION.$MINOR_VERSION.$BUILD_VERSION"
 		git tag "$NEW_GIT_VERSION"
 		git push --tags
-		git push	
+		git push
 		echo "Updated Microting eForm to ${EFORM_VERSION} and pushed new version ${NEW_GIT_VERSION}"
 	fi
 else
