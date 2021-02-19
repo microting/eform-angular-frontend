@@ -35,11 +35,12 @@ namespace eFormAPI.Web.Infrastructure.Database.Factories
         {
             var defaultCs = "Server = localhost; port = 3306; Database = eform-angular-migration; user = root; Convert Zero Datetime = true;";
             var optionsBuilder = new DbContextOptionsBuilder<BaseDbContext>();
-            optionsBuilder.UseMySql(args.Any() ? ((args[0] == "..." ? defaultCs : args[0])) : defaultCs, b => b.EnableRetryOnFailure());
-            optionsBuilder.UseLazyLoadingProxies(true);
-
+            optionsBuilder.UseMySql(args.Any() ? args[0] : defaultCs, mysqlOptions =>
+            {
+                mysqlOptions.ServerVersion(new Version(10, 4, 0), ServerType.MariaDb).EnableRetryOnFailure();
+            });
             return new BaseDbContext(optionsBuilder.Options);
-            
+
 //            optionsBuilder.UseMySql(@"Server = localhost; port = 3306; Database = eform-angular-migration; user = root; Convert Zero Datetime = true;");
 //            dotnet ef migrations add InitialCreate --project eFormAPI.Web --startup-project DBMigrator
         }
