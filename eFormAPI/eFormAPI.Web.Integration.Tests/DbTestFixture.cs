@@ -45,7 +45,7 @@ namespace eFormAPI.Web.Integration.Tests
 
             // if (ConnectionString.ToLower().Contains("convert zero datetime"))
             // {
-                dbContextOptionsBuilder.UseMySql(connectionStr);
+                dbContextOptionsBuilder.UseMySql(connectionStr, b => b.EnableRetryOnFailure());
             // }
             // else
             // {
