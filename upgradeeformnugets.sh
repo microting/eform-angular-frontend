@@ -4,22 +4,50 @@ GIT_STATUS=`git status | grep "nothing to commit, working tree clean" | wc -l`
 if (( "$GIT_STATUS" > 0 )); then
 	git pull
 	cd eFormAPI/eFormAPI.Web
+  CURRENT_NUMBER_OF_COMMITS=`git rev-list --all --count`
 
-	dotnet add eFormAPI.Web.csproj package Microting.eForm
-	dotnet add eFormAPI.Web.csproj package Microting.eFormApi.BasePn
+	PACKAGES=['Microting.eForm','Microting.eFormApi.BasePn','AWSSDK.Core','AWSSDK.S3','Pomelo.EntityFrameworkCore.MySql']
+	PROJECT_NAME='eFormAPI.Web.csproj'
+	REPOSITORY='eform-angular-frontend'
 
-	EFORM_VERSION=`dotnet list package | grep 'Microting.eForm ' | grep -oP '\d.\d.\d.\s' | sed -n 1p`
-	EFORM_BASEPN_VERSION=`dotnet list package | grep 'Microting.eFormApi.BasePn' | grep -oP '\d.\d.\d.\s' | sed -n 1p`
+	for PACKAGE_NAME in ${PACKAGES[@]}; do
 
-	COMMIT_MESSAGE="Updating"$'\n'"- Microting.eForm to ${EFORM_VERSION}"$'\n'"- Microting.eFormApi.BasePn to ${EFORM_BASEPN_VERSION}"
+		OLD_VERSION=`dotnet list package | grep "$PACKAGE_NAME " | grep -oP '\s\d.\d..\d\s' | grep -oP '\d.\d..\d' | sed -n 1p`
+		BOLD_VERSION=${OLD_VERSION//\./}
 
-	GIT_STATUS=`git status | grep "nothing to commit, working tree clean" | wc -l`
+		dotnet add $PROJECT_NAME package $PACKAGE_NAME
 
-	if (( "$GIT_STATUS" > 0 )); then
+		NEW_EFORM_VERSION=`dotnet list package | grep "$PACKAGE_NAME "dotnet list package | grep "$PACKAGE_NAME " | grep -oP '\s\d.\d..\d\s' | grep -oP '\d.\d..\d' | sed -n 1p`
+		BNEW_EFORM_VERSION=${OLD_EFORM_VERSION//\./}
+
+		if (( $BNEW_EFORM_VERSION > $BOLD_VERSION)); then
+		  echo "We have a new version of $PACKAGE_NAME, so creating github issue and do a commit message to close that said issue"
+		  RESULT=`curl -X "POST" "https://api.github.com/repos/microting/$REPOSITORY/issues?state=all" \
+		     -H "Cookie: logged_in=no" \
+		     -H "Authorization: token $CHANGELOG_GITHUB_TOKEN" \
+		     -H "Content-Type: text/plain; charset=utf-8" \
+		     -d $'{
+		  "title": "Bump '$PACKAGE_NAME' from '$OLD_MAGICK_VERSION' to '$NEW_MAGICK_VERSION'",
+		  "body": "TBD",
+		  "assignees": [
+		    "renemadsen"
+		  ],
+		  "labels": [
+		    ".NET",
+		    "backend",
+		    "enhancement"
+		  ]
+		}'`
+		  ISSUE_NUMBER=`echo $RESULT | grep -oP 'number": \d..,' | grep -oP '\d..'`
+		  git add .
+		  git commit -a -m "closes #$ISSUE_NUMBER"
+		fi
+	done
+	NEW_NUMBER_OF_COMMITS=`git rev-list --all --count`
+
+	if (( $NEW_NUMBER_OF_COMMITS > $CURRENT_NUMBER_OF_COMMITS )); then
 		echo "nothing to do, everything is up to date."
 	else
-		git add .
-		git commit -m "$COMMIT_MESSAGE"
 		CURRENT_GITVERSION=`git tag --sort=-creatordate | cut -d "v" -f 2 | sed -n 1p`
 		MAJOR_VERSION=`echo $CURRENT_GITVERSION | cut -d "." -f 1`
 		MINOR_VERSION=`echo $CURRENT_GITVERSION | cut -d "." -f 2`
