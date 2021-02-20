@@ -4,7 +4,7 @@ GIT_STATUS=`git status | grep "nothing to commit, working tree clean" | wc -l`
 if (( "$GIT_STATUS" > 0 )); then
 	git pull
 	cd eFormAPI/eFormAPI.Web
-  CURRENT_NUMBER_OF_COMMITS=`git rev-list --all --count`
+  CURRENT_NUMBER_OF_COMMITS=`git log --oneline | wc -l`
 
 	PACKAGES=('Microting.eForm' 'Microting.eFormApi.BasePn' 'AWSSDK.Core' 'AWSSDK.S3' 'Pomelo.EntityFrameworkCore.MySql')
 	PROJECT_NAME='eFormAPI.Web.csproj'
@@ -43,7 +43,7 @@ if (( "$GIT_STATUS" > 0 )); then
 		  git commit -a -m "closes #$ISSUE_NUMBER"
 		fi
 	done
-	NEW_NUMBER_OF_COMMITS=`git rev-list --all --count`
+	NEW_NUMBER_OF_COMMITS=`git log --oneline | wc -l`
 
 	if (( $NEW_NUMBER_OF_COMMITS > $CURRENT_NUMBER_OF_COMMITS )); then
 		echo "nothing to do, everything is up to date."
