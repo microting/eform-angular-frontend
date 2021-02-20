@@ -46,8 +46,6 @@ if (( "$GIT_STATUS" > 0 )); then
 	NEW_NUMBER_OF_COMMITS=`git log --oneline | wc -l`
 
 	if (( $NEW_NUMBER_OF_COMMITS > $CURRENT_NUMBER_OF_COMMITS )); then
-		echo "nothing to do, everything is up to date."
-	else
 		CURRENT_GITVERSION=`git tag --sort=-creatordate | cut -d "v" -f 2 | sed -n 1p`
 		MAJOR_VERSION=`echo $CURRENT_GITVERSION | cut -d "." -f 1`
 		MINOR_VERSION=`echo $CURRENT_GITVERSION | cut -d "." -f 2`
@@ -58,6 +56,12 @@ if (( "$GIT_STATUS" > 0 )); then
 		git push --tags
 		git push
 		echo "Updated Microting eForm to ${EFORM_VERSION} and pushed new version ${NEW_GIT_VERSION}"
+		github_changelog_generator -u microting -p $REPOSITORY -t $CHANGELOG_GITHUB_TOKEN
+		git add CHANGELOG.md
+		git commit -m "Updating changelog"
+		git push
+	else
+		echo "nothing to do, everything is up to date."
 	fi
 else
 	echo "Working tree is not clean, so we are not going to upgrade. Clean, before doing upgrade!"
