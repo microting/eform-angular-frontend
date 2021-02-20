@@ -197,6 +197,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
   public createSearchableList_OneItem(name, itemName) {
     $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     this.createEntitySearchBtn.click();
+    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     $('#createName').waitForDisplayed({timeout: 20000});
     this.entitySearchCreateName.setValue(name);
     $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});

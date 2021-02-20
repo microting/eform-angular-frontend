@@ -1,6 +1,6 @@
 export class Navbar {
   public get applicationSettingsBtn() {
-    const ele = $(`#header #application-settings`);
+    const ele = $(`#application-settings`);
     ele.waitForDisplayed({timeout: 20000});
     return ele;
   }
