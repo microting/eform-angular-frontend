@@ -6,7 +6,7 @@ if (( "$GIT_STATUS" > 0 )); then
 	cd eFormAPI/eFormAPI.Web
   CURRENT_NUMBER_OF_COMMITS=`git rev-list --all --count`
 
-	PACKAGES=['Microting.eForm','Microting.eFormApi.BasePn','AWSSDK.Core','AWSSDK.S3','Pomelo.EntityFrameworkCore.MySql']
+	PACKAGES=('Microting.eForm' 'Microting.eFormApi.BasePn' 'AWSSDK.Core' 'AWSSDK.S3' 'Pomelo.EntityFrameworkCore.MySql')
 	PROJECT_NAME='eFormAPI.Web.csproj'
 	REPOSITORY='eform-angular-frontend'
 
@@ -17,17 +17,17 @@ if (( "$GIT_STATUS" > 0 )); then
 
 		dotnet add $PROJECT_NAME package $PACKAGE_NAME
 
-		NEW_EFORM_VERSION=`dotnet list package | grep "$PACKAGE_NAME "dotnet list package | grep "$PACKAGE_NAME " | grep -oP '\s\d.\d..\d\s' | grep -oP '\d.\d..\d' | sed -n 1p`
-		BNEW_EFORM_VERSION=${OLD_EFORM_VERSION//\./}
+		NEW_VERSION=`dotnet list package | grep "$PACKAGE_NAME " | grep -oP '\s\d.\d..\d\s' | grep -oP '\d.\d..\d' | sed -n 1p`
+		BNEW_VERSION=${NEW_VERSION//\./}
 
-		if (( $BNEW_EFORM_VERSION > $BOLD_VERSION)); then
+		if (( $BNEW_VERSION > $BOLD_VERSION)); then
 		  echo "We have a new version of $PACKAGE_NAME, so creating github issue and do a commit message to close that said issue"
 		  RESULT=`curl -X "POST" "https://api.github.com/repos/microting/$REPOSITORY/issues?state=all" \
 		     -H "Cookie: logged_in=no" \
 		     -H "Authorization: token $CHANGELOG_GITHUB_TOKEN" \
 		     -H "Content-Type: text/plain; charset=utf-8" \
 		     -d $'{
-		  "title": "Bump '$PACKAGE_NAME' from '$OLD_MAGICK_VERSION' to '$NEW_MAGICK_VERSION'",
+		  "title": "Bump '$PACKAGE_NAME' from '$OLD_VERSION' to '$NEW_VERSION'",
 		  "body": "TBD",
 		  "assignees": [
 		    "renemadsen"
