@@ -12,12 +12,12 @@ if (( "$GIT_STATUS" > 0 )); then
 
 	for PACKAGE_NAME in ${PACKAGES[@]}; do
 
-		OLD_VERSION=`dotnet list package | grep "$PACKAGE_NAME " | grep -oP '\s\d.\d..\d\s' | grep -oP '\d.\d..\d' | sed -n 1p`
+		OLD_VERSION=`dotnet list package | grep "$PACKAGE_NAME " | grep -oP ' \d\.\d+\.\d.*$' | grep -oP '\d\.\d+\.\d.*$' | grep -oP ' \d\.\d+\.\d.*$' | xargs`
 		BOLD_VERSION=${OLD_VERSION//\./}
 
 		dotnet add $PROJECT_NAME package $PACKAGE_NAME
 
-		NEW_VERSION=`dotnet list package | grep "$PACKAGE_NAME " | grep -oP '\s\d.\d..\d\s' | grep -oP '\d.\d..\d' | sed -n 1p`
+		NEW_VERSION=`dotnet list package | grep "$PACKAGE_NAME " | grep -oP ' \d\.\d+\.\d.*$' | grep -oP '\d\.\d+\.\d.*$' | grep -oP ' \d\.\d+\.\d.*$' | xargs`
 		BNEW_VERSION=${NEW_VERSION//\./}
 
 		if (( $BNEW_VERSION > $BOLD_VERSION)); then
