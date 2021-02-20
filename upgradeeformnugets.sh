@@ -12,15 +12,13 @@ if (( "$GIT_STATUS" > 0 )); then
 
 	for PACKAGE_NAME in ${PACKAGES[@]}; do
 
-		OLD_VERSION=`dotnet list package | grep "$PACKAGE_NAME " | grep -oP ' \d\.\d+\.\d.*$' | grep -oP '\d\.\d+\.\d.*$' | grep -oP ' \d\.\d+\.\d.*$' | xargs`
-		BOLD_VERSION=${OLD_VERSION//\./}
+		OLD_VERSION=`dotnet list package | grep "$PACKAGE_NAME " | grep -oP ' \d\.\d+\.\d.*' | grep -oP ' \d.* \b' | xargs`
 
 		dotnet add $PROJECT_NAME package $PACKAGE_NAME
 
 		NEW_VERSION=`dotnet list package | grep "$PACKAGE_NAME " | grep -oP ' \d\.\d+\.\d.*$' | grep -oP '\d\.\d+\.\d.*$' | grep -oP ' \d\.\d+\.\d.*$' | xargs`
-		BNEW_VERSION=${NEW_VERSION//\./}
 
-		if (( $BNEW_VERSION > $BOLD_VERSION)); then
+		if [ $NEW_VERSION != $OLD_VERSION ]; then
 		  echo "We have a new version of $PACKAGE_NAME, so creating github issue and do a commit message to close that said issue"
 		  RESULT=`curl -X "POST" "https://api.github.com/repos/microting/$REPOSITORY/issues?state=all" \
 		     -H "Cookie: logged_in=no" \
@@ -38,7 +36,7 @@ if (( "$GIT_STATUS" > 0 )); then
 		    "enhancement"
 		  ]
 		}'`
-		  ISSUE_NUMBER=`echo $RESULT | grep -oP 'number": \d..,' | grep -oP '\d..'`
+			ISSUE_NUMBER=`echo $RESULT | grep -oP 'number": \d+,' | grep -oP '\d+'`
 		  git add .
 		  git commit -a -m "closes #$ISSUE_NUMBER"
 		fi
@@ -56,6 +54,7 @@ if (( "$GIT_STATUS" > 0 )); then
 		git push --tags
 		git push
 		echo "Updated Microting eForm to ${EFORM_VERSION} and pushed new version ${NEW_GIT_VERSION}"
+		cd ../..
 		github_changelog_generator -u microting -p $REPOSITORY -t $CHANGELOG_GITHUB_TOKEN
 		git add CHANGELOG.md
 		git commit -m "Updating changelog"
