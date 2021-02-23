@@ -1,16 +1,28 @@
-import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/common/services';
 import { LoaderService } from 'src/app/common/services/loeader.service';
+import { EFormService } from 'src/app/common/services/eform/eform.service';
+import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
+import { Subscription } from 'rxjs';
 
+@AutoUnsubscribe()
 @Component({
   selector: 'app-eforms-bulk-import-modal',
   templateUrl: './eforms-bulk-import-modal.component.html',
   styleUrls: ['./eforms-bulk-import-modal.component.scss'],
 })
-export class EformsBulkImportModalComponent implements OnInit {
+export class EformsBulkImportModalComponent implements OnInit, OnDestroy {
   @ViewChild('frame', { static: true }) frame;
   @ViewChild('xlsxEforms', { static: false })
   xlsxEformsInput: ElementRef;
@@ -20,13 +32,18 @@ export class EformsBulkImportModalComponent implements OnInit {
   });
   @Output() importFinished = new EventEmitter<void>();
   errors: { row: number; col: number; message: string }[];
+  xlsxFile: File;
+  importSubscription$: Subscription;
 
   constructor(
     private toastrService: ToastrService,
     private translateService: TranslateService,
     private authService: AuthService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private eFormService: EFormService
   ) {}
+
+  ngOnDestroy(): void {}
 
   ngOnInit() {
     this.xlsxEformsFileUploader.onSuccessItem = (item, response) => {
@@ -69,15 +86,25 @@ export class EformsBulkImportModalComponent implements OnInit {
 
   show() {
     this.frame.show();
+    this.xlsxFile = null;
   }
 
-  uploadExcelEformsFile() {
-    this.xlsxEformsFileUploader.queue[0].upload();
-    this.loaderService.isLoading.next(true);
+  uploadExcelEformsFile(fileInput) {
+    this.xlsxFile = fileInput.target.files[0] as File;
+    this.xlsxEformsFileUploader.progress = 100;
+    this.importSubscription$ = this.eFormService
+      .importEFormsFromExcel(this.xlsxFile)
+      .subscribe((result) => {
+        if (result && result.success) {
+          this.importFinished.emit();
+          this.excelEformsModal();
+        }
+      });
   }
 
   excelEformsModal() {
-    this.xlsxEformsFileUploader.clearQueue();
     this.frame.hide();
+    this.xlsxEformsFileUploader.clearQueue();
+    this.xlsxFile = null;
   }
 }
