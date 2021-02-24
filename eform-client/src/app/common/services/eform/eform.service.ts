@@ -127,7 +127,7 @@ export class EFormService extends BaseService {
     return this.getBlobData(TemplateFilesMethods.GetCsv + '/' + templateId);
   }
 
-  importEFormsFromExcel(excelFile: File): Observable<OperationResult> {
-    return this.uploadFile(TemplatesMethods.ImportEforms, excelFile);
-  }
+  // importEFormsFromExcel(excelFile: File): Observable<OperationResult> {
+  //   return this.uploadFile(TemplatesMethods.ImportEforms, excelFile);
+  // }
 }

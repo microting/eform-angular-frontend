@@ -1,4 +1,4 @@
-﻿/*
+/*
 The MIT License (MIT)
 
 Copyright (c) 2007 - 2020 Microting A/S
@@ -28,7 +28,6 @@ using eFormAPI.Web.Infrastructure;
 using eFormAPI.Web.Infrastructure.Models;
 using eFormAPI.Web.Infrastructure.Models.Templates;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
@@ -70,9 +69,9 @@ namespace eFormAPI.Web.Controllers.Eforms
         [HttpPost]
         [Route("api/templates/import")]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.Create)]
-        public async Task<OperationResult> Import(IFormFile file)
+        public async Task<OperationResult> Import(EformExcelUploadModel uploadModel)
         {
-            return await _templatesService.Import(file.OpenReadStream());
+            return await _templatesService.Import(uploadModel.File.OpenReadStream());
         }
 
         [HttpGet]

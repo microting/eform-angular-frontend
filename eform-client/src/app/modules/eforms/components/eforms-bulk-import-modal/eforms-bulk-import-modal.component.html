@@ -19,7 +19,7 @@
               <button
                 mdbBtn
                 class="btn-primary btn-small-height"
-                *ngIf="!xlsxFile"
+                *ngIf="xlsxEformsFileUploader?.queue?.length == 0"
                 (click)="xlsxEforms.click()"
               >
                 {{ 'Upload' | translate }}
@@ -27,7 +27,7 @@
               <button
                 mdbBtn
                 class="btn-warning btn-small-height"
-                *ngIf="xlsxFile"
+                *ngIf="xlsxEformsFileUploader?.queue?.length > 0"
                 (click)="xlsxEforms.click()"
               >
                 {{ 'Pending' | translate }}
@@ -35,9 +35,11 @@
               <input
                 class="form-control"
                 type="file"
-                (change)="uploadExcelEformsFile($event)"
+                ng2FileSelect
+                (onFileSelected)="uploadExcelEformsFile()"
+                [uploader]="xlsxEformsFileUploader"
                 #xlsxEforms
-                id="zipInput"
+                id="xlsxImportInput"
                 style="display: none"
               />
             </div>
@@ -51,9 +53,10 @@
                     class="progress-bar"
                     role="progressbar"
                     [ngStyle]="{
-                      width: !xlsxFile
-                        ? xlsxEformsFileUploader.progress + '%'
-                        : ''
+                      width:
+                        xlsxEformsFileUploader?.queue?.length !== 0
+                          ? xlsxEformsFileUploader.progress + '%'
+                          : ''
                     }"
                   ></div>
                 </div>
