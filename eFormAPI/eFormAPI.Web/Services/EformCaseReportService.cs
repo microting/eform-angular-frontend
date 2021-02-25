@@ -1,4 +1,4 @@
-﻿/*
+/*
 The MIT License (MIT)
 
 Copyright (c) 2007 - 2020 Microting A/S
@@ -38,6 +38,7 @@ namespace eFormAPI.Web.Services
     using System.Diagnostics;
     using System.IO;
     using Microsoft.Extensions.Logging;
+    using eFormAPI.Web.Infrastructure.Models;
 
     public class EformCaseReportService : IEformCaseReportService
     {
@@ -277,6 +278,72 @@ namespace eFormAPI.Web.Services
                     false,
                     _localizationService.GetString("ErrorWhileGeneratingReportFile"));
             }
+        }
+
+        public async Task<OperationResult> UpdateReportHeaders(EformDocxReportHeadersModel eformDocxReportHeadersModel)
+        {
+
+            var core = await _coreHelper.GetCore();
+            var sdkDbContext = core.DbContextHelper.GetDbContext();
+            var template = await sdkDbContext.CheckLists.Where(x => x.Id == eformDocxReportHeadersModel.TemplateId)
+                .FirstOrDefaultAsync();
+            if (template == null)
+            {
+                return new OperationResult(false, _localizationService.GetString("TemplateNotFound"));
+            }
+
+            if (!string.IsNullOrEmpty(eformDocxReportHeadersModel.H1.Trim()))
+            {
+                template.ReportH1 = eformDocxReportHeadersModel.H1.Trim(); // delete whitespaces in start & end string
+            }
+
+            if (!string.IsNullOrEmpty(eformDocxReportHeadersModel.H2.Trim()))
+            {
+                template.ReportH2 = eformDocxReportHeadersModel.H2.Trim();
+            }
+
+            if (!string.IsNullOrEmpty(eformDocxReportHeadersModel.H3.Trim()))
+            {
+                template.ReportH3 = eformDocxReportHeadersModel.H3.Trim();
+            }
+
+            if (!string.IsNullOrEmpty(eformDocxReportHeadersModel.H4.Trim()))
+            {
+                template.ReportH4 = eformDocxReportHeadersModel.H4.Trim();
+            }
+
+            if (!string.IsNullOrEmpty(eformDocxReportHeadersModel.H5.Trim()))
+            {
+                template.ReportH5 = eformDocxReportHeadersModel.H5.Trim();
+            }
+
+            await template.Update(sdkDbContext);
+
+            return new OperationResult(true);
+        }
+
+        public async Task<OperationDataResult<EformDocxReportHeadersModel>> GetReportHeadersByTemplateId(int templateId)
+        {
+            var core = await _coreHelper.GetCore();
+            var localeString = await _userService.GetCurrentUserLocale();
+            var sdkDbContext = core.DbContextHelper.GetDbContext();
+            var language = sdkDbContext.Languages.Single(x => string.Equals(x.LanguageCode, localeString, StringComparison.CurrentCultureIgnoreCase));
+            var template = await core.TemplateItemRead(templateId, language);
+            if (template == null)
+            {
+                return new OperationDataResult<EformDocxReportHeadersModel>(false, _localizationService.GetString("TemplateNotFound"));
+            }
+
+            return new OperationDataResult<EformDocxReportHeadersModel>(true,
+                new EformDocxReportHeadersModel
+                {
+                    H1 = template.ReportH1,
+                    H2 = template.ReportH2,
+                    H3 = template.ReportH3,
+                    H4 = template.ReportH4,
+                    H5 = template.ReportH5,
+                    TemplateId = template.Id
+                });
         }
     }
 }

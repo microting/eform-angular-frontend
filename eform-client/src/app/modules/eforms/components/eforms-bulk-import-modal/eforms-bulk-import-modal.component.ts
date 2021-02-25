@@ -1,4 +1,11 @@
-import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
@@ -68,6 +75,7 @@ export class EformsBulkImportModalComponent implements OnInit {
   }
 
   show() {
+    this.xlsxEformsFileUploader.clearQueue();
     this.frame.show();
   }
 
@@ -77,7 +85,7 @@ export class EformsBulkImportModalComponent implements OnInit {
   }
 
   excelEformsModal() {
-    this.xlsxEformsFileUploader.clearQueue();
     this.frame.hide();
+    this.xlsxEformsFileUploader.clearQueue();
   }
 }

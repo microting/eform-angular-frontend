@@ -1,4 +1,4 @@
-/*
+﻿/*
 The MIT License (MIT)
 
 Copyright (c) 2007 - 2021 Microting A/S
@@ -22,22 +22,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace eFormAPI.Web.Abstractions.Eforms
+namespace eFormAPI.Web.Infrastructure.Models
 {
-    using System.IO;
-    using System.Threading.Tasks;
-    using Infrastructure.Models;
-    using Infrastructure.Models.ReportEformCase;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-
-    public interface IEformCaseReportService
+    using System.ComponentModel.DataAnnotations;
+    public class EformDocxReportHeadersModel
     {
-        public Task<OperationDataResult<EFormCasesReportModel>> GetReportEformCases(EFormCaseReportRequest eFormCaseReportRequest);
+        public string H1 { get; set; }
 
-        public Task<OperationDataResult<Stream>> GenerateReportFile(EFormCaseReportRequest model);
+        public string H2 { get; set; }
 
-        public Task<OperationResult> UpdateReportHeaders(EformDocxReportHeadersModel eformDocxReportHeadersModel);
-        
-        public Task<OperationDataResult<EformDocxReportHeadersModel>> GetReportHeadersByTemplateId(int templateId);
+        public string H3 { get; set; }
+
+        public string H4 { get; set; }
+
+        public string H5 { get; set; }
+
+        [Required]
+        public int TemplateId { get; set; }
     }
 }

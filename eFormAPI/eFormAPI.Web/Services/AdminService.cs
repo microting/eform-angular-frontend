@@ -1,4 +1,4 @@
-﻿/*
+/*
 The MIT License (MIT)
 
 Copyright (c) 2007 - 2020 Microting A/S
@@ -65,8 +65,6 @@ namespace eFormAPI.Web.Services
             _localizationService = localizationService;
             _dbContext = dbContext;
         }
-
-        
 
         public async Task<OperationDataResult<UserInfoModelList>> Index(PaginationModel paginationModel)
         {
@@ -141,7 +139,7 @@ namespace eFormAPI.Web.Services
                     UserName = userRegisterModel.Email,
                     FirstName = userRegisterModel.FirstName,
                     LastName = userRegisterModel.LastName,
-                    EmailConfirmed =  true,
+                    EmailConfirmed = true,
                     TwoFactorEnabled = false,
                     IsGoogleAuthenticatorEnabled = false
                 };
@@ -149,10 +147,8 @@ namespace eFormAPI.Web.Services
                 var result = await _userManager.CreateAsync(user, userRegisterModel.Password);
                 if (!result.Succeeded)
                 {
-                    return new OperationResult(false, string.Join(" ", result.Errors.Select(x=>x.Description).ToArray()));
+                    return new OperationResult(false, string.Join(" ", result.Errors.Select(x => x.Description).ToArray()));
                 }
-
-               
 
                 // change role
                 await _userManager.AddToRoleAsync(user, userRegisterModel.Role);
@@ -161,7 +157,7 @@ namespace eFormAPI.Web.Services
                 {
                     var securityGroupUser = new SecurityGroupUser()
                     {
-                        SecurityGroupId = (int) userRegisterModel.GroupId,
+                        SecurityGroupId = (int)userRegisterModel.GroupId,
                         EformUserId = user.Id
                     };
                     _dbContext.SecurityGroupUsers.Add(securityGroupUser);
@@ -214,7 +210,7 @@ namespace eFormAPI.Web.Services
                     _localizationService.GetString("ErrorWhileObtainUsers"));
             }
         }
-        
+
         public async Task<OperationResult> Update(UserRegisterModel userRegisterModel)
         {
             try
@@ -237,14 +233,15 @@ namespace eFormAPI.Web.Services
                         _localizationService.GetStringWithFormat("UserNotFoundUserName", userRegisterModel.UserName));
                 }
 
-
-                if (_userService.UserId == 1 && !await _userManager.IsInRoleAsync(user, userRegisterModel.Role))
+                // get role
+                var roles = await _userManager.GetRolesAsync(user);
+                if (user.Id == 1 && roles.Any(x => x != userRegisterModel.Role))
                 {
                     return new OperationResult(false, _localizationService.GetString("CantUpdateRoleForPrimaryAdminUser"));
                 }
 
                 var isAdmin = await _userManager.IsInRoleAsync(user, EformRole.Admin);
-                if (!_dbContext.SecurityGroups.Any(x => x.Id == userRegisterModel.GroupId) && !isAdmin)
+                if (!_dbContext.SecurityGroups.Any(x => x.Id == userRegisterModel.GroupId) && !isAdmin && userRegisterModel.Role != EformRole.Admin)
                 {
                     return new OperationResult(false,
                         _localizationService.GetString("SecurityGroupNotFound"));
@@ -264,7 +261,7 @@ namespace eFormAPI.Web.Services
                 var result = await _userManager.UpdateAsync(user);
                 if (!result.Succeeded)
                 {
-                    return new OperationResult(false, string.Join(" ", result.Errors.Select(x=>x.Description).ToArray()));
+                    return new OperationResult(false, string.Join(" ", result.Errors.Select(x => x.Description).ToArray()));
                 }
 
                 // password
@@ -296,7 +293,7 @@ namespace eFormAPI.Web.Services
                     {
                         var securityGroupUser = new SecurityGroupUser()
                         {
-                            SecurityGroupId = (int) userRegisterModel.GroupId,
+                            SecurityGroupId = (int)userRegisterModel.GroupId,
                             EformUserId = user.Id
                         };
                         _dbContext.SecurityGroupUsers.Add(securityGroupUser);
@@ -327,7 +324,7 @@ namespace eFormAPI.Web.Services
                 return new OperationResult(false, _localizationService.GetString("ErrorWhileUpdatingUser"));
             }
         }
-        
+
         public async Task<OperationResult> Delete(int userId)
         {
             try
@@ -352,7 +349,7 @@ namespace eFormAPI.Web.Services
                 var result = await _userManager.DeleteAsync(user);
                 if (!result.Succeeded)
                 {
-                    return new OperationResult(false, string.Join(" ", result.Errors.Select(x=>x.Description).ToArray()));
+                    return new OperationResult(false, string.Join(" ", result.Errors.Select(x => x.Description).ToArray()));
                 }
 
                 return new OperationResult(true, _localizationService.GetStringWithFormat("UserParamWasDeleted", userId));
