@@ -210,6 +210,11 @@ body.theme-dark {
 
   td {
     color: var(--theme-body-font-color);
+    border-top-color: var(--black-075);
+  }
+
+  tr {
+    border-top-color: var(--black-075);
   }
 
   .card {
