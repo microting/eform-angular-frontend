@@ -37,3 +37,15 @@
   outline: 0;
   width: 30px;
 }
+
+body.theme-dark {
+  .pell-actionbar {
+    background-color: var(--black-025);
+    .pell-button {
+      color: var(--theme-body-font-color);
+    }
+  }
+  .pell-content {
+    border-bottom: 1px solid var(--black-300);
+  }
+}

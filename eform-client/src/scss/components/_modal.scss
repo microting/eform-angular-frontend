@@ -7,3 +7,23 @@
     display: none;  // Safari and Chrome
   }
 }
+
+body.theme-dark {
+  .modal-content {
+    background-color: var(--theme-background-color);
+    .modal-header {
+      background-color: var(--black-075);
+      color: var(--theme-body-font-color);
+      border-bottom: 1px solid var(--black-300);
+      button.close {
+        color: var(--black-900);
+      }
+    }
+    .modal-body {
+      color: var(--theme-body-font-color);
+    }
+    .modal-footer {
+      border-top: 1px solid var(--black-300);
+    }
+  }
+}

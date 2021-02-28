@@ -10,7 +10,7 @@
       <div class="modal-body">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 tags-selected">
               <ng-select
                 class="custom"
                 dropdownPosition="'bottom'"
@@ -31,7 +31,7 @@
                        #newTagInput
                        id="newTag" type="text" class="form-control">
                 <label for="newTag">{{ 'New tag' | translate }}</label>
-                  <button  class="btn btn-success btn-icon m-0"
+                  <button  class="btn-success btn-icon mb-2 btn"
                            (click)="createNewTag(newTagInput.value); newTagInput.value=''"
                            type="button" [disabled]="!newTagInput.value">
                     <fa-icon icon="plus" [fixedWidth]="true" size="lg"></fa-icon>
@@ -49,11 +49,11 @@
                   [(ngModel)]="tagForRemoval"
                   [placeholder]="'Tag for removal' | translate"
                   [items]="availableTags"></ng-select>
-                <button  class="btn btn-danger btn-icon m-0 mb-1"
+                <button  class="btn-danger btn-icon mb-2 btn"
                          (click)="removeTemplateTag()"
                          [disabled]="!tagForRemoval"
                          type="button">
-                  <fa-icon icon="times" [fixedWidth]="true" size="lg"></fa-icon>
+                  <fa-icon icon="trash" [fixedWidth]="true" size="lg"></fa-icon>
                 </button>
               </div>
             </div>
