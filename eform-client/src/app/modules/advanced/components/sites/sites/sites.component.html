@@ -37,12 +37,14 @@
         <td>
           <div class="d-flex justify-content-center">
             <div>
-              <a mdbBtn type="button" color="success" size="sm"
+              <a mdbBtn type="button" color="success" class="btn-icon btn-success"
                  id="editSiteTagsBtn_{{i}}"
                  mdbTooltip="{{ 'Edit tags' | translate }}" (click)="openEditTagsModal(siteDto)">
-                {{ 'Edit tags' | translate }}
+                <fa-icon icon="tags" size="lg" [fixedWidth]="true"></fa-icon>
               </a>
-              <p class="paragraph-sm" id="assignedTag" *ngFor="let tag of siteDto.tags">
+              <br>
+              <p class="badge badge-primary mb-1" id="assignedTag" *ngFor="let tag of siteDto.tags">
+                <fa-icon icon="tag"></fa-icon>
                 {{tag.value}}
               </p>
             </div>

@@ -251,14 +251,14 @@ body.theme-dark {
     background-color: transparent;
     border-bottom: 1px solid var(--black-300);
   }
-  .eform-tag {
+  .badge {
     background-color: var(--theme-tag-background-color);
     color: var(--theme-tag-color);
     border-color: var(--theme-tag-background-color);
   }
 }
 
-.eform-tag {
+.badge {
   padding: .4em .5em;
   margin: 2px 2px 2px 0;
   line-height: 1;
@@ -268,6 +268,10 @@ body.theme-dark {
   border-width: 1px;
   border-style: solid;
   border-radius: 3px;
+  color: var(--theme-tag-color);
+  background-color: var(--theme-tag-background-color);
+  border-color: var(--theme-tag-border-color);
+  font-weight: 300;
 }
 
 
@@ -353,7 +357,7 @@ body {
   --theme-link-color-hover: var(--blue-500);
   --theme-link-color-visited: var(--blue-700);
   --theme-tag-color: var(--powder-700);
-  --theme-tag-background-color: var(--powder-100);
+  --theme-tag-background-color: var(--powder-200);
   --theme-tag-border-color: transparent;
   --theme-tag-color-hover: var(--powder-800);
   --theme-tag-background-color-hover: var(--powder-200);

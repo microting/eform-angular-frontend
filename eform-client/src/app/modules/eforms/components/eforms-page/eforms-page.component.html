@@ -104,8 +104,10 @@
                 <fa-icon icon="tags" size="lg" [fixedWidth]="true"></fa-icon>
                 <!--                {{ 'Edit tags' | translate }}-->
               </a>
+              <br>
               <ng-container *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eformsReadTags)">
-                <p class="paragraph-sm" id="eform-tag-{{i}}" class="eform-tag" *ngFor="let tag of templateDto.tags">
+                <p class="paragraph-sm" id="eform-tag-{{i}}" class="badge badge-primary mb-1" *ngFor="let tag of templateDto.tags">
+                  <fa-icon icon="tag"></fa-icon>
                   {{tag.value}}
                 </p>
               </ng-container>
