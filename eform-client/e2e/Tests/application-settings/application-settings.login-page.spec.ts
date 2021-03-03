@@ -42,7 +42,7 @@ describe('Application settings page - site header section', function () {
   });
   it('should hide main text', function () {
     loginPage.login();
-    myEformsPage.Navbar.goToApplicationSettings();
+    loginPage.open('/application-settings');
     $('#mainTextLoginPage').waitForDisplayed({timeout: 120000});
     $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     applicationSettingsPage.LoginPage.mainTextVisibilityToggleBtn.click();
@@ -58,7 +58,7 @@ describe('Application settings page - site header section', function () {
   });
   it('should hide secondary text', function () {
     loginPage.login();
-    myEformsPage.Navbar.goToApplicationSettings();
+    loginPage.open('/application-settings');
     $('#mainTextLoginPage').waitForDisplayed({timeout: 120000});
     $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     applicationSettingsPage.LoginPage.secondaryTextVisibilityToggleBtn.click();
@@ -73,7 +73,7 @@ describe('Application settings page - site header section', function () {
   });
   it('should hide image', function () {
     loginPage.login();
-    myEformsPage.Navbar.goToApplicationSettings();
+    loginPage.open('/application-settings');
     $('#mainTextLoginPage').waitForDisplayed({timeout: 120000});
     $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     applicationSettingsPage.LoginPage.imageVisibilityToggler.click();
@@ -88,7 +88,7 @@ describe('Application settings page - site header section', function () {
   });
   it('should reset main text', function () {
     loginPage.login();
-    myEformsPage.Navbar.goToApplicationSettings();
+    loginPage.open('/application-settings');
     $('#mainTextLoginPage').waitForDisplayed({timeout: 120000});
     $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
     applicationSettingsPage.LoginPage.reset();

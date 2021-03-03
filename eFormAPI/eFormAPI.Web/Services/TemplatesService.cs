@@ -91,8 +91,18 @@ namespace eFormAPI.Web.Services
             {
                 Log.LogEvent("TemplateService.Index: try section");
                 var core = await _coreHelper.GetCore();
+                await using MicrotingDbContext microtingDbContext = core.DbContextHelper.GetDbContext();
                 var locale = await _userService.GetCurrentUserLocale();
-                var language = core.DbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
+                var language = await microtingDbContext.Languages.SingleOrDefaultAsync(x => x.LanguageCode.ToLower() == locale.ToLower());
+                if (language == null)
+                {
+                    language = await microtingDbContext.Languages.SingleOrDefaultAsync(x => x.Name == "Danish");
+                    if (language != null)
+                    {
+                        language.LanguageCode = "da";
+                        await language.Update(microtingDbContext);
+                    }
+                }
                 var templatesDto = await core.TemplateItemReadAll(false,
                     "",
                     templateRequestModel.NameFilter,

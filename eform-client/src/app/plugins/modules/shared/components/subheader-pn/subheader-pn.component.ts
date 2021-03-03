@@ -51,6 +51,14 @@ export class SubheaderPnComponent implements OnInit, OnDestroy {
   }
   searchTitle(href: string, menuItems: MenuItemModel[]): string {
     for (const menuItem of menuItems) {
+      if (href.charAt(0) !== '/') {
+        href = '/' + href;
+      }
+      if (menuItem.link != null) {
+        if (menuItem.link.charAt(0) !== '/') {
+          menuItem.link = '/' + menuItem.link;
+        }
+      }
       if (menuItem.link === href) {
         return menuItem.name;
       }

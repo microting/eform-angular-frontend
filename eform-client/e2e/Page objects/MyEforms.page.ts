@@ -17,7 +17,7 @@ class MyEformsPage extends PageWithNavbarPage {
 
   public get rowNum(): number {
     browser.pause(500);
-    return $$('#eform-id').length;
+    return $$('.eform-id').length;
   }
 
   public get idSortBtn() {
@@ -164,7 +164,7 @@ class MyEformsPage extends PageWithNavbarPage {
     this.createEformBtn.click();
     // browser.pause(14000);
     spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
-    $('#delete-eform-btn').waitForDisplayed({ timeout: 20000 });
+    $('#delete-eform-btn-0').waitForDisplayed({ timeout: 20000 });
     return { added: addedTags, selected: selectedTags };
   }
 
@@ -239,32 +239,31 @@ export default myEformsPage;
 
 class MyEformsRowObject {
   constructor(rowNum: number) {
-    if ($$('#eform-id')[rowNum - 1]) {
-      this.id = +$$('#eform-id')[rowNum - 1];
+    if ($$('#eform-id-' + (rowNum - 1))[0]) {
+      this.id = +$$('#eform-id-' + (rowNum - 1))[0];
       try {
         this.createdAt = new Date(
-          $$('#eform-created-at')[rowNum - 1].getText()
+          $$('#eform-created-at-' + (rowNum - 1))[0].getText()
         );
       } catch (e) {}
       try {
-        this.eFormName = $$('#eform-label')[rowNum - 1].getText();
+        this.eFormName = $$('#eform-label-' + (rowNum - 1))[0].getText();
       } catch (e) {}
       this.tags = $$(`#mainPageEFormsTableBody tr`)[rowNum - 1].$$(
-        `#eform-tag`
-      );
+        `#eform-tag-` + (rowNum - 1));
       this.pairs = $$(
         `//*[@id="mainPageEFormsTableBody"]/tr[${rowNum}]//*[@id="eform-pair"]`
       );
-      this.editTagsBtn = $$('#eform-edit-btn')[rowNum - 1];
+      this.editTagsBtn = $$('#eform-edit-btn-' + (rowNum - 1))[0];
       this.editPairEformBtn = $$(`#mainPageEFormsTableBody tr`)[rowNum - 1].$(
-        '#eform-pairing-btn'
+        '#eform-pairing-btn-' + (rowNum - 1)
       );
       this.addPairEformBtn = $$(`#mainPageEFormsTableBody tr`)[rowNum - 1].$(
-        '#eform-add-btn'
+        '#eform-add-btn-' + (rowNum - 1)
       );
-      this.editColumnsBtn = $$('#edit-columnts-btn')[rowNum - 1];
-      this.deleteBtn = $$('#delete-eform-btn')[rowNum - 1];
-      this.uploadZipArchiveBtn = $$('#upload-zip-btn')[rowNum - 1];
+      this.editColumnsBtn = $$('#edit-columnts-btn-' + (rowNum - 1))[0];
+      this.deleteBtn = $$('#delete-eform-btn-' + (rowNum - 1))[0];
+      this.uploadZipArchiveBtn = $$('#upload-zip-btn-' + (rowNum - 1))[0];
     }
   }
 

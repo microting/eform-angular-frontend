@@ -153,6 +153,7 @@ class FoldersPage extends PageWithNavbarPage {
   }
 
   getFolderByName(nameFolder: string): FoldersRowObject {
+    browser.pause(500);
     for (let i = 1; i < this.rowNum + 1; i++) {
       const folder = new FoldersRowObject(i);
       if (folder.name === nameFolder) {
