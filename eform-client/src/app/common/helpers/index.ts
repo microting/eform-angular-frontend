@@ -7,3 +7,4 @@ export * from './plugin-claims.helper';
 export * from './user-claims.helper';
 export * from './snake-to-camel.helper';
 export * from './folder-name.helper';
+export * from './table-sort.helper';

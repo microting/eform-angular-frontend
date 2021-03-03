@@ -1,4 +1,4 @@
-export interface IPaged<T> {
+export class Paged<T> {
   total: number;
   entities: T[];
 }
