@@ -118,6 +118,9 @@ namespace eFormAPI.Web.Services.Export
                         Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), "results"));
                         await using var fileStream = File.Create(resultDocument);
                         await objectResponse.ResponseStream.CopyToAsync(fileStream);
+                        await fileStream.FlushAsync();
+                        await fileStream.DisposeAsync();
+                        fileStream.Close();
                     }
                     catch (Exception exception)
                     {
@@ -157,14 +160,20 @@ namespace eFormAPI.Web.Services.Export
                 var wb = new XLWorkbook(resultDocument);
                 try {
                     var workSheetToDelete = wb.Worksheets.Worksheet($"Data_{excelModel.TemplateId}");
-                    workSheetToDelete.Delete();
+                    workSheetToDelete.Clear(XLClearOptions.All);
+                    //workSheetToDelete.Delete();
                 }
                 catch
                 {
                     // ignored
                 }
 
-                var worksheet = wb.Worksheets.Add($"Data_{excelModel.TemplateId}");
+                //var worksheet = wb.Worksheets.Add($"Data_{excelModel.TemplateId}");
+                var worksheet = wb.Worksheets.SingleOrDefault(x => x.Name == $"Data_{excelModel.TemplateId}");
+                if (worksheet == null)
+                {
+                    worksheet = wb.Worksheets.Add($"Data_{excelModel.TemplateId}");
+                }
                 for (var y = 0; y < dataSet.Count; y++)
                 {
                     var dataX = dataSet[y];
