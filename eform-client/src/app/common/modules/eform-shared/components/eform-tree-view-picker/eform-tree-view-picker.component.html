@@ -1,13 +1,13 @@
 <ng-container *ngIf="showCollapseButton">
   <a
-    class="float-right page-link mb-2"
+    class="btn-icon mb-2 float-right text-black-50 btn"
     *ngIf="collapsed"
     (click)="tree.treeModel.expandAll(); collapsed = !collapsed"
   >
     <fa-icon icon="angle-double-right" size="lg" [fixedWidth]="true"></fa-icon>
   </a>
   <a
-    class="float-right page-link mb-2"
+    class="btn-icon mb-2 float-right text-black-50 btn"
     *ngIf="!collapsed"
     (click)="tree.treeModel.collapseAll(); collapsed = !collapsed"
   >

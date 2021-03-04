@@ -62,6 +62,7 @@ namespace eFormAPI.Web.Services
                 await using var dbContext = core.DbContextHelper.GetDbContext();
                 var folders = await dbContext.Folders
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .OrderBy(x => x.Name)
                     .Select(x => new FolderDtoModel
                     {
                         Id = x.Id,
@@ -92,6 +93,7 @@ namespace eFormAPI.Web.Services
                 await using var dbContext = core.DbContextHelper.GetDbContext();
                 var folders = await dbContext.Folders
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .OrderBy(x => x.Name)
                     .Select(x => new FolderDtoModel
                     {
                         Id = x.Id,
