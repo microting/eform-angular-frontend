@@ -256,6 +256,30 @@ body.theme-dark {
     color: var(--theme-tag-color);
     border-color: var(--theme-tag-background-color);
   }
+  .owl-dt-container {
+    background-color: var(--black-025);
+    color: var(--theme-body-font-color);
+  }
+
+  .owl-dt-calendar-control {
+    color: var(--theme-body-font-color);
+  }
+
+  .owl-dt-calendar-table .owl-dt-calendar-cell {
+    color: var(--theme-body-font-color);
+  }
+
+  .owl-dt-calendar-table .owl-dt-calendar-cell-selected {
+    background-color: var(--blue-600);
+  }
+
+  .owl-dt-calendar-table .owl-dt-calendar-cell-in-range {
+    background: rgba(63, 81, 181, 0.2);
+  }
+
+  .owl-dt-container-info .owl-dt-container-info-active {
+    color: var(--blue-600);
+  }
 }
 
 .badge {
