@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+
 namespace eFormAPI.Web
 {
     using Services.Import;
@@ -78,6 +80,7 @@ namespace eFormAPI.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            Log.LogEvent("Startup.ConfigureServices");
             // TODO check if we need this or code needs to be updated.
             services.AddMvc(options => options.EnableEndpointRouting = false);
 
@@ -89,21 +92,34 @@ namespace eFormAPI.Web
                 loggingBuilder.AddConsole();
                 loggingBuilder.AddDebug();
             });
-            if (!string.IsNullOrEmpty(Configuration.MyConnectionString()))
+            if (!string.IsNullOrEmpty(Configuration["ConnectionString"]))
             {
-                if (Configuration.MyConnectionString() != "...")
+                Log.LogEvent($"We do have a ConnectionString {Configuration["ConnectionString"]}");
+                services.AddEntityFrameworkMySql()
+                    .AddDbContext<BaseDbContext>(o => o.UseMySql(Configuration["ConnectionString"],
+                        b => b.EnableRetryOnFailure()));
+            }
+            else
+            {
+                Log.LogEvent($"We don't have a ConnectionString");
+                if (!string.IsNullOrEmpty(Configuration.MyConnectionString()))
                 {
-                    services.AddEntityFrameworkMySql()
-                        .AddDbContext<BaseDbContext>(o => o.UseMySql(Configuration.MyConnectionString(),
-                            b => b.MigrationsAssembly("eFormAPI.Web").EnableRetryOnFailure()));
-                }
-                else
-                {
-                    // We use this hack to get the project started and we actually don't use this connection, but it's needed for the service to start.
-                    // Once we have the correct connectionstring in the connection.json, we restart the server and the above method is used.
-                    services.AddEntityFrameworkMySql()
-                        .AddDbContext<BaseDbContext>(o => o.UseMySql("server=localhost;",
-                            b => b.MigrationsAssembly("eFormAPI.Web").EnableRetryOnFailure()));
+                    Log.LogEvent($"We don't have a ConnectionString, so using default");
+                    if (Configuration.MyConnectionString() != "...")
+                    {
+                        services.AddEntityFrameworkMySql()
+                            .AddDbContext<BaseDbContext>(o => o.UseMySql(Configuration.MyConnectionString(),
+                                b => b.MigrationsAssembly("eFormAPI.Web").EnableRetryOnFailure()));
+                    }
+                    else
+                    {
+                        Log.LogEvent($"Setting default as active connection string.");
+                        // We use this hack to get the project started and we actually don't use this connection, but it's needed for the service to start.
+                        // Once we have the correct connectionstring in the connection.json, we restart the server and the above method is used.
+                        services.AddEntityFrameworkMySql()
+                            .AddDbContext<BaseDbContext>(o => o.UseMySql("server=sffsfd;",
+                                b => b.MigrationsAssembly("eFormAPI.Web").EnableRetryOnFailure()));
+                    }
                 }
             }
 
