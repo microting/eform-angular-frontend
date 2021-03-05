@@ -6,7 +6,7 @@ if (( "$GIT_STATUS" > 0 )); then
 	cd eFormAPI/eFormAPI.Web
   CURRENT_NUMBER_OF_COMMITS=`git log --oneline | wc -l`
 
-	PACKAGES=('Microting.eForm' 'Microting.eFormApi.BasePn' 'AWSSDK.Core' 'AWSSDK.S3' 'Pomelo.EntityFrameworkCore.MySql' 'Magick.NET-Q16-x64' 'DocumentFormat.OpenXml')
+	PACKAGES=('Microting.eForm' 'Microting.eFormApi.BasePn' 'AWSSDK.Core' 'AWSSDK.S3' 'Pomelo.EntityFrameworkCore.MySql' 'Magick.NET-Q16-x64')
 	PROJECT_NAME='eFormAPI.Web.csproj'
 	REPOSITORY='eform-angular-frontend'
 
