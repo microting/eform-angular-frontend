@@ -39,7 +39,7 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                 if (roots.Count > 0)
                 {
                     var dict = groups.Where(g => g.Key.HasValue).ToDictionary(g => g.Key.Value, g => g.ToList());
-                    foreach (var item in roots)
+                    foreach (var item in roots.OrderBy(x => x.Name))
                     {
                         AddChildren(item, dict);
                     }
@@ -54,7 +54,7 @@ namespace eFormAPI.Web.Infrastructure.Helpers
             if (source.ContainsKey(node.Id))
             {
                 node.Children = source[node.Id];
-                foreach (var t in node.Children)
+                foreach (var t in node.Children.OrderBy(x => x.Name))
                 {
                     AddChildren(t, source);
                 }
