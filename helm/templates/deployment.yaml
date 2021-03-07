@@ -53,7 +53,10 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           args:
             [
-            "/ConnectionString=host={{ include "angularfrontend.databaseHost" . }};Database={{ .Release.Name }}_SDK;user = root; password = secretpassword;port=3306;Convert Zero Datetime = true;SslMode=none;"
+            "/ConnectionString=host={{ include "angularfrontend.databaseHost" . }};Database={{ regexReplaceAll "frontend-(x*)" .Release.Name "$1" }}_Angular;user = root; password = secretpassword;port=3306;Convert Zero Datetime = true;SslMode=none;",
+            "/Token=df",
+            "/Password=abc123456"
+
             ]
 
             # [

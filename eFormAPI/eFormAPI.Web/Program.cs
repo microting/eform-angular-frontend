@@ -262,7 +262,7 @@ namespace eFormAPI.Web
                 .Build();
 
             var port = defaultConfig.GetValue("port", 5000);
-            var connectionString = defaultConfig.GetValue("connectionstring", "");
+            var connectionString = defaultConfig.GetValue("ConnectionString", "");
             return WebHost.CreateDefaultBuilder(args)
                 .UseUrls($"http://0.0.0.0:{port}")
                 .UseIISIntegration()
