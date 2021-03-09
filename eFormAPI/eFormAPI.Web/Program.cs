@@ -262,7 +262,7 @@ namespace eFormAPI.Web
                 .Build();
 
             var port = defaultConfig.GetValue("port", 5000);
-            var connectionString = defaultConfig.GetValue("connectionstring", "");
+            var connectionString = defaultConfig.GetValue("ConnectionString", "");
             return WebHost.CreateDefaultBuilder(args)
                 .UseUrls($"http://0.0.0.0:{port}")
                 .UseIISIntegration()
@@ -295,16 +295,19 @@ namespace eFormAPI.Web
                     DisabledPlugins = PluginHelper.GetDisablePlugins(_defaultConnectionString);
 
                     var contextFactory = new BaseDbContextFactory();
-                    using (var dbContext = contextFactory.CreateDbContext(new[] {_defaultConnectionString}))
+                    if (_defaultConnectionString != "...")
                     {
-                        foreach (var plugin in EnabledPlugins)
+                        using (var dbContext = contextFactory.CreateDbContext(new[] {_defaultConnectionString}))
                         {
-                            var pluginEntity = dbContext.EformPlugins
-                                .FirstOrDefault(x => x.PluginId == plugin.PluginId);
-
-                            if (pluginEntity != null && !string.IsNullOrEmpty(pluginEntity.ConnectionString))
+                            foreach (var plugin in EnabledPlugins)
                             {
-                                plugin.AddPluginConfig(config, pluginEntity.ConnectionString);
+                                var pluginEntity = dbContext.EformPlugins
+                                    .FirstOrDefault(x => x.PluginId == plugin.PluginId);
+
+                                if (pluginEntity != null && !string.IsNullOrEmpty(pluginEntity.ConnectionString))
+                                {
+                                    plugin.AddPluginConfig(config, pluginEntity.ConnectionString);
+                                }
                             }
                         }
                     }
