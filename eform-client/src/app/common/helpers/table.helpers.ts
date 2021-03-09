@@ -8,7 +8,7 @@ export const updateTableSorting = (
   if (currentPageSettings.sort === sort) {
     updatedPageSettings = {
       ...currentPageSettings,
-      isSortDsc: !currentPageSettings.sort,
+      isSortDsc: !currentPageSettings.isSortDsc,
     };
   } else {
     updatedPageSettings = { ...currentPageSettings, isSortDsc: false };
