@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using Microting.eForm.Infrastructure.Data.Entities;
+
 namespace eFormAPI.Web.Services
 {
     using System;
@@ -68,17 +70,20 @@ namespace eFormAPI.Web.Services
             _wordService = wordService;
         }
 
-        public async Task<OperationDataResult<EFormCasesReportModel>> GetReportEformCases(EFormCaseReportRequest eFormCaseReportRequest)
+        public async Task<OperationDataResult<EFormCasesReportModel>> GetReportEformCases(
+            EFormCaseReportRequest eFormCaseReportRequest)
         {
             var core = await _coreHelper.GetCore();
             var localeString = await _userService.GetCurrentUserLocale();
             var sdkDbContext = core.DbContextHelper.GetDbContext();
             var timeZoneInfo = await _userService.GetCurrentUserTimeZoneInfo();
-            var language = sdkDbContext.Languages.Single(x => string.Equals(x.LanguageCode, localeString, StringComparison.CurrentCultureIgnoreCase));
+            var language = sdkDbContext.Languages.Single(x =>
+                string.Equals(x.LanguageCode, localeString, StringComparison.CurrentCultureIgnoreCase));
             var template = await core.TemplateItemRead(eFormCaseReportRequest.TemplateId, language);
             if (template == null)
             {
-                return new OperationDataResult<EFormCasesReportModel>(false, _localizationService.GetString("TemplateNotFound"));
+                return new OperationDataResult<EFormCasesReportModel>(false,
+                    _localizationService.GetString("TemplateNotFound"));
             }
 
             var casesQueryable = sdkDbContext.Cases
@@ -101,7 +106,8 @@ namespace eFormAPI.Web.Services
 
             if (!casesQueryable.Any()) // if count <= 0
             {
-                return new OperationDataResult<EFormCasesReportModel>(false, _localizationService.GetString("CasesNotFound"));
+                return new OperationDataResult<EFormCasesReportModel>(false,
+                    _localizationService.GetString("CasesNotFound"));
             }
 
             var cases = casesQueryable.ToList();
@@ -150,6 +156,7 @@ namespace eFormAPI.Web.Services
                 {
                     result.DescriptionBlocks.Add(fieldDto.Label);
                 }
+
                 if (!excludedFieldTypeIds.Contains(fieldDto.FieldType))
                 {
                     var kvp = new KeyValuePair<int, string>(fieldDto.Id, fieldDto.Label);
@@ -159,11 +166,11 @@ namespace eFormAPI.Web.Services
             }
 
             var imagesForEform = await sdkDbContext.FieldValues
-                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                    .Where(x => x.Field.FieldTypeId == 5)
-                    .Where(x => casesIds.Contains((int)x.CaseId))
-                    .OrderBy(x => x.CaseId)
-                    .ToListAsync();
+                .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                .Where(x => x.Field.FieldTypeId == 5)
+                .Where(x => casesIds.Contains((int) x.CaseId))
+                .OrderBy(x => x.CaseId)
+                .ToListAsync();
 
             foreach (var imageField in imagesForEform)
             {
@@ -172,7 +179,7 @@ namespace eFormAPI.Web.Services
                     var singleCase = cases.Single(x => x.Id == imageField.CaseId);
                     if (singleCase.DoneAt != null)
                     {
-                        var doneAt = (DateTime)singleCase.DoneAt;
+                        var doneAt = (DateTime) singleCase.DoneAt;
                         doneAt = TimeZoneInfo.ConvertTimeFromUtc(doneAt, timeZoneInfo);
                         var label = $"{imageField.CaseId} - {doneAt:yyyy-MM-dd HH:mm:ss};";
                         var geoTag = "";
@@ -182,7 +189,7 @@ namespace eFormAPI.Web.Services
                                 $"https://www.google.com/maps/place/{imageField.Latitude},{imageField.Longitude}";
                         }
 
-                        var keyList = new List<string> { imageField.CaseId.ToString(), label };
+                        var keyList = new List<string> {imageField.CaseId.ToString(), label};
                         var list = new List<string>();
                         var uploadedData =
                             await sdkDbContext.UploadedDatas.SingleAsync(x => x.Id == imageField.UploadedDataId);
@@ -200,7 +207,7 @@ namespace eFormAPI.Web.Services
                 {
                     Id = caseDto.Id,
                     MicrotingSdkCaseId = caseDto.Id,
-                    MicrotingSdkCaseDoneAt = TimeZoneInfo.ConvertTimeFromUtc((DateTime)caseDto.DoneAt, timeZoneInfo),
+                    MicrotingSdkCaseDoneAt = TimeZoneInfo.ConvertTimeFromUtc((DateTime) caseDto.DoneAt, timeZoneInfo),
                     EFormId = caseDto.CheckListId,
                     DoneBy = $"{caseDto.Worker.FirstName} {caseDto.Worker.LastName}",
                 };
@@ -209,6 +216,7 @@ namespace eFormAPI.Web.Services
                     .Where(x => x.CaseId == caseDto.Id)
                     .Include(x => x.Field)
                     .Include(x => x.Field.FieldType)
+                    .Include(x => x.Field.FieldOptions)
                     .AsNoTracking()
                     .ToList();
 
@@ -223,13 +231,44 @@ namespace eFormAPI.Web.Services
                         switch (caseField.Field.FieldType.Type)
                         {
                             case Constants.FieldTypes.MultiSelect:
-                                reportEformCaseModel.CaseFields.Add(caseField.Value.Replace("|", "<br>"));
+                            {
+                                string readableValue = "";
+                                foreach (string s in caseField.Value.Split("|"))
+                                {
+                                    FieldOption fieldOption = caseField.Field.FieldOptions.Single(x => x.Key == s);
+                                    FieldOptionTranslation fieldOptionTranslation =
+                                        await sdkDbContext.FieldOptionTranslations.SingleAsync(x =>
+                                            x.FieldOptionId == fieldOption.Id && x.LanguageId == language.Id);
+                                    if (!string.IsNullOrEmpty(readableValue))
+                                    {
+                                        readableValue += "<br>";
+                                    }
+
+                                    readableValue += fieldOptionTranslation.Text;
+                                }
+
+                                reportEformCaseModel.CaseFields.Add(readableValue);
                                 break;
+                            }
+
                             case Constants.FieldTypes.EntitySearch:
                             case Constants.FieldTypes.EntitySelect:
-                            case Constants.FieldTypes.SingleSelect:
-                                reportEformCaseModel.CaseFields.Add(caseField.Value);
+                            {
+                                EntityItem entityItem =
+                                    await sdkDbContext.EntityItems.AsNoTracking().SingleOrDefaultAsync(x => x.Id == int.Parse(caseField.Value));
+                                reportEformCaseModel.CaseFields.Add(entityItem.Name);
                                 break;
+                            }
+                            case Constants.FieldTypes.SingleSelect:
+                            {
+                                FieldOption fieldOption =
+                                    caseField.Field.FieldOptions.Single(x => x.Key == caseField.Value);
+                                FieldOptionTranslation fieldOptionTranslation =
+                                    await sdkDbContext.FieldOptionTranslations.SingleAsync(x =>
+                                        x.FieldOptionId == fieldOption.Id && x.LanguageId == language.Id);
+                                reportEformCaseModel.CaseFields.Add(fieldOptionTranslation.Text);
+                                break;
+                            }
                             default:
                                 reportEformCaseModel.CaseFields.Add(caseField.Value);
                                 break;
