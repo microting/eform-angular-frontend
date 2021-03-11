@@ -92,6 +92,7 @@ namespace eFormAPI.Web
 
         public static void Restart()
         {
+            Log.LogEvent("Call restart WebBuild");
             _shouldBeRestarted = true;
             _cancelTokenSource.Cancel();
         }
@@ -99,6 +100,7 @@ namespace eFormAPI.Web
         // ReSharper disable once UnusedMember.Global
         public static void Stop()
         {
+            Log.LogEvent("Call stop WebBuild");
             _shouldBeRestarted = false;
             _cancelTokenSource.Cancel();
         }

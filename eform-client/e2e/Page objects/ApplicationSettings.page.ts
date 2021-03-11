@@ -1,4 +1,4 @@
-import {PageWithNavbarPage} from './PageWithNavbar.page';
+import { PageWithNavbarPage } from './PageWithNavbar.page';
 
 export class ApplicationSettingsPage extends PageWithNavbarPage {
   constructor() {
@@ -26,13 +26,12 @@ export class ApplicationSettingsPage extends PageWithNavbarPage {
     return ele;
   }
 
-
   public LoginPage: LoginPageSettings;
   public SiteHeader: SiteHeaderSettings;
 
   public save() {
     this.saveBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
+    $('#spinner-animation').waitForDisplayed({ timeout: 50000, reverse: true });
   }
 }
 
@@ -63,14 +62,14 @@ class LoginPageSettings {
 
   public get resetBtn() {
     const ele = $('#loginPageReset');
-    ele.waitForDisplayed({timeout: 20000});
-    ele.waitForClickable({timeout: 20000});
+    ele.waitForDisplayed({ timeout: 20000 });
+    ele.waitForClickable({ timeout: 20000 });
     return ele;
   }
 
   public reset() {
     this.resetBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
+    $('#spinner-animation').waitForDisplayed({ timeout: 50000, reverse: true });
   }
 }
 
@@ -105,8 +104,8 @@ class SiteHeaderSettings {
 
   public reset() {
     this.resetBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
-    //browser.refresh();
+    $('#spinner-animation').waitForDisplayed({ timeout: 50000, reverse: true });
+    // browser.refresh();
   }
 }
 

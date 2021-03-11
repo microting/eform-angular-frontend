@@ -185,5 +185,14 @@ namespace eFormAPI.Web.Services
                 await _userManager.AddToRoleAsync(user, role);
             }
         }
+
+        public async Task<string> GetFullNameUserByUserIdAsync(int userId)
+        {
+            return await _dbContext.Users
+                .AsNoTracking()
+                .Where(x => x.Id == userId)
+                .Select(x => $"{x.FirstName} {x.LastName}")
+                .FirstOrDefaultAsync();
+        }
     }
 }
