@@ -184,9 +184,7 @@ namespace eFormAPI.Web.Services
                         _localizationService.GetStringWithFormat("SiteParamNotFound", updateModel.Id));
                 }
 
-                site.Name = updateModel.SiteName;
-
-                await site.Update(dbContext);
+                await core.Advanced_SiteItemUpdate((int)site.MicrotingUid, updateModel.SiteName);
 
                 return new OperationResult(true);
             }
