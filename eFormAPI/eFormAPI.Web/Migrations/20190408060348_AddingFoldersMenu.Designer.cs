@@ -1052,7 +1052,7 @@ namespace eFormAPI.Web.Migrations
                             Link = "/application-settings",
                             LocaleName = "ApplicationSettings",
                             MenuPosition = 1,
-                            Name = "Application Settings",
+                            Name = "Application settings",
                             ParentId = 3,
                             Position = 6,
                             UpdatedByUserId = 0,

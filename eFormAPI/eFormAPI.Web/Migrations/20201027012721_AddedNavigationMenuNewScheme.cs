@@ -240,12 +240,12 @@ namespace eFormAPI.Web.Migrations
                     { 18, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Danish", "da", 6, "Enheder", null, 0, 0, null },
                     { 5, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "English", "en-US", 5, "Workers", null, 0, 0, null },
                     { 6, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "English", "en-US", 6, "Units", null, 0, 0, null },
-                    { 7, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "English", "en-US", 7, "Searchable List", null, 0, 0, null },
+                    { 7, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "English", "en-US", 7, "Searchable list", null, 0, 0, null },
                     { 8, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "English", "en-US", 8, "Selectable list", null, 0, 0, null },
-                    { 9, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "English", "en-US", 9, "Application Settings", null, 0, 0, null },
+                    { 9, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "English", "en-US", 9, "Application settings", null, 0, 0, null },
                     { 4, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "English", "en-US", 4, "Sites", null, 0, 0, null },
                     { 11, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "English", "en-US", 11, "Folders", null, 0, 0, null },
-                    { 12, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "English", "en-US", 12, "Email Recipients", null, 0, 0, null },
+                    { 12, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "English", "en-US", 12, "Email recipients", null, 0, 0, null },
                     { 13, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Danish", "da", 1, "Mine eForms", null, 0, 0, null },
                     { 14, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Danish", "da", 2, "Mobilbrugere", null, 0, 0, null },
                     { 15, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Danish", "da", 3, "Admin", null, 0, 0, null },
@@ -404,12 +404,12 @@ namespace eFormAPI.Web.Migrations
                 values: new object[,]
                 {
                     { 24, null, "Danish", "da", 12, "E-mail-modtagere", null, null, null },
-                    { 12, null, "English", "en-US", 12, "Email Recipients", null, null, null },
+                    { 12, null, "English", "en-US", 12, "Email recipients", null, null, null },
                     { 20, null, "Danish", "da", 8, "Valgbar Liste", null, null, null },
                     { 35, null, "German", "de-DE", 11, "Folders", null, null, null },
                     { 23, null, "Danish", "da", 11, "Folders", null, null, null },
                     { 32, null, "German", "de-DE", 8, "Auswählbare Liste", null, null, null },
-                    { 9, null, "English", "en-US", 9, "Application Settings", null, null, null },
+                    { 9, null, "English", "en-US", 9, "Application settings", null, null, null },
                     { 21, null, "Danish", "da", 9, "Applikationsindstillinger", null, null, null },
                     { 33, null, "German", "de-DE", 9, "Anwendungseinstellungen", null, null, null },
                     { 8, null, "English", "en-US", 8, "Selectable list", null, null, null },
@@ -436,7 +436,7 @@ namespace eFormAPI.Web.Migrations
                     { 30, null, "German", "de-DE", 6, "Einheiten", null, null, null },
                     { 1, null, "English", "en-US", 1, "My eForms", null, null, null },
                     { 27, null, "German", "de-DE", 3, "Fortgeschritten", null, null, null },
-                    { 7, null, "English", "en-US", 7, "Searchable List", null, null, null },
+                    { 7, null, "English", "en-US", 7, "Searchable list", null, null, null },
                     { 29, null, "German", "de-DE", 5, "Mitarbeiter", null, null, null },
                     { 5, null, "English", "en-US", 5, "Workers", null, null, null }
                 });
@@ -635,7 +635,7 @@ namespace eFormAPI.Web.Migrations
                 keyColumn: "Id",
                 keyValue: 9,
                 columns: new[] { "E2EId", "Link", "LocaleName", "MenuPosition", "Name" },
-                values: new object[] { "application-settings", "/application-settings", "ApplicationSettings", 1, "Application Settings" });
+                values: new object[] { "application-settings", "/application-settings", "ApplicationSettings", 1, "Application settings" });
 
             migrationBuilder.UpdateData(
                 table: "MenuItems",
@@ -663,7 +663,7 @@ namespace eFormAPI.Web.Migrations
                 columns: new[] { "Id", "CreatedAt", "CreatedByUserId", "E2EId", "Link", "LocaleName", "MenuPosition", "Name", "ParentId", "Position", "UpdatedAt", "UpdatedByUserId", "Version", "WorkflowState" },
                 values: new object[,]
                 {
-                    { 18, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "email-recipients", "/email-recipients", "EmailRecipients", 1, "Email Recipients", 3, 7, null, 0, 0, null },
+                    { 18, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "email-recipients", "/email-recipients", "EmailRecipients", 1, "Email recipients", 3, 7, null, 0, 0, null },
                     { 17, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "folders", "/advanced/folders", "Folders", 1, "Folders", 3, 5, null, 0, 0, null },
                     { 16, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "plugins-settings", "/plugins-settings", "PluginsSettings", 1, "Plugins Settings", 3, 8, null, 0, 0, null },
                     { 15, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "sign-out", "/auth/sign-out", "Logout", 2, "Logout", 10, 4, null, 0, 0, null },

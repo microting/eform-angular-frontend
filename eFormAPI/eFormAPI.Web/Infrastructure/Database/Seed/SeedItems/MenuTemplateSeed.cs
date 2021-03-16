@@ -78,7 +78,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 new MenuTemplate
                 {
                     Id = MenuTemplateIds.SearchableList,
-                    Name = "Searchable List",
+                    Name = "Searchable list",
                     E2EId = "search",
                     DefaultLink = "/advanced/entity-search",
                 },
@@ -92,7 +92,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 new MenuTemplate
                 {
                     Id = MenuTemplateIds.ApplicationSettings,
-                    Name = "Application Settings",
+                    Name = "Application settings",
                     E2EId = "application-settings",
                     DefaultLink = "/application-settings",
                 },
@@ -113,7 +113,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 new MenuTemplate
                 {
                     Id = MenuTemplateIds.EmailRecipients,
-                    Name = "Email Recipients",
+                    Name = "Email recipients",
                     E2EId = "email-recipients",
                     DefaultLink = "/email-recipients",
                 }

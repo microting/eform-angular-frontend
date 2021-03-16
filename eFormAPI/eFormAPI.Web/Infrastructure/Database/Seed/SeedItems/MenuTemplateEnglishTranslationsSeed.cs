@@ -75,7 +75,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 new MenuTemplateTranslation
                 {
                     Id = 7,
-                    Name = "Searchable List",
+                    Name = "Searchable list",
                     MenuTemplateId = MenuTemplateIds.SearchableList
                 },
                 new MenuTemplateTranslation
@@ -87,7 +87,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 new MenuTemplateTranslation
                 {
                     Id = 9,
-                    Name = "Application Settings",
+                    Name = "Application settings",
                     MenuTemplateId = MenuTemplateIds.ApplicationSettings
                 },
                 new MenuTemplateTranslation
@@ -105,7 +105,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 new MenuTemplateTranslation
                 {
                     Id = 12,
-                    Name = "Email Recipients",
+                    Name = "Email recipients",
                     MenuTemplateId = MenuTemplateIds.EmailRecipients
                 }
             };

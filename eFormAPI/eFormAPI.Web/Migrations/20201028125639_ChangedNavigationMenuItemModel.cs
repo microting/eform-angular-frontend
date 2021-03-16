@@ -58,7 +58,7 @@ namespace eFormAPI.Web.Migrations
                 keyColumn: "Id",
                 keyValue: 7,
                 column: "Name",
-                value: "Searchable List");
+                value: "Searchable list");
 
             migrationBuilder.UpdateData(
                 table: "MenuItems",
@@ -72,7 +72,7 @@ namespace eFormAPI.Web.Migrations
                 keyColumn: "Id",
                 keyValue: 9,
                 column: "Name",
-                value: "Application Settings");
+                value: "Application settings");
 
             migrationBuilder.UpdateData(
                 table: "MenuItems",
@@ -93,7 +93,7 @@ namespace eFormAPI.Web.Migrations
                 keyColumn: "Id",
                 keyValue: 12,
                 column: "Name",
-                value: "Email Recipients");
+                value: "Email recipients");
 
             migrationBuilder.UpdateData(
                 table: "MenuTemplates",
@@ -114,7 +114,7 @@ namespace eFormAPI.Web.Migrations
                 keyColumn: "Id",
                 keyValue: 7,
                 column: "Name",
-                value: "Searchable List");
+                value: "Searchable list");
 
             migrationBuilder.UpdateData(
                 table: "MenuTemplates",
@@ -128,7 +128,7 @@ namespace eFormAPI.Web.Migrations
                 keyColumn: "Id",
                 keyValue: 9,
                 column: "Name",
-                value: "Application Settings");
+                value: "Application settings");
 
             migrationBuilder.UpdateData(
                 table: "MenuTemplates",
@@ -142,7 +142,7 @@ namespace eFormAPI.Web.Migrations
                 keyColumn: "Id",
                 keyValue: 12,
                 column: "Name",
-                value: "Email Recipients");
+                value: "Email recipients");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

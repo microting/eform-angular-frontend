@@ -291,7 +291,7 @@ namespace eFormAPI.Web.Infrastructure
                 new MenuItem
                 {
                     Id = 7,
-                    Name = "Searchable List",
+                    Name = "Searchable list",
                     Link = "/advanced/entity-search",
                     E2EId = "search",
                     MenuTemplateId = MenuTemplateIds.SearchableList,
@@ -303,7 +303,7 @@ namespace eFormAPI.Web.Infrastructure
                         new MenuItemTranslation
                         {
                             Id = 7,
-                            Name = "Searchable List",
+                            Name = "Searchable list",
                             MenuItemId = MenuTemplateIds.SearchableList,
                             Language = LanguageNames.English,
                             LocaleName = LocaleNames.English,
@@ -383,7 +383,7 @@ namespace eFormAPI.Web.Infrastructure
                 new MenuItem
                 {
                     Id = 9,
-                    Name = "Application Settings",
+                    Name = "Application settings",
                     Link = "/application-settings",
                     E2EId = "application-settings",
                     MenuTemplateId = MenuTemplateIds.ApplicationSettings,
@@ -395,7 +395,7 @@ namespace eFormAPI.Web.Infrastructure
                         new MenuItemTranslation
                         {
                             Id = 9,
-                            Name = "Application Settings",
+                            Name = "Application settings",
                             MenuItemId = MenuTemplateIds.ApplicationSettings,
                             Language = LanguageNames.English,
                             LocaleName = LocaleNames.English,
@@ -521,7 +521,7 @@ namespace eFormAPI.Web.Infrastructure
                 new MenuItem
                 {
                     Id = 12,
-                    Name = "Email Recipients",
+                    Name = "Email recipients",
                     Link = "/email-recipients",
                     E2EId = "email-recipients",
                     MenuTemplateId = MenuTemplateIds.EmailRecipients,
@@ -533,7 +533,7 @@ namespace eFormAPI.Web.Infrastructure
                         new MenuItemTranslation
                         {
                             Id = 12,
-                            Name = "Email Recipients",
+                            Name = "Email recipients",
                             MenuItemId = MenuTemplateIds.EmailRecipients,
                             Language = LanguageNames.English,
                             LocaleName = LocaleNames.English,
