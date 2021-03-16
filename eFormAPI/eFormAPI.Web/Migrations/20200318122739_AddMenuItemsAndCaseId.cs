@@ -29,7 +29,7 @@ namespace eFormAPI.Web.Migrations
             migrationBuilder.InsertData(
                 table: "MenuItems",
                 columns: new[] { "Id", "CreatedAt", "CreatedByUserId", "E2EId", "Link", "LocaleName", "MenuPosition", "Name", "ParentId", "Position", "UpdatedAt", "UpdatedByUserId", "Version", "WorkflowState" },
-                values: new object[] { 18, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "email-recipients", "/email-recipients", "EmailRecipients", 1, "Email Recipients", 3, 8, null, 0, 0, null });
+                values: new object[] { 18, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "email-recipients", "/email-recipients", "EmailRecipients", 1, "Email recipients", 3, 8, null, 0, 0, null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CasePosts_CaseId",

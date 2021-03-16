@@ -161,7 +161,7 @@ namespace eFormAPI.Web.Migrations
                         new { Id = 6, E2EId = "units", Link = "/advanced/units", MenuPosition = 1, Name = "Units", ParentId = 3, Position = 2 },
                         new { Id = 7, E2EId = "search", Link = "/advanced/entity-search", MenuPosition = 1, Name = "Searchable list", ParentId = 3, Position = 3 },
                         new { Id = 8, E2EId = "selectable-list", Link = "/advanced/entity-select", MenuPosition = 1, Name = "Selectable list", ParentId = 3, Position = 4 },
-                        new { Id = 9, E2EId = "application-settings", Link = "/application-settings", MenuPosition = 1, Name = "Application Settings", ParentId = 3, Position = 5 },
+                        new { Id = 9, E2EId = "application-settings", Link = "/application-settings", MenuPosition = 1, Name = "Application settings", ParentId = 3, Position = 5 },
                         new { Id = 10, E2EId = "sign-out-dropdown", Link = "", MenuPosition = 2, Name = "user", Position = 0 },
                         new { Id = 11, E2EId = "user-management-menu", Link = "/account-management/users", MenuPosition = 2, Name = "User Management", ParentId = 10, Position = 0 },
                         new { Id = 12, E2EId = "settings", Link = "/account-management/settings", MenuPosition = 2, Name = "Settings", ParentId = 10, Position = 1 },
