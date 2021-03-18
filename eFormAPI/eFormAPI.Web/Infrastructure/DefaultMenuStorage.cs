@@ -441,7 +441,7 @@ namespace eFormAPI.Web.Infrastructure
                         new MenuItemTranslation
                         {
                             Id = 10,
-                            Name = "Plugins Settings",
+                            Name = "Plugins",
                             MenuItemId = MenuTemplateIds.PluginsSettings,
                             Language = LanguageNames.English,
                             LocaleName = LocaleNames.English,

@@ -250,7 +250,7 @@ namespace eFormAPI.Web.Migrations
                     { 14, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Danish", "da", 2, "Mobilbrugere", null, 0, 0, null },
                     { 15, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Danish", "da", 3, "Admin", null, 0, 0, null },
                     { 16, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Danish", "da", 4, "Lokationer", null, 0, 0, null },
-                    { 10, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "English", "en-US", 10, "Plugins Settings", null, 0, 0, null }
+                    { 10, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "English", "en-US", 10, "Plugins", null, 0, 0, null }
                 });
 
             migrationBuilder.InsertData(
@@ -413,7 +413,7 @@ namespace eFormAPI.Web.Migrations
                     { 21, null, "Danish", "da", 9, "Applikationsindstillinger", null, null, null },
                     { 33, null, "German", "de-DE", 9, "Anwendungseinstellungen", null, null, null },
                     { 8, null, "English", "en-US", 8, "Selectable list", null, null, null },
-                    { 10, null, "English", "en-US", 10, "Plugins Settings", null, null, null },
+                    { 10, null, "English", "en-US", 10, "Plugins", null, null, null },
                     { 22, null, "Danish", "da", 10, "Plugins", null, null, null },
                     { 11, null, "English", "en-US", 11, "Folders", null, null, null },
                     { 34, null, "German", "de-DE", 10, "Plugins", null, null, null },
@@ -665,7 +665,7 @@ namespace eFormAPI.Web.Migrations
                 {
                     { 18, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "email-recipients", "/email-recipients", "EmailRecipients", 1, "Email recipients", 3, 7, null, 0, 0, null },
                     { 17, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "folders", "/advanced/folders", "Folders", 1, "Folders", 3, 5, null, 0, 0, null },
-                    { 16, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "plugins-settings", "/plugins-settings", "PluginsSettings", 1, "Plugins Settings", 3, 8, null, 0, 0, null },
+                    { 16, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "plugins-settings", "/plugins-settings", "PluginsSettings", 1, "Plugins", 3, 8, null, 0, 0, null },
                     { 15, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "sign-out", "/auth/sign-out", "Logout", 2, "Logout", 10, 4, null, 0, 0, null },
                     { 14, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "change-password", "/account-management/change-password", "ChangePassword", 2, "Change password", 10, 3, null, 0, 0, null },
                     { 13, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "security", "/security", "Security", 2, "Security", 10, 2, null, 0, 0, null }

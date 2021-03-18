@@ -560,7 +560,7 @@ namespace eFormAPI.Web.Services
                                 newList.Add(menuItem);
                             }
                             break;
-                        case "Plugins Settings":
+                        case "Plugins":
                             if (_userService.IsAdmin())
                             {
                                 newList.Add(menuItem);

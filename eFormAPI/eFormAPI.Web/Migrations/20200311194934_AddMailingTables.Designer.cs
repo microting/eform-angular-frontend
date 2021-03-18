@@ -882,7 +882,7 @@ namespace eFormAPI.Web.Migrations
                             Link = "/plugins-settings",
                             LocaleName = "PluginsSettings",
                             MenuPosition = 1,
-                            Name = "Plugins Settings",
+                            Name = "Plugins",
                             ParentId = 3,
                             Position = 7,
                             UpdatedByUserId = 0,

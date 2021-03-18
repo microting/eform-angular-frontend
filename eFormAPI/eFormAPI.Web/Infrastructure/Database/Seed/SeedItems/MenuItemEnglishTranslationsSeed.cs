@@ -97,7 +97,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 new MenuItemTranslation
                 {
                     Id = 10,
-                    Name = "Plugins Settings",
+                    Name = "Plugins",
                     MenuItemId = MenuTemplateIds.PluginsSettings
                 },
                 new MenuItemTranslation

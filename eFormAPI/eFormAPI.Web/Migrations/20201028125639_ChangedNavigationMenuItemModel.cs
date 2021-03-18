@@ -135,7 +135,7 @@ namespace eFormAPI.Web.Migrations
                 keyColumn: "Id",
                 keyValue: 10,
                 column: "Name",
-                value: "Plugins Settings");
+                value: "Plugins");
 
             migrationBuilder.UpdateData(
                 table: "MenuTemplates",

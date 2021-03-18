@@ -1146,7 +1146,7 @@ namespace eFormAPI.Web.Migrations
                             Language = "English",
                             LocaleName = "en-US",
                             MenuItemId = 10,
-                            Name = "Plugins Settings",
+                            Name = "Plugins",
                             UpdatedByUserId = 0,
                             Version = 0
                         },
@@ -1650,7 +1650,7 @@ namespace eFormAPI.Web.Migrations
                             CreatedByUserId = 0,
                             DefaultLink = "/plugins-settings",
                             E2EId = "plugins-settings",
-                            Name = "Plugins Settings",
+                            Name = "Plugins",
                             UpdatedByUserId = 0,
                             Version = 0
                         },
@@ -2056,7 +2056,7 @@ namespace eFormAPI.Web.Migrations
                             Language = "English",
                             LocaleName = "en-US",
                             MenuTemplateId = 10,
-                            Name = "Plugins Settings"
+                            Name = "Plugins"
                         },
                         new
                         {

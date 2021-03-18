@@ -99,7 +99,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 new MenuTemplate
                 {
                     Id = MenuTemplateIds.PluginsSettings,
-                    Name = "Plugins Settings",
+                    Name = "Plugins",
                     E2EId = "plugins-settings",
                     DefaultLink = "/plugins-settings",
                 },
