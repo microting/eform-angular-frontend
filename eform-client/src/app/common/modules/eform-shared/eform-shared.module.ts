@@ -11,11 +11,13 @@ import {
   EformPaginationComponent,
   EformTreeViewPickerComponent,
   StatusBarComponent,
+  EformTableHeaderSortableComponent
 } from './components';
 import {AuthImagePipe, AuthAudioPipe, SafeHtmlPipe} from 'src/app/common/pipes';
 import {TreeModule} from '@circlon/angular-tree-component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {WavesModule} from 'angular-bootstrap-md';
+import { EformTableHeadersComponent } from './components/eform-table/eform-table-headers/eform-table-headers.component';
 
 @NgModule({
   imports: [
@@ -37,6 +39,8 @@ import {WavesModule} from 'angular-bootstrap-md';
     SafeHtmlPipe,
     EformTreeViewPickerComponent,
     EformCollapseToggleComponent,
+    EformTableHeaderSortableComponent,
+    EformTableHeadersComponent
   ],
   exports: [
     EformPaginationComponent,
@@ -44,10 +48,11 @@ import {WavesModule} from 'angular-bootstrap-md';
     StatusBarComponent,
     DateFormatterComponent,
     EformTreeViewPickerComponent,
+    EformTableHeadersComponent,
     AuthImagePipe,
     EformCollapseToggleComponent,
     AuthAudioPipe,
-    SafeHtmlPipe
+    SafeHtmlPipe,
   ],
 })
 export class EformSharedModule {}

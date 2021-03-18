@@ -2,7 +2,7 @@
 $highlight-color: $eform-gray;
 body.theme-dark {
   .ng-select-wrapper {
-    margin-top: 11px;
+    margin-top: 12px;
   }
 
   .ng-select {
@@ -18,10 +18,10 @@ body.theme-dark {
         }
         .ng-value-container {
           .ng-value {
-            color: rgba(0, 0, 0, 0.38);
+            color: rgba(0, 0, 0, 0.5);
           }
           .ng-placeholder {
-            color: rgba(0, 0, 0, 0.38);
+            color: rgba(0, 0, 0, 0.5);
           }
         }
       }
@@ -59,7 +59,7 @@ body.theme-dark {
     }
     .ng-select-container {
       align-items: baseline;
-      min-height: 51.5px;
+      min-height: 52px;
       &:after {
         border-bottom: 1px solid rgba(0, 0, 0, .20);
         content: '';
@@ -261,7 +261,7 @@ body.theme-dark {
 
 
 .ng-select-wrapper {
-  margin-top: 11px;
+  margin-top: 12px;
 }
 
 .ng-select {
@@ -277,10 +277,10 @@ body.theme-dark {
       }
       .ng-value-container {
         .ng-value {
-          color: rgba(0, 0, 0, 0.38);
+          color: rgba(0, 0, 0, 0.5);
         }
         .ng-placeholder {
-          color: rgba(0, 0, 0, 0.38);
+          color: rgba(0, 0, 0, 0.5);
         }
       }
     }
@@ -333,7 +333,7 @@ body.theme-dark {
       border-top: .84375em solid transparent;
       .ng-placeholder {
         position: absolute;
-        color: rgba(0, 0, 0, .54);
+        color: rgba(0, 0, 0, 0.5);
         transform-origin: 0 0;
         transition: transform .4s cubic-bezier(.25, .8, .25, 1), color .4s cubic-bezier(.25, .8, .25, 1), width .4s cubic-bezier(.25, .8, .25, 1);
       }
