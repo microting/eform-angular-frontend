@@ -331,27 +331,27 @@ namespace eFormAPI.Web.Services
                 return new OperationResult(false, _localizationService.GetString("TemplateNotFound"));
             }
 
-            if (!string.IsNullOrEmpty(eformDocxReportHeadersModel.H1.Trim()))
+            if (!string.IsNullOrEmpty(eformDocxReportHeadersModel.H1))
             {
                 template.ReportH1 = eformDocxReportHeadersModel.H1.Trim(); // delete whitespaces in start & end string
             }
 
-            if (!string.IsNullOrEmpty(eformDocxReportHeadersModel.H2.Trim()))
+            if (!string.IsNullOrEmpty(eformDocxReportHeadersModel.H2))
             {
                 template.ReportH2 = eformDocxReportHeadersModel.H2.Trim();
             }
 
-            if (!string.IsNullOrEmpty(eformDocxReportHeadersModel.H3.Trim()))
+            if (!string.IsNullOrEmpty(eformDocxReportHeadersModel.H3))
             {
                 template.ReportH3 = eformDocxReportHeadersModel.H3.Trim();
             }
 
-            if (!string.IsNullOrEmpty(eformDocxReportHeadersModel.H4.Trim()))
+            if (!string.IsNullOrEmpty(eformDocxReportHeadersModel.H4))
             {
                 template.ReportH4 = eformDocxReportHeadersModel.H4.Trim();
             }
 
-            if (!string.IsNullOrEmpty(eformDocxReportHeadersModel.H5.Trim()))
+            if (!string.IsNullOrEmpty(eformDocxReportHeadersModel.H5))
             {
                 template.ReportH5 = eformDocxReportHeadersModel.H5.Trim();
             }
