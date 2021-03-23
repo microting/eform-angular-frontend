@@ -1,0 +1,19 @@
+<tr>
+  <ng-container *ngFor="let header of tableHeaders">
+    <ng-container *ngIf="header.sortable">
+      <th class="table-header-sortable"
+        table-header-sortable
+        [currentSortName]="currentSortName"
+        (sortClick)="onSortClick($event)"
+        [isSortDsc]="isSortDsc"
+        [name]="header.name"
+        [id]="header.elementId"
+      ></th>
+    </ng-container>
+    <ng-container *ngIf="!header.sortable">
+      <th scope="col">
+        {{ header.name | translate }}
+      </th>
+    </ng-container>
+  </ng-container>
+</tr>

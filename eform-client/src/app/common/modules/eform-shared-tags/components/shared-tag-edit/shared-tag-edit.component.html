@@ -1,8 +1,13 @@
-<div [config]="{ignoreBackdropClick: true}" mdbModal class="modal fade" #frame="mdbModal">
+<div
+  [config]="{ ignoreBackdropClick: true }"
+  mdbModal
+  class="modal fade"
+  #frame="mdbModal"
+>
   <div class="modal-dialog modal-md">
     <div class="modal-content">
       <div class="modal-header">
-        <h3>{{'Edit tag name' | translate}}</h3>
+        <h3>{{ 'Edit tag name' | translate }}</h3>
         <button class="close" data-dismiss="modal" (click)="cancelEdit()">
           <span>×</span>
         </button>
@@ -10,18 +15,36 @@
       <div class="modal-body">
         <div class="container-fluid">
           <div class="md-form">
-            <input mdbInput
-                   [(ngModel)]="tagModel.name"
-                   type="text" class="form-control"
-                   id="tagNameEdit">
-            <label>{{'Name' | translate}}</label>
+            <input
+              mdbInput
+              [(ngModel)]="tagModel.name"
+              [required]="true"
+              type="text"
+              class="form-control"
+              id="tagNameEdit"
+            />
+            <label>{{ 'Name' | translate }}</label>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button mdbBtn id="tagEditSaveBtn" class="btn-success btn-small-height" (click)="updateItem()">{{'Save' | translate}}</button>
-        <button mdbBtn id="tagEditSaveCancelBtn" class="btn-accent text-black-50 btn-small-height"
-                (click)="cancelEdit()">{{'Close' | translate}}</button>
+        <button
+          mdbBtn
+          id="tagEditSaveBtn"
+          class="btn-success btn-small-height"
+          [disabled]="!tagModel.name"
+          (click)="updateItem()"
+        >
+          {{ 'Save' | translate }}
+        </button>
+        <button
+          mdbBtn
+          id="tagEditSaveCancelBtn"
+          class="btn-accent text-black-50 btn-small-height"
+          (click)="cancelEdit()"
+        >
+          {{ 'Close' | translate }}
+        </button>
       </div>
     </div>
   </div>
