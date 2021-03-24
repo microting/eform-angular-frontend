@@ -8,3 +8,4 @@ export * from './user-claims.helper';
 export * from './snake-to-camel.helper';
 export * from './folder-name.helper';
 export * from './table.helpers';
+export * from './forms';
