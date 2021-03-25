@@ -93,7 +93,7 @@
     "@wdio/sync": "7.2.2",
     "angular-mocks": "1.8.2",
     "chai": "4.3.4",
-    "chromedriver": "88.0.0",
+    "chromedriver": "89.0.0",
     "codelyzer": "^6.0.0",
     "fs-extra": "^9.0.0",
     "guid-typescript": "1.0.9",
