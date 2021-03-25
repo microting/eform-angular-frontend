@@ -63,9 +63,8 @@ class PluginRowObject {
       this.version = this.element.$('#plugin-version').getText();
       this.settingsBtn = this.element.$('#plugin-settings-link');
       this.statusBtn = this.element.$('#plugin-status button');
-      this.status =
-        this.element.$('#plugin-status').getCSSProperty('color').value ===
-        'rgb(6, 186, 6)';
+      const pluginStatus = this.element.$('#plugin-status');
+      this.status = pluginStatus.$('fa-icon[icon="toggle-off"]').isDisplayed();
     }
   }
 
