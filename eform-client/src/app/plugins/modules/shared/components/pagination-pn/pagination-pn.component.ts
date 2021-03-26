@@ -1,13 +1,22 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
-import {Observable, range} from 'rxjs';
-import {filter, map, toArray} from 'rxjs/operators';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { Observable, range } from 'rxjs';
+import { filter, map, toArray } from 'rxjs/operators';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'pagination-pn',
   templateUrl: './pagination-pn.component.html',
-  styleUrls: ['./pagination-pn.component.scss']
+  styleUrls: ['./pagination-pn.component.scss'],
 })
 export class PaginationPnComponent implements OnInit, OnChanges {
+  // tslint:disable-next-line:no-output-on-prefix
   @Output() onPageChanged: EventEmitter<number> = new EventEmitter<number>();
   @Input() offset = 0;
   @Input() limit = 1;
@@ -18,11 +27,10 @@ export class PaginationPnComponent implements OnInit, OnChanges {
   pages: Observable<number[]>;
 
   selectPage(page: number) {
-    if (page === 0 || page > this.totalPages) {
-      return;
-    }
     if (this.isValidPageNumber(page, this.totalPages)) {
       this.onPageChanged.emit((page - 1) * this.limit);
+    } else {
+      return;
     }
   }
 
@@ -30,8 +38,8 @@ export class PaginationPnComponent implements OnInit, OnChanges {
     this.currentPage = this.getCurrentPage(offset, limit);
     this.totalPages = this.getTotalPages(limit, size);
     this.pages = range(-this.range, this.range * 2 + 1).pipe(
-      map((offset) => this.currentPage + offset),
-      filter(page => this.isValidPageNumber(page, this.totalPages)),
+      map((offsetLocal) => this.currentPage + offsetLocal),
+      filter((page) => this.isValidPageNumber(page, this.totalPages)),
       toArray()
     );
   }
@@ -55,5 +63,4 @@ export class PaginationPnComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.getPages(this.offset, this.limit, this.size);
   }
-
 }
