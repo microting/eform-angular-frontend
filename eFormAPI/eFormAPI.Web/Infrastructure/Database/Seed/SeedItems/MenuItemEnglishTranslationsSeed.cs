@@ -79,7 +79,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 new MenuItemTranslation
                 {
                     Id = 7,
-                    Name = "Searchable List",
+                    Name = "Searchable list",
                     MenuItemId = MenuTemplateIds.SearchableList
                 },
                 new MenuItemTranslation
@@ -91,13 +91,13 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 new MenuItemTranslation
                 {
                     Id = 9,
-                    Name = "Application Settings",
+                    Name = "Application settings",
                     MenuItemId = MenuTemplateIds.ApplicationSettings
                 },
                 new MenuItemTranslation
                 {
                     Id = 10,
-                    Name = "Plugins Settings",
+                    Name = "Plugins",
                     MenuItemId = MenuTemplateIds.PluginsSettings
                 },
                 new MenuItemTranslation
@@ -109,7 +109,7 @@ namespace eFormAPI.Web.Infrastructure.Database.Seed.SeedItems
                 new MenuItemTranslation
                 {
                     Id = 12,
-                    Name = "Email Recipients",
+                    Name = "Email recipients",
                     MenuItemId = MenuTemplateIds.EmailRecipients
                 }
             };

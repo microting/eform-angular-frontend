@@ -854,7 +854,7 @@ namespace eFormAPI.Web.Migrations
                             CreatedByUserId = 0,
                             Link = "/advanced/entity-search",
                             MenuTemplateId = 7,
-                            Name = "Searchable List",
+                            Name = "Searchable list",
                             ParentId = 3,
                             Position = 3,
                             Type = 1,
@@ -882,7 +882,7 @@ namespace eFormAPI.Web.Migrations
                             CreatedByUserId = 0,
                             Link = "/advanced/application-settings",
                             MenuTemplateId = 9,
-                            Name = "Application Settings",
+                            Name = "Application settings",
                             ParentId = 3,
                             Position = 6,
                             Type = 1,
@@ -924,7 +924,7 @@ namespace eFormAPI.Web.Migrations
                             CreatedByUserId = 0,
                             Link = "/email-recipients",
                             MenuTemplateId = 12,
-                            Name = "Email Recipients",
+                            Name = "Email recipients",
                             ParentId = 3,
                             Position = 7,
                             Type = 1,
@@ -1110,7 +1110,7 @@ namespace eFormAPI.Web.Migrations
                             Language = "English",
                             LocaleName = "en-US",
                             MenuItemId = 7,
-                            Name = "Searchable List",
+                            Name = "Searchable list",
                             UpdatedByUserId = 0,
                             Version = 0
                         },
@@ -1134,7 +1134,7 @@ namespace eFormAPI.Web.Migrations
                             Language = "English",
                             LocaleName = "en-US",
                             MenuItemId = 9,
-                            Name = "Application Settings",
+                            Name = "Application settings",
                             UpdatedByUserId = 0,
                             Version = 0
                         },
@@ -1146,7 +1146,7 @@ namespace eFormAPI.Web.Migrations
                             Language = "English",
                             LocaleName = "en-US",
                             MenuItemId = 10,
-                            Name = "Plugins Settings",
+                            Name = "Plugins",
                             UpdatedByUserId = 0,
                             Version = 0
                         },
@@ -1170,7 +1170,7 @@ namespace eFormAPI.Web.Migrations
                             Language = "English",
                             LocaleName = "en-US",
                             MenuItemId = 12,
-                            Name = "Email Recipients",
+                            Name = "Email recipients",
                             UpdatedByUserId = 0,
                             Version = 0
                         },
@@ -1617,7 +1617,7 @@ namespace eFormAPI.Web.Migrations
                             CreatedByUserId = 0,
                             DefaultLink = "/advanced/entity-search",
                             E2EId = "search",
-                            Name = "Searchable List",
+                            Name = "Searchable list",
                             UpdatedByUserId = 0,
                             Version = 0
                         },
@@ -1639,7 +1639,7 @@ namespace eFormAPI.Web.Migrations
                             CreatedByUserId = 0,
                             DefaultLink = "/application-settings",
                             E2EId = "application-settings",
-                            Name = "Application Settings",
+                            Name = "Application settings",
                             UpdatedByUserId = 0,
                             Version = 0
                         },
@@ -1650,7 +1650,7 @@ namespace eFormAPI.Web.Migrations
                             CreatedByUserId = 0,
                             DefaultLink = "/plugins-settings",
                             E2EId = "plugins-settings",
-                            Name = "Plugins Settings",
+                            Name = "Plugins",
                             UpdatedByUserId = 0,
                             Version = 0
                         },
@@ -1672,7 +1672,7 @@ namespace eFormAPI.Web.Migrations
                             CreatedByUserId = 0,
                             DefaultLink = "/email-recipients",
                             E2EId = "email-recipients",
-                            Name = "Email Recipients",
+                            Name = "Email recipients",
                             UpdatedByUserId = 0,
                             Version = 0
                         },
@@ -2032,7 +2032,7 @@ namespace eFormAPI.Web.Migrations
                             Language = "English",
                             LocaleName = "en-US",
                             MenuTemplateId = 7,
-                            Name = "Searchable List"
+                            Name = "Searchable list"
                         },
                         new
                         {
@@ -2048,7 +2048,7 @@ namespace eFormAPI.Web.Migrations
                             Language = "English",
                             LocaleName = "en-US",
                             MenuTemplateId = 9,
-                            Name = "Application Settings"
+                            Name = "Application settings"
                         },
                         new
                         {
@@ -2056,7 +2056,7 @@ namespace eFormAPI.Web.Migrations
                             Language = "English",
                             LocaleName = "en-US",
                             MenuTemplateId = 10,
-                            Name = "Plugins Settings"
+                            Name = "Plugins"
                         },
                         new
                         {
@@ -2072,7 +2072,7 @@ namespace eFormAPI.Web.Migrations
                             Language = "English",
                             LocaleName = "en-US",
                             MenuTemplateId = 12,
-                            Name = "Email Recipients"
+                            Name = "Email recipients"
                         },
                         new
                         {

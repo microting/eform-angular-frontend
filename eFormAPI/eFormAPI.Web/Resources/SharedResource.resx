@@ -511,7 +511,7 @@
     <value>Advanced</value>
   </data>
   <data name="ApplicationSettings" xml:space="preserve">
-    <value>Application Settings</value>
+    <value>Application settings</value>
   </data>
   <data name="ChangePassword" xml:space="preserve">
     <value>Change Password</value>
@@ -526,7 +526,7 @@
     <value>My eForms</value>
   </data>
   <data name="SearchableList" xml:space="preserve">
-    <value>Searchable List</value>
+    <value>Searchable list</value>
   </data>
   <data name="Security" xml:space="preserve">
     <value>Security</value>
@@ -607,7 +607,7 @@
     <value>Tag updated successfully</value>
   </data>
   <data name="EmailRecipients" xml:space="preserve">
-    <value>Email Recipients</value>
+    <value>Email recipients</value>
   </data>
   <data name="EmailRecipientCreatedSuccessfully" xml:space="preserve">
     <value>Email recipient created successfully</value>

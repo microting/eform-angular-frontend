@@ -522,7 +522,7 @@ namespace eFormAPI.Web.Migrations
                             E2EId = "application-settings",
                             Link = "/application-settings",
                             MenuPosition = 1,
-                            Name = "Application Settings",
+                            Name = "Application settings",
                             ParentId = 3,
                             Position = 5
                         },

@@ -540,7 +540,7 @@ namespace eFormAPI.Web.Services
                             }
 
                             break;
-                        case "Searchable List":
+                        case "Searchable list":
                             if (claims.Contains(AuthConsts.EformClaims.EntitySearchClaims.Read))
                             {
                                 newList.Add(menuItem);
@@ -560,7 +560,7 @@ namespace eFormAPI.Web.Services
                                 newList.Add(menuItem);
                             }
                             break;
-                        case "Plugins Settings":
+                        case "Plugins":
                             if (_userService.IsAdmin())
                             {
                                 newList.Add(menuItem);
@@ -573,7 +573,7 @@ namespace eFormAPI.Web.Services
                                 newList.Add(menuItem);
                             }
                             break;
-                        case "Email Recipients":
+                        case "Email recipients":
                             if (claims.Contains(AuthConsts.EformClaims.EmailRecipientsClaims.Read))
                             {
                                 newList.Add(menuItem);
@@ -581,7 +581,7 @@ namespace eFormAPI.Web.Services
                             break;
                         case "Security":
                             break;
-                        case "Application Settings":
+                        case "Application settings":
                             break;
                         default:
                             newList.Add(menuItem);

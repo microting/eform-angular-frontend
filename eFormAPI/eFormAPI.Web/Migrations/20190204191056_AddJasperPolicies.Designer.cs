@@ -821,7 +821,7 @@ namespace eFormAPI.Web.Migrations
                             Link = "/application-settings",
                             LocaleName = "ApplicationSettings",
                             MenuPosition = 1,
-                            Name = "Application Settings",
+                            Name = "Application settings",
                             ParentId = 3,
                             Position = 5
                         },
@@ -896,7 +896,7 @@ namespace eFormAPI.Web.Migrations
                             Link = "/plugins-settings",
                             LocaleName = "PluginsSettings",
                             MenuPosition = 1,
-                            Name = "Plugins Settings",
+                            Name = "Plugins",
                             ParentId = 3,
                             Position = 6
                         });

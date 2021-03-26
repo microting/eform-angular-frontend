@@ -80,7 +80,7 @@ namespace eFormAPI.Web.Migrations
                     { 7, "search", "/advanced/entity-search", 1, "Searchable list", 3, 3 },
                     { 6, "units", "/advanced/units", 1, "Units", 3, 2 },
                     { 5, "workers", "/advanced/workers", 1, "Workers", 3, 1 },
-                    { 9, "application-settings", "/application-settings", 1, "Application Settings", 3, 5 }
+                    { 9, "application-settings", "/application-settings", 1, "Application settings", 3, 5 }
                 });
 
             migrationBuilder.InsertData(

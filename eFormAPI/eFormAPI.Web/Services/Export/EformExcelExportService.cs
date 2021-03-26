@@ -114,6 +114,7 @@ namespace eFormAPI.Web.Services.Export
                 {
                     try
                     {
+                        Log.LogEvent($"Trying to open {excelModel.TemplateId}.xlsx");
                         var objectResponse = await core.GetFileFromS3Storage($"{excelModel.TemplateId}.xlsx");
                         Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), "results"));
                         await using var fileStream = File.Create(resultDocument);
@@ -127,7 +128,7 @@ namespace eFormAPI.Web.Services.Export
                         try
                         {
                             Log.LogException($"EformExcelExportService.EformExport: Got exeption {exception.Message}");
-                            var objectResponse = await core.GetFileFromS3Storage($"{excelModel.TemplateId}_xlxs_compact.zip");
+                            var objectResponse = await core.GetFileFromS3Storage($"{excelModel.TemplateId}_xlsx_compact.zip");
                             var zipFileName = Path.Combine(Path.GetTempPath(), $"{excelModel.TemplateId}.zip");
                             await using var fileStream = File.Create(zipFileName);
                             await objectResponse.ResponseStream.CopyToAsync(fileStream);
@@ -143,7 +144,7 @@ namespace eFormAPI.Web.Services.Export
                         }
                         catch (Exception e)
                         {
-                            Console.WriteLine(e);
+                            Console.WriteLine(e.Message);
                             throw;
                         }
                     }

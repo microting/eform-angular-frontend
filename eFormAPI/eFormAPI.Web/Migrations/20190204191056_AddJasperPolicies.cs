@@ -34,7 +34,7 @@ namespace eFormAPI.Web.Migrations
                 keyColumn: "Id",
                 keyValue: 16,
                 columns: new[] { "LocaleName", "Name" },
-                values: new object[] { "PluginsSettings", "Plugins Settings" });
+                values: new object[] { "PluginsSettings", "Plugins" });
 
             migrationBuilder.InsertData(
                 table: "Permissions",
