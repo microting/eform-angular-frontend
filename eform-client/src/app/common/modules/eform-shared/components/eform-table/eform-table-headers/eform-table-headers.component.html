@@ -1,7 +1,9 @@
 <tr>
+  <ng-container *ngTemplateOutlet="customCell"></ng-container>
   <ng-container *ngFor="let header of tableHeaders">
     <ng-container *ngIf="header.sortable">
-      <th class="table-header-sortable"
+      <th
+        class="table-header-sortable"
         table-header-sortable
         [currentSortName]="currentSortName"
         (sortClick)="onSortClick($event)"

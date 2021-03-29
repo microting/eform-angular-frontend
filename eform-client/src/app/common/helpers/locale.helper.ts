@@ -1,9 +1,27 @@
-import {HttpClient} from '@angular/common/http';
-import {MissingTranslationHandler, MissingTranslationHandlerParams, TranslateLoader} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {
+  MissingTranslationHandler,
+  MissingTranslationHandlerParams,
+  TranslateLoader,
+} from '@ngx-translate/core';
+
+import { Observable } from 'rxjs';
+import { translates } from '../../../assets/i18n/translates';
+
+// custom loader translates
+export class EformTranslateLoader implements TranslateLoader {
+  constructor() {}
+
+  public getTranslation(lang: string): Observable<any> {
+    return new Observable((observer) => {
+      observer.next(translates[lang]);
+      observer.complete();
+    });
+  }
+}
 
 // Missing translation
-export class EformMissingTranslationHandler implements MissingTranslationHandler {
+export class EformMissingTranslationHandler
+  implements MissingTranslationHandler {
   handle(params: MissingTranslationHandlerParams) {
     // console.warn('Missing translation for: ' + params.key);
     return params.key;
@@ -26,16 +44,14 @@ export class EformMissingTranslationHandler implements MissingTranslationHandler
 //   }
 // }
 
-// AoT requires an exported function for factories
-export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
-
 export let translateConfig = {
   loader: {
     provide: TranslateLoader,
-    useFactory: (createTranslateLoader),
-    deps: [HttpClient]
+    // AoT requires an exported function for factories
+    useFactory: () => new EformTranslateLoader(),
   },
-  missingTranslationHandler: {provide: MissingTranslationHandler, useClass: EformMissingTranslationHandler}
+  missingTranslationHandler: {
+    provide: MissingTranslationHandler,
+    useClass: EformMissingTranslationHandler,
+  },
 };

@@ -1,9 +1,13 @@
-  <subheader-pn>
+<subheader-pn>
   <div class="p-3">
-    <button mdbBtn class="btn-success btn-small-height"
-      id = "ProfileSettingsSaveBtn"
+    <button
+      mdbBtn
+      class="btn-success btn-small-height"
+      id="ProfileSettingsSaveBtn"
       (click)="updateUserProfileSettings()"
-      mdbTooltip="Save settings">{{ 'Save' | translate }}
+      mdbTooltip="Save settings"
+    >
+      {{ 'Save' | translate }}
     </button>
   </div>
 </subheader-pn>
@@ -13,27 +17,43 @@
     <div class="col-md-6" *ngIf="userRole == 'admin'">
       <mdb-card>
         <mdb-card-header>
-          {{ 'Google Authenticator' | translate}}
+          {{ 'Google Authenticator' | translate }}
         </mdb-card-header>
         <mdb-card-body>
-            <div class="mat-checkbox mb-1">
-              <input id="2fauthForsed" (change)="isTwoFactorEnabledCheckBoxChanged($event)"
-                     [checked]="googleAuthInfoModel.isTwoFactorEnabled" [value]="googleAuthInfoModel.isTwoFactorEnabled"
-                     color="primary" type="checkbox">
-              <label for="2fauthForsed">{{'Status' | translate}}</label>
-            </div>
-            <p class="text-danger">({{ 'change will logout you from the application' | translate }})</p>
+          <div class="mat-checkbox mb-1">
+            <input
+              id="2fauthForsed"
+              (change)="isTwoFactorEnabledCheckBoxChanged($event)"
+              [checked]="googleAuthInfoModel.isTwoFactorEnabled"
+              [value]="googleAuthInfoModel.isTwoFactorEnabled"
+              color="primary"
+              type="checkbox"
+            />
+            <label for="2fauthForsed">{{ 'Status' | translate }}</label>
+          </div>
+          <p class="text-danger">
+            ({{ 'change will logout you from the application' | translate }})
+          </p>
 
           <ng-container *ngIf="googleAuthInfoModel.psk">
             <div class="p-0">
-              <div [innerHTML]="'Google Authenticator description' | translate">
-              </div>
-              <p><strong>{{googleAuthInfoModel.psk}}</strong></p>
+              <div
+                [innerHTML]="'Google Authenticator description' | translate"
+              ></div>
+              <p>
+                <strong>{{ googleAuthInfoModel.psk }}</strong>
+              </p>
             </div>
             <div class="p-0">
-              <button mdbBtn class="btn-ar btn-danger" id="deleteGoogleAuthenticatorInfo"
-                      mdbTooltip="{{ 'Remove google authenticator secret key' | translate }}"
-                      (click)="deleteGoogleAuthenticatorInfo()">
+              <button
+                mdbBtn
+                class="btn-ar btn-danger"
+                id="deleteGoogleAuthenticatorInfo"
+                mdbTooltip="{{
+                  'Remove google authenticator secret key' | translate
+                }}"
+                (click)="deleteGoogleAuthenticatorInfo()"
+              >
                 {{ 'Remove PSK' | translate }}
               </button>
             </div>
@@ -44,46 +64,54 @@
     <div class="col-md-6">
       <mdb-card class="card">
         <mdb-card-header>
-          {{ 'General' | translate}}
+          {{ 'General' | translate }}
         </mdb-card-header>
         <mdb-card-body>
           <div class="container-fluid">
             <div class="row">
               <ng-select
-                id = "ProfileLanguageSelector"
+                id="ProfileLanguageSelector"
                 [placeholder]="'Language' | translate"
                 [bindLabel]="'text'"
                 [bindValue]="'locale'"
                 [clearable]="false"
                 [(ngModel)]="userSettingsModel.locale"
-                [items]="languages"></ng-select>
+                [items]="languages"
+              ></ng-select>
             </div>
             <div class="row">
               <ng-select
-                id = "ProfileFormatSelector"
+                id="ProfileFormatSelector"
                 [placeholder]="'Formats' | translate"
                 [bindLabel]="'text'"
                 [bindValue]="'id'"
                 [clearable]="false"
                 [(ngModel)]="userSettingsModel.formats"
-                [items]="countries"></ng-select>
+                [items]="countries"
+              ></ng-select>
             </div>
             <div class="row">
               <ng-select
-                id = "ProfileTimeZoneSelector"
+                id="ProfileTimeZoneSelector"
                 [placeholder]="'Timezone' | translate"
                 [bindLabel]="'name'"
                 [bindValue]="'id'"
                 [clearable]="false"
                 [(ngModel)]="userSettingsModel.timeZone"
-                [items]="timeZones.timeZoneModels"></ng-select>
+                [items]="timeZones.timeZoneModels"
+              ></ng-select>
             </div>
             <div class="row">
               <div class="mat-checkbox mb-1">
-                <input id="darkTheme" (change)="darkTheme($event)"
-                       [checked]="userSettingsModel.darkTheme" [value]="userSettingsModel.darkTheme"
-                       color="primary" type="checkbox">
-                <label for="darkTheme">{{'Dark theme' | translate}}</label>
+                <input
+                  id="darkTheme"
+                  (click)="changeDarkTheme($event)"
+                  [checked]="userSettingsModel.darkTheme"
+                  [value]="userSettingsModel.darkTheme"
+                  color="primary"
+                  type="checkbox"
+                />
+                <label for="darkTheme">{{ 'Dark theme' | translate }}</label>
               </div>
             </div>
           </div>
