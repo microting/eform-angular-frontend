@@ -89,7 +89,7 @@
     "@wdio/cli": "7.2.3",
     "@wdio/local-runner": "7.3.0",
     "@wdio/mocha-framework": "7.2.1",
-    "@wdio/spec-reporter": "7.2.1",
+    "@wdio/spec-reporter": "7.3.0",
     "@wdio/sync": "7.3.0",
     "angular-mocks": "1.8.2",
     "chai": "4.3.4",
