@@ -9,9 +9,9 @@
     <thead>
       <tr>
         <th>{{ 'Case Id' | translate }}</th>
-        <th>{{ 'Created at' | translate }}</th>
+        <th>{{ 'CreatedAt' | translate }}</th>
         <th>{{ 'Done by' | translate }}</th>
-<!--        <th>{{ 'Item name' | translate }}</th>-->
+        <!--        <th>{{ 'Item name' | translate }}</th>-->
         <th *ngFor="let itemHeader of itemHeaders">{{ itemHeader.value }}</th>
         <th>{{ 'Actions' | translate }}</th>
       </tr>
@@ -30,16 +30,14 @@
         <td>
           {{ item.doneBy }}
         </td>
-<!--        <td>-->
-<!--          {{ item.itemName }}-->
-<!--        </td>-->
+        <!--        <td>-->
+        <!--          {{ item.itemName }}-->
+        <!--        </td>-->
         <ng-container *ngFor="let field of item.caseFields">
           <td>
-            <div *ngIf="field == 'checked'"><fa-icon
-              icon="check"
-              size="lg"
-              [fixedWidth]="true"
-            ></fa-icon></div>
+            <div *ngIf="field == 'checked'">
+              <fa-icon icon="check" size="lg" [fixedWidth]="true"></fa-icon>
+            </div>
             <div *ngIf="field != 'checked' && field != 'unchecked'">
               <div [innerHTML]="field"></div>
             </div>

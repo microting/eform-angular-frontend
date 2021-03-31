@@ -1,83 +1,122 @@
-<subheader-pn>
-
-</subheader-pn>
-<br>
+<subheader-pn> </subheader-pn>
+<br />
 <!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
 <div class="container-fluid">
   <div class="row p-1 table-responsive no-gutters">
-    <table mdbTable striped="true" hover="true" small="true" class="z-depth-1 text-center">
+    <table
+      mdbTable
+      striped="true"
+      hover="true"
+      small="true"
+      class="z-depth-1 text-center"
+    >
       <thead>
-      <tr>
-        <th scope="col"> Microting UID</th>
-<!--        <th scope="col">{{ 'Created at' | translate }}</th>-->
-<!--        <th scope="col"> {{ 'Updated at' | translate }}</th>-->
-        <th scope="col">{{ 'Name' | translate }}</th>
-        <th scope="col">{{ 'Units' | translate }}</th>
-        <th scope="col">{{ 'Tags' | translate }}</th>
-        <th scope="col" *ngIf="userClaims.sitesDelete || userClaims.sitesUpdate">{{ 'Actions' | translate }}</th>
-      </tr>
+        <tr>
+          <th scope="col">Microting UID</th>
+          <!--        <th scope="col">{{ 'CreatedAt' | translate }}</th>-->
+          <!--        <th scope="col"> {{ 'Updated at' | translate }}</th>-->
+          <th scope="col">{{ 'Name' | translate }}</th>
+          <th scope="col">{{ 'Units' | translate }}</th>
+          <th scope="col">{{ 'Tags' | translate }}</th>
+          <th
+            scope="col"
+            *ngIf="userClaims.sitesDelete || userClaims.sitesUpdate"
+          >
+            {{ 'Actions' | translate }}
+          </th>
+        </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let siteDto of sitesDto; let i = index">
-        <td id="siteUUId_{{i}}">
-          {{siteDto.siteUId}}
-        </td>
-<!--        <td scope="row">-->
-<!--          <date-formatter [date]="siteDto.createdAt" [Format]="'datetime'"></date-formatter>-->
-<!--        </td>-->
-<!--        <td>-->
-<!--          <date-formatter [date]="siteDto.updatedAt" [Format]="'datetime'"></date-formatter>-->
-<!--        </td>-->
-        <td id="siteName_{{i}}">{{siteDto.siteName}}</td>
-        <td>
-          <p class="paragraph-sm" id="units_{{i}}" *ngFor="let unit of siteDto.units">
-            {{unit.microtingUid}}
-          </p>
-        </td>
-        <td>
-          <div class="d-flex justify-content-center">
-            <div>
-              <a mdbBtn type="button" color="success" class="btn-icon btn-success"
-                 id="editSiteTagsBtn_{{i}}"
-                 mdbTooltip="{{ 'Edit tags' | translate }}" (click)="openEditTagsModal(siteDto)">
-                <fa-icon icon="tags" size="lg" [fixedWidth]="true"></fa-icon>
-              </a>
-              <br>
-              <p class="badge badge-primary mb-1" id="assignedTag" *ngFor="let tag of siteDto.tags">
-                <fa-icon icon="tag"></fa-icon>
-                {{tag.value}}
-              </p>
+        <tr *ngFor="let siteDto of sitesDto; let i = index">
+          <td id="siteUUId_{{ i }}">
+            {{ siteDto.siteUId }}
+          </td>
+          <!--        <td scope="row">-->
+          <!--          <date-formatter [date]="siteDto.createdAt" [Format]="'datetime'"></date-formatter>-->
+          <!--        </td>-->
+          <!--        <td>-->
+          <!--          <date-formatter [date]="siteDto.updatedAt" [Format]="'datetime'"></date-formatter>-->
+          <!--        </td>-->
+          <td id="siteName_{{ i }}">{{ siteDto.siteName }}</td>
+          <td>
+            <p
+              class="paragraph-sm"
+              id="units_{{ i }}"
+              *ngFor="let unit of siteDto.units"
+            >
+              {{ unit.microtingUid }}
+            </p>
+          </td>
+          <td>
+            <div class="d-flex justify-content-center">
+              <div>
+                <a
+                  mdbBtn
+                  type="button"
+                  color="success"
+                  class="btn-icon btn-success"
+                  id="editSiteTagsBtn_{{ i }}"
+                  mdbTooltip="{{ 'Edit tags' | translate }}"
+                  (click)="openEditTagsModal(siteDto)"
+                >
+                  <fa-icon icon="tags" size="lg" [fixedWidth]="true"></fa-icon>
+                </a>
+                <br />
+                <p
+                  class="badge badge-primary mb-1"
+                  id="assignedTag"
+                  *ngFor="let tag of siteDto.tags"
+                >
+                  <fa-icon icon="tag"></fa-icon>
+                  {{ tag.value }}
+                </p>
+              </div>
             </div>
-          </div>
-        </td>
-        <td *ngIf="userClaims.sitesDelete || userClaims.sitesUpdate">
-          <div class="d-flex flex-row justify-content-center">
-            <button mdbBtn class="btn-accent text-black-50 btn-icon mb-2 " id="editBtn_{{i}}" *ngIf="userClaims.sitesUpdate"
-                    mdbTooltip="{{'Edit site' | translate}}" mdbWavesEffect
-                    (click)="openEditModal(siteDto)">
-              <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
-            </button>
-            <button mdbBtn class="btn-danger btn-icon mb-2 " id="deleteBtn_{{i}}" *ngIf="userClaims.sitesDelete"
-                    mdbTooltip="{{'Delete site' | translate}}"
-                    (click)="openDeleteModal(siteDto)">
-              <fa-icon icon="trash-alt" [fixedWidth]="true" size="lg"></fa-icon>
-            </button>
-          </div>
-        </td>
-      </tr>
+          </td>
+          <td *ngIf="userClaims.sitesDelete || userClaims.sitesUpdate">
+            <div class="d-flex flex-row justify-content-center">
+              <button
+                mdbBtn
+                class="btn-accent text-black-50 btn-icon mb-2"
+                id="editBtn_{{ i }}"
+                *ngIf="userClaims.sitesUpdate"
+                mdbTooltip="{{ 'Edit site' | translate }}"
+                mdbWavesEffect
+                (click)="openEditModal(siteDto)"
+              >
+                <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
+              </button>
+              <button
+                mdbBtn
+                class="btn-danger btn-icon mb-2"
+                id="deleteBtn_{{ i }}"
+                *ngIf="userClaims.sitesDelete"
+                mdbTooltip="{{ 'Delete site' | translate }}"
+                (click)="openDeleteModal(siteDto)"
+              >
+                <fa-icon
+                  icon="trash-alt"
+                  [fixedWidth]="true"
+                  size="lg"
+                ></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
 </div>
 
-<app-site-edit
-  [siteNameDto]="selectedSiteDto"
-  #modalSiteEdit></app-site-edit>
+<app-site-edit [siteNameDto]="selectedSiteDto" #modalSiteEdit></app-site-edit>
 <app-site-delete
   (onSiteRemoved)="loadAllSites()"
   [siteNameDto]="selectedSiteDto"
-  #modalSiteDelete></app-site-delete>
-<app-site-tags (onSiteTagsUpdated)="loadAllSites()"
-               (onTagAdded)="loadAllTags()"
-               [availableTags]="availableTags"
-               #modalSiteTags></app-site-tags>
+  #modalSiteDelete
+></app-site-delete>
+<app-site-tags
+  (onSiteTagsUpdated)="loadAllSites()"
+  (onTagAdded)="loadAllTags()"
+  [availableTags]="availableTags"
+  #modalSiteTags
+></app-site-tags>

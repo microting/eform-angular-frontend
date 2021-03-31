@@ -1,24 +1,32 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Subject} from 'rxjs';
-import {debounceTime} from 'rxjs/operators';
-import {ApplicationPages, UserClaimsEnum} from 'src/app/common/const';
-import {CommonDictionaryModel} from 'src/app/common/models/common';
-import {TemplateDto} from 'src/app/common/models/dto';
-import {SavedTagModel, TemplateListModel, TemplateRequestModel} from 'src/app/common/models/eforms';
-import {EformPermissionsSimpleModel} from 'src/app/common/models/security/group-permissions/eform';
-import {PageSettingsModel} from 'src/app/common/models/settings';
-import {AuthService, UserSettingsService} from 'src/app/common/services/auth';
-import {EFormService, EformTagService} from 'src/app/common/services/eform';
-import {SecurityGroupEformsPermissionsService} from 'src/app/common/services/security';
-import {saveAs} from 'file-saver';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+import { ApplicationPages, UserClaimsEnum } from 'src/app/common/const';
+import {
+  CommonDictionaryModel,
+  TableHeaderElementModel,
+} from 'src/app/common/models/common';
+import { TemplateDto } from 'src/app/common/models/dto';
+import {
+  SavedTagModel,
+  TemplateListModel,
+  TemplateRequestModel,
+} from 'src/app/common/models/eforms';
+import { EformPermissionsSimpleModel } from 'src/app/common/models/security/group-permissions/eform';
+import { PageSettingsModel } from 'src/app/common/models/settings';
+import { AuthService, UserSettingsService } from 'src/app/common/services/auth';
+import { EFormService, EformTagService } from 'src/app/common/services/eform';
+import { SecurityGroupEformsPermissionsService } from 'src/app/common/services/security';
+import { saveAs } from 'file-saver';
+import { EformsStateService } from 'src/app/modules/eforms/state/eforms-state.service';
+import { updateTableSorting } from 'src/app/common/helpers';
 
 @Component({
   selector: 'app-eform-page',
   templateUrl: './eforms-page.component.html',
-  styleUrls: ['./eforms-page.component.scss']
+  styleUrls: ['./eforms-page.component.scss'],
 })
 export class EformsPageComponent implements OnInit, OnDestroy {
-
   @ViewChild('modalNewEform', { static: true }) newEformModal;
   @ViewChild('modalCasesColumns', { static: true }) modalCasesColumnsModal;
   @ViewChild('modalParing', { static: true }) modalPairing;
@@ -29,32 +37,42 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   @ViewChild('modalEformsImport', { static: true }) modalEformsImport;
 
   searchSubject = new Subject();
-  localPageSettings: PageSettingsModel = new PageSettingsModel();
-  templateRequestModel: TemplateRequestModel = new TemplateRequestModel;
   templateListModel: TemplateListModel = new TemplateListModel();
   eformPermissionsSimpleModel: Array<EformPermissionsSimpleModel> = [];
   availableTags: Array<CommonDictionaryModel> = [];
 
-  get userClaims() { return this.authService.userClaims; }
-  get userClaimsEnum() { return UserClaimsEnum; }
-  get userRole() { return this.authService.currentRole; }
+  get userClaims() {
+    return this.authService.userClaims;
+  }
+  get userClaimsEnum() {
+    return UserClaimsEnum;
+  }
+  get userRole() {
+    return this.authService.currentRole;
+  }
 
-  items = [
-    'New',
-    'Legacy',
-    'Test1'
+  tableHeaders: TableHeaderElementModel[] = [
+    { name: 'Id', elementId: 'idSort', sortable: true },
+    { name: 'CreatedAt', elementId: 'createdAtSort', sortable: true },
+    {
+      name: 'Label',
+      elementId: 'nameEFormSort',
+      sortable: true,
+    },
+    { name: 'Tags', elementId: 'tagsEForm', sortable: false },
+    { name: 'Pairing', elementId: 'pairingEForm', sortable: false },
+    { name: 'Actions', elementId: '', sortable: false },
   ];
 
-  constructor(private eFormService: EFormService,
-              private eFormTagService: EformTagService,
-              private authService: AuthService,
-              private securityGroupEformsService: SecurityGroupEformsPermissionsService,
-              private userSettingsService: UserSettingsService
+  constructor(
+    private eFormService: EFormService,
+    private eFormTagService: EformTagService,
+    private authService: AuthService,
+    private securityGroupEformsService: SecurityGroupEformsPermissionsService,
+    public eformsStateService: EformsStateService
   ) {
-    this.searchSubject.pipe(
-      debounceTime(500)
-    ). subscribe(val => {
-      this.templateRequestModel.nameFilter = val.toString();
+    this.searchSubject.pipe(debounceTime(500)).subscribe((val) => {
+      this.eformsStateService.updateNameFilter(val.toString());
       this.loadAllTags();
     });
   }
@@ -69,22 +87,11 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   }
 
   getLocalPageSettings() {
-    this.localPageSettings = this.userSettingsService.getLocalPageSettings
-    ('pagesSettings', ApplicationPages[ApplicationPages.Eforms])
-      .settings;
     this.loadAllTags();
   }
 
-  updateLocalPageSettings(localStorageItemName: string) {
-    this.userSettingsService.updateLocalPageSettings
-    (localStorageItemName, this.localPageSettings, ApplicationPages[ApplicationPages.Eforms]);
-    this.getLocalPageSettings();
-  }
-
   loadAllTemplates() {
-    this.templateRequestModel.sort = this.localPageSettings.sort;
-    this.templateRequestModel.isSortDsc = this.localPageSettings.isSortDsc;
-    this.eFormService.getAll(this.templateRequestModel).subscribe(operation => {
+    this.eformsStateService.loadAllTemplates().subscribe((operation) => {
       if (operation && operation.success) {
         this.templateListModel = operation.model;
       }
@@ -93,13 +100,15 @@ export class EformsPageComponent implements OnInit, OnDestroy {
 
   loadAllTags() {
     if (this.userClaims.eformsReadTags) {
-      this.eFormTagService.getAvailableTags().subscribe((data) => {
-        if (data && data.success) {
-          this.availableTags = data.model;
-          this.loadSelectedUserTags();
-        }
-      }, (error) => {
-      });
+      this.eFormTagService.getAvailableTags().subscribe(
+        (data) => {
+          if (data && data.success) {
+            this.availableTags = data.model;
+            this.loadSelectedUserTags();
+          }
+        },
+        (error) => {}
+      );
     } else {
       this.loadAllTemplates();
     }
@@ -111,55 +120,65 @@ export class EformsPageComponent implements OnInit, OnDestroy {
     savedTagModel.tagName = e.name;
     this.eFormTagService.addSavedTag(savedTagModel).subscribe((data) => {
       if (data && data.success) {
-        this.templateRequestModel.tagIds.push(e.id);
+        this.eformsStateService.addTagIds(e.id);
         this.loadAllTemplates();
       }
-    }, (error) => {
     });
   }
 
   removeSavedTag(e: any) {
-    this.eFormTagService.deleteSavedTag(e.value.id).subscribe(data => {
-      if (data && data.success) {
-        this.templateRequestModel.tagIds = this.templateRequestModel.tagIds.filter(x => x !== e.id);
-        this.loadAllTemplates();
-      }
-    }, (error) => {
-    });
+    this.eFormTagService.deleteSavedTag(e.value.id).subscribe(
+      (data) => {
+        if (data && data.success) {
+          this.eformsStateService.removeTagIds(e.value.id);
+          this.loadAllTemplates();
+        }
+      },
+      (error) => {}
+    );
   }
 
   loadSelectedUserTags() {
-    this.eFormTagService.getSavedTags().subscribe((data) => {
-      if (data && data.success) {
-        this.templateRequestModel.tagIds = data.model.tagList.map(x => x.tagId);
-        this.loadAllTemplates();
-      }
-    }, (error) => {
-    });
+    this.eFormTagService.getSavedTags().subscribe(
+      (data) => {
+        if (data && data.success) {
+          this.eformsStateService.updateTagIds(
+            data.model.tagList.map((x) => x.tagId)
+          );
+          this.loadAllTemplates();
+        }
+      },
+      (error) => {}
+    );
   }
 
   loadEformsPermissions() {
-    this.securityGroupEformsService.getEformsSimplePermissions().subscribe((data) => {
-      if (data && data.success) {
-        this.eformPermissionsSimpleModel = this.securityGroupEformsService.mapEformsSimplePermissions(data.model);
-      }
-    }, (error) => {
-    });
+    this.securityGroupEformsService.getEformsSimplePermissions().subscribe(
+      (data) => {
+        if (data && data.success) {
+          this.eformPermissionsSimpleModel = this.securityGroupEformsService.mapEformsSimplePermissions(
+            data.model
+          );
+        }
+      },
+      (error) => {}
+    );
   }
 
   onLabelInputChanged(label: string) {
-    // debugger;
     this.searchSubject.next(label);
   }
 
   sortTable(sort: string) {
-    if (this.localPageSettings.sort === sort) {
-      this.localPageSettings.isSortDsc = !this.localPageSettings.isSortDsc;
-    } else {
-      this.localPageSettings.isSortDsc = false;
-      this.localPageSettings.sort = sort;
-    }
-    this.updateLocalPageSettings('pagesSettings');
+    const localPageSettings = updateTableSorting(sort, {
+      sort: this.eformsStateService.sort,
+      isSortDsc: this.eformsStateService.isSortDsc,
+      pageSize: 0,
+      additional: [],
+    });
+    this.eformsStateService.updateIsSortDsc(localPageSettings.isSortDsc);
+    this.eformsStateService.updateSort(localPageSettings.sort);
+    this.loadAllTemplates();
   }
 
   openNewEformModal() {
@@ -180,12 +199,12 @@ export class EformsPageComponent implements OnInit, OnDestroy {
 
   downloadItem(itemName: string, templateId: number) {
     if (itemName === 'XML') {
-      this.eFormService.downloadEformXML(templateId).subscribe(data => {
+      this.eFormService.downloadEformXML(templateId).subscribe((data) => {
         const blob = new Blob([data]);
         saveAs(blob, `eForm_${templateId}.xml`);
       });
     } else {
-      this.eFormService.downloadCSVFile(templateId).subscribe(data => {
+      this.eFormService.downloadCSVFile(templateId).subscribe((data) => {
         const blob = new Blob([data]);
         saveAs(blob, `eForm_${templateId}.csv`);
       });
@@ -204,15 +223,18 @@ export class EformsPageComponent implements OnInit, OnDestroy {
     this.modalExcel.show(templateDto);
   }
 
-
   openEformsImportModal() {
     this.modalEformsImport.show();
   }
 
   checkEformPermissions(templateId: number, permissionIndex: number) {
-    const foundEform = this.eformPermissionsSimpleModel.find(x => x.templateId === templateId);
+    const foundEform = this.eformPermissionsSimpleModel.find(
+      (x) => x.templateId === templateId
+    );
     if (foundEform) {
-      return foundEform.permissionsSimpleList.find(x => x === UserClaimsEnum[permissionIndex].toString());
+      return foundEform.permissionsSimpleList.find(
+        (x) => x === UserClaimsEnum[permissionIndex].toString()
+      );
     } else {
       return this.userClaims[UserClaimsEnum[permissionIndex].toString()];
     }

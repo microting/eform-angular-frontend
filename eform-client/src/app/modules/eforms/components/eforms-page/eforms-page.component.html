@@ -1,16 +1,24 @@
 <subheader-pn>
   <div class="p-3">
-    <button mdbBtn class="btn-accent text-black-50 btn-icon"
-            id="importEformsBtn"
-            mdbTooltip="{{ 'Import eforms' | translate }}" *ngIf="userRole === 'admin'"
-            (click)="openEformsImportModal()">
+    <button
+      mdbBtn
+      class="btn-accent text-black-50 btn-icon"
+      id="importEformsBtn"
+      mdbTooltip="{{ 'Import eforms' | translate }}"
+      *ngIf="userRole === 'admin'"
+      (click)="openEformsImportModal()"
+    >
       <fa-icon icon="file-import" [fixedWidth]="true" size="lg"></fa-icon>
     </button>
     <button
       mdbBtn
       class="btn-success btn-small-height"
-      mdbTooltip="{{ 'Create eForm' | translate }}" id="newEFormBtn" *ngIf="userClaims.eformsCreate"
-      (click)="openNewEformModal()">{{ 'New eForm' | translate }}
+      mdbTooltip="{{ 'Create eForm' | translate }}"
+      id="newEFormBtn"
+      *ngIf="userClaims.eformsCreate"
+      (click)="openNewEformModal()"
+    >
+      {{ 'New eForm' | translate }}
     </button>
   </div>
 </subheader-pn>
@@ -20,10 +28,15 @@
   <div class="row pl-1">
     <div class="col-md-2">
       <div class="md-form">
-        <input mdbInput type="text" [(ngModel)]="templateRequestModel.nameFilter"
-               (ngModelChange)="onLabelInputChanged($event)"
-               class="form-control input-sm" id="labelInput">
-        <label for="labelInput">{{'Label' | translate}}</label>
+        <input
+          mdbInput
+          type="text"
+          [ngModel]="eformsStateService.getNameFilter() | async"
+          (ngModelChange)="onLabelInputChanged($event)"
+          class="form-control input-sm"
+          id="labelInput"
+        />
+        <label for="labelInput">{{ 'Label' | translate }}</label>
       </div>
     </div>
     <div class="col-md-4 ng-select-wrapper" *ngIf="userClaims.eformsReadTags">
@@ -32,204 +45,337 @@
         dropdownPosition="'bottom'"
         [placeholder]="'Tags' | translate"
         [items]="availableTags"
-        [(ngModel)]="templateRequestModel.tagIds"
+        [ngModel]="eformsStateService.getTagIds() | async"
         (add)="saveTag($event)"
         (remove)="removeSavedTag($event)"
         [clearable]="false"
         [bindLabel]="'name'"
         [bindValue]="'id'"
         id="tagSelector"
-        [multiple]="true"></ng-select>
+        [multiple]="true"
+      ></ng-select>
     </div>
   </div>
   <div class="row p-1 table-responsive no-gutters">
-    <table mdbTable striped="true" hover="true" small="true" class="z-depth-1 text-center">
-      <thead>
-      <tr>
-        <th scope="col" class="table-header-sortable" id="idSort"
-            (click)="sortTable('id')">
-          <div class="d-flex align-items-center justify-content-center">
-            ID
-            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'id'">unfold_more</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'id'
-            && !localPageSettings.isSortDsc">expand_less</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'id'
-            && localPageSettings.isSortDsc">expand_more</i>
-          </div>
-        </th>
-        <th scope="col" class="table-header-sortable" id="createdAtSort"
-            (click)="sortTable('createdAt')">
-          <div class="d-flex align-items-center justify-content-center">
-            {{ 'Created at' | translate }}
-            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'createdAt'">unfold_more</i>
-            <i class="material-icons"
-               *ngIf="localPageSettings.sort == 'createdAt'
-               && !localPageSettings.isSortDsc">expand_less</i>
-            <i class="material-icons"
-               *ngIf="localPageSettings.sort == 'createdAt'
-               && localPageSettings.isSortDsc">expand_more</i>
-          </div>
-        </th>
-        <th scope="col" class="table-header-sortable" id="nameEFormSort"
-            (click)="sortTable('label')">
-          <div class="d-flex align-items-center justify-content-center">
-            {{ 'eForm Name' | translate }}
-            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'label'">unfold_more</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'label'
-            && !localPageSettings.isSortDsc">expand_less</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'label'
-            && localPageSettings.isSortDsc">expand_more</i>
-          </div>
-        </th>
-        <th id="tagsEForm">{{ 'Tags' | translate }}</th>
-        <th id="pairingEForm">{{ 'Pairing' | translate }}</th>
-        <th id="actionsEForm">{{ 'Actions' | translate }}</th>
-      </tr>
-      </thead>
+    <table
+      mdbTable
+      striped="true"
+      hover="true"
+      small="true"
+      class="z-depth-1 text-center"
+    >
+      <thead
+        table-headers
+        [tableHeaders]="tableHeaders"
+        [currentSortName]="eformsStateService.getSort() | async"
+        (sortChanged)="sortTable($event)"
+        [isSortDsc]="eformsStateService.getIsSortDsc() | async"
+      ></thead>
       <tbody id="mainPageEFormsTableBody">
-      <tr *ngFor="let templateDto of templateListModel.templates; index as i">
-        <td scope="row" class="eform-id" id="eform-id-{{i}}">{{templateDto.id}}</td>
-        <!--<td id="eform-created-at">{{templateDto.createdAt | date:'dd.MM.y HH:mm:ss'}}</td>-->
-        <td id="eform-created-at-{{i}}">
-          <date-formatter [date]="templateDto.createdAt" [Format]="'datetime'"></date-formatter>
-        </td>
-        <td id="eform-label-{{i}}">{{templateDto.label}}</td>
-        <td>
-          <div class="d-flex justify-content-center">
-            <div>
-              <a mdbBtn type="button" color="success" class="btn-icon btn-success"
-                 *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eformsUpdateTags)"
-                 id="eform-edit-btn-{{i}}"
-                 mdbTooltip="{{ 'Edit tags' | translate }}" (click)="openEditTagsModal(templateDto)">
-                <fa-icon icon="tags" size="lg" [fixedWidth]="true"></fa-icon>
-                <!--                {{ 'Edit tags' | translate }}-->
-              </a>
-              <br>
-              <ng-container *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eformsReadTags)">
-                <p class="paragraph-sm" id="eform-tag-{{i}}" class="badge badge-primary mb-1" *ngFor="let tag of templateDto.tags">
-                  <fa-icon icon="tag"></fa-icon>
-                  {{tag.value}}
-                </p>
-              </ng-container>
+        <tr *ngFor="let templateDto of templateListModel.templates; index as i">
+          <td class="eform-id" id="eform-id-{{ i }}">
+            {{ templateDto.id }}
+          </td>
+          <!--<td id="eform-created-at">{{templateDto.createdAt | date:'dd.MM.y HH:mm:ss'}}</td>-->
+          <td id="eform-created-at-{{ i }}">
+            <date-formatter
+              [date]="templateDto.createdAt"
+              [Format]="'datetime'"
+            ></date-formatter>
+          </td>
+          <td id="eform-label-{{ i }}">{{ templateDto.label }}</td>
+          <td>
+            <div class="d-flex justify-content-center">
+              <div>
+                <a
+                  mdbBtn
+                  type="button"
+                  color="success"
+                  class="btn-icon btn-success"
+                  *ngIf="
+                    checkEformPermissions(
+                      templateDto.id,
+                      userClaimsEnum.eformsUpdateTags
+                    )
+                  "
+                  id="eform-edit-btn-{{ i }}"
+                  mdbTooltip="{{ 'Edit tags' | translate }}"
+                  (click)="openEditTagsModal(templateDto)"
+                >
+                  <fa-icon icon="tags" size="lg" [fixedWidth]="true"></fa-icon>
+                  <!--                {{ 'Edit tags' | translate }}-->
+                </a>
+                <br />
+                <ng-container
+                  *ngIf="
+                    checkEformPermissions(
+                      templateDto.id,
+                      userClaimsEnum.eformsReadTags
+                    )
+                  "
+                >
+                  <p
+                    class="paragraph-sm badge badge-primary mb-1"
+                    id="eform-tag-{{ i }}"
+                    *ngFor="let tag of templateDto.tags"
+                  >
+                    <fa-icon icon="tag"></fa-icon>
+                    {{ tag.value }}
+                  </p>
+                </ng-container>
+              </div>
             </div>
-          </div>
-        </td>
-        <td>
-          <div class="d-flex justify-content-center">
-            <div>
-              <button *ngIf="templateDto.deployedSites.length > 0
-              && checkEformPermissions(templateDto.id, userClaimsEnum.eformsPairingUpdate)
-              && !templateDto.isLocked"
-                      id="eform-pairing-btn-{{i}}"
-                      mdbBtn type="button" class="btn-success btn-icon" (click)="openPairingModal(templateDto)"
-                      mdbTooltip="{{ 'Click to edit eForm pairing with user(s)' | translate }}">
-                <!--                {{ 'Edit pairing' | translate }}-->
-                <fa-icon icon="link" size="lg" [fixedWidth]="true"></fa-icon>
-              </button>
-              <button *ngIf="templateDto.deployedSites.length == 0
-              && checkEformPermissions(templateDto.id, userClaimsEnum.eformsPairingUpdate)
-              && !templateDto.isLocked"
-                      id="eform-add-btn-{{i}}"
-                      mdbBtn type="button" class="btn-accent text-black-50 btn-icon mb-2 btn" (click)="openPairingModal(templateDto)"
-                      mdbTooltip="{{ 'Click to pair eForm with user(s)' | translate }}">
-                <!--                {{ 'Pair eForm' | translate }}-->
-                <fa-icon icon="link" size="lg" [fixedWidth]="true"></fa-icon>
-              </button>
-              <!--              <ng-container *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eFormsPairingRead)">-->
-              <!--                <p class="paragraph-sm" id="eform-paired-username" *ngFor="let deployedSite of templateDto.deployedSites">-->
-              <!--                  {{deployedSite.siteName}}-->
-              <!--                </p>-->
-              <!--              </ng-container>-->
+          </td>
+          <td>
+            <div class="d-flex justify-content-center">
+              <div>
+                <button
+                  *ngIf="
+                    templateDto.deployedSites.length > 0 &&
+                    checkEformPermissions(
+                      templateDto.id,
+                      userClaimsEnum.eformsPairingUpdate
+                    ) &&
+                    !templateDto.isLocked
+                  "
+                  id="eform-pairing-btn-{{ i }}"
+                  mdbBtn
+                  type="button"
+                  class="btn-success btn-icon"
+                  (click)="openPairingModal(templateDto)"
+                  mdbTooltip="{{
+                    'Click to edit eForm pairing with user(s)' | translate
+                  }}"
+                >
+                  <!--                {{ 'Edit pairing' | translate }}-->
+                  <fa-icon icon="link" size="lg" [fixedWidth]="true"></fa-icon>
+                </button>
+                <button
+                  *ngIf="
+                    templateDto.deployedSites.length == 0 &&
+                    checkEformPermissions(
+                      templateDto.id,
+                      userClaimsEnum.eformsPairingUpdate
+                    ) &&
+                    !templateDto.isLocked
+                  "
+                  id="eform-add-btn-{{ i }}"
+                  mdbBtn
+                  type="button"
+                  class="btn-accent text-black-50 btn-icon mb-2 btn"
+                  (click)="openPairingModal(templateDto)"
+                  mdbTooltip="{{
+                    'Click to pair eForm with user(s)' | translate
+                  }}"
+                >
+                  <!--                {{ 'Pair eForm' | translate }}-->
+                  <fa-icon icon="link" size="lg" [fixedWidth]="true"></fa-icon>
+                </button>
+                <!--              <ng-container *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eFormsPairingRead)">-->
+                <!--                <p class="paragraph-sm" id="eform-paired-username" *ngFor="let deployedSite of templateDto.deployedSites">-->
+                <!--                  {{deployedSite.siteName}}-->
+                <!--                </p>-->
+                <!--              </ng-container>-->
+              </div>
             </div>
-          </div>
-        </td>
-        <td>
-          <div class="d-flex flex-row justify-content-center">
-            <button mdbBtn class="btn-success btn-icon mb-2" *ngIf="templateDto.hasCases
-            && checkEformPermissions(templateDto.id, userClaimsEnum.casesRead)"
-                    id="eform-cases-btn-{{i}}"
-                    [routerLink]="['/cases', templateDto.id]"
-                    mdbTooltip="{{ 'Show cases' | translate }}">
-              <fa-icon icon="briefcase" [fixedWidth]="true" size="lg"></fa-icon>
-            </button>
-            <button mdbBtn class="btn-success btn-icon mb-2" id="edit-columnts-btn-{{i}}"
-                    *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eformsUpdateColumns)"
-                    (click)="openEditColumnsModal(templateDto)"
-                    mdbTooltip="{{ 'Edit columns' | translate }}">
-              <fa-icon icon="table" [fixedWidth]="true" size="lg"></fa-icon>
-            </button>
-            <button mdbBtn class="btn-danger btn-icon mb-2" id="delete-eform-btn-{{i}}"
-                    (click)="openEformDeleteModal(templateDto)"
-                    *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eformsDelete)
-                    && !templateDto.isLocked"
-                    mdbTooltip="{{ 'Delete eForm' | translate }}">
-              <fa-icon icon="trash-alt" [fixedWidth]="true" size="lg"></fa-icon>
-            </button>
-          </div>
-          <div class="d-flex flex-row justify-content-center">
-            <button mdbBtn class="btn-accent text-black-50 btn-icon mb-2"
-                    *ngIf="templateDto.hasCases
-                    && checkEformPermissions(templateDto.id, userClaimsEnum.eformsGetCsv)"
-                    id="download-csv-btn-{{i}}"
-                    (click)="downloadItem('CSV', templateDto.id)"
-                    mdbTooltip="{{ 'Download' | translate }} CSV">
-              <fa-icon icon="file-csv" [fixedWidth]="true" size="lg"></fa-icon>
-            </button>
-            <button mdbBtn class="btn-accent text-black-50 btn-icon mb-2"
-                    *ngIf="templateDto.hasCases
-                    && checkEformPermissions(templateDto.id, userClaimsEnum.eformsDownloadXml)"
-                    id="download-xml-btn-{{i}}"
-                    (click)="downloadItem('XML', templateDto.id)"
-                    mdbTooltip="{{ 'Download' | translate }} XML">
-              <fa-icon icon="file-code" [fixedWidth]="true" size="lg"></fa-icon>
-            </button>
-            <button mdbBtn class="btn-accent text-black-50 btn-icon mb-2"
-                    *ngIf="templateDto.hasCases
-                    && checkEformPermissions(templateDto.id, userClaimsEnum.casesRead)"
-                    id="docx-report-btn-{{i}}"
-                    [routerLink]="['/docx-report', templateDto.id]"
-                    mdbTooltip="{{ 'Word Report' | translate }}">
-              <fa-icon icon="file-word" [fixedWidth]="true" size="lg"></fa-icon>
-            </button>
-            <button mdbBtn class="btn-accent text-black-50 btn-icon mb-2"
-                    *ngIf="templateDto.excelExportEnabled && templateDto.hasCases
-                    && checkEformPermissions(templateDto.id, userClaimsEnum.eformExportEformExcel)"
-                    id="download-excel-btn-{{i}}"
-                    (click)="openDownloadExcelModal(templateDto)"
-                    mdbTooltip="{{ 'Download' | translate }} Excel">
-              <fa-icon icon="file-excel" [fixedWidth]="true" size="lg"></fa-icon>
-
-            </button>
-            <button mdbBtn class="btn-accent text-black-50 btn-icon mb-2" id="upload-zip-btn"
-                    (click)="uploadZipFile(templateDto)"
-                    *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eformsUploadZip)"
-                    mdbTooltip="{{ 'Upload ZIP archive' | translate }}">
-              <fa-icon icon="file-upload" [fixedWidth]="true" size="lg"></fa-icon>
-            </button>
-            <!--            <button mdbBtn class="btn-accent text-black-50 btn-icon mb-2" id="eform-report-button"-->
-            <!--                    *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eformsReadJasperReport)"-->
-            <!--                    [routerLink]="['./report', templateDto.id]"-->
-            <!--                    mdbTooltip="{{ 'Jasper Report' | translate }}">-->
-            <!--              <fa-icon icon="receipt" [fixedWidth]="true" size="lg"></fa-icon>-->
-            <!--            </button>-->
-          </div>
-        </td>
-      </tr>
+          </td>
+          <td>
+            <div class="d-flex flex-row justify-content-center">
+              <button
+                mdbBtn
+                class="btn-success btn-icon mb-2"
+                *ngIf="
+                  templateDto.hasCases &&
+                  checkEformPermissions(
+                    templateDto.id,
+                    userClaimsEnum.casesRead
+                  )
+                "
+                id="eform-cases-btn-{{ i }}"
+                [routerLink]="['/cases', templateDto.id]"
+                mdbTooltip="{{ 'Show cases' | translate }}"
+              >
+                <fa-icon
+                  icon="briefcase"
+                  [fixedWidth]="true"
+                  size="lg"
+                ></fa-icon>
+              </button>
+              <button
+                mdbBtn
+                class="btn-success btn-icon mb-2"
+                id="edit-columnts-btn-{{ i }}"
+                *ngIf="
+                  checkEformPermissions(
+                    templateDto.id,
+                    userClaimsEnum.eformsUpdateColumns
+                  )
+                "
+                (click)="openEditColumnsModal(templateDto)"
+                mdbTooltip="{{ 'Edit columns' | translate }}"
+              >
+                <fa-icon icon="table" [fixedWidth]="true" size="lg"></fa-icon>
+              </button>
+              <button
+                mdbBtn
+                class="btn-danger btn-icon mb-2"
+                id="delete-eform-btn-{{ i }}"
+                (click)="openEformDeleteModal(templateDto)"
+                *ngIf="
+                  checkEformPermissions(
+                    templateDto.id,
+                    userClaimsEnum.eformsDelete
+                  ) && !templateDto.isLocked
+                "
+                mdbTooltip="{{ 'Delete eForm' | translate }}"
+              >
+                <fa-icon
+                  icon="trash-alt"
+                  [fixedWidth]="true"
+                  size="lg"
+                ></fa-icon>
+              </button>
+            </div>
+            <div class="d-flex flex-row justify-content-center">
+              <button
+                mdbBtn
+                class="btn-accent text-black-50 btn-icon mb-2"
+                *ngIf="
+                  templateDto.hasCases &&
+                  checkEformPermissions(
+                    templateDto.id,
+                    userClaimsEnum.eformsGetCsv
+                  )
+                "
+                id="download-csv-btn-{{ i }}"
+                (click)="downloadItem('CSV', templateDto.id)"
+                mdbTooltip="{{ 'Download' | translate }} CSV"
+              >
+                <fa-icon
+                  icon="file-csv"
+                  [fixedWidth]="true"
+                  size="lg"
+                ></fa-icon>
+              </button>
+              <button
+                mdbBtn
+                class="btn-accent text-black-50 btn-icon mb-2"
+                *ngIf="
+                  templateDto.hasCases &&
+                  checkEformPermissions(
+                    templateDto.id,
+                    userClaimsEnum.eformsDownloadXml
+                  )
+                "
+                id="download-xml-btn-{{ i }}"
+                (click)="downloadItem('XML', templateDto.id)"
+                mdbTooltip="{{ 'Download' | translate }} XML"
+              >
+                <fa-icon
+                  icon="file-code"
+                  [fixedWidth]="true"
+                  size="lg"
+                ></fa-icon>
+              </button>
+              <button
+                mdbBtn
+                class="btn-accent text-black-50 btn-icon mb-2"
+                *ngIf="
+                  templateDto.hasCases &&
+                  checkEformPermissions(
+                    templateDto.id,
+                    userClaimsEnum.casesRead
+                  )
+                "
+                id="docx-report-btn-{{ i }}"
+                [routerLink]="['/docx-report', templateDto.id]"
+                mdbTooltip="{{ 'Word Report' | translate }}"
+              >
+                <fa-icon
+                  icon="file-word"
+                  [fixedWidth]="true"
+                  size="lg"
+                ></fa-icon>
+              </button>
+              <button
+                mdbBtn
+                class="btn-accent text-black-50 btn-icon mb-2"
+                *ngIf="
+                  templateDto.excelExportEnabled &&
+                  templateDto.hasCases &&
+                  checkEformPermissions(
+                    templateDto.id,
+                    userClaimsEnum.eformExportEformExcel
+                  )
+                "
+                id="download-excel-btn-{{ i }}"
+                (click)="openDownloadExcelModal(templateDto)"
+                mdbTooltip="{{ 'Download' | translate }} Excel"
+              >
+                <fa-icon
+                  icon="file-excel"
+                  [fixedWidth]="true"
+                  size="lg"
+                ></fa-icon>
+              </button>
+              <button
+                mdbBtn
+                class="btn-accent text-black-50 btn-icon mb-2"
+                id="upload-zip-btn"
+                (click)="uploadZipFile(templateDto)"
+                *ngIf="
+                  checkEformPermissions(
+                    templateDto.id,
+                    userClaimsEnum.eformsUploadZip
+                  )
+                "
+                mdbTooltip="{{ 'Upload ZIP archive' | translate }}"
+              >
+                <fa-icon
+                  icon="file-upload"
+                  [fixedWidth]="true"
+                  size="lg"
+                ></fa-icon>
+              </button>
+              <!--            <button mdbBtn class="btn-accent text-black-50 btn-icon mb-2" id="eform-report-button"-->
+              <!--                    *ngIf="checkEformPermissions(templateDto.id, userClaimsEnum.eformsReadJasperReport)"-->
+              <!--                    [routerLink]="['./report', templateDto.id]"-->
+              <!--                    mdbTooltip="{{ 'Jasper Report' | translate }}">-->
+              <!--              <fa-icon icon="receipt" [fixedWidth]="true" size="lg"></fa-icon>-->
+              <!--            </button>-->
+            </div>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
 
-
   <!--pagination(if required)-->
 </div>
 
-<app-eform-create-modal [availableTags]="availableTags" (onEformCreated)="loadAllTags()"
-                        #modalNewEform></app-eform-create-modal>
+<app-eform-create-modal
+  [availableTags]="availableTags"
+  (onEformCreated)="loadAllTags()"
+  #modalNewEform
+></app-eform-create-modal>
 <app-eform-column-modal #modalCasesColumns></app-eform-column-modal>
-<app-eform-edit-paring-modal (deploymentFinished)="loadAllTemplates()" #modalParing></app-eform-edit-paring-modal>
-<app-eform-edit-tags-modal [availableTags]="availableTags" (onEFormTagsUpdated)="loadAllTemplates()"
-                           (onTagAdded)="loadAllTags()" #modalEditTags></app-eform-edit-tags-modal>
-<app-eform-remove-eform-modal (onEFormDeleted)="loadAllTemplates()" #modalRemoveEform></app-eform-remove-eform-modal>
+<app-eform-edit-paring-modal
+  (deploymentFinished)="loadAllTemplates()"
+  #modalParing
+></app-eform-edit-paring-modal>
+<app-eform-edit-tags-modal
+  [availableTags]="availableTags"
+  (onEFormTagsUpdated)="loadAllTemplates()"
+  (onTagAdded)="loadAllTags()"
+  #modalEditTags
+></app-eform-edit-tags-modal>
+<app-eform-remove-eform-modal
+  (onEFormDeleted)="loadAllTemplates()"
+  #modalRemoveEform
+></app-eform-remove-eform-modal>
 <app-eform-upload-zip-modal #modalUploadZip></app-eform-upload-zip-modal>
 <app-eform-excel-report-modal #modalExcel></app-eform-excel-report-modal>
-<app-eforms-bulk-import-modal (importFinished)="loadAllTemplates()" #modalEformsImport></app-eforms-bulk-import-modal>
+<app-eforms-bulk-import-modal
+  (importFinished)="loadAllTemplates()"
+  #modalEformsImport
+></app-eforms-bulk-import-modal>

@@ -33,6 +33,8 @@ import {
   OwlNativeDateTimeModule,
 } from 'ng-pick-datetime-ex';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
+import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -66,6 +68,8 @@ import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-sha
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     EformSharedModule,
+    AkitaNgDevtools,
+    environment.production ? [] : AkitaNgDevtools.forRoot(),
   ],
   schemas: [NO_ERRORS_SCHEMA],
   providers: [providers],
