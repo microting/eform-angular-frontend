@@ -1,20 +1,15 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { ApplicationPages, UserClaimsEnum } from 'src/app/common/const';
+import { UserClaimsEnum } from 'src/app/common/const';
 import {
   CommonDictionaryModel,
   TableHeaderElementModel,
 } from 'src/app/common/models/common';
 import { TemplateDto } from 'src/app/common/models/dto';
-import {
-  SavedTagModel,
-  TemplateListModel,
-  TemplateRequestModel,
-} from 'src/app/common/models/eforms';
+import { SavedTagModel, TemplateListModel } from 'src/app/common/models/eforms';
 import { EformPermissionsSimpleModel } from 'src/app/common/models/security/group-permissions/eform';
-import { PageSettingsModel } from 'src/app/common/models/settings';
-import { AuthService, UserSettingsService } from 'src/app/common/services/auth';
+import { AuthService } from 'src/app/common/services/auth';
 import { EFormService, EformTagService } from 'src/app/common/services/eform';
 import { SecurityGroupEformsPermissionsService } from 'src/app/common/services/security';
 import { saveAs } from 'file-saver';
@@ -142,9 +137,11 @@ export class EformsPageComponent implements OnInit, OnDestroy {
     this.eFormTagService.getSavedTags().subscribe(
       (data) => {
         if (data && data.success) {
-          this.eformsStateService.updateTagIds(
-            data.model.tagList.map((x) => x.tagId)
-          );
+          if (data.model.tagList.length > 0) {
+            this.eformsStateService.updateTagIds(
+              data.model.tagList.map((x) => x.tagId)
+            );
+          }
           this.loadAllTemplates();
         }
       },

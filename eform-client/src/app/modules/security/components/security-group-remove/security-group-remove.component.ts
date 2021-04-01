@@ -1,34 +1,37 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {SecurityGroupModel} from 'src/app/common/models/security';
-import {SecurityGroupsService} from 'src/app/common/services';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { SecurityGroupModel } from 'src/app/common/models/security';
 
 @Component({
   selector: 'app-security-group-remove',
   templateUrl: './security-group-remove.component.html',
-  styleUrls: ['./security-group-remove.component.scss']
+  styleUrls: ['./security-group-remove.component.scss'],
 })
 export class SecurityGroupRemoveComponent implements OnInit {
-  @Output() onSecurityGroupRemoved: EventEmitter<void> = new EventEmitter<void>();
+  @Output()
+  onSecurityGroupRemoved: EventEmitter<number> = new EventEmitter<number>();
   @ViewChild('frame', { static: true }) frame;
 
-  selectedSecurityGroup: SecurityGroupModel = new SecurityGroupModel;
-  constructor(private securityGroupService: SecurityGroupsService) { }
+  selectedSecurityGroup: SecurityGroupModel = new SecurityGroupModel();
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   show(securityGroup: any) {
     this.selectedSecurityGroup = securityGroup;
     this.frame.show();
   }
 
-  deleteSingle() {
-    this.securityGroupService.deleteSecurityGroup(this.selectedSecurityGroup.id).subscribe(data => {
-      if (data && data.success) {
-        this.frame.hide();
-        this.onSecurityGroupRemoved.emit();
-      }
-    });
+  hide() {
+    this.frame.hide();
   }
 
+  deleteSingle() {
+    this.onSecurityGroupRemoved.emit(this.selectedSecurityGroup.id);
+  }
 }

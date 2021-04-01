@@ -21,26 +21,29 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using eFormAPI.Web.Infrastructure.Models;
-using eFormAPI.Web.Infrastructure.Models.SelectableList;
-using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
-using EntityGroupList = eFormAPI.Web.Infrastructure.Models.EntityGroupList;
 
 namespace eFormAPI.Web.Abstractions.Advanced
 {
+    using Infrastructure.Models;
+    using Infrastructure.Models.SelectableList;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
     public interface IEntitySelectService
     {
-        Task<OperationDataResult<EntityGroupList>> Index(
+        Task<OperationDataResult<Paged<EntityGroup>>> Index(
             AdvEntitySelectableGroupListRequestModel requestModel);
 
         Task<OperationResult> Create(AdvEntitySelectableGroupEditModel editModel);
+
         Task<OperationResult> Update(AdvEntitySelectableGroupEditModel editModel);
+
         Task<OperationDataResult<EntityGroup>> Read(string entityGroupUid);
+
         Task<OperationDataResult<List<CommonDictionaryTextModel>>> GetEntityGroupDictionary(string entityGroupUid);
-        Task<OperationResult> SendSearchableGroup(string entityGroupUid);
+
         Task<OperationResult> Delete(string entityGroupUid);
     }
 }

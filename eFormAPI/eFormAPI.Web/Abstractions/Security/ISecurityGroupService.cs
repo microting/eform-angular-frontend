@@ -33,7 +33,7 @@ namespace eFormAPI.Web.Abstractions.Security
     {
         Task<OperationResult> CreateSecurityGroup(SecurityGroupCreateModel requestModel);
         Task<OperationDataResult<SecurityGroupModel>> GetSecurityGroup(int id);
-        Task<OperationDataResult<SecurityGroupsModel>> GetSecurityGroups(SecurityGroupRequestModel requestModel);
+        Task<OperationDataResult<Paged<SecurityGroupModel>>> GetSecurityGroups(SecurityGroupRequestModel requestModel);
         Task<OperationDataResult<List<CommonDictionaryModel>>> GetSecurityGroupsDictionary();
         Task<OperationResult> UpdateSecurityGroup(SecurityGroupUpdateModel requestModel);
         Task<OperationResult> UpdateSecurityGroupSettings(SecurityGroupSettingsUpdateModel requestModel);

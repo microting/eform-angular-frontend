@@ -4,7 +4,7 @@ export class ApplicationPageModel {
 
   constructor(data?: any) {
     if (data) {
-      this.name = data.name;
+      this.name = data.groupName;
       this.settings = data.settings;
     }
   }
@@ -14,7 +14,7 @@ export class PageSettingsModel {
   pageSize: number;
   sort: string;
   isSortDsc: boolean;
-  additional: Array<{key: string, value: string}> = [];
+  additional: Array<{ key: string; value: string }> = [];
 
   constructor(data?: any) {
     if (data) {

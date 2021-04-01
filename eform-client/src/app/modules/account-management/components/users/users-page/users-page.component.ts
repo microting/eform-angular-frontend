@@ -1,14 +1,22 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {ApplicationPages} from 'src/app/common/const';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ApplicationPages } from 'src/app/common/const';
 
 import {
-  SecurityGroupsModel,
   UserInfoModel,
   UserInfoModelList,
   PaginationModel,
-  SecurityGroupsRequestModel, ApplicationPageModel, PageSettingsModel
+  SecurityGroupsRequestModel,
+  PageSettingsModel,
+  Paged,
+  SecurityGroupModel,
 } from 'src/app/common/models';
-import {AuthService, SecurityGroupsService, AdminService, UserSettingsService, GoogleAuthService} from 'src/app/common/services';
+import {
+  AuthService,
+  SecurityGroupsService,
+  AdminService,
+  UserSettingsService,
+  GoogleAuthService,
+} from 'src/app/common/services';
 
 @Component({
   selector: 'app-users-page',
@@ -21,15 +29,19 @@ export class UsersPageComponent implements OnInit {
 
   localPageSettings: PageSettingsModel = new PageSettingsModel();
   paginationModel: PaginationModel = new PaginationModel(1, 5, 0);
-  userInfoModelList: UserInfoModelList = new UserInfoModelList;
-  selectedUser: UserInfoModel = new UserInfoModel;
-  securityGroups: SecurityGroupsModel = new SecurityGroupsModel();
+  userInfoModelList: UserInfoModelList = new UserInfoModelList();
+  selectedUser: UserInfoModel = new UserInfoModel();
+  securityGroups: Paged<SecurityGroupModel> = new Paged<SecurityGroupModel>();
 
   spinnerStatus: boolean;
   isChecked = true;
 
-  get userClaims() { return this.authService.userClaims; }
-  get userRole() { return this.authService.currentRole; }
+  get userClaims() {
+    return this.authService.userClaims;
+  }
+  get userRole() {
+    return this.authService.currentRole;
+  }
 
   constructor(
     private adminService: AdminService,
@@ -37,8 +49,7 @@ export class UsersPageComponent implements OnInit {
     private googleAuthService: GoogleAuthService,
     private securityGroupsService: SecurityGroupsService,
     public userSettingsService: UserSettingsService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.getLocalPageSettings();
@@ -47,22 +58,29 @@ export class UsersPageComponent implements OnInit {
   }
 
   getLocalPageSettings() {
-    this.localPageSettings = this.userSettingsService.getLocalPageSettings
-    ('pagesSettings', ApplicationPages[ApplicationPages.AccountManagementUsers])
-      .settings;
+    this.localPageSettings = this.userSettingsService.getLocalPageSettings(
+      'pagesSettings',
+      ApplicationPages[ApplicationPages.AccountManagementUsers]
+    ).settings;
     this.getUserInfoList();
   }
 
   updateLocalPageSettings(localStorageItemName: string) {
-    this.userSettingsService.updateLocalPageSettings
-    (localStorageItemName, this.localPageSettings, ApplicationPages[ApplicationPages.AccountManagementUsers]);
+    this.userSettingsService.updateLocalPageSettings(
+      localStorageItemName,
+      this.localPageSettings,
+      ApplicationPages[ApplicationPages.AccountManagementUsers]
+    );
     this.getLocalPageSettings();
   }
 
   getTwoFactorInfo() {
-    this.googleAuthService.twoFactorAuthInfo().subscribe((data) => {
-      this.isChecked = data.model;
-    }, () => this.spinnerStatus = false);
+    this.googleAuthService.twoFactorAuthInfo().subscribe(
+      (data) => {
+        this.isChecked = data.model;
+      },
+      () => (this.spinnerStatus = false)
+    );
   }
 
   getUserInfoList() {
@@ -77,14 +95,14 @@ export class UsersPageComponent implements OnInit {
   getSecurityGroups() {
     const securityGroupRequestModel = new SecurityGroupsRequestModel();
     securityGroupRequestModel.pageSize = 10000;
-    this.securityGroupsService.getAllSecurityGroups(securityGroupRequestModel).subscribe((data) => {
-      if (data && data.success) {
-        this.securityGroups = data.model;
-      }
-    });
+    this.securityGroupsService
+      .getAllSecurityGroups(securityGroupRequestModel)
+      .subscribe((data) => {
+        if (data && data.success) {
+          this.securityGroups = data.model;
+        }
+      });
   }
-
-
 
   openEditModal(userId: number) {
     this.userEditModal.show(userId);
@@ -105,7 +123,9 @@ export class UsersPageComponent implements OnInit {
       if (e === 0) {
         this.paginationModel.pageIndex = 0;
       } else {
-        this.paginationModel.pageIndex = Math.floor(e / this.paginationModel.pageSize);
+        this.paginationModel.pageIndex = Math.floor(
+          e / this.paginationModel.pageSize
+        );
       }
       this.getUserInfoList();
     }
@@ -113,13 +133,19 @@ export class UsersPageComponent implements OnInit {
 
   checked(e: any) {
     if (e.target && e.target.checked) {
-      this.adminService.enableTwoFactorAuth().subscribe(() => {
-        this.isChecked = true;
-      }, () => this.spinnerStatus = false);
+      this.adminService.enableTwoFactorAuth().subscribe(
+        () => {
+          this.isChecked = true;
+        },
+        () => (this.spinnerStatus = false)
+      );
     } else if (e.target && !e.target.checked) {
-      this.adminService.disableTwoFactorAuth().subscribe(() => {
-        this.isChecked = false;
-      }, () => this.spinnerStatus = false);
+      this.adminService.disableTwoFactorAuth().subscribe(
+        () => {
+          this.isChecked = false;
+        },
+        () => (this.spinnerStatus = false)
+      );
     } else {
       return;
     }

@@ -44,10 +44,10 @@ namespace eFormAPI.Web.Controllers.Security
             _securityGroupService = securityGroupService;
         }
 
-        [HttpGet]
-        [Route("api/security/groups")]
+        [HttpPost]
+        [Route("api/security/groups/index")]
         [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Read)]
-        public async Task<OperationDataResult<SecurityGroupsModel>> GetEntityGroups(SecurityGroupRequestModel requestModel)
+        public async Task<OperationDataResult<Paged<SecurityGroupModel>>> GetEntityGroups([FromBody] SecurityGroupRequestModel requestModel)
         {
             return await _securityGroupService.GetSecurityGroups(requestModel);
         }

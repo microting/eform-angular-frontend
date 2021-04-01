@@ -7,12 +7,12 @@ import {
   CommonDictionaryModel,
   OperationDataResult,
   OperationResult,
+  Paged,
   SecurityGroupSettingsUpdateModel,
 } from 'src/app/common/models';
 import {
   SecurityGroupModel,
   SecurityGroupsRequestModel,
-  SecurityGroupsModel,
   SecurityGroupUpdateModel,
   SecurityGroupCreateModel,
 } from 'src/app/common/models/security';
@@ -20,6 +20,7 @@ import { BaseService } from 'src/app/common/services/base.service';
 
 const SecurityGroupMethods = {
   SecurityGroups: '/api/security/groups',
+  SecurityGroupsIndex: '/api/security/groups/index',
   SecurityGroupsDictionary: '/api/security/groups/dictionary',
   SecurityGroupSettings: '/api/security/groups/settings',
 };
@@ -36,8 +37,11 @@ export class SecurityGroupsService extends BaseService {
 
   getAllSecurityGroups(
     model: SecurityGroupsRequestModel
-  ): Observable<OperationDataResult<SecurityGroupsModel>> {
-    return this.get<any>(SecurityGroupMethods.SecurityGroups, model);
+  ): Observable<OperationDataResult<Paged<SecurityGroupModel>>> {
+    return this.post<Paged<SecurityGroupModel>>(
+      SecurityGroupMethods.SecurityGroupsIndex,
+      model
+    );
   }
 
   getSecurityGroupsDictionary(): Observable<

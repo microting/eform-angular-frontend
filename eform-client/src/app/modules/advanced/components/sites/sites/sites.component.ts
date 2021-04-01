@@ -1,19 +1,26 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
-import {SiteNameDto} from 'src/app/common/models/dto';
-import {SitesService, SiteTagsService} from 'src/app/common/services/advanced';
-import {AuthService} from 'src/app/common/services/auth';
-import {SiteTagsComponent} from '../..';
-import {CommonDictionaryModel} from '../../../../../common/models/common';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { SiteNameDto } from 'src/app/common/models/dto';
+import {
+  SitesService,
+  SiteTagsService,
+} from 'src/app/common/services/advanced';
+import { AuthService } from 'src/app/common/services/auth';
+import { SiteTagsComponent } from '../..';
+import {
+  CommonDictionaryModel,
+  TableHeaderElementModel,
+} from '../../../../../common/models/common';
 
 @Component({
   selector: 'app-sites',
-  templateUrl: './sites.component.html'
+  templateUrl: './sites.component.html',
 })
 export class SitesComponent implements OnInit {
   @ViewChild('modalSiteEdit', { static: true }) modalSiteEdit;
   @ViewChild('modalSiteDelete', { static: true }) modalSiteDelete;
-  @ViewChild('modalSiteTags', { static: true }) modalSiteTags: SiteTagsComponent;
+  @ViewChild('modalSiteTags', { static: true })
+  modalSiteTags: SiteTagsComponent;
   sitesDto: Array<SiteNameDto> = [];
   selectedSiteDto: SiteNameDto = new SiteNameDto();
   availableTags: Array<CommonDictionaryModel> = [];
@@ -22,10 +29,22 @@ export class SitesComponent implements OnInit {
     return this.authService.userClaims;
   }
 
-  constructor(private sitesService: SitesService, private router: Router,
-              private authService: AuthService, private siteTagsService: SiteTagsService) {
+  tableHeaders: TableHeaderElementModel[] = [
+    { name: 'Microting UID', elementId: '', sortable: false },
+    { name: 'Name', elementId: '', sortable: false },
+    { name: 'Units', elementId: '', sortable: false },
+    { name: 'Tags', elementId: '', sortable: false },
+    this.userClaims.sitesDelete || this.userClaims.sitesUpdate
+      ? { name: 'Actions', elementId: '', sortable: false }
+      : null,
+  ];
 
-  }
+  constructor(
+    private sitesService: SitesService,
+    private router: Router,
+    private authService: AuthService,
+    private siteTagsService: SiteTagsService
+  ) {}
 
   ngOnInit() {
     this.loadAllSites();
@@ -43,7 +62,7 @@ export class SitesComponent implements OnInit {
   }
 
   loadAllSites() {
-    this.sitesService.getAllSites().subscribe(operation => {
+    this.sitesService.getAllSites().subscribe((operation) => {
       if (operation && operation.success) {
         this.sitesDto = operation.model;
       }
@@ -56,11 +75,13 @@ export class SitesComponent implements OnInit {
   }
 
   loadAllTags() {
-    this.siteTagsService.getAvailableTags().subscribe((data) => {
-      if (data && data.success) {
-        this.availableTags = data.model;
-      }
-    }, (error) => {
-    });
+    this.siteTagsService.getAvailableTags().subscribe(
+      (data) => {
+        if (data && data.success) {
+          this.availableTags = data.model;
+        }
+      },
+      (error) => {}
+    );
   }
 }

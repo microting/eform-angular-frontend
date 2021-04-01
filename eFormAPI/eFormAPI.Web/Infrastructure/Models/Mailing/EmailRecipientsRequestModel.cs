@@ -25,15 +25,14 @@ SOFTWARE.
 namespace eFormAPI.Web.Infrastructure.Models.Mailing
 {
     using System.Collections.Generic;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
-    public class EmailRecipientsRequestModel
+    public class EmailRecipientsRequestModel : PaginationModel
     {
         public string Sort { get; set; }
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
+        
         public bool IsSortDsc { get; set; }
-        public int Offset { get; set; }
-
+        
         public List<int> TagIds { get; set; }
             = new List<int>();
     }

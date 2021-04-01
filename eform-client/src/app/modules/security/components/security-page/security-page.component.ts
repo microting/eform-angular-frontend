@@ -1,16 +1,14 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ApplicationPages } from 'src/app/common/const';
 import {
-  SecurityGroupsRequestModel,
-  SecurityGroupsModel,
-  PageSettingsModel, SecurityGroupModel, SecurityGroupSettingsUpdateModel,
+  SecurityGroupModel,
+  SecurityGroupSettingsUpdateModel,
+  TableHeaderElementModel,
+  Paged,
 } from 'src/app/common/models';
-import {
-  SecurityGroupsService,
-  UserSettingsService,
-} from 'src/app/common/services';
+import { SecurityGroupsService } from 'src/app/common/services';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { Subscription } from 'rxjs';
+import { SecurityStateService } from 'src/app/modules/security/components/state/security-state.service';
 
 @AutoUnsubscribe()
 @Component({
@@ -21,42 +19,29 @@ import { Subscription } from 'rxjs';
 export class SecurityPageComponent implements OnInit, OnDestroy {
   @ViewChild('modalGroupDelete', { static: true }) modalGroupDelete;
   @ViewChild('modalGroupSettings', { static: true }) modalGroupSettings;
-  securityGroups: SecurityGroupsModel = new SecurityGroupsModel();
-  securityGroupsRequestModel: SecurityGroupsRequestModel = new SecurityGroupsRequestModel();
-  localPageSettings: PageSettingsModel = new PageSettingsModel();
+  securityGroups: Paged<SecurityGroupModel> = new Paged<SecurityGroupModel>();
   getSecurityGroups$: Subscription;
   updateSecurityGroupSettings$: Subscription;
 
+  tableHeaders: TableHeaderElementModel[] = [
+    { name: 'Id', elementId: '', sortable: true },
+    { name: 'GroupName', elementId: '', sortable: true },
+    { name: 'UserAmount', elementId: '', sortable: true },
+    { name: 'Actions', elementId: '', sortable: false },
+  ];
+
   constructor(
     private securityGroupsService: SecurityGroupsService,
-    public userSettingsService: UserSettingsService
+    public securityStateService: SecurityStateService
   ) {}
 
   ngOnInit() {
-    this.getLocalPageSettings();
-  }
-
-  getLocalPageSettings() {
-    this.localPageSettings = this.userSettingsService.getLocalPageSettings(
-      'pagesSettings',
-      ApplicationPages[ApplicationPages.Security]
-    ).settings;
     this.getSecurityGroups();
   }
 
-  updateLocalPageSettings(localStorageItemName: string) {
-    this.userSettingsService.updateLocalPageSettings(
-      localStorageItemName,
-      this.localPageSettings,
-      ApplicationPages[ApplicationPages.Security]
-    );
-    this.getLocalPageSettings();
-  }
-
   getSecurityGroups() {
-    this.securityGroupsRequestModel.pageSize = this.localPageSettings.pageSize;
-    this.getSecurityGroups$ = this.securityGroupsService
-      .getAllSecurityGroups(this.securityGroupsRequestModel)
+    this.getSecurityGroups$ = this.securityStateService
+      .getAllSecurityGroups()
       .subscribe((data) => {
         if (data && data.success) {
           this.securityGroups = data.model;
@@ -68,25 +53,18 @@ export class SecurityPageComponent implements OnInit, OnDestroy {
     this.modalGroupDelete.show(securityGroup);
   }
 
-  changePage(e: any) {
-    if (e || e === 0) {
-      this.securityGroupsRequestModel.offset = e;
-      if (e === 0) {
-        this.securityGroupsRequestModel.pageIndex = 0;
-      } else {
-        this.securityGroupsRequestModel.pageIndex = Math.floor(
-          e / this.securityGroupsRequestModel.pageSize
-        );
-      }
-      this.getSecurityGroups();
-    }
+  changePage(offset: number) {
+    this.securityStateService.changePage(offset);
+    this.getSecurityGroups();
   }
 
   openSettingsModal(securityGroup: SecurityGroupModel) {
     this.modalGroupSettings.show(securityGroup);
   }
 
-  updateSecurityGroupSettings(settingsUpdateModel: SecurityGroupSettingsUpdateModel) {
+  updateSecurityGroupSettings(
+    settingsUpdateModel: SecurityGroupSettingsUpdateModel
+  ) {
     this.updateSecurityGroupSettings$ = this.securityGroupsService
       .updateSecurityGroupSettings(settingsUpdateModel)
       .subscribe((data) => {
@@ -98,9 +76,29 @@ export class SecurityPageComponent implements OnInit, OnDestroy {
   }
 
   onLabelInputChanged(label: string) {
-    this.securityGroupsRequestModel.nameFilter = label;
+    this.securityStateService.updateNameFilter(label);
     this.getSecurityGroups();
+    this.securityStateService.checkOffset();
   }
 
   ngOnDestroy(): void {}
+
+  onPageSizeChanged(pageSize: number) {
+    this.securityStateService.updatePageSize(pageSize);
+    this.getSecurityGroups();
+  }
+
+  onSortTable(sort: string) {
+    this.securityStateService.onSortTable(sort);
+    this.getSecurityGroups();
+  }
+
+  onDeleteSecurityGroup(id: number) {
+    this.securityGroupsService.deleteSecurityGroup(id).subscribe((data) => {
+      if (data && data.success) {
+        this.securityStateService.onDelete();
+        this.getSecurityGroups();
+      }
+    });
+  }
 }

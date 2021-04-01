@@ -23,12 +23,14 @@ SOFTWARE.
 */
 namespace eFormAPI.Web.Infrastructure.Models.SelectableList
 {
-    public class AdvEntitySelectableGroupListRequestModel
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+
+    public class AdvEntitySelectableGroupListRequestModel: PaginationModel
     {
         public string Sort { get; set; }
+
         public string NameFilter { get; set; }
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
+
         public bool IsSortDsc { get; set; }
     }
 }

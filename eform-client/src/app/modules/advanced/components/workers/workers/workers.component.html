@@ -22,21 +22,7 @@
       small="true"
       class="z-depth-1 text-center"
     >
-      <thead>
-        <tr>
-          <th scope="col">{{ 'CreatedAt' | translate }}</th>
-          <th scope="col">{{ 'Updated at' | translate }}</th>
-          <th scope="col">{{ 'First name' | translate }}</th>
-          <th scope="col">{{ 'Last name' | translate }}</th>
-          <th scope="col">Microting UID</th>
-          <th
-            scope="col"
-            *ngIf="userClaims.workersDelete || userClaims.workersUpdate"
-          >
-            {{ 'Actions' | translate }}
-          </th>
-        </tr>
-      </thead>
+      <thead table-headers [tableHeaders]="tableHeaders"></thead>
       <tbody>
         <tr *ngFor="let workerDto of workersDto">
           <td scope="row">

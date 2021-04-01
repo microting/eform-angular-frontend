@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { EFormService } from 'src/app/common/services/eform';
 import { EformsQuery } from 'src/app/modules/eforms/state/eforms.query';
 import { OperationDataResult, TemplateListModel } from 'src/app/common/models';
+import { arrayAdd, arrayRemove } from '@datorama/akita';
 
 @Injectable({ providedIn: 'root' })
 export class EformsStateService {
@@ -50,13 +51,15 @@ export class EformsStateService {
   }
 
   addTagIds(id: number) {
-    const tagIds = this.query.pageSetting.tagIds;
-    this.store.update({ tagIds: [...tagIds, id] });
+    this.store.update(({ tagIds }) => ({
+      tagIds: arrayAdd(tagIds, id),
+    }));
   }
 
   removeTagIds(id: number) {
-    const tagIds = this.query.pageSetting.tagIds;
-    this.store.update({ tagIds: tagIds.filter((x) => x !== id) });
+    this.store.update(({ tagIds }) => ({
+      tagIds: arrayRemove(tagIds, id),
+    }));
   }
 
   updateTagIds(ids: number[]) {

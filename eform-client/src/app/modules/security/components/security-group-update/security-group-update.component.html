@@ -2,9 +2,13 @@
   <div class="p-3">
     <button
       mdbBtn
-      class="btn-success btn-small-height" [disabled]="!securityGroupModel.name"
+      class="btn-success btn-small-height"
+      [disabled]="!securityGroupModel.groupName"
       (click)="updateSecurityGroup()"
-      mdbTooltip="{{ 'Update Group' | translate }}" id="newSecurityGroupBtn">{{ 'Save' | translate }}
+      mdbTooltip="{{ 'Update Group' | translate }}"
+      id="newSecurityGroupBtn"
+    >
+      {{ 'Save' | translate }}
     </button>
   </div>
 </subheader-pn>
@@ -13,9 +17,14 @@
   <div class="row pl-1">
     <div class="col-md-2 col-xs-12">
       <div class="md-form">
-        <input mdbInput type="text" [(ngModel)]="securityGroupModel.name"
-               class="form-control input-sm" id="groupNameCreateInput">
-        <label for="groupNameCreateInput">{{'Group Name' | translate}}</label>
+        <input
+          mdbInput
+          type="text"
+          [(ngModel)]="securityGroupModel.groupName"
+          class="form-control input-sm"
+          id="groupNameCreateInput"
+        />
+        <label for="groupNameCreateInput">{{ 'Group Name' | translate }}</label>
       </div>
     </div>
     <div class="col-md-3 col-xs-8 col-sm-8 ng-select-wrapper">
@@ -27,54 +36,64 @@
         [bindLabel]="'firstName'"
         [bindValue]="'id'"
         [placeholder]="'Select User' | translate"
-        id="tagSelector"></ng-select>
+        id="tagSelector"
+      ></ng-select>
     </div>
     <div class="col-md-3 col-xs-4 col-sm-4 mt-3 pt-1">
       <button
         mdbBtn
-        class="btn-success btn-small-height" (click)="addUserToGroup(usersSelector);"
-        mdbTooltip="{{ 'Add user to group' | translate }}">
+        class="btn-success btn-small-height"
+        (click)="addUserToGroup(usersSelector)"
+        mdbTooltip="{{ 'Add user to group' | translate }}"
+      >
         + {{ 'Bind to Group' | translate }}
       </button>
     </div>
   </div>
   <div class="row p-1 mt-2 table-responsive no-gutters">
-    <table mdbTable striped="true" hover="true" small="true" class="z-depth-1 text-center">
+    <table
+      mdbTable
+      striped="true"
+      hover="true"
+      small="true"
+      class="z-depth-1 text-center"
+    >
       <thead>
-      <tr>
-        <th scope="col">{{ 'ID' | translate }}</th>
-        <th scope="col">{{ 'First name' | translate }}</th>
-        <th scope="col"> {{ 'Last name' | translate }}</th>
-        <th scope="col">{{ 'Email' | translate }}</th>
-        <th scope="col">{{ 'Actions' | translate }}</th>
-      </tr>
+        <tr>
+          <th scope="col">{{ 'ID' | translate }}</th>
+          <th scope="col">{{ 'First name' | translate }}</th>
+          <th scope="col">{{ 'Last name' | translate }}</th>
+          <th scope="col">{{ 'Email' | translate }}</th>
+          <th scope="col">{{ 'Actions' | translate }}</th>
+        </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let securityGroupUser of securityGroupModel.usersList">
-        <td scope="row">
-          {{securityGroupUser.id}}
-        </td>
-        <td>
-          {{securityGroupUser.firstName}}
-        </td>
-        <td>
-          {{securityGroupUser.lastName}}
-        </td>
-        <td>
-          {{securityGroupUser.email}}
-        </td>
-        <td>
-          <div class="d-flex flex-row justify-content-center">
-            <button mdbBtn class="btn-danger btn-icon mb-2 "
-                    mdbTooltip="{{'Remove user from group' | translate}}"
-                    (click)="deleteUserFromGroup(securityGroupUser)">
-              <i class="material-icons">
-                delete_forever
-              </i>
-            </button>
-          </div>
-        </td>
-      </tr>
+        <tr *ngFor="let securityGroupUser of securityGroupModel.usersList">
+          <td scope="row">
+            {{ securityGroupUser.id }}
+          </td>
+          <td>
+            {{ securityGroupUser.firstName }}
+          </td>
+          <td>
+            {{ securityGroupUser.lastName }}
+          </td>
+          <td>
+            {{ securityGroupUser.email }}
+          </td>
+          <td>
+            <div class="d-flex flex-row justify-content-center">
+              <button
+                mdbBtn
+                class="btn-danger btn-icon mb-2"
+                mdbTooltip="{{ 'Remove user from group' | translate }}"
+                (click)="deleteUserFromGroup(securityGroupUser)"
+              >
+                <i class="material-icons"> delete_forever </i>
+              </button>
+            </div>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>

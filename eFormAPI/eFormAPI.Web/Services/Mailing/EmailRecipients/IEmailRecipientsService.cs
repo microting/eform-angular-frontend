@@ -30,7 +30,7 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
 
     public interface IEmailRecipientsService
     {
-        Task<OperationDataResult<EmailRecipientsListModel>> GetEmailRecipients(
+        Task<OperationDataResult<Paged<EmailRecipientModel>>> GetEmailRecipients(
             EmailRecipientsRequestModel requestModel);
         Task<OperationResult> UpdateEmailRecipient(
             EmailRecipientUpdateModel requestModel);

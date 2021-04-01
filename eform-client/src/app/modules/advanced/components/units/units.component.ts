@@ -1,31 +1,52 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {UnitDto} from 'src/app/common/models/dto';
-import {UnitsService} from 'src/app/common/services/advanced';
-import {AuthService} from 'src/app/common/services/auth';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { UnitDto } from 'src/app/common/models/dto';
+import { UnitsService } from 'src/app/common/services/advanced';
+import { AuthService } from 'src/app/common/services/auth';
+import { TableHeaderElementModel } from 'src/app/common/models';
 
 @Component({
   selector: 'app-units',
-  templateUrl: './units.component.html'
+  templateUrl: './units.component.html',
 })
 export class UnitsComponent implements OnInit {
-
   @ViewChild('modalUnitsOtpCode', { static: true }) modalUnitsOtpCode;
   @ViewChild('modalUnitsCreate', { static: true }) modalUnitsCreate;
   @ViewChild('modalUnitsMove', { static: true }) modalUnitsMove;
   unitModels: Array<UnitDto> = [];
   selectedUnitModel: UnitDto = new UnitDto();
 
-  get userClaims() { return this.authService.userClaims; }
+  tableHeaders: TableHeaderElementModel[] = [
+    { name: 'Microting UID', elementId: '', sortable: false },
+    { name: 'Location', elementId: '', sortable: false },
+    { name: 'OS', elementId: '', sortable: false },
+    { name: 'OS Version', elementId: '', sortable: false },
+    { name: 'Model', elementId: '', sortable: false },
+    { name: 'InSight Version', elementId: '', sortable: false },
+    { name: 'eForm Version', elementId: '', sortable: false },
+    { name: 'Customer no & OTP', elementId: '', sortable: false },
+    { name: 'Sync delay', elementId: '', sortable: false },
+    { name: 'Sync dialog', elementId: '', sortable: false },
+    { name: 'Push', elementId: '', sortable: false },
+    this.userClaims.sitesDelete || this.userClaims.sitesUpdate
+      ? { name: 'Actions', elementId: '', sortable: false }
+      : null,
+  ];
 
-  constructor(private unitsService: UnitsService, private authService: AuthService) {
+  get userClaims() {
+    return this.authService.userClaims;
   }
+
+  constructor(
+    private unitsService: UnitsService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
     this.loadAllUnits();
   }
 
   loadAllUnits() {
-    this.unitsService.getAllUnits().subscribe(operation => {
+    this.unitsService.getAllUnits().subscribe((operation) => {
       if (operation && operation.success) {
         this.unitModels = operation.model;
       }
