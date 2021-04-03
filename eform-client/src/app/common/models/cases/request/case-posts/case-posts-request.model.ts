@@ -1,6 +1,5 @@
 export class CasePostsRequestModel {
   public sort: string;
-  pageIndex: number;
   pageSize: number;
   isSortDsc: boolean;
   offset: number;
@@ -11,7 +10,6 @@ export class CasePostsRequestModel {
     this.sort = 'id';
     this.isSortDsc = true;
     this.pageSize = 1000;
-    this.pageIndex = 0;
     this.offset = 0;
   }
 }

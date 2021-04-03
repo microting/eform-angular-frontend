@@ -1,7 +1,7 @@
 <tr>
   <ng-container *ngTemplateOutlet="customCell"></ng-container>
   <ng-container *ngFor="let header of tableHeaders">
-    <ng-container *ngIf="header.sortable">
+    <ng-container *ngIf="header && header.sortable">
       <th
         class="table-header-sortable"
         table-header-sortable
@@ -10,9 +10,10 @@
         [isSortDsc]="isSortDsc"
         [name]="header.name"
         [id]="header.elementId"
+        [visibleName]="header.visibleName"
       ></th>
     </ng-container>
-    <ng-container *ngIf="!header.sortable">
+    <ng-container *ngIf="header && !header.sortable">
       <th scope="col">
         {{ header.name | translate }}
       </th>

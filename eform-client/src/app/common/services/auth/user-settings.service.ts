@@ -3,13 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
-import { ApplicationPagesSettings } from 'src/app/common/const/application-pages-settings.const';
-import {
-  ApplicationPageModel,
-  OperationDataResult,
-  OperationResult,
-  PageSettingsModel,
-} from 'src/app/common/models';
+import { OperationDataResult, OperationResult } from 'src/app/common/models';
 import { UserSettingsModel } from 'src/app/common/models/settings';
 import { BaseService } from '../base.service';
 
@@ -29,40 +23,6 @@ export class UserSettingsService extends BaseService {
 
   getUserSettings(): Observable<OperationDataResult<UserSettingsModel>> {
     return this.get(UserSettingsMethods.UserSettings);
-  }
-
-  getLocalPageSettings(
-    localStorageItemName: string,
-    pageName: string
-  ): ApplicationPageModel {
-    let localPagesSettings = localStorage.getItem(localStorageItemName);
-    if (!localPagesSettings) {
-      localStorage.setItem(
-        localStorageItemName,
-        JSON.stringify(ApplicationPagesSettings)
-      );
-      localPagesSettings = localStorage.getItem(localStorageItemName);
-    }
-    return <ApplicationPageModel>(
-      JSON.parse(localPagesSettings).find((x) => x.groupName === pageName)
-    );
-  }
-
-  updateLocalPageSettings(
-    localStorageItemName: string,
-    model: PageSettingsModel,
-    pageName: string
-  ) {
-    const localPagesSettings = <Array<ApplicationPageModel>>(
-      JSON.parse(localStorage.getItem(localStorageItemName))
-    );
-    localPagesSettings[
-      localPagesSettings.findIndex((x) => x.name === pageName)
-    ].settings = model;
-    localStorage.setItem(
-      localStorageItemName,
-      JSON.stringify(localPagesSettings)
-    );
   }
 
   updateUserSettings(model: UserSettingsModel): Observable<OperationResult> {

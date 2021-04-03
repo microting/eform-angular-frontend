@@ -7,6 +7,7 @@ import {
   PaginationModel,
   SecurityGroupUpdateModel,
   SecurityGroupModel,
+  Paged,
 } from 'src/app/common/models';
 import { SecurityGroupsService, AdminService } from 'src/app/common/services';
 
@@ -20,7 +21,7 @@ export class SecurityGroupUpdateComponent implements OnInit {
   securityGroupUpdateModel: SecurityGroupUpdateModel = new SecurityGroupUpdateModel();
   selectedGroupId: number;
   paginationModel = new PaginationModel(1, 1000, 0);
-  users: UserInfoModelList = new UserInfoModelList();
+  users: Paged<UserInfoModel> = new Paged<UserInfoModel>();
 
   constructor(
     private adminService: AdminService,
@@ -46,14 +47,21 @@ export class SecurityGroupUpdateComponent implements OnInit {
   }
 
   getUsers() {
-    this.adminService.getAllUsers(this.paginationModel).subscribe((data) => {
-      if (data && data.success) {
-        this.users = data.model;
-        this.users.userList = this.users.userList.filter(
-          (y) => !this.securityGroupModel.usersList.some((x) => x.id === y.id)
-        );
-      }
-    });
+    this.adminService
+      .getAllUsers({
+        sort: 'Id',
+        pageSize: 100000,
+        offset: 0,
+        isSortDsc: false,
+      })
+      .subscribe((data) => {
+        if (data && data.success) {
+          this.users = data.model;
+          this.users.entities = this.users.entities.filter(
+            (y) => !this.securityGroupModel.usersList.some((x) => x.id === y.id)
+          );
+        }
+      });
   }
 
   addUserToGroup(usersSelector: NgSelectComponent) {
@@ -66,7 +74,7 @@ export class SecurityGroupUpdateComponent implements OnInit {
     });
     usersSelector.clearModel();
     // Updating user list after working with model
-    this.users.userList = this.users.userList.filter(
+    this.users.entities = this.users.entities.filter(
       (x) => x.id !== selectedUser.id
     );
   }
@@ -76,8 +84,8 @@ export class SecurityGroupUpdateComponent implements OnInit {
       (x) => x.id !== selectedUserModel.id
     );
     // Updating user list after working with model
-    this.users.userList = [
-      ...this.users.userList,
+    this.users.entities = [
+      ...this.users.entities,
       new UserInfoModel(selectedUserModel),
     ];
   }

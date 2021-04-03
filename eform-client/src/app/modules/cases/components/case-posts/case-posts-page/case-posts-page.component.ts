@@ -1,29 +1,32 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {PageSettingsModel} from '../../../../../common/models/settings';
-import {Subscription} from 'rxjs';
-import {AuthService, UserSettingsService} from '../../../../../common/services/auth';
-import {ApplicationPages} from '../../../../../common/const';
-import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
-import {CasePostNewComponent, CasePostViewComponent} from '../..';
-import {CasePostsListModel, CasePostsRequestModel} from '../../../../../common/models/cases';
-import {CasePostsService} from '../../../../../common/services/cases';
-import {EmailRecipientsService} from '../../../../../common/services/email-recipients';
-import {EmailRecipientTagCommonModel} from '../../../../../common/models/email-recipients';
-import {ActivatedRoute} from '@angular/router';
-import {CommonDictionaryModel} from '../../../../../common/models/common';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Subscription } from 'rxjs';
+import {
+  AuthService,
+  UserSettingsService,
+} from '../../../../../common/services/auth';
+import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
+import { CasePostNewComponent, CasePostViewComponent } from '../..';
+import { CasePostsListModel } from 'src/app/common/models';
+import { CasePostsService } from 'src/app/common/services';
+import { EmailRecipientsService } from 'src/app/common/services';
+import { EmailRecipientTagCommonModel } from 'src/app/common/models';
+import { ActivatedRoute } from '@angular/router';
+import {
+  CommonDictionaryModel,
+  TableHeaderElementModel,
+} from '../../../../../common/models/common';
+import { CasePostsStateService } from 'src/app/modules/cases/components/case-posts/state/case-posts-state-service';
 
 @AutoUnsubscribe()
 @Component({
   selector: 'app-case-posts-page',
   templateUrl: './case-posts-page.component.html',
-  styleUrls: ['./case-posts-page.component.scss']
+  styleUrls: ['./case-posts-page.component.scss'],
 })
 export class CasePostsPageComponent implements OnInit, OnDestroy {
   @ViewChild('newPostModal') newPostModal: CasePostNewComponent;
   @ViewChild('viewPostModal') viewPostModal: CasePostViewComponent;
   casePostsListModel: CasePostsListModel = new CasePostsListModel();
-  casePostsRequestModel: CasePostsRequestModel = new CasePostsRequestModel();
-  localPageSettings: PageSettingsModel = new PageSettingsModel();
   availableRecipientsAndTags: EmailRecipientTagCommonModel[] = [];
   availableRecipients: CommonDictionaryModel[] = [];
   getAllSub$: Subscription;
@@ -34,18 +37,33 @@ export class CasePostsPageComponent implements OnInit, OnDestroy {
   selectedEformId: number;
   selectedCaseId: number;
 
+  tableHeaders: TableHeaderElementModel[] = [
+    { name: 'Id', elementId: 'idTableHeader', sortable: true },
+    { name: 'Date', elementId: 'casePostDateTableHeader', sortable: true },
+    { name: 'Post created by', elementId: '', sortable: false },
+    { name: 'Post sent to', elementId: '', sortable: false },
+    { name: 'Subject', elementId: '', sortable: false },
+    { name: 'Text', elementId: '', sortable: false },
+    { name: 'Actions', elementId: '', sortable: false },
+  ];
 
-  constructor(private userSettingsService: UserSettingsService,
-              private casePostsService: CasePostsService,
-              private emailRecipientsService: EmailRecipientsService,
-              private activatedRoute: ActivatedRoute,
-              private authService: AuthService) {
-  }
+  constructor(
+    private userSettingsService: UserSettingsService,
+    private casePostsService: CasePostsService,
+    private emailRecipientsService: EmailRecipientsService,
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthService,
+    public casePostsStateService: CasePostsStateService
+  ) {}
 
   ngOnInit(): void {
-    this.activatedRoute$ = this.activatedRoute.params.subscribe(params => {
-      this.selectedEformId = +params['templateId'];
-      this.selectedCaseId = +params['id'];
+    this.activatedRoute$ = this.activatedRoute.params.subscribe((params) => {
+      const templateId = +params['templateId'];
+      const caseId = +params['id'];
+      this.casePostsStateService.setTemplateId(templateId);
+      this.selectedEformId = templateId;
+      this.casePostsStateService.setCaseId(caseId);
+      this.selectedCaseId = caseId;
       const postAction = params['postAction'];
 
       if (postAction === 'new') {
@@ -55,83 +73,51 @@ export class CasePostsPageComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.getLocalPageSettings();
+    this.getCasePosts();
     this.getRecipientsAndTags();
     this.getRecipients();
 
     this.currentUserFullName = this.authService.currentUserFullName;
   }
 
-  getLocalPageSettings() {
-    this.localPageSettings = this.userSettingsService.getLocalPageSettings
-    ('pagesSettings', ApplicationPages[ApplicationPages.CasePosts])
-      .settings;
-    this.getCasePosts();
-  }
-
-  updateLocalPageSettings() {
-    this.userSettingsService.updateLocalPageSettings
-    ('pagesSettings', this.localPageSettings, ApplicationPages[ApplicationPages.CasePosts]);
-    this.getLocalPageSettings();
-  }
-
-
   getCasePosts() {
-    this.casePostsRequestModel.isSortDsc = this.localPageSettings.isSortDsc;
-    this.casePostsRequestModel.sort = this.localPageSettings.sort;
-    this.casePostsRequestModel.pageSize = this.localPageSettings.pageSize;
-
-    this.getAllSub$ = this.casePostsService.getAllPosts({
-      ...this.casePostsRequestModel,
-      caseId: this.selectedCaseId,
-      templateId: this.selectedEformId
-    }).subscribe((data) => {
-      if (data && data.success) {
-        this.casePostsListModel = data.model;
-      }
-    });
+    this.getAllSub$ = this.casePostsStateService
+      .getAllPosts()
+      .subscribe((data) => {
+        if (data && data.success) {
+          this.casePostsListModel = data.model;
+        }
+      });
   }
 
   getRecipientsAndTags() {
-    this.getTagsSub$ = this.emailRecipientsService.getEmailRecipientsAndTags().subscribe((data) => {
-      if (data && data.success) {
-        this.availableRecipientsAndTags = data.model;
-      }
-    });
+    this.getTagsSub$ = this.emailRecipientsService
+      .getEmailRecipientsAndTags()
+      .subscribe((data) => {
+        if (data && data.success) {
+          this.availableRecipientsAndTags = data.model;
+        }
+      });
   }
 
   getRecipients() {
-    this.getRecipientsSub$ = this.emailRecipientsService.getSimpleEmailRecipients().subscribe((data) => {
-      if (data && data.success) {
-        this.availableRecipients = data.model;
-      }
-    });
+    this.getRecipientsSub$ = this.emailRecipientsService
+      .getSimpleEmailRecipients()
+      .subscribe((data) => {
+        if (data && data.success) {
+          this.availableRecipients = data.model;
+        }
+      });
   }
-
 
   sortTable(sort: string) {
-    if (this.localPageSettings.sort === sort) {
-      this.localPageSettings.isSortDsc = !this.localPageSettings.isSortDsc;
-    } else {
-      this.localPageSettings.isSortDsc = false;
-      this.localPageSettings.sort = sort;
-    }
-    this.updateLocalPageSettings();
+    this.casePostsStateService.onSortTable(sort);
+    this.getCasePosts();
   }
 
-  changePage(e: any) {
-    if (e || e === 0) {
-      this.casePostsRequestModel.offset = e;
-      this.getCasePosts();
-    }
-  }
-
-  getSortIcon(sort: string): string {
-    if (this.casePostsRequestModel.sort === sort) {
-      return this.casePostsRequestModel.isSortDsc ? 'expand_more' : 'expand_less';
-    } else {
-      return 'unfold_more';
-    }
+  changePage(newOffset: any) {
+    this.casePostsStateService.changePage(newOffset);
+    this.getCasePosts();
   }
 
   openCreateModal() {
@@ -142,6 +128,10 @@ export class CasePostsPageComponent implements OnInit, OnDestroy {
     this.viewPostModal.show(id);
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy(): void {}
+
+  onPageSizeChanged(pageSize: number) {
+    this.casePostsStateService.updatePageSize(pageSize);
+    this.getCasePosts();
   }
 }

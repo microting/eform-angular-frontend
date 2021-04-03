@@ -46,7 +46,7 @@ namespace eFormAPI.Web.Controllers
         [HttpPost]
         [Route("api/admin/get-users")]
         [Authorize(Policy = AuthConsts.EformPolicies.UserManagement.Read)]
-        public async Task<OperationDataResult<UserInfoModelList>> Index([FromBody] PaginationModel paginationModel)
+        public async Task<OperationDataResult<Paged<UserInfoViewModel>>> Index([FromBody] UserInfoRequest paginationModel)
         {
             return await _adminService.Index(paginationModel);
         }

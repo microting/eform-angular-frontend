@@ -41,23 +41,16 @@
       small="true"
       class="z-depth-1 text-center"
     >
-      <thead>
-        <tr>
-          <th scope="col">ID</th>
-          <th scope="col">{{ 'Email' | translate }}</th>
-          <th scope="col">{{ 'Full Name' | translate }}</th>
-          <th scope="col">{{ 'Role' | translate }}</th>
-          <th
-            scope="col"
-            *ngIf="userClaims.usersUpdate || userClaims.usersDelete"
-          >
-            {{ 'Actions' | translate }}
-          </th>
-        </tr>
-      </thead>
+      <thead
+        table-headers
+        [tableHeaders]="tableHeaders"
+        [currentSortName]="usersStateService.getSort() | async"
+        (sortChanged)="onSortTable($event)"
+        [isSortDsc]="usersStateService.getIsSortDsc() | async"
+      ></thead>
       <tbody id="userInfoTable">
-        <tr *ngFor="let userInfoModel of userInfoModelList.userList">
-          <td id="userAdministrationId" scope="row">{{ userInfoModel.id }}</td>
+        <tr *ngFor="let userInfoModel of userInfoModelList.entities">
+          <td id="userAdministrationId">{{ userInfoModel.id }}</td>
           <td id="userAdministrationEmail">{{ userInfoModel.email }}</td>
           <td id="userAdministrationFullName">
             {{ userInfoModel.firstName }} {{ userInfoModel.lastName }}
@@ -99,24 +92,19 @@
 
   <div class="row justify-content-between mr-2 ml-2">
     <div class="col-md-1">
-      <eform-page-size
-        [pageSize]="localPageSettings.pageSize"
-        (onPageSizeChanged)="
-          localPageSettings.pageSize = $event;
-          paginationModel.pageIndex = 1;
-          updateLocalPageSettings('pagesSettings')
-        "
+      <page-size-pn
+        [pageSize]="usersStateService.getPageSize() | async"
+        (onPageSizeChanged)="onPageSizeChanged($event)"
       >
-      </eform-page-size>
+      </page-size-pn>
     </div>
     <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
-      <eform-pagination
-        *ngIf="userInfoModelList.totalUsers > paginationModel.pageSize"
-        [limit]="paginationModel.pageSize"
-        [size]="userInfoModelList.totalUsers"
-        [offset]="paginationModel.offset"
+      <pagination-pn
+        [limit]="usersStateService.getPageSize() | async"
+        [size]="userInfoModelList.total"
+        [offset]="usersStateService.getOffset() | async"
         (onPageChanged)="changePage($event)"
-      ></eform-pagination>
+      ></pagination-pn>
     </div>
   </div>
 </div>
@@ -133,7 +121,7 @@
 ></app-new-user-modal>
 <app-remove-user-modal
   [selectedUser]="selectedUser"
-  (onUserDeleted)="getUserInfoList()"
+  (onUserDeleted)="onUserDeleted()"
   #removeUserModal
 ></app-remove-user-modal>
 <!--<app-create-eform-modal #modalNewEform></app-create-eform-modal>-->

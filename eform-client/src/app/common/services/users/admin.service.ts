@@ -1,17 +1,17 @@
-import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
-import {ToastrService} from 'ngx-toastr';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import {
   OperationDataResult,
   OperationResult,
+  Paged,
   UserInfoModel,
-  UserInfoModelList,
-  UserRegisterModel
+  UserInfoRequestModel,
+  UserRegisterModel,
 } from 'src/app/common/models';
-import {PaginationModel} from 'src/app/common/models/common';
-import {BaseService} from 'src/app/common/services/base.service';
+import { BaseService } from 'src/app/common/services/base.service';
 
 const AdminMethods = {
   GetCurrentUser: '/api/account/user-info',
@@ -21,17 +21,23 @@ const AdminMethods = {
   CreateUser: '/api/admin/create-user',
   UpdateUser: '/api/admin/update-user',
   EnableTwoFactorAuth: 'api/admin/enable-two-factor',
-  DisableTwoFactorAuth: 'api/admin/disable-two-factor'
+  DisableTwoFactorAuth: 'api/admin/disable-two-factor',
 };
 
 @Injectable()
 export class AdminService extends BaseService {
-  constructor(private _http: HttpClient, router: Router, toastrService: ToastrService) {
+  constructor(
+    private _http: HttpClient,
+    router: Router,
+    toastrService: ToastrService
+  ) {
     super(_http, router, toastrService);
   }
 
-  getAllUsers(model: PaginationModel): Observable<OperationDataResult<UserInfoModelList>> {
-    return this.post<UserInfoModelList>(AdminMethods.GetAllUsers, model);
+  getAllUsers(
+    model: UserInfoRequestModel
+  ): Observable<OperationDataResult<Paged<UserInfoModel>>> {
+    return this.post<Paged<UserInfoModel>>(AdminMethods.GetAllUsers, model);
   }
 
   getCurrentUserInfo(): Observable<UserInfoModel> {
