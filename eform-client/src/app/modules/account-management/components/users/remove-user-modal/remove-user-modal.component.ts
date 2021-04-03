@@ -7,7 +7,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { UserInfoModel } from 'src/app/common/models/user';
-import { AdminService } from 'src/app/common/services/users';
 
 @Component({
   selector: 'app-remove-user-modal',
@@ -29,5 +28,6 @@ export class RemoveUserModalComponent implements OnInit {
 
   deleteUser() {
     this.onUserDeleted.emit();
+    this.frame.hide();
   }
 }

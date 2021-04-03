@@ -150,8 +150,8 @@ export class UsersPageComponent implements OnInit {
   onUserDeleted() {
     this.adminService.deleteUser(this.selectedUser.id).subscribe((data) => {
       if (data.success) {
-        this.removeUserModal.hide();
         this.usersStateService.onDelete();
+        this.getUserInfoList();
       }
     });
   }
