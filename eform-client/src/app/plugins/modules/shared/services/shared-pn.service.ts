@@ -29,7 +29,7 @@ export class SharedPnService extends BaseService {
     let result;
     if (pageName) {
       const bla = JSON.parse(localPagesSettings);
-      result = bla.find((x) => x.groupName === pageName);
+      result = bla.find((x) => x.name === pageName);
       return <ApplicationPageModel>result;
     }
     return <ApplicationPageModel>JSON.parse(localPagesSettings);
