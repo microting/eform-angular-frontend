@@ -32,7 +32,7 @@
         <th scope="col" class="table-header-sortable" (click)="sortTable('id')">
           <div class="d-flex align-items-center justify-content-center">
             ID
-            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'id'">unfold_more</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort != 'id'">unfold_more</i>
             <i class="material-icons" *ngIf="localPageSettings.sort == 'id' && !localPageSettings.isSortDsc">expand_less</i>
             <i class="material-icons" *ngIf="localPageSettings.sort == 'id' && localPageSettings.isSortDsc">expand_more</i>
           </div>
@@ -40,7 +40,7 @@
         <th class="table-header-sortable" (click)="sortTable('name')">
           <div class="d-flex align-items-center justify-content-center">
             {{ 'Name' | translate }}
-            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'name'">unfold_more</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort != 'name'">unfold_more</i>
             <i class="material-icons" *ngIf="localPageSettings.sort == 'name' && !localPageSettings.isSortDsc">expand_less</i>
             <i class="material-icons" *ngIf="localPageSettings.sort == 'name' && localPageSettings.isSortDsc">expand_more</i>
           </div>
@@ -48,7 +48,7 @@
         <th class="table-header-sortable" (click)="sortTable('description')">
           <div class="d-flex align-items-center justify-content-center">
             {{ 'Description' | translate }}
-            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'description'">unfold_more</i>
+            <i class="material-icons" *ngIf="localPageSettings.sort != 'description'">unfold_more</i>
             <i class="material-icons" *ngIf="localPageSettings.sort == 'description' && !localPageSettings.isSortDsc">expand_less</i>
             <i class="material-icons" *ngIf="localPageSettings.sort == 'description' && localPageSettings.isSortDsc">expand_more</i>
           </div>

@@ -6,6 +6,13 @@
     </mdb-card-header>
     <mdb-card-body>
       <div>
+        <div *ngIf="element.approvalEnabled" (click)="element.status = 'not_checked'">
+          <label class="md-radio block">
+            <input type="radio" [(ngModel)]="element.status" checked="{{element.status == 'not_checked'}}" value="not_checked" name="{{element.label}}{{element.id}}">
+            <span class="md-radio--fake"><span></span></span>
+            <div>{{ 'Not checked' | translate }}</div>
+          </label>
+        </div>
         <div *ngIf="element.approvalEnabled" (click)="element.status = 'approved'">
           <label class="md-radio block">
             <input type="radio" [(ngModel)]="element.status" checked="{{element.status == 'approved'}}" value="approved" name="{{element.label}}{{element.id}}">
