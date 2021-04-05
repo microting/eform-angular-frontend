@@ -37,6 +37,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 namespace eFormAPI.Web.Services.Security
 {
     using Infrastructure.Database.Entities.Permissions;
+    using Microting.eForm.Infrastructure.Constants;
     using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
     public class SecurityGroupService : ISecurityGroupService
@@ -77,63 +78,57 @@ namespace eFormAPI.Web.Services.Security
                     _localizationService.GetString("ErrorWhileObtainingSecurityGroups"));
             }
         }
-        public async Task<OperationDataResult<SecurityGroupsModel>> GetSecurityGroups(
+
+        public async Task<OperationDataResult<Paged<SecurityGroupModel>>> GetSecurityGroups(
             SecurityGroupRequestModel requestModel)
         {
             try
             {
-                var securityGroupsModel = new SecurityGroupsModel();
-                IQueryable<SecurityGroup> securityGroupsQuery = _dbContext.SecurityGroups.AsQueryable();
-                if (!string.IsNullOrEmpty(requestModel.Sort))
-                {
-                    if (requestModel.IsSortDsc)
-                    {
-                        securityGroupsQuery = securityGroupsQuery
-                            .CustomOrderByDescending(requestModel.Sort);
-                    }
-                    else
-                    {
-                        securityGroupsQuery = securityGroupsQuery
-                            .CustomOrderBy(requestModel.Sort);
-                    }
-                }
-                else
-                {
-                    securityGroupsQuery = _dbContext.SecurityGroups
-                        .OrderBy(x => x.Id);
-                }
+                var securityGroupsModel = new Paged<SecurityGroupModel>();
+                var securityGroupsQuery = _dbContext.SecurityGroups
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .AsQueryable();
 
                 if (!string.IsNullOrEmpty(requestModel.NameFilter))
                 {
                     securityGroupsQuery = securityGroupsQuery.Where(x => x.Name.Contains(requestModel.NameFilter));
                 }
 
-                securityGroupsQuery = securityGroupsQuery
+                securityGroupsModel.Total = await securityGroupsQuery.Select(x => x.Id).CountAsync();
+
+                var securityGroupsQueryWithSelect = AddSelectToQuery(securityGroupsQuery);
+
+                if (!string.IsNullOrEmpty(requestModel.Sort))
+                {
+                    if (requestModel.IsSortDsc)
+                    {
+                        securityGroupsQueryWithSelect = securityGroupsQueryWithSelect
+                            .CustomOrderByDescending(requestModel.Sort);
+                    }
+                    else
+                    {
+                        securityGroupsQueryWithSelect = securityGroupsQueryWithSelect
+                            .CustomOrderBy(requestModel.Sort);
+                    }
+                }
+                else
+                {
+                    securityGroupsQueryWithSelect = securityGroupsQueryWithSelect
+                        .OrderBy(x => x.Id);
+                }
+
+                securityGroupsQueryWithSelect = securityGroupsQueryWithSelect
                     .Skip(requestModel.Offset)
                     .Take(requestModel.PageSize);
 
-                List<SecurityGroupModel> securityGroupList = await securityGroupsQuery.Select(x => new SecurityGroupModel()
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    RedirectLink = x.RedirectLink,
-                    UserAmount = x.SecurityGroupUsers.Count,
-                    UsersList = x.SecurityGroupUsers.Select(u => new SecurityGroupUserModel()
-                    {
-                        Id = u.EformUser.Id,
-                        FirstName = u.EformUser.FirstName,
-                        LastName = u.EformUser.LastName,
-                        Email = u.EformUser.Email,
-                    }).ToList()
-                }).ToListAsync();
-                securityGroupsModel.Total = await _dbContext.SecurityGroups.CountAsync();
-                securityGroupsModel.SecurityGroupList = securityGroupList;
-                return new OperationDataResult<SecurityGroupsModel>(true, securityGroupsModel);
+                var securityGroupList = await securityGroupsQueryWithSelect.ToListAsync();
+                securityGroupsModel.Entities = securityGroupList;
+                return new OperationDataResult<Paged<SecurityGroupModel>>(true, securityGroupsModel);
             }
             catch (Exception e)
             {
                 _logger.LogError(e.Message);
-                return new OperationDataResult<SecurityGroupsModel>(false, 
+                return new OperationDataResult<Paged<SecurityGroupModel>>(false, 
                     _localizationService.GetString("ErrorWhileObtainingSecurityGroups"));
             }
         }
@@ -142,22 +137,12 @@ namespace eFormAPI.Web.Services.Security
         {
             try
             {
-                SecurityGroupModel securityGroupModel = await _dbContext.SecurityGroups
+                var query = _dbContext.SecurityGroups
                     .Where(x => x.Id == id)
-                    .Select(x => new SecurityGroupModel()
-                    {
-                        Id = x.Id,
-                        Name = x.Name,
-                        RedirectLink = x.RedirectLink,
-                        UserAmount = x.SecurityGroupUsers.Count,
-                        UsersList = x.SecurityGroupUsers.Select(u => new SecurityGroupUserModel()
-                        {
-                            Id = u.EformUser.Id,
-                            FirstName = u.EformUser.FirstName,
-                            LastName = u.EformUser.LastName,
-                            Email = u.EformUser.Email,
-                        }).ToList()
-                    }).FirstOrDefaultAsync();
+                    .AsQueryable();
+
+
+                var securityGroupModel = await AddSelectToQuery(query).FirstOrDefaultAsync();
                 if (securityGroupModel == null)
                 {
                     return new OperationDataResult<SecurityGroupModel>(false, 
@@ -180,13 +165,13 @@ namespace eFormAPI.Web.Services.Security
             {
                 if (string.IsNullOrEmpty(requestModel.Name))
                 {
-                    return new OperationDataResult<SecurityGroupsModel>(false,
+                    return new OperationResult(false,
                         _localizationService.GetString("SecurityGroupNameIsEmpty"));
                 }
 
                 //using (var transaction = await _dbContext.Database.BeginTransactionAsync())
 //                {
-                    SecurityGroup securityGroup = new SecurityGroup
+                    var securityGroup = new SecurityGroup
                     {
                         Name = requestModel.Name,
                     };
@@ -213,7 +198,7 @@ namespace eFormAPI.Web.Services.Security
             catch (Exception e)
             {
                 _logger.LogError(e.Message);
-                return new OperationDataResult<SecurityGroupsModel>(false, 
+                return new OperationResult(false, 
                     _localizationService.GetString("ErrorWhileCreatingSecurityGroup"));
             }
         }
@@ -224,14 +209,14 @@ namespace eFormAPI.Web.Services.Security
             {
                 //using (var transaction = await _dbContext.Database.BeginTransactionAsync())
 //                {
-                    SecurityGroup securityGroup = await _dbContext.SecurityGroups
+                    var securityGroup = await _dbContext.SecurityGroups
                         .Include(x => x.SecurityGroupUsers)
                         .FirstOrDefaultAsync(x => x.Id == requestModel.Id);
 
                     if (securityGroup == null)
                     {
                         //transaction.Rollback();
-                        return new OperationDataResult<SecurityGroupsModel>(false,
+                        return new OperationResult(false,
                             _localizationService.GetString("SecurityGroupNotFound"));
                     }
 
@@ -269,7 +254,7 @@ namespace eFormAPI.Web.Services.Security
             catch (Exception e)
             {
                 _logger.LogError(e.Message);
-                return new OperationDataResult<SecurityGroupsModel>(false, 
+                return new OperationResult(false, 
                     _localizationService.GetString("ErrorWhileUpdatingSecurityGroup"));
             }
         }
@@ -278,12 +263,12 @@ namespace eFormAPI.Web.Services.Security
         {
             try
             {
-                SecurityGroup securityGroup = await _dbContext.SecurityGroups
+                var securityGroup = await _dbContext.SecurityGroups
                     .FirstOrDefaultAsync(x => x.Id == requestModel.Id);
 
                 if (securityGroup == null)
                 {
-                    return new OperationDataResult<SecurityGroupsModel>(false,
+                    return new OperationResult(false,
                         _localizationService.GetString("SecurityGroupNotFound"));
                 }
 
@@ -298,7 +283,7 @@ namespace eFormAPI.Web.Services.Security
             catch (Exception e)
             {
                 _logger.LogError(e.Message);
-                return new OperationDataResult<SecurityGroupsModel>(false,
+                return new OperationResult(false,
                     _localizationService.GetString("ErrorWhileUpdatingSecurityGroup"));
             }
         }
@@ -309,7 +294,7 @@ namespace eFormAPI.Web.Services.Security
 //                {
                 try
                 {
-                    SecurityGroup securityGroup = await _dbContext.SecurityGroups.FirstOrDefaultAsync(x => x.Id == id);
+                    var securityGroup = await _dbContext.SecurityGroups.FirstOrDefaultAsync(x => x.Id == id);
                     if (securityGroup == null)
                     {
                         //transaction.Rollback();
@@ -334,6 +319,25 @@ namespace eFormAPI.Web.Services.Security
                         _localizationService.GetString("ErrorWhileDeletingSecurityGroup"));
                 }
             //}
+        }
+
+        private static IQueryable<SecurityGroupModel> AddSelectToQuery(IQueryable<SecurityGroup> query)
+        {
+            return query
+                .Select(x => new SecurityGroupModel()
+                {
+                    Id = x.Id,
+                    GroupName = x.Name,
+                    RedirectLink = x.RedirectLink,
+                    UserAmount = x.SecurityGroupUsers.Count,
+                    UsersList = x.SecurityGroupUsers.Select(u => new SecurityGroupUserModel()
+                    {
+                        Id = u.EformUser.Id,
+                        FirstName = u.EformUser.FirstName,
+                        LastName = u.EformUser.LastName,
+                        Email = u.EformUser.Email,
+                    }).ToList()
+                });
         }
     }
 

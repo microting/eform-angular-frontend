@@ -28,8 +28,11 @@ namespace eFormAPI.Web.Infrastructure.Models.Permissions
     public class SecurityGroupModel
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+
+        public string GroupName { get; set; }
+
         public int UserAmount { get; set; }
+
         public string RedirectLink { get; set; }
 
         public List<SecurityGroupUserModel> UsersList { get; set; }

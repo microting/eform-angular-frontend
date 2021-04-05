@@ -1,18 +1,31 @@
 <tr>
+  <ng-container *ngTemplateOutlet="customCell"></ng-container>
   <ng-container *ngFor="let header of tableHeaders">
-    <ng-container *ngIf="header.sortable">
-      <th class="table-header-sortable"
+    <ng-container *ngIf="header && header.sortable">
+      <th
+        class="table-header-sortable"
         table-header-sortable
         [currentSortName]="currentSortName"
         (sortClick)="onSortClick($event)"
         [isSortDsc]="isSortDsc"
         [name]="header.name"
         [id]="header.elementId"
+        [visibleName]="header.visibleName"
+        style="{{
+          header.name.toLowerCase() === 'id' ? 'text-transform: uppercase' : ''
+        }}"
       ></th>
     </ng-container>
-    <ng-container *ngIf="!header.sortable">
-      <th scope="col">
-        {{ header.name | translate }}
+    <ng-container *ngIf="header && !header.sortable">
+      <th
+        style="{{
+          header.name.toLowerCase() === 'id' ? 'text-transform: uppercase' : ''
+        }}"
+        scope="col"
+      >
+        {{
+          (header.visibleName ? header.visibleName : header.name) | translate
+        }}
       </th>
     </ng-container>
   </ng-container>

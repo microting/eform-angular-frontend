@@ -47,7 +47,7 @@ namespace eFormAPI.Web.Controllers.Advanced
         [HttpPost]
         [Route("api/selectable-groups")]
         [Authorize(Policy = AuthConsts.EformPolicies.EntitySelect.Read)]
-        public Task<OperationDataResult<EntityGroupList>> Index(
+        public Task<OperationDataResult<Paged<EntityGroup>>> Index(
             [FromBody] AdvEntitySelectableGroupListRequestModel requestModel)
         {
             return _entitySelectService.Index(requestModel);
@@ -93,12 +93,5 @@ namespace eFormAPI.Web.Controllers.Advanced
             return _entitySelectService.GetEntityGroupDictionary(entityGroupUid);
         }
 
-
-        [HttpPost]
-        [Route("api/selectable-groups/send")]
-        public Task<OperationResult> SendSearchableGroup(string entityGroupUid)
-        {
-            return _entitySelectService.SendSearchableGroup(entityGroupUid);
-        }
     }
 }

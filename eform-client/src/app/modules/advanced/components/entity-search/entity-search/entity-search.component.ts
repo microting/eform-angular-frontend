@@ -1,74 +1,66 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {ApplicationPages} from 'src/app/common/const';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   AdvEntitySearchableGroupListModel,
-  AdvEntitySearchableGroupListRequestModel, AdvEntitySearchableGroupModel,
-  AdvEntitySelectableGroupModel,
-  PageSettingsModel
+  AdvEntitySearchableGroupListRequestModel,
+  AdvEntitySearchableGroupModel,
+  PageSettingsModel,
+  TableHeaderElementModel,
 } from 'src/app/common/models';
-import {EntitySearchService} from 'src/app/common/services/advanced';
-import {AuthService, UserSettingsService} from 'src/app/common/services/auth';
+import { EntitySearchService } from 'src/app/common/services/advanced';
+import { AuthService } from 'src/app/common/services/auth';
+import { EntitySearchStateService } from 'src/app/modules/advanced/components/entity-search/state/entity-search-state.service';
+import { EntitySearchQuery } from 'src/app/modules/advanced/components/entity-search/state/entity-search.query';
+import { EntitySearchStore } from 'src/app/modules/advanced/components/entity-search/state/entity-search.store';
+import { updateTableSorting } from 'src/app/common/helpers';
 
 @Component({
   selector: 'app-searchable-list',
   templateUrl: './entity-search.component.html',
-  styleUrls: ['./entity-search.component.scss']
+  styleUrls: ['./entity-search.component.scss'],
 })
 export class EntitySearchComponent implements OnInit {
   @ViewChild('modalSearchRemove', { static: true }) modalSearchRemove;
-  @ViewChild('modalSearchCreate', { static: true }) modalSearchCreate;
-  @ViewChild('modalSearchEdit', { static: true }) modalSearchEdit;
-  spinnerStatus: boolean;
   selectedAdvGroup: AdvEntitySearchableGroupModel = new AdvEntitySearchableGroupModel();
   advEntitySearchableGroupListModel: AdvEntitySearchableGroupListModel = new AdvEntitySearchableGroupListModel();
-  advEntitySearchableGroupListRequestModel: AdvEntitySearchableGroupListRequestModel
-    = new AdvEntitySearchableGroupListRequestModel();
-  localPageSettings: PageSettingsModel = new PageSettingsModel();
 
-  get userClaims() { return this.authService.userClaims; }
-
-  constructor(private entitySearchService: EntitySearchService, private authService: AuthService, public userSettingsService: UserSettingsService) {
+  get userClaims() {
+    return this.authService.userClaims;
   }
+
+  tableHeaders: TableHeaderElementModel[] = [
+    { name: 'Id', elementId: 'idTableHeader', sortable: true },
+    { name: 'Name', elementId: 'nameTableHeader', sortable: false },
+    {
+      name: 'Description',
+      elementId: 'descriptionTableHeader',
+      sortable: false,
+    },
+    { name: 'Actions', elementId: '', sortable: false },
+  ];
+
+  constructor(
+    private entitySearchService: EntitySearchService,
+    private authService: AuthService,
+    public entitySearchStateService: EntitySearchStateService
+  ) {}
 
   ngOnInit() {
-    this.getLocalPageSettings();
-  }
-
-  getLocalPageSettings() {
-    this.localPageSettings = this.userSettingsService.getLocalPageSettings
-    ('pagesSettings', ApplicationPages[ApplicationPages.EntitySearch])
-      .settings;
     this.getEntitySearchableGroupList();
   }
 
-  updateLocalPageSettings(localStorageItemName: string) {
-    this.userSettingsService.updateLocalPageSettings
-    (localStorageItemName, this.localPageSettings, ApplicationPages[ApplicationPages.EntitySearch]);
-    this.getLocalPageSettings();
-  }
-
   getEntitySearchableGroupList() {
-    this.advEntitySearchableGroupListRequestModel.isSortDsc = this.localPageSettings.isSortDsc;
-    this.advEntitySearchableGroupListRequestModel.sort = this.localPageSettings.sort;
-    this.advEntitySearchableGroupListRequestModel.pageSize = this.localPageSettings.pageSize;
-    this.entitySearchService.getEntitySearchableGroupList(this.advEntitySearchableGroupListRequestModel).subscribe((data) => {
-      if (data && data.model) {
-        this.advEntitySearchableGroupListModel = data.model;
-      }
-    });
+    this.entitySearchStateService
+      .getEntitySearchableGroupList()
+      .subscribe((data) => {
+        if (data && data.model) {
+          this.advEntitySearchableGroupListModel = data.model;
+        }
+      });
   }
 
-  changePage(e: any) {
-    if (e || e === 0) {
-      this.advEntitySearchableGroupListRequestModel.offset = e;
-      if (e === 0) {
-        this.advEntitySearchableGroupListRequestModel.pageIndex = 0;
-      } else {
-        this.advEntitySearchableGroupListRequestModel.pageIndex
-          = Math.floor(e / this.advEntitySearchableGroupListRequestModel.pageSize);
-      }
-      this.getEntitySearchableGroupList();
-    }
+  changePage(offset: number) {
+    this.entitySearchStateService.updatePageIndex(offset);
+    this.getEntitySearchableGroupList();
   }
 
   openModalSearchRemove(selectedSearchModel: AdvEntitySearchableGroupModel) {
@@ -76,33 +68,26 @@ export class EntitySearchComponent implements OnInit {
     this.modalSearchRemove.show(this.selectedAdvGroup);
   }
 
-  openModalSearchCreate() {
-    this.modalSearchCreate.show();
-  }
-
-  openModalSearchEdit(selectedSearchModel: AdvEntitySearchableGroupModel) {
-    this.selectedAdvGroup = selectedSearchModel;
-    this.modalSearchEdit.show(this.selectedAdvGroup.microtingUUID);
-  }
-
-
-  onSearchChanged(e: any) {
-    this.advEntitySearchableGroupListRequestModel.nameFilter = e;
+  onSearchChanged(name: string) {
+    this.entitySearchStateService.updateNameFilter(name);
     this.changePage(0);
-  }
-
-  onEntitySearchableGroupListRequestChanged(e: any) {
-    this.advEntitySearchableGroupListRequestModel = e;
     this.getEntitySearchableGroupList();
   }
 
   sortTable(sort: string) {
-    if (this.localPageSettings.sort === sort) {
-      this.localPageSettings.isSortDsc = !this.localPageSettings.isSortDsc;
-    } else {
-      this.localPageSettings.isSortDsc = false;
-      this.localPageSettings.sort = sort;
-    }
-    this.updateLocalPageSettings('pagesSettings');
+    const localPageSettings = updateTableSorting(sort, {
+      sort: this.entitySearchStateService.sort,
+      isSortDsc: this.entitySearchStateService.isSortDsc,
+      pageSize: 0,
+      additional: [],
+    });
+    this.entitySearchStateService.updateSort(localPageSettings.sort);
+    this.entitySearchStateService.updateIsSortDsc(localPageSettings.isSortDsc);
+    this.getEntitySearchableGroupList();
+  }
+
+  onPageSizeChanged(pageSize: number) {
+    this.entitySearchStateService.updatePageSize(pageSize);
+    this.getEntitySearchableGroupList();
   }
 }

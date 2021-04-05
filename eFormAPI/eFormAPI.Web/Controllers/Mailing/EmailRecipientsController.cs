@@ -43,7 +43,7 @@ namespace eFormAPI.Web.Controllers.Mailing
 
         [HttpPost]
         [Route("api/email-recipients/index")]
-        public async Task<OperationDataResult<EmailRecipientsListModel>> GetEmailRecipients([FromBody]EmailRecipientsRequestModel requestModel)
+        public async Task<OperationDataResult<Paged<EmailRecipientModel>>> GetEmailRecipients([FromBody]EmailRecipientsRequestModel requestModel)
         {
             return await _emailRecipientsService.GetEmailRecipients(requestModel);
         }

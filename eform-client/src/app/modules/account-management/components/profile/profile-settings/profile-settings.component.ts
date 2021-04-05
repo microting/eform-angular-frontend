@@ -1,53 +1,56 @@
-import {Component, HostBinding, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {EventBrokerService} from 'src/app/common/helpers';
-import {GoogleAuthInfoModel} from 'src/app/common/models/auth';
-import {UserSettingsModel} from 'src/app/common/models/settings';
-import {AuthService, GoogleAuthService, LocaleService, UserSettingsService} from 'src/app/common/services/auth';
-import {TimezonesModel} from 'src/app/common/models/common/timezones.model';
-import {applicationLanguages} from 'src/app/common/const/application-languages.const';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { EventBrokerService } from 'src/app/common/helpers';
+import { GoogleAuthInfoModel } from 'src/app/common/models/auth';
+import { UserSettingsModel } from 'src/app/common/models/settings';
+import {
+  AuthService,
+  GoogleAuthService,
+  LocaleService,
+  UserSettingsService,
+} from 'src/app/common/services/auth';
+import { TimezonesModel } from 'src/app/common/models/common/timezones.model';
+import { applicationLanguages } from 'src/app/common/const/application-languages.const';
+import { countries } from 'src/app/common/const/application-countries.const';
 
 @Component({
   selector: 'app-profile-settings',
   templateUrl: './profile-settings.component.html',
-  styleUrls: ['./profile-settings.component.scss']
+  styleUrls: ['./profile-settings.component.scss'],
 })
 export class ProfileSettingsComponent implements OnInit {
-
   test = true;
-  get userRole() { return this.authService.currentRole; }
+  get userRole() {
+    return this.authService.currentRole;
+  }
 
   get languages() {
     return applicationLanguages;
   }
 
-  countries = [
-    {id: 'da', text: 'Denmark'},
-    {id: 'de-DE', text: 'Germany'},
-    {id: 'en-GB', text: 'United Kingdom'},
-    {id: 'en-US', text: 'United States'}
-  ];
+  get countries() {
+    return countries;
+  }
 
   userSettingsModel: UserSettingsModel = new UserSettingsModel();
-  googleAuthInfoModel: GoogleAuthInfoModel = new GoogleAuthInfoModel;
+  googleAuthInfoModel: GoogleAuthInfoModel = new GoogleAuthInfoModel();
   timeZones: TimezonesModel = new TimezonesModel();
   spinnerCounter = 0;
 
-  constructor(private authService: AuthService,
-              private googleAuthService: GoogleAuthService,
-              private router: Router,
-              private activatedRoute: ActivatedRoute,
-              private localeService: LocaleService,
-              private userSettingsService: UserSettingsService,
-              private eventBrokerService: EventBrokerService) {
-  }
+  constructor(
+    private authService: AuthService,
+    private googleAuthService: GoogleAuthService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private localeService: LocaleService,
+    private userSettingsService: UserSettingsService,
+    private eventBrokerService: EventBrokerService
+  ) {}
 
   ngOnInit() {
     this.getTimeZones();
     this.getGoogleAuthenticatorInfo();
     this.getUserSettings();
-
-    this.userSettingsModel.locale = this.localeService.getCurrentUserLocale();
   }
 
   getGoogleAuthenticatorInfo() {
@@ -78,32 +81,30 @@ export class ProfileSettingsComponent implements OnInit {
     });
   }
 
-  darkTheme(e) {
-    if (e.target && e.target.checked) {
-      this.userSettingsModel.darkTheme = true;
-    } else if (e.target && !e.target.checked) {
-      this.userSettingsModel.darkTheme = false;
+  changeDarkTheme(e) {
+    if (e.target) {
+      this.userSettingsModel.darkTheme = e.target.checked;
     } else {
       return;
     }
   }
 
   isTwoFactorEnabledCheckBoxChanged(e) {
-    if (e.target && e.target.checked) {
-      this.googleAuthInfoModel.isTwoFactorEnabled = true;
-    } else if (e.target && !e.target.checked) {
-      this.googleAuthInfoModel.isTwoFactorEnabled = false;
+    if (e.target) {
+      this.googleAuthInfoModel.isTwoFactorEnabled = e.target.checked;
     } else {
       return;
     }
     this.spinnerStatusCounter(1);
-    this.googleAuthService.updateGoogleAuthenticatorInfo(this.googleAuthInfoModel).subscribe((data) => {
-      if (data.success) {
-        localStorage.removeItem('currentAuth');
-        this.router.navigate(['/login']).then();
-      }
-      this.spinnerStatusCounter(-1);
-    });
+    this.googleAuthService
+      .updateGoogleAuthenticatorInfo(this.googleAuthInfoModel)
+      .subscribe((data) => {
+        if (data.success) {
+          localStorage.removeItem('currentAuth');
+          this.router.navigate(['/login']).then();
+        }
+        this.spinnerStatusCounter(-1);
+      });
   }
 
   deleteGoogleAuthenticatorInfo() {
@@ -118,12 +119,19 @@ export class ProfileSettingsComponent implements OnInit {
 
   updateUserProfileSettings() {
     this.spinnerStatusCounter(1);
-    this.userSettingsService.updateUserSettings(this.userSettingsModel).subscribe(((data) => {
-      this.localeService.updateUserLocale(this.userSettingsModel.locale);
-      window.location.reload();
-    }), error => {
-      this.spinnerStatusCounter(-1);
-    });
+    this.userSettingsService
+      .updateUserSettings(this.userSettingsModel)
+      .subscribe(
+        (data) => {
+          this.localeService.updateUserLocale(this.userSettingsModel.locale);
+          this.eventBrokerService.emit('get-navigation-menu', {
+            takeFromCache: false,
+          });
+        },
+        (error) => {
+          this.spinnerStatusCounter(-1);
+        }
+      );
   }
 
   spinnerStatusCounter(counter: number) {

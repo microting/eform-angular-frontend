@@ -41,6 +41,7 @@ namespace eFormAPI.Web.Services
 {
     using Infrastructure.Database.Entities.Permissions;
     using Microting.eFormApi.BasePn.Abstractions;
+    using Microting.eFormApi.BasePn.Infrastructure.Extensions;
 
     public class AdminService : IAdminService
     {
@@ -66,49 +67,71 @@ namespace eFormAPI.Web.Services
             _dbContext = dbContext;
         }
 
-        public async Task<OperationDataResult<UserInfoModelList>> Index(PaginationModel paginationModel)
+        public async Task<OperationDataResult<Paged<UserInfoViewModel>>> Index(UserInfoRequest requestModel)
         {
             try
             {
-                var userList = new List<UserInfoViewModel>();
-                var userResult = _userManager.Users
-                    .Include(x => x.UserRoles)
-                    .ThenInclude(x => x.Role)
-                    .OrderBy(z => z.Id)
-                    .Skip(paginationModel.Offset)
-                    .Take(paginationModel.PageSize)
-                    .ToList();
+                var userQuery = _userManager.Users
+                    .AsNoTracking()
+                    .AsQueryable();
 
-                userResult.ForEach(userItem =>
+
+                // get count
+                var totalUsers = await userQuery.Select(x => x.Id).CountAsync();
+
+                // pagination
+                userQuery = userQuery
+                    .Skip(requestModel.Offset)
+                    .Take(requestModel.PageSize);
+
+                // add select
+                var userQueryWithSelect = userQuery.Select(x => new UserInfoViewModel
                 {
-                    var roleName = userItem.UserRoles.Select(y => y.Role.Name).FirstOrDefault();
-                    var modelItem = new UserInfoViewModel();
-                    if (roleName != null)
-                    {
-                        modelItem.Role = roleName;
-                    }
-
-                    modelItem.FirstName = userItem.FirstName;
-                    modelItem.LastName = userItem.LastName;
-                    modelItem.Email = userItem.Email;
-                    modelItem.Id = userItem.Id;
-                    modelItem.UserName = userItem.UserName;
-                    userList.Add(modelItem);
+                    Role = x.UserRoles.Select(y => y.Role.Name).FirstOrDefault(),
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
+                    Id = x.Id,
+                    UserName = x.UserName,
+                    Email = x.Email,
                 });
-                var totalUsers = await _userManager.Users.CountAsync();
-                return new OperationDataResult<UserInfoModelList>(true, new UserInfoModelList()
+
+                // sort
+                if (!string.IsNullOrEmpty(requestModel.Sort))
                 {
-                    TotalUsers = totalUsers,
-                    UserList = userList
+                    if (requestModel.IsSortDsc)
+                    {
+                        userQueryWithSelect = userQueryWithSelect
+                            .CustomOrderByDescending(requestModel.Sort);
+                    }
+                    else
+                    {
+                        userQueryWithSelect = userQueryWithSelect
+                            .CustomOrderBy(requestModel.Sort);
+                    }
+                }
+                else
+                {
+                    userQueryWithSelect = userQueryWithSelect
+                        .OrderBy(x => x.Id);
+                }
+
+                // get from db
+                var userResult = await userQueryWithSelect.ToListAsync();
+
+                return new OperationDataResult<Paged<UserInfoViewModel>>(true, new Paged<UserInfoViewModel>
+                {
+                    Total = totalUsers,
+                    Entities = userResult
                 });
             }
             catch (Exception exception)
             {
                 _logger.LogError(exception.Message);
-                return new OperationDataResult<UserInfoModelList>(false,
+                return new OperationDataResult<Paged<UserInfoViewModel>>(false,
                     _localizationService.GetString("ErrorWhileObtainUsers"));
             }
         }
+
         public async Task<OperationResult> Create(UserRegisterModel userRegisterModel)
         {
             try
@@ -173,6 +196,7 @@ namespace eFormAPI.Web.Services
                 return new OperationResult(false, _localizationService.GetString("ErrorWhileCreatingUser"));
             }
         }
+
         public async Task<OperationDataResult<UserRegisterModel>> Read(int userId)
         {
             try

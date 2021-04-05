@@ -102,13 +102,13 @@
               >
                 <ng-select
                   required
-                  bindLabel="name"
+                  bindLabel="groupName"
                   bindValue="id"
                   [clearable]="false"
                   [(ngModel)]="selectedUserModel.groupId"
                   name="editGroup"
                   [placeholder]="'Group' | translate"
-                  [items]="availableGroups.securityGroupList"
+                  [items]="availableGroups.entities"
                   id="editGroup"
                 ></ng-select>
               </div>

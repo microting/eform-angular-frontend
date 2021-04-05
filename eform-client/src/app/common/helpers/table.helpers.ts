@@ -36,3 +36,20 @@ export const updateTablePage = (
     return null;
   }
 };
+
+export const updateTableSort = (
+  sort: string,
+  currentSort: string,
+  currentIsSortDsc: boolean
+): { sort: string; isSortDsc: boolean } => {
+  let updatedPageSettings: { sort: string; isSortDsc: boolean };
+  if (currentSort === sort) {
+    updatedPageSettings = {
+      sort: currentSort,
+      isSortDsc: !currentIsSortDsc,
+    };
+  } else {
+    updatedPageSettings = { isSortDsc: false, sort: sort };
+  }
+  return updatedPageSettings;
+};

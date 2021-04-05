@@ -1,24 +1,31 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {CommonDictionaryModel} from 'src/app/common/models/common';
-import {SecurityGroupsModel} from 'src/app/common/models/security';
-import {UserRegisterModel} from 'src/app/common/models/user';
-import {AdminService} from 'src/app/common/services/users';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { Paged } from 'src/app/common/models/common';
+import { SecurityGroupModel } from 'src/app/common/models/security';
+import { UserRegisterModel } from 'src/app/common/models/user';
+import { AdminService } from 'src/app/common/services/users';
 
 @Component({
   selector: 'app-new-user-modal',
   templateUrl: './new-user-modal.component.html',
-  styleUrls: ['./new-user-modal.component.scss']
+  styleUrls: ['./new-user-modal.component.scss'],
 })
 export class NewUserModalComponent implements OnInit {
-  @Input() availableGroups: SecurityGroupsModel = new SecurityGroupsModel();
+  @Input()
+  availableGroups: Paged<SecurityGroupModel> = new Paged<SecurityGroupModel>();
   @Output() onUserCreated: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('frame', { static: true }) frame;
-  newUserModel: UserRegisterModel = new UserRegisterModel;
+  newUserModel: UserRegisterModel = new UserRegisterModel();
 
-  constructor(private adminService: AdminService) { }
+  constructor(private adminService: AdminService) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   show() {
     this.frame.show();
@@ -27,11 +34,10 @@ export class NewUserModalComponent implements OnInit {
   createUser() {
     this.adminService.createUser(this.newUserModel).subscribe((data) => {
       if (data && data.success) {
-        this.newUserModel = new UserRegisterModel;
+        this.newUserModel = new UserRegisterModel();
         this.onUserCreated.emit();
         this.frame.hide();
       }
     });
   }
-
 }

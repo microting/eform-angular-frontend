@@ -4,9 +4,11 @@
       mdbBtn
       id="createEntitySearchBtn"
       class="btn btn-success btn-small-height"
-      mdbTooltip="{{ 'Create new searchable list' | translate }}" *ngIf="userClaims.entitySearchCreate"
+      mdbTooltip="{{ 'Create new searchable list' | translate }}"
+      *ngIf="userClaims.entitySearchCreate"
       placement="left"
-      [routerLink]="['/advanced/entity-search/create']">
+      [routerLink]="['/advanced/entity-search/create']"
+    >
       {{ 'New list' | translate }}
     </button>
   </div>
@@ -17,93 +19,110 @@
   <div class="row pl-1">
     <div class="col-md-2">
       <div class="md-form">
-        <input mdbInput
-               (ngModelChange)="onSearchChanged($event)"
-               [ngModel]="advEntitySearchableGroupListRequestModel.nameFilter"
-               type="text" class="form-control" id="labelInput">
+        <input
+          mdbInput
+          (ngModelChange)="onSearchChanged($event)"
+          [ngModel]="entitySearchStateService.getNameFilter() | async"
+          type="text"
+          class="form-control"
+          id="labelInput"
+        />
         <label for="labelInput">{{ 'Search' | translate }}</label>
       </div>
     </div>
   </div>
   <div class="row p-1 table-responsive no-gutters">
-    <table mdbTable striped="true" hover="true" small="true" class="z-depth-1 text-center">
-      <thead>
-      <tr>
-        <th scope="col" class="table-header-sortable" (click)="sortTable('id')">
-          <div class="d-flex align-items-center justify-content-center">
-            ID
-            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'id'">unfold_more</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'id' && !localPageSettings.isSortDsc">expand_less</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'id' && localPageSettings.isSortDsc">expand_more</i>
-          </div>
-        </th>
-        <th class="table-header-sortable" (click)="sortTable('name')">
-          <div class="d-flex align-items-center justify-content-center">
-            {{ 'Name' | translate }}
-            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'name'">unfold_more</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'name' && !localPageSettings.isSortDsc">expand_less</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'name' && localPageSettings.isSortDsc">expand_more</i>
-          </div>
-        </th>
-        <th class="table-header-sortable" (click)="sortTable('description')">
-          <div class="d-flex align-items-center justify-content-center">
-            {{ 'Description' | translate }}
-            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'description'">unfold_more</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'description' && !localPageSettings.isSortDsc">expand_less</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'description' && localPageSettings.isSortDsc">expand_more</i>
-          </div>
-        </th>
-        <th *ngIf="userClaims.entitySearchDelete || userClaims.entitySearchUpdate">
-          {{ 'Actions' | translate }}
-        </th>
-      </tr>
-      </thead>
+    <table
+      mdbTable
+      striped="true"
+      hover="true"
+      small="true"
+      class="z-depth-1 text-center"
+    >
+      <thead
+        table-headers
+        [tableHeaders]="tableHeaders"
+        [currentSortName]="entitySearchStateService.getSort() | async"
+        (sortChanged)="sortTable($event)"
+        [isSortDsc]="entitySearchStateService.getIsSortDsc() | async"
+      ></thead>
       <tbody id="tableBody">
-      <tr *ngFor="let advEntitySearchableGroup of advEntitySearchableGroupListModel.entityGroups">
-        <td scope="row" id="entitySearchMUid">{{advEntitySearchableGroup.microtingUUID}}</td>
-        <td id="entitySearchName"> {{advEntitySearchableGroup.name}}</td>
-        <td id="entitySearchDescription"> {{advEntitySearchableGroup.description}}</td>
-        <td *ngIf="userClaims.entitySearchDelete || userClaims.entitySearchUpdate">
-          <div class="d-flex flex-row justify-content-center">
-            <button id="entitySearchUpdateBtn" class="btn btn-accent btn-icon text-black-50 mb-2 "
-                    *ngIf="userClaims.entitySelectUpdate && (!advEntitySearchableGroup.isLocked || advEntitySearchableGroup.name.includes('editable'))"
-                    mdbTooltip="{{'Edit' | translate}}"
-                    [routerLink]="['/advanced/entity-search/edit/' + advEntitySearchableGroup.microtingUUID]">
-              <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
-            </button>
-            <button id="entitySearchDeleteBtn" class="btn btn-danger btn-icon mb-2 "
-                    *ngIf="userClaims.entitySearchDelete && !advEntitySearchableGroup.isLocked"
-                    mdbTooltip="{{'Remove' | translate}}"
-                    (click)="openModalSearchRemove(advEntitySearchableGroup)">
-              <fa-icon icon="trash-alt" [fixedWidth]="true" size="lg"></fa-icon>
-
-            </button>
-          </div>
-        </td>
-      </tr>
+        <tr
+          *ngFor="
+            let advEntitySearchableGroup of advEntitySearchableGroupListModel.entityGroups
+          "
+        >
+          <td id="entitySearchMUid">
+            {{ advEntitySearchableGroup.microtingUUID }}
+          </td>
+          <td id="entitySearchName">{{ advEntitySearchableGroup.name }}</td>
+          <td id="entitySearchDescription">
+            {{ advEntitySearchableGroup.description }}
+          </td>
+          <td
+            *ngIf="
+              userClaims.entitySearchDelete || userClaims.entitySearchUpdate
+            "
+          >
+            <div class="d-flex flex-row justify-content-center">
+              <button
+                id="entitySearchUpdateBtn"
+                class="btn btn-accent btn-icon text-black-50 mb-2"
+                *ngIf="
+                  userClaims.entitySelectUpdate &&
+                  (!advEntitySearchableGroup.isLocked ||
+                    advEntitySearchableGroup.name.includes('editable'))
+                "
+                mdbTooltip="{{ 'Edit' | translate }}"
+                [routerLink]="[
+                  '/advanced/entity-search/edit/' +
+                    advEntitySearchableGroup.microtingUUID
+                ]"
+              >
+                <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
+              </button>
+              <button
+                id="entitySearchDeleteBtn"
+                class="btn btn-danger btn-icon mb-2"
+                *ngIf="
+                  userClaims.entitySearchDelete &&
+                  !advEntitySearchableGroup.isLocked
+                "
+                mdbTooltip="{{ 'Remove' | translate }}"
+                (click)="openModalSearchRemove(advEntitySearchableGroup)"
+              >
+                <fa-icon
+                  icon="trash-alt"
+                  [fixedWidth]="true"
+                  size="lg"
+                ></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
       </tbody>
     </table>
-
-
   </div>
   <div class="row justify-content-between mr-2 ml-2">
     <div class="col-md-1">
       <eform-page-size
-        [pageSize]="localPageSettings.pageSize"
-        (onPageSizeChanged)="localPageSettings.pageSize = $event; advEntitySearchableGroupListRequestModel.pageIndex = 1;
-        updateLocalPageSettings('pagesSettings')">
+        [pageSize]="entitySearchStateService.getPageSize() | async"
+        (onPageSizeChanged)="onPageSizeChanged($event)"
+      >
       </eform-page-size>
     </div>
     <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
-      <eform-pagination
-        *ngIf="advEntitySearchableGroupListModel.numOfElements > advEntitySearchableGroupListRequestModel.pageSize"
-        [limit]="advEntitySearchableGroupListRequestModel.pageSize"
+      <pagination-pn
+        [limit]="entitySearchStateService.getPageSize() | async"
         [size]="advEntitySearchableGroupListModel.numOfElements"
-        [offset]="advEntitySearchableGroupListRequestModel.offset"
-        (onPageChanged)="changePage($event)"></eform-pagination>
+        [offset]="entitySearchStateService.getOffset()"
+        (onPageChanged)="changePage($event)"
+      ></pagination-pn>
     </div>
   </div>
 </div>
 
-<app-entity-search-remove (onEntityRemoved)="getEntitySearchableGroupList()"
-                          #modalSearchRemove></app-entity-search-remove>
+<app-entity-search-remove
+  (onEntityRemoved)="getEntitySearchableGroupList()"
+  #modalSearchRemove
+></app-entity-search-remove>

@@ -1,251 +1,180 @@
-<subheader-pn [title]="currentTemplate.label">
-
-</subheader-pn>
+<subheader-pn [title]="currentTemplate.label"> </subheader-pn>
 
 <!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
 <div class="container-fluid">
   <div class="row pl-1">
     <div class="col-md-2">
       <div class="md-form">
-        <input mdbInput
-               (input)="onLabelInputChanged($event.target.value)"
-               type="text" class="form-control" id="labelInput">
+        <input
+          mdbInput
+          [ngModel]="caseStateService.getNameFilter() | async"
+          (ngModelChange)="onLabelInputChanged($event)"
+          type="text"
+          class="form-control"
+          id="labelInput"
+        />
         <label for="labelInput">{{ 'Search' | translate }}</label>
       </div>
     </div>
   </div>
   <div class="row p-1 table-responsive no-gutters">
-    <table mdbTable striped="true" hover="true" small="true" class="z-depth-1 text-center">
-      <thead>
-      <tr>
-        <th class="table-header-sortable"
-            (click)="sortTable('id')"
-            rowspan="1" colspan="1">
-          <div class="d-flex align-items-center justify-content-center">
-            ID
-            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'id'">unfold_more</i>
-            <i class="material-icons"
-               *ngIf="localPageSettings.sort == 'id' && !localPageSettings.isSortDsc">expand_less</i>
-            <i class="material-icons"
-               *ngIf="localPageSettings.sort == 'id' && localPageSettings.isSortDsc">expand_more</i>
-          </div>
-        </th>
-        <th class="table-header-sortable"
-            (click)="sortTable('done_at')"
-            rowspan="1" colspan="1">
-          <div class="d-flex align-items-center justify-content-center">
-            {{ 'eForm finished at' | translate }}
-            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'done_at'">unfold_more</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'done_at' && !localPageSettings.isSortDsc">expand_less</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'done_at' && localPageSettings.isSortDsc">expand_more</i>
-          </div>
-        </th>
-        <th class="table-header-sortable"
-            (click)="sortTable('created_at')"
-            rowspan="1" colspan="1"
-            *ngIf="userRole == 'admin'">
-          <div class="d-flex align-items-center justify-content-center">
-            {{ 'Data accessible at' | translate }}
-            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'created_at'">unfold_more</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'created_at' && !localPageSettings.isSortDsc">expand_less</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'created_at' && localPageSettings.isSortDsc">expand_more</i>
-          </div>
-        </th>
-        <th class="table-header-sortable"
-            (click)="sortTable('worker_name')"
-            rowspan="1" colspan="1">
-          <div class="d-flex align-items-center justify-content-center">
-            {{ 'eForm done by' | translate }}
-            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'worker_name'">unfold_more</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'worker_name' && !localPageSettings.isSortDsc">expand_less</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'worker_name' && localPageSettings.isSortDsc">expand_more</i>
-          </div>
-        </th>
-        <th *ngIf="currentTemplate.field1" class="table-header-sortable"
-            (click)="sortTable('field1')"
-            rowspan="1" colspan="1">
-          <div class="d-flex align-items-center justify-content-center">
-            {{currentTemplate.field1.label}}
-            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'field1'">unfold_more</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'field1' && !localPageSettings.isSortDsc">expand_less</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'field1' && localPageSettings.isSortDsc">expand_more</i>
-          </div>
-        </th>
-        <th *ngIf="currentTemplate.field2" class="table-header-sortable"
-            (click)="sortTable('field2')"
-            rowspan="1" colspan="1">
-          <div class="d-flex align-items-center justify-content-center">
-            {{currentTemplate.field2.label}}
-            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'field2'">unfold_more</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'field2' && !localPageSettings.isSortDsc">expand_less</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'field2' && localPageSettings.isSortDsc">expand_more</i>
-          </div>
-        </th>
-        <th *ngIf="currentTemplate.field3" class="table-header-sortable"
-            (click)="sortTable('field3')"
-            rowspan="1" colspan="1">
-          <div class="d-flex align-items-center justify-content-center">
-            {{currentTemplate.field3.label}}
-            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'field3'">unfold_more</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'field3' && !localPageSettings.isSortDsc">expand_less</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'field3' && localPageSettings.isSortDsc">expand_more</i>
-          </div>
-        </th>
-        <th *ngIf="currentTemplate.field4" class="table-header-sortable"
-            (click)="sortTable('field4')"
-            rowspan="1" colspan="1">
-          <div class="d-flex align-items-center justify-content-center">
-            {{currentTemplate.field4.label}}
-            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'field4'">unfold_more</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'field4' && !localPageSettings.isSortDsc">expand_less</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'field4' && localPageSettings.isSortDsc">expand_more</i>
-          </div>
-        </th>
-        <th *ngIf="currentTemplate.field5" class="table-header-sortable"
-            (click)="sortTable('field5')"
-            rowspan="1" colspan="1">
-          <div class="d-flex align-items-center justify-content-center">
-            {{currentTemplate.field5.label}}
-            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'field5'">unfold_more</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'field5' && !localPageSettings.isSortDsc">expand_less</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'field5' && localPageSettings.isSortDsc">expand_more</i>
-          </div>
-        </th>
-        <th *ngIf="currentTemplate.field6" class="table-header-sortable"
-            (click)="sortTable('field6')"
-            rowspan="1" colspan="1">
-          <div class="d-flex align-items-center justify-content-center">
-            {{currentTemplate.field6.label}}
-            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'field6'">unfold_more</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'field6' && !localPageSettings.isSortDsc">expand_less</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'field6' && localPageSettings.isSortDsc">expand_more</i>
-          </div>
-        </th>
-        <th *ngIf="currentTemplate.field7" class="table-header-sortable"
-            (click)="sortTable('field7')"
-            rowspan="1" colspan="1">
-          <div class="d-flex align-items-center justify-content-center">
-            {{currentTemplate.field7.label}}
-            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'field7'">unfold_more</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'field7' && !localPageSettings.isSortDsc">expand_less</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'field7' && localPageSettings.isSortDsc">expand_more</i>
-          </div>
-        </th>
-        <th *ngIf="currentTemplate.field8" class="table-header-sortable"
-            (click)="sortTable('field8')"
-            rowspan="1" colspan="1">
-          <div class="d-flex align-items-center justify-content-center">
-            {{currentTemplate.field8.label}}
-            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'field8'">unfold_more</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'field8' && !localPageSettings.isSortDsc">expand_less</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'field8' && localPageSettings.isSortDsc">expand_more</i>
-          </div>
-        </th>
-        <th *ngIf="currentTemplate.field9" class="table-header-sortable"
-            (click)="sortTable('field9')"
-            rowspan="1" colspan="1">
-          <div class="d-flex align-items-center justify-content-center">
-            {{currentTemplate.field9.label}}
-            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'field9'">unfold_more</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'field9' && !localPageSettings.isSortDsc">expand_less</i>
-            <i class="material-icons" *ngIf="localPageSettings.sort == 'field9' && localPageSettings.isSortDsc">expand_more</i>
-          </div>
-        </th>
-        <th>{{ 'Actions' | translate }}
-        </th>
-      </tr>
-      </thead>
+    <table
+      mdbTable
+      striped="true"
+      hover="true"
+      small="true"
+      class="z-depth-1 text-center"
+    >
+      <thead
+        table-headers
+        [tableHeaders]="tableHeaders"
+        [currentSortName]="caseStateService.getSort() | async"
+        (sortChanged)="sortTable($event)"
+        [isSortDsc]="caseStateService.getIsSortDsc() | async"
+      ></thead>
       <tbody>
-      <tr *ngFor="let caseModel of caseListModel.cases">
-        <td scope="row">{{caseModel.id}}</td>
-        <td>
-          <date-formatter [date]="caseModel.doneAt" [Format]="'datetime'"></date-formatter>
-        </td>
-        <td *ngIf="userRole == 'admin'">
-          <date-formatter [date]="caseModel.createdAt" [Format]="'datetime'"></date-formatter>
-        </td>
-        <td> {{caseModel.workerName}}</td>
-        <td *ngIf="currentTemplate.field1" class="text-center">
-          <div class="max-lines" [innerHTML]="caseModel.fieldValue1"></div>
-        </td>
-        <td *ngIf="currentTemplate.field2" class="text-center">
-          <div class="max-lines" [innerHTML]="caseModel.fieldValue2"></div>
-        </td>
-        <td *ngIf="currentTemplate.field3" class="text-center">
-          <div class="max-lines" [innerHTML]="caseModel.fieldValue3"></div>
-        </td>
-        <td *ngIf="currentTemplate.field4" class="text-center">
-          <div class="max-lines" [innerHTML]="caseModel.fieldValue4"></div>
-        </td>
-        <td *ngIf="currentTemplate.field5" class="text-center">
-          <div class="max-lines" [innerHTML]="caseModel.fieldValue5"></div>
-        </td>
-        <td *ngIf="currentTemplate.field6" class="text-center">
-          <div class="max-lines" [innerHTML]="caseModel.fieldValue6"></div>
-        </td>
-        <td *ngIf="currentTemplate.field7" class="text-center">
-          <div class="max-lines" [innerHTML]="caseModel.fieldValue7"></div>
-        </td>
-        <td *ngIf="currentTemplate.field8" class="text-center">
-          <div class="max-lines" [innerHTML]="caseModel.fieldValue8"></div>
-        </td>
-        <td *ngIf="currentTemplate.field9" class="text-center">
-          <div class="max-lines" [innerHTML]="caseModel.fieldValue9"></div>
-        </td>
-        <td>
-          <div class="d-flex flex-row justify-content-center">
-            <button mdbBtn class="btn-success btn-icon mb-2" *ngIf="checkEformPermissions(userClaimsEnum.caseRead)"
-                    [routerLink]="['/cases/edit/' + caseModel.id + '/' + currentTemplate.id]"
-                    mdbTooltip="{{ 'Edit Case' | translate }}">
-              <fa-icon icon="pen" size="lg" [fixedWidth]="true"></fa-icon>
-            </button>
-            <button mdbBtn class="btn-success btn-icon mb-2" *ngIf="checkEformPermissions(userClaimsEnum.caseRead)"
-                    [routerLink]="['/cases/posts/' + caseModel.id + '/' + currentTemplate.id]"
-                    mdbTooltip="{{ 'Posts' | translate }}">
-              <fa-icon icon="sticky-note" size="lg" [fixedWidth]="true"></fa-icon>
-            </button>
-            <button mdbBtn class="btn-success btn-icon mb-2"
-                    *ngIf="checkEformPermissions(userClaimsEnum.caseGetPdf)
-                    && (currentTemplate.jasperExportEnabled || currentTemplate.docxExportEnabled)"
-                    (click)="downloadFile(caseModel.id, 'pdf')"
-                    mdbTooltip="{{ 'Download PDF' | translate }}">
-              <fa-icon icon="file-pdf" size="lg" [fixedWidth]="true"></fa-icon>
-
-            </button>
-            <button mdbBtn class="btn-info btn-icon mb-2"
-                    *ngIf="checkEformPermissions(userClaimsEnum.caseGetPdf) && currentTemplate.docxExportEnabled"
-                    (click)="downloadFile(caseModel.id, 'docx')"
-                    mdbTooltip="{{ 'Download Docx' | translate }}">
-              <fa-icon icon="file-word" size="lg" [fixedWidth]="true"></fa-icon>
-
-            </button>
-            <button mdbBtn class="btn-danger btn-icon mb-2 " *ngIf="checkEformPermissions(userClaimsEnum.caseDelete)"
-                    mdbTooltip="{{ 'Delete Case' | translate }}"
-                    (click)="onDeleteClicked(caseModel)">
-              <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true"></fa-icon>
-            </button>
-          </div>
-        </td>
-      </tr>
+        <tr *ngFor="let caseModel of caseListModel.cases">
+          <td>{{ caseModel.id }}</td>
+          <td>
+            <date-formatter
+              [date]="caseModel.doneAt"
+              [Format]="'datetime'"
+            ></date-formatter>
+          </td>
+          <td *ngIf="userRole == 'admin'">
+            <date-formatter
+              [date]="caseModel.createdAt"
+              [Format]="'datetime'"
+            ></date-formatter>
+          </td>
+          <td>{{ caseModel.workerName }}</td>
+          <td *ngIf="currentTemplate.field1" class="text-center">
+            <div class="max-lines" [innerHTML]="caseModel.fieldValue1"></div>
+          </td>
+          <td *ngIf="currentTemplate.field2" class="text-center">
+            <div class="max-lines" [innerHTML]="caseModel.fieldValue2"></div>
+          </td>
+          <td *ngIf="currentTemplate.field3" class="text-center">
+            <div class="max-lines" [innerHTML]="caseModel.fieldValue3"></div>
+          </td>
+          <td *ngIf="currentTemplate.field4" class="text-center">
+            <div class="max-lines" [innerHTML]="caseModel.fieldValue4"></div>
+          </td>
+          <td *ngIf="currentTemplate.field5" class="text-center">
+            <div class="max-lines" [innerHTML]="caseModel.fieldValue5"></div>
+          </td>
+          <td *ngIf="currentTemplate.field6" class="text-center">
+            <div class="max-lines" [innerHTML]="caseModel.fieldValue6"></div>
+          </td>
+          <td *ngIf="currentTemplate.field7" class="text-center">
+            <div class="max-lines" [innerHTML]="caseModel.fieldValue7"></div>
+          </td>
+          <td *ngIf="currentTemplate.field8" class="text-center">
+            <div class="max-lines" [innerHTML]="caseModel.fieldValue8"></div>
+          </td>
+          <td *ngIf="currentTemplate.field9" class="text-center">
+            <div class="max-lines" [innerHTML]="caseModel.fieldValue9"></div>
+          </td>
+          <td>
+            <div class="d-flex flex-row justify-content-center">
+              <button
+                mdbBtn
+                class="btn-success btn-icon mb-2"
+                *ngIf="checkEformPermissions(userClaimsEnum.caseRead)"
+                [routerLink]="[
+                  '/cases/edit/' + caseModel.id + '/' + currentTemplate.id
+                ]"
+                mdbTooltip="{{ 'Edit Case' | translate }}"
+              >
+                <fa-icon icon="pen" size="lg" [fixedWidth]="true"></fa-icon>
+              </button>
+              <button
+                mdbBtn
+                class="btn-success btn-icon mb-2"
+                *ngIf="checkEformPermissions(userClaimsEnum.caseRead)"
+                [routerLink]="[
+                  '/cases/posts/' + caseModel.id + '/' + currentTemplate.id
+                ]"
+                mdbTooltip="{{ 'Posts' | translate }}"
+              >
+                <fa-icon
+                  icon="sticky-note"
+                  size="lg"
+                  [fixedWidth]="true"
+                ></fa-icon>
+              </button>
+              <button
+                mdbBtn
+                class="btn-success btn-icon mb-2"
+                *ngIf="
+                  checkEformPermissions(userClaimsEnum.caseGetPdf) &&
+                  (currentTemplate.jasperExportEnabled ||
+                    currentTemplate.docxExportEnabled)
+                "
+                (click)="downloadFile(caseModel.id, 'pdf')"
+                mdbTooltip="{{ 'Download PDF' | translate }}"
+              >
+                <fa-icon
+                  icon="file-pdf"
+                  size="lg"
+                  [fixedWidth]="true"
+                ></fa-icon>
+              </button>
+              <button
+                mdbBtn
+                class="btn-info btn-icon mb-2"
+                *ngIf="
+                  checkEformPermissions(userClaimsEnum.caseGetPdf) &&
+                  currentTemplate.docxExportEnabled
+                "
+                (click)="downloadFile(caseModel.id, 'docx')"
+                mdbTooltip="{{ 'Download Docx' | translate }}"
+              >
+                <fa-icon
+                  icon="file-word"
+                  size="lg"
+                  [fixedWidth]="true"
+                ></fa-icon>
+              </button>
+              <button
+                mdbBtn
+                class="btn-danger btn-icon mb-2"
+                *ngIf="checkEformPermissions(userClaimsEnum.caseDelete)"
+                mdbTooltip="{{ 'Delete Case' | translate }}"
+                (click)="onDeleteClicked(caseModel)"
+              >
+                <fa-icon
+                  icon="trash-alt"
+                  size="lg"
+                  [fixedWidth]="true"
+                ></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
   <div class="row justify-content-between mr-2 ml-2">
     <div class="col-md-1">
-      <eform-page-size
-        [pageSize]="localPageSettings.pageSize"
-        (onPageSizeChanged)="localPageSettings.pageSize = $event; casesRequestModel.pageIndex = 1;
-        updateLocalPageSettings('pagesSettings')">
-      </eform-page-size>
+      <page-size-pn
+        [pageSize]="caseStateService.getPageSize() | async"
+        (onPageSizeChanged)="onPageSizeChanged($event)"
+      >
+      </page-size-pn>
     </div>
     <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
-      <eform-pagination *ngIf="caseListModel.numOfElements > casesRequestModel.pageSize"
-                        [limit]="casesRequestModel.pageSize"
-                        [size]="caseListModel.numOfElements"
-                        [offset]="casesRequestModel.offset"
-                        (onPageChanged)="changePage($event)"></eform-pagination>
+      <pagination-pn
+        [limit]="caseStateService.getPageSize() | async"
+        [size]="caseListModel.numOfElements"
+        [offset]="caseStateService.getOffset() | async"
+        (onPageChanged)="changePage($event)"
+      ></pagination-pn>
     </div>
   </div>
 </div>
 
-<app-remove-case-modal (onCaseDeleted)="loadAllCases()" #modalRemoveCase></app-remove-case-modal>
+<app-remove-case-modal
+  (onCaseDeleted)="onCaseDeleted()"
+  #modalRemoveCase
+></app-remove-case-modal>

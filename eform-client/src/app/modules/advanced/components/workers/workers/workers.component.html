@@ -1,58 +1,78 @@
 <subheader-pn>
   <div class="p-3">
-    <button mdbBtn
-      class="btn-success btn-small-height" id="workerCreateBtn" *ngIf="userClaims.workersCreate"
-      (click)="openCreateModal()">{{ 'Create Worker' | translate }}</button>
+    <button
+      mdbBtn
+      class="btn-success btn-small-height"
+      id="workerCreateBtn"
+      *ngIf="userClaims.workersCreate"
+      (click)="openCreateModal()"
+    >
+      {{ 'Create Worker' | translate }}
+    </button>
   </div>
 </subheader-pn>
-<br>
+<br />
 <!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
 <div class="container-fluid">
   <div class="row p-1 table-responsive no-gutters">
-    <table mdbTable striped="true" hover="true" small="true" class="z-depth-1 text-center">
-      <thead>
-      <tr>
-        <th scope="col">{{ 'Created at' | translate }}</th>
-        <th scope="col"> {{ 'Updated at' | translate }}</th>
-        <th scope="col">{{ 'First name' | translate }}</th>
-        <th scope="col">{{ 'Last name' | translate }}</th>
-        <th scope="col"> Microting UID</th>
-        <th scope="col" *ngIf="userClaims.workersDelete || userClaims.workersUpdate">{{ 'Actions' | translate }}</th>
-      </tr>
-      </thead>
+    <table
+      mdbTable
+      striped="true"
+      hover="true"
+      small="true"
+      class="z-depth-1 text-center"
+    >
+      <thead table-headers [tableHeaders]="tableHeaders"></thead>
       <tbody>
-      <tr *ngFor="let workerDto of workersDto">
-        <td scope="row">
-          <date-formatter [date]="workerDto.createdAt" [Format]="'datetime'"></date-formatter>
-        </td>
-        <td>
-          <date-formatter [date]="workerDto.updatedAt" [Format]="'datetime'"></date-formatter>
-        </td>
-        <td id="workerFirstName">
-          {{workerDto.firstName}}
-        </td>
-        <td id="workerLastName">
-          {{workerDto.lastName}}
-        </td>
-        <td id="workerUID">
-          {{workerDto.workerUId}}
-        </td>
-        <td *ngIf="userClaims.workersDelete || userClaims.workersUpdate">
-          <div class="d-flex flex-row justify-content-center">
-            <button id="workerEditBtn" class="btn btn-accent text-black-50 btn-icon mb-2" *ngIf="userClaims.workersUpdate"
-                    mdbTooltip="{{'Edit Worker' | translate}}"
-                    (click)="openEditModal(workerDto)">
-              <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
-            </button>
-            <button id="workerDeleteBtn"
-              class="btn btn-danger btn-icon mb-2 " *ngIf="userClaims.workersDelete"
-              mdbTooltip="{{'Delete Worker' | translate}}"
-              (click)="openDeleteModal(workerDto)">
-              <fa-icon icon="trash-alt" [fixedWidth]="true" size="lg"></fa-icon>
-            </button>
-          </div>
-        </td>
-      </tr>
+        <tr *ngFor="let workerDto of workersDto">
+          <td scope="row">
+            <date-formatter
+              [date]="workerDto.createdAt"
+              [Format]="'datetime'"
+            ></date-formatter>
+          </td>
+          <td>
+            <date-formatter
+              [date]="workerDto.updatedAt"
+              [Format]="'datetime'"
+            ></date-formatter>
+          </td>
+          <td id="workerFirstName">
+            {{ workerDto.firstName }}
+          </td>
+          <td id="workerLastName">
+            {{ workerDto.lastName }}
+          </td>
+          <td id="workerUID">
+            {{ workerDto.workerUId }}
+          </td>
+          <td *ngIf="userClaims.workersDelete || userClaims.workersUpdate">
+            <div class="d-flex flex-row justify-content-center">
+              <button
+                id="workerEditBtn"
+                class="btn btn-accent text-black-50 btn-icon mb-2"
+                *ngIf="userClaims.workersUpdate"
+                mdbTooltip="{{ 'Edit Worker' | translate }}"
+                (click)="openEditModal(workerDto)"
+              >
+                <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
+              </button>
+              <button
+                id="workerDeleteBtn"
+                class="btn btn-danger btn-icon mb-2"
+                *ngIf="userClaims.workersDelete"
+                mdbTooltip="{{ 'Delete Worker' | translate }}"
+                (click)="openDeleteModal(workerDto)"
+              >
+                <fa-icon
+                  icon="trash-alt"
+                  [fixedWidth]="true"
+                  size="lg"
+                ></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -60,12 +80,15 @@
 
 <app-worker-create
   (WorkerCreated)="loadAllWorkers()"
-  #modalWorkerCreate></app-worker-create>
+  #modalWorkerCreate
+></app-worker-create>
 <app-worker-edit
   (onWorkerEdited)="loadAllWorkers()"
   [selectedWorkerDto]="selectedWorkerDto"
-  #modalWorkerEdit></app-worker-edit>
+  #modalWorkerEdit
+></app-worker-edit>
 <app-worker-delete
   (onWorkerDeleted)="loadAllWorkers()"
   [selectedWorkerDto]="selectedWorkerDto"
-  #modalWorkerDelete></app-worker-delete>
+  #modalWorkerDelete
+></app-worker-delete>

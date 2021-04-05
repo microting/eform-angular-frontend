@@ -1,24 +1,31 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {SecurityGroupsModel} from 'src/app/common/models/security';
-import {UserRegisterModel} from 'src/app/common/models/user';
-import {AdminService} from 'src/app/common/services/users';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { SecurityGroupModel } from 'src/app/common/models/security';
+import { UserRegisterModel } from 'src/app/common/models/user';
+import { AdminService } from 'src/app/common/services/users';
+import { Paged } from 'src/app/common/models';
 
 @Component({
   selector: 'app-user-edit-modal',
   templateUrl: './user-edit-modal.component.html',
-  styleUrls: ['./user-edit-modal.component.scss']
+  styleUrls: ['./user-edit-modal.component.scss'],
 })
 export class UserEditModalComponent implements OnInit {
   @ViewChild('frame', { static: true }) frame;
-  @Input() availableGroups: SecurityGroupsModel = new SecurityGroupsModel();
+  @Input()
+  availableGroups: Paged<SecurityGroupModel> = new Paged<SecurityGroupModel>();
   @Output() onUserUpdated: EventEmitter<void> = new EventEmitter<void>();
-  selectedUserModel: UserRegisterModel = new UserRegisterModel;
+  selectedUserModel: UserRegisterModel = new UserRegisterModel();
 
-  constructor(private adminService: AdminService) {
-  }
+  constructor(private adminService: AdminService) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   show(selectedId: number) {
     this.getUserInfo(selectedId);

@@ -58,13 +58,15 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
             _dbContext = dbContext;
         }
 
-        public async Task<OperationDataResult<EmailRecipientsListModel>> GetEmailRecipients(
+        public async Task<OperationDataResult<Paged<EmailRecipientModel>>> GetEmailRecipients(
             EmailRecipientsRequestModel requestModel)
         {
             try
             {
-                var emailRecipientsModel = new EmailRecipientsListModel();
-                var emailRecipientsQuery = _dbContext.EmailRecipients.AsQueryable();
+                var emailRecipientsModel = new Paged<EmailRecipientModel>();
+                var emailRecipientsQuery = _dbContext.EmailRecipients
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .AsQueryable();
                 if (!string.IsNullOrEmpty(requestModel.Sort))
                 {
                     if (requestModel.IsSortDsc)
@@ -88,33 +90,23 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
                 if (requestModel.TagIds.Any())
                 {
                     emailRecipientsQuery = emailRecipientsQuery
-                        .Where(x => x.TagRecipients.Any(
-                            y => requestModel.TagIds.Contains(y.EmailTagId)));
+                        .Where(x => x.TagRecipients
+                            .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                            .Any(y => requestModel.TagIds.Contains(y.EmailTagId)));
                 }
 
-                emailRecipientsModel.Total = await emailRecipientsQuery.CountAsync();
+                emailRecipientsModel.Total = await emailRecipientsQuery.Select(x => x.Id).CountAsync();
 
                 emailRecipientsQuery = emailRecipientsQuery
                     .Skip(requestModel.Offset)
                     .Take(requestModel.PageSize);
 
-                var emailRecipientList = await emailRecipientsQuery
-                    .Select(x => new EmailRecipientModel()
-                    {
-                        Id = x.Id,
-                        Name = x.Name,
-                        Email = x.Email,
-                        Tags = x.TagRecipients
-                            .Select(u => new EmailRecipientTagModel()
-                            {
-                                Id = u.EmailTag.Id,
-                                Name = u.EmailTag.Name,
-                            }).ToList()
-                    }).ToListAsync();
+                var emailRecipientList = await AddSelectToEmailRecipientsQuery(emailRecipientsQuery)
+                    .ToListAsync();
 
-                emailRecipientsModel.EmailRecipientsList = emailRecipientList;
+                emailRecipientsModel.Entities = emailRecipientList;
 
-                return new OperationDataResult<EmailRecipientsListModel>(
+                return new OperationDataResult<Paged<EmailRecipientModel>>(
                     true,
                     emailRecipientsModel);
             }
@@ -122,7 +114,7 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
             {
                 Console.WriteLine(e);
                 _logger.LogError(e.Message);
-                return new OperationDataResult<EmailRecipientsListModel>(false,
+                return new OperationDataResult<Paged<EmailRecipientModel>>(false,
                     _localizationService.GetString("ErrorWhileObtainingEmailRecipients"));
             }
         }
@@ -323,6 +315,7 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
             try
             {
                 var emailTags = await _dbContext.EmailTags
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                     .AsNoTracking()
                     .Select(x => new EmailRecipientTagCommonModel
                     {
@@ -332,6 +325,7 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
                     }).ToListAsync();
 
                 var emailRecipients = await _dbContext.EmailRecipients
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                     .AsNoTracking()
                     .Select(x => new EmailRecipientTagCommonModel
                     {
@@ -357,7 +351,6 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
             }
         }
 
-
         public async Task<OperationDataResult<CommonDictionaryModel[]>> GetSimpleEmailRecipients()
         {
             try
@@ -381,6 +374,23 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
                 return new OperationDataResult<CommonDictionaryModel[]>(false,
                     _localizationService.GetString("ErrorWhileObtainingEmailRecipients"));
             }
+        }
+
+        private IQueryable<EmailRecipientModel> AddSelectToEmailRecipientsQuery(IQueryable<EmailRecipient> query)
+        {
+            return query.Select(x => new EmailRecipientModel()
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Email = x.Email,
+                Tags = x.TagRecipients
+                    .Where(y => y.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Select(u => new EmailRecipientTagModel
+                    {
+                        Id = u.EmailTag.Id,
+                        Name = u.EmailTag.Name,
+                    }).ToList()
+            });
         }
     }
 }

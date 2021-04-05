@@ -28,7 +28,6 @@ using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Advanced;
 using eFormAPI.Web.Infrastructure.Database;
-using eFormAPI.Web.Infrastructure.Models;
 using eFormAPI.Web.Infrastructure.Models.SelectableList;
 using Microsoft.EntityFrameworkCore;
 using Microting.eForm.Infrastructure.Constants;
@@ -40,6 +39,10 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
 namespace eFormAPI.Web.Services
 {
+    using Microting.eForm.Infrastructure.Models;
+    using Microting.eFormApi.BasePn.Infrastructure.Extensions;
+    using EntityGroup = Infrastructure.Models.EntityGroup;
+
     public class EntitySelectService : IEntitySelectService
     {
         private readonly BaseDbContext _dbContext;
@@ -56,37 +59,91 @@ namespace eFormAPI.Web.Services
         }
 
 
-        public async Task<OperationDataResult<EntityGroupList>> Index(
+        public async Task<OperationDataResult<Paged<EntityGroup>>> Index(
             AdvEntitySelectableGroupListRequestModel requestModel)
         {
             try
             {
                 var core = await _coreHelper.GetCore();
-                EntityGroupList model = await core.Advanced_EntityGroupAll(requestModel.Sort, requestModel.NameFilter,
-                    requestModel.PageIndex, requestModel.PageSize, Constants.FieldTypes.EntitySelect,
-                    requestModel.IsSortDsc,
-                    Constants.WorkflowStates.NotRemoved);
+                var sdkDbContext = core.DbContextHelper.GetDbContext();
 
-                if (model != null)
+                var entityGroupList = new Paged<EntityGroup>();
+
+                // get query
+                var entitySelectableGroupQuery = sdkDbContext.EntityGroups
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Where(x => x.Type == Constants.FieldTypes.EntitySelect)
+                    .AsNoTracking()
+                    .AsQueryable();
+
+                if (!string.IsNullOrEmpty(requestModel.NameFilter))
                 {
-                    List<string> plugins = await _dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
-                    foreach (EntityGroup entityGroup in model.EntityGroups)
+                    entitySelectableGroupQuery = entitySelectableGroupQuery
+                        .Where(x => x.Name.Contains(requestModel.NameFilter));
+                }
+
+                // sort
+                if (!string.IsNullOrEmpty(requestModel.Sort))
+                {
+                    if (requestModel.IsSortDsc)
                     {
-                        foreach (string plugin in plugins)
-                        {
-                            if (entityGroup.Name.Contains(plugin))
-                            {
-                                entityGroup.IsLocked = true;
-                            }
-                        }
+                        entitySelectableGroupQuery = entitySelectableGroupQuery
+                            .CustomOrderByDescending(requestModel.Sort);
+                    }
+                    else
+                    {
+                        entitySelectableGroupQuery = entitySelectableGroupQuery
+                            .CustomOrderBy(requestModel.Sort);
+                    }
+                }
+                else
+                {
+                    entitySelectableGroupQuery = entitySelectableGroupQuery
+                        .OrderBy(x => x.Id);
+                }
+
+                // count elements
+                entityGroupList.Total = await entitySelectableGroupQuery.Select(x => x.Id).CountAsync();
+
+                // pagination
+                entitySelectableGroupQuery =
+                    entitySelectableGroupQuery
+                        .Skip(requestModel.Offset)
+                        .Take(requestModel.PageSize);
+
+                // select and take from db
+
+                var entityGroups = await entitySelectableGroupQuery
+                    .Select(x => new EntityGroup
+                    {
+                        Description = x.Description,
+                        WorkflowState = x.WorkflowState,
+                        CreatedAt = x.CreatedAt,
+                        Id = x.Id,
+                        MicrotingUUID = x.MicrotingUid,
+                        Name = x.Name,
+                        Type = x.Type,
+                        UpdatedAt = x.UpdatedAt,
+                        EntityGroupItemLst = new List<EntityItem>(),
+                    }).ToListAsync();
+
+
+                entityGroupList.Entities = entityGroups;
+
+                var plugins = await _dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
+                foreach (var entityGroup in entityGroupList.Entities)
+                {
+                    foreach (var _ in plugins.Where(plugin => entityGroup.Name.Contains(plugin)))
+                    {
+                        entityGroup.IsLocked = true;
                     }
                 }
 
-                return new OperationDataResult<EntityGroupList>(true, model);
+                return new OperationDataResult<Paged<EntityGroup>>(true, entityGroupList);
             }
             catch (Exception)
             {
-                return new OperationDataResult<EntityGroupList>(false,
+                return new OperationDataResult<Paged<EntityGroup>>(false,
                     _localizationService.GetString("SelectableGroupLoadingFailed"));
             }
         }
@@ -237,22 +294,6 @@ namespace eFormAPI.Web.Services
                 return await core.EntityGroupDelete(entityGroupUid)
                     ? new OperationResult(true, _localizationService.GetStringWithFormat("ParamDeletedSuccessfully", entityGroupUid))
                     : new OperationResult(false, _localizationService.GetString("ErrorWhileDeletingSelectableList"));
-            }
-            catch (Exception)
-            {
-                return new OperationResult(false, _localizationService.GetString("ErrorWhileDeletingSelectableList"));
-            }
-        }
-
-
-        public async Task<OperationResult> SendSearchableGroup(string entityGroupUid)
-        {
-            try
-            {
-                var core = await _coreHelper.GetCore();
-
-
-                return new OperationResult(true, _localizationService.GetStringWithFormat("ParamDeletedSuccessfully", entityGroupUid));
             }
             catch (Exception)
             {

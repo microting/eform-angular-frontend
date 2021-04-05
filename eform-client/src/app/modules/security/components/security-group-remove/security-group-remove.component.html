@@ -1,9 +1,19 @@
-<div [config]="{ignoreBackdropClick: true}" mdbModal class="modal fade" #frame="mdbModal">
+<div
+  [config]="{ ignoreBackdropClick: true }"
+  mdbModal
+  class="modal fade"
+  #frame="mdbModal"
+>
   <div class="modal-dialog modal-md">
     <div class="modal-content">
       <div class="modal-header">
-        <h3>{{'Are you sure you want to delete the site? The action can not be undone' | translate}}!</h3>
-        <button class="close" data-dismiss="modal" (click)="frame.hide()">
+        <h3>
+          {{
+            'Are you sure you want to delete the site? The action can not be undone'
+              | translate
+          }}!
+        </h3>
+        <button class="close" data-dismiss="modal" (click)="hide()">
           <span>×</span>
         </button>
       </div>
@@ -14,33 +24,44 @@
               <h6>ID</h6>
             </div>
             <div class="col-md-6">
-              <h6>{{selectedSecurityGroup.id}}</h6>
+              <h6>{{ selectedSecurityGroup.id }}</h6>
             </div>
           </div>
 
           <div class="row">
             <div class="col-md-6">
-              <h6>{{'Group name' | translate}}</h6>
+              <h6>{{ 'GroupName' | translate }}</h6>
             </div>
             <div class="col-md-6">
-              {{selectedSecurityGroup.name}}
+              {{ selectedSecurityGroup.groupName }}
             </div>
           </div>
 
           <div class="row">
             <div class="col-md-6">
-              <h6>{{'Users amount' | translate}}</h6>
+              <h6>{{ 'UserAmount' | translate }}</h6>
             </div>
             <div class="col-md-6">
-              <h6>{{selectedSecurityGroup.userAmount}}</h6>
+              <h6>{{ selectedSecurityGroup.userAmount }}</h6>
             </div>
           </div>
-
         </div>
       </div>
       <div class="modal-footer">
-        <button mdbBtn class="btn-danger btn-small-height" (click)="deleteSingle()">{{'Delete' | translate}}</button>
-        <button mdbBtn class="btn-accent text-black-50 btn-small-height" (click)="frame.hide()">{{'Cancel' | translate}}</button>
+        <button
+          mdbBtn
+          class="btn-danger btn-small-height"
+          (click)="deleteSingle()"
+        >
+          {{ 'Delete' | translate }}
+        </button>
+        <button
+          mdbBtn
+          class="btn-accent text-black-50 btn-small-height"
+          (click)="hide()"
+        >
+          {{ 'Cancel' | translate }}
+        </button>
       </div>
     </div>
   </div>

@@ -4,6 +4,7 @@ export class SecurityGroupsRequestModel {
   pageSize: number;
   isSortDsc: boolean;
   offset: number;
+  sort: string;
 
   constructor() {
     this.nameFilter = '';
@@ -11,5 +12,6 @@ export class SecurityGroupsRequestModel {
     this.pageSize = 5;
     this.isSortDsc = false;
     this.offset = 0;
+    this.sort = 'Id';
   }
 }

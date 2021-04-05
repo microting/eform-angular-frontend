@@ -1,14 +1,19 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {ApplicationPages} from 'src/app/common/const';
-
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
-  SecurityGroupsModel,
   UserInfoModel,
-  UserInfoModelList,
   PaginationModel,
-  SecurityGroupsRequestModel, ApplicationPageModel, PageSettingsModel
+  PageSettingsModel,
+  Paged,
+  SecurityGroupModel,
+  TableHeaderElementModel,
 } from 'src/app/common/models';
-import {AuthService, SecurityGroupsService, AdminService, UserSettingsService, GoogleAuthService} from 'src/app/common/services';
+import {
+  AuthService,
+  SecurityGroupsService,
+  AdminService,
+  GoogleAuthService,
+} from 'src/app/common/services';
+import { UsersStateService } from 'src/app/modules/account-management/components/users/state/users-state.service';
 
 @Component({
   selector: 'app-users-page',
@@ -21,53 +26,56 @@ export class UsersPageComponent implements OnInit {
 
   localPageSettings: PageSettingsModel = new PageSettingsModel();
   paginationModel: PaginationModel = new PaginationModel(1, 5, 0);
-  userInfoModelList: UserInfoModelList = new UserInfoModelList;
-  selectedUser: UserInfoModel = new UserInfoModel;
-  securityGroups: SecurityGroupsModel = new SecurityGroupsModel();
+  userInfoModelList: Paged<UserInfoModel> = new Paged<UserInfoModel>();
+  selectedUser: UserInfoModel = new UserInfoModel();
+  securityGroups: Paged<SecurityGroupModel> = new Paged<SecurityGroupModel>();
 
   spinnerStatus: boolean;
   isChecked = true;
 
-  get userClaims() { return this.authService.userClaims; }
-  get userRole() { return this.authService.currentRole; }
+  tableHeaders: TableHeaderElementModel[] = [
+    { name: 'Id', elementId: '', sortable: true },
+    { name: 'Email', elementId: '', sortable: true },
+    { name: 'Full Name', elementId: '', sortable: false },
+    { name: 'Role', elementId: '', sortable: true },
+    this.userClaims.usersUpdate || this.userClaims.usersDelete
+      ? { name: 'Actions', elementId: '', sortable: false }
+      : null,
+  ];
+
+  get userClaims() {
+    return this.authService.userClaims;
+  }
+  get userRole() {
+    return this.authService.currentRole;
+  }
 
   constructor(
     private adminService: AdminService,
     private authService: AuthService,
     private googleAuthService: GoogleAuthService,
     private securityGroupsService: SecurityGroupsService,
-    public userSettingsService: UserSettingsService
-  ) {
-  }
+    public usersStateService: UsersStateService
+  ) {}
 
   ngOnInit() {
-    this.getLocalPageSettings();
+    this.getUserInfoList();
     this.getTwoFactorInfo();
     this.getSecurityGroups();
   }
 
-  getLocalPageSettings() {
-    this.localPageSettings = this.userSettingsService.getLocalPageSettings
-    ('pagesSettings', ApplicationPages[ApplicationPages.AccountManagementUsers])
-      .settings;
-    this.getUserInfoList();
-  }
-
-  updateLocalPageSettings(localStorageItemName: string) {
-    this.userSettingsService.updateLocalPageSettings
-    (localStorageItemName, this.localPageSettings, ApplicationPages[ApplicationPages.AccountManagementUsers]);
-    this.getLocalPageSettings();
-  }
-
   getTwoFactorInfo() {
-    this.googleAuthService.twoFactorAuthInfo().subscribe((data) => {
-      this.isChecked = data.model;
-    }, () => this.spinnerStatus = false);
+    this.googleAuthService.twoFactorAuthInfo().subscribe(
+      (data) => {
+        this.isChecked = data.model;
+      },
+      () => (this.spinnerStatus = false)
+    );
   }
 
   getUserInfoList() {
     this.paginationModel.pageSize = this.localPageSettings.pageSize;
-    this.adminService.getAllUsers(this.paginationModel).subscribe((data) => {
+    this.usersStateService.getAllUsers().subscribe((data) => {
       if (data && data.model) {
         this.userInfoModelList = data.model;
       }
@@ -75,16 +83,21 @@ export class UsersPageComponent implements OnInit {
   }
 
   getSecurityGroups() {
-    const securityGroupRequestModel = new SecurityGroupsRequestModel();
-    securityGroupRequestModel.pageSize = 10000;
-    this.securityGroupsService.getAllSecurityGroups(securityGroupRequestModel).subscribe((data) => {
-      if (data && data.success) {
-        this.securityGroups = data.model;
-      }
-    });
+    this.securityGroupsService
+      .getAllSecurityGroups({
+        sort: 'Id',
+        pageSize: 10000,
+        pageIndex: 0,
+        offset: 0,
+        nameFilter: '',
+        isSortDsc: false,
+      })
+      .subscribe((data) => {
+        if (data && data.success) {
+          this.securityGroups = data.model;
+        }
+      });
   }
-
-
 
   openEditModal(userId: number) {
     this.userEditModal.show(userId);
@@ -99,29 +112,47 @@ export class UsersPageComponent implements OnInit {
     this.removeUserModal.show();
   }
 
-  changePage(e: any) {
-    if (e || e === 0) {
-      this.paginationModel.offset = e;
-      if (e === 0) {
-        this.paginationModel.pageIndex = 0;
-      } else {
-        this.paginationModel.pageIndex = Math.floor(e / this.paginationModel.pageSize);
-      }
-      this.getUserInfoList();
-    }
+  changePage(offset: number) {
+    this.usersStateService.changePage(offset);
+    this.getUserInfoList();
   }
 
   checked(e: any) {
     if (e.target && e.target.checked) {
-      this.adminService.enableTwoFactorAuth().subscribe(() => {
-        this.isChecked = true;
-      }, () => this.spinnerStatus = false);
+      this.adminService.enableTwoFactorAuth().subscribe(
+        () => {
+          this.isChecked = true;
+        },
+        () => (this.spinnerStatus = false)
+      );
     } else if (e.target && !e.target.checked) {
-      this.adminService.disableTwoFactorAuth().subscribe(() => {
-        this.isChecked = false;
-      }, () => this.spinnerStatus = false);
+      this.adminService.disableTwoFactorAuth().subscribe(
+        () => {
+          this.isChecked = false;
+        },
+        () => (this.spinnerStatus = false)
+      );
     } else {
       return;
     }
+  }
+
+  onSortTable(sort: string) {
+    this.usersStateService.onSortTable(sort);
+    this.getUserInfoList();
+  }
+
+  onPageSizeChanged(pageSize: number) {
+    this.usersStateService.updatePageSize(pageSize);
+    this.getUserInfoList();
+  }
+
+  onUserDeleted() {
+    this.adminService.deleteUser(this.selectedUser.id).subscribe((data) => {
+      if (data.success) {
+        this.usersStateService.onDelete();
+        this.getUserInfoList();
+      }
+    });
   }
 }

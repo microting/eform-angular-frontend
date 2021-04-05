@@ -1,20 +1,19 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
-import {Router} from '@angular/router';
-import {ToastrService} from 'ngx-toastr';
-import {Observable} from 'rxjs';
-import {ApplicationPagesSettings} from 'src/app/common/const/application-pages-settings.const';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
 import {
   AdminSettingsModel,
   HeaderSettingsModel,
   LoginPageSettingsModel,
   OperationDataResult,
-  OperationResult
+  OperationResult,
 } from 'src/app/common/models';
-import {SettingsModel} from 'src/app/common/models/settings';
+import { SettingsModel } from 'src/app/common/models/settings';
 
-import {BaseService} from '../base.service';
+import { BaseService } from '../base.service';
 
 const SettingsMethods = {
   UpdateConnectionString: '/api/settings/connection-string',
@@ -28,18 +27,25 @@ const SettingsMethods = {
   GetLoginPageSettings: '/api/settings/login-page',
   GetHeaderSettings: '/api/settings/page-header',
   GetAnonymousImage: 'api/images/login-page-images',
-  GetAuthorizedImage: 'api/images/eform-images'
+  GetAuthorizedImage: 'api/images/eform-images',
 };
 
 @Injectable()
 export class AppSettingsService extends BaseService {
   loginPageSettingsModel: LoginPageSettingsModel = new LoginPageSettingsModel();
-  constructor(private _http: HttpClient, router: Router, toastrService: ToastrService) {
+  constructor(
+    private _http: HttpClient,
+    router: Router,
+    toastrService: ToastrService
+  ) {
     super(_http, router, toastrService);
   }
 
   updateConnectionString(model: SettingsModel): Observable<OperationResult> {
-    return this.post<SettingsModel>(SettingsMethods.UpdateConnectionString, model);
+    return this.post<SettingsModel>(
+      SettingsMethods.UpdateConnectionString,
+      model
+    );
   }
   connectionStringExist(): Observable<OperationResult> {
     return this.get(SettingsMethods.ConnectionStringExist);
@@ -47,8 +53,12 @@ export class AppSettingsService extends BaseService {
   getAdminSettings(): Observable<OperationDataResult<AdminSettingsModel>> {
     return this.get<AdminSettingsModel>(SettingsMethods.GetAdminSettings);
   }
-  getLoginPageSettings(): Observable<OperationDataResult<LoginPageSettingsModel>> {
-    return this.get<LoginPageSettingsModel>(SettingsMethods.GetLoginPageSettings);
+  getLoginPageSettings(): Observable<
+    OperationDataResult<LoginPageSettingsModel>
+  > {
+    return this.get<LoginPageSettingsModel>(
+      SettingsMethods.GetLoginPageSettings
+    );
   }
   getHeaderSettings(): Observable<OperationDataResult<HeaderSettingsModel>> {
     return this.get<HeaderSettingsModel>(SettingsMethods.GetHeaderSettings);
