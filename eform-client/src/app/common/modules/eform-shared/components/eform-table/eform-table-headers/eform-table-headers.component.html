@@ -11,11 +11,21 @@
         [name]="header.name"
         [id]="header.elementId"
         [visibleName]="header.visibleName"
+        style="{{
+          header.name.toLowerCase() === 'id' ? 'text-transform: uppercase' : ''
+        }}"
       ></th>
     </ng-container>
     <ng-container *ngIf="header && !header.sortable">
-      <th scope="col">
-        {{ header.name | translate }}
+      <th
+        style="{{
+          header.name.toLowerCase() === 'id' ? 'text-transform: uppercase' : ''
+        }}"
+        scope="col"
+      >
+        {{
+          (header.visibleName ? header.visibleName : header.name) | translate
+        }}
       </th>
     </ng-container>
   </ng-container>
