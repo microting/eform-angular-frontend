@@ -59,7 +59,7 @@ body {
 }
 
 b, strong {
-  font-weight: bold;
+  font-weight: 500;
 }
 
 body.theme-dark {
@@ -172,6 +172,10 @@ body.theme-dark {
   --highlight-addition: var(--green-600);
   --highlight-deletion: var(--red-700);
 
+  .text-black-50 {
+    color: var(--theme-body-font-color);
+  }
+
   .navbar-bg {
     background-color: var(--black-025);
 
@@ -279,6 +283,10 @@ body.theme-dark {
 
   .owl-dt-container-info .owl-dt-container-info-active {
     color: var(--blue-600);
+  }
+
+  .list-group-item-action a {
+    color: var(--black-600);
   }
 }
 
