@@ -1,13 +1,13 @@
-import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
-import {ToastrService} from 'ngx-toastr';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {OperationDataResult, OperationResult} from 'src/app/common/models';
-import {BaseService} from 'src/app/common/services/base.service';
-import {FolderCreateModel} from '../../models/advanced/folder-create.model';
-import {FolderDto} from '../../models/dto/folder.dto';
-import {FolderUpdateModel} from '../../models/advanced/folderUpdateModel';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { OperationDataResult, OperationResult } from 'src/app/common/models';
+import { BaseService } from 'src/app/common/services/base.service';
+import { FolderCreateModel } from '../../models/advanced/folder-create.model';
+import { FolderDto } from '../../models/dto/folder.dto';
+import { FolderUpdateModel } from '../../models/advanced/folder-update-model';
 
 const FoldersMethods = {
   Folders: '/api/folders',
@@ -16,7 +16,11 @@ const FoldersMethods = {
 
 @Injectable()
 export class FoldersService extends BaseService {
-  constructor(private _http: HttpClient, router: Router, toastrService: ToastrService) {
+  constructor(
+    private _http: HttpClient,
+    router: Router,
+    toastrService: ToastrService
+  ) {
     super(_http, router, toastrService);
   }
 
@@ -43,5 +47,4 @@ export class FoldersService extends BaseService {
   createFolder(model: FolderCreateModel): Observable<OperationResult> {
     return this.post<FolderCreateModel>(FoldersMethods.Folders, model);
   }
-
 }

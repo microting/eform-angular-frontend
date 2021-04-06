@@ -1,12 +1,19 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {FoldersService} from '../../../../../common/services/advanced/folders.service';
-import {FolderDto} from '../../../../../common/models/dto/folder.dto';
-import {FolderUpdateModel} from '../../../../../common/models/advanced/folderUpdateModel';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { FoldersService } from '../../../../../common/services/advanced/folders.service';
+import { FolderDto } from '../../../../../common/models/dto/folder.dto';
+import { FolderUpdateModel } from '../../../../../common/models/advanced/folder-update-model';
 
 @Component({
   selector: 'app-folder-edit',
   templateUrl: './folder-edit.component.html',
-  styleUrls: ['./folder-edit.component.scss']
+  styleUrls: ['./folder-edit.component.scss'],
 })
 export class FolderEditComponent implements OnInit {
   @Input() selectedFolderDto: FolderDto = new FolderDto();
@@ -14,11 +21,9 @@ export class FolderEditComponent implements OnInit {
   @ViewChild('frame', { static: true }) frame;
   folderModel: FolderUpdateModel = new FolderUpdateModel();
 
+  constructor(private foldersService: FoldersService) {}
 
-  constructor(private foldersService: FoldersService) { }
-
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   show(selectedFolder: FolderDto) {
     this.folderModel.id = selectedFolder.id;
@@ -29,11 +34,13 @@ export class FolderEditComponent implements OnInit {
   }
 
   updateFolder() {
-    this.foldersService.updateSingleFolder(this.folderModel).subscribe(operation => {
-      if (operation && operation.success) {
-        this.folderEdited.emit();
-        this.frame.hide();
-      }
-    });
+    this.foldersService
+      .updateSingleFolder(this.folderModel)
+      .subscribe((operation) => {
+        if (operation && operation.success) {
+          this.folderEdited.emit();
+          this.frame.hide();
+        }
+      });
   }
 }
