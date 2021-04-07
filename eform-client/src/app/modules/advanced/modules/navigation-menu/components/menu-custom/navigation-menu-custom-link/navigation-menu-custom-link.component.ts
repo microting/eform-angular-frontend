@@ -6,8 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { NavigationMenuItemModel } from 'src/app/common/models/navigation-menu';
-import { NavigationMenuItemTypeEnum } from 'src/app/common/const';
-import { applicationLanguages } from 'src/app/common/const/application-languages.const';
+import { NavigationMenuItemTypeEnum, applicationLanguages } from 'src/app/common/const';
 import {CommonDictionaryModel} from 'src/app/common/models';
 
 @Component({

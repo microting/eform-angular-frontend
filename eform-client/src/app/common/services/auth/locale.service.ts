@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { OperationDataResult } from 'src/app/common/models';
 import { BaseService } from '../base.service';
-import { applicationLanguages } from 'src/app/common/const/application-languages.const';
+import { applicationLanguages } from 'src/app/common/const';
 
 export let LocaleMethods = {
   UpdateGoogleAuthenticatorInfo: 'api/auth/google-auth-info',

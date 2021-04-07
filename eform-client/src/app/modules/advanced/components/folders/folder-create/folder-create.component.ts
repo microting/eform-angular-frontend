@@ -5,9 +5,11 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { noWhitespaceValidator } from 'src/app/common/helpers';
 import { FoldersService } from 'src/app/common/services/advanced/folders.service';
-import { FolderCreateModel } from 'src/app/common/models/advanced/folder-create.model';
-import { FolderDto } from 'src/app/common/models/dto/folder.dto';
+import { FolderCreateModel, FolderDto } from 'src/app/common/models';
+import { applicationLanguages } from 'src/app/common/const';
 
 @Component({
   selector: 'app-folder-create',
@@ -16,10 +18,19 @@ import { FolderDto } from 'src/app/common/models/dto/folder.dto';
 export class FolderCreateComponent implements OnInit {
   @Output() folderCreated: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('frame', { static: true }) frame;
-  newFolderModel: FolderCreateModel = new FolderCreateModel();
   selectedParentFolder: FolderDto;
+  newFolderModel: FolderCreateModel = new FolderCreateModel();
+  folderTranslations: FormArray = new FormArray([]);
+  selectedLanguage = applicationLanguages[0].id;
 
-  constructor(private foldersService: FoldersService) {}
+  get languages() {
+    return applicationLanguages;
+  }
+
+  constructor(
+    private foldersService: FoldersService,
+    private formBuilder: FormBuilder
+  ) {}
 
   ngOnInit(): void {}
 
@@ -27,9 +38,21 @@ export class FolderCreateComponent implements OnInit {
     if (selectedFolder) {
       this.selectedParentFolder = selectedFolder;
     }
-    this.newFolderModel.description = '';
-    this.newFolderModel.name = '';
+    this.initCreateForm();
     this.frame.show();
+  }
+
+  initCreateForm() {
+    this.newFolderModel = new FolderCreateModel();
+    for (const language of applicationLanguages) {
+      this.newFolderModel = {
+        ...this.newFolderModel,
+        translations: [
+          ...this.newFolderModel.translations,
+          { languageId: language.id, description: '', name: '' },
+        ],
+      };
+    }
   }
 
   hide() {
@@ -38,34 +61,42 @@ export class FolderCreateComponent implements OnInit {
   }
 
   createFolder() {
-    if (this.selectedParentFolder) {
-      this.newFolderModel = {...this.newFolderModel, parentId: this.selectedParentFolder.id};
-    }
-    this.foldersService.createFolder(this.newFolderModel).subscribe((data) => {
-      if (data && data.success) {
-        this.selectedParentFolder = null;
-        this.newFolderModel = new FolderCreateModel();
-        this.folderCreated.emit();
-        this.frame.hide();
-      }
-    });
+    this.foldersService
+      .createFolder({
+        translations: this.newFolderModel.translations,
+        parentId: this.selectedParentFolder
+          ? this.selectedParentFolder.id
+          : null,
+      })
+      .subscribe((data) => {
+        if (data && data.success) {
+          this.selectedParentFolder = null;
+          this.initCreateForm();
+          this.folderCreated.emit();
+          this.frame.hide();
+        }
+      });
   }
 
-  isDisabled(): boolean {
-    if (this.newFolderModel.name && this.newFolderModel.description) {
-      const div = document.createElement('div');
-      div.innerHTML = this.newFolderModel.description;
-      const description = div.textContent;
-      div.remove();
-      return !(!this.isEmpty(this.newFolderModel.name) && !this.isEmpty(description));
-    }
-    return true;
-  }
+  // isDisabled(): boolean {
+  //   if (this.newFolderForm.get('name').value && this.newFolderModel.description) {
+  //     const div = document.createElement('div');
+  //     div.innerHTML = this.newFolderModel.description;
+  //     const description = div.textContent;
+  //     div.remove();
+  //     return !(
+  //       !this.isEmpty(this.newFolderModel.name) && !this.isEmpty(description)
+  //     );
+  //   }
+  //   return true;
+  // }
+  //
+  // isEmpty(str: string): boolean {
+  //   if (str) {
+  //     return str.trim() === '';
+  //   }
+  //   return true;
+  // }
 
-  isEmpty(str: string): boolean {
-    if (str) {
-      return str.trim() === '';
-    }
-    return true;
-  }
+  onLanguageChanged(languageId: number) {}
 }

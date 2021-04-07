@@ -16,15 +16,16 @@
   <div class="card z-depth-1 mb-4 mt-4" style="width: 100%">
     <div class="card-body">
       <app-eform-tree-view-picker
+        *ngIf="foldersDto.length"
+        class="mb-2"
         [nodes]="foldersDto"
         [showActions]="true"
-        [showCollapseButton]="foldersDto.length > 0"
+        [showCollapseButton]="foldersDto.length"
         (createNode)="openCreateModal($event)"
         (editNode)="openEditModal($event)"
         (deleteNode)="openDeleteModal($event)"
       ></app-eform-tree-view-picker>
       <p
-        class="mt-2"
         style="cursor: pointer"
         id="newFolderBtn"
         (click)="openCreateModal()"
@@ -116,7 +117,6 @@
 
 <app-folder-edit
   (folderEdited)="getInitialData()"
-  [selectedFolderDto]="selectedFolder"
   #modalFolderEdit
 ></app-folder-edit>
 
