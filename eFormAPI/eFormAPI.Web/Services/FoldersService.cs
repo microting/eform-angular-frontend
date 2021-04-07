@@ -127,7 +127,13 @@ namespace eFormAPI.Web.Services
             try
             {
                 var core = await _coreHelper.GetCore();
-                await core.FolderCreate(createModel.Name, createModel.Description, createModel.ParentId);
+
+                List<KeyValuePair<string, string>> names = new List<KeyValuePair<string, string>>();
+                List<KeyValuePair<string, string>> descriptions = new List<KeyValuePair<string, string>>();
+
+                names.Add(new KeyValuePair<string, string> ("da", createModel.Name));
+                descriptions.Add(new KeyValuePair<string, string>("da",createModel.Description.Replace("&nbsp;", " ")));
+                await core.FolderCreate(names, descriptions, createModel.ParentId); // creating the folder in Danish as default
                 return new OperationResult(true);
             }
             catch (Exception e)
@@ -182,10 +188,15 @@ namespace eFormAPI.Web.Services
             var core = await _coreHelper.GetCore();
             try
             {
+                List<KeyValuePair<string, string>> names = new List<KeyValuePair<string, string>>();
+                List<KeyValuePair<string, string>> descriptions = new List<KeyValuePair<string, string>>();
+
+                names.Add(new KeyValuePair<string, string> ("da", folderUpdateModel.Name));
+                descriptions.Add(new KeyValuePair<string, string>("da",folderUpdateModel.Description.Replace("&nbsp;", " ")));
                 await core.FolderUpdate(
                     folderUpdateModel.Id,
-                    folderUpdateModel.Name,
-                    folderUpdateModel.Description.Replace("&nbsp;", " "),
+                    names,
+                    descriptions,
                     folderUpdateModel.ParentId);
 
                 return new OperationResult(true);
