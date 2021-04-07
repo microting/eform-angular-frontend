@@ -37,7 +37,26 @@
         </div>
       </div>
       <app-case-edit-switch [dataItemList]="element.dataItemList"></app-case-edit-switch>
-      <div class="mt-1 mb-1" *ngIf="element.extraFieldsEnabled"> ExtraFieldsEnabled</div>
+      <div class="mt-1 mb-1" *ngIf="element.extraFieldsEnabled">
+        <mdb-card class="mb-4 mt-4" style="width: 100%">
+          <mdb-card-header>{{ 'Extra comment' | translate}}</mdb-card-header>
+          <mdb-card-body>
+            <ng-container *ngFor="let fieldValueDto of element.extraComments; let i = index">
+              <element-comment [fieldValue]="fieldValueDto"></element-comment>
+            </ng-container>
+          </mdb-card-body>
+        </mdb-card>
+        <mdb-card class="mb-4 mt-4" style="width: 100%">
+          <mdb-card-header>{{ 'Extra picture' | translate}}</mdb-card-header>
+          <mdb-card-body>
+            <element-picture [fieldValues]="element.extraPictures"></element-picture>
+          </mdb-card-body>
+        </mdb-card>
+        <mdb-card class="mb-4 mt-4" style="width: 100%">
+          <mdb-card-header>{{ 'Extra recording' | translate}}</mdb-card-header>
+          <mdb-card-body></mdb-card-body>
+        </mdb-card>
+      </div>
 
       <ng-container *ngIf="element.elementList">
           <app-case-edit-element [element]="elem" *ngFor="let elem of element.elementList"></app-case-edit-element>
