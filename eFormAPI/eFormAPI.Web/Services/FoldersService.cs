@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 using Microting.eForm.Infrastructure;
+using Microting.eForm.Infrastructure.Data.Entities;
 
 namespace eFormAPI.Web.Services
 {
@@ -45,12 +46,15 @@ namespace eFormAPI.Web.Services
         private readonly IEFormCoreService _coreHelper;
         private readonly ILocalizationService _localizationService;
         private readonly ILogger<FoldersService> _logger;
+        private readonly IUserService _userService;
         public FoldersService(IEFormCoreService coreHelper,
             ILocalizationService localizationService,
+            IUserService userService,
             ILogger<FoldersService> logger)
         {
             _coreHelper = coreHelper;
             _localizationService = localizationService;
+            _userService = userService;
             _logger = logger;
         }
 
@@ -60,8 +64,25 @@ namespace eFormAPI.Web.Services
             {
                 var core = await _coreHelper.GetCore();
                 await using var dbContext = core.DbContextHelper.GetDbContext();
+                var locale = await _userService.GetCurrentUserLocale();
+                Language language = dbContext.Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
                 var folders = await dbContext.Folders
+                    .Join(dbContext.FolderTranslations,
+                        folder => folder.Id, translation => translation.FolderId,
+                        (folder, translation) => new
+                        {
+                            folder.WorkflowState,
+                            translation.Name,
+                            translation.Description,
+                            folder.Id,
+                            folder.CreatedAt,
+                            folder.MicrotingUid,
+                            folder.ParentId,
+                            folder.UpdatedAt,
+                            translation.LanguageId
+                        })
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Where(x => x.LanguageId == language.Id)
                     .OrderBy(x => x.Name)
                     .Select(x => new FolderDtoModel
                     {
@@ -91,8 +112,24 @@ namespace eFormAPI.Web.Services
             {
                 var core = await _coreHelper.GetCore();
                 await using var dbContext = core.DbContextHelper.GetDbContext();
-                var folders = await dbContext.Folders
+                var locale = await _userService.GetCurrentUserLocale();
+                Language language = dbContext.Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
+                var folders = await dbContext.Folders.Join(dbContext.FolderTranslations,
+                        folder => folder.Id, translation => translation.FolderId,
+                        (folder, translation) => new
+                        {
+                            folder.WorkflowState,
+                            translation.Name,
+                            translation.Description,
+                            folder.Id,
+                            folder.CreatedAt,
+                            folder.MicrotingUid,
+                            folder.ParentId,
+                            folder.UpdatedAt,
+                            translation.LanguageId
+                        })
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Where(x => x.LanguageId == language.Id)
                     .OrderBy(x => x.Name)
                     .Select(x => new FolderDtoModel
                     {
@@ -151,8 +188,24 @@ namespace eFormAPI.Web.Services
             {
                 var core = await _coreHelper.GetCore();
                 await using var dbContext = core.DbContextHelper.GetDbContext();
-                var folder = await dbContext.Folders
+                var locale = await _userService.GetCurrentUserLocale();
+                Language language = dbContext.Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
+                var folder = await dbContext.Folders.Join(dbContext.FolderTranslations,
+                        f => f.Id, translation => translation.FolderId,
+                        (f, translation) => new
+                        {
+                            f.WorkflowState,
+                            translation.Name,
+                            translation.Description,
+                            f.Id,
+                            f.CreatedAt,
+                            f.MicrotingUid,
+                            f.ParentId,
+                            f.UpdatedAt,
+                            translation.LanguageId
+                        })
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Where(x => x.LanguageId == language.Id)
                     .Where(x => x.Id == id)
                     .Select(x => new FolderDtoModel
                     {
