@@ -4,7 +4,7 @@ import profileSettings from '../../Page objects/ProfileSettings.page';
 
 const expect = require('chai').expect;
 const translationsEFormsPageEng: Array<{ key: string; value: string }> = [
-  { key: 'subheader-pn h1', value: 'My eForms' },
+  { key: 'eform-subheader h1', value: 'My eForms' },
   { key: '#newEFormBtn', value: 'NEW EFORM' },
   { key: '#idSort', value: 'ID\nexpand_less' },
   { key: '#createdAtSort', value: 'Created at\nunfold_more' },
@@ -14,7 +14,7 @@ const translationsEFormsPageEng: Array<{ key: string; value: string }> = [
   { key: '#actionsEForm', value: 'Actions' },
 ];
 const translationsEFormsPageGer: Array<{ key: string; value: string }> = [
-  { key: 'subheader-pn h1', value: 'Meine eForms' },
+  { key: 'eform-subheader h1', value: 'Meine eForms' },
   { key: '#newEFormBtn', value: 'NEUES EFORM' },
   { key: '#idSort', value: 'ID\nexpand_less' },
   { key: '#createdAtSort', value: 'Hergestellt in\nunfold_more' },
@@ -24,7 +24,7 @@ const translationsEFormsPageGer: Array<{ key: string; value: string }> = [
   { key: '#actionsEForm', value: 'Aktionen' },
 ];
 const translationsEFormsPageDan: Array<{ key: string; value: string }> = [
-  { key: 'subheader-pn h1', value: 'Mine eForms' },
+  { key: 'eform-subheader h1', value: 'Mine eForms' },
   { key: '#newEFormBtn', value: 'NY EFORM' },
   { key: '#idSort', value: 'ID\nexpand_less' },
   { key: '#createdAtSort', value: 'Oprettet d.\nunfold_more' },

@@ -1,4 +1,4 @@
-<subheader-pn>
+<eform-subheader>
   <button
     mdbBtn
     *ngIf="userRole === 'admin'"
@@ -8,7 +8,7 @@
   >
     {{ 'Edit headers' | translate }}
   </button>
-</subheader-pn>
+</eform-subheader>
 
 <div class="container-fluid">
   <app-eform-docx-report-header
@@ -49,7 +49,8 @@
       [dateFrom]="dateFrom"
       [dateTo]="dateTo"
     ></app-eform-docx-report-table>
-    <app-eform-docx-report-images *ngIf="reportModel.imageNames.length > 0"
+    <app-eform-docx-report-images
+      *ngIf="reportModel.imageNames.length > 0"
       [imageNames]="reportModel.imageNames"
     ></app-eform-docx-report-images>
   </div>

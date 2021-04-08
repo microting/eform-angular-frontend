@@ -1,4 +1,4 @@
-<subheader-pn [title]="'Database connection setup'" [heandingSizeRem]="1.7">
+<eform-subheader [title]="'Database connection setup'" [heandingSizeRem]="1.7">
   <div class="p-2">
     <button
       mdbBtn
@@ -6,92 +6,169 @@
       id="save"
       mdbTooltip="Save settings"
       [disabled]="!settingsForm.form.valid"
-      (click)="updateConnectionString()">Save
+      (click)="updateConnectionString()"
+    >
+      Save
     </button>
   </div>
-</subheader-pn>
+</eform-subheader>
 
 <div class="container-fluid mb-3">
   <form #settingsForm="ngForm">
     <div class="row">
       <div class="col-md-12 mt-3">
-        <subheader-pn [title]="'Admin information'" [heandingSizeRem]="1"></subheader-pn>
+        <eform-subheader
+          [title]="'Admin information'"
+          [heandingSizeRem]="1"
+        ></eform-subheader>
         <!--Admin block-->
         <div class="row">
           <div class="col-md-6">
             <div class="md-form input-group">
-              <input mdbInput
-                      [(ngModel)]="settingsModel.adminSetupModel.firstName"
-                     type="text" name="firstName" #firstName="ngModel"
-                     id="firstName" class="form-control">
+              <input
+                mdbInput
+                [(ngModel)]="settingsModel.adminSetupModel.firstName"
+                type="text"
+                name="firstName"
+                #firstName="ngModel"
+                id="firstName"
+                class="form-control"
+              />
               <label for="firstName">First name</label>
             </div>
             <div class="md-form input-group">
-              <input mdbInput
-                     [(ngModel)]="settingsModel.adminSetupModel.lastName"
-                     type="text" name="lastName" #lastName="ngModel"
-                     id="lastName" class="form-control">
+              <input
+                mdbInput
+                [(ngModel)]="settingsModel.adminSetupModel.lastName"
+                type="text"
+                name="lastName"
+                #lastName="ngModel"
+                id="lastName"
+                class="form-control"
+              />
               <label for="lastName">Last name</label>
             </div>
           </div>
           <div class="col-md-6">
             <div class="md-form input-group">
-              <input mdbInput
-                     [(ngModel)]="settingsModel.adminSetupModel.email"
-                     type="email" name="email" id="email" #email="ngModel" class="form-control">
+              <input
+                mdbInput
+                [(ngModel)]="settingsModel.adminSetupModel.email"
+                type="email"
+                name="email"
+                id="email"
+                #email="ngModel"
+                class="form-control"
+              />
               <label for="email">Email</label>
             </div>
             <div class="md-form input-group">
-              <input mdbInput
-                     [(ngModel)]="settingsModel.adminSetupModel.password"
-                     required type="text" name="password" #password="ngModel"
-                     id="password" class="form-control">
-              <label for="password">Password<span class="text-danger">*</span> </label>
+              <input
+                mdbInput
+                [(ngModel)]="settingsModel.adminSetupModel.password"
+                required
+                type="text"
+                name="password"
+                #password="ngModel"
+                id="password"
+                class="form-control"
+              />
+              <label for="password"
+                >Password<span class="text-danger">*</span>
+              </label>
             </div>
           </div>
         </div>
         <!--SDK Connection-->
         <div class="row">
           <div class="col-md-12 mt-3">
-            <subheader-pn [title]="'Database connection information'"
-                          [heandingSizeRem]="1"></subheader-pn>
+            <eform-subheader
+              [title]="'Database connection information'"
+              [heandingSizeRem]="1"
+            ></eform-subheader>
 
             <div class="row">
               <div class="col-md-12">
                 <div class="md-form input-group">
-                  <input mdbInput
-                         [(ngModel)]="settingsModel.connectionStringSDK.token"
-                         placeholder="12345678909876543210adfecdfefdae"
-                         #tokenSdk="ngModel" required type="text" value="" name="token" id="token" class="form-control">
-                  <label for="token">Token<span class="text-danger">*</span></label>
+                  <input
+                    mdbInput
+                    [(ngModel)]="settingsModel.connectionStringSDK.token"
+                    placeholder="12345678909876543210adfecdfefdae"
+                    #tokenSdk="ngModel"
+                    required
+                    type="text"
+                    value=""
+                    name="token"
+                    id="token"
+                    class="form-control"
+                  />
+                  <label for="token"
+                    >Token<span class="text-danger">*</span></label
+                  >
                 </div>
                 <div class="md-form input-group">
-                  <input mdbInput
-                         [(ngModel)]="settingsModel.generalAppSetupSettingsModel.customerNo"
-                         placeholder="123"
-                         #customerNo="ngModel" required type="text" value="" name="customerNo" id="customerNo" class="form-control">
-                  <label for="customerNo">Customer no<span class="text-danger">*</span></label>
+                  <input
+                    mdbInput
+                    [(ngModel)]="
+                      settingsModel.generalAppSetupSettingsModel.customerNo
+                    "
+                    placeholder="123"
+                    #customerNo="ngModel"
+                    required
+                    type="text"
+                    value=""
+                    name="customerNo"
+                    id="customerNo"
+                    class="form-control"
+                  />
+                  <label for="customerNo"
+                    >Customer no<span class="text-danger">*</span></label
+                  >
                 </div>
                 <div class="md-form input-group">
-                  <input mdbInput
-                         [(ngModel)]="settingsModel.connectionStringSDK.host"
-                         placeholder="localhost" type="text"
-                         required name="host" id="host2" class="form-control">
-                  <label for="host2">Server<span class="text-danger">*</span></label>
+                  <input
+                    mdbInput
+                    [(ngModel)]="settingsModel.connectionStringSDK.host"
+                    placeholder="localhost"
+                    type="text"
+                    required
+                    name="host"
+                    id="host2"
+                    class="form-control"
+                  />
+                  <label for="host2"
+                    >Server<span class="text-danger">*</span></label
+                  >
                 </div>
                 <div class="md-form input-group">
-                  <input mdbInput
-                         [(ngModel)]="settingsModel.connectionStringSDK.port"
-                         placeholder="3306"
-                         type="text" name="port" id="port" class="form-control">
-                  <label for="port">Port<span class="text-danger">*</span></label>
+                  <input
+                    mdbInput
+                    [(ngModel)]="settingsModel.connectionStringSDK.port"
+                    placeholder="3306"
+                    type="text"
+                    name="port"
+                    id="port"
+                    class="form-control"
+                  />
+                  <label for="port"
+                    >Port<span class="text-danger">*</span></label
+                  >
                 </div>
                 <div class="md-form input-group">
-                  <input mdbInput
-                         [(ngModel)]="settingsModel.connectionStringSDK.auth"
-                         placeholder="user = root;password = myPassword;"
-                         type="text" name="auth" id="auth2" class="form-control">
-                  <label for="auth2">Authentication type<span class="text-danger">*</span></label>
+                  <input
+                    mdbInput
+                    [(ngModel)]="settingsModel.connectionStringSDK.auth"
+                    placeholder="user = root;password = myPassword;"
+                    type="text"
+                    name="auth"
+                    id="auth2"
+                    class="form-control"
+                  />
+                  <label for="auth2"
+                    >Authentication type<span class="text-danger"
+                      >*</span
+                    ></label
+                  >
                 </div>
               </div>
             </div>
@@ -100,17 +177,23 @@
         <!--language-->
         <div class="row">
           <div class="col-md-12 mt-3">
-            <subheader-pn
-              [title]="'Default Language'" [heandingSizeRem]="1"></subheader-pn>
+            <eform-subheader
+              [title]="'Default Language'"
+              [heandingSizeRem]="1"
+            ></eform-subheader>
             <ng-select
               id="languageSelector"
               [placeholder]="'Language'"
-              name="default-language" #defaultLanguage="ngModel"
+              name="default-language"
+              #defaultLanguage="ngModel"
               [bindValue]="'id'"
               [bindLabel]="'text'"
               [clearable]="false"
-              [(ngModel)]="settingsModel.generalAppSetupSettingsModel.defaultLocale"
-              [items]="languages"></ng-select>
+              [(ngModel)]="
+                settingsModel.generalAppSetupSettingsModel.defaultLocale
+              "
+              [items]="languages"
+            ></ng-select>
           </div>
         </div>
         <!--(´・ω・｀) end here probably-->

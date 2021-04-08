@@ -1,9 +1,12 @@
-<subheader-pn>
+<eform-subheader>
   <div class="p-3">
-    <button mdbBtn class="btn-danger btn-icon mb-2 "
-            id="resetBtn"
-            mdbTooltip="{{ 'Reset' | translate }}"
-            (click)="showResetNavigationMenuModal()">
+    <button
+      mdbBtn
+      class="btn-danger btn-icon mb-2"
+      id="resetBtn"
+      mdbTooltip="{{ 'Reset' | translate }}"
+      (click)="showResetNavigationMenuModal()"
+    >
       <fa-icon icon="undo" [fixedWidth]="true" size="lg"></fa-icon>
     </button>
     <button
@@ -15,7 +18,7 @@
       {{ 'Save' | translate }}
     </button>
   </div>
-</subheader-pn>
+</eform-subheader>
 
 <div class="container-fluid">
   <div class="row mt-4">
@@ -23,7 +26,10 @@
       <mdb-card
         class="mb-3"
         id="menuTemplate"
-        *ngFor="let menuTemplate of navigationMenuModel.menuTemplates; let templateIndex = index;"
+        *ngFor="
+          let menuTemplate of navigationMenuModel.menuTemplates;
+          let templateIndex = index
+        "
       >
         <mdb-card-header>
           <div class="d-flex justify-content-between align-items-center">
@@ -45,7 +51,10 @@
             [(dragulaModel)]="menuTemplate.items"
           >
             <ng-container
-              *ngFor="let menuTemplateItem of menuTemplate.items; let itemIndex = index;"
+              *ngFor="
+                let menuTemplateItem of menuTemplate.items;
+                let itemIndex = index
+              "
             >
               <app-navigation-menu-template-item
                 [item]="menuTemplateItem"

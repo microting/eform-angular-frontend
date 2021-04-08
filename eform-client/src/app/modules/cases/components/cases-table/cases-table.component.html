@@ -1,4 +1,4 @@
-<subheader-pn [title]="currentTemplate.label"> </subheader-pn>
+<eform-subheader [title]="currentTemplate.label"> </eform-subheader>
 
 <!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
 <div class="container-fluid">
@@ -157,19 +157,19 @@
   </div>
   <div class="row justify-content-between mr-2 ml-2">
     <div class="col-md-1">
-      <page-size-pn
+      <eform-page-size
         [pageSize]="caseStateService.getPageSize() | async"
         (onPageSizeChanged)="onPageSizeChanged($event)"
       >
-      </page-size-pn>
+      </eform-page-size>
     </div>
     <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
-      <pagination-pn
+      <eform-pagination
         [limit]="caseStateService.getPageSize() | async"
         [size]="caseListModel.numOfElements"
         [offset]="caseStateService.getOffset() | async"
         (onPageChanged)="changePage($event)"
-      ></pagination-pn>
+      ></eform-pagination>
     </div>
   </div>
 </div>

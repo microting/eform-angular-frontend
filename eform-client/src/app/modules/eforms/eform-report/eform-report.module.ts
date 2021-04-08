@@ -1,48 +1,45 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
-import {NgSelectModule} from '@ng-select/ng-select';
-import {TranslateModule} from '@ngx-translate/core';
-import {DragulaModule} from 'ng2-dragula';
-import {ImageCropperModule} from 'ngx-image-cropper';
-import {MDBBootstrapModule} from 'angular-bootstrap-md';
-import {EformImportedModule} from 'src/app/common/modules/eform-imported/eform-imported.module';
-import {PellModule} from 'src/app/common/modules/eform-imported/pell/pell.module';
-
-import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { TranslateModule } from '@ngx-translate/core';
+import { DragulaModule } from 'ng2-dragula';
+import { ImageCropperModule } from 'ngx-image-cropper';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { EformImportedModule } from 'src/app/common/modules/eform-imported/eform-imported.module';
+import { PellModule } from 'src/app/common/modules/eform-imported/pell/pell.module';
+import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
 import {
   ElementCheckboxComponent,
   ElementCommentComponent,
   ElementContainerComponent,
   ElementInfoboxComponent,
   ElementMultiselectComponent,
-  ElementTextComponent
+  ElementTextComponent,
 } from './components/eform-report-elements';
-import {EformReportRouting} from './eform-report.routing';
+import { EformReportRouting } from './eform-report.routing';
 import {
   EformReportPageComponent,
   EformReportSwitchComponent,
   EformReportBlockComponent,
   EformReportHeaderComponent,
-  EformReportCropperComponent
+  EformReportCropperComponent,
 } from './components';
-import {SharedPnModule} from 'src/app/plugins/modules/shared/shared-pn.module';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        EformReportRouting,
-        EformSharedModule,
-        TranslateModule,
-        PellModule,
-        MDBBootstrapModule,
-        NgSelectModule,
-        EformImportedModule,
-        FormsModule,
-        DragulaModule,
-        ImageCropperModule,
-        SharedPnModule
-    ],
+  imports: [
+    CommonModule,
+    EformReportRouting,
+    EformSharedModule,
+    TranslateModule,
+    PellModule,
+    MDBBootstrapModule,
+    NgSelectModule,
+    EformImportedModule,
+    FormsModule,
+    DragulaModule,
+    ImageCropperModule,
+  ],
   declarations: [
     EformReportPageComponent,
     EformReportSwitchComponent,
@@ -54,7 +51,7 @@ import {SharedPnModule} from 'src/app/plugins/modules/shared/shared-pn.module';
     ElementMultiselectComponent,
     ElementTextComponent,
     EformReportHeaderComponent,
-    EformReportCropperComponent]
+    EformReportCropperComponent,
+  ],
 })
-export class EformReportModule {
-}
+export class EformReportModule {}

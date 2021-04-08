@@ -1,4 +1,4 @@
-<subheader-pn>
+<eform-subheader>
   <div class="p-3">
     <button
       mdbBtn
@@ -12,7 +12,7 @@
       {{ 'New list' | translate }}
     </button>
   </div>
-</subheader-pn>
+</eform-subheader>
 
 <!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
 <div class="container-fluid">
@@ -111,19 +111,19 @@
 
   <div class="row justify-content-between mr-2 ml-2">
     <div class="col-md-1">
-      <page-size-pn
+      <eform-page-size
         [pageSize]="entitySelectStateService.getPageSize() | async"
         (onPageSizeChanged)="onPageSizeChanged($event)"
       >
-      </page-size-pn>
+      </eform-page-size>
     </div>
     <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
-      <pagination-pn
+      <eform-pagination
         [limit]="entitySelectStateService.getPageSize() | async"
         [size]="advEntitySelectableGroupListModel.total"
         [offset]="entitySelectStateService.getOffset() | async"
         (onPageChanged)="changePage($event)"
-      ></pagination-pn>
+      ></eform-pagination>
     </div>
   </div>
 </div>

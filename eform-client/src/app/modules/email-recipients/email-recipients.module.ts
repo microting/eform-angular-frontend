@@ -1,21 +1,20 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {EformSharedModule} from '../../common/modules/eform-shared/eform-shared.module';
-import {NgSelectModule} from '@ng-select/ng-select';
-import {TranslateModule} from '@ngx-translate/core';
-import {MDBBootstrapModule} from 'angular-bootstrap-md';
-import {FormsModule} from '@angular/forms';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {EmailRecipientsRouting} from './email-recipients.routing';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { EformSharedModule } from '../../common/modules/eform-shared/eform-shared.module';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { TranslateModule } from '@ngx-translate/core';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { FormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { EmailRecipientsRouting } from './email-recipients.routing';
 import {
   EmailRecipientDeleteComponent,
   EmailRecipientEditComponent,
   EmailRecipientsNewComponent,
   EmailRecipientsPageComponent,
-  EmailRecipientsTagsComponent
+  EmailRecipientsTagsComponent,
 } from './components';
-import {SharedPnModule} from '../../plugins/modules/shared/shared-pn.module';
-import {EformSharedTagsModule} from 'src/app/common/modules/eform-shared-tags/eform-shared-tags.module';
+import { EformSharedTagsModule } from 'src/app/common/modules/eform-shared-tags/eform-shared-tags.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +22,7 @@ import {EformSharedTagsModule} from 'src/app/common/modules/eform-shared-tags/ef
     EmailRecipientsNewComponent,
     EmailRecipientEditComponent,
     EmailRecipientsTagsComponent,
-    EmailRecipientDeleteComponent
+    EmailRecipientDeleteComponent,
   ],
   imports: [
     CommonModule,
@@ -35,7 +34,6 @@ import {EformSharedTagsModule} from 'src/app/common/modules/eform-shared-tags/ef
     FormsModule,
     FontAwesomeModule,
     EmailRecipientsRouting,
-    SharedPnModule,
     EformSharedTagsModule,
   ],
 })

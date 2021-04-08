@@ -23,9 +23,14 @@ describe('Subheader test', function () {
     navigationMenuPage.editItemSaveBtn.click();
   });
   it('must navigate on create menu item and translate must be == translate', function () {
+    const spinnerAnimation = $('#spinner-animation');
+    const h1 = $('eform-subheader h1');
     myEformsPage.Navbar.clickOnHeaderMenuItem2(translation).click();
-    $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
-    expect($('subheader-pn h1').getText()).eq(translation, 'subheader text must be equal with text in translate');
+    spinnerAnimation.waitForDisplayed({ timeout: 30000, reverse: true });
+    expect(h1.getText()).eq(
+      translation,
+      'subheader text must be equal with text in translate'
+    );
     myEformsPage.Navbar.goToMenuEditorPage();
     navigationMenuPage.openOnEditCreatedMenuItem(0);
     translation = 'Test translation';
@@ -33,8 +38,11 @@ describe('Subheader test', function () {
     navigationMenuPage.editItemSaveBtn.click();
     navigationMenuPage.clickSaveMenuBtn();
     myEformsPage.Navbar.clickOnHeaderMenuItem2(translation).click();
-    $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
-    expect($('subheader-pn h1').getText()).eq(translation, 'subheader text must be equal with text in translate');
+    spinnerAnimation.waitForDisplayed({ timeout: 30000, reverse: true });
+    expect(h1.getText()).eq(
+      translation,
+      'subheader text must be equal with text in translate'
+    );
     myEformsPage.Navbar.goToMenuEditorPage();
     navigationMenuPage.resetMenu();
   });

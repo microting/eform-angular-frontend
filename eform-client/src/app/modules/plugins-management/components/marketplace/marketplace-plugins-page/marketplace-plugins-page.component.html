@@ -1,30 +1,45 @@
-<subheader-pn [title]="'Plugins marketplace' | translate">
+<eform-subheader [title]="'Plugins marketplace' | translate">
   <div class="p-3">
     <button
       mdbBtn
       class="btn-success btn-small-height"
-      id="managementPageButton" [routerLink]="['/plugins-management-settings']">{{ 'Management' | translate }}
+      id="managementPageButton"
+      [routerLink]="['/plugins-management-settings']"
+    >
+      {{ 'Management' | translate }}
     </button>
   </div>
-</subheader-pn>
+</eform-subheader>
 
 <!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
 <div class="container-fluid mt-4">
   <div class="row p-1 table-responsive no-gutters">
-    <table mdbTable striped="true" hover="true" small="true" class="z-depth-1 text-center">
+    <table
+      mdbTable
+      striped="true"
+      hover="true"
+      small="true"
+      class="z-depth-1 text-center"
+    >
       <tr>
         <th>{{ 'ID' }}</th>
         <th>{{ 'Name' | translate }}</th>
         <th>{{ 'Actions' | translate }}</th>
       </tr>
       <tr *ngFor="let plugin of marketplacePluginsList.pluginsList">
-        <td>{{plugin.pluginId}}</td>
-        <td>{{plugin.name}}</td>
+        <td>{{ plugin.pluginId }}</td>
+        <td>{{ plugin.name }}</td>
         <td>
           <div class="d-flex flex-row justify-content-center">
-            <button mdbBtn class="btn-accent text-black-50 btn-icon mb-2"
-                    mdbTooltip="{{'Edit Settings' | translate}}" (click)="showEditModal(plugin)"
-                    mdbWavesEffect id="editSettingsBtn" id="plugin-settings-btn">
+            <button
+              mdbBtn
+              class="btn-accent text-black-50 btn-icon mb-2"
+              mdbTooltip="{{ 'Edit Settings' | translate }}"
+              (click)="showEditModal(plugin)"
+              mdbWavesEffect
+              id="editSettingsBtn"
+              id="plugin-settings-btn"
+            >
               <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
           </div>
@@ -34,6 +49,7 @@
   </div>
 </div>
 
-
-<app-plugins-marketplace-install #installMarketplacePluginModal
-                                 (onMarketplacePluginInstall)="installPlugin($event)"></app-plugins-marketplace-install>
+<app-plugins-marketplace-install
+  #installMarketplacePluginModal
+  (onMarketplacePluginInstall)="installPlugin($event)"
+></app-plugins-marketplace-install>

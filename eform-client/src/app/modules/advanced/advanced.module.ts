@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { DragulaModule } from 'ng2-dragula';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
 import { NgSelectModule } from '@ng-select/ng-select';
-import {SharedPnModule} from 'src/app/plugins/modules/shared/shared-pn.module';
 import { AdvancedRoutingModule } from './advanced.routing';
 import {
   EntitySearchComponent,
@@ -56,7 +55,6 @@ import { EformImportedModule } from 'src/app/common/modules/eform-imported/eform
     MDBBootstrapModule,
     CasesModule,
     EformImportedModule,
-    SharedPnModule,
     ReactiveFormsModule,
   ],
   declarations: [
