@@ -71,9 +71,9 @@ namespace eFormAPI.Web.Controllers.Advanced
         [HttpGet]
         [Route("api/folders/{id}")]
         [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
-        public async Task<OperationDataResult<FolderDtoModel>> Read(int id)
+        public async Task<OperationDataResult<FolderModel>> Read(int id)
         {
-            return await _foldersService.Edit(id);
+            return await _foldersService.Read(id);
         }
 
         [HttpPut]

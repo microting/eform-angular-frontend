@@ -41,6 +41,7 @@ namespace eFormAPI.Web.Services
 {
     using Microting.eForm.Infrastructure.Models;
     using Microting.eFormApi.BasePn.Infrastructure.Extensions;
+    using Microting.eFormApi.BasePn.Infrastructure.Helpers;
     using EntityGroup = Infrastructure.Models.EntityGroup;
 
     public class EntitySelectService : IEntitySelectService
@@ -83,24 +84,7 @@ namespace eFormAPI.Web.Services
                 }
 
                 // sort
-                if (!string.IsNullOrEmpty(requestModel.Sort))
-                {
-                    if (requestModel.IsSortDsc)
-                    {
-                        entitySelectableGroupQuery = entitySelectableGroupQuery
-                            .CustomOrderByDescending(requestModel.Sort);
-                    }
-                    else
-                    {
-                        entitySelectableGroupQuery = entitySelectableGroupQuery
-                            .CustomOrderBy(requestModel.Sort);
-                    }
-                }
-                else
-                {
-                    entitySelectableGroupQuery = entitySelectableGroupQuery
-                        .OrderBy(x => x.Id);
-                }
+                entitySelectableGroupQuery = QueryHelper.AddSortToQuery(entitySelectableGroupQuery, requestModel.Sort, requestModel.IsSortDsc);
 
                 // count elements
                 entityGroupList.Total = await entitySelectableGroupQuery.Select(x => x.Id).CountAsync();

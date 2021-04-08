@@ -52,10 +52,8 @@ export class FolderEditComponent implements OnInit, OnDestroy {
     this.folderUpdateModel = new FolderUpdateModel();
     this.folderUpdateModel = {
       ...this.folderUpdateModel,
-      translations: [
-        ...this.folderUpdateModel.translations,
-        ...model.translations.sort((x) => x.languageId),
-      ],
+      id: model.id,
+      translations: [...model.translations.sort((x) => x.languageId)],
     };
   }
 
