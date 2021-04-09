@@ -7,7 +7,9 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
+import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { applicationLanguages } from 'src/app/common/const';
 import { FoldersService } from 'src/app/common/services';
@@ -38,7 +40,11 @@ export class FolderEditComponent implements OnInit, OnDestroy {
     return applicationLanguages;
   }
 
-  constructor(private foldersService: FoldersService) {}
+  constructor(
+    private foldersService: FoldersService,
+    private toastrService: ToastrService,
+    private translateService: TranslateService
+  ) {}
 
   ngOnInit() {}
 
@@ -68,14 +74,28 @@ export class FolderEditComponent implements OnInit, OnDestroy {
   }
 
   updateFolder() {
-    this.updateFolderSub$ = this.foldersService
-      .updateSingleFolder(this.folderUpdateModel)
-      .subscribe((operation) => {
-        if (operation && operation.success) {
-          this.folderEdited.emit();
-          this.frame.hide();
-        }
-      });
+    // Validate if at least one translation is filled correctly
+    const translationExists = this.folderUpdateModel.translations.find(
+      (x) => x.name && x.description
+    );
+
+    if (translationExists) {
+      this.updateFolderSub$ = this.foldersService
+        .updateSingleFolder(this.folderUpdateModel)
+        .subscribe((operation) => {
+          if (operation && operation.success) {
+            this.folderEdited.emit();
+            this.frame.hide();
+          }
+        });
+    } else {
+      this.toastrService.error(
+        this.translateService.instant(
+          'Folder translations should have at least one name/description pair'
+        )
+      );
+      return;
+    }
   }
 
   ngOnDestroy(): void {}

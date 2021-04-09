@@ -20,13 +20,13 @@
         class="mb-2"
         [nodes]="foldersDto"
         [showActions]="true"
-        [showCollapseButton]="foldersDto.length"
+        [showCollapseButton]="foldersDto.length > 0"
         (createNode)="openCreateModal($event)"
         (editNode)="openEditModal($event)"
         (deleteNode)="openDeleteModal($event)"
       ></app-eform-tree-view-picker>
       <p
-        style="cursor: pointer"
+        style="cursor: pointer; margin-bottom: 0"
         id="newFolderBtn"
         (click)="openCreateModal()"
         *ngIf="userClaims.workersCreate"

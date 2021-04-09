@@ -6,9 +6,15 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
+import { ToastrService } from 'ngx-toastr';
 import { noWhitespaceValidator } from 'src/app/common/helpers';
 import { FoldersService } from 'src/app/common/services/advanced/folders.service';
-import { FolderCreateModel, FolderDto } from 'src/app/common/models';
+import {
+  FolderCreateModel,
+  FolderDto,
+  FolderTranslationModel,
+} from 'src/app/common/models';
 import { applicationLanguages } from 'src/app/common/const';
 
 @Component({
@@ -29,7 +35,8 @@ export class FolderCreateComponent implements OnInit {
 
   constructor(
     private foldersService: FoldersService,
-    private formBuilder: FormBuilder
+    private toastrService: ToastrService,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit(): void {}
@@ -61,21 +68,34 @@ export class FolderCreateComponent implements OnInit {
   }
 
   createFolder() {
-    this.foldersService
-      .createFolder({
-        translations: this.newFolderModel.translations,
-        parentId: this.selectedParentFolder
-          ? this.selectedParentFolder.id
-          : null,
-      })
-      .subscribe((data) => {
-        if (data && data.success) {
-          this.selectedParentFolder = null;
-          this.initCreateForm();
-          this.folderCreated.emit();
-          this.frame.hide();
-        }
-      });
+    // Validate if at least one translation is filled correctly
+    const translationExists = this.newFolderModel.translations.find(
+      (x) => x.name && x.description
+    );
+    if (translationExists) {
+      this.foldersService
+        .createFolder({
+          translations: this.newFolderModel.translations,
+          parentId: this.selectedParentFolder
+            ? this.selectedParentFolder.id
+            : null,
+        })
+        .subscribe((data) => {
+          if (data && data.success) {
+            this.selectedParentFolder = null;
+            this.initCreateForm();
+            this.folderCreated.emit();
+            this.frame.hide();
+          }
+        });
+    } else {
+      this.toastrService.error(
+        this.translateService.instant(
+          'Folder translations should have at least one name/description pair'
+        )
+      );
+      return;
+    }
   }
 
   // isDisabled(): boolean {
