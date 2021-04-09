@@ -76,9 +76,7 @@
                         name="createFolderNameTranslation_{{
                           translationIndex
                         }}"
-                        [(ngModel)]="
-                          newFolderModel.translations[translationIndex].name
-                        "
+                        [(ngModel)]="translation.name"
                         class="form-control"
                       />
                       <label
@@ -97,10 +95,7 @@
                       </p>
                       <pell-editor
                         mdbInput
-                        [(value)]="
-                          newFolderModel.translations[translationIndex]
-                            .description
-                        "
+                        [(value)]="translation.description"
                         name="createFolderDescriptionTranslation_{{
                           translationIndex
                         }}"

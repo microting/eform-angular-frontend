@@ -173,16 +173,19 @@ namespace eFormAPI.Web.Services
                     .Select(x => new { x.LanguageCode, x.Id })
                     .ToListAsync();
 
-                names.AddRange(createModel.Translations
-                    .Select(x => new KeyValuePair<string, string>(languages
-                            .First(y => y.Id == x.LanguageId)
-                            .LanguageCode,
-                        x.Name)));
-                descriptions.AddRange(createModel.Translations
-                    .Select(x => new KeyValuePair<string, string>(languages
-                            .First(y => y.Id == x.LanguageId)
-                            .LanguageCode,
-                        x.Description)));
+                foreach (var folderTranslationModel in createModel.Translations)
+                {
+                    if (!string.IsNullOrEmpty(folderTranslationModel.Name) &&
+                        !string.IsNullOrEmpty(folderTranslationModel.Description))
+                    {
+                        var languageCode = languages
+                            .First(y => y.Id == folderTranslationModel.LanguageId).LanguageCode;
+                        names.Add(new KeyValuePair<string, string>(languageCode, folderTranslationModel.Name));
+
+                        descriptions.Add(new KeyValuePair<string, string>(languageCode, folderTranslationModel.Description));
+                    }
+                }
+
                 await core.FolderCreate(names, descriptions, createModel.ParentId); // creating the folder in Danish as default
                 return new OperationResult(true);
             }
@@ -240,16 +243,18 @@ namespace eFormAPI.Web.Services
                     .Select(x => new {x.LanguageCode, x.Id})
                     .ToListAsync();
 
-                names.AddRange(folderUpdateModel.Translations
-                    .Select(x => new KeyValuePair<string, string>(languages
-                            .First(y => y.Id == x.LanguageId)
-                        .LanguageCode,
-                    x.Name)));
-                descriptions.AddRange(folderUpdateModel.Translations
-                    .Select(x => new KeyValuePair<string, string>(languages
-                            .First(y => y.Id == x.LanguageId)
-                        .LanguageCode,
-                    x.Description)));
+                foreach (var folderTranslationModel in folderUpdateModel.Translations)
+                {
+                    if (!string.IsNullOrEmpty(folderTranslationModel.Name) &&
+                        !string.IsNullOrEmpty(folderTranslationModel.Description))
+                    {
+                        var languageCode = languages
+                            .First(y => y.Id == folderTranslationModel.LanguageId).LanguageCode;
+                        names.Add(new KeyValuePair<string, string>(languageCode, folderTranslationModel.Name));
+
+                        descriptions.Add(new KeyValuePair<string, string>(languageCode, folderTranslationModel.Description));
+                    }
+                }
 
                 await core.FolderUpdate(
                     folderUpdateModel.Id,

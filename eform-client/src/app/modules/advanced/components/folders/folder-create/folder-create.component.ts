@@ -5,16 +5,11 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { noWhitespaceValidator } from 'src/app/common/helpers';
 import { FoldersService } from 'src/app/common/services/advanced/folders.service';
-import {
-  FolderCreateModel,
-  FolderDto,
-  FolderTranslationModel,
-} from 'src/app/common/models';
+import { FolderCreateModel, FolderDto } from 'src/app/common/models';
 import { applicationLanguages } from 'src/app/common/const';
 
 @Component({
