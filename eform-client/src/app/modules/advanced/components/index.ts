@@ -19,6 +19,8 @@ export * from './units/unit-move/unit-move.component';
 export * from './workers/workers/workers.component';
 export * from './folders/folders/folders.component';
 export * from './folders/folder-create/folder-create.component';
+export * from './folders/folder-edit/folder-edit.component';
+export * from './folders/folder-delete/folder-delete.component';
 export * from './workers/worker-edit/worker-edit.component';
 export * from './workers/worker-create/worker-create.component';
 export * from './workers/worker-delete/worker-delete.component';

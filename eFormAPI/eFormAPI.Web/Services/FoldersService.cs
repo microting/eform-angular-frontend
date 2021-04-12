@@ -113,10 +113,10 @@ namespace eFormAPI.Web.Services
                 var core = await _coreHelper.GetCore();
                 await using var dbContext = core.DbContextHelper.GetDbContext();
                 var locale = await _userService.GetCurrentUserLocale();
-                Language language = dbContext.Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
+                var language = dbContext.Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
                 var folders = await dbContext.Folders.Join(dbContext.FolderTranslations,
                         folder => folder.Id, translation => translation.FolderId,
-                        (folder, translation) => new
+                        (folder, translation) => new 
                         {
                             folder.WorkflowState,
                             translation.Name,
@@ -165,11 +165,24 @@ namespace eFormAPI.Web.Services
             {
                 var core = await _coreHelper.GetCore();
 
-                List<KeyValuePair<string, string>> names = new List<KeyValuePair<string, string>>();
-                List<KeyValuePair<string, string>> descriptions = new List<KeyValuePair<string, string>>();
+                var names = new List<KeyValuePair<string, string>>();
+                var descriptions = new List<KeyValuePair<string, string>>();
+                await using var sdkDbContext = core.DbContextHelper.GetDbContext();
+                var languages = await sdkDbContext.Languages
+                    .AsNoTracking()
+                    .Select(x => new { x.LanguageCode, x.Id })
+                    .ToListAsync();
 
-                names.Add(new KeyValuePair<string, string> ("da", createModel.Name));
-                descriptions.Add(new KeyValuePair<string, string>("da",createModel.Description.Replace("&nbsp;", " ")));
+                foreach (var folderTranslationModel in createModel.Translations)
+                {
+                    var languageCode = languages
+                        .First(y => y.Id == folderTranslationModel.LanguageId).LanguageCode;
+                    names.Add(new KeyValuePair<string, string>(languageCode, folderTranslationModel.Name));
+
+                    descriptions.Add(
+                        new KeyValuePair<string, string>(languageCode, folderTranslationModel.Description));
+                }
+
                 await core.FolderCreate(names, descriptions, createModel.ParentId); // creating the folder in Danish as default
                 return new OperationResult(true);
             }
@@ -182,55 +195,33 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        public async Task<OperationDataResult<FolderDtoModel>> Edit(int id)
+        public async Task<OperationDataResult<FolderModel>> Read(int id)
         {
             try
             {
                 var core = await _coreHelper.GetCore();
-                await using var dbContext = core.DbContextHelper.GetDbContext();
-                var locale = await _userService.GetCurrentUserLocale();
-                Language language = dbContext.Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
-                var folder = await dbContext.Folders.Join(dbContext.FolderTranslations,
-                        f => f.Id, translation => translation.FolderId,
-                        (f, translation) => new
-                        {
-                            f.WorkflowState,
-                            translation.Name,
-                            translation.Description,
-                            f.Id,
-                            f.CreatedAt,
-                            f.MicrotingUid,
-                            f.ParentId,
-                            f.UpdatedAt,
-                            translation.LanguageId
-                        })
+                await using var sdkDbContext = core.DbContextHelper.GetDbContext();
+
+                var query = sdkDbContext.Folders
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                    .Where(x => x.LanguageId == language.Id)
-                    .Where(x => x.Id == id)
-                    .Select(x => new FolderDtoModel
-                    {
-                        Id = x.Id,
-                        Name = x.Name,
-                        CreatedAt = x.CreatedAt,
-                        Description = x.Description,
-                        MicrotingUId = x.MicrotingUid,
-                        ParentId = x.ParentId,
-                        UpdatedAt = x.UpdatedAt,
-                    }).FirstOrDefaultAsync();
+                    .Where(x => x.Id == id);
+
+                var folder = await AddSelectToQuery(query)
+                    .FirstOrDefaultAsync();
 
                 if (folder == null)
                 {
-                    return new OperationDataResult<FolderDtoModel>(
+                    return new OperationDataResult<FolderModel>(
                         false,
                         _localizationService.GetString("FolderNotFound"));
                 }
 
-                return new OperationDataResult<FolderDtoModel>(true, folder);
+                return new OperationDataResult<FolderModel>(true, folder);
             }
             catch (Exception e)
             {
                 _logger.LogError(e, e.Message);
-                return new OperationDataResult<FolderDtoModel>(
+                return new OperationDataResult<FolderModel>(
                     false,
                     _localizationService.GetString("ErrorWhileObtainingFoldersInfo"));
             }
@@ -241,11 +232,24 @@ namespace eFormAPI.Web.Services
             var core = await _coreHelper.GetCore();
             try
             {
-                List<KeyValuePair<string, string>> names = new List<KeyValuePair<string, string>>();
-                List<KeyValuePair<string, string>> descriptions = new List<KeyValuePair<string, string>>();
+                var names = new List<KeyValuePair<string, string>>();
+                var descriptions = new List<KeyValuePair<string, string>>();
+                await using var sdkDbContext = core.DbContextHelper.GetDbContext();
+                var languages = await sdkDbContext.Languages
+                    .AsNoTracking()
+                    .Select(x => new {x.LanguageCode, x.Id})
+                    .ToListAsync();
 
-                names.Add(new KeyValuePair<string, string> ("da", folderUpdateModel.Name));
-                descriptions.Add(new KeyValuePair<string, string>("da",folderUpdateModel.Description.Replace("&nbsp;", " ")));
+                foreach (var folderTranslationModel in folderUpdateModel.Translations)
+                {
+                    var languageCode = languages
+                        .First(y => y.Id == folderTranslationModel.LanguageId).LanguageCode;
+                    names.Add(new KeyValuePair<string, string>(languageCode, folderTranslationModel.Name));
+
+                    descriptions.Add(
+                        new KeyValuePair<string, string>(languageCode, folderTranslationModel.Description));
+                }
+
                 await core.FolderUpdate(
                     folderUpdateModel.Id,
                     names,
@@ -300,6 +304,24 @@ namespace eFormAPI.Web.Services
                 }
                 await core.FolderDelete(folder.Id);
             }
+        }
+
+        private static IQueryable<FolderModel> AddSelectToQuery(IQueryable<Folder> query)
+        {
+            return query.Select(x => new FolderModel
+            {
+                Id = x.Id,
+                ParentId = x.ParentId,
+                Translations = x.FolderTranslations
+                    .Where(y => y.WorkflowState != Constants.WorkflowStates.Removed)
+                    .OrderBy(y => y.LanguageId)
+                    .Select(y => new FolderTranslationModel
+                    {
+                        Name = y.Name,
+                        Description = y.Description,
+                        LanguageId = y.LanguageId,
+                    }).ToList()
+            });
         }
     }
 }

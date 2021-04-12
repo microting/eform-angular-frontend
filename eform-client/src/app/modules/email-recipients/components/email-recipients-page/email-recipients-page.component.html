@@ -1,4 +1,4 @@
-<subheader-pn>
+<eform-subheader>
   <div class="p-3">
     <button
       mdbBtn
@@ -18,7 +18,7 @@
       {{ 'Add Recipients' | translate }}
     </button>
   </div>
-</subheader-pn>
+</eform-subheader>
 
 <div class="container-fluid">
   <div class="row pl-1">
@@ -118,17 +118,17 @@
   </div>
   <div class="row justify-content-between mr-2 ml-2">
     <div class="col-md-1">
-      <page-size-pn
+      <eform-page-size
         [pageSize]="emailRecipientsStateService.getPageSize() | async"
         (onPageSizeChanged)="onPageSizeChanged($event)"
-      ></page-size-pn>
+      ></eform-page-size>
     </div>
-    <pagination-pn
+    <eform-pagination
       [limit]="emailRecipientsStateService.getPageSize() | async"
       [size]="emailRecipientsListModel.total"
       [offset]="emailRecipientsStateService.getOffset() | async"
       (onPageChanged)="changePage($event)"
-    ></pagination-pn>
+    ></eform-pagination>
   </div>
 </div>
 

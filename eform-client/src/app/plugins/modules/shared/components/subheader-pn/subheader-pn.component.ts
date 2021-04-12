@@ -1,6 +1,5 @@
 import {Component, ElementRef, Input, OnInit, ViewChild, OnDestroy} from '@angular/core';
 import {Router} from '@angular/router';
-import {EventBrokerService} from 'src/app/common/helpers';
 import {AppMenuService} from 'src/app/common/services';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription} from 'rxjs';

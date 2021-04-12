@@ -1,17 +1,10 @@
-export class SecurityGroupsRequestModel {
+import { PagedEntityRequest } from 'src/app/common/models';
+
+export class SecurityGroupsRequestModel extends PagedEntityRequest {
   nameFilter: string;
-  pageIndex: number;
-  pageSize: number;
-  isSortDsc: boolean;
-  offset: number;
-  sort: string;
 
   constructor() {
+    super();
     this.nameFilter = '';
-    this.pageIndex = 1;
-    this.pageSize = 5;
-    this.isSortDsc = false;
-    this.offset = 0;
-    this.sort = 'Id';
   }
 }

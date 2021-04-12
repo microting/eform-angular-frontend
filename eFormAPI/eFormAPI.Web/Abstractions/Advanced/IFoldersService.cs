@@ -31,10 +31,15 @@ namespace eFormAPI.Web.Abstractions.Advanced
     public interface IFoldersService
     {
         Task<OperationDataResult<List<FolderDtoModel>>> Index();
+
         Task<OperationDataResult<List<FolderDtoModel>>> List();
+
         Task<OperationResult> Create(FolderCreateModel createModel);
-        Task<OperationDataResult<FolderDtoModel>> Edit(int id);
+
+        Task<OperationDataResult<FolderModel>> Read(int id);
+
         Task<OperationResult> Update(FolderUpdateModel folderUpdateModel);
+
         Task<OperationResult> Delete(int id);
     }
 }

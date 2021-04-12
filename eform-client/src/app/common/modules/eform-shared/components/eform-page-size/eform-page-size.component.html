@@ -2,7 +2,8 @@
   [items]="pageSizes"
   (ngModelChange)="updateCurrentPageSettings($event)"
   [clearable]="false"
-  [(ngModel)]="pageSize"
+  [ngModel]="pageSize"
   dropdownPosition="top"
-  [placeholder]="'Display' | translate">
+  [placeholder]="'Display' | translate"
+>
 </ng-select>

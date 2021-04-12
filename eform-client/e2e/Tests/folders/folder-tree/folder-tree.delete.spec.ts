@@ -1,7 +1,7 @@
 import loginPage from '../../../Page objects/Login.page';
 import myEformsPage from '../../../Page objects/MyEforms.page';
 import foldersPage from '../../../Page objects/Folders.page';
-import {generateRandmString} from '../../../Helpers/helper-functions';
+import { generateRandmString } from '../../../Helpers/helper-functions';
 
 const expect = require('chai').expect;
 let nameFolder = generateRandmString();
@@ -16,10 +16,15 @@ describe('Delete folder', function () {
     // Create
     const description = generateRandmString();
     foldersPage.createNewFolder(nameFolder, description);
-    const rowNumParentsBeforeDelete = foldersPage.rowNum;
-    foldersPage.getFolderByName(nameFolder).delete();
-    const rowNumParentsAfterDelete = foldersPage.rowNum;
-    expect(rowNumParentsBeforeDelete - 1, 'Folder was deleted incorrectly').equal(rowNumParentsAfterDelete);
+    const rowNumBeforeDelete = foldersPage.rowNum;
+
+    $('#folderTreeName').waitForDisplayed({ timeout: 20000 });
+    const folder = foldersPage.getFolderByName(nameFolder);
+    folder.delete();
+    const rowNumAfterDelete = foldersPage.rowNum;
+    expect(rowNumBeforeDelete - 1, 'Folder was deleted incorrectly').equal(
+      rowNumAfterDelete
+    );
   });
   it('Should not delete if cancel was clicked', function () {
     // Create
@@ -28,12 +33,18 @@ describe('Delete folder', function () {
     foldersPage.createNewFolder(nameFolder, description);
 
     // Delete
-    const rowNumParentsBeforeDelete = foldersPage.rowNum;
-    foldersPage.getFolderByName(nameFolder).delete(true);
-    const rowNumParentsAfterCancelDelete = foldersPage.rowNum;
-    expect(rowNumParentsBeforeDelete).equal(rowNumParentsAfterCancelDelete);
+    const rowNumBeforeDelete = foldersPage.rowNum;
+    const folder = foldersPage.getFolderByName(nameFolder);
+    folder.delete(true);
+    const rowNumAfterCancelDelete = foldersPage.rowNum;
+    expect(rowNumBeforeDelete).equal(rowNumAfterCancelDelete);
   });
-  it('Should delete folder', function () {
-    foldersPage.getFolderByName(nameFolder).delete();
+  after('Should delete folder', function () {
+    $('#folderTreeName').waitForDisplayed({ timeout: 20000 });
+    const folder = foldersPage.getFolderByName(nameFolder);
+    const countFoldersBeforeDelete = foldersPage.rowNum;
+    folder.delete();
+    const countFoldersAfterDelete = foldersPage.rowNum;
+    expect(countFoldersBeforeDelete - 1).eq(countFoldersAfterDelete);
   });
 });

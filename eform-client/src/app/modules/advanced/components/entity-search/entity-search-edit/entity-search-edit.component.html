@@ -1,43 +1,72 @@
-<subheader-pn [title]="'Edit searchable list' | translate">
+<eform-subheader [title]="'Edit searchable list' | translate">
   <div class="p-3">
-    <button mdbBtn id="entitySearchUpdateSaveBtn" class="btn btn-success btn-small-height" (click)="updateEntitySearchableGroup()">{{'Save' | translate}}</button>
-    <button mdbBtn id="entitySearchUpdateCancelBtn" class="btn btn-accent text-black-50 btn-small-height" (click)="goBack()">{{'Cancel' | translate}}</button>
+    <button
+      mdbBtn
+      id="entitySearchUpdateSaveBtn"
+      class="btn btn-success btn-small-height"
+      (click)="updateEntitySearchableGroup()"
+    >
+      {{ 'Save' | translate }}
+    </button>
+    <button
+      mdbBtn
+      id="entitySearchUpdateCancelBtn"
+      class="btn btn-accent text-black-50 btn-small-height"
+      (click)="goBack()"
+    >
+      {{ 'Cancel' | translate }}
+    </button>
   </div>
-</subheader-pn>
-<br>
+</eform-subheader>
+<br />
 <div class="container-fluid">
   <div class="row">
-    <div  class="col-md-12 col-xs-12" role="main">
+    <div class="col-md-12 col-xs-12" role="main">
       <mdb-card>
         <mdb-card-body>
           <div class="row">
             <div class="col-md-12">
               <div class="md-form">
-                <input mdbInput
-                        required
-                       [(ngModel)]="advEntitySearchableGroupEditModel.name"
-                       id="editName" type="text" class="form-control"
-                       [disabled]="advEntitySearchableGroupEditModel.isLocked">
-                <label for="editName">{{'Name' | translate}}</label>
+                <input
+                  mdbInput
+                  required
+                  [(ngModel)]="advEntitySearchableGroupEditModel.name"
+                  id="editName"
+                  type="text"
+                  class="form-control"
+                  [disabled]="advEntitySearchableGroupEditModel.isLocked"
+                />
+                <label for="editName">{{ 'Name' | translate }}</label>
               </div>
               <div class="md-form">
-                <input mdbInput
-                        required
-                       [(ngModel)]="advEntitySearchableGroupEditModel.description"
-                       id="editName" type="text" class="form-control">
-                <label for="editName">{{'Description' | translate}}</label>
+                <input
+                  mdbInput
+                  required
+                  [(ngModel)]="advEntitySearchableGroupEditModel.description"
+                  id="editName"
+                  type="text"
+                  class="form-control"
+                />
+                <label for="editName">{{ 'Description' | translate }}</label>
               </div>
             </div>
           </div>
 
           <div class="row d-flex">
-            <div class="mr-auto">
-            </div>
+            <div class="mr-auto"></div>
             <div class="d-inline-flex">
-              <button id="editEntitySearchImportBtn" class="btn btn-success btn-icon" (click)="modalSearchImportList.show()">
+              <button
+                id="editEntitySearchImportBtn"
+                class="btn btn-success btn-icon"
+                (click)="modalSearchImportList.show()"
+              >
                 <i class="material-icons">format_list_bulleted</i>
               </button>
-              <button id="editEntitySearchCreateItem" class="btn btn-success btn-icon" (click)="addNewAdvEntitySelectableItem()">
+              <button
+                id="editEntitySearchCreateItem"
+                class="btn btn-success btn-icon"
+                (click)="addNewAdvEntitySelectableItem()"
+              >
                 <i class="material-icons">add</i>
               </button>
             </div>
@@ -46,34 +75,64 @@
           <div class="row">
             <div class="panel panel-default w-100 pt-2">
               <div class="panel-body">
-                <ul class="list-group" dragula="ITEMS"
-                    [(dragulaModel)]="advEntitySearchableGroupEditModel.advEntitySearchableItemModels"
-                    (dragulaModelChange)="dragulaPositionChanged()">
+                <ul
+                  class="list-group"
+                  dragula="ITEMS"
+                  [(dragulaModel)]="
+                    advEntitySearchableGroupEditModel.advEntitySearchableItemModels
+                  "
+                  (dragulaModelChange)="dragulaPositionChanged()"
+                >
                   <!--list item-->
-                  <li class="list-group-item"
-                      *ngFor="let entityItem of advEntitySearchableGroupEditModel.advEntitySearchableItemModels; let i = index">
+                  <li
+                    class="list-group-item"
+                    *ngFor="
+                      let entityItem of advEntitySearchableGroupEditModel.advEntitySearchableItemModels;
+                      let i = index
+                    "
+                  >
                     <div class="row">
                       <div class="col-md-1">
                         <a>
-                          <fa-icon icon="grip-lines" size="lg" [fixedWidth]="true"></fa-icon>
+                          <fa-icon
+                            icon="grip-lines"
+                            size="lg"
+                            [fixedWidth]="true"
+                          ></fa-icon>
                         </a>
                       </div>
-                      <div class="col-md-9">{{entityItem.name}}</div>
+                      <div class="col-md-9">{{ entityItem.name }}</div>
                       <div class="col-md-2">
-                        <fa-icon icon="exclamation-triangle" size="lg" [fixedWidth]="true" *ngIf="!entityItem.name"
-                                 mdbTooltip="{{'Name is required' | translate}}!"></fa-icon>
+                        <fa-icon
+                          icon="exclamation-triangle"
+                          size="lg"
+                          [fixedWidth]="true"
+                          *ngIf="!entityItem.name"
+                          mdbTooltip="{{ 'Name is required' | translate }}!"
+                        ></fa-icon>
                         <a class="pull-right">
-                          <fa-icon icon="pen" size="lg" [fixedWidth]="true"
-                                   (click)="openModalSearchEditName(entityItem)" ></fa-icon>
+                          <fa-icon
+                            icon="pen"
+                            size="lg"
+                            [fixedWidth]="true"
+                            (click)="openModalSearchEditName(entityItem)"
+                          ></fa-icon>
                         </a>
                         <a class="pull-right">
-                          <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true"
-                                   (click)="deleteAdvEntitySelectableItem(entityItem.entityItemUId)" ></fa-icon>
+                          <fa-icon
+                            icon="trash-alt"
+                            size="lg"
+                            [fixedWidth]="true"
+                            (click)="
+                              deleteAdvEntitySelectableItem(
+                                entityItem.entityItemUId
+                              )
+                            "
+                          ></fa-icon>
                         </a>
                       </div>
                     </div>
                   </li>
-
                 </ul>
               </div>
             </div>
@@ -86,6 +145,10 @@
 
 <app-entity-search-import-list
   (onImportSubmitted)="importAdvEntitySelectableGroup($event)"
-  #modalSearchImportList></app-entity-search-import-list>
-<app-entity-search-edit-name [selectedAdvEntitySearchableItemModel]="selectedItem"
-                             (onItemUpdated)="updateItem($event)" #modalSearchEditName></app-entity-search-edit-name>
+  #modalSearchImportList
+></app-entity-search-import-list>
+<app-entity-search-edit-name
+  [selectedAdvEntitySearchableItemModel]="selectedItem"
+  (onItemUpdated)="updateItem($event)"
+  #modalSearchEditName
+></app-entity-search-edit-name>

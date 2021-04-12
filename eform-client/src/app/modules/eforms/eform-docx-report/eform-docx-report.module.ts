@@ -5,21 +5,21 @@ import {
   EformDocxReportHeaderComponent,
   EformDocxReportImagesComponent,
   EformDocxReportTableComponent,
-  EformDocxReportHeaderEditorComponent
+  EformDocxReportHeaderEditorComponent,
 } from './components';
-import { SharedPnModule } from 'src/app/plugins/modules/shared/shared-pn.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
   ButtonsModule,
   CardsModule,
-  InputsModule, ModalModule,
+  InputsModule,
+  ModalModule,
   TableModule,
   TooltipModule,
 } from 'angular-bootstrap-md';
 import { RouterModule } from '@angular/router';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OwlDateTimeModule } from 'ng-pick-datetime-ex';
 import { EformDocxReportRouting } from './eform-docx-report.routing';
 
@@ -33,7 +33,6 @@ import { EformDocxReportRouting } from './eform-docx-report.routing';
   ],
   imports: [
     CommonModule,
-    SharedPnModule,
     TranslateModule,
     EformSharedModule,
     FontAwesomeModule,

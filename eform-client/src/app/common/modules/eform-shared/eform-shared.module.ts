@@ -1,23 +1,28 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
-import {NgSelectModule} from '@ng-select/ng-select';
-import {TranslateModule} from '@ngx-translate/core';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { TranslateModule } from '@ngx-translate/core';
 
 import {
   DateFormatterComponent,
   EformCollapseToggleComponent,
   EformPageSizeComponent,
   EformPaginationComponent,
+  EformSubheaderComponent,
   EformTreeViewPickerComponent,
   StatusBarComponent,
-  EformTableHeaderSortableComponent
+  EformTableHeaderSortableComponent,
 } from './components';
-import {AuthImagePipe, AuthAudioPipe, SafeHtmlPipe} from 'src/app/common/pipes';
-import {TreeModule} from '@circlon/angular-tree-component';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {WavesModule} from 'angular-bootstrap-md';
-import { EformTableHeadersComponent } from './components/eform-table/eform-table-headers/eform-table-headers.component';
+import {
+  AuthImagePipe,
+  AuthAudioPipe,
+  SafeHtmlPipe,
+} from 'src/app/common/pipes';
+import { TreeModule } from '@circlon/angular-tree-component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { WavesModule } from 'angular-bootstrap-md';
+import { EformTableHeadersComponent } from 'src/app/common/modules/eform-shared/components';
 
 @NgModule({
   imports: [
@@ -32,6 +37,7 @@ import { EformTableHeadersComponent } from './components/eform-table/eform-table
   declarations: [
     EformPaginationComponent,
     EformPageSizeComponent,
+    EformSubheaderComponent,
     StatusBarComponent,
     DateFormatterComponent,
     AuthImagePipe,
@@ -40,7 +46,7 @@ import { EformTableHeadersComponent } from './components/eform-table/eform-table
     EformTreeViewPickerComponent,
     EformCollapseToggleComponent,
     EformTableHeaderSortableComponent,
-    EformTableHeadersComponent
+    EformTableHeadersComponent,
   ],
   exports: [
     EformPaginationComponent,
@@ -53,6 +59,7 @@ import { EformTableHeadersComponent } from './components/eform-table/eform-table
     EformCollapseToggleComponent,
     AuthAudioPipe,
     SafeHtmlPipe,
+    EformSubheaderComponent,
   ],
 })
 export class EformSharedModule {}

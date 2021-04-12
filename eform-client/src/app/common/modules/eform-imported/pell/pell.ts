@@ -1,21 +1,21 @@
 const actions = {
   bold: {
-    icon: '<b class="text-black-60">B</b>',
+    icon: '<b class="text-black-50">B</b>',
     title: 'Bold',
     result: () => exec('bold')
   },
   italic: {
-    icon: '<i class="text-black-60">I</i>',
+    icon: '<i class="text-black-50">I</i>',
     title: 'Italic',
     result: () => exec('italic')
   },
   underline: {
-    icon: '<u class="text-black-60">U</u>',
+    icon: '<u class="text-black-50">U</u>',
     title: 'Underline',
     result: () => exec('underline')
   },
   strikethrough: {
-    icon: '<strike class="text-black-60">S</strike>',
+    icon: '<strike class="text-black-50">S</strike>',
     title: 'Strike-through',
     result: () => exec('strikeThrough')
   }

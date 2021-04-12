@@ -1,20 +1,22 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
-import {TranslateModule} from '@ngx-translate/core';
-import {DragulaModule} from 'ng2-dragula';
-import {MDBBootstrapModule} from 'angular-bootstrap-md';
-import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
-import {NgSelectModule} from '@ng-select/ng-select';
-import {AdvancedRoutingModule} from './advanced.routing';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
+import { DragulaModule } from 'ng2-dragula';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { AdvancedRoutingModule } from './advanced.routing';
 import {
   EntitySearchComponent,
-  EntitySearchCreateComponent, EntitySearchEditComponent,
+  EntitySearchCreateComponent,
+  EntitySearchEditComponent,
   EntitySearchEditNameComponent,
   EntitySearchImportListComponent,
   EntitySearchRemoveComponent,
   EntitySelectComponent,
-  EntitySelectCreateComponent, EntitySelectEditComponent,
+  EntitySelectCreateComponent,
+  EntitySelectEditComponent,
   EntitySelectEditNameComponent,
   EntitySelectImportListComponent,
   EntitySelectRemoveComponent,
@@ -30,14 +32,14 @@ import {
   WorkerEditComponent,
   WorkersComponent,
   FoldersComponent,
-  FolderCreateComponent, SiteTagsComponent
+  FolderCreateComponent,
+  SiteTagsComponent,
+  FolderEditComponent,
+  FolderDeleteComponent,
 } from './components';
-import { FolderEditComponent } from './components/folders/folder-edit/folder-edit.component';
-import { FolderDeleteComponent } from './components/folders/folder-delete/folder-delete.component';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {SharedPnModule} from 'src/app/plugins/modules/shared/shared-pn.module';
-import {CasesModule} from 'src/app/modules';
-import {EformImportedModule} from 'src/app/common/modules/eform-imported/eform-imported.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CasesModule } from 'src/app/modules';
+import { EformImportedModule } from 'src/app/common/modules/eform-imported/eform-imported.module';
 
 @NgModule({
   imports: [
@@ -51,9 +53,9 @@ import {EformImportedModule} from 'src/app/common/modules/eform-imported/eform-i
     DragulaModule,
     FontAwesomeModule,
     MDBBootstrapModule,
-    SharedPnModule,
     CasesModule,
-    EformImportedModule
+    EformImportedModule,
+    ReactiveFormsModule,
   ],
   declarations: [
     EntitySearchComponent,
@@ -83,8 +85,7 @@ import {EformImportedModule} from 'src/app/common/modules/eform-imported/eform-i
     FolderCreateComponent,
     FolderEditComponent,
     FolderDeleteComponent,
-    SiteTagsComponent
-  ]
+    SiteTagsComponent,
+  ],
 })
-export class AdvancedModule {
-}
+export class AdvancedModule {}

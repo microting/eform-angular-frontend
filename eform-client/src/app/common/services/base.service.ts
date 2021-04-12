@@ -105,17 +105,17 @@ export class BaseService {
   private setHeaders(contentType?: string) {
     let headers = new HttpHeaders();
     if (contentType === 'formData') {
-      const user: AuthResponseModel = JSON.parse(
-        localStorage.getItem('currentAuth')
-      );
-      // check user
-      if (user && user.access_token) {
-        headers.append('Authorization', 'Bearer ' + user.access_token);
-      }
     } else if (contentType) {
       headers = headers.set('Content-Type', contentType);
     } else {
       headers = headers.set('Content-Type', 'application/json');
+    }
+    const user: AuthResponseModel = JSON.parse(
+      localStorage.getItem('currentAuth')
+    );
+    // check user
+    if (user && user.access_token) {
+      headers = headers.append('Authorization', 'Bearer ' + user.access_token);
     }
     // add localization
     return headers;

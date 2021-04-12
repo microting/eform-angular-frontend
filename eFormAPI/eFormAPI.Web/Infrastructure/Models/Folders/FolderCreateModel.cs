@@ -23,10 +23,13 @@ SOFTWARE.
 */
 namespace eFormAPI.Web.Infrastructure.Models.Folders
 {
+    using System.Collections.Generic;
+
     public class FolderCreateModel
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
         public int? ParentId { get; set; }
+
+        public List<FolderTranslationModel> Translations { get; set; }
+            = new List<FolderTranslationModel>();
     }
 }

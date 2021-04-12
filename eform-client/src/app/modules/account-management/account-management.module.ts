@@ -1,9 +1,9 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {NgSelectModule} from '@ng-select/ng-select';
-import {MDBBootstrapModule} from 'angular-bootstrap-md';
-import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
 
 import {
   ChangePasswordComponent,
@@ -11,35 +11,31 @@ import {
   ProfileSettingsComponent,
   RemoveUserModalComponent,
   UserEditModalComponent,
-  UsersPageComponent
+  UsersPageComponent,
 } from './components';
-import {AccountManagementRouting} from './account-management.routing';
-import {TranslateModule} from '@ngx-translate/core';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {SharedPnModule} from 'src/app/plugins/modules/shared/shared-pn.module';
-
+import { AccountManagementRouting } from './account-management.routing';
+import { TranslateModule } from '@ngx-translate/core';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        AccountManagementRouting,
-        NgSelectModule,
-        MDBBootstrapModule,
-        EformSharedModule,
-        TranslateModule,
-        ReactiveFormsModule,
-        FormsModule,
-        FontAwesomeModule,
-        SharedPnModule
-    ],
+  imports: [
+    CommonModule,
+    AccountManagementRouting,
+    NgSelectModule,
+    MDBBootstrapModule,
+    EformSharedModule,
+    TranslateModule,
+    ReactiveFormsModule,
+    FormsModule,
+    FontAwesomeModule,
+  ],
   declarations: [
     ChangePasswordComponent,
     ProfileSettingsComponent,
     UsersPageComponent,
     UserEditModalComponent,
     NewUserModalComponent,
-    RemoveUserModalComponent
-  ]
+    RemoveUserModalComponent,
+  ],
 })
-export class AccountManagementModule {
-}
+export class AccountManagementModule {}
