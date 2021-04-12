@@ -4,7 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedPnService } from 'src/app/plugins/modules/shared/services';
-import { PellPnComponent } from './components';
+import {
+  PageSizePnComponent,
+  PaginationPnComponent,
+  PellPnComponent,
+  SubheaderPnComponent,
+} from './components';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { LoaderInterceptor } from 'src/app/common/interceptors/loader-interceptor.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -21,8 +26,18 @@ import {
     FormsModule,
     NgxChartsModule,
   ],
-  declarations: [PellPnComponent],
-  exports: [PellPnComponent],
+  declarations: [
+    PaginationPnComponent,
+    SubheaderPnComponent,
+    PellPnComponent,
+    PageSizePnComponent,
+  ],
+  exports: [
+    PaginationPnComponent,
+    SubheaderPnComponent,
+    PellPnComponent,
+    PageSizePnComponent,
+  ],
   providers: [
     SharedPnService,
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
