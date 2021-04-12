@@ -22,7 +22,7 @@ export class FolderCreateComponent implements OnInit {
   selectedParentFolder: FolderDto;
   newFolderModel: FolderCreateModel = new FolderCreateModel();
   folderTranslations: FormArray = new FormArray([]);
-  selectedLanguage = applicationLanguages[0].id;
+  selectedLanguage = applicationLanguages[1].id;
 
   get languages() {
     return applicationLanguages;

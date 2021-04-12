@@ -175,15 +175,12 @@ namespace eFormAPI.Web.Services
 
                 foreach (var folderTranslationModel in createModel.Translations)
                 {
-                    if (!string.IsNullOrEmpty(folderTranslationModel.Name) &&
-                        !string.IsNullOrEmpty(folderTranslationModel.Description))
-                    {
-                        var languageCode = languages
-                            .First(y => y.Id == folderTranslationModel.LanguageId).LanguageCode;
-                        names.Add(new KeyValuePair<string, string>(languageCode, folderTranslationModel.Name));
+                    var languageCode = languages
+                        .First(y => y.Id == folderTranslationModel.LanguageId).LanguageCode;
+                    names.Add(new KeyValuePair<string, string>(languageCode, folderTranslationModel.Name));
 
-                        descriptions.Add(new KeyValuePair<string, string>(languageCode, folderTranslationModel.Description));
-                    }
+                    descriptions.Add(
+                        new KeyValuePair<string, string>(languageCode, folderTranslationModel.Description));
                 }
 
                 await core.FolderCreate(names, descriptions, createModel.ParentId); // creating the folder in Danish as default
@@ -245,15 +242,12 @@ namespace eFormAPI.Web.Services
 
                 foreach (var folderTranslationModel in folderUpdateModel.Translations)
                 {
-                    if (!string.IsNullOrEmpty(folderTranslationModel.Name) &&
-                        !string.IsNullOrEmpty(folderTranslationModel.Description))
-                    {
-                        var languageCode = languages
-                            .First(y => y.Id == folderTranslationModel.LanguageId).LanguageCode;
-                        names.Add(new KeyValuePair<string, string>(languageCode, folderTranslationModel.Name));
+                    var languageCode = languages
+                        .First(y => y.Id == folderTranslationModel.LanguageId).LanguageCode;
+                    names.Add(new KeyValuePair<string, string>(languageCode, folderTranslationModel.Name));
 
-                        descriptions.Add(new KeyValuePair<string, string>(languageCode, folderTranslationModel.Description));
-                    }
+                    descriptions.Add(
+                        new KeyValuePair<string, string>(languageCode, folderTranslationModel.Description));
                 }
 
                 await core.FolderUpdate(

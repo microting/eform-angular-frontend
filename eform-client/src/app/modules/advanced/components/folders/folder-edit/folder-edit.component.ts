@@ -14,7 +14,6 @@ import { Subscription } from 'rxjs';
 import { applicationLanguages } from 'src/app/common/const';
 import { FoldersService } from 'src/app/common/services';
 import {
-  FolderCreateModel,
   FolderDto,
   FolderModel,
   FolderUpdateModel,
@@ -30,7 +29,7 @@ export class FolderEditComponent implements OnInit, OnDestroy {
   @Output() folderEdited: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('frame', { static: true }) frame;
   folderUpdateModel: FolderUpdateModel = new FolderUpdateModel();
-  selectedLanguage = applicationLanguages[0].id;
+  selectedLanguage = applicationLanguages[1].id;
   selectedParentFolder: FolderDto;
 
   getFolderSub$: Subscription;
