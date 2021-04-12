@@ -43,10 +43,12 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using Castle.Core.Internal;
+using Castle.DynamicProxy.Generators;
 using eFormAPI.Web.Hosting.Helpers;
 using eFormAPI.Web.Infrastructure.Models.Settings.Admin;
 using eFormAPI.Web.Infrastructure.Models.Settings.Initial;
 using Microting.eForm.Dto;
+using Microting.eForm.Infrastructure.Data.Entities;
 
 namespace eFormAPI.Web.Services
 {
@@ -376,6 +378,52 @@ namespace eFormAPI.Web.Services
                     SecondaryText = _headerSettings.Value.SecondaryText,
                     SecondaryTextVisible = _headerSettings.Value.SecondaryTextVisible,
                 };
+
+                var core = _coreHelper.GetCore().GetAwaiter().GetResult();
+                var dbContext = core.DbContextHelper.GetDbContext();
+                var folders = dbContext.Folders.Where(x => !string.IsNullOrEmpty(x.Name) && x.WorkflowState != Microting.eForm.Infrastructure.Constants.Constants.WorkflowStates.Removed).ToList();
+                foreach (Folder folder in folders)
+                {
+                    List<string> nameTexts = folder.Name.Split("|").ToList();
+                    List<string> descriptionTexts = folder.Description.Split("|").ToList();
+
+
+                    List<KeyValuePair<string, string>> names = new List<KeyValuePair<string, string>>();
+                    List<KeyValuePair<string, string>> descriptions = new List<KeyValuePair<string, string>>();
+
+                    names.Add(new KeyValuePair<string, string> ("da", nameTexts[0]));
+                    descriptions.Add(new KeyValuePair<string, string>("da",descriptionTexts[0].Replace("&nbsp;", " ")));
+                    if (descriptionTexts.Count > 1)
+                    {
+                        descriptions.Add(new KeyValuePair<string, string>("en-US",descriptionTexts[1].Replace("&nbsp;", " ")));
+                    }
+                    if (descriptionTexts.Count > 2)
+                    {
+                        descriptions.Add(new KeyValuePair<string, string>("de-DE",descriptionTexts[2].Replace("&nbsp;", " ")));
+                    }
+                    if (nameTexts.Count > 1)
+                    {
+                        if (descriptions.Count != 2)
+                        {
+                            descriptions.Add(new KeyValuePair<string, string>("en-US", " "));
+                        }
+                        names.Add(new KeyValuePair<string, string> ("en-US", nameTexts[1]));
+                    }
+                    if (nameTexts.Count > 2)
+                    {
+                        if (descriptions.Count != 3)
+                        {
+                            descriptions.Add(new KeyValuePair<string, string>("de-DE", " "));
+                        }
+                        names.Add(new KeyValuePair<string, string> ("de-DE", nameTexts[2]));
+                    }
+
+                    core.FolderUpdate(folder.Id, names, descriptions, folder.ParentId).GetAwaiter().GetResult();
+                    folder.Name = null;
+                    folder.Description = null;
+                    folder.Update(dbContext).GetAwaiter().GetResult();
+                }
+
                 return new OperationDataResult<HeaderSettingsModel>(true, model);
             }
             catch (Exception e)
