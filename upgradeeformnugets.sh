@@ -2,6 +2,7 @@
 
 GIT_STATUS=`git status | grep "nothing to commit, working tree clean" | wc -l`
 if (( "$GIT_STATUS" > 0 )); then
+	git checkout master
 	git pull
 	cd eFormAPI/eFormAPI.Web
   CURRENT_NUMBER_OF_COMMITS=`git log --oneline | wc -l`
