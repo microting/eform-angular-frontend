@@ -397,9 +397,17 @@ namespace eFormAPI.Web.Services
                     {
                         descriptions.Add(new KeyValuePair<string, string>("en-US",descriptionTexts[1].Replace("&nbsp;", " ")));
                     }
+                    else
+                    {
+                        descriptions.Add(new KeyValuePair<string, string>("en-US", " "));
+                    }
                     if (descriptionTexts.Count > 2)
                     {
                         descriptions.Add(new KeyValuePair<string, string>("de-DE",descriptionTexts[2].Replace("&nbsp;", " ")));
+                    }
+                    else
+                    {
+                        descriptions.Add(new KeyValuePair<string, string>("de-DE", " "));
                     }
                     if (nameTexts.Count > 1)
                     {
@@ -409,6 +417,10 @@ namespace eFormAPI.Web.Services
                         }
                         names.Add(new KeyValuePair<string, string> ("en-US", nameTexts[1]));
                     }
+                    else
+                    {
+                        names.Add(new KeyValuePair<string, string>("en-US", " "));
+                    }
                     if (nameTexts.Count > 2)
                     {
                         if (descriptions.Count != 3)
@@ -416,6 +428,10 @@ namespace eFormAPI.Web.Services
                             descriptions.Add(new KeyValuePair<string, string>("de-DE", " "));
                         }
                         names.Add(new KeyValuePair<string, string> ("de-DE", nameTexts[2]));
+                    }
+                    else
+                    {
+                        names.Add(new KeyValuePair<string, string>("de-DE", " "));
                     }
 
                     core.FolderUpdate(folder.Id, names, descriptions, folder.ParentId).GetAwaiter().GetResult();
