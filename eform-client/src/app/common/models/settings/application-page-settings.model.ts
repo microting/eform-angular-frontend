@@ -4,7 +4,7 @@ export class ApplicationPageModel {
 
   constructor(data?: any) {
     if (data) {
-      this.name = data.groupName;
+      this.name = data.name;
       this.settings = data.settings;
     }
   }
