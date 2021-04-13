@@ -256,7 +256,7 @@ namespace eFormAPI.Web.Services
                     LastName = initialSettingsModel.AdminSetupModel.LastName,
                     Locale = initialSettingsModel.GeneralAppSetupSettingsModel.DefaultLocale,
                     TimeZone = timeZoneString,
-                    DarkTheme = true,
+                    DarkTheme = initialSettingsModel.AdminSetupModel.DarkTheme,
                     Formats = "de-DE",
                     EmailConfirmed = true,
                     TwoFactorEnabled = false,
