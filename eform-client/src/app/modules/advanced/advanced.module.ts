@@ -38,7 +38,6 @@ import {
   FolderDeleteComponent,
 } from './components';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { CasesModule } from 'src/app/modules';
 import { EformImportedModule } from 'src/app/common/modules/eform-imported/eform-imported.module';
 
 @NgModule({
@@ -53,7 +52,6 @@ import { EformImportedModule } from 'src/app/common/modules/eform-imported/eform
     DragulaModule,
     FontAwesomeModule,
     MDBBootstrapModule,
-    CasesModule,
     EformImportedModule,
     ReactiveFormsModule,
   ],

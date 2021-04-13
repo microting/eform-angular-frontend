@@ -1,7 +1,6 @@
 import {
   Component,
   EventEmitter,
-  Input,
   OnDestroy,
   OnInit,
   Output,
@@ -12,7 +11,7 @@ import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { applicationLanguages } from 'src/app/common/const';
-import { FoldersService } from 'src/app/common/services';
+import { FoldersService, LocaleService } from 'src/app/common/services';
 import {
   FolderDto,
   FolderModel,
@@ -29,7 +28,7 @@ export class FolderEditComponent implements OnInit, OnDestroy {
   @Output() folderEdited: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('frame', { static: true }) frame;
   folderUpdateModel: FolderUpdateModel = new FolderUpdateModel();
-  selectedLanguage = applicationLanguages[1].id;
+  selectedLanguage: number;
   selectedParentFolder: FolderDto;
 
   getFolderSub$: Subscription;
@@ -42,8 +41,13 @@ export class FolderEditComponent implements OnInit, OnDestroy {
   constructor(
     private foldersService: FoldersService,
     private toastrService: ToastrService,
-    private translateService: TranslateService
-  ) {}
+    private translateService: TranslateService,
+    localeService: LocaleService
+  ) {
+    this.selectedLanguage = applicationLanguages.find(
+      (x) => x.locale === localeService.getCurrentUserLocale()
+    ).id;
+  }
 
   ngOnInit() {}
 
@@ -58,8 +62,18 @@ export class FolderEditComponent implements OnInit, OnDestroy {
     this.folderUpdateModel = {
       ...this.folderUpdateModel,
       id: model.id,
-      translations: [...model.translations.sort((x) => x.languageId)],
+      translations: [],
     };
+    for (let i = 0; i < applicationLanguages.length; i++) {
+      const translations = model.translations.find(
+        (x) => x.languageId === applicationLanguages[i].id
+      );
+      this.folderUpdateModel.translations.push({
+        languageId: applicationLanguages[i].id,
+        description: translations ? translations.description : '',
+        name: translations ? translations.name : '',
+      });
+    }
   }
 
   getFolder(folderId: number) {

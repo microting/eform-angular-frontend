@@ -20,7 +20,8 @@
       "userName": "admin@admin.com",
       "firstName": "John",
       "lastName": "Smith",
-      "password": "Qq1234567$"
+      "password": "Qq1234567$",
+      "darkTheme": true 
     },
     "generalAppSetupSettingsModel": {
       "defaultLocale": "da",

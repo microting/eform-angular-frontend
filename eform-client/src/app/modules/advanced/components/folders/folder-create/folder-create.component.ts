@@ -5,12 +5,12 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { FormArray } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { FoldersService } from 'src/app/common/services/advanced/folders.service';
 import { FolderCreateModel, FolderDto } from 'src/app/common/models';
 import { applicationLanguages } from 'src/app/common/const';
+import { LocaleService } from 'src/app/common/services';
 
 @Component({
   selector: 'app-folder-create',
@@ -21,8 +21,8 @@ export class FolderCreateComponent implements OnInit {
   @ViewChild('frame', { static: true }) frame;
   selectedParentFolder: FolderDto;
   newFolderModel: FolderCreateModel = new FolderCreateModel();
-  folderTranslations: FormArray = new FormArray([]);
-  selectedLanguage = applicationLanguages[1].id;
+  // folderTranslations: FormArray = new FormArray([]);
+  selectedLanguage: number;
 
   get languages() {
     return applicationLanguages;
@@ -31,8 +31,13 @@ export class FolderCreateComponent implements OnInit {
   constructor(
     private foldersService: FoldersService,
     private toastrService: ToastrService,
-    private translateService: TranslateService
-  ) {}
+    private translateService: TranslateService,
+    localeService: LocaleService
+  ) {
+    this.selectedLanguage = applicationLanguages.find(
+      (x) => x.locale === localeService.getCurrentUserLocale()
+    ).id;
+  }
 
   ngOnInit(): void {}
 
