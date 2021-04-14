@@ -77,7 +77,7 @@
   <ng-template #treeNodeTemplate let-node let-index="index">
     <div id="folderTreeId" class="d-flex align-items-center"
          [ngStyle]="{'cursor': lockSelectedNode ? 'not-allowed' : 'pointer'}">
-      <span id="folderTreeName">{{ node.data.name }}</span>
+      <span id="folderTreeName">{{ node.data.name }} <small style="color: var(--blue-400);">({{ node.data.microtingUId }})</small></span>
       <div class="ml-3 text-black-50" *ngIf="node.isActive && showActions">
         <fa-icon
           *ngIf="showCreateAction"
