@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 using eFormAPI.Web.Infrastructure.Models.Units;
+using Microting.eForm.Infrastructure.Data.Entities;
 
 namespace eFormAPI.Web.Services
 {
@@ -184,7 +185,8 @@ namespace eFormAPI.Web.Services
                         _localizationService.GetStringWithFormat("SiteParamNotFound", updateModel.Id));
                 }
 
-                await core.Advanced_SiteItemUpdate((int)site.MicrotingUid, updateModel.SiteName);
+                Language language = await dbContext.Languages.SingleAsync(x => x.Id == site.LanguageId);
+                await core.Advanced_SiteItemUpdate((int)site.MicrotingUid, updateModel.SiteName, language.LanguageCode);
 
                 return new OperationResult(true);
             }
