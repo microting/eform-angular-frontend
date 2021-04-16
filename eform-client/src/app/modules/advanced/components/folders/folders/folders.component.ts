@@ -28,7 +28,7 @@ export class FoldersComponent implements OnInit {
 
   getInitialData() {
     this.loadAllFolders();
-    this.loadAllFoldersList();
+    // this.loadAllFoldersList();
   }
 
   constructor(private foldersService: FoldersService,
