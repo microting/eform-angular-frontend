@@ -125,19 +125,19 @@ namespace eFormAPI.Web.Services
             var core = await _coreHelper.GetCore();
             var siteName = deviceUserModel.UserFirstName + " " + deviceUserModel.UserLastName;
             await using var db = core.DbContextHelper.GetDbContext();
-            Language language = db.Languages.Single(x => x.LanguageCode == deviceUserModel.LanguageCode);
+
 
             try
             {
                 var siteDto = await core.SiteCreate(siteName, deviceUserModel.UserFirstName, deviceUserModel.UserLastName,
-                    null);
+                    null, deviceUserModel.LanguageCode);
 
-                if (siteDto != null)
-                {
-                    Site site = await db.Sites.SingleAsync(x => x.MicrotingUid == siteDto.SiteId);
-                    site.LanguageId = language.Id;
-                    await site.Update(db);
-                }
+                // if (siteDto != null)
+                // {
+                //     Site site = await db.Sites.SingleAsync(x => x.MicrotingUid == siteDto.SiteId);
+                //     site.LanguageId = language.Id;
+                //     await site.Update(db);
+                // }
 
                 return siteDto != null
                     ? new OperationResult(true,
@@ -222,14 +222,14 @@ namespace eFormAPI.Web.Services
                     {
                         var fullName = deviceUserModel.UserFirstName + " " + deviceUserModel.UserLastName;
                         var isUpdated = await core.SiteUpdate(deviceUserModel.Id, fullName, deviceUserModel.UserFirstName,
-                            deviceUserModel.UserLastName, workerDto.Email);
+                            deviceUserModel.UserLastName, workerDto.Email, deviceUserModel.LanguageCode);
 
                         if (isUpdated)
-                        {
-                            Site site = await db.Sites.SingleAsync(x => x.MicrotingUid == deviceUserModel.Id);
-                            site.LanguageId = language.Id;
-                            await site.Update(db);
-                        }
+                        // {
+                        //     Site site = await db.Sites.SingleAsync(x => x.MicrotingUid == deviceUserModel.Id);
+                        //     site.LanguageId = language.Id;
+                        //     await site.Update(db);
+                        // }
                         return isUpdated
                             ? new OperationResult(true, _localizationService.GetString("DeviceUserUpdatedSuccessfully"))
                             : new OperationResult(false,

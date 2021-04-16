@@ -36,7 +36,7 @@ describe('Main page', function () {
     browser.pause(1000);
     expect($('tree-node .node-content-wrapper-active').getText(),
       'Wrong folder selected')
-      .eq(`${folders[0].name}`);
+      .contain(`${folders[0].name}`);
     const siteIds = $$('#microtingId');
     for (let i = 0; i < siteIds.length; i++) {
       const index = users.findIndex(user => user.siteId === +siteIds[i].getText());
