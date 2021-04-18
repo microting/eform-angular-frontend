@@ -174,6 +174,10 @@ namespace eFormAPI.Web.Services
                     }));
                 }
 
+                var securityGroupsIds = await _dbContext.MenuItemSecurityGroups
+                    .Select(p => p.SecurityGroupId)
+                    .ToListAsync();
+
                 var actualMenu = menuItems
                     .Where(x => x.ParentId == null)
                     .OrderBy(x => x.Position)
@@ -197,9 +201,8 @@ namespace eFormAPI.Web.Services
                                 Language = p.Language,
                             })
                             .ToList(),
-                        SecurityGroupsIds = _dbContext.MenuItemSecurityGroups
-                            .Where(p => p.MenuItemId == x.Id)
-                            .Select(p => p.SecurityGroupId)
+                        SecurityGroupsIds = securityGroupsIds
+                            .Where(p => p == x.Id)
                             .ToList(),
                         Children = menuItems.Where(p => p.ParentId == x.Id)
                             .OrderBy(p => p.Position)

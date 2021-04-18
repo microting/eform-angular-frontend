@@ -33,9 +33,9 @@ export class LocaleService extends BaseService {
 
   initLocale() {
     let language = localStorage.getItem('locale');
-    this.translateService.setDefaultLang(applicationLanguages[0].locale);
+    this.translateService.setDefaultLang(applicationLanguages[1].locale);
     if (!language) {
-      localStorage.setItem('locale', applicationLanguages[0].locale);
+      localStorage.setItem('locale', applicationLanguages[1].locale);
       this.getDefaultLocale().subscribe((data) => {
         language = data.model;
         localStorage.setItem('locale', language);
@@ -58,7 +58,7 @@ export class LocaleService extends BaseService {
   getCurrentUserLocale() {
     let currentUserLocale = localStorage.getItem('locale');
     if (!currentUserLocale) {
-      currentUserLocale = applicationLanguages[0].locale;
+      currentUserLocale = applicationLanguages[1].locale;
       localStorage.setItem('locale', currentUserLocale);
       this.translateService.setDefaultLang(currentUserLocale);
       this.translateService.use(currentUserLocale);
@@ -67,10 +67,10 @@ export class LocaleService extends BaseService {
   }
 
   initCookies(locale: string) {
-    this.translateService.setDefaultLang(applicationLanguages[0].locale);
-    let culture = this.buildCookieValue(applicationLanguages[0].locale);
-    if (locale === applicationLanguages[1].locale) {
-      culture = this.buildCookieValue(applicationLanguages[1].locale);
+    this.translateService.setDefaultLang(applicationLanguages[1].locale);
+    let culture = this.buildCookieValue(applicationLanguages[1].locale);
+    if (locale === applicationLanguages[0].locale) {
+      culture = this.buildCookieValue(applicationLanguages[0].locale);
     } else if (locale) {
       culture = this.buildCookieValue(locale);
     }

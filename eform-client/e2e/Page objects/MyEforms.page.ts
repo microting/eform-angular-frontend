@@ -131,7 +131,7 @@ class MyEformsPage extends PageWithNavbarPage {
     const spinnerAnimation = $('#spinner-animation');
     spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
     this.newEformBtn.click();
-    $('#eFormXml').waitForDisplayed({ timeout: 20000 });
+    this.xmlTextArea.waitForDisplayed({ timeout: 20000 });
     // Create replaced xml and insert it in textarea
     const xml = XMLForEform.XML.replace('TEST_LABEL', eFormLabel);
     browser.execute(function (xmlText) {
@@ -250,7 +250,8 @@ class MyEformsRowObject {
         this.eFormName = $$('#eform-label-' + (rowNum - 1))[0].getText();
       } catch (e) {}
       this.tags = $$(`#mainPageEFormsTableBody tr`)[rowNum - 1].$$(
-        `#eform-tag-` + (rowNum - 1));
+        `#eform-tag-` + (rowNum - 1)
+      );
       this.pairs = $$(
         `//*[@id="mainPageEFormsTableBody"]/tr[${rowNum}]//*[@id="eform-pair"]`
       );
