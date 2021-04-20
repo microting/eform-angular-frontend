@@ -44,7 +44,7 @@ export class CasesTableComponent implements OnInit {
           name: 'field1',
           elementId: '',
           sortable: true,
-          visibleName: this.currentTemplate.field1?.label,
+          visibleName: this.currentTemplate.field1.label,
         }
       : null,
     this.currentTemplate.field2 && this.currentTemplate.field2.label
@@ -52,7 +52,7 @@ export class CasesTableComponent implements OnInit {
           name: 'field2',
           elementId: '',
           sortable: true,
-          visibleName: this.currentTemplate.field2?.label,
+          visibleName: this.currentTemplate.field2.label,
         }
       : null,
     this.currentTemplate.field3 && this.currentTemplate.field3.label
@@ -60,7 +60,7 @@ export class CasesTableComponent implements OnInit {
           name: 'field3',
           elementId: '',
           sortable: true,
-          visibleName: this.currentTemplate.field3?.label,
+          visibleName: this.currentTemplate.field3.label,
         }
       : null,
     this.currentTemplate.field4 && this.currentTemplate.field4.label
@@ -68,7 +68,7 @@ export class CasesTableComponent implements OnInit {
           name: 'field4',
           elementId: '',
           sortable: true,
-          visibleName: this.currentTemplate.field4?.label,
+          visibleName: this.currentTemplate.field4.label,
         }
       : null,
     this.currentTemplate.field5 && this.currentTemplate.field5.label
@@ -76,7 +76,7 @@ export class CasesTableComponent implements OnInit {
           name: 'field5',
           elementId: '',
           sortable: true,
-          visibleName: this.currentTemplate.field5?.label,
+          visibleName: this.currentTemplate.field5.label,
         }
       : null,
     this.currentTemplate.field6 && this.currentTemplate.field6.label
@@ -84,7 +84,7 @@ export class CasesTableComponent implements OnInit {
           name: 'field6',
           elementId: '',
           sortable: true,
-          visibleName: this.currentTemplate.field6?.label,
+          visibleName: this.currentTemplate.field6.label,
         }
       : null,
     this.currentTemplate.field7 && this.currentTemplate.field7.label
@@ -92,7 +92,7 @@ export class CasesTableComponent implements OnInit {
           name: 'field7',
           elementId: '',
           sortable: true,
-          visibleName: this.currentTemplate.field7?.label,
+          visibleName: this.currentTemplate.field7.label,
         }
       : null,
     this.currentTemplate.field8 && this.currentTemplate.field8.label
@@ -100,7 +100,7 @@ export class CasesTableComponent implements OnInit {
           name: 'field8',
           elementId: '',
           sortable: true,
-          visibleName: this.currentTemplate.field8?.label,
+          visibleName: this.currentTemplate.field8.label,
         }
       : null,
     this.currentTemplate.field9 && this.currentTemplate.field9.label
@@ -108,7 +108,7 @@ export class CasesTableComponent implements OnInit {
           name: 'field9',
           elementId: '',
           sortable: true,
-          visibleName: this.currentTemplate.field9?.label,
+          visibleName: this.currentTemplate.field9.label,
         }
       : null,
     { name: 'Actions', elementId: '', sortable: false },
@@ -129,7 +129,6 @@ export class CasesTableComponent implements OnInit {
 
   ngOnInit() {
     this.loadTemplateData();
-    this.loadAllCases();
   }
 
   onLabelInputChanged(label: string) {
@@ -150,6 +149,85 @@ export class CasesTableComponent implements OnInit {
     this.caseStateService.getCases().subscribe((operation) => {
       if (operation && operation.success) {
         this.caseListModel = operation.model;
+        this.tableHeaders = [
+          { name: 'Id', elementId: '', sortable: true },
+          { name: 'done_at', elementId: '', sortable: true },
+          { name: 'created_at', elementId: '', sortable: true },
+          { name: 'worker_name', elementId: '', sortable: true },
+          this.currentTemplate.field1 && this.currentTemplate.field1.label
+            ? {
+              name: 'field1',
+              elementId: '',
+              sortable: true,
+              visibleName: this.currentTemplate.field1.label,
+            }
+            : null,
+          this.currentTemplate.field2 && this.currentTemplate.field2.label
+            ? {
+              name: 'field2',
+              elementId: '',
+              sortable: true,
+              visibleName: this.currentTemplate.field2.label,
+            }
+            : null,
+          this.currentTemplate.field3 && this.currentTemplate.field3.label
+            ? {
+              name: 'field3',
+              elementId: '',
+              sortable: true,
+              visibleName: this.currentTemplate.field3.label,
+            }
+            : null,
+          this.currentTemplate.field4 && this.currentTemplate.field4.label
+            ? {
+              name: 'field4',
+              elementId: '',
+              sortable: true,
+              visibleName: this.currentTemplate.field4.label,
+            }
+            : null,
+          this.currentTemplate.field5 && this.currentTemplate.field5.label
+            ? {
+              name: 'field5',
+              elementId: '',
+              sortable: true,
+              visibleName: this.currentTemplate.field5.label,
+            }
+            : null,
+          this.currentTemplate.field6 && this.currentTemplate.field6.label
+            ? {
+              name: 'field6',
+              elementId: '',
+              sortable: true,
+              visibleName: this.currentTemplate.field6.label,
+            }
+            : null,
+          this.currentTemplate.field7 && this.currentTemplate.field7.label
+            ? {
+              name: 'field7',
+              elementId: '',
+              sortable: true,
+              visibleName: this.currentTemplate.field7.label,
+            }
+            : null,
+          this.currentTemplate.field8 && this.currentTemplate.field8.label
+            ? {
+              name: 'field8',
+              elementId: '',
+              sortable: true,
+              visibleName: this.currentTemplate.field8.label,
+            }
+            : null,
+          this.currentTemplate.field9 && this.currentTemplate.field9.label
+            ? {
+              name: 'field9',
+              elementId: '',
+              sortable: true,
+              visibleName: this.currentTemplate.field9.label,
+            }
+            : null,
+          { name: 'Actions', elementId: '', sortable: false },
+        ];
       }
     });
   }
@@ -158,7 +236,9 @@ export class CasesTableComponent implements OnInit {
     this.caseStateService.loadTemplateData().subscribe((operation) => {
       if (operation && operation.success) {
         this.currentTemplate = operation.model;
+        debugger;
         this.loadEformPermissions(this.currentTemplate.id);
+        this.loadAllCases();
       }
     });
   }
