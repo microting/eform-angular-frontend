@@ -68,7 +68,7 @@
     <PackageReference Include="OtpSharp.Core" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.14" />
-    <PackageReference Include="sendgrid" Version="9.22.0" />
+    <PackageReference Include="sendgrid" Version="9.23.0" />
   </ItemGroup>
 
   <ItemGroup>
