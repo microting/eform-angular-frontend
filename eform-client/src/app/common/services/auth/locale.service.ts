@@ -1,44 +1,38 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { CookieService } from 'ngx-cookie-service';
-import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { OperationDataResult } from 'src/app/common/models';
 import { BaseService } from '../base.service';
 import { applicationLanguages } from 'src/app/common/const';
+import { AuthStateService } from 'src/app/common/store';
 
 export let LocaleMethods = {
-  UpdateGoogleAuthenticatorInfo: 'api/auth/google-auth-info',
-  DeleteGoogleAuthenticatorInfo: 'api/auth/google-auth-info',
+  // GoogleAuthenticatorInfo: 'api/auth/google-auth-info',
   DefaultLocale: 'api/settings/default-locale',
 };
 
 @Injectable()
-export class LocaleService extends BaseService {
+export class LocaleService {
   constructor(
-    private _http: HttpClient,
-    router: Router,
-    toastrService: ToastrService,
+    private baseService: BaseService,
+    private authStateService: AuthStateService,
     private translateService: TranslateService,
     private cookieService: CookieService
-  ) {
-    super(_http, router, toastrService);
-  }
+  ) {}
 
   getDefaultLocale(): Observable<OperationDataResult<any>> {
-    return this.get<string>(LocaleMethods.DefaultLocale);
+    return this.baseService.get<string>(LocaleMethods.DefaultLocale);
   }
 
   initLocale() {
-    let language = localStorage.getItem('locale');
+    let language = this.authStateService.currentUserLocale;
     this.translateService.setDefaultLang(applicationLanguages[1].locale);
     if (!language) {
-      localStorage.setItem('locale', applicationLanguages[1].locale);
+      this.authStateService.updateUserLocale(applicationLanguages[1].locale);
       this.getDefaultLocale().subscribe((data) => {
         language = data.model;
-        localStorage.setItem('locale', language);
+        this.authStateService.updateUserLocale(language);
         this.translateService.use(language);
         // Set cookies
         this.initCookies(language);
@@ -49,21 +43,19 @@ export class LocaleService extends BaseService {
     }
   }
 
-  updateUserLocale(localeName: string) {
-    localStorage.setItem('locale', localeName);
+  // updateUserLocale(localeName: string) {
+  //   this.authStateService.updateUserLocale(localeName);
+  //   this.updateCookies(localeName);
+  //   this.translateService.use(localeName);
+  // }
+
+  updateCurrentUserLocaleAndDarkTheme(localeName: string, darkTheme: boolean) {
+    this.authStateService.updateCurrentUserLocaleAndDarkTheme(
+      localeName,
+      darkTheme
+    );
     this.updateCookies(localeName);
     this.translateService.use(localeName);
-  }
-
-  getCurrentUserLocale() {
-    let currentUserLocale = localStorage.getItem('locale');
-    if (!currentUserLocale) {
-      currentUserLocale = applicationLanguages[1].locale;
-      localStorage.setItem('locale', currentUserLocale);
-      this.translateService.setDefaultLang(currentUserLocale);
-      this.translateService.use(currentUserLocale);
-    }
-    return currentUserLocale;
   }
 
   initCookies(locale: string) {
@@ -90,5 +82,9 @@ export class LocaleService extends BaseService {
       9999999,
       '/'
     );
+  }
+
+  getCurrentUserLocale() {
+    return this.authStateService.currentUserLocale;
   }
 }

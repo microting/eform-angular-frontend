@@ -1,23 +1,19 @@
 import {
   Component,
   ElementRef,
-  OnInit,
   OnDestroy,
+  OnInit,
   ViewChild,
 } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 import { EventBrokerService, PluginClaimsHelper } from 'src/app/common/helpers';
-import { UserInfoModel, UserMenuModel } from 'src/app/common/models/user';
+import { UserMenuModel } from 'src/app/common/models';
 import { AppMenuService } from 'src/app/common/services/settings';
-import {
-  AuthService,
-  LocaleService,
-  UserSettingsService,
-} from 'src/app/common/services/auth';
-import { AdminService } from 'src/app/common/services/users';
+import { AdminService, LocaleService } from 'src/app/common/services';
+import { AuthService } from 'src/app/common/services/auth/auth.service';
+import { UserSettingsService } from 'src/app/common/services/auth/user-settings.service';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { Subscription } from 'rxjs';
-import { PermissionGuard } from '../../common/guards';
+import { AuthStateService } from 'src/app/common/store';
 
 @AutoUnsubscribe()
 @Component({
@@ -28,9 +24,6 @@ import { PermissionGuard } from '../../common/guards';
 export class NavigationComponent implements OnInit, OnDestroy {
   @ViewChild('navigationMenu', { static: true }) menuElement: ElementRef;
   private _menuFlag = false;
-  userInfo: UserInfoModel = new UserInfoModel();
-  userMenu: any;
-  navMenu: any;
   appMenu: UserMenuModel = new UserMenuModel();
   brokerListener: any;
   private getAppMenu$: Subscription;
@@ -40,9 +33,9 @@ export class NavigationComponent implements OnInit, OnDestroy {
     private adminService: AdminService,
     private userSettingsService: UserSettingsService,
     private localeService: LocaleService,
-    private translateService: TranslateService,
     private eventBrokerService: EventBrokerService,
-    private appMenuService: AppMenuService
+    private appMenuService: AppMenuService,
+    private authStateService: AuthStateService
   ) {
     this.brokerListener = eventBrokerService.listen(
       'get-navigation-menu',
@@ -60,18 +53,11 @@ export class NavigationComponent implements OnInit, OnDestroy {
         this.appMenu = data;
       }
     );
-    if (this.authService.isAuth) {
+    if (this.authStateService.isAuth) {
       this.adminService.getCurrentUserInfo().subscribe((result) => {
-        this.userInfo = result;
-        this.userSettingsService.getUserSettings().subscribe((data) => {
-          localStorage.setItem('locale', data.model.locale);
-          localStorage.setItem(
-            'darkTheme',
-            data.model.darkTheme ? 'true' : 'false'
-          );
-          this.initLocaleAsync().then(() => {
-            this.getNavigationMenu({ takeFromCache: true });
-          });
+        this.authStateService.updateUserInfo(result);
+        this.initLocaleAsync().then(() => {
+          this.getNavigationMenu({ takeFromCache: true });
         });
       });
     }
@@ -86,12 +72,12 @@ export class NavigationComponent implements OnInit, OnDestroy {
       return true;
     }
 
-    const currentRole = this.authService.currentRole;
+    const currentRole = this.authStateService.currentRole;
     if (guards.includes(currentRole)) {
       return true;
     }
 
-    return guards.some((g) => PluginClaimsHelper.check(g));
+    return guards.some((g) => this.authStateService.checkClaim(g));
   }
 
   expandMenu() {

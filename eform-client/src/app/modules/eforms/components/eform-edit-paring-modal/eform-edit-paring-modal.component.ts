@@ -1,17 +1,16 @@
 import {
   Component,
   EventEmitter,
-  Input,
   OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
-import { SiteNameDto, TemplateDto } from 'src/app/common/models/dto';
+import { FolderDto, SiteNameDto, TemplateDto } from 'src/app/common/models/dto';
 import { DeployCheckbox, DeployModel } from 'src/app/common/models/eforms';
-import { SitesService, FoldersService } from 'src/app/common/services/advanced';
-import { AuthService } from 'src/app/common/services/auth';
+import { FoldersService, SitesService } from 'src/app/common/services/advanced';
+import { AuthService } from 'src/app/common/services/auth/auth.service';
 import { EFormService } from 'src/app/common/services/eform';
-import { FolderDto } from 'src/app/common/models/dto';
+import { AuthStateService } from 'src/app/common/store';
 
 @Component({
   selector: 'app-eform-edit-paring-modal',
@@ -31,14 +30,14 @@ export class EformEditParingModalComponent implements OnInit {
   eformDeployed = false;
 
   get userClaims() {
-    return this.authService.userClaims;
+    return this.authStateService.currentUserClaims;
   }
 
   constructor(
     private foldersService: FoldersService,
     private eFormService: EFormService,
     private sitesService: SitesService,
-    private authService: AuthService
+    private authStateService: AuthStateService
   ) {}
 
   ngOnInit() {
@@ -91,7 +90,10 @@ export class EformEditParingModalComponent implements OnInit {
       }
       this.deployModel.folderId = this.selectedTemplateDto.folderId;
       this.deployViewModel.id = this.selectedTemplateDto.id;
-      if (this.foldersDto.length === 0 || (this.foldersDto.length > 0 && this.deployModel.folderId)) {
+      if (
+        this.foldersDto.length === 0 ||
+        (this.foldersDto.length > 0 && this.deployModel.folderId)
+      ) {
         this.saveButtonDisabled = false;
       }
       deployObject.id = siteDto.siteUId;

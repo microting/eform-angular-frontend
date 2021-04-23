@@ -14,7 +14,8 @@ import {
   EmailRecipientsPageComponent,
   EmailRecipientsTagsComponent,
 } from './components';
-import { EformSharedTagsModule } from 'src/app/common/modules/eform-shared-tags/eform-shared-tags.module';
+import { EformSharedTagsModule } from '../../common/modules/eform-shared-tags/eform-shared-tags.module';
+import { emailRecipientsPersistProvider } from './components/store/email-recipients.store';
 
 @NgModule({
   declarations: [
@@ -36,5 +37,6 @@ import { EformSharedTagsModule } from 'src/app/common/modules/eform-shared-tags/
     EmailRecipientsRouting,
     EformSharedTagsModule,
   ],
+  providers: [emailRecipientsPersistProvider],
 })
 export class EmailRecipientsModule {}

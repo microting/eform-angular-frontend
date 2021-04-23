@@ -5,13 +5,13 @@ import { CaseListModel, CaseModel } from 'src/app/common/models/cases';
 import { TemplateDto } from 'src/app/common/models/dto';
 import { EformPermissionsSimpleModel } from 'src/app/common/models/security/group-permissions/eform';
 import { PageSettingsModel } from 'src/app/common/models/settings';
-import { AuthService } from 'src/app/common/services/auth';
 import { CasesService } from 'src/app/common/services/cases';
 import { EFormService } from 'src/app/common/services/eform';
 import { SecurityGroupEformsPermissionsService } from 'src/app/common/services/security';
 import { saveAs } from 'file-saver';
 import { TableHeaderElementModel } from 'src/app/common/models';
-import { CasesStateService } from 'src/app/modules/cases/components/state/cases-state-service';
+import { CasesStateService } from '../store/cases-state-service';
+import { AuthStateService } from 'src/app/common/store';
 
 @Component({
   selector: 'app-cases-table',
@@ -25,10 +25,10 @@ export class CasesTableComponent implements OnInit {
   localPageSettings: PageSettingsModel = new PageSettingsModel();
 
   get userClaims() {
-    return this.authService.userClaims;
+    return this.authStateService.currentUserClaims;
   }
   get userRole() {
-    return this.authService.currentRole;
+    return this.authStateService.currentRole;
   }
   get userClaimsEnum() {
     return UserClaimsEnum;
@@ -118,7 +118,7 @@ export class CasesTableComponent implements OnInit {
     private activateRoute: ActivatedRoute,
     private casesService: CasesService,
     private eFormService: EFormService,
-    private authService: AuthService,
+    private authStateService: AuthStateService,
     private securityGroupEformsService: SecurityGroupEformsPermissionsService,
     public caseStateService: CasesStateService
   ) {

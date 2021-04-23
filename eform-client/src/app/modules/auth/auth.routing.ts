@@ -1,10 +1,13 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {
-  LoginComponent,
-  RestorePasswordComponent,
+  AuthComponent,
   GoogleAuthenticatorComponent,
-  ResetAdminPasswordComponent, SignOutComponent, AuthComponent, RestorePasswordConfirmationComponent
+  LoginComponent,
+  ResetAdminPasswordComponent,
+  RestorePasswordComponent,
+  RestorePasswordConfirmationComponent,
+  SignOutComponent
 } from './components';
 
 const routes: Routes = [

@@ -128,7 +128,7 @@
   #newPostModal
   (postCreated)="getCasePosts()"
   [pdfReportAvailable]="casePostsListModel.pdfReportAvailable"
-  [currentUserFullName]="currentUserFullName"
+  [currentUserFullName]="authStateService.currentUserFullNameAsync | async"
   [availableRecipients]="availableRecipients"
   [availableRecipientsAndTags]="availableRecipientsAndTags"
   [eformId]="selectedEformId"
@@ -139,5 +139,5 @@
 <app-case-post-view
   #viewPostModal
   [pdfReportAvailable]="casePostsListModel.pdfReportAvailable"
-  [currentUserFullName]="currentUserFullName"
+  [currentUserFullName]="authStateService.currentUserFullNameAsync | async"
 ></app-case-post-view>

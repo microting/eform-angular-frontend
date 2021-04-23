@@ -1,11 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { WorkerCreateModel } from 'src/app/common/models/advanced';
 import { SiteDto, WorkerDto } from 'src/app/common/models/dto';
 import { WorkersService } from 'src/app/common/services/advanced';
-import { AuthService } from 'src/app/common/services/auth';
-import { DeviceUserService } from 'src/app/common/services/device-users';
 import { TableHeaderElementModel } from 'src/app/common/models';
+import { AuthService } from 'src/app/common/services';
+import { AuthStateService } from 'src/app/common/store';
 
 @Component({
   selector: 'app-workers',
@@ -31,13 +30,13 @@ export class WorkersComponent implements OnInit {
   ];
 
   get userClaims() {
-    return this.authService.userClaims;
+    return this.authStateService.currentUserClaims;
   }
 
   constructor(
     private workersService: WorkersService,
     private router: Router,
-    private authService: AuthService
+    private authStateService: AuthStateService
   ) {}
 
   ngOnInit() {

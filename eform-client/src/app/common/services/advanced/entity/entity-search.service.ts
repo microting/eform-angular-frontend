@@ -1,18 +1,15 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import {
   AdvEntitySearchableGroupEditModel,
   AdvEntitySearchableGroupListModel,
+  AdvEntitySearchableGroupListRequestModel,
   AdvEntitySearchableGroupModel,
   CommonDictionaryTextModel,
   OperationDataResult,
   OperationResult,
 } from 'src/app/common/models';
-import { BaseService } from 'src/app/common/services/base.service';
-import { EntitySearchState } from 'src/app/modules/advanced/components/entity-search/state/entity-search.store';
+import { ApiBaseService } from 'src/app/common/services';
 
 const AdvSearchableEntityMethods = {
   GetAll: '/api/searchable-groups',
@@ -24,19 +21,13 @@ const AdvSearchableEntityMethods = {
 };
 
 @Injectable()
-export class EntitySearchService extends BaseService {
-  constructor(
-    private _http: HttpClient,
-    router: Router,
-    toastrService: ToastrService
-  ) {
-    super(_http, router, toastrService);
-  }
+export class EntitySearchService {
+  constructor(private apiBaseService: ApiBaseService) {}
 
   getEntitySearchableGroupList(
-    model: EntitySearchState
+    model: AdvEntitySearchableGroupListRequestModel
   ): Observable<OperationDataResult<AdvEntitySearchableGroupListModel>> {
-    return this.post<AdvEntitySearchableGroupListModel>(
+    return this.apiBaseService.post<AdvEntitySearchableGroupListModel>(
       AdvSearchableEntityMethods.GetAll,
       model
     );
@@ -45,7 +36,7 @@ export class EntitySearchService extends BaseService {
   getEntitySearchableGroup(
     id: number
   ): Observable<OperationDataResult<AdvEntitySearchableGroupModel>> {
-    return this.get<AdvEntitySearchableGroupModel>(
+    return this.apiBaseService.get<AdvEntitySearchableGroupModel>(
       AdvSearchableEntityMethods.GetSingle + '/' + id
     );
   }
@@ -53,20 +44,22 @@ export class EntitySearchService extends BaseService {
   updateEntitySearchableGroup(
     model: AdvEntitySearchableGroupEditModel
   ): Observable<OperationResult> {
-    return this.post<AdvEntitySearchableGroupEditModel>(
+    return this.apiBaseService.post<AdvEntitySearchableGroupEditModel>(
       AdvSearchableEntityMethods.UpdateSingle,
       model
     );
   }
 
   deleteEntitySearchableGroup(groupUid: string): Observable<OperationResult> {
-    return this.get(AdvSearchableEntityMethods.DeleteSingle + '/' + groupUid);
+    return this.apiBaseService.get(
+      AdvSearchableEntityMethods.DeleteSingle + '/' + groupUid
+    );
   }
 
   createEntitySearchableGroup(
     model: AdvEntitySearchableGroupEditModel
   ): Observable<OperationResult> {
-    return this.post<AdvEntitySearchableGroupEditModel>(
+    return this.apiBaseService.post<AdvEntitySearchableGroupEditModel>(
       AdvSearchableEntityMethods.CreateSingle,
       model
     );
@@ -76,7 +69,7 @@ export class EntitySearchService extends BaseService {
     entityGroupUid: string,
     searchString: string
   ): Observable<OperationDataResult<Array<CommonDictionaryTextModel>>> {
-    return this.get<Array<CommonDictionaryTextModel>>(
+    return this.apiBaseService.get<Array<CommonDictionaryTextModel>>(
       AdvSearchableEntityMethods.GetAll +
         '/dict/' +
         entityGroupUid +

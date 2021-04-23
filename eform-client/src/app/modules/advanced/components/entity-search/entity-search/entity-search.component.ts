@@ -1,17 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   AdvEntitySearchableGroupListModel,
-  AdvEntitySearchableGroupListRequestModel,
   AdvEntitySearchableGroupModel,
-  PageSettingsModel,
   TableHeaderElementModel,
 } from 'src/app/common/models';
 import { EntitySearchService } from 'src/app/common/services/advanced';
-import { AuthService } from 'src/app/common/services/auth';
-import { EntitySearchStateService } from 'src/app/modules/advanced/components/entity-search/state/entity-search-state.service';
-import { EntitySearchQuery } from 'src/app/modules/advanced/components/entity-search/state/entity-search.query';
-import { EntitySearchStore } from 'src/app/modules/advanced/components/entity-search/state/entity-search.store';
+import { EntitySearchStateService } from 'src/app/modules/advanced/components/entity-search/store/entity-search-state.service';
 import { updateTableSorting } from 'src/app/common/helpers';
+import { AuthStateService } from 'src/app/common/store';
 
 @Component({
   selector: 'app-searchable-list',
@@ -24,7 +20,7 @@ export class EntitySearchComponent implements OnInit {
   advEntitySearchableGroupListModel: AdvEntitySearchableGroupListModel = new AdvEntitySearchableGroupListModel();
 
   get userClaims() {
-    return this.authService.userClaims;
+    return this.authStateService.currentUserClaims;
   }
 
   tableHeaders: TableHeaderElementModel[] = [
@@ -40,7 +36,7 @@ export class EntitySearchComponent implements OnInit {
 
   constructor(
     private entitySearchService: EntitySearchService,
-    private authService: AuthService,
+    private authStateService: AuthStateService,
     public entitySearchStateService: EntitySearchStateService
   ) {}
 

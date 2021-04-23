@@ -1,10 +1,7 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
-import {ToastrService} from 'ngx-toastr';
-import {Observable} from 'rxjs';
-import {OperationResult} from 'src/app/common/models';
-import {BaseService} from 'src/app/common/services/base.service';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { OperationResult } from 'src/app/common/models';
+import { ApiBaseService } from 'src/app/common/services';
 
 export let ImageMethods = {
   GetImage: '/api/template-files/get-image',
@@ -15,32 +12,46 @@ export let ImageMethods = {
 };
 
 @Injectable()
-export class TemplateFilesService extends BaseService {
-  constructor(private _http: HttpClient, router: Router, toastrService: ToastrService) {
-    super(_http, router, toastrService);
-  }
+export class TemplateFilesService {
+  constructor(private apiBaseService: ApiBaseService) {}
 
   rotateImage(fileName: string): Observable<OperationResult> {
-    return this.get(ImageMethods.RotateImage + '?&fileName=' + fileName);
+    return this.apiBaseService.get(
+      ImageMethods.RotateImage + '?&fileName=' + fileName
+    );
   }
 
-  deleteImage(fileName, fieldId, uploadedObjId: number): Observable<OperationResult> {
-    return this.get(ImageMethods.DeleteImage
-      + '?&fileName=' + fileName
-      + '&fieldId=' + fieldId
-      + '&uploadedObjId=' + uploadedObjId);
+  deleteImage(
+    fileName,
+    fieldId,
+    uploadedObjId: number
+  ): Observable<OperationResult> {
+    return this.apiBaseService.get(
+      ImageMethods.DeleteImage +
+        '?&fileName=' +
+        fileName +
+        '&fieldId=' +
+        fieldId +
+        '&uploadedObjId=' +
+        uploadedObjId
+    );
   }
 
   getImage(fileName: string): Observable<any> {
-    return this.getBlobData(`${ImageMethods.GetImage}/${fileName}`);
+    return this.apiBaseService.getBlobData(
+      `${ImageMethods.GetImage}/${fileName}`
+    );
   }
 
   getPdf(fileName: string): Observable<any> {
-    return this.getBlobData(`${ImageMethods.GetPdf}/${fileName}`);
+    return this.apiBaseService.getBlobData(
+      `${ImageMethods.GetPdf}/${fileName}`
+    );
   }
 
   getPdfFile(fileName: string): Observable<any> {
-    return this.getBlobData(`${ImageMethods.GetPdfFile}?fileName=${fileName}`);
+    return this.apiBaseService.getBlobData(
+      `${ImageMethods.GetPdfFile}?fileName=${fileName}`
+    );
   }
-
 }

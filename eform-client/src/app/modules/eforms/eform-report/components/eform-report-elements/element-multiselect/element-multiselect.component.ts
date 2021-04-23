@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {EformReportDataItemValue, FieldValueDto} from 'src/app/common/models';
+import {EformReportDataItemValue} from 'src/app/common/models';
 
 @Component({
   selector: 'report-element-multiselect',

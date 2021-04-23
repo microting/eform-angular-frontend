@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
-import {ToastrService} from 'ngx-toastr';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {OperationDataResult, OperationResult} from 'src/app/common/models';
-import {BaseService} from 'src/app/common/services/base.service';
-import {NavigationMenuItemModel, NavigationMenuModel} from 'src/app/common/models/navigation-menu';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { OperationDataResult, OperationResult } from 'src/app/common/models';
+import {
+  NavigationMenuItemModel,
+  NavigationMenuModel,
+} from 'src/app/common/models/navigation-menu';
+import { ApiBaseService } from 'src/app/common/services';
 
 const NavigationMenuMethods = {
   Menu: '/api/navigation-menu',
@@ -13,21 +13,22 @@ const NavigationMenuMethods = {
 };
 
 @Injectable()
-export class NavigationMenuService extends BaseService {
-  constructor(private _http: HttpClient, router: Router, toastrService: ToastrService) {
-    super(_http, router, toastrService);
-  }
+export class NavigationMenuService {
+  constructor(private apiBaseService: ApiBaseService) {}
 
   getNavigationMenu(): Observable<OperationDataResult<NavigationMenuModel>> {
-    return this.get<NavigationMenuModel>(NavigationMenuMethods.Menu);
+    return this.apiBaseService.get<NavigationMenuModel>(
+      NavigationMenuMethods.Menu
+    );
   }
 
-  updateNavigationMenu(model: NavigationMenuItemModel[]): Observable<OperationResult> {
-    return this.put<any>(NavigationMenuMethods.Menu, model);
+  updateNavigationMenu(
+    model: NavigationMenuItemModel[]
+  ): Observable<OperationResult> {
+    return this.apiBaseService.put<any>(NavigationMenuMethods.Menu, model);
   }
 
   restNavigationMenu(): Observable<OperationResult> {
-    return this.post<any>(NavigationMenuMethods.MenuReset, {});
+    return this.apiBaseService.post<any>(NavigationMenuMethods.MenuReset, {});
   }
-
 }

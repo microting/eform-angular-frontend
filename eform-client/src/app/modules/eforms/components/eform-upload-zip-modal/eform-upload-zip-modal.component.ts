@@ -3,24 +3,26 @@ import {TranslateService} from '@ngx-translate/core';
 import {FileUploader} from 'ng2-file-upload';
 import {ToastrService} from 'ngx-toastr';
 import {TemplateDto} from 'src/app/common/models/dto';
-import {AuthService} from 'src/app/common/services';
+import {AuthStateService} from 'src/app/common/store';
 
 @Component({
   selector: 'app-eform-upload-zip-modal',
   templateUrl: './eform-upload-zip-modal.component.html',
-  styleUrls: ['./eform-upload-zip-modal.component.scss']
+  styleUrls: ['./eform-upload-zip-modal.component.scss'],
 })
 export class EformUploadZipModalComponent implements OnInit {
-  @ViewChild('frame', {static: true}) frame;
+  @ViewChild('frame', { static: true }) frame;
   selectedTemplate: TemplateDto = new TemplateDto();
   zipFileUploader: FileUploader = new FileUploader({
-    url: '/api/template-files/upload-eform-zip', authToken: this.authService.bearerToken
+    url: '/api/template-files/upload-eform-zip',
+    authToken: this.authStateService.bearerToken,
   });
 
-  constructor(private toastrService: ToastrService,
-              private translateService: TranslateService,
-              private authService: AuthService) {
-  }
+  constructor(
+    private toastrService: ToastrService,
+    private translateService: TranslateService,
+    private authStateService: AuthStateService
+  ) {}
 
   ngOnInit() {
     this.zipFileUploader.onBuildItemForm = (item, form) => {
@@ -28,14 +30,18 @@ export class EformUploadZipModalComponent implements OnInit {
     };
     this.zipFileUploader.onSuccessItem = () => {
       this.zipFileUploader.clearQueue();
-      this.toastrService.success(this.translateService.instant('File has been uploaded successfully'));
+      this.toastrService.success(
+        this.translateService.instant('File has been uploaded successfully')
+      );
       this.frame.hide();
     };
     this.zipFileUploader.onErrorItem = () => {
       this.zipFileUploader.clearQueue();
-      this.toastrService.error(this.translateService.instant('Error while uploading file'));
+      this.toastrService.error(
+        this.translateService.instant('Error while uploading file')
+      );
     };
-    this.zipFileUploader.onAfterAddingFile = f => {
+    this.zipFileUploader.onAfterAddingFile = (f) => {
       if (this.zipFileUploader.queue.length > 1) {
         this.zipFileUploader.removeFromQueue(this.zipFileUploader.queue[0]);
       }

@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UnitDto } from 'src/app/common/models/dto';
 import { UnitsService } from 'src/app/common/services/advanced';
-import { AuthService } from 'src/app/common/services/auth';
 import { TableHeaderElementModel } from 'src/app/common/models';
+import { AuthStateService } from 'src/app/common/store';
 
 @Component({
   selector: 'app-units',
@@ -33,12 +33,12 @@ export class UnitsComponent implements OnInit {
   ];
 
   get userClaims() {
-    return this.authService.userClaims;
+    return this.authStateService.currentUserClaims;
   }
 
   constructor(
     private unitsService: UnitsService,
-    private authService: AuthService
+    private authStateService: AuthStateService
   ) {}
 
   ngOnInit() {

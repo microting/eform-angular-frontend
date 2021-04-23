@@ -1,26 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
-import {ToastrService} from 'ngx-toastr';
-import {LoginPageSettingsModel} from 'src/app/common/models/settings';
-import {AppSettingsService} from 'src/app/common/services/settings';
-import {AuthService, GoogleAuthService, LocaleService} from 'src/app/common/services/auth';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { LoginPageSettingsModel } from 'src/app/common/models/settings';
+import { AppSettingsService } from 'src/app/common/services/settings';
+import { GoogleAuthService, LocaleService } from 'src/app/common/services/auth';
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
 })
 export class AuthComponent implements OnInit {
-  loginPageSettings: LoginPageSettingsModel = new LoginPageSettingsModel;
+  loginPageSettings: LoginPageSettingsModel = new LoginPageSettingsModel();
   loginImage: any;
   twoFactorForced = false;
 
-  constructor(private router: Router,
-              private authService: AuthService,
-              private googleAuthService: GoogleAuthService,
-              private settingsService: AppSettingsService,
-              private toastrService: ToastrService,
-              private localeService: LocaleService) {}
-
+  constructor(
+    private router: Router,
+    private googleAuthService: GoogleAuthService,
+    private settingsService: AppSettingsService,
+    private toastrService: ToastrService,
+    private localeService: LocaleService
+  ) {}
 
   ngOnInit() {
     this.localeService.initLocale();
@@ -38,28 +38,38 @@ export class AuthComponent implements OnInit {
 
   isConnectionStringExist(secondCheck: boolean) {
     console.log('isConnectionStringExist called');
-    this.settingsService.connectionStringExist().subscribe((result) => {
-      if (result && !result.success) {
-        if (secondCheck) {
-          this.router.navigate(['/application-settings/connection-string']).then();
+    this.settingsService.connectionStringExist().subscribe(
+      (result) => {
+        if (result && !result.success) {
+          if (secondCheck) {
+            this.router
+              .navigate(['/application-settings/connection-string'])
+              .then();
+          }
+          return false;
+        } else if (result && result.success) {
+          this.getSettings();
+          this.getTwoFactorInfo();
         }
-        return false;
-      } else if (result && result.success) {
-        this.getSettings();
-        this.getTwoFactorInfo();
-      }
-      return true;
-    },
-        error => false);
+        return true;
+      },
+      (error) => false
+    );
     return false;
   }
 
   getSettings() {
     this.settingsService.getLoginPageSettings().subscribe((data) => {
       if (data && data.success) {
-        this.loginPageSettings = this.settingsService.loginPageSettingsModel = data.model;
-        if (this.loginPageSettings.imageLink && this.loginPageSettings.imageLinkVisible) {
-          this.loginImage = 'api/images/login-page-images?fileName=' + this.loginPageSettings.imageLink;
+        this.loginPageSettings = this.settingsService.loginPageSettingsModel =
+          data.model;
+        if (
+          this.loginPageSettings.imageLink &&
+          this.loginPageSettings.imageLinkVisible
+        ) {
+          this.loginImage =
+            'api/images/login-page-images?fileName=' +
+            this.loginPageSettings.imageLink;
         } else if (!this.loginPageSettings.imageLink) {
           this.loginImage = '../../../assets/images/eform-phone.jpg';
         }

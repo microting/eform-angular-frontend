@@ -14,12 +14,13 @@ import {
   EformEditTagsModalComponent,
   EformExcelReportModalComponent,
   EformRemoveEformModalComponent,
+  EformsBulkImportModalComponent,
   EformsPageComponent,
   EformUploadZipModalComponent,
-  EformsBulkImportModalComponent,
 } from './components';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { OwlDateTimeModule } from 'ng-pick-datetime-ex';
+import { persistProviders } from 'src/app/modules/eforms/store/eforms.store';
 
 @NgModule({
   imports: [
@@ -46,5 +47,6 @@ import { OwlDateTimeModule } from 'ng-pick-datetime-ex';
     EformExcelReportModalComponent,
     EformsBulkImportModalComponent,
   ],
+  providers: persistProviders,
 })
 export class EFormsModule {}

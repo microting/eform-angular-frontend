@@ -1,5 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FieldValueDto} from 'src/app/common/models';
+import {Component, Input} from '@angular/core';
 
 @Component({
   selector: 'report-element-text',

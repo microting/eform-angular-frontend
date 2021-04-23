@@ -9,6 +9,7 @@ import {
   EmailRecipientModel,
   EmailRecipientsCreateModel,
   EmailRecipientsListModel,
+  EmailRecipientsRequestModel,
   EmailRecipientTagCommonModel,
   EmailRecipientUpdateModel,
   OperationDataResult,
@@ -16,7 +17,6 @@ import {
   Paged,
 } from 'src/app/common/models';
 import { BaseService } from '../base.service';
-import { EmailRecipientsState } from 'src/app/modules/email-recipients/components/state/email-recipients.store';
 
 const EmailRecipientsMethods = {
   Main: '/api/email-recipients',
@@ -33,7 +33,7 @@ export class EmailRecipientsService extends BaseService {
   }
 
   getEmailRecipients(
-    model: EmailRecipientsState
+    model: EmailRecipientsRequestModel
   ): Observable<OperationDataResult<Paged<EmailRecipientModel>>> {
     return this.post<Paged<EmailRecipientModel>>(
       EmailRecipientsMethods.Main + '/index',

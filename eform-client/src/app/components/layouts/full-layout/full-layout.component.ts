@@ -1,21 +1,32 @@
-import {Component, OnInit, Renderer2} from '@angular/core';
+import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { akitaConfig } from '@datorama/akita';
+import { AuthStateService } from 'src/app/common/store';
+import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
+import { Subscription } from 'rxjs';
 
+akitaConfig({ resettable: true });
+
+@AutoUnsubscribe()
 @Component({
   selector: 'app-full-layout-root',
-  templateUrl: `./full-layout.component.html`
+  templateUrl: `./full-layout.component.html`,
 })
-export class FullLayoutComponent implements OnInit {
-  darkTheme: boolean;
-
-  constructor(private renderer: Renderer2) {
-
-  }
-
+export class FullLayoutComponent implements OnInit, OnDestroy {
+  isDarkThemeAsync$: Subscription;
+  constructor(
+    private authStateService: AuthStateService,
+    private renderer: Renderer2
+  ) {}
 
   ngOnInit() {
-    this.darkTheme = localStorage.getItem('darkTheme') === 'true';
-    if (this.darkTheme) {
-      this.renderer.addClass(document.body, 'theme-dark');
-    }
+    this.isDarkThemeAsync$ = this.authStateService.isDarkThemeAsync.subscribe(
+      (isDarkTheme) => {
+        isDarkTheme
+          ? this.renderer.addClass(document.body, 'theme-dark')
+          : this.renderer.removeClass(document.body, 'theme-dark');
+      }
+    );
   }
+
+  ngOnDestroy() {}
 }

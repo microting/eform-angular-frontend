@@ -3,7 +3,8 @@ import { DragulaService } from 'ng2-dragula';
 import {
   NavigationMenuItemIndexedModel,
   NavigationMenuItemModel,
-  NavigationMenuModel, NavigationMenuTranslationModel,
+  NavigationMenuModel,
+  NavigationMenuTranslationModel,
 } from 'src/app/common/models/navigation-menu';
 import {
   NavigationMenuService,
@@ -12,12 +13,15 @@ import {
 import { Subscription } from 'rxjs';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { NavigationMenuItemTypeEnum } from 'src/app/common/const';
-import { NavigationMenuItemEditComponent } from '../menu-item/navigation-menu-item-edit/navigation-menu-item-edit.component';
-import { NavigationMenuItemDeleteComponent } from '../menu-item/navigation-menu-item-delete/navigation-menu-item-delete.component';
+import {
+  NavigationMenuItemDeleteComponent,
+  NavigationMenuItemEditComponent,
+} from '../menu-item';
 import { NavigationMenuResetComponent } from '../navigation-menu-reset/navigation-menu-reset.component';
 import { CommonDictionaryModel } from 'src/app/common/models';
 import * as R from 'ramda';
 import { EventBrokerService } from 'src/app/common/helpers';
+import { AuthStateService } from 'src/app/common/store';
 
 @AutoUnsubscribe()
 @Component({
@@ -47,7 +51,8 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
     private dragulaService: DragulaService,
     private navigationMenuService: NavigationMenuService,
     private securityGroupsService: SecurityGroupsService,
-    private eventBrokerService: EventBrokerService
+    private eventBrokerService: EventBrokerService,
+    private authStateService: AuthStateService
   ) {
     dragulaService.createGroup('MENU_ITEMS', {
       moves: (el, container, handle) => {
@@ -98,7 +103,9 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
   }
 
   getHeaderNavigationMenu() {
-    this.eventBrokerService.emit('get-navigation-menu', {takeFromCache: false});
+    this.eventBrokerService.emit('get-navigation-menu', {
+      takeFromCache: false,
+    });
   }
 
   updateNavigationMenu() {
@@ -196,6 +203,8 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
   }
 
   getMenuTranslation(translations: NavigationMenuTranslationModel[]) {
-    return translations.find(x => x.localeName === localStorage.getItem('locale')).name;
+    return translations.find(
+      (x) => x.localeName === this.authStateService.currentUserLocale
+    ).name;
   }
 }

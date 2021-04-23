@@ -1,5 +1,5 @@
-import {Component, Input, OnInit, Output, EventEmitter, ViewChild} from '@angular/core';
-import { EformDocxReportHeadersModel } from 'src/app/common/models';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {EformDocxReportHeadersModel} from 'src/app/common/models';
 
 @Component({
   selector: 'app-eform-docx-report-header-editor',

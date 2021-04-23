@@ -7,16 +7,16 @@ import {
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { AuthService } from 'src/app/common/services';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { AuthStateService } from 'src/app/common/store';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
   constructor(
-    private authService: AuthService,
     private toastrService: ToastrService,
-    private router: Router
+    private router: Router,
+    private authStateService: AuthStateService
   ) {}
 
   intercept(
@@ -48,7 +48,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         if (error.status === 401) {
           this.toastrService.warning('401 - Unauthorized');
           console.error('401 - Unauthorized');
-          this.authService.logout();
+          this.authStateService.logout();
           console.error(error);
           return throwError(errorMessage);
         } else if (error.status === 403) {

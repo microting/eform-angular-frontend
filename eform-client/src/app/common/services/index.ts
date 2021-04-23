@@ -9,3 +9,6 @@ export * from './plugins-management';
 export * from './email-recipients';
 export * from './navigation-menu';
 export * from './advanced';
+export * from './eform';
+export * from './loader.service';
+export * from './apiBase.service';

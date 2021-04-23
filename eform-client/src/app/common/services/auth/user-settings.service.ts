@@ -1,32 +1,23 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { OperationDataResult, OperationResult } from 'src/app/common/models';
 import { UserSettingsModel } from 'src/app/common/models/settings';
-import { BaseService } from '../base.service';
+import { ApiBaseService } from 'src/app/common/services';
 
 export let UserSettingsMethods = {
   UserSettings: 'api/account/user-settings',
 };
 
 @Injectable()
-export class UserSettingsService extends BaseService {
-  constructor(
-    private _http: HttpClient,
-    router: Router,
-    toastrService: ToastrService
-  ) {
-    super(_http, router, toastrService);
-  }
+export class UserSettingsService {
+  constructor(private apiBaseService: ApiBaseService) {}
 
   getUserSettings(): Observable<OperationDataResult<UserSettingsModel>> {
-    return this.get(UserSettingsMethods.UserSettings);
+    return this.apiBaseService.get(UserSettingsMethods.UserSettings);
   }
 
   updateUserSettings(model: UserSettingsModel): Observable<OperationResult> {
-    return this.post<UserSettingsModel>(
+    return this.apiBaseService.post<UserSettingsModel>(
       UserSettingsMethods.UserSettings,
       model
     );

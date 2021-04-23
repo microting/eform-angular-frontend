@@ -1,17 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
   FolderModel,
   OperationDataResult,
   OperationResult,
+  FolderCreateModel,
+  FolderDto,
+  FolderUpdateModel,
 } from 'src/app/common/models';
-import { BaseService } from 'src/app/common/services/base.service';
-import { FolderCreateModel } from '../../models/advanced/folders/folder-create.model';
-import { FolderDto } from '../../models/dto/folder.dto';
-import { FolderUpdateModel } from '../../models/advanced/folders/folder-update-model';
+import { ApiBaseService } from 'src/app/common/services';
 
 const FoldersMethods = {
   Folders: '/api/folders',
@@ -19,36 +16,30 @@ const FoldersMethods = {
 };
 
 @Injectable()
-export class FoldersService extends BaseService {
-  constructor(
-    private _http: HttpClient,
-    router: Router,
-    toastrService: ToastrService
-  ) {
-    super(_http, router, toastrService);
-  }
+export class FoldersService {
+  constructor(private apiBaseService: ApiBaseService) {}
 
   getAllFolders(): Observable<OperationDataResult<FolderDto[]>> {
-    return this.get(FoldersMethods.Folders);
+    return this.apiBaseService.get(FoldersMethods.Folders);
   }
 
   getAllFoldersList(): Observable<OperationDataResult<FolderDto[]>> {
-    return this.get(FoldersMethods.FoldersList);
+    return this.apiBaseService.get(FoldersMethods.FoldersList);
   }
 
   getSingleFolder(id: number): Observable<OperationDataResult<FolderModel>> {
-    return this.get(FoldersMethods.Folders + '/' + id);
+    return this.apiBaseService.get(FoldersMethods.Folders + '/' + id);
   }
 
   updateSingleFolder(model: FolderUpdateModel): Observable<OperationResult> {
-    return this.put(FoldersMethods.Folders, model);
+    return this.apiBaseService.put(FoldersMethods.Folders, model);
   }
 
   deleteSingleFolder(id: number): Observable<OperationResult> {
-    return this.delete(FoldersMethods.Folders + '/' + id);
+    return this.apiBaseService.delete(FoldersMethods.Folders + '/' + id);
   }
 
   createFolder(model: FolderCreateModel): Observable<OperationResult> {
-    return this.post(FoldersMethods.Folders, model);
+    return this.apiBaseService.post(FoldersMethods.Folders, model);
   }
 }

@@ -1,6 +1,5 @@
-import {Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
-import {ActivatedRoute, ChildActivationEnd, Router} from '@angular/router';
-import {ElementDto} from 'src/app/common/models/dto';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {EformFullReportModel, EformReportElement} from 'src/app/common/models/eforms/report';
 import {CasesService} from 'src/app/common/services/cases';
 import {EformReportService} from 'src/app/common/services/eform';

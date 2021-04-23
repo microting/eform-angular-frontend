@@ -6,7 +6,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
 import { SecurityGroupGeneralPermissionsService } from 'src/app/common/services';
-import {} from 'src/app/common/services/security';
 import { SecurityRouting } from './security.routing';
 import {
   SecurityPageComponent,
@@ -18,9 +17,10 @@ import {
   SecurityGroupEformsAddComponent,
   SecurityGroupEformsEditComponent,
   SecurityGroupEformsDeleteComponent,
+  SecurityGroupSettingsComponent,
 } from './components';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { SecurityGroupSettingsComponent } from 'src/app/modules/security/components';
+import { securityPersistProvider } from './components/store/security.store';
 
 @NgModule({
   imports: [
@@ -45,6 +45,6 @@ import { SecurityGroupSettingsComponent } from 'src/app/modules/security/compone
     SecurityGroupEformsDeleteComponent,
     SecurityGroupSettingsComponent,
   ],
-  providers: [SecurityGroupGeneralPermissionsService],
+  providers: [SecurityGroupGeneralPermissionsService, securityPersistProvider],
 })
 export class SecurityModule {}

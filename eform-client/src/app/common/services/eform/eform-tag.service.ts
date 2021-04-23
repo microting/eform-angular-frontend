@@ -1,54 +1,61 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
-import {ToastrService} from 'ngx-toastr';
-import {Observable} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import {
   CommonDictionaryModel,
   OperationDataResult,
-  OperationResult, SavedTagModel,
-  TemplateTagsUpdateModel
+  OperationResult,
+  SavedTagModel,
+  TemplateTagsUpdateModel,
 } from 'src/app/common/models';
-import {BaseService} from 'src/app/common/services/base.service';
+import { ApiBaseService } from 'src/app/common/services';
 
 export let TemplateTagMethods = {
   Tags: 'api/tags',
   DeleteTag: 'api/tags/delete',
   TemplateTags: 'api/tags/template',
-  SavedTags: 'api/tags/saved'
+  SavedTags: 'api/tags/saved',
 };
 
 @Injectable()
-export class EformTagService extends BaseService {
-  constructor(private _http: HttpClient, router: Router, toastrService: ToastrService) {
-    super(_http, router, toastrService);
-  }
+export class EformTagService {
+  constructor(private apiBaseService: ApiBaseService) {}
 
-  getAvailableTags(): Observable<OperationDataResult<Array<CommonDictionaryModel>>> {
-    return this.get(TemplateTagMethods.Tags);
+  getAvailableTags(): Observable<
+    OperationDataResult<Array<CommonDictionaryModel>>
+  > {
+    return this.apiBaseService.get(TemplateTagMethods.Tags);
   }
 
   getSavedTags(): Observable<OperationDataResult<any>> {
-    return this.get(TemplateTagMethods.SavedTags);
+    return this.apiBaseService.get(TemplateTagMethods.SavedTags);
   }
 
   addSavedTag(model: SavedTagModel): Observable<OperationResult> {
-    return this.put(TemplateTagMethods.SavedTags, model);
+    return this.apiBaseService.put(TemplateTagMethods.SavedTags, model);
   }
 
   deleteSavedTag(tagId: number): Observable<OperationResult> {
-    return this.delete(TemplateTagMethods.SavedTags + '?tagId=' + tagId);
+    return this.apiBaseService.delete(
+      TemplateTagMethods.SavedTags + '?tagId=' + tagId
+    );
   }
 
   deleteTag(tagId: number): Observable<OperationResult> {
-    return this.get(TemplateTagMethods.DeleteTag + '?tagId=' + tagId);
+    return this.apiBaseService.get(
+      TemplateTagMethods.DeleteTag + '?tagId=' + tagId
+    );
   }
 
   createTag(tagName: string): Observable<OperationResult> {
-    return this.post(TemplateTagMethods.Tags + '?tagName=' + tagName, {});
+    return this.apiBaseService.post(
+      TemplateTagMethods.Tags + '?tagName=' + tagName,
+      {}
+    );
   }
 
-  updateTemplateTags = (model: TemplateTagsUpdateModel): Observable<OperationResult> => {
-    return this.post(TemplateTagMethods.TemplateTags, model);
-  }
+  updateTemplateTags = (
+    model: TemplateTagsUpdateModel
+  ): Observable<OperationResult> => {
+    return this.apiBaseService.post(TemplateTagMethods.TemplateTags, model);
+  };
 }

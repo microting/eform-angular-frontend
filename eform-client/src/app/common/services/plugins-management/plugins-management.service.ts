@@ -1,17 +1,14 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
-import {ToastrService} from 'ngx-toastr';
-import {Observable} from 'rxjs';
-import {OperationDataResult, OperationResult} from 'src/app/common/models';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { OperationDataResult, OperationResult } from 'src/app/common/models';
 import {
   InstalledPluginsModel,
   InstalledPluginsRequestModel,
   InstalledPluginUpdateModel,
   MarketplacePluginsModel,
-  MarketplacePluginsRequestModel
+  MarketplacePluginsRequestModel,
 } from 'src/app/common/models/plugins-management';
-import {BaseService} from 'src/app/common/services/base.service';
+import { ApiBaseService } from 'src/app/common/services';
 
 const PluginsManagementMethods = {
   InstalledPlugins: '/api/plugins-management/installed',
@@ -19,24 +16,40 @@ const PluginsManagementMethods = {
 };
 
 @Injectable()
-export class PluginsManagementService extends BaseService {
-  constructor(private _http: HttpClient, router: Router, toastrService: ToastrService) {
-    super(_http, router, toastrService);
+export class PluginsManagementService {
+  constructor(private apiBaseService: ApiBaseService) {}
+
+  getInstalledPlugins(
+    model: InstalledPluginsRequestModel
+  ): Observable<OperationDataResult<InstalledPluginsModel>> {
+    return this.apiBaseService.get(
+      PluginsManagementMethods.InstalledPlugins,
+      model
+    );
   }
 
-  getInstalledPlugins(model: InstalledPluginsRequestModel): Observable<OperationDataResult<InstalledPluginsModel>> {
-    return this.get(PluginsManagementMethods.InstalledPlugins, model);
+  updateInstalledPlugin(
+    model: InstalledPluginUpdateModel
+  ): Observable<OperationResult> {
+    return this.apiBaseService.put(
+      PluginsManagementMethods.InstalledPlugins,
+      model
+    );
   }
 
-  updateInstalledPlugin(model: InstalledPluginUpdateModel): Observable<OperationResult> {
-    return this.put(PluginsManagementMethods.InstalledPlugins, model);
-  }
-
-  getMarketplacePlugins(model: MarketplacePluginsRequestModel): Observable<OperationDataResult<MarketplacePluginsModel>> {
-    return this.get(PluginsManagementMethods.MarketplacePlugins, model);
+  getMarketplacePlugins(
+    model: MarketplacePluginsRequestModel
+  ): Observable<OperationDataResult<MarketplacePluginsModel>> {
+    return this.apiBaseService.get(
+      PluginsManagementMethods.MarketplacePlugins,
+      model
+    );
   }
 
   installMarketplacePlugin(pluginId: string): Observable<OperationResult> {
-    return this.put(PluginsManagementMethods.MarketplacePlugins, pluginId);
+    return this.apiBaseService.put(
+      PluginsManagementMethods.MarketplacePlugins,
+      pluginId
+    );
   }
 }

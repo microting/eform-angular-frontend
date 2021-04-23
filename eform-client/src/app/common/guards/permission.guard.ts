@@ -1,15 +1,20 @@
 import { Injectable } from '@angular/core';
-import {CanActivate, RouterStateSnapshot, ActivatedRouteSnapshot} from '@angular/router';
-import {PluginClaimsHelper} from '../helpers';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  RouterStateSnapshot,
+} from '@angular/router';
+import { AuthStateService } from 'src/app/common/store';
 
 @Injectable()
 export class PermissionGuard implements CanActivate {
+  constructor(private authStateService: AuthStateService) {}
 
-  constructor() { }
-
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-      const requiredPermission = route.data['requiredPermission'];
-
-      return PluginClaimsHelper.check(requiredPermission);
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): boolean {
+    const requiredPermission = route.data['requiredPermission'];
+    return this.authStateService.checkClaim(requiredPermission);
   }
 }
