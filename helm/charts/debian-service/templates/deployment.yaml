@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "angularfrontend.fullname" . }}
+  name: {{ include "debian-service.fullname" . }}
   labels:
-    {{- include "angularfrontend.labels" . | nindent 4 }}
+    {{- include "debian-service.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "angularfrontend.selectorLabels" . | nindent 6 }}
+      {{- include "debian-service.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,13 +18,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "angularfrontend.selectorLabels" . | nindent 8 }}
+        {{- include "debian-service.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "angularfrontend.serviceAccountName" . }}
+      serviceAccountName: {{ include "debian-service.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -33,37 +33,15 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: http
-              containerPort: 5000
-              protocol: TCP
-          livenessProbe:
-            initialDelaySeconds: 120
-            periodSeconds: 15
-            httpGet:
-              path: /
-              port: 5000
-          readinessProbe:
-            initialDelaySeconds: 120
-            periodSeconds: 15
-            httpGet:
-              path: /
-              port: 5000
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           args:
             [
-            "/ConnectionString=host={{ include "angularfrontend.databaseHost" . }};Database={{ regexReplaceAll "frontend-(x*)" .Release.Name "$1" }}_Angular;user = root; password = secretpassword;port=3306;Convert Zero Datetime = true;SslMode=none;",
-            "/Token=df",
+            "/ConnectionString=host={{ .Release.Name }}-mariadb;Database={{ regexReplaceAll "frontend-(x*)" .Release.Name "$1" }}_SDK;user = root; password = secretpassword;port=3306;Convert Zero Datetime = true;SslMode=none;",
+            "/RabbitmqHost={{ .Release.Name }}-rabbitmq",
             "/Password=abc123456"
 
             ]
-
-            # [
-            # {{  range .Values.arguments }}
-            # {{ . }}
-            # {{ end }}
-            # ]
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

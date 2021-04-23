@@ -210,11 +210,13 @@ namespace eFormAPI.Web.Services
                         new KeyValuePair<string, string>(languageCode, folderTranslationModel.Description));
                 }
 
+                Folder folder = await sdkDbContext.Folders.SingleOrDefaultAsync(x => x.Id == folderUpdateModel.Id);
+
                 await core.FolderUpdate(
                     folderUpdateModel.Id,
                     names,
                     descriptions,
-                    folderUpdateModel.ParentId);
+                    folder.ParentId);
 
                 return new OperationResult(true);
             }
