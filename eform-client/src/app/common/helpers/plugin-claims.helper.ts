@@ -3,8 +3,8 @@ import { AuthState } from 'src/app/common/store';
 
 export class PluginClaimsHelper {
   public static check(claimName: string): boolean {
-    const user: AuthState = JSON.parse(localStorage.getItem('mainStore'));
-    const userClaims = user.currentUser.claims;
+    const user: any = JSON.parse(localStorage.getItem('mainStore'));
+    const userClaims = user.auth.currentUser.claims;
     const normalizedClaimName = snakeToCamel(claimName);
     return (
       userClaims.hasOwnProperty(normalizedClaimName) &&
