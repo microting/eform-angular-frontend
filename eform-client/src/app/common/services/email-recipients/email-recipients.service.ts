@@ -1,7 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
   CommonDictionaryModel,
@@ -16,26 +13,20 @@ import {
   OperationResult,
   Paged,
 } from 'src/app/common/models';
-import { BaseService } from '../base.service';
+import { ApiBaseService } from 'src/app/common/services';
 
 const EmailRecipientsMethods = {
   Main: '/api/email-recipients',
 };
 
 @Injectable()
-export class EmailRecipientsService extends BaseService {
-  constructor(
-    private _http: HttpClient,
-    router: Router,
-    toastrService: ToastrService
-  ) {
-    super(_http, router, toastrService);
-  }
+export class EmailRecipientsService {
+  constructor(private apiBaseService: ApiBaseService) {}
 
   getEmailRecipients(
     model: EmailRecipientsRequestModel
   ): Observable<OperationDataResult<Paged<EmailRecipientModel>>> {
-    return this.post<Paged<EmailRecipientModel>>(
+    return this.apiBaseService.post<Paged<EmailRecipientModel>>(
       EmailRecipientsMethods.Main + '/index',
       model
     );
@@ -44,7 +35,7 @@ export class EmailRecipientsService extends BaseService {
   getEmailRecipientsAndTags(): Observable<
     OperationDataResult<EmailRecipientTagCommonModel[]>
   > {
-    return this.get<EmailRecipientsListModel>(
+    return this.apiBaseService.get<EmailRecipientsListModel>(
       EmailRecipientsMethods.Main + '/common'
     );
   }
@@ -52,7 +43,7 @@ export class EmailRecipientsService extends BaseService {
   getSimpleEmailRecipients(): Observable<
     OperationDataResult<CommonDictionaryModel[]>
   > {
-    return this.get<CommonDictionaryModel[]>(
+    return this.apiBaseService.get<CommonDictionaryModel[]>(
       EmailRecipientsMethods.Main + '/simple'
     );
   }
@@ -60,16 +51,22 @@ export class EmailRecipientsService extends BaseService {
   updateEmailRecipient(
     model: EmailRecipientUpdateModel
   ): Observable<OperationResult> {
-    return this.put<DeviceUserModel>(EmailRecipientsMethods.Main, model);
+    return this.apiBaseService.put<DeviceUserModel>(
+      EmailRecipientsMethods.Main,
+      model
+    );
   }
 
   deleteEmailRecipient(id: number): Observable<OperationResult> {
-    return this.delete(EmailRecipientsMethods.Main + '/' + id);
+    return this.apiBaseService.delete(EmailRecipientsMethods.Main + '/' + id);
   }
 
   createEmailRecipients(
     model: EmailRecipientsCreateModel
   ): Observable<OperationResult> {
-    return this.post<DeviceUserModel>(EmailRecipientsMethods.Main, model);
+    return this.apiBaseService.post<DeviceUserModel>(
+      EmailRecipientsMethods.Main,
+      model
+    );
   }
 }

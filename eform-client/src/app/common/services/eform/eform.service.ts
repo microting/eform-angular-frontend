@@ -1,7 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
   DeployModel,
@@ -15,8 +12,8 @@ import {
   UpdateColumnsModel,
 } from 'src/app/common/models';
 import { TemplateRequestModel } from 'src/app/common/models/eforms';
-import { BaseService } from 'src/app/common/services/base.service';
 import { FieldDto } from '../../models/dto/field.dto';
+import { ApiBaseService } from 'src/app/common/services';
 
 const TemplatesMethods = {
   GetAll: '/api/templates/index',
@@ -40,45 +37,46 @@ const TemplateColumnMethods = {
 };
 
 @Injectable()
-export class EFormService extends BaseService {
-  constructor(
-    private _http: HttpClient,
-    router: Router,
-    toastrService: ToastrService
-  ) {
-    super(_http, router, toastrService);
-  }
+export class EFormService {
+  constructor(private apiBaseService: ApiBaseService) {}
 
   getAll(
     model: TemplateRequestModel
   ): Observable<OperationDataResult<TemplateListModel>> {
-    return this.post(TemplatesMethods.GetAll, model);
+    return this.apiBaseService.post(TemplatesMethods.GetAll, model);
   }
 
   getSingle(id: number): Observable<OperationDataResult<TemplateDto>> {
-    return this.get<TemplateDto>(TemplatesMethods.GetSingle + '/' + id);
+    return this.apiBaseService.get<TemplateDto>(
+      TemplatesMethods.GetSingle + '/' + id
+    );
   }
 
   deleteSingle(id: number): Observable<OperationResult> {
-    return this.get(TemplatesMethods.DeleteSingle + '/' + id);
+    return this.apiBaseService.get(TemplatesMethods.DeleteSingle + '/' + id);
   }
 
   createSingle(eFormXmlModel: EFormCreateModel): Observable<OperationResult> {
-    return this.post(TemplatesMethods.CreateSingle, eFormXmlModel);
+    return this.apiBaseService.post(
+      TemplatesMethods.CreateSingle,
+      eFormXmlModel
+    );
   }
 
   deploySingle(deployModel: DeployModel): Observable<OperationResult> {
-    return this.post(TemplatesMethods.DeploySingle, deployModel);
+    return this.apiBaseService.post(TemplatesMethods.DeploySingle, deployModel);
   }
 
   getFields(id: number): Observable<OperationDataResult<FieldDto[]>> {
-    return this.get<FieldDto[]>(TemplatesMethods.GetFields + '/' + id);
+    return this.apiBaseService.get<FieldDto[]>(
+      TemplatesMethods.GetFields + '/' + id
+    );
   }
 
   getTemplateColumns(
     templateId: number
   ): Observable<OperationDataResult<Array<TemplateColumnModel>>> {
-    return this.get<Array<TemplateColumnModel>>(
+    return this.apiBaseService.get<Array<TemplateColumnModel>>(
       TemplateColumnMethods.GetColumns + '/' + templateId
     );
   }
@@ -86,7 +84,7 @@ export class EFormService extends BaseService {
   getCurrentTemplateColumns(
     templateId: number
   ): Observable<OperationDataResult<UpdateColumnsModel>> {
-    return this.get<UpdateColumnsModel>(
+    return this.apiBaseService.get<UpdateColumnsModel>(
       TemplateColumnMethods.GetColumns + '/current/' + templateId
     );
   }
@@ -94,11 +92,11 @@ export class EFormService extends BaseService {
   updateTemplateColumns(
     model: UpdateColumnsModel
   ): Observable<OperationResult> {
-    return this.post(TemplateColumnMethods.GetColumns, model);
+    return this.apiBaseService.post(TemplateColumnMethods.GetColumns, model);
   }
 
   downloadEformXML(templateId: number): Observable<any> {
-    return this.getBlobData(
+    return this.apiBaseService.getBlobData(
       TemplateFilesMethods.DownloadXML + '/' + templateId
     );
   }
@@ -108,7 +106,7 @@ export class EFormService extends BaseService {
     caseId: number,
     fileType: string
   ): Observable<any> {
-    return this.getBlobData(
+    return this.apiBaseService.getBlobData(
       TemplateFilesMethods.DownloadPDF +
         '/' +
         templateId +
@@ -120,14 +118,19 @@ export class EFormService extends BaseService {
   }
 
   downloadEformExcel(model: EformDownloadExcelModel): Observable<any> {
-    return this.getBlobData(TemplateFilesMethods.DownloadExcel, model);
+    return this.apiBaseService.getBlobData(
+      TemplateFilesMethods.DownloadExcel,
+      model
+    );
   }
 
   downloadCSVFile(templateId: number): Observable<any> {
-    return this.getBlobData(TemplateFilesMethods.GetCsv + '/' + templateId);
+    return this.apiBaseService.getBlobData(
+      TemplateFilesMethods.GetCsv + '/' + templateId
+    );
   }
 
   // importEFormsFromExcel(excelFile: File): Observable<OperationResult> {
-  //   return this.uploadFile(TemplatesMethods.ImportEforms, excelFile);
+  //   return this.apiBaseService.uploadFile(TemplatesMethods.ImportEforms, excelFile);
   // }
 }
