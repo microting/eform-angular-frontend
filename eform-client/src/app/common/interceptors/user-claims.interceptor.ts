@@ -12,11 +12,7 @@ import { AuthStateService } from 'src/app/common/store';
 
 @Injectable()
 export class UserClaimsInterceptor implements HttpInterceptor {
-  private isRefreshing = false;
-
-  constructor(
-    private authStateService: AuthStateService
-  ) {}
+  constructor(private authStateService: AuthStateService) {}
 
   intercept(
     request: HttpRequest<any>,
@@ -25,12 +21,7 @@ export class UserClaimsInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       tap((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse && event.headers.get('claimupdate')) {
-          if (!this.isRefreshing) {
-            this.isRefreshing = true;
-            this.authStateService.refreshToken().subscribe(() => {
-              this.isRefreshing = false;
-            });
-          }
+          this.authStateService.refreshToken();
         }
       })
     );

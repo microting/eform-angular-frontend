@@ -8,13 +8,13 @@ import {
   UserInfoModel,
 } from 'src/app/common/models';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { snakeToCamel } from 'src/app/common/helpers';
 import { resetStores } from '@datorama/akita';
 
 @Injectable()
 export class AuthStateService {
+  private isRefreshing = false;
   constructor(
     private store: AuthStore,
     private service: AuthService,
@@ -61,9 +61,10 @@ export class AuthStateService {
     });
   }
 
-  refreshToken(): Observable<void> {
-    return this.service.refreshToken().pipe(
-      map((response) => {
+  refreshToken() {
+    if (!this.isRefreshing) {
+      this.isRefreshing = true;
+      this.service.refreshToken().subscribe((response) => {
         if (response) {
           this.service.obtainUserClaims().subscribe((userClaims) => {
             this.store.update((state) => ({
@@ -78,11 +79,11 @@ export class AuthStateService {
                 claims: userClaims,
               },
             }));
+            this.isRefreshing = false;
           });
         }
-        return;
-      })
-    );
+      });
+    }
   }
 
   logout() {
