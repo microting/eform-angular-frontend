@@ -25,4 +25,8 @@ export class AuthQuery extends Query<AuthState> {
   get isAuth() {
     return !!this.getValue().auth.accessToken;
   }
+
+  get currentUserFullName(): string {
+    return `${this.currentSetting.currentUser.firstName} ${this.currentSetting.currentUser.lastName}`;
+  }
 }
