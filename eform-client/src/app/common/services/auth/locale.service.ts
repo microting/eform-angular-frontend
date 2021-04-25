@@ -3,9 +3,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
 import { OperationDataResult } from 'src/app/common/models';
-import { BaseService } from '../base.service';
 import { applicationLanguages } from 'src/app/common/const';
 import { AuthStateService } from 'src/app/common/store';
+import { ApiBaseService } from 'src/app/common/services';
 
 export let LocaleMethods = {
   // GoogleAuthenticatorInfo: 'api/auth/google-auth-info',
@@ -15,14 +15,14 @@ export let LocaleMethods = {
 @Injectable()
 export class LocaleService {
   constructor(
-    private baseService: BaseService,
+    private apiBaseService: ApiBaseService,
     private authStateService: AuthStateService,
     private translateService: TranslateService,
     private cookieService: CookieService
   ) {}
 
   getDefaultLocale(): Observable<OperationDataResult<any>> {
-    return this.baseService.get<string>(LocaleMethods.DefaultLocale);
+    return this.apiBaseService.get<string>(LocaleMethods.DefaultLocale);
   }
 
   initLocale() {
