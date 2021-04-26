@@ -41,7 +41,7 @@
               [Format]="'datetime'"
             ></date-formatter>
           </td>
-          <td *ngIf="userRole == 'admin'">
+          <td *ngIf="authStateService.isAdmin">
             <date-formatter
               [date]="caseModel.createdAt"
               [Format]="'datetime'"
