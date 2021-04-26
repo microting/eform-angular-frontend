@@ -1,16 +1,9 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
-import { FileUploader } from 'ng2-file-upload';
-import { ToastrService } from 'ngx-toastr';
-import { TranslateService } from '@ngx-translate/core';
-import { AuthService } from 'src/app/common/services';
-import { LoaderService } from 'src/app/common/services/loeader.service';
+import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild,} from '@angular/core';
+import {FileUploader} from 'ng2-file-upload';
+import {ToastrService} from 'ngx-toastr';
+import {TranslateService} from '@ngx-translate/core';
+import {LoaderService} from 'src/app/common/services/loader.service';
+import {AuthStateService} from 'src/app/common/store';
 
 @Component({
   selector: 'app-eforms-bulk-import-modal',
@@ -23,7 +16,7 @@ export class EformsBulkImportModalComponent implements OnInit {
   xlsxEformsInput: ElementRef;
   xlsxEformsFileUploader: FileUploader = new FileUploader({
     url: '/api/templates/import',
-    authToken: this.authService.bearerToken,
+    authToken: this.authStateService.bearerToken,
   });
   @Output() importFinished = new EventEmitter<void>();
   errors: { row: number; col: number; message: string }[];
@@ -31,8 +24,8 @@ export class EformsBulkImportModalComponent implements OnInit {
   constructor(
     private toastrService: ToastrService,
     private translateService: TranslateService,
-    private authService: AuthService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private authStateService: AuthStateService
   ) {}
 
   ngOnInit() {

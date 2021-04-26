@@ -28,18 +28,13 @@ export class EformSubheaderComponent implements OnInit, OnDestroy {
   @Input() forceStaticTitle = false;
 
   getAppMenu$: Subscription;
-  getTranslation$: Subscription;
 
-  constructor(
-    private router: Router,
-    private appMenuService: AppMenuService,
-    private translateService: TranslateService
-  ) {}
+  constructor(private router: Router, private appMenuService: AppMenuService) {}
 
   ngOnDestroy() {}
 
   ngOnInit() {
-    this.heading.nativeElement.style.fontSize = `${this.heandingSizeRem}rem`;
+    // this.heading.nativeElement.style.fontSize = `${this.heandingSizeRem}rem`;
 
     const href = this.router.url;
     this.getAppMenu$ = this.appMenuService.userMenuBehaviorSubject.subscribe(
@@ -50,9 +45,7 @@ export class EformSubheaderComponent implements OnInit, OnDestroy {
             title = this.searchTitle(href, data.rightMenu);
           }
           if (title) {
-            this.getTranslation$ = this.translateService
-              .get(title)
-              .subscribe((result) => (this.title = result));
+            this.title = title;
           }
         }
       }

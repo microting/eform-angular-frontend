@@ -1,18 +1,9 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DeviceUserModel } from 'src/app/common/models/device-users';
 import { SiteDto } from 'src/app/common/models/dto';
-import { UnitsService } from 'src/app/common/services/advanced';
-import { AuthService } from 'src/app/common/services/auth';
 import { DeviceUserService } from 'src/app/common/services/device-users';
 import { TableHeaderElementModel } from 'src/app/common/models';
+import { AuthStateService } from 'src/app/common/store';
 
 @Component({
   selector: 'app-device-users-page',
@@ -34,19 +25,19 @@ export class DeviceUsersPageComponent implements OnInit {
     { name: 'Device ID', sortable: false, elementId: '' },
     { name: 'Language', sortable: false, elementId: '' },
     { name: 'Customer no & OTP', sortable: false, elementId: '' },
-    this.userClaims.deviceUsersDelete || this.userClaims.deviceUsersDelete
+    this.authStateService.currentUserClaims.deviceUsersDelete ||
+    this.authStateService.currentUserClaims.deviceUsersDelete
       ? { name: 'Actions', sortable: false, elementId: '' }
       : null,
   ];
 
   get userClaims() {
-    return this.authService.userClaims;
+    return this.authStateService.currentUserClaims;
   }
 
   constructor(
     private deviceUsersService: DeviceUserService,
-    private router: Router,
-    private authService: AuthService
+    private authStateService: AuthStateService
   ) {}
 
   ngOnInit() {

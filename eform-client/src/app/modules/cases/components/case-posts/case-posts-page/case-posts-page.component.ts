@@ -1,21 +1,21 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import {
-  AuthService,
-  UserSettingsService,
-} from '../../../../../common/services/auth';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { CasePostNewComponent, CasePostViewComponent } from '../..';
-import { CasePostsListModel } from 'src/app/common/models';
-import { CasePostsService } from 'src/app/common/services';
-import { EmailRecipientsService } from 'src/app/common/services';
-import { EmailRecipientTagCommonModel } from 'src/app/common/models';
-import { ActivatedRoute } from '@angular/router';
 import {
+  CasePostsService,
+  UserSettingsService,
+  EmailRecipientsService,
+} from 'src/app/common/services';
+import {
+  EmailRecipientTagCommonModel,
+  CasePostsListModel,
   CommonDictionaryModel,
   TableHeaderElementModel,
-} from '../../../../../common/models/common';
-import { CasePostsStateService } from 'src/app/modules/cases/components/case-posts/state/case-posts-state-service';
+} from 'src/app/common/models';
+import { ActivatedRoute } from '@angular/router';
+import { CasePostsStateService } from '../store/case-posts-state-service';
+import { AuthStateService } from 'src/app/common/store';
 
 @AutoUnsubscribe()
 @Component({
@@ -33,7 +33,6 @@ export class CasePostsPageComponent implements OnInit, OnDestroy {
   getTagsSub$: Subscription;
   getRecipientsSub$: Subscription;
   activatedRoute$: Subscription;
-  currentUserFullName: string;
   selectedEformId: number;
   selectedCaseId: number;
 
@@ -52,8 +51,8 @@ export class CasePostsPageComponent implements OnInit, OnDestroy {
     private casePostsService: CasePostsService,
     private emailRecipientsService: EmailRecipientsService,
     private activatedRoute: ActivatedRoute,
-    private authService: AuthService,
-    public casePostsStateService: CasePostsStateService
+    public casePostsStateService: CasePostsStateService,
+    public authStateService: AuthStateService
   ) {}
 
   ngOnInit(): void {
@@ -76,8 +75,6 @@ export class CasePostsPageComponent implements OnInit, OnDestroy {
     this.getCasePosts();
     this.getRecipientsAndTags();
     this.getRecipients();
-
-    this.currentUserFullName = this.authService.currentUserFullName;
   }
 
   getCasePosts() {

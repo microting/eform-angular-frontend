@@ -1,17 +1,14 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
-import {ToastrService} from 'ngx-toastr';
-import {Observable} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import {
   CasePostCreateModel,
   CasePostsListModel,
   CasePostsRequestModel,
   CasePostViewModel,
   OperationDataResult,
-  OperationResult
+  OperationResult,
 } from 'src/app/common/models';
-import {BaseService} from 'src/app/common/services/base.service';
+import { ApiBaseService } from 'src/app/common/services';
 
 const CasePostsMethods = {
   Main: '/api/cases/posts',
@@ -19,20 +16,24 @@ const CasePostsMethods = {
 };
 
 @Injectable()
-export class CasePostsService extends BaseService {
-  constructor(private _http: HttpClient, router: Router, toastrService: ToastrService) {
-    super(_http, router, toastrService);
+export class CasePostsService {
+  constructor(private apiBaseService: ApiBaseService) {}
+
+  getAllPosts(
+    model: CasePostsRequestModel
+  ): Observable<OperationDataResult<CasePostsListModel>> {
+    return this.apiBaseService.get(CasePostsMethods.Main, model);
   }
 
-  getAllPosts(model: CasePostsRequestModel): Observable<OperationDataResult<CasePostsListModel>> {
-    return this.get(CasePostsMethods.Main, model);
-  }
-
-  getPostForView(id: number): Observable<OperationDataResult<CasePostViewModel>> {
-    return this.get<CasePostViewModel>(CasePostsMethods.View + '/' + id);
+  getPostForView(
+    id: number
+  ): Observable<OperationDataResult<CasePostViewModel>> {
+    return this.apiBaseService.get<CasePostViewModel>(
+      CasePostsMethods.View + '/' + id
+    );
   }
 
   createPost(model: CasePostCreateModel): Observable<OperationResult> {
-    return this.post(CasePostsMethods.Main, model);
+    return this.apiBaseService.post(CasePostsMethods.Main, model);
   }
 }

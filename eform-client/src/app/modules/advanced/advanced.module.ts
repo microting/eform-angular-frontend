@@ -39,6 +39,7 @@ import {
 } from './components';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EformImportedModule } from 'src/app/common/modules/eform-imported/eform-imported.module';
+import { advancedPersistProviders } from './components/advansed-persist-providers';
 
 @NgModule({
   imports: [
@@ -85,5 +86,6 @@ import { EformImportedModule } from 'src/app/common/modules/eform-imported/eform
     FolderDeleteComponent,
     SiteTagsComponent,
   ],
+  providers: [...advancedPersistProviders],
 })
 export class AdvancedModule {}

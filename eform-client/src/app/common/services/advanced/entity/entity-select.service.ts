@@ -1,11 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import {
   AdvEntitySelectableGroupEditModel,
-  AdvEntitySelectableGroupListModel,
   AdvEntitySelectableGroupModel,
   CommonDictionaryTextModel,
   OperationDataResult,
@@ -13,7 +9,7 @@ import {
   Paged,
 } from 'src/app/common/models';
 import { AdvEntitySelectableGroupListRequestModel } from 'src/app/common/models/advanced';
-import { BaseService } from 'src/app/common/services/base.service';
+import { ApiBaseService } from 'src/app/common/services';
 
 const AdvSelectableEntityMethods = {
   GetAll: '/api/selectable-groups',
@@ -25,19 +21,13 @@ const AdvSelectableEntityMethods = {
 };
 
 @Injectable()
-export class EntitySelectService extends BaseService {
-  constructor(
-    private _http: HttpClient,
-    router: Router,
-    toastrService: ToastrService
-  ) {
-    super(_http, router, toastrService);
-  }
+export class EntitySelectService {
+  constructor(private apiBaseService: ApiBaseService) {}
 
   getEntitySelectableGroupList(
     model: AdvEntitySelectableGroupListRequestModel
   ): Observable<OperationDataResult<Paged<AdvEntitySelectableGroupModel>>> {
-    return this.post<Paged<AdvEntitySelectableGroupModel>>(
+    return this.apiBaseService.post<Paged<AdvEntitySelectableGroupModel>>(
       AdvSelectableEntityMethods.GetAll,
       model
     );
@@ -46,7 +36,7 @@ export class EntitySelectService extends BaseService {
   getEntitySelectableGroup(
     id: number
   ): Observable<OperationDataResult<AdvEntitySelectableGroupModel>> {
-    return this.get<AdvEntitySelectableGroupModel>(
+    return this.apiBaseService.get<AdvEntitySelectableGroupModel>(
       AdvSelectableEntityMethods.GetSingle + '/' + id
     );
   }
@@ -54,20 +44,22 @@ export class EntitySelectService extends BaseService {
   updateEntitySelectableGroup(
     model: AdvEntitySelectableGroupEditModel
   ): Observable<OperationResult> {
-    return this.post<AdvEntitySelectableGroupEditModel>(
+    return this.apiBaseService.post<AdvEntitySelectableGroupEditModel>(
       AdvSelectableEntityMethods.UpdateSingle,
       model
     );
   }
 
   deleteEntitySelectableGroup(groupUid: string): Observable<OperationResult> {
-    return this.get(AdvSelectableEntityMethods.DeleteSingle + '/' + groupUid);
+    return this.apiBaseService.get(
+      AdvSelectableEntityMethods.DeleteSingle + '/' + groupUid
+    );
   }
 
   createEntitySelectableGroup(
     model: AdvEntitySelectableGroupEditModel
   ): Observable<OperationResult> {
-    return this.post<AdvEntitySelectableGroupEditModel>(
+    return this.apiBaseService.post<AdvEntitySelectableGroupEditModel>(
       AdvSelectableEntityMethods.CreateSingle,
       model
     );
@@ -76,7 +68,7 @@ export class EntitySelectService extends BaseService {
   getEntitySelectableGroupDictionary(
     entityGroupUid: string
   ): Observable<OperationDataResult<Array<CommonDictionaryTextModel>>> {
-    return this.get<Array<CommonDictionaryTextModel>>(
+    return this.apiBaseService.get<Array<CommonDictionaryTextModel>>(
       AdvSelectableEntityMethods.GetAll + '/dict/' + entityGroupUid
     );
   }

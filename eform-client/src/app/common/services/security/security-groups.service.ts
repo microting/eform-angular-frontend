@@ -1,7 +1,4 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import {
   CommonDictionaryModel,
@@ -16,7 +13,7 @@ import {
   SecurityGroupUpdateModel,
   SecurityGroupCreateModel,
 } from 'src/app/common/models/security';
-import { BaseService } from 'src/app/common/services/base.service';
+import { ApiBaseService } from 'src/app/common/services';
 
 const SecurityGroupMethods = {
   SecurityGroups: '/api/security/groups',
@@ -26,19 +23,13 @@ const SecurityGroupMethods = {
 };
 
 @Injectable()
-export class SecurityGroupsService extends BaseService {
-  constructor(
-    private _http: HttpClient,
-    router: Router,
-    toastrService: ToastrService
-  ) {
-    super(_http, router, toastrService);
-  }
+export class SecurityGroupsService {
+  constructor(private apiBaseService: ApiBaseService) {}
 
   getAllSecurityGroups(
     model: SecurityGroupsRequestModel
   ): Observable<OperationDataResult<Paged<SecurityGroupModel>>> {
-    return this.post<Paged<SecurityGroupModel>>(
+    return this.apiBaseService.post<Paged<SecurityGroupModel>>(
       SecurityGroupMethods.SecurityGroupsIndex,
       model
     );
@@ -47,37 +38,46 @@ export class SecurityGroupsService extends BaseService {
   getSecurityGroupsDictionary(): Observable<
     OperationDataResult<CommonDictionaryModel[]>
   > {
-    return this.get<any>(SecurityGroupMethods.SecurityGroupsDictionary);
+    return this.apiBaseService.get<any>(
+      SecurityGroupMethods.SecurityGroupsDictionary
+    );
   }
 
   getSecurityGroup(
     id: number
   ): Observable<OperationDataResult<SecurityGroupModel>> {
-    return this.get<any>(SecurityGroupMethods.SecurityGroups + '/' + id);
+    return this.apiBaseService.get<any>(
+      SecurityGroupMethods.SecurityGroups + '/' + id
+    );
   }
 
   createSecurityGroup(
     model: SecurityGroupCreateModel
   ): Observable<OperationResult> {
-    return this.post(SecurityGroupMethods.SecurityGroups, model);
+    return this.apiBaseService.post(SecurityGroupMethods.SecurityGroups, model);
   }
 
   updateSecurityGroup(
     model: SecurityGroupUpdateModel
   ): Observable<OperationResult> {
-    return this.put<any>(SecurityGroupMethods.SecurityGroups, model);
+    return this.apiBaseService.put<any>(
+      SecurityGroupMethods.SecurityGroups,
+      model
+    );
   }
 
   updateSecurityGroupSettings(
     settingsUpdateModel: SecurityGroupSettingsUpdateModel
   ): Observable<OperationResult> {
-    return this.put<any>(
+    return this.apiBaseService.put<any>(
       SecurityGroupMethods.SecurityGroupSettings,
       settingsUpdateModel
     );
   }
 
   deleteSecurityGroup(id: number): Observable<OperationResult> {
-    return this.delete(SecurityGroupMethods.SecurityGroups + '/' + id);
+    return this.apiBaseService.delete(
+      SecurityGroupMethods.SecurityGroups + '/' + id
+    );
   }
 }

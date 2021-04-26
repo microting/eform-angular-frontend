@@ -1,19 +1,9 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { ApplicationPageModel, PageSettingsModel } from 'src/app/common/models';
-import { BaseService } from 'src/app/common/services/base.service';
 
 @Injectable()
-export class SharedPnService extends BaseService {
-  constructor(
-    private _http: HttpClient,
-    router: Router,
-    toastrService: ToastrService
-  ) {
-    super(_http, router, toastrService);
-  }
+export class SharedPnService {
+  constructor() {}
 
   initLocalPageSettings(localStorageItemName: string, item: any) {
     if (!localStorage.getItem(localStorageItemName)) {

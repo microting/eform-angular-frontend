@@ -4,8 +4,10 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { AuthResponseModel } from 'src/app/common/models/auth';
+import { Injectable } from '@angular/core';
+import { AuthState } from 'src/app/common/store';
 
+@Injectable()
 export class BaseService {
   constructor(
     private http: HttpClient,
@@ -13,7 +15,7 @@ export class BaseService {
     private toastrService: ToastrService
   ) {}
 
-  protected get<T>(method: string, params?: any): Observable<any> {
+  public get<T>(method: string, params?: any): Observable<any> {
     return this.http
       .get(method, {
         headers: this.setHeaders(),
@@ -22,14 +24,14 @@ export class BaseService {
       .pipe(map((response) => this.extractData<T>(response)));
   }
 
-  protected post<T>(method: string, body: any): Observable<any> {
+  public post<T>(method: string, body: any): Observable<any> {
     const model = JSON.stringify(body);
     return this.http
       .post(method, model, { headers: this.setHeaders() })
       .pipe(map((response) => this.extractData<T>(response)));
   }
 
-  protected postUrlEncoded<T>(method: string, body: any): Observable<any> {
+  public postUrlEncoded<T>(method: string, body: any): Observable<any> {
     return this.http
       .post(method, body.toString(), {
         headers: this.setHeaders('application/x-www-form-urlencoded'),
@@ -37,20 +39,20 @@ export class BaseService {
       .pipe(map((response) => this.extractData<T>(response)));
   }
 
-  protected delete<T>(method: string): Observable<any> {
+  public delete<T>(method: string): Observable<any> {
     return this.http
       .delete(method, { headers: this.setHeaders() })
       .pipe(map((response) => this.extractData<T>(response)));
   }
 
-  protected put<T>(method: string, body: any): Observable<any> {
+  public put<T>(method: string, body: any): Observable<any> {
     const model = JSON.stringify(body);
     return this.http
       .put(method, model, { headers: this.setHeaders() })
       .pipe(map((response) => this.extractData<T>(response)));
   }
 
-  protected getBlobData<T>(method: string, params?: any): Observable<any> {
+  public getBlobData<T>(method: string, params?: any): Observable<any> {
     return this.http
       .get(method, {
         headers: this.setHeaders(),
@@ -60,7 +62,7 @@ export class BaseService {
       .pipe(map((response) => response));
   }
 
-  protected uploadFiles<T>(
+  public uploadFiles<T>(
     method: string,
     files: any[],
     params?: any,
@@ -82,7 +84,7 @@ export class BaseService {
       );
   }
 
-  protected uploadFile<T>(
+  public uploadFile<T>(
     method: string,
     file: any,
     params?: any,
@@ -110,12 +112,10 @@ export class BaseService {
     } else {
       headers = headers.set('Content-Type', 'application/json');
     }
-    const user: AuthResponseModel = JSON.parse(
-      localStorage.getItem('currentAuth')
-    );
+    const user: AuthState = JSON.parse(localStorage.getItem('mainStore'));
     // check user
-    if (user && user.access_token) {
-      headers = headers.append('Authorization', 'Bearer ' + user.access_token);
+    if (user && user.auth.accessToken) {
+      headers.append('Authorization', 'Bearer ' + user.auth.accessToken);
     }
     // add localization
     return headers;
@@ -137,12 +137,10 @@ export class BaseService {
   private get formHeaders() {
     const headers: Headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    const user: AuthResponseModel = JSON.parse(
-      localStorage.getItem('currentAuth')
-    );
+    const user: AuthState = JSON.parse(localStorage.getItem('mainStore'));
     // check user
-    if (user && user.access_token) {
-      headers.append('Authorization', 'Bearer ' + user.access_token);
+    if (user && user.auth.accessToken) {
+      headers.append('Authorization', 'Bearer ' + user.auth.accessToken);
     }
     return headers;
   }
@@ -160,11 +158,5 @@ export class BaseService {
       return {};
     }
     return <T>body || {};
-  }
-
-  private logOutWhenTokenFalse() {
-    localStorage.clear();
-    console.log("Let's kick the user out base.service");
-    this.router.navigate(['/auth']).then();
   }
 }

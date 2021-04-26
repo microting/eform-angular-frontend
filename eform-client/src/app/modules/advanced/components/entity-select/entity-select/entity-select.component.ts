@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AdvEntitySelectableGroupModel } from 'src/app/common/models/advanced';
 import { EntitySelectService } from 'src/app/common/services/advanced';
-import { AuthService } from 'src/app/common/services/auth';
 import { Paged, TableHeaderElementModel } from 'src/app/common/models';
-import { EntitySelectStateService } from 'src/app/modules/advanced/components/entity-select/state/entity-select-state.service';
+import { EntitySelectStateService } from '../store/entity-select-state.service';
+import { AuthStateService } from 'src/app/common/store';
 
 @Component({
   selector: 'app-selectable-list',
@@ -18,7 +18,7 @@ export class EntitySelectComponent implements OnInit {
   advEntitySelectableGroupListModel: Paged<AdvEntitySelectableGroupModel> = new Paged<AdvEntitySelectableGroupModel>();
 
   get userClaims() {
-    return this.authService.userClaims;
+    return this.authStateService.currentUserClaims;
   }
 
   tableHeaders: TableHeaderElementModel[] = [
@@ -32,7 +32,7 @@ export class EntitySelectComponent implements OnInit {
 
   constructor(
     private entitySelectService: EntitySelectService,
-    private authService: AuthService,
+    private authStateService: AuthStateService,
     public entitySelectStateService: EntitySelectStateService
   ) {}
 
@@ -72,6 +72,13 @@ export class EntitySelectComponent implements OnInit {
 
   onPageSizeChanged(pageSize: number) {
     this.entitySelectStateService.updatePageSize(pageSize);
+    this.getEntitySelectableGroupList();
+  }
+
+  onEntityRemoved() {
+    this.entitySelectStateService.onDelete(
+      this.advEntitySelectableGroupListModel.total - 1
+    );
     this.getEntitySelectableGroupList();
   }
 }

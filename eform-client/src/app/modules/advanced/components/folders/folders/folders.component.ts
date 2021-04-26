@@ -1,16 +1,15 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
-import {AuthService} from 'src/app/common/services/auth';
-import {FoldersService} from '../../../../../common/services/advanced/folders.service';
-import {FolderDto} from '../../../../../common/models/dto/folder.dto';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { FoldersService } from '../../../../../common/services/advanced/folders.service';
+import { FolderDto } from '../../../../../common/models/dto/folder.dto';
+import { AuthService } from 'src/app/common/services';
+import { AuthStateService } from 'src/app/common/store';
 
 @Component({
   selector: 'app-folders',
-  templateUrl: './folders.component.html'
+  templateUrl: './folders.component.html',
 })
-
 export class FoldersComponent implements OnInit {
-
   @ViewChild('modalFolderCreate', { static: true }) modalFolderCreate;
   @ViewChild('modalFolderEdit', { static: true }) modalFolderEdit;
   @ViewChild('modalFolderDelete', { static: true }) modalFolderDelete;
@@ -20,7 +19,9 @@ export class FoldersComponent implements OnInit {
   foldersFlatList: Array<FolderDto> = [];
   foldersDto: Array<FolderDto> = [];
 
-  get userClaims() { return this.authService.userClaims; }
+  get userClaims() {
+    return this.authStateService.currentUserClaims;
+  }
 
   ngOnInit(): void {
     this.getInitialData();
@@ -28,13 +29,14 @@ export class FoldersComponent implements OnInit {
 
   getInitialData() {
     this.loadAllFolders();
-    this.loadAllFoldersList();
+    // this.loadAllFoldersList();
   }
 
-  constructor(private foldersService: FoldersService,
-              private router: Router,
-              private authService: AuthService) {
-  }
+  constructor(
+    private foldersService: FoldersService,
+    private router: Router,
+    private authStateService: AuthStateService
+  ) {}
 
   openCreateModal(selectedFolder?: FolderDto) {
     this.modalFolderCreate.show(selectedFolder);

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
 import {TemplateColumnModel, UpdateColumnsModel} from 'src/app/common/models/cases';
 import {TemplateDto} from 'src/app/common/models/dto';

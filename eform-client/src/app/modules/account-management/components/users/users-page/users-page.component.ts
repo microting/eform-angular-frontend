@@ -8,12 +8,12 @@ import {
   TableHeaderElementModel,
 } from 'src/app/common/models';
 import {
-  AuthService,
   SecurityGroupsService,
   AdminService,
   GoogleAuthService,
 } from 'src/app/common/services';
-import { UsersStateService } from 'src/app/modules/account-management/components/users/state/users-state.service';
+import { UsersStateService } from '../store/users-state.service';
+import { AuthStateService } from 'src/app/common/store';
 
 @Component({
   selector: 'app-users-page',
@@ -44,15 +44,15 @@ export class UsersPageComponent implements OnInit {
   ];
 
   get userClaims() {
-    return this.authService.userClaims;
+    return this.authStateService.currentUserClaims;
   }
   get userRole() {
-    return this.authService.currentRole;
+    return this.authStateService.currentRole;
   }
 
   constructor(
     private adminService: AdminService,
-    private authService: AuthService,
+    private authStateService: AuthStateService,
     private googleAuthService: GoogleAuthService,
     private securityGroupsService: SecurityGroupsService,
     public usersStateService: UsersStateService

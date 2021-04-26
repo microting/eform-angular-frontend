@@ -1,20 +1,20 @@
-import { Injectable } from '@angular/core';
-import { Router, CanActivate } from '@angular/router';
-import {UserInfoModel} from 'src/app/common/models';
+import {Injectable} from '@angular/core';
+import {CanActivate, Router} from '@angular/router';
+import {AuthStateService} from 'src/app/common/store';
 
 @Injectable()
 export class AdminGuard implements CanActivate {
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private authStateService: AuthStateService
+  ) {}
   canActivate(): boolean {
-    if (!localStorage.getItem('currentAuth')) {
-      console.log('Let\'s kick the user out admin.guard');
+    if (!this.authStateService.isAuth) {
+      console.log(`Let's kick the user out admin.guard`);
       this.router.navigate(['/auth']).then();
       return false;
     } else {
-      const auth: UserInfoModel = JSON.parse(localStorage.getItem('currentAuth'));
-      if (auth && auth.role && auth.role === 'admin') {
-        return true;
-      }
+      return this.authStateService.isAdmin;
     }
   }
 }

@@ -96,7 +96,6 @@ namespace eFormAPI.Web.Services
                         .Take(requestModel.PageSize);
 
                 // select and take from db
-
                 var entityGroups = await entitySelectableGroupQuery
                     .Select(x => new EntityGroup
                     {
@@ -110,7 +109,6 @@ namespace eFormAPI.Web.Services
                         UpdatedAt = x.UpdatedAt,
                         EntityGroupItemLst = new List<EntityItem>(),
                     }).ToListAsync();
-
 
                 entityGroupList.Entities = entityGroups;
 

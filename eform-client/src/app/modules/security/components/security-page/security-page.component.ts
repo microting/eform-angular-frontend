@@ -8,7 +8,7 @@ import {
 import { SecurityGroupsService } from 'src/app/common/services';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { Subscription } from 'rxjs';
-import { SecurityStateService } from 'src/app/modules/security/components/state/security-state.service';
+import { SecurityStateService } from 'src/app/modules/security/components/store/security-state.service';
 
 @AutoUnsubscribe()
 @Component({

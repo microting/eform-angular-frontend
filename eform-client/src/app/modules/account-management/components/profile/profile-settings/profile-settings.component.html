@@ -14,7 +14,7 @@
 
 <div class="container-fluid mt-4">
   <div class="row mb-4">
-    <div class="col-md-6" *ngIf="userRole == 'admin'">
+    <div class="col-md-6" *ngIf="authStateService.isAdmin">
       <mdb-card>
         <mdb-card-header>
           {{ 'Google Authenticator' | translate }}
@@ -105,9 +105,9 @@
               <div class="mat-checkbox mb-1">
                 <input
                   id="darkTheme"
-                  (click)="changeDarkTheme($event)"
                   [checked]="userSettingsModel.darkTheme"
                   [value]="userSettingsModel.darkTheme"
+                  [(ngModel)]="userSettingsModel.darkTheme"
                   color="primary"
                   type="checkbox"
                 />

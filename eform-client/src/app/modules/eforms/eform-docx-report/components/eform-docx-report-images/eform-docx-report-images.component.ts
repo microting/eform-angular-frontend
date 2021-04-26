@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnDestroy, SimpleChanges} from '@angular/core';
 import {Gallery, GalleryItem, ImageItem} from '@ngx-gallery/core';
 import {Subscription} from 'rxjs';
 import {Lightbox} from '@ngx-gallery/lightbox';

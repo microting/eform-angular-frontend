@@ -17,9 +17,7 @@ import {
   EmailRecipientsTagsService,
 } from '../../../../common/services/email-recipients';
 import { EmailRecipientModel } from 'src/app/common/models';
-import { EmailRecipientsStateService } from 'src/app/modules/email-recipients/components/state/email-recipients-state.service';
-import { updateTableSort } from 'src/app/common/helpers';
-import { getOffset } from 'src/app/common/helpers/pagination.helper';
+import { EmailRecipientsStateService } from '../store/email-recipients-state.service';
 
 @AutoUnsubscribe()
 @Component({
@@ -89,24 +87,13 @@ export class EmailRecipientsPageComponent implements OnInit, OnDestroy {
   }
 
   onSortTable(sort: string) {
-    let localPageSettings = this.emailRecipientsStateService.getSorting();
-    localPageSettings = updateTableSort(
-      sort,
-      localPageSettings.sort,
-      localPageSettings.isSortDsc
-    );
-    this.emailRecipientsStateService.updateSorting(
-      localPageSettings.sort,
-      localPageSettings.isSortDsc
-    );
+    this.emailRecipientsStateService.onSortTable(sort);
     this.getEmailRecipients();
   }
 
-  changePage(offset: any) {
-    if (offset || offset === 0) {
-      this.emailRecipientsStateService.updateOffset(offset);
-      this.getEmailRecipients();
-    }
+  changePage(offset: number) {
+    this.emailRecipientsStateService.changePage(offset);
+    this.getEmailRecipients();
   }
 
   openCreateModal() {
@@ -126,14 +113,14 @@ export class EmailRecipientsPageComponent implements OnInit, OnDestroy {
   }
 
   removeSavedTag(e: any) {
-    this.emailRecipientsStateService.removeTagIds(e.value.id);
+    this.emailRecipientsStateService.addOrRemoveTagIds(e.value.id);
     this.getEmailRecipients();
   }
 
   ngOnDestroy(): void {}
 
   tagSelected(id: number) {
-    this.emailRecipientsStateService.addTagIds(id);
+    this.emailRecipientsStateService.addOrRemoveTagIds(id);
     this.getEmailRecipients();
   }
 
@@ -144,23 +131,11 @@ export class EmailRecipientsPageComponent implements OnInit, OnDestroy {
 
   onPageSizeChanged(pageSize: number) {
     this.emailRecipientsStateService.updatePageSize(pageSize);
-    this.emailRecipientsStateService.updateOffset(
-      getOffset(
-        pageSize,
-        this.emailRecipientsStateService.offset,
-        this.emailRecipientsListModel.total
-      )
-    );
+    this.getEmailRecipients();
   }
 
   onEmailRecipientDeleted() {
-    this.emailRecipientsStateService.updateOffset(
-      getOffset(
-        this.emailRecipientsStateService.pageSize,
-        this.emailRecipientsStateService.offset,
-        this.emailRecipientsListModel.total
-      )
-    );
+    this.emailRecipientsStateService.onDelete();
     this.getEmailRecipients();
   }
 }

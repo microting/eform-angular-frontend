@@ -1,7 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
   OperationDataResult,
@@ -11,7 +8,7 @@ import {
   UserInfoRequestModel,
   UserRegisterModel,
 } from 'src/app/common/models';
-import { BaseService } from 'src/app/common/services/base.service';
+import { ApiBaseService } from 'src/app/common/services';
 
 const AdminMethods = {
   GetCurrentUser: '/api/account/user-info',
@@ -25,46 +22,51 @@ const AdminMethods = {
 };
 
 @Injectable()
-export class AdminService extends BaseService {
-  constructor(
-    private _http: HttpClient,
-    router: Router,
-    toastrService: ToastrService
-  ) {
-    super(_http, router, toastrService);
-  }
+export class AdminService {
+  constructor(private apiBaseService: ApiBaseService) {}
 
   getAllUsers(
     model: UserInfoRequestModel
   ): Observable<OperationDataResult<Paged<UserInfoModel>>> {
-    return this.post<Paged<UserInfoModel>>(AdminMethods.GetAllUsers, model);
+    return this.apiBaseService.post<Paged<UserInfoModel>>(
+      AdminMethods.GetAllUsers,
+      model
+    );
   }
 
   getCurrentUserInfo(): Observable<UserInfoModel> {
-    return this.get(AdminMethods.GetCurrentUser);
+    return this.apiBaseService.get(AdminMethods.GetCurrentUser);
   }
 
   getUser(userId: number): Observable<OperationDataResult<UserRegisterModel>> {
-    return this.get<UserRegisterModel>(AdminMethods.GetUser + '/' + userId);
+    return this.apiBaseService.get<UserRegisterModel>(
+      AdminMethods.GetUser + '/' + userId
+    );
   }
 
   createUser(model: UserRegisterModel): Observable<OperationResult> {
-    return this.post<UserRegisterModel>(AdminMethods.CreateUser, model);
+    return this.apiBaseService.post<UserRegisterModel>(
+      AdminMethods.CreateUser,
+      model
+    );
   }
 
   updateUser(model: UserRegisterModel): Observable<OperationResult> {
-    return this.post<UserRegisterModel>(AdminMethods.UpdateUser, model);
+    return this.apiBaseService.post<UserRegisterModel>(
+      AdminMethods.UpdateUser,
+      model
+    );
   }
 
   deleteUser(userId: number): Observable<OperationResult> {
-    return this.get(AdminMethods.DeleteUser + '/' + userId);
+    return this.apiBaseService.get(AdminMethods.DeleteUser + '/' + userId);
   }
 
   enableTwoFactorAuth(): Observable<OperationResult> {
-    return this.get(AdminMethods.EnableTwoFactorAuth);
+    return this.apiBaseService.get(AdminMethods.EnableTwoFactorAuth);
   }
 
   disableTwoFactorAuth(): Observable<OperationResult> {
-    return this.get(AdminMethods.DisableTwoFactorAuth);
+    return this.apiBaseService.get(AdminMethods.DisableTwoFactorAuth);
   }
 }

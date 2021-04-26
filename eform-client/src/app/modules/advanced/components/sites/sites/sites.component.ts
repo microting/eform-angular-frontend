@@ -1,16 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
 import { SiteNameDto } from 'src/app/common/models/dto';
 import {
   SitesService,
   SiteTagsService,
 } from 'src/app/common/services/advanced';
-import { AuthService } from 'src/app/common/services/auth';
 import { SiteTagsComponent } from '../..';
 import {
   CommonDictionaryModel,
   TableHeaderElementModel,
 } from '../../../../../common/models/common';
+import { AuthService } from 'src/app/common/services';
+import { AuthStateService } from 'src/app/common/store';
 
 @Component({
   selector: 'app-sites',
@@ -26,7 +26,7 @@ export class SitesComponent implements OnInit {
   availableTags: Array<CommonDictionaryModel> = [];
 
   get userClaims() {
-    return this.authService.userClaims;
+    return this.authStateService.currentUserClaims;
   }
 
   tableHeaders: TableHeaderElementModel[] = [
@@ -41,8 +41,7 @@ export class SitesComponent implements OnInit {
 
   constructor(
     private sitesService: SitesService,
-    private router: Router,
-    private authService: AuthService,
+    private authStateService: AuthStateService,
     private siteTagsService: SiteTagsService
   ) {}
 

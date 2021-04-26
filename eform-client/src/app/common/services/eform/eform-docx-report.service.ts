@@ -1,16 +1,14 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
-import { BaseService } from 'src/app/common/services/base.service';
 import {
   OperationDataResult,
   OperationResult,
   EformDocxReportGenerateModel,
-  EformDocxReportModel, EformDocxReportHeadersModel,
+  EformDocxReportModel,
+  EformDocxReportHeadersModel,
 } from 'src/app/common/models';
+import { ApiBaseService } from 'src/app/common/services';
 
 export let EformDocxReportServiceMethods = {
   DocxReport: '/api/templates/docx-report',
@@ -18,35 +16,37 @@ export let EformDocxReportServiceMethods = {
 };
 
 @Injectable()
-export class EformDocxReportService extends BaseService {
-  constructor(
-    private _http: HttpClient,
-    router: Router,
-    toastrService: ToastrService
-  ) {
-    super(_http, router, toastrService);
-  }
+export class EformDocxReportService {
+  constructor(private apiBaseService: ApiBaseService) {}
 
-  getTemplateDocxReportHeaders(templateId: number): Observable<
-    OperationDataResult<EformDocxReportHeadersModel>
-  > {
-    return this.get(EformDocxReportServiceMethods.DocxReportHeaders + '/' + templateId);
+  getTemplateDocxReportHeaders(
+    templateId: number
+  ): Observable<OperationDataResult<EformDocxReportHeadersModel>> {
+    return this.apiBaseService.get(
+      EformDocxReportServiceMethods.DocxReportHeaders + '/' + templateId
+    );
   }
 
   updateTemplateDocxReportHeaders(
     model: EformDocxReportHeadersModel
   ): Observable<OperationResult> {
-    return this.post(EformDocxReportServiceMethods.DocxReportHeaders, model);
+    return this.apiBaseService.post(
+      EformDocxReportServiceMethods.DocxReportHeaders,
+      model
+    );
   }
 
   generateReport(
     model: EformDocxReportGenerateModel
   ): Observable<OperationDataResult<EformDocxReportModel>> {
-    return this.post(EformDocxReportServiceMethods.DocxReport, model);
+    return this.apiBaseService.post(
+      EformDocxReportServiceMethods.DocxReport,
+      model
+    );
   }
 
   downloadReport(model: EformDocxReportGenerateModel): Observable<any> {
-    return this.getBlobData(
+    return this.apiBaseService.getBlobData(
       EformDocxReportServiceMethods.DocxReport + '/word',
       model
     );

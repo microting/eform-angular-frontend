@@ -1,89 +1,114 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
-import {AdminGuard, AuthGuard, ClaimsGuard} from 'src/app/common/guards';
-import {
-  FullLayoutComponent,
-  SimpleLayoutComponent
-} from './components';
-import {UserClaimsEnum} from 'src/app/common/const';
-
+import { AdminGuard, AuthGuard, ClaimsGuard } from 'src/app/common/guards';
+import { FullLayoutComponent, SimpleLayoutComponent } from './components';
+import { UserClaimsEnum } from 'src/app/common/const';
 
 export const routes: Routes = [
   {
     path: '',
     component: FullLayoutComponent,
     data: {
-      title: 'Home'
+      title: 'Home',
     },
     children: [
       {
         path: '',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./modules/eforms/eforms.module').then(m => m.EFormsModule)
+        loadChildren: () =>
+          import('./modules/eforms/eforms.module').then((m) => m.EFormsModule),
       },
       {
         path: 'advanced',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./modules/advanced/advanced.module').then(m => m.AdvancedModule)
+        loadChildren: () =>
+          import('./modules/advanced/advanced.module').then(
+            (m) => m.AdvancedModule
+          ),
       },
       {
         path: 'device-users',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./modules/device-users/device-users.module').then(m => m.DeviceUsersModule)
+        loadChildren: () =>
+          import('./modules/device-users/device-users.module').then(
+            (m) => m.DeviceUsersModule
+          ),
       },
       {
         path: 'cases',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./modules/cases/cases.module').then(m => m.CasesModule)
+        loadChildren: () =>
+          import('./modules/cases/cases.module').then((m) => m.CasesModule),
       },
       {
         path: 'application-settings',
-        loadChildren: () => import('./modules/application-settings/application-settings.module').then(m => m.ApplicationSettingsModule)
+        loadChildren: () =>
+          import(
+            './modules/application-settings/application-settings.module'
+          ).then((m) => m.ApplicationSettingsModule),
       },
       {
         path: 'plugins-settings',
         canActivate: [AdminGuard],
-        loadChildren: () => import('./modules/plugins-management/plugins-management.module').then(m => m.PluginsManagementModule)
+        loadChildren: () =>
+          import('./modules/plugins-management/plugins-management.module').then(
+            (m) => m.PluginsManagementModule
+          ),
       },
       {
         path: 'account-management',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./modules/account-management/account-management.module').then(m => m.AccountManagementModule)
+        loadChildren: () =>
+          import('./modules/account-management/account-management.module').then(
+            (m) => m.AccountManagementModule
+          ),
       },
       {
         path: 'email-recipients',
         canActivate: [ClaimsGuard],
-        data: {requiredClaim: UserClaimsEnum.emailRecipientRead},
-        loadChildren: () => import('./modules/email-recipients/email-recipients.module').then(m => m.EmailRecipientsModule)
+        data: { requiredClaim: UserClaimsEnum.emailRecipientRead },
+        loadChildren: () =>
+          import('./modules/email-recipients/email-recipients.module').then(
+            (m) => m.EmailRecipientsModule
+          ),
       },
       {
         path: 'security',
         canActivate: [AdminGuard],
-        loadChildren: () => import('./modules/security/security.module').then(m => m.SecurityModule)
+        loadChildren: () =>
+          import('./modules/security/security.module').then(
+            (m) => m.SecurityModule
+          ),
       },
       {
         path: 'plugins',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./plugins/plugins.module').then(m => m.PluginsModule)
-      }
-    ]
+        loadChildren: () =>
+          import('./plugins/plugins.module').then((m) => m.PluginsModule),
+      },
+    ],
   },
   {
     path: 'auth',
     component: SimpleLayoutComponent,
     data: {
-      title: 'Auth'
+      title: 'Auth',
     },
-    loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule)
+    loadChildren: () =>
+      import('./modules/auth/auth.module').then((m) => m.AuthModule),
   },
   // otherwise redirect to home
-  {path: '**', redirectTo: ''}
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: false, relativeLinkResolution: 'legacy' })],
-  exports: [RouterModule]
+  imports: [
+    RouterModule.forRoot(routes, {
+      useHash: false,
+      relativeLinkResolution: 'legacy',
+    }),
+  ],
+  exports: [RouterModule],
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule {}

@@ -1,6 +1,5 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { CasePostNewComponent } from 'src/app/modules/cases/components';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Subscription} from 'rxjs';
 import {
   CommonDictionaryModel,
   EformDocxReportGenerateModel,
@@ -8,13 +7,14 @@ import {
   EformDocxReportModel,
   SharedTagModel,
 } from 'src/app/common/models';
-import { AuthService, EmailRecipientsService } from 'src/app/common/services';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { parseISO } from 'date-fns';
-import { saveAs } from 'file-saver';
-import { EformDocxReportService } from 'src/app/common/services/eform';
-import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
+import {EmailRecipientsService} from 'src/app/common/services';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
+import {parseISO} from 'date-fns';
+import {saveAs} from 'file-saver';
+import {EformDocxReportService} from 'src/app/common/services/eform';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
+import {AuthStateService} from 'src/app/common/store';
 
 @AutoUnsubscribe()
 @Component({
@@ -38,7 +38,9 @@ export class EformDocxReportContainerComponent implements OnInit, OnDestroy {
   updateHeadersSub$: Subscription;
   reportHeadersSub$: Subscription;
 
-  get userRole() { return this.authService.currentRole; }
+  get userRole() {
+    return this.authStateService.currentRole;
+  }
 
   constructor(
     private emailRecipientsService: EmailRecipientsService,
@@ -46,7 +48,7 @@ export class EformDocxReportContainerComponent implements OnInit, OnDestroy {
     private reportService: EformDocxReportService,
     private toastrService: ToastrService,
     private router: Router,
-    private authService: AuthService
+    private authStateService: AuthStateService
   ) {
     this.activatedRouteSub$ = this.activateRoute.params.subscribe((params) => {
       // Required to reload component

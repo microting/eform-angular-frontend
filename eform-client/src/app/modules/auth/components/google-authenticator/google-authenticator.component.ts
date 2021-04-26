@@ -1,27 +1,34 @@
-import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {ToastrService} from 'ngx-toastr';
-import {EventBrokerService} from 'src/app/common/helpers';
-import {AuthResponseModel, GoogleAuthenticatorModel, LoginRequestModel} from 'src/app/common/models/auth';
-import {AuthService} from 'src/app/common/services/auth';
+import { Component, OnInit } from '@angular/core';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import {
+  GoogleAuthenticatorModel,
+  LoginRequestModel,
+} from 'src/app/common/models/auth';
+import { AuthStateService } from 'src/app/common/store';
 
 @Component({
   selector: 'app-google-authenticator',
-  templateUrl: './google-authenticator.component.html'
+  templateUrl: './google-authenticator.component.html',
 })
-export class GoogleAuthenticatorComponent implements OnInit{
+export class GoogleAuthenticatorComponent implements OnInit {
   googleAuthenticatorModel: GoogleAuthenticatorModel;
   loginRequestModel: LoginRequestModel;
   formGoogleAuth: FormGroup;
   code: AbstractControl;
 
-  constructor(private authService: AuthService,
-              private router: Router,
-              private route: ActivatedRoute,
-              private fb: FormBuilder,
-              private toastrService: ToastrService) {
-    this.route.params.subscribe(params => {
+  constructor(
+    private authStateService: AuthStateService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private fb: FormBuilder
+  ) {
+    this.route.params.subscribe((params) => {
       const parsedModel = JSON.parse(atob(params['cypher']));
       this.loginRequestModel = parsedModel.loginData;
       this.googleAuthenticatorModel = parsedModel.googleAuthData;
@@ -30,24 +37,13 @@ export class GoogleAuthenticatorComponent implements OnInit{
 
   ngOnInit() {
     this.formGoogleAuth = this.fb.group({
-      code: [
-        '',
-        [Validators.required]
-      ]
+      code: ['', [Validators.required]],
     });
     this.code = this.formGoogleAuth.get('code');
   }
 
   submitGoogleAuthForm() {
     this.loginRequestModel.code = this.code.value;
-    this.authService.login(this.loginRequestModel)
-      .subscribe((result: AuthResponseModel) => {
-          localStorage.setItem('currentAuth', JSON.stringify(result));
-          this.router.navigate(['/']).then();
-        },
-        (error) => {
-          this.toastrService.error(error.error.error);
-        },
-      );
+    this.authStateService.login(this.loginRequestModel);
   }
 }

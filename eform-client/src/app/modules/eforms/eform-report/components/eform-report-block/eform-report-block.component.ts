@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {EformReportDataItem, EformReportElement} from 'src/app/common/models';
 import {UUID} from 'angular2-uuid';
 

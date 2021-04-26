@@ -1,38 +1,44 @@
-import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
-import {ToastrService} from 'ngx-toastr';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {CommonDictionaryModel, OperationDataResult, OperationResult} from 'src/app/common/models';
-import {BaseService} from '../../base.service';
-import {SiteTagsUpdateModel} from '../../../models/advanced/site-tags-update.model';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import {
+  CommonDictionaryModel,
+  OperationDataResult,
+  OperationResult,
+} from 'src/app/common/models';
+import { SiteTagsUpdateModel } from '../../../models/advanced/site-tags-update.model';
+import { ApiBaseService } from 'src/app/common/services';
 
 const SitesMethods = {
   Tags: '/api/sites/tags',
   CreateTag: '/api/sites/tags/create',
   DeleteTag: '/api/sites/tags/delete',
-  UpdateTags: '/api/sites/tags/update'
+  UpdateTags: '/api/sites/tags/update',
 };
 
 @Injectable()
-export class SiteTagsService extends BaseService {
-  constructor(private _http: HttpClient, router: Router, toastrService: ToastrService) {
-    super(_http, router, toastrService);
-  }
+export class SiteTagsService {
+  constructor(private apiBaseService: ApiBaseService) {}
 
-  getAvailableTags(): Observable<OperationDataResult<Array<CommonDictionaryModel>>> {
-    return this.get(SitesMethods.Tags);
+  getAvailableTags(): Observable<
+    OperationDataResult<Array<CommonDictionaryModel>>
+  > {
+    return this.apiBaseService.get(SitesMethods.Tags);
   }
 
   deleteTag(tagId: number): Observable<OperationResult> {
-    return this.get(SitesMethods.DeleteTag + '?tagId=' + tagId);
+    return this.apiBaseService.get(SitesMethods.DeleteTag + '?tagId=' + tagId);
   }
 
   createTag(tagName: string): Observable<OperationResult> {
-    return this.post(SitesMethods.CreateTag + '?tagName=' + tagName, {});
+    return this.apiBaseService.post(
+      SitesMethods.CreateTag + '?tagName=' + tagName,
+      {}
+    );
   }
 
-  updateSiteTags = (model: SiteTagsUpdateModel): Observable<OperationResult> => {
-    return this.post(SitesMethods.UpdateTags, model);
-  }
+  updateSiteTags = (
+    model: SiteTagsUpdateModel
+  ): Observable<OperationResult> => {
+    return this.apiBaseService.post(SitesMethods.UpdateTags, model);
+  };
 }

@@ -9,12 +9,13 @@ import {
 import { TemplateDto } from 'src/app/common/models/dto';
 import { SavedTagModel, TemplateListModel } from 'src/app/common/models/eforms';
 import { EformPermissionsSimpleModel } from 'src/app/common/models/security/group-permissions/eform';
-import { AuthService } from 'src/app/common/services/auth';
+import { AuthService } from 'src/app/common/services/auth/auth.service';
 import { EFormService, EformTagService } from 'src/app/common/services/eform';
 import { SecurityGroupEformsPermissionsService } from 'src/app/common/services/security';
 import { saveAs } from 'file-saver';
-import { EformsStateService } from 'src/app/modules/eforms/state/eforms-state.service';
+import { EformsStateService } from 'src/app/modules/eforms/store/eforms-state.service';
 import { updateTableSorting } from 'src/app/common/helpers';
+import { AuthStateService } from 'src/app/common/store';
 
 @Component({
   selector: 'app-eform-page',
@@ -37,13 +38,13 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   availableTags: Array<CommonDictionaryModel> = [];
 
   get userClaims() {
-    return this.authService.userClaims;
+    return this.authStateService.currentUserClaims;
   }
   get userClaimsEnum() {
     return UserClaimsEnum;
   }
   get userRole() {
-    return this.authService.currentRole;
+    return this.authStateService.currentRole;
   }
 
   tableHeaders: TableHeaderElementModel[] = [
@@ -64,7 +65,8 @@ export class EformsPageComponent implements OnInit, OnDestroy {
     private eFormTagService: EformTagService,
     private authService: AuthService,
     private securityGroupEformsService: SecurityGroupEformsPermissionsService,
-    public eformsStateService: EformsStateService
+    public eformsStateService: EformsStateService,
+    private authStateService: AuthStateService
   ) {
     this.searchSubject.pipe(debounceTime(500)).subscribe((val) => {
       this.eformsStateService.updateNameFilter(val.toString());
@@ -115,7 +117,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
     savedTagModel.tagName = e.name;
     this.eFormTagService.addSavedTag(savedTagModel).subscribe((data) => {
       if (data && data.success) {
-        this.eformsStateService.addTagIds(e.id);
+        this.eformsStateService.addOrRemoveTagIds(e.id);
         this.loadAllTemplates();
       }
     });
@@ -125,7 +127,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
     this.eFormTagService.deleteSavedTag(e.value.id).subscribe(
       (data) => {
         if (data && data.success) {
-          this.eformsStateService.removeTagIds(e.value.id);
+          this.eformsStateService.addOrRemoveTagIds(e.value.id);
           this.loadAllTemplates();
         }
       },

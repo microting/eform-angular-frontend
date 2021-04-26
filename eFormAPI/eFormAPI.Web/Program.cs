@@ -214,7 +214,7 @@ namespace eFormAPI.Web
                     var pluginList = PluginHelper.GetAllPlugins();
 
                     // Enable plugins
-                    if (startup.PluginsList.Count > 0)
+                    if (startup.PluginsList.Any())
                     {
                         foreach (var pluginId in startup.PluginsList)
                         {
@@ -289,7 +289,6 @@ namespace eFormAPI.Web
                     var mainSettings = ConnectionStringManager.Read(filePath);
                     _defaultConnectionString = mainSettings?.ConnectionStrings?.DefaultConnection;
                     config.AddEfConfiguration(_defaultConnectionString);
-
                     EnabledPlugins = PluginHelper.GetPlugins(_defaultConnectionString);
                     DisabledPlugins = PluginHelper.GetDisablePlugins(_defaultConnectionString);
 

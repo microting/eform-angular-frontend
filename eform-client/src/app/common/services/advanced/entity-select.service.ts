@@ -1,16 +1,16 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
-import {ToastrService} from 'ngx-toastr';
-import {Observable} from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import {
   AdvEntitySelectableGroupEditModel,
   AdvEntitySelectableGroupListModel,
-  AdvEntitySelectableGroupModel, CommonDictionaryTextModel,
-  OperationDataResult, OperationResult
+  AdvEntitySelectableGroupModel,
+  CommonDictionaryTextModel,
+  OperationDataResult,
+  OperationResult,
 } from 'src/app/common/models';
-import {AdvEntitySelectableGroupListRequestModel} from 'src/app/common/models/advanced';
-import {BaseService} from 'src/app/common/services/base.service';
+import { AdvEntitySelectableGroupListRequestModel } from 'src/app/common/models/advanced';
+import { ApiBaseService } from 'src/app/common/services';
 
 const AdvSelectableEntityMethods = {
   GetAll: '/api/selectable-groups',
@@ -18,40 +18,59 @@ const AdvSelectableEntityMethods = {
   DeleteSingle: '/api/selectable-groups/delete',
   CreateSingle: '/api/selectable-groups/create',
   UpdateSingle: '/api/selectable-groups/update',
-  ImportGroup: '/api/selectable-groups/import'
+  ImportGroup: '/api/selectable-groups/import',
 };
 
 @Injectable()
-export class EntitySelectService extends BaseService {
-  constructor(private _http: HttpClient, router: Router, toastrService: ToastrService) {
-    super(_http, router, toastrService);
+export class EntitySelectService {
+  constructor(private apiBaseService: ApiBaseService) {}
+
+  getEntitySelectableGroupList(
+    model: AdvEntitySelectableGroupListRequestModel
+  ): Observable<OperationDataResult<AdvEntitySelectableGroupListModel>> {
+    return this.apiBaseService.post<AdvEntitySelectableGroupListModel>(
+      AdvSelectableEntityMethods.GetAll,
+      model
+    );
   }
 
-  getEntitySelectableGroupList(model: AdvEntitySelectableGroupListRequestModel):
-    Observable<OperationDataResult<AdvEntitySelectableGroupListModel>> {
-    return this.post<AdvEntitySelectableGroupListModel>(AdvSelectableEntityMethods.GetAll, model);
+  getEntitySelectableGroup(
+    id: string
+  ): Observable<OperationDataResult<AdvEntitySelectableGroupModel>> {
+    return this.apiBaseService.get<AdvEntitySelectableGroupModel>(
+      AdvSelectableEntityMethods.GetSingle + '/' + id
+    );
   }
 
-  getEntitySelectableGroup(id: string): Observable<OperationDataResult<AdvEntitySelectableGroupModel>> {
-    return this.get<AdvEntitySelectableGroupModel>(AdvSelectableEntityMethods.GetSingle + '/' + id);
-  }
-
-  updateEntitySelectableGroup(model: AdvEntitySelectableGroupEditModel): Observable<OperationResult> {
-    return this.post<AdvEntitySelectableGroupEditModel>(AdvSelectableEntityMethods.UpdateSingle, model);
+  updateEntitySelectableGroup(
+    model: AdvEntitySelectableGroupEditModel
+  ): Observable<OperationResult> {
+    return this.apiBaseService.post<AdvEntitySelectableGroupEditModel>(
+      AdvSelectableEntityMethods.UpdateSingle,
+      model
+    );
   }
 
   deleteEntitySelectableGroup(groupUid: string): Observable<OperationResult> {
-    return this.get(AdvSelectableEntityMethods.DeleteSingle + '/' + groupUid);
+    return this.apiBaseService.get(
+      AdvSelectableEntityMethods.DeleteSingle + '/' + groupUid
+    );
   }
 
-  createEntitySelectableGroup(model: AdvEntitySelectableGroupEditModel): Observable<OperationResult> {
-    return this.post<AdvEntitySelectableGroupEditModel>(AdvSelectableEntityMethods.CreateSingle, model);
+  createEntitySelectableGroup(
+    model: AdvEntitySelectableGroupEditModel
+  ): Observable<OperationResult> {
+    return this.apiBaseService.post<AdvEntitySelectableGroupEditModel>(
+      AdvSelectableEntityMethods.CreateSingle,
+      model
+    );
   }
 
-  getEntitySelectableGroupDictionary(entityGroupUid: string):
-    Observable<OperationDataResult<Array<CommonDictionaryTextModel>>> {
-    return this.get<Array<CommonDictionaryTextModel>>(AdvSelectableEntityMethods.GetAll + '/dict/'
-      + entityGroupUid);
+  getEntitySelectableGroupDictionary(
+    entityGroupUid: string
+  ): Observable<OperationDataResult<Array<CommonDictionaryTextModel>>> {
+    return this.apiBaseService.get<Array<CommonDictionaryTextModel>>(
+      AdvSelectableEntityMethods.GetAll + '/dict/' + entityGroupUid
+    );
   }
 }
-

@@ -4,7 +4,7 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-import { AuthService } from 'src/app/common/services';
+import { AuthService } from 'src/app/common/services/auth/auth.service';
 import { EformDocxReportItemModel } from 'src/app/common/models';
 
 @Component({

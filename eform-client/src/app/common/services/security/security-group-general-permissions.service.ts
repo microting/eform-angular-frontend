@@ -1,30 +1,37 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
-import {ToastrService} from 'ngx-toastr';
-import {Observable} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import {
   OperationDataResult,
-  OperationResult, SecurityGroupGeneralPermissionsModel,
-  SecurityGroupGeneralPermissionsUpdateModel
+  OperationResult,
+  SecurityGroupGeneralPermissionsModel,
+  SecurityGroupGeneralPermissionsUpdateModel,
 } from 'src/app/common/models';
-import {BaseService} from 'src/app/common/services/base.service';
+import { ApiBaseService } from 'src/app/common/services';
 
 const SecurityGroupGeneralPermissionsMethods = {
-  SecurityGroupGeneralPermissions: '/api/security/permissions'
+  SecurityGroupGeneralPermissions: '/api/security/permissions',
 };
 
 @Injectable()
-export class SecurityGroupGeneralPermissionsService extends BaseService {
-  constructor(private _http: HttpClient, router: Router, toastrService: ToastrService) {
-    super(_http, router, toastrService);
+export class SecurityGroupGeneralPermissionsService {
+  constructor(private apiBaseService: ApiBaseService) {}
+
+  getGeneralPermissions(
+    groupId: number
+  ): Observable<OperationDataResult<SecurityGroupGeneralPermissionsModel>> {
+    return this.apiBaseService.get(
+      SecurityGroupGeneralPermissionsMethods.SecurityGroupGeneralPermissions +
+        '/' +
+        groupId
+    );
   }
 
-  getGeneralPermissions(groupId: number): Observable<OperationDataResult<SecurityGroupGeneralPermissionsModel>> {
-    return this.get(SecurityGroupGeneralPermissionsMethods.SecurityGroupGeneralPermissions + '/' + groupId);
-  }
-
-  updateGeneralPermissions(model: SecurityGroupGeneralPermissionsUpdateModel): Observable<OperationResult> {
-    return this.put(SecurityGroupGeneralPermissionsMethods.SecurityGroupGeneralPermissions, model);
+  updateGeneralPermissions(
+    model: SecurityGroupGeneralPermissionsUpdateModel
+  ): Observable<OperationResult> {
+    return this.apiBaseService.put(
+      SecurityGroupGeneralPermissionsMethods.SecurityGroupGeneralPermissions,
+      model
+    );
   }
 }
