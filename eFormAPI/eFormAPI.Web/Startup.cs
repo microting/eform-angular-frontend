@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 
 namespace eFormAPI.Web
@@ -96,8 +97,12 @@ namespace eFormAPI.Web
             {
                 Log.LogEvent($"We do have a ConnectionString {Configuration["ConnectionString"]}");
                 services.AddEntityFrameworkMySql()
-                    .AddDbContext<BaseDbContext>(o => o.UseMySql(Configuration["ConnectionString"],
-                        b => b.EnableRetryOnFailure()));
+                    .AddDbContext<BaseDbContext>(o => o.UseMySql(
+                        Configuration["ConnectionString"], new MariaDbServerVersion(
+                        new Version(10, 4, 0)), mySqlOptionsAction: builder =>
+                    {
+                        builder.EnableRetryOnFailure();
+                    }));
             }
             else
             {
@@ -108,8 +113,12 @@ namespace eFormAPI.Web
                     if (Configuration.MyConnectionString() != "...")
                     {
                         services.AddEntityFrameworkMySql()
-                            .AddDbContext<BaseDbContext>(o => o.UseMySql(Configuration.MyConnectionString(),
-                                b => b.MigrationsAssembly("eFormAPI.Web").EnableRetryOnFailure()));
+                            .AddDbContext<BaseDbContext>(o => o.UseMySql(
+                                Configuration.MyConnectionString(), new MariaDbServerVersion(
+                                    new Version(10, 4, 0)), mySqlOptionsAction: builder =>
+                                {
+                                    builder.EnableRetryOnFailure();
+                                }));
                     }
                     else
                     {
@@ -117,8 +126,12 @@ namespace eFormAPI.Web
                         // We use this hack to get the project started and we actually don't use this connection, but it's needed for the service to start.
                         // Once we have the correct connectionstring in the connection.json, we restart the server and the above method is used.
                         services.AddEntityFrameworkMySql()
-                            .AddDbContext<BaseDbContext>(o => o.UseMySql("server=sffsfd;",
-                                b => b.MigrationsAssembly("eFormAPI.Web").EnableRetryOnFailure()));
+                            .AddDbContext<BaseDbContext>(o => o.UseMySql(
+                                "server=sffsfd;", new MariaDbServerVersion(
+                                    new Version(10, 4, 0)), mySqlOptionsAction: builder =>
+                                {
+                                    builder.EnableRetryOnFailure();
+                                }));
                     }
                 }
             }

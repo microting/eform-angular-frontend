@@ -315,7 +315,7 @@ namespace eFormAPI.Web.Hosting.Helpers
                             typeof(LoggerCategory<>),
                             typeof(DbLoggerCategory),
                             typeof(WarningsConfigurationBuilder),
-                            typeof(MySqlDbContextOptionsExtensions),
+                            //typeof(MySqlDbContextOptionsExtensions),
                             typeof(CoreOptionsExtension),
                             typeof(RelationalEventId),
                             typeof(IDbContextOptionsBuilderInfrastructure),
