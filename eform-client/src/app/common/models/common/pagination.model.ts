@@ -1,11 +1,11 @@
 export class PaginationModel {
-  pageIndex: number;
+  total: number;
   pageSize: number;
   offset: number;
 
-  constructor(pageIndex?, pageSize?, offset?) {
+  constructor(total?, pageSize?, offset?) {
     this.pageSize = pageSize;
-    this.pageIndex = pageIndex;
+    this.total = total;
     this.offset = offset;
   }
 }

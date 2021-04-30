@@ -3,8 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import {
   UserInfoModel,
-  UserInfoModelList,
-  PaginationModel,
   SecurityGroupUpdateModel,
   SecurityGroupModel,
   Paged,
@@ -20,7 +18,6 @@ export class SecurityGroupUpdateComponent implements OnInit {
   securityGroupModel: SecurityGroupModel = new SecurityGroupModel();
   securityGroupUpdateModel: SecurityGroupUpdateModel = new SecurityGroupUpdateModel();
   selectedGroupId: number;
-  paginationModel = new PaginationModel(1, 1000, 0);
   users: Paged<UserInfoModel> = new Paged<UserInfoModel>();
 
   constructor(

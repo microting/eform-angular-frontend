@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   UserInfoModel,
-  PaginationModel,
-  PageSettingsModel,
   Paged,
   SecurityGroupModel,
   TableHeaderElementModel,
@@ -24,8 +22,6 @@ export class UsersPageComponent implements OnInit {
   @ViewChild('removeUserModal', { static: true }) removeUserModal;
   @ViewChild('newUserModal', { static: true }) newUserModal;
 
-  localPageSettings: PageSettingsModel = new PageSettingsModel();
-  paginationModel: PaginationModel = new PaginationModel(1, 5, 0);
   userInfoModelList: Paged<UserInfoModel> = new Paged<UserInfoModel>();
   selectedUser: UserInfoModel = new UserInfoModel();
   securityGroups: Paged<SecurityGroupModel> = new Paged<SecurityGroupModel>();
@@ -38,7 +34,8 @@ export class UsersPageComponent implements OnInit {
     { name: 'Email', elementId: '', sortable: true },
     { name: 'Full Name', elementId: '', sortable: false },
     { name: 'Role', elementId: '', sortable: true },
-    this.userClaims.usersUpdate || this.userClaims.usersDelete
+    this.authStateService.currentUserClaims.usersUpdate ||
+    this.authStateService.currentUserClaims.usersDelete
       ? { name: 'Actions', elementId: '', sortable: false }
       : null,
   ];
@@ -74,7 +71,6 @@ export class UsersPageComponent implements OnInit {
   }
 
   getUserInfoList() {
-    this.paginationModel.pageSize = this.localPageSettings.pageSize;
     this.usersStateService.getAllUsers().subscribe((data) => {
       if (data && data.model) {
         this.userInfoModelList = data.model;
