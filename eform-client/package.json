@@ -73,7 +73,7 @@
     "ngx-slimscroll": "11.0.0",
     "ngx-toastr": "13.2.1",
     "ramda": "^0.27.1",
-    "rxjs": "6.6.7",
+    "rxjs": "7.0.0",
     "tslib": "^2.0.0",
     "zone.js": "^0.11.3"
   },
