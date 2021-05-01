@@ -7,10 +7,11 @@
     <NuGetPackageRoot Condition=" '$(NuGetPackageRoot)' == '' ">/home/rene/.nuget/packages/</NuGetPackageRoot>
     <NuGetPackageFolders Condition=" '$(NuGetPackageFolders)' == '' ">/home/rene/.nuget/packages/;/usr/share/dotnet/sdk/NuGetFallbackFolder</NuGetPackageFolders>
     <NuGetProjectStyle Condition=" '$(NuGetProjectStyle)' == '' ">PackageReference</NuGetProjectStyle>
-    <NuGetToolVersion Condition=" '$(NuGetToolVersion)' == '' ">5.8.0</NuGetToolVersion>
+    <NuGetToolVersion Condition=" '$(NuGetToolVersion)' == '' ">5.9.1</NuGetToolVersion>
   </PropertyGroup>
   <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <SourceRoot Include="$([MSBuild]::EnsureTrailingSlash($(NuGetPackageFolders)))" />
+    <SourceRoot Include="/home/rene/.nuget/packages/" />
+    <SourceRoot Include="/usr/share/dotnet/sdk/NuGetFallbackFolder/" />
   </ItemGroup>
   <PropertyGroup>
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
@@ -23,7 +24,7 @@
   </ImportGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <PkgMicrosoft_Extensions_ApiDescription_Server Condition=" '$(PkgMicrosoft_Extensions_ApiDescription_Server)' == '' ">/home/rene/.nuget/packages/microsoft.extensions.apidescription.server/3.0.0</PkgMicrosoft_Extensions_ApiDescription_Server>
-    <PkgAWSSDK_Core Condition=" '$(PkgAWSSDK_Core)' == '' ">/home/rene/.nuget/packages/awssdk.core/3.7.0.16</PkgAWSSDK_Core>
+    <PkgAWSSDK_Core Condition=" '$(PkgAWSSDK_Core)' == '' ">/home/rene/.nuget/packages/awssdk.core/3.7.0.17</PkgAWSSDK_Core>
     <PkgAWSSDK_SQS Condition=" '$(PkgAWSSDK_SQS)' == '' ">/home/rene/.nuget/packages/awssdk.sqs/3.7.0.16</PkgAWSSDK_SQS>
     <PkgAWSSDK_S3 Condition=" '$(PkgAWSSDK_S3)' == '' ">/home/rene/.nuget/packages/awssdk.s3/3.7.0.17</PkgAWSSDK_S3>
     <PkgMicrosoft_EntityFrameworkCore_Tools Condition=" '$(PkgMicrosoft_EntityFrameworkCore_Tools)' == '' ">/home/rene/.nuget/packages/microsoft.entityframeworkcore.tools/5.0.5</PkgMicrosoft_EntityFrameworkCore_Tools>
