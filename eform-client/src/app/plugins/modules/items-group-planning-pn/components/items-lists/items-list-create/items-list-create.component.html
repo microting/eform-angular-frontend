@@ -1,0 +1,199 @@
+<eform-page-subheader>
+  <div class="p-3">
+    <button mdbBtn id="listCreateSaveBtn" class="btn-success btn-small-height" [disabled]="!newListModel.name"
+            (click)="createItemsList()">
+      {{ 'Create' | translate }}
+    </button>
+    <button mdbBtn id="listCreateCancelBtn" class="btn-accent text-black-50 btn-small-height"
+            (click)="goBack()">{{'Cancel' | translate}}</button>
+  </div>
+</eform-page-subheader>
+
+<div class="container-fluid">
+  <div class="row">
+    <div  class="col-md-12 col-xs-12" role="main">
+      <mdb-card>
+        <mdb-card-body>
+          <div class="row">
+            <div class="col-md-4 col-sm-4 col-xs-6">
+              <div class="md-form">
+                <input mdbInput
+                       [(ngModel)]="newListModel.name"
+                       type="text" id="createListItemName"
+                       name="createListItemName" class="form-control">
+                <label for="createListItemName">{{'List Name' | translate}}</label>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-6 ng-select-wrapper">
+              <ng-select [items]="templatesModel.templates"
+                         bindLabel="label"
+                         [placeholder]="('Selected template' | translate)"
+                         bindValue="id"
+                         [typeahead]="typeahead"
+                         [(ngModel)]="newListModel.relatedEFormId"
+                         id="createListSelector">
+              </ng-select>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-6">
+              <div class="md-form">
+                <input mdbInput
+                       [(ngModel)]="newListModel.description"
+                       type="text" id="createListDescription"
+                       name="createItemDescription" class="form-control">
+                <label for="createItemDescription">{{'Description' | translate}}</label>
+              </div>
+            </div>
+
+          </div>
+          <div class="row mb-1">
+            <div class="col-md-4 col-sm-4 col-xs-6">
+              <div class="md-form">
+                <input mdbInput
+                       [(ngModel)]="newListModel.repeatEvery"
+                       type="text" id="createRepeatEvery"
+                       name="createRepeatEvery" class="form-control">
+                <label for="createRepeatEvery">{{'Repeat every' | translate}}</label>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-6 ng-select-wrapper">
+                <ng-select [items]="[
+                {id: 1, name: 'Day' | translate},
+                {id: 2, name: 'Week' | translate},
+                {id: 3, name: 'Month' | translate}
+                ]"
+                           bindLabel="name"
+                           [placeholder]="('Repeat Type' | translate)"
+                           bindValue="id"
+                           [typeahead]="typeahead"
+                           [(ngModel)]="newListModel.repeatType"
+                           id="createRepeatType">
+                </ng-select>
+            </div>
+            <ng-template [ngIf]="newListModel.repeatType == 2">
+              <div class="col-md-4 col-sm-4 col-xs-6 ng-select-wrapper">
+                <ng-select [items]="[
+                                      {id: 1, name: 'Monday' | translate},
+                                      {id: 2, name: 'Tuesday' | translate},
+                                      {id: 3, name: 'Wednesday' | translate},
+                                      {id: 4, name: 'Thursday' | translate},
+                                      {id: 5, name: 'Friday' | translate},
+                                      {id: 6, name: 'Saturday' | translate},
+                                      {id: 0, name: 'Sunday' | translate}
+                              ]"
+                           bindLabel="name"
+                           [placeholder]="('Day of week' | translate)"
+                           bindValue="id"
+                           [typeahead]="typeahead"
+                           [(ngModel)]="newListModel.dayOfWeek"
+                           id="createDayOfWeek">
+                </ng-select>
+              </div>
+            </ng-template>
+            <ng-template [ngIf]="newListModel.repeatType == 3">
+              <div class="col-md-4 col-sm-4 col-xs-6">
+                <div class="md-form">
+                  <input mdbInput
+                         [(ngModel)]="newListModel.dayOfMonth"
+                         type="text" id="createDayOfMonth"
+                         name="createDayOfMonth" class="form-control">
+                  <label for="createDayOfMonth">{{'Day of month' | translate}}</label>
+                </div>
+              </div>
+            </ng-template>
+            <div class="col-md-4 col-sm-4 col-xs-6">
+              <div class="md-form" [owlDateTimeTrigger]="dt1">
+                <input mdbInput
+                       [owlDateTime]="dt1"
+                       [(ngModel)]="newListModel.internalRepeatUntil"
+                       type="text" id="createRepeatUntil"
+                       name="createRepeatUntil" class="form-control">
+                <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                <label for="createRepeatUntil">{{'Repeat until' | translate}}</label>
+              </div>
+            </div>
+          </div>
+          <button mdbBtn class="btn-success btn-small-height" id="addItemBtn" (click)="addNewItem()">
+            <fa-icon icon="plus"></fa-icon>
+            {{ 'Add New Item' | translate }}
+          </button>
+          <button mdbBtn class="btn-small-height" id="importItemBtn" name="button" (click)="showImportModal()">
+          <fa-icon icon="file-import"></fa-icon>
+          {{ 'Import New Items' | translate }}
+        </button>
+          <div class="row p-1 mt-2 table-responsive no-gutters">
+            <table class="table table-sm text-center z-depth-1 pr-2 pl-2">
+              <tbody id="tableBody">
+              <tr *ngFor="let item of newListModel.items">
+                <td id="itemsTableBody">
+                  <div class="md-form md-form-sm">
+                    <input mdbInput
+                           [(ngModel)]="item.name"
+                           type="text" id="createItemName"
+                           name="createItemName" class="form-control">
+                    <label for="createItemName">{{'Name' | translate}}</label>
+                  </div>
+                </td>
+                <td id="listName">
+                  <div class="md-form md-form-sm">
+                    <input mdbInput
+                           [(ngModel)]="item.description"
+                           type="text" id="createItemDescription"
+                           name="createItemDescription" class="form-control">
+                    <label for="createItemDescription">{{'Description' | translate}}</label>
+                  </div>
+                </td>
+                <td>
+                  <div class="md-form md-form-sm">
+                    <input mdbInput
+                           [(ngModel)]="item.itemNumber"
+                           type="text" id="createItemNumber"
+                           name="createItemNumber" class="form-control">
+                    <label for="createItemNumber">{{'Number' | translate}}</label>
+                  </div>
+                </td>
+                <td>
+                  <div class="md-form md-form-sm">
+                    <input mdbInput
+                           [(ngModel)]="item.locationCode"
+                           type="text" id="createItemLocationCode"
+                           name="createItemLocationCode" class="form-control">
+                    <label for="createItemLocationCode">{{'Location code' | translate}}</label>
+                  </div>
+                </td>
+                <td>
+                  <div class="md-form md-form-sm">
+                    <input mdbInput
+                           [(ngModel)]="item.buildYear"
+                           type="text" id="createItemBuildYear"
+                           name="createItemBuildYear" class="form-control">
+                    <label for="createItemBuildYear">{{'Build year' | translate}}</label>
+                  </div>
+                </td>
+                <td>
+                  <div class="md-form md-form-sm">
+                    <input mdbInput
+                           [(ngModel)]="item.type"
+                           type="text" id="createItemType"
+                           name="createItemType" class="form-control">
+                    <label for="createItemType">{{'Type' | translate}}</label>
+                  </div>
+                </td>
+                <td>
+                  <div class="d-flex flex-row justify-content-center">
+                    <button id="deleteItemBtn" (click)="removeItem(item.id)"
+                            class="btn btn-danger btn-icon mb-2 "
+                            mdbTooltip="{{ 'Delete Item' | translate }}">
+                      <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true"></fa-icon>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+  </div>
+</div>
+<app-items-group-planning-pn-unit-import #unitImportModal></app-items-group-planning-pn-unit-import>

@@ -1,0 +1,198 @@
+<subheader-pn>
+</subheader-pn>
+
+<div class="container-fluid">
+  <div class="row p-1 mt-4 table-responsive no-gutters">
+    <table mdbTable striped="true" hover="true" small="true" class="z-depth-1 text-center">
+      <thead>
+      <tr>
+        <th scope="col" class="table-header-sortable" id="idTableHeader"
+            (click)="sortTable('Id')">
+          <div class="d-flex align-items-center justify-content-center">
+            ID
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'Id'">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'Id' && !listCaseRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'Id' && listCaseRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th scope="col" class="table-header-sortable" id="dateTableHeader"
+            (click)="sortTable('CreatedAt')">
+          <div class="d-flex align-items-center justify-content-center">
+            {{'Date' | translate}}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'CreatedAt'">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'CreatedAt' && !listCaseRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'CreatedAt' && listCaseRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th scope="col" class="table-header-sortable" id="numberTableHeader"
+            (click)="sortTable('ItemNumber')">
+          <div class="d-flex align-items-center justify-content-center">
+            {{'Number' | translate}}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'ItemNumber'">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'ItemNumber' && !listCaseRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'ItemNumber' && listCaseRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th scope="col" class="table-header-sortable" id="buildYearTableHeader"
+            (click)="sortTable('BuildYear')">
+          <div class="d-flex align-items-center justify-content-center">
+            {{'Build Year' | translate}}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'BuildYear'">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'BuildYear' && !listCaseRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'BuildYear' && listCaseRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th scope="col" class="table-header-sortable" id="descriptionTableHeader"
+            (click)="sortTable('Description')">
+          <div class="d-flex align-items-center justify-content-center">
+            {{'Description' | translate}}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'Description'">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'Description' && !listCaseRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'Description' && listCaseRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th scope="col" class="table-header-sortable" id="typeTableHeader"
+            (click)="sortTable('Type')">
+          <div class="d-flex align-items-center justify-content-center">
+            {{'Type' | translate}}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'Type'">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'Type' && !listCaseRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'Type' && listCaseRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th scope="col" class="table-header-sortable" id="locationTypeTableHeader"
+            (click)="sortTable('Location')">
+          <div class="d-flex align-items-center justify-content-center">
+            {{'Location' | translate}}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'Location'">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'Location' && !listCaseRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'Location' && listCaseRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th scope="col" class="table-header-sortable" id="statusTypeTableHeader"
+            (click)="sortTable('FieldStatus')">
+          <div class="d-flex align-items-center justify-content-center">
+            {{'Status' | translate}}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'FieldStatus'">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'FieldStatus' && !listCaseRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'FieldStatus' && listCaseRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th scope="col" class="table-header-sortable" id="commentTypeTableHeader"
+            (click)="sortTable('Comment')">
+          <div class="d-flex align-items-center justify-content-center">
+            {{'Comment' | translate}}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'Comment'">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'Comment' && !listCaseRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'Comment' && listCaseRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th scope="col" class="table-header-sortable" id="numberOfPicturesTableHeader"
+            (click)="sortTable('NumberOfImages')">
+          <div class="d-flex align-items-center justify-content-center">
+            {{'Number of pictures' | translate}}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'NumberOfImages'">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'NumberOfImages' && !listCaseRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'NumberOfImages' && listCaseRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th scope="col" class="table-header-sortable" id="pdfTableHeader">
+          <div class="d-flex align-items-center justify-content-center">
+            {{'PDF' | translate}}
+          </div>
+        </th>
+
+        <th scope="col">
+          {{ 'Actions' | translate }}
+        </th>
+      </tr>
+      </thead>
+      <tbody id="tableBody">
+      <tr *ngFor="let case of casesModel.items">
+        <td id="caseId">
+          {{case.id}}
+        </td>
+        <td>
+          <date-formatter [date]="case.date" [Format]="'datetime'"></date-formatter>
+        </td>
+        <td>
+          {{case.itemNumber}}
+        </td>
+        <td>
+          {{case.buildYear}}
+        </td>
+        <td>
+          {{case.description}}
+        </td>
+        <td>
+          {{case.type}}
+        </td>
+        <td>
+          {{case.location}}
+        </td>
+        <td>
+          {{case.fieldStatus}}
+        </td>
+        <td>
+          {{case.comment}}
+        </td>
+        <td>
+          {{case.numberOfImages}}
+        </td>
+        <td>
+          <button mdbBtn class="btn-success"
+            (click)="showListCasePdfModal(case)"
+            mdbTooltip="{{'Show/Edit PDF' | translate}}">
+            <fa-icon icon="pen" size="lg" [fixedWidth]="true"></fa-icon>
+          </button>
+        </td>
+        <td>
+          <button mdbBtn class="btn-success btn-icon mb-2" *ngIf="case.status === 100"
+                  [routerLink]="['/cases/edit/' + case.sdkCaseId + '/' + case.sdkeFormId]"
+                  mdbTooltip="{{ 'Edit Case' | translate }}">
+            <fa-icon icon="pen" size="lg" [fixedWidth]="true"></fa-icon>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="row justify-content-between mr-2 ml-2">
+    <div class="col-md-1">
+      <page-size-pn
+        [pageSize]="localPageSettings.pageSize"
+        (onPageSizeChanged)="localPageSettings.pageSize = $event; listCaseRequestModel.pageIndex = 1;
+        updateLocalPageSettings()">
+      </page-size-pn>
+    </div>
+    <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
+      <pagination-pn *ngIf="casesModel.total > listCaseRequestModel.pageSize"
+                     [limit]="listCaseRequestModel.pageSize"
+                     [size]="casesModel.total"
+                     [offset]="listCaseRequestModel.offset"
+                     (onPageChanged)="changePage($event)"></pagination-pn>
+    </div>
+  </div>
+</div>
+
+<app-item-case-uploaded-data #uploadedDataModal></app-item-case-uploaded-data>

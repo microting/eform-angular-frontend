@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2048
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OuterInnerResource.Pn", "OuterInnerResource.Pn\OuterInnerResource.Pn.csproj", "{7E07880C-73CD-4C50-8D48-0089430E7DAD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9EF79113-5294-4FEC-B9A6-849769E05A6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OuterInnerResource.Pn.Test", "OuterInnerResource.Pn.Test\OuterInnerResource.Pn.Test.csproj", "{99035B18-DCB7-4361-A874-00EC77AF151C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E07880C-73CD-4C50-8D48-0089430E7DAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E07880C-73CD-4C50-8D48-0089430E7DAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E07880C-73CD-4C50-8D48-0089430E7DAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E07880C-73CD-4C50-8D48-0089430E7DAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99035B18-DCB7-4361-A874-00EC77AF151C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99035B18-DCB7-4361-A874-00EC77AF151C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99035B18-DCB7-4361-A874-00EC77AF151C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99035B18-DCB7-4361-A874-00EC77AF151C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{99035B18-DCB7-4361-A874-00EC77AF151C} = {9EF79113-5294-4FEC-B9A6-849769E05A6B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {360D429B-DCD6-4A25-943C-4FB1BB4A54C2}
+	EndGlobalSection
+EndGlobal

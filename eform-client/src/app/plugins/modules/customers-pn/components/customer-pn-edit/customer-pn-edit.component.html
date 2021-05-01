@@ -1,0 +1,233 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{ 'Edit customer' | translate }}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <form #editForm="ngForm">
+            <div class="row">
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CreatedBy)">
+                <div class="md-form">
+                  <input mdbInput
+
+                         [(ngModel)]="selectedCustomerModel.createdBy"
+                         type="text" id="editCreatedBy"
+                         name="editCreatedBy" class="form-control">
+                  <label for="editCreatedBy">{{'CreatedBy' | translate}}</label>
+                </div>
+              </div>
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CustomerNo)">
+                <div class="md-form">
+                  <input mdbInput
+
+                         [(ngModel)]="selectedCustomerModel.customerNo"
+                         type="text" id="editCustomerNo"
+                         name="editCustomerNo" class="form-control">
+                  <label for="editCustomerNo">{{'CustomerNo' | translate}}</label>
+                </div>
+              </div>
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.ContactPerson)">
+                <div class="md-form">
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.contactPerson"
+                         class="form-control"
+                         type="text" id="editContactPerson"
+                         name="editContactPerson">
+                  <label for="editContactPerson">{{'ContactPerson' | translate}}</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CompanyName)">
+                <div class="md-form">
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.companyName"
+                         class="form-control"
+                         type="text" id="editCompanyName"
+                         name="editCompanyName">
+                  <label for="editCompanyName">{{'CompanyName' | translate}}</label>
+                </div>
+              </div>
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CompanyAddress)">
+                <div class="md-form">
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.companyAddress"
+                         class="form-control"
+                         type="text" id="editCompanyAddress"
+                         name="editCompanyAddress">
+                  <label for="editCompanyAddress">{{'CompanyAddress' | translate}}</label>
+                </div>
+              </div>
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CompanyAddress)">
+                <div class="md-form">
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.companyAddress2"
+                         class="form-control"
+                         type="text" id="editCompanyAddress2"
+                         name="editCompanyAddress2">
+                  <label for="editCompanyAddress2">{{'CompanyAddress2' | translate}}</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.ZipCode)">
+                <div class="md-form">
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.zipCode"
+                         class="form-control"
+                         type="text" id="editZipCode"
+                         name="editZipCode">
+                  <label for="editZipCode">{{'ZipCode' | translate}}</label>
+                </div>
+              </div>
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CityName)">
+                <div class="md-form">
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.cityName"
+                         class="form-control"
+                         type="text" id="editCityName"
+                         name="editCityName">
+                  <label for="editCityName">{{'CityName' | translate}}</label>
+                </div>
+              </div>
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.Phone)">
+                <div class="md-form">
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.phone"
+                         class="form-control"
+                         type="text" id="editPhone"
+                         name="editPhone">
+                  <label for="editPhone">{{'Phone' | translate}}</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.Email)">
+                <div class="md-form">
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.email"
+                         class="form-control"
+                         type="text" id="editEmail"
+                         name="editEmail">
+                  <label for="editEmail">{{'Email' | translate}}</label>
+                </div>
+              </div>
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.Email)">
+                <div class="md-form">
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.eanCode"
+                         class="form-control"
+                         type="text" id="editEanCode"
+                         name="editEanCode">
+                  <label for="editEanCode">{{'EanCode' | translate}}</label>
+                </div>
+              </div>
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.Email)">
+                <div class="md-form">
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.vatNumber"
+                         class="form-control"
+                         type="text" id="editVatNumber"
+                         name="editVatNumber">
+                  <label for="editVatNumber">{{'VatNumber' | translate}}</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CountryCode)">
+                <div class="md-form">
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.countryCode"
+                         class="form-control"
+                         type="text" id="editCountryCode"
+                         name="editCountryCode">
+                  <label for="editCountryCode">{{'CountryCode' | translate}}</label>
+                </div>
+              </div>
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CadastralNumber)">
+                <div class="md-form">
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.cadastralNumber"
+                         class="form-control"
+                         type="text" id="editCadastralNumber"
+                         name="editCadastralNumber">
+                  <label for="editCadastralNumber">{{'CadastralNumber' | translate}}</label>
+                </div>
+              </div>
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CrmId)">
+                <div class="md-form">
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.crmId"
+                         class="form-control"
+                         type="text" id="editCrmId"
+                         name="editCrmId">
+                  <label for="editCrmId">{{'CrmId' | translate}}</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.PropertyNumber)">
+                <div class="md-form">
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.propertyNumber"
+                         class="form-control"
+                         type="text" id="editPropertyNumber"
+                         name="editPropertyNumber">
+                  <label for="editPropertyNumber">{{'PropertyNumber' | translate}}</label>
+                </div>
+              </div>
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.ApartmentNumber)">
+                <div class="md-form">
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.apartmentNumber"
+                         class="form-control"
+                         type="text" id="editApartmentNumber"
+                         name="editApartmentNumber">
+                  <label for="editApartmentNumber">{{'ApartmentNumber' | translate}}</label>
+                </div>
+              </div>
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CompletionYear)">
+                <div class="md-form">
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.completionYear"
+                         class="form-control"
+                         type="text" id="editCompletionYear"
+                         name="editCompletionYear">
+                  <label for="editCompletionYear">{{'CompletionYear' | translate}}</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.FloorsWithLivingSpace)">
+                <div class="md-form">
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.floorsWithLivingSpace"
+                         class="form-control"
+                         type="text" id="editFloorsWithLivingSpace"
+                         name="editFloorsWithLivingSpace">
+                  <label for="editFloorsWithLivingSpace">{{'FloorsWithLivingSpace' | translate}}</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col col-xs-12" *ngIf="isFieldAvailable(fieldsEnum.Description)">
+                <label class="text-black-60">{{'Description' | translate}}</label>
+                <div class="md-form p-0 m-0">
+                  <pell-pn-editor [(value)]="selectedCustomerModel.description" name="editComment"></pell-pn-editor>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button mdbBtn class="btn-success btn-small-height" [disabled]="!editForm.form.valid" (click)="updateCustomer()" id="saveEditBtn">
+          {{ 'Update' | translate }}
+        </button>
+        <button mdbBtn class="btn-accent text-black-50 btn-small-height" (click)="frame.hide()" id="cancelEditBtn">{{'Cancel' | translate}}</button>
+      </div>
+    </div>
+  </div>
+</div>

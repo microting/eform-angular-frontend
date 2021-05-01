@@ -1,0 +1,49 @@
+<eform-subheader
+  [title]="
+    'Trash/Deponi - ' + thisYear + ' - Compliance - Producers' | translate
+  "
+  [heandingSizeRem]="1"
+>
+</eform-subheader>
+<table class="table table-sm table-striped text-center z-depth-1">
+  <thead
+    table-headers
+    [tableHeaders]="tableHeaders"
+    [currentSortName]="
+      producersReportPreviewTableStateService.getSort() | async
+    "
+    (sortChanged)="sortTableProducers($event)"
+    [isSortDsc]="producersReportPreviewTableStateService.getIsSortDsc() | async"
+  ></thead>
+  <tbody id="tableBodyProducers">
+    <tr *ngFor="let producer of producerYearModel.entities">
+      <td id="NameProducer">
+        <a
+          [routerLink]=""
+          (click)="showGraphModal(producer)"
+          style="color: dodgerblue; text-decoration: underline"
+        >
+          {{ producer.name }}
+        </a>
+      </td>
+      <td id="AmountOfLoadProducers">
+        {{ producer.weighings }}
+      </td>
+      <td id="AmountOfLoadControlledProducers">
+        {{ producer.amountOfWeighingsControlled }}
+      </td>
+      <td id="ControlledPercentageProducers">
+        {{ producer.controlPercentage }}%
+      </td>
+      <td id="ApprovedPercentageProducers">
+        {{ producer.approvedPercentage }}%
+      </td>
+      <td id="ConditionalApprovedProducers">
+        {{ producer.conditionalApprovedPercentage }}%
+      </td>
+      <td id="NotApprovedProducers">{{ producer.notApprovedPercentage }}%</td>
+
+      <td></td>
+    </tr>
+  </tbody>
+</table>

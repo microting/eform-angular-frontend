@@ -1,0 +1,69 @@
+<section>
+  <div class="card z-depth-3 mb-4" style="width: 100%">
+    <div class="card-body">
+      <div class="row">
+        <div class="col">
+          <p>
+            <strong>{{'Question' | translate}}: </strong>
+            <span id="firstQuestion{{position}}">{{itemModel.firstQuestionName}}</span>
+          </p>
+          <p>
+            <strong>{{'Period from' | translate}}: </strong>
+            <span id="dateFrom{{position}}">
+              {{dashboardViewModel.answerDates.dateFrom
+              ? (dashboardViewModel.answerDates.dateFrom | date: 'yyyy/MM/dd')
+              : '--'}}</span>
+          </p>
+          <p>
+            <strong>{{'Period to' | translate}}: </strong>
+            <span id="dateTo{{position}}">
+              {{dashboardViewModel.answerDates.dateTo
+              ? (dashboardViewModel.answerDates.dateTo | date: 'yyyy/MM/dd')
+              : '--'}}</span>
+          </p>
+          <p>
+            <strong>{{'Dimension' | translate}}: </strong>
+            {{dashboardViewModel.locationName ? dashboardViewModel.locationName : dashboardViewModel.tagName}},
+            {{periodUnits[itemModel.period] | translate}}, {{chartTypes[itemModel.chartType] | translate}}
+          </p>
+          <p *ngIf="itemModel.firstQuestionType === questionType.Text">
+            <strong>{{'Number of interviews' | translate}}: </strong>
+            <span id="numberOfInterviews{{position}}">
+              {{itemModel.interviewsCount}}</span>
+          </p>
+        </div>
+        <div class="col">
+          <p *ngIf="itemModel.filterQuestionName">
+            <strong>{{'Filter Question' | translate}}: </strong>
+            <span id="filterQuestion{{position}}">{{itemModel.filterQuestionName}}</span>
+          </p>
+          <p *ngIf="itemModel.filterAnswerName">
+            <strong>{{'Filter answer' | translate}}: </strong>
+            <span
+              id="filterAnswer{{position}}">{{itemModel.filterAnswerName ? itemModel.filterAnswerName : '--'}}</span>
+          </p>
+          <p *ngIf="itemModel.ignoredAnswerValues && itemModel.ignoredAnswerValues.length > 0">
+            <strong>{{'Ignored values' | translate}}: </strong>
+            <ng-container *ngFor="let ignoredValue of itemModel.ignoredAnswerValues">
+              {{ignoredValue.name}};
+            </ng-container>
+          </p>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center flex-column">
+        <ng-container *ngIf="itemModel.firstQuestionType !== questionType.Text">
+          <app-dashboard-chart-view [chartPosition]="position"
+                                    [itemModel]="itemModel">
+          </app-dashboard-chart-view>
+          <app-dashboard-chart-data-view [itemModel]="itemModel"></app-dashboard-chart-data-view>
+        </ng-container>
+
+        <app-dashboard-interviews-view *ngIf="itemModel.firstQuestionType === questionType.Text"
+                                       [dashboardViewModel]="dashboardViewModel"
+                                       [itemModel]="itemModel">
+        </app-dashboard-interviews-view>
+      </div>
+    </div>
+
+  </div>
+</section>

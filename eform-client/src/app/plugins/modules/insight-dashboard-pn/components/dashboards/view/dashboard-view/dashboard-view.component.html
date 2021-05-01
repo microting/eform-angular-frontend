@@ -1,0 +1,45 @@
+<eform-subheader [title]="dashboardViewModel.dashboardName">
+  <div class="p-3">
+    <button
+      mdbBtn
+      id="exportToDoc"
+      class="btn-success text-white btn-icon"
+      mdbTooltip="{{ 'Export to Word' | translate }}"
+      (click)="exportToDoc()"
+    >
+      <fa-icon icon="file-word" [fixedWidth]="true" size="lg"></fa-icon>
+    </button>
+    <button
+      mdbBtn
+      id="returnToPrevious"
+      class="btn-accent text-black-50 btn-small-height"
+      [routerLink]="['../../dashboards']"
+    >
+      {{ 'Return to dashboards list' | translate }}
+    </button>
+  </div>
+</eform-subheader>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12 col-xl-12 col-md-12">
+      <div class="card z-depth-3 mt-3 mb-4" style="width: 100%">
+        <div class="card-body">
+          <ng-container
+            *ngFor="
+              let dashboardViewItemModel of dashboardViewModel.items;
+              let pos = index
+            "
+          >
+            <app-dashboard-block-view
+              id="dashboardViewItem"
+              [itemModel]="dashboardViewItemModel"
+              [dashboardViewModel]="dashboardViewModel"
+              [position]="pos + 1"
+            ></app-dashboard-block-view>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

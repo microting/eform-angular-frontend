@@ -1,0 +1,107 @@
+[
+  {
+    "Key": "Appointment",
+    "LocalizedValue": {
+      "da": "Aftaler",
+      "en-US": "Appointment"
+    }
+  },
+  {
+    "Key": "Appointments",
+    "LocalizedValue": {
+      "da": "Aftaler",
+      "en-US": "Appointments"
+    }
+  },
+  {
+    "Key": "AppointmentNotFound",
+    "LocalizedValue": {
+      "da": "Udnævnelse ikke fundet",
+      "en-US": "Appointment not found"
+    }
+  },
+  {
+    "Key": "ErrorGettingAppointment",
+    "LocalizedValue": {
+      "da": "Fejl ved at få aftale",
+      "en-US": "Error getting appointment"
+    }
+  },
+  {
+    "Key": "ErrorGettingAppointmentsList",
+    "LocalizedValue": {
+      "da": "Fejl ved hentning af aftaleliste",
+      "en-US": "Error getting appointments list"
+    }
+  },
+  {
+    "Key": "AppointmentCreatedSuccessfully",
+    "LocalizedValue": {
+      "da": "Udnævnelse oprettet med succes",
+      "en-US": "Appointment created successfully"
+    }
+  },
+  {
+    "Key": "ErrorWhileCreatingAppointment",
+    "LocalizedValue": {
+      "da": "Fejl under oprettelse af aftale",
+      "en-US": "Error while creating appointment"
+    }
+  },
+  {
+    "Key": "CannotEditAppointment",
+    "LocalizedValue": {
+      "da": "Kan ikke redigere aftale",
+      "en-US": "Cannot edit appointment"
+    }
+  },
+  {
+    "Key": "AppointmentDateNotCorrect",
+    "LocalizedValue": {
+      "da": "Udnævnelsesdato er ikke korrekt",
+      "en-US": "Appointment date is not correct"
+    }
+  },
+  {
+    "Key": "AppointmentUpdatedSuccessfully",
+    "LocalizedValue": {
+      "da": "Aftalen blev opdateret",
+      "en-US": "Appointment updated successfully"
+    }
+  },
+  {
+    "Key": "ErrorWhileUpdatingAppointment",
+    "LocalizedValue": {
+      "da": "Fejl under opdatering af aftale",
+      "en-US": "Error while updating appointment"
+    }
+  },
+  {
+    "Key": "CannotDeleteAppointment",
+    "LocalizedValue": {
+      "da": "Kan ikke slette aftale",
+      "en-US": "Cannot delete appointment"
+    }
+  },
+  {
+    "Key": "AppointmentDeletedSuccessfully",
+    "LocalizedValue": {
+      "da": "Aftalen blev slettet",
+      "en-US": "Appointment deleted successfully"
+    }
+  },
+  {
+    "Key": "ErrorWhileDeletingAppointment",
+    "LocalizedValue": {
+      "da": "Fejl under sletning af aftale",
+      "en-US": "Error while deleting appointment"
+    }
+  },
+  {
+    "Key": "Settings",
+    "LocalizedValue": {
+      "da": "Indstillinger",
+      "en-US": "Settings"
+    }
+  }
+]

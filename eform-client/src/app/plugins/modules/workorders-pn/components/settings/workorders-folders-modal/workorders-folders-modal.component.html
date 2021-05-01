@@ -1,0 +1,26 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{ 'Select folder' | translate }}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col">
+            <div class="card z-depth-1 mb-3" style="width: 100%;">
+              <div class="card-body">
+                <app-eform-tree-view-picker
+                  [nodes]="folders"
+                  [focusedNodeId]="selectedFolderId"
+                  [showActions]="false"
+                  [allowSelectingParents]="false"
+                  (nodeSelected)="select($event)"
+                ></app-eform-tree-view-picker>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

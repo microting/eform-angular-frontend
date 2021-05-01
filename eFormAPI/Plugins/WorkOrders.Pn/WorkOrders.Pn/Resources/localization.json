@@ -1,0 +1,200 @@
+﻿[
+  {
+    "Key": "ErrorWhileObtainingWorkOrders",
+    "LocalizedValue": {
+      "da": "Fejl under indhentning af arbejdsordrer",
+      "en-US": "Error while obtaining work orders",
+      "de-DE": "Fehler beim Abrufen von Arbeitsaufträgen",
+      "uk-UA": "Помилка при отриманні замовлень на виконання робіт"
+    }
+  },
+  {
+    "Key": "Settings",
+    "LocalizedValue": {
+      "da": "Indstillinger",
+      "en-US": "Settings",
+      "de-DE": "die Einstellungen",
+      "uk-UA": "Налаштування"
+    }
+  },
+  {
+    "Key": "ErrorWhileObtainingWorkOrdersSettings",
+    "LocalizedValue": {
+      "da": "Fejl under indhentning af arbejdsordre indstillinger",
+      "en-US": "Error while obtaining work orders settings",
+      "de-DE": "Fehler beim Abrufen der Arbeitsauftragseinstellungen",
+      "uk-UA": "Помилка при отриманні налаштувань робочих завдань"
+    }
+  },
+  {
+    "Key": "Yes",
+    "LocalizedValue": {
+      "da": "Ja",
+      "en-US": "Yes",
+      "de-DE": "Ja",
+      "uk-UA": "Так"
+    }
+  },
+  {
+    "Key": "No",
+    "LocalizedValue": {
+      "da": "Nej",
+      "en-US": "No",
+      "de-DE": "Nein",
+      "uk-UA": "Ні"
+    }
+  },
+  {
+    "Key": "Deployed at",
+    "LocalizedValue": {
+      "da": "Udsendt d.",
+      "en-US": "Deployed at",
+      "de-DE": "Bereitgestellt bei",
+      "uk-UA": "Розгорнуто в"
+    }
+  },
+  {
+    "Key": "Date of doing",
+    "LocalizedValue": {
+      "da": "Udførelsesdato",
+      "en-US": "Date of doing",
+      "de-DE": "Datum der Ausführung",
+      "uk-UA": "Дата виконання"
+    }
+  },
+  {
+    "Key": "Done by",
+    "LocalizedValue": {
+      "da": "Udført af",
+      "en-US": "Done by",
+      "de-DE": "Gemacht von",
+      "uk-UA": "Зроблено"
+    }
+  },
+  {
+    "Key": "Name",
+    "LocalizedValue": {
+      "da": "Navn",
+      "en-US": "Name",
+      "de-DE": "Name",
+      "uk-UA": "Ім'я"
+    }
+  },
+  {
+    "Key": "Description",
+    "LocalizedValue": {
+      "da": "Beskrivelse",
+      "en-US": "Description",
+      "de-DE": "Beschreibung",
+      "uk-UA": "Опис"
+    }
+  },
+  {
+    "Key": "SiteAddedSuccessfully",
+    "LocalizedValue": {
+      "da": "Site tilføjet med succes",
+      "en-US": "Site added successfully",
+      "de-DE": "Site erfolgreich hinzugefügt",
+      "uk-UA": "Місце успішно додано"
+    }
+  },
+  {
+    "Key": "ErrorWhileAddingSiteToSettings",
+    "LocalizedValue": {
+      "da": "Fejl under tilføjelse af websted til indstillinger",
+      "en-US": "Error while adding site to settings",
+      "de-DE":"Fehler beim Hinzufügen einer Site zu den Einstellungen",
+      "uk-UA": "Помилка при додаванні місця в налаштування"
+    }
+  },
+  {
+    "Key": "SiteDeletedSuccessfully",
+    "LocalizedValue": {
+      "da": "Webstedet blev slettet med succes",
+      "en-US": "Site deleted successfully",
+      "de-DE": "Site erfolgreich gelöscht",
+      "uk-UA": "Місце успішно видалено"
+    }
+  },
+  {
+    "Key": "ErrorWhileDeletingSiteFromSettings",
+    "LocalizedValue": {
+      "da": "Fejl under sletning af websted fra indstillinger",
+      "en-US": "Error while deleting site from settings",
+      "de-DE": "Fehler beim Löschen der Site aus den Einstellungen",
+      "uk-UA": "Помилка при видаленні місця з налаштувань"
+    }
+  },
+  {
+    "Key": "WorkOrders",
+    "LocalizedValue": {
+      "da": "Opgavestyring",
+      "en-US": "Work orders",
+      "de-DE": "Aufgabenmanagement",
+      "uk-UA": "Замовлення на роботу"
+    }
+  },
+  {
+    "Key": "Orders",
+    "LocalizedValue": {
+      "da": "Oversigt",
+      "en-US": "Overview",
+      "de-DE": "Überblick",
+      "uk-UA": "Замовлення"
+    }
+  },
+  {
+    "Key": "FolderUpdatedSuccessfully",
+    "LocalizedValue": {
+      "da": "Mappe blev opdateret",
+      "en-US": "Folder updated successfully",
+      "de-DE": "Ordner erfolgreich aktualisiert",
+      "uk-UA": "Папка успішно оновлена"
+    }
+  },
+  {
+    "Key": "ErrorWhileUpdatingFolder",
+    "LocalizedValue": {
+      "da": "Fejl under opdatering af mappe",
+      "en-US": "Error while updating folder",
+      "de-DE": "Fehler beim Aktualisieren des Ordners",
+      "uk-UA": "Помилка при оновленні папки"
+    }
+  },
+  {
+    "Key": "DontAtTheLatst",
+    "LocalizedValue": {
+      "da": "Udføres senest",
+      "en-US": "Performed at the latest",
+      "de-DE": "Spätestens durchgeführt",
+      "UK-UA": "Виконується найпізніше"
+    }
+  },
+  {
+    "Key": "Area",
+    "LocalizedValue": {
+      "da": "Område",
+      "en-US": "Area",
+      "de-DE": "Gebiet",
+      "uk-UA": "Площа"
+    }
+  },
+  {
+    "Key": "AssignedTo",
+    "LocalizedValue": {
+      "da": "Tildelt til",
+      "en-US": "Assigned to",
+      "de-DE": "Zugewiesen an",
+      "UK-UA": "Присвоєно"
+    }
+  },
+  {
+    "Key": "TaskCreatedBy",
+    "LocalizeValue": {
+      "da": "Oprettet af",
+      "en-US": "Task created by",
+      "de-DE": "Aufgabe erstellt von",
+      "uk-UA": "Завдання, створене користувачем"
+    }
+  }
+]

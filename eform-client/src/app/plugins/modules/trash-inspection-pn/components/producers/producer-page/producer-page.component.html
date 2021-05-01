@@ -1,0 +1,403 @@
+<eform-subheader>
+  <div class="p-3">
+    <button
+      mdbBtn
+      id="fractionCreateBtn"
+      class="btn btn-success"
+      mdbTooltip="{{ 'Create Producers' | translate }}"
+      (click)="showCreateProducerModal()"
+    >
+      {{ 'New Producer' | translate }}
+    </button>
+    <button
+      mdbBtn
+      id="importFractionBtn"
+      class="btn btn-success"
+      mdbTooltip="{{ 'Import Producer' | translate }}"
+      routerLink="/plugins/trash-inspection-pn/importproducers"
+    >
+      {{ 'Import Producer' | translate }}
+    </button>
+  </div>
+</eform-subheader>
+
+<div class="container-fluid">
+  <div class="row p-1 mt-4 table-responsive no-gutters">
+    <table class="table table-sm table-striped text-center z-depth-1">
+      <thead>
+        <tr>
+          <th
+            scope="col"
+            class="table-header-sortable"
+            id="idTableHeader"
+            (click)="sortTable('Id')"
+          >
+            <div class="d-flex align-items-center justify-content-center">
+              ID
+              <i
+                class="material-icons text-black-50"
+                *ngIf="localPageSettings.sort != 'Id'"
+                >unfold_more</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'Id' &&
+                  !producersRequestModel.isSortDsc
+                "
+                >expand_less</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'Id' &&
+                  producersRequestModel.isSortDsc
+                "
+                >expand_more</i
+              >
+            </div>
+          </th>
+          <th
+            scope="col"
+            class="table-header-sortable"
+            id="nameTableHeader"
+            (click)="sortTable('Name')"
+          >
+            <div class="d-flex align-items-center justify-content-center">
+              {{ 'Name' | translate }}
+              <i
+                class="material-icons text-black-50"
+                *ngIf="localPageSettings.sort != 'Name'"
+                >unfold_more</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'Name' &&
+                  !producersRequestModel.isSortDsc
+                "
+                >expand_less</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'Name' &&
+                  producersRequestModel.isSortDsc
+                "
+                >expand_more</i
+              >
+            </div>
+          </th>
+          <th
+            scope="col"
+            class="table-header-sortable"
+            id="descriptionTableHeader"
+            (click)="sortTable('Description')"
+          >
+            <div class="d-flex align-items-center justify-content-center">
+              {{ 'Description' | translate }}
+              <i
+                class="material-icons text-black-50"
+                *ngIf="localPageSettings.sort != 'Description'"
+                >unfold_more</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'Description' &&
+                  !producersRequestModel.isSortDsc
+                "
+                >expand_less</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'Description' &&
+                  producersRequestModel.isSortDsc
+                "
+                >expand_more</i
+              >
+            </div>
+          </th>
+          <th
+            scope="col"
+            class="table-header-sortable"
+            id="locationCodeTableHeader"
+            (click)="sortTable('ForeignId')"
+          >
+            <div class="d-flex align-items-center justify-content-center">
+              {{ 'Foreign ID' | translate }}
+              <i
+                class="material-icons text-black-50"
+                *ngIf="localPageSettings.sort != 'ForeignId'"
+                >unfold_more</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'ForeignId' &&
+                  !producersRequestModel.isSortDsc
+                "
+                >expand_less</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'ForeignId' &&
+                  producersRequestModel.isSortDsc
+                "
+                >expand_more</i
+              >
+            </div>
+          </th>
+          <th
+            scope="col"
+            class="table-header-sortable"
+            id="addressTableHeader"
+            (click)="sortTable('Address')"
+          >
+            <div class="d-flex align-items-center justify-content-center">
+              {{ 'Address' | translate }}
+              <i
+                class="material-icons text-black-50"
+                *ngIf="localPageSettings.sort != 'Address'"
+                >unfold_more</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'Address' &&
+                  !producersRequestModel.isSortDsc
+                "
+                >expand_less</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'Address' &&
+                  producersRequestModel.isSortDsc
+                "
+                >expand_more</i
+              >
+            </div>
+          </th>
+          <th
+            scope="col"
+            class="table-header-sortable"
+            id="cityTableHeader"
+            (click)="sortTable('City')"
+          >
+            <div class="d-flex align-items-center justify-content-center">
+              {{ 'City' | translate }}
+              <i
+                class="material-icons text-black-50"
+                *ngIf="localPageSettings.sort != 'City'"
+                >unfold_more</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'City' &&
+                  !producersRequestModel.isSortDsc
+                "
+                >expand_less</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'City' &&
+                  producersRequestModel.isSortDsc
+                "
+                >expand_more</i
+              >
+            </div>
+          </th>
+          <th
+            scope="col"
+            class="table-header-sortable"
+            id="zipCodeTableHeader"
+            (click)="sortTable('ZipCode')"
+          >
+            <div class="d-flex align-items-center justify-content-center">
+              {{ 'Zip Code' | translate }}
+              <i
+                class="material-icons text-black-50"
+                *ngIf="localPageSettings.sort != 'ZipCode'"
+                >unfold_more</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'ZipCode' &&
+                  !producersRequestModel.isSortDsc
+                "
+                >expand_less</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'ZipCode' &&
+                  producersRequestModel.isSortDsc
+                "
+                >expand_more</i
+              >
+            </div>
+          </th>
+          <th
+            scope="col"
+            class="table-header-sortable"
+            id="phoneTableHeader"
+            (click)="sortTable('Phone')"
+          >
+            <div class="d-flex align-items-center justify-content-center">
+              {{ 'Phone' | translate }}
+              <i
+                class="material-icons text-black-50"
+                *ngIf="localPageSettings.sort != 'Phone'"
+                >unfold_more</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'Phone' &&
+                  !producersRequestModel.isSortDsc
+                "
+                >expand_less</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'Phone' &&
+                  producersRequestModel.isSortDsc
+                "
+                >expand_more</i
+              >
+            </div>
+          </th>
+          <th
+            scope="col"
+            class="table-header-sortable"
+            id="contactPersonTableHeader"
+            (click)="sortTable('ContactPerson')"
+          >
+            <div class="d-flex align-items-center justify-content-center">
+              {{ 'Contact Person' | translate }}
+              <i
+                class="material-icons text-black-50"
+                *ngIf="localPageSettings.sort != 'ContactPerson'"
+                >unfold_more</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'ContactPerson' &&
+                  !producersRequestModel.isSortDsc
+                "
+                >expand_less</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'ContactPerson' &&
+                  producersRequestModel.isSortDsc
+                "
+                >expand_more</i
+              >
+            </div>
+          </th>
+
+          <th scope="col">
+            {{ 'Actions' | translate }}
+          </th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <tr *ngFor="let producer of producersModel.producerList">
+          <td id="transporterId">
+            {{ producer.id }}
+          </td>
+          <td id="transporterName">
+            {{ producer.name }}
+          </td>
+          <td id="transporterDescription">
+            {{ producer.description }}
+          </td>
+          <td id="transporterAddress">
+            {{ producer.foreignId }}
+          </td>
+          <td id="transporterCity">
+            {{ producer.address }}
+          </td>
+          <td id="transporterForeignId">
+            {{ producer.city }}
+          </td>
+          <td id="transporterPhon">
+            {{ producer.zipCode }}
+          </td>
+          <td id="transporterZipCode">
+            {{ producer.phone }}
+          </td>
+          <td id="transporterContactPerson">
+            {{ producer.contactPerson }}
+          </td>
+          <td>
+            <div class="d-flex flex-row justify-content-center">
+              <button
+                id="updateFractionBtn"
+                class="btn btn-accent text-black-50 btn-icon mb-2"
+                mdbTooltip="{{ 'Edit Transporter' | translate }}"
+                (click)="showEditProducerModal(producer)"
+              >
+                <i class="material-icons"> edit </i>
+              </button>
+              <button
+                id="deleteFractionBtn"
+                class="btn btn-danger btn-icon mb-2"
+                mdbTooltip="{{ 'Delete Transporter' | translate }}"
+                (click)="showDeleteProducerModal(producer)"
+              >
+                <i class="material-icons"> delete_forever </i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="row justify-content-between mr-2 ml-2">
+    <div class="col-md-1">
+      <eform-page-size
+        [pageSize]="localPageSettings.pageSize"
+        (onPageSizeChanged)="
+          localPageSettings.pageSize = $event;
+          producersRequestModel.pageIndex = 1;
+          updateLocalPageSettings()
+        "
+      >
+      </eform-page-size>
+    </div>
+    <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
+      <eform-pagination
+        *ngIf="producersModel.total > producersRequestModel.pageSize"
+        [limit]="producersRequestModel.pageSize"
+        [size]="producersModel.total"
+        [offset]="producersRequestModel.offset"
+        (onPageChanged)="changePage($event)"
+      ></eform-pagination>
+    </div>
+  </div>
+</div>
+
+<app-trash-inspection-pn-producer-create
+  #createProducerModal
+  (onProducerCreated)="getAllProducers()"
+>
+</app-trash-inspection-pn-producer-create>
+<app-trash-inspection-pn-producer-edit
+  #editProducerModal
+  (onProducerUpdated)="getAllProducers()"
+></app-trash-inspection-pn-producer-edit>
+<app-trash-inspection-pn-producer-delete
+  #deleteProducerModal
+  (onProducerDeleted)="getAllProducers()"
+></app-trash-inspection-pn-producer-delete>

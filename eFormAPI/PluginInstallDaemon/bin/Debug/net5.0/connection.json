@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "host= localhost;Database=420_Angular;user = root; password = secretpassword;port=3306;Convert Zero Datetime = true;SslMode=none;"
+  }
+}

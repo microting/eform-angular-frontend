@@ -1,0 +1,19 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{ 'Task photos' | translate }}</h3>
+      </div>
+      <div class="modal-body" style="padding: 0">
+        <div class="container-fluid" style="margin: 0; padding: 0">
+          <gallery></gallery>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button mdbBtn class="btn-accent text-black-50" (click)="frame.hide()" id="picturesModalClose">
+          {{ 'Close' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

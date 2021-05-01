@@ -1,0 +1,52 @@
+<eform-subheader
+  [title]="
+    'Trash/Deponi - ' + thisYear + ' - Compliance - Transporters' | translate
+  "
+  [heandingSizeRem]="1"
+>
+</eform-subheader>
+<table class="table table-sm table-striped text-center z-depth-1">
+  <thead
+    table-headers
+    [tableHeaders]="tableHeaders"
+    [currentSortName]="
+      transportersReportPreviewTableStateService.getSort() | async
+    "
+    (sortChanged)="sortTableTransporters($event)"
+    [isSortDsc]="
+      transportersReportPreviewTableStateService.getIsSortDsc() | async
+    "
+  ></thead>
+  <tbody id="tableBodyTransporters">
+    <tr *ngFor="let transporter of transporterYearModel.entities">
+      <td id="NameTransporter" style="color: dodgerblue">
+        <a
+          [routerLink]=""
+          (click)="showGraphModal(transporter)"
+          style="color: dodgerblue; text-decoration: underline"
+        >
+          {{ transporter.name }}
+        </a>
+      </td>
+      <td id="AmountOfLoadTransporters">
+        {{ transporter.weighings }}
+      </td>
+      <td id="AmountOfLoadControlledTransporters">
+        {{ transporter.amountOfWeighingsControlled }}
+      </td>
+      <td id="ControlledPercentageTransporters">
+        {{ transporter.controlPercentage }}%
+      </td>
+      <td id="ApprovedPercentageTransporters">
+        {{ transporter.approvedPercentage }}%
+      </td>
+      <td id="ConditionalApprovedTransporters">
+        {{ transporter.conditionalApprovedPercentage }}%
+      </td>
+      <td id="NotApprovedTransporters">
+        {{ transporter.notApprovedPercentage }}%
+      </td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>

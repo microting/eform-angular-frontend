@@ -1,0 +1,71 @@
+<div mdbModal class="modal fade" #frame="mdbModal" style="overflow-y: auto" tabindex="-1">
+  <div class="modal-dialog modal-full-height modal-top" role="dialog">
+    <div class="modal-content">
+      <subheader-pn [title]="'Import Items' | translate">
+      </subheader-pn>
+      <subheader-pn
+        [heandingSizeRem]="1">
+      </subheader-pn>
+      <div class="p-3">
+        <div class="row">
+          <div class="col-md-12">
+            <input #fileUploader id="fileUploaded" type="file" class="form-control" id="files" accept="text/csv" (change)="csv2Array($event)" style="display: none">
+            <button mdbBtn (click)="fileUploader.click()" class="btn-small-height">
+              {{'Select file' | translate}}
+            </button>
+
+            <button mdbBtn class="btn-danger btn-small-height"
+                    (click)="frame.hide()"
+                    id="cancelImportBtn"
+                    mdbTooltip="{{'Cancel' | translate}}">
+              {{'Cancel' | translate}}
+            </button>
+            <button mdbBtn class="btn-success btn-small-height"
+                    (click)="importUnit()"
+                    routerLink="/plugins/items-group-planning-pn/lists"
+                    id="continueImportBtn"
+                    mdbTooltip="{{'Import the item' | translate}}">
+              {{'Import the item' | translate}}
+            </button>
+          </div>
+        </div>
+        <div class="row p-1 table-responsive-lg no-gutters">
+          <table mdbTable striped="true" hover="true" small="true" class="z-depth-1 text-center" *ngIf="tableData">
+            <thead>
+            <tr>
+              <th scope="row"  class="table-header-sortable th-lg" *ngFor="let cols of tableData[0]; let i = index" [attr.data-index]="i">
+                <ng-select
+                  style="width: 180px"
+                  class=""
+                  [items]="options"
+                  (change)="onSelectedChanged($event, i)"
+                >
+                </ng-select>
+              </th>
+            </tr>
+            </thead>
+            <tbody id="itemsToImport">
+            <tr *ngFor="let rows of tableData">
+              <td >
+                {{rows[0]}}
+              </td>
+              <td >
+                {{rows[1]}}
+              </td>
+              <td >
+                {{rows[2]}}
+              </td>
+              <td >
+                {{rows[3]}}
+              </td>
+              <td >
+                {{rows[4]}}
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

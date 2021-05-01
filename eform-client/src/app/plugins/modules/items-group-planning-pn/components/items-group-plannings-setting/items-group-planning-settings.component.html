@@ -1,0 +1,74 @@
+<subheader-pn [title]="'Items planning plugin settings' | translate">
+  <div class="p-3">
+    <button
+      class="btn btn-success" id="saveBtn" (click)="updateSettings()">{{ 'Save' | translate }}
+    </button>
+  </div>
+</subheader-pn>
+
+<div class="container-fluid">
+  <div class="row mt-4">
+    <div class="col-md-12 col-xs-12 control-block">
+      <subheader-pn [title]="'Settings' | translate" [heandingSizeRem]="1">
+      </subheader-pn>
+      <div class="container-fluid">
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input mdbInput [(ngModel)]="settingsModel.sdkConnectionString"
+                   type="text" name="sdkConnectionString" #sdkConnectionString="ngModel"
+                   id="sdkConnectionString" class="form-control">
+            <label for="sdkConnectionString">{{'SDK connection string' | translate}}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input mdbInput [(ngModel)]="settingsModel.logLevel"
+                   type="text" name="logLevel" #loglevel="ngModel"
+                   id="logLevel" class="form-control">
+            <label for="logLevel">{{'Log Level' | translate}}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input mdbInput [(ngModel)]="settingsModel.logLimit"
+                   type="text" name="logLimit" #loglimit="ngModel"
+                   id="logLimit" class="form-control">
+            <label for="logLimit">{{'Log Limit' | translate}}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input mdbInput [(ngModel)]="settingsModel.maxParallelism"
+                   type="text" name="maxParallelism" #maxparallelism="ngModel"
+                   id="maxParallelism" class="form-control">
+            <label for="maxParallelism">{{'Max parallelism' | translate}}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input mdbInput [(ngModel)]="settingsModel.numberOfWorkers"
+                   type="text" name="numberOfWorkers" #numberofworkers="ngModel"
+                   id="numberOfWorkers" class="form-control">
+            <label for="numberOfWorkers">{{'Number of workers' | translate}}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input mdbInput [(ngModel)]="settingsModel.token"
+                   type="text" name="token" #token="ngModel"
+                   id="token" class="form-control">
+            <label for="token">{{'Token' | translate}}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input mdbInput [(ngModel)]="settingsModel.siteIds"
+                   type="text" name="siteIds" #siteIds="ngModel"
+                   id="siteIds" class="form-control">
+            <label for="siteIds">{{'Site ids' | translate}}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,156 @@
+<div class="row p-1 mt-4 table-responsive no-gutters">
+  <table
+    mdbTable
+    striped="true"
+    hover="true"
+    small="true"
+    class="z-depth-1 text-center"
+  >
+    <thead
+      table-headers
+      [tableHeaders]="tableHeaders"
+      [currentSortName]="planningsStateService.getSort() | async"
+      (sortChanged)="onSortTable($event)"
+      [isSortDsc]="planningsStateService.getIsSortDsc() | async"
+      [customCell]="selectAllPlanningsCheckbox"
+    >
+      <ng-template #selectAllPlanningsCheckbox>
+        <th scope="col">
+          <div>
+            <div class="mat-checkbox" *ngIf="planningsModel.total">
+              <input
+                id="selectAllPlanningsCheckbox"
+                name="selectAllPlanningsCheckbox"
+                (click)="onAllPlanningsCheckboxChanged($event)"
+                [value]="allPlanningCheckbox"
+                [checked]="allPlanningCheckbox"
+                type="checkbox"
+              />
+              <label for="selectAllPlanningsCheckbox"></label>
+            </div>
+          </div>
+        </th>
+      </ng-template>
+    </thead>
+    <tbody id="tableBody">
+      <tr *ngFor="let planning of planningsModel.entities; let i = index">
+        <td id="planningCheckboxColumn">
+          <div class="mat-checkbox d-flex align-items-end">
+            <input
+              id="planningCheckbox{{ i }}"
+              name="planningCheckbox{{ i }}"
+              (click)="onSinglePlanningCheckboxChanged($event, planning.id)"
+              [value]="getCheckedPlanning(planning.id)"
+              [checked]="getCheckedPlanning(planning.id)"
+              type="checkbox"
+            />
+            <label
+              id="planningCheckbox{{ i }}Label"
+              for="planningCheckbox{{ i }}"
+            ></label>
+          </div>
+        </td>
+        <td id="planningId">
+          {{ planning.id }}
+        </td>
+        <td id="planningName">
+          {{ planning.translatedName }}
+        </td>
+        <td id="planningDescription">
+          {{ planning.description }}
+        </td>
+        <td id="planningFolderName">
+          {{ planning.folder.eFormSdkFolderName }}
+        </td>
+        <td id="planningRelatedEformName">
+          {{ planning.boundEform.relatedEFormName }}
+          <fa-icon
+            *ngIf="planning.boundEform.isEformRemoved"
+            icon="exclamation-triangle"
+            style="color: red"
+            mdbTooltip="{{ 'Eform was deleted' | translate }}"
+          ></fa-icon>
+        </td>
+        <td id="planningTags">
+          <ng-container *ngFor="let tag of planning.tags; let i = index">
+            <span
+              class="badge badge-primary mb-1"
+              style="cursor: pointer"
+              (click)="onTagSelected(tag.id)"
+            >
+              <fa-icon icon="tag"></fa-icon>
+              {{ tag.name }}
+            </span>
+            <br />
+          </ng-container>
+        </td>
+        <td id="planningRepeatEvery">
+          {{ planning.reiteration.repeatEvery }}
+        </td>
+        <td id="planningRepeatType">
+          <div *ngIf="planning.reiteration.repeatType == 1">
+            {{ 'Day' | translate }}
+          </div>
+          <div *ngIf="planning.reiteration.repeatType == 2">
+            {{ 'Week' | translate }}
+          </div>
+          <div *ngIf="planning.reiteration.repeatType == 3">
+            {{ 'Month' | translate }}
+          </div>
+        </td>
+        <td id="planningRepeatUntil">
+          <date-formatter
+            [date]="planning.reiteration.repeatUntil"
+            [Format]="'datetime'"
+          ></date-formatter>
+        </td>
+        <!--        <td>-->
+        <!--          <div class="d-flex justify-content-center">-->
+        <!--            <div>-->
+        <!--            </div>-->
+        <!--          </div>-->
+        <!--        </td>-->
+        <td>
+          <div class="d-flex flex-row justify-content-center">
+            <button
+              id="planningAssignmentBtn-{{ i }}"
+              [ngClass]="
+                planning?.assignedSites?.length > 0
+                  ? 'btn-success'
+                  : 'btn btn-icon mb-2 btn-accent text-black-50'
+              "
+              mdbBtn
+              type="button"
+              class="btn btn-icon mb-2"
+              (click)="onOpenAssignmentModal(planning)"
+              mdbTooltip="{{
+                'Click to edit pairing with user(s)' | translate
+              }}"
+            >
+              <fa-icon icon="link" size="lg" [fixedWidth]="true"></fa-icon>
+            </button>
+            <button
+              id="updatePlanningBtn"
+              *ngIf="
+                pluginClaimsHelper.check(itemsPlanningPnClaims.editPlanning)
+              "
+              class="btn btn-accent text-black-50 btn-icon mb-2"
+              mdbTooltip="{{ 'Edit Planning' | translate }}"
+              [routerLink]="['./edit/' + planning.id]"
+            >
+              <fa-icon icon="pen" size="lg" [fixedWidth]="true"></fa-icon>
+            </button>
+            <button
+              id="deletePlanningBtn"
+              class="btn btn-danger btn-icon mb-2"
+              mdbTooltip="{{ 'Delete Planning' | translate }}"
+              (click)="onShowDeletePlanningModal(planning)"
+            >
+              <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true"></fa-icon>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

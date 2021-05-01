@@ -1,0 +1,184 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{ 'New Trash Inspection' | translate }}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row mt-2">
+            <div class="col-md-12 col-xs-12">
+              <div class="md-form">
+                <input
+                  mdbInput
+                  [(ngModel)]="newTrashInspectionModel.eakCode"
+                  type="text"
+                  id="createTrashInspectionEAKCode"
+                  name="createTrashInspectionEAKCode"
+                  class="form-control"
+                />
+                <label for="createTrashInspectionEAKCode">{{
+                  'EAK Code' | translate
+                }}</label>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-md-12 col-xs-12">
+              <div class="md-form">
+                <ng-select
+                  [items]="installationsModel.installationList"
+                  bindLabel="name"
+                  [placeholder]="'Selected installation' | translate"
+                  bindValue="name"
+                  [typeahead]="typeaheadInstallation"
+                  (change)="onInstallationSelectedChanged($event)"
+                  id="createTrashInspectionInstallationSelector"
+                >
+                </ng-select>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-md-12 col-xs-12">
+              <div class="md-form">
+                <ng-select
+                  [items]="segmentsModel.segmentList"
+                  bindLabel="name"
+                  [placeholder]="'Selected segment' | translate"
+                  bindValue="name"
+                  [typeahead]="typeaheadSegment"
+                  (change)="onSegmentSelectedChanged($event)"
+                  id="createTrashInspectionSegmentSelector"
+                >
+                </ng-select>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-md-12 col-xs-12">
+              <div class="md-form">
+                <div class="mat-checkbox">
+                  <input
+                    id="checkbox{{ newTrashInspectionModel.mustBeInspected }}"
+                    color="primary"
+                    type="checkbox"
+                    [(ngModel)]="newTrashInspectionModel.mustBeInspected"
+                  />
+                  <label
+                    for="checkbox{{ newTrashInspectionModel.mustBeInspected }}"
+                    >{{ 'Must be inspected' }}</label
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-md-12 col-xs-12">
+              <div class="md-form">
+                <ng-select
+                  [items]="producersModel.producerList"
+                  bindLabel="name"
+                  [placeholder]="'Selected producer' | translate"
+                  bindValue="name"
+                  [typeahead]="typeaheadProducer"
+                  (change)="onProducerSelectedChanged($event)"
+                  id="createTrashInspectionProducerSelector"
+                >
+                </ng-select>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-md-12 col-xs-12">
+              <div class="md-form">
+                <input
+                  mdbInput
+                  [(ngModel)]="newTrashInspectionModel.registrationNumber"
+                  type="text"
+                  id="createTrashInspectionRegistrationNumber"
+                  name="createTrashInspectionRegistrationNumber"
+                  class="form-control"
+                />
+                <label for="createTrashInspectionRegistrationNumber">{{
+                  'Registration Number' | translate
+                }}</label>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-md-12 col-xs-12">
+              <div class="md-form">
+                <ng-select
+                  [items]="transportersModel.transporterList"
+                  bindLabel="name"
+                  [placeholder]="'Selected transporter' | translate"
+                  bindValue="name"
+                  [typeahead]="typeaheadTransporter"
+                  (change)="onTransporterSelectedChanged($event)"
+                  id="createTrashInspectionTransporterSelector"
+                >
+                </ng-select>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-md-12 col-xs-12">
+              <div class="md-form">
+                <ng-select
+                  [items]="fractionsModel.entities"
+                  bindLabel="name"
+                  [placeholder]="'Selected fraction' | translate"
+                  bindValue="itemNumber"
+                  [typeahead]="typeaheadFraction"
+                  (change)="onFractionSelectedChanged($event)"
+                  id="createTrashInspectionFractionSelector"
+                >
+                </ng-select>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-md-12 col-xs-12">
+              <div class="md-form">
+                <input
+                  mdbInput
+                  [(ngModel)]="newTrashInspectionModel.weighingNumber"
+                  type="text"
+                  id="createTrashInspectionWeighingNumber"
+                  name="createTrashInspectionWeighingNumber"
+                  class="form-control"
+                />
+                <label for="createTrashInspectionWeighingNumber">{{
+                  'Weighing Number' | translate
+                }}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          mdbBtn
+          class="btn-success"
+          [disabled]="
+            !newTrashInspectionModel.eakCode &&
+            !newTrashInspectionModel.installationName &&
+            !newTrashInspectionModel.mustBeInspected &&
+            !newTrashInspectionModel.producer &&
+            !newTrashInspectionModel.registrationNumber &&
+            !newTrashInspectionModel.transporter &&
+            !newTrashInspectionModel.trashFraction &&
+            !newTrashInspectionModel.weighingNumber
+          "
+          (click)="createTrashInspection()"
+        >
+          {{ 'Create' | translate }}
+        </button>
+        <button mdbBtn class="btn-accent text-black-50" (click)="frame.hide()">
+          {{ 'Cancel' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -857,11 +857,11 @@
 
 ## [v3.1.15](https://github.com/microting/eform-angular-frontend/tree/v3.1.15) (2021-01-01)
 
-[Full Changelog](https://github.com/microting/eform-angular-frontend/compare/v3.1.14...v3.1.15)
+[Full Changelog](https://github.com/microting/eform-angular-frontend/compare/v5.0.5...v3.1.15)
 
-## [v3.1.14](https://github.com/microting/eform-angular-frontend/tree/v3.1.14) (2021-01-01)
+## [v5.0.5](https://github.com/microting/eform-angular-frontend/tree/v5.0.5) (2021-01-01)
 
-[Full Changelog](https://github.com/microting/eform-angular-frontend/compare/v3.1.12...v3.1.14)
+[Full Changelog](https://github.com/microting/eform-angular-frontend/compare/v3.1.12...v5.0.5)
 
 ## [v3.1.12](https://github.com/microting/eform-angular-frontend/tree/v3.1.12) (2021-01-01)
 
@@ -873,11 +873,11 @@
 
 ## [v3.1.10](https://github.com/microting/eform-angular-frontend/tree/v3.1.10) (2020-12-30)
 
-[Full Changelog](https://github.com/microting/eform-angular-frontend/compare/v3.1.8...v3.1.10)
+[Full Changelog](https://github.com/microting/eform-angular-frontend/compare/v5.0.0...v3.1.10)
 
-## [v3.1.8](https://github.com/microting/eform-angular-frontend/tree/v3.1.8) (2020-12-29)
+## [v5.0.0](https://github.com/microting/eform-angular-frontend/tree/v5.0.0) (2020-12-29)
 
-[Full Changelog](https://github.com/microting/eform-angular-frontend/compare/v3.1.7...v3.1.8)
+[Full Changelog](https://github.com/microting/eform-angular-frontend/compare/v3.1.7...v5.0.0)
 
 ## [v3.1.7](https://github.com/microting/eform-angular-frontend/tree/v3.1.7) (2020-12-29)
 

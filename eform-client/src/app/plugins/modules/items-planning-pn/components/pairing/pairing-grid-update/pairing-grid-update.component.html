@@ -1,0 +1,50 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{ 'Are you sure you want to update pairing' | translate }}?</h3>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-6">
+                <h6>{{ 'Pairing to deploy' }}</h6>
+              </div>
+              <div class="col-md-6" id="pairingsForDeployAmount">
+                <strong>{{ pairingsForDeploy.length }}</strong>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <h6>{{ 'Pairing to retract' | translate }}</h6>
+              </div>
+              <div class="col-md-6" id="pairingsForRetractAmount">
+                <strong>{{ pairingsForRetract.length }}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          mdbBtn
+          id="updatePairingsSaveBtn"
+          class="btn-success btn-small-height"
+          (click)="update()"
+        >
+          {{ 'Update' | translate }}
+        </button>
+        <button
+          mdbBtn
+          id="updatePairingsSaveCancelBtn"
+          class="btn-accent text-black-50 btn-small-height"
+          (click)="frame.hide()"
+        >
+          {{ 'Cancel' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

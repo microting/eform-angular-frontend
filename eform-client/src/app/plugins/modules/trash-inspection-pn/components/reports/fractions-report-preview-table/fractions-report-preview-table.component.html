@@ -1,0 +1,47 @@
+<eform-subheader
+  [title]="'Trash/Deponi - ' + thisYear + ' - Compliance - Items' | translate"
+  [heandingSizeRem]="1"
+>
+</eform-subheader>
+<table class="table table-sm table-striped text-center z-depth-1">
+  <thead
+    table-headers
+    [tableHeaders]="tableHeaders"
+    [currentSortName]="
+      fractionsReportPreviewTableStateService.getSort() | async
+    "
+    (sortChanged)="sortTableFractions($event)"
+    [isSortDsc]="fractionsReportPreviewTableStateService.getIsSortDsc() | async"
+  ></thead>
+  <tbody id="tableBodyFractions">
+    <tr *ngFor="let fraction of fractionYearModel.entities">
+      <td id="NameFractions">
+        <a
+          [routerLink]=""
+          (click)="showGraphModal(fraction)"
+          style="color: dodgerblue; text-decoration: underline"
+        >
+          {{ fraction.name }}
+        </a>
+      </td>
+      <td id="AmountOfLoadFractions">
+        {{ fraction.weighings }}
+      </td>
+      <td id="AmountOfLoadControlledFractions">
+        {{ fraction.amountOfWeighingsControlled }}
+      </td>
+      <td id="ControlledPercentageFractions">
+        {{ fraction.controlPercentage }}%
+      </td>
+      <td id="ApprovedPercentageFractions">
+        {{ fraction.approvedPercentage }}%
+      </td>
+      <td id="ConditionalApprovedFractions">
+        {{ fraction.conditionalApprovedPercentage }}%
+      </td>
+      <td id="NotApprovedFractions">{{ fraction.notApprovedPercentage }}%</td>
+
+      <td></td>
+    </tr>
+  </tbody>
+</table>

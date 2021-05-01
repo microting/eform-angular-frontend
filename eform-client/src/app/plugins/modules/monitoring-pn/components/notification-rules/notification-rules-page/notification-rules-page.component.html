@@ -1,0 +1,111 @@
+<subheader-pn>
+  <div class="p-3">
+    <button *ngIf="pluginClaimsHelper.check(monitoringPnClaims.createNotificationRules)"
+      id="ruleCreateBtn"
+      class="btn btn-success btn-small-height"
+      mdbTooltip="{{ 'Create Notification Rule' | translate }}"
+      [routerLink]="['/plugins/monitoring-pn/notification-rules/create']">
+      {{ 'New Notification Rule' | translate }}
+    </button>
+  </div>
+</subheader-pn>
+
+<div class="container-fluid">
+  <ng-container *ngIf="rulesModel.total > 0">
+    <div class="row p-1 mt-4 table-responsive no-gutters">
+      <table mdbTable striped="true" hover="true" small="true" class="z-depth-1 text-center">
+        <thead>
+        <tr>
+          <th scope="col" class="table-header-sortable" id="idTableHeader" (click)="sortTable('Id')">
+            <div class="d-flex align-items-center justify-content-center">
+              {{'ID' | translate}}
+              <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'Id'"></i>
+              <i class="material-icons" *ngIf="localPageSettings.sort == 'Id' && !rulesRequestModel.isSortDsc"></i>
+              <i class="material-icons" *ngIf="localPageSettings.sort == 'Id' && rulesRequestModel.isSortDsc"></i>
+            </div>
+          </th>
+          <th scope="col" class="table-header-sortable" id="eFormNameTableHeader" (click)="sortTable('eFormName')">
+            <div class="d-flex align-items-center justify-content-center">
+              {{'eForm Name' | translate}}
+              <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'eFormName'"></i>
+              <i class="material-icons" *ngIf="localPageSettings.sort == 'eFormName' && !rulesRequestModel.isSortDsc"></i>
+              <i class="material-icons" *ngIf="localPageSettings.sort == 'eFormName' && rulesRequestModel.isSortDsc"></i>
+            </div>
+          </th>
+          <th scope="col" class="table-header-sortable" id="triggerTableHeader" (click)="sortTable('Trigger')">
+            <div class="d-flex align-items-center justify-content-center">
+              {{'Trigger' | translate}}
+              <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'Trigger'"></i>
+              <i class="material-icons" *ngIf="localPageSettings.sort == 'Trigger' && !rulesRequestModel.isSortDsc"></i>
+              <i class="material-icons" *ngIf="localPageSettings.sort == 'Trigger' && rulesRequestModel.isSortDsc"></i>
+            </div>
+          </th>
+          <th scope="col" class="table-header-sortable" id="eventTableHeader" (click)="sortTable('Event')">
+            <div class="d-flex align-items-center justify-content-center">
+              {{'Event' | translate}}
+              <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'Event'"></i>
+              <i class="material-icons" *ngIf="localPageSettings.sort == 'Event' && !rulesRequestModel.isSortDsc"></i>
+              <i class="material-icons" *ngIf="localPageSettings.sort == 'Event' && rulesRequestModel.isSortDsc"></i>
+            </div>
+          </th>
+
+          <th scope="col" *ngIf="pluginClaimsHelper.check(monitoringPnClaims.updateNotificationRules)
+              || pluginClaimsHelper.check(monitoringPnClaims.deleteNotificationRules)">
+            {{ 'Actions' | translate }}
+          </th>
+        </tr>
+        </thead>
+        <tbody id="tableBody">
+        <tr *ngFor="let rule of rulesModel.rules">
+          <td id="ruleId">{{rule.id}}</td>
+          <td id="ruleeFormName">{{rule.eFormName}}</td>
+          <td id="ruleTrigger">
+            <div class="mt-3" [innerHTML]="rule.trigger"></div>
+          </td>
+          <td id="ruleEvent">{{rule.event}}</td>
+          <td *ngIf="pluginClaimsHelper.check(monitoringPnClaims.updateNotificationRules)
+              || pluginClaimsHelper.check(monitoringPnClaims.deleteNotificationRules)">
+            <div class="d-flex flex-row justify-content-center">
+              <button id="updateRuleBtn" *ngIf="pluginClaimsHelper.check(monitoringPnClaims.updateNotificationRules)"
+                      class="btn btn-accent text-black-50 btn-icon mb-2"
+                      mdbTooltip="{{ 'Edit Notification Rule' | translate }}"
+                      [routerLink]="['/plugins/monitoring-pn/notification-rules/edit/' + rule.id]">
+                <fa-icon icon="pen" size="lg" [fixedWidth]="true"></fa-icon>
+              </button>
+              <button id="deleteRuleBtn" *ngIf="pluginClaimsHelper.check(monitoringPnClaims.deleteNotificationRules)"
+                      class="btn btn-danger btn-icon mb-2 "
+                      mdbTooltip="{{ 'Delete Notification Rule' | translate }}"
+                      (click)="showDeleteRuleModal(rule)">
+                <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true"></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="row justify-content-between mr-2 ml-2">
+      <div class="col-md-1">
+        <page-size-pn
+          [pageSize]="localPageSettings.pageSize"
+          (onPageSizeChanged)="localPageSettings.pageSize = $event; rulesRequestModel.pageIndex = 1;
+        updateLocalPageSettings()">
+        </page-size-pn>
+      </div>
+      <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
+        <pagination-pn *ngIf="rulesModel.total > rulesRequestModel.pageSize"
+                       [limit]="rulesRequestModel.pageSize"
+                       [size]="rulesModel.total"
+                       [offset]="rulesRequestModel.offset"
+                       (onPageChanged)="changePage($event)"></pagination-pn>
+      </div>
+    </div>
+  </ng-container>
+  <div class="row p-1 mt-4 mx-2" *ngIf="rulesModel.total === 0">
+    <span>{{'No notification rules created' | translate}}</span>
+  </div>
+</div>
+
+<app-monitoring-pn-notification-rules-delete #deleteRuleModal
+  (ruleDeleted)="getRulesList()"
+></app-monitoring-pn-notification-rules-delete>

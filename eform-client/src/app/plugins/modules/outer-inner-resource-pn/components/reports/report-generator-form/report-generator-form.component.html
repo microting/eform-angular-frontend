@@ -1,0 +1,60 @@
+<form [formGroup]="generateForm">
+  <div class="row pl-1">
+
+    <div class="col-md-3">
+      <div class="md-form" [owlDateTimeTrigger]="dateRangePicker">
+        <i class="material-icons prefix">
+          calendar_today
+        </i>
+        <input mdbInput  formControlName="dateRange"
+               name="dateRange" required
+               type="text" [owlDateTime]="dateRangePicker" [selectMode]="'range'"
+               class="form-control input-sm" id="dateFormInput">
+        <label for="dateFormInput">{{'Selected date range' | translate}}</label>
+      </div>
+    </div>
+    <div class="col-md-3 ng-select-wrapper">
+      <ng-select
+        class="custom"
+        dropdownPosition="'bottom'"
+        formControlName="type"
+        required
+        [placeholder]="'Type' | translate"
+        [items]="[
+        {id: reportType.Month, name: reportType[reportType.Month] | translate},
+        {id: reportType.Week, name: reportType[reportType.Week] | translate},
+        {id: reportType.Day, name: reportType[reportType.Day] | translate}
+        ]"
+        [clearable]="false"
+        [bindLabel]="'name'"
+        [bindValue]="'id'"
+        id="typeSelector" style="max-height: 500px;"></ng-select>
+    </div>
+    <div class="col-md-3 ng-select-wrapper">
+      <ng-select
+        class="custom"
+        dropdownPosition="'bottom'"
+        formControlName="relationship"
+        required
+        [placeholder]="'Report' | translate"
+        [items]="reportNames.reportNameModels"
+        [bindLabel]="'name'"
+        [bindValue]="'id'"
+        [clearable]="false"
+        id="relationshipSelector"></ng-select>
+    </div>
+    <div class="col-md-3 text-center pt-3">
+      <button mdbBtn class="btn-success" [disabled]="generateForm.invalid" (click)="onSubmit()">
+        {{'Generate' | translate}}
+      </button>
+      <button mdbBtn class="btn-success" [disabled]="generateForm.invalid" (click)="onSave()">
+        <fa-icon icon="file-excel" [fixedWidth]="true" size="lg"></fa-icon>
+      </button>
+    </div>
+
+
+  </div>
+</form>
+
+
+<owl-date-time [pickerType]="'calendar'" #dateRangePicker></owl-date-time>

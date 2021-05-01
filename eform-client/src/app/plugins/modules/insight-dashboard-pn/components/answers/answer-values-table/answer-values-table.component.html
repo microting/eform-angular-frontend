@@ -1,0 +1,45 @@
+<div class="row p-1 table-responsive no-gutters">
+  <table
+    mdbTable
+    striped="true"
+    hover="true"
+    small="true"
+    class="z-depth-1 text-center"
+  >
+    <thead>
+      <tr>
+        <th scope="col">{{ 'ID' }}</th>
+        <th scope="col">{{ 'FinishedAt' }}</th>
+        <th scope="col">{{ 'Duration' }}</th>
+        <th scope="col">{{ 'Site' }}</th>
+        <th scope="col">{{ 'Unit' }}</th>
+        <th scope="col">{{ 'Language' | translate }}</th>
+        <th scope="col">{{ 'Value' | translate }}</th>
+        <th scope="col">{{ 'Question' | translate }}</th>
+        <th scope="col">{{ 'Option' | translate }}</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody">
+      <ng-container *ngFor="let answerValue of answerModel.answerValues">
+        <tr *ngFor="let answerValueTranslation of answerValue.translations">
+          <td id="answerValueId" scope="row">{{ answerModel.microtingUid }}</td>
+          <td scope="row">
+            <date-formatter [date]="answerModel.finishedAt" [Format]="'datetime'"></date-formatter></td>
+          <td scope="row">{{ answerModel.answerDuration }}</td>
+          <td scope="row">{{ answerModel.siteName }}</td>
+          <td scope="row">{{ answerModel.unitId }}</td>
+          <td id="answerValueLanguage" scope="row">
+            {{ answerValueTranslation.languageName }}
+          </td>
+          <td id="answerValueValue" scope="row">{{ answerValue.value }}</td>
+          <td scope="row">
+            {{ answerValue.question }}
+          </td>
+          <td id="answerValueTranslation" scope="row">
+            {{ answerValueTranslation.value }}
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>

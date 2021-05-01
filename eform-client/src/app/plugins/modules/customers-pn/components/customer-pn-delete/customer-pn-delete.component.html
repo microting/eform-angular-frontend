@@ -1,0 +1,80 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{'Are you sure you want to delete' | translate}}?</h3>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-3">
+            <strong>{{'Name:' | translate }}</strong> {{selectedCustomer.contactPerson}}
+          </div>
+          <div class="col-md-3">
+            <strong>{{'Number: ' | translate }}</strong> {{selectedCustomer.customerNo}}
+          </div>
+          <div class="col-md-3">
+            <strong>{{'Address: ' | translate }}</strong> {{selectedCustomer.companyAddress}}
+          </div>
+          <div class="col-md-3">
+            <strong>{{'Address 2: ' | translate }}</strong> {{selectedCustomer.companyAddress2}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <strong>{{'Zip Code: ' | translate }}</strong> {{selectedCustomer.zipCode}}
+          </div>
+          <div class="col-md-3">
+            <strong>{{'Created By: ' | translate }}</strong> {{selectedCustomer.createdBy}}
+          </div>
+          <div class="col-md-3">
+            <strong>{{'City Name: ' | translate}}</strong> {{selectedCustomer.cityName }}
+          </div>
+          <div class="col-md-3">
+            <strong>{{'Phone: ' | translate}}</strong> {{selectedCustomer.phone }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <strong>{{'Email: ' | translate}}</strong> {{selectedCustomer.email }}
+          </div>
+          <div class="col-md-3">
+            <strong>{{'EAN Code: ' | translate}}</strong> {{selectedCustomer.eanCode }}
+          </div>
+          <div class="col-md-3">
+            <strong>{{'Vat Number: ' | translate}}</strong> {{selectedCustomer.vatNumber }}
+          </div>
+          <div class="col-md-3">
+            <strong>{{'Country Code: ' | translate}}</strong> {{selectedCustomer.countryCode }}
+          </div>
+        </div>
+<!--        <table class="table table-sm table-striped text-center z-depth-1">-->
+<!--          <tbody id="tableBody">-->
+<!--          <ng-container *ngFor="let field of selectedCustomer.fields">-->
+<!--            <tr *ngIf="field.value">-->
+<!--              <td>-->
+<!--                {{field.name | translate}}-->
+<!--              </td>-->
+<!--              <td>-->
+<!--                <strong>-->
+<!--                  <ng-container [ngSwitch]="field.name">-->
+<!--                    <ng-container *ngSwitchCase="fieldsEnum[fieldsEnum.Description]">-->
+<!--                      <div class="max-lines" [innerHTML]="field.value"></div>-->
+<!--                    </ng-container>-->
+<!--                    <ng-container *ngSwitchDefault>-->
+<!--                      {{field.value}}-->
+<!--                    </ng-container>-->
+<!--                  </ng-container>-->
+<!--                  </strong>-->
+<!--              </td>-->
+<!--            </tr>-->
+<!--          </ng-container>-->
+<!--          </tbody>-->
+<!--        </table>-->
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button mdbBtn class="btn-danger btn-small-height" (click)="deleteCustomer()" id="customerSaveDeleteBtn">{{'Delete' | translate}}</button>
+        <button mdbBtn class="btn-accent text-black-50 btn-small-height" (click)="frame.hide()" id="customerDeleteCancelBtn">{{'Close' | translate}}</button>
+      </div>
+    </div>
+  </div>
+</div>

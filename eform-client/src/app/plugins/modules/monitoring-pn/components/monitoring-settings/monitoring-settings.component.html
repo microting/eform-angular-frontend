@@ -1,0 +1,68 @@
+<subheader-pn [title]="'Monitoring plugin settings' | translate">
+  <div class="p-3">
+    <button mdbBtn class=" btn-success" (click)="updateSettings()">{{ 'Save' | translate }}</button>
+  </div>
+</subheader-pn>
+
+<div class="container-fluid">
+  <div class="row mt-4">
+    <div class="col-md-12 col-xs-12 control-block">
+      <div class="container-fluid">
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input mdbInput
+                   [mdbValidate]="false" [(ngModel)]="settingsModel.sdkConnectionString"
+                   type="text" name="sdkConnectionString" #sdkConnectionString="ngModel"
+                   id="sdkConnectionString" class="form-control">
+            <label for="sdkConnectionString">{{'SDK connection string' | translate}}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input mdbInput
+                   [mdbValidate]="false" [(ngModel)]="settingsModel.logLevel"
+                   type="text" name="logLevel" #loglevel="ngModel"
+                   id="logLevel" class="form-control">
+            <label for="logLevel">{{'Log level' | translate}}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input mdbInput
+                   [mdbValidate]="false" [(ngModel)]="settingsModel.logLimit"
+                   type="text" name="logLimit" #loglimit="ngModel"
+                   id="logLimit" class="form-control">
+            <label for="logLimit">{{'Log limit' | translate}}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input mdbInput
+                   [mdbValidate]="false" [(ngModel)]="settingsModel.sendGridApiKey"
+                   type="text" name="logLimit" #sendGridApiKey="ngModel"
+                   id="sendGridApiKey" class="form-control">
+            <label for="sendGridApiKey">{{'Sendgrid api key' | translate}}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input mdbInput
+                   [mdbValidate]="false" [(ngModel)]="settingsModel.fromEmailAddress"
+                   type="text" name="fromEmailAddress" #fromEmailAddress="ngModel"
+                   id="fromEmailAddress" class="form-control">
+            <label for="fromEmailAddress">{{'From email address' | translate}}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input mdbInput
+                   [mdbValidate]="false" [(ngModel)]="settingsModel.fromEmailName"
+                   type="text" name="fromEmailName" #fromEmailName="ngModel"
+                   id="fromEmailName" class="form-control">
+            <label for="fromEmailName">{{'From email name' | translate}}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

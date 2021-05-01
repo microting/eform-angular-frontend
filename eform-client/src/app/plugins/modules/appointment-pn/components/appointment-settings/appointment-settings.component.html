@@ -1,0 +1,162 @@
+<subheader-pn [title]="'Appointment plugin settings' | translate">
+  <div class="p-3">
+    <button mdbBtn class=" btn-success" (click)="updateSettings()">{{ 'Save' | translate }}</button>
+  </div>
+</subheader-pn>
+
+<div class="container-fluid">
+  <div class="row mt-4">
+    <div class="col-md-12 col-xs-12 control-block">
+      <subheader-pn [title]="'Settings' | translate" [heandingSizeRem]="1">
+      </subheader-pn>
+      <div class="container-fluid">
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input mdbInput [(ngModel)]="settingsModel.sdkConnectionString"
+                   type="text" name="sdkConnectionString" #sdkConnectionString="ngModel"
+                   id="sdkConnectionString" class="form-control">
+            <label for="sdkConnectionString">{{'SDK connection string' | translate}}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input mdbInput [(ngModel)]="settingsModel.logLevel"
+                   type="text" name="logLevel" #loglevel="ngModel"
+                   id="logLevel" class="form-control">
+            <label for="logLevel">{{'Log Level' | translate}}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input mdbInput [(ngModel)]="settingsModel.logLimit"
+                   type="text" name="logLimit" #loglimit="ngModel"
+                   id="logLimit" class="form-control">
+            <label for="logLimit">{{'Log Limit' | translate}}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input mdbInput [(ngModel)]="settingsModel.maxParallelismPlugin"
+                   type="text" name="maxParallelismPlugin" #maxParallelismPlugin="ngModel"
+                   id="maxParallelismPlugin" class="form-control">
+            <label for="maxParallelismPlugin">{{'Max parallelism Plugin' | translate}}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input mdbInput [(ngModel)]="settingsModel.numberOfWorkersPlugin"
+                   type="text" name="numberOfWorkersPlugin" #numberOfWorkersPlugin="ngModel"
+                   id="numberOfWorkersPlugin" class="form-control">
+            <label for="numberOfWorkersPlugin">{{'Number of workers Plugin' | translate}}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input mdbInput [(ngModel)]="settingsModel.maxParallelismService"
+                   type="text" name="maxParallelismService" #maxParallelismService="ngModel"
+                   id="maxParallelismService" class="form-control">
+            <label for="maxParallelismService">{{'Max parallelism Service' | translate}}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input mdbInput [(ngModel)]="settingsModel.numberOfWorkersService"
+                   type="text" name="numberOfWorkersService" #numberOfWorkersService="ngModel"
+                   id="numberOfWorkersService" class="form-control">
+            <label for="numberOfWorkersService">{{'Number of workers Service' | translate}}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input mdbInput [(ngModel)]="settingsModel.token"
+                   type="text" name="token" #token="ngModel"
+                   id="token" class="form-control">
+            <label for="token">{{'Token' | translate}}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input mdbInput [(ngModel)]="settingsModel.checkPreSendHours"
+                   type="text" name="checkPreSendHours" #checkPreSendHours="ngModel"
+                   id="checkPreSendHours" class="form-control">
+            <label for="checkPreSendHours">{{'Check pre send hours' | translate}}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input mdbInput [(ngModel)]="settingsModel.checkRetraceHours"
+                   type="text" name="checkRetraceHours" #checkRetraceHours="ngModel"
+                   id="checkRetraceHours" class="form-control">
+            <label for="checkRetraceHours">{{'Check retrace hours' | translate}}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input mdbInput [(ngModel)]="settingsModel.checkEveryMinute"
+                   type="text" name="checkEveryMinute" #checkEveryMinute="ngModel"
+                   id="checkEveryMinute" class="form-control">
+            <label for="checkEveryMinute">{{'Check every minute' | translate}}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input mdbInput [(ngModel)]="settingsModel.includeBlankLocations"
+                   type="text" name="includeBlankLocations" #includeBlankLocations="ngModel"
+                   id="includeBlankLocations" class="form-control">
+            <label for="includeBlankLocations">{{'Include blank locations' | translate}}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input mdbInput [(ngModel)]="settingsModel.userEmailAddress"
+                   type="text" name="userEmailAddress" #userEmailAddress="ngModel"
+                   id="userEmailAddress" class="form-control">
+            <label for="userEmailAddress">{{'User e-mail address' | translate}}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input mdbInput [(ngModel)]="settingsModel.calendarName"
+                   type="text" name="calendarName" #calendarName="ngModel"
+                   id="calendarName" class="form-control">
+            <label for="calendarName">{{'Calendar Name' | translate}}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input mdbInput [(ngModel)]="settingsModel.directoryId"
+                   type="text" name="directoryId" #directoryId="ngModel"
+                   id="directoryId" class="form-control">
+            <label for="directoryId">{{'Directory ID' | translate}}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input mdbInput [(ngModel)]="settingsModel.applicationId"
+                   type="text" name="applicationId" #applicationId="ngModel"
+                   id="applicationId" class="form-control">
+            <label for="applicationId">{{'Application ID' | translate}}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input mdbInput [(ngModel)]="settingsModel.colorsRule"
+                   type="text" name="colorsRule" #colorsRule="ngModel"
+                   id="colorsRule" class="form-control">
+            <label for="colorsRule">{{'Colors Rule' | translate}}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input mdbInput [(ngModel)]="settingsModel.outlookAddinId"
+                   type="text" name="outlookAddinId" #outlookAddinId="ngModel"
+                   id="outlookAddinId" class="form-control">
+            <label for="outlookAddinId">{{'Outlook Add-in Id' | translate}}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

@@ -1,0 +1,116 @@
+<eform-subheader>
+  <div class="p-3">
+    <button
+      mdbBtn
+      *ngIf="
+        authStateService.checkClaim(trashInspectionPnClaims.createFraction)
+      "
+      id="fractionCreateBtn"
+      class="btn btn-success"
+      mdbTooltip="{{ 'Create Fraction' | translate }}"
+      (click)="showCreateFractionModal()"
+    >
+      {{ 'New Fraction' | translate }}
+    </button>
+    <button
+      mdbBtn
+      id="importFractionBtn"
+      class="btn btn-success"
+      mdbTooltip="{{ 'Import Fraction' | translate }}"
+      routerLink="/plugins/trash-inspection-pn/importfraction"
+    >
+      {{ 'Import Fraction' | translate }}
+    </button>
+  </div>
+</eform-subheader>
+
+<div class="container-fluid">
+  <div class="row p-1 mt-4 table-responsive no-gutters">
+    <table class="table table-sm table-striped text-center z-depth-1">
+      <thead
+        table-headers
+        [tableHeaders]="tableHeaders"
+        [currentSortName]="fractionsStateService.getSort() | async"
+        (sortChanged)="sortTable($event)"
+        [isSortDsc]="fractionsStateService.getIsSortDsc() | async"
+      ></thead>
+      <tbody id="tableBody">
+        <tr *ngFor="let fraction of fractionsModel.entities">
+          <td id="fractionId">
+            {{ fraction.id }}
+          </td>
+          <td id="fractionItemNumber">
+            {{ fraction.itemNumber }}
+          </td>
+          <td id="fractionName">
+            {{ fraction.name }}
+          </td>
+          <td id="fractionDescription">
+            {{ fraction.description }}
+          </td>
+          <td id="fractionLocationCode">
+            {{ fraction.locationCode }}
+          </td>
+          <td id="fractionSelectedeForm">
+            {{ fraction.selectedTemplateName }}
+          </td>
+          <td>
+            <div class="d-flex flex-row justify-content-center">
+              <button
+                id="updateFractionBtn"
+                class="btn btn-accent text-black-50 btn-icon mb-2"
+                mdbTooltip="{{ 'Edit Fraction' | translate }}"
+                (click)="showEditFractionModal(fraction)"
+              >
+                <fa-icon icon="pen" size="lg" [fixedWidth]="true"></fa-icon>
+              </button>
+              <button
+                id="deleteFractionBtn"
+                class="btn btn-danger btn-icon mb-2"
+                mdbTooltip="{{ 'Delete Fraction' | translate }}"
+                (click)="showDeleteFractionModal(fraction)"
+              >
+                <fa-icon
+                  icon="trash-alt"
+                  size="lg"
+                  [fixedWidth]="true"
+                ></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="row justify-content-between mr-2 ml-2">
+    <div class="col-md-1">
+      <eform-page-size
+        [pageSize]="fractionsStateService.getPageSize() | async"
+        (onPageSizeChanged)="onPageSizeChanged($event)"
+      >
+      </eform-page-size>
+    </div>
+    <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
+      <eform-pagination
+        [limit]="fractionsStateService.getPageSize() | async"
+        [size]="fractionsModel.total"
+        [offset]="fractionsStateService.getOffset() | async"
+        (onPageChanged)="changePage($event)"
+      ></eform-pagination>
+    </div>
+  </div>
+</div>
+
+<app-trash-inspection-pn-fraction-create
+  #createFractionModal
+  (onFractionCreated)="getAllFractions()"
+>
+</app-trash-inspection-pn-fraction-create>
+<app-trash-inspection-pn-fraction-edit
+  #editFractionModal
+  (onFractionUpdated)="getAllFractions()"
+></app-trash-inspection-pn-fraction-edit>
+<app-trash-inspection-pn-fraction-delete
+  #deleteFractionModal
+  (onFractionDeleted)="onFractionDeleted()"
+></app-trash-inspection-pn-fraction-delete>

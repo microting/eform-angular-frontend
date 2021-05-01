@@ -1,0 +1,14 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{'Are you sure you want to delete answer' | translate}}?</h3>
+      </div>
+      <div class="modal-footer">
+        <button mdbBtn class="btn-danger btn-small-height" id="saveDeleteBtn" (click)="delete()">{{'Delete' | translate}}</button>
+        <button mdbBtn class="btn-accent text-black-50 btn-small-height" id="cancelDeleteBtn" (click)="frame.hide()">
+          {{'Cancel' | translate}}</button>
+      </div>
+    </div>
+  </div>
+</div>

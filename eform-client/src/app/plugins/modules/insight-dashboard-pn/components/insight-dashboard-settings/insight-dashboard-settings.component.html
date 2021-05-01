@@ -1,0 +1,69 @@
+<eform-subheader [title]="'InSight Dashboard plugin settings' | translate">
+  <div class="p-3">
+    <button
+      mdbBtn
+      class="btn-success btn-small-height"
+      (click)="updateSettings()"
+    >
+      {{ 'Save' | translate }}
+    </button>
+  </div>
+</eform-subheader>
+
+<div class="container-fluid">
+  <div class="row mt-4">
+    <div class="col-md-12 col-xs-12 control-block">
+      <eform-subheader [title]="'Settings' | translate" [heandingSizeRem]="1">
+      </eform-subheader>
+      <div class="container-fluid">
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input
+              mdbInput
+              [mdbValidate]="false"
+              [(ngModel)]="settingsModel.sdkConnectionString"
+              type="text"
+              name="sdkConnectionString"
+              #sdkConnectionString="ngModel"
+              id="sdkConnectionString"
+              class="form-control"
+            />
+            <label for="sdkConnectionString">{{
+              'SDK connection string' | translate
+            }}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input
+              mdbInput
+              [mdbValidate]="false"
+              [(ngModel)]="settingsModel.logLevel"
+              type="text"
+              name="logLevel"
+              #loglevel="ngModel"
+              id="logLevel"
+              class="form-control"
+            />
+            <label for="logLevel">{{ 'Log Level' | translate }}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input
+              mdbInput
+              [mdbValidate]="false"
+              [(ngModel)]="settingsModel.logLimit"
+              type="text"
+              name="logLimit"
+              #loglimit="ngModel"
+              id="logLimit"
+              class="form-control"
+            />
+            <label for="logLimit">{{ 'Log Limit' | translate }}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

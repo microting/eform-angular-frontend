@@ -1,0 +1,189 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{ 'Select columns for displaying in Cases' | translate }}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-2">
+              <label class="md-checkbox">
+                <input [(ngModel)]="selectedListModel.deployedAtEnabled" [checked]="selectedListModel.deployedAtEnabled" value="{{selectedListModel.deployedAtEnabled}}" type="checkbox"/>
+                <span class="md-checkbox--fake"></span>
+                <div></div>
+              </label>
+              {{'Deployed at enabled' | translate}}
+            </div>
+            <div class="col-md-2">
+              <label class="md-checkbox">
+                <input [(ngModel)]="selectedListModel.doneAtEnabled" [checked]="selectedListModel.doneAtEnabled" value="{{selectedListModel.doneAtEnabled}}" type="checkbox"/>
+                <span class="md-checkbox--fake"></span>
+                <div></div>
+              </label>
+              {{'Done at enabled' | translate}}
+            </div>
+            <div class="col-md-2">
+              <label class="md-checkbox">
+                <input [(ngModel)]="selectedListModel.doneByUserNameEnabled"  [checked]="selectedListModel.doneByUserNameEnabled" value="{{selectedListModel.doneByUserNameEnabled}}" type="checkbox"/>
+                <span class="md-checkbox--fake"></span>
+                <div></div>
+              </label>
+              {{'Done by user enabled' | translate}}
+            </div>
+            <div class="col-md-2">
+              <label class="md-checkbox">
+                <input [(ngModel)]="selectedListModel.uploadedDataEnabled"  [checked]="selectedListModel.uploadedDataEnabled" value="{{selectedListModel.uploadedDataEnabled}}" type="checkbox"/>
+                <span class="md-checkbox--fake"></span>
+                <div></div>
+              </label>
+              {{'Uploaded data enabled' | translate}}
+            </div>
+            <div class="col-md-2">
+              <label class="md-checkbox">
+                <input [(ngModel)]="selectedListModel.labelEnabled"  [checked]="selectedListModel.labelEnabled" value="{{selectedListModel.labelEnabled}}" type="checkbox"/>
+                <span class="md-checkbox--fake"></span>
+                <div></div>
+              </label>
+              {{'Label enabled' | translate}}
+            </div>
+            <div class="col-md-2">
+              <label class="md-checkbox">
+                <input [(ngModel)]="selectedListModel.descriptionEnabled"  [checked]="selectedListModel.descriptionEnabled" value="{{selectedListModel.descriptionEnabled}}" type="checkbox"/>
+                <span class="md-checkbox--fake"></span>
+                <div></div>
+              </label>
+              {{'Description enabled' | translate}}
+            </div>
+            <div class="col-md-2">
+              <label class="md-checkbox">
+                <input [(ngModel)]="selectedListModel.itemNumberEnabled"  [checked]="selectedListModel.itemNumberEnabled" value="{{selectedListModel.itemNumberEnabled}}" type="checkbox"/>
+                <span class="md-checkbox--fake"></span>
+                <div></div>
+              </label>
+              {{'Item number enabled' | translate}}
+            </div>
+            <div class="col-md-2">
+              <label class="md-checkbox">
+                <input [(ngModel)]="selectedListModel.locationCodeEnabled"  [checked]="selectedListModel.locationCodeEnabled" value="{{selectedListModel.locationCodeEnabled}}" type="checkbox"/>
+                <span class="md-checkbox--fake"></span>
+                <div></div>
+              </label>
+              {{'Location code enabled' | translate}}
+            </div>
+            <div class="col-md-2">
+              <label class="md-checkbox">
+                <input [(ngModel)]="selectedListModel.buildYearEnabled"  [checked]="selectedListModel.buildYearEnabled" value="{{selectedListModel.buildYearEnabled}}" type="checkbox"/>
+                <span class="md-checkbox--fake"></span>
+                <div></div>
+              </label>
+              {{'Build year enabled' | translate}}
+            </div>
+            <div class="col-md-2">
+              <label class="md-checkbox">
+                <input [(ngModel)]="selectedListModel.typeEnabled"  [checked]="selectedListModel.typeEnabled" value="{{selectedListModel.typeEnabled}}" type="checkbox"/>
+                <span class="md-checkbox--fake"></span>
+                <div></div>
+              </label>
+              {{'Type enabled' | translate}}
+            </div>
+            <div class="col-md-2">
+              <label class="md-checkbox">
+                <input [(ngModel)]="selectedListModel.numberOfImagesEnabled"  [checked]="selectedListModel.numberOfImagesEnabled" value="{{selectedListModel.numberOfImagesEnabled}}" type="checkbox"/>
+                <span class="md-checkbox--fake"></span>
+                <div></div>
+              </label>
+              {{'Number of images enabled' | translate}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <ng-select
+                bindLabel="label"
+                bindValue="id"
+                [(ngModel)]="selectedListModel.sdkFieldId1"
+                [placeholder]="('Column' | translate) + ' 1'"
+                [items]="columnModels"></ng-select>
+            </div>
+            <div class="col-md-6">
+              <ng-select
+                bindLabel="label"
+                bindValue="id"
+                [(ngModel)]="selectedListModel.sdkFieldId2"
+                [placeholder]="('Column' | translate) + ' 2'"
+                [items]="columnModels"></ng-select>
+            </div>
+            <div class="col-md-6">
+              <ng-select
+                bindLabel="label"
+                bindValue="id"
+                [(ngModel)]="selectedListModel.sdkFieldId3"
+                [placeholder]="('Column' | translate) + ' 3'"
+                [items]="columnModels"></ng-select>
+            </div>
+            <div class="col-md-6">
+              <ng-select
+                bindLabel="label"
+                bindValue="id"
+                [(ngModel)]="selectedListModel.sdkFieldId4"
+                [placeholder]="('Column' | translate) + ' 4'"
+                [items]="columnModels"></ng-select>
+            </div>
+            <div class="col-md-6">
+              <ng-select
+                bindLabel="label"
+                bindValue="id"
+                [(ngModel)]="selectedListModel.sdkFieldId5"
+                [placeholder]="('Column' | translate) + ' 5'"
+                [items]="columnModels"></ng-select>
+            </div>
+            <div class="col-md-6">
+              <ng-select
+                bindLabel="label"
+                bindValue="id"
+                [(ngModel)]="selectedListModel.sdkFieldId6"
+                [placeholder]="('Column' | translate) + ' 6'"
+                [items]="columnModels"></ng-select>
+            </div>
+            <div class="col-md-6">
+              <ng-select
+                bindLabel="label"
+                bindValue="id"
+                [(ngModel)]="selectedListModel.sdkFieldId7"
+                [placeholder]="('Column' | translate) + ' 7'"
+                [items]="columnModels"></ng-select>
+            </div>
+            <div class="col-md-6">
+              <ng-select
+                bindLabel="label"
+                bindValue="id"
+                [(ngModel)]="selectedListModel.sdkFieldId8"
+                [placeholder]="('Column' | translate) + ' 8'"
+                [items]="columnModels"></ng-select>
+            </div>
+            <div class="col-md-6">
+              <ng-select
+                bindLabel="label"
+                bindValue="id"
+                [(ngModel)]="selectedListModel.sdkFieldId9"
+                [placeholder]="('Column' | translate) + ' 9'"
+                [items]="columnModels"></ng-select>
+            </div>
+            <div class="col-md-6">
+              <ng-select
+                bindLabel="label"
+                bindValue="id"
+                [(ngModel)]="selectedListModel.sdkFieldId10"
+                [placeholder]="('Column' | translate) + ' 10'"
+                [items]="columnModels"></ng-select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button mdbBtn class="btn-success btn-small-height" (click)="updateList()">{{ 'Save' | translate }}</button>
+        <button mdbBtn class="btn-accent text-black-50 btn-small-height" (click)="frame.hide()">{{ 'Cancel' | translate }}</button>
+      </div>
+    </div>
+  </div>
+</div>

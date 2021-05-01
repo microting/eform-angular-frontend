@@ -1,0 +1,126 @@
+<link href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.css" rel="stylesheet">
+
+<subheader-pn>
+  <div class="p-3">
+    <button *ngIf="pluginClaimsHelper.check(appointmentPnClaims.createAppointments)"
+      id="appointmentCreateBtn"
+      class="btn btn-success"
+      mdbTooltip="{{ 'Add new appointment' | translate }}"
+      (click)="showEditAppointmentModal()">{{ 'Add new' | translate }}
+    </button>
+  </div>
+</subheader-pn>
+
+<div class="container-fluid">
+  <div class="row mt-4">
+    <div class="col-md-12 col-xs-12 control-block">
+      <div class="container-fluid">
+        <div class="row text-center">
+          <div class="col-md-4">
+            <div class="btn-group">
+              <div
+                class="btn btn-primary"
+                mwlCalendarPreviousView
+                [view]="view"
+                [(viewDate)]="viewDate"
+                (viewDateChange)="viewDateChange($event)"
+              >
+                {{ 'Previous' | translate }}
+              </div>
+              <div
+                class="btn btn-primary"
+                mwlCalendarToday
+                [(viewDate)]="viewDate"
+              >
+                {{ 'Today' | translate }}
+              </div>
+              <div
+                class="btn btn-primary"
+                mwlCalendarNextView
+                [view]="view"
+                [(viewDate)]="viewDate"
+                (viewDateChange)="viewDateChange($event)"
+              >
+                {{ 'Next' | translate }}
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'): locale }}</h3>
+          </div>
+          <div class="col-md-4">
+            <div class="btn-group">
+              <div
+                class="btn btn-primary"
+                (click)="setView(CalendarView.Month)"
+                [class.active]="view === CalendarView.Month"
+              >
+                {{ 'Month' | translate }}
+              </div>
+              <div
+                class="btn btn-primary"
+                (click)="setView(CalendarView.Week)"
+                [class.active]="view === CalendarView.Week"
+              >
+                {{ 'Week' | translate }}
+              </div>
+              <div
+                class="btn btn-primary"
+                (click)="setView(CalendarView.Day)"
+                [class.active]="view === CalendarView.Day"
+              >
+                {{ 'Day' | translate }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div [ngSwitch]="view">
+          <mwl-calendar-month-view
+            *ngSwitchCase="CalendarView.Month"
+            [weekStartsOn]="1"
+            [viewDate]="viewDate"
+            [events]="events"
+            [refresh]="refresh"
+            [locale]="locale"
+            [activeDayIsOpen]="activeDayIsOpen"
+            (dayClicked)="dayClicked($event.day)"
+            (eventClicked)="viewEvent($event.event)"
+            (eventTimesChanged)="eventTimesChanged($event)"
+            (beforeViewRender)="beforeViewRender($event)"
+          >
+          </mwl-calendar-month-view>
+          <mwl-calendar-week-view
+            *ngSwitchCase="CalendarView.Week"
+            [weekStartsOn]="1"
+            [viewDate]="viewDate"
+            [events]="events"
+            [locale]="locale"
+            (eventClicked)="viewEvent($event.event)"
+            (eventTimesChanged)="eventTimesChanged($event)"
+            (beforeViewRender)="beforeViewRender($event)"
+          >
+          </mwl-calendar-week-view>
+          <mwl-calendar-day-view
+            *ngSwitchCase="CalendarView.Day"
+            [viewDate]="viewDate"
+            [events]="events"
+            [refresh]="refresh"
+            [locale]="locale"
+            (eventClicked)="viewEvent($event.event)"
+            (eventTimesChanged)="eventTimesChanged($event)"
+            (beforeViewRender)="beforeViewRender($event)"
+          >
+          </mwl-calendar-day-view>
+        </div>
+        <br />
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-appointment-edit #editAppointmentModal (appointmentSaved)="getAppointmentsList()"></app-appointment-edit>
+
+<app-appointment-view #viewAppointmentModal></app-appointment-view>
+
+<app-appointment-delete #deleteAppointmentModal (appointmentDeleted)="getAppointmentsList()"></app-appointment-delete>

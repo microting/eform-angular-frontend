@@ -1,0 +1,239 @@
+<eform-subheader>
+  <div class="p-3">
+    <!--    <button-->
+    <!--      id="createInstallationBtn"-->
+    <!--      class="btn btn-success"-->
+    <!--      mdbTooltip="{{ 'Create Trash Inspection' | translate }}"-->
+    <!--      (click)="showCreateTrashInspection()">{{ 'New Trash Inspection' | translate }}-->
+    <!--    </button>-->
+  </div>
+</eform-subheader>
+
+<div class="container-fluid">
+  <div class="row pl-1">
+    <div class="col-md-2">
+      <div class="md-form">
+        <input
+          mdbInput
+          type="text"
+          [ngModel]="trashInspectionsStateService.getNameFilter() | async"
+          (ngModelChange)="onLabelInputChanged($event)"
+          class="form-control input-sm"
+          id="labelInput"
+        />
+        <label for="labelInput">{{ 'Label' | translate }}</label>
+      </div>
+    </div>
+  </div>
+  <div class="row p-1 mt-4 table-responsive no-gutters">
+    <table
+      mdbTable
+      striped="true"
+      hover="true"
+      small="true"
+      class="z-depth-1 text-center"
+    >
+      <thead
+        table-headers
+        [tableHeaders]="tableHeaders"
+        [currentSortName]="trashInspectionsStateService.getSort() | async"
+        (sortChanged)="sortTable($event)"
+        [isSortDsc]="trashInspectionsStateService.getIsSortDsc() | async"
+      ></thead>
+      <tbody id="tableBody">
+        <tr *ngFor="let trashInspection of trashInspectionsModel.entities">
+          <td>
+            {{ trashInspection.id }}
+          </td>
+          <td>
+            <date-formatter
+              [date]="trashInspection.date"
+              [Format]="'date'"
+            ></date-formatter>
+          </td>
+          <td>
+            <date-formatter
+              [date]="trashInspection.time"
+              [Format]="'time'"
+            ></date-formatter>
+          </td>
+          <td>
+            {{ trashInspection.eakCode }}
+          </td>
+          <td>
+            {{ trashInspection.installationName }}
+          </td>
+          <td>
+            {{ trashInspection.segment }}
+          </td>
+          <td>
+            <fa-icon
+              icon="check"
+              size="lg"
+              [fixedWidth]="true"
+              *ngIf="trashInspection.mustBeInspected"
+            ></fa-icon>
+          </td>
+          <td>
+            {{ trashInspection.producer }}
+          </td>
+          <td>
+            {{ trashInspection.registrationNumber }}
+          </td>
+          <td>
+            {{ trashInspection.transporter }}
+          </td>
+          <td>
+            {{ trashInspection.trashFraction }}
+          </td>
+          <td>
+            {{ trashInspection.weighingNumber }}
+          </td>
+          <td>
+            <fa-icon
+              icon="check"
+              size="lg"
+              [fixedWidth]="true"
+              *ngIf="trashInspection.extendedInspection"
+            ></fa-icon>
+          </td>
+          <td>
+            <fa-icon
+              icon="check"
+              size="lg"
+              [fixedWidth]="true"
+              *ngIf="trashInspection.isApproved"
+            ></fa-icon>
+
+            <fa-icon
+              icon="times"
+              size="lg"
+              [fixedWidth]="true"
+              *ngIf="!trashInspection.isApproved"
+            ></fa-icon>
+          </td>
+          <td>
+            {{ trashInspection.comment }}
+          </td>
+          <td>
+            <status-bar [status]="trashInspection.status"></status-bar>
+          </td>
+          <td>
+            <fa-icon
+              icon="check"
+              size="lg"
+              [fixedWidth]="true"
+              *ngIf="
+                trashInspection.workflowState == 'removed' ||
+                trashInspection.inspectionDone
+              "
+            ></fa-icon>
+
+            <!--          <fa-icon icon="times" size="lg" [fixedWidth]="true" *ngIf="trashInspection.isApproved == 'removed'"></fa-icon>-->
+          </td>
+          <td>
+            <div class="d-flex flex-row justify-content-center">
+              <button
+                mdbBtn
+                class="btn-danger btn-icon mb-2"
+                mdbTooltip="{{ 'Delete Trash Inspection' | translate }}"
+                (click)="showDeleteTrashInspectionModal(trashInspection)"
+              >
+                <fa-icon
+                  icon="trash-alt"
+                  size="lg"
+                  [fixedWidth]="true"
+                ></fa-icon>
+              </button>
+
+              <button
+                mdbBtn
+                class="btn-success btn-icon mb-2"
+                *ngIf="trashInspection.status === 100"
+                [routerLink]="[
+                  '/cases/edit/' +
+                    trashInspection.sdkCaseId +
+                    '/' +
+                    trashInspection.sdkeFormId
+                ]"
+                [queryParams]="{
+                  reverseRoute: '/plugins/trash-inspection-pn/trash-inspections'
+                }"
+                mdbTooltip="{{ 'Edit Case' | translate }}"
+              >
+                <fa-icon icon="pen" size="lg" [fixedWidth]="true"></fa-icon>
+              </button>
+              <button
+                mdbBtn
+                class="btn-success btn-icon mb-2"
+                mdbTooltip="{{ 'Get PDF' | translate }}"
+                (click)="downloadPDF(trashInspection)"
+                *ngIf="trashInspection.status === 100"
+              >
+                <fa-icon
+                  icon="file-pdf"
+                  size="lg"
+                  [fixedWidth]="true"
+                ></fa-icon>
+              </button>
+              <button
+                mdbBtn
+                class="btn-success btn-icon mb-2"
+                mdbTooltip="{{ 'Get DOCX' | translate }}"
+                (click)="downloadDocx(trashInspection)"
+                *ngIf="trashInspection.status === 100"
+              >
+                <fa-icon
+                  icon="file-word"
+                  size="lg"
+                  [fixedWidth]="true"
+                ></fa-icon>
+              </button>
+              <button
+                mdbBtn
+                class="btn-success btn-icon mb-2"
+                mdbTooltip="{{ 'Analytics' | translate }}"
+                (click)="showVersionViewModal(trashInspection.id)"
+              >
+                <fa-icon
+                  icon="chart-bar"
+                  size="lg"
+                  [fixedWidth]="true"
+                ></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="row justify-content-between mr-2 ml-2">
+    <div class="col-md-1">
+      <eform-page-size
+        [pageSize]="trashInspectionsStateService.getPageSize() | async"
+        (onPageSizeChanged)="onPageSizeChanged($event)"
+      >
+      </eform-page-size>
+    </div>
+    <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
+      <eform-pagination
+        [limit]="trashInspectionsStateService.getPageSize() | async"
+        [size]="trashInspectionsModel.total"
+        [offset]="trashInspectionsStateService.getOffset() | async"
+        (onPageChanged)="changePage($event)"
+      ></eform-pagination>
+    </div>
+  </div>
+</div>
+
+<app-trash-inspection-pn-trash-inspection-create
+  #createTrashInspectionModal
+  (onTrashInspectionCreated)="getAllTrashInspections()"
+></app-trash-inspection-pn-trash-inspection-create>
+<app-trash-inspection-pn-trash-inspection-delete
+  #deleteTrashInspectionModal
+  (onTrashInspectionDeleted)="onTrashInspectionDeleted()"
+></app-trash-inspection-pn-trash-inspection-delete>
+<app-trash-inspection-pn-trash-inspection-version-view
+  #versionViewModal
+></app-trash-inspection-pn-trash-inspection-version-view>

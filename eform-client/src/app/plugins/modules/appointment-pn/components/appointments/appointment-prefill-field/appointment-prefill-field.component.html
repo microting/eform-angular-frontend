@@ -1,0 +1,46 @@
+<ng-container *ngFor="let field of fieldsList; let i = index">
+  <div class="card z-depth-2 mb-3" style="width: 100%" *ngIf="supportedFieldTypes.includes(field.fieldType)">
+    <div class="card-header" [ngStyle]="{'background-color': getHeaderColor(field)}"
+         *ngIf="field.fieldType != 'FieldContainer' && field.fieldType != 'SaveButton'">
+      {{field.label}}
+    </div>
+    <div class="card-body">
+      <ng-container [ngSwitch]="field.fieldType">
+        <ng-container *ngSwitchCase="'CheckBox'">
+          <element-checkbox [(fieldValue)]="field.fieldValues[0]"></element-checkbox>
+        </ng-container>
+        <ng-container *ngSwitchCase="'Number'">
+          <element-number [(fieldValue)]="field.fieldValues[0]"></element-number>
+        </ng-container>
+        <ng-container *ngSwitchCase="'NumberStepper'">
+          <element-number-stepper [(fieldValue)]="field.fieldValues[0]"></element-number-stepper>
+        </ng-container>
+        <ng-container *ngSwitchCase="'Comment'">
+          <element-comment [(fieldValue)]="field.fieldValues[0]"></element-comment>
+        </ng-container>
+        <ng-container *ngSwitchCase="'Text'">
+          <element-text [(fieldValue)]="field.fieldValues[0]"></element-text>
+        </ng-container>
+        <ng-container *ngSwitchCase="'Date'">
+          <element-date [(fieldValue)]="field.fieldValues[0]"></element-date>
+        </ng-container>
+        <ng-container *ngSwitchCase="'SingleSelect'">
+          <element-singleselect [(fieldValue)]="field.fieldValues[0]"></element-singleselect>
+        </ng-container>
+        <ng-container *ngSwitchCase="'MultiSelect'">
+          <element-multiselect [(fieldValue)]="field.fieldValues[0]"></element-multiselect>
+        </ng-container>
+        <ng-container *ngSwitchCase="'FieldContainer'">
+          <element-container [(fieldValue)]="field.dataItemList" [dataItemLabel]="field.label"></element-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="'EntitySearch'">
+          <element-entitysearch [(fieldValue)]="field.fieldValues[0]" [entityGroupUid]="field.entityGroupId"></element-entitysearch>
+        </ng-container>
+        <ng-container *ngSwitchCase="'EntitySelect'">
+          <element-entityselect [(fieldValue)]="field.fieldValues[0]" [entityGroupUid]="field.entityGroupId"></element-entityselect>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+</ng-container>
+

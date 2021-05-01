@@ -1,0 +1,101 @@
+<subheader-pn [title]="'Import Customer' | translate">
+</subheader-pn>
+<div class="p-3">
+  <input #fileUploader id="fileUploaded" type="file" class="form-control" id="files" accept="text/csv" (change)="csv2Array($event)" style="display: none">
+  <button mdbBtn (click)="fileUploader.click()" class="btn-small-height">
+    {{'Select file' | translate}}
+  </button>
+  <div class="row p-1 table-responsive-lg no-gutters">
+    <table class="table mh-100 table-striped text-center z-depth-1" *ngIf="tableData">
+      <thead>
+      <tr>
+        <th scope="row"  class="table-header-sortable th-lg" *ngFor="let cols of tableData[0]; let i = index" [attr.data-index]="i">
+          <ng-select
+            style="width: 180px"
+            class=""
+            [items]="options"
+            (change)="onSelectedChanged($event, i)"
+          >
+          </ng-select>
+        </th>
+      </tr>
+      </thead>
+      <tbody id="customersToImport">
+      <tr *ngFor="let rows of tableData; let i = index" [id]="'row_'+i">
+        <td >
+          {{rows[0]}}
+        </td>
+        <td >
+          {{rows[1]}}
+        </td>
+        <td >
+          {{rows[2]}}
+        </td>
+        <td >
+          {{rows[3]}}
+        </td>
+        <td >
+          {{rows[4]}}
+        </td>
+        <td>
+          {{rows[5]}}
+        </td>
+        <td>
+          {{rows[6]}}
+        </td>
+        <td>
+          {{rows[7]}}
+        </td>
+        <td>
+          {{rows[8]}}
+        </td>
+        <td>
+          {{rows[9]}}
+        </td>
+        <td>
+          {{rows[10]}}
+        </td>
+        <td>
+          {{rows[11]}}
+        </td>
+        <td>
+          {{rows[12]}}
+        </td>
+        <td>
+          {{rows[13]}}
+        </td>
+        <td>
+          {{rows[14]}}
+        </td>
+        <td>
+          {{rows[15]}}
+        </td>
+        <td>
+          {{rows[16]}}
+        </td>
+        <td>
+          {{rows[17]}}
+        </td>
+        <td>
+          {{rows[18]}}
+        </td>
+        <td>
+          {{rows[19]}}
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <button mdbBtn class="btn-danger btn-small-height"
+          routerLink="/plugins/customers-pn"
+          id="cancelImportBtn"
+          mdbTooltip="{{'Cancel' | translate}}">
+    {{'Cancel' | translate}}
+  </button>
+  <button mdbBtn class="btn-success btn-small-height"
+          (click)="importCustomer()"
+          routerLink="/plugins/customers-pn"
+          id="continueImportBtn"
+          mdbTooltip="{{'Import the customer' | translate}}">Continue Import
+  </button>
+</div>

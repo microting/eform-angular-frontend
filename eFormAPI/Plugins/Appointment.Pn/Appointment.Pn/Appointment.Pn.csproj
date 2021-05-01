@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <OutputPath>../../../eFormAPI.Web/Plugins/Appointment/</OutputPath>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <OutputPath>../../../eFormAPI.Web/Plugins/Appointment/</OutputPath>
+    </PropertyGroup>
+    <PropertyGroup>
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microting.AppointmentBase" Version="2.0.52" />
+      <PackageReference Include="Microting.eForm" Version="4.4.2" />
+      <PackageReference Include="Microting.eFormApi.BasePn" Version="2.0.98" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="Resources\localization.json" />
+    </ItemGroup>
+
+</Project>

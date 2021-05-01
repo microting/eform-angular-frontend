@@ -1,0 +1,143 @@
+<eform-subheader> </eform-subheader>
+<div class="container-fluid">
+  <div class="row pl-1">
+    <div class="col-md-2">
+      <div class="md-form">
+        <input
+          mdbInput
+          type="text"
+          [ngModel]="workordersStateService.getNameFilter() | async"
+          (ngModelChange)="onSearchInputChanged($event)"
+          class="form-control input-sm"
+          id="searchInput"
+        />
+        <label for="searchInput">{{ 'Search' | translate }}</label>
+      </div>
+    </div>
+  </div>
+  <div class="row p-1 table-responsive no-gutters">
+    <table
+      mdbTable
+      striped="true"
+      hover="true"
+      small="true"
+      class="z-depth-1 text-center"
+    >
+      <thead
+        table-headers
+        [tableHeaders]="tableHeaders"
+        [currentSortName]="workordersStateService.getSort() | async"
+        (sortChanged)="sortTable($event)"
+        [isSortDsc]="workordersStateService.getIsSortDsc() | async"
+      ></thead>
+      <tbody id="tableBody">
+        <tr
+          *ngFor="let workOrder of workOrdersModel?.workOrders; let i = index"
+        >
+          <td id="workOrderId">
+            {{ workOrder.id }}
+          </td>
+          <td id="workOrderCreatedAt">
+            {{ workOrder.createdAt | date: 'dd.MM.y HH:mm:ss' }}
+          </td>
+          <td id="workOrderCreatedBy">
+            {{ workOrder.createdBy }}
+          </td>
+          <td id="workOrderAssignedArea">
+            {{ workOrder.assignedArea }}
+          </td>
+          <td id="workOrderAssignedWorker">
+            {{ workOrder.assignedWorker }}
+          </td>
+          <td id="workOrderDescription">
+            {{ workOrder.description }}
+          </td>
+          <td id="workOrderCorrectedAtLatest">
+            {{ workOrder.correctedAtLatest | date: 'dd.MM.y' }}
+          </td>
+          <td id="workOrderDoneAt">
+            {{ workOrder.doneAt | date: 'dd.MM.y HH:mm:ss' }}
+          </td>
+          <td id="statusResult">
+            <div *ngIf="workOrder.doneAt">
+              <fa-icon icon="check" size="lg" [fixedWidth]="true"></fa-icon>
+            </div>
+          </td>
+          <td id="workOrderDoneBy">
+            {{ workOrder.doneBy }}
+          </td>
+          <td id="workOrderDescriptionOfTaskDone">
+            {{ workOrder.descriptionOfTaskDone }}
+          </td>
+          <td>
+            <div class="d-flex flex-row justify-content-center">
+              <button
+                id="workOrderShowPicturesOfTask"
+                *ngIf="workOrder.picturesOfTask.length > 0"
+                (click)="openPicturesModal(workOrder.picturesOfTask)"
+                class="btn btn-accent text-black-50 btn-icon mb-2"
+                mdbTooltip="{{ 'View pictures of task' | translate }}"
+              >
+                <fa-icon
+                  icon="clipboard-list"
+                  size="lg"
+                  [fixedWidth]="true"
+                ></fa-icon>
+              </button>
+              <button
+                *ngIf="workOrder.picturesOfTaskDone.length > 0"
+                id="workOrderShowPicturesOfTaskDone"
+                (click)="openPicturesModal(workOrder.picturesOfTaskDone)"
+                class="btn btn-accent text-black-50 btn-icon mb-2"
+                mdbTooltip="{{ 'View pictures of task done' | translate }}"
+              >
+                <fa-icon
+                  icon="clipboard-check"
+                  size="lg"
+                  [fixedWidth]="true"
+                ></fa-icon>
+              </button>
+              <button
+                id="deleteBtn"
+                class="btn btn-danger btn-icon mb-2"
+                mdbTooltip="{{ 'Delete' | translate }}"
+                (click)="showDeleteWorkOrderModal(workOrder)"
+              >
+                <fa-icon
+                  icon="trash-alt"
+                  size="lg"
+                  [fixedWidth]="true"
+                ></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="row p-1 my-4 mx-2" *ngIf="workOrdersModel.total === 0">
+    <span>{{ 'No work orders found' | translate }}</span>
+  </div>
+  <div class="row justify-content-between mr-2 ml-2">
+    <div class="col-md-1">
+      <eform-page-size
+        [pageSize]="workordersStateService.getPageSize() | async"
+        (onPageSizeChanged)="onPageSizeChanged($event)"
+      ></eform-page-size>
+    </div>
+    <eform-pagination
+      [limit]="workordersStateService.getPageSize() | async"
+      [size]="workOrdersModel.total"
+      [offset]="workordersStateService.getOffset() | async"
+      (onPageChanged)="changePage($event)"
+    ></eform-pagination>
+  </div>
+</div>
+
+<app-workorders-delete
+  #deleteWorkOrderModal
+  (workOrderDeleted)="workOrderDeleted()"
+></app-workorders-delete>
+<app-workorders-images-modal
+  #imagesModalComponent
+></app-workorders-images-modal>

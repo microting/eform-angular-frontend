@@ -1,0 +1,43 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{ selectedModel.title }}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col mb-3">
+              <h4>{{ 'Duration' | translate }}</h4>
+              <span>
+                {{ selectedModel.startAt
+                  ? selectedModel.startAt.format('MM/DD/YYYY HH:mm')
+                  : selectedModel.startAt }}
+                {{ selectedModel.expireAt
+                  ? '- ' + selectedModel.expireAt.format('MM/DD/YYYY HH:mm')
+                  : selectedModel.expireAt }}
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <h4>{{ 'Description' | translate }}</h4>
+              <p>{{ selectedModel.description ? selectedModel.description : '-' }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <h4>{{ 'Info' | translate }}</h4>
+              <p>{{ selectedModel.info ? selectedModel.info : '-' }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="listEditCancelBtn" class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Cancel' | translate}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

@@ -1,0 +1,45 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{ 'New Dashboard' | translate }}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col">
+              <div class="md-form">
+                <input mdbInput type="text" [(ngModel)]="dashboardName"
+                       class="form-control input-sm" id="dashboardNameCreate">
+                <label for="dashboardNameCreate">{{'Name' | translate}}</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <ng-select [items]="surveys"
+                         bindLabel="name"
+                         [placeholder]="'Select survey' | translate"
+                         bindValue="id"
+                         [clearable]="false"
+                         (ngModelChange)="onSurveySelected($event)"
+                         [(ngModel)]="selectedSurveyId"
+                         id="selectSurveyCreate">
+              </ng-select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button mdbBtn class=" btn-success btn-small-height" (click)="createDashboard()"
+                [disabled]="!dashboardName && !selectedSurveyId"
+                id="dashboardCreateSaveBtn">
+          {{ 'Save' | translate }}
+        </button>
+        <button mdbBtn class=" btn-accent text-black-50 btn-small-height" (click)="frame.hide()" id="dashboardCreateSaveCancelBtn">
+          {{ 'Cancel' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

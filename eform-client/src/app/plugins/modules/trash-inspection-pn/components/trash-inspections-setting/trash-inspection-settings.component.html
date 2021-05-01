@@ -1,0 +1,205 @@
+<eform-subheader [title]="'Trash Inspection plugin settings' | translate">
+  <div class="p-3">
+    <button class="btn btn-success" (click)="updateSettings()">
+      {{ 'Save' | translate }}
+    </button>
+  </div>
+</eform-subheader>
+
+<div class="container-fluid">
+  <div class="row mt-4">
+    <div class="col-md-12 col-xs-12 control-block">
+      <eform-subheader [title]="'Settings' | translate" [heandingSizeRem]="1">
+      </eform-subheader>
+      <div class="container-fluid">
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input
+              mdbInput
+              [(ngModel)]="settingsModel.sdkConnectionString"
+              type="text"
+              name="sdkConnectionString"
+              #sdkConnectionString="ngModel"
+              id="sdkConnectionString"
+              class="form-control"
+            />
+            <label for="sdkConnectionString">{{
+              'SDK connection string' | translate
+            }}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input
+              mdbInput
+              [(ngModel)]="settingsModel.logLevel"
+              type="text"
+              name="logLevel"
+              #loglevel="ngModel"
+              id="logLevel"
+              class="form-control"
+            />
+            <label for="logLevel">{{ 'Log Level' | translate }}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input
+              mdbInput
+              [(ngModel)]="settingsModel.logLimit"
+              type="text"
+              name="logLimit"
+              #loglimit="ngModel"
+              id="logLimit"
+              class="form-control"
+            />
+            <label for="logLimit">{{ 'Log Limit' | translate }}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input
+              mdbInput
+              [(ngModel)]="settingsModel.maxParallelism"
+              type="text"
+              name="maxParallelism"
+              #maxparallelism="ngModel"
+              id="maxParallelism"
+              class="form-control"
+            />
+            <label for="maxParallelism">{{
+              'Max parallelism' | translate
+            }}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input
+              mdbInput
+              [(ngModel)]="settingsModel.numberOfWorkers"
+              type="text"
+              name="numberOfWorkers"
+              #numberofworkers="ngModel"
+              id="numberOfWorkers"
+              class="form-control"
+            />
+            <label for="numberOfWorkers">{{
+              'Number of workers' | translate
+            }}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input
+              mdbInput
+              [(ngModel)]="settingsModel.token"
+              type="text"
+              name="token"
+              #token="ngModel"
+              id="token"
+              class="form-control"
+            />
+            <label for="token">{{ 'Token' | translate }}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input
+              mdbInput
+              [(ngModel)]="settingsModel.callBackUrl"
+              type="text"
+              name="callBackUrl"
+              #callBackUrl="ngModel"
+              id="callBackUrl"
+              class="form-control"
+            />
+            <label for="callBackUrl">{{ 'Callback URL' | translate }}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input
+              mdbInput
+              [(ngModel)]="settingsModel.callBackCredentialDomain"
+              type="text"
+              name="callBackCredentialDomain"
+              #callBackCredentialDomain="ngModel"
+              id="callBackCredentialDomain"
+              class="form-control"
+            />
+            <label for="callBackCredentialDomain">{{
+              'CallBack Credential Domain' | translate
+            }}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input
+              mdbInput
+              [(ngModel)]="settingsModel.callbackCredentialUserName"
+              type="text"
+              name="callbackCredentialUserName"
+              #callbackCredentialUserName="ngModel"
+              id="callbackCredentialUserName"
+              class="form-control"
+            />
+            <label for="callbackCredentialUserName">{{
+              'Callback Credential UserName' | translate
+            }}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input
+              mdbInput
+              [(ngModel)]="settingsModel.callbackCredentialPassword"
+              type="text"
+              name="callbackCredentialPassword"
+              #callbackCredentialPassword="ngModel"
+              id="callbackCredentialPassword"
+              class="form-control"
+            />
+            <label for="callbackCredentialPassword">{{
+              'Callback Credential Password' | translate
+            }}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input
+              mdbInput
+              [(ngModel)]="settingsModel.callbackCredentialAuthType"
+              type="text"
+              name="callbackCredentialAuthType"
+              #callbackCredentialAuthType="ngModel"
+              id="callbackCredentialAuthType"
+              class="form-control"
+            />
+            <label for="callbackCredentialAuthType">{{
+              'Callback Credential AuthType' | translate
+            }}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <ng-select
+              [items]="templatesModel.templates"
+              bindLabel="label"
+              [placeholder]="
+                settingsModel.extendedInspectioneFormId ||
+                ('Selected template for extended inspection' | translate)
+              "
+              bindValue="id"
+              [typeahead]="typeahead"
+              (change)="onSelectedChanged($event)"
+            >
+            </ng-select>
+            <label>{{
+              'Selected template for extended inspection' | translate
+            }}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,324 @@
+<eform-subheader [title]="'Edit Planning' | translate">
+  <div class="p-3">
+    <button
+      mdbBtn
+      id="planningEditSaveBtn"
+      class="btn-success btn-small-height"
+      [disabled]="saveButtonDisabled"
+      (click)="updatePlanning()"
+    >
+      {{ 'Save' | translate }}
+    </button>
+    <button
+      mdbBtn
+      id="planningEditCancelBtn"
+      class="btn-accent text-black-50 btn-small-height"
+      (click)="goBack()"
+    >
+      {{ 'Cancel' | translate }}
+    </button>
+  </div>
+</eform-subheader>
+
+<div class="container-fluid">
+  <div class="row mt-4">
+    <div class="col-md-12 col-xs-12" role="main">
+      <mdb-card>
+        <mdb-card-header>{{ 'Name' | translate }}</mdb-card-header>
+        <mdb-card-body>
+          <div class="row">
+            <ng-container
+              *ngFor="
+                let translationControls of translationsArray.controls;
+                let translationIndex = index
+              "
+            >
+              <ng-container [formGroup]="translationControls">
+                <div class="col-md-3 col-sm-6 col-xs-6">
+                  <div class="md-form">
+                    <input
+                      mdbInput
+                      type="text"
+                      id="editPlanningNameTranslation_{{ translationIndex }}"
+                      name="editPlanningNameTranslation_{{ translationIndex }}"
+                      formControlName="name"
+                      class="form-control"
+                    />
+                    <label
+                      for="editPlanningNameTranslation_{{ translationIndex }}"
+                    >
+                      {{ translationControls.get('localeName').value }}
+                    </label>
+                  </div>
+                </div>
+              </ng-container>
+            </ng-container>
+          </div>
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-md-12 col-xs-12" role="main">
+      <mdb-card>
+        <mdb-card-body>
+          <div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-6">
+              <div class="md-form">
+                <input
+                  mdbInput
+                  [(ngModel)]="selectedPlanningModel.description"
+                  type="text"
+                  id="editPlanningItemDescription"
+                  name="editPlanningItemDescription"
+                  class="form-control"
+                />
+                <label for="editPlanningItemDescription">{{
+                  'Description' | translate
+                }}</label>
+              </div>
+            </div>
+            <div
+              class="col-md-3 col-sm-6 col-xs-6"
+              *ngIf="foldersTreeDto.length > 0"
+            >
+              <div
+                class="md-form"
+                (click)="openFoldersModal()"
+                id="editFolderSelector"
+              >
+                <input
+                  mdbInput
+                  type="text"
+                  id="editFolderSelectorInput"
+                  [ngModel]="selectedFolderName"
+                  [disabled]="true"
+                  name="folderSelector"
+                  class="form-control"
+                />
+                <label for="editFolderSelectorInput">{{
+                  'Folders' | translate
+                }}</label>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-6 ng-select-wrapper">
+              <ng-select
+                [items]="templatesModel.templates"
+                bindLabel="label"
+                [placeholder]="'Selected template' | translate"
+                bindValue="id"
+                [typeahead]="typeahead"
+                [(ngModel)]="selectedPlanningModel.boundEform.relatedEFormId"
+                id="editPlanningSelector"
+              >
+                <ng-template ng-label-tmp let-item="item">
+                  <fa-icon
+                    *ngIf="
+                      selectedPlanningModel.boundEform.isEformRemoved &&
+                      selectedPlanningModel.boundEform.currentRelatedEformId ==
+                        item.id
+                    "
+                    icon="exclamation-triangle"
+                    style="color: red"
+                  ></fa-icon>
+                  {{ item.label }}
+                </ng-template>
+              </ng-select>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-6 ng-select-wrapper">
+              <ng-select
+                class="custom"
+                dropdownPosition="'bottom'"
+                [placeholder]="'Tags' | translate"
+                [(ngModel)]="selectedPlanningModel.tagsIds"
+                [bindValue]="'id'"
+                [bindLabel]="'name'"
+                [items]="availableTags"
+                id="editPlanningTagsSelector"
+                [multiple]="true"
+              ></ng-select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-6">
+              <div class="md-form">
+                <input
+                  mdbInput
+                  [(ngModel)]="selectedPlanningModel.reiteration.repeatEvery"
+                  type="text"
+                  id="editRepeatEvery"
+                  name="editRepeatEvery"
+                  class="form-control"
+                />
+                <label for="editRepeatEvery">{{
+                  'RepeatEvery' | translate
+                }}</label>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-6 ng-select-wrapper">
+              <ng-select
+                [items]="[
+                  { id: 1, name: 'Day' | translate },
+                  { id: 2, name: 'Week' | translate },
+                  { id: 3, name: 'Month' | translate }
+                ]"
+                bindLabel="name"
+                [placeholder]="'RepeatType' | translate"
+                bindValue="id"
+                [typeahead]="typeahead"
+                [(ngModel)]="selectedPlanningModel.reiteration.repeatType"
+                id="editRepeatType"
+              >
+              </ng-select>
+            </div>
+            <ng-template
+              [ngIf]="selectedPlanningModel.reiteration.repeatType == 2"
+            >
+              <div class="col-md-3 col-sm-6 col-xs-6 ng-select-wrapper">
+                <ng-select
+                  [items]="[
+                    { id: 1, name: 'Monday' | translate },
+                    { id: 2, name: 'Tuesday' | translate },
+                    { id: 3, name: 'Wednesday' | translate },
+                    { id: 4, name: 'Thursday' | translate },
+                    { id: 5, name: 'Friday' | translate },
+                    { id: 6, name: 'Saturday' | translate },
+                    { id: 0, name: 'Sunday' | translate }
+                  ]"
+                  bindLabel="name"
+                  [placeholder]="'Day of week' | translate"
+                  bindValue="id"
+                  [typeahead]="typeahead"
+                  [(ngModel)]="selectedPlanningModel.reiteration.dayOfWeek"
+                  id="editDayOfWeek"
+                >
+                </ng-select>
+              </div>
+            </ng-template>
+            <ng-template
+              [ngIf]="selectedPlanningModel.reiteration.repeatType == 3"
+            >
+              <div class="col-md-3 col-sm-6 col-xs-6">
+                <div class="md-form">
+                  <input
+                    mdbInput
+                    [(ngModel)]="selectedPlanningModel.reiteration.dayOfMonth"
+                    type="text"
+                    id="editDayOfMonth"
+                    name="editDayOfMonth"
+                    class="form-control"
+                  />
+                  <label for="editDayOfMonth">{{
+                    'Day of month' | translate
+                  }}</label>
+                </div>
+              </div>
+            </ng-template>
+            <div class="col-md-3 col-sm-6 col-xs-6">
+              <div class="md-form" [owlDateTimeTrigger]="dt2">
+                <input
+                  mdbInput
+                  [owlDateTime]="dt2"
+                  [max]="selectedPlanningModel.reiteration.internalRepeatUntil"
+                  [(ngModel)]="selectedPlanningModel.reiteration.startDate"
+                  type="text"
+                  id="editStartFrom"
+                  name="editStartFrom"
+                  class="form-control"
+                />
+                <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+                <label for="editStartFrom">{{
+                  'Start from' | translate
+                }}</label>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-6">
+              <div class="md-form" [owlDateTimeTrigger]="dt1">
+                <input
+                  mdbInput
+                  [min]="selectedPlanningModel.reiteration.startDate"
+                  [owlDateTime]="dt1"
+                  [(ngModel)]="
+                    selectedPlanningModel.reiteration.internalRepeatUntil
+                  "
+                  type="text"
+                  id="editRepeatUntil"
+                  name="editRepeatUntil"
+                  class="form-control"
+                />
+                <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                <label for="editRepeatUntil">{{
+                  'RepeatUntil' | translate
+                }}</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-6">
+              <div class="md-form">
+                <input
+                  mdbInput
+                  [(ngModel)]="selectedPlanningModel.itemNumber"
+                  type="text"
+                  id="editItemNumber"
+                  name="editItemNumber"
+                  class="form-control"
+                />
+                <label for="editItemNumber">{{ 'Number' | translate }}</label>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-6">
+              <div class="md-form">
+                <input
+                  mdbInput
+                  [(ngModel)]="selectedPlanningModel.locationCode"
+                  type="text"
+                  id="editItemLocationCode"
+                  name="editItemLocationCode"
+                  class="form-control"
+                />
+                <label for="editItemLocationCode">{{
+                  'Location code' | translate
+                }}</label>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-6">
+              <div class="md-form">
+                <input
+                  mdbInput
+                  [(ngModel)]="selectedPlanningModel.buildYear"
+                  type="text"
+                  id="editItemBuildYear"
+                  name="editItemBuildYear"
+                  class="form-control"
+                />
+                <label for="editItemBuildYear">{{
+                  'Build year' | translate
+                }}</label>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-6">
+              <div class="md-form">
+                <input
+                  mdbInput
+                  [(ngModel)]="selectedPlanningModel.type"
+                  type="text"
+                  id="editItemType"
+                  name="editItemType"
+                  class="form-control"
+                />
+                <label for="editItemType">{{ 'Type' | translate }}</label>
+              </div>
+            </div>
+          </div>
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+  </div>
+</div>
+
+<app-planning-folders-modal
+  (folderSelected)="onFolderSelected($event)"
+  [folders]="foldersTreeDto"
+  #foldersModal
+></app-planning-folders-modal>

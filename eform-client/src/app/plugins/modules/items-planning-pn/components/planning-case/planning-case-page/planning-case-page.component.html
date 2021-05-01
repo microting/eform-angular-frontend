@@ -1,0 +1,60 @@
+<!--<eform-subheader [title]="selectedRentableItemModel.fullName">-->
+
+<!--</eform-subheader>-->
+<br />
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 col-xs-12">
+      <!--      <app-installation-case-header [contractInspectionModel]="contractInspectionModel" [customerModel]="customerModel"></app-installation-case-header>-->
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-9 col-xs-12">
+      <app-case-edit-element
+        [element]="elem"
+        *ngFor="let elem of replyElement.elementList"
+      ></app-case-edit-element>
+    </div>
+    <div class="col-md-3">
+      <mdb-card class="sticky-top mb-4 mt-4" style="width: 100%; z-index: 1">
+        <mdb-card-header>
+          <!--          {{selectedRentableItemModel.fullName}}-->
+        </mdb-card-header>
+        <mdb-card-body>
+          <ul class="list-group list-group-flush">
+            <li
+              *ngFor="let element of replyElement.elementList"
+              style="cursor: pointer"
+              class="list-group-item list-group-item-action waves-light"
+              routerLinkActive="active"
+              mdbWavesEffect
+            >
+              <a (click)="goToSection('#section' + element.id)">
+                {{ element.label }}
+              </a>
+              <ng-container *ngIf="element.elementList">
+                <app-case-edit-nav [element]="element"></app-case-edit-nav>
+              </ng-container>
+            </li>
+          </ul>
+        </mdb-card-body>
+        <mdb-card-footer>
+          <div
+            class="d-flex justify-content-center align-items-center flex-column mt-2"
+          >
+            <div>
+              <button
+                mdbBtn
+                class="btn-ar btn-success"
+                (click)="saveCase()"
+                id="submit_form"
+              >
+                {{ 'Save' | translate }} <i class="fa fa-spinner fa-spin"></i>
+              </button>
+            </div>
+          </div>
+        </mdb-card-footer>
+      </mdb-card>
+    </div>
+  </div>
+</div>

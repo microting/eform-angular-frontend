@@ -1,0 +1,46 @@
+<div class="row pl-1">
+  <div class="col-md-4 col-sm-8 ng-select-wrapper">
+    <ng-select
+      class="custom"
+      dropdownPosition="'bottom'"
+      [placeholder]="'Tags' | translate"
+      [items]="availableTags"
+      [ngModel]="planningsStateService.getTagIds() | async"
+      (add)="saveTag($event)"
+      (remove)="removeSavedTag($event)"
+      [clearable]="false"
+      [bindLabel]="'name'"
+      [bindValue]="'id'"
+      id="tagSelector"
+      [multiple]="true"
+    ></ng-select>
+  </div>
+  <div class="col-md-2">
+    <div class="md-form">
+      <input
+        mdbInput
+        type="text"
+        [ngModel]="planningsStateService.getNameFilter() | async"
+        (ngModelChange)="onNameFilterChanged($event)"
+        class="form-control input-sm"
+        id="nameFilterInput"
+      />
+      <label for="nameFilterInput">{{ 'Name' | translate }}</label>
+    </div>
+  </div>
+  <div class="col-md-2">
+    <div class="md-form">
+      <input
+        mdbInput
+        type="text"
+        [ngModel]="planningsStateService.getDescriptionFilter() | async"
+        (ngModelChange)="onDescriptionFilterChanged($event)"
+        class="form-control input-sm"
+        id="descriptionFilterInput"
+      />
+      <label for="descriptionFilterInput">{{
+        'Description' | translate
+      }}</label>
+    </div>
+  </div>
+</div>

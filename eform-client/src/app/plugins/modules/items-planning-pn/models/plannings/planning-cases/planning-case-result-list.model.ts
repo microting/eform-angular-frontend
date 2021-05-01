@@ -1,0 +1,65 @@
+export class PlanningCaseResultListModel {
+  total: number;
+  items: Array<PlanningCaseResultModel> = [];
+  fieldEnabled1: boolean;
+  fieldEnabled2: boolean;
+  fieldEnabled3: boolean;
+  fieldEnabled4: boolean;
+  fieldEnabled5: boolean;
+  fieldEnabled6: boolean;
+  fieldEnabled7: boolean;
+  fieldEnabled8: boolean;
+  fieldEnabled9: boolean;
+  fieldEnabled10: boolean;
+  numberOfImagesEnabled: boolean;
+  labelEnabled: boolean;
+  descriptionEnabled: boolean;
+  deployedAtEnabled: boolean;
+  doneAtEnabled: boolean;
+  doneByUserNameEnabled: boolean;
+  uploadedDataEnabled: boolean;
+  itemNumberEnabled: boolean;
+  locationCodeEnabled: boolean;
+  buildYearEnabled: boolean;
+  typeEnabled: boolean;
+  fieldName1: string;
+  fieldName2: string;
+  fieldName3: string;
+  fieldName4: string;
+  fieldName5: string;
+  fieldName6: string;
+  fieldName7: string;
+  fieldName8: string;
+  fieldName9: string;
+  fieldName10: string;
+  fieldStatus: string;
+  comment: string;
+  sdkeFormId: number;
+}
+
+export class PlanningCaseResultModel {
+  id: number;
+  deployedAt: string;
+  doneAt: string;
+  label: string;
+  description: string;
+  buildYear: string;
+  locationCode: string;
+  itemNumber: string;
+  numberOfImages: number;
+  type: string;
+  doneByUserName: string;
+  field1: string;
+  field2: string;
+  field3: string;
+  field4: string;
+  field5: string;
+  field6: string;
+  field7: string;
+  field8: string;
+  field9: string;
+  field10: string;
+  status: number;
+  sdkCaseId: number;
+  token: string;
+}

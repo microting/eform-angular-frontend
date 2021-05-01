@@ -1,0 +1,311 @@
+<eform-subheader [title]="'New planning' | translate">
+  <div class="p-3">
+    <button
+      mdbBtn
+      id="planningCreateSaveBtn"
+      class="btn-success btn-small-height"
+      [disabled]="saveButtonDisabled"
+      (click)="createPlanning()"
+    >
+      {{ 'Create' | translate }}
+    </button>
+    <button
+      mdbBtn
+      id="planningCreateCancelBtn"
+      class="btn-accent text-black-50 btn-small-height"
+      (click)="goBack()"
+    >
+      {{ 'Cancel' | translate }}
+    </button>
+  </div>
+</eform-subheader>
+
+<div class="container-fluid">
+  <div class="row mt-4">
+    <div class="col-md-12 col-xs-12" role="main">
+      <mdb-card>
+        <mdb-card-header>{{ 'Name' | translate }}</mdb-card-header>
+        <mdb-card-body>
+          <div class="row">
+            <ng-container
+              *ngFor="
+                let translationControls of translationsArray.controls;
+                let translationIndex = index
+              "
+            >
+              <ng-container [formGroup]="translationControls">
+                <div class="col-md-3 col-sm-6 col-xs-6">
+                  <div class="md-form">
+                    <input
+                      mdbInput
+                      type="text"
+                      id="createPlanningNameTranslation_{{ translationIndex }}"
+                      name="createPlanningNameTranslation_{{
+                        translationIndex
+                      }}"
+                      formControlName="name"
+                      class="form-control"
+                    />
+                    <label
+                      for="createPlanningNameTranslation_{{ translationIndex }}"
+                    >
+                      {{ translationControls.get('language').value }}
+                    </label>
+                  </div>
+                </div>
+              </ng-container>
+            </ng-container>
+          </div>
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+  </div>
+  <div class="row mt-2">
+    <div class="col-md-12 col-xs-12" role="main">
+      <mdb-card>
+        <mdb-card-body>
+          <div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-6">
+              <div class="md-form">
+                <input
+                  mdbInput
+                  [(ngModel)]="newPlanningModel.description"
+                  type="text"
+                  id="createPlanningItemDescription"
+                  name="createPlanningItemDescription"
+                  class="form-control"
+                />
+                <label for="createPlanningItemDescription">{{
+                  'Description' | translate
+                }}</label>
+              </div>
+            </div>
+            <div
+              class="col-md-3 col-sm-6 col-xs-6"
+              *ngIf="foldersTreeDto.length > 0"
+            >
+              <div
+                class="md-form"
+                id="createFolderSelector"
+                (click)="openFoldersModal()"
+              >
+                <input
+                  mdbInput
+                  type="text"
+                  id="createFolderSelectorInput"
+                  [ngModel]="selectedFolderName"
+                  [disabled]="true"
+                  name="folderSelectorInput"
+                  class="form-control"
+                />
+                <label
+                  for="createFolderSelectorInput"
+                  id="folderSelectorLabel"
+                  (click)="openFoldersModal()"
+                  >{{ 'Folders' | translate }}</label
+                >
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-6 ng-select-wrapper">
+              <ng-select
+                [items]="templatesModel.templates"
+                bindLabel="label"
+                [placeholder]="'Selected template' | translate"
+                bindValue="id"
+                [typeahead]="typeahead"
+                [(ngModel)]="newPlanningModel.boundEform.relatedEFormId"
+                id="createPlanningSelector"
+              >
+              </ng-select>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-6 ng-select-wrapper">
+              <ng-select
+                class="custom"
+                dropdownPosition="'bottom'"
+                [placeholder]="'Tags' | translate"
+                [(ngModel)]="newPlanningModel.tagsIds"
+                [bindValue]="'id'"
+                [bindLabel]="'name'"
+                [items]="availableTags"
+                id="createPlanningTagsSelector"
+                [multiple]="true"
+              ></ng-select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-6">
+              <div class="md-form">
+                <input
+                  mdbInput
+                  [(ngModel)]="newPlanningModel.reiteration.repeatEvery"
+                  type="text"
+                  id="createRepeatEvery"
+                  name="createRepeatEvery"
+                  class="form-control"
+                />
+                <label for="createRepeatEvery">{{
+                  'RepeatEvery' | translate
+                }}</label>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-6 ng-select-wrapper">
+              <ng-select
+                [items]="[
+                  { id: 1, name: 'Day' | translate },
+                  { id: 2, name: 'Week' | translate },
+                  { id: 3, name: 'Month' | translate }
+                ]"
+                bindLabel="name"
+                [placeholder]="'Repeat Type' | translate"
+                bindValue="id"
+                [typeahead]="typeahead"
+                [(ngModel)]="newPlanningModel.reiteration.repeatType"
+                id="createRepeatType"
+              >
+              </ng-select>
+            </div>
+            <ng-template [ngIf]="newPlanningModel.reiteration.repeatType == 2">
+              <div class="col-md-3 col-sm-6 col-xs-6 ng-select-wrapper">
+                <ng-select
+                  [items]="[
+                    { id: 1, name: 'Monday' | translate },
+                    { id: 2, name: 'Tuesday' | translate },
+                    { id: 3, name: 'Wednesday' | translate },
+                    { id: 4, name: 'Thursday' | translate },
+                    { id: 5, name: 'Friday' | translate },
+                    { id: 6, name: 'Saturday' | translate },
+                    { id: 0, name: 'Sunday' | translate }
+                  ]"
+                  bindLabel="name"
+                  [placeholder]="'Day of week' | translate"
+                  bindValue="id"
+                  [typeahead]="typeahead"
+                  [(ngModel)]="newPlanningModel.reiteration.dayOfWeek"
+                  id="createDayOfWeek"
+                >
+                </ng-select>
+              </div>
+            </ng-template>
+            <ng-template [ngIf]="newPlanningModel.reiteration.repeatType == 3">
+              <div class="col-md-3 col-sm-6 col-xs-6">
+                <div class="md-form">
+                  <input
+                    mdbInput
+                    [(ngModel)]="newPlanningModel.reiteration.dayOfMonth"
+                    type="text"
+                    id="createDayOfMonth"
+                    name="createDayOfMonth"
+                    class="form-control"
+                  />
+                  <label for="createDayOfMonth">{{
+                    'Day of month' | translate
+                  }}</label>
+                </div>
+              </div>
+            </ng-template>
+            <div class="col-md-3 col-sm-6 col-xs-6">
+              <div class="md-form" [owlDateTimeTrigger]="dt2">
+                <input
+                  mdbInput
+                  [owlDateTime]="dt2"
+                  [max]="newPlanningModel.reiteration.internalRepeatUntil"
+                  [(ngModel)]="newPlanningModel.reiteration.startDate"
+                  type="text"
+                  id="createStartFrom"
+                  name="createStartFrom"
+                  class="form-control"
+                />
+                <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+                <label for="createStartFrom">{{
+                  'Start from' | translate
+                }}</label>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-6">
+              <div class="md-form" [owlDateTimeTrigger]="dt1">
+                <input
+                  mdbInput
+                  [owlDateTime]="dt1"
+                  [min]="newPlanningModel.reiteration.startDate"
+                  [(ngModel)]="newPlanningModel.reiteration.internalRepeatUntil"
+                  type="text"
+                  id="createRepeatUntil"
+                  name="createRepeatUntil"
+                  class="form-control"
+                />
+                <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                <label for="createRepeatUntil">{{
+                  'RepeatUntil' | translate
+                }}</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-6">
+              <div class="md-form">
+                <input
+                  mdbInput
+                  [(ngModel)]="newPlanningModel.planningNumber"
+                  type="text"
+                  id="createItemNumber"
+                  name="createItemNumber"
+                  class="form-control"
+                />
+                <label for="createItemNumber">{{ 'Number' | translate }}</label>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-6">
+              <div class="md-form">
+                <input
+                  mdbInput
+                  [(ngModel)]="newPlanningModel.locationCode"
+                  type="text"
+                  id="createItemLocationCode"
+                  name="createItemLocationCode"
+                  class="form-control"
+                />
+                <label for="createItemLocationCode">{{
+                  'Location code' | translate
+                }}</label>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-6">
+              <div class="md-form">
+                <input
+                  mdbInput
+                  [(ngModel)]="newPlanningModel.buildYear"
+                  type="text"
+                  id="createItemBuildYear"
+                  name="createItemBuildYear"
+                  class="form-control"
+                />
+                <label for="createItemBuildYear">{{
+                  'Build year' | translate
+                }}</label>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-6">
+              <div class="md-form">
+                <input
+                  mdbInput
+                  [(ngModel)]="newPlanningModel.type"
+                  type="text"
+                  id="createItemType"
+                  name="createItemType"
+                  class="form-control"
+                />
+                <label for="createItemType">{{ 'Type' | translate }}</label>
+              </div>
+            </div>
+          </div>
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+  </div>
+</div>
+
+<app-planning-folders-modal
+  (folderSelected)="onFolderSelected($event)"
+  [folders]="foldersTreeDto"
+  #foldersModal
+></app-planning-folders-modal>

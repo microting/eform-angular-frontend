@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemsGroupPlanning.Pn", "ItemsGroupPlanning.Pn\ItemsGroupPlanning.Pn.csproj", "{E3F95B04-48FA-4926-AF23-CFE0DA14220B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{8EB04F40-257F-40ED-A5CD-9D333FC1E0E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemsGroupPlanning.Pn.Test", "ItemsGroupPlanning.Pn.Test\ItemsGroupPlanning.Pn.Test.csproj", "{83EF1546-F1E2-4A85-855A-B3D254F68658}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E3F95B04-48FA-4926-AF23-CFE0DA14220B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3F95B04-48FA-4926-AF23-CFE0DA14220B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3F95B04-48FA-4926-AF23-CFE0DA14220B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3F95B04-48FA-4926-AF23-CFE0DA14220B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83EF1546-F1E2-4A85-855A-B3D254F68658}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83EF1546-F1E2-4A85-855A-B3D254F68658}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83EF1546-F1E2-4A85-855A-B3D254F68658}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83EF1546-F1E2-4A85-855A-B3D254F68658}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{83EF1546-F1E2-4A85-855A-B3D254F68658} = {8EB04F40-257F-40ED-A5CD-9D333FC1E0E2}
+	EndGlobalSection
+EndGlobal

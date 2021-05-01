@@ -1,0 +1,100 @@
+[
+  {
+    "Key": "Monitoring",
+    "LocalizedValue": {
+      "da": "Overvågning",
+      "en-US": "Monitoring"
+    }
+  },
+  {
+    "Key": "NotificationRules",
+    "LocalizedValue": {
+      "da": "Underretningsregler",
+      "en-US": "Notification rules"
+    }
+  },
+  {
+    "Key": "Settings",
+    "LocalizedValue": {
+      "da": "Indstillinger",
+      "en-US": "Settings"
+    }
+  },
+  {
+    "Key": "NotificationRuleNotFound",
+    "LocalizedValue": {
+      "da": "Notifikationsregel ikke fundet",
+      "en-US": "Notification rule not found"
+    }
+  },
+  {
+    "Key": "NotificationRuleDeletedSuccessfully",
+    "LocalizedValue": {
+      "da": "Underretningsregel blev slettet",
+      "en-US": "Notification rule deleted successfully"
+    }
+  },
+  {
+    "Key": "ErrorWhileRemovingNotificationRule",
+    "LocalizedValue": {
+      "da": "Fejl under fjernelse af underretningsregel",
+      "en-US": "Error while removing notification rule"
+    }
+  },
+  {
+    "Key": "NotificationRuleCreatedSuccessfully",
+    "LocalizedValue": {
+      "da": "Underretningsregel oprettet med succes",
+      "en-US": "Notification rule created successfully"
+    }
+  },
+  {
+    "Key": "ErrorWhileCreatingNotificationRule",
+    "LocalizedValue": {
+      "da": "Fejl under oprettelse af underretningsregel",
+      "en-US": "Error while creating notification rule"
+    }
+  },
+  {
+    "Key": "ErrorWhileObtainingNotificationRulesInfo",
+    "LocalizedValue": {
+      "da": "Fejl under indhentning af meddelelsesreglerinfo",
+      "en-US": "Error while obtaining notification rules info"
+    }
+  },
+  {
+    "Key": "ErrorWhileUpdatingNotificationRule",
+    "LocalizedValue": {
+      "da": "Fejl under opdatering af underretningsregel",
+      "en-US": "Error while updating notification rule"
+    }
+  },
+  {
+    "Key": "NotificationRuleHasBeenUpdated",
+    "LocalizedValue": {
+      "da": "Underretningsregel er blevet opdateret",
+      "en-US": "Notification rule has been updated"
+    }
+  },
+  {
+    "Key": "ErrorWhileObtainingMonitoringSettings",
+    "LocalizedValue": {
+      "da": "Fejl under opnåelse af overvågningsindstillinger",
+      "en-US": "Error while obtaining monitoring settings"
+    }
+  },
+  {
+    "Key": "SettingsHaveBeenUpdatedSuccessfully",
+    "LocalizedValue": {
+      "da": "Indstillinger er blevet opdateret med succes",
+      "en-US": "Settings have been updated successfully"
+    }
+  },
+  {
+    "Key": "ErrorWhileUpdatingSettings",
+    "LocalizedValue": {
+      "da": "Fejl under opdatering af indstillinger",
+      "en-US": "Error while updating settings"
+    }
+  }
+]

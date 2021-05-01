@@ -1,0 +1,53 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+      <PlatformTarget>x64</PlatformTarget>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <None Remove="Data\DashboardHorizontalBar.data.json" />
+      <None Remove="Data\DashboardLine.data.json" />
+      <None Remove="Data\DashboardLineScore.data.json" />
+      <None Remove="Data\DashboardMultiChart.data.json" />
+      <None Remove="Data\DashboardStackedBar.data.json" />
+      <None Remove="Data\DashboardStackedGrouped.data.json" />
+      <None Remove="Data\DashboardTotal.data.json" />
+      <None Remove="Data\DashboardTotalN.data.json" />
+      <None Remove="Data\DashboardVerticalBar.data.json" />
+      <None Remove="Data\TestAnswer.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="Data\TestAnswer.json" />
+      <EmbeddedResource Include="Data\DashboardHorizontalBar.data.json" />
+      <EmbeddedResource Include="Data\DashboardMultiChart.data.json" />
+      <EmbeddedResource Include="Data\DashboardStackedGrouped.data.json" />
+      <EmbeddedResource Include="Data\DashboardTotal.data.json" />
+      <EmbeddedResource Include="Data\DashboardVerticalBar.data.json" />
+      <EmbeddedResource Include="Data\DashboardTotalN.data.json" />
+      <EmbeddedResource Include="Data\DashboardStackedBar.data.json" />
+      <EmbeddedResource Include="Data\DashboardLineScore.data.json" />
+      <EmbeddedResource Include="Data\DashboardLine.data.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
+      <PackageReference Include="Moq" Version="4.16.1" />
+      <PackageReference Include="NUnit" Version="3.13.1" />
+      <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\InsightDashboard.Pn\InsightDashboard.Pn.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Resource Include="Data\TestAnswer.json" />
+    </ItemGroup>
+
+</Project>

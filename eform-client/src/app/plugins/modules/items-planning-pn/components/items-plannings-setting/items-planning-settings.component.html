@@ -1,0 +1,143 @@
+<eform-subheader [title]="'Items planning plugin settings' | translate">
+  <div class="p-3">
+    <button class="btn btn-success" id="saveBtn" (click)="updateSettings()">
+      {{ 'Save' | translate }}
+    </button>
+  </div>
+</eform-subheader>
+
+<div class="container-fluid">
+  <div class="row mt-4">
+    <div class="col-md-12 col-xs-12 control-block">
+      <eform-subheader [title]="'Settings' | translate" [heandingSizeRem]="1">
+      </eform-subheader>
+      <div class="container-fluid">
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input
+              mdbInput
+              [(ngModel)]="settingsModel.reportHeaderName"
+              type="text"
+              name="sdkConnectionString"
+              #sdkConnectionString="ngModel"
+              id="sdkConnectionString"
+              class="form-control"
+            />
+            <label for="sdkConnectionString">{{
+              'Report header' | translate
+            }}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input
+              mdbInput
+              [(ngModel)]="settingsModel.reportSubHeaderName"
+              type="text"
+              name="logLevel"
+              #loglevel="ngModel"
+              id="logLevel"
+              class="form-control"
+            />
+            <label for="logLevel">{{ 'Report sub header' | translate }}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input
+              mdbInput
+              [(ngModel)]="settingsModel.startTime"
+              type="text"
+              name="logLimit"
+              #loglimit="ngModel"
+              id="logLimit"
+              class="form-control"
+            />
+            <label for="logLimit">{{
+              'Start time for doing the synchronization of items' | translate
+            }}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <input
+              mdbInput
+              [(ngModel)]="settingsModel.endTime"
+              type="text"
+              name="maxParallelism"
+              #maxparallelism="ngModel"
+              id="maxParallelism"
+              class="form-control"
+            />
+            <label for="maxParallelism">{{
+              'End time for doing the synchronization of items' | translate
+            }}</label>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="md-form input-group">
+            <p class="mb-0 align-self-center">
+              {{ 'Report image' | translate }}
+            </p>
+            <img
+              *ngIf="headerImageLink"
+              class="p-3"
+              width="150"
+              [src]="headerImageLink | authImage | async"
+            />
+          </div>
+          <div class="align-self-center align-self-end mb-3">
+            <button
+              mdbBtn
+              type="button"
+              color="primary"
+              size="sm"
+              *ngIf="loginPageImageUploader?.queue?.length == 0"
+              id="loginPageImageUploadBtn"
+              (click)="loginPagefileInput.click()"
+            >
+              {{ 'Upload' | translate }}
+            </button>
+            <button
+              mdbBtn
+              type="button"
+              color="warning"
+              size="sm"
+              *ngIf="loginPageImageUploader?.queue?.length > 0"
+              (click)="loginPagefileInput.click()"
+            >
+              {{ 'Pending' | translate }}
+            </button>
+            <input
+              class="input-invisible"
+              type="file"
+              ng2FileSelect
+              #loginPagefileInput
+              [uploader]="loginPageImageUploader"
+              id="loginPageFileInput"
+            />
+            <!--            <button-->
+            <!--              class="btn btn-icon waves-light m-0"-->
+            <!--              id="loginPageImageVisibilityToggler"-->
+            <!--              [class.btn-success]="adminSettingsModel.loginPageSettingsModel.imageLinkVisible"-->
+            <!--              [class.btn-danger]="!adminSettingsModel.loginPageSettingsModel.imageLinkVisible"-->
+            <!--              (click)="adminSettingsModel.loginPageSettingsModel.imageLinkVisible = !adminSettingsModel.loginPageSettingsModel.imageLinkVisible">-->
+            <!--              <fa-icon icon="eye" [fixedWidth]="true" size="lg" *ngIf="adminSettingsModel.loginPageSettingsModel.imageLinkVisible"></fa-icon>-->
+
+            <!--              <fa-icon icon="eye-slash" [fixedWidth]="true" size="lg" *ngIf="!adminSettingsModel.loginPageSettingsModel.imageLinkVisible"></fa-icon>-->
+            <!--            </button>-->
+
+            <button
+              mdbBtn
+              class="btn-danger btn-icon mb-2"
+              mdbTooltip="{{ 'Delete image' | translate }}"
+              (click)="resetImage()"
+            >
+              <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true"></fa-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

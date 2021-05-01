@@ -1,0 +1,95 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{ 'Item Case Uploaded Data' | translate }}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div>
+            {{'ID: ' | translate}} {{selectedListCase.id}}
+          </div>
+          <div>
+            {{'Date: ' | translate }} {{selectedListCase.date}}
+          </div>
+          <div>
+            {{'Item Number: ' | translate}} {{selectedListCase.itemNumber}}
+          </div>
+          <div>
+            {{'Description: ' | translate}} {{selectedListCase.description}}
+          </div>
+          <div>
+            {{'Build Year: ' | translate}} {{selectedListCase.buildYear}}
+          </div>
+          <div>
+            {{'Type: ' | translate}} {{selectedListCase.type}}
+          </div>
+          <div>
+            {{'Location: ' | translate}} {{selectedListCase.location}}
+          </div>
+          <div>
+            {{'Status: ' | translate}} {{selectedListCase.status}}
+          </div>
+          <div>
+            {{'Comment: ' | translate}} {{selectedListCase.comment}}
+          </div>
+          <div class="row">
+            <button mdbBtn class="btn-success"
+            (click)="showUploadPDFModal()">{{'Upload New PDF' | translate}}
+            </button>
+          </div>
+          <div class="row p-1 mt-4 table-responsive no-gutters">
+            <table class="table table-sm table-striped text-center z-depth-1">
+              <thead>
+              <tr>
+                <th scope="col" class="table-header-sortable" id="idTableHeader">
+                  <div class="d-flex align-items-center justify-content-center">
+                    ID
+                  </div>
+                </th>
+                <th scope="col" class="table-header-sortable" id="nameTableHeader">
+                  <div class="d-flex align-items-center justify-content-center">
+                    Name
+                  </div>
+                </th>
+                <th scope="col">
+                  {{ 'Actions' | translate }}
+                </th>
+              </tr>
+              </thead>
+              <tbody id="tableBody">
+              <tr *ngFor="let uploadedData of uploadedDatasModel.uploadedDatas">
+                <td id="uploadedDatasId">
+                  {{uploadedData.id}}
+                </td>
+                <td id="uploadedDatasFileName">
+                  {{uploadedData.fileName}}
+                </td>
+                <td id="actionBtns">
+                  <button mdbBtn class="btn-success"
+                          (click)="downloadUploadedDataPdf(uploadedData.fileName)"
+                          mdbTooltip="{{'Download PDF' | translate}}">
+                    <fa-icon icon="download" size="lg" [fixedWidth]="true"></fa-icon>
+                  </button>
+                  <button mdbBtn class="btn-danger"
+                          (click)="showUploadedDataDeleteModal(uploadedData)"
+                          mdbTooltip="{{'Delete' | translate}}">
+                    <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true"></fa-icon>
+                  </button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button mdbBtn id="listCreateCancelBtn" class="btn-accent text-black-50 btn-small-height"
+                (click)="frame.hide()">{{'Cancel' | translate}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-uploaded-data-pdf (onUploadedDataUploaded)="getMessage()" #uploadedDataPdfModal></app-uploaded-data-pdf>
+<app-uploaded-data-delete (onUploadedDataDeleted)="getMessage()" #uploadedDataDeleteModal></app-uploaded-data-delete>

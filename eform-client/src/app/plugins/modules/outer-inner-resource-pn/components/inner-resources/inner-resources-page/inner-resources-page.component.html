@@ -1,0 +1,113 @@
+<subheader-pn [title]="machinesModel.name">
+  <div class="p-3">
+    <button *ngIf="pluginClaimsHelper.check(outerInnerResourcePnClaims.createMachines)"
+      class="btn btn-success"
+      id="newInnerResource"
+      mdbTooltip="{{ 'Create' | translate }}"
+      (click)="showCreateMachineModal()">{{ 'New' | translate }}
+    </button>
+  </div>
+</subheader-pn>
+
+<div class="container-fluid">
+  <div class="row p-1 mt-4 table-responsive no-gutters">
+    <table class="table table-sm table-striped text-center z-depth-1">
+      <thead>
+      <tr>
+        <th scope="col" class="table-header-sortable" id="idTableHeader"
+            (click)="sortTable('Id')">
+          <div class="d-flex align-items-center justify-content-center">
+            ID
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'Id'">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'Id' && !machinesRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'Id' && machinesRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th scope="col" class="table-header-sortable" id="nameTableHeader"
+            (click)="sortTable('Name')">
+          <div class="d-flex align-items-center justify-content-center">
+            {{'Name' | translate}}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'Name'">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'Name' && !machinesRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'Name' && machinesRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th scope="col" class="table-header-sortable" id="externalIdTableHeader"
+            (click)="sortTable('ExternalId')">
+          <div class="d-flex align-items-center justify-content-center">
+            {{'External ID' | translate}}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'ExternalId'">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'ExternalId' && !machinesRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'ExternalId' && machinesRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+
+        <th scope="col">
+          {{ 'Actions' | translate }}
+        </th>
+      </tr>
+      </thead>
+      <tbody id="tableBody">
+      <tr *ngFor="let machine of machinesModel.innerResourceList">
+        <td id="innerResourceId">
+          {{machine.id}}
+        </td>
+        <td id="innerResourceName">
+          {{machine.name}}
+        </td>
+        <td id="innerResourceExternalId">
+          {{machine.externalId}}
+        </td>
+        <td>
+          <div class="d-flex flex-row justify-content-center">
+            <button mdbBtn class="btn-accent text-black-50 btn-icon mb-2"
+                    mdbTooltip="{{ 'Edit' | translate }}"
+                    id="innerResourceEditBtn"
+                    (click)="showEditMachineModal(machine)">
+              <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
+            </button>
+            <button mdbBtn class="btn-danger btn-icon mb-2 "
+                    mdbTooltip="{{ 'Delete' | translate }}"
+                    id="innerResourceDeleteBtn"
+                    (click)="showDeleteMachineModal(machine)">
+              <fa-icon icon="trash-alt" [fixedWidth]="true" size="lg"></fa-icon>
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="row justify-content-between mr-2 ml-2">
+    <div class="col-md-1">
+      <page-size-pn
+        [pageSize]="localPageSettings.pageSize"
+        (onPageSizeChanged)="localPageSettings.pageSize = $event; machinesRequestModel.pageIndex = 1;
+        updateLocalPageSettings()">
+      </page-size-pn>
+    </div>
+    <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
+      <pagination-pn *ngIf="machinesModel.total > machinesRequestModel.pageSize"
+                     [limit]="machinesRequestModel.pageSize"
+                     [size]="machinesModel.total"
+                     [offset]="machinesRequestModel.offset"
+                     (onPageChanged)="changePage($event)"></pagination-pn>
+    </div>
+  </div>
+</div>
+
+<app-machine-area-pn-machine-create #createMachineModal
+                                    [mappingAreas]="mappingAreas"
+                                    (onMachineCreated)="getAllMachines()">
+</app-machine-area-pn-machine-create>
+<app-machine-area-pn-machine-edit #editMachineModal
+                                  [mappingAreas]="mappingAreas"
+                                  (onMachineUpdated)="getAllMachines()"></app-machine-area-pn-machine-edit>
+<app-machine-area-pn-machine-delete #deleteMachineModal
+                                    (onMachineDeleted)="getAllMachines()"></app-machine-area-pn-machine-delete>

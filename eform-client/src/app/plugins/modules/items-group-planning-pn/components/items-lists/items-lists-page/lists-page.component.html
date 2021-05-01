@@ -1,0 +1,217 @@
+<subheader-pn>
+  <div class="p-3">
+    <button mdbBtn *ngIf="pluginClaimsHelper.check(itemsPlanningPnClaims.createItemsGroupLists)"
+      id="listCreateBtn"
+      class="btn-success btn-small-height"
+      mdbTooltip="{{ 'Create List' | translate }}"
+      [routerLink]="['/plugins/items-group-planning-pn/lists/create']">{{ 'New List' | translate }}
+    </button>
+  </div>
+</subheader-pn>
+
+<div class="container-fluid">
+  <div class="row p-1 mt-4 table-responsive no-gutters">
+    <table mdbTable striped="true" hover="true" small="true" class="z-depth-1 text-center">
+      <thead>
+      <tr>
+        <th scope="col" class="table-header-sortable" id="idTableHeader"
+            (click)="sortTable('Id')">
+          <div class="d-flex align-items-center justify-content-center">
+            ID
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'Id'">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'Id' && !listRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'Id' && listRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th scope="col" class="table-header-sortable" id="nameTableHeader"
+            (click)="sortTable('Name')">
+          <div class="d-flex align-items-center justify-content-center">
+            {{'Name' | translate}}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'Name'">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'Name' && !listRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'Name' && listRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th scope="col" class="table-header-sortable" id="descriptionTableHeader"
+            (click)="sortTable('Description')">
+          <div class="d-flex align-items-center justify-content-center">
+            {{'Description' | translate}}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'Description'">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'Description' && !listRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'Description' && listRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th scope="col" class="table-header-sortable" id="repeatEveryTableHeader"
+            (click)="sortTable('RepeatEvery')">
+          <div class="d-flex align-items-center justify-content-center">
+            {{'Repeat every' | translate}}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'RepeatEvery'">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'RepeatEvery' && !listRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'RepeatEvery' && listRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th scope="col" class="table-header-sortable" id="repeatTypeTableHeader"
+            (click)="sortTable('RepeatType')">
+          <div class="d-flex align-items-center justify-content-center">
+            {{'Repeat type' | translate}}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'RepeatType'">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'RepeatType' && !listRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'RepeatType' && listRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th scope="col" class="table-header-sortable" id="repeatTypeTableHeader"
+            (click)="sortTable('RepeatType')">
+          <div class="d-flex align-items-center justify-content-center">
+            {{'Day of week' | translate}}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'RepeatType'">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'RepeatType' && !listRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'RepeatType' && listRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th scope="col" class="table-header-sortable" id="repeatTypeTableHeader"
+            (click)="sortTable('RepeatType')">
+          <div class="d-flex align-items-center justify-content-center">
+            {{'Day of month' | translate}}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'RepeatType'">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'RepeatType' && !listRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'RepeatType' && listRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th scope="col" class="table-header-sortable" id="repeatUntilTableHeader"
+            (click)="sortTable('RepeatUntil')">
+          <div class="d-flex align-items-center justify-content-center">
+            {{'Repeat until' | translate}}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != 'RepeatUntil'">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'RepeatUntil' && !listRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == 'RepeatUntil' && listRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+
+        <th scope="col">
+          {{ 'Actions' | translate }}
+        </th>
+      </tr>
+      </thead>
+      <tbody id="tableBody">
+      <tr *ngFor="let list of listsModel.lists">
+        <td id="listId">
+          {{list.id}}
+        </td>
+        <td id="listName">
+          {{list.name}}
+        </td>
+        <td id="listDescription">
+          {{list.description}}
+        </td>
+        <td id="listRepeatEvery">
+          {{list.repeatEvery}}
+        </td>
+        <td id="listRepeatType">
+          <div *ngIf="list.repeatType == 1">
+            {{'Day' | translate}}
+          </div>
+          <div *ngIf="list.repeatType == 2">
+            {{'Week' | translate}}
+          </div>
+          <div *ngIf="list.repeatType == 3">
+            {{'Month' | translate}}
+          </div>
+        </td>
+        <td id="listDayOfWeek">
+          <div *ngIf="list.dayOfWeek == 1">
+            {{'Monday' | translate}}
+          </div>
+          <div *ngIf="list.dayOfWeek == 2">
+            {{'Tuesday' | translate}}
+          </div>
+          <div *ngIf="list.dayOfWeek == 3">
+            {{'Wednesday' | translate}}
+          </div>
+          <div *ngIf="list.dayOfWeek == 4">
+            {{'Thursday' | translate}}
+          </div>
+          <div *ngIf="list.dayOfWeek == 5">
+            {{'Friday' | translate}}
+          </div>
+          <div *ngIf="list.dayOfWeek == 6">
+            {{'Saturday' | translate}}
+          </div>
+          <div *ngIf="list.dayOfWeek == 7">
+            {{'Sunday' | translate}}
+          </div>
+        </td>
+        <td id="listDayOfMonth">
+          {{list.dayOfMonth}}
+        </td>
+        <td id="listRepeatUntil">
+          <date-formatter [date]="list.repeatUntil" [Format]="'date'"></date-formatter>
+        </td>
+        <td>
+          <div class="d-flex flex-row justify-content-center">
+            <button id="updateListBtn"
+              class="btn btn-accent text-black-50 btn-icon mb-2"
+                    mdbTooltip="{{ 'Edit List' | translate }}"
+                    [routerLink]="['/plugins/items-group-planning-pn/lists/edit/' + list.id]">
+              <fa-icon icon="pen" size="lg" [fixedWidth]="true"></fa-icon>
+            </button>
+            <button mdbBtn class="btn-success btn-icon mb-2"
+                    id="itemlist-case-results-btn"
+                    [routerLink]="['/plugins/items-group-planning-pn/item-itemCase-results', list.id]"
+                    mdbTooltip="{{ 'Show itemCase results' | translate }}">
+              <fa-icon icon="briefcase" [fixedWidth]="true" size="lg"></fa-icon>
+            </button>
+
+            <button mdbBtn class="btn-success btn-icon mb-2" id="edit-columnts-btn"
+                    (click)="openEditColumnsModal(list)"
+                    mdbTooltip="{{ 'Edit columns' | translate }}">
+              <fa-icon icon="table" [fixedWidth]="true" size="lg"></fa-icon>
+            </button>
+            <button id="deleteListBtn"
+              class="btn btn-danger btn-icon mb-2 "
+                    mdbTooltip="{{ 'Delete List' | translate }}"
+                    (click)="showDeleteListModal(list)">
+              <fa-icon icon="trash-alt" size="lg" [fixedWidth]="true"></fa-icon>
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="row justify-content-between mr-2 ml-2">
+    <div class="col-md-1">
+      <page-size-pn
+        [pageSize]="localPageSettings.pageSize"
+        (onPageSizeChanged)="localPageSettings.pageSize = $event; listRequestModel.pageIndex = 1;
+        updateLocalPageSettings()">
+      </page-size-pn>
+    </div>
+    <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
+      <pagination-pn *ngIf="listsModel.total > listRequestModel.pageSize"
+                     [limit]="listRequestModel.pageSize"
+                     [size]="listsModel.total"
+                     [offset]="listRequestModel.offset"
+                     (onPageChanged)="changePage($event)"></pagination-pn>
+    </div>
+  </div>
+</div>
+<app-items-group-planning-pn-list-delete #deleteListModal
+                                     (onListDeleted)="getAllLists()"></app-items-group-planning-pn-list-delete>
+
+<app-item-list-case-column-modal #modalCasesColumns></app-item-list-case-column-modal>

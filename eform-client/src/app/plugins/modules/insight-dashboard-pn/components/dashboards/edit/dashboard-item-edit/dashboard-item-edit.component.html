@@ -1,0 +1,230 @@
+<div class="card z-depth-3 mb-4" style="width: 100%">
+  <div class="card-header">
+    <div class="d-flex flex-row align-items-center">
+      <div style="cursor: pointer">
+        <div *ngIf="dashboardItem.collapsed" class="mr-4">
+          <a>
+            <fa-icon icon="grip-lines" size="lg" [fixedWidth]="true"></fa-icon>
+          </a>
+        </div>
+      </div>
+      <div>
+        {{dashboardItemFullName}}
+      </div>
+      <div class="ml-auto">
+        <div class="d-flex flex-row-reverse align-items-center">
+          <div class="text-black-50">
+            <button mdbBtn class="btn-success btn-icon mb-2"
+                    mdbTooltip="{{ 'Add block' | translate }}">
+              <fa-icon icon="plus-circle"
+                       id="createItemBtn"
+                       (click)="addNew(dashboardItem.position)"
+                       size="lg"></fa-icon>
+            </button>
+            <button mdbBtn class="btn-success btn-icon mb-2"
+                    mdbTooltip="{{ 'Copy block' | translate }}">
+            <fa-icon icon="copy"
+                     id="copyItemBtn"
+                     (click)="copy(dashboardItem)"
+                     size="lg"></fa-icon>
+            </button>
+            <button mdbBtn class="btn-danger btn-icon mb-2"
+                      mdbTooltip="{{ 'Delete block' | translate }}">
+            <fa-icon icon="trash"
+                     id="deleteItemBtn"
+                     (click)="delete(dashboardItem.position)"
+                     size="lg"></fa-icon>
+              </button>
+            <button mdbBtn class="btn-icon mb-2"
+                    mdbTooltip="{{ 'Expand' | translate }}"
+                    *ngIf="dashboardItem.collapsed"
+                    (click)="collapse.toggle(); fieldChanged(!dashboardItem.collapsed, itemFields.collapsed);">
+              <fa-icon icon="angle-right" size="lg" [fixedWidth]="true" ></fa-icon>
+            </button>
+            <button mdbBtn class="btn-icon mb-2"
+                    mdbTooltip="{{ 'Collapse' | translate }}"
+                    *ngIf="!dashboardItem.collapsed"
+                    (click)="collapse.toggle(); fieldChanged(!dashboardItem.collapsed, itemFields.collapsed);">
+              <fa-icon icon="angle-down" size="lg" [fixedWidth]="true" ></fa-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div mdbCollapse #collapse="bs-collapse" [isCollapsed]="dashboardItem.collapsed">
+    <div class="card-body">
+      <div class="row">
+        <div class="col">
+          <div class="card z-depth-2 mb-3" style="width: 100%">
+            <div class="card-body">
+              <ng-select
+                bindValue="id"
+                bindLabel="name"
+                id="editFirstQuestion{{dashboardItem.position}}"
+                [placeholder]="('Select First Question' | translate) + ' *'"
+                [ngModel]="dashboardItem.firstQuestionId"
+                [required]="true"
+                [clearable]="false"
+                (ngModelChange)="fieldChanged($event, itemFields.firstQuestionId)"
+                [items]="questions"></ng-select>
+              <ng-select
+                bindValue="id"
+                bindLabel="name"
+                id="editFilterQuestion{{dashboardItem.position}}"
+                [placeholder]="'Select Filter Question' | translate"
+                [ngModel]="dashboardItem.filterQuestionId"
+                [disabled]="!dashboardItem.firstQuestionId"
+                (ngModelChange)="fieldChanged($event, itemFields.filterQuestionId)"
+                [items]="filteredQuestions"></ng-select>
+              <ng-select
+                bindValue="id"
+                bindLabel="name"
+                id="editFilterAnswer{{dashboardItem.position}}"
+                [ngModel]="dashboardItem.filterAnswerId"
+                (ngModelChange)="fieldChanged($event, itemFields.filterAnswerId)"
+                [disabled]="!dashboardItem.filterQuestionId"
+                [placeholder]="dashboardItem.filterAnswerName || ('Select Filter Answer' | translate)"
+                [items]="filterAnswers"></ng-select>
+              <ng-select *ngIf="dashboardItem.firstQuestionType !== questionTypes.Text"
+                         bindValue="id"
+                         bindLabel="name"
+                         id="editPeriod{{dashboardItem.position}}"
+                         [ngModel]="dashboardItem.period"
+                         [required]="true"
+                         [clearable]="false"
+                         [disabled]="!dashboardItem.firstQuestionId"
+                         (ngModelChange)="fieldChanged($event, itemFields.period)"
+                         [placeholder]="('Select Period Unit' | translate) + ' *'"
+                         [items]="[
+                  {id: periodUnits.Week, name: periodUnits[periodUnits.Week] | translate},
+                  {id: periodUnits.Month, name: periodUnits[periodUnits.Month] | translate},
+                  {id: periodUnits.Quarter, name: periodUnits[periodUnits.Quarter] | translate},
+                  {id: periodUnits.SixMonth, name: periodUnits[periodUnits.SixMonth] | translate},
+                  {id: periodUnits.Year, name: periodUnits[periodUnits.Year] | translate},
+                  {id: periodUnits.Total, name: periodUnits[periodUnits.Total] | translate}
+                ]"></ng-select>
+              <div class="row ml-1 mb-2">
+                <div class="mat-checkbox mb-1">
+                  <input id="calcAverageCheckbox{{dashboardItem.position}}" type="checkbox"
+                         [disabled]="dashboardItem.firstQuestionType !== questionTypes.Smiley"
+                         [checked]="dashboardItem.calculateAverage"
+                         (click)="fieldChanged($event.target.checked, itemFields.calculateAverage)"
+                         [value]="dashboardItem.calculateAverage">
+                  <label for="calcAverageCheckbox{{dashboardItem.position}}" id="calculateAverageCheckbox{{dashboardItem.position}}"
+                         [ngClass]="{'text-muted' : dashboardItem.firstQuestionType !== questionTypes.Smiley}"
+                         mdbTooltip="{{ 'When you want to show the average score for the options' | translate }}">
+                    {{'Calculate average' | translate}}
+                  </label>
+                </div>
+              </div>
+              <div class="row ml-1 mb-2">
+                <div class="mat-checkbox mb-1">
+                  <input id="calcByWeight{{dashboardItem.position}}" type="checkbox"
+                         [disabled]="dashboardItem.firstQuestionType === questionTypes.Smiley"
+                         [checked]="dashboardItem.calculateByWeight"
+                         (click)="fieldChanged($event.target.checked, itemFields.calculateByWeight)"
+                         [value]="dashboardItem.calculateByWeight">
+                  <label for="calcByWeight{{dashboardItem.position}}" id="calculateByWeightCheckbox{{dashboardItem.position}}"
+                         [ngClass]="{'text-muted' : dashboardItem.firstQuestionType === questionTypes.Smiley}"
+                         mdbTooltip="{{ 'When you want to show values by weight' | translate }}">
+                    {{'Calculate by weight' | translate}}
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card z-depth-2 mb-3" style="width: 100%"
+               *ngIf="dashboardItem.firstQuestionType !== questionTypes.Text">
+            <div class="card-body">
+              <ng-container *ngIf="!questionAnswers.length">
+                <div class="row ml-1">
+                  {{'No answers found to ignore'  | translate}}
+                </div>
+              </ng-container>
+              <ng-container *ngIf="questionAnswers.length > 0">
+                <div class="row ml-1 mb-3">
+                  {{'Select answer values to ignore in calculation'  | translate}}
+                </div>
+                <div class="scrollable-block" id="ignoredAnswers{{dashboardItem.position}}">
+                  <div class="row ml-2 mb-2" *ngFor="let answer of questionAnswers">
+                    <div class="mat-checkbox mb-1">
+                      <input id="ignoreCheckbox{{answer.id}}_{{dashboardItem.position}}" type="checkbox"
+                             [checked]="isAnswerIgnored(answer.id)"
+                             (change)="addToArrayIgnoredValues($event, answer.id)"
+                             [value]="isAnswerIgnored(answer.id)">
+                      <label for="ignoreCheckbox{{answer.id}}_{{dashboardItem.position}}"
+                             id="answerIgnoreCheckbox{{answer.id}}_{{dashboardItem.position}}">
+                        {{answer.name}}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+          <div class="card z-depth-2 mb-3" style="width: 100%"
+               *ngIf="dashboardItem.firstQuestionType !== questionTypes.Text">
+            <div class="card-body">
+              <div class="row ml-1">
+                <div class="mat-checkbox mb-1">
+                  <input id="enableCompare{{dashboardItem.position}}" type="checkbox"
+                         [checked]="dashboardItem.compareEnabled"
+                         [(ngModel)]="dashboardItem.compareEnabled"
+                         (ngModelChange)="fieldChanged($event, itemFields.compareEnabled)"
+                         [disabled]="!dashboardItem.firstQuestionId"
+                         [value]="dashboardItem.compareEnabled">
+                  <label for="enableCompare{{dashboardItem.position}}" id="enableCompareLabel{{dashboardItem.position}}"
+                         mdbTooltip="{{ 'When you want to compare locations (eg. center, department etc.' | translate }}">
+                    {{'Compare Location/Report tag' | translate}}
+                  </label>
+                </div>
+              </div>
+              <div class="scrollable-block" *ngIf="dashboardItem.compareEnabled">
+                <div class="row m-0 ml-2" *ngFor="let locationTag of locationsTags; let compareItemIndex = index;">
+                  <div class="col-2">
+                    <div class="md-form">
+                      <input mdbInput (change)="onLocationPositionChanged($event, locationTag)"
+                             [value]="getCurrentLocationValue(locationTag)"
+                             type="number" [disabled]="!dashboardItem.compareEnabled"
+                             class="form-control input-sm" id="locationTag{{dashboardItem.position}}_{{compareItemIndex}}">
+                      <label for="locationTag{{dashboardItem.position}}_{{compareItemIndex}}">{{locationTag.label}}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card z-depth-2 mb-3" style="width: 100%">
+            <ng-container *ngIf="dashboardItem.firstQuestionType !== questionTypes.Text">
+              <div class="card-body">
+                <ng-select
+                  id="editChartType{{dashboardItem.position}}"
+                  bindValue="id"
+                  bindLabel="name"
+                  [clearable]="false"
+                  [ngModel]="dashboardItem.chartType"
+                  [disabled]="!dashboardItem.firstQuestionId"
+                  (ngModelChange)="fieldChanged($event, itemFields.chartType)"
+                  [placeholder]="('Select Chart' | translate) + ' *'"
+                  [required]="true"
+                  [items]="availableCharts"></ng-select>
+                <app-dashboard-chart-edit [dashboardItem]="dashboardItem"
+                                          [questionType]="firstQuestionType"
+                                          [period]="dashboardItem.period"
+                                          [chartType]="dashboardItem.chartType"
+                                          [answers]="questionAnswers">
+                </app-dashboard-chart-edit>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="dashboardItem.firstQuestionType === questionTypes.Text">
+              <div class="card-body">
+                <app-dashboard-interviews-edit></app-dashboard-interviews-edit>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,402 @@
+<eform-subheader>
+  <div class="p-3">
+    <button
+      mdbBtn
+      id="fractionCreateBtn"
+      class="btn btn-success"
+      mdbTooltip="{{ 'Create Transporter' | translate }}"
+      (click)="showCreateTransporterModal()"
+    >
+      {{ 'New Transporter' | translate }}
+    </button>
+    <button
+      id="importFractionBtn"
+      class="btn btn-success"
+      mdbTooltip="{{ 'Import Transporter' | translate }}"
+      routerLink="/plugins/trash-inspection-pn/importtransporters"
+    >
+      {{ 'Import Transporter' | translate }}
+    </button>
+  </div>
+</eform-subheader>
+
+<div class="container-fluid">
+  <div class="row p-1 mt-4 table-responsive no-gutters">
+    <table class="table table-sm table-striped text-center z-depth-1">
+      <thead>
+        <tr>
+          <th
+            scope="col"
+            class="table-header-sortable"
+            id="idTableHeader"
+            (click)="sortTable('Id')"
+          >
+            <div class="d-flex align-items-center justify-content-center">
+              ID
+              <i
+                class="material-icons text-black-50"
+                *ngIf="localPageSettings.sort != 'Id'"
+                >unfold_more</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'Id' &&
+                  !transporterRequestModel.isSortDsc
+                "
+                >expand_less</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'Id' &&
+                  transporterRequestModel.isSortDsc
+                "
+                >expand_more</i
+              >
+            </div>
+          </th>
+          <th
+            scope="col"
+            class="table-header-sortable"
+            id="nameTableHeader"
+            (click)="sortTable('Name')"
+          >
+            <div class="d-flex align-items-center justify-content-center">
+              {{ 'Name' | translate }}
+              <i
+                class="material-icons text-black-50"
+                *ngIf="localPageSettings.sort != 'Name'"
+                >unfold_more</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'Name' &&
+                  !transporterRequestModel.isSortDsc
+                "
+                >expand_less</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'Name' &&
+                  transporterRequestModel.isSortDsc
+                "
+                >expand_more</i
+              >
+            </div>
+          </th>
+          <th
+            scope="col"
+            class="table-header-sortable"
+            id="descriptionTableHeader"
+            (click)="sortTable('Description')"
+          >
+            <div class="d-flex align-items-center justify-content-center">
+              {{ 'Description' | translate }}
+              <i
+                class="material-icons text-black-50"
+                *ngIf="localPageSettings.sort != 'Description'"
+                >unfold_more</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'Description' &&
+                  !transporterRequestModel.isSortDsc
+                "
+                >expand_less</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'Description' &&
+                  transporterRequestModel.isSortDsc
+                "
+                >expand_more</i
+              >
+            </div>
+          </th>
+          <th
+            scope="col"
+            class="table-header-sortable"
+            id="locationCodeTableHeader"
+            (click)="sortTable('ForeignId')"
+          >
+            <div class="d-flex align-items-center justify-content-center">
+              {{ 'Foreign ID' | translate }}
+              <i
+                class="material-icons text-black-50"
+                *ngIf="localPageSettings.sort != 'ForeignId'"
+                >unfold_more</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'ForeignId' &&
+                  !transporterRequestModel.isSortDsc
+                "
+                >expand_less</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'ForeignId' &&
+                  transporterRequestModel.isSortDsc
+                "
+                >expand_more</i
+              >
+            </div>
+          </th>
+          <th
+            scope="col"
+            class="table-header-sortable"
+            id="addressTableHeader"
+            (click)="sortTable('Address')"
+          >
+            <div class="d-flex align-items-center justify-content-center">
+              {{ 'Address' | translate }}
+              <i
+                class="material-icons text-black-50"
+                *ngIf="localPageSettings.sort != 'Address'"
+                >unfold_more</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'Address' &&
+                  !transporterRequestModel.isSortDsc
+                "
+                >expand_less</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'Address' &&
+                  transporterRequestModel.isSortDsc
+                "
+                >expand_more</i
+              >
+            </div>
+          </th>
+          <th
+            scope="col"
+            class="table-header-sortable"
+            id="cityTableHeader"
+            (click)="sortTable('City')"
+          >
+            <div class="d-flex align-items-center justify-content-center">
+              {{ 'City' | translate }}
+              <i
+                class="material-icons text-black-50"
+                *ngIf="localPageSettings.sort != 'City'"
+                >unfold_more</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'City' &&
+                  !transporterRequestModel.isSortDsc
+                "
+                >expand_less</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'City' &&
+                  transporterRequestModel.isSortDsc
+                "
+                >expand_more</i
+              >
+            </div>
+          </th>
+          <th
+            scope="col"
+            class="table-header-sortable"
+            id="zipCodeTableHeader"
+            (click)="sortTable('ZipCode')"
+          >
+            <div class="d-flex align-items-center justify-content-center">
+              {{ 'Zip Code' | translate }}
+              <i
+                class="material-icons text-black-50"
+                *ngIf="localPageSettings.sort != 'ZipCode'"
+                >unfold_more</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'ZipCode' &&
+                  !transporterRequestModel.isSortDsc
+                "
+                >expand_less</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'ZipCode' &&
+                  transporterRequestModel.isSortDsc
+                "
+                >expand_more</i
+              >
+            </div>
+          </th>
+          <th
+            scope="col"
+            class="table-header-sortable"
+            id="phoneTableHeader"
+            (click)="sortTable('Phone')"
+          >
+            <div class="d-flex align-items-center justify-content-center">
+              {{ 'Phone' | translate }}
+              <i
+                class="material-icons text-black-50"
+                *ngIf="localPageSettings.sort != 'Phone'"
+                >unfold_more</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'Phone' &&
+                  !transporterRequestModel.isSortDsc
+                "
+                >expand_less</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'Phone' &&
+                  transporterRequestModel.isSortDsc
+                "
+                >expand_more</i
+              >
+            </div>
+          </th>
+          <th
+            scope="col"
+            class="table-header-sortable"
+            id="contactPersonTableHeader"
+            (click)="sortTable('ContactPerson')"
+          >
+            <div class="d-flex align-items-center justify-content-center">
+              {{ 'Contact Person' | translate }}
+              <i
+                class="material-icons text-black-50"
+                *ngIf="localPageSettings.sort != 'ContactPerson'"
+                >unfold_more</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'ContactPerson' &&
+                  !transporterRequestModel.isSortDsc
+                "
+                >expand_less</i
+              >
+              <i
+                class="material-icons"
+                *ngIf="
+                  localPageSettings.sort == 'ContactPerson' &&
+                  transporterRequestModel.isSortDsc
+                "
+                >expand_more</i
+              >
+            </div>
+          </th>
+
+          <th scope="col">
+            {{ 'Actions' | translate }}
+          </th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <tr *ngFor="let transporter of transportersModel.transporterList">
+          <td id="transporterId">
+            {{ transporter.id }}
+          </td>
+          <td id="transporterName">
+            {{ transporter.name }}
+          </td>
+          <td id="transporterDescription">
+            {{ transporter.description }}
+          </td>
+          <td id="transporterForeignId">
+            {{ transporter.foreignId }}
+          </td>
+          <td id="transporterAddress">
+            {{ transporter.address }}
+          </td>
+          <td id="transporterCity">
+            {{ transporter.city }}
+          </td>
+          <td id="transporterZipCode">
+            {{ transporter.zipCode }}
+          </td>
+          <td id="transporterPhone">
+            {{ transporter.phone }}
+          </td>
+          <td id="transporterContactPerson">
+            {{ transporter.contactPerson }}
+          </td>
+          <td>
+            <div class="d-flex flex-row justify-content-center">
+              <button
+                id="updateFractionBtn"
+                class="btn btn-accent text-black-50 btn-icon mb-2"
+                mdbTooltip="{{ 'Edit Transporter' | translate }}"
+                (click)="showEditTransporterModal(transporter)"
+              >
+                <i class="material-icons"> edit </i>
+              </button>
+              <button
+                id="deleteFractionBtn"
+                class="btn btn-danger btn-icon mb-2"
+                mdbTooltip="{{ 'Delete Transporter' | translate }}"
+                (click)="showDeleteTransporterModal(transporter)"
+              >
+                <i class="material-icons"> delete_forever </i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="row justify-content-between mr-2 ml-2">
+    <div class="col-md-1">
+      <eform-page-size
+        [pageSize]="localPageSettings.pageSize"
+        (onPageSizeChanged)="
+          localPageSettings.pageSize = $event;
+          transporterRequestModel.pageIndex = 1;
+          updateLocalPageSettings()
+        "
+      >
+      </eform-page-size>
+    </div>
+    <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
+      <eform-pagination
+        *ngIf="transportersModel.total > transporterRequestModel.pageSize"
+        [limit]="transporterRequestModel.pageSize"
+        [size]="transportersModel.total"
+        [offset]="transporterRequestModel.offset"
+        (onPageChanged)="changePage($event)"
+      ></eform-pagination>
+    </div>
+  </div>
+</div>
+
+<app-trash-inspection-pn-transporter-create
+  #createTransporterModal
+  (onTransporterCreated)="getAllTransporters()"
+>
+</app-trash-inspection-pn-transporter-create>
+<app-trash-inspection-pn-transporter-edit
+  #editTransporterModal
+  (onTransporterUpdated)="getAllTransporters()"
+></app-trash-inspection-pn-transporter-edit>
+<app-trash-inspection-pn-transporter-delete
+  #deleteTransporterModal
+  (onTransporterDeleted)="getAllTransporters()"
+></app-trash-inspection-pn-transporter-delete>

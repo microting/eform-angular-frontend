@@ -1,0 +1,36 @@
+export class CustomerPnModel {
+  id: number;
+  customerNo: number;
+  companyName: string;
+  companyAddress: string;
+  companyAddress2: string;
+  createdDate: Date;
+  createdBy: string;
+  zipCode: string;
+  cityName: string;
+  phone: string;
+  email: string;
+  contactPerson: string;
+  description: string;
+  eanCode: string;
+  vatNumber: string;
+  countryCode: string;
+  crmId: number;
+  cadastralNumber: string;
+  propertyNumber: number;
+  apartmentNumber: number;
+  completionYear: number;
+  floorsWithLivingSpace: number;
+  createdAt: Date;
+  updateAt: Date;
+  relatedEntityId: number;
+  createdByUserId: number;
+  updatedByUserId: number;
+  workflowState: string;
+  version: number;
+  cadastralType: number;
+  paymentOverdue: boolean;
+  paymentStatu: string;
+  balance: number;
+  creditLimit: number;
+}

@@ -1,0 +1,90 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{ 'New Installation' | translate }}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-md-12 col-xs-12">
+              <div class="md-form">
+                <input
+                  mdbInput
+                  [(ngModel)]="newInstallationModel.name"
+                  type="text"
+                  id="createInstallationName"
+                  name="createInstallationName"
+                  class="form-control"
+                />
+                <label for="createInstallationName">{{
+                  'Name' | translate
+                }}</label>
+              </div>
+            </div>
+          </div>
+          <div
+            class="row p-1 table-responsive table-fixed-scrollable no-gutters"
+          >
+            <table class="table table-xs table-bordered text-center z-depth-1">
+              <thead>
+                <tr>
+                  <th>Microting ID</th>
+                  <th>{{ 'Device user' | translate }}</th>
+                  <th>{{ 'Check to pair' | translate }}</th>
+                </tr>
+              </thead>
+              <tbody id="pairingModalTableBody">
+                <tr *ngFor="let siteDto of sitesDto">
+                  <td class="align-middle">{{ siteDto.siteUId }}</td>
+                  <td class="align-middle">{{ siteDto.siteName }}</td>
+                  <td class="align-middle">
+                    <ng-container
+                      *ngFor="
+                        let checkboxModel of deployViewModel.deployCheckboxes
+                      "
+                    >
+                      <div
+                        class="mat-checkbox"
+                        *ngIf="checkboxModel.id == siteDto.siteUId"
+                      >
+                        <input
+                          id="checkbox{{ checkboxModel.id }}"
+                          (change)="addToArray($event, checkboxModel.id)"
+                          [checked]="checkboxModel.isChecked"
+                          [value]="checkboxModel.isChecked"
+                          color="primary"
+                          type="checkbox"
+                        />
+                        <label for="checkbox{{ checkboxModel.id }}"></label>
+                      </div>
+                    </ng-container>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          mdbBtn
+          id="installationCreateSaveBtn"
+          class="btn-small-height btn-success"
+          [disabled]="!newInstallationModel.name"
+          (click)="createInstallation()"
+        >
+          {{ 'Create' | translate }}
+        </button>
+        <button
+          mdbBtn
+          id="installationCreateCancelBtn"
+          class="btn-accent text-black-50 btn-small-height"
+          (click)="frame.hide()"
+        >
+          {{ 'Cancel' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

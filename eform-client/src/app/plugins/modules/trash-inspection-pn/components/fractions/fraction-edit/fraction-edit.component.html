@@ -1,0 +1,127 @@
+<div
+  [config]="{ ignoreBackdropClick: true }"
+  mdbModal
+  class="modal fade"
+  #frame="mdbModal"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{ 'Update Fraction' | translate }}</h3>
+        <button class="close" data-dismiss="modal" (click)="hide()">
+          <span>×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <form #createForm="ngForm">
+            <div class="row mb-2">
+              <div class="col-md-12 col-xs-12">
+                <div class="md-form">
+                  <input
+                    mdbInput
+                    [(ngModel)]="selectedFractionModel.itemNumber"
+                    type="text"
+                    id="updateFractionItemNumber"
+                    name="updateFractionItemNumber"
+                    class="form-control"
+                  />
+                  <label for="updateFractionItemNumber">{{
+                    'Item number' | translate
+                  }}</label>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-2">
+              <div class="col-md-12 col-xs-12">
+                <div class="md-form">
+                  <input
+                    mdbInput
+                    [(ngModel)]="selectedFractionModel.name"
+                    type="text"
+                    id="updateFractionName"
+                    name="updateFractionName"
+                    class="form-control"
+                  />
+                  <label for="updateFractionName">{{
+                    'Name' | translate
+                  }}</label>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-2">
+              <div class="col-md-12 col-xs-12">
+                <div class="md-form">
+                  <input
+                    mdbInput
+                    [(ngModel)]="selectedFractionModel.description"
+                    type="text"
+                    id="editFractionDescription"
+                    name="editFractionDescription"
+                    class="form-control"
+                  />
+                  <label for="editFractionDescription">{{
+                    'Description' | translate
+                  }}</label>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-2">
+              <div class="col-md-12 col-xs-12">
+                <div class="md-form">
+                  <input
+                    mdbInput
+                    [(ngModel)]="selectedFractionModel.locationCode"
+                    type="text"
+                    id="editFractionLocationCode"
+                    name="editFractionLocationCode"
+                    class="form-control"
+                  />
+                  <label for="editFractionLocationCode">{{
+                    'Location code' | translate
+                  }}</label>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-md-12 col-xs-12">
+                <div class="md-form">
+                  <ng-select
+                    [items]="templatesModel.templates"
+                    bindLabel="label"
+                    [placeholder]="
+                      selectedFractionModel.selectedTemplateName ||
+                      ('Selected template' | translate)
+                    "
+                    bindValue="id"
+                    [typeahead]="typeahead"
+                    (change)="onSelectedChanged($event)"
+                    id="fractionUpdateSelector"
+                  >
+                  </ng-select>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          id="fractionUpdateSaveBtn"
+          class="btn btn-success"
+          [disabled]="!selectedFractionModel.name"
+          (click)="updateFraction()"
+        >
+          {{ 'Save' | translate }}
+        </button>
+        <button
+          id="fractionUpdateCancelBtn"
+          class="btn btn-accent text-black-50"
+          (click)="hide()"
+        >
+          {{ 'Cancel' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

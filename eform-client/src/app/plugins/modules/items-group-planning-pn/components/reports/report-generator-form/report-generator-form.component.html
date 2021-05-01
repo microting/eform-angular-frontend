@@ -1,0 +1,56 @@
+<form [formGroup]="generateForm">
+  <div class="row pl-1">
+
+    <div class="col-md-3">
+      <div class="md-form" [owlDateTimeTrigger]="dateRangePicker">
+        <i class="material-icons prefix">
+          calendar_today
+        </i>
+        <input mdbInput  formControlName="dateRange"
+               name="dateRange" required
+               type="text" [owlDateTime]="dateRangePicker" [selectMode]="'range'"
+               class="form-control input-sm" id="dateFormInput">
+        <label for="dateFormInput">{{'Selected date range' | translate}}</label>
+      </div>
+    </div>
+    <div class="col-md-3 ng-select-wrapper">
+      <ng-select
+        class="custom"
+        dropdownPosition="'bottom'"
+        formControlName="itemList"
+        required
+        [placeholder]="'Item List' | translate"
+        [items]="itemLists.lists"
+        [clearable]="false"
+        [bindLabel]="'name'"
+        [bindValue]="'id'"
+        [typeahead]="typeahead"
+        (change)="onItemListSelected($event)"
+        id="itemListSelector"></ng-select>
+    </div>
+    <div class="col-md-3 ng-select-wrapper">
+      <ng-select
+        class="custom"
+        dropdownPosition="'bottom'"
+        formControlName="item"
+        required
+        [placeholder]="'Item' | translate"
+        [items]="items"
+        [clearable]="false"
+        [bindLabel]="'name'"
+        [bindValue]="'id'"
+        id="itemSelector"></ng-select>
+    </div>
+    <div class="col-md-3 text-center pt-3">
+      <button mdbBtn class="btn-success btn-small-height" [disabled]="generateForm.invalid" (click)="onSubmit()">
+        {{'Generate' | translate}}
+      </button>
+      <button mdbBtn class="btn-success btn-small-height" [disabled]="generateForm.invalid" (click)="onSave()">
+        {{ 'Download' | translate }}
+      </button>
+    </div>
+
+  </div>
+</form>
+
+<owl-date-time [pickerType]="'calendar'" [firstDayOfWeek]="1" #dateRangePicker></owl-date-time>

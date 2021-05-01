@@ -1,0 +1,74 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{ 'New' | translate }}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-md-12 col-xs-12">
+              <div class="md-form">
+                <input mdbInput
+
+                       [(ngModel)]="newMachineModel.name"
+                       type="text" id="createInnerResourceName"
+                       name="createInnerResourceName" class="form-control">
+                <label for="createInnerResourceName">{{'Name' | translate}}</label>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-md-12 col-xs-12">
+              <div class="md-form">
+                <input mdbInput
+
+                       [(ngModel)]="newMachineModel.externalId"
+                       type="text" id="createInnerResourceId"
+                       name="createInnerResourceId" class="form-control" [readOnly]="true">
+                <label for="createInnerResourceId">{{'External ID' | translate}}</label>
+              </div>
+            </div>
+          </div>
+          <div class="row p-1 table-responsive table-fixed-scrollable no-gutters">
+            <table class="table table-sm table-striped text-center z-depth-1">
+              <thead>
+              <tr>
+                <th scope="col" id="idTableHeader">ID</th>
+                <th scope="col" id="nameTableHeader">{{'Name' | translate}}</th>
+                <th scope="col">{{ 'Relationship' | translate }}</th>
+              </tr>
+              </thead>
+              <tbody id="tableBody">
+              <tr *ngFor="let area of mappingAreas.outerResourceList">
+                <td id="outerResourceId">
+                  {{area.id}}
+                </td>
+                <td id="outerResourceName">
+                  {{area.name}}
+                </td>
+                <td id="outerResourceExternalId">
+                  {{area.externalId}}
+                </td>
+                <td>
+                  <div class="mat-checkbox">
+                    <input id="checkbox{{area.id}}" (change)="addToArray($event, area.id)" [checked]="isChecked(area.id)"
+                           color="primary" type="checkbox">
+                    <label for="checkbox{{area.id}}"></label>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button mdbBtn class="btn-success" id="innerResourceCreateSaveBtn" [disabled]="!newMachineModel.name" (click)="createMachine()">
+          {{ 'Create' | translate }}
+        </button>
+        <button mdbBtn class="btn-accent text-black-50" id="innerResourceCreateCancelBtn" (click)="frame.hide()">{{'Cancel' | translate}}</button>
+      </div>
+    </div>
+  </div>
+</div>

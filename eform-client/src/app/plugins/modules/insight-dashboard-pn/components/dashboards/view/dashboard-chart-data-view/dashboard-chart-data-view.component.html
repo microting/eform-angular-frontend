@@ -1,0 +1,78 @@
+<!--suppress XmlDuplicatedId -->
+<div class="row p-1 mb-4 table-responsive no-gutters scrollable-xy-block">
+  <table mdbTable hover="true" small="true" class="z-depth-1 text-center"
+         id="dashboardViewChartData{{itemModel.position - 1}}_{{rawDataIndex}}"
+         [ngClass]="{'mt-2': !rawDataIndexFirst}"
+         *ngFor="let rawData of itemModel.chartData.rawData; let rawDataIndex = index; let rawDataIndexFirst = first">
+    <thead id="dataViewTableHeader">
+    <tr>
+      <th scope="col" *ngIf="itemModel.chartType === chartTypes.HorizontalBarStackedGrouped"></th>
+      <th scope="col"></th>
+      <th scope="col" id="dataViewRawHeader"
+          *ngFor="let header of rawData.rawHeaders; let i = index;" class="font-bold">
+        {{header}}
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container *ngFor="let dataItem of rawData.rawDataItems; let rawDataItemIndex = index;">
+      <ng-container *ngIf="itemModel.chartType !== chartTypes.HorizontalBarStackedGrouped">
+        <tr *ngFor="let dataValue of dataItem.rawDataValues; let last = last; let i = index;"
+            [ngStyle]="{'background-color': i % 2 !== 0 ? (darkTHeme ? '#393939' : '#f2f2f2'): (darkTHeme ? '#404345' : 'white')}"
+            id="dataViewPercent{{rawDataItemIndex}}">
+          <td [ngClass]="{'font-bold': last}" id="dataViewPercentName">
+            {{dataValue.valueName}}
+          </td>
+          <td *ngFor="let value of dataValue.percents; let t = index" [ngClass]="{'font-bold': last}"
+              id="dataViewPercentValue">
+            <ng-container *ngIf="itemModel.calculateAverage">
+              {{value}}
+            </ng-container>
+            <ng-container *ngIf="!itemModel.calculateAverage">
+              {{value}}%
+            </ng-container>
+          </td>
+        </tr>
+        <tr class="blank_row">
+          <td></td>
+          <td *ngFor="let header of rawData.rawHeaders"></td>
+        </tr>
+        <tr *ngFor="let dataValue of dataItem.rawDataValues; let last = last; let i = index"
+            [ngStyle]="{'background-color': i % 2 !== 0 ? (darkTHeme ? '#393939' : '#f2f2f2'): (darkTHeme ? '#404345' : 'white')}"
+            id="dataViewAmount{{rawDataItemIndex}}">
+          <td [ngClass]="{'font-bold': last}" id="dataViewAmountName">
+            {{dataValue.valueName}}
+          </td>
+          <td *ngFor="let value of dataValue.amounts; let t = index"
+              [ngClass]="{'font-bold': last}" id="dataViewAmountValue">
+            {{value}}
+          </td>
+        </tr>
+      </ng-container>
+      <ng-container *ngIf="itemModel.chartType === chartTypes.HorizontalBarStackedGrouped">
+        <tr>
+          <td [rowSpan]="dataItem.rawDataValues.length + 1">
+            {{dataItem.rawValueName}}
+          </td>
+        </tr>
+
+        <tr *ngFor="let dataValue of dataItem.rawDataValues; let i = index;" id="dataViewPercent"
+            [ngStyle]="{'background-color': i % 2 !== 0 ? '#f2f2f2': 'white'}">
+          <td id="dataViewPercentName">
+            {{dataValue.valueName}}
+          </td>
+          <td *ngFor="let value of dataValue.percents; let lastPercent = last; let t = index"
+              [ngClass]="{'font-bold': lastPercent}"
+              id="dataViewPercentValue">
+            {{value}}%
+          </td>
+          <td *ngFor="let value of dataValue.amounts; let lastAmount = last; let t = index"
+              [ngClass]="{'font-bold': lastAmount}" id="dataViewAmountValue">
+            {{value}}
+          </td>
+        </tr>
+      </ng-container>
+    </ng-container>
+    </tbody>
+  </table>
+</div>
