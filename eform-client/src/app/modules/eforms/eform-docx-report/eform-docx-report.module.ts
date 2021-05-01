@@ -13,7 +13,7 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {ButtonsModule, CardsModule, InputsModule, ModalModule, TableModule, TooltipModule,} from 'angular-bootstrap-md';
 import {RouterModule} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {OwlDateTimeModule} from 'ng-pick-datetime-ex';
+import {OwlDateTimeModule} from '@danielmoncada/angular-datetime-picker';
 import {EformDocxReportRouting} from './eform-docx-report.routing';
 
 @NgModule({
