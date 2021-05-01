@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "sVXdMVJpf0trWMBGXjnt63OB624ZZannHQcK45P31+dyNQkKN6/HGdlO3dvLHo4xvWJfkR3Tihhta14VCxt2tg==",
+  "dgSpecHash": "Ak6s/DVFQA+rkA6VVp+gPMiW4BjAXwHQDj+mPv2Z5KxxsbgXI/HByL88+5qAVwmjayWysM552PwP/5spfdNDeA==",
   "success": true,
   "projectFilePath": "/home/rene/Documents/workspace/microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/eFormAPI.Web.csproj",
   "expectedPackageFiles": [
     "/home/rene/.nuget/packages/awssdk.core/3.7.0.17/awssdk.core.3.7.0.17.nupkg.sha512",
-    "/home/rene/.nuget/packages/awssdk.s3/3.7.0.17/awssdk.s3.3.7.0.17.nupkg.sha512",
+    "/home/rene/.nuget/packages/awssdk.s3/3.7.0.18/awssdk.s3.3.7.0.18.nupkg.sha512",
     "/home/rene/.nuget/packages/awssdk.sqs/3.7.0.16/awssdk.sqs.3.7.0.16.nupkg.sha512",
     "/home/rene/.nuget/packages/castle.core/4.4.1/castle.core.4.4.1.nupkg.sha512",
     "/home/rene/.nuget/packages/castle.windsor/5.1.1/castle.windsor.5.1.1.nupkg.sha512",

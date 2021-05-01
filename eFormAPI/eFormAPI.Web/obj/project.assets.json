@@ -11,10 +11,10 @@
           "lib/netcoreapp3.1/AWSSDK.Core.dll": {}
         }
       },
-      "AWSSDK.S3/3.7.0.17": {
+      "AWSSDK.S3/3.7.0.18": {
         "type": "package",
         "dependencies": {
-          "AWSSDK.Core": "[3.7.0.16, 3.8.0)"
+          "AWSSDK.Core": "[3.7.0.17, 4.0.0)"
         },
         "compile": {
           "lib/netcoreapp3.1/AWSSDK.S3.dll": {}
@@ -2774,16 +2774,16 @@
         "tools/account-management.ps1"
       ]
     },
-    "AWSSDK.S3/3.7.0.17": {
-      "sha512": "pwaYCUbr2R2z7pB8OD+GFHYICYMJZcUHxnig0gbAYltuJqAasmf11Y/EeO/7OceIb+XCbhWuI0Tx//y5d/cezQ==",
+    "AWSSDK.S3/3.7.0.18": {
+      "sha512": "PmpcLK0kLn0mkRUr/oDfn9DTAtoP1PaWr6eHNfUMSwhAl5o4/Rq8/2S7kJj7ZxX7ZyvwHIJwYV3S/+isGjGE4A==",
       "type": "package",
-      "path": "awssdk.s3/3.7.0.17",
+      "path": "awssdk.s3/3.7.0.18",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "analyzers/dotnet/cs/AWSSDK.S3.CodeAnalysis.dll",
-        "awssdk.s3.3.7.0.17.nupkg.sha512",
+        "awssdk.s3.3.7.0.18.nupkg.sha512",
         "awssdk.s3.nuspec",
         "lib/net35/AWSSDK.S3.dll",
         "lib/net35/AWSSDK.S3.pdb",
@@ -8867,7 +8867,7 @@
   "projectFileDependencyGroups": {
     "net5.0": [
       "AWSSDK.Core >= 3.7.0.17",
-      "AWSSDK.S3 >= 3.7.0.17",
+      "AWSSDK.S3 >= 3.7.0.18",
       "ClosedXML >= 0.95.4",
       "HtmlToOpenXml.dll >= 2.2.0",
       "Magick.NET-Q16-x64 >= 7.23.4",
@@ -8936,7 +8936,7 @@
           },
           "AWSSDK.S3": {
             "target": "Package",
-            "version": "[3.7.0.17, )"
+            "version": "[3.7.0.18, )"
           },
           "ClosedXML": {
             "target": "Package",

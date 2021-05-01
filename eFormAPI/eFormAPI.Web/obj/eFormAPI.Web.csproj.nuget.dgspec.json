@@ -47,7 +47,7 @@
             },
             "AWSSDK.S3": {
               "target": "Package",
-              "version": "[3.7.0.17, )"
+              "version": "[3.7.0.18, )"
             },
             "ClosedXML": {
               "target": "Package",
