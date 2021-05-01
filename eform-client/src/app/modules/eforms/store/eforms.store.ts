@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
 import { persistState, Store, StoreConfig } from '@datorama/akita';
-import { CommonPaginationState } from 'src/app/common/models/common-pagination-state';
+import {
+  FiltrationStateModel,
+  CommonPaginationState,
+} from 'src/app/common/models';
 
 export interface EformsState {
   pagination: CommonPaginationState;
+  filters: FiltrationStateModel;
 }
 
 export function createInitialState(): EformsState {
@@ -11,15 +15,23 @@ export function createInitialState(): EformsState {
     pagination: {
       sort: 'Id',
       isSortDsc: false,
+    },
+    filters: {
       nameFilter: '',
       tagIds: [],
     },
   };
 }
 
-export const eformsPersistStorage = persistState({
+const eformsPersistStorage = persistState({
   include: ['eforms'],
   key: 'mainStore',
+  preStorageUpdate(storeName, state) {
+    return {
+      pagination: state.pagination,
+      filters: state.filters,
+    };
+  },
 });
 
 @Injectable({ providedIn: 'root' })
@@ -30,6 +42,8 @@ export class EformsStore extends Store<EformsState> {
   }
 }
 
-export const persistProviders = [
-  { provide: 'persistStorage', useValue: eformsPersistStorage, multi: true },
-];
+export const persistProvider = {
+  provide: 'persistStorage',
+  useValue: eformsPersistStorage,
+  multi: true,
+};

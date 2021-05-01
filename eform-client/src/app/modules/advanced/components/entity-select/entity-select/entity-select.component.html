@@ -42,9 +42,8 @@
       <thead
         table-headers
         [tableHeaders]="tableHeaders"
-        [currentSortName]="entitySelectStateService.getSort() | async"
+        [sort]="entitySelectStateService.getSort() | async"
         (sortChanged)="sortTable($event)"
-        [isSortDsc]="entitySelectStateService.getIsSortDsc() | async"
       ></thead>
       <tbody>
         <tr
@@ -119,9 +118,7 @@
     </div>
     <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
       <eform-pagination
-        [limit]="entitySelectStateService.getPageSize() | async"
-        [size]="advEntitySelectableGroupListModel.total"
-        [offset]="entitySelectStateService.getOffset() | async"
+        [pagination]="entitySelectStateService.getPagination() | async"
         (onPageChanged)="changePage($event)"
       ></eform-pagination>
     </div>

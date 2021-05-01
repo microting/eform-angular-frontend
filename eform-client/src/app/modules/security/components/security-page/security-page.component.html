@@ -39,9 +39,8 @@
       <thead
         table-headers
         [tableHeaders]="tableHeaders"
-        [currentSortName]="securityStateService.getSort() | async"
+        [sort]="securityStateService.getSort() | async"
         (sortChanged)="onSortTable($event)"
-        [isSortDsc]="securityStateService.getIsSortDsc() | async"
       ></thead>
       <tbody>
         <tr *ngFor="let securityGroup of securityGroups.entities">
@@ -129,9 +128,7 @@
     </div>
     <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
       <eform-pagination
-        [limit]="securityStateService.getPageSize() | async"
-        [size]="securityGroups.total"
-        [offset]="securityStateService.getOffset() | async"
+        [pagination]="securityStateService.getPagination() | async"
         (onPageChanged)="changePage($event)"
       ></eform-pagination>
     </div>

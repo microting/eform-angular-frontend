@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { UsersStore } from './users.store';
 import { Observable } from 'rxjs';
 import {
   OperationDataResult,
   Paged,
+  PaginationModel,
+  SortModel,
   UserInfoModel,
 } from 'src/app/common/models';
-import { UsersQuery } from 'src/app/modules/account-management/components/users/store/users.query';
+import { UsersQuery, UsersStore } from './';
 import { AdminService } from 'src/app/common/services';
 import { updateTableSort } from 'src/app/common/helpers';
 import { getOffset } from 'src/app/common/helpers/pagination.helper';
@@ -19,51 +20,46 @@ export class UsersStateService {
     private service: AdminService,
     private query: UsersQuery
   ) {}
-  private total: number;
 
   getAllUsers(): Observable<OperationDataResult<Paged<UserInfoModel>>> {
     return this.service
-      .getAllUsers({
-        isSortDsc: this.query.pageSetting.pagination.isSortDsc,
-        offset: this.query.pageSetting.pagination.offset,
-        pageSize: this.query.pageSetting.pagination.pageSize,
-        sort: this.query.pageSetting.pagination.sort,
-      })
+      .getAllUsers({ ...this.query.pageSetting.pagination })
       .pipe(
         map((response) => {
           if (response && response.success && response.model) {
-            this.total = response.model.total;
+            this.store.update(() => ({
+              totalUsers: response.model.total,
+            }));
           }
           return response;
         })
       );
   }
 
-  getIsSortDsc(): Observable<boolean> {
-    return this.query.selectIsSortDsc$;
-  }
+  // getIsSortDsc(): Observable<boolean> {
+  //   return this.query.selectIsSortDsc$;
+  // }
 
-  getSort(): Observable<string> {
+  getSort(): Observable<SortModel> {
     return this.query.selectSort$;
   }
 
-  getOffset(): Observable<number> {
-    return this.query.selectOffset$;
-  }
+  // getOffset(): Observable<number> {
+  //   return this.query.selectOffset$;
+  // }
 
   getPageSize(): Observable<number> {
     return this.query.selectPageSize$;
   }
 
   updatePageSize(pageSize: number) {
-    const offset = getOffset(
-      pageSize,
-      this.query.pageSetting.pagination.offset,
-      this.total
-    );
     this.store.update((state) => ({
-      pagination: { ...state.pagination, pageSize: pageSize, offset: offset },
+      pagination: {
+        ...state.pagination,
+        pageSize: pageSize,
+      },
     }));
+    this.checkOffset();
   }
 
   onSortTable(sort: string) {
@@ -84,15 +80,29 @@ export class UsersStateService {
   }
 
   onDelete() {
-    const offset = getOffset(
+    this.store.update((state) => ({
+      totalUsers: state.totalUsers - 1,
+    }));
+    this.checkOffset();
+  }
+
+  checkOffset() {
+    const newOffset = getOffset(
       this.query.pageSetting.pagination.pageSize,
       this.query.pageSetting.pagination.offset,
-      this.total
+      this.query.pageSetting.totalUsers
     );
-    if (this.query.pageSetting.pagination.offset !== offset) {
+    if (newOffset !== this.query.pageSetting.pagination.offset) {
       this.store.update((state) => ({
-        pagination: { ...state.pagination, offset: offset },
+        pagination: {
+          ...state.pagination,
+          offset: newOffset,
+        },
       }));
     }
+  }
+
+  getPagination(): Observable<PaginationModel> {
+    return this.query.selectPagination$;
   }
 }

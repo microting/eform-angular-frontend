@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
-import { EntitySelectStore } from './entity-select.store';
 import { EntitySelectService } from 'src/app/common/services';
 import {
   AdvEntitySelectableGroupModel,
   OperationDataResult,
   Paged,
+  PaginationModel,
+  SortModel,
 } from 'src/app/common/models';
 import { Observable } from 'rxjs';
-import { EntitySelectQuery } from '../store/entity-select.query';
+import { EntitySelectQuery, EntitySelectStore } from '../store';
 import { updateTablePage, updateTableSort } from 'src/app/common/helpers';
 import { getOffset } from 'src/app/common/helpers/pagination.helper';
+import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class EntitySelectStateService {
@@ -22,42 +24,47 @@ export class EntitySelectStateService {
   getEntitySelectableGroupList(): Observable<
     OperationDataResult<Paged<AdvEntitySelectableGroupModel>>
   > {
-    return this.service.getEntitySelectableGroupList({
-      isSortDsc: this.query.pageSetting.pagination.isSortDsc,
-      nameFilter: this.query.pageSetting.pagination.nameFilter,
-      offset: this.query.pageSetting.pagination.offset,
-      pageSize: this.query.pageSetting.pagination.pageSize,
-      sort: this.query.pageSetting.pagination.sort,
-      pageIndex: 0,
-    });
+    return this.service
+      .getEntitySelectableGroupList({
+        ...this.query.pageSetting.pagination,
+        ...this.query.pageSetting.filters,
+        pageIndex: 0,
+      })
+      .pipe(
+        map((response) => {
+          if (response && response.success && response.model) {
+            this.store.update(() => ({
+              total: response.model.total,
+            }));
+          }
+          return response;
+        })
+      );
   }
 
   updateNameFilter(nameFilter: string) {
     this.store.update((state) => ({
-      pagination: { ...state.pagination, nameFilter: nameFilter },
+      pagination: { ...state.pagination, offset: 0 },
+      filters: { ...state.filters, nameFilter: nameFilter },
     }));
   }
 
   updatePageSize(pageSize: number) {
     this.store.update((state) => ({
-      pagination: { ...state.pagination, pageSize: pageSize },
+      pagination: {
+        ...state.pagination,
+        pageSize: pageSize,
+      },
     }));
-  }
-
-  getOffset(): Observable<number> {
-    return this.query.selectOffset$;
+    this.checkOffset();
   }
 
   getPageSize(): Observable<number> {
     return this.query.selectPageSize$;
   }
 
-  getSort(): Observable<string> {
+  getSort(): Observable<SortModel> {
     return this.query.selectSort$;
-  }
-
-  getIsSortDsc(): Observable<boolean> {
-    return this.query.selectIsSortDsc$;
   }
 
   getNameFilter(): Observable<string> {
@@ -77,17 +84,11 @@ export class EntitySelectStateService {
     }));
   }
 
-  onDelete(total) {
-    const newOffset = getOffset(
-      this.query.pageSetting.pagination.pageSize,
-      this.query.pageSetting.pagination.offset,
-      total
-    );
-    if (newOffset !== this.query.pageSetting.pagination.offset) {
-      this.store.update((state) => ({
-        pagination: { ...state.pagination, offset: newOffset },
-      }));
-    }
+  onDelete() {
+    this.store.update((state) => ({
+      total: state.total - 1,
+    }));
+    this.checkOffset();
   }
 
   onSortTable(sort: string) {
@@ -103,5 +104,25 @@ export class EntitySelectStateService {
         sort: localPageSetting.sort,
       },
     }));
+  }
+
+  checkOffset() {
+    const newOffset = getOffset(
+      this.query.pageSetting.pagination.pageSize,
+      this.query.pageSetting.pagination.offset,
+      this.query.pageSetting.total
+    );
+    if (newOffset !== this.query.pageSetting.pagination.offset) {
+      this.store.update((state) => ({
+        pagination: {
+          ...state.pagination,
+          offset: newOffset,
+        },
+      }));
+    }
+  }
+
+  getPagination(): Observable<PaginationModel> {
+    return this.query.selectPagination$;
   }
 }

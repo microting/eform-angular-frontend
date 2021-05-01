@@ -21,23 +21,26 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using eFormAPI.Web.Abstractions;
-using eFormAPI.Web.Abstractions.Advanced;
-using eFormAPI.Web.Infrastructure.Database;
-using eFormAPI.Web.Infrastructure.Models;
-using eFormAPI.Web.Infrastructure.Models.SearchableList;
-using Microsoft.EntityFrameworkCore;
-using Microting.eForm.Infrastructure.Constants;
-using Microting.eFormApi.BasePn.Abstractions;
-using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
 namespace eFormAPI.Web.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Abstractions;
+    using Abstractions.Advanced;
+    using Infrastructure.Database;
+    using Infrastructure.Models.SearchableList;
+    using Microsoft.EntityFrameworkCore;
+    using Microting.eForm.Infrastructure.Constants;
+    using Microting.eFormApi.BasePn.Abstractions;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+    using Microting.eForm.Infrastructure.Models;
+    using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+    using EntityGroup = Infrastructure.Models.EntityGroup;
+
     public class EntitySearchService : IEntitySearchService
     {
         private readonly BaseDbContext _dbContext;
@@ -54,20 +57,62 @@ namespace eFormAPI.Web.Services
         }
 
 
-        public async Task<OperationDataResult<EntityGroupList>> Index(
+        public async Task<OperationDataResult<Paged<EntityGroup>>> Index(
             AdvEntitySearchableGroupListRequestModel requestModel)
         {
             try
             {
                 var core = await _coreHelper.GetCore();
-                EntityGroupList model = await core.Advanced_EntityGroupAll(requestModel.Sort, requestModel.NameFilter,
-                    requestModel.PageIndex, requestModel.PageSize, Constants.FieldTypes.EntitySearch,
-                    requestModel.IsSortDsc,
-                    Constants.WorkflowStates.NotRemoved);
-                if (model != null)
+                var sdkDbContext = core.DbContextHelper.GetDbContext();
+
+                var entityGroupList = new Paged<EntityGroup>();
+
+                // get query
+                var entitySelectableGroupQuery = sdkDbContext.EntityGroups
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Where(x => x.Type == Constants.FieldTypes.EntitySearch)
+                    .AsNoTracking()
+                    .AsQueryable();
+
+                if (!string.IsNullOrEmpty(requestModel.NameFilter))
+                {
+                    entitySelectableGroupQuery = entitySelectableGroupQuery
+                        .Where(x => x.Name.Contains(requestModel.NameFilter));
+                }
+
+                // sort
+                entitySelectableGroupQuery = QueryHelper.AddSortToQuery(entitySelectableGroupQuery, requestModel.Sort, requestModel.IsSortDsc);
+
+                // count elements
+                entityGroupList.Total = await entitySelectableGroupQuery.Select(x => x.Id).CountAsync();
+
+                // pagination
+                entitySelectableGroupQuery =
+                    entitySelectableGroupQuery
+                        .Skip(requestModel.Offset)
+                        .Take(requestModel.PageSize);
+
+                // select and take from db
+                var entityGroups = await entitySelectableGroupQuery
+                    .Select(x => new EntityGroup
+                    {
+                        Description = x.Description,
+                        WorkflowState = x.WorkflowState,
+                        CreatedAt = x.CreatedAt,
+                        Id = x.Id,
+                        MicrotingUUID = x.MicrotingUid,
+                        Name = x.Name,
+                        Type = x.Type,
+                        UpdatedAt = x.UpdatedAt,
+                        EntityGroupItemLst = new List<EntityItem>(),
+                    }).ToListAsync();
+
+                entityGroupList.Entities = entityGroups;
+
+                if (entityGroupList.Entities != null)
                 {
                     List<string> plugins = await _dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
-                    foreach (EntityGroup entityGroup in model.EntityGroups)
+                    foreach (EntityGroup entityGroup in entityGroupList.Entities)
                     {
                         foreach (string plugin in plugins)
                         {
@@ -79,11 +124,11 @@ namespace eFormAPI.Web.Services
                     }
                 }
                 
-                return new OperationDataResult<EntityGroupList>(true, model);
+                return new OperationDataResult<Paged<EntityGroup>>(true, entityGroupList);
             }
             catch (Exception)
             {
-                return new OperationDataResult<EntityGroupList>(false,
+                return new OperationDataResult<Paged<EntityGroup>>(false,
                     _localizationService.GetString("SearchableListLoadingFailed"));
             }
         }
@@ -243,7 +288,7 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                var core = await _coreHelper.GetCore();
+                //var core = await _coreHelper.GetCore();
 
 
                 return new OperationResult(true, _localizationService.GetStringWithFormat("ParamDeletedSuccessfully", entityGroupUid));

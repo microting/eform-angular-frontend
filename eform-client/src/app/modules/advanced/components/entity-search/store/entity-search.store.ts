@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { persistState, Store, StoreConfig } from '@datorama/akita';
 import { CommonPaginationState } from 'src/app/common/models/common-pagination-state';
+import { FiltrationStateModel } from 'src/app/common/models';
 
 export interface EntitySearchState {
   pagination: CommonPaginationState;
+  filters: FiltrationStateModel;
+  total: number;
 }
 
 export function createInitialState(): EntitySearchState {
@@ -12,15 +15,23 @@ export function createInitialState(): EntitySearchState {
       pageSize: 10,
       sort: 'Id',
       isSortDsc: false,
+      offset: 0,
+    },
+    filters: {
       nameFilter: '',
-      pageIndex: 0,
     },
   };
 }
 
-export const entitySearchPersistStorage = persistState({
+const entitySearchPersistStorage = persistState({
   include: ['entitySearch'],
   key: 'mainStore',
+  preStorageUpdate(storeName, state) {
+    return {
+      pagination: state.pagination,
+      filters: state.filters,
+    };
+  },
 });
 
 @Injectable({ providedIn: 'root' })

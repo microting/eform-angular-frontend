@@ -21,27 +21,32 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using eFormAPI.Web.Infrastructure.Models;
-using eFormAPI.Web.Infrastructure.Models.SearchableList;
-using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
 namespace eFormAPI.Web.Abstractions.Advanced
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Infrastructure.Models;
+    using Infrastructure.Models.SearchableList;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+
     public interface IEntitySearchService
     {
-        Task<OperationDataResult<EntityGroupList>> Index(
+        Task<OperationDataResult<Paged<EntityGroup>>> Index(
             AdvEntitySearchableGroupListRequestModel requestModel);
 
         Task<OperationDataResult<List<CommonDictionaryTextModel>>> GetEntityGroupDictionary(string entityGroupUid,
             string searchString);
 
         Task<OperationResult> Create(AdvEntitySearchableGroupEditModel editModel);
+
         Task<OperationResult> Update(AdvEntitySearchableGroupEditModel editModel);
+
         Task<OperationDataResult<EntityGroup>> Read(string entityGroupUid);
+
         Task<OperationResult> Delete(string entityGroupUid);
+
         Task<OperationResult> SendSearchableGroup(string entityGroupUid);
     }
 }

@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
-import { EmailRecipientsStore } from './email-recipients.store';
 import { EmailRecipientsService } from 'src/app/common/services';
 import {
   EmailRecipientModel,
   OperationDataResult,
   Paged,
+  PaginationModel,
+  SortModel,
 } from 'src/app/common/models';
 import { Observable } from 'rxjs';
-import { EmailRecipientsQuery } from './email-recipients.query';
-import { updateTablePage, updateTableSort } from 'src/app/common/helpers';
+import { EmailRecipientsQuery, EmailRecipientsStore } from './';
+import { updateTableSort } from 'src/app/common/helpers';
 import { getOffset } from 'src/app/common/helpers/pagination.helper';
 import { arrayToggle } from '@datorama/akita';
 import { map } from 'rxjs/operators';
@@ -21,24 +22,20 @@ export class EmailRecipientsStateService {
     private query: EmailRecipientsQuery
   ) {}
 
-  private total: number;
-
   getEmailRecipients(): Observable<
     OperationDataResult<Paged<EmailRecipientModel>>
   > {
     return this.service
       .getEmailRecipients({
-        isSortDsc: this.query.pageSetting.pagination.isSortDsc,
-        offset: this.query.pageSetting.pagination.offset,
-        pageIndex: 0,
-        pageSize: this.query.pageSetting.pagination.pageSize,
-        sort: this.query.pageSetting.pagination.sort,
-        tagIds: this.query.pageSetting.pagination.tagIds,
+        ...this.query.pageSetting.pagination,
+        ...this.query.pageSetting.filters,
       })
       .pipe(
         map((response) => {
           if (response && response.success && response.model) {
-            this.total = response.model.total;
+            this.store.update(() => ({
+              total: response.model.total,
+            }));
           }
           return response;
         })
@@ -52,33 +49,25 @@ export class EmailRecipientsStateService {
     this.checkOffset();
   }
 
-  getOffset(): Observable<number> {
-    return this.query.selectOffset$;
-  }
-
   getPageSize(): Observable<number> {
     return this.query.selectPageSize$;
   }
 
-  getSort(): Observable<string> {
+  getSort(): Observable<SortModel> {
     return this.query.selectSort$;
-  }
-
-  getIsSortDsc(): Observable<boolean> {
-    return this.query.selectIsSortDsc$;
   }
 
   addOrRemoveTagIds(id: number) {
     this.store.update((state) => ({
-      pagination: {
-        ...state.pagination,
-        tagIds: arrayToggle(state.pagination.tagIds, id),
+      filters: {
+        ...state.filters,
+        tagIds: arrayToggle(state.filters.tagIds, id),
       },
     }));
   }
 
   getTagIds(): Observable<number[]> {
-    return this.query.selectTagsIds$;
+    return this.query.selectTagIds$;
   }
 
   onSortTable(sort: string) {
@@ -106,7 +95,7 @@ export class EmailRecipientsStateService {
     const newOffset = getOffset(
       this.query.pageSetting.pagination.pageSize,
       this.query.pageSetting.pagination.offset,
-      this.total
+      this.query.pageSetting.total
     );
     if (newOffset !== this.query.pageSetting.pagination.offset) {
       this.store.update((state) => ({
@@ -116,7 +105,13 @@ export class EmailRecipientsStateService {
   }
 
   onDelete() {
-    this.total -= 1;
+    this.store.update((state) => ({
+      total: state.total - 1,
+    }));
     this.checkOffset();
+  }
+
+  getPagination(): Observable<PaginationModel> {
+    return this.query.selectPagination$;
   }
 }

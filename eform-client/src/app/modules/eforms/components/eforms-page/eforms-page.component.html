@@ -67,9 +67,8 @@
       <thead
         table-headers
         [tableHeaders]="tableHeaders"
-        [currentSortName]="eformsStateService.getSort() | async"
+        [sort]="eformsStateService.getSort() | async"
         (sortChanged)="sortTable($event)"
-        [isSortDsc]="eformsStateService.getIsSortDsc() | async"
       ></thead>
       <tbody id="mainPageEFormsTableBody">
         <tr *ngFor="let templateDto of templateListModel.templates; index as i">

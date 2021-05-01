@@ -28,9 +28,8 @@
       <thead
         table-headers
         [tableHeaders]="tableHeaders"
-        [currentSortName]="caseStateService.getSort() | async"
+        [sort]="caseStateService.getSort() | async"
         (sortChanged)="sortTable($event)"
-        [isSortDsc]="caseStateService.getIsSortDsc() | async"
       ></thead>
       <tbody>
         <tr *ngFor="let caseModel of caseListModel.cases">
@@ -165,9 +164,7 @@
     </div>
     <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
       <eform-pagination
-        [limit]="caseStateService.getPageSize() | async"
-        [size]="caseListModel.numOfElements"
-        [offset]="caseStateService.getOffset() | async"
+        [pagination]="caseStateService.getPagination() | async"
         (onPageChanged)="changePage($event)"
       ></eform-pagination>
     </div>

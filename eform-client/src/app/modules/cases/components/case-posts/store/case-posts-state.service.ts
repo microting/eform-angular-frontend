@@ -2,7 +2,12 @@ import { Injectable } from '@angular/core';
 import { CasePostsStore } from './case-posts-store';
 import { CasePostsService } from 'src/app/common/services';
 import { Observable } from 'rxjs';
-import { CasePostsListModel, OperationDataResult } from 'src/app/common/models';
+import {
+  CasePostsListModel,
+  OperationDataResult,
+  PaginationModel,
+  SortModel,
+} from 'src/app/common/models';
 import { updateTablePage, updateTableSort } from 'src/app/common/helpers';
 import { getOffset } from 'src/app/common/helpers/pagination.helper';
 import { map } from 'rxjs/operators';
@@ -23,17 +28,17 @@ export class CasePostsStateService {
   getAllPosts(): Observable<OperationDataResult<CasePostsListModel>> {
     return this.service
       .getAllPosts({
-        isSortDsc: this.query.pageSetting.pagination.isSortDsc,
-        offset: this.query.pageSetting.pagination.offset,
-        pageSize: this.query.pageSetting.pagination.pageSize,
-        sort: this.query.pageSetting.pagination.sort,
+        ...this.query.pageSetting.pagination,
+        ...this.query.pageSetting.filters,
         templateId: this.templateId,
         caseId: this.caseId,
       })
       .pipe(
         map((response) => {
           if (response && response.success && response.model) {
-            this.total = response.model.total;
+            this.store.update(() => ({
+              total: response.model.total,
+            }));
           }
           return response;
         })
@@ -52,9 +57,12 @@ export class CasePostsStateService {
     this.store.update((state) => ({
       pagination: {
         ...state.pagination,
-        nameFilter: nameFilter,
         pageIndex: 0,
         offset: 0,
+      },
+      filters: {
+        ...state.filters,
+        nameFilter: nameFilter,
       },
     }));
   }
@@ -66,20 +74,12 @@ export class CasePostsStateService {
     this.checkOffset();
   }
 
-  getOffset(): Observable<number> {
-    return this.query.selectOffset$;
-  }
-
   getPageSize(): Observable<number> {
     return this.query.selectPageSize$;
   }
 
-  getSort(): Observable<string> {
+  getSort(): Observable<SortModel> {
     return this.query.selectSort$;
-  }
-
-  getIsSortDsc(): Observable<boolean> {
-    return this.query.selectIsSortDsc$;
   }
 
   getNameFilter(): Observable<string> {
@@ -87,13 +87,22 @@ export class CasePostsStateService {
   }
 
   changePage(offset: number) {
+    const updatedPageSetting = updateTablePage(offset, {
+      ...this.query.pageSetting.pagination,
+    });
     this.store.update((state) => ({
-      pagination: { ...state.pagination, offset: offset },
+      pagination: {
+        ...state.pagination,
+        offset: updatedPageSetting.offset,
+        pageIndex: updatedPageSetting.pageIndex,
+      },
     }));
   }
 
   onDelete() {
-    this.total -= 1;
+    this.store.update((state) => ({
+      total: state.total - 1,
+    }));
     this.checkOffset();
   }
 
@@ -129,5 +138,9 @@ export class CasePostsStateService {
         },
       }));
     }
+  }
+
+  getPagination(): Observable<PaginationModel> {
+    return this.query.selectPagination$;
   }
 }

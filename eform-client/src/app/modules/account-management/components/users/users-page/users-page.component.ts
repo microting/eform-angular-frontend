@@ -10,7 +10,7 @@ import {
   AdminService,
   GoogleAuthService,
 } from 'src/app/common/services';
-import { UsersStateService } from '../store/users-state.service';
+import { UsersStateService } from '../store';
 import { AuthStateService } from 'src/app/common/store';
 
 @Component({
@@ -43,13 +43,10 @@ export class UsersPageComponent implements OnInit {
   get userClaims() {
     return this.authStateService.currentUserClaims;
   }
-  get userRole() {
-    return this.authStateService.currentRole;
-  }
 
   constructor(
     private adminService: AdminService,
-    private authStateService: AuthStateService,
+    public authStateService: AuthStateService,
     private googleAuthService: GoogleAuthService,
     private securityGroupsService: SecurityGroupsService,
     public usersStateService: UsersStateService

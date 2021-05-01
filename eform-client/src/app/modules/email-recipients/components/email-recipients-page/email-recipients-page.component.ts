@@ -4,20 +4,20 @@ import {
   CommonDictionaryModel,
   Paged,
   TableHeaderElementModel,
-} from '../../../../common/models/common';
+  EmailRecipientModel,
+} from '../../../../common/models';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import {
   EmailRecipientDeleteComponent,
   EmailRecipientEditComponent,
   EmailRecipientsNewComponent,
   EmailRecipientsTagsComponent,
-} from '../index';
+} from '../';
 import {
   EmailRecipientsService,
   EmailRecipientsTagsService,
-} from '../../../../common/services/email-recipients';
-import { EmailRecipientModel } from 'src/app/common/models';
-import { EmailRecipientsStateService } from '../store/email-recipients-state.service';
+} from '../../../../common/services';
+import { EmailRecipientsStateService } from '../store';
 
 @AutoUnsubscribe()
 @Component({

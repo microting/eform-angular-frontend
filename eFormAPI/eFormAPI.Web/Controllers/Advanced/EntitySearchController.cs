@@ -47,7 +47,7 @@ namespace eFormAPI.Web.Controllers.Advanced
         [HttpPost]
         [Route("api/searchable-groups")]
         [Authorize(Policy = AuthConsts.EformPolicies.EntitySearch.Read)]
-        public Task<OperationDataResult<EntityGroupList>> Index(
+        public Task<OperationDataResult<Paged<EntityGroup>>> Index(
             [FromBody] AdvEntitySearchableGroupListRequestModel requestModel)
         {
             return _entitySearchService.Index(requestModel);

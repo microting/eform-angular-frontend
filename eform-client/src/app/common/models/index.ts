@@ -12,3 +12,4 @@ export * from './security';
 export * from './email-recipients';
 export * from './tags';
 export * from './plugins-management';
+export * from './common-pagination-state';

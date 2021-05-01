@@ -20,7 +20,7 @@ import {
 } from './components';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { OwlDateTimeModule } from 'ng-pick-datetime-ex';
-import { persistProviders } from 'src/app/modules/eforms/store/eforms.store';
+import { persistProvider } from 'src/app/modules/eforms/store';
 
 @NgModule({
   imports: [
@@ -47,6 +47,6 @@ import { persistProviders } from 'src/app/modules/eforms/store/eforms.store';
     EformExcelReportModalComponent,
     EformsBulkImportModalComponent,
   ],
-  providers: persistProviders,
+  providers: [persistProvider],
 })
 export class EFormsModule {}
