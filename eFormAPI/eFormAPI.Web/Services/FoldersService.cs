@@ -65,7 +65,7 @@ namespace eFormAPI.Web.Services
                 var core = await _coreHelper.GetCore();
                 await using var dbContext = core.DbContextHelper.GetDbContext();
                 var locale = await _userService.GetCurrentUserLocale();
-                var language = dbContext.Languages.Single(x => string.Equals(x.LanguageCode, locale, StringComparison.CurrentCultureIgnoreCase));
+                var language = dbContext.Languages.Single(x => x.LanguageCode == locale);
                 var folderQuery = dbContext.Folders
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                     .Where(x => x.FolderTranslations.Any(y =>
