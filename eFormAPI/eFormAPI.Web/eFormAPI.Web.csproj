@@ -69,6 +69,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.5" />
     <PackageReference Include="sendgrid" Version="9.23.0" />
+    <PackageReference Include="System.Threading.AccessControl" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
