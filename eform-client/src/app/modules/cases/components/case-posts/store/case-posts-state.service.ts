@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { CasePostsStore } from './case-posts-store';
 import { CasePostsService } from 'src/app/common/services';
 import { Observable } from 'rxjs';
 import {
@@ -8,10 +7,13 @@ import {
   PaginationModel,
   SortModel,
 } from 'src/app/common/models';
-import { updateTablePage, updateTableSort } from 'src/app/common/helpers';
-import { getOffset } from 'src/app/common/helpers/pagination.helper';
+import {
+  updateTablePage,
+  updateTableSort,
+  getOffset,
+} from 'src/app/common/helpers';
 import { map } from 'rxjs/operators';
-import { CasePostsQuery } from 'src/app/modules/cases/components/case-posts/store/case-posts-query';
+import { CasePostsQuery, CasePostsStore } from './';
 
 @Injectable({ providedIn: 'root' })
 export class CasePostsStateService {
@@ -21,7 +23,6 @@ export class CasePostsStateService {
     private query: CasePostsQuery
   ) {}
 
-  private total: number;
   private templateId: number;
   private caseId: number;
 
@@ -125,7 +126,7 @@ export class CasePostsStateService {
     const newOffset = getOffset(
       this.query.pageSetting.pagination.pageSize,
       this.query.pageSetting.pagination.offset,
-      this.total
+      this.query.pageSetting.total
     );
     if (newOffset !== this.query.pageSetting.pagination.offset) {
       this.store.update((state) => ({

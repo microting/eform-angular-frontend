@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { SecurityStore } from './security.store';
 import { SecurityGroupsService } from 'src/app/common/services';
 import { Observable } from 'rxjs';
-import { SecurityQuery } from 'src/app/modules/security/components/store/security.query';
+import { SecurityQuery, SecurityStore } from './';
 import {
   OperationDataResult,
   Paged,
@@ -10,8 +9,7 @@ import {
   SecurityGroupModel,
   SortModel,
 } from 'src/app/common/models';
-import { updateTableSort } from 'src/app/common/helpers';
-import { getOffset } from 'src/app/common/helpers/pagination.helper';
+import { updateTableSort, getOffset } from 'src/app/common/helpers';
 import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
@@ -49,6 +47,7 @@ export class SecurityStateService {
         nameFilter: nameFilter,
       },
     }));
+    this.checkOffset();
   }
 
   updatePageSize(pageSize: number) {
@@ -58,6 +57,7 @@ export class SecurityStateService {
         pageSize: pageSize,
       },
     }));
+    this.checkOffset();
   }
 
   getPageSize(): Observable<number> {
@@ -97,8 +97,7 @@ export class SecurityStateService {
     this.store.update((state) => ({
       pagination: {
         ...state.pagination,
-        isSortDsc: localPageSetting.isSortDsc,
-        sort: localPageSetting.sort,
+        ...localPageSetting,
       },
     }));
   }

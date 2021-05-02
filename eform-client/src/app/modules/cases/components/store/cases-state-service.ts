@@ -22,7 +22,6 @@ export class CasesStateService {
     private eFormService: EFormService
   ) {}
 
-  private total: number;
   private templateId: number;
 
   loadTemplateData(): Observable<OperationDataResult<TemplateDto>> {
@@ -32,11 +31,8 @@ export class CasesStateService {
   getCases(): Observable<OperationDataResult<CaseListModel>> {
     return this.service
       .getCases({
-        isSortDsc: this.query.pageSetting.pagination.isSortDsc,
-        nameFilter: this.query.pageSetting.pagination.nameFilter,
-        offset: this.query.pageSetting.pagination.offset,
-        pageSize: this.query.pageSetting.pagination.pageSize,
-        sort: this.query.pageSetting.pagination.sort,
+        ...this.query.pageSetting.pagination,
+        ...this.query.pageSetting.filters,
         templateId: this.templateId,
         pageIndex: this.query.pageSetting.pagination.pageIndex,
       })
@@ -91,11 +87,7 @@ export class CasesStateService {
 
   changePage(offset: number) {
     const updatedPageSetting = updateTablePage(offset, {
-      offset: this.query.pageSetting.pagination.offset,
-      pageSize: this.query.pageSetting.pagination.pageSize,
-      isSortDsc: false,
-      sort: '',
-      pageIndex: this.query.pageSetting.pagination.pageIndex,
+      ...this.query.pageSetting.pagination,
     });
     this.store.update((state) => ({
       pagination: {
@@ -107,7 +99,9 @@ export class CasesStateService {
   }
 
   onDelete() {
-    this.total -= 1;
+    this.store.update((state) => ({
+      total: state.total - 1,
+    }));
     this.checkOffset();
   }
 

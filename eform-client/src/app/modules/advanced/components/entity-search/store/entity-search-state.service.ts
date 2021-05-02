@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { EntitySearchStore } from './entity-search.store';
 import { EntitySearchService } from 'src/app/common/services';
 import {
   AdvEntitySearchableGroupModel,
@@ -9,7 +8,7 @@ import {
   SortModel,
 } from 'src/app/common/models';
 import { Observable } from 'rxjs';
-import { EntitySearchQuery } from './entity-search.query';
+import { EntitySearchQuery, EntitySearchStore } from './';
 import { updateTableSort } from 'src/app/common/helpers';
 import { getOffset } from 'src/app/common/helpers/pagination.helper';
 import { map } from 'rxjs/operators';

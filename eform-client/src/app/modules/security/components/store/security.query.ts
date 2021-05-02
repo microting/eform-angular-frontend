@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Query } from '@datorama/akita';
-import { SecurityStore, SecurityState } from './security.store';
+import { SecurityStore, SecurityState } from './';
 import { PaginationModel, SortModel } from 'src/app/common/models';
 
 @Injectable({ providedIn: 'root' })
