@@ -78,7 +78,7 @@ namespace eFormAPI.Web.Services
             var sdkDbContext = core.DbContextHelper.GetDbContext();
             var timeZoneInfo = await _userService.GetCurrentUserTimeZoneInfo();
             var language = sdkDbContext.Languages.Single(x =>
-                string.Equals(x.LanguageCode, localeString, StringComparison.CurrentCultureIgnoreCase));
+                x.LanguageCode == localeString);
             var template = await core.TemplateItemRead(eFormCaseReportRequest.TemplateId, language);
             if (template == null)
             {
@@ -366,7 +366,7 @@ namespace eFormAPI.Web.Services
             var core = await _coreHelper.GetCore();
             var localeString = await _userService.GetCurrentUserLocale();
             var sdkDbContext = core.DbContextHelper.GetDbContext();
-            var language = sdkDbContext.Languages.Single(x => string.Equals(x.LanguageCode, localeString, StringComparison.CurrentCultureIgnoreCase));
+            var language = sdkDbContext.Languages.Single(x => x.LanguageCode == localeString);
             var template = await core.TemplateItemRead(templateId, language);
             if (template == null)
             {

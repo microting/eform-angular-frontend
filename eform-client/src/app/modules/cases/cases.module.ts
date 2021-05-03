@@ -45,7 +45,7 @@ import {
   OWL_DATE_TIME_FORMATS,
   OwlDateTimeModule,
   OwlNativeDateTimeModule,
-} from 'ng-pick-datetime-ex';
+} from '@danielmoncada/angular-datetime-picker';
 import { casesPersistProvider } from './components/store';
 import { casePostsPersistProvider } from './components/case-posts/store';
 // import {OwlMomentDateTimeModule} from 'ng-pick-datetime-moment';
