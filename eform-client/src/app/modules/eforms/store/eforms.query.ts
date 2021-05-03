@@ -1,6 +1,7 @@
-import {Injectable} from '@angular/core';
-import {Query} from '@datorama/akita';
-import {EformsState, EformsStore} from './eforms.store';
+import { Injectable } from '@angular/core';
+import { Query } from '@datorama/akita';
+import { EformsState, EformsStore } from './';
+import { SortModel } from 'src/app/common/models';
 
 @Injectable({ providedIn: 'root' })
 export class EformsQuery extends Query<EformsState> {
@@ -12,8 +13,9 @@ export class EformsQuery extends Query<EformsState> {
     return this.getValue();
   }
 
-  selectNameFilter$ = this.select((state) => state.pagination.nameFilter);
-  selectIsSortDsc$ = this.select((state) => state.pagination.isSortDsc);
-  selectSort$ = this.select((state) => state.pagination.sort);
-  selectTagIds$ = this.select((state) => state.pagination.tagIds);
+  selectTagIds$ = this.select((state) => state.filters.tagIds);
+  selectNameFilter$ = this.select((state) => state.filters.nameFilter);
+  selectSort$ = this.select(
+    (state) => new SortModel(state.pagination.sort, state.pagination.isSortDsc)
+  );
 }

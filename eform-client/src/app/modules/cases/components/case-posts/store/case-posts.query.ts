@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Query } from '@datorama/akita';
-import { CasesStore, CasesState } from './';
+import { CasePostsStore, CasePostsState } from './case-posts.store';
 import { PaginationModel, SortModel } from 'src/app/common/models';
 
 @Injectable({ providedIn: 'root' })
-export class CasesQuery extends Query<CasesState> {
-  constructor(protected store: CasesStore) {
+export class CasePostsQuery extends Query<CasePostsState> {
+  constructor(protected store: CasePostsStore) {
     super(store);
   }
 

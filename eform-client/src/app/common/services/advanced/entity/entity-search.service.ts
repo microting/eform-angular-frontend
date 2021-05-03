@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   AdvEntitySearchableGroupEditModel,
-  AdvEntitySearchableGroupListModel,
   AdvEntitySearchableGroupListRequestModel,
   AdvEntitySearchableGroupModel,
   CommonDictionaryTextModel,
   OperationDataResult,
   OperationResult,
+  Paged,
 } from 'src/app/common/models';
 import { ApiBaseService } from 'src/app/common/services';
 
@@ -26,8 +26,8 @@ export class EntitySearchService {
 
   getEntitySearchableGroupList(
     model: AdvEntitySearchableGroupListRequestModel
-  ): Observable<OperationDataResult<AdvEntitySearchableGroupListModel>> {
-    return this.apiBaseService.post<AdvEntitySearchableGroupListModel>(
+  ): Observable<OperationDataResult<Paged<AdvEntitySearchableGroupModel>>> {
+    return this.apiBaseService.post<Paged<AdvEntitySearchableGroupModel>>(
       AdvSearchableEntityMethods.GetAll,
       model
     );

@@ -4,6 +4,7 @@ import { CommonPaginationState } from 'src/app/common/models/common-pagination-s
 
 export interface UsersState {
   pagination: CommonPaginationState;
+  totalUsers: number;
 }
 
 export function createInitialState(): UsersState {
@@ -14,12 +15,19 @@ export function createInitialState(): UsersState {
       pageSize: 10,
       offset: 0,
     },
+    totalUsers: 0,
   };
 }
 
-export const usersPersistStorage = persistState({
+const usersPersistStorage = persistState({
   include: ['users'],
   key: 'mainStore',
+  preStorageUpdate(storeName, state) {
+    return {
+      pagination: state.pagination,
+      // filters: state.filters,
+    };
+  },
 });
 
 @Injectable({ providedIn: 'root' })
@@ -30,6 +38,8 @@ export class UsersStore extends Store<UsersState> {
   }
 }
 
-export const usersPersistProviders = [
-  { provide: 'persistStorage', useValue: usersPersistStorage, multi: true },
-];
+export const usersPersistProvider = {
+  provide: 'persistStorage',
+  useValue: usersPersistStorage,
+  multi: true,
+};

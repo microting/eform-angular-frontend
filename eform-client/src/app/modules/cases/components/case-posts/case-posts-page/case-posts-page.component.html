@@ -47,9 +47,8 @@
       <thead
         table-headers
         [tableHeaders]="tableHeaders"
-        [currentSortName]="casePostsStateService.getSort() | async"
+        [sort]="casePostsStateService.getSort() | async"
         (sortChanged)="sortTable($event)"
-        [isSortDsc]="casePostsStateService.getIsSortDsc() | async"
       ></thead>
       <tbody id="tableBody">
         <tr
@@ -116,9 +115,7 @@
       ></eform-page-size>
     </div>
     <eform-pagination
-      [limit]="casePostsStateService.getPageSize() | async"
-      [size]="casePostsListModel.total"
-      [offset]="casePostsStateService.getOffset() | async"
+      [pagination]="casePostsStateService.getPagination() | async"
       (onPageChanged)="changePage($event)"
     ></eform-pagination>
   </div>

@@ -46,8 +46,8 @@ import {
   OwlDateTimeModule,
   OwlNativeDateTimeModule,
 } from '@danielmoncada/angular-datetime-picker';
-import { casesPersistProvider } from './components/store/cases-store';
-import { casePostsPersistProvider } from './components/case-posts/store/case-posts-store';
+import { casesPersistProvider } from './components/store';
+import { casePostsPersistProvider } from './components/case-posts/store';
 // import {OwlMomentDateTimeModule} from 'ng-pick-datetime-moment';
 
 @NgModule({

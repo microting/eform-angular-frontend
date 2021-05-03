@@ -3,8 +3,6 @@ import { Router } from '@angular/router';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import {
   UserInfoModel,
-  UserInfoModelList,
-  PaginationModel,
   SecurityGroupCreateModel,
   Paged,
   TableHeaderElementModel,

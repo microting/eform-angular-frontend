@@ -3,18 +3,21 @@ import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { UserClaimsEnum } from 'src/app/common/const';
 import {
+  SavedTagModel,
+  TemplateListModel,
+  EformPermissionsSimpleModel,
+  TemplateDto,
   CommonDictionaryModel,
   TableHeaderElementModel,
-} from 'src/app/common/models/common';
-import { TemplateDto } from 'src/app/common/models/dto';
-import { SavedTagModel, TemplateListModel } from 'src/app/common/models/eforms';
-import { EformPermissionsSimpleModel } from 'src/app/common/models/security/group-permissions/eform';
-import { AuthService } from 'src/app/common/services/auth/auth.service';
-import { EFormService, EformTagService } from 'src/app/common/services/eform';
-import { SecurityGroupEformsPermissionsService } from 'src/app/common/services/security';
+} from 'src/app/common/models';
+import {
+  SecurityGroupEformsPermissionsService,
+  EFormService,
+  EformTagService,
+  AuthService,
+} from 'src/app/common/services';
 import { saveAs } from 'file-saver';
-import { EformsStateService } from 'src/app/modules/eforms/store/eforms-state.service';
-import { updateTableSorting } from 'src/app/common/helpers';
+import { EformsStateService } from '../../store';
 import { AuthStateService } from 'src/app/common/store';
 
 @Component({
@@ -68,8 +71,8 @@ export class EformsPageComponent implements OnInit, OnDestroy {
     public eformsStateService: EformsStateService,
     private authStateService: AuthStateService
   ) {
-    this.searchSubject.pipe(debounceTime(500)).subscribe((val) => {
-      this.eformsStateService.updateNameFilter(val.toString());
+    this.searchSubject.pipe(debounceTime(500)).subscribe((val: string) => {
+      this.eformsStateService.updateNameFilter(val);
       this.loadAllTags();
     });
   }
@@ -97,15 +100,12 @@ export class EformsPageComponent implements OnInit, OnDestroy {
 
   loadAllTags() {
     if (this.userClaims.eformsReadTags) {
-      this.eFormTagService.getAvailableTags().subscribe(
-        (data) => {
-          if (data && data.success) {
-            this.availableTags = data.model;
-            this.loadSelectedUserTags();
-          }
-        },
-        (error) => {}
-      );
+      this.eFormTagService.getAvailableTags().subscribe((data) => {
+        if (data && data.success) {
+          this.availableTags = data.model;
+          this.loadSelectedUserTags();
+        }
+      });
     } else {
       this.loadAllTemplates();
     }
@@ -124,44 +124,37 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   }
 
   removeSavedTag(e: any) {
-    this.eFormTagService.deleteSavedTag(e.value.id).subscribe(
-      (data) => {
-        if (data && data.success) {
-          this.eformsStateService.addOrRemoveTagIds(e.value.id);
-          this.loadAllTemplates();
-        }
-      },
-      (error) => {}
-    );
+    this.eFormTagService.deleteSavedTag(e.value.id).subscribe((data) => {
+      if (data && data.success) {
+        this.eformsStateService.addOrRemoveTagIds(e.value.id);
+        this.loadAllTemplates();
+      }
+    });
   }
 
   loadSelectedUserTags() {
-    this.eFormTagService.getSavedTags().subscribe(
-      (data) => {
-        if (data && data.success) {
-          if (data.model.tagList.length > 0) {
-            this.eformsStateService.updateTagIds(
-              data.model.tagList.map((x) => x.tagId)
-            );
-          }
-          this.loadAllTemplates();
+    this.eFormTagService.getSavedTags().subscribe((data) => {
+      if (data && data.success) {
+        if (data.model.tagList.length > 0) {
+          this.eformsStateService.updateTagIds(
+            data.model.tagList.map((x) => x.tagId)
+          );
         }
-      },
-      (error) => {}
-    );
+        this.loadAllTemplates();
+      }
+    });
   }
 
   loadEformsPermissions() {
-    this.securityGroupEformsService.getEformsSimplePermissions().subscribe(
-      (data) => {
+    this.securityGroupEformsService
+      .getEformsSimplePermissions()
+      .subscribe((data) => {
         if (data && data.success) {
           this.eformPermissionsSimpleModel = this.securityGroupEformsService.mapEformsSimplePermissions(
             data.model
           );
         }
-      },
-      (error) => {}
-    );
+      });
   }
 
   onLabelInputChanged(label: string) {
@@ -169,14 +162,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   }
 
   sortTable(sort: string) {
-    const localPageSettings = updateTableSorting(sort, {
-      sort: this.eformsStateService.sort,
-      isSortDsc: this.eformsStateService.isSortDsc,
-      pageSize: 0,
-      additional: [],
-    });
-    this.eformsStateService.updateIsSortDsc(localPageSettings.isSortDsc);
-    this.eformsStateService.updateSort(localPageSettings.sort);
+    this.eformsStateService.onSortTable(sort);
     this.loadAllTemplates();
   }
 

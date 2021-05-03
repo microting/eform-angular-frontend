@@ -14,7 +14,7 @@ import {
   TableHeaderElementModel,
 } from 'src/app/common/models';
 import { ActivatedRoute } from '@angular/router';
-import { CasePostsStateService } from '../store/case-posts-state-service';
+import { CasePostsStateService } from '../store';
 import { AuthStateService } from 'src/app/common/store';
 
 @AutoUnsubscribe()

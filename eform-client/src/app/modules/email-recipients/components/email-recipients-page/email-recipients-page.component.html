@@ -50,9 +50,8 @@
       <thead
         table-headers
         [tableHeaders]="tableHeaders"
-        [currentSortName]="this.emailRecipientsStateService.getSort() | async"
+        [sort]="this.emailRecipientsStateService.getSort() | async"
         (sortChanged)="onSortTable($event)"
-        [isSortDsc]="this.emailRecipientsStateService.getIsSortDsc() | async"
       ></thead>
       <tbody id="tableBody">
         <tr
@@ -124,9 +123,7 @@
       ></eform-page-size>
     </div>
     <eform-pagination
-      [limit]="emailRecipientsStateService.getPageSize() | async"
-      [size]="emailRecipientsListModel.total"
-      [offset]="emailRecipientsStateService.getOffset() | async"
+      [pagination]="emailRecipientsStateService.getPagination() | async"
       (onPageChanged)="changePage($event)"
     ></eform-pagination>
   </div>

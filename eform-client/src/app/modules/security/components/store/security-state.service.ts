@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import { SecurityStore } from './security.store';
 import { SecurityGroupsService } from 'src/app/common/services';
 import { Observable } from 'rxjs';
-import { SecurityQuery } from 'src/app/modules/security/components/store/security.query';
+import { SecurityQuery, SecurityStore } from './';
 import {
   OperationDataResult,
   Paged,
+  PaginationModel,
   SecurityGroupModel,
+  SortModel,
 } from 'src/app/common/models';
-import { updateTableSort } from 'src/app/common/helpers';
-import { getOffset } from 'src/app/common/helpers/pagination.helper';
+import { updateTableSort, getOffset } from 'src/app/common/helpers';
 import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
@@ -20,24 +20,20 @@ export class SecurityStateService {
     private query: SecurityQuery
   ) {}
 
-  private total: number;
-
   getAllSecurityGroups(): Observable<
     OperationDataResult<Paged<SecurityGroupModel>>
   > {
     return this.service
       .getAllSecurityGroups({
-        isSortDsc: this.query.pageSetting.pagination.isSortDsc,
-        nameFilter: this.query.pageSetting.pagination.nameFilter,
-        offset: this.query.pageSetting.pagination.offset,
-        pageSize: this.query.pageSetting.pagination.pageSize,
-        pageIndex: 0,
-        sort: this.query.pageSetting.pagination.sort,
+        ...this.query.pageSetting.pagination,
+        ...this.query.pageSetting.filters,
       })
       .pipe(
         map((response) => {
           if (response && response.success && response.model) {
-            this.total = response.model.total;
+            this.store.update(() => ({
+              total: response.model.total,
+            }));
           }
           return response;
         })
@@ -46,11 +42,12 @@ export class SecurityStateService {
 
   updateNameFilter(nameFilter: string) {
     this.store.update((state) => ({
-      pagination: {
-        ...state.pagination,
+      filters: {
+        ...state.filters,
         nameFilter: nameFilter,
       },
     }));
+    this.checkOffset();
   }
 
   updatePageSize(pageSize: number) {
@@ -60,22 +57,15 @@ export class SecurityStateService {
         pageSize: pageSize,
       },
     }));
-  }
-
-  getOffset(): Observable<number> {
-    return this.query.selectOffset$;
+    this.checkOffset();
   }
 
   getPageSize(): Observable<number> {
     return this.query.selectPageSize$;
   }
 
-  getSort(): Observable<string> {
+  getSort(): Observable<SortModel> {
     return this.query.selectSort$;
-  }
-
-  getIsSortDsc(): Observable<boolean> {
-    return this.query.selectIsSortDsc$;
   }
 
   getNameFilter(): Observable<string> {
@@ -92,7 +82,9 @@ export class SecurityStateService {
   }
 
   onDelete() {
-    this.total -= 1;
+    this.store.update((state) => ({
+      total: state.total - 1,
+    }));
     this.checkOffset();
   }
 
@@ -105,8 +97,7 @@ export class SecurityStateService {
     this.store.update((state) => ({
       pagination: {
         ...state.pagination,
-        isSortDsc: localPageSetting.isSortDsc,
-        sort: localPageSetting.sort,
+        ...localPageSetting,
       },
     }));
   }
@@ -115,7 +106,7 @@ export class SecurityStateService {
     const newOffset = getOffset(
       this.query.pageSetting.pagination.pageSize,
       this.query.pageSetting.pagination.offset,
-      this.total
+      this.query.pageSetting.total
     );
     if (newOffset !== this.query.pageSetting.pagination.offset) {
       this.store.update((state) => ({
@@ -125,5 +116,9 @@ export class SecurityStateService {
         },
       }));
     }
+  }
+
+  getPagination(): Observable<PaginationModel> {
+    return this.query.selectPagination$;
   }
 }

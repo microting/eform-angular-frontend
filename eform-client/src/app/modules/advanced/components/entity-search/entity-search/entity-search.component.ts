@@ -1,12 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
-  AdvEntitySearchableGroupListModel,
   AdvEntitySearchableGroupModel,
+  Paged,
   TableHeaderElementModel,
 } from 'src/app/common/models';
-import { EntitySearchService } from 'src/app/common/services/advanced';
-import { EntitySearchStateService } from 'src/app/modules/advanced/components/entity-search/store/entity-search-state.service';
-import { updateTableSorting } from 'src/app/common/helpers';
+import { EntitySearchService } from 'src/app/common/services';
+import { EntitySearchStateService } from '../store';
 import { AuthStateService } from 'src/app/common/store';
 
 @Component({
@@ -17,7 +16,7 @@ import { AuthStateService } from 'src/app/common/store';
 export class EntitySearchComponent implements OnInit {
   @ViewChild('modalSearchRemove', { static: true }) modalSearchRemove;
   selectedAdvGroup: AdvEntitySearchableGroupModel = new AdvEntitySearchableGroupModel();
-  advEntitySearchableGroupListModel: AdvEntitySearchableGroupListModel = new AdvEntitySearchableGroupListModel();
+  advEntitySearchableGroupListModel: Paged<AdvEntitySearchableGroupModel> = new Paged<AdvEntitySearchableGroupModel>();
 
   get userClaims() {
     return this.authStateService.currentUserClaims;
@@ -25,11 +24,11 @@ export class EntitySearchComponent implements OnInit {
 
   tableHeaders: TableHeaderElementModel[] = [
     { name: 'Id', elementId: 'idTableHeader', sortable: true },
-    { name: 'Name', elementId: 'nameTableHeader', sortable: false },
+    { name: 'Name', elementId: 'nameTableHeader', sortable: true },
     {
       name: 'Description',
       elementId: 'descriptionTableHeader',
-      sortable: false,
+      sortable: true,
     },
     { name: 'Actions', elementId: '', sortable: false },
   ];
@@ -55,7 +54,7 @@ export class EntitySearchComponent implements OnInit {
   }
 
   changePage(offset: number) {
-    this.entitySearchStateService.updatePageIndex(offset);
+    this.entitySearchStateService.changePage(offset);
     this.getEntitySearchableGroupList();
   }
 
@@ -66,24 +65,21 @@ export class EntitySearchComponent implements OnInit {
 
   onSearchChanged(name: string) {
     this.entitySearchStateService.updateNameFilter(name);
-    this.changePage(0);
     this.getEntitySearchableGroupList();
   }
 
   sortTable(sort: string) {
-    const localPageSettings = updateTableSorting(sort, {
-      sort: this.entitySearchStateService.sort,
-      isSortDsc: this.entitySearchStateService.isSortDsc,
-      pageSize: 0,
-      additional: [],
-    });
-    this.entitySearchStateService.updateSort(localPageSettings.sort);
-    this.entitySearchStateService.updateIsSortDsc(localPageSettings.isSortDsc);
+    this.entitySearchStateService.onSortTable(sort);
     this.getEntitySearchableGroupList();
   }
 
   onPageSizeChanged(pageSize: number) {
     this.entitySearchStateService.updatePageSize(pageSize);
+    this.getEntitySearchableGroupList();
+  }
+
+  onEntityRemoved() {
+    this.entitySearchStateService.onDelete();
     this.getEntitySearchableGroupList();
   }
 }

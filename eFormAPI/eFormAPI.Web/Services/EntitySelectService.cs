@@ -21,26 +21,24 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using eFormAPI.Web.Abstractions;
-using eFormAPI.Web.Abstractions.Advanced;
-using eFormAPI.Web.Infrastructure.Database;
-using eFormAPI.Web.Infrastructure.Models.SelectableList;
-using Microsoft.EntityFrameworkCore;
-using Microting.eForm.Infrastructure.Constants;
-//using Microting.eForm.Infrastructure.Models;
-using Microting.eFormApi.BasePn.Abstractions;
-using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
 
 namespace eFormAPI.Web.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Abstractions;
+    using Abstractions.Advanced;
+    using Infrastructure.Database;
+    using Infrastructure.Models.SelectableList;
+    using Microsoft.EntityFrameworkCore;
+    using Microting.eForm.Infrastructure.Constants;
+    using Microting.eFormApi.BasePn.Abstractions;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
     using Microting.eForm.Infrastructure.Models;
-    using Microting.eFormApi.BasePn.Infrastructure.Extensions;
     using Microting.eFormApi.BasePn.Infrastructure.Helpers;
     using EntityGroup = Infrastructure.Models.EntityGroup;
 
@@ -219,9 +217,9 @@ namespace eFormAPI.Web.Services
 
                 EntityGroup entityGroup = await core.EntityGroupRead(entityGroupUid);
 
-                List<string> plugins = await _dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
+                var plugins = await _dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
                 
-                foreach (string plugin in plugins)
+                foreach (var plugin in plugins)
                 {
                     if (entityGroup.Name.Contains(plugin))
                     {
@@ -246,16 +244,13 @@ namespace eFormAPI.Web.Services
 
                 var entityGroup = await core.EntityGroupRead(entityGroupUid);
 
-                var mappedEntityGroupDict = new List<CommonDictionaryTextModel>();
-
-                foreach (var entityGroupItem in entityGroup.EntityGroupItemLst)
-                {
-                    mappedEntityGroupDict.Add(new CommonDictionaryTextModel()
+                var mappedEntityGroupDict = entityGroup.EntityGroupItemLst
+                    .Select(entityGroupItem => new CommonDictionaryTextModel
                     {
                         Id = entityGroupItem.Id.ToString(),
                         Text = entityGroupItem.Name
-                    });
-                }
+                    })
+                    .ToList();
 
                 return new OperationDataResult<List<CommonDictionaryTextModel>>(true, mappedEntityGroupDict);
             }

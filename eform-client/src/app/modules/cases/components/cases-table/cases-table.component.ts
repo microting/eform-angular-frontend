@@ -1,16 +1,21 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserClaimsEnum } from 'src/app/common/const';
-import { CaseListModel, CaseModel } from 'src/app/common/models/cases';
-import { TemplateDto } from 'src/app/common/models/dto';
-import { EformPermissionsSimpleModel } from 'src/app/common/models/security/group-permissions/eform';
-import { PageSettingsModel } from 'src/app/common/models/settings';
-import { CasesService } from 'src/app/common/services/cases';
-import { EFormService } from 'src/app/common/services/eform';
-import { SecurityGroupEformsPermissionsService } from 'src/app/common/services/security';
+import {
+  PageSettingsModel,
+  EformPermissionsSimpleModel,
+  TemplateDto,
+  CaseListModel,
+  CaseModel,
+  TableHeaderElementModel,
+} from 'src/app/common/models';
+import {
+  EFormService,
+  CasesService,
+  SecurityGroupEformsPermissionsService,
+} from 'src/app/common/services';
 import { saveAs } from 'file-saver';
-import { TableHeaderElementModel } from 'src/app/common/models';
-import { CasesStateService } from '../store/cases-state-service';
+import { CasesStateService } from '../store';
 import { AuthStateService } from 'src/app/common/store';
 
 @Component({
@@ -27,92 +32,12 @@ export class CasesTableComponent implements OnInit {
   get userClaims() {
     return this.authStateService.currentUserClaims;
   }
-  get userRole() {
-    return this.authStateService.currentRole;
-  }
+
   get userClaimsEnum() {
     return UserClaimsEnum;
   }
 
-  tableHeaders: TableHeaderElementModel[] = [
-    { name: 'Id', elementId: '', sortable: true },
-    { name: 'done_at', elementId: '', sortable: true },
-    { name: 'created_at', elementId: '', sortable: true },
-    { name: 'worker_name', elementId: '', sortable: true },
-    this.currentTemplate.field1 && this.currentTemplate.field1.label
-      ? {
-          name: 'field1',
-          elementId: '',
-          sortable: true,
-          visibleName: this.currentTemplate.field1.label,
-        }
-      : null,
-    this.currentTemplate.field2 && this.currentTemplate.field2.label
-      ? {
-          name: 'field2',
-          elementId: '',
-          sortable: true,
-          visibleName: this.currentTemplate.field2.label,
-        }
-      : null,
-    this.currentTemplate.field3 && this.currentTemplate.field3.label
-      ? {
-          name: 'field3',
-          elementId: '',
-          sortable: true,
-          visibleName: this.currentTemplate.field3.label,
-        }
-      : null,
-    this.currentTemplate.field4 && this.currentTemplate.field4.label
-      ? {
-          name: 'field4',
-          elementId: '',
-          sortable: true,
-          visibleName: this.currentTemplate.field4.label,
-        }
-      : null,
-    this.currentTemplate.field5 && this.currentTemplate.field5.label
-      ? {
-          name: 'field5',
-          elementId: '',
-          sortable: true,
-          visibleName: this.currentTemplate.field5.label,
-        }
-      : null,
-    this.currentTemplate.field6 && this.currentTemplate.field6.label
-      ? {
-          name: 'field6',
-          elementId: '',
-          sortable: true,
-          visibleName: this.currentTemplate.field6.label,
-        }
-      : null,
-    this.currentTemplate.field7 && this.currentTemplate.field7.label
-      ? {
-          name: 'field7',
-          elementId: '',
-          sortable: true,
-          visibleName: this.currentTemplate.field7.label,
-        }
-      : null,
-    this.currentTemplate.field8 && this.currentTemplate.field8.label
-      ? {
-          name: 'field8',
-          elementId: '',
-          sortable: true,
-          visibleName: this.currentTemplate.field8.label,
-        }
-      : null,
-    this.currentTemplate.field9 && this.currentTemplate.field9.label
-      ? {
-          name: 'field9',
-          elementId: '',
-          sortable: true,
-          visibleName: this.currentTemplate.field9.label,
-        }
-      : null,
-    { name: 'Actions', elementId: '', sortable: false },
-  ];
+  tableHeaders: TableHeaderElementModel[];
 
   constructor(
     private activateRoute: ActivatedRoute,
@@ -149,85 +74,7 @@ export class CasesTableComponent implements OnInit {
     this.caseStateService.getCases().subscribe((operation) => {
       if (operation && operation.success) {
         this.caseListModel = operation.model;
-        this.tableHeaders = [
-          { name: 'Id', elementId: '', sortable: true },
-          { name: 'done_at', elementId: '', sortable: true },
-          { name: 'created_at', elementId: '', sortable: true },
-          { name: 'worker_name', elementId: '', sortable: true },
-          this.currentTemplate.field1 && this.currentTemplate.field1.label
-            ? {
-              name: 'field1',
-              elementId: '',
-              sortable: true,
-              visibleName: this.currentTemplate.field1.label,
-            }
-            : null,
-          this.currentTemplate.field2 && this.currentTemplate.field2.label
-            ? {
-              name: 'field2',
-              elementId: '',
-              sortable: true,
-              visibleName: this.currentTemplate.field2.label,
-            }
-            : null,
-          this.currentTemplate.field3 && this.currentTemplate.field3.label
-            ? {
-              name: 'field3',
-              elementId: '',
-              sortable: true,
-              visibleName: this.currentTemplate.field3.label,
-            }
-            : null,
-          this.currentTemplate.field4 && this.currentTemplate.field4.label
-            ? {
-              name: 'field4',
-              elementId: '',
-              sortable: true,
-              visibleName: this.currentTemplate.field4.label,
-            }
-            : null,
-          this.currentTemplate.field5 && this.currentTemplate.field5.label
-            ? {
-              name: 'field5',
-              elementId: '',
-              sortable: true,
-              visibleName: this.currentTemplate.field5.label,
-            }
-            : null,
-          this.currentTemplate.field6 && this.currentTemplate.field6.label
-            ? {
-              name: 'field6',
-              elementId: '',
-              sortable: true,
-              visibleName: this.currentTemplate.field6.label,
-            }
-            : null,
-          this.currentTemplate.field7 && this.currentTemplate.field7.label
-            ? {
-              name: 'field7',
-              elementId: '',
-              sortable: true,
-              visibleName: this.currentTemplate.field7.label,
-            }
-            : null,
-          this.currentTemplate.field8 && this.currentTemplate.field8.label
-            ? {
-              name: 'field8',
-              elementId: '',
-              sortable: true,
-              visibleName: this.currentTemplate.field8.label,
-            }
-            : null,
-          this.currentTemplate.field9 && this.currentTemplate.field9.label
-            ? {
-              name: 'field9',
-              elementId: '',
-              sortable: true,
-              visibleName: this.currentTemplate.field9.label,
-            }
-            : null,
-          { name: 'Actions', elementId: '', sortable: false },
-        ];
+        this.addTableHeaders();
       }
     });
   }
@@ -298,5 +145,87 @@ export class CasesTableComponent implements OnInit {
   onCaseDeleted() {
     this.caseStateService.onDelete();
     this.loadAllCases();
+  }
+
+  private addTableHeaders() {
+    this.tableHeaders = [
+      { name: 'Id', elementId: '', sortable: true },
+      { name: 'done_at', elementId: '', sortable: true },
+      { name: 'created_at', elementId: '', sortable: true },
+      { name: 'worker_name', elementId: '', sortable: true },
+      this.currentTemplate.field1 && this.currentTemplate.field1.label
+        ? {
+            name: 'field1',
+            elementId: '',
+            sortable: true,
+            visibleName: this.currentTemplate.field1.label,
+          }
+        : null,
+      this.currentTemplate.field2 && this.currentTemplate.field2.label
+        ? {
+            name: 'field2',
+            elementId: '',
+            sortable: true,
+            visibleName: this.currentTemplate.field2.label,
+          }
+        : null,
+      this.currentTemplate.field3 && this.currentTemplate.field3.label
+        ? {
+            name: 'field3',
+            elementId: '',
+            sortable: true,
+            visibleName: this.currentTemplate.field3.label,
+          }
+        : null,
+      this.currentTemplate.field4 && this.currentTemplate.field4.label
+        ? {
+            name: 'field4',
+            elementId: '',
+            sortable: true,
+            visibleName: this.currentTemplate.field4.label,
+          }
+        : null,
+      this.currentTemplate.field5 && this.currentTemplate.field5.label
+        ? {
+            name: 'field5',
+            elementId: '',
+            sortable: true,
+            visibleName: this.currentTemplate.field5.label,
+          }
+        : null,
+      this.currentTemplate.field6 && this.currentTemplate.field6.label
+        ? {
+            name: 'field6',
+            elementId: '',
+            sortable: true,
+            visibleName: this.currentTemplate.field6.label,
+          }
+        : null,
+      this.currentTemplate.field7 && this.currentTemplate.field7.label
+        ? {
+            name: 'field7',
+            elementId: '',
+            sortable: true,
+            visibleName: this.currentTemplate.field7.label,
+          }
+        : null,
+      this.currentTemplate.field8 && this.currentTemplate.field8.label
+        ? {
+            name: 'field8',
+            elementId: '',
+            sortable: true,
+            visibleName: this.currentTemplate.field8.label,
+          }
+        : null,
+      this.currentTemplate.field9 && this.currentTemplate.field9.label
+        ? {
+            name: 'field9',
+            elementId: '',
+            sortable: true,
+            visibleName: this.currentTemplate.field9.label,
+          }
+        : null,
+      { name: 'Actions', elementId: '', sortable: false },
+    ];
   }
 }

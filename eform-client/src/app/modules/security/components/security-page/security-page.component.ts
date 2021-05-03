@@ -8,7 +8,7 @@ import {
 import { SecurityGroupsService } from 'src/app/common/services';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { Subscription } from 'rxjs';
-import { SecurityStateService } from 'src/app/modules/security/components/store/security-state.service';
+import { SecurityStateService } from '../store';
 
 @AutoUnsubscribe()
 @Component({
@@ -78,7 +78,6 @@ export class SecurityPageComponent implements OnInit, OnDestroy {
   onLabelInputChanged(label: string) {
     this.securityStateService.updateNameFilter(label);
     this.getSecurityGroups();
-    this.securityStateService.checkOffset();
   }
 
   ngOnDestroy(): void {}

@@ -42,14 +42,13 @@
       <thead
         table-headers
         [tableHeaders]="tableHeaders"
-        [currentSortName]="entitySearchStateService.getSort() | async"
+        [sort]="entitySearchStateService.getSort() | async"
         (sortChanged)="sortTable($event)"
-        [isSortDsc]="entitySearchStateService.getIsSortDsc() | async"
       ></thead>
       <tbody id="tableBody">
         <tr
           *ngFor="
-            let advEntitySearchableGroup of advEntitySearchableGroupListModel.entityGroups
+            let advEntitySearchableGroup of advEntitySearchableGroupListModel.entities
           "
         >
           <td id="entitySearchMUid">
@@ -113,9 +112,7 @@
     </div>
     <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
       <eform-pagination
-        [limit]="entitySearchStateService.getPageSize() | async"
-        [size]="advEntitySearchableGroupListModel.numOfElements"
-        [offset]="entitySearchStateService.getOffset()"
+        [pagination]="entitySearchStateService.getPagination() | async"
         (onPageChanged)="changePage($event)"
       ></eform-pagination>
     </div>
@@ -123,6 +120,6 @@
 </div>
 
 <app-entity-search-remove
-  (onEntityRemoved)="getEntitySearchableGroupList()"
+  (onEntityRemoved)="onEntityRemoved()"
   #modalSearchRemove
 ></app-entity-search-remove>

@@ -1,9 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AdvEntitySelectableGroupModel } from 'src/app/common/models/advanced';
-import { EntitySelectService } from 'src/app/common/services/advanced';
-import { Paged, TableHeaderElementModel } from 'src/app/common/models';
-import { EntitySelectStateService } from '../store/entity-select-state.service';
+import { EntitySelectService } from 'src/app/common/services';
+import {
+  Paged,
+  TableHeaderElementModel,
+  AdvEntitySelectableGroupModel,
+} from 'src/app/common/models';
 import { AuthStateService } from 'src/app/common/store';
+import { EntitySelectStateService } from '../store';
 
 @Component({
   selector: 'app-selectable-list',
@@ -57,7 +60,7 @@ export class EntitySelectComponent implements OnInit {
 
   onNameFilterChanged(nameFilter: any) {
     this.entitySelectStateService.updateNameFilter(nameFilter);
-    this.changePage(0);
+    this.getEntitySelectableGroupList();
   }
 
   changePage(offset: number) {
@@ -76,9 +79,7 @@ export class EntitySelectComponent implements OnInit {
   }
 
   onEntityRemoved() {
-    this.entitySelectStateService.onDelete(
-      this.advEntitySelectableGroupListModel.total - 1
-    );
+    this.entitySelectStateService.onDelete();
     this.getEntitySelectableGroupList();
   }
 }
