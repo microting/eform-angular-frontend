@@ -285,68 +285,71 @@ namespace eFormAPI.Web.Hosting.Helpers
 
             foreach (var pluginFile in pluginList)
             {
-                var loader = PluginLoader.CreateFromAssemblyFile(pluginFile,
-                    // this ensures that the plugin resolves to the same version of DependencyInjection
-                    // and ASP.NET Core that the current app uses
-                    new[]
-                    {
-                        typeof(IApplicationBuilder),
-                        typeof(IEformPlugin),
-                        typeof(IServiceCollection),
-                        typeof(IEFormCoreService),
-                        typeof(IPluginConfigurationSeedData),
-                        typeof(IPluginDbContext),
-                        typeof(IConfigurationBuilder),
-                        typeof(ReloadDbConfiguration),
-                        typeof(DbSet<PluginConfigurationValueVersion>),
-                        typeof(DbSet<PluginConfigurationValue>),
-                        typeof(ReloadDbConfiguration),
-                        typeof(EFormCoreService),
-
-                        typeof(ModelBuilder),
-                        typeof(PluginConfigurationValue),
-                        typeof(PluginConfigurationValueVersion),
-                        typeof(BaseEntity),
-                        typeof(PluginConfigurationProvider<>),
-                        typeof(ConfigurationProvider),
-                        typeof(DbContext),
-                        typeof(WarningsConfiguration),
-                        typeof(WarningBehavior),
-                        typeof(DbContextOptionsBuilder),
-                        typeof(DbContextOptions),
-                        typeof(InMemoryEventId),
-                        typeof(LoggerCategory<>),
-                        typeof(DbLoggerCategory),
-                        typeof(WarningsConfigurationBuilder),
-                        //typeof(MySqlDbContextOptionsExtensions),
-                        typeof(CoreOptionsExtension),
-                        typeof(RelationalEventId),
-                        typeof(IDbContextOptionsBuilderInfrastructure),
-                        typeof(ModelSnapshot),
-                        typeof(ILazyLoader),
-
-                        typeof(IPluginDbOptions<>),
-                        typeof(IOptionsSnapshot<>),
-                        typeof(PluginDbOptions<>),
-                        typeof(IDesignTimeDbContextFactory<>),
-                        typeof(Core),
-                        typeof(GetObjectResponse),
-                        typeof(AmazonS3Client),
-                        typeof(SwiftObjectGetResponse),
-                        typeof(SwiftClient)
-                    });
-
-                var types = loader
-                    .LoadDefaultAssembly()
-                    .GetTypes();
-
-                foreach (var type in types
-                    .Where(t => typeof(IEformPlugin).IsAssignableFrom(t) && !t.IsAbstract))
+                if (!pluginFile.Contains("ref"))
                 {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine($@"[INF] Found plugin : {type.Name}");
-                    var plugin = (IEformPlugin)Activator.CreateInstance(type);
-                    plugins.Add(plugin);
+                    var loader = PluginLoader.CreateFromAssemblyFile(pluginFile,
+                        // this ensures that the plugin resolves to the same version of DependencyInjection
+                        // and ASP.NET Core that the current app uses
+                        new[]
+                        {
+                            typeof(IApplicationBuilder),
+                            typeof(IEformPlugin),
+                            typeof(IServiceCollection),
+                            typeof(IEFormCoreService),
+                            typeof(IPluginConfigurationSeedData),
+                            typeof(IPluginDbContext),
+                            typeof(IConfigurationBuilder),
+                            typeof(ReloadDbConfiguration),
+                            typeof(DbSet<PluginConfigurationValueVersion>),
+                            typeof(DbSet<PluginConfigurationValue>),
+                            typeof(ReloadDbConfiguration),
+                            typeof(EFormCoreService),
+
+                            typeof(ModelBuilder),
+                            typeof(PluginConfigurationValue),
+                            typeof(PluginConfigurationValueVersion),
+                            typeof(BaseEntity),
+                            typeof(PluginConfigurationProvider<>),
+                            typeof(ConfigurationProvider),
+                            typeof(DbContext),
+                            typeof(WarningsConfiguration),
+                            typeof(WarningBehavior),
+                            typeof(DbContextOptionsBuilder),
+                            typeof(DbContextOptions),
+                            typeof(InMemoryEventId),
+                            typeof(LoggerCategory<>),
+                            typeof(DbLoggerCategory),
+                            typeof(WarningsConfigurationBuilder),
+                            //typeof(MySqlDbContextOptionsExtensions),
+                            typeof(CoreOptionsExtension),
+                            typeof(RelationalEventId),
+                            typeof(IDbContextOptionsBuilderInfrastructure),
+                            typeof(ModelSnapshot),
+                            typeof(ILazyLoader),
+
+                            typeof(IPluginDbOptions<>),
+                            typeof(IOptionsSnapshot<>),
+                            typeof(PluginDbOptions<>),
+                            typeof(IDesignTimeDbContextFactory<>),
+                            typeof(Core),
+                            typeof(GetObjectResponse),
+                            typeof(AmazonS3Client),
+                            typeof(SwiftObjectGetResponse),
+                            typeof(SwiftClient)
+                        });
+
+                    var types = loader
+                        .LoadDefaultAssembly()
+                        .GetTypes();
+
+                    foreach (var type in types
+                        .Where(t => typeof(IEformPlugin).IsAssignableFrom(t) && !t.IsAbstract))
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine($@"[INF] Found plugin : {type.Name}");
+                        var plugin = (IEformPlugin) Activator.CreateInstance(type);
+                        plugins.Add(plugin);
+                    }
                 }
             }
             //}
