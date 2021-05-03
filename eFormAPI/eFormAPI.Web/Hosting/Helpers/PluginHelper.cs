@@ -282,6 +282,7 @@ namespace eFormAPI.Web.Hosting.Helpers
             //{
             var pluginList = Directory.GetFiles(pluginsDir, "*.Pn.dll", SearchOption.AllDirectories);
 
+
             foreach (var pluginFile in pluginList)
             {
                 var loader = PluginLoader.CreateFromAssemblyFile(pluginFile,
@@ -317,7 +318,7 @@ namespace eFormAPI.Web.Hosting.Helpers
                         typeof(LoggerCategory<>),
                         typeof(DbLoggerCategory),
                         typeof(WarningsConfigurationBuilder),
-                        typeof(MySqlDbContextOptionsExtensions),
+                        //typeof(MySqlDbContextOptionsExtensions),
                         typeof(CoreOptionsExtension),
                         typeof(RelationalEventId),
                         typeof(IDbContextOptionsBuilderInfrastructure),

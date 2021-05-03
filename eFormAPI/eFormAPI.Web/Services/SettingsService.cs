@@ -193,7 +193,11 @@ namespace eFormAPI.Web.Services
             var dbContextOptionsBuilder = new DbContextOptionsBuilder<BaseDbContext>();
             try
             {
-                dbContextOptionsBuilder.UseMySql(mainConnectionString, b =>
+                //
+                dbContextOptionsBuilder.UseMySql(mainConnectionString,
+                    new MariaDbServerVersion(
+                    new Version(10, 4, 0)),
+                    b =>
                     b.MigrationsAssembly("eFormAPI.Web").EnableRetryOnFailure());
 
 

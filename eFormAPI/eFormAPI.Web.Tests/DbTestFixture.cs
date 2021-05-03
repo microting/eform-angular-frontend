@@ -41,18 +41,14 @@ namespace eFormAPI.Web.Tests
         private void GetContext(string connectionStr)
         {
 
-            DbContextOptionsBuilder<BaseDbContext> dbContextOptionsBuilder = new DbContextOptionsBuilder<BaseDbContext>();
-
-            // if (ConnectionString.ToLower().Contains("convert zero datetime"))
-            // {
-                dbContextOptionsBuilder.UseMySql(connectionStr, b => b.EnableRetryOnFailure());
-            // }
-            // else
-            // {
-                // dbContextOptionsBuilder.UseSqlServer(connectionStr);
-            // }
-            dbContextOptionsBuilder.UseLazyLoadingProxies(true);
-            DbContext = new BaseDbContext(dbContextOptionsBuilder.Options);
+            DbContextOptionsBuilder<BaseDbContext> optionsBuilder = new DbContextOptionsBuilder<BaseDbContext>();
+            optionsBuilder.UseMySql(connectionStr, new MariaDbServerVersion(
+                new Version(10, 4, 0)), mySqlOptionsAction: builder =>
+            {
+                builder.EnableRetryOnFailure();
+            });
+            optionsBuilder.UseLazyLoadingProxies(true);
+            DbContext = new BaseDbContext(optionsBuilder.Options);
 
             DbContext.Database.Migrate();
             DbContext.Database.EnsureCreated();
@@ -61,17 +57,9 @@ namespace eFormAPI.Web.Tests
         [SetUp]
         public async Task Setup()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                ConnectionString = @"data source=(LocalDb)\SharedInstance;Initial catalog=angular-tests;Integrated Security=True";
-            }
-            else
-            {
-                ConnectionString = @"Server = localhost; port = 3306; Database = angular-tests; user = root; password = secretpassword; Convert Zero Datetime = true;";
-            }
+            ConnectionString = @"Server = localhost; port = 3306; Database = angular-tests; user = root; password = secretpassword; Convert Zero Datetime = true;";
 
             GetContext(ConnectionString);
-
 
             DbContext.Database.SetCommandTimeout(300);
 
@@ -81,7 +69,6 @@ namespace eFormAPI.Web.Tests
             }
             catch
             {
-
                 DbContext.Database.Migrate();
 
             }
@@ -92,38 +79,37 @@ namespace eFormAPI.Web.Tests
         [TearDown]
         public async Task TearDown()
         {
-
             await ClearDb();
 
-            DbContext.Dispose();
+            await DbContext.DisposeAsync();
         }
 
-        public async Task ClearDb()
+        private async Task ClearDb()
         {
-
             Console.WriteLine("ClearDb called.");
-            List<string> modelNames = new List<string>();
-            modelNames.Add("UserTokens");
-            modelNames.Add("UserRoles");
-            modelNames.Add("UserLogins");
-            modelNames.Add("UserClaims");
-            modelNames.Add("SecurityGroups");
-            modelNames.Add("Users");
-            modelNames.Add("Roles");
-            modelNames.Add("RoleClaims");
-            modelNames.Add("GroupPermissions");
-            modelNames.Add("EformPermissions");
-            modelNames.Add("EformInGroups");
-            modelNames.Add("MenuItems");
-            modelNames.Add("Permissions");
-            modelNames.Add("SecurityGroupUsers");
-
+            List<string> modelNames = new List<string>
+            {
+                "UserTokens",
+                "UserRoles",
+                "UserLogins",
+                "UserClaims",
+                "SecurityGroups",
+                "Users",
+                "Roles",
+                "RoleClaims",
+                "GroupPermissions",
+                "EformPermissions",
+                "EformInGroups",
+                "MenuItems",
+                "Permissions",
+                "SecurityGroupUsers"
+            };
 
             foreach (var modelName in modelNames)
             {
                 try
                 {
-                    string sqlCmd = string.Empty;
+                    string sqlCmd;
                     if (DbContext.Database.IsMySql())
                     {
                         sqlCmd = $"SET FOREIGN_KEY_CHECKS = 0;TRUNCATE `{"angular-tests"}`.`{modelName}`";
@@ -142,7 +128,6 @@ namespace eFormAPI.Web.Tests
                     Console.WriteLine(ex.Message);
                 }
             }
-
         }
 
         public virtual void DoSetup() { }

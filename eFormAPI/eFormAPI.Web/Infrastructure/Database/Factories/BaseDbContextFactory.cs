@@ -35,9 +35,10 @@ namespace eFormAPI.Web.Infrastructure.Database.Factories
         {
             var defaultCs = "Server = localhost; port = 3306; Database = eform-angular-migration; user = root; Convert Zero Datetime = true;";
             var optionsBuilder = new DbContextOptionsBuilder<BaseDbContext>();
-            optionsBuilder.UseMySql(args.Any() ? ((args[0] == "..." ? defaultCs : args[0])) : defaultCs, mysqlOptions =>
+            optionsBuilder.UseMySql(args.Any() ? args[0] : defaultCs, new MariaDbServerVersion(
+                new Version(10, 4, 0)), mySqlOptionsAction: builder =>
             {
-                mysqlOptions.ServerVersion(new Version(10, 4, 0), ServerType.MariaDb).EnableRetryOnFailure();
+                builder.EnableRetryOnFailure();
             });
             return new BaseDbContext(optionsBuilder.Options);
 
