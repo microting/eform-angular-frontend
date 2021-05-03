@@ -97,7 +97,7 @@ export class Navbar {
   }
 
   public get deviceUsersBtn() {
-    const ele = this.header.$(`#plugins-device-users`);
+    const ele = this.header.$(`#device-users`);
     ele.waitForDisplayed({ timeout: 20000 });
     return ele;
   }
