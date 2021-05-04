@@ -55,6 +55,13 @@ export class TagsModalPage extends Page {
     return $('#tagDeleteSaveCancelBtn');
   }
 
+  public get tagsModalCloseBtn() {
+    const ele = $('#tagsModalCloseBtn');
+    ele.waitForDisplayed({ timeout: 20000 });
+    ele.waitForClickable({ timeout: 20000 });
+    return ele;
+  }
+
   public createTag(tagName: string) {
     this.newTagBtn.click();
     $('#newTagName').waitForDisplayed({ timeout: 90000 });
@@ -96,7 +103,6 @@ export class TagsModalPage extends Page {
     $('#newTagBtn').waitForDisplayed({ timeout: 20000 });
     const rowObject = new TagRowObject(rowNumber);
     rowObject.deleteTag();
-    this.tagDeleteSaveBtn.click();
     $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
   }
 
@@ -106,6 +112,20 @@ export class TagsModalPage extends Page {
     rowObject.deleteTag();
     this.tagDeleteSaveCancelBtn.click();
     $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
+  }
+
+  public getTagByName(name: string) {
+    for (let i = 1; i < this.rowNum + 1; i++) {
+      const tag = new TagRowObject(i);
+      if (tag.name === name) {
+        return tag;
+      }
+    }
+    return null;
+  }
+
+  public closeTagModal() {
+    this.tagsModalCloseBtn.click();
   }
 }
 
@@ -130,6 +150,7 @@ export class TagRowObject {
 
   public deleteTag() {
     this.deleteTagBtn.click();
+    tagsModalPage.tagDeleteSaveBtn.click();
     $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
   }
 }
