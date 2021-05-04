@@ -5,7 +5,7 @@ COPY eform-client ./
 RUN npm install
 RUN npm run build
 
-FROM mcr.microsoft.com/dotnet/core/sdk:5.0 AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build-env
 WORKDIR /app
 ARG GITVERSION
 
@@ -15,7 +15,7 @@ RUN dotnet publish -o out /p:Version=$GITVERSION --runtime linux-x64 --configura
 RUN pwd
 
 # Build runtime image
-FROM mcr.microsoft.com/dotnet/core/aspnet:5.0
+FROM mcr.microsoft.com/dotnet/aspnet:5.0
 WORKDIR /app
 COPY --from=build-env /app/out .
 COPY --from=node-env /app/dist wwwroot
