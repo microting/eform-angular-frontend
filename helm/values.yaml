@@ -204,3 +204,13 @@ rabbitmq:
     total_memory_available_override_value = {{ include "rabbitmq.toBytes" .Values.resources.limits.memory }}
     vm_memory_high_watermark.{{ .Values.memoryHighWatermark.type }} = {{ .Values.memoryHighWatermark.value }}
     {{- end }}
+
+cronjob:
+  repository: microtingas/kubernetes-cloud-mysql-backup
+  image:
+    tag: latest
+  crons:
+   "0":
+     name: my-first-cron
+     command: my:first:cron
+     schedule: "*/10 * * * *"
