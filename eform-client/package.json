@@ -96,7 +96,7 @@
     "angular-mocks": "1.8.2",
     "chai": "4.3.4",
     "chromedriver": "90.0.0",
-    "codelyzer": "^6.0.0",
+    "codelyzer": "^6.0.2",
     "fs-extra": "^9.0.0",
     "guid-typescript": "1.0.9",
     "path": "0.12.7",
