@@ -37,7 +37,9 @@ export class EformTagService {
   }
 
   deleteSavedTag(tagId: number): Observable<OperationResult> {
-    return this.apiBaseService.delete(TemplateTagMethods.SavedTags, tagId);
+    return this.apiBaseService.delete(TemplateTagMethods.SavedTags, {
+      tagId: tagId,
+    });
   }
 
   deleteTag(tagId: number): Observable<OperationResult> {
