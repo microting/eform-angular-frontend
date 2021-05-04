@@ -109,11 +109,7 @@ namespace eFormAPI.Web.Services
                         Tags = x.SiteTags
                             .Where(y => y.WorkflowState != Constants.WorkflowStates.Removed)
                             .Where(y => y.Tag.WorkflowState != Constants.WorkflowStates.Removed)
-                            .Select(t => new KeyValueModel
-                            {
-                                Key = (int) t.TagId,
-                                Value = t.Tag.Name,
-                            }).ToList(),
+                            .Select(t => (int)t.TagId).ToList(),
                     }).ToListAsync();
 
                 return new OperationDataResult<List<SiteModel>>(true, sites);
@@ -131,8 +127,8 @@ namespace eFormAPI.Web.Services
             try
             {
                 var core = await _coreHelper.GetCore();
-                await using var dbContext = core.DbContextHelper.GetDbContext();
-                var site = await dbContext.Sites
+                await using var sdkDbContext = core.DbContextHelper.GetDbContext();
+                var site = await sdkDbContext.Sites
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                     .Where(x => x.Id == id)
                     .Select(x => new SiteModel
@@ -142,11 +138,10 @@ namespace eFormAPI.Web.Services
                         CreatedAt = x.CreatedAt,
                         SiteUId = (int) x.MicrotingUid,
                         UpdatedAt = x.UpdatedAt,
-                        Tags = x.SiteTags.Select(t => new KeyValueModel
-                        {
-                            Key = (int) t.TagId,
-                            Value = t.Tag.Name,
-                        }).ToList(),
+                        Tags = x.SiteTags
+                            .Where(y => y.WorkflowState != Constants.WorkflowStates.Removed)
+                            .Where(y => y.Tag.WorkflowState != Constants.WorkflowStates.Removed)
+                            .Select(t => (int)t.TagId).ToList(),
                     }).FirstOrDefaultAsync();
 
                 if (site == null)
@@ -185,8 +180,50 @@ namespace eFormAPI.Web.Services
                         _localizationService.GetStringWithFormat("SiteParamNotFound", updateModel.Id));
                 }
 
-                Language language = await dbContext.Languages.SingleAsync(x => x.Id == site.LanguageId);
+                var language = await dbContext.Languages.SingleAsync(x => x.Id == site.LanguageId);
+
                 await core.Advanced_SiteItemUpdate((int)site.MicrotingUid, updateModel.SiteName, language.LanguageCode);
+
+
+                // Tags
+                var siteTagIds = site.SiteTags
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Where(x => x.TagId != null)
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Select(x => (int)x.TagId)
+                    .ToList();
+
+                var forRemove = siteTagIds
+                    .Where(x => !updateModel.Tags.Contains(x))
+                    .ToList();
+
+                foreach (var tagIdForRemove in forRemove)
+                {
+                    var siteTag = await dbContext.SiteTags
+                        .Where(x => x.TagId == tagIdForRemove)
+                        .Where(x => x.SiteId == site.Id)
+                        .FirstOrDefaultAsync();
+
+                    if (siteTag != null)
+                    {
+                        await siteTag.Delete(dbContext);
+                    }
+                }
+
+                var forCreate = updateModel.Tags
+                    .Where(x => !siteTagIds.Contains(x))
+                    .ToList();
+
+                foreach (var tagIdForCreate in forCreate)
+                {
+                    var siteTag = new SiteTag
+                    {
+                        TagId = tagIdForCreate,
+                        SiteId = site.Id,
+                    };
+
+                    await siteTag.Create(dbContext);
+                }
 
                 return new OperationResult(true);
             }

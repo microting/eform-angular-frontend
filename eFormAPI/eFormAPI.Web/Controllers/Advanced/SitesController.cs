@@ -70,23 +70,23 @@ namespace eFormAPI.Web.Controllers.Advanced
         }
 
         [HttpGet]
-        [Route("api/sites/edit")]
+        [Route("api/sites")]
         [Authorize(Policy = AuthConsts.EformPolicies.Sites.Read)]
         public async Task<OperationDataResult<SiteModel>> Read(int id)
         {
             return await _sitesService.Read(id);
         }
 
-        [HttpPost]
-        [Route("api/sites/update")]
+        [HttpPut]
+        [Route("api/sites")]
         [Authorize(Policy = AuthConsts.EformPolicies.Sites.Update)]
         public async Task<OperationResult> Update([FromBody] SiteUpdateModel updateModel)
         {
             return await _sitesService.Update(updateModel);
         }
 
-        [HttpGet]
-        [Route("api/sites/delete/{id}")]
+        [HttpDelete]
+        [Route("api/sites")]
         [Authorize(Policy = AuthConsts.EformPolicies.Sites.Delete)]
         public async Task<OperationResult> Delete(int id)
         {

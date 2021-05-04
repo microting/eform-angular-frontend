@@ -5,13 +5,15 @@ import {
   OperationDataResult,
   OperationResult,
   SavedTagModel,
+  SharedTagCreateModel,
+  SharedTagModel,
   TemplateTagsUpdateModel,
 } from 'src/app/common/models';
 import { ApiBaseService } from 'src/app/common/services';
 
 export let TemplateTagMethods = {
   Tags: 'api/tags',
-  DeleteTag: 'api/tags/delete',
+  TagIndex: 'api/tags/index',
   TemplateTags: 'api/tags/template',
   SavedTags: 'api/tags/saved',
 };
@@ -23,7 +25,7 @@ export class EformTagService {
   getAvailableTags(): Observable<
     OperationDataResult<Array<CommonDictionaryModel>>
   > {
-    return this.apiBaseService.get(TemplateTagMethods.Tags);
+    return this.apiBaseService.get(TemplateTagMethods.TagIndex);
   }
 
   getSavedTags(): Observable<OperationDataResult<any>> {
@@ -35,27 +37,26 @@ export class EformTagService {
   }
 
   deleteSavedTag(tagId: number): Observable<OperationResult> {
-    return this.apiBaseService.delete(
-      TemplateTagMethods.SavedTags + '?tagId=' + tagId
-    );
+    return this.apiBaseService.delete(TemplateTagMethods.SavedTags, tagId);
   }
 
   deleteTag(tagId: number): Observable<OperationResult> {
-    return this.apiBaseService.get(
-      TemplateTagMethods.DeleteTag + '?tagId=' + tagId
-    );
+    return this.apiBaseService.delete(TemplateTagMethods.Tags, {
+      tagId: tagId,
+    });
   }
 
-  createTag(tagName: string): Observable<OperationResult> {
-    return this.apiBaseService.post(
-      TemplateTagMethods.Tags + '?tagName=' + tagName,
-      {}
-    );
+  createTag(tag: SharedTagCreateModel): Observable<OperationResult> {
+    return this.apiBaseService.post(TemplateTagMethods.Tags, tag);
   }
 
-  updateTemplateTags = (
+  updateTemplateTags(
     model: TemplateTagsUpdateModel
-  ): Observable<OperationResult> => {
+  ): Observable<OperationResult> {
     return this.apiBaseService.post(TemplateTagMethods.TemplateTags, model);
-  };
+  }
+
+  updateTag(tag: SharedTagModel): Observable<OperationResult> {
+    return this.apiBaseService.put(TemplateTagMethods.Tags, tag);
+  }
 }

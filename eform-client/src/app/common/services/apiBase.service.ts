@@ -37,9 +37,12 @@ export class ApiBaseService {
       .pipe(map((response) => this.extractData<T>(response)));
   }
 
-  public delete<T>(method: string): Observable<any> {
+  public delete<T>(method: string, params?: any): Observable<any> {
     return this.http
-      .delete(method, { headers: this.setHeaders() })
+      .delete(method, {
+        headers: this.setHeaders(),
+        params: this.setParams(params),
+      })
       .pipe(map((response) => this.extractData<T>(response)));
   }
 

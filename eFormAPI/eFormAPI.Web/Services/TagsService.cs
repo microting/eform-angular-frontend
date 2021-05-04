@@ -38,6 +38,8 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
 namespace eFormAPI.Web.Services
 {
+    using Microting.eForm.Infrastructure.Constants;
+
     public class TagsService : ITagsService
     {
         private readonly IEFormCoreService _coreHelper;
@@ -121,20 +123,50 @@ namespace eFormAPI.Web.Services
         {
             try
             {
-                var result = await _coreHelper.GetCore().Result.TagDelete(tagId);
-                if (result)
+                var core = await _coreHelper.GetCore();
+                var sdkDbContext = core.DbContextHelper.GetDbContext();
+                var tagFromDb = await sdkDbContext.Tags
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Where(x => x.Id == tagId)
+                    .FirstOrDefaultAsync();
+
+                if (tagFromDb == null)
                 {
-                    var savedTags = _dbContext.SavedTags.Where(x => x.TagId == tagId).ToList();
-                    if (savedTags.Any())
-                    {
-                        _dbContext.SavedTags.RemoveRange(savedTags);
-                        await _dbContext.SaveChangesAsync();
-                    }
+                    return new OperationResult(
+                        false,
+                        _localizationService.GetString("TagNotFound"));
                 }
 
-                return result
-                    ? new OperationResult(true, _localizationService.GetString("TagDeletedSuccessfully"))
-                    : new OperationResult(false, _localizationService.GetString("ErrorWhileDeletingTag"));
+                var taggingFromDb = await sdkDbContext.Taggings
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Where(x => x.Id == tagId)
+                    .ToListAsync();
+
+                foreach (var tagging in taggingFromDb)
+                {
+                    await tagging.Delete(sdkDbContext);
+                }
+
+                var sitesTags = await sdkDbContext.SiteTags
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Where(x => x.TagId == tagId)
+                    .ToListAsync();
+
+                foreach (var siteTag in sitesTags)
+                {
+                    await siteTag.Delete(sdkDbContext);
+                }
+
+                await tagFromDb.Delete(sdkDbContext);
+
+                var savedTags = await _dbContext.SavedTags.Where(x => x.TagId == tagId).FirstOrDefaultAsync();
+                if (savedTags != null)
+                {
+                    _dbContext.SavedTags.Remove(savedTags);
+                    await _dbContext.SaveChangesAsync();
+                }
+
+                return new OperationResult(true, _localizationService.GetString("TagDeletedSuccessfully"));
             }
             catch (Exception e)
             {
@@ -231,6 +263,49 @@ namespace eFormAPI.Web.Services
                 _logger.LogError(e.Message);
                 return new OperationResult(false,
                     _localizationService.GetString("ErrorWhileSavingTag"));
+            }
+        }
+
+        public async Task<OperationResult> UpdateTag(CommonTagModel commonTagModel)
+        {
+
+            try
+            {
+                var core = await _coreHelper.GetCore();
+                var sdkDbContext = core.DbContextHelper.GetDbContext();
+                var tagFromDb = await sdkDbContext.Tags
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Where(x => x.Id == commonTagModel.Id)
+                    .FirstOrDefaultAsync();
+
+                if (tagFromDb == null)
+                {
+                    return new OperationResult(
+                        false,
+                        _localizationService.GetString("TagNotFound"));
+                }
+
+                tagFromDb.Name = commonTagModel.Name;
+                await tagFromDb.Update(sdkDbContext);
+
+                var savedTagFromDb = await _dbContext.SavedTags
+                    //.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Where(x => x.TagId == commonTagModel.Id)
+                    .FirstOrDefaultAsync();
+
+                if (savedTagFromDb != null)
+                {
+                    savedTagFromDb.TagName = commonTagModel.Name;
+                    savedTagFromDb.UpdatedByUserId = _userService.UserId;
+                    await _dbContext.SaveChangesAsync();
+                }
+
+                return new OperationResult(true, _localizationService.GetString("TagUpdatedSuccessfully"));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return new OperationResult(false, _localizationService.GetString("ErrorWhileUpdateTag"));
             }
         }
     }

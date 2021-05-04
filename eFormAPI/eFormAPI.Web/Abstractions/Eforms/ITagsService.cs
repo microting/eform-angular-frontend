@@ -32,11 +32,19 @@ namespace eFormAPI.Web.Abstractions.Eforms
     public interface ITagsService
     {
         Task<OperationDataResult<List<CommonDictionaryModel>>> Index();
+
         Task<OperationResult> Delete(int tagId);
+
         Task<OperationResult> Create(string tagName);
+
         Task<OperationResult> Update(UpdateTemplateTagsModel requestModel);
+
         Task<OperationDataResult<SavedTagsModel>> GetSavedTags();
+
         Task<OperationResult> RemoveTagFromSaved(int tagId);
+
         Task<OperationResult> AddTagToSaved(SavedTagModel requestModel);
+
+        Task<OperationResult> UpdateTag(CommonTagModel commonTagModel);
     }
 }
