@@ -11,11 +11,9 @@ import { ApiBaseService } from 'src/app/common/services';
 
 const SitesMethods = {
   GetAll: '/api/sites/index',
+  Sites: '/api/sites',
   GetAllDictionary: '/api/sites/dictionary',
   GetAllSitesForPairing: '/api/sites/pairing',
-  GetSingle: '/api/sites/edit',
-  UpdateSingle: '/api/sites/update',
-  DeleteSingle: '/api/sites/delete',
 };
 
 @Injectable()
@@ -40,20 +38,17 @@ export class SitesService {
     );
   }
 
-  getSingleSite(id: number): Observable<OperationDataResult<SiteNameDto>> {
-    return this.apiBaseService.get<SiteNameDto>(
-      SitesMethods.GetSingle + '/' + id
-    );
+  getSingleSite(id: number): Observable<OperationDataResult<SiteNameModel>> {
+    return this.apiBaseService.get<SiteNameModel>(SitesMethods.Sites, {
+      id: id,
+    });
   }
 
   updateSingleSite(model: SiteNameModel): Observable<OperationResult> {
-    return this.apiBaseService.post<SiteNameModel>(
-      SitesMethods.UpdateSingle,
-      model
-    );
+    return this.apiBaseService.put<SiteNameModel>(SitesMethods.Sites, model);
   }
 
   deleteSingleSite(id: number): Observable<OperationResult> {
-    return this.apiBaseService.get(SitesMethods.DeleteSingle + '/' + id);
+    return this.apiBaseService.delete(SitesMethods.Sites, { id: id });
   }
 }

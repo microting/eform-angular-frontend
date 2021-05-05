@@ -21,19 +21,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using eFormAPI.Web.Abstractions.Eforms;
-using eFormAPI.Web.Abstractions.Security;
-using eFormAPI.Web.Infrastructure;
-using eFormAPI.Web.Infrastructure.Models.Tags;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
-namespace eFormAPI.Web.Controllers.Eforms
+namespace eFormAPI.Web.Controllers
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Abstractions.Eforms;
+    using Abstractions.Security;
+    using Infrastructure;
+    using Infrastructure.Models.Tags;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+
     [Authorize]
     public class TagsController : Controller
     {
@@ -48,7 +49,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         }
 
         [HttpGet]
-        [Route("api/tags")]
+        [Route("api/tags/index")]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.ReadTags)]
         public async Task<OperationDataResult<List<CommonDictionaryModel>>> Index()
         {
@@ -58,9 +59,9 @@ namespace eFormAPI.Web.Controllers.Eforms
         [HttpPost]
         [Route("api/tags")]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UpdateTags)]
-        public async Task<OperationResult> Create(string tagName)
+        public async Task<OperationResult> Create([FromBody] CommonTagModel tag)
         {
-            return await _tagsService.Create(tagName);
+            return await _tagsService.Create(tag.Name);
         }
 
 
@@ -78,8 +79,8 @@ namespace eFormAPI.Web.Controllers.Eforms
             return Ok(await _tagsService.Update(requestModel));
         }
 
-        [HttpGet]
-        [Route("api/tags/delete")]
+        [HttpDelete]
+        [Route("api/tags")]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.UpdateTags)]
         public async Task<OperationResult> DeleteTag(int tagId)
         {
@@ -108,6 +109,12 @@ namespace eFormAPI.Web.Controllers.Eforms
         {
             return await _tagsService.RemoveTagFromSaved(tagId);
         }
-        
+
+        [HttpPut]
+        [Route("api/tags")]
+        public async Task<OperationResult> UpdateTag([FromBody] CommonTagModel commonTagModel)
+        {
+            return await _tagsService.UpdateTag(commonTagModel);
+        }
     }
 }

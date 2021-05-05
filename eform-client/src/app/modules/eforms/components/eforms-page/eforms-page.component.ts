@@ -34,6 +34,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   @ViewChild('modalUploadZip', { static: true }) modalUploadZip;
   @ViewChild('modalExcel', { static: true }) modalExcel;
   @ViewChild('modalEformsImport', { static: true }) modalEformsImport;
+  @ViewChild('modalTags', { static: true }) modalTags;
 
   searchSubject = new Subject();
   templateListModel: TemplateListModel = new TemplateListModel();
@@ -45,9 +46,6 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   }
   get userClaimsEnum() {
     return UserClaimsEnum;
-  }
-  get userRole() {
-    return this.authStateService.currentRole;
   }
 
   tableHeaders: TableHeaderElementModel[] = [
@@ -69,7 +67,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private securityGroupEformsService: SecurityGroupEformsPermissionsService,
     public eformsStateService: EformsStateService,
-    private authStateService: AuthStateService
+    public authStateService: AuthStateService
   ) {
     this.searchSubject.pipe(debounceTime(500)).subscribe((val: string) => {
       this.eformsStateService.updateNameFilter(val);
@@ -223,5 +221,9 @@ export class EformsPageComponent implements OnInit, OnDestroy {
     } else {
       return this.userClaims[UserClaimsEnum[permissionIndex].toString()];
     }
+  }
+
+  openTagsModal() {
+    this.modalTags.show();
   }
 }

@@ -5,6 +5,7 @@ import {
   OnChanges,
   OnInit,
   Output,
+  SimpleChanges,
 } from '@angular/core';
 import { Observable, range } from 'rxjs';
 import { filter, map, toArray } from 'rxjs/operators';
@@ -58,27 +59,23 @@ export class EformPaginationComponent implements OnInit, OnChanges {
     return Math.ceil(Math.max(size, 1) / Math.max(limit, 1));
   }
 
-  ngOnChanges() {
-    if (!this.pagination) {
+  ngOnChanges(changes: SimpleChanges) {
+    if (!changes.pagination.firstChange) {
+      if (this.pagination) {
+        this.offset = this.pagination.offset;
+        this.limit = this.pagination.pageSize;
+        this.size = this.pagination.total;
+      }
       this.getPages(this.offset, this.limit, this.size);
-    } else {
-      this.getPages(
-        this.pagination.offset,
-        this.pagination.total,
-        this.pagination.pageSize
-      );
     }
   }
 
   ngOnInit() {
-    if (!this.pagination) {
-      this.getPages(this.offset, this.limit, this.size);
-    } else {
-      this.getPages(
-        this.pagination.offset,
-        this.pagination.total,
-        this.pagination.pageSize
-      );
+    if (this.pagination) {
+      this.offset = this.pagination.offset;
+      this.limit = this.pagination.pageSize;
+      this.size = this.pagination.total;
     }
+    this.getPages(this.offset, this.limit, this.size);
   }
 }

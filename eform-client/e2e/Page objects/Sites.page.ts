@@ -1,29 +1,18 @@
-import {PageWithNavbarPage} from './PageWithNavbar.page';
+import { PageWithNavbarPage } from './PageWithNavbar.page';
+import tagsModalPage from './TagsModal.page';
 
 class SitesPage extends PageWithNavbarPage {
   constructor() {
     super();
   }
 
-  public get editTagsBtn() {
-    return $('#newDeviceUserBtn');
-  }
-
-  public get newTagInput() {
-    const ele = $('#newTag');
-    ele.waitForDisplayed({timeout: 20000});
-    return ele;
-  }
-
-  public get newTagCreateBtn() {
-    const ele = $('#newTagCreateBtn');
-    ele.waitForDisplayed({timeout: 20000});
-    return ele;
+  public get rowNum(): number {
+    return $$('#sitesTableBody > tr').length;
   }
 
   public get siteTagSelector() {
     const ele = $('#tagSelector');
-    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForDisplayed({ timeout: 20000 });
     return ele;
   }
 
@@ -31,51 +20,30 @@ class SitesPage extends PageWithNavbarPage {
     return $$(`#tagForRemoval .ng-option`);
   }
 
-  public siteTagSearchField() {
-    return $(`#tagSelector .ng-input > input`);
-  }
-
   public get updateTagsBtn() {
     const ele = $('#saveTagsBtn');
-    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForDisplayed({ timeout: 20000 });
     return ele;
   }
 
   public get tagRemovalSelector() {
     const ele = $('#tagForRemoval');
-    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForDisplayed({ timeout: 20000 });
     return ele;
-  }
-
-  public siteTagListOfOptions() {
-    return $$(`#tagSelector .ng-option`);
   }
 
   public get removeTagBtn() {
     const ele = $('#removeTagBtn');
-    ele.waitForDisplayed({timeout: 20000});
-    ele.waitForClickable({timeout: 20000});
+    ele.waitForDisplayed({ timeout: 20000 });
+    ele.waitForClickable({ timeout: 20000 });
     return ele;
   }
 
-  getFirstRowObject(): SitesRowObject {
-    browser.pause(500);
-    return new SitesRowObject(1);
-  }
-
-  public tagExists(tagName: string) {
-    $('#tagSelector').waitForDisplayed({timeout: 20000});
-    this.siteTagSelector.click();
-    const selectedTag = $('#tagSelector .ng-option');
-    selectedTag.getText();
-    return selectedTag.getText() === tagName;
-  }
-
-  public tagNotSelected(tagName: string) {
-    this.siteTagSelector.click();
-    const availableTag = $('.ng-option:not(.ng-option-selected)');
-    availableTag.getText();
-    return availableTag.getText() === tagName;
+  public get sitesManageTagsBtn() {
+    const ele = $('#sitesManageTagsBtn');
+    ele.waitForDisplayed({ timeout: 20000 });
+    ele.waitForClickable({ timeout: 20000 });
+    return ele;
   }
 
   public get getFirstAvailableTag() {
@@ -83,57 +51,66 @@ class SitesPage extends PageWithNavbarPage {
     return $('.ng-option:not(.ng-option-selected)');
   }
 
-  public createTag(site: SitesRowObject, tagName: string) {
-    site.siteTagsEditBtn.click();
-    $('#tagSelector').waitForDisplayed({timeout: 20000});
-    sitesPage.newTagInput.setValue(tagName);
-    sitesPage.newTagCreateBtn.click();
-  }
-
-  public createAndAssignTag(tagName: string, sitesRows: number[]) {
-    const firstSite = this.getFirstRowObject();
-    this.createTag(firstSite, tagName);
-    $('#spinner-animation').waitForDisplayed({timeout: 30000, reverse: true});
-    this.cancelCreateBtn.click();
-    for (const siteRow of sitesRows) {
-      this.getSite(siteRow).siteTagsEditBtn.click();
-      $('#newTag').waitForDisplayed({timeout: 20000});
-      this.siteTagSearchField().addValue(tagName);
-      const siteTagChoice = this.siteTagListOfOptions()[0];
-      siteTagChoice.waitForDisplayed({timeout: 30000});
-      siteTagChoice.waitForClickable({timeout: 30000});
-      siteTagChoice.click();
-      sitesPage.updateTagsBtn.click();
-      $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-    }
-  }
-
-  public get saveCreateBtn() {
-    return $('#saveCreateBtn');
-  }
-
   public get cancelCreateBtn() {
     return $('#cancelCreateBtn');
   }
 
-  public get saveEditBtn() {
-    return $('#saveEditBtn');
+  public get siteEditCancelBtn() {
+    const ele = $('#siteEditCancelBtn');
+    ele.waitForDisplayed({ timeout: 20000 });
+    ele.waitForClickable({ timeout: 20000 });
+    return ele;
   }
 
-  public get cancelEditBtn() {
-    return $('#cancelEditBtn');
+  public get siteNameEditInput() {
+    const ele = $('#siteName');
+    ele.waitForDisplayed({ timeout: 20000 });
+    return ele;
   }
 
-  public get saveDeleteBtn() {
-    return $('#saveDeleteBtn');
+  public get tagSelector() {
+    const ele = $('#tagSelector');
+    ele.waitForDisplayed({ timeout: 20000 });
+    return ele;
   }
 
-  public get cancelDeleteBtn() {
-    return $('#cancelDeleteBtn');
+  public get siteEditSaveBtn() {
+    const ele = $('#siteEditSaveBtn');
+    ele.waitForDisplayed({ timeout: 20000 });
+    return ele;
   }
 
-  public get rowNum(): number {
-    return $$('#tableBody > tr').length;
+  public get siteDeleteCancelBtn() {
+    const ele = $('#siteDeleteCancelBtn');
+    ele.waitForDisplayed({ timeout: 20000 });
+    ele.waitForClickable({ timeout: 20000 });
+    return ele;
+  }
+
+  public get siteDeleteDeleteBtn() {
+    const ele = $('#siteDeleteDeleteBtn');
+    ele.waitForDisplayed({ timeout: 20000 });
+    return ele;
+  }
+
+  public createTag(tagName: string[]) {
+    this.sitesManageTagsBtn.click();
+    tagsModalPage.tagsModalCloseBtn.waitForDisplayed({ timeout: 20000 });
+    for (let i = 0; i < tagName.length; i++) {
+      tagsModalPage.createTag(tagName[i]);
+    }
+    tagsModalPage.closeTagModal();
+    sitesPage.sitesManageTagsBtn.waitForClickable({ timeout: 20000 });
+  }
+
+  public removeTags(tagName: string[]) {
+    this.sitesManageTagsBtn.click();
+    tagsModalPage.tagsModalCloseBtn.waitForDisplayed({ timeout: 20000 });
+    for (let i = 0; i < tagName.length; i++) {
+      tagsModalPage.getTagByName(tagName[i]).deleteTag();
+    }
+    tagsModalPage.closeTagModal();
+    sitesPage.sitesManageTagsBtn.waitForClickable({ timeout: 20000 });
   }
 
   getSite(num): SitesRowObject {
@@ -141,12 +118,9 @@ class SitesPage extends PageWithNavbarPage {
     return new SitesRowObject(num);
   }
 
-  getSitesList(maxNum): SitesRowObject[] {
-    const users: SitesRowObject[] = [];
-    for (let i = 1; i <= maxNum; i++) {
-      users[i - 1] = new SitesRowObject(i);
-    }
-    return users;
+  getFirstRowObject(): SitesRowObject {
+    browser.pause(500);
+    return this.getSite(1);
   }
 }
 
@@ -155,23 +129,74 @@ export default sitesPage;
 
 export class SitesRowObject {
   constructor(rowNum) {
-    if ($$('#siteUUId_' + (rowNum - 1))[0]) {
-      this.siteId = $$('#siteUUId_' + (rowNum - 1))[0];
-      this.units = $$('#units_' + (rowNum - 1))[0];
-      this.siteName = $$('#siteName_' + (rowNum - 1))[0];
-      this.siteTagsEditBtn = $$('#editSiteTagsBtn_' + (rowNum - 1))[0];
-      this.editBtn = $$('#editSiteBtn_' + (rowNum - 1))[0];
-      this.assignedTag = $$('#assignedTag_' + (rowNum - 1))[0];
-      this.deleteBtn = $$('#deleteSiteBtn_' + (rowNum - 1))[0];
-      // this.deleteBtn = $$('#deleteSiteBtn')[rowNum - 1];
+    this.element = $$('#sitesTableBody > tr')[rowNum - 1];
+    if (this.element) {
+      this.siteId = +this.element.$('#siteUUId').getText();
+      this.units = this.element.$('#units').getText();
+      this.siteName = this.element.$('#siteName').getText();
+      this.tags = this.element
+        .$('#tags')
+        .$$('#assignedTag')
+        .map((element) => element.getText());
+      this.editBtn = this.element.$('#editSiteBtn');
+      this.deleteBtn = this.element.$('#deleteSiteBtn');
     }
   }
 
-  siteId;
-  units;
-  siteName;
-  editBtn;
-  siteTagsEditBtn;
-  deleteBtn;
-  assignedTag;
+  element: WebdriverIO.Element;
+  siteId: number;
+  units: string;
+  siteName: string;
+  tags: string[];
+  editBtn: WebdriverIO.Element;
+  deleteBtn: WebdriverIO.Element;
+
+  openEditModal(site?: { name?: string; tags?: string[] }) {
+    this.editBtn.click();
+    sitesPage.siteEditCancelBtn.waitForDisplayed({ timeout: 20000 });
+    if (site) {
+      if (site.name) {
+        sitesPage.siteNameEditInput.setValue(site.name);
+      }
+      if (site.tags) {
+        for (let i = 0; i < site.tags.length; i++) {
+          sitesPage.tagSelector.$('input').addValue(site.tags[i]);
+          browser.keys(['Return']);
+        }
+      }
+    }
+  }
+
+  closeEditModal(clickCancel = false) {
+    if (clickCancel) {
+      sitesPage.siteEditCancelBtn.click();
+    } else {
+      sitesPage.siteEditSaveBtn.click();
+    }
+    sitesPage.sitesManageTagsBtn.waitForClickable({ timeout: 20000 });
+  }
+
+  edit(site?: { name?: string; tags?: string[] }, clickCancel = false) {
+    this.openEditModal(site);
+    this.closeEditModal(clickCancel);
+  }
+
+  openDeleteModal() {
+    this.deleteBtn.click();
+    sitesPage.siteDeleteCancelBtn.waitForClickable({ timeout: 20000 });
+  }
+
+  closeDeleteModal(clickCancel = false) {
+    if (clickCancel) {
+      sitesPage.siteDeleteCancelBtn.click();
+    } else {
+      sitesPage.siteDeleteDeleteBtn.click();
+    }
+    sitesPage.sitesManageTagsBtn.waitForClickable({ timeout: 20000 });
+  }
+
+  delete(clickCancel = false) {
+    this.openDeleteModal();
+    this.closeDeleteModal(clickCancel);
+  }
 }

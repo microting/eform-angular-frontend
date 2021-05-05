@@ -717,4 +717,7 @@
   <data name="ReportPeriod" xml:space="preserve">
     <value>Berichtszeitraum</value>
   </data>
+  <data name="ErrorWhileUpdateTag" xml:space="preserve">
+    <value>Fehler beim update tag</value>
+  </data>
 </root>

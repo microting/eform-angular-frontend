@@ -29,7 +29,6 @@ export function createInitialState(): CasesState {
       sort: 'Id',
       isSortDsc: false,
       offset: 0,
-      pageIndex: 0,
     },
     filters: {
       nameFilter: '',
