@@ -5,10 +5,20 @@
       class="btn-accent text-black-50 btn-icon"
       id="importEformsBtn"
       mdbTooltip="{{ 'Import eforms' | translate }}"
-      *ngIf="userRole === 'admin'"
+      *ngIf="authStateService.isAdmin"
       (click)="openEformsImportModal()"
     >
       <fa-icon icon="file-import" [fixedWidth]="true" size="lg"></fa-icon>
+    </button>
+    <button
+      mdbBtn
+      class="btn-accent text-black-50 btn-icon"
+      id="eformsManageTagsBtn"
+      (click)="openTagsModal()"
+      mdbTooltip="{{ 'Manage tags' | translate }}"
+      mdbWavesEffect
+    >
+      <fa-icon icon="tags" [fixedWidth]="true" size="lg"></fa-icon>
     </button>
     <button
       mdbBtn
@@ -101,7 +111,7 @@
                   mdbTooltip="{{ 'Edit tags' | translate }}"
                   (click)="openEditTagsModal(templateDto)"
                 >
-                  <fa-icon icon="tags" size="lg" [fixedWidth]="true"></fa-icon>
+                  <fa-icon icon="pen" size="lg" [fixedWidth]="true"></fa-icon>
                   <!--                {{ 'Edit tags' | translate }}-->
                 </a>
                 <br />
@@ -365,7 +375,6 @@
 <app-eform-edit-tags-modal
   [availableTags]="availableTags"
   (onEFormTagsUpdated)="loadAllTemplates()"
-  (onTagAdded)="loadAllTags()"
   #modalEditTags
 ></app-eform-edit-tags-modal>
 <app-eform-remove-eform-modal
@@ -378,3 +387,9 @@
   (importFinished)="loadAllTemplates()"
   #modalEformsImport
 ></app-eforms-bulk-import-modal>
+<app-eforms-tags
+  #modalTags
+  [availableTags]="availableTags"
+  (tagsChanged)="loadAllTags()"
+>
+</app-eforms-tags>

@@ -1,5 +1,4 @@
-import {KeyValueModel} from '../common';
-import {UnitModel} from './unit-model';
+import { UnitModel } from './unit-model';
 
 export class SiteNameDto {
   id: number;
@@ -7,6 +6,6 @@ export class SiteNameDto {
   updatedAt: Date;
   siteName: string;
   siteUId: number;
-  tags: Array<KeyValueModel> = [];
+  tags: Array<number> = [];
   units: Array<UnitModel> = [];
 }

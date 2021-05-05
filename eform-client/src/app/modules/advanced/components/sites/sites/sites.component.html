@@ -1,7 +1,21 @@
-<eform-subheader> </eform-subheader>
-<br />
+<eform-subheader>
+  <div class="p-3">
+    <button
+      mdbBtn
+      class="btn-accent text-black-50 btn-icon"
+      id="sitesManageTagsBtn"
+      (click)="openEditTagsModal()"
+      mdbTooltip="{{ 'Manage tags' | translate }}"
+      placement="left"
+      mdbWavesEffect
+    >
+      <fa-icon icon="tags" [fixedWidth]="true" size="lg"></fa-icon>
+    </button>
+  </div>
+</eform-subheader>
+
 <!--Here you can choose approach as you like: container-row, or flex, or just element with required styles and markup-->
-<div class="container-fluid">
+<div class="container-fluid mt-4">
   <div class="row p-1 table-responsive no-gutters">
     <table
       mdbTable
@@ -11,9 +25,9 @@
       class="z-depth-1 text-center"
     >
       <thead table-headers [tableHeaders]="tableHeaders"></thead>
-      <tbody>
-        <tr *ngFor="let siteDto of sitesDto; let i = index">
-          <td id="siteUUId_{{ i }}">
+      <tbody id="sitesTableBody">
+        <tr *ngFor="let siteDto of sitesDto">
+          <td id="siteUUId">
             {{ siteDto.siteUId }}
           </td>
           <!--        <td scope="row">-->
@@ -22,38 +36,28 @@
           <!--        <td>-->
           <!--          <date-formatter [date]="siteDto.updatedAt" [Format]="'datetime'"></date-formatter>-->
           <!--        </td>-->
-          <td id="siteName_{{ i }}">{{ siteDto.siteName }}</td>
-          <td>
-            <p
-              class="paragraph-sm"
-              id="units_{{ i }}"
-              *ngFor="let unit of siteDto.units"
-            >
-              {{ unit.microtingUid }}
-            </p>
-          </td>
+          <td id="siteName">{{ siteDto.siteName }}</td>
           <td>
             <div class="d-flex justify-content-center">
+              <div
+                class="paragraph-sm"
+                id="units"
+                *ngFor="let unit of siteDto.units"
+              >
+                {{ unit.microtingUid }}
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex justify-content-center" id="tags">
               <div>
-                <a
-                  mdbBtn
-                  type="button"
-                  color="success"
-                  class="btn-icon btn-success"
-                  id="editSiteTagsBtn_{{ i }}"
-                  mdbTooltip="{{ 'Edit tags' | translate }}"
-                  (click)="openEditTagsModal(siteDto)"
-                >
-                  <fa-icon icon="tags" size="lg" [fixedWidth]="true"></fa-icon>
-                </a>
-                <br />
                 <p
                   class="badge badge-primary mb-1"
                   id="assignedTag"
                   *ngFor="let tag of siteDto.tags"
                 >
                   <fa-icon icon="tag"></fa-icon>
-                  {{ tag.value }}
+                  {{ getTagName(tag) }}
                 </p>
               </div>
             </div>
@@ -63,7 +67,7 @@
               <button
                 mdbBtn
                 class="btn-accent text-black-50 btn-icon mb-2"
-                id="editBtn_{{ i }}"
+                id="editSiteBtn"
                 *ngIf="userClaims.sitesUpdate"
                 mdbTooltip="{{ 'Edit site' | translate }}"
                 mdbWavesEffect
@@ -74,7 +78,7 @@
               <button
                 mdbBtn
                 class="btn-danger btn-icon mb-2"
-                id="deleteBtn_{{ i }}"
+                id="deleteSiteBtn"
                 *ngIf="userClaims.sitesDelete"
                 mdbTooltip="{{ 'Delete site' | translate }}"
                 (click)="openDeleteModal(siteDto)"
@@ -93,15 +97,18 @@
   </div>
 </div>
 
-<app-site-edit [siteNameDto]="selectedSiteDto" #modalSiteEdit></app-site-edit>
+<app-site-edit
+  #modalSiteEdit
+  [availableTags]="availableTags"
+  (siteUpdate)="loadAllSites()"
+></app-site-edit>
 <app-site-delete
   (onSiteRemoved)="loadAllSites()"
   [siteNameDto]="selectedSiteDto"
   #modalSiteDelete
 ></app-site-delete>
-<app-site-tags
-  (onSiteTagsUpdated)="loadAllSites()"
-  (onTagAdded)="loadAllTags()"
+<app-sites-tags
+  #modalTags
   [availableTags]="availableTags"
-  #modalSiteTags
-></app-site-tags>
+  (tagsChanged)="loadAllTags()"
+></app-sites-tags>

@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { SiteDto, WorkerDto } from 'src/app/common/models/dto';
+import { WorkerDto } from 'src/app/common/models/dto';
 import { WorkersService } from 'src/app/common/services/advanced';
 import { TableHeaderElementModel } from 'src/app/common/models';
-import { AuthService } from 'src/app/common/services';
 import { AuthStateService } from 'src/app/common/store';
 
 @Component({

@@ -87,7 +87,7 @@ namespace eFormAPI.Web.Services
                 var core = await _coreHelper.GetCore();
                 var caseList = await core.CaseReadAll(requestModel.TemplateId, null, null,
                     Constants.WorkflowStates.NotRemoved, requestModel.NameFilter,
-                    requestModel.IsSortDsc, requestModel.Sort, requestModel.PageIndex, requestModel.PageSize, timeZoneInfo);
+                    requestModel.IsSortDsc, requestModel.Sort, requestModel.Offset, requestModel.PageSize, timeZoneInfo);
                 var model = new CaseListModel()
                 {
                     NumOfElements = caseList.NumOfElements,

@@ -2,6 +2,7 @@ import { PageWithNavbarPage } from './PageWithNavbar.page';
 import XMLForEform from '../Constants/XMLForEform';
 import { FoldersRowObject } from './Folders.page';
 import { DeviceUsersRowObject } from './DeviceUsers.page';
+import tagsModalPage from './TagsModal.page';
 
 class MyEformsPage extends PageWithNavbarPage {
   constructor() {
@@ -100,6 +101,13 @@ class MyEformsPage extends PageWithNavbarPage {
     return $('#xlsxImportInput');
   }
 
+  get eformsManageTagsBtn() {
+    const ele = $('#eformsManageTagsBtn');
+    ele.waitForDisplayed({ timeout: 20000 });
+    ele.waitForClickable({ timeout: 20000 });
+    return ele;
+  }
+
   getFirstMyEformsRowObj(): MyEformsRowObject {
     browser.pause(500);
     return new MyEformsRowObject(1);
@@ -169,59 +177,31 @@ class MyEformsPage extends PageWithNavbarPage {
   }
 
   createNewTag(nameTag: string) {
-    const spinnerAnimation = $('#spinner-animation');
-    myEformsPage.getFirstMyEformsRowObj().editTagsBtn.click();
-    const newTagInput = $('#newTag');
-    newTagInput.waitForDisplayed({ timeout: 20000 });
-    newTagInput.setValue(nameTag);
-    newTagInput.$('..').$('button').click();
-    spinnerAnimation.waitForDisplayed({ timeout: 20000, reverse: true });
-    this.tagEditSaveCancelBtn.click();
+    this.createNewTags([nameTag]);
   }
 
   createNewTags(nameTags: string[]) {
-    const spinnerAnimation = $('#spinner-animation');
-    myEformsPage.getFirstMyEformsRowObj().editTagsBtn.click();
-    const newTagInput = $('#newTag');
-    newTagInput.waitForDisplayed({ timeout: 20000 });
+    this.eformsManageTagsBtn.click();
+    tagsModalPage.tagsModalCloseBtn.waitForDisplayed({ timeout: 20000 });
     for (let i = 0; i < nameTags.length; i++) {
-      const nameTag = nameTags[i];
-      newTagInput.setValue(nameTag);
-      newTagInput.$('..').$('button').click();
-      spinnerAnimation.waitForDisplayed({ timeout: 20000, reverse: true });
+      tagsModalPage.createTag(nameTags[i]);
     }
-    this.tagEditSaveCancelBtn.click();
+    tagsModalPage.closeTagModal();
+    this.newEformBtn.waitForClickable({ timeout: 20000 });
   }
 
   removeTag(nameTag: string) {
-    const spinnerAnimation = $('#spinner-animation');
-    myEformsPage.getFirstMyEformsRowObj().editTagsBtn.click();
-    const removeTagSelect = $('#removeTagSelect');
-    removeTagSelect.waitForDisplayed({ timeout: 20000 });
-    removeTagSelect.$('input').setValue(nameTag);
-    const ngDropdownPanel = $('.ng-option');
-    ngDropdownPanel.waitForClickable({ timeout: 20000 });
-    ngDropdownPanel.click();
-    removeTagSelect.$('..').$('button').click();
-    spinnerAnimation.waitForDisplayed({ timeout: 20000, reverse: true });
-    this.tagEditSaveCancelBtn.click();
+    this.removeTags([nameTag]);
   }
 
   removeTags(nameTags: string[]) {
-    const spinnerAnimation = $('#spinner-animation');
-    myEformsPage.getFirstMyEformsRowObj().editTagsBtn.click();
-    const removeTagSelect = $('#removeTagSelect');
-    removeTagSelect.waitForDisplayed({ timeout: 20000 });
+    this.eformsManageTagsBtn.click();
+    tagsModalPage.tagsModalCloseBtn.waitForDisplayed({ timeout: 20000 });
     for (let i = 0; i < nameTags.length; i++) {
-      const nameTag = nameTags[i];
-      removeTagSelect.$('input').setValue(nameTag);
-      const ngDropdownPanel = $('.ng-option');
-      ngDropdownPanel.waitForClickable({ timeout: 20000 });
-      ngDropdownPanel.click();
-      removeTagSelect.$('..').$('button').click();
-      spinnerAnimation.waitForDisplayed({ timeout: 20000, reverse: true });
+      tagsModalPage.getTagByName(nameTags[i]).deleteTag();
     }
-    this.tagEditSaveCancelBtn.click();
+    tagsModalPage.closeTagModal();
+    this.newEformBtn.waitForClickable({ timeout: 20000 });
   }
 
   enterTagFilter(nameTag: string) {

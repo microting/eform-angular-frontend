@@ -320,7 +320,6 @@ namespace eFormAPI.Web
             services.AddScoped<IEformPermissionsService, EformPermissionsService>();
             services.AddScoped<IEformReportsService, EformReportsService>();
             services.AddScoped<IPluginsManagementService, PluginsManagementService>();
-            services.AddScoped<ISiteTagsService, SiteTagsService>();
             services.AddScoped<IEmailTagsService, EmailTagsService>();
             services.AddScoped<IEmailRecipientsService, EmailRecipientsService>();
             services.AddScoped<ICasePostService, CasePostService>();

@@ -737,4 +737,7 @@
   <data name="ReportPeriod" xml:space="preserve">
     <value>Звітний період</value>
   </data>
+  <data name="ErrorWhileUpdateTag" xml:space="preserve">
+    <value>Помилка при оновленні тега</value>
+  </data>
 </root>

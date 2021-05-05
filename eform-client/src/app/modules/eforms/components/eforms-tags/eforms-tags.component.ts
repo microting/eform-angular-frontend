@@ -19,11 +19,11 @@ import { EformTagService } from 'src/app/common/services';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-sites-tags',
-  templateUrl: './site-tags.component.html',
-  styleUrls: ['./site-tags.component.scss'],
+  selector: 'app-eforms-tags',
+  templateUrl: './eforms-tags.component.html',
+  styleUrls: ['./eforms-tags.component.scss'],
 })
-export class SiteTagsComponent implements OnInit, OnDestroy {
+export class EformsTagsComponent implements OnInit, OnDestroy {
   @ViewChild('tagsModal') tagsModal: SharedTagsComponent;
   @Input() availableTags: CommonDictionaryModel[] = [];
   @Output() tagsChanged: EventEmitter<void> = new EventEmitter<void>();
