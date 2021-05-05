@@ -37,6 +37,8 @@ spec:
                 value: "true"
               - name: DB_CLEANUP
                 value: "true"
+              - name: BACKUP_COMPRESS
+                value: "true"
               - name: MAX_NUMBER_OF_BACKUPS
                 value: "290"
               - name: BACKUP_TIMESTAMP
