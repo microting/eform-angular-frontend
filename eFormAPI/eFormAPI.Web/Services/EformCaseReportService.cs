@@ -262,11 +262,14 @@ namespace eFormAPI.Web.Services
                             case Constants.FieldTypes.SingleSelect:
                             {
                                 FieldOption fieldOption =
-                                    caseField.Field.FieldOptions.Single(x => x.Key == caseField.Value);
-                                FieldOptionTranslation fieldOptionTranslation =
-                                    await sdkDbContext.FieldOptionTranslations.SingleAsync(x =>
-                                        x.FieldOptionId == fieldOption.Id && x.LanguageId == language.Id);
-                                reportEformCaseModel.CaseFields.Add(fieldOptionTranslation.Text);
+                                    caseField.Field.FieldOptions.SingleOrDefault(x => x.Key == caseField.Value);
+                                if (fieldOption != null)
+                                {
+                                    FieldOptionTranslation fieldOptionTranslation =
+                                        await sdkDbContext.FieldOptionTranslations.SingleAsync(x =>
+                                            x.FieldOptionId == fieldOption.Id && x.LanguageId == language.Id);
+                                    reportEformCaseModel.CaseFields.Add(fieldOptionTranslation.Text);
+                                }
                                 break;
                             }
                             default:
