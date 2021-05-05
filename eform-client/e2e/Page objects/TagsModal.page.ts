@@ -109,7 +109,7 @@ export class TagsModalPage extends Page {
   public cancelDeleteTag(rowNumber: number) {
     $('#newTagBtn').waitForDisplayed({ timeout: 20000 });
     const rowObject = new TagRowObject(rowNumber);
-    rowObject.deleteTag();
+    rowObject.deleteTag(true);
     this.tagDeleteSaveCancelBtn.click();
     $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
   }
@@ -148,9 +148,13 @@ export class TagRowObject {
     $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
   }
 
-  public deleteTag() {
+  public deleteTag(clickCancel = false) {
     this.deleteTagBtn.click();
-    tagsModalPage.tagDeleteSaveBtn.click();
-    $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
+    if (clickCancel) {
+      tagsModalPage.tagDeleteSaveCancelBtn.click();
+    } else {
+      tagsModalPage.tagDeleteSaveBtn.click();
+    }
+    tagsModalPage.tagsModalCloseBtn.waitForClickable({ timeout: 20000 });
   }
 }
