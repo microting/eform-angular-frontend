@@ -735,4 +735,7 @@
   <data name="ReportPeriod" xml:space="preserve">
     <value>Report period</value>
   </data>
+  <data name="ErrorWhileUpdateTag" xml:space="preserve">
+    <value>Error while update tag</value>
+  </data>
 </root>

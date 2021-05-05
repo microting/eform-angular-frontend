@@ -4,6 +4,7 @@ namespace eFormAPI.Web.Infrastructure.Models.Sites
 {
     using System;
     using System.Collections.Generic;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
     public class SiteModel
     {
@@ -17,8 +18,8 @@ namespace eFormAPI.Web.Infrastructure.Models.Sites
 
         public DateTime? UpdatedAt { get; set; }
 
-        public List<KeyValueModel> Tags { get; set; }
-            = new List<KeyValueModel>();
+        public List<int> Tags { get; set; }
+            = new List<int>();
         
         public List<UnitModel> Units { get; set; } = new List<UnitModel>();
     }

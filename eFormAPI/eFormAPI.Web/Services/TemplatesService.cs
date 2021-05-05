@@ -51,6 +51,7 @@ namespace eFormAPI.Web.Services
     using Import;
     using Infrastructure.Models.Import;
     using Microsoft.Extensions.Logging;
+    using Microting.eForm.Infrastructure.Constants;
     using Remotion.Linq.Parsing.Structure.IntermediateModel;
 
     public class TemplatesService : ITemplatesService
@@ -91,16 +92,16 @@ namespace eFormAPI.Web.Services
             {
                 Log.LogEvent("TemplateService.Index: try section");
                 var core = await _coreHelper.GetCore();
-                await using MicrotingDbContext microtingDbContext = core.DbContextHelper.GetDbContext();
+                await using var sdkDbContext = core.DbContextHelper.GetDbContext();
                 var locale = await _userService.GetCurrentUserLocale();
-                var language = await microtingDbContext.Languages.SingleOrDefaultAsync(x => x.LanguageCode.ToLower() == locale.ToLower());
+                var language = await sdkDbContext.Languages.SingleOrDefaultAsync(x => x.LanguageCode.ToLower() == locale.ToLower());
                 if (language == null)
                 {
-                    language = await microtingDbContext.Languages.SingleOrDefaultAsync(x => x.Name == "Danish");
+                    language = await sdkDbContext.Languages.SingleOrDefaultAsync(x => x.Name == "Danish");
                     if (language != null)
                     {
                         language.LanguageCode = "da";
-                        await language.Update(microtingDbContext);
+                        await language.Update(sdkDbContext);
                     }
                 }
                 var templatesDto = await core.TemplateItemReadAll(false,
@@ -164,6 +165,26 @@ namespace eFormAPI.Web.Services
                         model.Templates.Add(templateDto);
                     }
                 }
+
+                foreach (var template in model.Templates)
+                {
+                    var tagsForRemove = new List<KeyValuePair<int, string>>();
+                    foreach (var tag in template.Tags)
+                    {
+                        if (await sdkDbContext.Tags
+                            .Where(y => y.WorkflowState == Constants.WorkflowStates.Removed)
+                            .AnyAsync(x => x.Id == tag.Key))
+                        {
+                            tagsForRemove.Add(tag);
+                        }
+                    }
+
+                    foreach (var tag in tagsForRemove)
+                    {
+                        template.Tags.Remove(tag);
+                    }
+                }
+
                 return new OperationDataResult<TemplateListModel>(true, model);
             }
             catch (Exception ex)

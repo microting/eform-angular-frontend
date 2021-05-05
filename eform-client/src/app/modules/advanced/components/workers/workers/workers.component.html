@@ -25,7 +25,7 @@
       <thead table-headers [tableHeaders]="tableHeaders"></thead>
       <tbody>
         <tr *ngFor="let workerDto of workersDto">
-          <td scope="row">
+          <td>
             <date-formatter
               [date]="workerDto.createdAt"
               [Format]="'datetime'"

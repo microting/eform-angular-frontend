@@ -34,7 +34,6 @@ export class CasesStateService {
         ...this.query.pageSetting.pagination,
         ...this.query.pageSetting.filters,
         templateId: this.templateId,
-        pageIndex: this.query.pageSetting.pagination.pageIndex,
       })
       .pipe(
         map((response) => {
