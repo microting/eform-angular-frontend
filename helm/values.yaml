@@ -42,7 +42,7 @@ service:
   port: 5000
 
 ingress:
-  enabled: false
+  enabled: true
   annotations:
     kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: letsencrypt-prod
@@ -81,7 +81,8 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-nodeSelector: {}
+nodeSelector:
+  microting.load.type: customer
 
 tolerations: []
 
@@ -124,6 +125,8 @@ mariadb:
       accessModes:
         - ReadWriteOnce
       size: 8Gi
+    nodeSelector:
+      microting.load.type: customer
 rabbitmq:
   ## Whether to deploy a rabbitmq server to satisfy the applications database requirements.
   ##
@@ -204,6 +207,8 @@ rabbitmq:
     total_memory_available_override_value = {{ include "rabbitmq.toBytes" .Values.resources.limits.memory }}
     vm_memory_high_watermark.{{ .Values.memoryHighWatermark.type }} = {{ .Values.memoryHighWatermark.value }}
     {{- end }}
+  nodeSelector:
+    microting.load.type: customer
 
 cronjob:
   repository: microtingas/kubernetes-cloud-mysql-backup
