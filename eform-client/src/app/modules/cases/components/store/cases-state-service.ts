@@ -55,7 +55,6 @@ export class CasesStateService {
     this.store.update((state) => ({
       pagination: {
         ...state.pagination,
-        pageIndex: 0,
         offset: 0,
       },
       filters: {
@@ -92,7 +91,6 @@ export class CasesStateService {
       pagination: {
         ...state.pagination,
         offset: updatedPageSetting.offset,
-        pageIndex: updatedPageSetting.pageIndex,
       },
     }));
   }
@@ -130,9 +128,6 @@ export class CasesStateService {
         pagination: {
           ...state.pagination,
           offset: newOffset,
-          pageIndex: Math.ceil(
-            this.query.pageSetting.pagination.pageSize / newOffset
-          ),
         },
       }));
     }
