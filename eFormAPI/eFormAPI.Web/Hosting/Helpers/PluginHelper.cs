@@ -1,4 +1,4 @@
-﻿/*
+/*
 The MIT License (MIT)
 
 Copyright (c) 2007 - 2020 Microting A/S
@@ -139,67 +139,61 @@ namespace eFormAPI.Web.Hosting.Helpers
             var plugins = new List<IEformPlugin>();
             if (connectionString != "...")
             {
-                using (var dbContext = contextFactory.CreateDbContext(new[] { connectionString }))
+                using var dbContext = contextFactory.CreateDbContext(new[] { connectionString });
+                try
                 {
-                    try
-                    {
-                        eformPlugins = dbContext.EformPlugins
-                            .AsNoTracking()
-                            .ToList();
-                    }
-                    catch
-                    {
-                        // ignored
-                    }
+                    eformPlugins = dbContext.EformPlugins
+                        .AsNoTracking()
+                        .ToList();
+                }
+                catch
+                {
+                    // ignored
                 }
 
                 // create plugin loaders
                 if (eformPlugins != null)
                 {
-                    using (var dbContext = contextFactory.CreateDbContext(new[] { connectionString }))
+                    var dbNameSection = Regex.Match(connectionString, @"(Database=\w*;)").Groups[0].Value;
+                    var dbPrefix = Regex.Match(connectionString, @"Database=(\d*)_").Groups[1].Value;
+
+                    foreach (var plugin in GetAllPlugins())
                     {
-                        var dbNameSection = Regex.Match(connectionString, @"(Database=\w*;)").Groups[0].Value;
-                        var dbPrefix = Regex.Match(connectionString, @"Database=(\d*)_").Groups[1].Value;
-
-                        foreach (var plugin in GetAllPlugins())
+                        var eformPlugin = eformPlugins.FirstOrDefault(x => x.PluginId == plugin.PluginId);
+                        if (eformPlugin != null)
                         {
-                            var eformPlugin = eformPlugins.FirstOrDefault(x => x.PluginId == plugin.PluginId);
-                            if (eformPlugin != null)
+                            if (!eformPlugin.ConnectionString.Contains("PersistSecurityInfo=true;"))
                             {
-                                if (!eformPlugin.ConnectionString.Contains("PersistSecurityInfo=true;"))
-                                {
-                                    var aPlugin =
-                                        dbContext.EformPlugins.SingleOrDefault(x => x.PluginId == plugin.PluginId);
-                                    if (aPlugin != null)
-                                        aPlugin.ConnectionString += "PersistSecurityInfo=true;";
-                                    dbContext.SaveChanges();
-                                }
-
-                                if (eformPlugin.Status == (int)PluginStatus.Disabled)
-                                {
-                                    plugins.Add(plugin);
-                                }
-                            }
-                            else
-                            {
-                                var pluginDbName = $"Database={dbPrefix}_{plugin.PluginId};";
-                                var pluginConnectionString =
-                                    connectionString.Replace(dbNameSection, pluginDbName) +
-                                    "PersistSecurityInfo=true;";
-                                var newPlugin = new EformPlugin
-                                {
-                                    PluginId = plugin.PluginId,
-                                    ConnectionString = pluginConnectionString,
-                                    Status = (int)PluginStatus.Disabled
-                                };
-                                dbContext.EformPlugins.Add(newPlugin);
+                                var aPlugin =
+                                    dbContext.EformPlugins.SingleOrDefault(x => x.PluginId == plugin.PluginId);
+                                if (aPlugin != null)
+                                    aPlugin.ConnectionString += "PersistSecurityInfo=true;";
                                 dbContext.SaveChanges();
                             }
+
+                            if (eformPlugin.Status == (int)PluginStatus.Disabled)
+                            {
+                                plugins.Add(plugin);
+                            }
+                        }
+                        else
+                        {
+                            var pluginDbName = $"Database={dbPrefix}_{plugin.PluginId};";
+                            var pluginConnectionString =
+                                connectionString.Replace(dbNameSection, pluginDbName) +
+                                "PersistSecurityInfo=true;";
+                            var newPlugin = new EformPlugin
+                            {
+                                PluginId = plugin.PluginId,
+                                ConnectionString = pluginConnectionString,
+                                Status = (int)PluginStatus.Disabled
+                            };
+                            dbContext.EformPlugins.Add(newPlugin);
+                            dbContext.SaveChanges();
                         }
                     }
                 }
             }
-
             return plugins;
         }
 

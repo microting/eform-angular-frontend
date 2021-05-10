@@ -135,26 +135,20 @@ namespace eFormAPI.Web.Services
                 dbNamePrefix = "Microting_";
             }
 
-            var sdkDbName = dbNamePrefix + customerNo + "_SDK";
-            var angularDbName = dbNamePrefix + customerNo + "_Angular";
+            var sdkDbName = $"{dbNamePrefix}{customerNo}_SDK";
+            var angularDbName = $"{dbNamePrefix}{customerNo}_Angular";
 
-            var sdkConnectionString = "host= " +
-                                         initialSettingsModel.ConnectionStringSdk.Host +
-                                         ";Database=" +
-                                         sdkDbName + ";" +
-                                         initialSettingsModel
-                                             .ConnectionStringSdk.Auth +
-                                         "port=" + initialSettingsModel.ConnectionStringSdk.Port +
-                                         ";Convert Zero Datetime = true;SslMode=none;";
+            var sdkConnectionString =
+                $"host= {initialSettingsModel.ConnectionStringSdk.Host};" +
+                $"Database={sdkDbName};{initialSettingsModel.ConnectionStringSdk.Auth}" +
+                $"port={initialSettingsModel.ConnectionStringSdk.Port};" +
+                "Convert Zero Datetime = true;SslMode=none;";
 
-            var mainConnectionString = "host= " +
-                                          initialSettingsModel.ConnectionStringSdk.Host +
-                                          ";Database=" +
-                                          angularDbName + ";" +
-                                          initialSettingsModel
-                                              .ConnectionStringSdk.Auth +
-                                          "port=" + initialSettingsModel.ConnectionStringSdk.Port +
-                                          ";Convert Zero Datetime = true;SslMode=none;";
+            var angularConnectionString =
+                $"host= {initialSettingsModel.ConnectionStringSdk.Host};" +
+                $"Database={angularDbName};{initialSettingsModel.ConnectionStringSdk.Auth}" +
+                $"port={initialSettingsModel.ConnectionStringSdk.Port};" +
+                "Convert Zero Datetime = true;SslMode=none;";
 
 
             if (!string.IsNullOrEmpty(_connectionStringsSdk.Value.SdkConnection))
@@ -193,8 +187,7 @@ namespace eFormAPI.Web.Services
             var dbContextOptionsBuilder = new DbContextOptionsBuilder<BaseDbContext>();
             try
             {
-                //
-                dbContextOptionsBuilder.UseMySql(mainConnectionString,
+                dbContextOptionsBuilder.UseMySql(angularConnectionString,
                     new MariaDbServerVersion(
                     new Version(10, 4, 0)),
                     b =>
@@ -207,83 +200,14 @@ namespace eFormAPI.Web.Services
                 {
                     await dbContext.Database.MigrateAsync();
                 }
-                var userStore = new UserStore<EformUser,
-                    EformRole,
-                    BaseDbContext,
-                    int,
-                    IdentityUserClaim<int>,
-                    EformUserRole,
-                    IdentityUserLogin<int>,
-                    IdentityUserToken<int>,
-                    IdentityRoleClaim<int>>(dbContext);
 
-
-                IPasswordHasher<EformUser> hasher = new PasswordHasher<EformUser>();
-                var validator = new UserValidator<EformUser>();
-                var validators = new List<UserValidator<EformUser>> { validator };
-                var userManager = new UserManager<EformUser>(userStore, null, hasher, validators, null, null, null,
-                    null, null);
-
-                // Set-up token providers.
-                IUserTwoFactorTokenProvider<EformUser> tokenProvider = new EmailTokenProvider<EformUser>();
-                userManager.RegisterTokenProvider("Default", tokenProvider);
-                IUserTwoFactorTokenProvider<EformUser> phoneTokenProvider =
-                    new PhoneNumberTokenProvider<EformUser>();
-                userManager.RegisterTokenProvider("PhoneTokenProvider", phoneTokenProvider);
-                // Roles
-                var roleStore = new RoleStore<EformRole, BaseDbContext, int>(dbContext);
-                var roleManager = new RoleManager<EformRole>(roleStore, null, null, null, null);
-                if (!await roleManager.RoleExistsAsync(EformRole.Admin))
+                if (initialSettingsModel.AdminSetupModel != null)
                 {
-                    await roleManager.CreateAsync(new EformRole() { Name = EformRole.Admin });
+                    // Seed admin and demo users
+                    await SeedAdminHelper.SeedAdmin(initialSettingsModel.AdminSetupModel,
+                        initialSettingsModel.GeneralAppSetupSettingsModel.DefaultLocale, dbContext);
                 }
 
-                if (!await roleManager.RoleExistsAsync(EformRole.User))
-                {
-                    await roleManager.CreateAsync(new EformRole() { Name = EformRole.User });
-                }
-
-                // Seed admin and demo users
-                string timeZoneString = "Europe/Copenhagen";
-
-                try
-                {
-                    TimeZoneInfo.FindSystemTimeZoneById(timeZoneString);
-                }
-                catch
-                {
-                    timeZoneString = "E. Europe Standard Time";
-                }
-                var adminUser = new EformUser()
-                {
-                    UserName = initialSettingsModel.AdminSetupModel.Email,
-                    Email = initialSettingsModel.AdminSetupModel.Email,
-                    FirstName = initialSettingsModel.AdminSetupModel.FirstName,
-                    LastName = initialSettingsModel.AdminSetupModel.LastName,
-                    Locale = initialSettingsModel.GeneralAppSetupSettingsModel.DefaultLocale,
-                    TimeZone = timeZoneString,
-                    DarkTheme = initialSettingsModel.AdminSetupModel.DarkTheme,
-                    Formats = "de-DE",
-                    EmailConfirmed = true,
-                    TwoFactorEnabled = false,
-                    IsGoogleAuthenticatorEnabled = false
-                };
-                if (!userManager.Users.Any(x => x.Email.Equals(adminUser.Email)))
-                {
-                    var createResult = await userManager.CreateAsync(adminUser,
-                        initialSettingsModel.AdminSetupModel.Password);
-                    if (!createResult.Succeeded)
-                    {
-                        return new OperationResult(false,
-                            _localizationService.GetString("Could not create the user"));
-                    }
-                }
-
-                var user = userManager.Users.FirstOrDefault(x => x.Email.Equals(adminUser.Email));
-                if (!await userManager.IsInRoleAsync(user, EformRole.Admin))
-                {
-                    await userManager.AddToRoleAsync(user, EformRole.Admin);
-                }
             }
             catch (Exception exception)
             {
@@ -291,6 +215,11 @@ namespace eFormAPI.Web.Services
                 _logger.LogError(exception.StackTrace);
                 //return new OperationResult(false,
                 //    _localizationService.GetString("MainConnectionStringIsInvalid"));
+                if (exception.Message == "Could not create the user")
+                {
+                    return new OperationResult(false,
+                                _localizationService.GetString(exception.Message));
+                }
 
                 if (exception.InnerException != null)
                 {
@@ -324,7 +253,7 @@ namespace eFormAPI.Web.Services
                 // Update connection string
                 _connectionStrings.UpdateFile((options) =>
                 {
-                    options.DefaultConnection = mainConnectionString;
+                    options.DefaultConnection = angularConnectionString;
                 });
             }
 
