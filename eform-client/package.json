@@ -35,7 +35,7 @@
     "@angular/core": "^11.1.2",
     "@angular/forms": "^11.1.2",
     "@angular/localize": "^11.1.2",
-    "@angular/platform-browser": "^11.1.2",
+    "@angular/platform-browser": "^11.2.13",
     "@angular/platform-browser-dynamic": "^11.1.2",
     "@angular/router": "^11.1.2",
     "@circlon/angular-tree-component": "^11.0.1",
