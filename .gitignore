@@ -279,7 +279,6 @@ eFormAPI/eFormAPI/logs/
 eFormAPI/eFormAPI\.sln\.DotSettings\.user
 
 eFormAPI/eFormAPI/output/dataFolder/
-eform-client/package-lock.json
 .idea
 eFormAPI/eFromAPI.Common/bin/Release/*
 eFormAPI/eFormAPI/Properties/PublishProfiles/
@@ -296,7 +295,6 @@ eFormApi.Integration.Tests/obj/*
 eFormApi.Tests/bin/*
 eFormApi.Tests/obj/*
 
-eform-client/package-lock\.json
 eFormAPI/AllowMultipleVersions/obj/
 eFormAPI/AlowMultipleVersionsBundle/bin/
 eFormAPI/AlowMultipleVersionsBundle/obj/
