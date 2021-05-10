@@ -39,15 +39,15 @@ spec:
               protocol: TCP
           livenessProbe:
             initialDelaySeconds: 120
-            periodSeconds: 15
+            periodSeconds: 120
             httpGet:
-              path: /
+              path: /auth
               port: 5000
           readinessProbe:
             initialDelaySeconds: 120
-            periodSeconds: 15
+            periodSeconds: 120
             httpGet:
-              path: /
+              path: /auth
               port: 5000
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

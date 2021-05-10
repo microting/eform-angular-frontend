@@ -4,6 +4,9 @@ on:
   push:
     tags:
       - 'v*.*.*'
+    paths-ignore:
+    - '**.md'
+    - '.github/**'
 
 jobs:
   build:

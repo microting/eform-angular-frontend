@@ -1,0 +1,56 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: "angular-backup-{{ regexReplaceAll "frontend-(x*)" .Release.Name "$1" }}"
+  labels: {{- include "angularfrontend.labels" . | nindent 4 }}
+spec:
+  schedule: "0 * * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 0
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - image: "{{ .Values.cronjob.repository }}:{{ .Values.cronjob.image.tag }}"
+            name: "angular-backup-{{ regexReplaceAll "frontend-(x*)" .Release.Name "$1" }}"
+            env:
+              - name: AWS_ACCESS_KEY_ID
+                valueFrom:
+                  secretKeyRef:
+                    name: aws-secrets
+                    key: awsAccessKey
+              - name: AWS_SECRET_ACCESS_KEY
+                valueFrom:
+                  secretKeyRef:
+                    name: aws-secrets
+                    key: awsSecretKey
+              - name: AWS_BUCKET_BACKUP_PATH
+                value: "{{ regexReplaceAll "frontend-(x*)" .Release.Name "$1" }}"
+              - name: AWS_BUCKET_NAME
+                valueFrom:
+                  secretKeyRef:
+                    name: aws-secrets
+                    key: angularBackupPath
+              - name: NO_DB_NAME
+                value: "true"
+              - name: DB_CLEANUP
+                value: "true"
+              - name: BACKUP_COMPRESS
+                value: "true"
+              - name: MAX_NUMBER_OF_BACKUPS
+                value: "290"
+              - name: BACKUP_TIMESTAMP
+                value: "-%Y-%m-%d-%H-%M"
+              - name: TARGET_DATABASE_HOST
+                value: "{{ include "angularfrontend.databaseHost" . }}"
+              - name: TARGET_DATABASE_USER
+                value: "root"
+              - name: TARGET_DATABASE_PASSWORD
+                value: "secretpassword"
+              - name: TARGET_DATABASE_NAMES
+                value: "{{ regexReplaceAll "frontend-(x*)" .Release.Name "$1" }}_Angular"
+
+            command: ['sh', '/perform-backup.sh']
+            imagePullPolicy: Always

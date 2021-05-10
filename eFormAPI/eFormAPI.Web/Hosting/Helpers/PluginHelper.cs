@@ -21,6 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -66,7 +67,7 @@ namespace eFormAPI.Web.Hosting.Helpers
             var contextFactory = new BaseDbContextFactory();
             if (connectionString != "...")
             {
-                using (var dbContext = contextFactory.CreateDbContext(new[] { connectionString }))
+                using (var dbContext = contextFactory.CreateDbContext(new[] {connectionString}))
                 {
                     try
                     {
@@ -84,7 +85,7 @@ namespace eFormAPI.Web.Hosting.Helpers
                 // create plugin loaders
                 if (eformPlugins != null)
                 {
-                    using (var dbContext = contextFactory.CreateDbContext(new[] { connectionString }))
+                    using (var dbContext = contextFactory.CreateDbContext(new[] {connectionString}))
                     {
                         var dbNameSection = Regex.Match(connectionString, @"(Database=\w*;)").Groups[0].Value;
                         var dbPrefix = Regex.Match(connectionString, @"Database=(\d*)_").Groups[1].Value;
@@ -103,7 +104,7 @@ namespace eFormAPI.Web.Hosting.Helpers
                                     dbContext.SaveChanges();
                                 }
 
-                                if (eformPlugin.Status == (int)PluginStatus.Enabled)
+                                if (eformPlugin.Status == (int) PluginStatus.Enabled)
                                 {
                                     plugins.Add(plugin);
                                 }
@@ -118,7 +119,7 @@ namespace eFormAPI.Web.Hosting.Helpers
                                 {
                                     PluginId = plugin.PluginId,
                                     ConnectionString = pluginConnectionString,
-                                    Status = (int)PluginStatus.Disabled
+                                    Status = (int) PluginStatus.Disabled
                                 };
                                 dbContext.EformPlugins.Add(newPlugin);
                                 dbContext.SaveChanges();
@@ -127,6 +128,7 @@ namespace eFormAPI.Web.Hosting.Helpers
                     }
                 }
             }
+
             return plugins;
         }
 
@@ -346,7 +348,6 @@ namespace eFormAPI.Web.Hosting.Helpers
                     }
                 }
             }
-            //}
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($@"[INF] {plugins.Count} plugins found");
