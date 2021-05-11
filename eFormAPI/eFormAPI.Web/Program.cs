@@ -22,34 +22,40 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using eFormAPI.Web.Infrastructure.Database.Factories;
+using eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader;
+using Microting.eFormApi.BasePn;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
+using eFormAPI.Web.Abstractions;
+using eFormCore;
+using eFormAPI.Web.Hosting.Enums;
+using eFormAPI.Web.Hosting.Helpers;
+using eFormAPI.Web.Hosting.Helpers.DbOptions;
+using eFormAPI.Web.Hosting.Settings;
+using eFormAPI.Web.Infrastructure.Database;
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
+using eFormAPI.Web.Infrastructure.Models;
+using eFormAPI.Web.Infrastructure.Models.Settings.Admin;
+using eFormAPI.Web.Infrastructure.Models.Settings.Initial;
+using Microting.eForm.Dto;
+using Newtonsoft.Json;
+
 namespace eFormAPI.Web
 {
-    using Infrastructure.Database.Factories;
-    using Services.PluginsManagement.MenuItemsLoader;
-    using Microting.eFormApi.BasePn;
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Threading;
-    using Abstractions;
-    using Hosting.Enums;
-    using Hosting.Helpers;
-    using Hosting.Settings;
-    using Infrastructure.Database;
-    using Microsoft.AspNetCore;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Logging;
-    using Microsoft.Extensions.Options;
-    using Microting.eFormApi.BasePn.Infrastructure.Helpers;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
-    using Infrastructure.Models;
-    using Infrastructure.Models.Settings.Admin;
-    using Newtonsoft.Json;
-
     public class Program
     {
         private static CancellationTokenSource _cancelTokenSource = new CancellationTokenSource();
@@ -61,12 +67,13 @@ namespace eFormAPI.Web
         public static void Main(string[] args)
         {
             var host = BuildWebHost(args);
-            InitializeSettings(host);
+            InitializeSettings(host, args).Wait();
 
             if (_shouldBeRestarted)
             {
                 host = BuildWebHost(args);
                 _shouldBeRestarted = false;
+                _cancelTokenSource = new CancellationTokenSource();
             }
 
             MigrateDb(host);
@@ -114,6 +121,7 @@ namespace eFormAPI.Web
             }
             catch
             {
+                // ignored
             }
 
             if (dbContext != null)
@@ -148,6 +156,7 @@ namespace eFormAPI.Web
             }
             catch
             {
+                // ignored
             }
 
             if (dbContext != null)
@@ -157,13 +166,10 @@ namespace eFormAPI.Web
                 {
                     var connectionStrings =
                         scope.ServiceProvider.GetRequiredService<IOptions<ConnectionStrings>>();
-                    if (connectionStrings.Value.DefaultConnection != "...")
+                    if (connectionStrings.Value.DefaultConnection != "..." && dbContext.Database.GetPendingMigrations().Any())
                     {
-                        if (dbContext.Database.GetPendingMigrations().Any())
-                        {
-                            Log.LogEvent("Migrating Angular DB");
-                            dbContext.Database.Migrate();
-                        }
+                        Log.LogEvent("Migrating Angular DB");
+                        dbContext.Database.Migrate();
                     }
                 }
                 catch (Exception e)
@@ -174,7 +180,7 @@ namespace eFormAPI.Web
             }
         }
 
-        private static async void InitializeSettings(IWebHost webHost)
+        private static async Task InitializeSettings(IWebHost webHost, string[] args)
         {
             // Find file
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "init.json");
@@ -211,43 +217,105 @@ namespace eFormAPI.Web
                         throw new Exception("Init error: " + updateAdminSettingsResult.Message);
                     }
 
-                    var pluginList = PluginHelper.GetAllPlugins();
+                    EnabledPlugins = PluginHelper.GetPlugins(_defaultConnectionString);
+                    DisabledPlugins = PluginHelper.GetDisablePlugins(_defaultConnectionString);
 
                     // Enable plugins
-                    if (startup.PluginsList.Any())
+                    //if (startup.PluginsList.Any())
+                    //{
+                    foreach (var pluginId in startup.PluginsList)
                     {
-                        foreach (var pluginId in startup.PluginsList)
+                        var pluginObject = DisabledPlugins.FirstOrDefault(x => x.PluginId == pluginId);
+                        if (pluginObject != null)
                         {
-                            var pluginObject = pluginList.FirstOrDefault(x => x.PluginId == pluginId);
-                            if (pluginObject != null)
+                            var contextFactory = new BaseDbContextFactory();
+                            await using var dbContext =
+                                contextFactory.CreateDbContext(new[] { _defaultConnectionString });
+                            var eformPlugin = await dbContext.EformPlugins
+                                .Where(x => x.Status == (int)PluginStatus.Disabled)
+                                .FirstOrDefaultAsync(x => x.PluginId == pluginObject.PluginId);
+
+                            if (eformPlugin != null)
                             {
-                                var contextFactory = new BaseDbContextFactory();
-                                await using var dbContext =
-                                    contextFactory.CreateDbContext(new[] { _defaultConnectionString });
-                                var eformPlugin = await dbContext.EformPlugins
-                                    .Where(x => x.Status == (int)PluginStatus.Disabled)
-                                    .FirstOrDefaultAsync(x => x.PluginId == pluginObject.PluginId);
-
-                                if (eformPlugin != null)
-                                {
-                                    eformPlugin.Status = (int)PluginStatus.Enabled;
-                                    dbContext.EformPlugins.Update(eformPlugin);
-                                    await dbContext.SaveChangesAsync();
+                                eformPlugin.Status = (int)PluginStatus.Enabled;
+                                dbContext.EformPlugins.Update(eformPlugin);
+                                await dbContext.SaveChangesAsync();
 
 
-                                    var pluginMenu = pluginObject.GetNavigationMenu(scope.ServiceProvider);
+                                var pluginMenu = pluginObject.GetNavigationMenu(scope.ServiceProvider);
 
-                                    // Load to database all navigation menu from plugin by id
-                                    var pluginMenuItemsLoader = new PluginMenuItemsLoader(dbContext, pluginId);
+                                // Load to database all navigation menu from plugin by id
+                                var pluginMenuItemsLoader = new PluginMenuItemsLoader(dbContext, pluginId);
 
-                                    pluginMenuItemsLoader.Load(pluginMenu);
+                                pluginMenuItemsLoader.Load(pluginMenu);
 
 
-                                }
                             }
                         }
+                    }
+                    // not need because settingsService.UpdateAdminSettings call restart
+                    // Restart(); // restart IF some plugins has been enabled
+                    //}
+                }
+            }
+            else if(args.Any())
+            {
+                Log.LogEvent("Try initialize from args");
+                var defaultConfig = new ConfigurationBuilder()
+                    .AddCommandLine(args)
+                    .AddEnvironmentVariables(prefix: "ASPNETCORE_")
+                    .Build();
+                var firstName = defaultConfig.GetValue("FirstName", "");
+                var lastName = defaultConfig.GetValue("LastName", "");
+                var email = defaultConfig.GetValue("Email", "");
+                var password = defaultConfig.GetValue("Password", "");
+                var token = defaultConfig.GetValue("Token", "");
 
-                        Restart(); // restart IF some plugins has been enabled}
+                if (!string.IsNullOrEmpty(token) && !string.IsNullOrEmpty(firstName) && !string.IsNullOrEmpty(lastName) && !string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
+                {
+                    var sdkConnectionString = _defaultConnectionString.Replace("_Angular", "_SDK");
+                    // get customer number
+
+                    const RegexOptions options = RegexOptions.Multiline | RegexOptions.CultureInvariant;
+                    const string pattern = @"database=(\D*)(\d*)_Angular";
+                    if (int.TryParse(Regex.Match(_defaultConnectionString, pattern, options).Groups[^1].Value, out var customerNumber))
+                    {
+                        var adminTools = new AdminTools(sdkConnectionString);
+                        // Setup SDK DB
+                        await adminTools.DbSetup(token);
+                        var core = new Core();
+                        await core.StartSqlOnly(sdkConnectionString);
+                        await core.SetSdkSetting(Settings.customerNo, customerNumber.ToString());
+
+                        // setup admin
+                        var adminSetupModel = new AdminSetupModel()
+                        {
+                            DarkTheme = false,
+                            FirstName = firstName,
+                            LastName = lastName,
+                            Email = email,
+                            Password = password,
+                        };
+
+                        using var scope = webHost.Services.GetService<IServiceScopeFactory>().CreateScope();
+                        var settingsService = scope.ServiceProvider.GetRequiredService<ISettingsService>();
+                        var existsResult = settingsService.ConnectionStringExist();
+
+                        if (!existsResult.Success)
+                        {
+                            var contextFactory = new BaseDbContextFactory();
+                            await using var dbContext =
+                                contextFactory.CreateDbContext(new[] { _defaultConnectionString });
+                            var connectionStringsSdk =
+                                scope.ServiceProvider.GetRequiredService<IDbOptions<ConnectionStringsSdk>>();
+                            await connectionStringsSdk.UpdateDb(options =>
+                            {
+                                options.SdkConnection = sdkConnectionString;
+                            }, dbContext);
+
+                            await SeedAdminHelper.SeedAdmin(adminSetupModel,
+                                    "", dbContext);
+                        }
                     }
                 }
             }
