@@ -34,7 +34,7 @@
     "@angular/compiler": "^11.1.2",
     "@angular/core": "^11.1.2",
     "@angular/forms": "^11.1.2",
-    "@angular/localize": "^11.1.2",
+    "@angular/localize": "^11.2.13",
     "@angular/platform-browser": "^11.2.13",
     "@angular/platform-browser-dynamic": "^11.2.13",
     "@angular/router": "^11.1.2",
