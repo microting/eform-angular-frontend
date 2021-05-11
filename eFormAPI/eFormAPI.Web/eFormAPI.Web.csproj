@@ -45,11 +45,11 @@
   </Target>
 
   <ItemGroup>
-    <PackageReference Include="AWSSDK.Core" Version="3.7.0.18" />
-    <PackageReference Include="AWSSDK.S3" Version="3.7.0.19" />
+    <PackageReference Include="AWSSDK.Core" Version="3.7.0.20" />
+    <PackageReference Include="AWSSDK.S3" Version="3.7.0.21" />
     <PackageReference Include="ClosedXML" Version="0.95.4" />
     <PackageReference Include="HtmlToOpenXml.dll" Version="2.2.0" />
-    <PackageReference Include="Magick.NET-Q16-x64" Version="7.23.4" />
+    <PackageReference Include="Magick.NET-Q16-x64" Version="7.24.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.5" />
@@ -59,8 +59,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
-    <PackageReference Include="Microting.eForm" Version="5.1.4" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="3.0.8" />
+    <PackageReference Include="Microting.eForm" Version="5.1.5" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="3.0.9" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.0" />
     <PackageReference Include="SharpZipLib.NETStandard" Version="1.0.7" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
@@ -68,7 +68,7 @@
     <PackageReference Include="OtpSharp.Core" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.5" />
-    <PackageReference Include="sendgrid" Version="9.23.0" />
+    <PackageReference Include="sendgrid" Version="9.23.1" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
     <PackageReference Include="System.Threading.AccessControl" Version="5.0.0" />
   </ItemGroup>
