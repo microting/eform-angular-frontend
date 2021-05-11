@@ -18,7 +18,6 @@ export function createInitialState(): CasePostsState {
       sort: 'Id',
       isSortDsc: false,
       offset: 0,
-      pageIndex: 0,
     },
     filters: {
       nameFilter: '',
