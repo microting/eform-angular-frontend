@@ -37,7 +37,7 @@
     "@angular/localize": "^11.2.13",
     "@angular/platform-browser": "^11.2.13",
     "@angular/platform-browser-dynamic": "^11.2.13",
-    "@angular/router": "^11.1.2",
+    "@angular/router": "^11.2.13",
     "@circlon/angular-tree-component": "^11.0.1",
     "@danielmoncada/angular-datetime-picker": "^11.0.1",
     "@fortawesome/angular-fontawesome": "0.8.2",
