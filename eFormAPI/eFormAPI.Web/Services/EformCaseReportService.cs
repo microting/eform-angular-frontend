@@ -270,6 +270,10 @@ namespace eFormAPI.Web.Services
                                             x.FieldOptionId == fieldOption.Id && x.LanguageId == language.Id);
                                     reportEformCaseModel.CaseFields.Add(fieldOptionTranslation.Text);
                                 }
+                                else
+                                {
+                                    reportEformCaseModel.CaseFields.Add("");
+                                }
                                 break;
                             }
                             default:

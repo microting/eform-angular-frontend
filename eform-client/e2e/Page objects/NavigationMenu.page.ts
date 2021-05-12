@@ -1,5 +1,4 @@
 class NavigationMenuPage {
-
   public get menuItemsChilds() {
     return $$('#menuItems>*');
   }
@@ -17,7 +16,7 @@ class NavigationMenuPage {
   }
 
   public get editItemSaveBtn() {
-    $('#editItemSaveBtn').waitForClickable({timeout: 20000});
+    $('#editItemSaveBtn').waitForClickable({ timeout: 20000 });
     return $('#editItemSaveBtn');
   }
 
@@ -49,12 +48,22 @@ class NavigationMenuPage {
     return this.menuItemsChilds[indexDropdown].$$('#dropdownBody>*');
   }
 
-  public editTranslationsOnDropdownBodyChilds(data: { indexChildDropdown: number,
-    indexDropdownInMenu: number, translations_array: string[] }) {
-    this.dropdownBodyChilds(data.indexDropdownInMenu)[data.indexChildDropdown].$('#editBtn').click();
-    $('#editMenuEntry').waitForDisplayed({timeout: 20000});
+  public editTranslationsOnDropdownBodyChilds(data: {
+    indexChildDropdown: number;
+    indexDropdownInMenu: number;
+    translations_array: string[];
+  }) {
+    this.dropdownBodyChilds(data.indexDropdownInMenu)
+      [data.indexChildDropdown].$('#editBtn')
+      .click();
+    $('#editMenuEntry').waitForDisplayed({ timeout: 20000 });
     data.translations_array.forEach((translation, i) =>
-      this.editItemTranslation(data.indexDropdownInMenu, data.indexChildDropdown, i).setValue(translation));
+      this.editItemTranslation(
+        data.indexDropdownInMenu,
+        data.indexChildDropdown,
+        i
+      ).setValue(translation)
+    );
     this.editItemSaveBtn.click();
   }
 
@@ -62,13 +71,22 @@ class NavigationMenuPage {
     this.menuItemsChilds[index].$('#collapseToggle').click();
   }
 
-  public dragTemplateOnElementInCreatedDropdown(indexTemplate: number, indexCreatedDropdown: number, indexElementInCreatedDropdown= 0) {
+  public dragTemplateOnElementInCreatedDropdown(
+    indexTemplate: number,
+    indexCreatedDropdown: number,
+    indexElementInCreatedDropdown = 0
+  ) {
     this.collapseTemplates(0);
     if (this.dropdownBodyChilds(indexCreatedDropdown).length === 0) {
-      this.dragHandleOnItemInMainMenu(indexTemplate).dragAndDrop(this.dropdownBody(indexCreatedDropdown));
+      this.dragHandleOnItemInMainMenu(indexTemplate).dragAndDrop(
+        this.dropdownBody(indexCreatedDropdown)
+      );
     } else {
-      this.dragHandleOnItemInMainMenu(indexTemplate)
-        .dragAndDrop(this.dropdownBodyChilds(indexCreatedDropdown)[indexElementInCreatedDropdown]);
+      this.dragHandleOnItemInMainMenu(indexTemplate).dragAndDrop(
+        this.dropdownBodyChilds(indexCreatedDropdown)[
+          indexElementInCreatedDropdown
+        ]
+      );
     }
     this.collapseTemplates(0);
   }
@@ -87,17 +105,28 @@ class NavigationMenuPage {
     return this.mainMenu.$(`#dragHandle0_${numberItem}`);
   }
 
-  public dragAndDropElementOfDropdown(indexDropdownInMenuItems, indexItemForSwap, indexItemOfSwap) {
-    const elem = this.menuItemsChilds[indexDropdownInMenuItems]
-      .$(`#drag_handle${indexDropdownInMenuItems}_${indexItemForSwap}`);
+  public dragAndDropElementOfDropdown(
+    indexDropdownInMenuItems,
+    indexItemForSwap,
+    indexItemOfSwap
+  ) {
+    const elem = this.menuItemsChilds[indexDropdownInMenuItems].$(
+      `#drag_handle${indexDropdownInMenuItems}_${indexItemForSwap}`
+    );
     elem.scrollIntoView();
     browser.pause(2000);
 
-    elem.dragAndDrop(this.menuItemsChilds[indexDropdownInMenuItems].$(`#drag_handle${indexDropdownInMenuItems}_${indexItemOfSwap}`));
+    elem.dragAndDrop(
+      this.menuItemsChilds[indexDropdownInMenuItems].$(
+        `#drag_handle${indexDropdownInMenuItems}_${indexItemOfSwap}`
+      )
+    );
   }
 
   public createMenuItemFromTemplate(indexItemInTemplate) {
-    this.dragHandleOnItemInMainMenu(indexItemInTemplate).dragAndDrop(this.menuItemsChilds[0]);
+    this.dragHandleOnItemInMainMenu(indexItemInTemplate).dragAndDrop(
+      this.menuItemsChilds[0]
+    );
   }
 
   public dropdownTemplate(indexTemplate) {
@@ -107,55 +136,63 @@ class NavigationMenuPage {
   public clickSaveMenuBtn() {
     const navigationMenuSaveBtn = $('#navigationMenuSaveBtn');
     navigationMenuSaveBtn.scrollIntoView();
-    navigationMenuSaveBtn.waitForClickable({timeout: 20000});
+    navigationMenuSaveBtn.waitForClickable({ timeout: 20000 });
     navigationMenuSaveBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
+    $('#spinner-animation').waitForDisplayed({ timeout: 50000, reverse: true });
   }
 
   public openOnEditCreatedMenuItem(indexInCreatedMenuItems) {
     this.menuItemsChilds[indexInCreatedMenuItems].$('#editBtn').click();
-    $('#editMenuEntry').waitForDisplayed({timeout: 20000});
+    $('#editMenuEntry').waitForDisplayed({ timeout: 40000 });
   }
 
-  public editItemTranslation(firstLevelIndex, secondLevelIndex, translationIndex) {
-    const ele = $(`#editItemTranslation${firstLevelIndex}_${secondLevelIndex}_${translationIndex}`);
-    ele.waitForDisplayed({timeout: 20000});
-    ele.waitForClickable({timeout: 20000});
+  public editItemTranslation(
+    firstLevelIndex,
+    secondLevelIndex,
+    translationIndex
+  ) {
+    const ele = $(
+      `#editItemTranslation${firstLevelIndex}_${secondLevelIndex}_${translationIndex}`
+    );
+    ele.waitForDisplayed({ timeout: 20000 });
+    ele.waitForClickable({ timeout: 20000 });
     return ele;
   }
 
   public resetMenu() {
     const resetBtn = $('#resetBtn');
     resetBtn.scrollIntoView();
-    resetBtn.waitForClickable({timeout: 20000});
+    resetBtn.waitForClickable({ timeout: 20000 });
     resetBtn.click();
-    $('#resetModal').waitForDisplayed({timeout: 20000});
+    $('#resetModal').waitForDisplayed({ timeout: 20000 });
     const deleteWorkerDeleteBtn = $('#deleteWorkerDeleteBtn');
-    deleteWorkerDeleteBtn.waitForDisplayed({timeout: 20000});
-    deleteWorkerDeleteBtn.waitForClickable({timeout: 20000});
+    deleteWorkerDeleteBtn.waitForDisplayed({ timeout: 20000 });
+    deleteWorkerDeleteBtn.waitForClickable({ timeout: 20000 });
     deleteWorkerDeleteBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
+    $('#spinner-animation').waitForDisplayed({ timeout: 50000, reverse: true });
   }
 
   public deleteElementFromMenuItems(indexElementInMenu) {
     const deleteBtn = this.menuItemsChilds[indexElementInMenu].$('#deleteBtn');
     deleteBtn.scrollIntoView();
-    deleteBtn.waitForClickable({timeout: 20000});
+    deleteBtn.waitForClickable({ timeout: 20000 });
     deleteBtn.click();
     const menuItemDeleteBtn = $('#menuItemDeleteBtn');
-    menuItemDeleteBtn.waitForDisplayed({timeout: 20000});
-    menuItemDeleteBtn.waitForClickable({ timeout: 20000});
+    menuItemDeleteBtn.waitForDisplayed({ timeout: 20000 });
+    menuItemDeleteBtn.waitForClickable({ timeout: 20000 });
     menuItemDeleteBtn.click();
   }
 
   public deleteElementFromDropdown(indexDropdown, indexInDropdown) {
-    const deleteBtn = this.dropdownBodyChilds(indexDropdown)[indexInDropdown].$('#deleteBtn');
+    const deleteBtn = this.dropdownBodyChilds(indexDropdown)[indexInDropdown].$(
+      '#deleteBtn'
+    );
     deleteBtn.scrollIntoView();
-    deleteBtn.waitForClickable({timeout: 20000});
+    deleteBtn.waitForClickable({ timeout: 20000 });
     deleteBtn.click();
     const menuItemDeleteBtn = $('#menuItemDeleteBtn');
-    menuItemDeleteBtn.waitForDisplayed({timeout: 20000});
-    menuItemDeleteBtn.waitForClickable({ timeout: 20000});
+    menuItemDeleteBtn.waitForDisplayed({ timeout: 20000 });
+    menuItemDeleteBtn.waitForClickable({ timeout: 20000 });
     menuItemDeleteBtn.click();
     this.collapseMenuItemDropdown(indexDropdown);
   }
@@ -172,20 +209,24 @@ class NavigationMenuPage {
 
   public setSecurityGroupCustomLinkSelector(textSecurityGroup) {
     this.securityGroupsCustomLinkSelector.click();
-    $(`//*[@id="securityGroupsCustomLinkSelector"]//*[text()="${textSecurityGroup}"]`).click();
+    $(
+      `//*[@id="securityGroupsCustomLinkSelector"]//*[text()="${textSecurityGroup}"]`
+    ).click();
     browser.pause(500);
   }
 
   public setSecurityGroupCustomDropdownSelector(textSecurityGroup) {
     this.securityGroupsCustomDropdownSelector.click();
-    $(`//*[@id="securityGroupsCustomDropdownSelector"]//*[text()="${textSecurityGroup}"]`).click();
+    $(
+      `//*[@id="securityGroupsCustomDropdownSelector"]//*[text()="${textSecurityGroup}"]`
+    ).click();
     browser.pause(500);
   }
 
   public selectCustomLink() {
     // $('#customLinkCreateBtn').waitForExist({timeout: 2000, reverse: true});
     $('#addCustomLink').click();
-    $('#newLinkModal').waitForDisplayed({timeout: 20000});
+    $('#newLinkModal').waitForDisplayed({ timeout: 20000 });
   }
 
   public selectCustomDropdown() {
@@ -193,34 +234,52 @@ class NavigationMenuPage {
     $('#addCustomDropdown').click();
   }
 
-  public createCustomLink(data: {securityGroups: string[], link: string, translations: string[]}) {
+  public createCustomLink(data: {
+    securityGroups: string[];
+    link: string;
+    translations: string[];
+  }) {
     this.selectCustomLink();
-    $('#newLinkModal').waitForDisplayed({timeout: 20000});
+    $('#newLinkModal').waitForDisplayed({ timeout: 20000 });
     if (data.securityGroups.length > 0) {
-      data.securityGroups.forEach(securityGroup => this.setSecurityGroupCustomLinkSelector(securityGroup));
+      data.securityGroups.forEach((securityGroup) =>
+        this.setSecurityGroupCustomLinkSelector(securityGroup)
+      );
     }
     this.createCustomLinkInput.setValue(data.link);
     if (data.translations.length > 0) {
-      data.translations.forEach((translation, i) => this.createCustomLinkTranslation(i, translation));
+      data.translations.forEach((translation, i) =>
+        this.createCustomLinkTranslation(i, translation)
+      );
     }
     // $('#customLinkCreateBtn').waitForClickable({timeout: 2000});
     $('#customLinkCreateBtn').click();
   }
 
-  public createCustomDropdown(data: {securityGroups: string[], translations: string[]}) {
+  public createCustomDropdown(data: {
+    securityGroups: string[];
+    translations: string[];
+  }) {
     this.selectCustomDropdown();
-    $('#newDropdownModal').waitForDisplayed({timeout: 20000});
+    $('#newDropdownModal').waitForDisplayed({ timeout: 20000 });
     if (data.securityGroups.length > 0) {
-      data.securityGroups.forEach(securityGroup => this.setSecurityGroupCustomDropdownSelector(securityGroup));
+      data.securityGroups.forEach((securityGroup) =>
+        this.setSecurityGroupCustomDropdownSelector(securityGroup)
+      );
     }
     if (data.translations.length > 0) {
-      data.translations.forEach((translation, i) => this.createCustomDropdownTranslation(i, translation));
+      data.translations.forEach((translation, i) =>
+        this.createCustomDropdownTranslation(i, translation)
+      );
     }
 
     $('button#customDropdownCreateBtn').click();
   }
 
-  public editCustomLink(data: {securityGroups: string[], link: string, translations: string[]}, indexInCreated: number) {
+  public editCustomLink(
+    data: { securityGroups: string[]; link: string; translations: string[] },
+    indexInCreated: number
+  ) {
     this.openOnEditCreatedMenuItem(indexInCreated);
     // $('#editMenuEntry').waitForDisplayed({timeout: 20000});
     if (data.securityGroups.length > 0) {
@@ -228,38 +287,50 @@ class NavigationMenuPage {
     }
     this.editLinkInput.setValue(data.link);
     if (data.translations.length > 0) {
-      data.translations.forEach((translation, i) => this.editItemTranslation(indexInCreated, 0, i)
-        .setValue(translation));
+      data.translations.forEach((translation, i) =>
+        this.editItemTranslation(indexInCreated, 0, i).setValue(translation)
+      );
     }
     this.editItemSaveBtn.click();
   }
 
-  public editCustomDropdown(data: {securityGroups: string[], translations: string[]}, indexInCreated: number) {
+  public editCustomDropdown(
+    data: { securityGroups: string[]; translations: string[] },
+    indexInCreated: number
+  ) {
     this.openOnEditCreatedMenuItem(indexInCreated);
     if (data.securityGroups.length > 0) {
       this.editSecurityGroupsValue(data.securityGroups);
     }
     if (data.translations.length > 0) {
-      data.translations.forEach((translation, i) => this.editItemTranslation(indexInCreated, 0, i)
-        .setValue(translation));
+      data.translations.forEach((translation, i) =>
+        this.editItemTranslation(indexInCreated, 0, i).setValue(translation)
+      );
     }
     this.editItemSaveBtn.click();
   }
 
   public deleteSecurityGroupsInEditItem() {
-    this.securityGroupsValue.forEach(_ => this.editSecurityGroupsSelector.$('.ng-value span').click());
+    this.securityGroupsValue.forEach((_) =>
+      this.editSecurityGroupsSelector.$('.ng-value span').click()
+    );
   }
 
   public editSecurityGroupsValue(securityGroups: string[]) {
     this.deleteSecurityGroupsInEditItem();
-    securityGroups.forEach(textSecurityGroup => {
+    securityGroups.forEach((textSecurityGroup) => {
       this.editSecurityGroupsSelector.click();
-      $(`//*[@id="editSecurityGroupsSelector"]//*[text()="${textSecurityGroup}"]`).click();
+      $(
+        `//*[@id="editSecurityGroupsSelector"]//*[text()="${textSecurityGroup}"]`
+      ).click();
       browser.pause(500);
     });
   }
 
-  public editTemplateItem(data: {link: string, translations: string []}, indexInCreated: number) {
+  public editTemplateItem(
+    data: { link: string; translations: string[] },
+    indexInCreated: number
+  ) {
     this.openOnEditCreatedMenuItem(indexInCreated);
     if (data.link) {
       this.editLinkInput.setValue(data.link);

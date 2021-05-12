@@ -9,21 +9,17 @@ using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Hosting.Enums;
 using eFormAPI.Web.Hosting.Helpers;
 using eFormAPI.Web.Hosting.Helpers.DbOptions;
-using eFormAPI.Web.Infrastructure.Const;
 using eFormAPI.Web.Infrastructure.Database;
 using eFormAPI.Web.Infrastructure.Database.Entities.Menu;
 using eFormAPI.Web.Infrastructure.Database.Entities.Permissions;
 using eFormAPI.Web.Infrastructure.Models.Plugins;
 using eFormAPI.Web.Infrastructure.Models.Settings.Plugins;
-using eFormAPI.Web.Services.NavigationMenu;
-using eFormAPI.Web.Services.PluginsManagement;
 using eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace eFormAPI.Web.Services
 {
