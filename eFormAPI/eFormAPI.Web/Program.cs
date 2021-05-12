@@ -271,7 +271,11 @@ namespace eFormAPI.Web
                 var password = defaultConfig.GetValue("Password", "");
                 var token = defaultConfig.GetValue("Token", "");
 
-                if (!string.IsNullOrEmpty(token) && !string.IsNullOrEmpty(firstName) && !string.IsNullOrEmpty(lastName) && !string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
+                using var scope = webHost.Services.GetService<IServiceScopeFactory>().CreateScope();
+                var settingsService = scope.ServiceProvider.GetRequiredService<ISettingsService>();
+                var existsResult = settingsService.ConnectionStringExist();
+
+                if (!existsResult.Success && !string.IsNullOrEmpty(token) && !string.IsNullOrEmpty(firstName) && !string.IsNullOrEmpty(lastName) && !string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
                 {
                     var sdkConnectionString = _defaultConnectionString.Replace("_Angular", "_SDK");
                     // get customer number
@@ -297,25 +301,18 @@ namespace eFormAPI.Web
                             Password = password,
                         };
 
-                        using var scope = webHost.Services.GetService<IServiceScopeFactory>().CreateScope();
-                        var settingsService = scope.ServiceProvider.GetRequiredService<ISettingsService>();
-                        var existsResult = settingsService.ConnectionStringExist();
-
-                        if (!existsResult.Success)
+                        var contextFactory = new BaseDbContextFactory();
+                        await using var dbContext =
+                            contextFactory.CreateDbContext(new[] { _defaultConnectionString });
+                        var connectionStringsSdk =
+                            scope.ServiceProvider.GetRequiredService<IDbOptions<ConnectionStringsSdk>>();
+                        await connectionStringsSdk.UpdateDb(options =>
                         {
-                            var contextFactory = new BaseDbContextFactory();
-                            await using var dbContext =
-                                contextFactory.CreateDbContext(new[] { _defaultConnectionString });
-                            var connectionStringsSdk =
-                                scope.ServiceProvider.GetRequiredService<IDbOptions<ConnectionStringsSdk>>();
-                            await connectionStringsSdk.UpdateDb(options =>
-                            {
-                                options.SdkConnection = sdkConnectionString;
-                            }, dbContext);
+                            options.SdkConnection = sdkConnectionString;
+                        }, dbContext);
 
-                            await SeedAdminHelper.SeedAdmin(adminSetupModel,
-                                    "", dbContext);
-                        }
+                        await SeedAdminHelper.SeedAdmin(adminSetupModel,
+                                "", dbContext);
                     }
                 }
             }
