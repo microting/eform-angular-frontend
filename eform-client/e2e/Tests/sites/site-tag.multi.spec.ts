@@ -12,7 +12,7 @@ describe('Site tags', function () {
     loginPage.open('/');
     loginPage.login();
     myEformsPage.Navbar.goToDeviceUsersPage();
-    $('#newDeviceUserBtn').waitForDisplayed({ timeout: 20000 });
+    $('#newDeviceUserBtn').waitForDisplayed({ timeout: 40000 });
     deviceUsersPage.createDeviceUserFromScratch('John', 'Smith');
     myEformsPage.Navbar.goToSites();
   });
