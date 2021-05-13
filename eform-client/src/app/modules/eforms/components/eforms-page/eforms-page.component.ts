@@ -77,15 +77,11 @@ export class EformsPageComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadEformsPermissions();
-    this.getLocalPageSettings();
+    this.loadAllTags();
   }
 
   ngOnDestroy() {
     this.searchSubject.unsubscribe();
-  }
-
-  getLocalPageSettings() {
-    this.loadAllTags();
   }
 
   loadAllTemplates() {
@@ -97,6 +93,7 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   }
 
   loadAllTags() {
+    // load tags after call load templates (not know why)
     if (this.userClaims.eformsReadTags) {
       this.eFormTagService.getAvailableTags().subscribe((data) => {
         if (data && data.success) {
