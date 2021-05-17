@@ -47,7 +47,6 @@ namespace eFormAPI.Web.Tests
             {
                 builder.EnableRetryOnFailure();
             });
-            optionsBuilder.UseLazyLoadingProxies(true);
             DbContext = new BaseDbContext(optionsBuilder.Options);
 
             DbContext.Database.Migrate();

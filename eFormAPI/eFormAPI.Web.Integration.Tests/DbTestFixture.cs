@@ -46,7 +46,6 @@ namespace eFormAPI.Web.Integration.Tests
                     new MariaDbServerVersion(
                     new Version(10, 4, 0)),
                     b => b.EnableRetryOnFailure());
-            dbContextOptionsBuilder.UseLazyLoadingProxies(true);
             DbContext = new BaseDbContext(dbContextOptionsBuilder.Options);
 
             DbContext.Database.Migrate();
