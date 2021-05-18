@@ -193,9 +193,12 @@ namespace eFormAPI.Web.Services
                         var list = new List<string>();
                         var uploadedData =
                             await sdkDbContext.UploadedDatas.SingleAsync(x => x.Id == imageField.UploadedDataId);
-                        list.Add(uploadedData.FileName);
-                        list.Add(geoTag);
-                        result.ImageNames.Add(new KeyValuePair<List<string>, List<string>>(keyList, list));
+                        if (!string.IsNullOrEmpty(uploadedData.FileName))
+                        {
+                            list.Add(uploadedData.FileName);
+                            list.Add(geoTag);
+                            result.ImageNames.Add(new KeyValuePair<List<string>, List<string>>(keyList, list));
+                        }
                     }
                 }
             }

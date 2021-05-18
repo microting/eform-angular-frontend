@@ -182,21 +182,22 @@ namespace eFormAPI.Web
 
         private static async Task InitializeSettings(IWebHost webHost, string[] args)
         {
-            // Find file
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "init.json");
-            if (File.Exists(filePath))
+            using var scope = webHost.Services.GetService<IServiceScopeFactory>().CreateScope();
+            var settingsService = scope.ServiceProvider.GetRequiredService<ISettingsService>();
+            var existsResult = settingsService.ConnectionStringExist();
+            if(!existsResult.Success)// do need to initialize database
             {
-                Log.LogEvent($"Try initialize from {filePath}");
-                // Get content
-                var startupContent = await File.ReadAllTextAsync(filePath);
-                var startup = JsonConvert.DeserializeObject<StartupInitializeModel>(startupContent);
-                // Apply settings
-                using var scope = webHost.Services.GetService<IServiceScopeFactory>().CreateScope();
-                var settingsService = scope.ServiceProvider.GetRequiredService<ISettingsService>();
-                var existsResult = settingsService.ConnectionStringExist();
-                if (!existsResult.Success)
+                // Find file
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "init.json");
+                if (File.Exists(filePath))
                 {
-                    var updateConnectionResult = await settingsService.UpdateConnectionString(startup.InitialSettings);
+                    Log.LogEvent($"Try initialize from {filePath}");
+                    // Get content
+                    var startupContent = await File.ReadAllTextAsync(filePath);
+                    var startup = JsonConvert.DeserializeObject<StartupInitializeModel>(startupContent);
+                    // Apply settings
+                    var updateConnectionResult =
+                        await settingsService.UpdateConnectionString(startup.InitialSettings);
                     if (!updateConnectionResult.Success)
                     {
                         throw new Exception("Init error: " + updateConnectionResult.Message);
@@ -211,7 +212,8 @@ namespace eFormAPI.Web
                         SwiftSettingsModel = startup.SwiftSettingsModel,
                     };
 
-                    var updateAdminSettingsResult = await settingsService.UpdateAdminSettings(adminSettingsUpdateModel);
+                    var updateAdminSettingsResult =
+                        await settingsService.UpdateAdminSettings(adminSettingsUpdateModel);
                     if (!updateAdminSettingsResult.Success)
                     {
                         throw new Exception("Init error: " + updateAdminSettingsResult.Message);
@@ -221,8 +223,6 @@ namespace eFormAPI.Web
                     DisabledPlugins = PluginHelper.GetDisablePlugins(_defaultConnectionString);
 
                     // Enable plugins
-                    //if (startup.PluginsList.Any())
-                    //{
                     foreach (var pluginId in startup.PluginsList)
                     {
                         var pluginObject = DisabledPlugins.FirstOrDefault(x => x.PluginId == pluginId);
@@ -241,78 +241,72 @@ namespace eFormAPI.Web
                                 dbContext.EformPlugins.Update(eformPlugin);
                                 await dbContext.SaveChangesAsync();
 
-
                                 var pluginMenu = pluginObject.GetNavigationMenu(scope.ServiceProvider);
 
                                 // Load to database all navigation menu from plugin by id
                                 var pluginMenuItemsLoader = new PluginMenuItemsLoader(dbContext, pluginId);
 
                                 pluginMenuItemsLoader.Load(pluginMenu);
-
-
                             }
                         }
                     }
                     // not need because settingsService.UpdateAdminSettings call restart
                     // Restart(); // restart IF some plugins has been enabled
-                    //}
                 }
-            }
-            else if(args.Any())
-            {
-                Log.LogEvent("Try initialize from args");
-                var defaultConfig = new ConfigurationBuilder()
-                    .AddCommandLine(args)
-                    .AddEnvironmentVariables(prefix: "ASPNETCORE_")
-                    .Build();
-                var firstName = defaultConfig.GetValue("FirstName", "");
-                var lastName = defaultConfig.GetValue("LastName", "");
-                var email = defaultConfig.GetValue("Email", "");
-                var password = defaultConfig.GetValue("Password", "");
-                var token = defaultConfig.GetValue("Token", "");
-
-                using var scope = webHost.Services.GetService<IServiceScopeFactory>().CreateScope();
-                var settingsService = scope.ServiceProvider.GetRequiredService<ISettingsService>();
-                var existsResult = settingsService.ConnectionStringExist();
-
-                if (!existsResult.Success && !string.IsNullOrEmpty(token) && !string.IsNullOrEmpty(firstName) && !string.IsNullOrEmpty(lastName) && !string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
+                else if (args.Any())
                 {
-                    var sdkConnectionString = _defaultConnectionString.Replace("_Angular", "_SDK");
-                    // get customer number
+                    Log.LogEvent("Try initialize from args");
+                    var defaultConfig = new ConfigurationBuilder()
+                        .AddCommandLine(args)
+                        .AddEnvironmentVariables(prefix: "ASPNETCORE_")
+                        .Build();
+                    var firstName = defaultConfig.GetValue("FirstName", "");
+                    var lastName = defaultConfig.GetValue("LastName", "");
+                    var email = defaultConfig.GetValue("Email", "");
+                    var password = defaultConfig.GetValue("Password", "");
+                    var token = defaultConfig.GetValue("Token", "");
 
-                    const RegexOptions options = RegexOptions.Multiline | RegexOptions.CultureInvariant;
-                    const string pattern = @"database=(\D*)(\d*)_Angular";
-                    if (int.TryParse(Regex.Match(_defaultConnectionString, pattern, options).Groups[^1].Value, out var customerNumber))
+
+                    if (!string.IsNullOrEmpty(token) && !string.IsNullOrEmpty(firstName) &&
+                        !string.IsNullOrEmpty(lastName) && !string.IsNullOrEmpty(email) &&
+                        !string.IsNullOrEmpty(password))
                     {
-                        var adminTools = new AdminTools(sdkConnectionString);
-                        // Setup SDK DB
-                        await adminTools.DbSetup(token);
-                        var core = new Core();
-                        await core.StartSqlOnly(sdkConnectionString);
-                        await core.SetSdkSetting(Settings.customerNo, customerNumber.ToString());
+                        var sdkConnectionString = _defaultConnectionString.Replace("_Angular", "_SDK");
+                        // get customer number
 
-                        // setup admin
-                        var adminSetupModel = new AdminSetupModel()
+                        const RegexOptions options = RegexOptions.Multiline | RegexOptions.CultureInvariant;
+                        const string pattern = @"database=(\D*)(\d*)_Angular";
+                        if (int.TryParse(Regex.Match(_defaultConnectionString, pattern, options).Groups[^1].Value,
+                            out var customerNumber))
                         {
-                            DarkTheme = false,
-                            FirstName = firstName,
-                            LastName = lastName,
-                            Email = email,
-                            Password = password,
-                        };
+                            var adminTools = new AdminTools(sdkConnectionString);
+                            // Setup SDK DB
+                            await adminTools.DbSetup(token);
+                            var core = new Core();
+                            await core.StartSqlOnly(sdkConnectionString);
+                            await core.SetSdkSetting(Settings.customerNo, customerNumber.ToString());
 
-                        var contextFactory = new BaseDbContextFactory();
-                        await using var dbContext =
-                            contextFactory.CreateDbContext(new[] { _defaultConnectionString });
-                        var connectionStringsSdk =
-                            scope.ServiceProvider.GetRequiredService<IDbOptions<ConnectionStringsSdk>>();
-                        await connectionStringsSdk.UpdateDb(options =>
-                        {
-                            options.SdkConnection = sdkConnectionString;
-                        }, dbContext);
+                            // setup admin
+                            var adminSetupModel = new AdminSetupModel()
+                            {
+                                DarkTheme = false,
+                                FirstName = firstName,
+                                LastName = lastName,
+                                Email = email,
+                                Password = password,
+                            };
 
-                        await SeedAdminHelper.SeedAdmin(adminSetupModel,
+                            var contextFactory = new BaseDbContextFactory();
+                            await using var dbContext =
+                                contextFactory.CreateDbContext(new[] {_defaultConnectionString});
+                            var connectionStringsSdk =
+                                scope.ServiceProvider.GetRequiredService<IDbOptions<ConnectionStringsSdk>>();
+                            await connectionStringsSdk.UpdateDb(
+                                options => { options.SdkConnection = sdkConnectionString; }, dbContext);
+
+                            await SeedAdminHelper.SeedAdmin(adminSetupModel,
                                 "", dbContext);
+                        }
                     }
                 }
             }
