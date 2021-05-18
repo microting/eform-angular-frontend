@@ -33,9 +33,9 @@ export class CasesTableComponent implements OnInit {
     return this.authStateService.currentUserClaims;
   }
 
-  get userRole(): string {
-    return this.authStateService.currentRole;
-  }
+  // get userRole(): string {
+  //   return this.authStateService.currentRole;
+  // }
 
   get userClaimsEnum() {
     return UserClaimsEnum;
@@ -155,7 +155,7 @@ export class CasesTableComponent implements OnInit {
     this.tableHeaders = [
       { name: 'Id', elementId: '', sortable: true },
       { name: 'done_at', elementId: '', sortable: true },
-      this.userRole === 'admin'
+      this.authStateService.isAdmin
         ? { name: 'created_at', elementId: '', sortable: true }
         : null,
       { name: 'worker_name', elementId: '', sortable: true },
