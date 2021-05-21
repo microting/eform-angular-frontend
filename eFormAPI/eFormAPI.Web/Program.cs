@@ -275,7 +275,7 @@ namespace eFormAPI.Web
                         // get customer number
 
                         const RegexOptions options = RegexOptions.Multiline | RegexOptions.CultureInvariant;
-                        const string pattern = @"database=(\D*)(\d*)_Angular";
+                        const string pattern = @"D|database=(\D*)(\d*)_Angular";
                         if (int.TryParse(Regex.Match(_defaultConnectionString, pattern, options).Groups[^1].Value,
                             out var customerNumber))
                         {
@@ -306,6 +306,7 @@ namespace eFormAPI.Web
 
                             await SeedAdminHelper.SeedAdmin(adminSetupModel,
                                 "", dbContext);
+                            Restart();
                         }
                     }
                 }
