@@ -9,7 +9,7 @@
         (sortClick)="onSortClick($event)"
         [isSortDsc]="!sort ? isSortDsc : sort.isSortDsc"
         [name]="header.name"
-        [id]="header.elementId"
+        [id]="header.elementId ? header.elementId : getElementId(header.name)"
         [visibleName]="header.visibleName"
         style="{{
           header.name.toLowerCase() === 'id' ? 'text-transform: uppercase' : ''

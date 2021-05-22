@@ -28,4 +28,12 @@ export class EformTableHeadersComponent implements OnInit {
   onSortClick(name: string) {
     this.sortChanged.emit(name);
   }
+
+  getElementId(name: string): string {
+    if (name) {
+      const firstSymbol = name.split('')[0];
+      name = name.replace(firstSymbol, firstSymbol.toLowerCase());
+      return `${name}TableHeader`;
+    }
+  }
 }
