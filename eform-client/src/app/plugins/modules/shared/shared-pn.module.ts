@@ -11,11 +11,11 @@ import {
   SubheaderPnComponent,
 } from './components';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { LoaderInterceptor } from 'src/app/common/interceptors/loader-interceptor.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import {
   HttpErrorInterceptor,
   JwtInterceptor,
+  LoaderInterceptor,
 } from 'src/app/common/interceptors';
 
 @NgModule({
