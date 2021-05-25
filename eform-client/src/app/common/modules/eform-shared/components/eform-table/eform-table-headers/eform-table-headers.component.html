@@ -3,7 +3,9 @@
   <ng-container *ngFor="let header of tableHeaders">
     <ng-container *ngIf="header && header.sortable">
       <th
-        class="table-header-sortable"
+        class="table-header-sortable {{
+          header.name.toLowerCase() === 'id' ? 'text-uppercase' : ''
+        }} {{ stickyHeader ? 'sticky-top' : '' }}"
         table-header-sortable
         [currentSortName]="!sort ? currentSortName : sort.sort"
         (sortClick)="onSortClick($event)"
@@ -11,15 +13,12 @@
         [name]="header.name"
         [id]="header.elementId ? header.elementId : getElementId(header.name)"
         [visibleName]="header.visibleName"
-        style="{{
-          header.name.toLowerCase() === 'id' ? 'text-transform: uppercase' : ''
-        }}"
       ></th>
     </ng-container>
     <ng-container *ngIf="header && !header.sortable">
       <th
-        style="{{
-          header.name.toLowerCase() === 'id' ? 'text-transform: uppercase' : ''
+        class="{{ stickyHeader ? 'sticky-top' : '' }} {{
+          header.name.toLowerCase() === 'id' ? 'text-uppercase' : ''
         }}"
         scope="col"
       >

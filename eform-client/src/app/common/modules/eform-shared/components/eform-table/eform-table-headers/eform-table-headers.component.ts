@@ -21,6 +21,7 @@ export class EformTableHeadersComponent implements OnInit {
   @Output() sortChanged: EventEmitter<string> = new EventEmitter<string>();
   @Input() tableHeaders: TableHeaderElementModel[] = [];
   @Input() customCell: TemplateRef<any>;
+  @Input() stickyHeader = false;
   constructor() {}
 
   ngOnInit(): void {}
