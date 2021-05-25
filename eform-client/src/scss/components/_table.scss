@@ -12,3 +12,12 @@
   overflow: auto;
 }
 
+.table-with-sticky-headers {
+  table thead th.sticky-top {
+    background-color: var(--theme-background-color);
+    z-index: 1;
+  }
+  & {
+    height: 100vh;
+  }
+}

@@ -21,11 +21,20 @@ export class EformTableHeadersComponent implements OnInit {
   @Output() sortChanged: EventEmitter<string> = new EventEmitter<string>();
   @Input() tableHeaders: TableHeaderElementModel[] = [];
   @Input() customCell: TemplateRef<any>;
+  @Input() stickyHeader = false;
   constructor() {}
 
   ngOnInit(): void {}
 
   onSortClick(name: string) {
     this.sortChanged.emit(name);
+  }
+
+  getElementId(name: string): string {
+    if (name) {
+      const firstSymbol = name.split('')[0];
+      name = name.replace(firstSymbol, firstSymbol.toLowerCase());
+      return `${name}TableHeader`;
+    }
   }
 }

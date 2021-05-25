@@ -60,7 +60,7 @@ export class EformPaginationComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (!changes.pagination.firstChange) {
+    if (changes.pagination && !changes.pagination.firstChange) {
       if (this.pagination) {
         this.offset = this.pagination.offset;
         this.limit = this.pagination.pageSize;
