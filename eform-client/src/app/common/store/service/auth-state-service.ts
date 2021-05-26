@@ -24,6 +24,7 @@ export class AuthStateService {
   ) {}
 
   login(loginInfo: LoginRequestModel) {
+    console.log({ method: 'AuthStateService.login()', loginInfo });
     this.service.login(loginInfo).subscribe((response) => {
       if (response) {
         this.store.update(() => ({
@@ -66,6 +67,7 @@ export class AuthStateService {
       this.isRefreshing = true;
       this.service.refreshToken().subscribe((response) => {
         if (response) {
+          console.log({ method: 'AuthStateService.refreshToken()', response });
           this.service.obtainUserClaims().subscribe((userClaims) => {
             this.store.update((state) => ({
               auth: {
@@ -96,6 +98,10 @@ export class AuthStateService {
   }
 
   get bearerToken(): string {
+    console.log({
+      method: 'AuthStateService.bearerToken()',
+      accessToken: this.query.currentSetting.auth.accessToken,
+    });
     return 'Bearer ' + this.query.currentSetting.auth.accessToken;
   }
 
@@ -124,6 +130,7 @@ export class AuthStateService {
   }
 
   updateUserLocale(locale: string) {
+    console.log({ method: 'AuthStateService.updateUserLocale()', locale });
     this.store.update((state) => ({
       currentUser: {
         ...state.currentUser,
@@ -133,6 +140,11 @@ export class AuthStateService {
   }
 
   updateCurrentUserLocaleAndDarkTheme(locale: string, darkTheme: boolean) {
+    console.log({
+      method: 'AuthStateService.updateUserInfo()',
+      locale,
+      darkTheme,
+    });
     this.store.update((state) => ({
       currentUser: {
         ...state.currentUser,
@@ -142,16 +154,8 @@ export class AuthStateService {
     }));
   }
 
-  // updateUserDarkTheme(darkTheme: boolean) {
-  //   this.store.update((state) => ({
-  //     currentUser: {
-  //       ...state.currentUser,
-  //       darkTheme: darkTheme,
-  //     },
-  //   }));
-  // }
-
   updateUserInfo(userInfo: UserInfoModel) {
+    console.log({ method: 'AuthStateService.updateUserInfo()', userInfo });
     this.store.update((state) => ({
       currentUser: {
         ...state.currentUser,
