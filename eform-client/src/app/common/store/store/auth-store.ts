@@ -22,6 +22,7 @@ export interface AuthState {
 }
 
 export function createInitialState(): AuthState {
+  console.log('AuthState.createInitialState()');
   return {
     auth: {
       accessToken: '',
@@ -92,6 +93,13 @@ export function createInitialState(): AuthState {
 const authPersistStorage = persistState({
   include: ['auth'],
   key: 'mainStore',
+  preStorageUpdate(storeName, state: AuthState): AuthState {
+    console.log({ method: 'AuthStateService.preStorageUpdate()', state });
+    return {
+      currentUser: state.currentUser,
+      auth: state.auth,
+    };
+  },
 });
 
 @Injectable({ providedIn: 'root' })
@@ -99,6 +107,12 @@ const authPersistStorage = persistState({
 export class AuthStore extends Store<AuthState> {
   constructor() {
     super(createInitialState());
+  }
+
+  reset(): void {
+    console.log({ method: 'before AuthState.reset()', value: this.getValue() });
+    super.reset();
+    console.log({ method: 'after AuthState.reset()', value: this.getValue() });
   }
 }
 
