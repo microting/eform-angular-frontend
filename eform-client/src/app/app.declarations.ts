@@ -53,7 +53,7 @@ import {
   UserClaimsInterceptor,
 } from 'src/app/common/interceptors';
 import { GALLERY_CONFIG } from '@ngx-gallery/core';
-import { AuthStateService } from 'src/app/common/store';
+import { AppMenuStateService, AuthStateService } from 'src/app/common/store';
 import { persistProviders } from 'src/app/common/store/persist.config';
 import { BaseService } from 'src/app/common/services/base.service';
 // Guards
@@ -109,6 +109,7 @@ export let providers = [
     },
   },
   AuthStateService,
+  AppMenuStateService,
   // Helpers
   EventBrokerService,
   DatePipe,

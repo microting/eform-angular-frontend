@@ -5,15 +5,13 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { EventBrokerService, PluginClaimsHelper } from 'src/app/common/helpers';
-import { UserMenuModel } from 'src/app/common/models';
-import { AppMenuService } from 'src/app/common/services/settings';
-import { AdminService, LocaleService } from 'src/app/common/services';
-import { AuthService } from 'src/app/common/services/auth/auth.service';
-import { UserSettingsService } from 'src/app/common/services/auth/user-settings.service';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
-import { Subscription } from 'rxjs';
-import { AuthStateService } from 'src/app/common/store';
+import {
+  AppMenuQuery,
+  AppMenuStateService,
+  AuthStateService,
+} from 'src/app/common/store';
+import { AdminService, AuthService } from 'src/app/common/services';
 
 @AutoUnsubscribe()
 @Component({
@@ -24,47 +22,23 @@ import { AuthStateService } from 'src/app/common/store';
 export class NavigationComponent implements OnInit, OnDestroy {
   @ViewChild('navigationMenu', { static: true }) menuElement: ElementRef;
   private _menuFlag = false;
-  appMenu: UserMenuModel = new UserMenuModel();
-  brokerListener: any;
-  private getAppMenu$: Subscription;
 
   constructor(
     private authService: AuthService,
     private adminService: AdminService,
-    private userSettingsService: UserSettingsService,
-    private localeService: LocaleService,
-    private eventBrokerService: EventBrokerService,
-    private appMenuService: AppMenuService,
-    private authStateService: AuthStateService
-  ) {
-    this.brokerListener = eventBrokerService.listen(
-      'get-navigation-menu',
-      (data: { takeFromCache: boolean }) => {
-        this.getNavigationMenu(data);
-      }
-    );
-  }
+    private appMenuService: AppMenuStateService,
+    private authStateService: AuthStateService,
+    public appMenuQuery: AppMenuQuery
+  ) {}
 
   ngOnDestroy() {}
 
   ngOnInit() {
-    this.getAppMenu$ = this.appMenuService.userMenuBehaviorSubject.subscribe(
-      (data) => {
-        this.appMenu = data;
-      }
-    );
     if (this.authStateService.isAuth) {
       this.adminService.getCurrentUserInfo().subscribe((result) => {
         this.authStateService.updateUserInfo(result);
-        this.initLocaleAsync().then(() => {
-          this.getNavigationMenu({ takeFromCache: true });
-        });
       });
     }
-  }
-
-  async initLocaleAsync() {
-    await this.localeService.initLocale();
   }
 
   checkGuards(guards: string[]) {
@@ -72,8 +46,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
       return true;
     }
 
-    const currentRole = this.authStateService.currentRole;
-    if (guards.includes(currentRole)) {
+    if (guards.includes(this.authStateService.currentRole)) {
       return true;
     }
 
@@ -85,9 +58,5 @@ export class NavigationComponent implements OnInit, OnDestroy {
       ? this.menuElement.nativeElement.classList.remove('show')
       : this.menuElement.nativeElement.classList.add('show');
     this._menuFlag = !this._menuFlag;
-  }
-
-  getNavigationMenu(takeFromCacheObject: { takeFromCache: boolean }) {
-    this.appMenuService.getAppMenu(takeFromCacheObject.takeFromCache);
   }
 }

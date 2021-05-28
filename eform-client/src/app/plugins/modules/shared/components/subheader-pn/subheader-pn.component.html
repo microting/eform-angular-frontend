@@ -1,8 +1,8 @@
 <div class="d-flex heading-bg">
   <div class="mr-auto p-3">
     <h1 #heading>
-      {{title}}
-      <small *ngIf="subtitle" style="font-size: 1rem">({{subtitle}})</small>
+      {{ title | translate }}
+      <small *ngIf="subtitle" style="font-size: 1rem">({{ subtitle }})</small>
     </h1>
   </div>
   <ng-content></ng-content>
