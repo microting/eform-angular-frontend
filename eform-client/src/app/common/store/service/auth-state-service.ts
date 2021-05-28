@@ -27,8 +27,9 @@ export class AuthStateService {
     console.log({ method: 'AuthStateService.login()', loginInfo });
     this.service.login(loginInfo).subscribe((response) => {
       if (response) {
-        this.store.update(() => ({
-          auth: {
+        this.store.update((state) => ({
+          ...state,
+          token: {
             accessToken: response.access_token,
             tokenType: response.token_type,
             expiresIn: response.expires_in,
@@ -38,6 +39,7 @@ export class AuthStateService {
         this.userSettings.getUserSettings().subscribe((data) => {
           this.service.obtainUserClaims().subscribe((userClaims) => {
             this.store.update((state) => ({
+              ...state,
               currentUser: {
                 ...state.currentUser,
                 darkTheme: data.model.darkTheme,
@@ -70,7 +72,8 @@ export class AuthStateService {
           console.log({ method: 'AuthStateService.refreshToken()', response });
           this.service.obtainUserClaims().subscribe((userClaims) => {
             this.store.update((state) => ({
-              auth: {
+              ...state,
+              token: {
                 accessToken: response.model.access_token,
                 tokenType: response.model.token_type,
                 expiresIn: response.model.expires_in,
@@ -94,23 +97,23 @@ export class AuthStateService {
   }
 
   get isAuth(): boolean {
-    return !!this.query.currentSetting.auth.accessToken;
+    return !!this.query.currentSetting.token.accessToken;
   }
 
   get bearerToken(): string {
     console.log({
       method: 'AuthStateService.bearerToken()',
-      accessToken: this.query.currentSetting.auth.accessToken,
+      accessToken: this.query.currentSetting.token.accessToken,
     });
-    return 'Bearer ' + this.query.currentSetting.auth.accessToken;
+    return 'Bearer ' + this.query.currentSetting.token.accessToken;
   }
 
   get isAdmin(): boolean {
-    return this.query.currentSetting.auth.role === 'admin';
+    return this.query.currentSetting.token.role === 'admin';
   }
 
   get currentRole(): string {
-    return this.query.currentSetting.auth.role;
+    return this.query.currentSetting.token.role;
   }
 
   get isDarkThemeAsync(): Observable<boolean> {
@@ -132,6 +135,7 @@ export class AuthStateService {
   updateUserLocale(locale: string) {
     console.log({ method: 'AuthStateService.updateUserLocale()', locale });
     this.store.update((state) => ({
+      ...state,
       currentUser: {
         ...state.currentUser,
         locale: locale,
@@ -146,6 +150,7 @@ export class AuthStateService {
       darkTheme,
     });
     this.store.update((state) => ({
+      ...state,
       currentUser: {
         ...state.currentUser,
         locale: locale,
@@ -157,6 +162,7 @@ export class AuthStateService {
   updateUserInfo(userInfo: UserInfoModel) {
     console.log({ method: 'AuthStateService.updateUserInfo()', userInfo });
     this.store.update((state) => ({
+      ...state,
       currentUser: {
         ...state.currentUser,
         firstName: userInfo.firstName,

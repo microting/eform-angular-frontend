@@ -13,7 +13,7 @@ export class AuthQuery extends Query<AuthState> {
   }
 
   get bearerToken() {
-    return `Bearer ${this.getValue().auth.accessToken}`;
+    return `Bearer ${this.getValue().token.accessToken}`;
   }
 
   selectDarkTheme$ = this.select((state) => state.currentUser.darkTheme);
@@ -23,7 +23,7 @@ export class AuthQuery extends Query<AuthState> {
   );
 
   get isAuth() {
-    return !!this.getValue().auth.accessToken;
+    return !!this.getValue().token.accessToken;
   }
 
   get currentUserFullName(): string {

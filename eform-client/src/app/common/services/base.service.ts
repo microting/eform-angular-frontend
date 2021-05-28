@@ -114,8 +114,8 @@ export class BaseService {
     }
     const user: AuthState = JSON.parse(localStorage.getItem('mainStore'));
     // check user
-    if (user && user.auth.accessToken) {
-      headers.append('Authorization', 'Bearer ' + user.auth.accessToken);
+    if (user && user.token.accessToken) {
+      headers.append('Authorization', 'Bearer ' + user.token.accessToken);
     }
     // add localization
     return headers;
@@ -139,8 +139,8 @@ export class BaseService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const user: AuthState = JSON.parse(localStorage.getItem('mainStore'));
     // check user
-    if (user && user.auth.accessToken) {
-      headers.append('Authorization', 'Bearer ' + user.auth.accessToken);
+    if (user && user.token.accessToken) {
+      headers.append('Authorization', 'Bearer ' + user.token.accessToken);
     }
     return headers;
   }
