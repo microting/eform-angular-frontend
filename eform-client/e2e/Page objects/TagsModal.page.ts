@@ -11,54 +11,54 @@ export class TagsModalPage extends Page {
 
   // Create page elements
   public get newTagBtn() {
-    $('#newTagBtn').waitForDisplayed({ timeout: 20000 });
+    $('#newTagBtn').waitForDisplayed({ timeout: 40000 });
     return $('#newTagBtn');
   }
 
   public get newTagSaveBtn() {
-    $('#newTagSaveBtn').waitForDisplayed({ timeout: 20000 });
+    $('#newTagSaveBtn').waitForDisplayed({ timeout: 40000 });
     return $('#newTagSaveBtn');
   }
 
   public get newTagSaveCancelBtn() {
-    $('#newTagSaveCancelBtn').waitForDisplayed({ timeout: 20000 });
+    $('#newTagSaveCancelBtn').waitForDisplayed({ timeout: 40000 });
     return $('#newTagSaveCancelBtn');
   }
 
   public get newTagNameInput() {
-    $('#newTagName').waitForDisplayed({ timeout: 20000 });
+    $('#newTagName').waitForDisplayed({ timeout: 40000 });
     return $('#newTagName');
   }
 
   public get editTagNameInput() {
-    $('#tagNameEdit').waitForDisplayed({ timeout: 20000 });
+    $('#tagNameEdit').waitForDisplayed({ timeout: 40000 });
     return $('#tagNameEdit');
   }
 
   public get tagEditSaveBtn() {
-    $('#tagEditSaveBtn').waitForDisplayed({ timeout: 20000 });
+    $('#tagEditSaveBtn').waitForDisplayed({ timeout: 40000 });
     return $('#tagEditSaveBtn');
   }
 
   public get tagEditSaveCancelBtn() {
-    $('#tagEditSaveCancelBtn').waitForDisplayed({ timeout: 20000 });
+    $('#tagEditSaveCancelBtn').waitForDisplayed({ timeout: 40000 });
     return $('#tagEditSaveCancelBtn');
   }
 
   public get tagDeleteSaveBtn() {
-    $('#tagDeleteSaveBtn').waitForDisplayed({ timeout: 20000 });
+    $('#tagDeleteSaveBtn').waitForDisplayed({ timeout: 40000 });
     return $('#tagDeleteSaveBtn');
   }
 
   public get tagDeleteSaveCancelBtn() {
-    $('#tagDeleteSaveCancelBtn').waitForDisplayed({ timeout: 20000 });
+    $('#tagDeleteSaveCancelBtn').waitForDisplayed({ timeout: 40000 });
     return $('#tagDeleteSaveCancelBtn');
   }
 
   public get tagsModalCloseBtn() {
     const ele = $('#tagsModalCloseBtn');
-    ele.waitForDisplayed({ timeout: 20000 });
-    ele.waitForClickable({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
@@ -68,7 +68,7 @@ export class TagsModalPage extends Page {
     this.newTagNameInput.setValue(tagName);
     this.newTagSaveBtn.click();
     $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
-    $('#newTagBtn').waitForDisplayed({ timeout: 20000 });
+    $('#newTagBtn').waitForDisplayed({ timeout: 40000 });
   }
 
   public cancelCreateTag(tagName: string) {
@@ -76,38 +76,38 @@ export class TagsModalPage extends Page {
     $('#newTagName').waitForDisplayed({ timeout: 90000 });
     this.newTagNameInput.setValue(tagName);
     this.newTagSaveCancelBtn.click();
-    $('#newTagBtn').waitForDisplayed({ timeout: 20000 });
+    $('#newTagBtn').waitForDisplayed({ timeout: 40000 });
   }
 
   public editTag(rowNumber: number, name: string) {
-    $('#newTagBtn').waitForDisplayed({ timeout: 20000 });
+    $('#newTagBtn').waitForDisplayed({ timeout: 40000 });
     const rowObject = new TagRowObject(rowNumber);
     rowObject.editTagClick();
     this.editTagNameInput.setValue(name);
     this.tagEditSaveBtn.click();
     $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
-    $('#newTagBtn').waitForDisplayed({ timeout: 20000 });
+    $('#newTagBtn').waitForDisplayed({ timeout: 40000 });
     $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
   }
 
   public cancelEditTag(rowNumber: number, name: string) {
-    $('#newTagBtn').waitForDisplayed({ timeout: 20000 });
+    $('#newTagBtn').waitForDisplayed({ timeout: 40000 });
     const rowObject = new TagRowObject(rowNumber);
     rowObject.editTagClick();
     this.editTagNameInput.setValue(name);
     this.tagEditSaveCancelBtn.click();
-    $('#newTagBtn').waitForDisplayed({ timeout: 20000 });
+    $('#newTagBtn').waitForDisplayed({ timeout: 40000 });
   }
 
   public deleteTag(rowNumber: number) {
-    $('#newTagBtn').waitForDisplayed({ timeout: 20000 });
+    $('#newTagBtn').waitForDisplayed({ timeout: 40000 });
     const rowObject = new TagRowObject(rowNumber);
     rowObject.deleteTag();
     $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
   }
 
   public cancelDeleteTag(rowNumber: number) {
-    $('#newTagBtn').waitForDisplayed({ timeout: 20000 });
+    $('#newTagBtn').waitForDisplayed({ timeout: 40000 });
     const rowObject = new TagRowObject(rowNumber);
     rowObject.deleteTag(true);
     this.tagDeleteSaveCancelBtn.click();
@@ -155,6 +155,6 @@ export class TagRowObject {
     } else {
       tagsModalPage.tagDeleteSaveBtn.click();
     }
-    tagsModalPage.tagsModalCloseBtn.waitForClickable({ timeout: 20000 });
+    tagsModalPage.tagsModalCloseBtn.waitForClickable({ timeout: 40000 });
   }
 }

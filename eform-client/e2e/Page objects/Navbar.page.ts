@@ -1,123 +1,123 @@
 export class Navbar {
   public get header() {
     const ele = $(`#header`);
-    ele.waitForDisplayed({ timeout: 20000 });
-    // ele.waitForClickable({timeout: 20000});
+    ele.waitForDisplayed({ timeout: 40000 });
+    // ele.waitForClickable({timeout: 40000});
     return ele;
   }
 
   public get applicationSettingsBtn() {
     const ele = $(`#application-settings`);
-    ele.waitForDisplayed({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
   public get signOutDropdown() {
     const ele = $(`#sign-out-dropdown`);
-    ele.waitForDisplayed({ timeout: 20000 });
-    ele.waitForClickable({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
   public get advancedBtn() {
     const ele = $(`#advanced`);
-    ele.waitForDisplayed({ timeout: 20000 });
-    ele.waitForClickable({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
   public get logoutBtn() {
     const ele = $(`#sign-out`);
-    ele.waitForDisplayed({ timeout: 20000 });
-    ele.waitForClickable({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
   public get settingsBtn() {
     const ele = $(`#settings`);
-    ele.waitForDisplayed({ timeout: 20000 });
-    // ele.waitForClickable({timeout: 20000});
+    ele.waitForDisplayed({ timeout: 40000 });
+    // ele.waitForClickable({timeout: 40000});
     return ele;
   }
 
   public get changePasswordBtn() {
     const ele = $(`#change-password`);
-    ele.waitForDisplayed({ timeout: 20000 });
-    // ele.waitForClickable({timeout: 20000});
+    ele.waitForDisplayed({ timeout: 40000 });
+    // ele.waitForClickable({timeout: 40000});
     return ele;
   }
 
   public get userAdministrationBtn() {
     const ele = $(`#user-management-menu`);
-    ele.waitForDisplayed({ timeout: 20000 });
-    ele.waitForClickable({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
   public get workersBtn() {
     const ele = this.header.$(`#workers`);
-    ele.waitForDisplayed({ timeout: 20000 });
-    // ele.waitForClickable({timeout: 20000});
+    ele.waitForDisplayed({ timeout: 40000 });
+    // ele.waitForClickable({timeout: 40000});
     return ele;
   }
 
   public get sitesBtn() {
     const ele = this.header.$(`#sites`);
-    ele.waitForDisplayed({ timeout: 20000 });
-    // ele.waitForClickable({timeout: 20000});
+    ele.waitForDisplayed({ timeout: 40000 });
+    // ele.waitForClickable({timeout: 40000});
     return ele;
   }
 
   public get foldersBtn() {
     const ele = this.header.$(`#folders`);
-    ele.waitForDisplayed({ timeout: 20000 });
-    // ele.waitForClickable({timeout: 20000});
+    ele.waitForDisplayed({ timeout: 40000 });
+    // ele.waitForClickable({timeout: 40000});
     return ele;
   }
 
   public get pluginsBtn() {
     const ele = this.header.$(`#plugins-settings`);
-    ele.waitForDisplayed({ timeout: 20000 });
-    // ele.waitForClickable({timeout: 20000});
+    ele.waitForDisplayed({ timeout: 40000 });
+    // ele.waitForClickable({timeout: 40000});
     return ele;
   }
 
   public get menuEditorBtn() {
     const ele = $(`#menu-editor`);
-    ele.waitForDisplayed({ timeout: 20000 });
-    // ele.waitForClickable({timeout: 20000});
+    ele.waitForDisplayed({ timeout: 40000 });
+    // ele.waitForClickable({timeout: 40000});
     return ele;
   }
 
   public get securityBtn() {
     const ele = $(`#security`);
-    ele.waitForDisplayed({ timeout: 20000 });
-    // ele.waitForClickable({timeout: 20000});
+    ele.waitForDisplayed({ timeout: 40000 });
+    // ele.waitForClickable({timeout: 40000});
     return ele;
   }
 
   public get deviceUsersBtn() {
     const ele = this.header.$(`#device-users`);
-    ele.waitForDisplayed({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
   public get entitySearchBtn() {
     const ele = this.header.$(`#search`);
-    ele.waitForDisplayed({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
   public get entitySelectBtn() {
     const ele = this.header.$(`#selectable-list`);
-    ele.waitForDisplayed({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
   public get myEformsBtn() {
     const ele = this.header.$(`#my-eforms`);
-    ele.waitForDisplayed({ timeout: 20000 });
-    ele.waitForClickable({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
@@ -125,7 +125,7 @@ export class Navbar {
     const ele = $(
       `//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), '${menuItem}')]`
     );
-    ele.waitForDisplayed({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
     ele.click();
   }
 
@@ -150,8 +150,8 @@ export class Navbar {
     const ele = $(
       `//*[@id="header"]//*[contains(text(), '${headerMenuItem}')]`
     );
-    ele.waitForDisplayed({ timeout: 20000 });
-    ele.waitForClickable({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
@@ -220,8 +220,8 @@ export class Navbar {
 
   public goToFolderPage() {
     this.advancedDropdownClick();
-    this.foldersBtn.waitForDisplayed({ timeout: 20000 });
-    this.foldersBtn.waitForClickable({ timeout: 20000 });
+    this.foldersBtn.waitForDisplayed({ timeout: 40000 });
+    this.foldersBtn.waitForClickable({ timeout: 40000 });
     this.foldersBtn.click();
     $('#spinner-animation').waitForDisplayed({ timeout: 30000, reverse: true });
   }

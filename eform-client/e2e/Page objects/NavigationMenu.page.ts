@@ -16,7 +16,7 @@ class NavigationMenuPage {
   }
 
   public get editItemSaveBtn() {
-    $('#editItemSaveBtn').waitForClickable({ timeout: 20000 });
+    $('#editItemSaveBtn').waitForClickable({ timeout: 40000 });
     return $('#editItemSaveBtn');
   }
 
@@ -56,7 +56,7 @@ class NavigationMenuPage {
     this.dropdownBodyChilds(data.indexDropdownInMenu)
       [data.indexChildDropdown].$('#editBtn')
       .click();
-    $('#editMenuEntry').waitForDisplayed({ timeout: 20000 });
+    $('#editMenuEntry').waitForDisplayed({ timeout: 40000 });
     data.translations_array.forEach((translation, i) =>
       this.editItemTranslation(
         data.indexDropdownInMenu,
@@ -136,7 +136,7 @@ class NavigationMenuPage {
   public clickSaveMenuBtn() {
     const navigationMenuSaveBtn = $('#navigationMenuSaveBtn');
     navigationMenuSaveBtn.scrollIntoView();
-    navigationMenuSaveBtn.waitForClickable({ timeout: 20000 });
+    navigationMenuSaveBtn.waitForClickable({ timeout: 40000 });
     navigationMenuSaveBtn.click();
     $('#spinner-animation').waitForDisplayed({ timeout: 50000, reverse: true });
   }
@@ -154,20 +154,20 @@ class NavigationMenuPage {
     const ele = $(
       `#editItemTranslation${firstLevelIndex}_${secondLevelIndex}_${translationIndex}`
     );
-    ele.waitForDisplayed({ timeout: 20000 });
-    ele.waitForClickable({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
   public resetMenu() {
     const resetBtn = $('#resetBtn');
     resetBtn.scrollIntoView();
-    resetBtn.waitForClickable({ timeout: 20000 });
+    resetBtn.waitForClickable({ timeout: 40000 });
     resetBtn.click();
-    $('#resetModal').waitForDisplayed({ timeout: 20000 });
+    $('#resetModal').waitForDisplayed({ timeout: 40000 });
     const deleteWorkerDeleteBtn = $('#deleteWorkerDeleteBtn');
-    deleteWorkerDeleteBtn.waitForDisplayed({ timeout: 20000 });
-    deleteWorkerDeleteBtn.waitForClickable({ timeout: 20000 });
+    deleteWorkerDeleteBtn.waitForDisplayed({ timeout: 40000 });
+    deleteWorkerDeleteBtn.waitForClickable({ timeout: 40000 });
     deleteWorkerDeleteBtn.click();
     $('#spinner-animation').waitForDisplayed({ timeout: 50000, reverse: true });
   }
@@ -175,11 +175,11 @@ class NavigationMenuPage {
   public deleteElementFromMenuItems(indexElementInMenu) {
     const deleteBtn = this.menuItemsChilds[indexElementInMenu].$('#deleteBtn');
     deleteBtn.scrollIntoView();
-    deleteBtn.waitForClickable({ timeout: 20000 });
+    deleteBtn.waitForClickable({ timeout: 40000 });
     deleteBtn.click();
     const menuItemDeleteBtn = $('#menuItemDeleteBtn');
-    menuItemDeleteBtn.waitForDisplayed({ timeout: 20000 });
-    menuItemDeleteBtn.waitForClickable({ timeout: 20000 });
+    menuItemDeleteBtn.waitForDisplayed({ timeout: 40000 });
+    menuItemDeleteBtn.waitForClickable({ timeout: 40000 });
     menuItemDeleteBtn.click();
   }
 
@@ -188,11 +188,11 @@ class NavigationMenuPage {
       '#deleteBtn'
     );
     deleteBtn.scrollIntoView();
-    deleteBtn.waitForClickable({ timeout: 20000 });
+    deleteBtn.waitForClickable({ timeout: 40000 });
     deleteBtn.click();
     const menuItemDeleteBtn = $('#menuItemDeleteBtn');
-    menuItemDeleteBtn.waitForDisplayed({ timeout: 20000 });
-    menuItemDeleteBtn.waitForClickable({ timeout: 20000 });
+    menuItemDeleteBtn.waitForDisplayed({ timeout: 40000 });
+    menuItemDeleteBtn.waitForClickable({ timeout: 40000 });
     menuItemDeleteBtn.click();
     this.collapseMenuItemDropdown(indexDropdown);
   }
@@ -226,7 +226,7 @@ class NavigationMenuPage {
   public selectCustomLink() {
     // $('#customLinkCreateBtn').waitForExist({timeout: 2000, reverse: true});
     $('#addCustomLink').click();
-    $('#newLinkModal').waitForDisplayed({ timeout: 20000 });
+    $('#newLinkModal').waitForDisplayed({ timeout: 40000 });
   }
 
   public selectCustomDropdown() {
@@ -240,7 +240,7 @@ class NavigationMenuPage {
     translations: string[];
   }) {
     this.selectCustomLink();
-    $('#newLinkModal').waitForDisplayed({ timeout: 20000 });
+    $('#newLinkModal').waitForDisplayed({ timeout: 40000 });
     if (data.securityGroups.length > 0) {
       data.securityGroups.forEach((securityGroup) =>
         this.setSecurityGroupCustomLinkSelector(securityGroup)
@@ -261,7 +261,7 @@ class NavigationMenuPage {
     translations: string[];
   }) {
     this.selectCustomDropdown();
-    $('#newDropdownModal').waitForDisplayed({ timeout: 20000 });
+    $('#newDropdownModal').waitForDisplayed({ timeout: 40000 });
     if (data.securityGroups.length > 0) {
       data.securityGroups.forEach((securityGroup) =>
         this.setSecurityGroupCustomDropdownSelector(securityGroup)
@@ -281,7 +281,7 @@ class NavigationMenuPage {
     indexInCreated: number
   ) {
     this.openOnEditCreatedMenuItem(indexInCreated);
-    // $('#editMenuEntry').waitForDisplayed({timeout: 20000});
+    // $('#editMenuEntry').waitForDisplayed({timeout: 40000});
     if (data.securityGroups.length > 0) {
       this.editSecurityGroupsValue(data.securityGroups);
     }

@@ -35,10 +35,10 @@ describe('Folder page', function () {
   });
   it('Should change description', function () {
     const newDescription = generateRandmString();
-    $('#folderTreeName').waitForDisplayed({ timeout: 20000 });
+    $('#folderTreeName').waitForDisplayed({ timeout: 40000 });
     const lastFolderBeforeEdit = foldersPage.getFolderByName(name);
     lastFolderBeforeEdit.editFolder(null, newDescription);
-    foldersPage.newFolderBtn.waitForDisplayed({ timeout: 20000 });
+    foldersPage.newFolderBtn.waitForDisplayed({ timeout: 40000 });
     const folder = foldersPage.getFolderByName(name);
     expect(
       folder.name,
@@ -51,7 +51,7 @@ describe('Folder page', function () {
   });
   it('Should not change name and description if cancel was clicked', function () {
     const folderTreeName = $('#folderTreeName');
-    folderTreeName.waitForDisplayed({ timeout: 20000 });
+    folderTreeName.waitForDisplayed({ timeout: 40000 });
     const newName = generateRandmString();
     const newDescription = generateRandmString();
     const lastFolderPageBeforeEdit = foldersPage.getFolderByName(name);

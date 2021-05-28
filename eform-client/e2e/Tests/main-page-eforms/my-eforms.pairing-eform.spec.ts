@@ -1,7 +1,9 @@
 import loginPage from '../../Page objects/Login.page';
 import myEformsPage from '../../Page objects/MyEforms.page';
-import deviceUsersPage, {DeviceUsersRowObject} from '../../Page objects/DeviceUsers.page';
-import foldersPage, {FoldersRowObject} from '../../Page objects/Folders.page';
+import deviceUsersPage, {
+  DeviceUsersRowObject,
+} from '../../Page objects/DeviceUsers.page';
+import foldersPage, { FoldersRowObject } from '../../Page objects/Folders.page';
 
 const expect = require('chai').expect;
 const users = new Array<DeviceUsersRowObject>();
@@ -27,22 +29,27 @@ describe('Main page', function () {
   it('should pair several device users', function () {
     myEformsPage.idSortBtn.click();
     const spinnerAnimation = $('#spinner-animation');
-    spinnerAnimation.waitForDisplayed({timeout: 20000, reverse: true});
+    spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
     browser.pause(1000);
     myEformsPage.getFirstMyEformsRowObj().pair(folders[0], users);
     myEformsPage.getFirstMyEformsRowObj().editPairEformBtn.click();
-    spinnerAnimation.waitForDisplayed({timeout: 20000, reverse: true});
-    myEformsPage.cancelParingBtn.waitForDisplayed({timeout: 20000});
+    spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
+    myEformsPage.cancelParingBtn.waitForDisplayed({ timeout: 40000 });
     browser.pause(1000);
-    expect($('tree-node .node-content-wrapper-active').getText(),
-      'Wrong folder selected')
-      .contain(`${folders[0].name}`);
+    expect(
+      $('tree-node .node-content-wrapper-active').getText(),
+      'Wrong folder selected'
+    ).contain(`${folders[0].name}`);
     const siteIds = $$('#microtingId');
     for (let i = 0; i < siteIds.length; i++) {
-      const index = users.findIndex(user => user.siteId === +siteIds[i].getText());
+      const index = users.findIndex(
+        (user) => user.siteId === +siteIds[i].getText()
+      );
       if (index !== -1) {
-        expect($(`#checkbox${users[index].siteId}`).getValue(),
-          `User ${users[index].siteId} not paired`).eq('true');
+        expect(
+          $(`#checkbox${users[index].siteId}`).getValue(),
+          `User ${users[index].siteId} not paired`
+        ).eq('true');
       }
     }
     myEformsPage.cancelParingBtn.click();
@@ -52,18 +59,22 @@ describe('Main page', function () {
     myEformsPage.getFirstMyEformsRowObj().unPair([users[1]]);
     const spinnerAnimation = $('#spinner-animation');
     myEformsPage.getFirstMyEformsRowObj().editPairEformBtn.click();
-    spinnerAnimation.waitForDisplayed({timeout: 20000, reverse: true});
-    $('#microtingId').waitForDisplayed({timeout: 20000});
+    spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
+    $('#microtingId').waitForDisplayed({ timeout: 40000 });
     browser.pause(1000);
     const siteIds = $$('#microtingId');
     for (let i = 0; i < siteIds.length; i++) {
       if (users[1].siteId === +siteIds[i].getText()) {
-        expect($(`#checkbox${users[1].siteId}`).getValue(),
-          `User ${users[1].siteId} paired`).eq('false');
+        expect(
+          $(`#checkbox${users[1].siteId}`).getValue(),
+          `User ${users[1].siteId} paired`
+        ).eq('false');
       }
       if (users[0].siteId === +siteIds[i].getText()) {
-        expect($(`#checkbox${users[0].siteId}`).getValue(),
-          `User ${users[0].siteId} not paired`).eq('true');
+        expect(
+          $(`#checkbox${users[0].siteId}`).getValue(),
+          `User ${users[0].siteId} not paired`
+        ).eq('true');
       }
     }
     myEformsPage.cancelParingBtn.click();

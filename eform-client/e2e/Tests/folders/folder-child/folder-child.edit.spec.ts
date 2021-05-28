@@ -12,7 +12,7 @@ describe('Create folder', function () {
     loginPage.open('/');
     loginPage.login();
     myEformsPage.Navbar.goToFolderPage();
-    $('#newFolderBtn').waitForDisplayed({ timeout: 20000 });
+    $('#newFolderBtn').waitForDisplayed({ timeout: 40000 });
     const description = generateRandmString();
     foldersPage.createNewFolder(nameFolder, description);
   });
