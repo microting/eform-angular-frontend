@@ -1,0 +1,40 @@
+<form [formGroup]="generateForm">
+  <div class="row pl-1">
+    <div class="col-md-3">
+      <div class="md-form" [owlDateTimeTrigger]="dateRangePicker">
+        <i class="material-icons prefix"> calendar_today </i>
+        <input
+          mdbInput
+          formControlName="dateRange"
+          name="dateRange"
+          required
+          [(ngModel)]="range"
+          type="text"
+          [owlDateTime]="dateRangePicker"
+          [selectMode]="'range'"
+          class="form-control input-sm"
+          id="dateFormInput"
+        />
+        <label for="dateFormInput">{{
+          'Selected date range' | translate
+        }}</label>
+      </div>
+    </div>
+    <div class="col-md-3 text-center pt-3">
+      <button
+        mdbBtn
+        class="btn-success btn-small-height"
+        [disabled]="generateForm.invalid"
+        (click)="onSave()"
+      >
+        {{ 'Download' | translate }} Excel
+      </button>
+    </div>
+  </div>
+</form>
+
+<owl-date-time
+  [pickerType]="'calendar'"
+  [firstDayOfWeek]="1"
+  #dateRangePicker
+></owl-date-time>

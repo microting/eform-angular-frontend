@@ -1,0 +1,25 @@
+<eform-subheader>
+  <button
+    mdbBtn
+    *ngIf="authStateService.isAdmin"
+    id="reportEditHeadersBtn"
+    class="btn-success btn-small-height"
+    (click)="showHeadersEditModal()"
+  >
+    {{ 'Edit headers' | translate }}
+  </button>
+</eform-subheader>
+
+<div class="container-fluid">
+  <app-eform-excel-report-header
+    [range]="range"
+    [templateId]="selectedTemplateId"
+    (downloadReport)="onDownloadReport($event)"
+  >
+  </app-eform-excel-report-header>
+</div>
+
+<app-eform-excel-report-header-editor
+  (updateReportHeaders)="onUpdateReportHeaders($event)"
+  #headerEditorModal
+></app-eform-excel-report-header-editor>

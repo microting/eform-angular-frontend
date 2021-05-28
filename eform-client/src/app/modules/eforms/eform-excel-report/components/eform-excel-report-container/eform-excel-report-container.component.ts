@@ -1,46 +1,40 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import {
-  CommonDictionaryModel,
-  EformDocxReportGenerateModel,
-  EformDocxReportHeadersModel,
-  EformDocxReportModel,
-  SharedTagModel,
-} from 'src/app/common/models';
-import { EmailRecipientsService } from 'src/app/common/services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { parseISO } from 'date-fns';
 import { saveAs } from 'file-saver';
-import { EformDocxReportService } from 'src/app/common/services/eform';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { AuthStateService } from 'src/app/common/store';
+import {
+  EformDocxReportService,
+  EFormService,
+  EmailRecipientsService,
+} from 'src/app/common/services';
+import {
+  EformDocxReportGenerateModel,
+  EformDocxReportHeadersModel,
+  SharedTagModel,
+} from 'src/app/common/models';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-eform-docx-report-container',
-  templateUrl: './eform-docx-report-container.component.html',
-  styleUrls: ['./eform-docx-report-container.component.scss'],
+  selector: 'app-eform-excel-report-container',
+  templateUrl: './eform-excel-report-container.component.html',
+  styleUrls: ['./eform-excel-report-container.component.scss'],
 })
-export class EformDocxReportContainerComponent implements OnInit, OnDestroy {
+export class EformExcelReportContainerComponent implements OnInit, OnDestroy {
   @ViewChild('headerEditorModal', { static: false }) headerEditorModal;
-  reportModel: EformDocxReportModel = new EformDocxReportModel();
   reportHeadersModel: EformDocxReportHeadersModel = new EformDocxReportHeadersModel();
   generateReportSub$: Subscription;
-  downloadReportSub$: Subscription;
   dateFrom: any;
   dateTo: any;
   range: Date[] = [];
-  availableEmailRecipients: CommonDictionaryModel[] = [];
   availableTags: SharedTagModel[] = [];
   selectedTemplateId: number;
   activatedRouteSub$: Subscription;
   updateHeadersSub$: Subscription;
   reportHeadersSub$: Subscription;
-
-  get userRole() {
-    return this.authStateService.currentRole;
-  }
 
   constructor(
     private emailRecipientsService: EmailRecipientsService,
@@ -48,13 +42,14 @@ export class EformDocxReportContainerComponent implements OnInit, OnDestroy {
     private reportService: EformDocxReportService,
     private toastrService: ToastrService,
     private router: Router,
-    private authStateService: AuthStateService
+    public authStateService: AuthStateService,
+    private eFormService: EFormService
   ) {
     this.activatedRouteSub$ = this.activateRoute.params.subscribe((params) => {
       // Required to reload component
       if (this.selectedTemplateId) {
         this.router.navigate(['/']).then(() => {
-          this.router.navigate(['/docx-report/' + +params['eformId']]);
+          this.router.navigate(['/excel-report/' + +params['eformId']]);
         });
       }
 
@@ -71,7 +66,7 @@ export class EformDocxReportContainerComponent implements OnInit, OnDestroy {
         templateId: +params['eformId'],
       };
       if (model.dateFrom) {
-        this.onGenerateReport(model);
+        this.onDownloadReport(model);
       }
     });
   }
@@ -92,29 +87,13 @@ export class EformDocxReportContainerComponent implements OnInit, OnDestroy {
     this.headerEditorModal.show(this.reportHeadersModel);
   }
 
-  onGenerateReport(model: EformDocxReportGenerateModel) {
-    this.dateFrom = model.dateFrom;
-    this.dateTo = model.dateTo;
-    this.generateReportSub$ = this.reportService
-      .generateReport(model)
-      .subscribe((data) => {
-        if (data && data.success) {
-          this.reportModel = data.model;
-        }
-      });
-  }
-
   onDownloadReport(model: EformDocxReportGenerateModel) {
-    this.downloadReportSub$ = this.reportService
-      .downloadReport(model)
-      .subscribe(
-        (data) => {
-          saveAs(data, model.dateFrom + '_' + model.dateTo + '_report.docx');
-        },
-        (error) => {
-          this.toastrService.error('Error downloading report');
-        }
-      );
+    this.generateReportSub$ = this.eFormService
+      .downloadEformExcel(model)
+      .subscribe((data) => {
+        const blob = new Blob([data]);
+        saveAs(blob, `template_${this.selectedTemplateId}.xlsx`);
+      });
   }
 
   onUpdateReportHeaders(model: EformDocxReportHeadersModel) {

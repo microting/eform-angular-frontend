@@ -32,7 +32,6 @@ export class EformsPageComponent implements OnInit, OnDestroy {
   @ViewChild('modalEditTags', { static: true }) modalEditTags;
   @ViewChild('modalRemoveEform', { static: true }) modalRemoveEform;
   @ViewChild('modalUploadZip', { static: true }) modalUploadZip;
-  @ViewChild('modalExcel', { static: true }) modalExcel;
   @ViewChild('modalEformsImport', { static: true }) modalEformsImport;
   @ViewChild('modalTags', { static: true }) modalTags;
 
@@ -197,10 +196,6 @@ export class EformsPageComponent implements OnInit, OnDestroy {
 
   openEditTagsModal(templateDto: TemplateDto) {
     this.modalEditTags.show(templateDto);
-  }
-
-  openDownloadExcelModal(templateDto: TemplateDto) {
-    this.modalExcel.show(templateDto);
   }
 
   openEformsImportModal() {

@@ -7,13 +7,11 @@ import { format } from 'date-fns';
 import { AuthStateService } from 'src/app/common/store';
 
 @Component({
-  selector: 'app-eform-docx-report-header',
-  templateUrl: './eform-docx-report-header.component.html',
-  styleUrls: ['./eform-docx-report-header.component.scss'],
+  selector: 'app-eform-excel-report-header',
+  templateUrl: './eform-excel-report-header.component.html',
+  styleUrls: ['./eform-excel-report-header.component.scss'],
 })
-export class EformDocxReportHeaderComponent implements OnInit {
-  @Output()
-  generateReport: EventEmitter<EformDocxReportGenerateModel> = new EventEmitter();
+export class EformExcelReportHeaderComponent implements OnInit {
   @Output()
   downloadReport: EventEmitter<EformDocxReportGenerateModel> = new EventEmitter();
   @Input() range: Date[];
@@ -33,11 +31,6 @@ export class EformDocxReportHeaderComponent implements OnInit {
     this.generateForm = this.formBuilder.group({
       dateRange: ['', Validators.required],
     });
-  }
-
-  onSubmit() {
-    const model = this.extractData(this.generateForm.value);
-    this.generateReport.emit(model);
   }
 
   onSave() {

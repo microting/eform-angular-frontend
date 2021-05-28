@@ -8,11 +8,11 @@ import {
 import { EformDocxReportHeadersModel } from 'src/app/common/models';
 
 @Component({
-  selector: 'app-eform-docx-report-header-editor',
-  templateUrl: './eform-docx-report-header-editor.component.html',
-  styleUrls: ['./eform-docx-report-header-editor.component.scss'],
+  selector: 'app-eform-excel-report-header-editor',
+  templateUrl: './eform-excel-report-header-editor.component.html',
+  styleUrls: ['./eform-excel-report-header-editor.component.scss'],
 })
-export class EformDocxReportHeaderEditorComponent implements OnInit {
+export class EformExcelReportHeaderEditorComponent implements OnInit {
   @ViewChild('frame', { static: true }) frame;
   @Output()
   updateReportHeaders: EventEmitter<EformDocxReportHeadersModel> = new EventEmitter<EformDocxReportHeadersModel>();
