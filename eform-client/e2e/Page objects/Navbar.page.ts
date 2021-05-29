@@ -122,7 +122,9 @@ export class Navbar {
   }
 
   public clickOnSubMenuItem(menuItem) {
-    const ele = $(`.fadeInDropdown=${menuItem}`);
+    const ele = $(
+      `//*[contains(@class, 'fadeInDropdown')]//*[contains(text(), '${menuItem}')]`
+    );
     ele.waitForDisplayed({ timeout: 40000 });
     ele.click();
   }
@@ -133,15 +135,21 @@ export class Navbar {
   }
 
   public clickOnHeaderMenuItem(headerMenuItem) {
-    return $(`#header=${headerMenuItem}`).$('..').$('..');
+    return $(`//*[@id="header"]//*[text()="${headerMenuItem}"]`)
+      .$('..')
+      .$('..');
   }
 
   public verifyHeaderMenuItem(headerMenuItem) {
-    return $(`#header=${headerMenuItem}`).getText();
+    return $(
+      `//*[@id="header"]//*[contains(text(), '${headerMenuItem}')]`
+    ).getText();
   }
 
   public clickOnHeaderMenuItem2(headerMenuItem) {
-    const ele = $(`#header=${headerMenuItem}`);
+    const ele = $(
+      `//*[@id="header"]//*[contains(text(), '${headerMenuItem}')]`
+    );
     ele.waitForDisplayed({ timeout: 40000 });
     ele.waitForClickable({ timeout: 40000 });
     return ele;
