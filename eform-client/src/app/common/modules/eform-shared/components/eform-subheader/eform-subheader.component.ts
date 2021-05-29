@@ -27,7 +27,6 @@ export class EformSubheaderComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private appMenuService: AppMenuService,
     private appMenuStateService: AppMenuStateService
   ) {}
 
