@@ -1,0 +1,11 @@
+<eform-subheader [title]="'Generate XLSX report'" [forceStaticTitle]="true">
+</eform-subheader>
+
+<div class="container-fluid">
+  <app-eform-xlsx-report-header
+    [range]="range"
+    [templateId]="selectedTemplateId"
+    (downloadReport)="onDownloadReport($event)"
+  >
+  </app-eform-xlsx-report-header>
+</div>

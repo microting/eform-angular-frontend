@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-  EformExcelReportContainerComponent,
-  EformExcelReportHeaderComponent,
-  EformExcelReportHeaderEditorComponent,
+  EformXlsxReportContainerComponent,
+  EformXlsxReportHeaderComponent,
 } from './components';
 import { TranslateModule } from '@ngx-translate/core';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
@@ -19,13 +18,12 @@ import {
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OwlDateTimeModule } from '@danielmoncada/angular-datetime-picker';
-import { EformExcelReportRouting } from './eform-excel-report.routing';
+import { EformXlsxReportRouting } from './eform-xlsx-report.routing';
 
 @NgModule({
   declarations: [
-    EformExcelReportContainerComponent,
-    EformExcelReportHeaderComponent,
-    EformExcelReportHeaderEditorComponent,
+    EformXlsxReportContainerComponent,
+    EformXlsxReportHeaderComponent,
   ],
   imports: [
     CommonModule,
@@ -40,9 +38,9 @@ import { EformExcelReportRouting } from './eform-excel-report.routing';
     OwlDateTimeModule,
     InputsModule,
     CardsModule,
-    EformExcelReportRouting,
+    EformXlsxReportRouting,
     ModalModule,
     FormsModule,
   ],
 })
-export class EformExcelReportModule {}
+export class EformXlsxReportModule {}

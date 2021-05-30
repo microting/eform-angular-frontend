@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from 'src/app/common/guards';
-import { EformExcelReportContainerComponent } from './components';
+import { EformXlsxReportContainerComponent } from './components';
 
 export const routes: Routes = [
   {
     path: ':eformId',
     canActivate: [AuthGuard],
-    component: EformExcelReportContainerComponent,
+    component: EformXlsxReportContainerComponent,
   },
 ];
 
@@ -15,4 +15,4 @@ export const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class EformExcelReportRouting {}
+export class EformXlsxReportRouting {}

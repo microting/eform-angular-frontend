@@ -7,11 +7,11 @@ import { format } from 'date-fns';
 import { AuthStateService } from 'src/app/common/store';
 
 @Component({
-  selector: 'app-eform-excel-report-header',
-  templateUrl: './eform-excel-report-header.component.html',
-  styleUrls: ['./eform-excel-report-header.component.scss'],
+  selector: 'app-eform-xlsx-report-header',
+  templateUrl: './eform-xlsx-report-header.component.html',
+  styleUrls: ['./eform-xlsx-report-header.component.scss'],
 })
-export class EformExcelReportHeaderComponent implements OnInit {
+export class EformXlsxReportHeaderComponent implements OnInit {
   @Output()
   downloadReport: EventEmitter<EformDocxReportGenerateModel> = new EventEmitter();
   @Input() range: Date[];

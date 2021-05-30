@@ -12,6 +12,7 @@ import {
   AuthStateService,
 } from 'src/app/common/store';
 import { AdminService, AuthService } from 'src/app/common/services';
+import { Subscription } from 'rxjs';
 
 @AutoUnsubscribe()
 @Component({
@@ -22,6 +23,9 @@ import { AdminService, AuthService } from 'src/app/common/services';
 export class NavigationComponent implements OnInit, OnDestroy {
   @ViewChild('navigationMenu', { static: true }) menuElement: ElementRef;
   private _menuFlag = false;
+
+  getAppMenuSub$: Subscription;
+  getCurrentUserInfoSub$: Subscription;
 
   constructor(
     private authService: AuthService,
@@ -35,9 +39,12 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (this.authStateService.isAuth) {
-      this.adminService.getCurrentUserInfo().subscribe((result) => {
-        this.authStateService.updateUserInfo(result);
-      });
+      this.getCurrentUserInfoSub$ = this.adminService
+        .getCurrentUserInfo()
+        .subscribe((result) => {
+          this.authStateService.updateUserInfo(result);
+        });
+      this.getAppMenuSub$ = this.appMenuService.getAppMenu().subscribe();
     }
   }
 

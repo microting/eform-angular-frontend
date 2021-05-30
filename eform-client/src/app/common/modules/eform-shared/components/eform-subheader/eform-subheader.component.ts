@@ -7,7 +7,6 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppMenuService } from 'src/app/common/services';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { AppMenuStateService } from 'src/app/common/store';
 
@@ -18,8 +17,6 @@ import { AppMenuStateService } from 'src/app/common/store';
   styleUrls: ['./eform-subheader.component.scss'],
 })
 export class EformSubheaderComponent implements OnInit, OnDestroy {
-  @ViewChild('heading', { static: true }) heading: ElementRef;
-
   @Input() title = '';
   @Input() subtitle = '';
   @Input() heandingSizeRem = 2.5;

@@ -25,10 +25,10 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'excel-report',
+    path: 'xlsx-report',
     loadChildren: () =>
-      import('./eform-excel-report/eform-excel-report.module').then(
-        (m) => m.EformExcelReportModule
+      import('./eform-xlsx-report/eform-xlsx-report.module').then(
+        (m) => m.EformXlsxReportModule
       ),
   },
 ];
