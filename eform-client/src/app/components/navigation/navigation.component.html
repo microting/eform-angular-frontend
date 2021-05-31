@@ -1,10 +1,15 @@
 <div class="w-100 navbar-bg">
-  <nav class="navbar navbar-static-top navbar-expand-lg p-2" id="header" role="navigation">
+  <nav
+    class="navbar navbar-static-top navbar-expand-lg p-2"
+    id="header"
+    role="navigation"
+  >
     <button
       class="navbar-toggler"
       type="button"
       aria-label="Toggle navigation"
-      (click)="expandMenu()">
+      (click)="expandMenu()"
+    >
       <fa-icon icon="bars" size="lg" [fixedWidth]="true"></fa-icon>
 
       <span class="navbar-toggler-icon"></span>
@@ -12,53 +17,63 @@
     <!--nav items here-->
     <div class="collapse navbar-collapse" #navigationMenu>
       <ul class="navbar-nav mr-auto">
-        <ng-container *ngFor="let menu of appMenu.leftMenu">
+        <ng-container *ngFor="let menu of appMenuQuery.userMenuLeft$ | async">
           <ng-container *ngIf="checkGuards(menu.guards)">
-          <ng-container *ngIf="menu?.menuItems?.length == 0; else dropdown;">
-            <li class="nav-item">
-              <a routerLink="{{menu.link}}"
-                mdbWavesEffect
-                class="nav-link waves-light"
-                 [id]="menu.e2EId">
-                {{menu.name}}
-              </a>
-            </li>
-          </ng-container>
-          <ng-template #dropdown>
-            <li class="nav-item">
-              <div mdbDropdown class="dropdown">
+            <ng-container *ngIf="menu?.menuItems?.length == 0; else dropdown">
+              <li class="nav-item">
                 <a
-                  mdbDropdownToggle
+                  routerLink="{{ menu.link }}"
                   mdbWavesEffect
-                  class="nav-link dropdown-toggle waves-light"
-                  [id]="menu.e2EId">{{menu.name}}</a>
-                <div class="dropdown-menu" *ngIf="menu?.menuItems?.length > 0;">
-                  <ng-container *ngFor="let subMenu of menu.menuItems">
-                  <a *ngIf="checkGuards(subMenu.guards)"
-                    class="dropdown-item waves-light"
-                    routerLink="{{subMenu.link}}"
-                    routerLinkActive="active"
-                     [id]="subMenu.e2EId">
-                    {{subMenu.name}}
-                  </a>
-                  </ng-container>
+                  class="nav-link waves-light"
+                  [id]="menu.e2EId"
+                >
+                  {{ menu.name }}
+                </a>
+              </li>
+            </ng-container>
+            <ng-template #dropdown>
+              <li class="nav-item">
+                <div mdbDropdown class="dropdown">
+                  <a
+                    mdbDropdownToggle
+                    mdbWavesEffect
+                    class="nav-link dropdown-toggle waves-light"
+                    [id]="menu.e2EId"
+                    >{{ menu.name }}</a
+                  >
+                  <div
+                    class="dropdown-menu"
+                    *ngIf="menu?.menuItems?.length > 0"
+                  >
+                    <ng-container *ngFor="let subMenu of menu.menuItems">
+                      <a
+                        *ngIf="checkGuards(subMenu.guards)"
+                        class="dropdown-item waves-light"
+                        routerLink="{{ subMenu.link }}"
+                        routerLinkActive="active"
+                        [id]="subMenu.e2EId"
+                      >
+                        {{ subMenu.name }}
+                      </a>
+                    </ng-container>
+                  </div>
                 </div>
-              </div>
-            </li>
-          </ng-template>
-        </ng-container>
+              </li>
+            </ng-template>
+          </ng-container>
         </ng-container>
       </ul>
       <ul class="navbar-nav ml-auto">
-        <ng-container *ngFor="let menu of appMenu.rightMenu">
-          <ng-container *ngIf="menu?.menuItems?.length == 0; else dropdown;">
+        <ng-container *ngFor="let menu of appMenuQuery.userMenuRight$ | async">
+          <ng-container *ngIf="menu?.menuItems?.length == 0; else dropdown">
             <li class="nav-item">
               <a
-                routerLink="{{menu.link}}"
+                routerLink="{{ menu.link }}"
                 mdbWavesEffect
                 class="nav-link waves-light"
-                [id]="menu.e2EId">
-                {{menu.name}}
+                [id]="menu.e2EId"
+              >
+                {{ menu.name }}
               </a>
             </li>
           </ng-container>
@@ -69,15 +84,22 @@
                   mdbDropdownToggle
                   mdbWavesEffect
                   class="nav-link dropdown-toggle waves-light"
-                  [id]="menu.e2EId">{{menu.name}}</a>
-                <div class="dropdown-menu outbounds-fix" *ngIf="menu?.menuItems?.length > 0;">
+                  [id]="menu.e2EId"
+                  >{{ menu.name }}</a
+                >
+                <div
+                  class="dropdown-menu outbounds-fix"
+                  *ngIf="menu?.menuItems?.length > 0"
+                >
                   <ng-container *ngFor="let subMenu of menu.menuItems">
-                    <a *ngIf="checkGuards(subMenu.guards)"
+                    <a
+                      *ngIf="checkGuards(subMenu.guards)"
                       class="dropdown-item waves-light"
-                      routerLink="{{subMenu.link}}"
+                      routerLink="{{ subMenu.link }}"
                       routerLinkActive="active"
-                       [id]="subMenu.e2EId">
-                      {{subMenu.name}}
+                      [id]="subMenu.e2EId"
+                    >
+                      {{ subMenu.name }}
                     </a>
                   </ng-container>
                 </div>

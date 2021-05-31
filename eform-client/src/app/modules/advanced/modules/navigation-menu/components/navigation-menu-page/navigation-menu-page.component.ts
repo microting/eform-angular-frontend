@@ -5,7 +5,8 @@ import {
   NavigationMenuItemModel,
   NavigationMenuModel,
   NavigationMenuTranslationModel,
-} from 'src/app/common/models/navigation-menu';
+  CommonDictionaryModel,
+} from 'src/app/common/models';
 import {
   NavigationMenuService,
   SecurityGroupsService,
@@ -16,12 +17,10 @@ import { NavigationMenuItemTypeEnum } from 'src/app/common/const';
 import {
   NavigationMenuItemDeleteComponent,
   NavigationMenuItemEditComponent,
-} from '../menu-item';
-import { NavigationMenuResetComponent } from '../navigation-menu-reset/navigation-menu-reset.component';
-import { CommonDictionaryModel } from 'src/app/common/models';
+  NavigationMenuResetComponent,
+} from '../';
 import * as R from 'ramda';
-import { EventBrokerService } from 'src/app/common/helpers';
-import { AuthStateService } from 'src/app/common/store';
+import { AppMenuStateService, AuthStateService } from 'src/app/common/store';
 
 @AutoUnsubscribe()
 @Component({
@@ -36,12 +35,14 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
   editMenuItemModal: NavigationMenuItemEditComponent;
   @ViewChild('resetMenuModal')
   resetMenuModal: NavigationMenuResetComponent;
+  securityGroups: CommonDictionaryModel[] = [];
+  navigationMenuModel: NavigationMenuModel = new NavigationMenuModel();
+
   navigationMenuSub$: Subscription;
   updateNavigationMenuSub$: Subscription;
   securityGroupsSub$: Subscription;
   resetSub$: Subscription;
-  securityGroups: CommonDictionaryModel[] = [];
-  navigationMenuModel: NavigationMenuModel = new NavigationMenuModel();
+  getAppMenuSub$: Subscription;
 
   get menuItemTypes() {
     return NavigationMenuItemTypeEnum;
@@ -51,8 +52,8 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
     private dragulaService: DragulaService,
     private navigationMenuService: NavigationMenuService,
     private securityGroupsService: SecurityGroupsService,
-    private eventBrokerService: EventBrokerService,
-    private authStateService: AuthStateService
+    private authStateService: AuthStateService,
+    private appMenuStateService: AppMenuStateService
   ) {
     dragulaService.createGroup('MENU_ITEMS', {
       moves: (el, container, handle) => {
@@ -103,9 +104,9 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
   }
 
   getHeaderNavigationMenu() {
-    this.eventBrokerService.emit('get-navigation-menu', {
-      takeFromCache: false,
-    });
+    this.getAppMenuSub$ = this.appMenuStateService
+      .getAppMenu(false)
+      .subscribe();
   }
 
   updateNavigationMenu() {

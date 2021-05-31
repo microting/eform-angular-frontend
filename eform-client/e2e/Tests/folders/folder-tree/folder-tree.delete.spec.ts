@@ -18,7 +18,7 @@ describe('Delete folder', function () {
     foldersPage.createNewFolder(nameFolder, description);
     const rowNumBeforeDelete = foldersPage.rowNum;
 
-    $('#folderTreeName').waitForDisplayed({ timeout: 20000 });
+    $('#folderTreeName').waitForDisplayed({ timeout: 40000 });
     const folder = foldersPage.getFolderByName(nameFolder);
     folder.delete();
     const rowNumAfterDelete = foldersPage.rowNum;
@@ -40,7 +40,7 @@ describe('Delete folder', function () {
     expect(rowNumBeforeDelete).equal(rowNumAfterCancelDelete);
   });
   after('Should delete folder', function () {
-    $('#folderTreeName').waitForDisplayed({ timeout: 20000 });
+    $('#folderTreeName').waitForDisplayed({ timeout: 40000 });
     const folder = foldersPage.getFolderByName(nameFolder);
     const countFoldersBeforeDelete = foldersPage.rowNum;
     folder.delete();

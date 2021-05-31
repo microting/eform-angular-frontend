@@ -3,7 +3,7 @@ import { persistState, Store, StoreConfig } from '@datorama/akita';
 import { UserClaimsModel } from 'src/app/common/models';
 
 export interface AuthState {
-  auth: {
+  token: {
     accessToken: string;
     expiresIn: any;
     tokenType: string;
@@ -24,7 +24,7 @@ export interface AuthState {
 export function createInitialState(): AuthState {
   console.log('AuthState.createInitialState()');
   return {
-    auth: {
+    token: {
       accessToken: '',
       expiresIn: '',
       tokenType: '',
@@ -97,7 +97,7 @@ const authPersistStorage = persistState({
     console.log({ method: 'AuthStateService.preStorageUpdate()', state });
     return {
       currentUser: state.currentUser,
-      auth: state.auth,
+      token: state.token,
     };
   },
 });

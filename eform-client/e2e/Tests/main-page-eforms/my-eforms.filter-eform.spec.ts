@@ -1,6 +1,6 @@
 import loginPage from '../../Page objects/Login.page';
 import myEformsPage from '../../Page objects/MyEforms.page';
-import {generateRandmString} from '../../Helpers/helper-functions';
+import { generateRandmString } from '../../Helpers/helper-functions';
 
 const expect = require('chai').expect;
 const testTag1 = 'Test tag';
@@ -16,7 +16,7 @@ describe('My eforms', function () {
   it('should be able to filter by 1 word in label input', function () {
     myEformsPage.idSortBtn.click();
     const spinnerAnimation = $('#spinner-animation');
-    spinnerAnimation.waitForDisplayed({timeout: 20000, reverse: true});
+    spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
     for (let i = 0; i < countCreateEForm; i++) {
       const newEForm = generateRandmString();
       myEformsPage.createNewEform(newEForm);
@@ -25,15 +25,17 @@ describe('My eforms', function () {
     const nameEFormForFiltering = namesEForms[1];
     countRowsBeforeFiltering = myEformsPage.rowNum;
     myEformsPage.eformFilter.setValue(nameEFormForFiltering);
-    spinnerAnimation.waitForDisplayed({timeout: 50000, reverse: true});
+    spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
     browser.pause(2000);
-    const eform = myEformsPage.getEformsRowObjByNameEForm(nameEFormForFiltering);
+    const eform = myEformsPage.getEformsRowObjByNameEForm(
+      nameEFormForFiltering
+    );
     expect(eform).not.equal(null);
   });
   it('should be able to see all eforms by leaving label input empty', function () {
     myEformsPage.eformFilter.click();
     browser.keys(['Control', 'a', 'Control', 'Delete']);
-    $('#spinner-animation').waitForDisplayed({timeout: 50000, reverse: true});
+    $('#spinner-animation').waitForDisplayed({ timeout: 50000, reverse: true });
     browser.pause(2000);
     expect(myEformsPage.rowNum).equal(countRowsBeforeFiltering);
   });

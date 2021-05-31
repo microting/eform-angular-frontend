@@ -11,7 +11,7 @@ class MyEformsPage extends PageWithNavbarPage {
 
   public get newEformBtn() {
     const el = $('#newEFormBtn');
-    el.waitForDisplayed({ timeout: 20000 });
+    el.waitForDisplayed({ timeout: 40000 });
     el.waitForClickable({ timeout: 90000 });
     return el;
   }
@@ -40,15 +40,15 @@ class MyEformsPage extends PageWithNavbarPage {
   // Create eform modal
   public get createEformTagSelector() {
     const ele = $('#createEFormMultiSelector');
-    ele.waitForDisplayed({ timeout: 20000 });
-    ele.waitForClickable({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
   public get importEformsBtn() {
     const ele = $('#importEformsBtn');
-    ele.waitForDisplayed({ timeout: 20000 });
-    ele.waitForClickable({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
@@ -58,14 +58,14 @@ class MyEformsPage extends PageWithNavbarPage {
 
   public get xmlTextArea() {
     const ele = $('#eFormXml');
-    ele.waitForDisplayed({ timeout: 20000 });
-    ele.waitForClickable({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
   public get createEformBtn() {
     const ele = $('#createEformBtn');
-    ele.waitForDisplayed({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
@@ -81,12 +81,12 @@ class MyEformsPage extends PageWithNavbarPage {
 
   get tagEditSaveCancelBtn() {
     const ele = $('#tagEditSaveCancelBtn');
-    ele.waitForClickable({ timeout: 20000 });
+    ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
   get tagSelector() {
-    // ele.waitForDisplayed({timeout: 20000});
+    // ele.waitForDisplayed({timeout: 40000});
     return $('#tagSelector');
   }
   get saveParingBtn() {
@@ -103,8 +103,8 @@ class MyEformsPage extends PageWithNavbarPage {
 
   get eformsManageTagsBtn() {
     const ele = $('#eformsManageTagsBtn');
-    ele.waitForDisplayed({ timeout: 20000 });
-    ele.waitForClickable({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
@@ -139,7 +139,7 @@ class MyEformsPage extends PageWithNavbarPage {
     const spinnerAnimation = $('#spinner-animation');
     spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
     this.newEformBtn.click();
-    this.xmlTextArea.waitForDisplayed({ timeout: 20000 });
+    this.xmlTextArea.waitForDisplayed({ timeout: 40000 });
     // Create replaced xml and insert it in textarea
     const xml = XMLForEform.XML.replace('TEST_LABEL', eFormLabel);
     browser.execute(function (xmlText) {
@@ -161,8 +161,8 @@ class MyEformsPage extends PageWithNavbarPage {
         const selectedTag = $('.ng-option:not(.ng-option-selected)');
         selectedTags.push(selectedTag.getText());
         // console.log('selectedTags is ' + JSON.stringify(selectedTags));
-        selectedTag.waitForDisplayed({ timeout: 20000 });
-        selectedTag.waitForClickable({ timeout: 20000 });
+        selectedTag.waitForDisplayed({ timeout: 40000 });
+        selectedTag.waitForClickable({ timeout: 40000 });
         selectedTag.click();
         spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
         $('#createEformBtn').waitForDisplayed({ timeout: 10000 });
@@ -172,7 +172,7 @@ class MyEformsPage extends PageWithNavbarPage {
     this.createEformBtn.click();
     // browser.pause(14000);
     spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
-    $('#delete-eform-btn-0').waitForDisplayed({ timeout: 20000 });
+    $('#delete-eform-btn-0').waitForDisplayed({ timeout: 40000 });
     return { added: addedTags, selected: selectedTags };
   }
 
@@ -182,12 +182,12 @@ class MyEformsPage extends PageWithNavbarPage {
 
   createNewTags(nameTags: string[]) {
     this.eformsManageTagsBtn.click();
-    tagsModalPage.tagsModalCloseBtn.waitForDisplayed({ timeout: 20000 });
+    tagsModalPage.tagsModalCloseBtn.waitForDisplayed({ timeout: 40000 });
     for (let i = 0; i < nameTags.length; i++) {
       tagsModalPage.createTag(nameTags[i]);
     }
     tagsModalPage.closeTagModal();
-    this.newEformBtn.waitForClickable({ timeout: 20000 });
+    this.newEformBtn.waitForClickable({ timeout: 40000 });
   }
 
   removeTag(nameTag: string) {
@@ -196,12 +196,12 @@ class MyEformsPage extends PageWithNavbarPage {
 
   removeTags(nameTags: string[]) {
     this.eformsManageTagsBtn.click();
-    tagsModalPage.tagsModalCloseBtn.waitForDisplayed({ timeout: 20000 });
+    tagsModalPage.tagsModalCloseBtn.waitForDisplayed({ timeout: 40000 });
     for (let i = 0; i < nameTags.length; i++) {
       tagsModalPage.getTagByName(nameTags[i]).deleteTag();
     }
     tagsModalPage.closeTagModal();
-    this.newEformBtn.waitForClickable({ timeout: 20000 });
+    this.newEformBtn.waitForClickable({ timeout: 40000 });
   }
 
   enterTagFilter(nameTag: string) {
@@ -210,7 +210,7 @@ class MyEformsPage extends PageWithNavbarPage {
     option.waitForDisplayed({ timeout: 10000 });
     option.waitForClickable({ timeout: 10000 });
     option.click();
-    $('#spinner-animation').waitForDisplayed({ timeout: 20000, reverse: true });
+    $('#spinner-animation').waitForDisplayed({ timeout: 40000, reverse: true });
   }
 }
 
@@ -264,31 +264,31 @@ class MyEformsRowObject {
     this.deleteBtn.scrollIntoView();
     this.deleteBtn.click();
     const eFormDeleteDeleteBtn = $('#eFormDeleteDeleteBtn');
-    eFormDeleteDeleteBtn.waitForDisplayed({ timeout: 20000 });
-    eFormDeleteDeleteBtn.waitForClickable({ timeout: 20000 });
+    eFormDeleteDeleteBtn.waitForDisplayed({ timeout: 40000 });
+    eFormDeleteDeleteBtn.waitForClickable({ timeout: 40000 });
     eFormDeleteDeleteBtn.click();
-    $('#spinner-animation').waitForDisplayed({ timeout: 20000, reverse: true });
+    $('#spinner-animation').waitForDisplayed({ timeout: 40000, reverse: true });
     browser.pause(500);
   }
 
   addTag(tag: string) {
-    this.editTagsBtn.waitForClickable({ timeout: 20000 });
+    this.editTagsBtn.waitForClickable({ timeout: 40000 });
     this.editTagsBtn.click();
     const tagSelector = $('app-eform-edit-tags-modal #tagSelector input');
-    tagSelector.waitForDisplayed({ timeout: 20000 });
+    tagSelector.waitForDisplayed({ timeout: 40000 });
     tagSelector.setValue(tag);
     const ngDropdownPanel = $('.ng-option');
-    ngDropdownPanel.waitForClickable({ timeout: 20000 });
+    ngDropdownPanel.waitForClickable({ timeout: 40000 });
     ngDropdownPanel.click();
     myEformsPage.tagEditSaveBtn.click();
-    $('#spinner-animation').waitForDisplayed({ timeout: 20000, reverse: true });
+    $('#spinner-animation').waitForDisplayed({ timeout: 40000, reverse: true });
   }
 
   deleteTags(tags: string[]) {
-    this.editTagsBtn.waitForClickable({ timeout: 20000 });
+    this.editTagsBtn.waitForClickable({ timeout: 40000 });
     this.editTagsBtn.click();
     $('app-eform-edit-tags-modal #tagSelector').waitForDisplayed({
-      timeout: 20000,
+      timeout: 40000,
     });
     const tagSelectorValues = $$(
       'app-eform-edit-tags-modal #tagSelector .ng-value'
@@ -301,7 +301,7 @@ class MyEformsRowObject {
       }
     }
     myEformsPage.tagEditSaveBtn.click();
-    $('#spinner-animation').waitForDisplayed({ timeout: 20000, reverse: true });
+    $('#spinner-animation').waitForDisplayed({ timeout: 40000, reverse: true });
   }
 
   pair(folder: FoldersRowObject, users: DeviceUsersRowObject[]) {
@@ -312,7 +312,7 @@ class MyEformsRowObject {
       this.addPairEformBtn.click();
     }
     spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });
-    myEformsPage.cancelParingBtn.waitForDisplayed({ timeout: 20000 });
+    myEformsPage.cancelParingBtn.waitForDisplayed({ timeout: 40000 });
     browser.pause(500);
     const folders = $$('tree-node');
     for (let i = 0; i < folders.length; i++) {
@@ -324,7 +324,7 @@ class MyEformsRowObject {
     for (let i = 0; i < users.length; i++) {
       const checkbox = $(`#checkbox${users[i].siteId}`);
       checkbox.scrollIntoView();
-      checkbox.$('..').waitForClickable({ timeout: 20000 });
+      checkbox.$('..').waitForClickable({ timeout: 40000 });
       checkbox.$('..').click();
     }
     myEformsPage.saveParingBtn.click();
@@ -334,12 +334,12 @@ class MyEformsRowObject {
   unPair(users: DeviceUsersRowObject[]) {
     const spinnerAnimation = $('#spinner-animation');
     this.editPairEformBtn.click();
-    spinnerAnimation.waitForDisplayed({ timeout: 20000, reverse: true });
-    myEformsPage.cancelParingBtn.waitForDisplayed({ timeout: 20000 });
+    spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
+    myEformsPage.cancelParingBtn.waitForDisplayed({ timeout: 40000 });
     for (let i = 0; i < users.length; i++) {
       const checkbox = $(`#checkbox${users[i].siteId}`);
       checkbox.scrollIntoView();
-      checkbox.$('..').waitForClickable({ timeout: 20000 });
+      checkbox.$('..').waitForClickable({ timeout: 40000 });
       checkbox.$('..').click();
     }
     myEformsPage.saveParingBtn.click();

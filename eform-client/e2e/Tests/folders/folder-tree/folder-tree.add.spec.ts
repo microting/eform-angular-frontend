@@ -18,7 +18,7 @@ describe('Create folder', function () {
     loginPage.open('/');
     loginPage.login();
     myEformsPage.Navbar.goToFolderPage();
-    foldersPage.newFolderBtn.waitForDisplayed({ timeout: 20000 });
+    foldersPage.newFolderBtn.waitForDisplayed({ timeout: 40000 });
   });
   it('With name and with description', function () {
     const description = generateRandmString();
@@ -108,7 +108,7 @@ describe('Create folder', function () {
     const da = applicationLanguages[0];
     foldersPage.createLanguageSelector.$('input').setValue(da.text);
     let value = foldersPage.createLanguageSelector.$(`.ng-option=${da.text}`);
-    value.waitForDisplayed({ timeout: 20000 });
+    value.waitForDisplayed({ timeout: 40000 });
     value.click();
     foldersPage
       .createDescriptionInput(
@@ -128,7 +128,7 @@ describe('Create folder', function () {
 
     foldersPage.editLanguageSelector.$('input').setValue(da.text);
     value = foldersPage.editLanguageSelector.$(`.ng-option=${da.text}`);
-    value.waitForDisplayed({ timeout: 20000 });
+    value.waitForDisplayed({ timeout: 40000 });
     value.click();
     const html = foldersPage
       .editDescriptionInput(
@@ -146,7 +146,7 @@ describe('Create folder', function () {
     const da = applicationLanguages[0];
     foldersPage.createLanguageSelector.$('input').setValue(da.text);
     let value = foldersPage.createLanguageSelector.$(`.ng-option=${da.text}`);
-    value.waitForDisplayed({ timeout: 20000 });
+    value.waitForDisplayed({ timeout: 40000 });
     value.click();
     foldersPage
       .createDescriptionInput(
@@ -166,7 +166,7 @@ describe('Create folder', function () {
 
     foldersPage.editLanguageSelector.$('input').setValue(da.text);
     value = foldersPage.editLanguageSelector.$(`.ng-option=${da.text}`);
-    value.waitForDisplayed({ timeout: 20000 });
+    value.waitForDisplayed({ timeout: 40000 });
     value.click();
     const html = foldersPage
       .editDescriptionInput(
@@ -184,7 +184,7 @@ describe('Create folder', function () {
     const da = applicationLanguages[0];
     foldersPage.createLanguageSelector.$('input').setValue(da.text);
     let value = foldersPage.createLanguageSelector.$(`.ng-option=${da.text}`);
-    value.waitForDisplayed({ timeout: 20000 });
+    value.waitForDisplayed({ timeout: 40000 });
     value.click();
     foldersPage
       .createDescriptionInput(
@@ -204,7 +204,7 @@ describe('Create folder', function () {
 
     foldersPage.editLanguageSelector.$('input').setValue(da.text);
     value = foldersPage.editLanguageSelector.$(`.ng-option=${da.text}`);
-    value.waitForDisplayed({ timeout: 20000 });
+    value.waitForDisplayed({ timeout: 40000 });
     value.click();
     const html = foldersPage
       .editDescriptionInput(
@@ -222,7 +222,7 @@ describe('Create folder', function () {
     const da = applicationLanguages[0];
     foldersPage.createLanguageSelector.$('input').setValue(da.text);
     let value = foldersPage.createLanguageSelector.$(`.ng-option=${da.text}`);
-    value.waitForDisplayed({ timeout: 20000 });
+    value.waitForDisplayed({ timeout: 40000 });
     value.click();
     foldersPage
       .createDescriptionInput(
@@ -242,7 +242,7 @@ describe('Create folder', function () {
 
     foldersPage.editLanguageSelector.$('input').setValue(da.text);
     value = foldersPage.editLanguageSelector.$(`.ng-option=${da.text}`);
-    value.waitForDisplayed({ timeout: 20000 });
+    value.waitForDisplayed({ timeout: 40000 });
     value.click();
     const html = foldersPage
       .editDescriptionInput(

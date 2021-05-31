@@ -13,3 +13,4 @@ export * from './email-recipients';
 export * from './tags';
 export * from './plugins-management';
 export * from './common-pagination-state';
+export * from './navigation-menu';

@@ -318,8 +318,8 @@
                   )
                 "
                 id="download-excel-btn-{{ i }}"
-                (click)="openDownloadExcelModal(templateDto)"
-                mdbTooltip="{{ 'Download' | translate }} Excel"
+                [routerLink]="['/xlsx-report', templateDto.id]"
+                mdbTooltip="{{ 'Download' | translate }} XLSX"
               >
                 <fa-icon
                   icon="file-excel"
@@ -382,7 +382,6 @@
   #modalRemoveEform
 ></app-eform-remove-eform-modal>
 <app-eform-upload-zip-modal #modalUploadZip></app-eform-upload-zip-modal>
-<app-eform-excel-report-modal #modalExcel></app-eform-excel-report-modal>
 <app-eforms-bulk-import-modal
   (importFinished)="loadAllTags()"
   #modalEformsImport

@@ -36,7 +36,7 @@ export class AuthService {
 
   get currentRole(): string {
     if (this.authQuery.isAuth) {
-      return this.authQuery.currentSetting.auth.role;
+      return this.authQuery.currentSetting.token.role;
     }
     return '';
   }

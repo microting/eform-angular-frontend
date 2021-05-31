@@ -17,7 +17,7 @@ describe('Device users page', function () {
   });
   it('should change first name', function () {
     const newName = Guid.create().toString();
-    $('#deviceUserFirstName').waitForDisplayed({ timeout: 20000 });
+    $('#deviceUserFirstName').waitForDisplayed({ timeout: 40000 });
     const lastDeviceUserBeforeEdit = deviceUsersPage.getDeviceUser(
       deviceUsersPage.rowNum
     );
@@ -38,7 +38,7 @@ describe('Device users page', function () {
   });
   it('should change last name', function () {
     const newSurname = Guid.create().toString();
-    $('#deviceUserFirstName').waitForDisplayed({ timeout: 20000 });
+    $('#deviceUserFirstName').waitForDisplayed({ timeout: 40000 });
     const lastDeviceUserBeforeEdit = deviceUsersPage.getDeviceUser(
       deviceUsersPage.rowNum
     );
@@ -60,7 +60,7 @@ describe('Device users page', function () {
   it('should change first name and last name', function () {
     const newName = Guid.create().toString();
     const newSurname = Guid.create().toString();
-    $('#deviceUserFirstName').waitForDisplayed({ timeout: 20000 });
+    $('#deviceUserFirstName').waitForDisplayed({ timeout: 40000 });
     const lastDeviceUserBeforeEdit = deviceUsersPage.getDeviceUser(
       deviceUsersPage.rowNum
     );

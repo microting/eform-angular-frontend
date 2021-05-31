@@ -1,7 +1,7 @@
 import loginPage from '../../../Page objects/Login.page';
 import myEformsPage from '../../../Page objects/MyEforms.page';
 import foldersPage from '../../../Page objects/Folders.page';
-import {generateRandmString} from '../../../Helpers/helper-functions';
+import { generateRandmString } from '../../../Helpers/helper-functions';
 
 const expect = require('chai').expect;
 const nameFolder = generateRandmString();
@@ -11,7 +11,7 @@ describe('Delete folder', function () {
     loginPage.open('/');
     loginPage.login();
     myEformsPage.Navbar.goToFolderPage();
-    foldersPage.newFolderBtn.waitForDisplayed({timeout: 20000});
+    foldersPage.newFolderBtn.waitForDisplayed({ timeout: 40000 });
     const description = generateRandmString();
     foldersPage.createNewFolder(nameFolder, description);
     // const rowParentsCountBeforeCreation = foldersPage.rowNumParents;
@@ -23,22 +23,33 @@ describe('Delete folder', function () {
   });
   it('Delete folder child with name and description', function () {
     const rowCountBeforeDelete = foldersPage.rowChildrenNum;
-    foldersPage.getFolderFromTree(foldersPage.getFolderRowNumByName(nameFolder), 1).delete();
+    foldersPage
+      .getFolderFromTree(foldersPage.getFolderRowNumByName(nameFolder), 1)
+      .delete();
     const rowCountAfterDelete = foldersPage.rowChildrenNum;
-    expect(rowCountAfterDelete, 'Number of rows hasn\'t changed after creating new folder').equal(rowCountBeforeDelete - 1);
+    expect(
+      rowCountAfterDelete,
+      "Number of rows hasn't changed after creating new folder"
+    ).equal(rowCountBeforeDelete - 1);
   });
   it('If cancel was clicked', function () {
     const childName = generateRandmString();
     const childDescription = generateRandmString();
-    foldersPage.getFolderByName(nameFolder).createChild(childName, childDescription);
+    foldersPage
+      .getFolderByName(nameFolder)
+      .createChild(childName, childDescription);
     const rowCountBeforeDelete = foldersPage.rowChildrenNum;
-    foldersPage.getFolderFromTree(foldersPage.getFolderRowNumByName(nameFolder), 1).delete(true);
+    foldersPage
+      .getFolderFromTree(foldersPage.getFolderRowNumByName(nameFolder), 1)
+      .delete(true);
     const rowCountAfterDelete = foldersPage.rowChildrenNum;
     expect(rowCountBeforeDelete, 'Folder was deleted', rowCountAfterDelete);
   });
   it('Should delete folder 1', function () {
     const rowCountBeforeDelete = foldersPage.rowChildrenNum;
-    foldersPage.getFolderFromTree(foldersPage.getFolderRowNumByName(nameFolder), 1).delete();
+    foldersPage
+      .getFolderFromTree(foldersPage.getFolderRowNumByName(nameFolder), 1)
+      .delete();
     const rowCountAfterDelete = foldersPage.rowChildrenNum;
     expect(rowCountBeforeDelete - 1, 'Folder not deleted', rowCountAfterDelete);
   });
@@ -49,5 +60,3 @@ describe('Delete folder', function () {
     expect(rowCountBeforeDelete - 1, 'Folder not deleted', rowCountAfterDelete);
   });
 });
-
-

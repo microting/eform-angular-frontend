@@ -46,10 +46,10 @@ describe('Device users page should not add new device user', function () {
     loginPage.open('/');
     myEformsPage.Navbar.goToDeviceUsersPage();
     // browser.pause(8000);
-    // $('#newDeviceUserBtn').waitForDisplayed({timeout: 20000});
+    // $('#newDeviceUserBtn').waitForDisplayed({timeout: 40000});
   });
   it('with only first name', function () {
-    // $('#newDeviceUserBtn').waitForDisplayed({timeout: 20000});
+    // $('#newDeviceUserBtn').waitForDisplayed({timeout: 40000});
     const name = generateRandmString();
     // browser.refresh();
     // browser.pause(8000);

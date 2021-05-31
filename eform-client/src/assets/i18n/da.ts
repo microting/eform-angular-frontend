@@ -363,4 +363,5 @@ export const da = {
   'Security groups': 'Sikkerhedsgrupper',
   Custom: 'Brugerdefinerede',
   Add: 'Tilføje',
+  'Generate report': 'Generer {{value}} rapport',
 };

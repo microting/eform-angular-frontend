@@ -1,5 +1,5 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Subscription} from 'rxjs';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Subscription } from 'rxjs';
 import {
   CommonDictionaryModel,
   EformDocxReportGenerateModel,
@@ -7,14 +7,14 @@ import {
   EformDocxReportModel,
   SharedTagModel,
 } from 'src/app/common/models';
-import {EmailRecipientsService} from 'src/app/common/services';
-import {ActivatedRoute, Router} from '@angular/router';
-import {ToastrService} from 'ngx-toastr';
-import {parseISO} from 'date-fns';
-import {saveAs} from 'file-saver';
-import {EformDocxReportService} from 'src/app/common/services/eform';
-import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
-import {AuthStateService} from 'src/app/common/store';
+import { EmailRecipientsService } from 'src/app/common/services';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { parseISO } from 'date-fns';
+import { saveAs } from 'file-saver';
+import { EformDocxReportService } from 'src/app/common/services/eform';
+import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
+import { AuthStateService } from 'src/app/common/store';
 
 @AutoUnsubscribe()
 @Component({

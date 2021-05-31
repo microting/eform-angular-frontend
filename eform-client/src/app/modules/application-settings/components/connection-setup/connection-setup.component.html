@@ -1,4 +1,8 @@
-<eform-subheader [title]="'Database connection setup'" [heandingSizeRem]="1.7">
+<eform-subheader
+  [title]="'Database connection setup' | translate"
+  [forceStaticTitle]="true"
+  [heandingSizeRem]="1.7"
+>
   <div class="p-2">
     <button
       mdbBtn
@@ -18,7 +22,8 @@
     <div class="row">
       <div class="col-md-12 mt-3">
         <eform-subheader
-          [title]="'Admin information'"
+          [title]="'Admin information' | translate"
+          [forceStaticTitle]="true"
           [heandingSizeRem]="1"
         ></eform-subheader>
         <!--Admin block-->
@@ -83,7 +88,8 @@
         <div class="row">
           <div class="col-md-12 mt-3">
             <eform-subheader
-              [title]="'Database connection information'"
+              [forceStaticTitle]="true"
+              [title]="'Database connection information' | translate"
               [heandingSizeRem]="1"
             ></eform-subheader>
 
@@ -178,7 +184,8 @@
         <div class="row">
           <div class="col-md-12 mt-3">
             <eform-subheader
-              [title]="'Default Language'"
+              [forceStaticTitle]="true"
+              [title]="'Default Language' | translate"
               [heandingSizeRem]="1"
             ></eform-subheader>
             <ng-select

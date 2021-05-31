@@ -62,8 +62,8 @@ class LoginPageSettings {
 
   public get resetBtn() {
     const ele = $('#loginPageReset');
-    ele.waitForDisplayed({ timeout: 20000 });
-    ele.waitForClickable({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 

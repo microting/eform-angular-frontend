@@ -11,7 +11,7 @@ describe('Create folder', function () {
     loginPage.open('/');
     loginPage.login();
     myEformsPage.Navbar.goToFolderPage();
-    foldersPage.newFolderBtn.waitForDisplayed({ timeout: 20000 });
+    foldersPage.newFolderBtn.waitForDisplayed({ timeout: 40000 });
     const description = generateRandmString();
     foldersPage.createNewFolder(nameFolder, description);
   });
@@ -32,7 +32,7 @@ describe('Create folder', function () {
   //   const parentFolder = foldersPage.getFolderByName(nameFolder);
   //   // parentFolder.expandChildren();
   //   parentFolder.createFolderChildBtn.click();
-  //   foldersPage.createNameInput.waitForDisplayed({ timeout: 20000 });
+  //   foldersPage.createNameInput.waitForDisplayed({ timeout: 40000 });
   //   foldersPage.createNameInput.setValue(generateRandmString());
   //   expect(
   //     foldersPage.saveCreateBtn.isEnabled(),

@@ -359,4 +359,5 @@ export const ukUA = {
   Custom: 'Спеціальне',
   Add: 'Додати',
   Remove: 'Видалити',
+  'Generate report': 'Створити {{value}} звіт',
 };

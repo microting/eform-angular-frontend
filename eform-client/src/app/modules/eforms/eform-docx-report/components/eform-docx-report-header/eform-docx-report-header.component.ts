@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {EformDocxReportGenerateModel,} from 'src/app/common/models';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {DateTimeAdapter} from '@danielmoncada/angular-datetime-picker';
-import {LocaleService} from 'src/app/common/services';
-import {format} from 'date-fns';
-import {AuthStateService} from 'src/app/common/store';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { EformDocxReportGenerateModel } from 'src/app/common/models';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DateTimeAdapter } from '@danielmoncada/angular-datetime-picker';
+import { LocaleService } from 'src/app/common/services';
+import { format } from 'date-fns';
+import { AuthStateService } from 'src/app/common/store';
 
 @Component({
   selector: 'app-eform-docx-report-header',

@@ -12,14 +12,14 @@ describe('Device users page', function () {
   });
   it('should not delete if cancel was clicked', function () {
     const rowNumBeforeDelete = deviceUsersPage.rowNum;
-    $('#deviceUserId').waitForDisplayed({timeout: 20000});
+    $('#deviceUserId').waitForDisplayed({ timeout: 40000 });
     const lastDeviceUser = deviceUsersPage.getDeviceUser(rowNumBeforeDelete);
-    lastDeviceUser.deleteBtn.waitForDisplayed({timeout: 5000});
-    lastDeviceUser.deleteBtn.waitForClickable({ timeout: 20000});
+    lastDeviceUser.deleteBtn.waitForDisplayed({ timeout: 5000 });
+    lastDeviceUser.deleteBtn.waitForClickable({ timeout: 40000 });
     lastDeviceUser.deleteBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     deviceUsersPage.cancelDeleteBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     loginPage.open('/');
     myEformsPage.Navbar.goToDeviceUsersPage();
     const rowNumAfterCancelDelete = deviceUsersPage.rowNum;
@@ -29,16 +29,18 @@ describe('Device users page', function () {
     loginPage.open('/');
     myEformsPage.Navbar.goToDeviceUsersPage();
     const rowNumBeforeDelete = deviceUsersPage.rowNum;
-    $('#deviceUserId').waitForDisplayed({timeout: 20000});
+    $('#deviceUserId').waitForDisplayed({ timeout: 40000 });
     const lastDeviceUser = deviceUsersPage.getDeviceUser(rowNumBeforeDelete);
-    lastDeviceUser.deleteBtn.waitForDisplayed({timeout: 5000});
+    lastDeviceUser.deleteBtn.waitForDisplayed({ timeout: 5000 });
     lastDeviceUser.deleteBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     deviceUsersPage.saveDeleteBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     loginPage.open('/');
     myEformsPage.Navbar.goToDeviceUsersPage();
     const rowNumAfterDelete = deviceUsersPage.rowNum;
-    expect(rowNumBeforeDelete, 'User deleted incorrectly').equal(rowNumAfterDelete + 1);
+    expect(rowNumBeforeDelete, 'User deleted incorrectly').equal(
+      rowNumAfterDelete + 1
+    );
   });
 });

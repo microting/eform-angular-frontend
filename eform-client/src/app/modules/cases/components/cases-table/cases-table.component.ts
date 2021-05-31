@@ -87,7 +87,7 @@ export class CasesTableComponent implements OnInit {
     this.caseStateService.loadTemplateData().subscribe((operation) => {
       if (operation && operation.success) {
         this.currentTemplate = operation.model;
-        debugger;
+        // debugger;
         this.loadEformPermissions(this.currentTemplate.id);
         this.loadAllCases();
       }

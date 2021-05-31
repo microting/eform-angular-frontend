@@ -26,8 +26,8 @@ class FoldersPage extends PageWithNavbarPage {
     const ele = this.createDescription(translationIndex).$(
       'button[title="Bold"]'
     );
-    ele.waitForDisplayed({ timeout: 20000 });
-    ele.waitForClickable({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
@@ -35,8 +35,8 @@ class FoldersPage extends PageWithNavbarPage {
     const ele = this.createDescription(translationIndex).$(
       'button[title="Underline"]'
     );
-    ele.waitForDisplayed({ timeout: 20000 });
-    ele.waitForClickable({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
@@ -44,8 +44,8 @@ class FoldersPage extends PageWithNavbarPage {
     const ele = this.createDescription(translationIndex).$(
       'button[title="Italic"]'
     );
-    ele.waitForDisplayed({ timeout: 20000 });
-    ele.waitForClickable({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
@@ -53,8 +53,8 @@ class FoldersPage extends PageWithNavbarPage {
     const ele = this.createDescription(translationIndex).$(
       'button[title="Strike-through"]'
     );
-    ele.waitForDisplayed({ timeout: 20000 });
-    ele.waitForClickable({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
@@ -62,8 +62,8 @@ class FoldersPage extends PageWithNavbarPage {
     const ele = this.editDescription(translationIndex).$(
       'button[title="Bold"]'
     );
-    ele.waitForDisplayed({ timeout: 20000 });
-    ele.waitForClickable({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
@@ -71,8 +71,8 @@ class FoldersPage extends PageWithNavbarPage {
     const ele = this.editDescription(translationIndex).$(
       'button[title="Underline"]'
     );
-    ele.waitForDisplayed({ timeout: 20000 });
-    ele.waitForClickable({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
@@ -80,8 +80,8 @@ class FoldersPage extends PageWithNavbarPage {
     const ele = this.editDescription(translationIndex).$(
       'button[title="Italic"]'
     );
-    ele.waitForDisplayed({ timeout: 20000 });
-    ele.waitForClickable({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
@@ -89,60 +89,60 @@ class FoldersPage extends PageWithNavbarPage {
     const ele = this.editDescription(translationIndex).$(
       'button[title="Strike-through"]'
     );
-    ele.waitForDisplayed({ timeout: 20000 });
-    ele.waitForClickable({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
   public get saveCreateBtn() {
     const ele = $('#folderSaveBtn');
-    ele.waitForDisplayed({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
   public get cancelCreateBtn() {
     const cancelCreateBtn = $('#cancelCreateBtn');
-    cancelCreateBtn.waitForDisplayed({ timeout: 20000 });
-    cancelCreateBtn.waitForClickable({ timeout: 20000 });
+    cancelCreateBtn.waitForDisplayed({ timeout: 40000 });
+    cancelCreateBtn.waitForClickable({ timeout: 40000 });
     return cancelCreateBtn;
   }
 
   public get saveDeleteBtn() {
     const saveDeleteBtn = $('#saveDeleteBtn');
-    saveDeleteBtn.waitForDisplayed({ timeout: 20000 });
-    // saveDeleteBtn.waitForClickable({timeout: 20000});
+    saveDeleteBtn.waitForDisplayed({ timeout: 40000 });
+    // saveDeleteBtn.waitForClickable({timeout: 40000});
     return saveDeleteBtn;
   }
 
   public get cancelDeleteBtn() {
     const ele = $('#cancelDeleteBtn');
-    ele.waitForDisplayed({ timeout: 20000 });
-    ele.waitForClickable({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
   public editNameInput(translationIndex: number) {
     const ele = $(`#editFolderNameTranslation_${translationIndex}`);
-    ele.waitForDisplayed({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
   public editDescription(translationIndex: number) {
     const ele = $(`#editFolderDescriptionTranslation_${translationIndex}`);
-    ele.waitForDisplayed({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
   public editDescriptionInput(translationIndex: number) {
     const ele = this.editDescription(translationIndex).$('.pell-content');
-    ele.waitForDisplayed({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
   public get createLanguageSelector() {
     const ele = $('#createLanguageSelector');
-    ele.waitForDisplayed({ timeout: 20000 });
-    ele.waitForClickable({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
@@ -172,8 +172,8 @@ class FoldersPage extends PageWithNavbarPage {
 
   public get editLanguageSelector() {
     const ele = $('#editLanguageSelector');
-    ele.waitForDisplayed({ timeout: 20000 });
-    ele.waitForClickable({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
@@ -227,7 +227,7 @@ class FoldersPage extends PageWithNavbarPage {
         const da = applicationLanguages[0];
         this.createLanguageSelector.$('input').setValue(da.text);
         const value = this.createLanguageSelector.$(`.ng-option=${da.text}`);
-        value.waitForDisplayed({ timeout: 20000 });
+        value.waitForDisplayed({ timeout: 40000 });
         value.click();
         this.createNameInput(
           applicationLanguages.findIndex((x) => x.text === da.text)
@@ -243,7 +243,7 @@ class FoldersPage extends PageWithNavbarPage {
           const value = this.createLanguageSelector.$(
             `.ng-option=${language.text}`
           );
-          value.waitForDisplayed({ timeout: 20000 });
+          value.waitForDisplayed({ timeout: 40000 });
           value.click();
           this.createNameInput(
             applicationLanguages.findIndex((x) => x.text === language.text)
@@ -257,7 +257,7 @@ class FoldersPage extends PageWithNavbarPage {
         const da = applicationLanguages[0];
         this.createLanguageSelector.$('input').setValue(da.text);
         const value = this.createLanguageSelector.$(`.ng-option=${da.text}`);
-        value.waitForDisplayed({ timeout: 20000 });
+        value.waitForDisplayed({ timeout: 40000 });
         value.click();
         this.createDescriptionInput(
           applicationLanguages.findIndex((x) => x.text === da.text)
@@ -276,7 +276,7 @@ class FoldersPage extends PageWithNavbarPage {
           const value = this.createLanguageSelector.$(
             `.ng-option=${language.text}`
           );
-          value.waitForDisplayed({ timeout: 20000 });
+          value.waitForDisplayed({ timeout: 40000 });
           value.click();
           this.createDescriptionInput(
             applicationLanguages.findIndex((x) => x.text === language.text)
@@ -288,7 +288,7 @@ class FoldersPage extends PageWithNavbarPage {
 
   closeCreateFolder(clickCancel = false) {
     if (!clickCancel) {
-      this.saveCreateBtn.waitForClickable({ timeout: 20000 });
+      this.saveCreateBtn.waitForClickable({ timeout: 40000 });
       this.saveCreateBtn.click();
       $('#spinner-animation').waitForDisplayed({
         timeout: 90000,
@@ -297,7 +297,7 @@ class FoldersPage extends PageWithNavbarPage {
     } else {
       this.cancelCreateBtn.click();
     }
-    foldersPage.newFolderBtn.waitForDisplayed({ timeout: 20000 });
+    foldersPage.newFolderBtn.waitForDisplayed({ timeout: 40000 });
   }
 }
 
@@ -343,7 +343,7 @@ export class FoldersRowObject {
       const value = foldersPage.editLanguageSelector.$(
         `.ng-option=${language.text}`
       );
-      value.waitForDisplayed({ timeout: 20000 });
+      value.waitForDisplayed({ timeout: 40000 });
       value.click();
       descriptions.push({
         description: foldersPage
@@ -365,7 +365,7 @@ export class FoldersRowObject {
   ) {
     if (!this.createFolderChildBtn.isExisting()) {
       this.folderElement.click();
-      this.createFolderChildBtn.waitForDisplayed({ timeout: 20000 });
+      this.createFolderChildBtn.waitForDisplayed({ timeout: 40000 });
     }
     this.createFolderChildBtn.click();
     foldersPage.cancelCreateBtn.waitForDisplayed({ timeout: 10000 });
@@ -377,7 +377,7 @@ export class FoldersRowObject {
         const value = foldersPage.createLanguageSelector.$(
           `.ng-option=${da.text}`
         );
-        value.waitForDisplayed({ timeout: 20000 });
+        value.waitForDisplayed({ timeout: 40000 });
         value.click();
         foldersPage
           .createNameInput(
@@ -395,7 +395,7 @@ export class FoldersRowObject {
           const value = foldersPage.createLanguageSelector.$(
             `.ng-option=${language.text}`
           );
-          value.waitForDisplayed({ timeout: 20000 });
+          value.waitForDisplayed({ timeout: 40000 });
           value.click();
           foldersPage
             .createNameInput(
@@ -413,7 +413,7 @@ export class FoldersRowObject {
         const value = foldersPage.createLanguageSelector.$(
           `.ng-option=${da.text}`
         );
-        value.waitForDisplayed({ timeout: 20000 });
+        value.waitForDisplayed({ timeout: 40000 });
         value.click();
         foldersPage
           .createDescriptionInput(
@@ -434,7 +434,7 @@ export class FoldersRowObject {
           const value = foldersPage.createLanguageSelector.$(
             `.ng-option=${language.text}`
           );
-          value.waitForDisplayed({ timeout: 20000 });
+          value.waitForDisplayed({ timeout: 40000 });
           value.click();
           foldersPage
             .createDescriptionInput(
@@ -453,36 +453,36 @@ export class FoldersRowObject {
     } else {
       foldersPage.cancelCreateBtn.click();
     }
-    foldersPage.newFolderBtn.waitForDisplayed({ timeout: 20000 });
+    foldersPage.newFolderBtn.waitForDisplayed({ timeout: 40000 });
   }
 
   delete(clickCancel = false) {
     if (!this.deleteBtn.isExisting()) {
       this.folderElement.click();
-      this.deleteBtn.waitForDisplayed({ timeout: 20000 });
+      this.deleteBtn.waitForDisplayed({ timeout: 40000 });
     }
     this.deleteBtn.click();
     if (!clickCancel) {
-      foldersPage.saveDeleteBtn.waitForClickable({ timeout: 20000 });
+      foldersPage.saveDeleteBtn.waitForClickable({ timeout: 40000 });
       foldersPage.saveDeleteBtn.click();
       $('#spinner-animation').waitForDisplayed({
         timeout: 2000,
         reverse: true,
       });
     } else {
-      foldersPage.cancelDeleteBtn.waitForDisplayed({ timeout: 20000 });
+      foldersPage.cancelDeleteBtn.waitForDisplayed({ timeout: 40000 });
       foldersPage.cancelDeleteBtn.click();
     }
-    foldersPage.newFolderBtn.waitForDisplayed({ timeout: 20000 });
+    foldersPage.newFolderBtn.waitForDisplayed({ timeout: 40000 });
   }
 
   openEditModal() {
     if (!this.editBtn.isExisting()) {
       this.folderElement.click();
-      this.editBtn.waitForDisplayed({ timeout: 20000 });
+      this.editBtn.waitForDisplayed({ timeout: 40000 });
     }
     this.editBtn.click();
-    foldersPage.cancelEditBtn.waitForDisplayed({ timeout: 20000 });
+    foldersPage.cancelEditBtn.waitForDisplayed({ timeout: 40000 });
   }
 
   editFolder(
@@ -491,7 +491,7 @@ export class FoldersRowObject {
     clickCancel = false
   ) {
     this.openEditModal();
-    foldersPage.cancelEditBtn.waitForDisplayed({ timeout: 20000 });
+    foldersPage.cancelEditBtn.waitForDisplayed({ timeout: 40000 });
     if (name) {
       if (typeof name === typeof '') {
         const nameConverted = name as string;
@@ -500,7 +500,7 @@ export class FoldersRowObject {
         const value = foldersPage.editLanguageSelector.$(
           `.ng-option=${da.text}`
         );
-        value.waitForDisplayed({ timeout: 20000 });
+        value.waitForDisplayed({ timeout: 40000 });
         value.click();
         foldersPage
           .editNameInput(
@@ -518,7 +518,7 @@ export class FoldersRowObject {
           const value = foldersPage.editLanguageSelector.$(
             `.ng-option=${language.text}`
           );
-          value.waitForDisplayed({ timeout: 20000 });
+          value.waitForDisplayed({ timeout: 40000 });
           value.click();
           foldersPage
             .editNameInput(
@@ -536,7 +536,7 @@ export class FoldersRowObject {
         const value = foldersPage.editLanguageSelector.$(
           `.ng-option=${da.text}`
         );
-        value.waitForDisplayed({ timeout: 20000 });
+        value.waitForDisplayed({ timeout: 40000 });
         value.click();
         foldersPage
           .editDescriptionInput(
@@ -557,7 +557,7 @@ export class FoldersRowObject {
           const value = foldersPage.editLanguageSelector.$(
             `.ng-option=${language.text}`
           );
-          value.waitForDisplayed({ timeout: 20000 });
+          value.waitForDisplayed({ timeout: 40000 });
           value.click();
           foldersPage
             .editDescriptionInput(
@@ -574,13 +574,13 @@ export class FoldersRowObject {
     if (!clickCancel) {
       foldersPage.saveEditBtn.click();
       $('#spinner-animation').waitForDisplayed({
-        timeout: 20000,
+        timeout: 40000,
         reverse: true,
       });
     } else {
       foldersPage.cancelEditBtn.click();
     }
-    foldersPage.newFolderBtn.waitForDisplayed({ timeout: 20000 });
+    foldersPage.newFolderBtn.waitForDisplayed({ timeout: 40000 });
   }
 
   collapseChildren() {
@@ -637,7 +637,7 @@ export class FoldersTreeRowObject {
       const value = foldersPage.editLanguageSelector.$(
         `.ng-option=${language.text}`
       );
-      value.waitForDisplayed({ timeout: 20000 });
+      value.waitForDisplayed({ timeout: 40000 });
       value.click();
       descriptions.push({
         description: foldersPage
@@ -655,30 +655,30 @@ export class FoldersTreeRowObject {
   delete(clickCancel = false) {
     if (!this.deleteTreeBtn.isExisting()) {
       this.folderTreeElement.click();
-      this.deleteTreeBtn.waitForDisplayed({ timeout: 20000 });
+      this.deleteTreeBtn.waitForDisplayed({ timeout: 40000 });
     }
     this.deleteTreeBtn.click();
     if (!clickCancel) {
-      foldersPage.saveDeleteBtn.waitForClickable({ timeout: 20000 });
+      foldersPage.saveDeleteBtn.waitForClickable({ timeout: 40000 });
       foldersPage.saveDeleteBtn.click();
       $('#spinner-animation').waitForDisplayed({
         timeout: 2000,
         reverse: true,
       });
     } else {
-      foldersPage.cancelDeleteBtn.waitForClickable({ timeout: 20000 });
+      foldersPage.cancelDeleteBtn.waitForClickable({ timeout: 40000 });
       foldersPage.cancelDeleteBtn.click();
     }
-    foldersPage.newFolderBtn.waitForDisplayed({ timeout: 20000 });
+    foldersPage.newFolderBtn.waitForDisplayed({ timeout: 40000 });
   }
 
   openEditModal() {
     if (!this.editTreeBtn.isExisting()) {
       this.folderTreeElement.click();
-      this.editTreeBtn.waitForDisplayed({ timeout: 20000 });
+      this.editTreeBtn.waitForDisplayed({ timeout: 40000 });
     }
     this.editTreeBtn.click();
-    foldersPage.saveEditBtn.waitForDisplayed({ timeout: 20000 });
+    foldersPage.saveEditBtn.waitForDisplayed({ timeout: 40000 });
   }
 
   editFolderChild(
@@ -695,7 +695,7 @@ export class FoldersTreeRowObject {
         const value = foldersPage.editLanguageSelector.$(
           `.ng-option=${da.text}`
         );
-        value.waitForDisplayed({ timeout: 20000 });
+        value.waitForDisplayed({ timeout: 40000 });
         value.click();
         foldersPage
           .editNameInput(
@@ -713,7 +713,7 @@ export class FoldersTreeRowObject {
           const value = foldersPage.editLanguageSelector.$(
             `.ng-option=${language.text}`
           );
-          value.waitForDisplayed({ timeout: 20000 });
+          value.waitForDisplayed({ timeout: 40000 });
           value.click();
           foldersPage
             .editNameInput(
@@ -731,7 +731,7 @@ export class FoldersTreeRowObject {
         const value = foldersPage.editLanguageSelector.$(
           `.ng-option=${da.text}`
         );
-        value.waitForDisplayed({ timeout: 20000 });
+        value.waitForDisplayed({ timeout: 40000 });
         value.click();
         foldersPage
           .editDescriptionInput(
@@ -752,7 +752,7 @@ export class FoldersTreeRowObject {
           const value = foldersPage.editLanguageSelector.$(
             `.ng-option=${language.text}`
           );
-          value.waitForDisplayed({ timeout: 20000 });
+          value.waitForDisplayed({ timeout: 40000 });
           value.click();
           foldersPage
             .editDescriptionInput(
@@ -765,12 +765,12 @@ export class FoldersTreeRowObject {
     if (!clickCancel) {
       foldersPage.saveEditBtn.click();
       $('#spinner-animation').waitForDisplayed({
-        timeout: 20000,
+        timeout: 40000,
         reverse: true,
       });
     } else {
       foldersPage.cancelEditBtn.click();
     }
-    foldersPage.newFolderBtn.waitForDisplayed({ timeout: 20000 });
+    foldersPage.newFolderBtn.waitForDisplayed({ timeout: 40000 });
   }
 }

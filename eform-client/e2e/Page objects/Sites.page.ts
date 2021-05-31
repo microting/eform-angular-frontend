@@ -12,7 +12,7 @@ class SitesPage extends PageWithNavbarPage {
 
   public get siteTagSelector() {
     const ele = $('#tagSelector');
-    ele.waitForDisplayed({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
@@ -22,27 +22,27 @@ class SitesPage extends PageWithNavbarPage {
 
   public get updateTagsBtn() {
     const ele = $('#saveTagsBtn');
-    ele.waitForDisplayed({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
   public get tagRemovalSelector() {
     const ele = $('#tagForRemoval');
-    ele.waitForDisplayed({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
   public get removeTagBtn() {
     const ele = $('#removeTagBtn');
-    ele.waitForDisplayed({ timeout: 20000 });
-    ele.waitForClickable({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
   public get sitesManageTagsBtn() {
     const ele = $('#sitesManageTagsBtn');
-    ele.waitForDisplayed({ timeout: 20000 });
-    ele.waitForClickable({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
@@ -57,60 +57,60 @@ class SitesPage extends PageWithNavbarPage {
 
   public get siteEditCancelBtn() {
     const ele = $('#siteEditCancelBtn');
-    ele.waitForDisplayed({ timeout: 20000 });
-    ele.waitForClickable({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
   public get siteNameEditInput() {
     const ele = $('#siteName');
-    ele.waitForDisplayed({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
   public get tagSelector() {
     const ele = $('#tagSelector');
-    ele.waitForDisplayed({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
   public get siteEditSaveBtn() {
     const ele = $('#siteEditSaveBtn');
-    ele.waitForDisplayed({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
   public get siteDeleteCancelBtn() {
     const ele = $('#siteDeleteCancelBtn');
-    ele.waitForDisplayed({ timeout: 20000 });
-    ele.waitForClickable({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
   public get siteDeleteDeleteBtn() {
     const ele = $('#siteDeleteDeleteBtn');
-    ele.waitForDisplayed({ timeout: 20000 });
+    ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
   public createTag(tagName: string[]) {
     this.sitesManageTagsBtn.click();
-    tagsModalPage.tagsModalCloseBtn.waitForDisplayed({ timeout: 20000 });
+    tagsModalPage.tagsModalCloseBtn.waitForDisplayed({ timeout: 40000 });
     for (let i = 0; i < tagName.length; i++) {
       tagsModalPage.createTag(tagName[i]);
     }
     tagsModalPage.closeTagModal();
-    sitesPage.sitesManageTagsBtn.waitForClickable({ timeout: 20000 });
+    sitesPage.sitesManageTagsBtn.waitForClickable({ timeout: 40000 });
   }
 
   public removeTags(tagName: string[]) {
     this.sitesManageTagsBtn.click();
-    tagsModalPage.tagsModalCloseBtn.waitForDisplayed({ timeout: 20000 });
+    tagsModalPage.tagsModalCloseBtn.waitForDisplayed({ timeout: 40000 });
     for (let i = 0; i < tagName.length; i++) {
       tagsModalPage.getTagByName(tagName[i]).deleteTag();
     }
     tagsModalPage.closeTagModal();
-    sitesPage.sitesManageTagsBtn.waitForClickable({ timeout: 20000 });
+    sitesPage.sitesManageTagsBtn.waitForClickable({ timeout: 40000 });
   }
 
   getSite(num): SitesRowObject {
@@ -153,7 +153,7 @@ export class SitesRowObject {
 
   openEditModal(site?: { name?: string; tags?: string[] }) {
     this.editBtn.click();
-    sitesPage.siteEditCancelBtn.waitForDisplayed({ timeout: 20000 });
+    sitesPage.siteEditCancelBtn.waitForDisplayed({ timeout: 40000 });
     if (site) {
       if (site.name) {
         sitesPage.siteNameEditInput.setValue(site.name);
@@ -173,7 +173,7 @@ export class SitesRowObject {
     } else {
       sitesPage.siteEditSaveBtn.click();
     }
-    sitesPage.sitesManageTagsBtn.waitForClickable({ timeout: 20000 });
+    sitesPage.sitesManageTagsBtn.waitForClickable({ timeout: 40000 });
   }
 
   edit(site?: { name?: string; tags?: string[] }, clickCancel = false) {
@@ -183,7 +183,7 @@ export class SitesRowObject {
 
   openDeleteModal() {
     this.deleteBtn.click();
-    sitesPage.siteDeleteCancelBtn.waitForClickable({ timeout: 20000 });
+    sitesPage.siteDeleteCancelBtn.waitForClickable({ timeout: 40000 });
   }
 
   closeDeleteModal(clickCancel = false) {
@@ -192,7 +192,7 @@ export class SitesRowObject {
     } else {
       sitesPage.siteDeleteDeleteBtn.click();
     }
-    sitesPage.sitesManageTagsBtn.waitForClickable({ timeout: 20000 });
+    sitesPage.sitesManageTagsBtn.waitForClickable({ timeout: 40000 });
   }
 
   delete(clickCancel = false) {
