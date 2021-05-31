@@ -2,9 +2,9 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import {
   InstalledPluginModel,
   InstalledPluginUpdateModel,
-} from '../../../../../common/models/plugins-management';
-import { InstalledPluginStatusEnum } from '../../../../../common/const';
-import { PluginsManagementService } from '../../../../../common/services/plugins-management';
+} from '../../../../../common/models';
+import { InstalledPluginStatusEnum } from 'src/app/common/const';
+import { PluginsManagementService } from 'src/app/common/services';
 import { AuthStateService } from 'src/app/common/store';
 
 @Component({
@@ -46,7 +46,7 @@ export class InstalledPluginModalComponent implements OnInit {
         if (data && data.success) {
           // this.editInstalledPluginModal.hide();
           this.authStateService.logout();
-          window.location.reload();
+          // window.location.reload();
         }
       });
   }
