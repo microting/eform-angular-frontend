@@ -5,7 +5,7 @@ import {
 } from '@ngx-translate/core';
 
 import { Observable } from 'rxjs';
-import { translates } from '../../../assets/i18n/translates';
+import { translates } from 'src/assets/i18n/translates';
 
 // custom loader translates
 export class EformTranslateLoader implements TranslateLoader {

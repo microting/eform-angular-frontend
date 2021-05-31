@@ -3,6 +3,7 @@ import { akitaConfig } from '@datorama/akita';
 import { AuthStateService } from 'src/app/common/store';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { Subscription } from 'rxjs';
+import { LocaleService } from 'src/app/common/services';
 
 akitaConfig({ resettable: true });
 
@@ -15,7 +16,8 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
   isDarkThemeAsync$: Subscription;
   constructor(
     private authStateService: AuthStateService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private localeService: LocaleService
   ) {}
 
   ngOnInit() {
@@ -26,6 +28,8 @@ export class FullLayoutComponent implements OnInit, OnDestroy {
           : this.renderer.removeClass(document.body, 'theme-dark');
       }
     );
+
+    this.localeService.initLocale();
   }
 
   ngOnDestroy() {}

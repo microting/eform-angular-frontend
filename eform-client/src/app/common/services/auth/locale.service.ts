@@ -6,6 +6,7 @@ import { OperationDataResult } from 'src/app/common/models';
 import { applicationLanguages } from 'src/app/common/const';
 import { AuthStateService } from 'src/app/common/store';
 import { ApiBaseService } from 'src/app/common/services';
+import { translates } from 'src/assets/i18n/translates';
 
 export let LocaleMethods = {
   // GoogleAuthenticatorInfo: 'api/auth/google-auth-info',
@@ -26,6 +27,12 @@ export class LocaleService {
   }
 
   initLocale() {
+    const arrayTranslate = [];
+    // tslint:disable-next-line:forin
+    for (const translate in translates) {
+      arrayTranslate.push(translate);
+    }
+    this.translateService.addLangs(arrayTranslate);
     let language = this.authStateService.currentUserLocale;
     this.translateService.setDefaultLang(applicationLanguages[1].locale);
     if (!language) {

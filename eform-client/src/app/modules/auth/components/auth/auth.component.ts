@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { LoginPageSettingsModel } from 'src/app/common/models/settings';
-import { AppSettingsService } from 'src/app/common/services/settings';
-import { GoogleAuthService, LocaleService } from 'src/app/common/services/auth';
+import { LoginPageSettingsModel } from 'src/app/common/models';
+import { AppSettingsService } from 'src/app/common/services';
+import { GoogleAuthService } from 'src/app/common/services';
 
 @Component({
   selector: 'app-auth',
@@ -17,13 +16,10 @@ export class AuthComponent implements OnInit {
   constructor(
     private router: Router,
     private googleAuthService: GoogleAuthService,
-    private settingsService: AppSettingsService,
-    private toastrService: ToastrService,
-    private localeService: LocaleService
+    private settingsService: AppSettingsService
   ) {}
 
   ngOnInit() {
-    this.localeService.initLocale();
     this.checkConnectionString();
   }
 
