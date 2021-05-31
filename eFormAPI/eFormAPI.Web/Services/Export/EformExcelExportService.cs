@@ -87,7 +87,7 @@ namespace eFormAPI.Web.Services.Export
                     "",
                     false,
                     cultureInfo,
-                    timeZoneInfo, language).ConfigureAwait(false);
+                    timeZoneInfo, language, true).ConfigureAwait(false);
 
                 if (dataSet == null)
                 {
