@@ -1,4 +1,5 @@
 import { PageWithNavbarPage } from './PageWithNavbar.page';
+import { generateRandmString } from '../Helpers/helper-functions';
 
 export class SelectableListsPage extends PageWithNavbarPage {
   constructor() {
@@ -6,11 +7,7 @@ export class SelectableListsPage extends PageWithNavbarPage {
   }
 
   public get selectableListCount(): number {
-    let i = 0;
-    while ($(`#entitySelectMicrotingUUID_${i}`).isExisting()) {
-      i++;
-    }
-    return i;
+    return $$('#tableBodyEntitySelect > tr').length;
   }
 
   public get itemsEditPageCount(): number {
@@ -162,6 +159,27 @@ export class SelectableListsPage extends PageWithNavbarPage {
     return new EntitySelectItemEditRowObject(1);
   }
 
+  public get idTableHeader() {
+    const ele = $('#idTableHeader');
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
+    return ele;
+  }
+
+  public get nameTableHeader() {
+    const ele = $('#nameTableHeader');
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
+    return ele;
+  }
+
+  public get descriptionTableHeader() {
+    const ele = $('#descriptionTableHeader');
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
+    return ele;
+  }
+
   public getEntitySelectItemEditRowObjectByIndex(
     index: number
   ): EntitySelectItemEditRowObject {
@@ -186,6 +204,15 @@ export class SelectableListsPage extends PageWithNavbarPage {
 
   getLastItemCreateObject(): EntitySelectItemCreateRowObject {
     return new EntitySelectItemCreateRowObject(this.itemsCreatePageCount);
+  }
+
+  public createDummySelectableLists(count = 3) {
+    for (let i = 0; i < count; i++) {
+      this.createSelectableList({
+        name: generateRandmString(),
+        description: generateRandmString(),
+      });
+    }
   }
 
   public createSelectableList(
@@ -246,31 +273,30 @@ export default selectableLists;
 
 export class SelectableListRowObject {
   constructor(rowNumber) {
-    const id = $('#entitySelectMicrotingUUID_' + (rowNumber - 1));
-    if (id) {
-      this.id = +id.getText();
+    this.element = $$('#tableBodyEntitySelect > tr')[rowNumber - 1];
+    if (this.element) {
+      this.id = +this.element.$('#entitySelectMicrotingUUID').getText();
       try {
-        this.name = $('#entitySelectName_' + (rowNumber - 1)).getText();
+        this.name = this.element.$('#entitySelectName').getText();
       } catch (e) {}
       try {
-        this.description = $(
-          '#entitySelectDescription_' + (rowNumber - 1)
-        ).getText();
+        this.description = this.element.$('#entitySelectDescription').getText();
       } catch (e) {}
       try {
-        this.deleteBtn = $('#entitySelectDeleteBtn_' + (rowNumber - 1));
+        this.deleteBtn = this.element.$('#entitySelectDeleteBtn');
       } catch (e) {}
       try {
-        this.editBtn = $('#entitySelectEditBtn_' + (rowNumber - 1));
+        this.editBtn = this.element.$('#entitySelectEditBtn');
       } catch (e) {}
     }
   }
 
+  element: WebdriverIO.Element;
   id: number;
   name: string;
   description: string;
-  editBtn;
-  deleteBtn;
+  editBtn: WebdriverIO.Element;
+  deleteBtn: WebdriverIO.Element;
 
   delete(clickCancel = false) {
     this.deleteBtn.click();

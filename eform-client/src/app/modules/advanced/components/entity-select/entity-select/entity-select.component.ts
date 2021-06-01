@@ -25,11 +25,11 @@ export class EntitySelectComponent implements OnInit {
   }
 
   tableHeaders: TableHeaderElementModel[] = [
-    { name: 'Id', elementId: '', sortable: true },
-    { name: 'Name', elementId: '', sortable: true },
-    { name: 'Description', elementId: '', sortable: true },
+    { name: 'Id', sortable: true },
+    { name: 'Name', sortable: true },
+    { name: 'Description', sortable: true },
     this.userClaims.entitySelectUpdate || this.userClaims.entitySelectDelete
-      ? { name: 'Actions', elementId: '', sortable: false }
+      ? { name: 'Actions', sortable: false }
       : null,
   ];
 

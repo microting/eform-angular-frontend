@@ -22,15 +22,24 @@ class MyEformsPage extends PageWithNavbarPage {
   }
 
   public get idSortBtn() {
-    return $('#idSort');
+    const ele = $('#idSort');
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
+    return ele;
   }
 
   public get createdAtSortBtn() {
-    return $('#createdAtSort');
+    const ele = $('#createdAtSort');
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
+    return ele;
   }
 
   public get eformNameSortBtn() {
-    return $('#nameEFormSort');
+    const ele = $('#nameEFormSort');
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
+    return ele;
   }
 
   public get eformFilter() {
