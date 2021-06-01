@@ -172,7 +172,7 @@ class MyEformsPage extends PageWithNavbarPage {
     this.createEformBtn.click();
     // browser.pause(14000);
     spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
-    $('#delete-eform-btn-0').waitForDisplayed({ timeout: 40000 });
+    this.newEformBtn.waitForClickable({ timeout: 40000 });
     return { added: addedTags, selected: selectedTags };
   }
 

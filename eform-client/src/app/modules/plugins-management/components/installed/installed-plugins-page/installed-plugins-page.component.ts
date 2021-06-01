@@ -1,23 +1,21 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { InstalledPluginStatusEnum } from 'src/app/common/const';
 import {
+  SecurityGroupsService,
+  PluginPermissionsService,
+  PluginsManagementService,
+} from 'src/app/common/services';
+import {
+  TableHeaderElementModel,
+  SecurityGroupModel,
+  SecurityGroupsRequestModel,
   InstalledPluginModel,
   InstalledPluginsModel,
   InstalledPluginsRequestModel,
   InstalledPluginUpdateModel,
   PluginGroupPermissionsListModel,
   PluginGroupPermissionsUpdateModel,
-} from '../../../../../common/models/plugins-management';
-import { InstalledPluginStatusEnum } from '../../../../../common/const';
-import {
-  PluginPermissionsService,
-  PluginsManagementService,
-} from '../../../../../common/services/plugins-management';
-import { SecurityGroupsService } from '../../../../../common/services/security';
-import {
-  SecurityGroupModel,
-  SecurityGroupsRequestModel,
-} from '../../../../../common/models/security/group';
-import { TableHeaderElementModel } from 'src/app/common/models';
+} from 'src/app/common/models';
 
 @Component({
   selector: 'app-installed-plugins-page',
@@ -37,11 +35,11 @@ export class InstalledPluginsPageComponent implements OnInit {
   pluginSettingsUpdateModel: InstalledPluginUpdateModel = new InstalledPluginUpdateModel();
 
   tableHeaders: TableHeaderElementModel[] = [
-    { name: 'ID', elementId: '', sortable: false },
-    { name: 'Name', elementId: '', sortable: false },
-    { name: 'Version', elementId: '', sortable: false },
-    { name: 'Newest version available', elementId: '', sortable: false },
-    { name: 'Actions', elementId: '', sortable: false },
+    { name: 'ID', sortable: false },
+    { name: 'Name', sortable: false },
+    { name: 'Version', sortable: false },
+    { name: 'Newest version available', sortable: false },
+    { name: 'Actions', sortable: false },
   ];
 
   constructor(

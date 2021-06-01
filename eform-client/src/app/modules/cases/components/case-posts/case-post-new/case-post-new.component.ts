@@ -6,6 +6,8 @@ import {
   OnInit,
   Output,
   ViewChild,
+  OnChanges,
+  SimpleChanges,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CasePostsService } from 'src/app/common/services';
@@ -15,6 +17,8 @@ import {
   CommonDictionaryModel,
   EmailRecipientTagCommonModel,
 } from 'src/app/common/models';
+import { format } from 'date-fns';
+import { arrayToggle } from '@datorama/akita';
 
 @AutoUnsubscribe()
 @Component({
@@ -22,7 +26,7 @@ import {
   templateUrl: './case-post-new.component.html',
   styleUrls: ['./case-post-new.component.scss'],
 })
-export class CasePostNewComponent implements OnInit, OnDestroy {
+export class CasePostNewComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild('frame') frame;
   @Output() postCreated: EventEmitter<void> = new EventEmitter<void>();
   @Input() availableRecipientsAndTags: EmailRecipientTagCommonModel[] = [];
@@ -35,9 +39,25 @@ export class CasePostNewComponent implements OnInit, OnDestroy {
   @Input() doneAt: string;
   postCreateModel: CasePostCreateModel = new CasePostCreateModel();
   selectedTagsAndRecipientsIds: number[] = [];
+
+  private firstChange = true;
+
   createTag$: Subscription;
 
   constructor(private casePostsService: CasePostsService) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.firstChange && this.caseId && this.doneAt && this.eFormName) {
+      this.postCreateModel = {
+        ...this.postCreateModel,
+        subject: `${this.eFormName} - ${format(
+          new Date(this.doneAt),
+          'yyyy/MM/dd HH:mm:ss'
+        )} - ${this.caseId}`,
+      };
+      this.firstChange = false;
+    }
+  }
 
   ngOnInit() {}
 
@@ -64,22 +84,16 @@ export class CasePostNewComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {}
 
-  saveRecipientOrTag(model: any) {
+  saveRemoveRecipientOrTag(model: EmailRecipientTagCommonModel) {
     if (model.isTag) {
-      this.postCreateModel.toTagsIds.push(model.id);
-    } else {
-      this.postCreateModel.toRecipientsIds.push(model.id);
-    }
-  }
-
-  removeRecipientOrTag(model: any) {
-    if (model.isTag) {
-      this.postCreateModel.toTagsIds = this.postCreateModel.toTagsIds.filter(
-        (x) => x !== model.id
+      this.postCreateModel.toTagsIds = arrayToggle(
+        this.postCreateModel.toTagsIds,
+        model.id
       );
     } else {
-      this.postCreateModel.toRecipientsIds = this.postCreateModel.toRecipientsIds.filter(
-        (x) => x !== model.id
+      this.postCreateModel.toRecipientsIds = arrayToggle(
+        this.postCreateModel.toRecipientsIds,
+        model.id
       );
     }
   }
