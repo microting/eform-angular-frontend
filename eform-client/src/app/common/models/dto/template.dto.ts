@@ -1,12 +1,12 @@
-import {SiteNameDto} from './site-name.dto';
-import {FieldDto} from './field.dto';
-import {KeyValueModel} from '../common/key-value.model';
+import { SiteNameDto } from './site-name.dto';
+import { FieldDto } from './field.dto';
+import { KeyValueModel } from '../common/key-value.model';
 
 export class TemplateDto {
   id: number;
   createdAt: Date;
   updatedAt: Date;
-  label: String;
+  label: string;
   description: String;
   repeated: Number;
   folderName: String;
