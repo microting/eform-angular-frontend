@@ -1,5 +1,5 @@
-import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { UserClaimsEnum } from 'src/app/common/const';
 import {
   PageSettingsModel,
@@ -16,19 +16,16 @@ import {
 } from 'src/app/common/services';
 import { saveAs } from 'file-saver';
 import { CasesStateService } from '../store';
-import { AuthStateService } from 'src/app/common/store';
+import { AppMenuStateService, AuthStateService } from 'src/app/common/store';
+import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
+import { Subscription } from 'rxjs';
 
+@AutoUnsubscribe()
 @Component({
   selector: 'app-cases-table',
   templateUrl: './cases-table.component.html',
 })
-export class CasesTableComponent implements OnInit {
-  @ViewChild('modalRemoveCase', { static: true }) modalRemoveCase;
-  currentTemplate: TemplateDto = new TemplateDto();
-  eformPermissionsSimpleModel: EformPermissionsSimpleModel = new EformPermissionsSimpleModel();
-  caseListModel: CaseListModel = new CaseListModel();
-  localPageSettings: PageSettingsModel = new PageSettingsModel();
-
+export class CasesTableComponent implements OnInit, OnDestroy {
   get userClaims() {
     return this.authStateService.currentUserClaims;
   }
@@ -41,20 +38,31 @@ export class CasesTableComponent implements OnInit {
     return UserClaimsEnum;
   }
 
-  tableHeaders: TableHeaderElementModel[];
-
   constructor(
     private activateRoute: ActivatedRoute,
     private casesService: CasesService,
     private eFormService: EFormService,
-    private authStateService: AuthStateService,
+    public authStateService: AuthStateService,
     private securityGroupEformsService: SecurityGroupEformsPermissionsService,
-    public caseStateService: CasesStateService
+    public caseStateService: CasesStateService,
+    private router: Router,
+    private appMenuStateService: AppMenuStateService
   ) {
     this.activateRoute.params.subscribe((params) => {
       this.caseStateService.setTemplateId(+params['id']);
     });
   }
+  @ViewChild('modalRemoveCase', { static: true }) modalRemoveCase;
+  currentTemplate: TemplateDto = new TemplateDto();
+  eformPermissionsSimpleModel: EformPermissionsSimpleModel = new EformPermissionsSimpleModel();
+  caseListModel: CaseListModel = new CaseListModel();
+  localPageSettings: PageSettingsModel = new PageSettingsModel();
+  title: string;
+
+  tableHeaders: TableHeaderElementModel[];
+  appMenuObservableSub$: Subscription;
+
+  ngOnDestroy() {}
 
   ngOnInit() {
     this.loadTemplateData();
@@ -87,9 +95,9 @@ export class CasesTableComponent implements OnInit {
     this.caseStateService.loadTemplateData().subscribe((operation) => {
       if (operation && operation.success) {
         this.currentTemplate = operation.model;
-        // debugger;
         this.loadEformPermissions(this.currentTemplate.id);
         this.loadAllCases();
+        this.setTitle();
       }
     });
   }
@@ -233,5 +241,19 @@ export class CasesTableComponent implements OnInit {
         : null,
       { name: 'Actions', elementId: '', sortable: false },
     ];
+  }
+
+  private setTitle() {
+    const href = this.router.url;
+    this.appMenuObservableSub$ = this.appMenuStateService.appMenuObservable.subscribe(
+      (appMenu) => {
+        if (appMenu) {
+          this.title = this.appMenuStateService.getTitleByUrl(href);
+          if (!this.title) {
+            this.title = this.currentTemplate.label;
+          }
+        }
+      }
+    );
   }
 }

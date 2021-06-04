@@ -6,6 +6,7 @@ import { saveAs } from 'file-saver';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { EFormService } from 'src/app/common/services';
 import { EformDocxReportGenerateModel } from 'src/app/common/models';
+import { AppMenuStateService } from 'src/app/common/store';
 
 @AutoUnsubscribe()
 @Component({
@@ -18,20 +19,24 @@ export class EformXlsxReportContainerComponent implements OnInit, OnDestroy {
   dateTo: any;
   range: Date[] = [];
   selectedTemplateId: number;
+  title: string;
 
   activatedRouteSub$: Subscription;
   generateReportSub$: Subscription;
+  getSingleEformSub$: Subscription;
+  appMenuObservableSub$: Subscription;
 
   constructor(
     private activateRoute: ActivatedRoute,
     private router: Router,
+    private appMenuStateService: AppMenuStateService,
     private eFormService: EFormService
   ) {
     this.activatedRouteSub$ = this.activateRoute.params.subscribe((params) => {
       // Required to reload component
       if (this.selectedTemplateId) {
         this.router.navigate(['/']).then(() => {
-          this.router.navigate(['/excel-report/' + +params['eformId']]);
+          this.router.navigate([`/xlsx-report/${+params['eformId']}`]);
         });
       }
 
@@ -39,16 +44,34 @@ export class EformXlsxReportContainerComponent implements OnInit, OnDestroy {
       this.dateTo = params['dateTo'];
       this.selectedTemplateId = +params['eformId'];
 
-      this.range.push(parseISO(params['dateFrom']));
-      this.range.push(parseISO(params['dateTo']));
+      this.range.push(parseISO(this.dateFrom));
+      this.range.push(parseISO(this.dateTo));
       const model: EformDocxReportGenerateModel = {
-        dateFrom: params['dateFrom'] ? params['dateFrom'].toString() : null,
-        dateTo: params['dateTo'] ? params['dateTo'].toString() : null,
-        templateId: +params['eformId'],
+        dateFrom: this.dateFrom ? this.dateFrom.toString() : null,
+        dateTo: this.dateTo ? this.dateTo.toString() : null,
+        templateId: this.selectedTemplateId,
       };
       if (model.dateFrom) {
         this.onDownloadReport(model);
       }
+
+      const href = this.router.url;
+      this.appMenuObservableSub$ = this.appMenuStateService.appMenuObservable.subscribe(
+        (appMenu) => {
+          if (appMenu) {
+            this.title = this.appMenuStateService.getTitleByUrl(href);
+            if (!this.title) {
+              this.getSingleEformSub$ = this.eFormService
+                .getSingle(this.selectedTemplateId)
+                .subscribe((data) => {
+                  if (data.success && data.model) {
+                    this.title = data.model.label;
+                  }
+                });
+            }
+          }
+        }
+      );
     });
   }
 

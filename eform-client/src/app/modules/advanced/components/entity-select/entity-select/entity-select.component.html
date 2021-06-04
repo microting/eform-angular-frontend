@@ -45,20 +45,19 @@
         [sort]="entitySelectStateService.getSort() | async"
         (sortChanged)="sortTable($event)"
       ></thead>
-      <tbody>
+      <tbody id="tableBodyEntitySelect">
         <tr
           *ngFor="
-            let advEntitySelectableGroup of advEntitySelectableGroupListModel.entities;
-            let i = index
+            let advEntitySelectableGroup of advEntitySelectableGroupListModel.entities
           "
         >
-          <td id="entitySelectMicrotingUUID_{{ i }}">
+          <td id="entitySelectMicrotingUUID">
             {{ advEntitySelectableGroup.microtingUUID }}
           </td>
-          <td id="entitySelectName_{{ i }}">
+          <td id="entitySelectName">
             {{ advEntitySelectableGroup.name }}
           </td>
-          <td id="entitySelectDescription_{{ i }}">
+          <td id="entitySelectDescription">
             {{ advEntitySelectableGroup.description }}
           </td>
           <td
@@ -69,7 +68,7 @@
             <div class="d-flex flex-row justify-content-center">
               <button
                 mdbBtn
-                id="entitySelectEditBtn_{{ i }}"
+                id="entitySelectEditBtn"
                 class="btn btn-accent btn-icon text-black-50 mb-2"
                 *ngIf="
                   userClaims.entitySelectUpdate &&
@@ -86,7 +85,7 @@
               </button>
               <button
                 mdbBtn
-                id="entitySelectDeleteBtn_{{ i }}"
+                id="entitySelectDeleteBtn"
                 class="btn btn-danger btn-icon mb-2"
                 *ngIf="
                   userClaims.entitySelectDelete &&

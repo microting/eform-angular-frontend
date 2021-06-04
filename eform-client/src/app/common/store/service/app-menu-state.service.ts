@@ -39,7 +39,10 @@ export class AppMenuStateService {
 
   getTitleByUrl(href: string): string {
     if (
+      this.query.currentAppMenu &&
+      this.query.currentAppMenu.leftMenu &&
       this.query.currentAppMenu.leftMenu.length > 0 &&
+      this.query.currentAppMenu.rightMenu &&
       this.query.currentAppMenu.rightMenu.length > 0
     ) {
       let title = this.searchTitle(href, this.query.currentAppMenu.leftMenu);

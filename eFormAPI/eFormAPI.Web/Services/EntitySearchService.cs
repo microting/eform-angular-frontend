@@ -284,12 +284,13 @@ namespace eFormAPI.Web.Services
             }
         }
 
+#pragma warning disable 1998
         public async Task<OperationResult> SendSearchableGroup(string entityGroupUid)
+#pragma warning restore 1998
         {
             try
             {
                 //var core = await _coreHelper.GetCore();
-
 
                 return new OperationResult(true, _localizationService.GetStringWithFormat("ParamDeletedSuccessfully", entityGroupUid));
             }
