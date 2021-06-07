@@ -3,11 +3,11 @@ import {CaseModel} from 'src/app/common/models/cases';
 import {CasesService} from 'src/app/common/services/cases';
 
 @Component({
-  selector: 'app-remove-case-modal',
-  templateUrl: './remove-case-modal.component.html',
-  styleUrls: ['./remove-case-modal.component.scss']
+  selector: 'app-case-remove-modal',
+  templateUrl: './case-remove-modal.component.html',
+  styleUrls: ['./case-remove-modal.component.scss']
 })
-export class RemoveCaseModalComponent implements OnInit {
+export class CaseRemoveModalComponent implements OnInit {
   @ViewChild('frame', { static: true }) frame;
   @Output() onCaseDeleted: EventEmitter<void> = new EventEmitter<void>();
   selectedTemplateId: number;

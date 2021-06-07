@@ -6,10 +6,8 @@ import {
   ViewChild,
   ViewChildren,
 } from '@angular/core';
-import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
-import { RouteConfigLoadEnd } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
 import { UserClaimsEnum } from 'src/app/common/const';
 import {
   CaseEditRequest,
@@ -18,11 +16,11 @@ import {
 } from 'src/app/common/models/cases';
 import { TemplateDto } from 'src/app/common/models/dto';
 import { EformPermissionsSimpleModel } from 'src/app/common/models/security/group-permissions/eform';
-import { AuthService, UserSettingsService } from 'src/app/common/services/auth';
+import { CaseEditElementComponent } from 'src/app/common/modules/eform-cases/components';
+import { AuthService } from 'src/app/common/services/auth';
 import { CasesService } from 'src/app/common/services/cases';
 import { EFormService } from 'src/app/common/services/eform';
 import { SecurityGroupEformsPermissionsService } from 'src/app/common/services/security';
-import { CaseEditElementComponent } from '../case-edit-element/case-edit-element.component';
 import { AuthStateService } from 'src/app/common/store';
 
 @Component({
@@ -34,7 +32,6 @@ export class CaseEditComponent implements OnInit, OnDestroy {
   @ViewChildren(CaseEditElementComponent)
   editElements: QueryList<CaseEditElementComponent>;
   @ViewChild('caseConfirmation', { static: true }) caseConfirmation;
-  activatedRouteSub: Subscription;
   id: number;
   templateId: number;
   currentTemplate: TemplateDto = new TemplateDto();
