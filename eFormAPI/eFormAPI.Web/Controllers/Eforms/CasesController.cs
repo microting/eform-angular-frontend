@@ -31,6 +31,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace eFormAPI.Web.Controllers.Eforms
 {
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Application.Case.CaseEdit;
+
     [Authorize]
     public class CasesController : Controller
     {
