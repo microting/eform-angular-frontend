@@ -93,8 +93,7 @@ namespace eFormAPI.Web.Services
                 Log.LogEvent("TemplateService.Index: try section");
                 var core = await _coreHelper.GetCore();
                 await using var sdkDbContext = core.DbContextHelper.GetDbContext();
-                var locale = await _userService.GetCurrentUserLocale();
-                var language = await sdkDbContext.Languages.SingleOrDefaultAsync(x => x.LanguageCode.ToLower() == locale.ToLower());
+                var language = await _userService.GetCurrentUserLanguage();
                 if (language == null)
                 {
                     language = await sdkDbContext.Languages.SingleOrDefaultAsync(x => x.Name == "Danish");
@@ -228,9 +227,7 @@ namespace eFormAPI.Web.Services
             {
                 var core = await _coreHelper.GetCore();
 
-                var locale = await _userService.GetCurrentUserLocale();
-
-                Language language = core.DbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
+                var language = await _userService.GetCurrentUserLanguage();
                 var templateDto = await core.TemplateItemRead(id, language);
                 return new OperationDataResult<Template_Dto>(true, templateDto);
             }
@@ -316,8 +313,7 @@ namespace eFormAPI.Web.Services
                 var result = new ExcelParseResult();
                 var core = await _coreHelper.GetCore();
                 await using MicrotingDbContext dbContext = core.DbContextHelper.GetDbContext();
-                var locale = await _userService.GetCurrentUserLocale();
-                Language language = dbContext.Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
+                var language = await _userService.GetCurrentUserLanguage();
 
                 var timeZone = await _userService.GetCurrentUserTimeZoneInfo();
                 var templatesDto = await core.TemplateItemReadAll(
@@ -488,9 +484,7 @@ namespace eFormAPI.Web.Services
         {
             var core = await _coreHelper.GetCore();
 
-            await using MicrotingDbContext dbContext = core.DbContextHelper.GetDbContext();
-            var locale = await _userService.GetCurrentUserLocale();
-            Language language = dbContext.Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
+            var language = await _userService.GetCurrentUserLanguage();
             var templateDto = await core.TemplateItemRead(id, language);
             var siteNamesDto = await core.Advanced_SiteItemReadAll();
 
@@ -512,8 +506,7 @@ namespace eFormAPI.Web.Services
             var core = await _coreHelper.GetCore();
 
             await using MicrotingDbContext dbContext = core.DbContextHelper.GetDbContext();
-            var locale = await _userService.GetCurrentUserLocale();
-            Language language = dbContext.Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
+            var language = await _userService.GetCurrentUserLanguage();
             var templateDto = await core.TemplateItemRead(deployModel.Id, language);
 
             foreach (var site in templateDto.DeployedSites)
@@ -583,9 +576,7 @@ namespace eFormAPI.Web.Services
         {
             var core = await _coreHelper.GetCore();
 
-            await using MicrotingDbContext dbContext = core.DbContextHelper.GetDbContext();
-            var locale = await _userService.GetCurrentUserLocale();
-            Language language = dbContext.Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
+            var language = await _userService.GetCurrentUserLanguage();
             var fields = core.Advanced_TemplateFieldReadAll(id, language).Result.Select(f => core.Advanced_FieldRead(f.Id, language).Result).ToList();
 
             return new OperationDataResult<List<Field>>(true, fields);

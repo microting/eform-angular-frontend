@@ -81,8 +81,7 @@ namespace eFormAPI.Web.Services.Security
                     Templates = new List<TemplateDto>()
                 };
                 var core = await _coreHelper.GetCore();
-                var locale = await _userService.GetCurrentUserLocale();
-                Language language = core.DbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
+                var language = await _userService.GetCurrentUserLanguage();
                 var templatesDto = await core.TemplateItemReadAll(false,
                     "",
                     templateRequestModel.NameFilter,
@@ -226,8 +225,7 @@ namespace eFormAPI.Web.Services.Security
                     }
                 }
                 var core = await _coreHelper.GetCore();
-                var locale = await _userService.GetCurrentUserLocale();
-                Language language = core.DbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
+                var language = await _userService.GetCurrentUserLanguage();
                 var templatesDto = await core.TemplateItemReadAll(false, timeZoneInfo, language);
                 foreach (var eformInGroups in eformsInGroup)
                 {

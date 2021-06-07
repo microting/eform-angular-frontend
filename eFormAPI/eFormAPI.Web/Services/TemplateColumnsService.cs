@@ -38,6 +38,8 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Services
 {
+    using Microting.eForm.Infrastructure.Constants;
+
     public class TemplateColumnsService : ITemplateColumnsService
     {
         private readonly IEFormCoreService _coreHelper;
@@ -66,18 +68,17 @@ namespace eFormAPI.Web.Services
             {
                 var core = await _coreHelper.GetCore();
                 await using MicrotingDbContext dbContext = core.DbContextHelper.GetDbContext();
-                var locale = await _userService.GetCurrentUserLocale();
-                Language language = dbContext.Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
+                var language = await _userService.GetCurrentUserLanguage();
                 var fields = await core.Advanced_TemplateFieldReadAll(templateId, language);
                 var templateColumns = new List<TemplateColumnModel>();
                 foreach (var field in fields)
                 {
-                    if (field.FieldType != "Picture"
-                        && field.FieldType != "Audio"
-                        && field.FieldType != "Movie"
-                        && field.FieldType != "Signature"
-                        && field.FieldType != "None"
-                        && field.FieldType != "SaveButton")
+                    if (field.FieldType != Constants.FieldTypes.Picture
+                        && field.FieldType != Constants.FieldTypes.Audio
+                        && field.FieldType != Constants.FieldTypes.Movie
+                        && field.FieldType != Constants.FieldTypes.Signature
+                        && field.FieldType != Constants.FieldTypes.None
+                        && field.FieldType != Constants.FieldTypes.SaveButton)
                         templateColumns.Add(new TemplateColumnModel()
                         {
                             Id = field.Id,
@@ -102,8 +103,7 @@ namespace eFormAPI.Web.Services
                 var core = await _coreHelper.GetCore();
 
                 await using MicrotingDbContext dbContext = core.DbContextHelper.GetDbContext();
-                var locale = await _userService.GetCurrentUserLocale();
-                Language language = dbContext.Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
+                var language = await _userService.GetCurrentUserLanguage();
                 var template = await core.TemplateItemRead(templateId, language);
                 var model = new DisplayTemplateColumnsModel()
                 {
@@ -134,8 +134,7 @@ namespace eFormAPI.Web.Services
             try
             {
                 var core = await _coreHelper.GetCore();
-                var locale = await _userService.GetCurrentUserLocale();
-                var language = core.DbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
+                var language = await _userService.GetCurrentUserLanguage();
                 var columnsList = new List<int?>
                 {
                     model.FieldId1,

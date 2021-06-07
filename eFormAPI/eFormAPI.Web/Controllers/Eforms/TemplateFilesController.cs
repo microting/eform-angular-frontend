@@ -22,37 +22,32 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using System;
-using System.Globalization;
-using System.IO;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using eFormAPI.Web.Abstractions;
-using eFormAPI.Web.Abstractions.Security;
-using eFormAPI.Web.Infrastructure;
-using eFormAPI.Web.Infrastructure.Database;
-using ICSharpCode.SharpZipLib.Zip;
-using ImageMagick;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microting.eForm.Dto;
-using Microting.eForm.Infrastructure.Data.Entities;
-using Microting.eForm.Infrastructure.Models;
-using Microting.eFormApi.BasePn.Abstractions;
-using Microting.eFormApi.BasePn.Infrastructure.Helpers;
-using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using OpenStack.NetCoreSwiftClient.Extensions;
-using Settings = Microting.eForm.Dto.Settings;
 
 namespace eFormAPI.Web.Controllers.Eforms
 {
-    using System.Linq;
+    using Abstractions;
+    using eFormAPI.Web.Abstractions.Security;
+    using ICSharpCode.SharpZipLib.Zip;
+    using ImageMagick;
+    using Infrastructure;
     using Infrastructure.Models;
     using Infrastructure.Models.Import;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using Microting.eForm.Dto;
+    using Microting.eForm.Infrastructure.Models;
+    using Microting.eFormApi.BasePn.Abstractions;
+    using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    using OpenStack.NetCoreSwiftClient.Extensions;
     using Services.Export;
+    using System;
+    using System.Globalization;
+    using System.IO;
+    using System.Threading.Tasks;
+    using System.Xml.Linq;
+    using Settings = Microting.eForm.Dto.Settings;
 
     [Authorize]
     public class TemplateFilesController : Controller
@@ -61,25 +56,19 @@ namespace eFormAPI.Web.Controllers.Eforms
         private readonly IEformPermissionsService _permissionsService;
         private readonly ILocalizationService _localizationService;
         private readonly IEformExcelExportService _eformExcelExportService;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly BaseDbContext _dbContext;
         private readonly IUserService _userService;
 
         public TemplateFilesController(IEFormCoreService coreHelper,
             ILocalizationService localizationService,
             IUserService userService,
             IEformPermissionsService permissionsService,
-            IEformExcelExportService eformExcelExportService,
-            BaseDbContext dbContext,
-            IHttpContextAccessor httpContextAccessor)
+            IEformExcelExportService eformExcelExportService)
         {
             _coreHelper = coreHelper;
-            _dbContext = dbContext;
             _userService = userService;
             _localizationService = localizationService;
             _permissionsService = permissionsService;
             _eformExcelExportService = eformExcelExportService;
-            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpGet]
@@ -97,26 +86,12 @@ namespace eFormAPI.Web.Controllers.Eforms
             var fileName = $"{id}_{DateTime.Now.Ticks}.csv";
             var filePath = PathHelper.GetOutputPath(fileName);
             CultureInfo cultureInfo = new CultureInfo("de-DE");
-            var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
-            var timeZone = _dbContext.Users.Single(x => x.Id == int.Parse(value)).TimeZone;
-            var locale = await _userService.GetCurrentUserLocale();
-            Language language = core.DbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
-            if (string.IsNullOrEmpty(timeZone))
-            {
-                timeZone = "Europe/Copenhagen";
-            }
+            var language = await _userService.GetCurrentUserLanguage();
 
-            TimeZoneInfo timeZoneInfo;
 
-            try
-            {
-                timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timeZone);
-            }
-            catch
-            {
-                timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("E. Europe Standard Time");
-            }
-            string fullPath = "";
+            var timeZoneInfo = await _userService.GetCurrentUserTimeZoneInfo();
+
+            string fullPath;
             if (!string.IsNullOrEmpty(start) && !string.IsNullOrEmpty(end))
             {
                 fullPath = await core.CasesToCsv(id, DateTime.Parse(start), DateTime.Parse(end), filePath,
@@ -176,8 +151,8 @@ namespace eFormAPI.Web.Controllers.Eforms
         private async Task<IActionResult> GetFile(string fileName, string ext, string fileType, string noCache = "noCache")
         {
             var core = await _coreHelper.GetCore();
-            string fullFileName = $"{fileName}.{ext}";
-            var filePath = Path.Combine(await core.GetSdkSetting(Settings.fileLocationPicture),fullFileName);   ;
+            var fullFileName = $"{fileName}.{ext}";
+            var filePath = Path.Combine(await core.GetSdkSetting(Settings.fileLocationPicture),fullFileName);
             if (fileType == "pdf")
             {
                 filePath = Path.Combine(await core.GetSdkSetting(Settings.fileLocationPdf),fullFileName);
@@ -324,8 +299,7 @@ namespace eFormAPI.Web.Controllers.Eforms
             try
             {
                 var core = await _coreHelper.GetCore();
-                var locale = await _userService.GetCurrentUserLocale();
-                var language = core.DbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
+                var language = await _userService.GetCurrentUserLanguage();
 
                 // Fix for broken SDK not handling empty customXmlContent well
                 string customXmlContent = new XElement("FillerElement",
@@ -365,8 +339,7 @@ namespace eFormAPI.Web.Controllers.Eforms
                 var core = await _coreHelper.GetCore();
                 var caseId = await core.CaseReadFirstId(templateId, "not_revmoed");
                 CaseDto caseDto = await core.CaseLookupCaseId((int)caseId);
-                var locale = await _userService.GetCurrentUserLocale();
-                Language language = core.DbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
+                var language = await _userService.GetCurrentUserLanguage();
                 ReplyElement replyElement = await core.CaseRead((int)caseDto.MicrotingUId, (int)caseDto.CheckUId, language).ConfigureAwait(false);
                 if (caseId != null)
                 {
