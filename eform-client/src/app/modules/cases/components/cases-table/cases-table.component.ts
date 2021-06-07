@@ -162,4 +162,18 @@ export class CasesTableComponent implements OnInit, OnDestroy {
     this.caseStateService.onDelete();
     this.loadAllCases();
   }
+
+  private setTitle() {
+    const href = this.router.url;
+    this.appMenuObservableSub$ = this.appMenuStateService.appMenuObservable.subscribe(
+      (appMenu) => {
+        if (appMenu) {
+          this.title = this.appMenuStateService.getTitleByUrl(href);
+          if (!this.title) {
+            this.title = this.currentTemplate.label;
+          }
+        }
+      }
+    );
+  }
 }
