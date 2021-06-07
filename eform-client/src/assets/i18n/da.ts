@@ -364,4 +364,5 @@ export const da = {
   Custom: 'Brugerdefinerede',
   Add: 'Tilføje',
   'Generate report': 'Generer {{value}} rapport',
+  'Select date range': 'Valg periode',
 };
