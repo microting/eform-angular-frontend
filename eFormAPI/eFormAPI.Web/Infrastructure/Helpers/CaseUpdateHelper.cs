@@ -21,14 +21,16 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using eFormAPI.Web.Infrastructure.Models.Cases.Request;
 
 namespace eFormAPI.Web.Infrastructure.Helpers
 {
+    using Microting.eForm.Infrastructure.Constants;
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
+    using Models.Cases.Request;
+
     public static class CaseUpdateHelper
     {
         public static List<string> GetStatusByEditRequest(CaseEditRequest editRequest)
@@ -58,16 +60,15 @@ namespace eFormAPI.Web.Infrastructure.Helpers
             return list;
         }
 
-
         public static List<string> GetFieldValuesByRequestField(CaseEditRequestField editRequestField)
         {
             var list = new List<string>();
 
             switch (editRequestField.FieldType)
             {
-                case "CheckBox":
-                    var checkBoxfirst = editRequestField?.FieldValues?.First();
-                    if (checkBoxfirst?.Value != null && checkBoxfirst?.FieldId != null)
+                case Constants.FieldTypes.CheckBox:
+                    var checkBoxfirst = editRequestField.FieldValues?.First();
+                    if (checkBoxfirst?.Value != null && checkBoxfirst.FieldId != 0)
                     {
                         string val;
                         if (checkBoxfirst.Value.ToString() == "1" || checkBoxfirst.Value.ToString() == "checked")
@@ -82,36 +83,36 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                     }
 
                     break;
-                case "Comment":
-                    var commentFirst = editRequestField?.FieldValues?.First();
-                    if (commentFirst?.Value != null && commentFirst?.FieldId != null)
+                case Constants.FieldTypes.Comment:
+                    var commentFirst = editRequestField.FieldValues?.First();
+                    if (commentFirst?.Value != null && commentFirst.FieldId != 0)
                     {
                         var val = $"{commentFirst.FieldId}|{commentFirst.Value.ToString().Replace("</p>", "<br>").Replace("<p>", "").Replace("<div>", "").Replace("</div>", "<br>").Replace("&nbsp;", "").Replace("</span>", "").Replace("<span style=\"font-size: 1rem;\">", "").Replace("</br>", "<br>")}";
                         list.Add(val);
                     }
 
                     break;
-                case "Number":
-                    var numberFirst = editRequestField?.FieldValues?.First();
-                    if (numberFirst?.Value != null && numberFirst?.FieldId != null)
+                case Constants.FieldTypes.Number:
+                    var numberFirst = editRequestField.FieldValues?.First();
+                    if (numberFirst?.Value != null && numberFirst.FieldId != 0)
                     {
                         var val = $"{numberFirst.FieldId}|{numberFirst.Value.ToString()}";
                         list.Add(val);
                     }
 
                     break;
-                case "Text":
-                    var textFirst = editRequestField?.FieldValues?.First();
-                    if (textFirst?.Value != null && textFirst?.FieldId != null)
+                case Constants.FieldTypes.Text:
+                    var textFirst = editRequestField.FieldValues?.First();
+                    if (textFirst?.Value != null && textFirst.FieldId != 0)
                     {
                         var val = $"{textFirst.FieldId}|{textFirst.Value.ToString()}";
                         list.Add(val);
                     }
 
                     break;
-                case "Date":
-                    var dateFirst = editRequestField?.FieldValues?.First();
-                    if (dateFirst?.Value != null && dateFirst?.FieldId != null)
+                case Constants.FieldTypes.Date:
+                    var dateFirst = editRequestField.FieldValues?.First();
+                    if (dateFirst?.Value != null && dateFirst.FieldId != 0)
                     {
                         try
                         {
@@ -134,45 +135,45 @@ namespace eFormAPI.Web.Infrastructure.Helpers
                     }
 
                     break;
-                case "SingleSelect":
-                    var singleSelect = editRequestField?.FieldValues?.First();
-                    if (singleSelect?.Value != null && singleSelect?.Value != "0" && singleSelect?.FieldId != null)
+                case Constants.FieldTypes.SingleSelect:
+                    var singleSelect = editRequestField.FieldValues?.First();
+                    if (singleSelect?.Value != null && singleSelect.Value != "0" && singleSelect.FieldId != 0)
                     {
                         var val = $"{singleSelect.FieldId}|{singleSelect.Value.ToString()}";
                         list.Add(val);
                     }
 
                     break;
-                case "EntitySearch":
-                    var entitySearch = editRequestField?.FieldValues?.First();
-                    if (entitySearch?.Value != null && entitySearch?.Value != "0" && entitySearch?.FieldId != null)
+                case Constants.FieldTypes.EntitySearch:
+                    var entitySearch = editRequestField.FieldValues?.First();
+                    if (entitySearch?.Value != null && entitySearch.Value != "0" && entitySearch.FieldId != 0)
                     {
                         var val = $"{entitySearch.FieldId}|{entitySearch.Value.ToString()}";
                         list.Add(val);
                     }
 
                     break;
-                case "EntitySelect":
+                case Constants.FieldTypes.EntitySelect:
                     var entitySelect = editRequestField?.FieldValues?.First();
-                    if (entitySelect?.Value != null && entitySelect?.FieldId != null)
+                    if (entitySelect?.Value != null && entitySelect.FieldId != 0)
                     {
                         var val = $"{entitySelect.FieldId}|{entitySelect.Value.ToString()}";
                         list.Add(val);
                     }
 
                     break;
-                case "MultiSelect":
+                case Constants.FieldTypes.MultiSelect:
                     var multiFirst = editRequestField?.FieldValues?.First();
-                    if (multiFirst?.Value != null && multiFirst?.FieldId != null)
+                    if (multiFirst?.Value != null && multiFirst.FieldId != 0)
                     {
                         var val = $"{multiFirst.FieldId}|{multiFirst.Value.ToString()}";
                         list.Add(val);
                     }
 
                     break;
-                case "Audio":
+                case Constants.FieldTypes.Audio:
                     var audioFirst = editRequestField?.FieldValues?.First();
-                    if (audioFirst?.Value != null && audioFirst?.FieldId != null)
+                    if (audioFirst?.Value != null && audioFirst.FieldId != 0)
                     {
                         var val = $"{audioFirst.FieldId}|{audioFirst.Value.ToString()}";
                         list.Add(val);
@@ -183,7 +184,6 @@ namespace eFormAPI.Web.Infrastructure.Helpers
 
             return list;
         }
-
 
         public static List<string> GetFieldList(CaseEditRequest editRequest)
         {
