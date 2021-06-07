@@ -360,4 +360,5 @@ export const enUS = {
   Custom: 'Custom',
   Add: 'Add',
   'Generate report': 'Generate {{value}} report',
+  'Select date range': 'Select date range',
 };

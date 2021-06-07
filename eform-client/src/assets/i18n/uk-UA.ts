@@ -360,4 +360,5 @@ export const ukUA = {
   Add: 'Додати',
   Remove: 'Видалити',
   'Generate report': 'Створити {{value}} звіт',
+  'Select date range': 'Виберіть діапазон дат',
 };
