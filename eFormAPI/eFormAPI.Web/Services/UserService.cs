@@ -21,34 +21,38 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System.Security.Claims;
-using System.Threading.Tasks;
-using eFormAPI.Web.Infrastructure.Database;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microting.eFormApi.BasePn.Infrastructure.Consts;
-using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 
 namespace eFormAPI.Web.Services
 {
+    using Infrastructure.Database;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
+    using Microting.eFormApi.BasePn.Abstractions;
+    using Microting.eFormApi.BasePn.Infrastructure.Consts;
+    using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
     using System;
     using System.Linq;
-    using Microting.eFormApi.BasePn.Abstractions;
+    using System.Security.Claims;
+    using System.Threading.Tasks;
+    using Microting.eForm.Infrastructure.Data.Entities;
 
     public class UserService : IUserService
     {
         private readonly UserManager<EformUser> _userManager;
         private readonly IHttpContextAccessor _httpAccessor;
         private readonly BaseDbContext _dbContext;
+        private readonly IEFormCoreService _coreHelper;
 
         public UserService(BaseDbContext dbContext,
             UserManager<EformUser> userManager,
-            IHttpContextAccessor httpAccessor)
+            IHttpContextAccessor httpAccessor,
+            IEFormCoreService coreHelper)
         {
             _userManager = userManager;
             _httpAccessor = httpAccessor;
             _dbContext = dbContext;
+            _coreHelper = coreHelper;
         }
 
         public async Task<EformUser> GetByIdAsync(int id)
@@ -193,6 +197,39 @@ namespace eFormAPI.Web.Services
                 .Where(x => x.Id == userId)
                 .Select(x => $"{x.FirstName} {x.LastName}")
                 .FirstOrDefaultAsync();
+        }
+
+        public async Task<string> GetCurrentUserFullName()
+        {
+            if (UserId < 1)
+            {
+                throw new Exception("User not authorized!");
+            }
+
+            return await GetFullNameUserByUserIdAsync(UserId);
+        }
+
+        public async Task<Language> GetLanguageByUserIdAsync(int userId)
+        {
+            var core = await _coreHelper.GetCore();
+            var locale = await GetUserLocale(userId);
+            var sdkDbContext = core.DbContextHelper.GetDbContext();
+            var language = await sdkDbContext.Languages
+                .AsNoTracking()
+                .Where(x => x.LanguageCode.ToLower() == locale.ToLower())
+                .FirstAsync();
+
+            return language;
+        }
+
+        public async Task<Language> GetCurrentUserLanguage()
+        {
+            if (UserId < 1)
+            {
+                throw new Exception("User not authorized!");
+            }
+
+            return await GetLanguageByUserIdAsync(UserId);
         }
     }
 }

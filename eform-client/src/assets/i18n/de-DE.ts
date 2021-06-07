@@ -368,4 +368,5 @@ export const deDE = {
   Custom: 'Op maat',
   Add: 'Toevoegen',
   'Generate report': 'Bericht {{value}} generieren',
+  'Select date range': 'Datumsbereich auswählen',
 };
