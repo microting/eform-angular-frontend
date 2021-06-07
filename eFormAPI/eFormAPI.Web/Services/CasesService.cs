@@ -30,7 +30,6 @@ namespace eFormAPI.Web.Services
     using System.Threading.Tasks;
     using Abstractions;
     using Abstractions.Eforms;
-    using Infrastructure.Helpers;
     using Infrastructure.Models.Cases.Request;
     using Infrastructure.Models.Cases.Response;
     using Microting.eForm.Infrastructure.Constants;
@@ -40,6 +39,7 @@ namespace eFormAPI.Web.Services
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
     using Microting.eFormApi.BasePn.Infrastructure.Delegates.CaseUpdate;
     using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Application.Case.CaseEdit;
 
     public class CasesService : ICasesService
     {
