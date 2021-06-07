@@ -35,6 +35,7 @@ namespace eFormAPI.Web.Services
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
+    using Microting.eForm.Infrastructure.Data.Entities;
 
     public class UserService : IUserService
     {
@@ -208,24 +209,20 @@ namespace eFormAPI.Web.Services
             return await GetFullNameUserByUserIdAsync(UserId);
         }
 
-        public async Task<string> GetLanguageByUserIdAsync(int userId)
+        public async Task<Language> GetLanguageByUserIdAsync(int userId)
         {
             var core = await _coreHelper.GetCore();
             var locale = await GetUserLocale(userId);
             var sdkDbContext = core.DbContextHelper.GetDbContext();
             var language = await sdkDbContext.Languages
+                .AsNoTracking()
                 .Where(x => x.LanguageCode.ToLower() == locale.ToLower())
-                .Select(x => x.Name)
-                .FirstOrDefaultAsync();
+                .FirstAsync();
 
-            if (string.IsNullOrEmpty(language))
-            {
-                language = LanguageNames.Danish;
-            }
             return language;
         }
 
-        public async Task<string> GetCurrentUserLanguage()
+        public async Task<Language> GetCurrentUserLanguage()
         {
             if (UserId < 1)
             {

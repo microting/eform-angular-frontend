@@ -24,7 +24,6 @@ export class AuthStateService {
   ) {}
 
   login(loginInfo: LoginRequestModel) {
-    console.log({ method: 'AuthStateService.login()', loginInfo });
     this.service.login(loginInfo).subscribe((response) => {
       if (response) {
         this.store.update((state) => ({
@@ -69,7 +68,6 @@ export class AuthStateService {
       this.isRefreshing = true;
       this.service.refreshToken().subscribe((response) => {
         if (response) {
-          console.log({ method: 'AuthStateService.refreshToken()', response });
           this.service.obtainUserClaims().subscribe((userClaims) => {
             this.store.update((state) => ({
               ...state,
@@ -101,10 +99,6 @@ export class AuthStateService {
   }
 
   get bearerToken(): string {
-    console.log({
-      method: 'AuthStateService.bearerToken()',
-      accessToken: this.query.currentSetting.token.accessToken,
-    });
     return 'Bearer ' + this.query.currentSetting.token.accessToken;
   }
 
@@ -133,7 +127,6 @@ export class AuthStateService {
   }
 
   updateUserLocale(locale: string) {
-    console.log({ method: 'AuthStateService.updateUserLocale()', locale });
     this.store.update((state) => ({
       ...state,
       currentUser: {
@@ -144,11 +137,6 @@ export class AuthStateService {
   }
 
   updateCurrentUserLocaleAndDarkTheme(locale: string, darkTheme: boolean) {
-    console.log({
-      method: 'AuthStateService.updateUserInfo()',
-      locale,
-      darkTheme,
-    });
     this.store.update((state) => ({
       ...state,
       currentUser: {
@@ -160,7 +148,6 @@ export class AuthStateService {
   }
 
   updateUserInfo(userInfo: UserInfoModel) {
-    console.log({ method: 'AuthStateService.updateUserInfo()', userInfo });
     this.store.update((state) => ({
       ...state,
       currentUser: {

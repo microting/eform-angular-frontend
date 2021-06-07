@@ -40,7 +40,7 @@ namespace eFormAPI.Web.Services
     using System.Diagnostics;
     using System.IO;
     using Microsoft.Extensions.Logging;
-    using eFormAPI.Web.Infrastructure.Models;
+    using Infrastructure.Models;
 
     public class EformCaseReportService : IEformCaseReportService
     {
@@ -74,11 +74,9 @@ namespace eFormAPI.Web.Services
             EFormCaseReportRequest eFormCaseReportRequest)
         {
             var core = await _coreHelper.GetCore();
-            var localeString = await _userService.GetCurrentUserLocale();
+            var language = await _userService.GetCurrentUserLanguage();
             var sdkDbContext = core.DbContextHelper.GetDbContext();
             var timeZoneInfo = await _userService.GetCurrentUserTimeZoneInfo();
-            var language = sdkDbContext.Languages.Single(x =>
-                x.LanguageCode == localeString);
             var template = await core.TemplateItemRead(eFormCaseReportRequest.TemplateId, language);
             if (template == null)
             {
@@ -374,9 +372,7 @@ namespace eFormAPI.Web.Services
         public async Task<OperationDataResult<EformDocxReportHeadersModel>> GetReportHeadersByTemplateId(int templateId)
         {
             var core = await _coreHelper.GetCore();
-            var localeString = await _userService.GetCurrentUserLocale();
-            var sdkDbContext = core.DbContextHelper.GetDbContext();
-            var language = sdkDbContext.Languages.Single(x => x.LanguageCode == localeString);
+            var language = await _userService.GetCurrentUserLanguage();
             var template = await core.TemplateItemRead(templateId, language);
             if (template == null)
             {

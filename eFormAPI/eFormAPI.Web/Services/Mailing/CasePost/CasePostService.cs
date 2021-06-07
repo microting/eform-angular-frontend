@@ -132,7 +132,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                     throw new InvalidOperationException("caseDto not found");
                 }
 
-                var replyElement = await core.CaseRead((int) caseDto.MicrotingUId, (int) caseDto.CheckUId, language).ConfigureAwait(false);
+                var replyElement = await core.CaseRead((int)caseDto.MicrotingUId, (int)caseDto.CheckUId, language).ConfigureAwait(false);
                 if (replyElement.DocxExportEnabled || replyElement.JasperExportEnabled)
                 {
                     casePostsListModel.PdfReportAvailable = true;
@@ -177,7 +177,7 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
 
                     if (caseEntity.Site?.MicrotingUid != null)
                     {
-                        var site = await core.SiteRead((int) caseEntity.Site.MicrotingUid);
+                        var site = await core.SiteRead((int)caseEntity.Site.MicrotingUid);
                         casePostsListModel.WorkerName = site.SiteName;
                     }
 
@@ -339,183 +339,172 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
         public async Task<OperationResult> CreatePost(CasePostCreateModel requestModel)
         {
             //using (var transaction = await _dbContext.Database.BeginTransactionAsync())
-//                {
-                try
+            //                {
+            try
+            {
+                if (string.IsNullOrEmpty(_emailSettings.Value.SendGridKey))
                 {
-                    if (string.IsNullOrEmpty(_emailSettings.Value.SendGridKey))
-                    {
-                        //transaction.Rollback();
-                        return new OperationResult(false,
-                            _localizationService.GetString("SendGridKeyShouldBeAddedToSettings"));
-                    }
+                    //transaction.Rollback();
+                    return new OperationResult(false,
+                        _localizationService.GetString("SendGridKeyShouldBeAddedToSettings"));
+                }
 
-                    var casePost = new CasePost
+                var casePost = new CasePost
+                {
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow,
+                    Version = 1,
+                    CreatedByUserId = _userService.UserId,
+                    UpdatedByUserId = _userService.UserId,
+                    AttachPdf = requestModel.AttachReport,
+                    LinkToCase = requestModel.AttachLinkToCase,
+                    Text = requestModel.Text,
+                    Subject = requestModel.Subject,
+                    CaseId = requestModel.CaseId,
+                    PostDate = DateTime.UtcNow,
+                    WorkflowState = Constants.WorkflowStates.Created,
+                };
+
+                await _dbContext.CasePosts.AddAsync(casePost);
+                await _dbContext.SaveChangesAsync();
+
+                foreach (var tagsId in requestModel.ToTagsIds)
+                {
+                    var casePostEmailTag = new CasePostEmailTag
                     {
                         CreatedAt = DateTime.UtcNow,
                         UpdatedAt = DateTime.UtcNow,
                         Version = 1,
                         CreatedByUserId = _userService.UserId,
                         UpdatedByUserId = _userService.UserId,
-                        AttachPdf = requestModel.AttachReport,
-                        LinkToCase = requestModel.AttachLinkToCase,
-                        Text = requestModel.Text,
-                        Subject = requestModel.Subject,
-                        CaseId = requestModel.CaseId,
-                        PostDate = DateTime.UtcNow,
+                        CasePostId = casePost.Id,
+                        EmailTagId = tagsId,
                         WorkflowState = Constants.WorkflowStates.Created,
                     };
 
-                    await _dbContext.CasePosts.AddAsync(casePost);
-                    await _dbContext.SaveChangesAsync();
+                    await _dbContext.CasePostEmailTags.AddAsync(casePostEmailTag);
+                }
 
-                    foreach (var tagsId in requestModel.ToTagsIds)
+                foreach (var recipientId in requestModel.ToRecipientsIds)
+                {
+                    var casePostEmailRecipient = new CasePostEmailRecipient()
                     {
-                        var casePostEmailTag = new CasePostEmailTag
+                        CreatedAt = DateTime.UtcNow,
+                        UpdatedAt = DateTime.UtcNow,
+                        Version = 1,
+                        CreatedByUserId = _userService.UserId,
+                        UpdatedByUserId = _userService.UserId,
+                        CasePostId = casePost.Id,
+                        EmailRecipientId = recipientId,
+                        WorkflowState = Constants.WorkflowStates.Created,
+                    };
+
+                    await _dbContext.CasePostEmailRecipients.AddAsync(casePostEmailRecipient);
+                }
+
+                await _dbContext.SaveChangesAsync();
+
+                // Send email
+                var currentUser = await _userService.GetCurrentUserAsync();
+
+                var casePostRecipientResult = await _dbContext.CasePosts
+                    .AsNoTracking()
+                    .Where(x => x.Id == casePost.Id)
+                    .Select(x => new
+                    {
+                        Recipients = x.Recipients
+                            .Select(y => y.EmailRecipient)
+                            .ToList(),
+                        EmailTags = x.Tags
+                            .Select(y => y.EmailTagId)
+                            .ToList()
+                    })
+                    .FirstOrDefaultAsync();
+
+                var emailTagsRecipients = await _dbContext.EmailTagRecipients
+                    .Where(x => casePostRecipientResult.EmailTags.Contains(x.EmailTagId))
+                    .Select(x => x.EmailRecipient)
+                    .ToListAsync();
+
+                var recipients = new List<EmailRecipient>();
+                recipients.AddRange(casePostRecipientResult.Recipients);
+                recipients.AddRange(emailTagsRecipients);
+
+                var core = await _coreService.GetCore();
+                var caseDto = await core.CaseLookupCaseId(casePost.CaseId);
+                if (caseDto?.MicrotingUId == null || caseDto.CheckUId == null)
+                {
+                    //transaction.Rollback();
+                    throw new InvalidOperationException("caseDto not found");
+                }
+                var language = await _userService.GetCurrentUserLanguage();
+                var replyElement = await core.CaseRead((int)caseDto.MicrotingUId, (int)caseDto.CheckUId, language).ConfigureAwait(false);
+                var assembly = Assembly.GetExecutingAssembly();
+                var assemblyName = assembly.GetName().Name;
+                var stream = assembly.GetManifestResourceStream($"{assemblyName}.Resources.Email.html");
+                string html;
+                if (stream == null)
+                {
+                    //transaction.Rollback();
+                    throw new InvalidOperationException("Resource not found");
+                }
+                using (var reader = new StreamReader(stream, Encoding.UTF8))
+                {
+                    html = await reader.ReadToEndAsync();
+                }
+
+                if (casePost.LinkToCase)
+                {
+                    html = html
+                        .Replace("{{link}}",
+                            $"{await core.GetSdkSetting(Settings.httpServerAddress)}/cases/edit/{casePost.CaseId}/{caseDto.CheckListId}")
+                        .Replace("{{text}}", casePost.Text);
+                }
+                else
+                {
+                    html = casePost.Text;
+                }
+
+                foreach (var recipient in recipients
+                    .Where(r => r.WorkflowState != Constants.WorkflowStates.Removed)
+                    .GroupBy(x => new { x.Email, x.Name })
+                    .Select(x => x.Key)
+                    .ToList())
+                {
+                    if (casePost.AttachPdf)
+                    {
+                        try
                         {
-                            CreatedAt = DateTime.UtcNow,
-                            UpdatedAt = DateTime.UtcNow,
-                            Version = 1,
-                            CreatedByUserId = _userService.UserId,
-                            UpdatedByUserId = _userService.UserId,
-                            CasePostId = casePost.Id,
-                            EmailTagId = tagsId,
-                            WorkflowState = Constants.WorkflowStates.Created,
-                        };
+                            // Fix for broken SDK not handling empty customXmlContent well
+                            var customXmlContent = new XElement("FillerElement",
+                                new XElement("InnerElement", "SomeValue")).ToString();
 
-                        await _dbContext.CasePostEmailTags.AddAsync(casePostEmailTag);
-                    }
+                            // get report file
+                            var filePath = await core.CaseToPdf(
+                                casePost.CaseId,
+                                replyElement.Id.ToString(),
+                                DateTime.Now.ToString("yyyyMMddHHmmssffff"),
+                                $"{await core.GetSdkSetting(Settings.httpServerAddress)}/" +
+                                "api/template-files/get-image/",
+                                "pdf",
+                                customXmlContent, language);
 
-                    foreach (var recipientId in requestModel.ToRecipientsIds)
-                    {
-                        var casePostEmailRecipient = new CasePostEmailRecipient()
-                        {
-                            CreatedAt = DateTime.UtcNow,
-                            UpdatedAt = DateTime.UtcNow,
-                            Version = 1,
-                            CreatedByUserId = _userService.UserId,
-                            UpdatedByUserId = _userService.UserId,
-                            CasePostId = casePost.Id,
-                            EmailRecipientId = recipientId,
-                            WorkflowState = Constants.WorkflowStates.Created,
-                        };
-
-                        await _dbContext.CasePostEmailRecipients.AddAsync(casePostEmailRecipient);
-                    }
-
-                    await _dbContext.SaveChangesAsync();
-
-                    // Send email
-                    var currentUser = await _userService.GetCurrentUserAsync();
-
-                    var casePostRecipientResult = await _dbContext.CasePosts
-                        .AsNoTracking()
-                        .Where(x => x.Id == casePost.Id)
-                        .Select(x => new
-                        {
-                            Recipients = x.Recipients
-                                .Select(y => y.EmailRecipient)
-                                .ToList(),
-                            EmailTags = x.Tags
-                                .Select(y => y.EmailTagId)
-                                .ToList()
-                        })
-                        .FirstOrDefaultAsync();
-
-                    var emailTagsRecipients = await _dbContext.EmailTagRecipients
-                        .Where(x => casePostRecipientResult.EmailTags.Contains(x.EmailTagId))
-                        .Select(x => x.EmailRecipient)
-                        .ToListAsync();
-
-                    var recipients = new List<EmailRecipient>();
-                    recipients.AddRange(casePostRecipientResult.Recipients);
-                    recipients.AddRange(emailTagsRecipients);
-
-                    var core = await _coreService.GetCore();
-                    var caseDto = await core.CaseLookupCaseId(casePost.CaseId);
-                    if (caseDto?.MicrotingUId == null || caseDto.CheckUId == null)
-                    {
-                        //transaction.Rollback();
-                        throw new InvalidOperationException("caseDto not found");
-                    }
-                    var locale = await _userService.GetCurrentUserLocale();
-                    Language language = core.DbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
-                    var replyElement = await core.CaseRead((int) caseDto.MicrotingUId, (int) caseDto.CheckUId, language).ConfigureAwait(false);
-                    var assembly = Assembly.GetExecutingAssembly();
-                    var assemblyName = assembly.GetName().Name;
-                    var stream = assembly.GetManifestResourceStream($"{assemblyName}.Resources.Email.html");
-                    string html;
-                    if (stream == null)
-                    {
-                        //transaction.Rollback();
-                        throw new InvalidOperationException("Resource not found");
-                    }
-                    using (var reader = new StreamReader(stream, Encoding.UTF8))
-                    {
-                        html = await reader.ReadToEndAsync();
-                    }
-
-                    if (casePost.LinkToCase)
-                    {
-                        html = html
-                            .Replace("{{link}}",
-                                $"{await core.GetSdkSetting(Settings.httpServerAddress)}/cases/edit/{casePost.CaseId}/{caseDto.CheckListId}")
-                            .Replace("{{text}}", casePost.Text);
-                    }
-                    else
-                    {
-                        html = casePost.Text;
-                    }
-
-                    foreach (var recipient in recipients
-                        .Where(r => r.WorkflowState != Constants.WorkflowStates.Removed)
-                        .GroupBy(x => new { x.Email, x.Name})
-                        .Select(x=> x.Key)
-                        .ToList())
-                    {
-                        if (casePost.AttachPdf)
-                        {
-                            try
+                            if (!File.Exists(filePath))
                             {
-                                // Fix for broken SDK not handling empty customXmlContent well
-                                var customXmlContent = new XElement("FillerElement",
-                                    new XElement("InnerElement", "SomeValue")).ToString();
-
-                                // get report file
-                                var filePath = await core.CaseToPdf(
-                                    casePost.CaseId,
-                                    replyElement.Id.ToString(),
-                                    DateTime.Now.ToString("yyyyMMddHHmmssffff"),
-                                    $"{await core.GetSdkSetting(Settings.httpServerAddress)}/" +
-                                    "api/template-files/get-image/",
-                                    "pdf",
-                                    customXmlContent, language);
-
-                                if (!File.Exists(filePath))
-                                {
-                                    throw new Exception("Error while creating report file");
-                                }
-
-                                await _emailService.SendFileAsync(
-                                    EformEmailConst.FromEmail,
-                                    $"{currentUser.FirstName} {currentUser.LastName}",
-                                    casePost.Subject.IsNullOrEmpty() ? "-" : casePost.Subject,
-                                    recipient.Email,
-                                    filePath,
-                                    html: html);
+                                throw new Exception("Error while creating report file");
                             }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine(e);
-                                await _emailService.SendAsync(
-                                    EformEmailConst.FromEmail,
-                                    $"{currentUser.FirstName} {currentUser.LastName}",
-                                    casePost.Subject.IsNullOrEmpty() ? "-" : casePost.Subject,
-                                    recipient.Email,
-                                    html: html);
-                            }
+
+                            await _emailService.SendFileAsync(
+                                EformEmailConst.FromEmail,
+                                $"{currentUser.FirstName} {currentUser.LastName}",
+                                casePost.Subject.IsNullOrEmpty() ? "-" : casePost.Subject,
+                                recipient.Email,
+                                filePath,
+                                html: html);
                         }
-                        else
+                        catch (Exception e)
                         {
+                            Console.WriteLine(e);
                             await _emailService.SendAsync(
                                 EformEmailConst.FromEmail,
                                 $"{currentUser.FirstName} {currentUser.LastName}",
@@ -524,20 +513,30 @@ namespace eFormAPI.Web.Services.Mailing.CasePost
                                 html: html);
                         }
                     }
+                    else
+                    {
+                        await _emailService.SendAsync(
+                            EformEmailConst.FromEmail,
+                            $"{currentUser.FirstName} {currentUser.LastName}",
+                            casePost.Subject.IsNullOrEmpty() ? "-" : casePost.Subject,
+                            recipient.Email,
+                            html: html);
+                    }
+                }
 
-                    //transaction.Commit();
-                    return new OperationResult(
-                        true,
-                        _localizationService.GetString("PostCreatedSuccessfully"));
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    _logger.LogError(e.Message);
-                    //transaction.Rollback();
-                    return new OperationResult(false,
-                        _localizationService.GetString("ErrorWhileCreatingPost"));
-                }
+                //transaction.Commit();
+                return new OperationResult(
+                    true,
+                    _localizationService.GetString("PostCreatedSuccessfully"));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                _logger.LogError(e.Message);
+                //transaction.Rollback();
+                return new OperationResult(false,
+                    _localizationService.GetString("ErrorWhileCreatingPost"));
+            }
             //}
         }
 

@@ -22,7 +22,6 @@ export interface AuthState {
 }
 
 export function createInitialState(): AuthState {
-  console.log('AuthState.createInitialState()');
   return {
     token: {
       accessToken: '',
@@ -94,7 +93,6 @@ const authPersistStorage = persistState({
   include: ['auth'],
   key: 'mainStore',
   preStorageUpdate(storeName, state: AuthState): AuthState {
-    console.log({ method: 'AuthStateService.preStorageUpdate()', state });
     return {
       currentUser: state.currentUser,
       token: state.token,
@@ -110,9 +108,7 @@ export class AuthStore extends Store<AuthState> {
   }
 
   reset(): void {
-    console.log({ method: 'before AuthState.reset()', value: this.getValue() });
     super.reset();
-    console.log({ method: 'after AuthState.reset()', value: this.getValue() });
   }
 }
 

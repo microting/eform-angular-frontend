@@ -67,8 +67,7 @@ namespace eFormAPI.Web.Services.Export
                 var core = await _coreHelper.GetCore();
                 var cultureInfo = new CultureInfo("de-DE");
 
-                var locale = await _userService.GetCurrentUserLocale();
-                var language = core.DbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
+                var language = await _userService.GetCurrentUserLanguage();
                 var timeZoneInfo = await _userService.GetCurrentUserTimeZoneInfo();
 
                 var customPathForUploadedData = $"{await core.GetSdkSetting(Settings.httpServerAddress)}/" +

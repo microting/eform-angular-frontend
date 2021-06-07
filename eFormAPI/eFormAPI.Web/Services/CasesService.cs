@@ -30,7 +30,6 @@ namespace eFormAPI.Web.Services
     using System.Threading.Tasks;
     using Abstractions;
     using Abstractions.Eforms;
-    using Infrastructure.Helpers;
     using Infrastructure.Models.Cases.Request;
     using Infrastructure.Models.Cases.Response;
     using Microting.eForm.Infrastructure.Constants;
@@ -40,6 +39,7 @@ namespace eFormAPI.Web.Services
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
     using Microting.eFormApi.BasePn.Infrastructure.Delegates.CaseUpdate;
     using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Application.Case.CaseEdit;
 
     public class CasesService : ICasesService
     {
@@ -90,8 +90,7 @@ namespace eFormAPI.Web.Services
                 var caseDto = await core.CaseReadByCaseId(id);
                 var microtingUId = caseDto.MicrotingUId;
                 var microtingCheckUId = caseDto.CheckUId;
-                var locale = await _userService.GetCurrentUserLocale();
-                Language language = core.DbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
+                var language = await _userService.GetCurrentUserLanguage();
                 var theCase = await core.CaseRead((int)microtingUId, (int)microtingCheckUId, language);
                 theCase.Id = id;
 
@@ -130,8 +129,7 @@ namespace eFormAPI.Web.Services
             var checkListValueList = new List<string>();
             var fieldValueList = new List<string>();
             var core = await _coreHelper.GetCore();
-            var locale = await _userService.GetCurrentUserLocale();
-            var language = core.DbContextHelper.GetDbContext().Languages.Single(x => x.LanguageCode.ToLower() == locale.ToLower());
+            var language = await _userService.GetCurrentUserLanguage();
             try
             {
                 model.ElementList.ForEach(element =>
