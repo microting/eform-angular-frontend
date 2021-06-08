@@ -33,7 +33,9 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Controllers.Eforms
 {
+    using System.Collections.Generic;
     using Infrastructure.Models.Import;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
     [Authorize]
     public class TemplatesController : Controller
@@ -116,6 +118,13 @@ namespace eFormAPI.Web.Controllers.Eforms
         public async Task<OperationResult> Deploy([FromBody] DeployModel deployModel)
         {
             return await _templatesService.Deploy(deployModel);
+        }
+
+        [HttpGet]
+        [Route("api/templates/common-dictionary-templates")]
+        public async Task<OperationDataResult<List<CommonDictionaryModel>>> GetCommonDictionaryTemplates(string nameFilter, int idFilter)
+        {
+            return await _templatesService.GetDictionaryTemplates(nameFilter, idFilter);
         }
     }
 }
