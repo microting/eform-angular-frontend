@@ -61,7 +61,7 @@ export class CasesTableComponent implements OnInit, OnDestroy {
   title: string;
 
   tableHeaders: TableHeaderElementModel[];
-  appMenuObservableSub$: Subscription;
+  appMenuSub$: Subscription;
 
   ngOnDestroy() {}
 
@@ -165,7 +165,7 @@ export class CasesTableComponent implements OnInit, OnDestroy {
 
   private setTitle() {
     const href = this.router.url;
-    this.appMenuObservableSub$ = this.appMenuStateService.appMenuObservable.subscribe(
+    this.appMenuSub$ = this.appMenuStateService.appMenuObservable.subscribe(
       (appMenu) => {
         if (appMenu) {
           this.title = this.appMenuStateService.getTitleByUrl(href);

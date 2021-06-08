@@ -9,10 +9,11 @@ import {
   TemplateColumnModel,
   TemplateDto,
   TemplateListModel,
+  FieldDto,
   UpdateColumnsModel,
+  TemplateRequestModel,
+  CommonDictionaryModel,
 } from 'src/app/common/models';
-import { TemplateRequestModel } from 'src/app/common/models/eforms';
-import { FieldDto } from '../../models/dto/field.dto';
 import { ApiBaseService } from 'src/app/common/services';
 
 const TemplatesMethods = {
@@ -23,6 +24,7 @@ const TemplatesMethods = {
   CreateSingle: '/api/templates/create',
   DeploySingle: '/api/templates/deploy',
   ImportEforms: '/api/templates/import',
+  CommonDictionaryModelTemplates: 'api/templates/common-dictionary-templates',
 };
 
 const TemplateFilesMethods = {
@@ -127,6 +129,16 @@ export class EFormService {
   downloadCSVFile(templateId: number): Observable<any> {
     return this.apiBaseService.getBlobData(
       TemplateFilesMethods.GetCsv + '/' + templateId
+    );
+  }
+
+  getTemplatesDictionary(
+    nameFilter: string,
+    idFilter = 0
+  ): Observable<OperationDataResult<CommonDictionaryModel[]>> {
+    return this.apiBaseService.get<CommonDictionaryModel[]>(
+      TemplatesMethods.CommonDictionaryModelTemplates,
+      { nameFilter: nameFilter, idFilter: idFilter }
     );
   }
 
