@@ -1,5 +1,17 @@
 # Changelog
 
+## [v3.3.17](https://github.com/microting/eform-angular-frontend/tree/v3.3.17) (2021-06-09)
+
+[Full Changelog](https://github.com/microting/eform-angular-frontend/compare/v3.3.16...v3.3.17)
+
+**Implemented enhancements:**
+
+- Bump Microting.eFormApi.BasePn from 3.0.19 to 3.0.20 [\#1058](https://github.com/microting/eform-angular-frontend/issues/1058)
+
+**Merged pull requests:**
+
+- Delete logging from auth store [\#1047](https://github.com/microting/eform-angular-frontend/pull/1047) ([sanioooook](https://github.com/sanioooook))
+
 ## [v3.3.16](https://github.com/microting/eform-angular-frontend/tree/v3.3.16) (2021-06-07)
 
 [Full Changelog](https://github.com/microting/eform-angular-frontend/compare/v3.3.15...v3.3.16)
@@ -320,7 +332,6 @@
 - Bump @wdio/spec-reporter from 7.5.2 to 7.5.3 in /eform-client [\#844](https://github.com/microting/eform-angular-frontend/pull/844) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump @wdio/mocha-framework from 7.5.2 to 7.5.3 in /eform-client [\#843](https://github.com/microting/eform-angular-frontend/pull/843) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump webdriverio from 7.5.2 to 7.5.3 in /eform-client [\#842](https://github.com/microting/eform-angular-frontend/pull/842) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump Swashbuckle.AspNetCore from 6.1.3 to 6.1.4 in /eFormAPI [\#840](https://github.com/microting/eform-angular-frontend/pull/840) ([dependabot[bot]](https://github.com/apps/dependabot))
 
 ## [v3.2.49](https://github.com/microting/eform-angular-frontend/tree/v3.2.49) (2021-05-03)
 
@@ -336,6 +347,7 @@
 - Bump @wdio/sync from 7.5.2 to 7.5.3 in /eform-client [\#847](https://github.com/microting/eform-angular-frontend/pull/847) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump @wdio/local-runner from 7.5.2 to 7.5.4 in /eform-client [\#846](https://github.com/microting/eform-angular-frontend/pull/846) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump chart.js from 3.2.0 to 3.2.1 in /eform-client [\#841](https://github.com/microting/eform-angular-frontend/pull/841) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump Swashbuckle.AspNetCore from 6.1.3 to 6.1.4 in /eFormAPI [\#840](https://github.com/microting/eform-angular-frontend/pull/840) ([dependabot[bot]](https://github.com/apps/dependabot))
 
 ## [v3.2.48](https://github.com/microting/eform-angular-frontend/tree/v3.2.48) (2021-05-02)
 
@@ -347,6 +359,7 @@
 
 **Merged pull requests:**
 
+- Bump rxjs from 6.6.7 to 7.0.0 in /eform-client [\#837](https://github.com/microting/eform-angular-frontend/pull/837) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Upgrade to GitHub-native Dependabot [\#832](https://github.com/microting/eform-angular-frontend/pull/832) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 
 ## [v3.2.47](https://github.com/microting/eform-angular-frontend/tree/v3.2.47) (2021-05-01)
@@ -369,7 +382,6 @@
 
 **Merged pull requests:**
 
-- Bump rxjs from 6.6.7 to 7.0.0 in /eform-client [\#837](https://github.com/microting/eform-angular-frontend/pull/837) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump core-js from 3.11.0 to 3.11.1 in /eform-client [\#831](https://github.com/microting/eform-angular-frontend/pull/831) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump @angular/cdk from 11.2.10 to 11.2.11 in /eform-client [\#830](https://github.com/microting/eform-angular-frontend/pull/830) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump @angular/cli from 11.2.10 to 11.2.11 in /eform-client [\#829](https://github.com/microting/eform-angular-frontend/pull/829) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
@@ -491,7 +503,6 @@
 - Bump @types/node from 14.14.39 to 14.14.41 in /eform-client [\#769](https://github.com/microting/eform-angular-frontend/pull/769) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump d3 from 6.6.2 to 6.7.0 in /eform-client [\#768](https://github.com/microting/eform-angular-frontend/pull/768) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump @wdio/mocha-framework from 7.4.2 to 7.4.6 in /eform-client [\#767](https://github.com/microting/eform-angular-frontend/pull/767) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
-- Bump @angular/cli from 11.2.8 to 11.2.9 in /eform-client [\#762](https://github.com/microting/eform-angular-frontend/pull/762) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 
 ## [v3.2.37](https://github.com/microting/eform-angular-frontend/tree/v3.2.37) (2021-04-16)
 
@@ -508,6 +519,7 @@
 
 - Bump date-fns from 2.20.2 to 2.21.0 in /eform-client [\#764](https://github.com/microting/eform-angular-frontend/pull/764) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump webdriverio from 7.3.1 to 7.4.5 in /eform-client [\#763](https://github.com/microting/eform-angular-frontend/pull/763) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump @angular/cli from 11.2.8 to 11.2.9 in /eform-client [\#762](https://github.com/microting/eform-angular-frontend/pull/762) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump @wdio/sync from 7.3.1 to 7.4.5 in /eform-client [\#761](https://github.com/microting/eform-angular-frontend/pull/761) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump @wdio/local-runner from 7.3.1 to 7.4.5 in /eform-client [\#760](https://github.com/microting/eform-angular-frontend/pull/760) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump @types/node from 14.14.37 to 14.14.39 in /eform-client [\#759](https://github.com/microting/eform-angular-frontend/pull/759) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
@@ -670,6 +682,10 @@
 - Bump AWSSDK.S3 from 3.7.0.8 to 3.7.0.9 [\#699](https://github.com/microting/eform-angular-frontend/issues/699)
 - Bump AWSSDK.Core from 3.7.0.8 to 3.7.0.9 [\#698](https://github.com/microting/eform-angular-frontend/issues/698)
 
+**Merged pull requests:**
+
+- Bump chart.js from 2.9.4 to 3.0.2 in /eform-client [\#679](https://github.com/microting/eform-angular-frontend/pull/679) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+
 ## [v3.2.22](https://github.com/microting/eform-angular-frontend/tree/v3.2.22) (2021-04-07)
 
 [Full Changelog](https://github.com/microting/eform-angular-frontend/compare/v3.2.21...v3.2.22)
@@ -708,7 +724,6 @@
 - Refactoring [\#682](https://github.com/microting/eform-angular-frontend/pull/682) ([sanioooook](https://github.com/sanioooook))
 - Bump @angular/cli from 11.2.6 to 11.2.7 in /eform-client [\#681](https://github.com/microting/eform-angular-frontend/pull/681) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump @types/chai from 4.2.15 to 4.2.16 in /eform-client [\#680](https://github.com/microting/eform-angular-frontend/pull/680) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
-- Bump chart.js from 2.9.4 to 3.0.2 in /eform-client [\#679](https://github.com/microting/eform-angular-frontend/pull/679) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump core-js from 3.9.1 to 3.10.0 in /eform-client [\#671](https://github.com/microting/eform-angular-frontend/pull/671) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump @angular/cdk from 11.2.6 to 11.2.7 in /eform-client [\#670](https://github.com/microting/eform-angular-frontend/pull/670) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump Microsoft.NET.Test.Sdk from 16.9.1 to 16.9.4 in /eFormAPI [\#667](https://github.com/microting/eform-angular-frontend/pull/667) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
@@ -732,7 +747,6 @@
 - Bump @wdio/spec-reporter from 7.2.1 to 7.3.0 in /eform-client [\#662](https://github.com/microting/eform-angular-frontend/pull/662) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump webdriverio from 7.2.3 to 7.3.0 in /eform-client [\#661](https://github.com/microting/eform-angular-frontend/pull/661) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump d3 from 6.6.1 to 6.6.2 in /eform-client [\#658](https://github.com/microting/eform-angular-frontend/pull/658) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
-- Bump @wdio/spec-reporter from 7.1.1 to 7.2.1 in /eform-client [\#626](https://github.com/microting/eform-angular-frontend/pull/626) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump @fortawesome/free-solid-svg-icons from 5.15.2 to 5.15.3 in /eform-client [\#613](https://github.com/microting/eform-angular-frontend/pull/613) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump Swashbuckle.AspNetCore from 6.1.0 to 6.1.1 in /eFormAPI [\#607](https://github.com/microting/eform-angular-frontend/pull/607) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 
@@ -750,6 +764,7 @@
 **Merged pull requests:**
 
 - Bump @wdio/sync from 7.2.2 to 7.2.3 in /eform-client [\#648](https://github.com/microting/eform-angular-frontend/pull/648) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump @types/node from 14.14.35 to 14.14.37 in /eform-client [\#647](https://github.com/microting/eform-angular-frontend/pull/647) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 
 ## [v3.2.16](https://github.com/microting/eform-angular-frontend/tree/v3.2.16) (2021-03-29)
 
@@ -777,11 +792,9 @@
 **Implemented enhancements:**
 
 - Bump Magick.NET-Q16-x64 from 7.23.2.1 to 7.23.3 [\#643](https://github.com/microting/eform-angular-frontend/issues/643)
-- Bump AWSSDK.S3 from 3.5.9.8 to 3.5.10.1 [\#642](https://github.com/microting/eform-angular-frontend/issues/642)
 
 **Merged pull requests:**
 
-- Bump @types/node from 14.14.35 to 14.14.37 in /eform-client [\#647](https://github.com/microting/eform-angular-frontend/pull/647) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump @angular/cli from 11.2.4 to 11.2.6 in /eform-client [\#641](https://github.com/microting/eform-angular-frontend/pull/641) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Fix plugin status calculation \(plugin enabled or disabled\) [\#639](https://github.com/microting/eform-angular-frontend/pull/639) ([sanioooook](https://github.com/sanioooook))
 - Added new validator [\#638](https://github.com/microting/eform-angular-frontend/pull/638) ([Gid733](https://github.com/Gid733))
@@ -792,10 +805,11 @@
 - Bump webdriverio from 7.1.1 to 7.2.2 in /eform-client [\#632](https://github.com/microting/eform-angular-frontend/pull/632) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump @wdio/cli from 7.1.2 to 7.2.2 in /eform-client [\#630](https://github.com/microting/eform-angular-frontend/pull/630) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump @wdio/sync from 7.1.1 to 7.2.2 in /eform-client [\#629](https://github.com/microting/eform-angular-frontend/pull/629) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump @wdio/spec-reporter from 7.1.1 to 7.2.1 in /eform-client [\#626](https://github.com/microting/eform-angular-frontend/pull/626) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump @types/node from 14.14.34 to 14.14.35 in /eform-client [\#604](https://github.com/microting/eform-angular-frontend/pull/604) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump angular-bootstrap-md from 10.1.1 to 11.0.0 in /eform-client [\#564](https://github.com/microting/eform-angular-frontend/pull/564) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump chromedriver from 88.0.0 to 89.0.0 in /eform-client [\#550](https://github.com/microting/eform-angular-frontend/pull/550) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
-- Bump core-js from 3.9.0 to 3.9.1 in /eform-client [\#546](https://github.com/microting/eform-angular-frontend/pull/546) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump chai from 4.3.0 to 4.3.3 in /eform-client [\#547](https://github.com/microting/eform-angular-frontend/pull/547) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 
 ## [v3.2.14](https://github.com/microting/eform-angular-frontend/tree/v3.2.14) (2021-03-18)
 
@@ -805,6 +819,7 @@
 
 - Bump Microting.eFormApi.BasePn from 2.0.105 to 2.0.106 [\#621](https://github.com/microting/eform-angular-frontend/issues/621)
 - Bump Microting.eForm from 4.4.10 to 4.4.11 [\#620](https://github.com/microting/eform-angular-frontend/issues/620)
+- Bump AWSSDK.Core from 3.5.3.7 to 3.5.3.8 [\#618](https://github.com/microting/eform-angular-frontend/issues/618)
 
 ## [v3.2.13](https://github.com/microting/eform-angular-frontend/tree/v3.2.13) (2021-03-18)
 
@@ -813,10 +828,8 @@
 **Implemented enhancements:**
 
 - Bump AWSSDK.S3 from 3.5.9.7 to 3.5.9.8 [\#619](https://github.com/microting/eform-angular-frontend/issues/619)
-- Bump AWSSDK.Core from 3.5.3.7 to 3.5.3.8 [\#618](https://github.com/microting/eform-angular-frontend/issues/618)
 - Bump Microting.eFormApi.BasePn from 2.0.104 to 2.0.105 [\#617](https://github.com/microting/eform-angular-frontend/issues/617)
 - Bump Microting.eForm from 4.4.9 to 4.4.10 [\#616](https://github.com/microting/eform-angular-frontend/issues/616)
-- Bump Microting.eFormApi.BasePn from 2.0.103 to 2.0.104 [\#606](https://github.com/microting/eform-angular-frontend/issues/606)
 
 ## [v3.2.12](https://github.com/microting/eform-angular-frontend/tree/v3.2.12) (2021-03-17)
 
@@ -824,6 +837,8 @@
 
 **Implemented enhancements:**
 
+- Bump AWSSDK.S3 from 3.5.9.8 to 3.5.10.1 [\#642](https://github.com/microting/eform-angular-frontend/issues/642)
+- Bump Microting.eFormApi.BasePn from 2.0.103 to 2.0.104 [\#606](https://github.com/microting/eform-angular-frontend/issues/606)
 - Bump Microting.eForm from 4.4.8 to 4.4.9 [\#605](https://github.com/microting/eform-angular-frontend/issues/605)
 
 ## [v3.2.11](https://github.com/microting/eform-angular-frontend/tree/v3.2.11) (2021-03-16)
@@ -862,6 +877,8 @@
 - Bump AWSSDK.Core from 3.5.3.5 to 3.5.3.6 [\#586](https://github.com/microting/eform-angular-frontend/issues/586)
 - Bump Microting.eFormApi.BasePn from 2.0.100 to 2.0.101 [\#585](https://github.com/microting/eform-angular-frontend/issues/585)
 - Bump Microting.eForm from 4.4.4 to 4.4.6 [\#584](https://github.com/microting/eform-angular-frontend/issues/584)
+- Bump Microting.eForm from 4.4.3 to 4.4.4 [\#565](https://github.com/microting/eform-angular-frontend/issues/565)
+- Bump Magick.NET-Q16-x64 from 7.23.2 to 7.23.2.1 [\#556](https://github.com/microting/eform-angular-frontend/issues/556)
 
 **Merged pull requests:**
 
@@ -886,7 +903,6 @@
 
 - Bump AWSSDK.S3 from 3.5.9.3 to 3.5.9.4 [\#567](https://github.com/microting/eform-angular-frontend/issues/567)
 - Bump Microting.eFormApi.BasePn from 2.0.99 to 2.0.100 [\#566](https://github.com/microting/eform-angular-frontend/issues/566)
-- Bump Microting.eForm from 4.4.3 to 4.4.4 [\#565](https://github.com/microting/eform-angular-frontend/issues/565)
 
 ## [v3.2.7](https://github.com/microting/eform-angular-frontend/tree/v3.2.7) (2021-03-05)
 
@@ -895,10 +911,6 @@
 ## [v3.2.6](https://github.com/microting/eform-angular-frontend/tree/v3.2.6) (2021-03-05)
 
 [Full Changelog](https://github.com/microting/eform-angular-frontend/compare/v3.2.5...v3.2.6)
-
-**Implemented enhancements:**
-
-- Bump Magick.NET-Q16-x64 from 7.23.2 to 7.23.2.1 [\#556](https://github.com/microting/eform-angular-frontend/issues/556)
 
 ## [v3.2.5](https://github.com/microting/eform-angular-frontend/tree/v3.2.5) (2021-03-05)
 
@@ -913,7 +925,7 @@
 **Merged pull requests:**
 
 - Bump date-fns from 2.18.0 to 2.19.0 in /eform-client [\#552](https://github.com/microting/eform-angular-frontend/pull/552) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
-- Bump chai from 4.3.0 to 4.3.3 in /eform-client [\#547](https://github.com/microting/eform-angular-frontend/pull/547) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump core-js from 3.9.0 to 3.9.1 in /eform-client [\#546](https://github.com/microting/eform-angular-frontend/pull/546) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump @angular/cli from 11.2.2 to 11.2.3 in /eform-client [\#545](https://github.com/microting/eform-angular-frontend/pull/545) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump @angular/cdk from 11.2.2 to 11.2.3 in /eform-client [\#544](https://github.com/microting/eform-angular-frontend/pull/544) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump @wdio/cli from 7.0.8 to 7.0.9 in /eform-client [\#542](https://github.com/microting/eform-angular-frontend/pull/542) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
@@ -1117,6 +1129,7 @@
 **Merged pull requests:**
 
 - Bump AWSSDK.S3 from 3.5.7.5 to 3.5.7.6 in /eFormAPI [\#360](https://github.com/microting/eform-angular-frontend/pull/360) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump AWSSDK.SQS from 3.5.1.7 to 3.5.1.8 in /eFormAPI [\#359](https://github.com/microting/eform-angular-frontend/pull/359) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump AWSSDK.Core from 3.5.1.58 to 3.5.1.59 in /eFormAPI [\#358](https://github.com/microting/eform-angular-frontend/pull/358) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 
 ## [v3.1.30](https://github.com/microting/eform-angular-frontend/tree/v3.1.30) (2021-01-19)
@@ -1131,12 +1144,12 @@
 - Bump zone.js from 0.10.3 to 0.11.3 in /eform-client [\#371](https://github.com/microting/eform-angular-frontend/pull/371) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump chromedriver from 87.0.4 to 87.0.7 in /eform-client [\#370](https://github.com/microting/eform-angular-frontend/pull/370) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Minor updates [\#368](https://github.com/microting/eform-angular-frontend/pull/368) ([Gid733](https://github.com/Gid733))
-- Bump AWSSDK.SQS from 3.5.1.7 to 3.5.1.8 in /eFormAPI [\#359](https://github.com/microting/eform-angular-frontend/pull/359) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump @wdio/spec-reporter from 6.0.14 to 6.11.0 in /eform-client [\#352](https://github.com/microting/eform-angular-frontend/pull/352) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump @ng-select/ng-select from 4.0.0 to 4.0.4 in /eform-client [\#350](https://github.com/microting/eform-angular-frontend/pull/350) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump @wdio/sync from 6.0.15 to 6.11.0 in /eform-client [\#349](https://github.com/microting/eform-angular-frontend/pull/349) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump date-fns from 2.12.0 to 2.16.1 in /eform-client [\#348](https://github.com/microting/eform-angular-frontend/pull/348) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump @swimlane/ngx-charts from 13.0.2 to 14.0.0 in /eform-client [\#342](https://github.com/microting/eform-angular-frontend/pull/342) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump @types/d3 from 5.7.2 to 6.2.0 in /eform-client [\#340](https://github.com/microting/eform-angular-frontend/pull/340) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 
 ## [v3.1.29](https://github.com/microting/eform-angular-frontend/tree/v3.1.29) (2021-01-18)
 
@@ -1187,7 +1200,6 @@
 
 - Bump NUnit from 3.12.0 to 3.13.0 in /eFormAPI [\#345](https://github.com/microting/eform-angular-frontend/pull/345) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump AWSSDK.Core from 3.5.1.57 to 3.5.1.58 in /eFormAPI [\#344](https://github.com/microting/eform-angular-frontend/pull/344) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
-- Bump @types/d3 from 5.7.2 to 6.2.0 in /eform-client [\#340](https://github.com/microting/eform-angular-frontend/pull/340) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump angular-calendar from 0.28.7 to 0.28.22 in /eform-client [\#339](https://github.com/microting/eform-angular-frontend/pull/339) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump codelyzer from 5.2.2 to 6.0.1 in /eform-client [\#338](https://github.com/microting/eform-angular-frontend/pull/338) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump ClosedXML from 0.95.3 to 0.95.4 in /eFormAPI [\#337](https://github.com/microting/eform-angular-frontend/pull/337) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
@@ -1410,7 +1422,6 @@
 **Merged pull requests:**
 
 - Updates [\#316](https://github.com/microting/eform-angular-frontend/pull/316) ([Gid733](https://github.com/Gid733))
-- Changed tags ids [\#315](https://github.com/microting/eform-angular-frontend/pull/315) ([Gid733](https://github.com/Gid733))
 
 ## [v3.0.22](https://github.com/microting/eform-angular-frontend/tree/v3.0.22) (2020-10-06)
 
@@ -1418,6 +1429,7 @@
 
 **Merged pull requests:**
 
+- Changed tags ids [\#315](https://github.com/microting/eform-angular-frontend/pull/315) ([Gid733](https://github.com/Gid733))
 - Updates for tests [\#314](https://github.com/microting/eform-angular-frontend/pull/314) ([Gid733](https://github.com/Gid733))
 - Updates folders [\#313](https://github.com/microting/eform-angular-frontend/pull/313) ([Gid733](https://github.com/Gid733))
 
@@ -1559,6 +1571,7 @@
 
 - Updates for excel [\#293](https://github.com/microting/eform-angular-frontend/pull/293) ([Gid733](https://github.com/Gid733))
 - Auth for files update [\#291](https://github.com/microting/eform-angular-frontend/pull/291) ([Gid733](https://github.com/Gid733))
+- Reworked authorization  [\#280](https://github.com/microting/eform-angular-frontend/pull/280) ([Gid733](https://github.com/Gid733))
 
 ## [v2.0.696](https://github.com/microting/eform-angular-frontend/tree/v2.0.696) (2020-07-10)
 
@@ -1653,7 +1666,6 @@
 
 **Merged pull requests:**
 
-- Reworked authorization  [\#280](https://github.com/microting/eform-angular-frontend/pull/280) ([Gid733](https://github.com/Gid733))
 - Fix for chart legend [\#279](https://github.com/microting/eform-angular-frontend/pull/279) ([Gid733](https://github.com/Gid733))
 - Updates [\#277](https://github.com/microting/eform-angular-frontend/pull/277) ([Gid733](https://github.com/Gid733))
 
@@ -2055,7 +2067,6 @@
 **Merged pull requests:**
 
 - Fixed cookies [\#231](https://github.com/microting/eform-angular-frontend/pull/231) ([Gid733](https://github.com/Gid733))
-- Fixing the statusbar. [\#226](https://github.com/microting/eform-angular-frontend/pull/226) ([renemadsen](https://github.com/renemadsen))
 
 ## [v2.0.600](https://github.com/microting/eform-angular-frontend/tree/v2.0.600) (2019-07-01)
 
@@ -2124,6 +2135,7 @@
 **Merged pull requests:**
 
 - Updates [\#228](https://github.com/microting/eform-angular-frontend/pull/228) ([Gid733](https://github.com/Gid733))
+- Fixing the statusbar. [\#226](https://github.com/microting/eform-angular-frontend/pull/226) ([renemadsen](https://github.com/renemadsen))
 - Settings updates [\#223](https://github.com/microting/eform-angular-frontend/pull/223) ([Gid733](https://github.com/Gid733))
 - Added fa icons to project [\#222](https://github.com/microting/eform-angular-frontend/pull/222) ([Gid733](https://github.com/Gid733))
 - Fix plugin loader [\#221](https://github.com/microting/eform-angular-frontend/pull/221) ([emleonid](https://github.com/emleonid))
@@ -2145,7 +2157,6 @@
 **Merged pull requests:**
 
 - Minor fix [\#217](https://github.com/microting/eform-angular-frontend/pull/217) ([Gid733](https://github.com/Gid733))
-- Minor temporary fix [\#210](https://github.com/microting/eform-angular-frontend/pull/210) ([Gid733](https://github.com/Gid733))
 
 ## [v2.0.590](https://github.com/microting/eform-angular-frontend/tree/v2.0.590) (2019-02-22)
 
@@ -2181,6 +2192,10 @@
 ## [v2.0.559](https://github.com/microting/eform-angular-frontend/tree/v2.0.559) (2019-01-30)
 
 [Full Changelog](https://github.com/microting/eform-angular-frontend/compare/v2.0.553...v2.0.559)
+
+**Merged pull requests:**
+
+- Minor temporary fix [\#210](https://github.com/microting/eform-angular-frontend/pull/210) ([Gid733](https://github.com/Gid733))
 
 ## [v2.0.553](https://github.com/microting/eform-angular-frontend/tree/v2.0.553) (2019-01-28)
 
@@ -2318,6 +2333,7 @@
 - Updated linux installation script [\#200](https://github.com/microting/eform-angular-frontend/pull/200) ([Gid733](https://github.com/Gid733))
 - Small translation fixes [\#199](https://github.com/microting/eform-angular-frontend/pull/199) ([Gid733](https://github.com/Gid733))
 - Major updates [\#198](https://github.com/microting/eform-angular-frontend/pull/198) ([Gid733](https://github.com/Gid733))
+- Linux installation script [\#193](https://github.com/microting/eform-angular-frontend/pull/193) ([Gid733](https://github.com/Gid733))
 
 ## [v2.0.496](https://github.com/microting/eform-angular-frontend/tree/v2.0.496) (2019-01-03)
 
@@ -2341,14 +2357,12 @@
 - Fixed ondestroy [\#196](https://github.com/microting/eform-angular-frontend/pull/196) ([Gid733](https://github.com/Gid733))
 - Minor enhancements [\#195](https://github.com/microting/eform-angular-frontend/pull/195) ([Gid733](https://github.com/Gid733))
 - Added installer sh for linux [\#194](https://github.com/microting/eform-angular-frontend/pull/194) ([Gid733](https://github.com/Gid733))
-- Linux installation script [\#193](https://github.com/microting/eform-angular-frontend/pull/193) ([Gid733](https://github.com/Gid733))
 - Fixes and improvements [\#185](https://github.com/microting/eform-angular-frontend/pull/185) ([Gid733](https://github.com/Gid733))
 - Tests fixed [\#182](https://github.com/microting/eform-angular-frontend/pull/182) ([Gid733](https://github.com/Gid733))
 - Enhancements and updates [\#181](https://github.com/microting/eform-angular-frontend/pull/181) ([Gid733](https://github.com/Gid733))
 - Updates & enhancements [\#179](https://github.com/microting/eform-angular-frontend/pull/179) ([Gid733](https://github.com/Gid733))
 - Rerouting enhancement [\#178](https://github.com/microting/eform-angular-frontend/pull/178) ([Gid733](https://github.com/Gid733))
 - Minor fixes and improvements [\#176](https://github.com/microting/eform-angular-frontend/pull/176) ([Gid733](https://github.com/Gid733))
-- Tags functionality & small fixes [\#175](https://github.com/microting/eform-angular-frontend/pull/175) ([Gid733](https://github.com/Gid733))
 - Tags save functionality & small fixes [\#174](https://github.com/microting/eform-angular-frontend/pull/174) ([Gid733](https://github.com/Gid733))
 - Pell editor output fix [\#165](https://github.com/microting/eform-angular-frontend/pull/165) ([Gid733](https://github.com/Gid733))
 - Fixes updates [\#163](https://github.com/microting/eform-angular-frontend/pull/163) ([Gid733](https://github.com/Gid733))
@@ -2532,6 +2546,10 @@
 
 - Tags selected are not persistent in session [\#166](https://github.com/microting/eform-angular-frontend/issues/166)
 - Missing translations Danish/English [\#161](https://github.com/microting/eform-angular-frontend/issues/161)
+
+**Merged pull requests:**
+
+- Tags functionality & small fixes [\#175](https://github.com/microting/eform-angular-frontend/pull/175) ([Gid733](https://github.com/Gid733))
 
 ## [v2.0.369](https://github.com/microting/eform-angular-frontend/tree/v2.0.369) (2018-11-21)
 
@@ -2843,6 +2861,7 @@
 - Added missing translation & nav fix [\#127](https://github.com/microting/eform-angular-frontend/pull/127) ([Gid733](https://github.com/Gid733))
 - Updates [\#126](https://github.com/microting/eform-angular-frontend/pull/126) ([Gid733](https://github.com/Gid733))
 - Initial commit of new app [\#125](https://github.com/microting/eform-angular-frontend/pull/125) ([Gid733](https://github.com/Gid733))
+- Fixed forgot password [\#124](https://github.com/microting/eform-angular-frontend/pull/124) ([Gid733](https://github.com/Gid733))
 
 ## [v2.0.261](https://github.com/microting/eform-angular-frontend/tree/v2.0.261) (2018-08-30)
 
@@ -2878,7 +2897,6 @@
 
 **Merged pull requests:**
 
-- Fixed forgot password [\#124](https://github.com/microting/eform-angular-frontend/pull/124) ([Gid733](https://github.com/Gid733))
 - Fix for saving cases  [\#123](https://github.com/microting/eform-angular-frontend/pull/123) ([Gid733](https://github.com/Gid733))
 - Email validation fixes & multiple audio [\#122](https://github.com/microting/eform-angular-frontend/pull/122) ([Gid733](https://github.com/Gid733))
 
@@ -2889,7 +2907,6 @@
 **Merged pull requests:**
 
 - dbData fix [\#121](https://github.com/microting/eform-angular-frontend/pull/121) ([Gid733](https://github.com/Gid733))
-- Moved base plugin to main solution [\#112](https://github.com/microting/eform-angular-frontend/pull/112) ([Gid733](https://github.com/Gid733))
 
 ## [v2.0.230](https://github.com/microting/eform-angular-frontend/tree/v2.0.230) (2018-07-10)
 
@@ -2928,10 +2945,6 @@
 
 [Full Changelog](https://github.com/microting/eform-angular-frontend/compare/v2.0.209...v2.0.211)
 
-**Merged pull requests:**
-
-- Enhancements for translation [\#116](https://github.com/microting/eform-angular-frontend/pull/116) ([Gid733](https://github.com/Gid733))
-
 ## [v2.0.209](https://github.com/microting/eform-angular-frontend/tree/v2.0.209) (2018-06-21)
 
 [Full Changelog](https://github.com/microting/eform-angular-frontend/compare/v2.0.208...v2.0.209)
@@ -2954,6 +2967,7 @@
 
 **Merged pull requests:**
 
+- Enhancements for translation [\#116](https://github.com/microting/eform-angular-frontend/pull/116) ([Gid733](https://github.com/Gid733))
 - Added full string translation [\#114](https://github.com/microting/eform-angular-frontend/pull/114) ([Gid733](https://github.com/Gid733))
 - Added i18n on front-end [\#113](https://github.com/microting/eform-angular-frontend/pull/113) ([Gid733](https://github.com/Gid733))
 
@@ -2971,6 +2985,7 @@
 
 **Merged pull requests:**
 
+- Moved base plugin to main solution [\#112](https://github.com/microting/eform-angular-frontend/pull/112) ([Gid733](https://github.com/Gid733))
 - Added plugins to current application [\#111](https://github.com/microting/eform-angular-frontend/pull/111) ([Gid733](https://github.com/Gid733))
 
 ## [v2.0.182](https://github.com/microting/eform-angular-frontend/tree/v2.0.182) (2018-05-23)
@@ -3545,6 +3560,7 @@
 **Merged pull requests:**
 
 - Fixes and enhancements [\#70](https://github.com/microting/eform-angular-frontend/pull/70) ([Gid733](https://github.com/Gid733))
+- Signature duplicating fix [\#59](https://github.com/microting/eform-angular-frontend/pull/59) ([Gid733](https://github.com/Gid733))
 
 ## [v2.0.20](https://github.com/microting/eform-angular-frontend/tree/v2.0.20) (2018-01-25)
 
@@ -3581,10 +3597,6 @@
 ## [v2.0.12](https://github.com/microting/eform-angular-frontend/tree/v2.0.12) (2018-01-10)
 
 [Full Changelog](https://github.com/microting/eform-angular-frontend/compare/v2.0.11...v2.0.12)
-
-**Merged pull requests:**
-
-- Signature duplicating fix [\#59](https://github.com/microting/eform-angular-frontend/pull/59) ([Gid733](https://github.com/Gid733))
 
 ## [v2.0.11](https://github.com/microting/eform-angular-frontend/tree/v2.0.11) (2018-01-09)
 
@@ -3863,13 +3875,16 @@
 
 [Full Changelog](https://github.com/microting/eform-angular-frontend/compare/v1.1.0.0...v1.1.0.1)
 
+**Merged pull requests:**
+
+- Updated SDK, Added gallery & Geo pin [\#10](https://github.com/microting/eform-angular-frontend/pull/10) ([Gid733](https://github.com/Gid733))
+
 ## [v1.1.0.0](https://github.com/microting/eform-angular-frontend/tree/v1.1.0.0) (2017-08-03)
 
 [Full Changelog](https://github.com/microting/eform-angular-frontend/compare/v1.0.0...v1.1.0.0)
 
 **Merged pull requests:**
 
-- Updated SDK, Added gallery & Geo pin [\#10](https://github.com/microting/eform-angular-frontend/pull/10) ([Gid733](https://github.com/Gid733))
 - Input addon fix, spinner added [\#9](https://github.com/microting/eform-angular-frontend/pull/9) ([Gid733](https://github.com/Gid733))
 - User management CRUD [\#8](https://github.com/microting/eform-angular-frontend/pull/8) ([Gid733](https://github.com/Gid733))
 - Authorize fix and display users [\#7](https://github.com/microting/eform-angular-frontend/pull/7) ([Gid733](https://github.com/Gid733))
