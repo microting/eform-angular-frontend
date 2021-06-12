@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2020 Microting A/S
+Copyright (c) 2007 - 2021 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,11 +24,11 @@ SOFTWARE.
 
 namespace eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader
 {
-    using eFormAPI.Web.Infrastructure.Database;
-    using eFormAPI.Web.Infrastructure.Database.Entities.Menu;
     using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
     using System.Collections.Generic;
     using System.Linq;
+    using Microting.EformAngularFrontendBase.Infrastructure.Data;
+    using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
 
     public class IsNotSimpleLinkLoader : AbstractLoader
     {
@@ -42,31 +42,31 @@ namespace eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader
         public override bool IsExecute(PluginMenuItemModel menuItem)
            => menuItem.Type != MenuItemTypeEnum.Link;
 
-        public override void Load(PluginMenuItemModel MenuItem, string pluginId, int? parentId)
+        public override void Load(PluginMenuItemModel menuItem, string pluginId, int? parentId)
         {
-            int currentPosition = 0;
+            int currentPosition;
 
-            if(MenuItem.Type == MenuItemTypeEnum.Dropdown)
+            if (menuItem.Type == MenuItemTypeEnum.Dropdown)
             {
                 currentPosition = _dbContext.MenuItems
-                                    .Where(x => x.ParentId == null)
-                                    .Max(x => x.Position) + MenuItem.Position + 1;
+                    .Where(x => x.ParentId == null)
+                    .Max(x => x.Position) + menuItem.Position + 1;
             }
             else
             {
                 currentPosition = parentId != null
-                                        ? MenuItem.Position
-                                        : _dbContext.MenuItems
-                                            .Where(x => x.ParentId == null)
-                                            .Max(x => x.Position) + MenuItem.Position + 1;
+                    ? menuItem.Position
+                    : _dbContext.MenuItems
+                        .Where(x => x.ParentId == null)
+                        .Max(x => x.Position) + menuItem.Position + 1;
             }
 
             var newMenuItem = new MenuItem()
             {
-                E2EId = MenuItem.E2EId,
-                Name = MenuItem.Type == MenuItemTypeEnum.Dropdown ? "Dropdown" : MenuItem.Name,
-                Link = MenuItem.Link,
-                Type = MenuItem.Type,
+                E2EId = menuItem.E2EId,
+                Name = menuItem.Type == MenuItemTypeEnum.Dropdown ? "Dropdown" : menuItem.Name,
+                Link = menuItem.Link,
+                Type = menuItem.Type,
                 Position = currentPosition,
                 MenuTemplateId = null,
                 ParentId = parentId
@@ -75,23 +75,22 @@ namespace eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader
             _dbContext.MenuItems.Add(newMenuItem);
             _dbContext.SaveChanges();
 
-            foreach (var menuItemTranslation in MenuItem.Translations)
-            {
-                var translation = new MenuItemTranslation
+            foreach (var translation in menuItem.Translations
+                .Select(menuItemTranslation => new MenuItemTranslation
                 {
                     Language = menuItemTranslation.Language,
                     LocaleName = menuItemTranslation.LocaleName,
                     Name = menuItemTranslation.Name,
                     MenuItemId = newMenuItem.Id,
-                };
-
+                }))
+            {
                 _dbContext.MenuItemTranslations.Add(translation);
                 _dbContext.SaveChanges();
             }
 
-            if (MenuItem.ChildItems.Any())
+            if (menuItem.ChildItems.Any())
             {
-                foreach (var menuItemChild in MenuItem.ChildItems)
+                foreach (var menuItemChild in menuItem.ChildItems)
                 {
                     var loaders = new List<AbstractLoader>()
                     {
@@ -99,12 +98,9 @@ namespace eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader
                         new IsNotSimpleLinkLoader(_dbContext)
                     };
 
-                    foreach(var loader in loaders)
+                    foreach (var loader in loaders.Where(loader => loader.IsExecute(menuItemChild)))
                     {
-                        if(loader.IsExecute(menuItemChild))
-                        {
-                            loader.Load(menuItemChild, pluginId, newMenuItem.Id);
-                        }
+                        loader.Load(menuItemChild, pluginId, newMenuItem.Id);
                     }
                 }
             }

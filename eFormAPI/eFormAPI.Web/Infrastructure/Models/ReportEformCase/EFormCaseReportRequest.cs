@@ -24,7 +24,6 @@ SOFTWARE.
 
 namespace eFormAPI.Web.Infrastructure.Models.ReportEformCase
 {
-    using System;
     using System.ComponentModel.DataAnnotations;
     public class EFormCaseReportRequest
     {

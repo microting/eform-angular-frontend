@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2020 Microting A/S
+Copyright (c) 2007 - 2021 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,6 @@ namespace eFormAPI.Web.Services
     using Abstractions.Eforms;
     using eFormCore;
     using Import;
-    using Infrastructure.Database;
     using Infrastructure.Models;
     using Infrastructure.Models.Import;
     using Infrastructure.Models.Templates;
@@ -48,6 +47,7 @@ namespace eFormAPI.Web.Services
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microting.EformAngularFrontendBase.Infrastructure.Data;
     using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
     using Field = Microting.eForm.Infrastructure.Models.Field;
 
@@ -127,15 +127,12 @@ namespace eFormAPI.Web.Services
                             .Select(x => x.TemplateId)
                             .ToList();
 
-                        foreach (TemplateDto templateDto in templatesDto)
+                        foreach (var templateDto in templatesDto.Cast<TemplateDto>().Where(templateDto => eformIds.Contains(templateDto.Id)))
                         {
-                            if (eformIds.Contains(templateDto.Id))
-                            {
-                                await templateDto.CheckForLock(_dbContext);
-                                templateDto.CreatedAt =
-                                    TimeZoneInfo.ConvertTimeFromUtc((DateTime) templateDto.CreatedAt, timeZoneInfo);
-                                model.Templates.Add(templateDto);
-                            }
+                            await templateDto.CheckForLock(_dbContext);
+                            templateDto.CreatedAt =
+                                TimeZoneInfo.ConvertTimeFromUtc((DateTime) templateDto.CreatedAt, timeZoneInfo);
+                            model.Templates.Add(templateDto);
                         }
                     }
                     else

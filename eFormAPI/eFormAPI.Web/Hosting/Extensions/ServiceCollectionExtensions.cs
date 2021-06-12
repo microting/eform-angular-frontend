@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2020 Microting A/S
+Copyright (c) 2007 - 2021 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,27 +22,20 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using System;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-
 namespace eFormAPI.Web.Hosting.Extensions
 {
     using System.Collections.Generic;
     using System.Linq;
     using Helpers.DbOptions;
-    using Infrastructure;
-    using Infrastructure.Database.Entities;
-    using Infrastructure.Database.Factories;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Options;
+    using Microting.EformAngularFrontendBase.Infrastructure.Const;
+    using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities;
+    using Microting.EformAngularFrontendBase.Infrastructure.Data.Factories;
     using Microting.eFormApi.BasePn;
     using Microting.eFormApi.BasePn.Infrastructure.Helpers.WritableOptions;
     using Microting.eFormApi.BasePn.Infrastructure.Models.Application;

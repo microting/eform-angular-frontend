@@ -4,7 +4,6 @@ namespace eFormAPI.Web.Infrastructure.Models.Sites
 {
     using System;
     using System.Collections.Generic;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
     public class SiteModel
     {
