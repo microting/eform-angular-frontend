@@ -188,15 +188,11 @@ namespace eFormAPI.Web.Services
                     new MariaDbServerVersion(
                     new Version(10, 4, 0)),
                     b =>
-                    b.MigrationsAssembly("eFormAPI.Web").EnableRetryOnFailure());
+                    b.EnableRetryOnFailure());
 
 
                 await using var dbContext = new BaseDbContext(dbContextOptionsBuilder.Options);
-                Log.LogEvent("Migrating Angular DB");
-                if ((await dbContext.Database.GetPendingMigrationsAsync()).Any())
-                {
-                    await dbContext.Database.MigrateAsync();
-                }
+                await dbContext.Database.MigrateAsync();
 
                 if (initialSettingsModel.AdminSetupModel != null)
                 {
