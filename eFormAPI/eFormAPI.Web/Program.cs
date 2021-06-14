@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2020 Microting A/S
+Copyright (c) 2007 - 2021 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,40 +22,40 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using eFormAPI.Web.Infrastructure.Database.Factories;
-using eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader;
-using Microting.eFormApi.BasePn;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
-using eFormAPI.Web.Abstractions;
-using eFormCore;
-using eFormAPI.Web.Hosting.Enums;
-using eFormAPI.Web.Hosting.Helpers;
-using eFormAPI.Web.Hosting.Helpers.DbOptions;
-using eFormAPI.Web.Hosting.Settings;
-using eFormAPI.Web.Infrastructure.Database;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microting.eFormApi.BasePn.Infrastructure.Helpers;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
-using eFormAPI.Web.Infrastructure.Models;
-using eFormAPI.Web.Infrastructure.Models.Settings.Admin;
-using eFormAPI.Web.Infrastructure.Models.Settings.Initial;
-using Microting.eForm.Dto;
-using Newtonsoft.Json;
-
 namespace eFormAPI.Web
 {
+    using Services.PluginsManagement.MenuItemsLoader;
+    using Microting.eFormApi.BasePn;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Text.RegularExpressions;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Abstractions;
+    using eFormCore;
+    using Hosting.Enums;
+    using Hosting.Helpers;
+    using Hosting.Helpers.DbOptions;
+    using Hosting.Settings;
+    using Microsoft.AspNetCore;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Options;
+    using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
+    using Infrastructure.Models;
+    using Infrastructure.Models.Settings.Admin;
+    using Infrastructure.Models.Settings.Initial;
+    using Microsoft.EntityFrameworkCore;
+    using Microting.eForm.Dto;
+    using Newtonsoft.Json;
+    using Microting.EformAngularFrontendBase.Infrastructure.Data;
+    using Microting.EformAngularFrontendBase.Infrastructure.Data.Factories;
+
     public class Program
     {
         private static CancellationTokenSource _cancelTokenSource = new CancellationTokenSource();

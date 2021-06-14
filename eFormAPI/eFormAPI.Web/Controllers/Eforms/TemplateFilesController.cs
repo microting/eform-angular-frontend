@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2020 Microting A/S
+Copyright (c) 2007 - 2021 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,6 @@ namespace eFormAPI.Web.Controllers.Eforms
     using eFormAPI.Web.Abstractions.Security;
     using ICSharpCode.SharpZipLib.Zip;
     using ImageMagick;
-    using Infrastructure;
     using Infrastructure.Models;
     using Infrastructure.Models.Import;
     using Microsoft.AspNetCore.Authorization;
@@ -47,6 +46,7 @@ namespace eFormAPI.Web.Controllers.Eforms
     using System.IO;
     using System.Threading.Tasks;
     using System.Xml.Linq;
+    using Microting.EformAngularFrontendBase.Infrastructure.Const;
     using Settings = Microting.eForm.Dto.Settings;
 
     [Authorize]

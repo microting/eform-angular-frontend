@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2020 Microting A/S
+Copyright (c) 2007 - 2021 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,12 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using System;
-using Microting.eFormApi.BasePn.Infrastructure.Helpers;
-
 namespace eFormAPI.Web
 {
     using Services.Import;
+    using System;
+    using Microting.eFormApi.BasePn.Infrastructure.Helpers;
     using System.Linq;
     using System.Collections.Generic;
     using Abstractions;
@@ -36,7 +35,6 @@ namespace eFormAPI.Web
     using Abstractions.Security;
     using Hosting.Extensions;
     using Hosting.Security;
-    using Infrastructure.Database;
     using Infrastructure.Models.Settings.Plugins;
     using Services;
     using Services.Security;
@@ -57,7 +55,6 @@ namespace eFormAPI.Web
     using Microting.eFormApi.BasePn.Localization;
     using Microting.eFormApi.BasePn.Localization.Abstractions;
     using Microting.eFormApi.BasePn.Services;
-    using Infrastructure.Database.Factories;
     using Services.Export;
     using Services.Mailing.CasePost;
     using Services.Mailing.EmailRecipients;
@@ -67,6 +64,8 @@ namespace eFormAPI.Web
     using Microsoft.OpenApi.Models;
     using System.IO;
     using Microsoft.Extensions.PlatformAbstractions;
+    using Microting.EformAngularFrontendBase.Infrastructure.Data;
+    using Microting.EformAngularFrontendBase.Infrastructure.Data.Factories;
 
     public class Startup
     {

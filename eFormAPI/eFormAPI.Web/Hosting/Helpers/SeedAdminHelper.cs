@@ -24,10 +24,10 @@ namespace eFormAPI.Web.Hosting.Helpers
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Infrastructure.Database;
     using Infrastructure.Models.Settings.Initial;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using Microting.EformAngularFrontendBase.Infrastructure.Data;
     using Microting.eFormApi.BasePn.Infrastructure.Consts;
     using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 

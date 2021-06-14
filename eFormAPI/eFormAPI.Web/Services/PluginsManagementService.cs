@@ -1,28 +1,29 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using eFormAPI.Web.Abstractions;
-using eFormAPI.Web.Hosting.Enums;
-using eFormAPI.Web.Hosting.Helpers;
-using eFormAPI.Web.Hosting.Helpers.DbOptions;
-using eFormAPI.Web.Infrastructure.Database;
-using eFormAPI.Web.Infrastructure.Database.Entities.Menu;
-using eFormAPI.Web.Infrastructure.Database.Entities.Permissions;
-using eFormAPI.Web.Infrastructure.Models.Plugins;
-using eFormAPI.Web.Infrastructure.Models.Settings.Plugins;
-using eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
-using Newtonsoft.Json;
 
 namespace eFormAPI.Web.Services
 {
+    using Microsoft.EntityFrameworkCore;
+    using Microting.EformAngularFrontendBase.Infrastructure.Data;
+    using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
+    using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Permissions;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Linq;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+    using Abstractions;
+    using Hosting.Enums;
+    using Hosting.Helpers;
+    using Hosting.Helpers.DbOptions;
+    using Infrastructure.Models.Plugins;
+    using Infrastructure.Models.Settings.Plugins;
+    using PluginsManagement.MenuItemsLoader;
+    using Microsoft.Extensions.Logging;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
+    using Newtonsoft.Json;
+
     public class PluginsManagementService : IPluginsManagementService
     {
         private readonly BaseDbContext _dbContext;

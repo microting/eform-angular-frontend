@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2020 Microting A/S
+Copyright (c) 2007 - 2021 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -28,14 +28,14 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
     using System.Linq;
     using System.Threading.Tasks;
     using Abstractions;
-    using Infrastructure.Database;
-    using Infrastructure.Database.Entities.Mailing;
     using Infrastructure.Models.Mailing;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
     using Microting.eForm.Infrastructure.Constants;
+    using Microting.EformAngularFrontendBase.Infrastructure.Data;
+    using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Mailing;
     using Microting.eFormApi.BasePn.Abstractions;
-    using Microting.eFormApi.BasePn.Infrastructure.Extensions;
+    using Microting.eFormApi.BasePn.Infrastructure.Helpers;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
     using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
@@ -67,31 +67,15 @@ namespace eFormAPI.Web.Services.Mailing.EmailRecipients
                 var emailRecipientsQuery = _dbContext.EmailRecipients
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                     .AsQueryable();
-                if (!string.IsNullOrEmpty(requestModel.Sort))
-                {
-                    if (requestModel.IsSortDsc)
-                    {
-                        emailRecipientsQuery = emailRecipientsQuery
-                            .CustomOrderByDescending(requestModel.Sort);
-                    }
-                    else
-                    {
-                        emailRecipientsQuery = emailRecipientsQuery
-                            .CustomOrderBy(requestModel.Sort);
-                    }
-                }
-                else
-                {
-                    emailRecipientsQuery = emailRecipientsQuery
-                        .OrderBy(x => x.Id);
-                }
+
+                emailRecipientsQuery = QueryHelper.AddSortToQuery(emailRecipientsQuery, requestModel.Sort, requestModel.IsSortDsc);
 
                 // Tag ids
                 if (requestModel.TagIds.Any())
                 {
                     emailRecipientsQuery = emailRecipientsQuery
                         .Where(x => x.TagRecipients
-                            .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                            .Where(y => y.WorkflowState != Constants.WorkflowStates.Removed)
                             .Any(y => requestModel.TagIds.Contains(y.EmailTagId)));
                 }
 
