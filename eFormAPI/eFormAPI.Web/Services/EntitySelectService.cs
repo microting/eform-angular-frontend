@@ -106,6 +106,7 @@ namespace eFormAPI.Web.Services
                         Type = x.Type,
                         UpdatedAt = x.UpdatedAt,
                         EntityGroupItemLst = new List<EntityItem>(),
+                        IsLocked = x.Locked
                     }).ToListAsync();
 
                 entityGroupList.Entities = entityGroups;
