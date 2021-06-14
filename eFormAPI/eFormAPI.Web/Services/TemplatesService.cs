@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2020 Microting A/S
+Copyright (c) 2007 - 2021 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,38 +21,35 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using eFormAPI.Web.Abstractions;
-using eFormAPI.Web.Abstractions.Eforms;
-using eFormAPI.Web.Infrastructure.Database;
-using eFormAPI.Web.Infrastructure.Models;
-using eFormAPI.Web.Infrastructure.Models.Templates;
-using eFormCore;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using Microting.eFormApi.BasePn.Abstractions;
-using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
-using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microsoft.Extensions.Options;
-using Microting.eForm.Dto;
-using Microting.eForm.Infrastructure;
-using Microting.eForm.Infrastructure.Data.Entities;
-using Microting.eFormApi.BasePn.Infrastructure.Helpers;
-using Field = Microting.eForm.Infrastructure.Models.Field;
 
 namespace eFormAPI.Web.Services
 {
-    using System.IO;
+    using Abstractions;
+    using Abstractions.Eforms;
+    using eFormCore;
     using Import;
+    using Infrastructure.Models;
     using Infrastructure.Models.Import;
+    using Infrastructure.Models.Templates;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Options;
+    using Microting.eForm.Dto;
+    using Microting.eForm.Infrastructure;
     using Microting.eForm.Infrastructure.Constants;
-    using Remotion.Linq.Parsing.Structure.IntermediateModel;
+    using Microting.eForm.Infrastructure.Data.Entities;
+    using Microting.eFormApi.BasePn.Abstractions;
+    using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microting.EformAngularFrontendBase.Infrastructure.Data;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+    using Field = Microting.eForm.Infrastructure.Models.Field;
 
     public class TemplatesService : ITemplatesService
     {
@@ -61,7 +58,6 @@ namespace eFormAPI.Web.Services
         private readonly ILocalizationService _localizationService;
         private readonly IUserService _userService;
         private readonly BaseDbContext _dbContext;
-        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IEformExcelImportService _eformExcelImportService;
         private readonly ILogger<TemplatesService> _logger;
 
@@ -70,7 +66,6 @@ namespace eFormAPI.Web.Services
             ILocalizationService localizationService,
             IUserService userService, BaseDbContext dbContext,
             IOptions<ConnectionStringsSdk> connectionStringsSdk,
-            IHttpContextAccessor httpContextAccessor,
             IEformExcelImportService eformExcelImportService,
             ILogger<TemplatesService> logger)
         {
@@ -79,7 +74,6 @@ namespace eFormAPI.Web.Services
             _userService = userService;
             _dbContext = dbContext;
             _connectionStringsSdk = connectionStringsSdk;
-            _httpContextAccessor = httpContextAccessor;
             _eformExcelImportService = eformExcelImportService;
             _logger = logger;
         }
@@ -103,6 +97,7 @@ namespace eFormAPI.Web.Services
                         await language.Update(sdkDbContext);
                     }
                 }
+
                 var templatesDto = await core.TemplateItemReadAll(false,
                     "",
                     templateRequestModel.NameFilter,
@@ -118,9 +113,6 @@ namespace eFormAPI.Web.Services
                     Templates = new List<TemplateDto>()
                 };
 
-                var eformIds = new List<int>();
-                //List<string> plugins = await _dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
-
                 if (!_userService.IsAdmin())
                 {
                     var isEformsInGroups = await _dbContext.SecurityGroupUsers
@@ -129,20 +121,18 @@ namespace eFormAPI.Web.Services
                         .AnyAsync();
                     if (isEformsInGroups)
                     {
-                        eformIds = _dbContext.EformInGroups
+                        var eformIds = _dbContext.EformInGroups
                             .Where(x =>
                                 x.SecurityGroup.SecurityGroupUsers.Any(y => y.EformUserId == _userService.UserId))
                             .Select(x => x.TemplateId)
                             .ToList();
 
-                        foreach (TemplateDto templateDto in templatesDto)
+                        foreach (var templateDto in templatesDto.Cast<TemplateDto>().Where(templateDto => eformIds.Contains(templateDto.Id)))
                         {
-                            if (eformIds.Contains(templateDto.Id))
-                            {
-                                await templateDto.CheckForLock(_dbContext);
-                                templateDto.CreatedAt = TimeZoneInfo.ConvertTimeFromUtc((DateTime)templateDto.CreatedAt, timeZoneInfo);
-                                model.Templates.Add(templateDto);
-                            }
+                            await templateDto.CheckForLock(_dbContext);
+                            templateDto.CreatedAt =
+                                TimeZoneInfo.ConvertTimeFromUtc((DateTime) templateDto.CreatedAt, timeZoneInfo);
+                            model.Templates.Add(templateDto);
                         }
                     }
                     else
@@ -150,7 +140,8 @@ namespace eFormAPI.Web.Services
                         foreach (TemplateDto templateDto in templatesDto)
                         {
                             await templateDto.CheckForLock(_dbContext);
-                            templateDto.CreatedAt = TimeZoneInfo.ConvertTimeFromUtc((DateTime)templateDto.CreatedAt, timeZoneInfo);
+                            templateDto.CreatedAt =
+                                TimeZoneInfo.ConvertTimeFromUtc((DateTime) templateDto.CreatedAt, timeZoneInfo);
                             model.Templates.Add(templateDto);
                         }
                     }
@@ -160,7 +151,8 @@ namespace eFormAPI.Web.Services
                     foreach (TemplateDto templateDto in templatesDto)
                     {
                         await templateDto.CheckForLock(_dbContext);
-                        templateDto.CreatedAt = TimeZoneInfo.ConvertTimeFromUtc((DateTime)templateDto.CreatedAt, timeZoneInfo);
+                        templateDto.CreatedAt =
+                            TimeZoneInfo.ConvertTimeFromUtc((DateTime) templateDto.CreatedAt, timeZoneInfo);
                         model.Templates.Add(templateDto);
                     }
                 }
@@ -204,12 +196,12 @@ namespace eFormAPI.Web.Services
                 {
                     try
                     {
-                        var core = await _coreHelper.GetCore();
+                        var _ = await _coreHelper.GetCore();
                     }
                     catch (Exception ex2)
                     {
                         return new OperationDataResult<TemplateListModel>(false,
-                            _localizationService.GetString("CoreIsNotStarted") +" " + ex2.Message);
+                            _localizationService.GetString("CoreIsNotStarted") + " " + ex2.Message);
                     }
 
                     return new OperationDataResult<TemplateListModel>(false,
@@ -389,7 +381,8 @@ namespace eFormAPI.Web.Services
                 // Process file result
                 foreach (var importExcelModel in fileResult)
                 {
-                    if (!string.IsNullOrEmpty(importExcelModel.Name) || !string.IsNullOrEmpty(importExcelModel.EformXML))
+                    if (!string.IsNullOrEmpty(importExcelModel.Name) ||
+                        !string.IsNullOrEmpty(importExcelModel.EformXML))
                     {
                         var tags = await core.GetAllTags(false);
                         var tagIds = new List<int>();
@@ -453,7 +446,8 @@ namespace eFormAPI.Web.Services
                 var core = await _coreHelper.GetCore();
 
                 await using var dbContext = core.DbContextHelper.GetDbContext();
-                List<CheckListSite> checkListSites = await dbContext.CheckListSites.Where(x => x.CheckListId == id).ToListAsync();
+                List<CheckListSite> checkListSites =
+                    await dbContext.CheckListSites.Where(x => x.CheckListId == id).ToListAsync();
                 foreach (var checkListSite in checkListSites)
                 {
                     await core.CaseDelete(checkListSite.MicrotingUid);
@@ -476,7 +470,8 @@ namespace eFormAPI.Web.Services
             }
             catch (Exception)
             {
-                return new OperationResult(false, _localizationService.GetStringWithFormat("eFormParamCouldNotBeDeleted", id));
+                return new OperationResult(false,
+                    _localizationService.GetStringWithFormat("eFormParamCouldNotBeDeleted", id));
             }
         }
 
@@ -554,8 +549,10 @@ namespace eFormAPI.Web.Services
                     // this will let the eForm be deployed until end date or we actively retract it.
                     if (deployModel.FolderId != null)
                     {
-                        mainElement.CheckListFolderName = dbContext.Folders.Single(x => x.Id == deployModel.FolderId).MicrotingUid.ToString();
+                        mainElement.CheckListFolderName = dbContext.Folders.Single(x => x.Id == deployModel.FolderId)
+                            .MicrotingUid.ToString();
                     }
+
                     mainElement.EndDate = DateTime.Now.AddYears(10).ToUniversalTime();
                     mainElement.StartDate = DateTime.Now.ToUniversalTime();
                     await core.CaseCreate(mainElement, "", i, deployModel.FolderId);
@@ -577,9 +574,43 @@ namespace eFormAPI.Web.Services
             var core = await _coreHelper.GetCore();
 
             var language = await _userService.GetCurrentUserLanguage();
-            var fields = core.Advanced_TemplateFieldReadAll(id, language).Result.Select(f => core.Advanced_FieldRead(f.Id, language).Result).ToList();
+            var fields = core.Advanced_TemplateFieldReadAll(id, language).Result
+                .Select(f => core.Advanced_FieldRead(f.Id, language).Result).ToList();
 
             return new OperationDataResult<List<Field>>(true, fields);
+        }
+
+        public async Task<OperationDataResult<List<CommonDictionaryModel>>> GetDictionaryTemplates(string nameFilter, int idFilter)
+        {
+            var core = await _coreHelper.GetCore();
+            await using var sdkDbContext = core.DbContextHelper.GetDbContext();
+            var language = await _userService.GetCurrentUserLanguage();
+            var query = sdkDbContext.CheckListTranslations
+                .Include(x => x.CheckList)
+                .Where(x => x.LanguageId == language.Id)
+                .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                .Where(x => x.CheckList.ParentId == null)
+                .Where(x => x.CheckList.WorkflowState != Constants.WorkflowStates.Removed);
+
+            if (!string.IsNullOrEmpty(nameFilter))
+            {
+                query = query.Where(x => x.Text.Contains(nameFilter));
+            }
+
+            if (idFilter > 0)
+            {
+                query = query.Where(x => x.CheckListId == idFilter);
+            }
+
+            var templates = await query
+                .Select(x => new CommonDictionaryModel
+                {
+                    Id = x.CheckList.Id,
+                    Name = x.Text
+                })
+                .ToListAsync();
+
+            return new OperationDataResult<List<CommonDictionaryModel>>(true, templates);
         }
     }
 }

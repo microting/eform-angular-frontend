@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2020 Microting A/S
+Copyright (c) 2007 - 2021 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,37 +21,34 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
-using eFormAPI.Web.Abstractions;
-using eFormAPI.Web.Hosting.Helpers.DbOptions;
-using eFormAPI.Web.Infrastructure.Database;
-using eFormCore;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Microting.eFormApi.BasePn.Abstractions;
-using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
-using Microting.eFormApi.BasePn.Infrastructure.Enums;
-using Microting.eFormApi.BasePn.Infrastructure.Helpers.WritableOptions;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
-using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.eFormApi.BasePn.Infrastructure.Helpers;
-using Castle.Core.Internal;
-using Castle.DynamicProxy.Generators;
-using eFormAPI.Web.Hosting.Helpers;
-using eFormAPI.Web.Infrastructure.Models.Settings.Admin;
-using eFormAPI.Web.Infrastructure.Models.Settings.Initial;
-using Microting.eForm.Dto;
-using Microting.eForm.Infrastructure.Data.Entities;
 
 namespace eFormAPI.Web.Services
 {
+    using Microting.EformAngularFrontendBase.Infrastructure.Data;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using System.Security.Cryptography;
+    using System.Threading.Tasks;
+    using Abstractions;
+    using Hosting.Helpers.DbOptions;
+    using eFormCore;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
+    using Microting.eFormApi.BasePn.Abstractions;
+    using Microting.eFormApi.BasePn.Infrastructure.Enums;
+    using Microting.eFormApi.BasePn.Infrastructure.Helpers.WritableOptions;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+    using Castle.Core.Internal;
+    using Hosting.Helpers;
+    using Infrastructure.Models.Settings.Admin;
+    using Infrastructure.Models.Settings.Initial;
+    using Microting.eForm.Dto;
+    using Microting.eForm.Infrastructure.Data.Entities;
+
     public class SettingsService : ISettingsService
     {
         private readonly ILogger<SettingsService> _logger;

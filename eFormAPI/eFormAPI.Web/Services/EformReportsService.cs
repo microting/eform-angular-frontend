@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2020 Microting A/S
+Copyright (c) 2007 - 2021 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -32,15 +32,15 @@ namespace eFormAPI.Web.Services
     using System.Threading.Tasks;
     using Abstractions;
     using Abstractions.Eforms;
-    using Infrastructure.Database;
     using Infrastructure.Helpers;
     using Infrastructure.Models.Reports;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
     using Microting.eForm.Infrastructure.Models;
+    using Microting.EformAngularFrontendBase.Infrastructure.Data;
+    using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Reports;
     using Microting.eFormApi.BasePn.Abstractions;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-    using Infrastructure.Database.Entities.Reports;
 
     public class EformReportsService : IEformReportsService
     {
@@ -48,13 +48,11 @@ namespace eFormAPI.Web.Services
         private readonly ILocalizationService _localizationService;
         private readonly BaseDbContext _dbContext;
         private readonly IUserService _userService;
-        //private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ILogger<EformReportsService> _logger;
 
         public EformReportsService(
             IEFormCoreService coreHelper,
             IUserService userService,
-            //IHttpContextAccessor httpContextAccessor,
             ILocalizationService localizationService,
             BaseDbContext dbContext,
             ILogger<EformReportsService> logger)
@@ -63,7 +61,6 @@ namespace eFormAPI.Web.Services
             _localizationService = localizationService;
             _dbContext = dbContext;
             _logger = logger;
-            //_httpContextAccessor = httpContextAccessor;
             _userService = userService;
         }
 

@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2020 Microting A/S
+Copyright (c) 2007 - 2021 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,19 +21,21 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System;
-using System.Threading.Tasks;
-using eFormAPI.Web.Abstractions.Eforms;
-using eFormAPI.Web.Infrastructure;
-using eFormAPI.Web.Infrastructure.Models;
-using eFormAPI.Web.Infrastructure.Models.Templates;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Controllers.Eforms
 {
+    using System;
+    using System.Threading.Tasks;
+    using eFormAPI.Web.Abstractions.Eforms;
+    using Infrastructure.Models;
+    using Infrastructure.Models.Templates;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    using System.Collections.Generic;
     using Infrastructure.Models.Import;
+    using Microting.EformAngularFrontendBase.Infrastructure.Const;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
     [Authorize]
     public class TemplatesController : Controller
@@ -116,6 +118,13 @@ namespace eFormAPI.Web.Controllers.Eforms
         public async Task<OperationResult> Deploy([FromBody] DeployModel deployModel)
         {
             return await _templatesService.Deploy(deployModel);
+        }
+
+        [HttpGet]
+        [Route("api/templates/common-dictionary-templates")]
+        public async Task<OperationDataResult<List<CommonDictionaryModel>>> GetCommonDictionaryTemplates(string nameFilter, int idFilter)
+        {
+            return await _templatesService.GetDictionaryTemplates(nameFilter, idFilter);
         }
     }
 }
