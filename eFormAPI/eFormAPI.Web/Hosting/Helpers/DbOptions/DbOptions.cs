@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2020 Microting A/S
+Copyright (c) 2007 - 2021 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,12 +27,13 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Castle.Core.Internal;
-using eFormAPI.Web.Infrastructure.Database;
 using Microsoft.Extensions.Options;
 using Microting.eFormApi.BasePn.Infrastructure.Delegates;
 
 namespace eFormAPI.Web.Hosting.Helpers.DbOptions
 {
+    using Microting.EformAngularFrontendBase.Infrastructure.Data;
+
     public class DbOptions<T> : IDbOptions<T> where T : class, new()
     {
         private readonly IOptionsMonitor<T> _options;

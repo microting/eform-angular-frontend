@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2020 Microting A/S
+Copyright (c) 2007 - 2021 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -26,14 +26,12 @@ namespace eFormAPI.Web.Services
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
     using Abstractions;
     using Abstractions.Eforms;
     using Infrastructure.Models.Cases.Request;
     using Infrastructure.Models.Cases.Response;
     using Microting.eForm.Infrastructure.Constants;
-    using Microting.eForm.Infrastructure.Data.Entities;
     using Microting.eForm.Infrastructure.Models;
     using Microting.eFormApi.BasePn.Abstractions;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;

@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2020 Microting A/S
+Copyright (c) 2007 - 2021 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,19 +22,20 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using System;
-using System.IO;
-using System.Threading.Tasks;
-using eFormAPI.Web.Infrastructure;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microting.eForm.Dto;
-using Microting.eFormApi.BasePn.Abstractions;
-using Microting.eFormApi.BasePn.Infrastructure.Helpers;
-using OpenStack.NetCoreSwiftClient.Extensions;
 
 namespace eFormAPI.Web.Controllers.Eforms
 {
+    using System;
+    using System.IO;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using Microting.eForm.Dto;
+    using Microting.eFormApi.BasePn.Abstractions;
+    using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+    using OpenStack.NetCoreSwiftClient.Extensions;
+    using Microting.EformAngularFrontendBase.Infrastructure.Const;
+
     [Authorize]
     public class AudioController : Controller
     {

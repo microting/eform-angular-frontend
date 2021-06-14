@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2020 Microting A/S
+Copyright (c) 2007 - 2021 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,42 +21,32 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using eFormAPI.Web.Abstractions;
-using eFormAPI.Web.Abstractions.Eforms;
-using eFormAPI.Web.Infrastructure.Database;
-using eFormAPI.Web.Infrastructure.Models.Templates;
-using Microsoft.AspNetCore.Http;
-using Microting.eForm.Infrastructure;
-using Microting.eForm.Infrastructure.Data.Entities;
-using Microting.eFormApi.BasePn.Abstractions;
-using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Abstractions;
+    using Abstractions.Eforms;
+    using Infrastructure.Models.Templates;
+    using Microting.eForm.Infrastructure;
+    using Microting.eFormApi.BasePn.Abstractions;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
     using Microting.eForm.Infrastructure.Constants;
 
     public class TemplateColumnsService : ITemplateColumnsService
     {
         private readonly IEFormCoreService _coreHelper;
         private readonly ILocalizationService _localizationService;
-        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IUserService _userService;
-        private readonly BaseDbContext _dbContext;
 
         public TemplateColumnsService(ILocalizationService localizationService,
-            IHttpContextAccessor httpContextAccessor,
-            BaseDbContext dbContext,
             IUserService userService,
             IEFormCoreService coreHelper)
         {
             _localizationService = localizationService;
-            _httpContextAccessor = httpContextAccessor;
-            _dbContext = dbContext;
             _userService = userService;
             _coreHelper = coreHelper;
         }

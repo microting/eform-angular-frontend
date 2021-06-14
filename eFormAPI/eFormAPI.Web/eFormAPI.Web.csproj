@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 <PropertyGroup>
 <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
@@ -60,6 +60,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
     <PackageReference Include="Microting.eForm" Version="5.2.11" />
+    <PackageReference Include="Microting.EformAngularFrontendBase" Version="1.0.1" />
     <PackageReference Include="Microting.eFormApi.BasePn" Version="3.0.21" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.0" />
     <PackageReference Include="SharpZipLib.NETStandard" Version="1.0.7" />

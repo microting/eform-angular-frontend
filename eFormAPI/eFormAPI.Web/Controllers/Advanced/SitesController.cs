@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2020 Microting A/S
+Copyright (c) 2007 - 2021 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,18 +22,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using System.Threading.Tasks;
-using eFormAPI.Web.Abstractions.Advanced;
-using eFormAPI.Web.Infrastructure;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace eFormAPI.Web.Controllers.Advanced
 {
     using System.Collections.Generic;
     using Infrastructure.Models.Sites;
+    using Microting.EformAngularFrontendBase.Infrastructure.Const;
     using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+    using System.Threading.Tasks;
+    using eFormAPI.Web.Abstractions.Advanced;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
     [Authorize]
     public class SitesController : Controller
