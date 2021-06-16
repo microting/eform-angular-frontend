@@ -1,8 +1,8 @@
 import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
-import {CasePostViewModel} from '../../../../../common/models/cases';
-import {CasePostsService} from '../../../../../common/services/cases';
+import {CasePostViewModel} from 'src/app/common/models';
+import {CasePostsService} from 'src/app/common/services';
 
 @AutoUnsubscribe()
 @Component({

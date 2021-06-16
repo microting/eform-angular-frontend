@@ -18,14 +18,7 @@ import { EformCasesModule } from 'src/app/common/modules/eform-cases/eform-cases
 import { EformImportedModule } from 'src/app/common/modules/eform-imported/eform-imported.module';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
 import { CasesRoutingModule } from './cases.routing';
-import {
-  CaseEditComponent,
-  CasePostNewComponent,
-  CasePostsPageComponent,
-  CasePostViewComponent,
-  CasesTableComponent,
-} from './components';
-import { casePostsPersistProvider } from './components/case-posts/store';
+import { CaseEditComponent, CasesTableComponent } from './components';
 import { casesPersistProvider } from './components/store';
 
 @NgModule({
@@ -46,18 +39,10 @@ import { casesPersistProvider } from './components/store';
     FontAwesomeModule,
     EformCasesModule,
   ],
-  declarations: [
-    CasesTableComponent,
-    CaseEditComponent,
-    CasePostNewComponent,
-    CasePostsPageComponent,
-    CasePostViewComponent,
-  ],
+  declarations: [CasesTableComponent, CaseEditComponent],
   providers: [
     { provide: OWL_DATE_TIME_FORMATS, useValue: MY_MOMENT_FORMATS },
     casesPersistProvider,
-    casePostsPersistProvider,
   ],
-  exports: [CasePostNewComponent],
 })
 export class CasesModule {}

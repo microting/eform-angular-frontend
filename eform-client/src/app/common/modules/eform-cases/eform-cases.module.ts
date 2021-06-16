@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import {RouterModule} from '@angular/router';
 import {
   OWL_DATE_TIME_FORMATS,
   OwlDateTimeModule,
@@ -21,6 +22,9 @@ import {
   CaseEditElementComponent,
   CaseEditNavComponent,
   CaseEditSwitchComponent,
+  CasePostNewComponent,
+  CasePostsPageComponent,
+  CasePostViewComponent,
   CaseRemoveModalComponent,
   ElementAudioComponent,
   ElementCheckboxComponent,
@@ -41,6 +45,8 @@ import {
   ElementTimerComponent,
 } from './components';
 
+import { casePostsPersistProvider } from './components/case-posts/store';
+
 @NgModule({
   imports: [
     TranslateModule,
@@ -56,6 +62,7 @@ import {
     OwlNativeDateTimeModule,
     FormsModule,
     FontAwesomeModule,
+    RouterModule,
   ],
   declarations: [
     CaseEditNavComponent,
@@ -80,8 +87,14 @@ import {
     ElementContainerComponent,
     ElementPictureComponent,
     ElementSignatureComponent,
+    CasePostNewComponent,
+    CasePostViewComponent,
+    CasePostsPageComponent,
   ],
-  providers: [{ provide: OWL_DATE_TIME_FORMATS, useValue: MY_MOMENT_FORMATS }],
+  providers: [
+    { provide: OWL_DATE_TIME_FORMATS, useValue: MY_MOMENT_FORMATS },
+    casePostsPersistProvider,
+  ],
   exports: [
     CaseEditNavComponent,
     CaseEditSwitchComponent,
@@ -105,6 +118,9 @@ import {
     ElementContainerComponent,
     ElementPictureComponent,
     ElementSignatureComponent,
+    CasePostNewComponent,
+    CasePostViewComponent,
+    CasePostsPageComponent,
   ],
 })
 export class EformCasesModule {}
