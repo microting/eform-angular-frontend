@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2020 Microting A/S
+Copyright (c) 2007 - 2021 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -28,9 +28,9 @@ namespace eFormAPI.Web.Hosting.Security
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
-    using Infrastructure;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Http;
+    using Microting.EformAngularFrontendBase.Infrastructure.Const;
     using Services.Cache.AuthCache;
 
     public class ClaimsTransformer : IClaimsTransformation

@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2020 Microting A/S
+Copyright (c) 2007 - 2021 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,17 +21,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System.Linq;
-using System.Threading.Tasks;
-using eFormAPI.Web.Abstractions;
-using eFormAPI.Web.Abstractions.Security;
-using eFormAPI.Web.Infrastructure.Database;
-using Microsoft.EntityFrameworkCore;
-using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 
 namespace eFormAPI.Web.Services.Security
 {
+    using System.Linq;
+    using Microsoft.EntityFrameworkCore;
+    using Microting.EformAngularFrontendBase.Infrastructure.Data;
     using Microting.eFormApi.BasePn.Abstractions;
+    using System.Threading.Tasks;
+    using eFormAPI.Web.Abstractions.Security;
+    using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
+
 
     public class EformPermissionsService : IEformPermissionsService
     {
@@ -51,8 +51,8 @@ namespace eFormAPI.Web.Services.Security
             {
                 var result = await _dbContext
                     .EformInGroups
-                    .Where(x => x.TemplateId == eformId
-                                && x.SecurityGroup.SecurityGroupUsers.Any(u => u.EformUserId == _userService.UserId))
+                    .Where(x => x.TemplateId == eformId)
+                    .Where(x => x.SecurityGroup.SecurityGroupUsers.Any(u => u.EformUserId == _userService.UserId))
                     .Select(x => new
                     {
                         iss = x.EformPermissions.Any(y => y.Permission.ClaimName == claimName)

@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2020 Microting A/S
+Copyright (c) 2007 - 2021 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,17 +21,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using System.Linq;
-using Castle.Core.Internal;
-using eFormAPI.Web.Infrastructure.Database.Factories;
-using eFormAPI.Web.Infrastructure.Database.Seed.SeedItems;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microting.eFormApi.BasePn.Infrastructure.Delegates;
-using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+
 
 namespace eFormAPI.Web.Hosting.Settings
 {
+    using System.Linq;
+    using Microsoft.EntityFrameworkCore;
+    using Microting.EformAngularFrontendBase.Infrastructure.Data.Factories;
+    using Microting.EformAngularFrontendBase.Infrastructure.Data.Seed.SeedItems;
+    using Castle.Core.Internal;
+    using Microsoft.Extensions.Configuration;
+    using Microting.eFormApi.BasePn.Infrastructure.Delegates;
+    using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+
     public class EfConfigurationProvider : ConfigurationProvider
     {
         private readonly string _connectionString;
