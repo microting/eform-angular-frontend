@@ -1,7 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {CanDeactivateGuard} from 'src/app/common/guards';
-import {CaseEditComponent, CasePostsPageComponent, CasesTableComponent} from './components';
+import {CasePostsPageComponent} from 'src/app/common/modules/eform-cases/components';
+import {CaseEditComponent, CasesTableComponent} from './components';
 
 const routes: Routes = [
 
