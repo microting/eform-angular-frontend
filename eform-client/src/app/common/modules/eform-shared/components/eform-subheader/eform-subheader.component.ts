@@ -21,6 +21,9 @@ export class EformSubheaderComponent implements OnInit, OnDestroy {
   @Input() subtitle = '';
   @Input() heandingSizeRem = 2.5;
   @Input() forceStaticTitle = false;
+  @Input() prioritizeMenuTitle = false;
+
+  internalTitle = '';
 
   constructor(
     private router: Router,
@@ -33,9 +36,9 @@ export class EformSubheaderComponent implements OnInit, OnDestroy {
     if (!this.forceStaticTitle) {
       const href = this.router.url;
       this.appMenuStateService.getAppMenu().subscribe((_) => {
-        const title = this.appMenuStateService.getTitleByUrl(href);
-        if (title) {
-          this.title = title;
+        const foundTitle = this.appMenuStateService.getTitleByUrl(href);
+        if (foundTitle) {
+          this.internalTitle = foundTitle;
         }
       });
     }
