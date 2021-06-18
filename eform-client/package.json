@@ -85,7 +85,7 @@
     "@datorama/akita": "^6.2.0",
     "@datorama/akita-ngdevtools": "^6.0.0",
     "@types/chai": "4.2.18",
-    "@types/d3": "6.7.0",
+    "@types/d3": "6.7.1",
     "@types/mocha": "8.2.2",
     "@types/node": "15.12.2",
     "@wdio/cli": "7.7.3",
