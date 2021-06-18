@@ -1,13 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using eFormAPI.Web.Infrastructure.Database;
-using Microsoft.EntityFrameworkCore;
-using Microting.eForm.Dto;
-
 namespace eFormAPI.Web.Infrastructure.Models
 {
+    using System.Linq;
+    using Microsoft.EntityFrameworkCore;
+    using Microting.EformAngularFrontendBase.Infrastructure.Data;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Microting.eForm.Dto;
+
     public class TemplateDto
     {
         public int Id { get; set; }

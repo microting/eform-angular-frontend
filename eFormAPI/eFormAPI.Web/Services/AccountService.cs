@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2020 Microting A/S
+Copyright (c) 2007 - 2021 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,31 +22,31 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using eFormAPI.Web.Abstractions;
-using eFormAPI.Web.Hosting.Helpers.DbOptions;
-using eFormAPI.Web.Infrastructure.Models.Settings;
-using eFormAPI.Web.Infrastructure.Models.Settings.User;
-using eFormAPI.Web.Infrastructure.Models.Users;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Microting.eForm.Dto;
-using Microting.eFormApi.BasePn.Abstractions;
-using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
-using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
 
 namespace eFormAPI.Web.Services
 {
-    using Infrastructure.Database;
     using Microsoft.EntityFrameworkCore;
+    using Microting.EformAngularFrontendBase.Infrastructure.Data;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Abstractions;
+    using Hosting.Helpers.DbOptions;
+    using Infrastructure.Models.Settings;
+    using Infrastructure.Models.Settings.User;
+    using Infrastructure.Models.Users;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Identity.UI.Services;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
+    using Microting.eForm.Dto;
+    using Microting.eFormApi.BasePn.Abstractions;
+    using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Auth;
 
     public class AccountService : IAccountService
     {

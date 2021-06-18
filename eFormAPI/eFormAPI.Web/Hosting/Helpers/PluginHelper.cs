@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2020 Microting A/S
+Copyright (c) 2007 - 2021 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,40 +22,41 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
-using Amazon.S3;
-using Amazon.S3.Model;
-using eFormAPI.Web.Hosting.Enums;
-using eFormAPI.Web.Infrastructure.Database.Entities;
-using eFormAPI.Web.Infrastructure.Database.Factories;
-using eFormCore;
-using McMaster.NETCore.Plugins;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using Microting.eFormApi.BasePn;
-using Microting.eFormApi.BasePn.Abstractions;
-using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
-using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
-using Microting.eFormApi.BasePn.Infrastructure.Delegates;
-using Microting.eFormApi.BasePn.Infrastructure.Helpers;
-using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
-using Microting.eFormApi.BasePn.Infrastructure.Settings;
-using Microting.eFormApi.BasePn.Services;
-using OpenStack.NetCoreSwiftClient;
-using OpenStack.NetCoreSwiftClient.Infrastructure.Models;
 
 namespace eFormAPI.Web.Hosting.Helpers
 {
+    using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities;
+    using Microting.EformAngularFrontendBase.Infrastructure.Data.Factories;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Text.RegularExpressions;
+    using Amazon.S3;
+    using Amazon.S3.Model;
+    using Enums;
+    using eFormCore;
+    using McMaster.NETCore.Plugins;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Design;
+    using Microsoft.EntityFrameworkCore.Diagnostics;
+    using Microsoft.EntityFrameworkCore.Infrastructure;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Options;
+    using Microting.eFormApi.BasePn;
+    using Microting.eFormApi.BasePn.Abstractions;
+    using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
+    using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
+    using Microting.eFormApi.BasePn.Infrastructure.Delegates;
+    using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+    using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
+    using Microting.eFormApi.BasePn.Infrastructure.Settings;
+    using Microting.eFormApi.BasePn.Services;
+    using OpenStack.NetCoreSwiftClient;
+    using OpenStack.NetCoreSwiftClient.Infrastructure.Models;
+
     public static class PluginHelper
     {
         public static List<IEformPlugin> GetPlugins(string connectionString)

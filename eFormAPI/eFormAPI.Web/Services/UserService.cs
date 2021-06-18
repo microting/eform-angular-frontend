@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2020 Microting A/S
+Copyright (c) 2007 - 2021 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,6 @@ SOFTWARE.
 
 namespace eFormAPI.Web.Services
 {
-    using Infrastructure.Database;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
@@ -36,6 +35,7 @@ namespace eFormAPI.Web.Services
     using System.Security.Claims;
     using System.Threading.Tasks;
     using Microting.eForm.Infrastructure.Data.Entities;
+    using Microting.EformAngularFrontendBase.Infrastructure.Data;
 
     public class UserService : IUserService
     {
@@ -69,12 +69,12 @@ namespace eFormAPI.Web.Services
         {
             get
             {
-                var value = _httpAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+                var value = _httpAccessor?.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 return value == null ? 0 : int.Parse(value);
             }
         }
 
-        public string Role => _httpAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Role);
+        public string Role => _httpAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.Role);
 
         public bool IsInRole(string role) => _httpAccessor.HttpContext.User.IsInRole(role);
 

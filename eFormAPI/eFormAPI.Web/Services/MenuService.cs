@@ -1,7 +1,7 @@
 ﻿/*
 The MIT License (MIT)
 
-Copyright (c) 2007 - 2020 Microting A/S
+Copyright (c) 2007 - 2021 Microting A/S
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,31 +21,29 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-using eFormAPI.Web.Abstractions;
-using eFormAPI.Web.Abstractions.Security;
-using eFormAPI.Web.Infrastructure;
-using eFormAPI.Web.Infrastructure.Database;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
-using Microting.eFormApi.BasePn.Infrastructure.Models.API;
-using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace eFormAPI.Web.Services
 {
-    using eFormAPI.Web.Hosting.Enums;
-    using eFormAPI.Web.Infrastructure.Const;
-    using eFormAPI.Web.Services.NavigationMenu;
-    using eFormAPI.Web.Services.NavigationMenu.Builder;
-    using eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader;
-    using Infrastructure.Database.Entities.Menu;
+    using Hosting.Enums;
+    using NavigationMenu;
+    using NavigationMenu.Builder;
     using Microting.eFormApi.BasePn.Abstractions;
     using Microting.eFormApi.BasePn.Infrastructure.Consts;
     using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
+    using Abstractions;
+    using eFormAPI.Web.Abstractions.Security;
+    using Microsoft.Extensions.Logging;
+    using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using Microting.EformAngularFrontendBase.Infrastructure.Const;
+    using Microting.EformAngularFrontendBase.Infrastructure.Data;
+    using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
 
     public class MenuService : IMenuService
     {
@@ -107,7 +105,7 @@ namespace eFormAPI.Web.Services
                     menuItems = FilterMenuForUser(menuItems, userClaims);
                 }
 
-                var user = await _userService.GetCurrentUserAsync();
+                //var user = await _userService.GetCurrentUserAsync();
 
                 var menuTemplates = new List<NavigationMenuTemplateModel>()
                 {
