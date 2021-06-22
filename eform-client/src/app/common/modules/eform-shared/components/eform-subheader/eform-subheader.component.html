@@ -1,13 +1,7 @@
 <div class="d-flex heading-bg">
   <div class="mr-auto p-3">
     <h1 [ngStyle]="{ fontSize: heandingSizeRem + 'rem' }">
-      {{
-        forceStaticTitle
-          ? title
-          : prioritizeMenuTitle
-          ? (internalTitle | translate)
-          : title
-      }}
+      {{ forceStaticTitle ? title : (title | translate) }}
       <small *ngIf="subtitle" style="font-size: 1rem"
         >({{ subtitle | translate }})</small
       >

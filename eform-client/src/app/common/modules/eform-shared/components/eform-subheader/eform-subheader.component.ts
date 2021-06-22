@@ -1,11 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  Input,
-  OnInit,
-  ViewChild,
-  OnDestroy,
-} from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { AppMenuStateService } from 'src/app/common/store';
@@ -23,7 +16,7 @@ export class EformSubheaderComponent implements OnInit, OnDestroy {
   @Input() forceStaticTitle = false;
   @Input() prioritizeMenuTitle = false;
 
-  internalTitle = '';
+  // internalTitle = '';
 
   constructor(
     private router: Router,
@@ -33,12 +26,13 @@ export class EformSubheaderComponent implements OnInit, OnDestroy {
   ngOnDestroy() {}
 
   ngOnInit() {
-    if (!this.forceStaticTitle) {
+    if (!this.forceStaticTitle || this.title) {
       const href = this.router.url;
       this.appMenuStateService.getAppMenu().subscribe((_) => {
         const foundTitle = this.appMenuStateService.getTitleByUrl(href);
         if (foundTitle) {
-          this.internalTitle = foundTitle;
+          // this.internalTitle = foundTitle;
+          this.title = foundTitle;
         }
       });
     }
