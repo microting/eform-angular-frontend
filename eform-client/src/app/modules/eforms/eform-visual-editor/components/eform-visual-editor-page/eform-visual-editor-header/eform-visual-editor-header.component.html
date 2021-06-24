@@ -1,0 +1,48 @@
+<section>
+  <div class="card z-depth-3 mt-4" style="width: 100%">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-4 col-sm-6 col-xs-6">
+          <div class="md-form">
+            <input
+              mdbInput
+              [(ngModel)]="visualEditorModel.label"
+              type="text"
+              id="label"
+              name="label"
+              class="form-control"
+            />
+            <label for="label">{{
+              'Label' | translate
+              }}</label>
+          </div>
+        </div>
+        <div class="col-md-8 col-sm-6 col-xs-6 ng-select-wrapper">
+          <ng-select
+            [items]="[]"
+            bindLabel="label"
+            [placeholder]="'Tags' | translate"
+            bindValue="id"
+            [(ngModel)]="visualEditorModel.tagIds"
+            id="tagsSelector"
+          >
+          </ng-select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="md-form">
+            <p class="text-black-50">
+              {{ 'Description' | translate }}
+            </p>
+            <pell-editor
+              mdbInput
+              [(value)]="visualEditorModel.description"
+              rows="10"
+            ></pell-editor>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
