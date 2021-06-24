@@ -236,6 +236,7 @@ namespace eFormAPI.Web.Services.Security
                 new Claim(AuthConsts.EformClaims.EformsClaims.ReadJasperReport, AuthConsts.ClaimDefaultValue),
                 new Claim(AuthConsts.EformClaims.EformsClaims.UpdateJasperReport, AuthConsts.ClaimDefaultValue),
                 new Claim(AuthConsts.EformClaims.EformsClaims.ExportEformExcel, AuthConsts.ClaimDefaultValue),
+                new Claim(AuthConsts.EformClaims.EformsClaims.AllowManagingEformTags, AuthConsts.ClaimDefaultValue),
                 // E-mail recipients
                 new Claim(AuthConsts.EformClaims.EmailRecipientsClaims.Create, AuthConsts.ClaimDefaultValue),
                 new Claim(AuthConsts.EformClaims.EmailRecipientsClaims.Delete, AuthConsts.ClaimDefaultValue),
