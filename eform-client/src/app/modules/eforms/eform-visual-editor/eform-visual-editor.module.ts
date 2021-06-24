@@ -15,12 +15,16 @@ import {
   EformVisualEditorTagsComponent
 } from './components';
 import { EformVisualEditorRouting } from './eform-visual-editor.routing';
+import { EformVisualEditorElementModalComponent } from './components/eform-visual-editor-element-modal/eform-visual-editor-element-modal.component';
+import { EformVisualEditorElementComponent } from './components/eform-visual-editor-element/eform-visual-editor-element.component';
 
 @NgModule({
   declarations: [
     EformVisualEditorContainerComponent,
     EformVisualEditorHeaderComponent,
-    EformVisualEditorTagsComponent
+    EformVisualEditorTagsComponent,
+    EformVisualEditorElementModalComponent,
+    EformVisualEditorElementComponent
   ],
   imports: [
     CommonModule,

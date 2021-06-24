@@ -15,11 +15,12 @@ import { EformTagService } from 'src/app/common/services';
   styleUrls: ['./eform-visual-editor-container.component.scss'],
 })
 export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
-  newTemplateModel: EformVisualEditorModel = new EformVisualEditorModel();
+  templateModel: EformVisualEditorModel = new EformVisualEditorModel();
   availableTags: CommonDictionaryModel[] = [];
   @ViewChild('tagsModal') tagsModal: SharedTagsComponent;
 
   getTagsSub$: Subscription;
+  isItemsCollapsed = false;
 
   constructor(private tagsService: EformTagService) {}
 
@@ -42,4 +43,24 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {}
+
+  onAddNewElement(number: number) {
+
+  }
+
+  toggleCollapse() {
+
+  }
+
+  dragulaPositionChanged($event: any[]) {
+
+  }
+
+  onEditorElementChanged($event: any) {
+
+  }
+
+  onDeleteElement($event: number) {
+
+  }
 }

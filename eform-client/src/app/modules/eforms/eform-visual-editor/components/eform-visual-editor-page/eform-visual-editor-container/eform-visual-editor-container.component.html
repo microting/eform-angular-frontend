@@ -13,47 +13,74 @@
 </eform-subheader>
 
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-md-9 col-xs-12" role="main">
+  <div class="row mb-2">
+    <div class="col-lg-9 col-md-12 col-xs-12">
       <app-eform-visual-editor-header
-        [visualEditorModel]="newTemplateModel"
+        [visualEditorModel]="templateModel"
       ></app-eform-visual-editor-header>
-      <!--      <app-eform-report-block-->
-      <!--        [element]="elem"-->
-      <!--        (elementChanged)="onElementChanged($event)"-->
-      <!--        *ngFor="let elem of fullReportModel.eformMainElement.elementList"-->
-      <!--      ></app-eform-report-block>-->
     </div>
-    <div class="col-md-3">
-      <div
-        class="card sticky-top z-depth-3 mb-4 mt-4"
-        style="width: 100%; z-index: 1"
-      >
-        <div class="card-header text-center">
-          {{ 'Additional elements' | translate }}
-        </div>
+  </div>
+  <div class="row mb-2">
+    <div class="col-lg-9 col-md-12 col-xs-12">
+      <div class="card z-depth-3" style="width: 100%">
         <div class="card-body">
-          <ul class="list-group">
-            <li
-              style="cursor: pointer"
-              class="list-group-item list-group-item-action waves-light"
-              mdbWavesEffect
-            >
-              <a>
-                {{ 'Page Break' | translate }}
-              </a>
-            </li>
-          </ul>
-          <div class="text-center mt-2">
-            <button
-              mdbBtn
-              class="btn-ar btn-danger"
-              (click)="createTemplate()"
-              id="submit_form"
-            >
-              {{ 'Save' | translate }} <i class="fa fa-spinner fa-spin"></i>
-            </button>
+          <div class="row">
+            <div class="col">
+              <button
+                mdbBtn
+                id="initialItemCreateBtn"
+                class="btn-success btn-small-height"
+                (click)="onAddNewElement(1)"
+              >
+                {{ 'Add new item' | translate }}
+              </button>
+              <ng-container>
+                <button
+                  mdbBtn
+                  class="btn-icon mb-2 float-right text-black-50"
+                  mdbTooltip="{{ 'Expand all' | translate }}"
+                  (click)="toggleCollapse()"
+                  *ngIf="isItemsCollapsed"
+                >
+                  <fa-icon
+                    icon="angle-double-right"
+                    size="lg"
+                    [fixedWidth]="true"
+                  ></fa-icon>
+                </button>
+
+                <button
+                  mdbBtn
+                  class="btn-icon mb-2 float-right text-black-50"
+                  mdbTooltip="{{ 'Collapse all' | translate }}"
+                  (click)="toggleCollapse()"
+                  *ngIf="!isItemsCollapsed"
+                >
+                  <fa-icon
+                    icon="angle-double-down"
+                    size="lg"
+                    [fixedWidth]="true"
+                  ></fa-icon>
+                </button>
+              </ng-container>
+            </div>
           </div>
+          <section
+            dragula="ITEMS"
+            id="editorElements"
+            (dragulaModelChange)="dragulaPositionChanged($event)"
+            [dragulaModel]="templateModel.elements"
+          >
+            <app-eform-visual-editor-element
+              *ngFor="let editorElement of templateModel.elements"
+              [editorElement]="editorElement"
+              id="editorElement"
+              (addNewElement)="onAddNewElement($event)"
+              (deleteElement)="onDeleteElement($event)"
+              [ngClass]="{ 'no-drag': !editorElement.collapsed }"
+              (editorElementChanged)="onEditorElementChanged($event)"
+            ></app-eform-visual-editor-element>
+          </section>
         </div>
       </div>
     </div>

@@ -3,4 +3,5 @@ export class EformVisualEditorModel {
   label: string;
   description: string;
   tagIds: number[];
+  elements: any[];
 }
