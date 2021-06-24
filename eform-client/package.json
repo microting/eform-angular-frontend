@@ -53,7 +53,7 @@
     "@types/dragula": "3.7.0",
     "@types/file-saver": "2.0.2",
     "angular-bootstrap-md": "^11.1.0",
-    "angular-calendar": "0.28.24",
+    "angular-calendar": "0.28.26",
     "angular2-uuid": "1.1.1",
     "chart.js": "3.3.2",
     "core-js": "3.14.0",
