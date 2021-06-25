@@ -84,6 +84,7 @@ export function createInitialState(): AuthState {
         eformsGetCsv: false,
         eformsReadJasperReport: false,
         eformsUpdateJasperReport: false,
+        eformAllowManagingEformTags: false,
       },
     },
   };
