@@ -1,12 +1,17 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { Subscription } from 'rxjs';
+import { applicationLanguages } from 'src/app/common/const';
 import {
   CommonDictionaryModel,
   EformVisualEditorModel,
 } from 'src/app/common/models';
 import { SharedTagsComponent } from 'src/app/common/modules/eform-shared-tags/components';
-import { EformTagService } from 'src/app/common/services';
+import {
+  EformTagService,
+  EformVisualEditorService,
+} from 'src/app/common/services';
 
 @AutoUnsubscribe()
 @Component({
@@ -15,17 +20,36 @@ import { EformTagService } from 'src/app/common/services';
   styleUrls: ['./eform-visual-editor-container.component.scss'],
 })
 export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
-  templateModel: EformVisualEditorModel = new EformVisualEditorModel();
-  availableTags: CommonDictionaryModel[] = [];
   @ViewChild('tagsModal') tagsModal: SharedTagsComponent;
 
-  getTagsSub$: Subscription;
+  visualEditorTemplateModel: EformVisualEditorModel = new EformVisualEditorModel();
+  availableTags: CommonDictionaryModel[] = [];
   isItemsCollapsed = false;
 
-  constructor(private tagsService: EformTagService) {}
+  getTagsSub$: Subscription;
+  getVisualTemplateSub$: Subscription;
+  createVisualTemplateSub$: Subscription;
+  updateVisualTemplateSub$: Subscription;
+
+  constructor(
+    private tagsService: EformTagService,
+    private visualEditorService: EformVisualEditorService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.getTags();
+    this.initForm();
+  }
+
+  getVisualTemplate() {
+    this.getVisualTemplateSub$ = this.tagsService
+      .getAvailableTags()
+      .subscribe((data) => {
+        if (data && data.success) {
+          this.availableTags = data.model;
+        }
+      });
   }
 
   getTags() {
@@ -36,31 +60,51 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
     });
   }
 
-  createTemplate() {}
+  initForm() {
+    for (const language of applicationLanguages) {
+      this.visualEditorTemplateModel = {
+        ...this.visualEditorTemplateModel,
+        translations: [
+          ...this.visualEditorTemplateModel.translations,
+          { id: language.id, description: '', name: '' },
+        ],
+      };
+    }
+  }
+
+  createVisualTemplate() {
+    this.createVisualTemplateSub$ = this.visualEditorService
+      .createVisualEditorTemplate(this.visualEditorTemplateModel)
+      .subscribe((data) => {
+        if (data && data.success) {
+          this.router.navigate(['/cases/']).then();
+        }
+      });
+  }
+
+  updateVisualTemplate() {
+    this.updateVisualTemplateSub$ = this.visualEditorService
+      .updateVisualEditorTemplate(this.visualEditorTemplateModel)
+      .subscribe((data) => {
+        if (data && data.success) {
+          this.router.navigate(['/cases/']).then();
+        }
+      });
+  }
 
   openTagsModal() {
     this.tagsModal.show();
   }
 
+  onAddNewElement(number: number) {}
+
+  toggleCollapse() {}
+
+  dragulaPositionChanged($event: any[]) {}
+
+  onEditorElementChanged($event: any) {}
+
+  onDeleteElement($event: number) {}
+
   ngOnDestroy(): void {}
-
-  onAddNewElement(number: number) {
-
-  }
-
-  toggleCollapse() {
-
-  }
-
-  dragulaPositionChanged($event: any[]) {
-
-  }
-
-  onEditorElementChanged($event: any) {
-
-  }
-
-  onDeleteElement($event: number) {
-
-  }
 }

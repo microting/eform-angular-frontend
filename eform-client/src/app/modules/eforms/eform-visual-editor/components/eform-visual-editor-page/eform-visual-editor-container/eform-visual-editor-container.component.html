@@ -9,6 +9,17 @@
     >
       <fa-icon icon="tags" [fixedWidth]="true" size="lg"></fa-icon>
     </button>
+    <button
+      mdbBtn
+      class="btn-success btn-small-height"
+      (click)="createVisualTemplate()"
+      mdbTooltip="{{ 'Save' | translate }}"
+      mdbWavesEffect
+    >
+      {{
+      'Save' | translate
+      }}
+    </button>
   </div>
 </eform-subheader>
 
@@ -16,7 +27,7 @@
   <div class="row mb-2">
     <div class="col-lg-9 col-md-12 col-xs-12">
       <app-eform-visual-editor-header
-        [visualEditorModel]="templateModel"
+        [visualEditorModel]="visualEditorTemplateModel"
       ></app-eform-visual-editor-header>
     </div>
   </div>
@@ -69,10 +80,10 @@
             dragula="ITEMS"
             id="editorElements"
             (dragulaModelChange)="dragulaPositionChanged($event)"
-            [dragulaModel]="templateModel.elements"
+            [dragulaModel]="visualEditorTemplateModel.fields"
           >
             <app-eform-visual-editor-element
-              *ngFor="let editorElement of templateModel.elements"
+              *ngFor="let editorElement of visualEditorTemplateModel.fields"
               [editorElement]="editorElement"
               id="editorElement"
               (addNewElement)="onAddNewElement($event)"

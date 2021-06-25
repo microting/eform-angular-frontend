@@ -1,5 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { ToastrService } from 'ngx-toastr';
+import { applicationLanguages } from 'src/app/common/const';
 import { EformVisualEditorModel } from 'src/app/common/models';
+import { LocaleService } from 'src/app/common/services';
 
 @Component({
   selector: 'app-eform-visual-editor-header',
@@ -9,8 +13,21 @@ import { EformVisualEditorModel } from 'src/app/common/models';
 export class EformVisualEditorHeaderComponent implements OnInit {
   @Input()
   visualEditorModel: EformVisualEditorModel = new EformVisualEditorModel();
+  selectedLanguage: number;
 
-  constructor() {}
+  get languages() {
+    return applicationLanguages;
+  }
 
-  ngOnInit(): void {}
+  constructor(
+    private toastrService: ToastrService,
+    private translateService: TranslateService,
+    private localeService: LocaleService
+  ) {}
+
+  ngOnInit() {
+    this.selectedLanguage = applicationLanguages.find(
+      (x) => x.locale === this.localeService.getCurrentUserLocale()
+    ).id;
+  }
 }

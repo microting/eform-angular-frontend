@@ -10,7 +10,7 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 import { CollapseComponent } from 'angular-bootstrap-md';
 import { Subscription } from 'rxjs';
-import { EformVisualEditorCollapseService } from 'src/app/common/services';
+import { EformVisualEditorService } from 'src/app/common/services';
 
 @Component({
   selector: 'app-eform-visual-editor-element',
@@ -28,20 +28,22 @@ export class EformVisualEditorElementComponent implements OnInit, OnDestroy {
 
   constructor(
     private translateService: TranslateService,
-    private collapseService: EformVisualEditorCollapseService
+    private visualEditorService: EformVisualEditorService
   ) {}
 
   ngOnInit() {
-    this.collapseSub$ = this.collapseService.collapse.subscribe((collapsed) => {
-      if (!collapsed && this.editorElement.collapsed) {
-        this.editorElement.collapsed = false;
-        this.collapse.toggle();
+    this.collapseSub$ = this.visualEditorService.collapse.subscribe(
+      (collapsed) => {
+        if (!collapsed && this.editorElement.collapsed) {
+          this.editorElement.collapsed = false;
+          this.collapse.toggle();
+        }
+        if (collapsed && !this.editorElement.collapsed) {
+          this.editorElement.collapsed = true;
+          this.collapse.toggle();
+        }
       }
-      if (collapsed && !this.editorElement.collapsed) {
-        this.editorElement.collapsed = true;
-        this.collapse.toggle();
-      }
-    });
+    );
   }
 
   addNew(position: number) {
