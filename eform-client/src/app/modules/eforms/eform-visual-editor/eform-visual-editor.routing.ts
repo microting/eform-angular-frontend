@@ -9,6 +9,11 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     component: EformVisualEditorContainerComponent,
   },
+  {
+    path: ':templateId',
+    canActivate: [AuthGuard],
+    component: EformVisualEditorContainerComponent,
+  },
 ];
 
 @NgModule({

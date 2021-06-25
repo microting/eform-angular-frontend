@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import { Subscription } from 'rxjs';
 import { applicationLanguages } from 'src/app/common/const';
@@ -23,6 +23,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   @ViewChild('tagsModal') tagsModal: SharedTagsComponent;
 
   visualEditorTemplateModel: EformVisualEditorModel = new EformVisualEditorModel();
+  selectedTemplateId: number;
   availableTags: CommonDictionaryModel[] = [];
   isItemsCollapsed = false;
 
@@ -34,20 +35,29 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   constructor(
     private tagsService: EformTagService,
     private visualEditorService: EformVisualEditorService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.getTags();
-    this.initForm();
+
+    this.route.params.subscribe((params) => {
+      this.selectedTemplateId = params['templateId'];
+      if (this.selectedTemplateId) {
+        this.getVisualTemplate(this.selectedTemplateId);
+      } else {
+        this.initForm();
+      }
+    });
   }
 
-  getVisualTemplate() {
-    this.getVisualTemplateSub$ = this.tagsService
-      .getAvailableTags()
+  getVisualTemplate(templateId: number) {
+    this.getVisualTemplateSub$ = this.visualEditorService
+      .getVisualEditorTemplate(templateId)
       .subscribe((data) => {
         if (data && data.success) {
-          this.availableTags = data.model;
+          this.visualEditorTemplateModel = data.model;
         }
       });
   }
