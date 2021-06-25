@@ -76,11 +76,11 @@ class PluginRowObject {
   status: boolean;
   settingsBtn;
 
-  enableOrDisablePlugin() {
+  enableOrDisablePlugin(timeout = 100000) {
     this.statusBtn.click();
     pluginPage.pluginOKBtn.waitForDisplayed({ timeout: 40000 });
     pluginPage.pluginOKBtn.click();
-    browser.pause(100000); // We need to wait 100 seconds for the plugin to create db etc.
+    browser.pause(timeout); // We need to wait 100 seconds for the plugin to create db etc.
     loginPage.open('/');
     loginPage.login();
     myEformsPage.Navbar.goToPluginsPage();

@@ -45,4 +45,5 @@ export interface UserClaimsModel {
   eformsGetCsv: boolean;
   eformsReadJasperReport: boolean;
   eformsUpdateJasperReport: boolean;
+  eformAllowManagingEformTags: boolean;
 }

@@ -50,6 +50,6 @@ export enum UserClaimsEnum {
   eformExportEformExcel,
   emailRecipientCreate,
   emailRecipientDelete,
-  emailRecipientRead
+  emailRecipientRead,
+  eformAllowManagingEformTags,
 }
-
