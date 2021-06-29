@@ -125,11 +125,21 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
     this.checklistModal.show(model);
   }
 
-  onChecklistCreate(model: EformVisualEditorModel) {}
+  onChecklistCreate(model: EformVisualEditorModel) {
+    this.visualEditorTemplateModel = {
+      ...this.visualEditorTemplateModel,
+      checkLists: [...this.visualEditorTemplateModel.checkLists, model],
+    };
+  }
 
   onChecklistUpdate(model: EformVisualEditorModel) {}
 
-  onFieldCreate(model: EformVisualEditorFieldModel) {}
+  onFieldCreate(model: EformVisualEditorFieldModel) {
+    this.visualEditorTemplateModel = {
+      ...this.visualEditorTemplateModel,
+      fields: [...this.visualEditorTemplateModel.fields, model],
+    };
+  }
 
   onFieldUpdate(model: EformVisualEditorFieldModel) {}
 

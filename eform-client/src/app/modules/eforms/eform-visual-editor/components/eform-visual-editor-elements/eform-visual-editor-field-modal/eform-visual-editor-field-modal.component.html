@@ -1,94 +1,91 @@
 <div mdbModal class="modal fade" #frame="mdbModal">
-  <div class="modal-dialog modal-md">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h3>{{ 'New field' | translate }}</h3>
       </div>
       <div class="modal-body">
-        <div class="card z-depth-3 mt-4" style="width: 100%">
-          <div class="card-body">
-            <mdb-card class="mb-3">
-              <mdb-card-body>
-                <div class="row">
-                  <div class="col">
-                    <div class="ng-select-wrapper">
-                      <ng-select
-                        class="custom"
-                        dropdownPosition="'bottom'"
-                        [placeholder]="'Selected language' | translate"
-                        [clearable]="false"
-                        [bindLabel]="'text'"
-                        [bindValue]="'id'"
-                        [(ngModel)]="selectedLanguage"
-                        id="newFieldLanguageSelector"
-                        [items]="languages"
-                      ></ng-select>
-                    </div>
-                  </div>
+        <mdb-card class="mb-3">
+          <mdb-card-body>
+            <div class="row">
+              <div class="col">
+                <div class="ng-select-wrapper">
+                  <ng-select
+                    class="custom"
+                    dropdownPosition="'bottom'"
+                    [placeholder]="'Selected language' | translate"
+                    [clearable]="false"
+                    [bindLabel]="'text'"
+                    [bindValue]="'id'"
+                    [(ngModel)]="selectedLanguage"
+                    id="newFieldLanguageSelector"
+                    [items]="languages"
+                  ></ng-select>
                 </div>
-              </mdb-card-body>
-            </mdb-card>
-            <mdb-card>
-              <mdb-card-body>
-                <ng-container
-                  *ngFor="
+              </div>
+            </div>
+          </mdb-card-body>
+        </mdb-card>
+        <mdb-card>
+          <mdb-card-body>
+            <ng-container
+              *ngFor="
                     let translation of selectedFieldTranslations;
                     let translationIndex = index
                   "
-                >
-                  <ng-container *ngIf="selectedLanguage === translation.id">
-                    <div class="row">
-                      <div class="col-12">
-                        <div class="md-form">
-                          <input
-                            mdbInput
-                            type="text"
-                            id="newFieldNameTranslation_{{
+            >
+              <ng-container *ngIf="selectedLanguage === translation.id">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="md-form">
+                      <input
+                        mdbInput
+                        type="text"
+                        id="newFieldNameTranslation_{{
                               translationIndex
                             }}"
-                            name="newFieldNameTranslation_{{
+                        name="newFieldNameTranslation_{{
                               translationIndex
                             }}"
-                            [(ngModel)]="translation.name"
-                            class="form-control"
-                          />
-                          <label
-                            for="newFieldNameTranslation_{{
+                        [(ngModel)]="translation.name"
+                        class="form-control"
+                      />
+                      <label
+                        for="newFieldNameTranslation_{{
                               translationIndex
                             }}"
-                          >
-                            {{ 'Name' | translate }}
-                          </label>
-                        </div>
-                      </div>
+                      >
+                        {{ 'Name' | translate }}
+                      </label>
                     </div>
-                    <div class="row">
-                      <div class="col-12">
-                        <div class="md-form">
-                          <p class="text-black-50">
-                            {{ 'Description' | translate }}
-                          </p>
-                          <pell-editor
-                            mdbInput
-                            [(value)]="translation.description"
-                            name="newFieldDescriptionTranslation_{{
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="md-form">
+                      <p class="text-black-50">
+                        {{ 'Description' | translate }}
+                      </p>
+                      <pell-editor
+                        mdbInput
+                        [(value)]="translation.description"
+                        name="newFieldDescriptionTranslation_{{
                               translationIndex
                             }}"
-                            required
-                            id="newFieldDescriptionTranslation_{{
+                        required
+                        id="newFieldDescriptionTranslation_{{
                               translationIndex
                             }}"
-                            rows="10"
-                          ></pell-editor>
-                        </div>
-                      </div>
+                        rows="10"
+                      ></pell-editor>
                     </div>
-                  </ng-container>
-                </ng-container>
-              </mdb-card-body>
-            </mdb-card>
-          </div>
-        </div>
+                  </div>
+                </div>
+              </ng-container>
+            </ng-container>
+          </mdb-card-body>
+        </mdb-card>
+
       </div>
       <div class="modal-footer">
         <button

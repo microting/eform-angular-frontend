@@ -18,6 +18,8 @@ import {
   EformVisualEditorTagsComponent,
 } from './components';
 import { EformVisualEditorRouting } from './eform-visual-editor.routing';
+import { EformVisualEditorElementBlockComponent } from './components/eform-visual-editor-elements/eform-visual-editor-element-block/eform-visual-editor-element-block.component';
+import { EformVisualEditorElementSwitchComponent } from './components/eform-visual-editor-elements/eform-visual-editor-element-switch/eform-visual-editor-element-switch.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { EformVisualEditorRouting } from './eform-visual-editor.routing';
     EformVisualEditorFieldModalComponent,
     EformVisualEditorElementComponent,
     EformVisualEditorChecklistModalComponent,
+    EformVisualEditorElementBlockComponent,
+    EformVisualEditorElementSwitchComponent,
   ],
   imports: [
     CommonModule,

@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { CollapseComponent } from 'angular-bootstrap-md';
+import { UUID } from 'angular2-uuid';
 import { Subscription } from 'rxjs';
 import {
   EformVisualEditorFieldModel,
@@ -17,11 +18,12 @@ import {
 import { EformVisualEditorService } from 'src/app/common/services';
 
 @Component({
-  selector: 'app-eform-visual-editor-element',
-  templateUrl: './eform-visual-editor-element.component.html',
-  styleUrls: ['./eform-visual-editor-element.component.scss'],
+  selector: 'app-eform-visual-editor-element-block',
+  templateUrl: './eform-visual-editor-element-block.component.html',
+  styleUrls: ['./eform-visual-editor-element-block.component.scss'],
 })
-export class EformVisualEditorElementComponent implements OnInit, OnDestroy {
+export class EformVisualEditorElementBlockComponent
+  implements OnInit, OnDestroy {
   @ViewChild('collapse', { static: true }) collapse: CollapseComponent;
   @Input() checklist: EformVisualEditorModel;
   @Input() field: EformVisualEditorFieldModel;
@@ -31,6 +33,7 @@ export class EformVisualEditorElementComponent implements OnInit, OnDestroy {
   @Output()
   editorElementChanged: EventEmitter<any> = new EventEmitter<any>();
   @Output() deleteElement: EventEmitter<number> = new EventEmitter<number>();
+  dragulaElementContainerName = UUID.UUID();
 
   collapseSub$: Subscription;
 
@@ -67,4 +70,29 @@ export class EformVisualEditorElementComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {}
+
+  // @Input() checkList: EformVisualEditorModel;
+  // @Input() field: EformVisualEditorFieldModel;
+  // @Output()
+  // checklistChanged: EventEmitter<EformVisualEditorModel> = new EventEmitter();
+  // @Output()
+  // fieldChanged: EventEmitter<EformVisualEditorFieldModel> = new EventEmitter();
+  // dragulaElementContainerName = UUID.UUID();
+  //
+  // constructor() {}
+  //
+  // ngOnInit() {}
+  //
+  // onChecklistListChanged(e: EformVisualEditorModel[]) {
+  //   this.checkList.checkLists = e;
+  //   this.checklistChanged.emit(this.checkList);
+  // }
+  //
+  // onFieldListChanged(e: EformVisualEditorFieldModel[]) {
+  //   this.checkList.fields = e;
+  //   this.checklistChanged.emit(this.checkList);
+  // }
+  onFieldChanged($event: EformVisualEditorFieldModel[]) {
+
+  }
 }
