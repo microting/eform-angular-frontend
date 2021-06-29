@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { applicationLanguages } from 'src/app/common/const';
 import {
   CommonDictionaryModel,
+  EformVisualEditorFieldModel,
   EformVisualEditorModel,
 } from 'src/app/common/models';
 import { SharedTagsComponent } from 'src/app/common/modules/eform-shared-tags/components';
@@ -21,6 +22,8 @@ import {
 })
 export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   @ViewChild('tagsModal') tagsModal: SharedTagsComponent;
+  @ViewChild('fieldModal') fieldModal: any;
+  @ViewChild('checklistModal') checklistModal: any;
 
   visualEditorTemplateModel: EformVisualEditorModel = new EformVisualEditorModel();
   selectedTemplateId: number;
@@ -106,8 +109,6 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
     this.tagsModal.show();
   }
 
-  onAddNewElement(number: number) {}
-
   toggleCollapse() {}
 
   dragulaPositionChanged($event: any[]) {}
@@ -115,6 +116,22 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   onEditorElementChanged($event: any) {}
 
   onDeleteElement($event: number) {}
+
+  showFieldModal(model?: EformVisualEditorFieldModel) {
+    this.fieldModal.show(model);
+  }
+
+  showChecklistModal(model?: EformVisualEditorModel) {
+    this.checklistModal.show(model);
+  }
+
+  onChecklistCreate(model: EformVisualEditorModel) {}
+
+  onChecklistUpdate(model: EformVisualEditorModel) {}
+
+  onFieldCreate(model: EformVisualEditorFieldModel) {}
+
+  onFieldUpdate(model: EformVisualEditorFieldModel) {}
 
   ngOnDestroy(): void {}
 }

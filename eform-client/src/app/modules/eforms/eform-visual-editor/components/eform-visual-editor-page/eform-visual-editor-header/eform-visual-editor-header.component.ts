@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { ToastrService } from 'ngx-toastr';
 import { applicationLanguages } from 'src/app/common/const';
 import { EformVisualEditorModel } from 'src/app/common/models';
 import { LocaleService } from 'src/app/common/services';
@@ -20,7 +19,6 @@ export class EformVisualEditorHeaderComponent implements OnInit {
   }
 
   constructor(
-    private toastrService: ToastrService,
     private translateService: TranslateService,
     private localeService: LocaleService
   ) {}

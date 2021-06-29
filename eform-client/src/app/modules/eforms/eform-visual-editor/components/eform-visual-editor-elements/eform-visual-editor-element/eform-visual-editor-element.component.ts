@@ -20,10 +20,11 @@ import { EformVisualEditorService } from 'src/app/common/services';
 export class EformVisualEditorElementComponent implements OnInit, OnDestroy {
   @ViewChild('collapse', { static: true }) collapse: CollapseComponent;
   @Input() editorElement: any;
-  @Output() addNewElement: EventEmitter<number> = new EventEmitter<number>();
+  @Output() addNewElement: EventEmitter<any> = new EventEmitter<any>();
   @Output()
   editorElementChanged: EventEmitter<any> = new EventEmitter<any>();
   @Output() deleteElement: EventEmitter<number> = new EventEmitter<number>();
+
   collapseSub$: Subscription;
 
   constructor(

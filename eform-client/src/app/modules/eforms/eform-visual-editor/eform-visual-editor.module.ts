@@ -1,30 +1,32 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TranslateModule } from '@ngx-translate/core';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { DragulaModule } from 'ng2-dragula';
-import {EformImportedModule} from 'src/app/common/modules/eform-imported/eform-imported.module';
-import {EformSharedTagsModule} from 'src/app/common/modules/eform-shared-tags/eform-shared-tags.module';
+import { EformImportedModule } from 'src/app/common/modules/eform-imported/eform-imported.module';
+import { EformSharedTagsModule } from 'src/app/common/modules/eform-shared-tags/eform-shared-tags.module';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
 import {
+  EformVisualEditorChecklistModalComponent,
   EformVisualEditorContainerComponent,
+  EformVisualEditorElementComponent,
+  EformVisualEditorFieldModalComponent,
   EformVisualEditorHeaderComponent,
-  EformVisualEditorTagsComponent
+  EformVisualEditorTagsComponent,
 } from './components';
 import { EformVisualEditorRouting } from './eform-visual-editor.routing';
-import { EformVisualEditorElementModalComponent } from './components/eform-visual-editor-element-modal/eform-visual-editor-element-modal.component';
-import { EformVisualEditorElementComponent } from './components/eform-visual-editor-element/eform-visual-editor-element.component';
 
 @NgModule({
   declarations: [
     EformVisualEditorContainerComponent,
     EformVisualEditorHeaderComponent,
     EformVisualEditorTagsComponent,
-    EformVisualEditorElementModalComponent,
-    EformVisualEditorElementComponent
+    EformVisualEditorFieldModalComponent,
+    EformVisualEditorElementComponent,
+    EformVisualEditorChecklistModalComponent,
   ],
   imports: [
     CommonModule,

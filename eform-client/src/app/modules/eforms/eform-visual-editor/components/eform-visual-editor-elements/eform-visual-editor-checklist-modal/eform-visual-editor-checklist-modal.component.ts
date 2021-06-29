@@ -1,0 +1,74 @@
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { applicationLanguages } from 'src/app/common/const';
+import {
+  CommonDictionaryModel,
+  EformVisualEditorModel,
+} from 'src/app/common/models';
+import { LocaleService } from 'src/app/common/services';
+
+@Component({
+  selector: 'app-eform-visual-editor-checklist-modal',
+  templateUrl: './eform-visual-editor-checklist-modal.component.html',
+  styleUrls: ['./eform-visual-editor-checklist-modal.component.scss'],
+})
+export class EformVisualEditorChecklistModalComponent implements OnInit {
+  @ViewChild('frame', { static: true }) frame;
+  @Output()
+  createChecklist: EventEmitter<EformVisualEditorModel> = new EventEmitter<EformVisualEditorModel>();
+  @Output()
+  updateChecklist: EventEmitter<EformVisualEditorModel> = new EventEmitter<EformVisualEditorModel>();
+  selectedLanguage: number;
+  selectedChecklist: EformVisualEditorModel;
+  selectedChecklistTranslations: CommonDictionaryModel[] = [];
+
+  get languages() {
+    return applicationLanguages;
+  }
+
+  constructor(
+    private translateService: TranslateService,
+    private localeService: LocaleService
+  ) {}
+
+  ngOnInit() {
+    this.selectedLanguage = applicationLanguages.find(
+      (x) => x.locale === this.localeService.getCurrentUserLocale()
+    ).id;
+  }
+
+  show(model?: EformVisualEditorModel) {
+    this.selectedChecklist = model;
+    if (model) {
+      this.selectedChecklistTranslations = model.translations;
+    } else {
+      this.initForm();
+    }
+    this.frame.show();
+  }
+
+  initForm() {
+    for (const language of applicationLanguages) {
+      this.selectedChecklistTranslations = [
+        ...this.selectedChecklistTranslations,
+        { id: language.id, description: '', name: '' },
+      ];
+    }
+  }
+
+  onAddChecklist() {
+    this.createChecklist.emit();
+    this.frame.hide();
+  }
+
+  onUpdateChecklist() {
+    this.updateChecklist.emit();
+    this.frame.hide();
+  }
+}

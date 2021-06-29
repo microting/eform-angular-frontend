@@ -41,7 +41,7 @@
                 mdbBtn
                 id="initialItemCreateBtn"
                 class="btn-success btn-small-height"
-                (click)="onAddNewElement(1)"
+                (click)="showFieldModal()"
               >
                 {{ 'Add new item' | translate }}
               </button>
@@ -86,7 +86,7 @@
               *ngFor="let editorElement of visualEditorTemplateModel.fields"
               [editorElement]="editorElement"
               id="editorElement"
-              (addNewElement)="onAddNewElement($event)"
+              (addNewElement)="showFieldModal($event)"
               (deleteElement)="onDeleteElement($event)"
               [ngClass]="{ 'no-drag': !editorElement.collapsed }"
               (editorElementChanged)="onEditorElementChanged($event)"
@@ -104,3 +104,17 @@
   (tagsChanged)="getTags()"
 >
 </app-eform-visual-editor-tags>
+
+<app-eform-visual-editor-checklist-modal
+  #checklistModal
+  (createChecklist)="onChecklistCreate($event)"
+  (updateChecklist)="onChecklistUpdate($event)"
+>
+</app-eform-visual-editor-checklist-modal>
+
+<app-eform-visual-editor-field-modal
+  #fieldModal
+  (createField)="onFieldCreate($event)"
+  (updateField)="onFieldUpdate($event)"
+>
+</app-eform-visual-editor-field-modal>
