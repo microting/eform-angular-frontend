@@ -395,7 +395,7 @@ export class SearchableListsPage extends PageWithNavbarPage {
         timeout: 90000,
         reverse: true,
       });
-      //browser.refresh();
+      // browser.refresh();
     }
   }
   public editItemName(newItemName) {

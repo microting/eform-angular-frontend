@@ -26,6 +26,8 @@ describe('Entity Search', function () {
     $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
   });
   it('should create a new searchable list with name and one item', function () {
+    loginPage.open('/');
+    searchableLists.goToEntitySearchPage();
     const name = Guid.create().toString();
     const itemName = Guid.create().toString();
     searchableLists.createSearchableList_OneItem(name, itemName);
@@ -38,6 +40,8 @@ describe('Entity Search', function () {
     $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
   });
   it('should delete item from list.', function () {
+    loginPage.open('/');
+    searchableLists.goToEntitySearchPage();
     searchableLists.deleteItemFromList();
     searchableLists.entitySearchEditBtn.click();
     $('#editName').waitForDisplayed({ timeout: 40000 });
@@ -47,6 +51,8 @@ describe('Entity Search', function () {
     $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
   });
   it('should make a new searchable list with multiple items', function () {
+    loginPage.open('/');
+    searchableLists.goToEntitySearchPage();
     const name = Guid.create().toString();
     const itemNames = ['a \n', 'b\n', 'c\n', 'd\n', 'e'];
     searchableLists.createSearchableList_MultipleItems(name, itemNames);
@@ -55,6 +61,8 @@ describe('Entity Search', function () {
     $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
   });
   it('should delete a list with multiple items.', function () {
+    loginPage.open('/');
+    searchableLists.goToEntitySearchPage();
     searchableLists.deleteList();
     loginPage.open('/');
     searchableLists.goToEntitySearchPage();
