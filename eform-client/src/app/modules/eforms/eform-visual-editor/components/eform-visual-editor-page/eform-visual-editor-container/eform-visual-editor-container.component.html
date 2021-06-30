@@ -16,9 +16,7 @@
       mdbTooltip="{{ 'Save' | translate }}"
       mdbWavesEffect
     >
-      {{
-      'Save' | translate
-      }}
+      {{ 'Save' | translate }}
     </button>
   </div>
 </eform-subheader>
@@ -38,7 +36,11 @@
           <div class="row">
             <div class="col">
               <ng-container
-                *ngIf="visualEditorTemplateModel.fields.length || visualEditorTemplateModel.checkLists.length">
+                *ngIf="
+                  visualEditorTemplateModel.fields.length ||
+                  visualEditorTemplateModel.checkLists.length
+                "
+              >
                 <button
                   mdbBtn
                   class="btn-icon mb-2 float-right text-black-50"
@@ -67,27 +69,6 @@
                   ></fa-icon>
                 </button>
               </ng-container>
-              <ng-container
-                *ngIf="!visualEditorTemplateModel.fields.length && !visualEditorTemplateModel.checkLists.length">
-                <button
-                  mdbBtn
-                  id="initialFieldCreateBtn"
-                  [mdbTooltip]="'New field' | translate"
-                  class="btn-success btn-icon"
-                  (click)="showFieldModal()"
-                >
-                  <fa-icon icon="plus" [fixedWidth]="true" size="lg"></fa-icon>
-                </button>
-                <button
-                  mdbBtn
-                  id="initialChecklistCreateBtn"
-                  [mdbTooltip]="'New checklist' | translate"
-                  class="btn-success btn-icon"
-                  (click)="showChecklistModal()"
-                >
-                  <fa-icon icon="folder-plus" [fixedWidth]="true" size="lg"></fa-icon>
-                </button>
-              </ng-container>
             </div>
           </div>
           <section
@@ -97,33 +78,71 @@
             [dragulaModel]="visualEditorTemplateModel.checkLists"
           >
             <app-eform-visual-editor-element-block
-              *ngFor="let checklist of visualEditorTemplateModel.checkLists; let i = index"
+              *ngFor="
+                let checklist of visualEditorTemplateModel.checkLists;
+                let i = index
+              "
               [checklist]="checklist"
               [elementIndex]="i"
-              id="checkList_{{i}}"
+              id="checkList_{{ i }}"
               (addNewChecklist)="showChecklistModal($event)"
               (deleteElement)="onDeleteElement($event)"
               [ngClass]="{ 'no-drag': !checklist.collapsed }"
               (editorElementChanged)="onEditorElementChanged($event)"
             ></app-eform-visual-editor-element-block>
           </section>
-          <section *ngIf="!visualEditorTemplateModel.checkLists"
+          <section
+            *ngIf="
+              !visualEditorTemplateModel.checkLists ||
+              visualEditorTemplateModel.checkLists.length == 0
+            "
             dragula="FIELDS"
             id="editorFields"
             (dragulaModelChange)="dragulaPositionChanged($event)"
-            [dragulaModel]="visualEditorTemplateModel.checkLists"
+            [dragulaModel]="visualEditorTemplateModel.fields"
           >
             <app-eform-visual-editor-element-block
-              *ngFor="let field of visualEditorTemplateModel.fields; let i = index"
+              *ngFor="
+                let field of visualEditorTemplateModel.fields;
+                let i = index
+              "
               [field]="field"
               [elementIndex]="i"
-              id="field_{{i}}"
+              [visualEditorTemplateModel]="visualEditorTemplateModel"
+              id="field_{{ i }}"
               (addNewChecklist)="showChecklistModal($event)"
               (deleteElement)="onDeleteElement($event)"
               [ngClass]="{ 'no-drag': !field.collapsed }"
               (editorElementChanged)="onEditorElementChanged($event)"
             ></app-eform-visual-editor-element-block>
           </section>
+          <div class="row">
+            <div class="col d-flex justify-content-end">
+              <button
+                mdbBtn
+                id="initialFieldCreateBtn"
+                [mdbTooltip]="'New field' | translate"
+                class="btn-success btn-icon"
+                (click)="showFieldModal()"
+              >
+                <fa-icon icon="plus" [fixedWidth]="true" size="lg"></fa-icon>
+              </button>
+              <button
+                mdbBtn
+                id="initialChecklistCreateBtn"
+                [mdbTooltip]="'New checklist' | translate"
+                class="btn-success btn-icon"
+                [disabled]="true"
+                (click)="showChecklistModal()"
+              >
+                <fa-icon
+                  icon="folder-plus"
+                  [fixedWidth]="true"
+                  size="lg"
+                ></fa-icon>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

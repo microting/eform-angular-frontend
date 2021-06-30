@@ -27,6 +27,7 @@ export class EformVisualEditorElementBlockComponent
   @ViewChild('collapse', { static: true }) collapse: CollapseComponent;
   @Input() checklist: EformVisualEditorModel;
   @Input() field: EformVisualEditorFieldModel;
+  @Input() visualEditorTemplateModel: EformVisualEditorModel;
   @Input() elementIndex: number;
   @Output() addNewChecklist: EventEmitter<any> = new EventEmitter<any>();
   @Output() addNewField: EventEmitter<any> = new EventEmitter<any>();
@@ -93,6 +94,14 @@ export class EformVisualEditorElementBlockComponent
   //   this.checklistChanged.emit(this.checkList);
   // }
   onFieldChanged($event: EformVisualEditorFieldModel[]) {
+
+  }
+
+  onEditField() {
+
+  }
+
+  onDeleteField() {
 
   }
 }

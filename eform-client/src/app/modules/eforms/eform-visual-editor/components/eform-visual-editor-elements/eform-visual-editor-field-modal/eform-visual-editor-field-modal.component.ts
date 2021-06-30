@@ -7,11 +7,9 @@ import {
 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { applicationLanguages } from 'src/app/common/const';
-import {
-  CommonDictionaryModel,
-  EformVisualEditorFieldModel,
-} from 'src/app/common/models';
+import { EformVisualEditorFieldModel } from 'src/app/common/models';
 import { LocaleService } from 'src/app/common/services';
+import { eformVisualEditorElementTypes } from '../../../const/eform-visual-editor-element-types';
 
 @Component({
   selector: 'app-eform-visual-editor-field-modal',
@@ -25,11 +23,15 @@ export class EformVisualEditorFieldModalComponent implements OnInit {
   @Output()
   updateField: EventEmitter<EformVisualEditorFieldModel> = new EventEmitter<EformVisualEditorFieldModel>();
   selectedLanguage: number;
-  selectedField: EformVisualEditorFieldModel;
-  selectedFieldTranslations: CommonDictionaryModel[] = [];
+  editorField: EformVisualEditorFieldModel = new EformVisualEditorFieldModel();
+  isFieldSelected = false;
 
   get languages() {
     return applicationLanguages;
+  }
+
+  get fieldTypes() {
+    return eformVisualEditorElementTypes;
   }
 
   constructor(
@@ -44,9 +46,9 @@ export class EformVisualEditorFieldModalComponent implements OnInit {
   }
 
   show(model?: EformVisualEditorFieldModel) {
-    this.selectedField = model;
     if (model) {
-      this.selectedFieldTranslations = model.translations;
+      this.isFieldSelected = true;
+      this.editorField = model;
     } else {
       this.initForm();
     }
@@ -54,21 +56,24 @@ export class EformVisualEditorFieldModalComponent implements OnInit {
   }
 
   initForm() {
+    this.editorField = new EformVisualEditorFieldModel();
     for (const language of applicationLanguages) {
-      this.selectedFieldTranslations = [
-        ...this.selectedFieldTranslations,
+      this.editorField.translations = [
+        ...this.editorField.translations,
         { id: language.id, description: '', name: '' },
       ];
     }
   }
 
   onCreateField() {
-    this.createField.emit();
+    this.createField.emit({
+      ...this.editorField,
+    });
     this.frame.hide();
   }
 
   onUpdateField() {
-    this.updateField.emit();
+    this.updateField.emit({ ...this.editorField });
     this.frame.hide();
   }
 }
