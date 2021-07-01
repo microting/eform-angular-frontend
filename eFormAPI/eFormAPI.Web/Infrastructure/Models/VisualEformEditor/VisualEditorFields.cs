@@ -29,10 +29,10 @@ namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
         public int FieldType { get; set; }
 
         /// <summary>
-        /// Translates for label and description. id - languageId
+        /// Translates for label and description
         /// </summary>
-        public List<CommonDictionaryModel> Translates { get; set; }
-            = new List<CommonDictionaryModel>();
+        public List<CommonTranslationsModel> Translates { get; set; }
+            = new List<CommonTranslationsModel>();
 
         public string Color { get; set; }
 
@@ -49,8 +49,8 @@ namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
         /// <summary>
         /// for List field
         /// </summary>
-        public List<CommonDictionaryModel> Options { get; set; }
-            = new List<CommonDictionaryModel>();
+        public List<FieldOptions> Options { get; set; }
+            = new List<FieldOptions>();
 
         /// <summary>
         /// for Number field - long. for Date - Date

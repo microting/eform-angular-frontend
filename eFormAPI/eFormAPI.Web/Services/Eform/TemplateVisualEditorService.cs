@@ -1,4 +1,4 @@
-/*
+﻿/*
 The MIT License (MIT)
 Copyright (c) 2007 - 2021 Microting A/S
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -31,6 +31,7 @@ namespace eFormAPI.Web.Services.Eform
     using Microsoft.Extensions.Logging;
     using Microting.eForm.Infrastructure;
     using Microting.eForm.Infrastructure.Constants;
+    using Microting.eForm.Infrastructure.Data.Entities;
     using Microting.eFormApi.BasePn.Abstractions;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
     using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
@@ -67,11 +68,12 @@ namespace eFormAPI.Web.Services.Eform
                     {
                         Position = 0,
                         Translates = x.Translations.Select(y =>
-                                new CommonDictionaryModel
+                                new CommonTranslationsModel
                                 {
                                     Name = y.Text,
                                     Description = y.Description,
-                                    Id = y.LanguageId
+                                    Id = y.Id,
+                                    LanguageId = y.LanguageId,
                                 })
                             .ToList(),
                         TagIds = x.Taggings.Select(y => (int)y.TagId).ToList(),
@@ -99,7 +101,22 @@ namespace eFormAPI.Web.Services.Eform
 
         public async Task<OperationResult> CreateVisualTemplate(EformVisualEditorModel model)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var core = await _coreHelper.GetCore();
+                var sdkDbContext = core.DbContextHelper.GetDbContext();
+                var newCheckList = new CheckList { Color = model.Color, DisplayIndex = model.Position };
+                await newCheckList.Create(sdkDbContext);
+                await CreateFields(newCheckList.Id, sdkDbContext, model.Fields);
+                return new OperationResult(true,
+                    _localizationService.GetString("EformSuccessfullyUpdated"));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                return new OperationDataResult<EformVisualEditorModel>(false,
+                    _localizationService.GetString("ErrorWhileUpdateEform"));
+            }
         }
 
         public async Task<OperationResult> UpdateVisualTemplate(EformVisualEditorModel model)
@@ -109,7 +126,7 @@ namespace eFormAPI.Web.Services.Eform
 
         private static async Task<List<VisualEditorFields>> FindFields(int eformId, MicrotingDbContext sdkDbContext, int parentFieldId = -1)
         {
-            var findetFields = new List<VisualEditorFields>();
+            var findFields = new List<VisualEditorFields>();
             var fieldQuery = sdkDbContext.Fields
                 .Where(x => x.CheckListId == eformId)
                 .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
@@ -131,11 +148,12 @@ namespace eFormAPI.Web.Services.Eform
                     FieldType = (int) field.FieldTypeId,
                     Position = (int) field.DisplayIndex,
                     Translates = field.Translations.Select(x =>
-                        new CommonDictionaryModel
+                        new CommonTranslationsModel
                         {
                             Id = x.LanguageId,
                             Description = x.Description,
-                            Name = x.Text
+                            Name = x.Text,
+                            LanguageId = x.LanguageId,
                         }).ToList(),
                     Mandatory = Convert.ToBoolean(field.Mandatory)
                 };
@@ -148,7 +166,7 @@ namespace eFormAPI.Web.Services.Eform
                         editorField.MinValue = long.Parse(field.MinValue);
                         editorField.MaxValue = long.Parse(field.MaxValue);
                         editorField.Value = long.Parse(field.DefaultValue);
-                        findetFields.Add(editorField);
+                        findFields.Add(editorField);
                         break;
                     }
                     case Constants.FieldTypes.NumberStepper:
@@ -157,27 +175,27 @@ namespace eFormAPI.Web.Services.Eform
                         editorField.MinValue = long.Parse(field.MinValue);
                         editorField.MaxValue = long.Parse(field.MaxValue);
                         editorField.Value = long.Parse(field.DefaultValue);
-                        findetFields.Add(editorField);
+                        findFields.Add(editorField);
                         break;
                     }
                     case Constants.FieldTypes.SaveButton:
                     {
                         editorField.Value = field.DefaultValue;
-                        findetFields.Add(editorField);
+                        findFields.Add(editorField);
                         break;
                     }
                     case Constants.FieldTypes.FieldGroup:
                     {
                         var fieldsInGroups =  await FindFields(eformId, sdkDbContext, field.Id);
                         editorField.Fields = fieldsInGroups;
-                        findetFields.Add(editorField);
+                        findFields.Add(editorField);
                         break;
                     }
                     case Constants.FieldTypes.Date:
                     {
                         editorField.MinValue = DateTime.Parse(field.MinValue);
                         editorField.MaxValue = DateTime.Parse(field.MaxValue);
-                        findetFields.Add(editorField);
+                        findFields.Add(editorField);
                         break;
                     }
                     case Constants.FieldTypes.SingleSelect:
@@ -186,10 +204,23 @@ namespace eFormAPI.Web.Services.Eform
                             .Where(x => x.FieldId == field.Id)
                             .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                             .Include(x => x.FieldOptionTranslations)
-                            .SelectMany(x => x.FieldOptionTranslations.ToList())
-                            .Select(y => new CommonDictionaryModel { Id = y.LanguageId, Name = y.Text })
+                            .Select(x =>
+                                new FieldOptions
+                                {
+                                    DisplayOrder = int.Parse(x.DisplayOrder),
+                                    Id = x.Id, Key = int.Parse(x.Key), 
+                                    Selected = x.Selected, 
+                                    Translates = x.FieldOptionTranslations
+                                        .Select(y =>
+                                            new CommonTranslationsModel
+                                            {
+                                                Id = y.Id, 
+                                                Name = y.Text, 
+                                                LanguageId = y.LanguageId
+                                            }).ToList()
+                                })
                             .ToList();
-                        findetFields.Add(editorField);
+                        findFields.Add(editorField);
                         break;
                     }
                     case Constants.FieldTypes.MultiSelect:
@@ -198,21 +229,89 @@ namespace eFormAPI.Web.Services.Eform
                             .Where(x => x.FieldId == field.Id)
                             .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                             .Include(x => x.FieldOptionTranslations)
-                            .SelectMany(x => x.FieldOptionTranslations.ToList())
-                            .Select(y => new CommonDictionaryModel { Id = y.LanguageId, Name = y.Text })
+                            .Select(x =>
+                                new FieldOptions
+                                {
+                                    DisplayOrder = int.Parse(x.DisplayOrder),
+                                    Id = x.Id,
+                                    Key = int.Parse(x.Key),
+                                    Selected = x.Selected,
+                                    Translates = x.FieldOptionTranslations
+                                        .Select(y =>
+                                            new CommonTranslationsModel
+                                            {
+                                                Id = y.Id,
+                                                Name = y.Text,
+                                                LanguageId = y.LanguageId
+                                            }).ToList()
+                                })
                             .ToList();
-                        findetFields.Add(editorField);
+                            findFields.Add(editorField);
                         break;
                     }
                     default:
                     {
-                        findetFields.Add(editorField);
+                        findFields.Add(editorField);
                         break;
                     }
                 }
             }
 
-            return findetFields;
+            return findFields;
+        }
+
+        private static async Task CreateFields(int eformId, MicrotingDbContext sdkDbContext,
+            List<VisualEditorFields> fieldsList, int? parentFieldId = null)
+        {
+            foreach (var field in fieldsList)
+            {
+                var dbField = new Field
+                {
+                    CheckListId = eformId,
+                    Color = field.Color,
+                    FieldTypeId = field.FieldType,
+                    DecimalCount = field.DecimalCount,
+                    DefaultValue = field.Value,
+                    DisplayIndex = field.Position,
+                    MaxValue = field.MaxValue,
+                    MinValue = field.MinValue,
+                    Mandatory = Convert.ToInt16(field.Mandatory),
+                    ParentFieldId = parentFieldId,
+                };
+                await dbField.Create(sdkDbContext);
+
+                var fieldType = await sdkDbContext.FieldTypes
+                    .Where(x => x.Id == field.FieldType)
+                    .Select(x => x.Type)
+                    .FirstAsync();
+
+                switch (fieldType)
+                {
+                    case Constants.FieldTypes.FieldGroup:
+                        {
+                            await CreateFields(eformId, sdkDbContext, field.Fields, dbField.Id);
+                            break;
+                        }
+                    default:
+                        {
+                            break;
+                        }
+                }
+
+                var translates = field.Translates
+                    .Select(x => 
+                        new FieldTranslation
+                        {
+                            FieldId = dbField.Id,
+                            LanguageId = x.LanguageId,
+                            Text = x.Name,
+                            Description = x.Description,
+                        }).ToList();
+                foreach (var fieldTranslation in translates)
+                {
+                    await fieldTranslation.Create(sdkDbContext);
+                }
+            }
         }
     }
 }

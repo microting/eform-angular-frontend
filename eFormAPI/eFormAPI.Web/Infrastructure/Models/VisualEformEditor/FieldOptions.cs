@@ -23,25 +23,17 @@ namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
     using System.Collections.Generic;
     using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
-    public class EformVisualEditorModel
+    public class FieldOptions
     {
-        /// <summary>
-        /// Translates for eform label and description. id - languageId
-        /// </summary>
+        public int Id { get; set; }
+
+        public int DisplayOrder { get; set; }
+
+        public bool Selected { get; set; }
+
+        public int Key { get; set; }
+
         public List<CommonTranslationsModel> Translates { get; set; }
             = new List<CommonTranslationsModel>();
-       
-        public List<int> TagIds { get; set; }
-            = new List<int>();
-
-        public int Position { get; set; }
-
-        public string Color { get; set; }
-
-        public List<EformVisualEditorModel> CheckLists { get; set; }
-            = new List<EformVisualEditorModel>();
-
-        public List<VisualEditorFields> Fields { get; set; }
-            = new List<VisualEditorFields>();
     }
 }
