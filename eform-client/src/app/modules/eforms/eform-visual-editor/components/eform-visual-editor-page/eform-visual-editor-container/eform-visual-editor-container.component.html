@@ -77,7 +77,7 @@
             (dragulaModelChange)="dragulaPositionChanged($event)"
             [dragulaModel]="visualEditorTemplateModel.checkLists"
           >
-            <app-eform-visual-editor-element-block
+            <app-eform-visual-editor-block
               *ngFor="
                 let checklist of visualEditorTemplateModel.checkLists;
                 let i = index
@@ -86,10 +86,10 @@
               [elementIndex]="i"
               id="checkList_{{ i }}"
               (addNewChecklist)="showChecklistModal($event)"
-              (deleteElement)="onDeleteElement($event)"
+              (deleteField)="onDeleteElement($event)"
               [ngClass]="{ 'no-drag': !checklist.collapsed }"
-              (editorElementChanged)="onEditorElementChanged($event)"
-            ></app-eform-visual-editor-element-block>
+              (fieldPositionChanged)="onFieldPositionChanged($event)"
+            ></app-eform-visual-editor-block>
           </section>
           <section
             *ngIf="
@@ -101,7 +101,7 @@
             (dragulaModelChange)="dragulaPositionChanged($event)"
             [dragulaModel]="visualEditorTemplateModel.fields"
           >
-            <app-eform-visual-editor-element-block
+            <app-eform-visual-editor-block
               *ngFor="
                 let field of visualEditorTemplateModel.fields;
                 let i = index
@@ -111,10 +111,11 @@
               [visualEditorTemplateModel]="visualEditorTemplateModel"
               id="field_{{ i }}"
               (addNewChecklist)="showChecklistModal($event)"
-              (deleteElement)="onDeleteElement($event)"
+              (updateField)="showFieldModal($event)"
+              (deleteField)="onDeleteElement($event)"
               [ngClass]="{ 'no-drag': !field.collapsed }"
-              (editorElementChanged)="onEditorElementChanged($event)"
-            ></app-eform-visual-editor-element-block>
+              (fieldPositionChanged)="onFieldPositionChanged($event)"
+            ></app-eform-visual-editor-block>
           </section>
           <div class="row">
             <div class="col d-flex justify-content-end">

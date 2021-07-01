@@ -3,11 +3,10 @@
   id="fieldSection{{ elementIndex }}"
   *ngIf="visualEditorTemplateModel && field"
 >
-  <!--  <div class="card z-depth-3 mb-4 mt-4" style="width: 100%">-->
-  <!--    <div class="card-body">-->
-  <!--      <div dragula="{{dragulaElementContainerName}}" [dragulaModel]="visualEditorTemplateModel.fields"-->
-  <!--           (dragulaModelChange)="onFieldChanged($event)">-->
+  <!-- IMPORTANT TO IMPLEMENT FOR NESTING -->
 
+  <!--  <div dragula="{{dragulaElementContainerName}}" [dragulaModel]="visualEditorTemplateModel.fields"-->
+  <!--       (dragulaModelChange)="onFieldChanged($event)">-->
   <div class="card mb-3 hoverable" style="width: 100%">
     <div class="card-header">
       <div class="d-flex justify-content-between align-items-center">
@@ -20,7 +19,7 @@
             [fixedWidth]="true"
             style="cursor: pointer"
           ></fa-icon>
-          {{ 'InfoBox' }}
+          {{ 'InfoBox' + elementIndex }}
         </div>
         <div>
           <fa-icon
@@ -42,16 +41,11 @@
       </div>
     </div>
   </div>
-  <!--    </div>-->
-  <!--  </div>-->
   <!--  </div>-->
 </section>
 
 <!-- Nested checklists level rendering -->
-<section
-  id="checkListSection{{ elementIndex }}"
-  *ngIf="checklist && checklist.fields"
->
+<section id="checkListSection{{ elementIndex }}" *ngIf="checklist">
   <div class="card z-depth-3 mb-4 mt-4" style="width: 100%">
     <div class="card-body">
       <!--      <app-eform-visual-editor-element-switch-->
@@ -91,8 +85,13 @@
   </div>
 </section>
 <ng-container *ngIf="checklist && checklist.checkLists">
-  <app-eform-visual-editor-element-block
+  <app-eform-visual-editor-block
     [checklist]="elem"
-    *ngFor="let elem of checklist.checkLists"
-  ></app-eform-visual-editor-element-block>
+    [checklistRecursionIndex]="checklistRecursionIndex + 1"
+    [elementIndex]="elementIndex + checklistIndex"
+    [elementRecursionIndex]="
+      composeIndexes(elementRecursionIndex, checklistIndex)
+    "
+    *ngFor="let elem of checklist.checkLists; let checklistIndex = index"
+  ></app-eform-visual-editor-block>
 </ng-container>

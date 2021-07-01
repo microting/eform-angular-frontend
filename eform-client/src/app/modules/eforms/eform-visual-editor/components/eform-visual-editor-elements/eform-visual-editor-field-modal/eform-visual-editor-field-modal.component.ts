@@ -6,10 +6,14 @@ import {
   ViewChild,
 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { UUID } from 'angular2-uuid';
 import { applicationLanguages } from 'src/app/common/const';
 import { EformVisualEditorFieldModel } from 'src/app/common/models';
 import { LocaleService } from 'src/app/common/services';
-import {eformVisualEditorElementColors, eformVisualEditorElementTypes} from '../../../const/eform-visual-editor-element-types';
+import {
+  eformVisualEditorElementColors,
+  eformVisualEditorElementTypes,
+} from '../../../const/eform-visual-editor-element-types';
 
 @Component({
   selector: 'app-eform-visual-editor-field-modal',
@@ -21,9 +25,13 @@ export class EformVisualEditorFieldModalComponent implements OnInit {
   @Output()
   createField: EventEmitter<EformVisualEditorFieldModel> = new EventEmitter<EformVisualEditorFieldModel>();
   @Output()
-  updateField: EventEmitter<EformVisualEditorFieldModel> = new EventEmitter<EformVisualEditorFieldModel>();
+  updateField: EventEmitter<{
+    field: EformVisualEditorFieldModel;
+    fieldIndex: number;
+  }> = new EventEmitter();
   selectedLanguage: number;
-  editorField: EformVisualEditorFieldModel = new EformVisualEditorFieldModel();
+  fieldModel: EformVisualEditorFieldModel = new EformVisualEditorFieldModel();
+  fieldIndex: number;
   isFieldSelected = false;
 
   get languages() {
@@ -49,10 +57,11 @@ export class EformVisualEditorFieldModalComponent implements OnInit {
     ).id;
   }
 
-  show(model?: EformVisualEditorFieldModel) {
+  show(model?: EformVisualEditorFieldModel, fieldIndex?: number) {
     if (model) {
       this.isFieldSelected = true;
-      this.editorField = model;
+      this.fieldIndex = fieldIndex;
+      this.fieldModel = model;
     } else {
       this.initForm();
     }
@@ -60,10 +69,10 @@ export class EformVisualEditorFieldModalComponent implements OnInit {
   }
 
   initForm() {
-    this.editorField = new EformVisualEditorFieldModel();
+    this.fieldModel = new EformVisualEditorFieldModel();
     for (const language of applicationLanguages) {
-      this.editorField.translations = [
-        ...this.editorField.translations,
+      this.fieldModel.translations = [
+        ...this.fieldModel.translations,
         { id: language.id, description: '', name: '' },
       ];
     }
@@ -71,21 +80,26 @@ export class EformVisualEditorFieldModalComponent implements OnInit {
 
   onCreateField() {
     this.createField.emit({
-      ...this.editorField,
+      ...this.fieldModel,
+      tempId: UUID.UUID(),
     });
     this.frame.hide();
   }
 
   onUpdateField() {
-    this.updateField.emit({ ...this.editorField });
+    debugger;
+    this.updateField.emit({
+      field: this.fieldModel,
+      fieldIndex: this.fieldIndex,
+    });
     this.frame.hide();
   }
 
   mandatoryCheckboxClick(e: any) {
     if (e.target && e.target.checked) {
-      this.editorField = {...this.editorField, mandatory: true};
+      this.fieldModel = { ...this.fieldModel, mandatory: true };
     } else if (e.target && !e.target.checked) {
-      this.editorField = {...this.editorField, mandatory: false};
+      this.fieldModel = { ...this.fieldModel, mandatory: false };
     } else {
       return;
     }

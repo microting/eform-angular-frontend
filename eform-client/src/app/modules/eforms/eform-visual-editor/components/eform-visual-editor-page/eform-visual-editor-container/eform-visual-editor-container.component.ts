@@ -13,6 +13,7 @@ import {
   EformTagService,
   EformVisualEditorService,
 } from 'src/app/common/services';
+import * as R from 'ramda';
 
 @AutoUnsubscribe()
 @Component({
@@ -111,14 +112,26 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
 
   toggleCollapse() {}
 
-  dragulaPositionChanged($event: any[]) {}
+  dragulaPositionChanged(model: EformVisualEditorFieldModel[]) {
+    this.visualEditorTemplateModel.fields = [...model];
+  }
 
-  onEditorElementChanged($event: any) {}
+  onFieldPositionChanged(model: EformVisualEditorFieldModel[]) {
+    this.visualEditorTemplateModel.fields = [...model];
+  }
 
   onDeleteElement($event: number) {}
 
-  showFieldModal(model?: EformVisualEditorFieldModel) {
-    this.fieldModal.show(model);
+  showFieldModal(model?: { fieldIndex: number }) {
+    debugger;
+    if (model) {
+      const foundField = this.visualEditorTemplateModel.fields[
+        model.fieldIndex
+      ];
+      this.fieldModal.show(foundField, model.fieldIndex);
+    } else {
+      this.fieldModal.show();
+    }
   }
 
   showChecklistModal(model?: EformVisualEditorModel) {
@@ -135,13 +148,22 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   onChecklistUpdate(model: EformVisualEditorModel) {}
 
   onFieldCreate(model: EformVisualEditorFieldModel) {
+    // Todo: redesign for nesting
     this.visualEditorTemplateModel = {
       ...this.visualEditorTemplateModel,
       fields: [...this.visualEditorTemplateModel.fields, model],
     };
   }
 
-  onFieldUpdate(model: EformVisualEditorFieldModel) {}
+  onFieldUpdate(model: {field: EformVisualEditorFieldModel, fieldIndex: number }) {
+    // Todo: redesign for nesting
+    debugger;
+    this.visualEditorTemplateModel.fields = R.update(
+      model.fieldIndex,
+      model.field,
+      this.visualEditorTemplateModel.fields
+    );
+  }
 
   ngOnDestroy(): void {}
 }

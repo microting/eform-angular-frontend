@@ -26,7 +26,7 @@
             </div>
             <ng-container
               *ngFor="
-                let translation of editorField.translations;
+                let translation of fieldModel.translations;
                 let translationIndex = index
               "
             >
@@ -87,7 +87,7 @@
                     [clearable]="false"
                     [bindLabel]="'text'"
                     [bindValue]="'id'"
-                    [(ngModel)]="editorField.fieldType"
+                    [(ngModel)]="fieldModel.fieldType"
                     id="mainCheckListLanguageSelector"
                     [items]="fieldTypes"
                   >
@@ -97,8 +97,8 @@
                       let-search="searchTerm"
                     >
                       <ng-template #popTemplate
-                        ><img [src]="item.previewImage"
-                      /></ng-template>
+                      ><img [src]="item.previewImage"
+                            alt=""/></ng-template>
                       <div
                         [mdbTooltip]="popTemplate"
                         customHeight="200"
@@ -121,7 +121,7 @@
                     [clearable]="false"
                     [bindLabel]="'name'"
                     [bindValue]="'name'"
-                    [(ngModel)]="editorField.color"
+                    [(ngModel)]="fieldModel.color"
                     id="newFieldColorSelector"
                     [items]="fieldColors"
                   >
@@ -162,8 +162,8 @@
                   <input
                     id="isChecked"
                     (click)="mandatoryCheckboxClick($event)"
-                    [checked]="editorField.mandatory"
-                    [value]="editorField.mandatory"
+                    [checked]="fieldModel.mandatory"
+                    [value]="fieldModel.mandatory"
                     color="primary"
                     type="checkbox"
                   />

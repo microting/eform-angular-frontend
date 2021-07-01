@@ -1,3 +1,4 @@
+import {EformFieldTypesEnum} from 'src/app/common/const';
 import {CommonDictionaryModel, EformVisualEditorFieldTypeModel} from 'src/app/common/models';
 
 export enum EformVisualEditorElementTypesEnum {
@@ -6,8 +7,8 @@ export enum EformVisualEditorElementTypesEnum {
 
 export const eformVisualEditorElementTypes: EformVisualEditorFieldTypeModel[] = [
   {
-    id: 'InfoBox',
-    text: 'InfoBox',
+    id: EformFieldTypesEnum.Text,
+    text: 'Text',
     previewImage: '../../../../../../../assets/images/visual-editor-preview/infobox.png'
   }
 ];
