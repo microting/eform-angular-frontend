@@ -26,7 +26,7 @@ namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
 
     public class VisualEditorFields
     {
-        public string FieldType { get; set; }
+        public int FieldType { get; set; }
 
         /// <summary>
         /// Translates for label and description. id - languageId

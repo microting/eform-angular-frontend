@@ -1,4 +1,4 @@
-﻿/*
+/*
 The MIT License (MIT)
 Copyright (c) 2007 - 2021 Microting A/S
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -61,7 +61,6 @@ namespace eFormAPI.Web.Services.Eform
                 var eform = await sdkDbContext.CheckLists
                     .Include(x => x.Translations)
                     .Include(x => x.Taggings)
-                    //.Include(x => x.Fields)
                     .Where(x => x.Id == id)
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                     .Select(x => new EformVisualEditorModel
@@ -108,7 +107,7 @@ namespace eFormAPI.Web.Services.Eform
             throw new NotImplementedException();
         }
 
-        private async Task<List<VisualEditorFields>> FindFields(int eformId, MicrotingDbContext sdkDbContext, int parentFieldId = -1)
+        private static async Task<List<VisualEditorFields>> FindFields(int eformId, MicrotingDbContext sdkDbContext, int parentFieldId = -1)
         {
             var findetFields = new List<VisualEditorFields>();
             var fieldQuery = sdkDbContext.Fields
@@ -129,7 +128,7 @@ namespace eFormAPI.Web.Services.Eform
                 var editorField = new VisualEditorFields
                 {
                     Color = field.Color,
-                    FieldType = field.FieldType.Type,
+                    FieldType = (int) field.FieldTypeId,
                     Position = (int) field.DisplayIndex,
                     Translates = field.Translations.Select(x =>
                         new CommonDictionaryModel
@@ -188,7 +187,7 @@ namespace eFormAPI.Web.Services.Eform
                             .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                             .Include(x => x.FieldOptionTranslations)
                             .SelectMany(x => x.FieldOptionTranslations.ToList())
-                            .Select(y => new CommonDictionaryModel() { Id = y.LanguageId, Name = y.Text })
+                            .Select(y => new CommonDictionaryModel { Id = y.LanguageId, Name = y.Text })
                             .ToList();
                         findetFields.Add(editorField);
                         break;
@@ -200,7 +199,7 @@ namespace eFormAPI.Web.Services.Eform
                             .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                             .Include(x => x.FieldOptionTranslations)
                             .SelectMany(x => x.FieldOptionTranslations.ToList())
-                            .Select(y => new CommonDictionaryModel() { Id = y.LanguageId, Name = y.Text })
+                            .Select(y => new CommonDictionaryModel { Id = y.LanguageId, Name = y.Text })
                             .ToList();
                         findetFields.Add(editorField);
                         break;

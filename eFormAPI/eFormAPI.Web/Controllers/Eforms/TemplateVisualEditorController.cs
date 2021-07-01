@@ -46,13 +46,13 @@ namespace eFormAPI.Web.Controllers.Eforms
         }
 
         [HttpPost]
-        public async Task<OperationResult> Create(EformVisualEditorModel model)
+        public async Task<OperationResult> Create([FromBody] EformVisualEditorModel model)
         {
             return await _templateVisualEditorService.CreateVisualTemplate(model);
         }
 
         [HttpPut]
-        public async Task<OperationResult> Update(EformVisualEditorModel model)
+        public async Task<OperationResult> Update([FromBody] EformVisualEditorModel model)
         {
             return await _templateVisualEditorService.UpdateVisualTemplate(model);
         }

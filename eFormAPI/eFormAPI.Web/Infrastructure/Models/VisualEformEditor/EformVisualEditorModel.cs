@@ -36,6 +36,8 @@ namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
 
         public int Position { get; set; }
 
+        public string Color { get; set; }
+
         public List<EformVisualEditorModel> CheckLists { get; set; }
             = new List<EformVisualEditorModel>();
 
