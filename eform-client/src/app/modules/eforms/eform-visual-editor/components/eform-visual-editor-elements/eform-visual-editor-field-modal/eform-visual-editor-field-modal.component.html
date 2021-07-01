@@ -91,17 +91,85 @@
                     id="mainCheckListLanguageSelector"
                     [items]="fieldTypes"
                   >
-                    <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
-<!--                      <div triggers="hover" [mdbPopover]="hoverImgTemp" container="body" placement="right">{{item.text}}</div>-->
-<!--                      <ng-template #hoverImgTemp ><div [innerHtml]="hoverImg"></div></ng-template>-->
-<!--                      <div>{{item.text}}</div>-->
-<!--                      <ng-template #hoverImgTemp>-->
-<!--                        <div [innerHtml]="item.previewImage"></div>-->
-<!--                      </ng-template>-->
-                      <ng-template #popTemplate><img [src]="item.previewImage" /></ng-template>
-                      <div [mdbTooltip]="popTemplate" customHeight="200" container="body" placement="right">{{item.text}}</div>
+                    <ng-template
+                      ng-option-tmp
+                      let-item="item"
+                      let-search="searchTerm"
+                    >
+                      <ng-template #popTemplate
+                        ><img [src]="item.previewImage"
+                      /></ng-template>
+                      <div
+                        [mdbTooltip]="popTemplate"
+                        customHeight="200"
+                        container="body"
+                        placement="right"
+                      >
+                        {{ item.text }}
+                      </div>
                     </ng-template>
                   </ng-select>
+                </div>
+              </div>
+
+              <div class="col">
+                <div class="ng-select-wrapper">
+                  <ng-select
+                    class="custom"
+                    dropdownPosition="'bottom'"
+                    [placeholder]="'Color' | translate"
+                    [clearable]="false"
+                    [bindLabel]="'name'"
+                    [bindValue]="'name'"
+                    [(ngModel)]="editorField.color"
+                    id="newFieldColorSelector"
+                    [items]="fieldColors"
+                  >
+                    <ng-template
+                      ng-option-tmp
+                      let-item="item"
+                      let-search="searchTerm"
+                    >
+                      <div>
+                        <fa-icon
+                          icon="square"
+                          [fixedWidth]="true"
+                          size="lg"
+                          [ngStyle]="{ color: item.description }"
+                        ></fa-icon>
+                        {{ item.name }}
+                      </div>
+                    </ng-template>
+                    <ng-template ng-label-tmp let-item="item">
+                      <div>
+                        <fa-icon
+                          icon="square"
+                          [fixedWidth]="true"
+                          size="lg"
+                          [ngStyle]="{ color: item.description }"
+                        ></fa-icon>
+                        {{ item.name }}
+                      </div>
+                    </ng-template>
+                  </ng-select>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <div class="mat-checkbox">
+                  <input
+                    id="isChecked"
+                    (click)="mandatoryCheckboxClick($event)"
+                    [checked]="editorField.mandatory"
+                    [value]="editorField.mandatory"
+                    color="primary"
+                    type="checkbox"
+                  />
+                  <label for="isChecked">{{
+                    'Mandatory' | translate
+                    }}</label>
                 </div>
               </div>
             </div>

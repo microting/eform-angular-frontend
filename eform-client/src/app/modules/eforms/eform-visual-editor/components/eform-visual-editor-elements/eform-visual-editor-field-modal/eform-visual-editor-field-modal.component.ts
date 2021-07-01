@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { applicationLanguages } from 'src/app/common/const';
 import { EformVisualEditorFieldModel } from 'src/app/common/models';
 import { LocaleService } from 'src/app/common/services';
-import { eformVisualEditorElementTypes } from '../../../const/eform-visual-editor-element-types';
+import {eformVisualEditorElementColors, eformVisualEditorElementTypes} from '../../../const/eform-visual-editor-element-types';
 
 @Component({
   selector: 'app-eform-visual-editor-field-modal',
@@ -32,6 +32,10 @@ export class EformVisualEditorFieldModalComponent implements OnInit {
 
   get fieldTypes() {
     return eformVisualEditorElementTypes;
+  }
+
+  get fieldColors() {
+    return eformVisualEditorElementColors;
   }
 
   constructor(
@@ -75,5 +79,15 @@ export class EformVisualEditorFieldModalComponent implements OnInit {
   onUpdateField() {
     this.updateField.emit({ ...this.editorField });
     this.frame.hide();
+  }
+
+  mandatoryCheckboxClick(e: any) {
+    if (e.target && e.target.checked) {
+      this.editorField = {...this.editorField, mandatory: true};
+    } else if (e.target && !e.target.checked) {
+      this.editorField = {...this.editorField, mandatory: false};
+    } else {
+      return;
+    }
   }
 }
