@@ -21,9 +21,10 @@ SOFTWARE.
 namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
 {
     using System.Collections.Generic;
+    using Microting.eForm.Infrastructure.Models;
     using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
-    public abstract class VisualEditorFields
+    public class VisualEditorFields
     {
         public string FieldType { get; set; }
 
@@ -36,5 +37,45 @@ namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
         public string Color { get; set; }
 
         public bool Mandatory { get; set; }
+
+        public int Position { get; set; }
+        
+        /// <summary>
+        /// for GroupOpenClose field
+        /// </summary>
+        public List<VisualEditorFields> Fields { get; set; }
+            = new List<VisualEditorFields>();
+
+        /// <summary>
+        /// for List field
+        /// </summary>
+        public List<CommonDictionaryModel> Options { get; set; }
+            = new List<CommonDictionaryModel>();
+
+        /// <summary>
+        /// for Number field - long. for Date - Date
+        /// </summary>
+        public dynamic MinValue { get; set; }
+
+        /// <summary>
+        /// for Number field - long. for Date - Date
+        /// </summary>
+        public dynamic MaxValue { get; set; }
+
+        /// <summary>
+        /// for Number field - long. for saveButton - string
+        /// </summary>
+        public dynamic Value { get; set; }
+
+        /// <summary>
+        /// for Number field
+        /// </summary>
+        public int DecimalCount { get; set; }
+
+        /// <summary>
+        /// for PDF field
+        /// </summary>
+        public List<UploadedData> Files { get; set; }
+            = new List<UploadedData>();
     }
 }
