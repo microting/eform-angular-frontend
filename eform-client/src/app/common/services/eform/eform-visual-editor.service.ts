@@ -38,9 +38,9 @@ export class EformVisualEditorService {
   getVisualEditorTemplate(
     id: number
   ): Observable<OperationDataResult<EformVisualEditorModel>> {
-    return this.apiBaseService.get(
-      `${TemplateVisualEditorMethods.VisualEditor}${id}`
-    );
+    return this.apiBaseService.get(TemplateVisualEditorMethods.VisualEditor, {
+      id: id,
+    });
   }
 
   createVisualEditorTemplate(

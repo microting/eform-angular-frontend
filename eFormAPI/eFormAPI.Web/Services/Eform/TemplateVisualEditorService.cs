@@ -66,6 +66,7 @@ namespace eFormAPI.Web.Services.Eform
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                     .Select(x => new EformVisualEditorModel
                     {
+                        Id = x.Id,
                         Position = 0,
                         Translates = x.Translations.Select(y =>
                                 new CommonTranslationsModel
@@ -108,6 +109,92 @@ namespace eFormAPI.Web.Services.Eform
                 var newCheckList = new CheckList { Color = model.Color, DisplayIndex = model.Position };
                 await newCheckList.Create(sdkDbContext);
                 await CreateFields(newCheckList.Id, sdkDbContext, model.Fields);
+
+                // add tags to eform
+                foreach (var tagId in model.TagIds)
+                {
+                    var tag = new Tagging { CheckListId = newCheckList.Id, TagId = tagId };
+                    await tag.Create(sdkDbContext);
+                }
+                return new OperationResult(true,
+                    _localizationService.GetString("EformSuccessfullyCreated"));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                return new OperationDataResult<EformVisualEditorModel>(false,
+                    _localizationService.GetString("ErrorWhileCreateEform"));
+            }
+        }
+
+        public async Task<OperationResult> UpdateVisualTemplate(EformVisualEditorModel model)
+        {
+            try
+            {
+                var core = await _coreHelper.GetCore();
+                var sdkDbContext = core.DbContextHelper.GetDbContext();
+                var dbEform = await sdkDbContext.CheckLists
+                    .Where(x => x.Id == model.Id)
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Include(x => x.Fields)
+                    .Include(x => x.Taggings)
+                    .Include(x => x.Translations)
+                    .FirstOrDefaultAsync();
+
+                if (dbEform == null)
+                {
+                    return new OperationDataResult<EformVisualEditorModel>(false,
+                        _localizationService.GetString("EformNotFound"));
+                }
+
+                var fieldIdForDelete = dbEform.Fields
+                    .Select(x => x.Id)
+                    .Where(id => !model.Fields.Select(y => y.Id).Contains(id))
+                    .ToList();
+
+                var fieldForCreate = model.Fields
+                    .Where(x => x.Id == null)
+                    .ToList();
+
+                // delete removed field
+                await DeleteFields(fieldIdForDelete, sdkDbContext);
+
+                // create new field
+                await CreateFields(dbEform.Id, sdkDbContext, fieldForCreate);
+
+                //tagging
+
+                var tagsIdForDelete = dbEform.Taggings
+                    .Select(x => x.Id)
+                    .Where(id => !model.TagIds.Contains(id))
+                    .ToList();
+
+                foreach (var tagId in tagsIdForDelete)
+                {
+                    var tagging = await sdkDbContext.Taggings
+                        .Where(x => x.TagId == tagId && x.CheckListId == dbEform.Id)
+                        .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                        .FirstOrDefaultAsync();
+                    if (tagging != null)
+                    {
+                        await tagging.Delete(sdkDbContext);
+                    }
+                }
+
+                var tagsForCreate = model.TagIds
+                    .Where(id => !dbEform.Taggings.Select(x => x.Id).Contains(id))
+                    .ToList();
+
+                foreach (var tagId in tagsForCreate)
+                {
+                    var tagging = new Tagging
+                    {
+                        CheckListId = dbEform.Id,
+                        TagId = tagId,
+                    };
+                    await tagging.Create(sdkDbContext);
+                }
+
                 return new OperationResult(true,
                     _localizationService.GetString("EformSuccessfullyUpdated"));
             }
@@ -119,9 +206,65 @@ namespace eFormAPI.Web.Services.Eform
             }
         }
 
-        public async Task<OperationResult> UpdateVisualTemplate(EformVisualEditorModel model)
+        private static async Task DeleteFields(List<int> fieldIdForDelete, MicrotingDbContext sdkDbContext)
         {
-            throw new NotImplementedException();
+
+            foreach (var fieldId in fieldIdForDelete)
+            {
+                var fieldForDelete = await sdkDbContext.Fields
+                    .Where(x => x.Id == fieldId)
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Include(x => x.Translations)
+                    .FirstOrDefaultAsync();
+                foreach (var translate in fieldForDelete.Translations)
+                {
+                    await translate.Delete(sdkDbContext);
+                }
+
+                var fieldType = await sdkDbContext.FieldTypes
+                    .Where(x => x.Id == fieldForDelete.FieldTypeId)
+                    .Select(x => x.Type)
+                    .FirstAsync();
+
+                switch (fieldType)
+                {
+                    case Constants.FieldTypes.SingleSelect or Constants.FieldTypes.MultiSelect:
+                        {
+                            var options = sdkDbContext.FieldOptions
+                                .Where(x => x.FieldId == fieldId)
+                                .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                                .Include(x => x.FieldOptionTranslations)
+                                .ToList();
+                            foreach (var optionTranslation in options.SelectMany(x => x.FieldOptionTranslations).ToList())
+                            {
+                                await optionTranslation.Delete(sdkDbContext);
+                            }
+
+                            foreach (var fieldOption in options)
+                            {
+                                await fieldOption.Delete(sdkDbContext);
+                            }
+
+                            break;
+                        }
+                    case Constants.FieldTypes.FieldGroup:
+                        {
+                            var fieldIds = await sdkDbContext.Fields
+                                .Where(x => x.ParentFieldId == fieldForDelete.Id)
+                                .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                                .Select(x => x.Id)
+                                .ToListAsync();
+                            await DeleteFields(fieldIds, sdkDbContext);
+                            break;
+                        }
+                    default:
+                        {
+                            break;
+                        }
+                }
+
+                await fieldForDelete.Delete(sdkDbContext);
+            }
         }
 
         private static async Task<List<VisualEditorFields>> FindFields(int eformId, MicrotingDbContext sdkDbContext, int parentFieldId = -1)
@@ -144,9 +287,10 @@ namespace eFormAPI.Web.Services.Eform
             {
                 var editorField = new VisualEditorFields
                 {
+                    Id = field.Id,
                     Color = field.Color,
-                    FieldType = (int) field.FieldTypeId,
-                    Position = (int) field.DisplayIndex,
+                    FieldType = (int)field.FieldTypeId,
+                    Position = (int)field.DisplayIndex,
                     Translates = field.Translations.Select(x =>
                         new CommonTranslationsModel
                         {
@@ -160,100 +304,66 @@ namespace eFormAPI.Web.Services.Eform
 
                 switch (field.FieldType.Type)
                 {
-                    case Constants.FieldTypes.Number:
-                    {
-                        editorField.DecimalCount = (int) field.DecimalCount;
-                        editorField.MinValue = long.Parse(field.MinValue);
-                        editorField.MaxValue = long.Parse(field.MaxValue);
-                        editorField.Value = long.Parse(field.DefaultValue);
-                        findFields.Add(editorField);
-                        break;
-                    }
-                    case Constants.FieldTypes.NumberStepper:
-                    {
-                        editorField.DecimalCount = (int)field.DecimalCount;
-                        editorField.MinValue = long.Parse(field.MinValue);
-                        editorField.MaxValue = long.Parse(field.MaxValue);
-                        editorField.Value = long.Parse(field.DefaultValue);
-                        findFields.Add(editorField);
-                        break;
-                    }
-                    case Constants.FieldTypes.SaveButton:
-                    {
-                        editorField.Value = field.DefaultValue;
-                        findFields.Add(editorField);
-                        break;
-                    }
-                    case Constants.FieldTypes.FieldGroup:
-                    {
-                        var fieldsInGroups =  await FindFields(eformId, sdkDbContext, field.Id);
-                        editorField.Fields = fieldsInGroups;
-                        findFields.Add(editorField);
-                        break;
-                    }
-                    case Constants.FieldTypes.Date:
-                    {
-                        editorField.MinValue = DateTime.Parse(field.MinValue);
-                        editorField.MaxValue = DateTime.Parse(field.MaxValue);
-                        findFields.Add(editorField);
-                        break;
-                    }
-                    case Constants.FieldTypes.SingleSelect:
-                    {
-                        editorField.Options = sdkDbContext.FieldOptions
-                            .Where(x => x.FieldId == field.Id)
-                            .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                            .Include(x => x.FieldOptionTranslations)
-                            .Select(x =>
-                                new FieldOptions
-                                {
-                                    DisplayOrder = int.Parse(x.DisplayOrder),
-                                    Id = x.Id, Key = int.Parse(x.Key), 
-                                    Selected = x.Selected, 
-                                    Translates = x.FieldOptionTranslations
-                                        .Select(y =>
-                                            new CommonTranslationsModel
-                                            {
-                                                Id = y.Id, 
-                                                Name = y.Text, 
-                                                LanguageId = y.LanguageId
-                                            }).ToList()
-                                })
-                            .ToList();
-                        findFields.Add(editorField);
-                        break;
-                    }
-                    case Constants.FieldTypes.MultiSelect:
-                    {
-                        editorField.Options = sdkDbContext.FieldOptions
-                            .Where(x => x.FieldId == field.Id)
-                            .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                            .Include(x => x.FieldOptionTranslations)
-                            .Select(x =>
-                                new FieldOptions
-                                {
-                                    DisplayOrder = int.Parse(x.DisplayOrder),
-                                    Id = x.Id,
-                                    Key = int.Parse(x.Key),
-                                    Selected = x.Selected,
-                                    Translates = x.FieldOptionTranslations
-                                        .Select(y =>
-                                            new CommonTranslationsModel
-                                            {
-                                                Id = y.Id,
-                                                Name = y.Text,
-                                                LanguageId = y.LanguageId
-                                            }).ToList()
-                                })
-                            .ToList();
+                    case Constants.FieldTypes.Number or Constants.FieldTypes.NumberStepper:
+                        {
+                            editorField.DecimalCount = (int)field.DecimalCount;
+                            editorField.MinValue = long.Parse(field.MinValue);
+                            editorField.MaxValue = long.Parse(field.MaxValue);
+                            editorField.Value = long.Parse(field.DefaultValue);
                             findFields.Add(editorField);
-                        break;
-                    }
+                            break;
+                        }
+                    case Constants.FieldTypes.SaveButton:
+                        {
+                            editorField.Value = field.DefaultValue;
+                            findFields.Add(editorField);
+                            break;
+                        }
+                    case Constants.FieldTypes.FieldGroup:
+                        {
+                            var fieldsInGroups = await FindFields(eformId, sdkDbContext, field.Id);
+                            editorField.Fields = fieldsInGroups;
+                            findFields.Add(editorField);
+                            break;
+                        }
+                    case Constants.FieldTypes.Date:
+                        {
+                            editorField.MinValue = DateTime.Parse(field.MinValue);
+                            editorField.MaxValue = DateTime.Parse(field.MaxValue);
+                            findFields.Add(editorField);
+                            break;
+                        }
+                    case Constants.FieldTypes.SingleSelect or Constants.FieldTypes.MultiSelect:
+                        {
+                            editorField.Options = sdkDbContext.FieldOptions
+                                .Where(x => x.FieldId == field.Id)
+                                .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                                .Include(x => x.FieldOptionTranslations)
+                                .Select(x =>
+                                    new FieldOptions
+                                    {
+                                        DisplayOrder = int.Parse(x.DisplayOrder),
+                                        Id = x.Id,
+                                        Key = int.Parse(x.Key),
+                                        Selected = x.Selected,
+                                        Translates = x.FieldOptionTranslations
+                                            .Select(y =>
+                                                new CommonTranslationsModel
+                                                {
+                                                    Id = y.Id,
+                                                    Name = y.Text,
+                                                    LanguageId = y.LanguageId
+                                                }).ToList()
+                                    })
+                                .ToList();
+                            findFields.Add(editorField);
+                            break;
+                        }
                     default:
-                    {
-                        findFields.Add(editorField);
-                        break;
-                    }
+                        {
+                            findFields.Add(editorField);
+                            break;
+                        }
                 }
             }
 
@@ -287,6 +397,36 @@ namespace eFormAPI.Web.Services.Eform
 
                 switch (fieldType)
                 {
+                    case Constants.FieldTypes.SingleSelect or Constants.FieldTypes.MultiSelect:
+                        {
+                            var optionsForCreate = field.Options.Select(x =>
+                                    new FieldOption
+                                    {
+                                        FieldId = dbField.Id,
+                                        Selected = x.Selected,
+                                        DisplayOrder = x.DisplayOrder.ToString(),
+                                        Key = x.Key.ToString(),
+                                        FieldOptionTranslations = x.Translates
+                                            .Select(y =>
+                                                new FieldOptionTranslation
+                                                {
+                                                    LanguageId = y.LanguageId,
+                                                    Text = y.Name
+                                                })
+                                            .ToList(),
+                                    })
+                                .ToList();
+                            foreach (var dbOption in optionsForCreate)
+                            {
+                                await dbOption.Create(sdkDbContext);
+                                foreach (var optionTranslation in dbOption.FieldOptionTranslations)
+                                {
+                                    optionTranslation.FieldOptionId = dbOption.Id;
+                                    await optionTranslation.Create(sdkDbContext);
+                                }
+                            }
+                            break;
+                        }
                     case Constants.FieldTypes.FieldGroup:
                         {
                             await CreateFields(eformId, sdkDbContext, field.Fields, dbField.Id);
@@ -299,7 +439,7 @@ namespace eFormAPI.Web.Services.Eform
                 }
 
                 var translates = field.Translates
-                    .Select(x => 
+                    .Select(x =>
                         new FieldTranslation
                         {
                             FieldId = dbField.Id,

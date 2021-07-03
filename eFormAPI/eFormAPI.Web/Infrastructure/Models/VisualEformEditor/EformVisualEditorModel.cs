@@ -25,6 +25,8 @@ namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
 
     public class EformVisualEditorModel
     {
+        public int Id { get; set; }
+
         /// <summary>
         /// Translates for eform label and description. id - languageId
         /// </summary>

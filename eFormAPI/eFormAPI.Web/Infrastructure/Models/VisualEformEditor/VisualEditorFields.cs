@@ -26,6 +26,8 @@ namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
 
     public class VisualEditorFields
     {
+        public int? Id { get; set; }
+
         public int FieldType { get; set; }
 
         /// <summary>
