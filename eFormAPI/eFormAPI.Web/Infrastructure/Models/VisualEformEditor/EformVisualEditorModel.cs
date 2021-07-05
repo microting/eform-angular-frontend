@@ -28,9 +28,9 @@ namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
         public int Id { get; set; }
 
         /// <summary>
-        /// Translates for eform label and description. id - languageId
+        /// Translates for eform label and description with languageId
         /// </summary>
-        public List<CommonTranslationsModel> Translates { get; set; }
+        public List<CommonTranslationsModel> Translations { get; set; }
             = new List<CommonTranslationsModel>();
        
         public List<int> TagIds { get; set; }

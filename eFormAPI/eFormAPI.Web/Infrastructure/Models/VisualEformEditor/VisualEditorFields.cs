@@ -33,7 +33,7 @@ namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
         /// <summary>
         /// Translates for label and description
         /// </summary>
-        public List<CommonTranslationsModel> Translates { get; set; }
+        public List<CommonTranslationsModel> Translations { get; set; }
             = new List<CommonTranslationsModel>();
 
         public string Color { get; set; }

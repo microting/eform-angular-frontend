@@ -68,7 +68,7 @@ namespace eFormAPI.Web.Services.Eform
                     {
                         Id = x.Id,
                         Position = 0,
-                        Translates = x.Translations.Select(y =>
+                        Translations = x.Translations.Select(y =>
                                 new CommonTranslationsModel
                                 {
                                     Name = y.Text,
@@ -291,7 +291,7 @@ namespace eFormAPI.Web.Services.Eform
                     Color = field.Color,
                     FieldType = (int)field.FieldTypeId,
                     Position = (int)field.DisplayIndex,
-                    Translates = field.Translations.Select(x =>
+                    Translations = field.Translations.Select(x =>
                         new CommonTranslationsModel
                         {
                             Id = x.LanguageId,
@@ -438,7 +438,7 @@ namespace eFormAPI.Web.Services.Eform
                         }
                 }
 
-                var translates = field.Translates
+                var translates = field.Translations
                     .Select(x =>
                         new FieldTranslation
                         {
