@@ -92,7 +92,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
       .createVisualEditorTemplate(this.visualEditorTemplateModel)
       .subscribe((data) => {
         if (data && data.success) {
-          this.router.navigate(['/cases/']).then();
+          this.router.navigate(['/']).then();
         }
       });
   }
@@ -102,7 +102,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
       .updateVisualEditorTemplate(this.visualEditorTemplateModel)
       .subscribe((data) => {
         if (data && data.success) {
-          this.router.navigate(['/cases/']).then();
+          this.router.navigate(['/']).then();
         }
       });
   }
