@@ -4,9 +4,9 @@
       <div class="modal-header">
         <h3>
           {{
-          selectedChecklist
-            ? ('Edit checklist' | translate)
-            : ('New checklist' | translate)
+            selectedChecklist
+              ? ('Edit checklist' | translate)
+              : ('New checklist' | translate)
           }}
         </h3>
       </div>
@@ -22,7 +22,7 @@
                     [placeholder]="'Selected language' | translate"
                     [clearable]="false"
                     [bindLabel]="'text'"
-                    [bindValue]="'languageId'"
+                    [bindValue]="'id'"
                     [(ngModel)]="selectedLanguage"
                     id="newChecklistLanguageSelector"
                     [items]="languages"
@@ -36,30 +36,26 @@
           <mdb-card-body>
             <ng-container
               *ngFor="
-                    let translation of selectedChecklistTranslations;
-                    let translationIndex = index
-                  "
+                let translation of selectedChecklistTranslations;
+                let translationIndex = index
+              "
             >
-              <ng-container *ngIf="selectedLanguage === translation.id">
+              <ng-container *ngIf="selectedLanguage === translation.languageId">
                 <div class="row">
                   <div class="col-12">
                     <div class="md-form">
                       <input
                         mdbInput
                         type="text"
-                        id="newChecklistNameTranslation_{{
-                              translationIndex
-                            }}"
+                        id="newChecklistNameTranslation_{{ translationIndex }}"
                         name="newChecklistNameTranslation_{{
-                              translationIndex
-                            }}"
+                          translationIndex
+                        }}"
                         [(ngModel)]="translation.name"
                         class="form-control"
                       />
                       <label
-                        for="newChecklistNameTranslation_{{
-                              translationIndex
-                            }}"
+                        for="newChecklistNameTranslation_{{ translationIndex }}"
                       >
                         {{ 'Name' | translate }}
                       </label>
@@ -76,12 +72,12 @@
                         mdbInput
                         [(value)]="translation.description"
                         name="newChecklistDescriptionTranslation_{{
-                              translationIndex
-                            }}"
+                          translationIndex
+                        }}"
                         required
                         id="newChecklistDescriptionTranslation_{{
-                              translationIndex
-                            }}"
+                          translationIndex
+                        }}"
                         rows="10"
                       ></pell-editor>
                     </div>
@@ -91,7 +87,6 @@
             </ng-container>
           </mdb-card-body>
         </mdb-card>
-
       </div>
       <div class="modal-footer">
         <button

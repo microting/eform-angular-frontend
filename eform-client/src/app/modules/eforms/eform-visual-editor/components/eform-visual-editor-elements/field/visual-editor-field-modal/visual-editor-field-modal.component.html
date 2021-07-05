@@ -2,7 +2,9 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h3>{{ (isFieldSelected ? 'Edit field' : 'New field') | translate }}</h3>
+        <h3>
+          {{ (isFieldSelected ? 'Edit field' : 'New field') | translate }}
+        </h3>
       </div>
       <div class="modal-body">
         <mdb-card class="mb-3">
@@ -16,7 +18,7 @@
                     [placeholder]="'Selected language' | translate"
                     [clearable]="false"
                     [bindLabel]="'text'"
-                    [bindValue]="'languageId'"
+                    [bindValue]="'id'"
                     [(ngModel)]="selectedLanguage"
                     id="newFieldLanguageSelector"
                     [items]="languages"
@@ -38,7 +40,7 @@
                 let translationIndex = index
               "
             >
-              <ng-container *ngIf="selectedLanguage === translation.id">
+              <ng-container *ngIf="selectedLanguage === translation.languageId">
                 <div class="row">
                   <div class="col-12">
                     <div class="md-form">
@@ -50,9 +52,7 @@
                         [(ngModel)]="translation.name"
                         class="form-control"
                       />
-                      <label
-                        for="fieldNameTranslation_{{ translationIndex }}"
-                      >
+                      <label for="fieldNameTranslation_{{ translationIndex }}">
                         {{ 'Name' | translate }}
                       </label>
                     </div>
@@ -105,8 +105,8 @@
                       let-search="searchTerm"
                     >
                       <ng-template #popTemplate
-                      ><img [src]="item.previewImage"
-                            alt=""/></ng-template>
+                        ><img [src]="item.previewImage" alt=""
+                      /></ng-template>
                       <div
                         [mdbTooltip]="popTemplate"
                         customHeight="200"
@@ -175,9 +175,7 @@
                     color="primary"
                     type="checkbox"
                   />
-                  <label for="isChecked">{{
-                    'Mandatory' | translate
-                    }}</label>
+                  <label for="isChecked">{{ 'Mandatory' | translate }}</label>
                 </div>
               </div>
             </div>

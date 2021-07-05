@@ -63,6 +63,29 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         if (data && data.success) {
           this.visualEditorTemplateModel = data.model;
+          // if there are not enough translations
+          if (
+            this.visualEditorTemplateModel.translations.length <
+            applicationLanguages.length
+          ) {
+            for (const language of applicationLanguages) {
+              if (
+                !this.visualEditorTemplateModel.translations.find(
+                  (x) => x.languageId === language.id
+                )
+              ) {
+                this.visualEditorTemplateModel.translations = [
+                  ...this.visualEditorTemplateModel.translations,
+                  {
+                    id: null,
+                    languageId: language.id,
+                    description: '',
+                    name: '',
+                  },
+                ];
+              }
+            }
+          }
         }
       });
   }

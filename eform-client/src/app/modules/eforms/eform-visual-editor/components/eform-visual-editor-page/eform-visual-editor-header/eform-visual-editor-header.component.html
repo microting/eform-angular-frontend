@@ -11,7 +11,7 @@
                   [placeholder]="'Selected language' | translate"
                   [clearable]="false"
                   [bindLabel]="'text'"
-                  [bindValue]="'languageId'"
+                  [bindValue]="'id'"
                   [(ngModel)]="selectedLanguage"
                   id="mainCheckListLanguageSelector"
                   [items]="languages"
@@ -34,7 +34,7 @@
               let translationIndex = index
             "
           >
-            <ng-container *ngIf="selectedLanguage === translation.id">
+            <ng-container *ngIf="selectedLanguage === translation.languageId">
               <div class="row">
                 <div class="col-12">
                   <div class="md-form">

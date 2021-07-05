@@ -8,7 +8,8 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 import { applicationLanguages } from 'src/app/common/const';
 import {
-  CommonDictionaryModel, EformVisualEditorElementTranslateModel,
+  CommonDictionaryModel,
+  EformVisualEditorElementTranslateModel,
   EformVisualEditorModel,
 } from 'src/app/common/models';
 import { LocaleService } from 'src/app/common/services';
@@ -47,6 +48,24 @@ export class VisualEditorChecklistModalComponent implements OnInit {
     this.selectedChecklist = { ...model };
     if (model) {
       this.selectedChecklistTranslations = { ...model.translations };
+
+      // if there are not enough translations
+      if (
+        this.selectedChecklist.translations.length < applicationLanguages.length
+      ) {
+        for (const language of applicationLanguages) {
+          if (
+            !this.selectedChecklist.translations.find(
+              (x) => x.languageId === language.id
+            )
+          ) {
+            this.selectedChecklist.translations = [
+              ...this.selectedChecklist.translations,
+              { id: null, languageId: language.id, description: '', name: '' },
+            ];
+          }
+        }
+      }
     } else {
       this.initForm();
     }

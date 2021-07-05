@@ -47,7 +47,7 @@ export class VisualEditorFieldModalComponent implements OnInit {
   }
 
   get isAllNamesEmpty() {
-    return !this.fieldModel.translations.find(x => x.name !== '');
+    return !this.fieldModel.translations.find((x) => x.name !== '');
   }
 
   constructor(
@@ -66,6 +66,21 @@ export class VisualEditorFieldModalComponent implements OnInit {
       this.isFieldSelected = true;
       this.fieldIndex = fieldIndex;
       this.fieldModel = { ...model };
+      // if there are not enough translations
+      if (this.fieldModel.translations.length < applicationLanguages.length) {
+        for (const language of applicationLanguages) {
+          if (
+            !this.fieldModel.translations.find(
+              (x) => x.languageId === language.id
+            )
+          ) {
+            this.fieldModel.translations = [
+              ...this.fieldModel.translations,
+              { id: null, languageId: language.id, description: '', name: '' },
+            ];
+          }
+        }
+      }
     } else {
       this.initForm();
     }
