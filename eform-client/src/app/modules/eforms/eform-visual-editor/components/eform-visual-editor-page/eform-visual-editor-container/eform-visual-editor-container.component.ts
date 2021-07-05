@@ -81,7 +81,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
         ...this.visualEditorTemplateModel,
         translations: [
           ...this.visualEditorTemplateModel.translations,
-          { id: language.id, description: '', name: '' },
+          { id: null, languageId: language.id, description: '', name: '' },
         ],
       };
     }

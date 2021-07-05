@@ -8,7 +8,7 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 import { applicationLanguages } from 'src/app/common/const';
 import {
-  CommonDictionaryModel,
+  CommonDictionaryModel, EformVisualEditorElementTranslateModel,
   EformVisualEditorModel,
 } from 'src/app/common/models';
 import { LocaleService } from 'src/app/common/services';
@@ -26,7 +26,7 @@ export class VisualEditorChecklistModalComponent implements OnInit {
   updateChecklist: EventEmitter<EformVisualEditorModel> = new EventEmitter<EformVisualEditorModel>();
   selectedLanguage: number;
   selectedChecklist: EformVisualEditorModel;
-  selectedChecklistTranslations: CommonDictionaryModel[] = [];
+  selectedChecklistTranslations: EformVisualEditorElementTranslateModel[] = [];
 
   get languages() {
     return applicationLanguages;
@@ -44,9 +44,9 @@ export class VisualEditorChecklistModalComponent implements OnInit {
   }
 
   show(model?: EformVisualEditorModel) {
-    this.selectedChecklist = model;
+    this.selectedChecklist = { ...model };
     if (model) {
-      this.selectedChecklistTranslations = model.translations;
+      this.selectedChecklistTranslations = { ...model.translations };
     } else {
       this.initForm();
     }
@@ -57,7 +57,7 @@ export class VisualEditorChecklistModalComponent implements OnInit {
     for (const language of applicationLanguages) {
       this.selectedChecklistTranslations = [
         ...this.selectedChecklistTranslations,
-        { id: language.id, description: '', name: '' },
+        { id: null, languageId: language.id, description: '', name: '' },
       ];
     }
   }

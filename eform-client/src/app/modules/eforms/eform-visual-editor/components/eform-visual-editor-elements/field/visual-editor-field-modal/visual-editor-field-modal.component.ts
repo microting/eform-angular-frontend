@@ -77,7 +77,7 @@ export class VisualEditorFieldModalComponent implements OnInit {
     for (const language of applicationLanguages) {
       this.fieldModel.translations = [
         ...this.fieldModel.translations,
-        { id: language.id, description: '', name: '' },
+        { id: null, languageId: language.id, description: '', name: '' },
       ];
     }
   }

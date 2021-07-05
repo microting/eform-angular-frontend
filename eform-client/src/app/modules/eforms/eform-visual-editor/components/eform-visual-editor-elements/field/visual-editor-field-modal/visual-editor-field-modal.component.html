@@ -16,7 +16,7 @@
                     [placeholder]="'Selected language' | translate"
                     [clearable]="false"
                     [bindLabel]="'text'"
-                    [bindValue]="'id'"
+                    [bindValue]="'languageId'"
                     [(ngModel)]="selectedLanguage"
                     id="newFieldLanguageSelector"
                     [items]="languages"
@@ -45,13 +45,13 @@
                       <input
                         mdbInput
                         type="text"
-                        id="newFieldNameTranslation_{{ translationIndex }}"
-                        name="newFieldNameTranslation_{{ translationIndex }}"
+                        id="fieldNameTranslation_{{ translationIndex }}"
+                        name="fieldNameTranslation_{{ translationIndex }}"
                         [(ngModel)]="translation.name"
                         class="form-control"
                       />
                       <label
-                        for="newFieldNameTranslation_{{ translationIndex }}"
+                        for="fieldNameTranslation_{{ translationIndex }}"
                       >
                         {{ 'Name' | translate }}
                       </label>
