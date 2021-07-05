@@ -65,6 +65,9 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
   // onAddNewChecklist(position: number) {
   //   this.addNewChecklist.emit(position);
   // }
+  get isFieldComplete() {
+    return this.field.translations.find(x => x.name !== '') && this.field.fieldType;
+  }
 
   onAddNewField(position: number) {
     this.addNewField.emit(position);

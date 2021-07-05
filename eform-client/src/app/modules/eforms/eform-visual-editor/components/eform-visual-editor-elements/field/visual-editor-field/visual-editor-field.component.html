@@ -8,7 +8,7 @@
   <!--  <div dragula="{{dragulaElementContainerName}}" [dragulaModel]="visualEditorTemplateModel.fields"-->
   <!--       (dragulaModelChange)="onFieldChanged($event)">-->
   <div class="card mb-3 hoverable" style="width: 100%">
-    <div class="card-header">
+    <div class="card-header" [ngStyle]="{'background-color': field.color ? '#' + field.color : ''}">
       <div class="d-flex justify-content-between align-items-center">
         <div>
           <fa-icon
@@ -22,6 +22,14 @@
           {{ 'InfoBox' }}
         </div>
         <div>
+          <fa-icon
+            *ngIf="!isFieldComplete"
+            [mdbTooltip]="'Field is not complete' | translate"
+            icon="info-circle"
+            [fixedWidth]="true"
+            size="lg"
+            class="text-warning mr-2"
+          ></fa-icon>
           <fa-icon
             id="editBtn"
             icon="pen"

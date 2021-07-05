@@ -33,44 +33,44 @@
     <div class="col-lg-9 col-md-12 col-xs-12">
       <div class="card z-depth-3" style="width: 100%">
         <div class="card-body">
-          <div class="row">
-            <div class="col">
-              <ng-container
-                *ngIf="
-                  visualEditorTemplateModel.fields.length ||
-                  visualEditorTemplateModel.checkLists.length
-                "
-              >
-                <button
-                  mdbBtn
-                  class="btn-icon mb-2 float-right text-black-50"
-                  mdbTooltip="{{ 'Expand all' | translate }}"
-                  (click)="toggleCollapse()"
-                  *ngIf="isItemsCollapsed"
-                >
-                  <fa-icon
-                    icon="angle-double-right"
-                    size="lg"
-                    [fixedWidth]="true"
-                  ></fa-icon>
-                </button>
+<!--          <div class="row">-->
+<!--            <div class="col">-->
+<!--              <ng-container-->
+<!--                *ngIf="-->
+<!--                  visualEditorTemplateModel.fields.length ||-->
+<!--                  visualEditorTemplateModel.checkLists.length-->
+<!--                "-->
+<!--              >-->
+<!--                <button-->
+<!--                  mdbBtn-->
+<!--                  class="btn-icon mb-2 float-right text-black-50"-->
+<!--                  mdbTooltip="{{ 'Expand all' | translate }}"-->
+<!--                  (click)="toggleCollapse()"-->
+<!--                  *ngIf="isItemsCollapsed"-->
+<!--                >-->
+<!--                  <fa-icon-->
+<!--                    icon="angle-double-right"-->
+<!--                    size="lg"-->
+<!--                    [fixedWidth]="true"-->
+<!--                  ></fa-icon>-->
+<!--                </button>-->
 
-                <button
-                  mdbBtn
-                  class="btn-icon mb-2 float-right text-black-50"
-                  mdbTooltip="{{ 'Collapse all' | translate }}"
-                  (click)="toggleCollapse()"
-                  *ngIf="!isItemsCollapsed"
-                >
-                  <fa-icon
-                    icon="angle-double-down"
-                    size="lg"
-                    [fixedWidth]="true"
-                  ></fa-icon>
-                </button>
-              </ng-container>
-            </div>
-          </div>
+<!--                <button-->
+<!--                  mdbBtn-->
+<!--                  class="btn-icon mb-2 float-right text-black-50"-->
+<!--                  mdbTooltip="{{ 'Collapse all' | translate }}"-->
+<!--                  (click)="toggleCollapse()"-->
+<!--                  *ngIf="!isItemsCollapsed"-->
+<!--                >-->
+<!--                  <fa-icon-->
+<!--                    icon="angle-double-down"-->
+<!--                    size="lg"-->
+<!--                    [fixedWidth]="true"-->
+<!--                  ></fa-icon>-->
+<!--                </button>-->
+<!--              </ng-container>-->
+<!--            </div>-->
+<!--          </div>-->
           <section
             dragula="CHECK_LISTS"
             id="editorChecklists"

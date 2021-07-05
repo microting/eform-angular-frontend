@@ -46,6 +46,10 @@ export class VisualEditorFieldModalComponent implements OnInit {
     return eformVisualEditorElementColors;
   }
 
+  get isAllNamesEmpty() {
+    return !this.fieldModel.translations.find(x => x.name !== '');
+  }
+
   constructor(
     private translateService: TranslateService,
     private localeService: LocaleService
@@ -61,7 +65,7 @@ export class VisualEditorFieldModalComponent implements OnInit {
     if (model) {
       this.isFieldSelected = true;
       this.fieldIndex = fieldIndex;
-      this.fieldModel = model;
+      this.fieldModel = { ...model };
     } else {
       this.initForm();
     }

@@ -9,7 +9,7 @@
           <mdb-card-body>
             <div class="row">
               <div class="col">
-                <div class="ng-select-wrapper">
+                <div class="ng-select-wrapper d-flex align-items-center">
                   <ng-select
                     class="custom"
                     dropdownPosition="'bottom'"
@@ -21,6 +21,14 @@
                     id="newFieldLanguageSelector"
                     [items]="languages"
                   ></ng-select>
+                  <fa-icon
+                    *ngIf="isAllNamesEmpty"
+                    [mdbTooltip]="'Required' | translate"
+                    icon="info-circle"
+                    [fixedWidth]="true"
+                    size="lg"
+                    class="text-warning ml-1"
+                  ></fa-icon>
                 </div>
               </div>
             </div>
@@ -119,7 +127,7 @@
                     dropdownPosition="'bottom'"
                     [placeholder]="'Color' | translate"
                     [clearable]="false"
-                    [bindLabel]="'name'"
+                    [bindLabel]="'description'"
                     [bindValue]="'name'"
                     [(ngModel)]="fieldModel.color"
                     id="newFieldColorSelector"
@@ -135,9 +143,9 @@
                           icon="square"
                           [fixedWidth]="true"
                           size="lg"
-                          [ngStyle]="{ color: item.description }"
+                          [ngStyle]="{ color: '#' + item.name }"
                         ></fa-icon>
-                        {{ item.name }}
+                        {{ item.description }}
                       </div>
                     </ng-template>
                     <ng-template ng-label-tmp let-item="item">
@@ -146,9 +154,9 @@
                           icon="square"
                           [fixedWidth]="true"
                           size="lg"
-                          [ngStyle]="{ color: item.description }"
+                          [ngStyle]="{ color: '#' + item.name }"
                         ></fa-icon>
-                        {{ item.name }}
+                        {{ item.description }}
                       </div>
                     </ng-template>
                   </ng-select>

@@ -28,4 +28,8 @@ export class EformVisualEditorHeaderComponent implements OnInit {
       (x) => x.locale === this.localeService.getCurrentUserLocale()
     ).id;
   }
+
+  get isAllNamesEmpty() {
+    return !this.visualEditorModel.translations.find(x => x.name !== '');
+  }
 }
