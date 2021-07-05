@@ -9,15 +9,16 @@ import { DragulaModule } from 'ng2-dragula';
 import { EformImportedModule } from 'src/app/common/modules/eform-imported/eform-imported.module';
 import { EformSharedTagsModule } from 'src/app/common/modules/eform-shared-tags/eform-shared-tags.module';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
-import { EformVisualEditorChecklistComponent } from 'src/app/modules/eforms/eform-visual-editor/components/eform-visual-editor-elements/eform-visual-editor-checklist/eform-visual-editor-checklist.component';
-import { EformVisualEditorFieldComponent } from 'src/app/modules/eforms/eform-visual-editor/components/eform-visual-editor-elements/eform-visual-editor-field/eform-visual-editor-field.component';
 import {
-  EformVisualEditorChecklistModalComponent,
+  VisualEditorChecklistModalComponent,
   EformVisualEditorContainerComponent,
-  EformVisualEditorBlockComponent,
-  EformVisualEditorFieldModalComponent,
+  VisualEditorFieldModalComponent,
   EformVisualEditorHeaderComponent,
   EformVisualEditorTagsComponent,
+  VisualEditorFieldComponent,
+  VisualEditorChecklistComponent,
+  VisualEditorFieldDeleteModalComponent,
+  VisualEditorChecklistDeleteModalComponent,
 } from './components';
 import { EformVisualEditorRouting } from './eform-visual-editor.routing';
 
@@ -26,11 +27,12 @@ import { EformVisualEditorRouting } from './eform-visual-editor.routing';
     EformVisualEditorContainerComponent,
     EformVisualEditorHeaderComponent,
     EformVisualEditorTagsComponent,
-    EformVisualEditorFieldModalComponent,
-    EformVisualEditorChecklistModalComponent,
-    EformVisualEditorBlockComponent,
-    EformVisualEditorFieldComponent,
-    EformVisualEditorChecklistComponent,
+    VisualEditorFieldModalComponent,
+    VisualEditorChecklistModalComponent,
+    VisualEditorFieldComponent,
+    VisualEditorChecklistComponent,
+    VisualEditorFieldDeleteModalComponent,
+    VisualEditorChecklistDeleteModalComponent,
   ],
   imports: [
     CommonModule,

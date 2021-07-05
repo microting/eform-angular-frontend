@@ -14,11 +14,11 @@ import {
 import { LocaleService } from 'src/app/common/services';
 
 @Component({
-  selector: 'app-eform-visual-editor-checklist-modal',
-  templateUrl: './eform-visual-editor-checklist-modal.component.html',
-  styleUrls: ['./eform-visual-editor-checklist-modal.component.scss'],
+  selector: 'app-visual-editor-checklist-modal',
+  templateUrl: './visual-editor-checklist-modal.component.html',
+  styleUrls: ['./visual-editor-checklist-modal.component.scss'],
 })
-export class EformVisualEditorChecklistModalComponent implements OnInit {
+export class VisualEditorChecklistModalComponent implements OnInit {
   @ViewChild('frame', { static: true }) frame;
   @Output()
   createChecklist: EventEmitter<EformVisualEditorModel> = new EventEmitter<EformVisualEditorModel>();

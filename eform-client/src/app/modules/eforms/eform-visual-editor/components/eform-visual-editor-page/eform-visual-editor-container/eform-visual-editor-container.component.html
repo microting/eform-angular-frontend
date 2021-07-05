@@ -77,7 +77,7 @@
             (dragulaModelChange)="dragulaPositionChanged($event)"
             [dragulaModel]="visualEditorTemplateModel.checkLists"
           >
-            <app-eform-visual-editor-block
+            <app-visual-editor-checklist
               *ngFor="
                 let checklist of visualEditorTemplateModel.checkLists;
                 let i = index
@@ -89,7 +89,7 @@
               (deleteField)="onDeleteElement($event)"
               [ngClass]="{ 'no-drag': !checklist.collapsed }"
               (fieldPositionChanged)="onFieldPositionChanged($event)"
-            ></app-eform-visual-editor-block>
+            ></app-visual-editor-checklist>
           </section>
           <section
             *ngIf="
@@ -101,7 +101,7 @@
             (dragulaModelChange)="dragulaPositionChanged($event)"
             [dragulaModel]="visualEditorTemplateModel.fields"
           >
-            <app-eform-visual-editor-block
+            <app-visual-editor-field
               *ngFor="
                 let field of visualEditorTemplateModel.fields;
                 let i = index
@@ -110,12 +110,10 @@
               [elementIndex]="i"
               [visualEditorTemplateModel]="visualEditorTemplateModel"
               id="field_{{ i }}"
-              (addNewChecklist)="showChecklistModal($event)"
               (updateField)="showFieldModal($event)"
-              (deleteField)="onDeleteElement($event)"
-              [ngClass]="{ 'no-drag': !field.collapsed }"
+              (deleteField)="showDeleteFieldModal($event)"
               (fieldPositionChanged)="onFieldPositionChanged($event)"
-            ></app-eform-visual-editor-block>
+            ></app-visual-editor-field>
           </section>
           <div class="row">
             <div class="col d-flex justify-content-end">
@@ -157,16 +155,21 @@
 >
 </app-eform-visual-editor-tags>
 
-<app-eform-visual-editor-checklist-modal
+<app-visual-editor-checklist-modal
   #checklistModal
   (createChecklist)="onChecklistCreate($event)"
   (updateChecklist)="onChecklistUpdate($event)"
 >
-</app-eform-visual-editor-checklist-modal>
+</app-visual-editor-checklist-modal>
 
-<app-eform-visual-editor-field-modal
+<app-visual-editor-field-modal
   #fieldModal
   (createField)="onFieldCreate($event)"
   (updateField)="onFieldUpdate($event)"
 >
-</app-eform-visual-editor-field-modal>
+</app-visual-editor-field-modal>
+<app-visual-editor-field-delete-modal
+  #fieldDeleteModal
+  (fieldDelete)="onDeleteField($event)"
+>
+</app-visual-editor-field-delete-modal>

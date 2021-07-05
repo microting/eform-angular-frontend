@@ -1,31 +1,20 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { CollapseComponent } from 'angular-bootstrap-md';
-import { UUID } from 'angular2-uuid';
-import { Subscription } from 'rxjs';
-import {
-  EformVisualEditorFieldModel,
-  EformVisualEditorModel,
-} from 'src/app/common/models';
-import { EformVisualEditorService } from 'src/app/common/services';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
+import {CollapseComponent} from 'angular-bootstrap-md';
+import {UUID} from 'angular2-uuid';
+import {Subscription} from 'rxjs';
+import {EformVisualEditorFieldModel, EformVisualEditorModel} from 'src/app/common/models';
+import {EformVisualEditorService} from 'src/app/common/services';
 
 @Component({
-  selector: 'app-eform-visual-editor-block',
-  templateUrl: './eform-visual-editor-block.component.html',
-  styleUrls: ['./eform-visual-editor-block.component.scss'],
+  selector: 'app-visual-editor-checklist',
+  templateUrl: './visual-editor-checklist.component.html',
+  styleUrls: ['./visual-editor-checklist.component.scss']
 })
-export class EformVisualEditorBlockComponent implements OnInit, OnDestroy {
+export class VisualEditorChecklistComponent implements OnInit, OnDestroy {
   @ViewChild('collapse', { static: true }) collapse: CollapseComponent;
   @Input() checklist: EformVisualEditorModel;
-  @Input() field: EformVisualEditorFieldModel;
+  // @Input() field: EformVisualEditorFieldModel;
   @Input() visualEditorTemplateModel: EformVisualEditorModel;
   @Input() elementIndex: number;
   @Input() checklistRecursionIndex: number[] = [0];

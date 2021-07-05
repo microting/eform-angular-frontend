@@ -1,0 +1,45 @@
+<!-- First level fields render -->
+<section
+  id="fieldSection{{ elementIndex }}"
+  *ngIf="field"
+>
+  <!-- IMPORTANT TO IMPLEMENT FOR NESTING OF GROUPS -->
+
+  <!--  <div dragula="{{dragulaElementContainerName}}" [dragulaModel]="visualEditorTemplateModel.fields"-->
+  <!--       (dragulaModelChange)="onFieldChanged($event)">-->
+  <div class="card mb-3 hoverable" style="width: 100%">
+    <div class="card-header">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <fa-icon
+            id="moveBtn"
+            size="lg"
+            icon="grip-lines"
+            class="dragula-handle"
+            [fixedWidth]="true"
+            style="cursor: pointer"
+          ></fa-icon>
+          {{ 'InfoBox' }}
+        </div>
+        <div>
+          <fa-icon
+            id="editBtn"
+            icon="pen"
+            class="mr-2"
+            [fixedWidth]="true"
+            style="cursor: pointer"
+            (click)="onEditField()"
+          ></fa-icon>
+          <fa-icon
+            id="deleteBtn"
+            icon="trash-alt"
+            [fixedWidth]="true"
+            style="cursor: pointer"
+            (click)="onDeleteField()"
+          ></fa-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--  </div>-->
+</section>

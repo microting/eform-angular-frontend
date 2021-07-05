@@ -5,9 +5,16 @@
         <mdb-card-body>
           <div class="row">
             <div class="col">
-              <div class="ng-select-wrapper">
+              <div class="ng-select-wrapper d-flex align-items-center">
+                <fa-icon
+                  [mdbTooltip]="'Test' | translate"
+                  icon="info-circle"
+                  [fixedWidth]="true"
+                  size="lg"
+                  class="text-warning pb-2 mr-1"
+                  [ngStyle]="{ color: 'yellow' }"
+                ></fa-icon>
                 <ng-select
-                  class="custom"
                   dropdownPosition="'bottom'"
                   [placeholder]="'Selected language' | translate"
                   [clearable]="false"
@@ -16,7 +23,8 @@
                   [(ngModel)]="selectedLanguage"
                   id="mainCheckListLanguageSelector"
                   [items]="languages"
-                ></ng-select>
+                >
+                </ng-select>
               </div>
             </div>
           </div>

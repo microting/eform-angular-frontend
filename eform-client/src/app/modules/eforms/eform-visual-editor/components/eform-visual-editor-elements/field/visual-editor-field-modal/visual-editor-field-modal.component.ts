@@ -13,14 +13,14 @@ import { LocaleService } from 'src/app/common/services';
 import {
   eformVisualEditorElementColors,
   eformVisualEditorElementTypes,
-} from '../../../const/eform-visual-editor-element-types';
+} from '../../../../const/eform-visual-editor-element-types';
 
 @Component({
-  selector: 'app-eform-visual-editor-field-modal',
-  templateUrl: './eform-visual-editor-field-modal.component.html',
-  styleUrls: ['./eform-visual-editor-field-modal.component.scss'],
+  selector: 'app-visual-editor-field-modal',
+  templateUrl: './visual-editor-field-modal.component.html',
+  styleUrls: ['./visual-editor-field-modal.component.scss'],
 })
-export class EformVisualEditorFieldModalComponent implements OnInit {
+export class VisualEditorFieldModalComponent implements OnInit {
   @ViewChild('frame', { static: true }) frame;
   @Output()
   createField: EventEmitter<EformVisualEditorFieldModel> = new EventEmitter<EformVisualEditorFieldModel>();

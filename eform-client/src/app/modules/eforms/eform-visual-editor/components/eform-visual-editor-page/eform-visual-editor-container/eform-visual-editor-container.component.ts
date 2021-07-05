@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
+import * as R from 'ramda';
 import { Subscription } from 'rxjs';
 import { applicationLanguages } from 'src/app/common/const';
 import {
@@ -13,7 +14,6 @@ import {
   EformTagService,
   EformVisualEditorService,
 } from 'src/app/common/services';
-import * as R from 'ramda';
 
 @AutoUnsubscribe()
 @Component({
@@ -24,6 +24,7 @@ import * as R from 'ramda';
 export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   @ViewChild('tagsModal') tagsModal: SharedTagsComponent;
   @ViewChild('fieldModal') fieldModal: any;
+  @ViewChild('fieldDeleteModal') fieldDeleteModal: any;
   @ViewChild('checklistModal') checklistModal: any;
 
   visualEditorTemplateModel: EformVisualEditorModel = new EformVisualEditorModel();
@@ -120,7 +121,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
     this.visualEditorTemplateModel.fields = [...model];
   }
 
-  onDeleteElement($event: number) {}
+  onDeleteElement(model?: any) {}
 
   showFieldModal(model?: { fieldIndex: number }) {
     debugger;
@@ -132,6 +133,13 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
     } else {
       this.fieldModal.show();
     }
+  }
+
+  showDeleteFieldModal(model: {
+    fieldIndex: number;
+    field: EformVisualEditorFieldModel;
+  }) {
+    this.fieldDeleteModal.show(model.fieldIndex, model.field);
   }
 
   showChecklistModal(model?: EformVisualEditorModel) {
@@ -155,7 +163,10 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
     };
   }
 
-  onFieldUpdate(model: {field: EformVisualEditorFieldModel, fieldIndex: number }) {
+  onFieldUpdate(model: {
+    field: EformVisualEditorFieldModel;
+    fieldIndex: number;
+  }) {
     // Todo: redesign for nesting
     debugger;
     this.visualEditorTemplateModel.fields = R.update(
@@ -166,4 +177,13 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {}
+
+  onDeleteField(model: { fieldIndex: number }) {
+    this.visualEditorTemplateModel.fields = R.remove(
+      model.fieldIndex,
+      1,
+      this.visualEditorTemplateModel.fields
+    );
+    this.fieldDeleteModal.hide();
+  }
 }

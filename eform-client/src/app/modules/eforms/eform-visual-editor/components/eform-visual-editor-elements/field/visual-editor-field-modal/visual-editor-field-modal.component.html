@@ -2,7 +2,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h3>{{ 'New field' | translate }}</h3>
+        <h3>{{ (isFieldSelected ? 'Edit field' : 'New field') | translate }}</h3>
       </div>
       <div class="modal-body">
         <mdb-card class="mb-3">
