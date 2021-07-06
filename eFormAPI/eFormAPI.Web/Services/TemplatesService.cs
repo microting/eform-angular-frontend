@@ -589,7 +589,7 @@ namespace eFormAPI.Web.Services
                 .Include(x => x.CheckList)
                 .Where(x => x.LanguageId == language.Id)
                 .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                .Where(x => x.CheckList.ParentId == null)
+                .Where(x => x.CheckList.ParentId != null)
                 .Where(x => x.CheckList.WorkflowState != Constants.WorkflowStates.Removed);
 
             if (!string.IsNullOrEmpty(nameFilter))
