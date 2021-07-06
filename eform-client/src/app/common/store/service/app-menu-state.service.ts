@@ -45,6 +45,9 @@ export class AppMenuStateService {
       this.query.currentAppMenu.rightMenu &&
       this.query.currentAppMenu.rightMenu.length > 0
     ) {
+      if (href.charAt(0) !== '/') {
+        href = '/' + href;
+      }
       let title = this.searchTitle(href, this.query.currentAppMenu.leftMenu);
       if (!title) {
         title = this.searchTitle(href, this.query.currentAppMenu.rightMenu);
@@ -54,17 +57,15 @@ export class AppMenuStateService {
   }
 
   private searchTitle(href: string, menuItems: MenuItemModel[]): string {
-    if (href.charAt(0) !== '/') {
-      href = '/' + href;
-    }
     for (const menuItem of menuItems) {
-      if (menuItem.link !== '') {
-        if (menuItem.link != null) {
-          if (menuItem.link.charAt(0) !== '/') {
-            menuItem.link = '/' + menuItem.link;
+      let menuItemLink = menuItem.link;
+      if (menuItemLink !== '') {
+        if (menuItemLink != null) {
+          if (menuItemLink.charAt(0) !== '/') {
+            menuItemLink = `/${menuItemLink}`;
           }
         }
-        if (menuItem.link === href) {
+        if (menuItemLink === href) {
           return menuItem.name;
         }
       }

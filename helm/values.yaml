@@ -82,7 +82,7 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 nodeSelector:
-  microting.load.type: customer
+  node.kubernetes.io/instance-type: s-2vcpu-4gb-amd
 
 tolerations: []
 
@@ -125,8 +125,8 @@ mariadb:
       accessModes:
         - ReadWriteOnce
       size: 8Gi
-    nodeSelector:
-      microting.load.type: customer
+  nodeSelector:
+    node.kubernetes.io/instance-type: s-2vcpu-4gb-amd
 rabbitmq:
   ## Whether to deploy a rabbitmq server to satisfy the applications database requirements.
   ##
@@ -208,7 +208,7 @@ rabbitmq:
     vm_memory_high_watermark.{{ .Values.memoryHighWatermark.type }} = {{ .Values.memoryHighWatermark.value }}
     {{- end }}
   nodeSelector:
-    microting.load.type: customer
+    node.kubernetes.io/instance-type: s-2vcpu-4gb-amd
 
 cronjob:
   repository: microtingas/kubernetes-cloud-mysql-backup

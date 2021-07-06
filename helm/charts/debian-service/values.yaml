@@ -77,7 +77,7 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 nodeSelector:
-  microting.load.type: customer
+  node.kubernetes.io/instance-type: s-2vcpu-4gb-amd
 
 tolerations: []
 

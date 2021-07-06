@@ -26,7 +26,7 @@ export class EformSubheaderComponent implements OnInit, OnDestroy {
   ngOnDestroy() {}
 
   ngOnInit() {
-    if (!this.forceStaticTitle || this.title) {
+    if (!this.forceStaticTitle || !this.title) {
       const href = this.router.url;
       this.appMenuStateService.getAppMenu().subscribe((_) => {
         const foundTitle = this.appMenuStateService.getTitleByUrl(href);
