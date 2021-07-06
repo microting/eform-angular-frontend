@@ -1,4 +1,6 @@
 import { PageWithNavbarPage } from './PageWithNavbar.page';
+import loginPage from './Login.page';
+import myEformsPage from './MyEforms.page';
 
 export class UserAdministration extends PageWithNavbarPage {
   constructor() {
@@ -239,6 +241,9 @@ export class UserAdministrationRowObject {
         reverse: true,
       });
     }
+
+    loginPage.open('/');
+    myEformsPage.Navbar.goToUserAdministration();
     userAdministration.createNewUserBtn.waitForClickable({ timeout: 40000 });
   }
 

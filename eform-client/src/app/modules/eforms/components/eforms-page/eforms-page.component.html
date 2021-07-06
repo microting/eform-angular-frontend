@@ -17,6 +17,7 @@
       (click)="openTagsModal()"
       mdbTooltip="{{ 'Manage tags' | translate }}"
       mdbWavesEffect
+      *ngIf="authStateService.checkClaim('eformAllowManagingEformTags')"
     >
       <fa-icon icon="tags" [fixedWidth]="true" size="lg"></fa-icon>
     </button>

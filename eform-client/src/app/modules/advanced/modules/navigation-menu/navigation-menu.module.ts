@@ -9,6 +9,7 @@ import {
   NavigationMenuItemEditComponent,
   NavigationMenuPageComponent,
   NavigationMenuTemplateItemComponent,
+  NavigationMenuResetComponent,
 } from './components';
 import { NavigationMenuRouting } from './navigation-menu.routing';
 import {
@@ -27,7 +28,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { DragulaModule } from 'ng2-dragula';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
-import { NavigationMenuResetComponent } from './components/navigation-menu-reset/navigation-menu-reset.component';
 
 @NgModule({
   declarations: [

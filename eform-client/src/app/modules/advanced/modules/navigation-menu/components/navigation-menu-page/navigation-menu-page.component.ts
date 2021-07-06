@@ -76,6 +76,9 @@ export class NavigationMenuPageComponent implements OnInit, OnDestroy {
         );
       },
     });
+    this.dragulaService.drop().subscribe(({ name }) => {
+      this.dragulaService.find(name).drake.cancel(true);
+    });
   }
 
   ngOnInit(): void {

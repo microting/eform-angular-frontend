@@ -31,10 +31,6 @@ export class CasesTableComponent implements OnInit, OnDestroy {
     return this.authStateService.currentUserClaims;
   }
 
-  // get userRole(): string {
-  //   return this.authStateService.currentRole;
-  // }
-
   get userClaimsEnum() {
     return UserClaimsEnum;
   }
@@ -48,11 +44,7 @@ export class CasesTableComponent implements OnInit, OnDestroy {
     public caseStateService: CasesStateService,
     private router: Router,
     private appMenuStateService: AppMenuStateService
-  ) {
-    this.activateRoute.params.subscribe((params) => {
-      this.caseStateService.setTemplateId(+params['id']);
-    });
-  }
+  ) {}
   @ViewChild('modalRemoveCase', { static: true }) modalRemoveCase;
   currentTemplate: TemplateDto = new TemplateDto();
   eformPermissionsSimpleModel: EformPermissionsSimpleModel = new EformPermissionsSimpleModel();
@@ -66,7 +58,10 @@ export class CasesTableComponent implements OnInit, OnDestroy {
   ngOnDestroy() {}
 
   ngOnInit() {
-    this.loadTemplateData();
+    this.activateRoute.params.subscribe((params) => {
+      this.caseStateService.setTemplateId(+params['id']);
+      this.loadTemplateData();
+    });
   }
 
   onLabelInputChanged(label: string) {

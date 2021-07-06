@@ -22,11 +22,15 @@ describe('Entity Search', function () {
     $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
   });
   it('should not create a new searchable list', function () {
+    loginPage.open('/');
+    searchableLists.goToEntitySearchPage();
     const name = Guid.create().toString();
     searchableLists.createSearchableList_NoItem_Cancels(name);
     expect(searchableLists.rowNum).equal(0);
   });
   it('should create a new searchable list with one item', function () {
+    loginPage.open('/');
+    searchableLists.goToEntitySearchPage();
     const name = Guid.create().toString();
     const itemName = Guid.create().toString();
     searchableLists.createSearchableList_OneItem(name, itemName);
@@ -41,12 +45,16 @@ describe('Entity Search', function () {
     $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
   });
   it('should not make a new searchable list with one item', function () {
+    loginPage.open('/');
+    searchableLists.goToEntitySearchPage();
     const name = Guid.create().toString();
     const itemName = Guid.create().toString();
     searchableLists.createSearchableList_OneItem_Cancels(name, itemName);
     expect(searchableLists.rowNum).equal(0);
   });
   it('should make a new searchable list with multiple items', function () {
+    loginPage.open('/');
+    searchableLists.goToEntitySearchPage();
     const name = Guid.create().toString();
     const itemNames = ['a \n', 'b\n', 'c\n', 'd\n', 'e'];
     searchableLists.createSearchableList_MultipleItems(name, itemNames);
@@ -74,6 +82,8 @@ describe('Entity Search', function () {
     $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
   });
   it('should not create a searchable list with multiple items', function () {
+    loginPage.open('/');
+    searchableLists.goToEntitySearchPage();
     const name = Guid.create().toString();
     const itemNames = ['a \n', 'b\n', 'c\n', 'd\n', 'e'];
     searchableLists.createSearchableList_MultipleItems_Cancels(name, itemNames);
