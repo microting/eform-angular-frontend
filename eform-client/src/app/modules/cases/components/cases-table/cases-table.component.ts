@@ -97,6 +97,7 @@ export class CasesTableComponent implements OnInit, OnDestroy {
         this.loadEformPermissions(this.currentTemplate.id);
         this.loadAllCases();
         this.setTitle();
+        this.setTableHeaders();
       }
     });
   }
@@ -156,6 +157,90 @@ export class CasesTableComponent implements OnInit, OnDestroy {
   onCaseDeleted() {
     this.caseStateService.onDelete();
     this.loadAllCases();
+  }
+
+  private setTableHeaders() {
+    this.tableHeaders = [
+      { name: 'Id', elementId: '', sortable: true },
+      { name: 'done_at', elementId: '', sortable: true },
+      this.authStateService.isAdmin
+          ? { name: 'created_at', elementId: '', sortable: true }
+          : null,
+      { name: 'worker_name', elementId: '', sortable: true },
+      this.currentTemplate.field1 && this.currentTemplate.field1.label
+          ? {
+            name: 'field1',
+            elementId: '',
+            sortable: true,
+            visibleName: this.currentTemplate.field1.label,
+          }
+          : null,
+      this.currentTemplate.field2 && this.currentTemplate.field2.label
+          ? {
+            name: 'field2',
+            elementId: '',
+            sortable: true,
+            visibleName: this.currentTemplate.field2.label,
+          }
+          : null,
+      this.currentTemplate.field3 && this.currentTemplate.field3.label
+          ? {
+            name: 'field3',
+            elementId: '',
+            sortable: true,
+            visibleName: this.currentTemplate.field3.label,
+          }
+          : null,
+      this.currentTemplate.field4 && this.currentTemplate.field4.label
+          ? {
+            name: 'field4',
+            elementId: '',
+            sortable: true,
+            visibleName: this.currentTemplate.field4.label,
+          }
+          : null,
+      this.currentTemplate.field5 && this.currentTemplate.field5.label
+          ? {
+            name: 'field5',
+            elementId: '',
+            sortable: true,
+            visibleName: this.currentTemplate.field5.label,
+          }
+          : null,
+      this.currentTemplate.field6 && this.currentTemplate.field6.label
+          ? {
+            name: 'field6',
+            elementId: '',
+            sortable: true,
+            visibleName: this.currentTemplate.field6.label,
+          }
+          : null,
+      this.currentTemplate.field7 && this.currentTemplate.field7.label
+          ? {
+            name: 'field7',
+            elementId: '',
+            sortable: true,
+            visibleName: this.currentTemplate.field7.label,
+          }
+          : null,
+      this.currentTemplate.field8 && this.currentTemplate.field8.label
+          ? {
+            name: 'field8',
+            elementId: '',
+            sortable: true,
+            visibleName: this.currentTemplate.field8.label,
+          }
+          : null,
+      this.currentTemplate.field9 && this.currentTemplate.field9.label
+          ? {
+            name: 'field9',
+            elementId: '',
+            sortable: true,
+            visibleName: this.currentTemplate.field9.label,
+          }
+          : null,
+      { name: 'Actions', elementId: '', sortable: false },
+    ];
   }
 
   private setTitle() {
