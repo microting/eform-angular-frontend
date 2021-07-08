@@ -1,4 +1,4 @@
-﻿/*
+/*
 The MIT License (MIT)
 Copyright (c) 2007 - 2021 Microting A/S
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -106,16 +106,69 @@ namespace eFormAPI.Web.Services.Eform
             {
                 var core = await _coreHelper.GetCore();
                 var sdkDbContext = core.DbContextHelper.GetDbContext();
-                var newCheckList = new CheckList { Color = model.Color, DisplayIndex = model.Position };
+
+                // create main checkList
+                var newCheckList = new CheckList
+                {
+                    Color = model.Color,
+                    DisplayIndex = 0,
+                    Repeated = 1,
+                    ReviewEnabled = 0,
+                    ManualSync = 0,
+                    ExtraFieldsEnabled = 0,
+                    DoneButtonEnabled = 0,
+                    ApprovalEnabled = 0,
+                    MultiApproval = 0,
+                    FastNavigation = 0,
+                    DownloadEntities = 0,
+                    QuickSyncEnabled = 0,
+                };
                 await newCheckList.Create(sdkDbContext);
-                await CreateFields(newCheckList.Id, sdkDbContext, model.Fields);
+
+                // create empty checkList
+                var emptyCheckList = new CheckList
+                {
+                    Color = model.Color,
+                    DisplayIndex = 0,
+                    ParentId = newCheckList.Id,
+                    ReviewEnabled = 0,
+                    ExtraFieldsEnabled = 0,
+                    DoneButtonEnabled = 0,
+                    ApprovalEnabled = 0,
+                };
+                await emptyCheckList.Create(sdkDbContext);
+
+                // create translations to eform
+                foreach (var translation in model.Translations)
+                {
+                    var newCheckListTranslation = new CheckListTranslation
+                    {
+                        CheckListId = newCheckList.Id,
+                        LanguageId = translation.LanguageId,
+                        Text = translation.Name,
+                        Description = translation.Description
+                    };
+                    var emptyCheckListTranslation = new CheckListTranslation
+                    {
+                        CheckListId = emptyCheckList.Id,
+                        LanguageId = translation.LanguageId,
+                        Text = translation.Name,
+                        Description = translation.Description
+                    };
+
+                    await newCheckListTranslation.Create(sdkDbContext);
+                    await emptyCheckListTranslation.Create(sdkDbContext);
+                }
 
                 // add tags to eform
-                foreach (var tagId in model.TagIds)
+                foreach (var tag in model.TagIds.Select(tagId => new Tagging { CheckListId = newCheckList.Id, TagId = tagId }))
                 {
-                    var tag = new Tagging { CheckListId = newCheckList.Id, TagId = tagId };
                     await tag.Create(sdkDbContext);
                 }
+
+                // add fields to eform
+                await CreateFields(newCheckList.Id, sdkDbContext, model.Fields);
+
                 return new OperationResult(true,
                     _localizationService.GetString("EformSuccessfullyCreated"));
             }
