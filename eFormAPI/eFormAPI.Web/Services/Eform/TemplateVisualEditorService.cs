@@ -1,4 +1,4 @@
-/*
+﻿/*
 The MIT License (MIT)
 Copyright (c) 2007 - 2021 Microting A/S
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -59,36 +59,7 @@ namespace eFormAPI.Web.Services.Eform
             {
                 var core = await _coreHelper.GetCore();
                 var sdkDbContext = core.DbContextHelper.GetDbContext();
-                var eform = await sdkDbContext.CheckLists
-                    .Include(x => x.Translations)
-                    .Include(x => x.Taggings)
-                    .Where(x => x.Id == id)
-                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                    .Select(x => new EformVisualEditorModel
-                    {
-                        Id = x.Id,
-                        Position = 0,
-                        Translations = x.Translations.Select(y =>
-                                new CommonTranslationsModel
-                                {
-                                    Name = y.Text,
-                                    Description = y.Description,
-                                    Id = y.Id,
-                                    LanguageId = y.LanguageId,
-                                })
-                            .ToList(),
-                        TagIds = x.Taggings.Select(y => (int)y.TagId).ToList(),
-                        Fields = new List<VisualEditorFields>(),
-                    })
-                    .FirstOrDefaultAsync();
-                if (eform == null)
-                {
-                    return new OperationDataResult<EformVisualEditorModel>(false,
-                        _localizationService.GetString("EformNotFound"));
-                }
-
-                // add fields
-                eform.Fields = await FindFields(id, sdkDbContext);
+                var eform = await FindTemplates(id, sdkDbContext);
 
                 return new OperationDataResult<EformVisualEditorModel>(true, eform);
             }
@@ -505,6 +476,54 @@ namespace eFormAPI.Web.Services.Eform
                     await fieldTranslation.Create(sdkDbContext);
                 }
             }
+        }
+
+        private static async Task<EformVisualEditorModel> FindTemplates(int idEform, MicrotingDbContext sdkDbContext, int position = 0) // TODO position will not work correctly if there are several forms on the same level
+        {
+            var query = sdkDbContext.CheckLists
+                .Include(x => x.Translations)
+                .Include(x => x.Taggings)
+                .Where(x => x.Id == idEform)
+                .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed);
+
+            var eform = await query
+                .Select(x => new EformVisualEditorModel
+                {
+                    Id = x.Id,
+                    Position = position,
+                    Translations = x.Translations.Select(y =>
+                            new CommonTranslationsModel
+                            {
+                                Name = y.Text,
+                                Description = y.Description,
+                                Id = y.Id,
+                                LanguageId = y.LanguageId,
+                            })
+                        .ToList(),
+                    TagIds = x.Taggings.Select(y => (int)y.TagId).ToList(),
+                    Fields = new List<VisualEditorFields>(),
+                })
+                .FirstOrDefaultAsync();
+            if (eform == null)
+            {
+                throw new Exception("EformNotFound");
+            }
+
+            // add fields
+            eform.Fields = await FindFields(idEform, sdkDbContext);
+
+            // add eforms
+            var childrenCheckListIds = await query
+                .Include(x => x.Children)
+                .Select(x => x.Children.Select(y => y.Id).ToList())
+                .FirstAsync();
+
+            foreach (var checkListId in childrenCheckListIds)
+            {
+                eform.CheckLists.Add(await FindTemplates(checkListId, sdkDbContext, position + 1));
+            }
+
+            return eform;
         }
     }
 }
