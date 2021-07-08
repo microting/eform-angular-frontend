@@ -4,7 +4,7 @@
       <div class="modal-header">
         <h3>
           {{
-            selectedChecklist
+            recursionModel
               ? ('Edit checklist' | translate)
               : ('New checklist' | translate)
           }}
@@ -36,7 +36,7 @@
           <mdb-card-body>
             <ng-container
               *ngFor="
-                let translation of selectedChecklist.checklist.translations;
+                let translation of recursionModel.checklist.translations;
                 let translationIndex = index
               "
             >

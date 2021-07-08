@@ -82,6 +82,7 @@ export class VisualEditorChecklistComponent implements OnInit, OnDestroy {
   onAddNewNestedChecklist() {
     this.addNewNestedChecklist.emit({
       checklistRecursionIndex: this.checklistRecursionIndex,
+      checklistRecursionIndexes: this.checklistRecursionIndexes,
     });
   }
 
@@ -89,6 +90,7 @@ export class VisualEditorChecklistComponent implements OnInit, OnDestroy {
     this.editNestedChecklist.emit({
       checklist: { ...this.checklist },
       checklistRecursionIndex: this.checklistRecursionIndex,
+      checklistRecursionIndexes: this.checklistRecursionIndexes,
       checklistIndex: this.checklistIndex,
     });
   }

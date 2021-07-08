@@ -84,6 +84,7 @@
                 let i = index
               "
               [checklist]="checklist"
+              [checklistRecursionIndexes]="[0]"
               [checklistIndex]="i"
               id="checkList_{{ i }}"
               (addNewNestedChecklist)="showChecklistModal($event)"

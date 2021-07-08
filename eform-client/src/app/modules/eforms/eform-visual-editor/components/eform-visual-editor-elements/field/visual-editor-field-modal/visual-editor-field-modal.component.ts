@@ -63,8 +63,10 @@ export class VisualEditorFieldModalComponent implements OnInit {
 
   show(model?: EformVisualEditorRecursionFieldModel) {
     if (model) {
-      this.isFieldSelected = true;
       this.recursionModel = { ...model };
+    }
+    if (model && model.field) {
+      this.isFieldSelected = true;
       // if there are not enough translations
       if (
         this.recursionModel.field.translations.length <

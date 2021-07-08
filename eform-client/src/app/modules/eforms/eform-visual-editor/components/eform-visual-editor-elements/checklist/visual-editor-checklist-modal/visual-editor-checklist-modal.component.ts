@@ -8,8 +8,6 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 import { applicationLanguages } from 'src/app/common/const';
 import {
-  CommonDictionaryModel,
-  EformVisualEditorElementTranslateModel, EformVisualEditorFieldModel,
   EformVisualEditorModel,
   EformVisualEditorRecursionChecklistModel,
 } from 'src/app/common/models';
@@ -27,7 +25,7 @@ export class VisualEditorChecklistModalComponent implements OnInit {
   @Output()
   updateChecklist: EventEmitter<EformVisualEditorRecursionChecklistModel> = new EventEmitter<EformVisualEditorRecursionChecklistModel>();
   selectedLanguage: number;
-  selectedChecklist: EformVisualEditorRecursionChecklistModel = new EformVisualEditorRecursionChecklistModel();
+  recursionModel: EformVisualEditorRecursionChecklistModel = new EformVisualEditorRecursionChecklistModel();
   isChecklistSelected = false;
 
   get languages() {
@@ -46,23 +44,27 @@ export class VisualEditorChecklistModalComponent implements OnInit {
   }
 
   show(model?: EformVisualEditorRecursionChecklistModel) {
+    debugger;
     if (model) {
-      this.selectedChecklist = { ...model };
+      this.recursionModel = { ...model };
+    }
+    if (model && model.checklist) {
+      this.recursionModel = { ...model };
       this.isChecklistSelected = true;
 
       // if there are not enough translations
       if (
-        this.selectedChecklist.checklist.translations.length <
+        this.recursionModel.checklist.translations.length <
         applicationLanguages.length
       ) {
         for (const language of applicationLanguages) {
           if (
-            !this.selectedChecklist.checklist.translations.find(
+            !this.recursionModel.checklist.translations.find(
               (x) => x.languageId === language.id
             )
           ) {
-            this.selectedChecklist.checklist.translations = [
-              ...this.selectedChecklist.checklist.translations,
+            this.recursionModel.checklist.translations = [
+              ...this.recursionModel.checklist.translations,
               { id: null, languageId: language.id, description: '', name: '' },
             ];
           }
@@ -75,10 +77,10 @@ export class VisualEditorChecklistModalComponent implements OnInit {
   }
 
   initForm() {
-    this.selectedChecklist.checklist = new EformVisualEditorModel();
+    this.recursionModel.checklist = new EformVisualEditorModel();
     for (const language of applicationLanguages) {
-      this.selectedChecklist.checklist.translations = [
-        ...this.selectedChecklist.checklist.translations,
+      this.recursionModel.checklist.translations = [
+        ...this.recursionModel.checklist.translations,
         { id: null, languageId: language.id, description: '', name: '' },
       ];
     }
@@ -86,14 +88,14 @@ export class VisualEditorChecklistModalComponent implements OnInit {
 
   onCreateChecklist() {
     this.createChecklist.emit({
-      ...this.selectedChecklist,
+      ...this.recursionModel,
     });
     this.frame.hide();
   }
 
   onUpdateChecklist() {
     this.updateChecklist.emit({
-      ...this.selectedChecklist,
+      ...this.recursionModel,
     });
     this.frame.hide();
     this.isChecklistSelected = false;
