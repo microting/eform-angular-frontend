@@ -1,4 +1,9 @@
-<div mdbModal class="modal fade" #frame="mdbModal">
+<div
+  [config]="{ ignoreBackdropClick: true }"
+  mdbModal
+  class="modal fade"
+  #frame="mdbModal"
+>
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -9,6 +14,9 @@
               : ('New checklist' | translate)
           }}
         </h3>
+        <button class="close" data-dismiss="modal" (click)="frame.hide()">
+          <span>×</span>
+        </button>
       </div>
       <div class="modal-body">
         <mdb-card class="mb-3">

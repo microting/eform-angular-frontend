@@ -1,4 +1,4 @@
-﻿/*
+/*
 The MIT License (MIT)
 
 Copyright (c) 2007 - 2021 Microting A/S
@@ -108,11 +108,14 @@ namespace eFormAPI.Web.Services
 
                 var model = new TemplateListModel
                 {
-                    NumOfElements = 40,
+                    NumOfElements = await sdkDbContext.CheckLists.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed && x.ParentId != null).CountAsync(),
                     PageNum = templateRequestModel.PageIndex,
                     Templates = new List<TemplateDto>()
                 };
 
+                var pluginIds = await _dbContext.EformPlugins
+                    .Select(x => x.PluginId)
+                    .ToListAsync();
                 if (!_userService.IsAdmin())
                 {
                     var isEformsInGroups = await _dbContext.SecurityGroupUsers
@@ -129,7 +132,7 @@ namespace eFormAPI.Web.Services
 
                         foreach (var templateDto in templatesDto.Cast<TemplateDto>().Where(templateDto => eformIds.Contains(templateDto.Id)))
                         {
-                            await templateDto.CheckForLock(_dbContext);
+                            await templateDto.CheckForLock(_dbContext, pluginIds);
                             templateDto.CreatedAt =
                                 TimeZoneInfo.ConvertTimeFromUtc((DateTime) templateDto.CreatedAt, timeZoneInfo);
                             model.Templates.Add(templateDto);
@@ -139,7 +142,7 @@ namespace eFormAPI.Web.Services
                     {
                         foreach (TemplateDto templateDto in templatesDto)
                         {
-                            await templateDto.CheckForLock(_dbContext);
+                            await templateDto.CheckForLock(_dbContext, pluginIds);
                             templateDto.CreatedAt =
                                 TimeZoneInfo.ConvertTimeFromUtc((DateTime) templateDto.CreatedAt, timeZoneInfo);
                             model.Templates.Add(templateDto);
@@ -150,7 +153,7 @@ namespace eFormAPI.Web.Services
                 {
                     foreach (TemplateDto templateDto in templatesDto)
                     {
-                        await templateDto.CheckForLock(_dbContext);
+                        await templateDto.CheckForLock(_dbContext, pluginIds);
                         templateDto.CreatedAt =
                             TimeZoneInfo.ConvertTimeFromUtc((DateTime) templateDto.CreatedAt, timeZoneInfo);
                         model.Templates.Add(templateDto);
