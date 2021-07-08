@@ -36,7 +36,7 @@
           <mdb-card-body>
             <ng-container
               *ngFor="
-                let translation of selectedChecklistTranslations;
+                let translation of selectedChecklist.checklist.translations;
                 let translationIndex = index
               "
             >
@@ -92,7 +92,7 @@
         <button
           mdbBtn
           class="btn-success btn-small-height"
-          (click)="selectedChecklist ? onUpdateChecklist() : onAddChecklist()"
+          (click)="isChecklistSelected ? onUpdateChecklist() : onCreateChecklist()"
           id="changeChecklistSaveBtn"
         >
           {{ 'Save' | translate }}

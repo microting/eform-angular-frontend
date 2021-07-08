@@ -5,7 +5,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { EformVisualEditorFieldModel } from 'src/app/common/models';
+import { EformVisualEditorRecursionFieldModel } from 'src/app/common/models';
 
 @Component({
   selector: 'app-visual-editor-field-delete-modal',
@@ -14,19 +14,16 @@ import { EformVisualEditorFieldModel } from 'src/app/common/models';
 })
 export class VisualEditorFieldDeleteModalComponent implements OnInit {
   @ViewChild('frame', { static: false }) frame;
-  @Output() fieldDelete: EventEmitter<{
-    fieldIndex: number;
-  }> = new EventEmitter<{ fieldIndex: number }>();
-  fieldModel: EformVisualEditorFieldModel = new EformVisualEditorFieldModel();
-  fieldIndex: number;
+  @Output()
+  fieldDelete: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter();
+  recursionFieldModel: EformVisualEditorRecursionFieldModel = new EformVisualEditorRecursionFieldModel();
 
   constructor() {}
 
   ngOnInit() {}
 
-  show(fieldIndex: number, field: EformVisualEditorFieldModel) {
-    this.fieldModel = field;
-    this.fieldIndex = fieldIndex;
+  show(model: EformVisualEditorRecursionFieldModel) {
+    this.recursionFieldModel = model;
     this.frame.show();
   }
 
@@ -35,6 +32,7 @@ export class VisualEditorFieldDeleteModalComponent implements OnInit {
   }
 
   onFieldDelete() {
-    this.fieldDelete.emit({ fieldIndex: this.fieldIndex });
+    this.fieldDelete.emit(this.recursionFieldModel);
+    this.frame.hide();
   }
 }

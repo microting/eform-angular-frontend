@@ -8,7 +8,11 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 import { UUID } from 'angular2-uuid';
 import { applicationLanguages } from 'src/app/common/const';
-import { EformVisualEditorFieldModel } from 'src/app/common/models';
+import {
+  EformVisualEditorFieldModel,
+  EformVisualEditorFieldsDnDRecursionModel,
+  EformVisualEditorRecursionFieldModel,
+} from 'src/app/common/models';
 import { LocaleService } from 'src/app/common/services';
 import {
   eformVisualEditorElementColors,
@@ -23,15 +27,11 @@ import {
 export class VisualEditorFieldModalComponent implements OnInit {
   @ViewChild('frame', { static: true }) frame;
   @Output()
-  createField: EventEmitter<EformVisualEditorFieldModel> = new EventEmitter<EformVisualEditorFieldModel>();
+  createField: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter<EformVisualEditorRecursionFieldModel>();
   @Output()
-  updateField: EventEmitter<{
-    field: EformVisualEditorFieldModel;
-    fieldIndex: number;
-  }> = new EventEmitter();
+  updateField: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter();
   selectedLanguage: number;
-  fieldModel: EformVisualEditorFieldModel = new EformVisualEditorFieldModel();
-  fieldIndex: number;
+  recursionModel: EformVisualEditorRecursionFieldModel = new EformVisualEditorRecursionFieldModel();
   isFieldSelected = false;
 
   get languages() {
@@ -47,7 +47,7 @@ export class VisualEditorFieldModalComponent implements OnInit {
   }
 
   get isAllNamesEmpty() {
-    return !this.fieldModel.translations.find((x) => x.name !== '');
+    return !this.recursionModel.field.translations.find((x) => x.name !== '');
   }
 
   constructor(
@@ -61,21 +61,23 @@ export class VisualEditorFieldModalComponent implements OnInit {
     ).id;
   }
 
-  show(model?: EformVisualEditorFieldModel, fieldIndex?: number) {
+  show(model?: EformVisualEditorRecursionFieldModel) {
     if (model) {
       this.isFieldSelected = true;
-      this.fieldIndex = fieldIndex;
-      this.fieldModel = { ...model };
+      this.recursionModel = { ...model };
       // if there are not enough translations
-      if (this.fieldModel.translations.length < applicationLanguages.length) {
+      if (
+        this.recursionModel.field.translations.length <
+        applicationLanguages.length
+      ) {
         for (const language of applicationLanguages) {
           if (
-            !this.fieldModel.translations.find(
+            !this.recursionModel.field.translations.find(
               (x) => x.languageId === language.id
             )
           ) {
-            this.fieldModel.translations = [
-              ...this.fieldModel.translations,
+            this.recursionModel.field.translations = [
+              ...this.recursionModel.field.translations,
               { id: null, languageId: language.id, description: '', name: '' },
             ];
           }
@@ -88,10 +90,10 @@ export class VisualEditorFieldModalComponent implements OnInit {
   }
 
   initForm() {
-    this.fieldModel = new EformVisualEditorFieldModel();
+    this.recursionModel.field = new EformVisualEditorFieldModel();
     for (const language of applicationLanguages) {
-      this.fieldModel.translations = [
-        ...this.fieldModel.translations,
+      this.recursionModel.field.translations = [
+        ...this.recursionModel.field.translations,
         { id: null, languageId: language.id, description: '', name: '' },
       ];
     }
@@ -99,26 +101,30 @@ export class VisualEditorFieldModalComponent implements OnInit {
 
   onCreateField() {
     this.createField.emit({
-      ...this.fieldModel,
-      tempId: UUID.UUID(),
+      ...this.recursionModel,
     });
     this.frame.hide();
   }
 
   onUpdateField() {
-    debugger;
     this.updateField.emit({
-      field: this.fieldModel,
-      fieldIndex: this.fieldIndex,
+      ...this.recursionModel,
     });
     this.frame.hide();
+    this.isFieldSelected = false;
   }
 
   mandatoryCheckboxClick(e: any) {
     if (e.target && e.target.checked) {
-      this.fieldModel = { ...this.fieldModel, mandatory: true };
+      this.recursionModel.field = {
+        ...this.recursionModel.field,
+        mandatory: true,
+      };
     } else if (e.target && !e.target.checked) {
-      this.fieldModel = { ...this.fieldModel, mandatory: false };
+      this.recursionModel.field = {
+        ...this.recursionModel.field,
+        mandatory: false,
+      };
     } else {
       return;
     }

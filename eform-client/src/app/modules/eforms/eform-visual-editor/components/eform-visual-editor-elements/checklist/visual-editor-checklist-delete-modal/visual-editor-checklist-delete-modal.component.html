@@ -1,116 +1,59 @@
-<!--<div mdbModal class="modal fade" #frame="mdbModal">-->
-<!--  <div class="modal-dialog modal-lg">-->
-<!--    <div class="modal-content">-->
-<!--      <div class="modal-header">-->
-<!--        <h3>-->
-<!--          {{-->
-<!--          selectedChecklist-->
-<!--            ? ('Edit checklist' | translate)-->
-<!--            : ('New checklist' | translate)-->
-<!--          }}-->
-<!--        </h3>-->
-<!--      </div>-->
-<!--      <div class="modal-body">-->
-<!--        <mdb-card class="mb-3">-->
-<!--          <mdb-card-body>-->
-<!--            <div class="row">-->
-<!--              <div class="col">-->
-<!--                <div class="ng-select-wrapper">-->
-<!--                  <ng-select-->
-<!--                    class="custom"-->
-<!--                    dropdownPosition="'bottom'"-->
-<!--                    [placeholder]="'Selected language' | translate"-->
-<!--                    [clearable]="false"-->
-<!--                    [bindLabel]="'text'"-->
-<!--                    [bindValue]="'id'"-->
-<!--                    [(ngModel)]="selectedLanguage"-->
-<!--                    id="newChecklistLanguageSelector"-->
-<!--                    [items]="languages"-->
-<!--                  ></ng-select>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </mdb-card-body>-->
-<!--        </mdb-card>-->
-<!--        <mdb-card>-->
-<!--          <mdb-card-body>-->
-<!--            <ng-container-->
-<!--              *ngFor="-->
-<!--                    let translation of selectedChecklistTranslations;-->
-<!--                    let translationIndex = index-->
-<!--                  "-->
-<!--            >-->
-<!--              <ng-container *ngIf="selectedLanguage === translation.id">-->
-<!--                <div class="row">-->
-<!--                  <div class="col-12">-->
-<!--                    <div class="md-form">-->
-<!--                      <input-->
-<!--                        mdbInput-->
-<!--                        type="text"-->
-<!--                        id="newChecklistNameTranslation_{{-->
-<!--                              translationIndex-->
-<!--                            }}"-->
-<!--                        name="newChecklistNameTranslation_{{-->
-<!--                              translationIndex-->
-<!--                            }}"-->
-<!--                        [(ngModel)]="translation.name"-->
-<!--                        class="form-control"-->
-<!--                      />-->
-<!--                      <label-->
-<!--                        for="newChecklistNameTranslation_{{-->
-<!--                              translationIndex-->
-<!--                            }}"-->
-<!--                      >-->
-<!--                        {{ 'Name' | translate }}-->
-<!--                      </label>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--                <div class="row">-->
-<!--                  <div class="col-12">-->
-<!--                    <div class="md-form">-->
-<!--                      <p class="text-black-50">-->
-<!--                        {{ 'Description' | translate }}-->
-<!--                      </p>-->
-<!--                      <pell-editor-->
-<!--                        mdbInput-->
-<!--                        [(value)]="translation.description"-->
-<!--                        name="newChecklistDescriptionTranslation_{{-->
-<!--                              translationIndex-->
-<!--                            }}"-->
-<!--                        required-->
-<!--                        id="newChecklistDescriptionTranslation_{{-->
-<!--                              translationIndex-->
-<!--                            }}"-->
-<!--                        rows="10"-->
-<!--                      ></pell-editor>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </ng-container>-->
-<!--            </ng-container>-->
-<!--          </mdb-card-body>-->
-<!--        </mdb-card>-->
+<div
+  [config]="{ ignoreBackdropClick: true }"
+  mdbModal
+  class="modal fade"
+  #frame="mdbModal"
+>
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{ 'Are you sure you want to delete checklist' | translate }}?</h3>
+        <!--        <button class="close" data-dismiss="modal" (click)="frame.hide()">-->
+        <!--          <span>×</span>-->
+        <!--        </button>-->
+      </div>
+      <!--      <div class="modal-body">-->
+      <!--        <div class="container-fluid">-->
+      <!--          <div class="container-fluid">-->
+      <!--            <div class="row">-->
+      <!--              <div class="col-md-6">-->
+      <!--                <h6>ID</h6>-->
+      <!--              </div>-->
+      <!--              <div class="col-md-6" id="selectedPlanningId">-->
+      <!--                <strong>{{fieldModel.}}</strong>-->
+      <!--              </div>-->
+      <!--            </div>-->
 
-<!--      </div>-->
-<!--      <div class="modal-footer">-->
-<!--        <button-->
-<!--          mdbBtn-->
-<!--          class="btn-success btn-small-height"-->
-<!--          (click)="selectedChecklist ? onUpdateChecklist() : onAddChecklist()"-->
-<!--          id="changeChecklistSaveBtn"-->
-<!--        >-->
-<!--          {{ 'Save' | translate }}-->
-<!--        </button>-->
-<!--        <button-->
-<!--          mdbBtn-->
-<!--          class="btn-accent text-black-50 btn-small-height"-->
-<!--          (click)="frame.hide()"-->
-<!--          id="changeChecklistSaveCancelBtn"-->
-<!--        >-->
-<!--          {{ 'Cancel' | translate }}-->
-<!--        </button>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
+      <!--            <div class="row">-->
+      <!--              <div class="col-md-6">-->
+      <!--                <h6>{{'Name' | translate}}</h6>-->
+      <!--              </div>-->
+      <!--              <div class="col-md-6" id="selectedPlanningName">-->
+      <!--                <strong>{{planningModel.translatedName}}</strong>-->
+      <!--              </div>-->
+      <!--            </div>-->
+
+      <!--          </div>-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <div class="modal-footer">
+        <button
+          mdbBtn
+          id="checklistDeleteDeleteBtn"
+          class="btn-danger btn-small-height"
+          (click)="onDeleteChecklist()"
+        >
+          {{ 'Delete' | translate }}
+        </button>
+        <button
+          mdbBtn
+          id="checklistDeleteCancelBtn"
+          class="btn-accent text-black-50 btn-small-height"
+          (click)="frame.hide()"
+        >
+          {{ 'Cancel' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

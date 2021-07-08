@@ -7,7 +7,11 @@ import { applicationLanguages } from 'src/app/common/const';
 import {
   CommonDictionaryModel,
   EformVisualEditorFieldModel,
+  EformVisualEditorFieldsDnDRecursionModel,
   EformVisualEditorModel,
+  EformVisualEditorRecursionChecklistModel,
+  EformVisualEditorRecursionFieldModel,
+  EformVisualEditorRecursionModel,
 } from 'src/app/common/models';
 import { SharedTagsComponent } from 'src/app/common/modules/eform-shared-tags/components';
 import {
@@ -26,6 +30,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   @ViewChild('fieldModal') fieldModal: any;
   @ViewChild('fieldDeleteModal') fieldDeleteModal: any;
   @ViewChild('checklistModal') checklistModal: any;
+  @ViewChild('checklistDeleteModal') checklistDeleteModal: any;
 
   visualEditorTemplateModel: EformVisualEditorModel = new EformVisualEditorModel();
   selectedTemplateId: number;
@@ -36,6 +41,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   getVisualTemplateSub$: Subscription;
   createVisualTemplateSub$: Subscription;
   updateVisualTemplateSub$: Subscription;
+  collapseSub$: Subscription;
 
   constructor(
     private tagsService: EformTagService,
@@ -54,6 +60,10 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
       } else {
         this.initForm();
       }
+    });
+
+    this.collapseSub$ = this.visualEditorService.collapse.subscribe((data) => {
+      this.isItemsCollapsed = data;
     });
   }
 
@@ -140,73 +150,115 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
     this.visualEditorTemplateModel.fields = [...model];
   }
 
-  onFieldPositionChanged(model: EformVisualEditorFieldModel[]) {
-    this.visualEditorTemplateModel.fields = [...model];
+  onFieldPositionChanged(model: EformVisualEditorFieldsDnDRecursionModel) {
+    // TODO: FIND FIX GRAPH
+    this.visualEditorTemplateModel.fields = [...model.fields];
   }
 
-  onDeleteElement(model?: any) {}
-
-  showFieldModal(model?: { fieldIndex: number }) {
-    debugger;
-    if (model) {
-      const foundField = this.visualEditorTemplateModel.fields[
-        model.fieldIndex
-      ];
-      this.fieldModal.show(foundField, model.fieldIndex);
-    } else {
-      this.fieldModal.show();
-    }
+  showFieldModal(model?: EformVisualEditorRecursionFieldModel) {
+    this.fieldModal.show(model);
   }
 
-  showDeleteFieldModal(model: {
-    fieldIndex: number;
-    field: EformVisualEditorFieldModel;
-  }) {
-    this.fieldDeleteModal.show(model.fieldIndex, model.field);
+  showDeleteFieldModal(model: EformVisualEditorRecursionFieldModel) {
+    this.fieldDeleteModal.show(model);
   }
 
-  showChecklistModal(model?: EformVisualEditorModel) {
+  showChecklistModal(model?: EformVisualEditorRecursionChecklistModel) {
     this.checklistModal.show(model);
   }
 
-  onChecklistCreate(model: EformVisualEditorModel) {
-    this.visualEditorTemplateModel = {
-      ...this.visualEditorTemplateModel,
-      checkLists: [...this.visualEditorTemplateModel.checkLists, model],
-    };
+  showDeleteChecklistModal(model: EformVisualEditorRecursionChecklistModel) {
+    this.checklistDeleteModal.show(model);
   }
 
-  onChecklistUpdate(model: EformVisualEditorModel) {}
-
-  onFieldCreate(model: EformVisualEditorFieldModel) {
-    // Todo: redesign for nesting
-    this.visualEditorTemplateModel = {
-      ...this.visualEditorTemplateModel,
-      fields: [...this.visualEditorTemplateModel.fields, model],
-    };
+  onCreateChecklist(model: EformVisualEditorRecursionChecklistModel) {
+    if (model.checklistRecursionIndexes.length) {
+      // Creating checklist inside nested checklists
+      // TODO: FIND FIX GRAPH
+    } else {
+      // Creating checklist for the initial checklist
+      this.visualEditorTemplateModel = {
+        ...this.visualEditorTemplateModel,
+        checkLists: [
+          ...this.visualEditorTemplateModel.checkLists,
+          model.checklist,
+        ],
+      };
+    }
   }
 
-  onFieldUpdate(model: {
-    field: EformVisualEditorFieldModel;
-    fieldIndex: number;
-  }) {
-    // Todo: redesign for nesting
-    debugger;
-    this.visualEditorTemplateModel.fields = R.update(
-      model.fieldIndex,
-      model.field,
-      this.visualEditorTemplateModel.fields
-    );
+  onUpdateChecklist(model: EformVisualEditorRecursionChecklistModel) {
+    if (model.checklistRecursionIndexes.length) {
+      // Updating checklist inside nested checklists
+      // TODO: FIND FIX GRAPH
+    } else {
+      // Updating checklist for the initial checklist
+      this.visualEditorTemplateModel.checkLists = R.update(
+        model.checklistIndex,
+        model.checklist,
+        this.visualEditorTemplateModel.checkLists
+      );
+    }
+  }
+
+  onDeleteChecklist(model: EformVisualEditorRecursionChecklistModel) {
+    if (model.checklistRecursionIndexes.length) {
+      // Deleting field inside nested checklists
+      // TODO: FIND FIX GRAPH
+    } else {
+      // Deleting field for the initial checklist
+      this.visualEditorTemplateModel.checkLists = R.remove(
+        model.checklistIndex,
+        1,
+        this.visualEditorTemplateModel.checkLists
+      );
+    }
+  }
+
+  onAddNewNestedField(model: EformVisualEditorRecursionModel) {
+    // TODO: FIND FIX GRAPH
+  }
+
+  onFieldCreate(model: EformVisualEditorRecursionFieldModel) {
+    if (model.checklistRecursionIndexes.length) {
+      // Creating field inside nested checklists
+      // TODO: FIND FIX GRAPH
+    } else {
+      // Creating field for the initial checklist
+      this.visualEditorTemplateModel = {
+        ...this.visualEditorTemplateModel,
+        fields: [...this.visualEditorTemplateModel.fields, model.field],
+      };
+    }
+  }
+
+  onFieldUpdate(model: EformVisualEditorRecursionFieldModel) {
+    if (model.checklistRecursionIndexes.length) {
+      // Updating field inside nested checklists
+      // TODO: FIND FIX GRAPH
+    } else {
+      // Updating field for the initial checklist
+      this.visualEditorTemplateModel.fields = R.update(
+        model.fieldIndex,
+        model.field,
+        this.visualEditorTemplateModel.fields
+      );
+    }
+  }
+
+  onFieldDelete(model: EformVisualEditorRecursionModel) {
+    if (model.checklistRecursionIndexes.length) {
+      // Deleting field inside nested checklists
+      // TODO: FIND FIX GRAPH
+    } else {
+      // Deleting field for the initial checklist
+      this.visualEditorTemplateModel.fields = R.remove(
+        model.fieldIndex,
+        1,
+        this.visualEditorTemplateModel.fields
+      );
+    }
   }
 
   ngOnDestroy(): void {}
-
-  onDeleteField(model: { fieldIndex: number }) {
-    this.visualEditorTemplateModel.fields = R.remove(
-      model.fieldIndex,
-      1,
-      this.visualEditorTemplateModel.fields
-    );
-    this.fieldDeleteModal.hide();
-  }
 }

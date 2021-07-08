@@ -5,11 +5,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { applicationLanguages } from 'src/app/common/const';
-import {
-  CommonDictionaryModel,
-  EformVisualEditorModel,
-} from 'src/app/common/models';
+import { EformVisualEditorRecursionChecklistModel } from 'src/app/common/models';
 
 @Component({
   selector: 'app-visual-editor-checklist-delete-modal',
@@ -17,22 +13,26 @@ import {
   styleUrls: ['./visual-editor-checklist-delete-modal.component.scss'],
 })
 export class VisualEditorChecklistDeleteModalComponent implements OnInit {
-  @ViewChild('frame', { static: true }) frame;
+  @ViewChild('frame', { static: false }) frame;
   @Output()
-  deleteChecklist: EventEmitter<EformVisualEditorModel> = new EventEmitter<EformVisualEditorModel>();
-  selectedChecklist: EformVisualEditorModel;
-  selectedChecklistTranslations: CommonDictionaryModel[] = [];
-
-  get languages() {
-    return applicationLanguages;
-  }
+  deleteChecklist: EventEmitter<EformVisualEditorRecursionChecklistModel> = new EventEmitter();
+  recursionChecklistModel: EformVisualEditorRecursionChecklistModel = new EformVisualEditorRecursionChecklistModel();
 
   constructor() {}
 
   ngOnInit() {}
 
-  show(model?: EformVisualEditorModel) {
-    this.selectedChecklist = model;
+  show(model: EformVisualEditorRecursionChecklistModel) {
+    this.recursionChecklistModel = model;
     this.frame.show();
+  }
+
+  hide() {
+    this.frame.hide();
+  }
+
+  onDeleteChecklist() {
+    this.deleteChecklist.emit(this.recursionChecklistModel);
+    this.frame.hide();
   }
 }

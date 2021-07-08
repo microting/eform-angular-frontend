@@ -6,12 +6,12 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { UUID } from 'angular2-uuid';
+import { EformFieldTypesEnum } from 'src/app/common/const';
 import {
   EformVisualEditorFieldModel,
   EformVisualEditorModel,
+  EformVisualEditorRecursionFieldModel,
 } from 'src/app/common/models';
-import { EformVisualEditorService } from 'src/app/common/services';
 
 @Component({
   selector: 'app-visual-editor-field',
@@ -19,72 +19,58 @@ import { EformVisualEditorService } from 'src/app/common/services';
   styleUrls: ['./visual-editor-field.component.scss'],
 })
 export class VisualEditorFieldComponent implements OnInit, OnDestroy {
-  // @Input() checklist: EformVisualEditorModel;
   @Input() field: EformVisualEditorFieldModel;
   @Input() visualEditorTemplateModel: EformVisualEditorModel;
-  @Input() elementIndex: number;
-  @Input() checklistRecursionIndex: number[] = [0];
-  @Input() fieldRecursionIndex: number[] = [0];
-  // @Input() elementRecursionIndex: number[] = [0];
-  // @Output() addNewChecklist: EventEmitter<any> = new EventEmitter<any>();
-  @Output() addNewField: EventEmitter<any> = new EventEmitter<any>();
+  @Input() fieldIndex: number;
+  @Input() checklistRecursionIndexes = [];
+  @Output()
+  addNewField: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter();
   @Output()
   fieldPositionChanged: EventEmitter<any> = new EventEmitter<any>();
-  @Output() deleteField: EventEmitter<{
-    fieldIndex: number;
-    field: EformVisualEditorFieldModel
-  }> = new EventEmitter();
-  @Output() updateField: EventEmitter<{
-    fieldIndex: number;
-  }> = new EventEmitter<{ fieldIndex: number }>();
-  dragulaElementContainerName = UUID.UUID();
+  @Output()
+  deleteField: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter();
+  @Output()
+  editField: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter();
 
-  // collapseSub$: Subscription;
+  // dragulaElementContainerName = UUID.UUID();
 
-  public composeIndexes(item: number[], index: number): number[] {
-    return [...item, index];
+  get fieldTypes() {
+    return EformFieldTypesEnum;
   }
 
-  constructor(private visualEditorService: EformVisualEditorService) {}
-
-  ngOnInit() {
-    // this.collapseSub$ = this.visualEditorService.collapse.subscribe(
-    //   (collapsed) => {
-    //     if (!collapsed && this.checklist && this.checklist.collapsed) {
-    //       this.checklist.collapsed = false;
-    //       this.collapse.toggle();
-    //     }
-    //     if (collapsed && this.checklist && !this.checklist.collapsed) {
-    //       this.checklist.collapsed = true;
-    //       this.collapse.toggle();
-    //     }
-    //   }
-    // );
-  }
-
-  // onAddNewChecklist(position: number) {
-  //   this.addNewChecklist.emit(position);
-  // }
   get isFieldComplete() {
-    return this.field.translations.find(x => x.name !== '') && this.field.fieldType;
+    return (
+      this.field.translations.find((x) => x.name !== '') && this.field.fieldType
+    );
   }
 
-  onAddNewField(position: number) {
-    this.addNewField.emit(position);
+  constructor() {}
+
+  ngOnInit() {}
+
+  // onAddNewField() {
+  //   this.addNewField.emit({
+  //     field: this.field,
+  //     fieldIndex: this.fieldIndex,
+  //     checklistRecursionIndexes: this.checklistRecursionIndexes,
+  //   });
+  // }
+
+  onEditField() {
+    this.editField.emit({
+      field: {...this.field},
+      fieldIndex: this.fieldIndex,
+      checklistRecursionIndexes: this.checklistRecursionIndexes,
+    });
   }
 
   onDeleteField() {
-    this.deleteField.emit({ field: this.field, fieldIndex: this.elementIndex });
+    this.deleteField.emit({
+      field: {...this.field},
+      fieldIndex: this.fieldIndex,
+      checklistRecursionIndexes: this.checklistRecursionIndexes,
+    });
   }
 
   ngOnDestroy(): void {}
-
-  onFieldChanged(model: EformVisualEditorFieldModel[]) {
-    this.fieldPositionChanged.emit(model);
-  }
-
-  onEditField() {
-    // Todo: include checklist index
-    this.updateField.emit({ fieldIndex: this.elementIndex });
-  }
 }
