@@ -77,6 +77,24 @@
               </div>
             </ng-container>
           </ng-container>
+          <div class="row">
+            <div class="col">
+              <div class="ng-select-wrapper d-flex align-items-center">
+                <ng-select
+                  dropdownPosition="'bottom'"
+                  [placeholder]="'Selected tags' | translate"
+                  clearable="false"
+                  bindLabel="name"
+                  bindValue="id"
+                  [(ngModel)]="visualEditorModel.tagIds"
+                  id="mainCheckListTagsSelector"
+                  [items]="availableTags"
+                  multiple="true"
+                >
+                </ng-select>
+              </div>
+            </div>
+          </div>
         </mdb-card-body>
       </mdb-card>
     </div>
