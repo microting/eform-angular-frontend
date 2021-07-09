@@ -1,37 +1,62 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
-import {CollapseComponent} from 'angular-bootstrap-md';
-import {UUID} from 'angular2-uuid';
-import {Subscription} from 'rxjs';
-import {EformVisualEditorFieldModel, EformVisualEditorModel} from 'src/app/common/models';
-import {EformVisualEditorService} from 'src/app/common/services';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { CollapseComponent } from 'angular-bootstrap-md';
+import { UUID } from 'angular2-uuid';
+import { Subscription } from 'rxjs';
+import {
+  EformVisualEditorFieldsDnDRecursionModel,
+  EformVisualEditorFieldModel,
+  EformVisualEditorModel,
+  EformVisualEditorRecursionModel,
+  EformVisualEditorRecursionFieldModel,
+  EformVisualEditorRecursionChecklistModel,
+} from 'src/app/common/models';
+import { EformVisualEditorService } from 'src/app/common/services';
 
 @Component({
   selector: 'app-visual-editor-checklist',
   templateUrl: './visual-editor-checklist.component.html',
-  styleUrls: ['./visual-editor-checklist.component.scss']
+  styleUrls: ['./visual-editor-checklist.component.scss'],
 })
 export class VisualEditorChecklistComponent implements OnInit, OnDestroy {
   @ViewChild('collapse', { static: true }) collapse: CollapseComponent;
   @Input() checklist: EformVisualEditorModel;
-  // @Input() field: EformVisualEditorFieldModel;
   @Input() visualEditorTemplateModel: EformVisualEditorModel;
-  @Input() elementIndex: number;
-  @Input() checklistRecursionIndex: number[] = [0];
-  @Input() fieldRecursionIndex: number[] = [0];
-  @Input() elementRecursionIndex: number[] = [0];
-  @Output() addNewChecklist: EventEmitter<any> = new EventEmitter<any>();
-  @Output() addNewField: EventEmitter<any> = new EventEmitter<any>();
+  @Input() checklistIndex = 0;
+  @Input() checklistRecursionIndex = 0;
+  @Input() checklistRecursionIndexes = [];
   @Output()
-  fieldPositionChanged: EventEmitter<any> = new EventEmitter<any>();
-  @Output() deleteField: EventEmitter<number> = new EventEmitter<number>();
-  @Output() updateField: EventEmitter<{ fieldIndex: number }> = new EventEmitter<{ fieldIndex: number }>();
+  addNewNestedChecklist: EventEmitter<EformVisualEditorRecursionChecklistModel> = new EventEmitter();
+  @Output()
+  addNewNestedField: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter();
+  @Output()
+  nestedFieldPositionChanged: EventEmitter<EformVisualEditorFieldsDnDRecursionModel> = new EventEmitter();
+  @Output()
+  deleteNestedField: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter();
+  @Output()
+  editNestedField: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter();
+  @Output()
+  editNestedChecklist: EventEmitter<EformVisualEditorRecursionChecklistModel> = new EventEmitter();
+  @Output()
+  deleteNestedChecklist: EventEmitter<EformVisualEditorRecursionChecklistModel> = new EventEmitter();
   dragulaElementContainerName = UUID.UUID();
 
   collapseSub$: Subscription;
 
-  public composeIndexes(item: number[], index: number): number[] {
-    return [...item, index];
+  get composeIndexes() {
+    return [...this.checklistRecursionIndexes, this.checklistIndex];
+  }
+
+  get isChecklistComplete() {
+    return this.checklist.translations.find((x) => x.name !== '');
   }
 
   constructor(
@@ -54,28 +79,63 @@ export class VisualEditorChecklistComponent implements OnInit, OnDestroy {
     );
   }
 
-  onAddNewChecklist(position: number) {
-    this.addNewChecklist.emit(position);
+  onAddNewNestedChecklist() {
+    this.addNewNestedChecklist.emit({
+      checklistRecursionIndex: this.checklistRecursionIndex,
+      checklistRecursionIndexes: this.checklistRecursionIndexes,
+    });
   }
 
-  onAddNewField(position: number) {
-    this.addNewChecklist.emit(position);
+  onEditChecklist() {
+    this.editNestedChecklist.emit({
+      checklist: { ...this.checklist },
+      checklistRecursionIndex: this.checklistRecursionIndex,
+      checklistRecursionIndexes: this.checklistRecursionIndexes,
+      checklistIndex: this.checklistIndex,
+    });
   }
 
-  deleteChecklist(position: number) {
-    this.deleteField.emit(position);
+  onDeleteChecklist() {
+    this.deleteNestedChecklist.emit({
+      checklist: { ...this.checklist },
+      checklistRecursionIndex: this.checklistRecursionIndex,
+      checklistIndex: this.checklistIndex,
+      checklistRecursionIndexes: this.checklistRecursionIndexes
+    });
+  }
+
+  onAddNewNestedField() {
+    this.addNewNestedChecklist.emit({
+      checklistRecursionIndex: this.checklistRecursionIndex,
+      checklistIndex: this.checklistIndex,
+    });
+  }
+
+  onNestedFieldChanged(model: EformVisualEditorFieldModel[]) {
+    this.nestedFieldPositionChanged.emit({
+      checklistRecursionIndex: this.checklistRecursionIndex,
+      checklistIndex: this.checklistIndex,
+      fields: model,
+    });
+  }
+
+  onEditNestedField(fieldIndex: number, field: EformVisualEditorFieldModel) {
+    this.editNestedField.emit({
+      checklistRecursionIndex: this.checklistRecursionIndex,
+      checklistIndex: this.checklistIndex,
+      fieldIndex,
+      field,
+    });
+  }
+
+  onDeleteNestedField(fieldIndex: number, field: EformVisualEditorFieldModel) {
+    this.deleteNestedField.emit({
+      checklistRecursionIndex: this.checklistRecursionIndex,
+      checklistIndex: this.checklistIndex,
+      fieldIndex,
+      field,
+    });
   }
 
   ngOnDestroy(): void {}
-
-  onFieldChanged(model: EformVisualEditorFieldModel[]) {
-    this.fieldPositionChanged.emit(model);
-  }
-
-  onEditField() {
-    // Todo: include checklist index
-    this.updateField.emit({ fieldIndex: this.elementIndex });
-  }
-
-  onDeleteField() {}
 }

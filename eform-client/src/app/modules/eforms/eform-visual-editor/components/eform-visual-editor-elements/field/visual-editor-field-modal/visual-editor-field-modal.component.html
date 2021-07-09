@@ -44,7 +44,7 @@
             </div>
             <ng-container
               *ngFor="
-                let translation of fieldModel.translations;
+                let translation of recursionModel.field.translations;
                 let translationIndex = index
               "
             >
@@ -103,7 +103,7 @@
                     [clearable]="false"
                     [bindLabel]="'text'"
                     [bindValue]="'id'"
-                    [(ngModel)]="fieldModel.fieldType"
+                    [(ngModel)]="recursionModel.field.fieldType"
                     id="mainCheckListLanguageSelector"
                     [items]="fieldTypes"
                   >
@@ -137,7 +137,7 @@
                     [clearable]="false"
                     [bindLabel]="'description'"
                     [bindValue]="'name'"
-                    [(ngModel)]="fieldModel.color"
+                    [(ngModel)]="recursionModel.field.color"
                     id="newFieldColorSelector"
                     [items]="fieldColors"
                   >
@@ -178,8 +178,8 @@
                   <input
                     id="isChecked"
                     (click)="mandatoryCheckboxClick($event)"
-                    [checked]="fieldModel.mandatory"
-                    [value]="fieldModel.mandatory"
+                    [checked]="recursionModel.field.mandatory"
+                    [value]="recursionModel.field.mandatory"
                     color="primary"
                     type="checkbox"
                   />

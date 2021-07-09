@@ -1,6 +1,6 @@
 <!-- First level fields render -->
 <section
-  id="fieldSection{{ elementIndex }}"
+  id="fieldSection{{ fieldIndex }}"
   *ngIf="field"
 >
   <!-- IMPORTANT TO IMPLEMENT FOR NESTING OF GROUPS -->
@@ -19,7 +19,7 @@
             [fixedWidth]="true"
             style="cursor: pointer"
           ></fa-icon>
-          {{ 'InfoBox' }}
+          {{ fieldTypes[field.fieldType] | translate }}
         </div>
         <div>
           <fa-icon
