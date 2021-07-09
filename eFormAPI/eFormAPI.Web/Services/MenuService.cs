@@ -341,11 +341,7 @@ namespace eFormAPI.Web.Services
                 // Add user first and last name
                 var rightMenuItem = orderedRightMenu.First(x => x.Name == "user");
                 rightMenuItem.Name = await _userService.GetCurrentUserFullName();
-                //foreach (var rightMenuItem in orderedRightMenu.Where(rightMenuItem => rightMenuItem.Name == "user"))
-                //{
-                //    var user = await _userService.GetCurrentUserAsync();
-                //    rightMenuItem.Name = $"{user.FirstName} {user.LastName}";
-                //}
+
                 // Create result
                 var result = new MenuModel
                 {

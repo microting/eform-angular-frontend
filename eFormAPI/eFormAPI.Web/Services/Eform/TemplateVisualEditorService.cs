@@ -97,7 +97,7 @@ namespace eFormAPI.Web.Services.Eform
                 await newCheckList.Create(sdkDbContext);
 
                 // create empty checkList
-                var emptyCheckList = new CheckList
+                var twoCheckList = new CheckList
                 {
                     Color = model.Color,
                     DisplayIndex = 0,
@@ -107,7 +107,7 @@ namespace eFormAPI.Web.Services.Eform
                     DoneButtonEnabled = 0,
                     ApprovalEnabled = 0,
                 };
-                await emptyCheckList.Create(sdkDbContext);
+                await twoCheckList.Create(sdkDbContext);
 
                 // create translations to eform
                 foreach (var translation in model.Translations)
@@ -119,16 +119,16 @@ namespace eFormAPI.Web.Services.Eform
                         Text = translation.Name,
                         Description = translation.Description
                     };
-                    var emptyCheckListTranslation = new CheckListTranslation
+                    var twoCheckListTranslation = new CheckListTranslation
                     {
-                        CheckListId = emptyCheckList.Id,
+                        CheckListId = twoCheckList.Id,
                         LanguageId = translation.LanguageId,
                         Text = translation.Name,
                         Description = translation.Description
                     };
 
                     await newCheckListTranslation.Create(sdkDbContext);
-                    await emptyCheckListTranslation.Create(sdkDbContext);
+                    await twoCheckListTranslation.Create(sdkDbContext);
                 }
 
                 // add tags to eform
@@ -138,7 +138,7 @@ namespace eFormAPI.Web.Services.Eform
                 }
 
                 // add fields to eform
-                await CreateFields(newCheckList.Id, sdkDbContext, model.Fields);
+                await CreateFields(twoCheckList.Id, sdkDbContext, model.Fields);
 
                 return new OperationResult(true,
                     _localizationService.GetString("EformSuccessfullyCreated"));
