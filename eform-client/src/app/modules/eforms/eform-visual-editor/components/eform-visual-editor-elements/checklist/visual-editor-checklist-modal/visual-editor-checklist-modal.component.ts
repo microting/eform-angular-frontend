@@ -44,7 +44,6 @@ export class VisualEditorChecklistModalComponent implements OnInit {
   }
 
   show(model?: EformVisualEditorRecursionChecklistModel) {
-    debugger;
     if (model) {
       this.recursionModel = { ...model };
     }

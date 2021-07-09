@@ -23,35 +23,39 @@
             size="lg"
             class="text-warning mr-2"
           ></fa-icon>
-          <button mdbBtn
-                  [mdbTooltip]="'New nested checklist' | translate"
-                  class="btn-success btn-icon"
-                  id="addNewNestedChecklist{{ checklistIndex }}"
-                  (click)="onAddNewNestedChecklist()"
+          <button
+            mdbBtn
+            [mdbTooltip]="'New nested checklist' | translate"
+            class="btn-success btn-icon"
+            id="addNewNestedChecklist{{ checklistIndex }}"
+            (click)="onAddNewNestedChecklist()"
           >
             <fa-icon icon="folder-plus" [fixedWidth]="true" size="lg"></fa-icon>
           </button>
-          <button mdbBtn
-                  [mdbTooltip]="'New nested field' | translate"
-                  class="btn-success btn-icon"
-                  id="addNewNestedField{{ checklistIndex }}"
-                  (click)="onAddNewNestedField()"
+          <button
+            mdbBtn
+            [mdbTooltip]="'New nested field' | translate"
+            class="btn-success btn-icon"
+            id="addNewNestedField{{ checklistIndex }}"
+            (click)="onAddNewNestedField()"
           >
             <fa-icon icon="plus" [fixedWidth]="true" size="lg"></fa-icon>
           </button>
-          <button mdbBtn
-                  [mdbTooltip]="'Edit checklist' | translate"
-                  class="btn-neutral btn-icon"
-                  id="editChecklistBtn{{ checklistIndex }}"
-                  (click)="onEditChecklist()"
+          <button
+            mdbBtn
+            [mdbTooltip]="'Edit checklist' | translate"
+            class="btn-neutral btn-icon"
+            id="editChecklistBtn{{ checklistIndex }}"
+            (click)="onEditChecklist()"
           >
             <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
           </button>
-          <button mdbBtn
-                  [mdbTooltip]="'Delete checklist' | translate"
-                  class="btn-danger btn-icon"
-                  id="deleteChecklistBtn{{ checklistIndex }}"
-                  (click)="onDeleteChecklist()"
+          <button
+            mdbBtn
+            [mdbTooltip]="'Delete checklist' | translate"
+            class="btn-danger btn-icon"
+            id="deleteChecklistBtn{{ checklistIndex }}"
+            (click)="onDeleteChecklist()"
           >
             <fa-icon icon="trash-alt" [fixedWidth]="true" size="lg"></fa-icon>
           </button>
@@ -64,7 +68,9 @@
         [dragulaModel]="checklist.fields"
         (dragulaModelChange)="onNestedFieldChanged($event)"
       >
-        <ng-container *ngFor="let field of checklist.fields; let fieldIndex = index">
+        <ng-container
+          *ngFor="let field of checklist.fields; let fieldIndex = index"
+        >
           <app-visual-editor-field
             [fieldIndex]="fieldIndex"
             [field]="field"
@@ -75,15 +81,15 @@
           ></app-visual-editor-field>
         </ng-container>
       </div>
+      <ng-container *ngIf="checklist && checklist.checkLists">
+        <app-visual-editor-checklist
+          [checklist]="elem"
+          [checklistRecursionIndex]="checklistRecursionIndex + 1"
+          [checklistIndex]="checklistIndex + 1"
+          [checklistRecursionIndexes]="composeIndexes"
+          *ngFor="let elem of checklist.checkLists; let checklistIndex = index"
+        ></app-visual-editor-checklist>
+      </ng-container>
     </div>
   </div>
 </section>
-<ng-container *ngIf="checklist && checklist.checkLists;">
-  <app-visual-editor-checklist
-    [checklist]="elem"
-    [checklistRecursionIndex]="checklistRecursionIndex + 1"
-    [checklistIndex]="checklistIndex + 1"
-    [checklistRecursionIndexes]="composeIndexes"
-    *ngFor="let elem of checklist.checkLists; let checklistIndex = index"
-  ></app-visual-editor-checklist>
-</ng-container>

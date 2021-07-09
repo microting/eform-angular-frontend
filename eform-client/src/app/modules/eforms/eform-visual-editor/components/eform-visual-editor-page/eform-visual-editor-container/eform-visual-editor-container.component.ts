@@ -174,7 +174,23 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   onCreateChecklist(model: EformVisualEditorRecursionChecklistModel) {
     if (model.checklistRecursionIndexes.length) {
       // Creating checklist inside nested checklists
-      // TODO: FIND FIX GRAPH
+      const indexes = new Array<number | string>();
+      model.checklist = {
+        ...model.checklist,
+        id: null,
+        position: model.checklistRecursionIndex,
+        collapsed: true,
+      };
+      model.checklistRecursionIndexes.forEach(
+        (x) => indexes.push('checkLists', x) // checkLists[x]
+      );
+      indexes.push('checkLists'); // for change checkLists[x].checkLists. if remove this, have been change checkLists[x]
+      const visualTemplatePath = R.lensPath(indexes);
+      this.visualEditorTemplateModel = R.set(
+        visualTemplatePath,
+        [model.checklist],
+        this.visualEditorTemplateModel
+      );
     } else {
       // Creating checklist for the initial checklist
       this.visualEditorTemplateModel = {
