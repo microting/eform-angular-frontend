@@ -21,33 +21,34 @@ SOFTWARE.
 namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
 {
     using System.Collections.Generic;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
 
-    public class EformVisualEditorModel
+    public class EformVisualEditorUpdateModel
     {
-        public int Id { get; set; }
+        // parent checklist
+        public EformVisualEditorModel Checklist { get; set; }
 
-        /// <summary>
-        /// Translates for eform label and description with languageId
-        /// </summary>
-        public List<CommonTranslationsModel> Translations { get; set; }
-            = new List<CommonTranslationsModel>();
-       
-        public List<int> TagIds { get; set; }
+        // checklist ids for delete
+        public List<int> ChecklistForDelete { get; set; }
             = new List<int>();
 
-        public int Position { get; set; }
-
-        public string Color { get; set; }
-
-        public List<EformVisualEditorModel> CheckLists { get; set; }
+        // checklist models for create
+        public List<EformVisualEditorModel> ChecklistForCreate { get; set; }
             = new List<EformVisualEditorModel>();
 
-        public List<VisualEditorFields> Fields { get; set; }
+        // field ids for delete
+        public List<int> FieldForDelete { get; set; }
+            = new List<int>();
+
+        // field models for create
+        public List<VisualEditorFields> FieldForCreate { get; set; }
             = new List<VisualEditorFields>();
 
-        public int? TempId { get; set; }
+        // field models for update
+        public List<VisualEditorFields> FieldForUpdate { get; set; }
+            = new List<VisualEditorFields>();
 
-        public int? ParentId { get; set; }
+        // checklist models for update
+        public List<EformVisualEditorModel> ChecklistForUpdate { get; set; }
+            = new List<EformVisualEditorModel>();
     }
 }

@@ -1,5 +1,6 @@
 export class EformVisualEditorFieldTypeModel {
   id: number;
-  text: string;
+  name: string;
+  description: string;
   previewImage: string;
 }

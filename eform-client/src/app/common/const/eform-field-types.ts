@@ -1,5 +1,3 @@
-import { CommonDictionaryModel } from 'src/app/common/models';
-
 export enum EformFieldTypesEnum {
   Text = 1,
   Number,
@@ -21,25 +19,3 @@ export enum EformFieldTypesEnum {
   SaveButton,
   NumberStepper,
 }
-
-export const eformFieldTypes: CommonDictionaryModel[] = [
-  { id: 1, name: 'Text', description: 'Simple text field' },
-  { id: 2, name: 'Number', description: 'Simple number field' },
-  { id: 3, name: 'None', description: 'Simple text to be displayed' },
-  { id: 4, name: 'CheckBox', description: 'Simple check box field' },
-  { id: 5, name: 'Picture', description: 'Simple picture field' },
-  { id: 6, name: 'Audio', description: 'Simple audio field' },
-  { id: 7, name: 'Movie', description: 'Simple movie field' },
-  { id: 8, name: 'SingleSelect', description: 'Single selection list' },
-  { id: 9, name: 'Comment', description: 'Simple comment field' },
-  { id: 10, name: 'MultiSelect', description: 'Simple multi select list' },
-  { id: 11, name: 'Date', description: 'Date selection' },
-  { id: 12, name: 'Signature', description: 'Simple signature field' },
-  { id: 13, name: 'Timer', description: 'Simple timer field' },
-  { id: 14, name: 'EntitySearch', description: 'Autofilled searchable items field' },
-  { id: 15, name: 'EntitySelect', description: 'Autofilled single selection list' },
-  { id: 16, name: 'ShowPdf', description: 'Show PDF' },
-  { id: 17, name: 'FieldGroup', description: 'Field group' },
-  { id: 18, name: 'SaveButton', description: 'Save eForm' },
-  { id: 19, name: 'NumberStepper', description: 'Number stepper field' },
-];

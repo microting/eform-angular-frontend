@@ -12,6 +12,8 @@ export class EformVisualEditorRecursionModel {
 
 export class EformVisualEditorRecursionFieldModel extends EformVisualEditorRecursionModel {
   field?: EformVisualEditorFieldModel = new EformVisualEditorFieldModel();
+  fieldPosition?: number;
+  checklistId?: number;
 }
 
 export class EformVisualEditorRecursionChecklistModel extends EformVisualEditorRecursionModel {
@@ -22,4 +24,5 @@ export class EformVisualEditorFieldsDnDRecursionModel {
   fields: EformVisualEditorFieldModel[] = [];
   checklistIndex?: number;
   checklistRecursionIndex: number;
+  checklistRecursionIndexes?: number[] = [];
 }

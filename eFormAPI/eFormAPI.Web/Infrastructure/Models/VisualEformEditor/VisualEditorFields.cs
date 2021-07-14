@@ -1,4 +1,4 @@
-﻿/*
+/*
 The MIT License (MIT)
 Copyright (c) 2007 - 2021 Microting A/S
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -79,5 +79,9 @@ namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
         /// </summary>
         public List<UploadedData> Files { get; set; }
             = new List<UploadedData>();
+
+        public int ChecklistId { get; set; }
+
+        public int? TempId { get; set; }
     }
 }

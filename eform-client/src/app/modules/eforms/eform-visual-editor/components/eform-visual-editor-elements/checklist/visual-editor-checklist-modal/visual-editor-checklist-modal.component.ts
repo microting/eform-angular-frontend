@@ -12,6 +12,7 @@ import {
   EformVisualEditorRecursionChecklistModel,
 } from 'src/app/common/models';
 import { LocaleService } from 'src/app/common/services';
+import { fixTranslations } from 'src/app/common/helpers';
 
 @Component({
   selector: 'app-visual-editor-checklist-modal',
@@ -46,30 +47,19 @@ export class VisualEditorChecklistModalComponent implements OnInit {
   show(model?: EformVisualEditorRecursionChecklistModel) {
     if (model) {
       this.recursionModel = { ...model };
+      this.isChecklistSelected = false;
     }
     if (model && model.checklist) {
-      this.recursionModel = { ...model };
       this.isChecklistSelected = true;
 
       // if there are not enough translations
-      if (
-        this.recursionModel.checklist.translations.length <
-        applicationLanguages.length
-      ) {
-        for (const language of applicationLanguages) {
-          if (
-            !this.recursionModel.checklist.translations.find(
-              (x) => x.languageId === language.id
-            )
-          ) {
-            this.recursionModel.checklist.translations = [
-              ...this.recursionModel.checklist.translations,
-              { id: null, languageId: language.id, description: '', name: '' },
-            ];
-          }
-        }
-      }
+      this.recursionModel.checklist.translations = fixTranslations(
+        this.recursionModel.checklist.translations
+      );
     } else {
+      if (!model) {
+        this.recursionModel = new EformVisualEditorRecursionChecklistModel();
+      }
       this.initForm();
     }
     this.frame.show();
@@ -86,6 +76,7 @@ export class VisualEditorChecklistModalComponent implements OnInit {
   }
 
   onCreateChecklist() {
+    debugger;
     this.createChecklist.emit({
       ...this.recursionModel,
     });

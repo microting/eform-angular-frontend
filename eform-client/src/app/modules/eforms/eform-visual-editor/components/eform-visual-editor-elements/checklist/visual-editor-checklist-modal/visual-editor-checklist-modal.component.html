@@ -100,10 +100,12 @@
         <button
           mdbBtn
           class="btn-success btn-small-height"
-          (click)="isChecklistSelected ? onUpdateChecklist() : onCreateChecklist()"
+          (click)="
+            isChecklistSelected ? onUpdateChecklist() : onCreateChecklist()
+          "
           id="changeChecklistSaveBtn"
         >
-          {{ 'Save' | translate }}
+          {{ (isChecklistSelected ? 'Save' : 'Create') | translate }}
         </button>
         <button
           mdbBtn

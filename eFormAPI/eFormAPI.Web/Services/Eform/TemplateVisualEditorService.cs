@@ -59,8 +59,44 @@ namespace eFormAPI.Web.Services.Eform
             {
                 var core = await _coreHelper.GetCore();
                 var sdkDbContext = core.DbContextHelper.GetDbContext();
+                var count = await sdkDbContext.CheckLists
+                    .Where(x => x.Id == id)
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Include(x => x.Children)
+                    .Select(x => x.Children)
+                    .FirstOrDefaultAsync();
+                if (count?.Count == 1)
+                {
+                    id += 1;
+                }
                 var eform = await FindTemplates(id, sdkDbContext);
-
+                if (count?.Count == 1)
+                {
+                    var checklist = await sdkDbContext.CheckLists
+                        .Where(x => x.Id == id - 1)
+                        .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                        .Include(x => x.Translations)
+                        .Include(x => x.Taggings)
+                        .Select(x => new
+                        {
+                            x.Taggings,
+                            x.Translations,
+                        })
+                        .FirstOrDefaultAsync();
+                    eform.Translations = checklist?.Translations
+                        .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                        .Select(x => new CommonTranslationsModel
+                        {
+                            Id = x.Id,
+                            Description = x.Description,
+                            LanguageId = x.LanguageId,
+                            Name = x.Text,
+                        })
+                        .ToList();
+                    eform.TagIds = checklist?.Taggings
+                        .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                        .Select(x => (int)x.TagId).ToList();
+                }
                 return new OperationDataResult<EformVisualEditorModel>(true, eform);
             }
             catch (Exception e)
@@ -151,16 +187,16 @@ namespace eFormAPI.Web.Services.Eform
             }
         }
 
-        public async Task<OperationResult> UpdateVisualTemplate(EformVisualEditorModel model)
+        public async Task<OperationResult> UpdateVisualTemplate(EformVisualEditorUpdateModel model)
         {
             try
             {
                 var core = await _coreHelper.GetCore();
                 var sdkDbContext = core.DbContextHelper.GetDbContext();
+                CheckList parentEform = null;
                 var dbEform = await sdkDbContext.CheckLists
-                    .Where(x => x.Id == model.Id)
+                    .Where(x => x.Id == model.Checklist.Id)
                     .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                    .Include(x => x.Fields)
                     .Include(x => x.Taggings)
                     .Include(x => x.Translations)
                     .FirstOrDefaultAsync();
@@ -171,32 +207,65 @@ namespace eFormAPI.Web.Services.Eform
                         _localizationService.GetString("EformNotFound"));
                 }
 
-                var fieldIdForDelete = dbEform.Fields
-                    .Select(x => x.Id)
-                    .Where(id => !model.Fields.Select(y => y.Id).Contains(id))
-                    .ToList();
-
-                var fieldForCreate = model.Fields
+                if (dbEform.ParentId != null)
+                {
+                    parentEform = await sdkDbContext.CheckLists
+                        .Where(x => x.Id == model.Checklist.Id - 1)
+                        .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                        .Include(x => x.Taggings)
+                        .Include(x => x.Translations)
+                        .FirstOrDefaultAsync();
+                }
+                
+                // create translations if need
+                foreach (var newCheckListTranslation in model.Checklist.Translations
                     .Where(x => x.Id == null)
-                    .ToList();
+                    .Select(translation => new CheckListTranslation
+                    {
+                        CheckListId = dbEform.Id,
+                        LanguageId = translation.LanguageId,
+                        Text = translation.Name,
+                        Description = translation.Description
+                    }))
+                {
+                    await newCheckListTranslation.Create(sdkDbContext);
+                }
 
-                // delete removed field
-                await DeleteFields(fieldIdForDelete, sdkDbContext);
+                // update translations
+                foreach (var translationsModel in model.Checklist.Translations
+                    .Where(x => x.Id != null))
+                {
+                    var translation = dbEform.Translations.First(x => x.LanguageId == translationsModel.LanguageId);
+                    if (translation.Text != translationsModel.Name ||
+                        translation.Description != translationsModel.Description) // check if update is need
+                    {
+                        translation.Text = translationsModel.Name;
+                        translation.Description = translationsModel.Description;
+                        await translation.Update(sdkDbContext);
+                    }
 
-                // create new field
-                await CreateFields(dbEform.Id, sdkDbContext, fieldForCreate);
+                    var translationForUpdate = parentEform?.Translations.FirstOrDefault(x =>
+                        x.LanguageId == translationsModel.LanguageId && x.Text != translationsModel.Name);
+                    if (translationForUpdate != null)
+                    {
+                        translationForUpdate.Text = translationsModel.Name;
+                        await translationForUpdate.Update(sdkDbContext);
+                    }
+                }
 
                 //tagging
+                var eformWithTags = parentEform ?? dbEform;
 
-                var tagsIdForDelete = dbEform.Taggings
+                var tagsIdForDelete = eformWithTags.Taggings
                     .Select(x => x.Id)
-                    .Where(id => !model.TagIds.Contains(id))
+                    .Where(id => !model.Checklist.TagIds.Contains(id))
                     .ToList();
 
+                // remove tags from eform
                 foreach (var tagId in tagsIdForDelete)
                 {
                     var tagging = await sdkDbContext.Taggings
-                        .Where(x => x.TagId == tagId && x.CheckListId == dbEform.Id)
+                        .Where(x => x.TagId == tagId && x.CheckListId == eformWithTags.Id)
                         .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                         .FirstOrDefaultAsync();
                     if (tagging != null)
@@ -205,19 +274,34 @@ namespace eFormAPI.Web.Services.Eform
                     }
                 }
 
-                var tagsForCreate = model.TagIds
-                    .Where(id => !dbEform.Taggings.Select(x => x.Id).Contains(id))
+                // create tags for eform
+                var tagsForCreate = model.Checklist.TagIds
+                    .Where(id => !eformWithTags.Taggings.Select(x => x.Id).Contains(id))
                     .ToList();
 
                 foreach (var tagId in tagsForCreate)
                 {
                     var tagging = new Tagging
                     {
-                        CheckListId = dbEform.Id,
+                        CheckListId = eformWithTags.Id,
                         TagId = tagId,
                     };
                     await tagging.Create(sdkDbContext);
                 }
+
+                // delete removed field
+                await DeleteFields(model.FieldForDelete, sdkDbContext);
+
+                // update fields
+                await UpdateFields(model.FieldForUpdate, sdkDbContext);
+
+                var fieldForCreateOnThisCheckList = model.FieldForCreate
+                        .Where(x => x.ChecklistId == dbEform.Id)
+                        .ToList();
+                // create new field
+                await CreateFields(dbEform.Id, sdkDbContext, fieldForCreateOnThisCheckList);
+
+                await CreateChecklist(model, sdkDbContext);
 
                 return new OperationResult(true,
                     _localizationService.GetString("EformSuccessfullyUpdated"));
@@ -227,6 +311,66 @@ namespace eFormAPI.Web.Services.Eform
                 _logger.LogError(e, e.Message);
                 return new OperationDataResult<EformVisualEditorModel>(false,
                     _localizationService.GetString("ErrorWhileUpdateEform"));
+            }
+        }
+
+        private static async Task UpdateFields(List<VisualEditorFields> fieldsForUpdate, MicrotingDbContext sdkDbContext)
+        {
+            foreach (var fieldForUpdate in fieldsForUpdate)
+            {
+                var fieldFromDb = await sdkDbContext.Fields
+                    .Where(x => x.Id == fieldForUpdate.Id)
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .Include(x => x.Translations)
+                    .Include(x => x.FieldOptions)
+                    .FirstAsync();
+
+                fieldFromDb.Color = fieldForUpdate.Color;
+                fieldFromDb.FieldTypeId = fieldForUpdate.FieldType;
+                fieldFromDb.Mandatory = Convert.ToInt16(fieldForUpdate.Mandatory);
+                fieldFromDb.DecimalCount = fieldForUpdate.DecimalCount;
+                fieldFromDb.DisplayIndex = fieldForUpdate.Position;
+                fieldFromDb.MaxValue = fieldForUpdate.MaxValue;
+                fieldFromDb.MinValue = fieldForUpdate.MinValue;
+                fieldFromDb.DefaultValue = fieldForUpdate.Value;
+                // todo add specific behaviour for some fields
+
+                await fieldFromDb.Update(sdkDbContext);
+
+                // translations
+                var translations = await sdkDbContext.FieldTranslations
+                    .Where(x => x.FieldId == fieldFromDb.Id)
+                    .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                    .ToListAsync();
+
+                // create new translations
+                foreach (var translationsModel in fieldForUpdate.Translations
+                    .Where(x => x.Id == null)
+                    .Select(x => new FieldTranslation
+                    {
+                        FieldId = fieldFromDb.Id,
+                        LanguageId = x.LanguageId,
+                        Text = x.Name,
+                        Description = x.Description,
+                    })
+                    .ToList())
+                {
+                    await translationsModel.Create(sdkDbContext);
+                }
+
+                // update translations
+                foreach (var fieldTranslation in translations)
+                {
+                    var translation = fieldForUpdate.Translations.First(x => x.LanguageId == fieldTranslation.LanguageId);
+                    if (translation.Name != fieldTranslation.Text ||
+                        translation.Description != fieldTranslation.Description) // check if update is need
+                    {
+                        fieldTranslation.Description = translation.Description;
+                        fieldTranslation.Text = translation.Name;
+                        await fieldTranslation.Update(sdkDbContext);
+                    }
+                }
+
             }
         }
 
@@ -299,6 +443,7 @@ namespace eFormAPI.Web.Services.Eform
                 .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                 .Include(x => x.FieldType)
                 .Include(x => x.Translations)
+                .OrderBy(x => x.DisplayIndex)
                 .AsNoTracking();
             if (parentFieldId != -1)
             {
@@ -323,7 +468,8 @@ namespace eFormAPI.Web.Services.Eform
                             Name = x.Text,
                             LanguageId = x.LanguageId,
                         }).ToList(),
-                    Mandatory = Convert.ToBoolean(field.Mandatory)
+                    Mandatory = Convert.ToBoolean(field.Mandatory),
+                    ChecklistId = (int) field.CheckListId,
                 };
 
                 switch (field.FieldType.Type)
@@ -478,7 +624,7 @@ namespace eFormAPI.Web.Services.Eform
             }
         }
 
-        private static async Task<EformVisualEditorModel> FindTemplates(int idEform, MicrotingDbContext sdkDbContext, int position = 0) // TODO position will not work correctly if there are several forms on the same level
+        private static async Task<EformVisualEditorModel> FindTemplates(int idEform, MicrotingDbContext sdkDbContext)
         {
             var query = sdkDbContext.CheckLists
                 .Include(x => x.Translations)
@@ -490,7 +636,7 @@ namespace eFormAPI.Web.Services.Eform
                 .Select(x => new EformVisualEditorModel
                 {
                     Id = x.Id,
-                    Position = position,
+                    Position = (int) x.DisplayIndex,
                     Translations = x.Translations.Select(y =>
                             new CommonTranslationsModel
                             {
@@ -520,10 +666,53 @@ namespace eFormAPI.Web.Services.Eform
 
             foreach (var checkListId in childrenCheckListIds)
             {
-                eform.CheckLists.Add(await FindTemplates(checkListId, sdkDbContext, position + 1));
+                eform.CheckLists.Add(await FindTemplates(checkListId, sdkDbContext));
             }
 
             return eform;
+        }
+
+        private static async Task CreateChecklist(EformVisualEditorUpdateModel model, MicrotingDbContext sdkDbContext)
+        {
+            foreach (var checklistForCreate in model.ChecklistForCreate)
+            {
+                // create checkList
+                var newCheckList = new CheckList
+                {
+                    Color = checklistForCreate.Color,
+                    DisplayIndex = 0,
+                    ParentId = checklistForCreate.ParentId,
+                    ReviewEnabled = 0,
+                    ExtraFieldsEnabled = 0,
+                    DoneButtonEnabled = 0,
+                    ApprovalEnabled = 0,
+                };
+                await newCheckList.Create(sdkDbContext);
+
+                // create translations to eform
+                foreach (var newCheckListTranslation in checklistForCreate.Translations
+                    .Select(translation => new CheckListTranslation
+                    {
+                        CheckListId = newCheckList.Id,
+                        LanguageId = translation.LanguageId,
+                        Text = translation.Name,
+                        Description = translation.Description
+                    }))
+                {
+                    await newCheckListTranslation.Create(sdkDbContext);
+                }
+
+                var fieldsForCreate = model.FieldForCreate
+                    .Where(x => x.ChecklistId == checklistForCreate.TempId)
+                    .ToList();
+
+                await CreateFields(newCheckList.Id, sdkDbContext, fieldsForCreate);
+
+                foreach (var eformVisualEditorModel in model.ChecklistForCreate.Where(x => x.ParentId == checklistForCreate.TempId))
+                {
+                    eformVisualEditorModel.ParentId = newCheckList.Id;
+                }
+            }
         }
     }
 }

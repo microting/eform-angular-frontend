@@ -20,7 +20,6 @@ SOFTWARE.
 
 namespace eFormAPI.Web.Controllers.Eforms
 {
-    using System.Linq;
     using System.Threading.Tasks;
     using Abstractions.Eforms;
     using Infrastructure.Models.VisualEformEditor;
@@ -52,7 +51,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         }
 
         [HttpPut]
-        public async Task<OperationResult> Update([FromBody] EformVisualEditorModel model)
+        public async Task<OperationResult> Update([FromBody] EformVisualEditorUpdateModel model)
         {
             return await _templateVisualEditorService.UpdateVisualTemplate(model);
         }

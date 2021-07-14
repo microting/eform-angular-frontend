@@ -19,6 +19,8 @@ import {
   VisualEditorChecklistComponent,
   VisualEditorFieldDeleteModalComponent,
   VisualEditorChecklistDeleteModalComponent,
+  VisualEditorAdditionalFieldNumberComponent,
+  VisualEditorAdditionalFieldSaveButtonComponent,
 } from './components';
 import { EformVisualEditorRouting } from './eform-visual-editor.routing';
 
@@ -33,6 +35,8 @@ import { EformVisualEditorRouting } from './eform-visual-editor.routing';
     VisualEditorChecklistComponent,
     VisualEditorFieldDeleteModalComponent,
     VisualEditorChecklistDeleteModalComponent,
+    VisualEditorAdditionalFieldNumberComponent,
+    VisualEditorAdditionalFieldSaveButtonComponent,
   ],
   imports: [
     CommonModule,

@@ -1,12 +1,15 @@
-import { EformVisualEditorElementTranslateModel } from './eform-visual-editor-element-translate.model';
-import { EformVisualEditorFieldModel } from './eform-visual-editor-field.model';
+import {
+  EformVisualEditorFieldModel,
+  CommonTranslationsModel,
+} from 'src/app/common/models';
 
 export class EformVisualEditorModel {
   id: number;
-  translations: EformVisualEditorElementTranslateModel[] = [];
+  translations: CommonTranslationsModel[] = [];
   tagIds: number[];
   position: number;
   collapsed: boolean;
   fields: EformVisualEditorFieldModel[] = [];
   checkLists: EformVisualEditorModel[] = [];
+  tempId?: number;
 }

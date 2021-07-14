@@ -30,6 +30,6 @@ namespace eFormAPI.Web.Abstractions.Eforms
 
         Task<OperationResult> CreateVisualTemplate(EformVisualEditorModel model);
 
-        Task<OperationResult> UpdateVisualTemplate(EformVisualEditorModel model);
+        Task<OperationResult> UpdateVisualTemplate(EformVisualEditorUpdateModel model);
     }
 }

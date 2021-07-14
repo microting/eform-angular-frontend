@@ -6,6 +6,7 @@ import {
   EFormCreateModel,
   EformDownloadExcelModel,
   EformVisualEditorModel,
+  EformVisualEditorUpdateModel,
   FieldDto,
   OperationDataResult,
   OperationResult,
@@ -53,7 +54,7 @@ export class EformVisualEditorService {
   }
 
   updateVisualEditorTemplate(
-    model: EformVisualEditorModel
+    model: EformVisualEditorUpdateModel
   ): Observable<OperationResult> {
     return this.apiBaseService.put(
       TemplateVisualEditorMethods.VisualEditor,

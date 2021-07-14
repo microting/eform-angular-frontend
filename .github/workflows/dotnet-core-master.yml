@@ -77,9 +77,7 @@ jobs:
       run: cd eform-client && npm run testheadless2${{matrix.test}}
     - name: The job has failed
       if: ${{ failure() }}
-      run: |
-        cat dotnet_log
-        cat eform-angular-frontend/eform-client/npm_log
+      run: cat dotnet_log
     - name: Notify slack fail
       if: ${{ failure() }}
       env:
