@@ -84,7 +84,7 @@
     "@angular/language-service": "^12.1.1",
     "@datorama/akita": "^6.2.0",
     "@datorama/akita-ngdevtools": "^6.0.1",
-    "@types/chai": "4.2.20",
+    "@types/chai": "4.2.21",
     "@types/d3": "7.0.0",
     "@types/mocha": "8.2.3",
     "@types/node": "16.3.2",
