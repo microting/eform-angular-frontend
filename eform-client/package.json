@@ -87,7 +87,7 @@
     "@types/chai": "4.2.21",
     "@types/d3": "7.0.0",
     "@types/mocha": "8.2.3",
-    "@types/node": "16.3.2",
+    "@types/node": "16.3.3",
     "@wdio/cli": "7.7.6",
     "@wdio/local-runner": "7.7.7",
     "@wdio/mocha-framework": "7.7.5",
