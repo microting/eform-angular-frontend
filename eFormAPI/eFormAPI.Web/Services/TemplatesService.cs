@@ -130,12 +130,13 @@ namespace eFormAPI.Web.Services
                             .Select(x => x.TemplateId)
                             .ToList();
 
-                        foreach (var templateDto in templatesDto.Cast<TemplateDto>().Where(templateDto => eformIds.Contains(templateDto.Id)))
+                        foreach (var templateDto in templatesDto.Where(templateDto => eformIds.Contains(templateDto.Id)))
                         {
-                            await templateDto.CheckForLock(_dbContext, pluginIds);
-                            templateDto.CreatedAt =
-                                TimeZoneInfo.ConvertTimeFromUtc((DateTime) templateDto.CreatedAt, timeZoneInfo);
-                            model.Templates.Add(templateDto);
+                            TemplateDto templateLocalDto = templateDto;
+                            await templateLocalDto.CheckForLock(_dbContext);
+                            templateLocalDto.CreatedAt =
+                                TimeZoneInfo.ConvertTimeFromUtc((DateTime) templateLocalDto.CreatedAt, timeZoneInfo);
+                            model.Templates.Add(templateLocalDto);
                         }
                     }
                     else
