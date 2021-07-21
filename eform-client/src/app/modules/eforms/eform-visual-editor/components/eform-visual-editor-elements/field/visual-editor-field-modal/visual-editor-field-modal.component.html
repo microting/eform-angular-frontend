@@ -118,19 +118,13 @@
                           [src]="item.previewImage"
                           alt=""
                           class="img-fluid"
-                        /><br />
-                        <img
-                          *ngIf="item.image"
-                          [src]="item.image"
-                          class="img-fluid"
-                          alt=""
                         />
                       </ng-template>
                       <div
-                        [mdbTooltip]="popTemplate"
-                        customHeight="200"
+                        [mdbPopover]="popTemplate"
                         container="body"
                         placement="right"
+                        [triggers]="'hover'"
                       >
                         {{ item.name }}
                       </div>

@@ -1,20 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import {
-  CommonDictionaryModel,
-  DeployModel,
-  EFormCreateModel,
-  EformDownloadExcelModel,
   EformVisualEditorModel,
   EformVisualEditorUpdateModel,
-  FieldDto,
   OperationDataResult,
   OperationResult,
-  TemplateColumnModel,
-  TemplateDto,
-  TemplateListModel,
-  TemplateRequestModel,
-  UpdateColumnsModel,
 } from 'src/app/common/models';
 import { ApiBaseService } from 'src/app/common/services';
 
@@ -26,15 +16,7 @@ const TemplateVisualEditorMethods = {
   providedIn: 'root',
 })
 export class EformVisualEditorService {
-  public collapse: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
-  );
-
   constructor(private apiBaseService: ApiBaseService) {}
-
-  updateState(collapsed: boolean): void {
-    this.collapse.next(collapsed);
-  }
 
   getVisualEditorTemplate(
     id: number

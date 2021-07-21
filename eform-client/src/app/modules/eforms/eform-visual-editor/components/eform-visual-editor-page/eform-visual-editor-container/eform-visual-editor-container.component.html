@@ -74,57 +74,67 @@
               </ng-container>
             </div>
           </div>
-          <section
-            dragula="CHECK_LISTS"
-            id="editorChecklists"
-            (dragulaModelChange)="dragulaPositionChecklistChanged($event)"
-            [dragulaModel]="visualEditorTemplateModel.checkLists"
+          <div
+            mdbCollapse
+            #collapse="bs-collapse"
+            [isCollapsed]="isItemsCollapsed"
           >
-            <app-visual-editor-checklist
-              *ngFor="
-                let checklist of visualEditorTemplateModel.checkLists;
-                let i = index
+            <section
+              dragula="CHECK_LISTS"
+              id="editorChecklists"
+              (dragulaModelChange)="dragulaPositionChecklistChanged($event)"
+              [dragulaModel]="visualEditorTemplateModel.checkLists"
+            >
+              <app-visual-editor-checklist
+                *ngFor="
+                  let checklist of visualEditorTemplateModel.checkLists;
+                  let i = index
+                "
+                [checklist]="checklist"
+                [checklistRecursionIndexes]="[i]"
+                [checklistIndex]="i"
+                id="checkList_{{ i }}"
+                (addNewNestedChecklist)="showChecklistModal($event)"
+                (deleteNestedChecklist)="showDeleteChecklistModal($event)"
+                (editNestedChecklist)="showChecklistModal($event)"
+                (addNewNestedField)="showFieldModal($event)"
+                (deleteNestedField)="showDeleteFieldModal($event)"
+                (editNestedField)="showFieldModal($event)"
+                [ngClass]="{ 'no-drag': !checklist.collapsed }"
+                (nestedFieldPositionChanged)="
+                  onNestedFieldPositionChanged($event)
+                "
+                (copyNestedField)="onFieldCreate($event)"
+                (changeColorField)="onFieldUpdate($event)"
+              ></app-visual-editor-checklist>
+            </section>
+            <section
+              *ngIf="
+                !visualEditorTemplateModel.checkLists ||
+                visualEditorTemplateModel.checkLists.length == 0
               "
-              [checklist]="checklist"
-              [checklistRecursionIndexes]="[0]"
-              [checklistIndex]="i"
-              id="checkList_{{ i }}"
-              (addNewNestedChecklist)="showChecklistModal($event)"
-              (deleteNestedChecklist)="showDeleteChecklistModal($event)"
-              (editNestedChecklist)="showChecklistModal($event)"
-              (addNewNestedField)="showFieldModal($event)"
-              (deleteNestedField)="onFieldDelete($event)"
-              (editNestedField)="showFieldModal($event)"
-              [ngClass]="{ 'no-drag': !checklist.collapsed }"
-              (nestedFieldPositionChanged)="
-                onNestedFieldPositionChanged($event)
-              "
-            ></app-visual-editor-checklist>
-          </section>
-          <section
-            *ngIf="
-              !visualEditorTemplateModel.checkLists ||
-              visualEditorTemplateModel.checkLists.length == 0
-            "
-            dragula="FIELDS"
-            id="editorFields"
-            (dragulaModelChange)="dragulaPositionFieldChanged($event)"
-            [dragulaModel]="visualEditorTemplateModel.fields"
-          >
-            <app-visual-editor-field
-              *ngFor="
-                let field of visualEditorTemplateModel.fields;
-                let i = index
-              "
-              [field]="field"
-              [fieldIndex]="i"
-              [visualEditorTemplateModel]="visualEditorTemplateModel"
-              id="field_{{ i }}"
-              (editField)="showFieldModal($event)"
-              (deleteField)="showDeleteFieldModal($event)"
-              (fieldPositionChanged)="onNestedFieldPositionChanged($event)"
-            ></app-visual-editor-field>
-          </section>
+              dragula="FIELDS"
+              id="editorFields"
+              (dragulaModelChange)="dragulaPositionFieldChanged($event)"
+              [dragulaModel]="visualEditorTemplateModel.fields"
+            >
+              <app-visual-editor-field
+                *ngFor="
+                  let field of visualEditorTemplateModel.fields;
+                  let i = index
+                "
+                [field]="field"
+                [fieldIndex]="i"
+                id="field_{{ i }}"
+                (editField)="showFieldModal($event)"
+                (deleteField)="showDeleteFieldModal($event)"
+                (fieldPositionChanged)="onNestedFieldPositionChanged($event)"
+                (changeColor)="onFieldUpdate($event)"
+                (copyField)="onFieldCreate($event)"
+                (addNewField)="showFieldModal($event)"
+              ></app-visual-editor-field>
+            </section>
+          </div>
           <div class="row">
             <div class="col d-flex justify-content-end">
               <button

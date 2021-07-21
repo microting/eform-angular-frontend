@@ -25,7 +25,7 @@ namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
 
     public class EformVisualEditorModel
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         /// <summary>
         /// Translates for eform label and description with languageId
@@ -36,9 +36,7 @@ namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
         public List<int> TagIds { get; set; }
             = new List<int>();
 
-        public int Position { get; set; }
-
-        public string Color { get; set; }
+        public int? Position { get; set; }
 
         public List<EformVisualEditorModel> CheckLists { get; set; }
             = new List<EformVisualEditorModel>();
@@ -48,6 +46,6 @@ namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
 
         public int? TempId { get; set; }
 
-        public int? ParentId { get; set; }
+        public int? ParentChecklistId { get; set; }
     }
 }

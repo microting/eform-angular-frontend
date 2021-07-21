@@ -18,9 +18,10 @@ import {
   EformTagService,
   EformVisualEditorService,
 } from 'src/app/common/services';
-import { fixTranslations, getRandomInt } from 'src/app/common/helpers';
+import { fixTranslations } from 'src/app/common/helpers';
 import { VisualEditorFieldModalComponent } from '../../';
 import { DragulaService } from 'ng2-dragula';
+import { CollapseComponent } from 'angular-bootstrap-md';
 
 @AutoUnsubscribe()
 @Component({
@@ -29,6 +30,7 @@ import { DragulaService } from 'ng2-dragula';
   styleUrls: ['./eform-visual-editor-container.component.scss'],
 })
 export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
+  @ViewChild('collapse') collapse: CollapseComponent;
   @ViewChild('tagsModal') tagsModal: SharedTagsComponent;
   @ViewChild('fieldModal') fieldModal: VisualEditorFieldModalComponent;
   @ViewChild('fieldDeleteModal') fieldDeleteModal: any;
@@ -45,7 +47,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   getVisualTemplateSub$: Subscription;
   createVisualTemplateSub$: Subscription;
   updateVisualTemplateSub$: Subscription;
-  collapseSub$: Subscription;
+  routerSub$: Subscription;
 
   constructor(
     private dragulaService: DragulaService,
@@ -56,10 +58,23 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   ) {
     this.dragulaService.createGroup('CHECK_LISTS', {
       moves: (el, container, handle) => {
-        return handle.classList.contains('dragula-handle');
+        return (
+          handle.classList.contains('dragula-handle') && handle.id === 'moveBtn'
+        );
       },
       accepts: (el, target) => {
         return target.id === 'editorChecklists' && el.id.includes('checkList_');
+      },
+    });
+    this.dragulaService.createGroup('FIELDS', {
+      moves: (el, container, handle) => {
+        return (
+          handle.id === 'moveFieldBtn' &&
+          handle.classList.contains('dragula-handle')
+        );
+      },
+      accepts: (el, target) => {
+        return target.id === 'editorFields' || target.id === 'nestedFields';
       },
     });
   }
@@ -67,17 +82,13 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getTags();
 
-    this.route.params.subscribe((params) => {
+    this.routerSub$ = this.route.params.subscribe((params) => {
       this.selectedTemplateId = params['templateId'];
       if (this.selectedTemplateId) {
         this.getVisualTemplate(this.selectedTemplateId);
       } else {
         this.initForm();
       }
-    });
-
-    this.collapseSub$ = this.visualEditorService.collapse.subscribe((data) => {
-      this.isItemsCollapsed = data;
     });
   }
 
@@ -147,80 +158,40 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
     this.tagsModal.show();
   }
 
-  toggleCollapse() {}
+  toggleCollapse() {
+    this.isItemsCollapsed = !this.isItemsCollapsed;
+    this.collapse.toggle();
+  }
 
   dragulaPositionChecklistChanged(model: EformVisualEditorModel[]) {
-    for (let i = 0; i < model.length; i++) {
-      if (model[i].position !== i) {
-        model[i].position = i;
-        if (model[i].id) {
-          const index = this.eformVisualEditorUpdateModel.checklistForUpdate.findIndex(
-            (x) => x.id === model[i].id
-          );
-          if (index === -1) {
-            this.eformVisualEditorUpdateModel.checklistForUpdate = [
-              ...this.eformVisualEditorUpdateModel.checklistForUpdate,
-              { ...model[i], checkLists: [], fields: [] },
-            ];
-          } else {
-            this.eformVisualEditorUpdateModel.checklistForUpdate[index] = {
-              ...model[i],
-              checkLists: [],
-              fields: [],
-            };
-          }
-        } else if (model[i].tempId) {
-          const index = this.eformVisualEditorUpdateModel.checklistForCreate.findIndex(
-            (x) => x.tempId === model[i].tempId
-          );
-          if (index === -1) {
-            this.eformVisualEditorUpdateModel.checklistForCreate = [
-              ...this.eformVisualEditorUpdateModel.checklistForCreate,
-              { ...model[i], checkLists: [], fields: [] },
-            ];
-          } else {
-            this.eformVisualEditorUpdateModel.checklistForCreate[index] = {
-              ...model[i],
-              checkLists: [],
-              fields: [],
-            };
-          }
-        }
-      }
-    }
+    model = this.checkPosition(model, true);
     this.visualEditorTemplateModel.checkLists = [...model];
   }
 
   dragulaPositionFieldChanged(model: EformVisualEditorFieldModel[]) {
-    for (let i = 0; i < model.length; i++) {
-      if (model[i].position !== i) {
-        model[i].position = i;
-        if (model[i].id) {
-          const index = this.eformVisualEditorUpdateModel.fieldForUpdate.findIndex(
-            (x) => x.id === model[i].id
-          );
-          if (index === -1) {
-            this.eformVisualEditorUpdateModel.fieldForUpdate = [
-              ...this.eformVisualEditorUpdateModel.fieldForUpdate,
-              model[i],
-            ];
-          } else {
-            this.eformVisualEditorUpdateModel.fieldForUpdate[index] = model[i];
-          }
-        } else if (model[i].tempId) {
-          const index = this.eformVisualEditorUpdateModel.fieldForCreate.findIndex(
-            (x) => x.tempId === model[i].tempId
-          );
-          if (index === -1) {
-            this.eformVisualEditorUpdateModel.fieldForCreate = [
-              ...this.eformVisualEditorUpdateModel.fieldForCreate,
-              model[i],
-            ];
-          } else {
-            this.eformVisualEditorUpdateModel.fieldForCreate[index] = model[i];
-          }
+    model = this.checkPosition(model);
+    // need check, maybe need to delete field from fields
+    let field = new EformVisualEditorFieldModel();
+    if (model.length < this.visualEditorTemplateModel.fields.length) {
+      this.visualEditorTemplateModel.fields.forEach((x) => {
+        const index = model.findIndex((y) =>
+          y.id ? y.id === x.id : y.tempId === x.tempId
+        );
+        if (index === -1) {
+          field = x;
         }
-      }
+      });
+      this.checkOnDeleteField(field);
+    } else if (model.length > this.visualEditorTemplateModel.fields.length) {
+      model.forEach((x) => {
+        const index = this.visualEditorTemplateModel.fields.findIndex((y) =>
+          y.id ? y.id === x.id : y.tempId === x.tempId
+        );
+        if (index === -1) {
+          field = x;
+        }
+      });
+      this.checkOnUpdateField(field);
     }
     this.visualEditorTemplateModel.fields = [...model];
   }
@@ -228,68 +199,40 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   onNestedFieldPositionChanged(
     model: EformVisualEditorFieldsDnDRecursionModel
   ) {
-    if (this.selectedTemplateId) {
+    if (model.checklistRecursionIndexes.length) {
+      model.fields = this.checkPosition(model.fields);
       // Deleting field inside nested checklists
       let indexes = new Array<number | string>();
-      if (model.checklistRecursionIndexes.length) {
-        if (model.checklistRecursionIndexes.length === 1) {
-          indexes = ['checkLists', model.checklistIndex];
-        } else {
-          model.checklistRecursionIndexes.forEach(
-            (x) => indexes.push('checkLists', x) // checkLists[x]
-          );
-        }
+      if (model.checklistRecursionIndexes.length === 1) {
+        indexes = ['checkLists', model.checklistIndex];
+      } else {
+        model.checklistRecursionIndexes.forEach(
+          (x) => indexes.push('checkLists', x) // checkLists[x]
+        );
       }
       indexes.push('fields'); // checkLists[x].fields
       const visualTemplatePath = R.lensPath(indexes);
-
-      for (let i = 0; i < model.fields.length; i++) {
-        if (model.fields[i].position !== i) {
-          model.fields[i].position = i;
-          if (model.fields[i].id) {
-            const index = this.eformVisualEditorUpdateModel.fieldForUpdate.findIndex(
-              (x) => x.id === model.fields[i].id
-            );
-            if (index === -1) {
-              this.eformVisualEditorUpdateModel.fieldForUpdate = [
-                ...this.eformVisualEditorUpdateModel.fieldForUpdate,
-                model.fields[i],
-              ];
-            } else {
-              this.eformVisualEditorUpdateModel.fieldForUpdate[index] =
-                model.fields[i];
-            }
-          } else if (model.fields[i].tempId) {
-            const index = this.eformVisualEditorUpdateModel.fieldForCreate.findIndex(
-              (x) => x.tempId === model.fields[i].tempId
-            );
-            if (index === -1) {
-              this.eformVisualEditorUpdateModel.fieldForCreate = [
-                ...this.eformVisualEditorUpdateModel.fieldForCreate,
-                model.fields[i],
-              ];
-            } else {
-              this.eformVisualEditorUpdateModel.fieldForCreate[index] =
-                model.fields[i];
-            }
-          }
-        }
-      }
       this.visualEditorTemplateModel = R.set(
         visualTemplatePath,
         model.fields,
         this.visualEditorTemplateModel
       );
     } else {
-      this.visualEditorTemplateModel.fields = [...model.fields];
+      const parentField = this.visualEditorTemplateModel.fields[
+        model.fieldIndex
+      ];
+      model.fields.forEach(
+        (x) => (x.parentFieldId = parentField.id ?? parentField.tempId)
+      );
+      model.fields = this.checkPosition(model.fields);
+      this.visualEditorTemplateModel.fields[model.fieldIndex].fields = [
+        ...model.fields,
+      ];
     }
   }
 
   showFieldModal(model?: EformVisualEditorRecursionFieldModel) {
-    this.fieldModal.show(
-      model,
-      model ? null : this.visualEditorTemplateModel.id // add field to root checklist
-    );
+    this.fieldModal.show(model);
   }
 
   showDeleteFieldModal(model: EformVisualEditorRecursionFieldModel) {
@@ -305,68 +248,75 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   }
 
   onCreateChecklist(model: EformVisualEditorRecursionChecklistModel) {
-    if (this.selectedTemplateId) {
+    if (model.checklistRecursionIndexes.length) {
       // Creating checklist inside nested checklists
+      const indexes = new Array<number | string>();
+      // if (model.checklistRecursionIndexes.length > 1) {
+      model.checklistRecursionIndexes.forEach(
+        (x) => indexes.push('checkLists', x) // checkLists[x]
+      );
+      // } else {
+      //   indexes.push('checkLists');
+      // }
+      const visualTemplatePath = R.lensPath(indexes);
+      let checklist: EformVisualEditorModel = R.view(
+        visualTemplatePath,
+        this.visualEditorTemplateModel
+      );
       model.checklist = {
         ...model.checklist,
         id: null,
-        position: model.checklistRecursionIndex,
+        position: checklist.checkLists.length,
         collapsed: true,
-        tempId: getRandomInt(1000, 10000),
+        parentChecklistId: checklist.id ?? checklist.tempId,
       };
-      const indexes = new Array<number | string>();
-      if (model.checklistRecursionIndexes.length) {
-        model.checklistRecursionIndexes.forEach(
-          (x) => indexes.push('checkLists', x) // checkLists[x]
-        );
-      }
-      indexes.push('checkLists'); // for change checkLists[x].checkLists. if remove this, have been change checkLists[x]
-      const visualTemplatePath = R.lensPath(indexes);
-      const checklists: EformVisualEditorModel[] = (this.visualEditorTemplateModel = R.view(
-        visualTemplatePath,
-        this.visualEditorTemplateModel
-      ));
+      checklist = {
+        ...checklist,
+        checkLists: [...checklist.checkLists, model.checklist],
+      };
       this.visualEditorTemplateModel = R.set(
         visualTemplatePath,
-        [...checklists, model.checklist],
+        checklist,
         this.visualEditorTemplateModel
       );
-      this.eformVisualEditorUpdateModel.checklistForCreate = [
-        ...this.eformVisualEditorUpdateModel.checklistForCreate,
-        model.checklist,
-      ];
-    } else {
-      if (model.checklistRecursionIndexes.length) {
-        const indexes = new Array<number | string>();
-        model.checklistRecursionIndexes.forEach(
-          (x) => indexes.push('checkLists', x) // checkLists[x]
-        );
-        indexes.push('checkLists'); // for change checkLists[x].checkLists. if remove this, have been change checkLists[x]
-        const visualTemplatePath = R.lensPath(indexes);
-        const checklists: EformVisualEditorModel[] = R.view(
-          visualTemplatePath,
-          this.visualEditorTemplateModel
-        );
-        this.visualEditorTemplateModel = R.set(
-          visualTemplatePath,
-          [...checklists, model.checklist],
-          this.visualEditorTemplateModel
-        );
-      } else {
-        // Creating checklist for the initial checklist
-        this.visualEditorTemplateModel = {
-          ...this.visualEditorTemplateModel,
-          checkLists: [
-            ...this.visualEditorTemplateModel.checkLists,
-            model.checklist,
-          ],
-        };
+      if (this.selectedTemplateId) {
+        this.eformVisualEditorUpdateModel.checklistForCreate = [
+          ...this.eformVisualEditorUpdateModel.checklistForCreate,
+          model.checklist,
+        ];
       }
+    } else {
+      model.checklist = {
+        ...model.checklist,
+        id: null,
+        position: this.visualEditorTemplateModel.checkLists.length,
+        collapsed: true,
+        parentChecklistId:
+          this.visualEditorTemplateModel.id ??
+          this.visualEditorTemplateModel.tempId,
+      };
+      if (this.selectedTemplateId) {
+        this.eformVisualEditorUpdateModel.checklistForCreate = [
+          ...this.eformVisualEditorUpdateModel.checklistForCreate,
+          model.checklist,
+        ];
+      }
+      // Creating checklist for the initial checklist
+      this.visualEditorTemplateModel = {
+        ...this.visualEditorTemplateModel,
+        checkLists: [
+          ...this.visualEditorTemplateModel.checkLists,
+          model.checklist,
+        ],
+      };
     }
   }
 
   onUpdateChecklist(model: EformVisualEditorRecursionChecklistModel) {
     if (this.selectedTemplateId) {
+      this.checkOnUpdateChecklist(model.checklist);
+    }
+    if (model.checklistRecursionIndexes.length) {
       // Updating checklist inside nested checklists
       const indexes = new Array<number | string>();
       if (model.checklistRecursionIndexes.length > 1) {
@@ -386,7 +336,6 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
         checklist,
         this.visualEditorTemplateModel
       );
-      this.checkOnUpdateChecklist(model.checklist, checklist);
     } else {
       // Updating checklist for the initial checklist
       this.visualEditorTemplateModel.checkLists = R.update(
@@ -399,6 +348,9 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
 
   onDeleteChecklist(model: EformVisualEditorRecursionChecklistModel) {
     if (this.selectedTemplateId) {
+      this.checkOnDeleteChecklist(model.checklist);
+    }
+    if (model.checklistRecursionIndexes.length) {
       // Deleting field inside nested checklists
       const indexes = new Array<number | string>();
       if (model.checklistRecursionIndexes.length > 1) {
@@ -418,7 +370,6 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
         checklists,
         this.visualEditorTemplateModel
       );
-      this.checkOnDeleteChecklist(model.checklist);
     } else {
       // Deleting field for the initial checklist
       this.visualEditorTemplateModel.checkLists = R.remove(
@@ -430,98 +381,150 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   }
 
   onFieldCreate(model: EformVisualEditorRecursionFieldModel) {
-    model.field = {
-      ...model.field,
-      id: null,
-      tempId: getRandomInt(1000, 10000),
-      position: model.field.position
-        ? model.field.position
-        : model.fieldPosition ?? this.visualEditorTemplateModel.fields.length,
-      checklistId: model.field.checklistId ?? model.checklistId,
-    };
-    if (this.selectedTemplateId) {
-      // if template is selected - it update
+    if (model.checklistRecursionIndexes.length) {
       // Creating field inside nested checklists
       const indexes = new Array<number | string>();
-      if (model.checklistRecursionIndexes.length) {
-        model.checklistRecursionIndexes.forEach(
-          (x) => indexes.push('checkLists', x) // checkLists[x]
-        );
-      }
-      indexes.push('fields'); // checkLists[x].fields
+      model.checklistRecursionIndexes.forEach(
+        (x) => indexes.push('checkLists', x) // checkLists[x]
+      );
       const visualTemplatePath = R.lensPath(indexes);
-      let fields: EformVisualEditorFieldModel[] = R.view(
+      let checklist: EformVisualEditorModel = R.view(
         visualTemplatePath,
         this.visualEditorTemplateModel
-      ); // get fields for update
-      fields = [...fields, model.field]; // add new field
-      this.visualEditorTemplateModel = R.set(
-        visualTemplatePath,
-        fields,
-        this.visualEditorTemplateModel
-      ); // save changes
-      this.eformVisualEditorUpdateModel.fieldForCreate = [
-        ...this.eformVisualEditorUpdateModel.fieldForCreate,
-        model.field,
-      ];
-    } else {
-      // Creating field for the initial checklist
+      ); // get checklist for update
       model.field = {
         ...model.field,
-        checklistId:
-          model.field.checklistId ??
-          model.checklistId ??
-          this.visualEditorTemplateModel.id,
+        checklistId: checklist.id ?? checklist.tempId,
+        position: checklist.fields.length,
       };
-      this.visualEditorTemplateModel = {
-        ...this.visualEditorTemplateModel,
-        fields: [...this.visualEditorTemplateModel.fields, model.field],
+      if (!R.isNil(model.fieldIndex)) {
+        // add nested field to field
+        const fieldGroup = checklist.fields[model.fieldIndex];
+        model.field = {
+          ...model.field,
+          parentFieldId: fieldGroup.id ?? fieldGroup.tempId,
+          position: fieldGroup.fields.length,
+        };
+        checklist.fields[model.fieldIndex].fields = [
+          ...fieldGroup.fields,
+          model.field,
+        ];
+      } else {
+        checklist = {
+          ...checklist,
+          fields: [...checklist.fields, model.field],
+        }; // add new field
+      }
+      this.visualEditorTemplateModel = R.set(
+        visualTemplatePath,
+        checklist,
+        this.visualEditorTemplateModel
+      ); // save changes
+      if (this.selectedTemplateId) {
+        // if template is selected - it update
+        this.eformVisualEditorUpdateModel.fieldForCreate = [
+          ...this.eformVisualEditorUpdateModel.fieldForCreate,
+          model.field,
+        ];
+      }
+    } else {
+      model.field = {
+        ...model.field,
+        checklistId: this.visualEditorTemplateModel.id,
+        position: this.visualEditorTemplateModel.fields.length,
       };
+
+      if (!R.isNil(model.fieldIndex)) {
+        // add nested field to field
+        const groupField = this.visualEditorTemplateModel.fields[
+          model.fieldIndex
+        ];
+        model.field = {
+          ...model.field,
+          position: groupField.fields.length,
+          parentFieldId: groupField.id ?? groupField.tempId,
+        };
+        this.visualEditorTemplateModel.fields[model.fieldIndex].fields = [
+          ...groupField.fields,
+          model.field,
+        ];
+      } else {
+        // Creating field for the initial checklist
+
+        this.visualEditorTemplateModel = {
+          ...this.visualEditorTemplateModel,
+          fields: [...this.visualEditorTemplateModel.fields, model.field],
+        };
+      }
+      if (this.selectedTemplateId) {
+        // update or initial create
+        this.eformVisualEditorUpdateModel.fieldForCreate = [
+          ...this.eformVisualEditorUpdateModel.fieldForCreate,
+          model.field,
+        ];
+      }
     }
   }
 
   onFieldUpdate(model: EformVisualEditorRecursionFieldModel) {
     if (this.selectedTemplateId) {
+      this.checkOnUpdateField(model.field);
+    }
+    if (model.checklistRecursionIndexes.length) {
       // Updating field inside nested checklists
       const indexes = new Array<number | string>();
-      if (model.checklistRecursionIndexes.length) {
-        model.checklistRecursionIndexes.forEach(
-          (x) => indexes.push('checkLists', x) // checkLists[x]
-        );
-      }
-      indexes.push('fields', model.fieldIndex); // checkLists[x].fields
-      const visualTemplatePath = R.lensPath(indexes);
-      let field: EformVisualEditorFieldModel = R.view(
-        visualTemplatePath,
-        this.visualEditorTemplateModel
+      model.checklistRecursionIndexes.forEach(
+        (x) => indexes.push('checkLists', x) // checkLists[x]
       );
-      field = { ...field, ...model.field };
+      if (!R.isNil(model.parentFieldIndex)) {
+        indexes.push('fields', model.parentFieldIndex); // checkLists[x].fields[parentFieldIndex]
+      }
+      indexes.push('fields', model.fieldIndex); // checkLists[x].fields or checkLists[x].fields[parentFieldIndex].fields[fieldIndex]
+      const visualTemplatePath = R.lensPath(indexes);
+      // let field: EformVisualEditorFieldModel = R.view(
+      //   visualTemplatePath,
+      //   this.visualEditorTemplateModel
+      // );
+      // field = { ...field, ...model.field };
       this.visualEditorTemplateModel = R.set(
         visualTemplatePath,
-        field,
+        model.field, // field,
         this.visualEditorTemplateModel
       );
-      this.checkOnUpdateField(field);
     } else {
       // Updating field for the initial checklist
-      this.visualEditorTemplateModel.fields = R.update(
-        model.fieldIndex,
-        model.field,
-        this.visualEditorTemplateModel.fields
-      );
+      if (!R.isNil(model.parentFieldIndex)) {
+        // update in group field
+        this.visualEditorTemplateModel.fields[
+          model.parentFieldIndex
+        ].fields = R.update(
+          model.fieldIndex,
+          model.field,
+          this.visualEditorTemplateModel.fields[model.parentFieldIndex].fields
+        );
+      } else {
+        // simple update
+        this.visualEditorTemplateModel.fields = R.update(
+          model.fieldIndex,
+          model.field,
+          this.visualEditorTemplateModel.fields
+        );
+      }
     }
   }
 
   onFieldDelete(model: EformVisualEditorRecursionFieldModel) {
-    if (this.selectedTemplateId) {
+    if (model.checklistRecursionIndexes.length) {
       // Deleting field inside nested checklists
       const indexes = new Array<number | string>();
-      if (model.checklistRecursionIndexes.length) {
-        model.checklistRecursionIndexes.forEach(
-          (x) => indexes.push('checkLists', x) // checkLists[x]
-        );
-      }
+      model.checklistRecursionIndexes.forEach(
+        (x) => indexes.push('checkLists', x) // checkLists[x]
+      );
       indexes.push('fields'); // checkLists[x].fields
+      if (!R.isNil(model.parentFieldIndex)) {
+        // if delete from fieldGroup
+        indexes.push(model.parentFieldIndex, 'fields'); // checkLists[x].fields[parentFieldIndex].fields
+      }
       const visualTemplatePath = R.lensPath(indexes);
       const fields = R.view(visualTemplatePath, this.visualEditorTemplateModel);
       fields.splice(model.fieldIndex, 1);
@@ -530,14 +533,32 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
         fields,
         this.visualEditorTemplateModel
       );
-      this.checkOnDeleteField(model.field);
+      if (this.selectedTemplateId) {
+        this.checkOnDeleteField(model.field);
+      }
     } else {
       // Deleting field for the initial checklist
-      this.visualEditorTemplateModel.fields = R.remove(
-        model.fieldIndex,
-        1,
-        this.visualEditorTemplateModel.fields
-      );
+      if (this.selectedTemplateId) {
+        this.checkOnDeleteField(model.field);
+      }
+
+      if (!R.isNil(model.parentFieldIndex)) {
+        // delete from group
+        this.visualEditorTemplateModel.fields[
+          model.parentFieldIndex
+        ].fields = R.remove(
+          model.fieldIndex,
+          1,
+          this.visualEditorTemplateModel.fields[model.parentFieldIndex].fields
+        );
+      } else {
+        // simple delete
+        this.visualEditorTemplateModel.fields = R.remove(
+          model.fieldIndex,
+          1,
+          this.visualEditorTemplateModel.fields
+        );
+      }
     }
   }
 
@@ -572,9 +593,6 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
         field,
         this.eformVisualEditorUpdateModel.fieldForCreate
       );
-      // if (index !== -1) {
-      //   this.eformVisualEditorUpdateModel.fieldForCreate[index] = field;
-      // }
     }
   }
 
@@ -599,10 +617,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
     }
   }
 
-  private checkOnUpdateChecklist(
-    modelChecklist: EformVisualEditorModel,
-    checklist: EformVisualEditorModel
-  ) {
+  private checkOnUpdateChecklist(checklist: EformVisualEditorModel) {
     if (checklist.id) {
       const index = this.eformVisualEditorUpdateModel.checklistForUpdate.findIndex(
         (x) => x.id === checklist.id
@@ -610,14 +625,13 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
       if (index !== -1) {
         this.eformVisualEditorUpdateModel.checklistForUpdate[index] = {
           ...checklist,
-          ...modelChecklist,
           checkLists: [],
           fields: [],
         };
       } else {
         this.eformVisualEditorUpdateModel.checklistForUpdate = [
           ...this.eformVisualEditorUpdateModel.checklistForUpdate,
-          { ...checklist, ...modelChecklist, checkLists: [], fields: [] },
+          { ...checklist, checkLists: [], fields: [] },
         ];
       }
     } else if (checklist.tempId) {
@@ -627,7 +641,6 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
       if (index !== -1) {
         this.eformVisualEditorUpdateModel.checklistForCreate[index] = {
           ...checklist,
-          ...modelChecklist,
           checkLists: [],
           fields: [],
         };
@@ -653,7 +666,22 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
     }
   }
 
+  private checkPosition(mas: any[], masIsChecklists: boolean = false): any[] {
+    for (let i = 0; i < mas.length; i++) {
+      if (mas[i].position !== i) {
+        mas[i].position = i;
+        if (this.selectedTemplateId) {
+          masIsChecklists
+            ? this.checkOnUpdateChecklist(mas[i])
+            : this.checkOnUpdateField(mas[i]);
+        }
+      }
+    }
+    return mas;
+  }
+
   ngOnDestroy(): void {
     this.dragulaService.destroy('CHECK_LISTS');
+    this.dragulaService.destroy('FIELDS');
   }
 }

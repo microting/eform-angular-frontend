@@ -40,7 +40,7 @@ namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
 
         public bool Mandatory { get; set; }
 
-        public int Position { get; set; }
+        public int? Position { get; set; }
         
         /// <summary>
         /// for GroupOpenClose field
@@ -72,7 +72,7 @@ namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
         /// <summary>
         /// for Number field
         /// </summary>
-        public int DecimalCount { get; set; }
+        public int? DecimalCount { get; set; }
 
         /// <summary>
         /// for PDF field
@@ -83,5 +83,7 @@ namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
         public int ChecklistId { get; set; }
 
         public int? TempId { get; set; }
+
+        public int? ParentFieldId { get; set; }
     }
 }

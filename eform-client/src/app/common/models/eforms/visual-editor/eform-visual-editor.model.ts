@@ -2,14 +2,16 @@ import {
   EformVisualEditorFieldModel,
   CommonTranslationsModel,
 } from 'src/app/common/models';
+import { getRandomInt } from 'src/app/common/helpers';
 
 export class EformVisualEditorModel {
   id: number;
   translations: CommonTranslationsModel[] = [];
-  tagIds: number[];
+  tagIds: number[] = [];
   position: number;
   collapsed: boolean;
   fields: EformVisualEditorFieldModel[] = [];
   checkLists: EformVisualEditorModel[] = [];
-  tempId?: number;
+  tempId?: number = getRandomInt(1000, 10000);
+  parentChecklistId?: number;
 }

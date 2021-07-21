@@ -12,17 +12,13 @@ export class EformVisualEditorRecursionModel {
 
 export class EformVisualEditorRecursionFieldModel extends EformVisualEditorRecursionModel {
   field?: EformVisualEditorFieldModel = new EformVisualEditorFieldModel();
-  fieldPosition?: number;
-  checklistId?: number;
+  parentFieldIndex?: number;
 }
 
 export class EformVisualEditorRecursionChecklistModel extends EformVisualEditorRecursionModel {
   checklist?: EformVisualEditorModel = new EformVisualEditorModel();
 }
 
-export class EformVisualEditorFieldsDnDRecursionModel {
+export class EformVisualEditorFieldsDnDRecursionModel extends EformVisualEditorRecursionModel {
   fields: EformVisualEditorFieldModel[] = [];
-  checklistIndex?: number;
-  checklistRecursionIndex: number;
-  checklistRecursionIndexes?: number[] = [];
 }

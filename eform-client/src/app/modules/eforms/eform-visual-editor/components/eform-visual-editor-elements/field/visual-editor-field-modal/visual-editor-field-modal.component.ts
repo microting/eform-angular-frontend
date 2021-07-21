@@ -20,6 +20,7 @@ import {
   eformVisualEditorElementTypes,
 } from '../../../../const/eform-visual-editor-element-types';
 import { fixTranslations } from 'src/app/common/helpers';
+import * as R from 'ramda';
 
 @Component({
   selector: 'app-visual-editor-field-modal',
@@ -28,6 +29,7 @@ import { fixTranslations } from 'src/app/common/helpers';
 })
 export class VisualEditorFieldModalComponent implements OnInit {
   @ViewChild('frame', { static: true }) frame;
+  @ViewChild('popTemplate', { static: true }) popTemplate;
   @Output()
   createField: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter<EformVisualEditorRecursionFieldModel>();
   @Output()
@@ -75,13 +77,10 @@ export class VisualEditorFieldModalComponent implements OnInit {
     this.setSelectedLanguage();
   }
 
-  show(
-    model?: EformVisualEditorRecursionFieldModel,
-    checklistParentId?: number
-  ) {
+  show(model?: EformVisualEditorRecursionFieldModel) {
     this.setSelectedLanguage();
     if (model) {
-      this.recursionModel = { ...model };
+      this.recursionModel = R.clone(model);
     }
     if (model && model.field) {
       this.isFieldSelected = true;
@@ -93,24 +92,16 @@ export class VisualEditorFieldModalComponent implements OnInit {
       if (!model) {
         this.recursionModel = new EformVisualEditorRecursionFieldModel();
       }
-      this.initForm(checklistParentId);
+      this.initForm();
     }
     this.frame.show();
   }
 
-  initForm(checklistParentId?: number) {
+  initForm() {
     this.recursionModel.field = new EformVisualEditorFieldModel();
-    this.recursionModel.field = {
-      ...this.recursionModel.field,
-      position: this.recursionModel.fieldIndex + 2,
-      checklistId: checklistParentId,
-    }; // field index + 1(new index) + 1(the countdown field index starts from zero)
-    for (const language of applicationLanguages) {
-      this.recursionModel.field.translations = [
-        ...this.recursionModel.field.translations,
-        { id: null, languageId: language.id, description: '', name: '' },
-      ];
-    }
+    this.recursionModel.field.translations = fixTranslations(
+      this.recursionModel.field.translations
+    ); // create translations
   }
 
   onCreateField() {

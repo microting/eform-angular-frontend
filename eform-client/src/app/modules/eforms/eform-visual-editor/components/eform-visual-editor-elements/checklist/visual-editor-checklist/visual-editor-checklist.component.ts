@@ -7,10 +7,8 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 import { CollapseComponent } from 'angular-bootstrap-md';
 import { UUID } from 'angular2-uuid';
-import { Subscription } from 'rxjs';
 import {
   EformVisualEditorFieldsDnDRecursionModel,
   EformVisualEditorFieldModel,
@@ -18,7 +16,7 @@ import {
   EformVisualEditorRecursionFieldModel,
   EformVisualEditorRecursionChecklistModel,
 } from 'src/app/common/models';
-import { EformVisualEditorService } from 'src/app/common/services';
+import { DragulaService } from 'ng2-dragula';
 
 @Component({
   selector: 'app-visual-editor-checklist',
@@ -45,37 +43,32 @@ export class VisualEditorChecklistComponent implements OnInit, OnDestroy {
   editNestedChecklist: EventEmitter<EformVisualEditorRecursionChecklistModel> = new EventEmitter();
   @Output()
   deleteNestedChecklist: EventEmitter<EformVisualEditorRecursionChecklistModel> = new EventEmitter();
+  @Output()
+  copyNestedField: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter(); // todo
+  @Output()
+  changeColorField: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter();
   dragulaElementContainerName = UUID.UUID();
 
-  collapseSub$: Subscription;
-
-  get composeIndexes() {
-    return [...this.checklistRecursionIndexes, this.checklistIndex];
+  composeIndexes(checklistIndex: number) {
+    return [...this.checklistRecursionIndexes, checklistIndex];
   }
 
   get isChecklistComplete() {
     return this.checklist.translations.find((x) => x.name !== '');
   }
 
-  constructor(
-    private translateService: TranslateService,
-    private visualEditorService: EformVisualEditorService
-  ) {}
-
-  ngOnInit() {
-    this.collapseSub$ = this.visualEditorService.collapse.subscribe(
-      (collapsed) => {
-        if (!collapsed && this.checklist && this.checklist.collapsed) {
-          this.checklist.collapsed = false;
-          // this.collapse.toggle();
-        }
-        if (collapsed && this.checklist && !this.checklist.collapsed) {
-          this.checklist.collapsed = true;
-          // this.collapse.toggle();
-        }
-      }
-    );
+  constructor(private dragulaService: DragulaService) {
+    this.dragulaService.createGroup(this.dragulaElementContainerName, {
+      moves: (el, container, handle) => {
+        return handle.classList.contains('dragula-handle');
+      },
+      accepts: (el, target) => {
+        return el.id.includes('checkList_');
+      },
+    });
   }
+
+  ngOnInit() {}
 
   onAddNewNestedChecklist() {
     this.addNewNestedChecklist.emit({
@@ -103,16 +96,15 @@ export class VisualEditorChecklistComponent implements OnInit, OnDestroy {
   }
 
   onAddNewNestedField() {
+    // add to checklist
     this.addNewNestedField.emit({
       checklistRecursionIndexes: this.checklistRecursionIndexes,
       checklistRecursionIndex: this.checklistRecursionIndex,
       checklistIndex: this.checklistIndex,
-      fieldPosition: this.checklist.fields.length,
-      checklistId: this.checklist.id ?? this.checklist.tempId,
     });
   }
 
-  onNestedFieldChanged(model: EformVisualEditorFieldModel[]) {
+  onNestedFieldPositionChanged(model: EformVisualEditorFieldModel[]) {
     this.nestedFieldPositionChanged.emit({
       checklistRecursionIndexes: this.checklistRecursionIndexes,
       checklistRecursionIndex: this.checklistRecursionIndex,
@@ -141,8 +133,6 @@ export class VisualEditorChecklistComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {}
-
   onEditNestedChecklistInNestedChecklist(
     $event: EformVisualEditorRecursionChecklistModel
   ) {
@@ -155,10 +145,48 @@ export class VisualEditorChecklistComponent implements OnInit, OnDestroy {
     this.addNewNestedChecklist.emit($event);
   }
 
-  onAddNewNestedFieldInNestedChecklist(
+  onAddNestedFieldInNestedChecklist(
     $event: EformVisualEditorRecursionFieldModel
   ) {
-    debugger;
+    // add to field group. Code for visualization: checklist.fields[fieldGroupIndex].fields.push()
     this.addNewNestedField.emit($event);
+  }
+
+  onEditNestedFieldInNestedChecklist(
+    $event: EformVisualEditorRecursionFieldModel
+  ) {
+    this.editNestedField.emit($event);
+  }
+
+  onFieldPositionChangedInNestedChecklist(
+    $event: EformVisualEditorFieldsDnDRecursionModel
+  ) {
+    this.nestedFieldPositionChanged.emit($event);
+  }
+
+  onDeleteNestedChecklist($event: EformVisualEditorRecursionChecklistModel) {
+    this.deleteNestedChecklist.emit($event);
+  }
+
+  onDeleteNestedFieldInNestedChecklist(
+    $event: EformVisualEditorRecursionFieldModel
+  ) {
+    this.deleteNestedField.emit($event);
+  }
+
+  onCopyNestedFieldInNestedChecklist(
+    $event: EformVisualEditorRecursionFieldModel
+  ) {
+    this.copyNestedField.emit($event);
+  }
+
+  ngOnDestroy(): void {
+    this.dragulaService.destroy(this.dragulaElementContainerName);
+  }
+
+  onChangeColorInNestedFieldInNestedChecklist(
+    $event: EformVisualEditorRecursionFieldModel
+  ) {
+    this.changeColorField.emit($event);
   }
 }

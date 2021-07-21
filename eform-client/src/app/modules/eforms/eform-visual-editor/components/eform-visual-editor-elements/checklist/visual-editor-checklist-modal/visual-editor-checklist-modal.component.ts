@@ -13,6 +13,7 @@ import {
 } from 'src/app/common/models';
 import { LocaleService } from 'src/app/common/services';
 import { fixTranslations } from 'src/app/common/helpers';
+import * as R from 'ramda';
 
 @Component({
   selector: 'app-visual-editor-checklist-modal',
@@ -44,9 +45,15 @@ export class VisualEditorChecklistModalComponent implements OnInit {
     ).id;
   }
 
+  get isAllNamesEmpty() {
+    return !this.recursionModel.checklist.translations.find(
+      (x) => x.name !== ''
+    );
+  }
+
   show(model?: EformVisualEditorRecursionChecklistModel) {
     if (model) {
-      this.recursionModel = { ...model };
+      this.recursionModel = R.clone(model);
       this.isChecklistSelected = false;
     }
     if (model && model.checklist) {
@@ -58,6 +65,7 @@ export class VisualEditorChecklistModalComponent implements OnInit {
       );
     } else {
       if (!model) {
+        this.isChecklistSelected = false;
         this.recursionModel = new EformVisualEditorRecursionChecklistModel();
       }
       this.initForm();
@@ -76,7 +84,6 @@ export class VisualEditorChecklistModalComponent implements OnInit {
   }
 
   onCreateChecklist() {
-    debugger;
     this.createChecklist.emit({
       ...this.recursionModel,
     });

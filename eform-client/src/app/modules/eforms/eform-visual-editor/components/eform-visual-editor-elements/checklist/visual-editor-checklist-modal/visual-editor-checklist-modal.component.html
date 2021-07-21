@@ -9,7 +9,7 @@
       <div class="modal-header">
         <h3>
           {{
-            recursionModel
+            isChecklistSelected
               ? ('Edit checklist' | translate)
               : ('New checklist' | translate)
           }}
@@ -23,7 +23,7 @@
           <mdb-card-body>
             <div class="row">
               <div class="col">
-                <div class="ng-select-wrapper">
+                <div class="ng-select-wrapper d-flex align-items-center">
                   <ng-select
                     class="custom"
                     dropdownPosition="'bottom'"
@@ -35,6 +35,14 @@
                     id="newChecklistLanguageSelector"
                     [items]="languages"
                   ></ng-select>
+                  <fa-icon
+                    *ngIf="isAllNamesEmpty"
+                    [mdbTooltip]="'Required' | translate"
+                    icon="info-circle"
+                    [fixedWidth]="true"
+                    size="lg"
+                    class="text-warning ml-1"
+                  ></fa-icon>
                 </div>
               </div>
             </div>
