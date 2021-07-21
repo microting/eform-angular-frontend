@@ -13,11 +13,13 @@ export class AppMenuStateService {
     private service: AppMenuService,
     private query: AppMenuQuery
   ) {}
+  private responseIsLoading = false;
 
   getAppMenu(takeFromCache = true): Observable<UserMenuModel> {
     if (takeFromCache && this.query.currentAppMenu) {
       return this.appMenuObservable;
-    } else {
+    } else if (!this.responseIsLoading) {
+      this.responseIsLoading = true;
       return this.service.getAppMenuFromServer().pipe(
         map((response) => {
           if (response && response.success && response.model) {
@@ -27,9 +29,13 @@ export class AppMenuStateService {
               this.store.update(0, response.model);
             }
           }
+          this.responseIsLoading = false;
           return response.model;
         })
       );
+    } else {
+      // so that the second request does not start until the first one is completed
+      return this.appMenuObservable;
     }
   }
 

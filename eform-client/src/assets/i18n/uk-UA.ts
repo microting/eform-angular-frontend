@@ -361,4 +361,6 @@ export const ukUA = {
   Remove: 'Видалити',
   'Generate report': 'Створити {{value}} звіт',
   'Select date range': 'Виберіть діапазон дат',
+  'Edit headers': 'Редагувати заголовки',
+  'Generate': 'Створити звіт'
 };

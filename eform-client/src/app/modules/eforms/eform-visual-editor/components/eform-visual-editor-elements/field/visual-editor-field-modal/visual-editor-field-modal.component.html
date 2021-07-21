@@ -1,0 +1,231 @@
+<div
+  [config]="{ ignoreBackdropClick: true }"
+  mdbModal
+  class="modal fade overflow-auto"
+  #frame="mdbModal"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>
+          {{ (isFieldSelected ? 'Edit field' : 'New field') | translate }}
+        </h3>
+        <button class="close" data-dismiss="modal" (click)="frame.hide()">
+          <span>×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <mdb-card class="mb-3">
+          <mdb-card-body>
+            <div class="row">
+              <div class="col">
+                <div class="ng-select-wrapper d-flex align-items-center">
+                  <ng-select
+                    class="custom"
+                    dropdownPosition="'bottom'"
+                    [placeholder]="'Selected language' | translate"
+                    [clearable]="false"
+                    [bindLabel]="'text'"
+                    [bindValue]="'id'"
+                    [(ngModel)]="selectedLanguage"
+                    id="newFieldLanguageSelector"
+                    [items]="languages"
+                  ></ng-select>
+                  <fa-icon
+                    *ngIf="isAllNamesEmpty"
+                    [mdbTooltip]="'Required' | translate"
+                    icon="info-circle"
+                    [fixedWidth]="true"
+                    size="lg"
+                    class="text-warning ml-1"
+                  ></fa-icon>
+                </div>
+              </div>
+            </div>
+            <ng-container
+              *ngFor="
+                let translation of recursionModel.field.translations;
+                let translationIndex = index
+              "
+            >
+              <ng-container *ngIf="selectedLanguage === translation.languageId">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="md-form">
+                      <input
+                        mdbInput
+                        type="text"
+                        id="fieldNameTranslation_{{ translationIndex }}"
+                        name="fieldNameTranslation_{{ translationIndex }}"
+                        [(ngModel)]="translation.name"
+                        class="form-control"
+                      />
+                      <label for="fieldNameTranslation_{{ translationIndex }}">
+                        {{ 'Name' | translate }}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="md-form">
+                      <p class="text-black-50">
+                        {{ 'Description' | translate }}
+                      </p>
+                      <pell-editor
+                        mdbInput
+                        [(value)]="translation.description"
+                        name="newFieldDescriptionTranslation_{{
+                          translationIndex
+                        }}"
+                        required
+                        id="newFieldDescriptionTranslation_{{
+                          translationIndex
+                        }}"
+                        rows="10"
+                      ></pell-editor>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </ng-container>
+          </mdb-card-body>
+        </mdb-card>
+        <mdb-card>
+          <mdb-card-body>
+            <div class="row">
+              <div class="col">
+                <div class="ng-select-wrapper">
+                  <ng-select
+                    class="custom"
+                    dropdownPosition="'bottom'"
+                    [placeholder]="'Type' | translate"
+                    [clearable]="false"
+                    [bindLabel]="'name'"
+                    [bindValue]="'id'"
+                    [(ngModel)]="recursionModel.field.fieldType"
+                    id="mainCheckListLanguageSelector"
+                    [items]="fieldTypes"
+                  >
+                    <ng-template
+                      ng-option-tmp
+                      let-item="item"
+                      let-search="searchTerm"
+                    >
+                      <ng-template #popTemplate>
+                        <p>{{ item.description }}</p>
+                        <img
+                          [src]="item.previewImage"
+                          alt=""
+                          class="img-fluid"
+                        />
+                      </ng-template>
+                      <div
+                        [mdbPopover]="popTemplate"
+                        container="body"
+                        placement="right"
+                        [triggers]="'hover'"
+                      >
+                        {{ item.name }}
+                      </div>
+                    </ng-template>
+                  </ng-select>
+                </div>
+              </div>
+
+              <div class="col">
+                <div class="ng-select-wrapper">
+                  <ng-select
+                    class="custom"
+                    dropdownPosition="'bottom'"
+                    [placeholder]="'Color' | translate"
+                    [clearable]="false"
+                    [bindLabel]="'description'"
+                    [bindValue]="'name'"
+                    [(ngModel)]="recursionModel.field.color"
+                    id="newFieldColorSelector"
+                    [items]="fieldColors"
+                  >
+                    <ng-template
+                      ng-option-tmp
+                      let-item="item"
+                      let-search="searchTerm"
+                    >
+                      <div>
+                        <fa-icon
+                          icon="square"
+                          [fixedWidth]="true"
+                          size="lg"
+                          [ngStyle]="{ color: '#' + item.name }"
+                        ></fa-icon>
+                        {{ item.description }}
+                      </div>
+                    </ng-template>
+                    <ng-template ng-label-tmp let-item="item">
+                      <div>
+                        <fa-icon
+                          icon="square"
+                          [fixedWidth]="true"
+                          size="lg"
+                          [ngStyle]="{ color: '#' + item.name }"
+                        ></fa-icon>
+                        {{ item.description }}
+                      </div>
+                    </ng-template>
+                  </ng-select>
+                </div>
+              </div>
+            </div>
+
+            <div class="row" *ngIf="!mandatoryIsNotNeed">
+              <div class="col">
+                <div class="mat-checkbox">
+                  <input
+                    id="isChecked"
+                    [(ngModel)]="recursionModel.field.mandatory"
+                    color="primary"
+                    type="checkbox"
+                  />
+                  <label for="isChecked">{{ 'Mandatory' | translate }}</label>
+                </div>
+              </div>
+            </div>
+          </mdb-card-body>
+        </mdb-card>
+        <app-visual-editor-additional-field-number
+          *ngIf="
+            recursionModel.field.fieldType == eformFieldTypesEnum.Number ||
+            recursionModel.field.fieldType == eformFieldTypesEnum.NumberStepper
+          "
+          [field]="recursionModel.field"
+        >
+        </app-visual-editor-additional-field-number>
+        <app-visual-editor-additional-field-save-button
+          *ngIf="
+            recursionModel.field.fieldType == eformFieldTypesEnum.SaveButton
+          "
+          [field]="recursionModel.field"
+        >
+        </app-visual-editor-additional-field-save-button>
+      </div>
+      <div class="modal-footer">
+        <button
+          mdbBtn
+          class="btn-success btn-small-height"
+          (click)="isFieldSelected ? onUpdateField() : onCreateField()"
+          id="changeFieldSaveBtn"
+        >
+          {{ 'Save' | translate }}
+        </button>
+        <button
+          mdbBtn
+          class="btn-accent text-black-50 btn-small-height"
+          (click)="frame.hide()"
+          id="changeFieldSaveCancelBtn"
+        >
+          {{ 'Cancel' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

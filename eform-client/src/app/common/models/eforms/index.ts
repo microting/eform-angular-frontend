@@ -8,3 +8,4 @@ export * from './deploy/deploy-checkbox.model';
 export * from './tag/saved-tag.model';
 export * from './report';
 export * from './docx-report';
+export * from './visual-editor';

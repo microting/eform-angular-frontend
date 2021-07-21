@@ -361,4 +361,6 @@ export const enUS = {
   Add: 'Add',
   'Generate report': 'Generate {{value}} report',
   'Select date range': 'Select date range',
+  'Edit headers': 'Edit headers',
+  'Generate': 'Generate rapport'
 };

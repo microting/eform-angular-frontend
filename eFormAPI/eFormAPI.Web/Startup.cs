@@ -66,6 +66,7 @@ namespace eFormAPI.Web
     using Microsoft.Extensions.PlatformAbstractions;
     using Microting.EformAngularFrontendBase.Infrastructure.Data;
     using Microting.EformAngularFrontendBase.Infrastructure.Data.Factories;
+    using Services.Eform;
 
     public class Startup
     {
@@ -327,6 +328,7 @@ namespace eFormAPI.Web
             services.AddTransient<IEformExcelImportService, EformExcelImportService>();
             services.AddScoped<IEformCaseReportService, EformCaseReportService>();
             services.AddScoped<IWordService, WordService>();
+            services.AddScoped<ITemplateVisualEditorService, TemplateVisualEditorService>();
         }
 
         private ICollection<PluginPermissionModel> GetPluginsPermissions()
