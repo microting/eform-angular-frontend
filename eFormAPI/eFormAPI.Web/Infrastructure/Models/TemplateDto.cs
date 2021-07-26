@@ -96,16 +96,18 @@ namespace eFormAPI.Web.Infrastructure.Models
             };
         }
 
-        public async Task CheckForLock(BaseDbContext dbContext)
+        public async Task CheckForLock(BaseDbContext dbContext, List<string> pluginIds = null)
         {
-            List<string> plugins = await dbContext.EformPlugins.Select(x => x.PluginId).ToListAsync();
-
-            foreach (string plugin in plugins)
+            if (pluginIds == null)
             {
-                if (Label.Contains(plugin))
-                {
-                    IsLocked = true;
-                }
+                IsLocked = await dbContext.EformPlugins
+                    .Select(x => x.PluginId)
+                    .Where(x => x.Contains(Label))
+                    .AnyAsync();
+            }
+            else
+            {
+                IsLocked = pluginIds.Any(x => x.Contains(Label));
             }
         }
     }
