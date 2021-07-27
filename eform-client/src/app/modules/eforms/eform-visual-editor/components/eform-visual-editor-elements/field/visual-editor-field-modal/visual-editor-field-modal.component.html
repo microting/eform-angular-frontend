@@ -132,49 +132,49 @@
                   </ng-select>
                 </div>
               </div>
-
-              <div class="col">
-                <div class="ng-select-wrapper">
-                  <ng-select
-                    class="custom"
-                    dropdownPosition="'bottom'"
-                    [placeholder]="'Color' | translate"
-                    [clearable]="false"
-                    [bindLabel]="'description'"
-                    [bindValue]="'name'"
-                    [(ngModel)]="recursionModel.field.color"
-                    id="newFieldColorSelector"
-                    [items]="fieldColors"
-                  >
-                    <ng-template
-                      ng-option-tmp
-                      let-item="item"
-                      let-search="searchTerm"
-                    >
-                      <div>
-                        <fa-icon
-                          icon="square"
-                          [fixedWidth]="true"
-                          size="lg"
-                          [ngStyle]="{ color: '#' + item.name }"
-                        ></fa-icon>
-                        {{ item.description }}
-                      </div>
-                    </ng-template>
-                    <ng-template ng-label-tmp let-item="item">
-                      <div>
-                        <fa-icon
-                          icon="square"
-                          [fixedWidth]="true"
-                          size="lg"
-                          [ngStyle]="{ color: '#' + item.name }"
-                        ></fa-icon>
-                        {{ item.description }}
-                      </div>
-                    </ng-template>
-                  </ng-select>
-                </div>
-              </div>
+              <!--              COLOR PICKER-->
+              <!--              <div class="col">-->
+              <!--                <div class="ng-select-wrapper">-->
+              <!--                  <ng-select-->
+              <!--                    class="custom"-->
+              <!--                    dropdownPosition="'bottom'"-->
+              <!--                    [placeholder]="'Color' | translate"-->
+              <!--                    [clearable]="false"-->
+              <!--                    [bindLabel]="'description'"-->
+              <!--                    [bindValue]="'name'"-->
+              <!--                    [(ngModel)]="recursionModel.field.color"-->
+              <!--                    id="newFieldColorSelector"-->
+              <!--                    [items]="fieldColors"-->
+              <!--                  >-->
+              <!--                    <ng-template-->
+              <!--                      ng-option-tmp-->
+              <!--                      let-item="item"-->
+              <!--                      let-search="searchTerm"-->
+              <!--                    >-->
+              <!--                      <div>-->
+              <!--                        <fa-icon-->
+              <!--                          icon="square"-->
+              <!--                          [fixedWidth]="true"-->
+              <!--                          size="lg"-->
+              <!--                          [ngStyle]="{ color: '#' + item.name }"-->
+              <!--                        ></fa-icon>-->
+              <!--                        {{ item.description }}-->
+              <!--                      </div>-->
+              <!--                    </ng-template>-->
+              <!--                    <ng-template ng-label-tmp let-item="item">-->
+              <!--                      <div>-->
+              <!--                        <fa-icon-->
+              <!--                          icon="square"-->
+              <!--                          [fixedWidth]="true"-->
+              <!--                          size="lg"-->
+              <!--                          [ngStyle]="{ color: '#' + item.name }"-->
+              <!--                        ></fa-icon>-->
+              <!--                        {{ item.description }}-->
+              <!--                      </div>-->
+              <!--                    </ng-template>-->
+              <!--                  </ng-select>-->
+              <!--                </div>-->
+              <!--              </div>-->
             </div>
 
             <div class="row" *ngIf="!mandatoryIsNotNeed">

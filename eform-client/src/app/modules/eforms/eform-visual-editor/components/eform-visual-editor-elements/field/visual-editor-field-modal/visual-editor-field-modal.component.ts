@@ -11,16 +11,12 @@ import {
   EformFieldTypesEnum,
 } from 'src/app/common/const';
 import {
-  CommonDictionaryModel,
   EformVisualEditorFieldModel,
   EformVisualEditorFieldTypeModel,
   EformVisualEditorRecursionFieldModel,
 } from 'src/app/common/models';
 import { LocaleService } from 'src/app/common/services';
-import {
-  eformVisualEditorElementColors,
-  eformVisualEditorElementTypes,
-} from '../../../../const/eform-visual-editor-element-types';
+import { eformVisualEditorElementTypes } from '../../../../const/eform-visual-editor-element-types';
 import { fixTranslations } from 'src/app/common/helpers';
 import * as R from 'ramda';
 
@@ -39,13 +35,22 @@ export class VisualEditorFieldModalComponent implements OnInit {
   selectedLanguage: number;
   recursionModel: EformVisualEditorRecursionFieldModel = new EformVisualEditorRecursionFieldModel();
   isFieldSelected = false;
+  fieldTypes: EformVisualEditorFieldTypeModel[];
 
   get languages() {
     return applicationLanguages;
   }
 
-  get fieldTypes() {
-    return eformVisualEditorElementTypes;
+  setFieldTypes() {
+    if (this.recursionModel.fieldIsNested) {
+      this.fieldTypes = [
+        ...eformVisualEditorElementTypes.filter(
+          (x) => x.id !== EformFieldTypesEnum.FieldGroup
+        ),
+      ];
+    } else {
+      this.fieldTypes = [...eformVisualEditorElementTypes];
+    }
   }
 
   get eformFieldTypesEnum(): typeof EformFieldTypesEnum {
@@ -62,9 +67,9 @@ export class VisualEditorFieldModalComponent implements OnInit {
     );
   }
 
-  get fieldColors(): CommonDictionaryModel[] {
-    return eformVisualEditorElementColors;
-  }
+  // get fieldColors(): CommonDictionaryModel[] {
+  //   return eformVisualEditorElementColors;
+  // }
 
   get isAllNamesEmpty() {
     return !this.recursionModel.field.translations.find((x) => x.name !== '');
@@ -96,6 +101,7 @@ export class VisualEditorFieldModalComponent implements OnInit {
       }
       this.initForm();
     }
+    this.setFieldTypes();
     this.frame.show();
   }
 

@@ -77,6 +77,7 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
     this.addNewField.emit({
       fieldIndex: this.fieldIndex,
       checklistRecursionIndexes: this.checklistRecursionIndexes,
+      fieldIsNested: this.field.fieldType === EformFieldTypesEnum.FieldGroup,
     });
   }
 
@@ -86,6 +87,7 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
       fieldIndex: this.fieldIndex,
       parentFieldIndex: this.parentFieldIndex,
       checklistRecursionIndexes: this.checklistRecursionIndexes,
+      fieldIsNested: this.fieldIsNested,
     });
   }
 
