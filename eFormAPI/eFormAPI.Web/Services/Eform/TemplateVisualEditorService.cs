@@ -1,4 +1,4 @@
-﻿/*
+/*
 The MIT License (MIT)
 Copyright (c) 2007 - 2021 Microting A/S
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -570,6 +570,10 @@ namespace eFormAPI.Web.Services.Eform
             if (parentFieldId != -1)
             {
                 fieldQuery = fieldQuery.Where(x => x.ParentFieldId == parentFieldId);
+            }
+            else
+            {
+                fieldQuery = fieldQuery.Where(x => x.ParentFieldId == null);
             }
             var fields = await fieldQuery
                 .ToListAsync();
