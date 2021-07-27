@@ -6,6 +6,7 @@
       (click)="openTagsModal()"
       mdbTooltip="{{ 'Manage tags' | translate }}"
       mdbWavesEffect
+      id="manageTags"
     >
       <fa-icon icon="tags" [fixedWidth]="true" size="lg"></fa-icon>
     </button>
@@ -17,6 +18,7 @@
       "
       mdbTooltip="{{ (selectedTemplateId ? 'Save' : 'Create') | translate }}"
       mdbWavesEffect
+      id="saveCreateEformBtn"
     >
       {{ (selectedTemplateId ? 'Save Eform' : 'Create Eform') | translate }}
     </button>
@@ -50,6 +52,7 @@
                   mdbTooltip="{{ 'Expand all' | translate }}"
                   (click)="toggleCollapse()"
                   *ngIf="isItemsCollapsed"
+                  id="expandAllBtn"
                 >
                   <fa-icon
                     icon="angle-double-right"
@@ -64,6 +67,7 @@
                   mdbTooltip="{{ 'Collapse all' | translate }}"
                   (click)="toggleCollapse()"
                   *ngIf="!isItemsCollapsed"
+                  id="collapseAllBtn"
                 >
                   <fa-icon
                     icon="angle-double-down"

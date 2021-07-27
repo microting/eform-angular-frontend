@@ -11,7 +11,9 @@ import {
   EformFieldTypesEnum,
 } from 'src/app/common/const';
 import {
+  CommonDictionaryModel,
   EformVisualEditorFieldModel,
+  EformVisualEditorFieldTypeModel,
   EformVisualEditorRecursionFieldModel,
 } from 'src/app/common/models';
 import { LocaleService } from 'src/app/common/services';
@@ -46,7 +48,7 @@ export class VisualEditorFieldModalComponent implements OnInit {
     return eformVisualEditorElementTypes;
   }
 
-  get eformFieldTypesEnum() {
+  get eformFieldTypesEnum(): typeof EformFieldTypesEnum {
     return EformFieldTypesEnum;
   }
 
@@ -60,7 +62,7 @@ export class VisualEditorFieldModalComponent implements OnInit {
     );
   }
 
-  get fieldColors() {
+  get fieldColors(): CommonDictionaryModel[] {
     return eformVisualEditorElementColors;
   }
 

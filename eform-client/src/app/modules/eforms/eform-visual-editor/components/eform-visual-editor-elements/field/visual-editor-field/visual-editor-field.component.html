@@ -60,7 +60,7 @@
         </button>
         <button
           id="editBtn"
-          class="btn btn-icon mr-2"
+          class="btn btn-neutral btn-icon mr-2"
           (click)="onEditField()"
           [mdbTooltip]="'Edit field' | translate"
         >
@@ -77,7 +77,7 @@
         <button
           *ngIf="field.fieldType == fieldTypes.FieldGroup && field.collapsed"
           id="expandBtn"
-          class="btn btn-icon mr-2"
+          class="btn btn-neutral btn-icon mr-2"
           [mdbTooltip]="'Expand field' | translate"
           (click)="toggleCollapse(field)"
         >
@@ -86,7 +86,7 @@
         <button
           *ngIf="field.fieldType == fieldTypes.FieldGroup && !field.collapsed"
           id="collapseToggleBtn"
-          class="btn btn-icon mr-2"
+          class="btn btn-neutral btn-icon mr-2"
           [mdbTooltip]="'Collapse field' | translate"
           (click)="toggleCollapse(field)"
         >
