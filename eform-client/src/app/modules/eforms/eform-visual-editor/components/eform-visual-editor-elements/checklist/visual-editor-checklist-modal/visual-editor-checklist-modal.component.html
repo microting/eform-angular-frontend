@@ -1,7 +1,7 @@
 <div
   [config]="{ ignoreBackdropClick: true }"
   mdbModal
-  class="modal fade"
+  class="modal fade overflow-auto"
   #frame="mdbModal"
 >
   <div class="modal-dialog modal-lg">
@@ -9,9 +9,8 @@
       <div class="modal-header">
         <h3>
           {{
-            isChecklistSelected
-              ? ('Edit checklist' | translate)
-              : ('New checklist' | translate)
+            (isChecklistSelected ? 'Edit checklist' : 'New checklist')
+              | translate
           }}
         </h3>
         <button class="close" data-dismiss="modal" (click)="frame.hide()">
@@ -19,89 +18,60 @@
         </button>
       </div>
       <div class="modal-body">
-        <mdb-card class="mb-3">
-          <mdb-card-body>
-            <div class="row">
-              <div class="col">
-                <div class="ng-select-wrapper d-flex align-items-center">
-                  <ng-select
-                    class="custom"
-                    dropdownPosition="'bottom'"
-                    [placeholder]="'Selected language' | translate"
-                    [clearable]="false"
-                    [bindLabel]="'text'"
-                    [bindValue]="'id'"
-                    [(ngModel)]="selectedLanguage"
-                    id="newChecklistLanguageSelector"
-                    [items]="languages"
-                  ></ng-select>
-                  <fa-icon
-                    *ngIf="isAllNamesEmpty"
-                    [mdbTooltip]="'Required' | translate"
-                    icon="info-circle"
-                    [fixedWidth]="true"
-                    size="lg"
-                    class="text-warning ml-1"
-                  ></fa-icon>
+        <mdb-card
+          *ngFor="
+            let translation of recursionModel.checklist.translations;
+            let translationIndex = index
+          "
+          class="mb-3"
+        >
+          <ng-container *ngIf="isLanguageSelected(translation.languageId)">
+            <mdb-card-header>{{
+              getLanguage(translation.languageId) | translate
+            }}</mdb-card-header>
+            <mdb-card-body>
+              <div class="row">
+                <div class="col-12">
+                  <div class="md-form">
+                    <input
+                      mdbInput
+                      type="text"
+                      id="newChecklistNameTranslation_{{ translationIndex }}"
+                      name="newChecklistNameTranslation_{{ translationIndex }}"
+                      [(ngModel)]="translation.name"
+                      class="form-control"
+                    />
+                    <label
+                      for="newChecklistNameTranslation_{{ translationIndex }}"
+                    >
+                      {{ 'Name' | translate }}
+                    </label>
+                  </div>
                 </div>
               </div>
-            </div>
-          </mdb-card-body>
-        </mdb-card>
-        <mdb-card>
-          <mdb-card-body>
-            <ng-container
-              *ngFor="
-                let translation of recursionModel.checklist.translations;
-                let translationIndex = index
-              "
-            >
-              <ng-container *ngIf="selectedLanguage === translation.languageId">
-                <div class="row">
-                  <div class="col-12">
-                    <div class="md-form">
-                      <input
-                        mdbInput
-                        type="text"
-                        id="newChecklistNameTranslation_{{ translationIndex }}"
-                        name="newChecklistNameTranslation_{{
-                          translationIndex
-                        }}"
-                        [(ngModel)]="translation.name"
-                        class="form-control"
-                      />
-                      <label
-                        for="newChecklistNameTranslation_{{ translationIndex }}"
-                      >
-                        {{ 'Name' | translate }}
-                      </label>
-                    </div>
+              <div class="row">
+                <div class="col-12">
+                  <div class="md-form">
+                    <p class="text-black-50">
+                      {{ 'Description' | translate }}
+                    </p>
+                    <pell-editor
+                      mdbInput
+                      [(value)]="translation.description"
+                      name="newChecklistDescriptionTranslation_{{
+                        translationIndex
+                      }}"
+                      required
+                      id="newChecklistDescriptionTranslation_{{
+                        translationIndex
+                      }}"
+                      rows="10"
+                    ></pell-editor>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-12">
-                    <div class="md-form">
-                      <p class="text-black-50">
-                        {{ 'Description' | translate }}
-                      </p>
-                      <pell-editor
-                        mdbInput
-                        [(value)]="translation.description"
-                        name="newChecklistDescriptionTranslation_{{
-                          translationIndex
-                        }}"
-                        required
-                        id="newChecklistDescriptionTranslation_{{
-                          translationIndex
-                        }}"
-                        rows="10"
-                      ></pell-editor>
-                    </div>
-                  </div>
-                </div>
-              </ng-container>
-            </ng-container>
-          </mdb-card-body>
+              </div>
+            </mdb-card-body>
+          </ng-container>
         </mdb-card>
       </div>
       <div class="modal-footer">

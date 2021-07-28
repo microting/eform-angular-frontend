@@ -31,6 +31,8 @@
       <app-eform-visual-editor-header
         [visualEditorModel]="visualEditorTemplateModel"
         [availableTags]="availableTags"
+        [selectedLanguages]="selectedLanguages"
+        (addOrDeleteLanguage)="onAddOrDeleteLanguage($event)"
       ></app-eform-visual-editor-header>
     </div>
   </div>
@@ -182,6 +184,7 @@
 
 <app-visual-editor-checklist-modal
   #checklistModal
+  [selectedLanguages]="selectedLanguages"
   (createChecklist)="onCreateChecklist($event)"
   (updateChecklist)="onUpdateChecklist($event)"
 >
@@ -194,6 +197,7 @@
 
 <app-visual-editor-field-modal
   #fieldModal
+  [selectedLanguages]="selectedLanguages"
   (createField)="onFieldCreate($event)"
   (updateField)="onFieldUpdate($event)"
 >

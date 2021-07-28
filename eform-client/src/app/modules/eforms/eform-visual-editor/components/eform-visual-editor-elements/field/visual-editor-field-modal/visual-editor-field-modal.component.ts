@@ -1,11 +1,11 @@
 import {
   Component,
   EventEmitter,
+  Input,
   OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 import {
   applicationLanguages,
   EformFieldTypesEnum,
@@ -15,7 +15,6 @@ import {
   EformVisualEditorFieldTypeModel,
   EformVisualEditorRecursionFieldModel,
 } from 'src/app/common/models';
-import { LocaleService } from 'src/app/common/services';
 import { eformVisualEditorElementTypes } from '../../../../const/eform-visual-editor-element-types';
 import { fixTranslations } from 'src/app/common/helpers';
 import * as R from 'ramda';
@@ -28,11 +27,11 @@ import * as R from 'ramda';
 export class VisualEditorFieldModalComponent implements OnInit {
   @ViewChild('frame', { static: true }) frame;
   @ViewChild('popTemplate', { static: true }) popTemplate;
+  @Input() selectedLanguages: number[];
   @Output()
   createField: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter<EformVisualEditorRecursionFieldModel>();
   @Output()
   updateField: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter();
-  selectedLanguage: number;
   recursionModel: EformVisualEditorRecursionFieldModel = new EformVisualEditorRecursionFieldModel();
   isFieldSelected = false;
   fieldTypes: EformVisualEditorFieldTypeModel[];
@@ -71,21 +70,19 @@ export class VisualEditorFieldModalComponent implements OnInit {
   //   return eformVisualEditorElementColors;
   // }
 
-  get isAllNamesEmpty() {
-    return !this.recursionModel.field.translations.find((x) => x.name !== '');
-  }
+  // get isAllNamesEmpty() {
+  //   return !this.recursionModel.field.translations.find((x) => x.name !== '');
+  // }
 
-  constructor(
-    private translateService: TranslateService,
-    private localeService: LocaleService
-  ) {}
+  constructor() // private localeService: LocaleService // private translateService: TranslateService,
+  {}
 
   ngOnInit() {
-    this.setSelectedLanguage();
+    // this.setSelectedLanguage();
   }
 
   show(model?: EformVisualEditorRecursionFieldModel) {
-    this.setSelectedLanguage();
+    // this.setSelectedLanguage();
     if (model) {
       this.recursionModel = R.clone(model);
     }
@@ -128,9 +125,17 @@ export class VisualEditorFieldModalComponent implements OnInit {
     this.isFieldSelected = false;
   }
 
-  private setSelectedLanguage() {
-    this.selectedLanguage = applicationLanguages.find(
-      (x) => x.locale === this.localeService.getCurrentUserLocale()
-    ).id;
+  // private setSelectedLanguage() {
+  //   this.selectedLanguage = applicationLanguages.find(
+  //     (x) => x.locale === this.localeService.getCurrentUserLocale()
+  //   ).id;
+  // }
+
+  isLanguageSelected(languageId: number): boolean {
+    return this.selectedLanguages.some((x) => x === languageId);
+  }
+
+  getLanguage(languageId: number): string {
+    return this.languages.find((x) => x.id === languageId).text;
   }
 }
