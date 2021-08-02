@@ -74,7 +74,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         [HttpGet]
         [Route("api/template-files/csv/{id}")]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.GetCsv)]
-        public async Task<IActionResult> Csv(int id, string start, string end, bool utcTime)
+        public async Task<IActionResult> Csv(int id, string start, string end, bool utcTime, bool gpsCoordinates)
         {
             if (!await _permissionsService.CheckEform(id,
                 AuthConsts.EformClaims.EformsClaims.GetCsv))
@@ -96,13 +96,13 @@ namespace eFormAPI.Web.Controllers.Eforms
             {
                 fullPath = await core.CasesToCsv(id, DateTime.Parse(start), DateTime.Parse(end), filePath,
                     $"{await core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", ",",
-                    "", utcTime, cultureInfo, timeZoneInfo, language);
+                    "", utcTime, cultureInfo, timeZoneInfo, language, gpsCoordinates);
             }
             else
             {
                 fullPath = await core.CasesToCsv(id, null, null, filePath,
                     $"{await core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", ",",
-                    "", utcTime, cultureInfo, timeZoneInfo, language);
+                    "", utcTime, cultureInfo, timeZoneInfo, language, gpsCoordinates);
             }
 
             var fileStream = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
