@@ -22,10 +22,12 @@ namespace eFormAPI.Web.Services.Eform
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
     using Abstractions;
     using Abstractions.Eforms;
+    using eFormCore;
     using Infrastructure.Models.VisualEformEditor;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
@@ -117,10 +119,16 @@ namespace eFormAPI.Web.Services.Eform
             }
         }
 
+        //todo check all translates(checklists, filds) for create. if name and description == empty string - don't create this translate
         public async Task<OperationResult> CreateVisualTemplate(EformVisualEditorModel model)
         {
             try
             {
+                if (model == null || !model.Fields.Any() && !model.CheckLists.Any())
+                {
+                    throw new Exception();
+                } // todo i think it not need
+
                 var core = await _coreHelper.GetCore();
                 var sdkDbContext = core.DbContextHelper.GetDbContext();
 
@@ -190,11 +198,11 @@ namespace eFormAPI.Web.Services.Eform
                 // add fields to eform
                 if (!model.CheckLists.Any())
                 {
-                    await CreateFields(twoCheckList.Id, sdkDbContext, model.Fields);
+                    await CreateFields(twoCheckList.Id, sdkDbContext, model.Fields, core);
                 }
                 else // create checklists
                 {
-                    await CreateChecklist(model.CheckLists, sdkDbContext, newCheckList.Id);
+                    await CreateChecklist(model.CheckLists, sdkDbContext, newCheckList.Id, core);
                 }
 
                 return new OperationResult(true,
@@ -317,7 +325,7 @@ namespace eFormAPI.Web.Services.Eform
 
                 if (model.FieldForUpdate.Any())
                 {
-                    await UpdateFields(model.FieldForUpdate, sdkDbContext); // update fields
+                    await UpdateFields(model.FieldForUpdate, sdkDbContext, core); // update fields
                 }
 
                 var fieldForCreateOnThisCheckList = model.FieldForCreate
@@ -325,7 +333,7 @@ namespace eFormAPI.Web.Services.Eform
                         .ToList();
                 if(fieldForCreateOnThisCheckList.Any())
                 {
-                    await CreateFields(dbEform.Id, sdkDbContext, fieldForCreateOnThisCheckList); // create new field
+                    await CreateFields(dbEform.Id, sdkDbContext, fieldForCreateOnThisCheckList, core); // create new field
                 }
 
                 if(model.ChecklistForDelete.Any())
@@ -339,7 +347,7 @@ namespace eFormAPI.Web.Services.Eform
 
                 if (model.ChecklistForCreate.Any())
                 {
-                    await CreateChecklist(model, sdkDbContext); // create new checklists
+                    await CreateChecklist(model, sdkDbContext, core); // create new checklists
                 }
 
                 return new OperationResult(true,
@@ -426,7 +434,7 @@ namespace eFormAPI.Web.Services.Eform
             }
         }
 
-        private static async Task UpdateFields(List<VisualEditorFields> fieldsForUpdate, MicrotingDbContext sdkDbContext)
+        private static async Task UpdateFields(List<VisualEditorFields> fieldsForUpdate, MicrotingDbContext sdkDbContext, Core core)
         {
             foreach (var fieldForUpdate in fieldsForUpdate)
             {
@@ -448,11 +456,38 @@ namespace eFormAPI.Web.Services.Eform
                 fieldFromDb.MinValue = fieldForUpdate.MinValue;
                 fieldFromDb.DefaultValue = fieldForUpdate.Value;
 
+                var hashAndLanguageIdList = new List<KeyValuePair<string, int>>();
                 switch (fieldFromDb.FieldType.Type) // todo add specific behaviour for some fields
                 {
                     case Constants.FieldTypes.SingleSelect or Constants.FieldTypes.MultiSelect:
                     {
 
+                        break;
+                    }
+                    case Constants.FieldTypes.ShowPdf:
+                    {
+                        if (fieldForUpdate.PdfFiles.Any())
+                        {
+                            var folder = Path.Combine(Path.GetTempPath(), "templates",
+                                Path.Combine("fields-pdf-files", fieldFromDb.CheckListId.ToString()));
+                            Directory.CreateDirectory(folder);
+                            foreach (var pdfFile in fieldForUpdate.PdfFiles)
+                            {
+                                if (pdfFile.File != null)
+                                {
+                                    var filePath = Path.Combine(folder, $"{DateTime.Now.Ticks}_{fieldFromDb.CheckListId}.pdf");
+                                    using (var stream = new FileStream(filePath, FileMode.Create)) // if you replace using to await using - stream not start copy until it goes beyond the current block
+                                    {
+                                        await pdfFile.File.CopyToAsync(stream);
+                                    }
+
+                                    await core.PutFileToStorageSystem(filePath, pdfFile.File.FileName);
+                                    hashAndLanguageIdList.Add(
+                                        new KeyValuePair<string, int>(await core.PdfUpload(filePath),
+                                            pdfFile.LanguageId));
+                                }
+                            }
+                        }
                         break;
                     }
                 }
@@ -477,6 +512,17 @@ namespace eFormAPI.Web.Services.Eform
                     })
                     .ToList())
                 {
+                    if (fieldFromDb.FieldType.Type == Constants.FieldTypes.ShowPdf)
+                    {
+                        var hash = hashAndLanguageIdList
+                            .Where(x => x.Value == translationsModel.LanguageId)
+                            .Select(x => x.Key)
+                            .FirstOrDefault();
+                        if (!string.IsNullOrEmpty(hash))
+                        {
+                            translationsModel.DefaultValue = hash; // for pdf
+                        }
+                    }
                     await translationsModel.Create(sdkDbContext);
                 }
 
@@ -489,6 +535,18 @@ namespace eFormAPI.Web.Services.Eform
                     {
                         fieldTranslation.Description = translation.Description;
                         fieldTranslation.Text = translation.Name;
+
+                        if (fieldFromDb.FieldType.Type == Constants.FieldTypes.ShowPdf)
+                        {
+                            var hash = hashAndLanguageIdList
+                                .Where(x => x.Value == fieldTranslation.LanguageId)
+                                .Select(x => x.Key)
+                                .FirstOrDefault();
+                            if (!string.IsNullOrEmpty(hash))
+                            {
+                                fieldTranslation.DefaultValue = hash; // for pdf
+                            }
+                        }
                         await fieldTranslation.Update(sdkDbContext);
                     }
                 }
@@ -667,7 +725,7 @@ namespace eFormAPI.Web.Services.Eform
         }
 
         private static async Task CreateFields(int eformId, MicrotingDbContext sdkDbContext,
-            List<VisualEditorFields> fieldsList, int? parentFieldId = null)
+            List<VisualEditorFields> fieldsList, Core core, int? parentFieldId = null)
         {
             foreach (var field in fieldsList)
             {
@@ -690,6 +748,7 @@ namespace eFormAPI.Web.Services.Eform
                     .Where(x => x.Id == field.FieldType)
                     .Select(x => x.Type)
                     .FirstAsync();
+                var hashAndLanguageIdList = new List<KeyValuePair<string, int>>();
 
                 switch (fieldType)
                 {
@@ -725,7 +784,33 @@ namespace eFormAPI.Web.Services.Eform
                         }
                     case Constants.FieldTypes.FieldGroup:
                         {
-                            await CreateFields(eformId, sdkDbContext, field.Fields, dbField.Id);
+                            await CreateFields(eformId, sdkDbContext, field.Fields, core, dbField.Id);
+                            break;
+                        }
+                    case Constants.FieldTypes.ShowPdf:
+                        {
+                            if(field.PdfFiles.Any())
+                            {
+                                var folder = Path.Combine(Path.GetTempPath(), "templates",
+                                    Path.Combine("fields-pdf-files", eformId.ToString()));
+                                Directory.CreateDirectory(folder);
+                                foreach (var pdfFile in field.PdfFiles)
+                                {
+                                    if (pdfFile.File != null)
+                                    {
+                                        var filePath = Path.Combine(folder, $"{DateTime.Now.Ticks}_{eformId}.pdf");
+                                        using (var stream = new FileStream(filePath, FileMode.Create)) // if you replace using to await using - stream not start copy until it goes beyond the current block
+                                        {
+                                            await pdfFile.File.CopyToAsync(stream);
+                                        }
+
+                                        await core.PutFileToStorageSystem(filePath, pdfFile.File.FileName);
+                                        hashAndLanguageIdList.Add(
+                                            new KeyValuePair<string, int>(await core.PdfUpload(filePath),
+                                                pdfFile.LanguageId));
+                                    }
+                                }
+                            }
                             break;
                         }
                     default:
@@ -745,6 +830,17 @@ namespace eFormAPI.Web.Services.Eform
                         }).ToList();
                 foreach (var fieldTranslation in translates)
                 {
+                    if(fieldType == Constants.FieldTypes.ShowPdf)
+                    {
+                        var hash = hashAndLanguageIdList
+                            .Where(x => x.Value == fieldTranslation.LanguageId)
+                            .Select(x => x.Key)
+                            .FirstOrDefault();
+                        if (!string.IsNullOrEmpty(hash))
+                        {
+                            fieldTranslation.DefaultValue = hash; // for pdf
+                        }
+                    }
                     await fieldTranslation.Create(sdkDbContext);
                 }
             }
@@ -798,7 +894,7 @@ namespace eFormAPI.Web.Services.Eform
             return eform;
         }
 
-        private static async Task CreateChecklist(EformVisualEditorUpdateModel model, MicrotingDbContext sdkDbContext)
+        private static async Task CreateChecklist(EformVisualEditorUpdateModel model, MicrotingDbContext sdkDbContext, Core core)
         {
             foreach (var checklistForCreate in model.ChecklistForCreate)
             {
@@ -831,7 +927,7 @@ namespace eFormAPI.Web.Services.Eform
                     .Where(x => x.ChecklistId == checklistForCreate.TempId)
                     .ToList();
 
-                await CreateWhenUpdateFields(newCheckList.Id, sdkDbContext, model);
+                await CreateWhenUpdateFields(newCheckList.Id, sdkDbContext, model, core);
 
                 foreach (var eformVisualEditorModel in model.ChecklistForCreate.Where(x => x.ParentChecklistId == checklistForCreate.TempId))
                 {
@@ -841,7 +937,7 @@ namespace eFormAPI.Web.Services.Eform
         }
 
         private static async Task CreateChecklist(List<EformVisualEditorModel> model, MicrotingDbContext sdkDbContext,
-            int parentId)
+            int parentId, Core core)
         {
             foreach (var visualEditorModel in model)
             {
@@ -869,16 +965,16 @@ namespace eFormAPI.Web.Services.Eform
                 }
                 if (visualEditorModel.CheckLists.Any())
                 {
-                    await CreateChecklist(visualEditorModel.CheckLists, sdkDbContext, checkList.Id);
+                    await CreateChecklist(visualEditorModel.CheckLists, sdkDbContext, checkList.Id, core);
                 }
                 else
                 {
-                    await CreateFields(checkList.Id, sdkDbContext, visualEditorModel.Fields);
+                    await CreateFields(checkList.Id, sdkDbContext, visualEditorModel.Fields, core);
                 }
             }
         }
 
-        private static async Task CreateWhenUpdateFields(int eformId, MicrotingDbContext sdkDbContext, EformVisualEditorUpdateModel model)
+        private static async Task CreateWhenUpdateFields(int eformId, MicrotingDbContext sdkDbContext, EformVisualEditorUpdateModel model, Core core)
         {
             var fieldTypeGroup =
                 await sdkDbContext.FieldTypes
@@ -922,13 +1018,13 @@ namespace eFormAPI.Web.Services.Eform
                 var fieldsForCreate = model.FieldForCreate
                     .Where(x => x.ParentFieldId == fieldGroup.TempId)
                     .ToList();
-                await CreateFields(eformId, sdkDbContext, fieldsForCreate, dbField.Id); // child fields to create when updating the checklist are **not added to the group field**
+                await CreateFields(eformId, sdkDbContext, fieldsForCreate, core, dbField.Id); // child fields to create when updating the checklist are **not added to the group field**
 
                 model.FieldForCreate = model.FieldForCreate
                     .Where(x => x.ParentFieldId != fieldGroup.TempId || x.TempId != fieldGroup.TempId) // delete created fields from mas
                     .ToList();
             }
-            await CreateFields(eformId, sdkDbContext, model.FieldForCreate);
+            await CreateFields(eformId, sdkDbContext, model.FieldForCreate, core);
 
         }
     }

@@ -43,7 +43,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   availableTags: CommonDictionaryModel[] = [];
   isItemsCollapsed = false;
   eformVisualEditorUpdateModel: EformVisualEditorUpdateModel = new EformVisualEditorUpdateModel();
-  selectedLanguages: number[];
+  selectedLanguages: number[] = [];
 
   getTagsSub$: Subscription;
   getVisualTemplateSub$: Subscription;
@@ -106,6 +106,12 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         if (data && data.success) {
           this.visualEditorTemplateModel = data.model;
+          this.selectedLanguages = [
+            ...R.map(
+              (x) => x.languageId,
+              this.visualEditorTemplateModel.translations
+            ),
+          ];
           // if there are not enough translations
           this.visualEditorTemplateModel.translations = fixTranslations(
             this.visualEditorTemplateModel.translations

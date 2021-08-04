@@ -182,6 +182,12 @@
           [field]="recursionModel.field"
         >
         </app-visual-editor-additional-field-save-button>
+        <app-visual-editor-additional-field-pdf
+          *ngIf="recursionModel.field.fieldType == eformFieldTypesEnum.ShowPdf"
+          [field]="recursionModel.field"
+          [selectedLanguages]="selectedLanguages"
+        >
+        </app-visual-editor-additional-field-pdf>
       </div>
       <div class="modal-footer">
         <button

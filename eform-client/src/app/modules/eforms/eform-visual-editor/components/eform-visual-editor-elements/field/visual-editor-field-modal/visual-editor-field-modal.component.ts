@@ -74,8 +74,7 @@ export class VisualEditorFieldModalComponent implements OnInit {
   //   return !this.recursionModel.field.translations.find((x) => x.name !== '');
   // }
 
-  constructor() // private localeService: LocaleService // private translateService: TranslateService,
-  {}
+  constructor() {}
 
   ngOnInit() {
     // this.setSelectedLanguage();
@@ -124,12 +123,6 @@ export class VisualEditorFieldModalComponent implements OnInit {
     this.frame.hide();
     this.isFieldSelected = false;
   }
-
-  // private setSelectedLanguage() {
-  //   this.selectedLanguage = applicationLanguages.find(
-  //     (x) => x.locale === this.localeService.getCurrentUserLocale()
-  //   ).id;
-  // }
 
   isLanguageSelected(languageId: number): boolean {
     return this.selectedLanguages.some((x) => x === languageId);
