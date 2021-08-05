@@ -119,7 +119,7 @@ namespace eFormAPI.Web.Services.Eform
             }
         }
 
-        //todo check all translates(checklists, filds) for create. if name and description == empty string - don't create this translate
+        //todo check all translates(checklists, filds) for create. if name and description == empty string - don't create this translate. i think it's realy need
         public async Task<OperationResult> CreateVisualTemplate(EformVisualEditorModel model)
         {
             try
@@ -461,9 +461,65 @@ namespace eFormAPI.Web.Services.Eform
                 {
                     case Constants.FieldTypes.SingleSelect or Constants.FieldTypes.MultiSelect:
                     {
+                        foreach (var fieldOption in fieldFromDb.FieldOptions
+                            .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                            .Where(x => fieldForUpdate.Options.Where(y => y.Id != null).Any(y => y.Id != x.Id)))
+                        {
+                            await fieldOption.Delete(sdkDbContext);
+                        }
 
-                        break;
-                    }
+                        var optionsForCreate = fieldForUpdate.Options
+                            .Where(x => x.Id == null)
+                            .Select(x => new FieldOption
+                                {
+                                    FieldId = fieldFromDb.Id,
+                                    Selected = x.Selected,
+                                    DisplayOrder = x.DisplayOrder.ToString(),
+                                    Key = x.Key.ToString(),
+                                    FieldOptionTranslations = x.Translates
+                                        .Select(y =>
+                                            new FieldOptionTranslation
+                                            {
+                                                LanguageId = y.LanguageId,
+                                                Text = y.Name
+                                            })
+                                        .ToList(),
+                                })
+                            .ToList();
+
+                        var optionsForUpdate = fieldForUpdate.Options
+                            .Where(y => y.Id != null)
+                            .Select(x => new FieldOption
+                            {
+                                FieldId = fieldFromDb.Id,
+                                Selected = x.Selected,
+                                DisplayOrder = x.DisplayOrder.ToString(),
+                                Key = x.Key.ToString(),
+                                FieldOptionTranslations = x.Translates
+                                .Select(y => new FieldOptionTranslation
+                                    {
+                                        LanguageId = y.LanguageId,
+                                        Text = y.Name
+                                    })
+                                .ToList(),
+                            });
+
+                            foreach (var fieldOption in optionsForUpdate)
+                            {
+                                await fieldOption.Update(sdkDbContext);
+                            }
+
+                            foreach (var dbOption in optionsForCreate)
+                            {
+                                await dbOption.Create(sdkDbContext);
+                                foreach (var optionTranslation in dbOption.FieldOptionTranslations)
+                                {
+                                    optionTranslation.FieldOptionId = dbOption.Id;
+                                    await optionTranslation.Create(sdkDbContext);
+                                }
+                            }
+                            break;
+                        }
                     case Constants.FieldTypes.ShowPdf:
                     {
                         if (fieldForUpdate.PdfFiles.Any())

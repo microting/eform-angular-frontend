@@ -69,12 +69,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="API.doc.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Plugins" />
   </ItemGroup>
 

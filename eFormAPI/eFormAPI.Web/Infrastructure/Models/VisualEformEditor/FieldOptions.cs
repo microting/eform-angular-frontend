@@ -25,7 +25,7 @@ namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
 
     public class FieldOptions
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         public int DisplayOrder { get; set; }
 
