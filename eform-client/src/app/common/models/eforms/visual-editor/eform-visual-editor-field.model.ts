@@ -1,5 +1,6 @@
 import {
   CommonTranslationsModel,
+  EformVisualEditorOptionsModel,
   EformVisualEditorUploadPdfFileForFieldModel,
 } from 'src/app/common/models';
 import { getRandomInt } from 'src/app/common/helpers';
@@ -21,4 +22,5 @@ export class EformVisualEditorFieldModel {
   parentFieldId?: number;
   fields: EformVisualEditorFieldModel[] = [];
   pdfFiles: EformVisualEditorUploadPdfFileForFieldModel[] = [];
+  options: EformVisualEditorOptionsModel[] = [];
 }

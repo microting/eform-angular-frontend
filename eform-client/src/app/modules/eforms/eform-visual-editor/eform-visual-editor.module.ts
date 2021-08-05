@@ -22,6 +22,7 @@ import {
   VisualEditorAdditionalFieldNumberComponent,
   VisualEditorAdditionalFieldSaveButtonComponent,
   VisualEditorAdditionalFieldPdfComponent,
+  VisualEditorAdditionalFieldOptionsComponent,
 } from './components';
 import { EformVisualEditorRouting } from './eform-visual-editor.routing';
 
@@ -39,6 +40,7 @@ import { EformVisualEditorRouting } from './eform-visual-editor.routing';
     VisualEditorAdditionalFieldNumberComponent,
     VisualEditorAdditionalFieldSaveButtonComponent,
     VisualEditorAdditionalFieldPdfComponent,
+    VisualEditorAdditionalFieldOptionsComponent,
   ],
   imports: [
     CommonModule,

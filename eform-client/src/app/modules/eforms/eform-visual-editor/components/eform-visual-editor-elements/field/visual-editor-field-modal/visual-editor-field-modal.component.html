@@ -188,6 +188,15 @@
           [selectedLanguages]="selectedLanguages"
         >
         </app-visual-editor-additional-field-pdf>
+        <app-visual-editor-additional-field-options
+          *ngIf="
+            recursionModel.field.fieldType == eformFieldTypesEnum.MultiSelect ||
+            recursionModel.field.fieldType == eformFieldTypesEnum.SingleSelect
+          "
+          [field]="recursionModel.field"
+          [selectedLanguages]="selectedLanguages"
+        >
+        </app-visual-editor-additional-field-options>
       </div>
       <div class="modal-footer">
         <button
