@@ -265,19 +265,17 @@ namespace eFormAPI.Web.Services.Eform
                     .Where(x => x.Id != null))
                 {
                     var translation = dbEform.Translations.First(x => x.LanguageId == translationsModel.LanguageId);
-                    if (translation.Text != translationsModel.Name ||
-                        translation.Description != translationsModel.Description) // check if update is need
-                    {
-                        translation.Text = translationsModel.Name;
-                        translation.Description = translationsModel.Description;
-                        await translation.Update(sdkDbContext);
-                    }
 
-                    var translationForUpdate = parentEform?.Translations.FirstOrDefault(x =>
-                        x.LanguageId == translationsModel.LanguageId && x.Text != translationsModel.Name);
+                    translation.Text = translationsModel.Name;
+                    translation.Description = translationsModel.Description;
+                    await translation.Update(sdkDbContext);
+
+                    var translationForUpdate = parentEform?.Translations
+                        .FirstOrDefault(x => x.LanguageId == translationsModel.LanguageId && (x.Text != translationsModel.Name || x.Description != translationsModel.Description));
                     if (translationForUpdate != null)
                     {
                         translationForUpdate.Text = translationsModel.Name;
+                        translationForUpdate.Description = translationsModel.Description;
                         await translationForUpdate.Update(sdkDbContext);
                     }
                 }

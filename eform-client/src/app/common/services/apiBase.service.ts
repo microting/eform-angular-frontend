@@ -29,10 +29,10 @@ export class ApiBaseService {
       const formKey = namespace
         ? `${namespace}[${changedNameProperty}]`
         : changedNameProperty;
-      if (object[property] === null) {
-        formData.append(formKey, null);
-        continue;
-      }
+      // if (object[property] === null) {
+      //   formData.append(formKey, null);
+      //   continue;
+      // }
       if (object[property] instanceof Date) {
         formData.append(formKey, object[property].toISOString());
       } else if (

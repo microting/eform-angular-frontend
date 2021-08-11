@@ -1,3 +1,5 @@
+// noinspection JSIgnoredPromiseFromCall
+
 import { PageWithNavbarPage } from './PageWithNavbar.page';
 import XMLForEform from '../Constants/XMLForEform';
 import { FoldersRowObject } from './Folders.page';
@@ -120,6 +122,11 @@ class MyEformsPage extends PageWithNavbarPage {
   getFirstMyEformsRowObj(): MyEformsRowObject {
     browser.pause(500);
     return new MyEformsRowObject(1);
+  }
+
+  getLastMyEformsRowObj(): MyEformsRowObject {
+    browser.pause(500);
+    return new MyEformsRowObject(this.rowNum);
   }
 
   getEformsRowObjByNameEForm(nameEform: string): MyEformsRowObject {
