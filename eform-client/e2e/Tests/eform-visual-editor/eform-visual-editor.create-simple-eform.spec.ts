@@ -114,7 +114,7 @@ describe('Visual editor page', function () {
       checklistObjForEdit.translations[0].name
     );
     eform.goToVisualEditor();
-    mainChecklist = new MainCheckListRowObj();
+    mainChecklist = new MainCheckListRowObj(true);
     for (let i = 0; i < applicationLanguages.length; i++) {
       expect(
         mainChecklist.translations[i].name,

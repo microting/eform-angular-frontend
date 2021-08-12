@@ -28,10 +28,6 @@ export class EformVisualEditorHeaderComponent implements OnInit {
 
   ngOnInit() {}
 
-  get isAllNamesEmpty() {
-    return !this.visualEditorModel.translations.find((x) => x.name !== '');
-  }
-
   onAddOrDeleteLanguage(addTranslate: boolean, languageId: number) {
     this.addOrDeleteLanguage.emit({ addTranslate, languageId });
   }

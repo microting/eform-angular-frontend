@@ -145,13 +145,17 @@ class EformVisualEditorPage extends PageWithNavbarPage {
 
   goToVisualEditor() {
     this.eformsVisualEditor.click();
-    this.saveCreateEformBtn.waitForClickable({ timeout: 40000 });
+    this.manageTags.waitForClickable({ timeout: 40000 });
   }
 
   createVisualTemplate(checklist: ChecklistObj, clickSave = false) {
     if (checklist) {
       if (checklist.translations) {
         for (let i = 0; i < checklist.translations.length; i++) {
+          const checkbox = $(`#languageCheckbox${i}`);
+          if (checkbox.getValue() === false.toString()) {
+            checkbox.$('..').click();
+          }
           $(`#mainCheckListNameTranslation_${i}`).setValue(
             checklist.translations[i].name
           );
@@ -219,20 +223,26 @@ const eformVisualEditorPage = new EformVisualEditorPage();
 export default eformVisualEditorPage;
 
 export class MainCheckListRowObj {
-  constructor() {
+  constructor(openAllLanguages = false) {
+    if (openAllLanguages) {
+      this.openAllLanguages();
+    }
     const countField = eformVisualEditorPage.fieldsCountOnFirsLevel;
     for (let i = 0; i < countField; i++) {
       this.fields.push(new ChecklistFieldRowObj(i));
     }
     for (let i = 0; i < applicationLanguages.length; i++) {
-      this.translations.push({
-        languageId: i,
-        name: $(`#mainCheckListNameTranslation_${i}`).getValue(),
-        description: $(
-          `#mainCheckListDescriptionTranslation_${i} .pell-content`
-        ).getText(),
-        id: null,
-      });
+      const checkbox = $(`#languageCheckbox${i}`);
+      if (checkbox.getValue() !== false.toString()) {
+        this.translations.push({
+          languageId: i,
+          name: $(`#mainCheckListNameTranslation_${i}`).getValue(),
+          description: $(
+            `#mainCheckListDescriptionTranslation_${i} .pell-content`
+          ).getText(),
+          id: null,
+        });
+      }
     }
   }
   fields: ChecklistFieldRowObj[] = [];
@@ -242,6 +252,10 @@ export class MainCheckListRowObj {
     if (checklist) {
       if (checklist.translations) {
         for (let i = 0; i < checklist.translations.length; i++) {
+          const checkbox = $(`#languageCheckbox${i}`);
+          if (checkbox.getValue() === false.toString()) {
+            checkbox.$('..').click();
+          }
           $(`#mainCheckListNameTranslation_${i}`).setValue(
             checklist.translations[i].name
           );
@@ -266,6 +280,15 @@ export class MainCheckListRowObj {
     if (clickSave) {
       eformVisualEditorPage.saveCreateEformBtn.click();
       myEformsPage.newEformBtn.waitForClickable({ timeout: 40000 });
+    }
+  }
+
+  openAllLanguages() {
+    for (let i = 0; i < applicationLanguages.length; i++) {
+      const checkbox = $(`#languageCheckbox${i}`);
+      if (checkbox.getValue() === false.toString()) {
+        checkbox.$('..').click();
+      }
     }
   }
 }

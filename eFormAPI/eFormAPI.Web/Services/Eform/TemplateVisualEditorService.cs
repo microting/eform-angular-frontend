@@ -118,17 +118,11 @@ namespace eFormAPI.Web.Services.Eform
                     _localizationService.GetString("ErrorWhileObtainingEform"));
             }
         }
-
-        //todo check all translates(checklists, filds) for create. if name and description == empty string - don't create this translate. i think it's realy need
+        
         public async Task<OperationResult> CreateVisualTemplate(EformVisualEditorModel model)
         {
             try
             {
-                if (model == null || !model.Fields.Any() && !model.CheckLists.Any())
-                {
-                    throw new Exception();
-                } // todo i think it not need
-
                 var core = await _coreHelper.GetCore();
                 var sdkDbContext = core.DbContextHelper.GetDbContext();
 

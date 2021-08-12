@@ -82,20 +82,26 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
     });
   }
 
+  get isAllNamesEmpty() {
+    return !this.visualEditorTemplateModel.translations.find(
+      (x) => x.name !== ''
+    );
+  }
+
   ngOnInit(): void {
     this.getTags();
 
     this.routerSub$ = this.route.params.subscribe((params) => {
       this.selectedTemplateId = params['templateId'];
+      this.selectedLanguages = [
+        applicationLanguages.find(
+          (x) => x.locale === this.authStateService.currentUserLocale
+        ).id,
+      ];
       if (this.selectedTemplateId) {
         this.getVisualTemplate(this.selectedTemplateId);
       } else {
         this.initForm();
-        this.selectedLanguages = [
-          applicationLanguages.find(
-            (x) => x.locale === this.authStateService.currentUserLocale
-          ).id,
-        ];
       }
     });
   }
@@ -106,12 +112,12 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         if (data && data.success) {
           this.visualEditorTemplateModel = data.model;
-          this.selectedLanguages = [
-            ...R.map(
-              (x) => x.languageId,
-              this.visualEditorTemplateModel.translations
-            ),
-          ];
+          // this.selectedLanguages = [
+          //   ...R.map(
+          //     (x) => x.languageId,
+          //     this.visualEditorTemplateModel.translations
+          //   ),
+          // ];
           // if there are not enough translations
           this.visualEditorTemplateModel.translations = fixTranslations(
             this.visualEditorTemplateModel.translations

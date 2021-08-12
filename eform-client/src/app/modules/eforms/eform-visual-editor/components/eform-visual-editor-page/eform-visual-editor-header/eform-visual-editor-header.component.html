@@ -13,6 +13,7 @@
                   id="languageCheckbox{{ index }}"
                   name="languageCheckbox{{ index }}"
                   [ngModel]="isLanguageSelected(language.id)"
+                  [value]="isLanguageSelected(language.id)"
                   (ngModelChange)="onAddOrDeleteLanguage($event, language.id)"
                   type="checkbox"
                 />

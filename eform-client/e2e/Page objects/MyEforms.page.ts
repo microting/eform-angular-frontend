@@ -371,6 +371,6 @@ class MyEformsRowObject {
 
   goToVisualEditor() {
     this.goVisualEditorBtn.click();
-    $('#saveCreateEformBtn').waitForClickable({ timeout: 40000 });
+    $('#manageTags').waitForClickable({ timeout: 40000 });
   }
 }

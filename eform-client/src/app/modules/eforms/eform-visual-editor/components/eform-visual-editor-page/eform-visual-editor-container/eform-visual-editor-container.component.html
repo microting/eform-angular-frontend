@@ -19,6 +19,7 @@
       mdbTooltip="{{ (selectedTemplateId ? 'Save' : 'Create') | translate }}"
       mdbWavesEffect
       id="saveCreateEformBtn"
+      [disabled]="isAllNamesEmpty"
     >
       {{ (selectedTemplateId ? 'Save Eform' : 'Create Eform') | translate }}
     </button>
