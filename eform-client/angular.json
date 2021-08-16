@@ -52,6 +52,14 @@
             ]
           },
           "configurations": {
+            "development": {
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "buildOptimizer": false,
+              "sourceMap": true,
+              "optimization": false,
+              "namedChunks": true
+            },
             "production": {
               "budgets": [
                 {
@@ -74,12 +82,14 @@
               "vendorChunk": false,
               "buildOptimizer": true
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "defaultConfiguration": "",
           "options": {
-            "browserTarget": "eform-angular:build"
+            "browserTarget": "eform-angular:build:development"
           },
           "configurations": {
             "production": {
@@ -100,6 +110,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
+            "sourceMap": false,
             "styles": [
               "src/styles.scss"
             ],
