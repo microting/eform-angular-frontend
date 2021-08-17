@@ -128,7 +128,7 @@ export class EFormService {
 
   downloadCSVFile(templateId: number): Observable<any> {
     return this.apiBaseService.getBlobData(
-      TemplateFilesMethods.GetCsv + '/' + templateId
+      TemplateFilesMethods.GetCsv + '/' + templateId + '?start=&end=&utcTime=false&gpsCoordinates=false&includeCheckListText=true'
     );
   }
 
