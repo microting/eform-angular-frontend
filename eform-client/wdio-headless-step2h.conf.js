@@ -11,7 +11,7 @@ exports.config = {
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
   specs: [
-    
+    'e2e/Tests/navigation-menu/subheader.spec.ts', // Remove this test, when first real test is added.
   ],
   suites: {
     settings: ['e2e/Tests/application-settings/**/*.spec.ts'],
