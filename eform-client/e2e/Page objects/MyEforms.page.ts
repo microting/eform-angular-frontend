@@ -146,18 +146,20 @@ class MyEformsPage extends PageWithNavbarPage {
   }
 
   clearEFormTable() {
-    for (let i = this.rowNum - 1; i > 0; i--) {
-      this.getEformRowObj(i).deleteEForm();
+    while (this.rowNum !== 0) {
+      this.getLastMyEformsRowObj().deleteEForm();
     }
   }
 
-  createNewEform(eFormLabel, newTagsList = [], tagAddedNum = 0) {
+  createNewEform(eFormLabel, newTagsList = [], tagAddedNum = 0, xml = '') {
     const spinnerAnimation = $('#spinner-animation');
     spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
     this.newEformBtn.click();
     this.xmlTextArea.waitForDisplayed({ timeout: 40000 });
     // Create replaced xml and insert it in textarea
-    const xml = XMLForEform.XML.replace('TEST_LABEL', eFormLabel);
+    if (!xml) {
+      xml = XMLForEform.XML.replace('TEST_LABEL', eFormLabel);
+    }
     browser.execute(function (xmlText) {
       (<HTMLInputElement>document.getElementById('eFormXml')).value = xmlText;
     }, xml);

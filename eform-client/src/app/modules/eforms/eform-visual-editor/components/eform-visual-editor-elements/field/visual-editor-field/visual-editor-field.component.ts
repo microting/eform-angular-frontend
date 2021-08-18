@@ -150,4 +150,13 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
       checklistRecursionIndexes: this.checklistRecursionIndexes,
     });
   }
+
+  get fieldTranslationAndType() {
+    const type: string = EformFieldTypesEnum[this.field.fieldType];
+    let strForReturn = this.getTranslation;
+    if (type) {
+      strForReturn += `; ${type}`;
+    }
+    return strForReturn;
+  }
 }

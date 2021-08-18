@@ -17,10 +17,10 @@
         >
           drag_handle
         </i>
-        {{ getTranslation + '; ' + (fieldTypes[field.fieldType] | translate) }}
+        {{ fieldTranslationAndType }}
       </div>
       <div class="col">
-        <div class="row">
+        <div class="row" id="colors">
           <div *ngFor="let color of fieldColors">
             <div
               mdbBtn

@@ -3,7 +3,9 @@
     <div class="row">
       <div class="col">
         <div class="md-form">
-          <div *ngFor="let selectedLanguage of selectedLanguages">
+          <div
+            *ngFor="let selectedLanguage of selectedLanguages; let i = index"
+          >
             <ng-container *ngIf="isLanguageSelected(selectedLanguage)">
               <mdb-card class="mb-3">
                 <mdb-card-header>{{
@@ -15,6 +17,7 @@
                     hidden
                     [accept]="'application/pdf'"
                     (change)="onFileSelected($event, selectedLanguage)"
+                    id="pdfInput{{ i }}"
                     #fileUpload
                   />
                   <div>

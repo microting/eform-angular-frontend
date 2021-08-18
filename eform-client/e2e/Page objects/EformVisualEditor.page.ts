@@ -5,8 +5,12 @@ import {
   applicationLanguages,
   EformFieldTypesEnum,
 } from '../../src/app/common/const';
-import { CommonTranslationsModel } from '../../src/app/common/models';
+import {
+  CommonDictionaryModel,
+  CommonTranslationsModel,
+} from '../../src/app/common/models';
 import myEformsPage from './MyEforms.page';
+import { eformVisualEditorElementColors } from '../../src/app/modules/eforms/eform-visual-editor/const/eform-visual-editor-element-types';
 
 class EformVisualEditorPage extends PageWithNavbarPage {
   constructor() {
@@ -156,7 +160,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
           if (checkbox.getValue() === false.toString()) {
             checkbox.$('..').click();
           }
-          $(`#mainCheckListNameTranslation_${i}`).setValue(
+          this.mainCheckListNameTranslationByLanguageId(i).setValue(
             checklist.translations[i].name
           );
           $(`#mainCheckListDescriptionTranslation_${i} .pell-content`).setValue(
@@ -179,8 +183,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
       }
     }
     if (clickSave) {
-      this.saveCreateEformBtn.click();
-      myEformsPage.newEformBtn.waitForClickable({ timeout: 40000 });
+      this.clickSave();
     }
   }
 
@@ -209,13 +212,27 @@ class EformVisualEditorPage extends PageWithNavbarPage {
         option.waitForDisplayed({ timeout: 40000 });
         option.click();
       }
+      if (
+        checklistFieldObj.pathToFiles &&
+        checklistFieldObj.pathToFiles.length > 0
+      ) {
+        for (let i = 0; i < checklistFieldObj.pathToFiles.length; i++) {
+          const file = browser.uploadFile(checklistFieldObj.pathToFiles[i]);
+          $(`#pdfInput${i}`).addValue(file);
+        }
+      }
       if (clickCancel) {
         this.changeFieldSaveCancelBtn.click();
       } else {
         this.changeFieldSaveBtn.click();
       }
-      this.saveCreateEformBtn.waitForClickable({ timeout: 40000 });
+      this.manageTags.waitForClickable({ timeout: 40000 });
     }
+  }
+
+  clickSave() {
+    this.saveCreateEformBtn.click();
+    myEformsPage.newEformBtn.waitForClickable({ timeout: 40000 });
   }
 }
 
@@ -278,8 +295,7 @@ export class MainCheckListRowObj {
       }
     }
     if (clickSave) {
-      eformVisualEditorPage.saveCreateEformBtn.click();
-      myEformsPage.newEformBtn.waitForClickable({ timeout: 40000 });
+      eformVisualEditorPage.clickSave();
     }
   }
 
@@ -295,31 +311,63 @@ export class MainCheckListRowObj {
 
 export class ChecklistFieldRowObj {
   constructor(index: number, isNested = false) {
-    let element: WebdriverIO.Element;
     if (isNested) {
-      element = $$('#nestedFields')[index];
+      this.element = $$('#nestedFields')[index];
     } else {
-      element = $(`#field_${index}`);
+      this.element = $(`#field_${index}`);
     }
-    if (element) {
-      const str: string[] = element
+    if (this.element) {
+      const str: string[] = this.element
         .getText()
         .replace('drag_handle ', '') // delete not need word
         .split('; '); // split name and type
       this.name = str[0];
       this.type = EformFieldTypesEnum[str[1]];
-      this.deleteBtn = element.$('#deleteBtn');
-      this.editBtn = element.$('#editBtn');
-      this.copyBtn = element.$('#copyBtn');
-      this.fieldIsNotComplete = !!element.$('fa-icon');
+      this.deleteBtn = this.element.$('#deleteBtn');
+      this.editBtn = this.element.$('#editBtn');
+      this.copyBtn = this.element.$('#copyBtn');
+      this.fieldIsNotComplete = !!this.element.$('fa-icon');
+      const backgroundColor = this.element
+        .$('div>div')
+        .getCSSProperty('background-color').parsed.hex;
+      this.color = eformVisualEditorElementColors.find(
+        (x) => x.name === backgroundColor.replace('#', '')
+      );
+      const colorMas = this.element.$$('#colors >*');
+      this.colorsBtn = {
+        standard: colorMas[0],
+        green: colorMas[1],
+        blue: colorMas[2],
+        yellow: colorMas[3],
+        red: colorMas[4],
+        grey: colorMas[5],
+      };
     }
   }
+  element: WebdriverIO.Element;
   name: string;
   type: EformFieldTypesEnum;
   deleteBtn: WebdriverIO.Element;
   editBtn: WebdriverIO.Element;
   copyBtn: WebdriverIO.Element;
   fieldIsNotComplete: boolean;
+  color: CommonDictionaryModel;
+  colorsBtn: {
+    standard: WebdriverIO.Element;
+    green: WebdriverIO.Element;
+    blue: WebdriverIO.Element;
+    yellow: WebdriverIO.Element;
+    red: WebdriverIO.Element;
+    grey: WebdriverIO.Element;
+  };
+
+  changeColor(colorName: string) {
+    this.colorsBtn[colorName].click();
+  }
+
+  makeCopy() {
+    this.copyBtn.click();
+  }
 }
 
 export class ChecklistObj {
@@ -332,4 +380,5 @@ export class ChecklistFieldObj {
   translations: CommonTranslationsModel[];
   type: EformFieldTypesEnum;
   mandatory: boolean;
+  pathToFiles?: string[];
 }
