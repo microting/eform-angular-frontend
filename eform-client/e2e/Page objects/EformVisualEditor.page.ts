@@ -156,10 +156,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
     if (checklist) {
       if (checklist.translations) {
         for (let i = 0; i < checklist.translations.length; i++) {
-          const checkbox = $(`#languageCheckbox${i}`);
-          if (checkbox.getValue() === false.toString()) {
-            checkbox.$('..').click();
-          }
+          this.clickLanguageCheckbox(true, i);
           this.mainCheckListNameTranslationByLanguageId(i).setValue(
             checklist.translations[i].name
           );
@@ -191,6 +188,11 @@ class EformVisualEditorPage extends PageWithNavbarPage {
     checklistFieldObj: ChecklistFieldObj,
     clickCancel = false
   ) {
+    this.openVisualTemplateFieldCreateModal(checklistFieldObj);
+    this.closeVisualTemplateFieldCreateModal(clickCancel);
+  }
+
+  openVisualTemplateFieldCreateModal(checklistFieldObj: ChecklistFieldObj) {
     if (checklistFieldObj) {
       this.initialFieldCreateBtn.click();
       this.changeFieldSaveCancelBtn.waitForClickable({ timeout: 40000 });
@@ -212,6 +214,8 @@ class EformVisualEditorPage extends PageWithNavbarPage {
         option.waitForDisplayed({ timeout: 40000 });
         option.click();
       }
+
+      // pdf type
       if (
         checklistFieldObj.pathToFiles &&
         checklistFieldObj.pathToFiles.length > 0
@@ -221,18 +225,63 @@ class EformVisualEditorPage extends PageWithNavbarPage {
           $(`#pdfInput${i}`).addValue(file);
         }
       }
-      if (clickCancel) {
-        this.changeFieldSaveCancelBtn.click();
-      } else {
-        this.changeFieldSaveBtn.click();
+
+      // number type
+      if (checklistFieldObj.minValue) {
+        $('#minValueEdit').setValue(checklistFieldObj.minValue);
       }
-      this.manageTags.waitForClickable({ timeout: 40000 });
+      if (checklistFieldObj.maxValue) {
+        $('#maxValueEdit').setValue(checklistFieldObj.maxValue);
+      }
+      if (checklistFieldObj.defaultValue) {
+        $('#defaultValueEdit').setValue(checklistFieldObj.defaultValue);
+      }
+      if (checklistFieldObj.decimalCount) {
+        $('#decimalCountEdit').setValue(checklistFieldObj.decimalCount);
+      }
+
+      // mandatory
+      const noMandatory = [
+        EformFieldTypesEnum.None,
+        EformFieldTypesEnum.FieldGroup,
+        EformFieldTypesEnum.Audio,
+        EformFieldTypesEnum.ShowPdf,
+        EformFieldTypesEnum.SaveButton,
+      ];
+      if (
+        !noMandatory.includes(checklistFieldObj.type) &&
+        checklistFieldObj.mandatory
+      ) {
+        $('#isChecked').$('..').click();
+      }
     }
+  }
+
+  closeVisualTemplateFieldCreateModal(clickCancel = false) {
+    if (clickCancel) {
+      this.changeFieldSaveCancelBtn.click();
+    } else {
+      this.changeFieldSaveBtn.click();
+    }
+    this.manageTags.waitForClickable({ timeout: 40000 });
   }
 
   clickSave() {
     this.saveCreateEformBtn.click();
     myEformsPage.newEformBtn.waitForClickable({ timeout: 40000 });
+  }
+
+  openAllLanguages() {
+    for (let i = 0; i < applicationLanguages.length; i++) {
+      this.clickLanguageCheckbox(true, i);
+    }
+  }
+
+  clickLanguageCheckbox(value: boolean, index: number) {
+    const checkbox = $(`#languageCheckbox${index}`);
+    if (checkbox.getValue() !== value.toString()) {
+      checkbox.$('..').click();
+    }
   }
 }
 
@@ -242,7 +291,7 @@ export default eformVisualEditorPage;
 export class MainCheckListRowObj {
   constructor(openAllLanguages = false) {
     if (openAllLanguages) {
-      this.openAllLanguages();
+      eformVisualEditorPage.openAllLanguages();
     }
     const countField = eformVisualEditorPage.fieldsCountOnFirsLevel;
     for (let i = 0; i < countField; i++) {
@@ -296,15 +345,6 @@ export class MainCheckListRowObj {
     }
     if (clickSave) {
       eformVisualEditorPage.clickSave();
-    }
-  }
-
-  openAllLanguages() {
-    for (let i = 0; i < applicationLanguages.length; i++) {
-      const checkbox = $(`#languageCheckbox${i}`);
-      if (checkbox.getValue() === false.toString()) {
-        checkbox.$('..').click();
-      }
     }
   }
 }
@@ -379,6 +419,10 @@ export class ChecklistObj {
 export class ChecklistFieldObj {
   translations: CommonTranslationsModel[];
   type: EformFieldTypesEnum;
-  mandatory: boolean;
+  mandatory?: boolean;
   pathToFiles?: string[];
+  minValue?: number;
+  maxValue?: number;
+  defaultValue?: number;
+  decimalCount?: number;
 }

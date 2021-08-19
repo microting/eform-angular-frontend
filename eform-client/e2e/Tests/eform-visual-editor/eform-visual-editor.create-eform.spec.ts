@@ -3,7 +3,10 @@ import eformVisualEditorPage, {
   ChecklistObj,
   MainCheckListRowObj,
 } from '../../Page objects/EformVisualEditor.page';
-import { generateRandmString } from '../../Helpers/helper-functions';
+import {
+  generateRandmString,
+  getRandomInt,
+} from '../../Helpers/helper-functions';
 import { EformFieldTypesEnum } from '../../../src/app/common/const';
 import myEformsPage from '../../Page objects/MyEforms.page';
 import XMLForEformFractions from '../../Constants/XMLForEformFractions';
@@ -280,6 +283,117 @@ describe('Visual editor page', function () {
       mainChecklist.fields[0].color.description,
       'field color not valid'
     ).eq('Red');
+  });
+  it('should create visual template with one numberField', function () {
+    eformVisualEditorPage.goToVisualEditor();
+    const checklistWithPdfFile: ChecklistObj = {
+      translations: [
+        {
+          name: generateRandmString(),
+          description: generateRandmString(),
+          languageId: 1,
+          id: null,
+        },
+      ],
+      tags: [],
+      fields: [
+        {
+          type: EformFieldTypesEnum.Number,
+          translations: [
+            {
+              name: generateRandmString(),
+              description: generateRandmString(),
+              languageId: 1,
+              id: null,
+            },
+          ],
+          mandatory: false,
+          minValue: getRandomInt(0, 100),
+          maxValue: getRandomInt(100, 200),
+          defaultValue: getRandomInt(0, 200),
+          decimalCount: 0,
+        },
+      ],
+    };
+    eformVisualEditorPage.createVisualTemplate(checklistWithPdfFile, true);
+    const eform = myEformsPage.getLastMyEformsRowObj();
+
+    expect(eform.eFormName, 'name in table eforms not valid').eq(
+      checklistWithPdfFile.translations[0].name
+    );
+    eform.goToVisualEditor();
+    const mainChecklist = new MainCheckListRowObj();
+    expect(
+      mainChecklist.translations[0].name,
+      'name main checklist not valid'
+    ).eq(checklistWithPdfFile.translations[0].name);
+    expect(
+      mainChecklist.translations[0].description,
+      'description main checklist not valid'
+    ).eq(checklistWithPdfFile.translations[0].description);
+    expect(mainChecklist.fields[0].name, 'field name not valid').eq(
+      checklistWithPdfFile.fields[0].translations[0].name
+    );
+    expect(mainChecklist.fields[0].type, 'field type not valid').eq(
+      checklistWithPdfFile.fields[0].type
+    );
+    // todo add open modal field and expect other
+  });
+  it('should create visual template with one field and make copy this field', function () {
+    eformVisualEditorPage.goToVisualEditor();
+    const checklistObj: ChecklistObj = {
+      translations: [
+        {
+          name: generateRandmString(),
+          description: generateRandmString(),
+          languageId: 1,
+          id: null,
+        },
+      ],
+      tags: [],
+      fields: [
+        {
+          type: EformFieldTypesEnum.None,
+          translations: [
+            {
+              name: generateRandmString(),
+              description: generateRandmString(),
+              languageId: 1,
+              id: null,
+            },
+          ],
+          mandatory: false,
+        },
+      ],
+    };
+    eformVisualEditorPage.createVisualTemplate(checklistObj);
+    checklistObj.fields = [...checklistObj.fields, checklistObj.fields[0]];
+    let mainChecklist = new MainCheckListRowObj();
+    mainChecklist.fields[0].makeCopy();
+    eformVisualEditorPage.clickSave();
+    myEformsPage.getLastMyEformsRowObj().goToVisualEditor();
+    mainChecklist = new MainCheckListRowObj();
+    expect(
+      mainChecklist.translations[0].name,
+      'name main checklist not valid'
+    ).eq(checklistObj.translations[0].name);
+    expect(
+      mainChecklist.translations[0].description,
+      'description main checklist not valid'
+    ).eq(checklistObj.translations[0].description);
+    expect(mainChecklist.fields.length, 'fields length not valid').eq(2);
+    expect(mainChecklist.fields[0].name, 'field[0] name not valid').eq(
+      checklistObj.fields[0].translations[0].name
+    );
+    expect(mainChecklist.fields[0].type, 'field[0] type not valid').eq(
+      checklistObj.fields[0].type
+    );
+    expect(mainChecklist.fields[1].name, 'field[1] name not valid').eq(
+      checklistObj.fields[1].translations[0].name
+    );
+    expect(mainChecklist.fields[1].type, 'field[1] type not valid').eq(
+      checklistObj.fields[1].type
+    );
   });
   afterEach(function () {
     // delete created checklist
