@@ -1,17 +1,16 @@
 import {
   Component,
   EventEmitter,
+  Input,
   OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 import { applicationLanguages } from 'src/app/common/const';
 import {
   EformVisualEditorModel,
   EformVisualEditorRecursionChecklistModel,
 } from 'src/app/common/models';
-import { LocaleService } from 'src/app/common/services';
 import { fixTranslations } from 'src/app/common/helpers';
 import * as R from 'ramda';
 
@@ -26,7 +25,7 @@ export class VisualEditorChecklistModalComponent implements OnInit {
   createChecklist: EventEmitter<EformVisualEditorRecursionChecklistModel> = new EventEmitter<EformVisualEditorRecursionChecklistModel>();
   @Output()
   updateChecklist: EventEmitter<EformVisualEditorRecursionChecklistModel> = new EventEmitter<EformVisualEditorRecursionChecklistModel>();
-  selectedLanguage: number;
+  @Input() selectedLanguages: number[];
   recursionModel: EformVisualEditorRecursionChecklistModel = new EformVisualEditorRecursionChecklistModel();
   isChecklistSelected = false;
 
@@ -34,22 +33,19 @@ export class VisualEditorChecklistModalComponent implements OnInit {
     return applicationLanguages;
   }
 
-  constructor(
-    private translateService: TranslateService,
-    private localeService: LocaleService
-  ) {}
+  constructor() {}
 
   ngOnInit() {
-    this.selectedLanguage = applicationLanguages.find(
-      (x) => x.locale === this.localeService.getCurrentUserLocale()
-    ).id;
+    // this.selectedLanguage = applicationLanguages.find(
+    //   (x) => x.locale === this.localeService.getCurrentUserLocale()
+    // ).id;
   }
 
-  get isAllNamesEmpty() {
-    return !this.recursionModel.checklist.translations.find(
-      (x) => x.name !== ''
-    );
-  }
+  // get isAllNamesEmpty() {
+  //   return !this.recursionModel.checklist.translations.find(
+  //     (x) => x.name !== ''
+  //   );
+  // }
 
   show(model?: EformVisualEditorRecursionChecklistModel) {
     if (model) {
@@ -96,5 +92,13 @@ export class VisualEditorChecklistModalComponent implements OnInit {
     });
     this.frame.hide();
     this.isChecklistSelected = false;
+  }
+
+  isLanguageSelected(languageId: number): boolean {
+    return this.selectedLanguages.some((x) => x === languageId);
+  }
+
+  getLanguage(languageId: number): string {
+    return this.languages.find((x) => x.id === languageId).text;
   }
 }

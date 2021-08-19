@@ -77,6 +77,7 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
     this.addNewField.emit({
       fieldIndex: this.fieldIndex,
       checklistRecursionIndexes: this.checklistRecursionIndexes,
+      fieldIsNested: this.field.fieldType === EformFieldTypesEnum.FieldGroup, // called on parent field(field group)
     });
   }
 
@@ -86,6 +87,7 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
       fieldIndex: this.fieldIndex,
       parentFieldIndex: this.parentFieldIndex,
       checklistRecursionIndexes: this.checklistRecursionIndexes,
+      fieldIsNested: this.fieldIsNested, // called on field
     });
   }
 
@@ -147,5 +149,14 @@ export class VisualEditorFieldComponent implements OnInit, OnDestroy {
       fieldIndex: this.fieldIndex,
       checklistRecursionIndexes: this.checklistRecursionIndexes,
     });
+  }
+
+  get fieldTranslationAndType() {
+    const type: string = EformFieldTypesEnum[this.field.fieldType];
+    let strForReturn = this.getTranslation;
+    if (type) {
+      strForReturn += `; ${type}`;
+    }
+    return strForReturn;
   }
 }

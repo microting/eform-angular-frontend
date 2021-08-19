@@ -3,28 +3,23 @@
     <div class="card-body">
       <mdb-card>
         <mdb-card-body>
-          <div class="row">
-            <div class="col">
-              <div class="ng-select-wrapper d-flex align-items-center">
-                <ng-select
-                  dropdownPosition="'bottom'"
-                  [placeholder]="'Selected language' | translate"
-                  [clearable]="false"
-                  [bindLabel]="'text'"
-                  [bindValue]="'id'"
-                  [(ngModel)]="selectedLanguage"
-                  id="mainCheckListLanguageSelector"
-                  [items]="languages"
-                >
-                </ng-select>
-                <fa-icon
-                  *ngIf="isAllNamesEmpty"
-                  [mdbTooltip]="'Required' | translate"
-                  icon="info-circle"
-                  [fixedWidth]="true"
-                  size="lg"
-                  class="text-warning ml-1"
-                ></fa-icon>
+          <div class="row mb-3 mt-3">
+            <div
+              class="col"
+              *ngFor="let language of languages; let index = index"
+            >
+              <div class="mat-checkbox mr-3">
+                <input
+                  id="languageCheckbox{{ index }}"
+                  name="languageCheckbox{{ index }}"
+                  [ngModel]="isLanguageSelected(language.id)"
+                  [value]="isLanguageSelected(language.id)"
+                  (ngModelChange)="onAddOrDeleteLanguage($event, language.id)"
+                  type="checkbox"
+                />
+                <label for="languageCheckbox{{ index }}">{{
+                  language.text | translate
+                }}</label>
               </div>
             </div>
           </div>
@@ -34,48 +29,56 @@
               let translationIndex = index
             "
           >
-            <ng-container *ngIf="selectedLanguage === translation.languageId">
-              <div class="row">
-                <div class="col-12">
-                  <div class="md-form">
-                    <input
-                      mdbInput
-                      type="text"
-                      id="mainCheckListNameTranslation_{{ translationIndex }}"
-                      name="mainCheckListNameTranslation_{{ translationIndex }}"
-                      [(ngModel)]="translation.name"
-                      class="form-control"
-                    />
-                    <label
-                      for="mainCheckListNameTranslation_{{ translationIndex }}"
-                    >
-                      {{ 'Name' | translate }}
-                    </label>
+            <mdb-card
+              class="mb-3"
+              *ngIf="isLanguageSelected(translation.languageId)"
+            >
+              <mdb-card-header>{{
+                getLanguage(translation.languageId) | translate
+              }}</mdb-card-header>
+              <mdb-card-body>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="md-form">
+                      <input
+                        mdbInput
+                        type="text"
+                        id="mainCheckListNameTranslation_{{ translationIndex }}"
+                        name="mainCheckListNameTranslation_{{
+                          translationIndex
+                        }}"
+                        [(ngModel)]="translation.name"
+                        class="form-control"
+                      />
+                      <label
+                        for="mainCheckListNameTranslation_{{
+                          translationIndex
+                        }}"
+                      >
+                        {{ 'Name' | translate }}
+                      </label>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-12">
-                  <div class="md-form">
-                    <p class="text-black-50">
-                      {{ 'Description' | translate }}
-                    </p>
-                    <pell-editor
-                      mdbInput
-                      [(value)]="translation.description"
-                      name="mainCheckListDescriptionTranslation_{{
-                        translationIndex
-                      }}"
-                      required
-                      id="mainCheckListDescriptionTranslation_{{
-                        translationIndex
-                      }}"
-                      rows="10"
-                    ></pell-editor>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="md-form">
+                      <p class="text-black-50">
+                        {{ 'Description' | translate }}
+                      </p>
+                      <pell-editor
+                        mdbInput
+                        [(value)]="translation.description"
+                        required
+                        id="mainCheckListDescriptionTranslation_{{
+                          translationIndex
+                        }}"
+                      ></pell-editor>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </ng-container>
+              </mdb-card-body>
+            </mdb-card>
           </ng-container>
           <div class="row">
             <div class="col">

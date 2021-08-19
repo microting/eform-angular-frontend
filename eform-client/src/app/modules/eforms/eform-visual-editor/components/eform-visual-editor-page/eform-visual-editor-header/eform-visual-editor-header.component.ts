@@ -1,11 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { applicationLanguages } from 'src/app/common/const';
 import {
   CommonDictionaryModel,
   EformVisualEditorModel,
 } from 'src/app/common/models';
-import { LocaleService } from 'src/app/common/services';
 
 @Component({
   selector: 'app-eform-visual-editor-header',
@@ -15,25 +13,30 @@ import { LocaleService } from 'src/app/common/services';
 export class EformVisualEditorHeaderComponent implements OnInit {
   @Input()
   visualEditorModel: EformVisualEditorModel = new EformVisualEditorModel();
-  selectedLanguage: number;
+  @Input() selectedLanguages: number[];
   @Input() availableTags: CommonDictionaryModel[];
+  @Output() addOrDeleteLanguage: EventEmitter<{
+    addTranslate: boolean;
+    languageId: number;
+  }> = new EventEmitter();
 
   get languages() {
     return applicationLanguages;
   }
 
-  constructor(
-    private translateService: TranslateService,
-    private localeService: LocaleService
-  ) {}
+  constructor() {}
 
-  ngOnInit() {
-    this.selectedLanguage = applicationLanguages.find(
-      (x) => x.locale === this.localeService.getCurrentUserLocale()
-    ).id;
+  ngOnInit() {}
+
+  onAddOrDeleteLanguage(addTranslate: boolean, languageId: number) {
+    this.addOrDeleteLanguage.emit({ addTranslate, languageId });
   }
 
-  get isAllNamesEmpty() {
-    return !this.visualEditorModel.translations.find((x) => x.name !== '');
+  getLanguage(languageId: number): string {
+    return this.languages.find((x) => x.id === languageId).text;
+  }
+
+  isLanguageSelected(languageId: number): boolean {
+    return this.selectedLanguages.some((x) => x === languageId);
   }
 }

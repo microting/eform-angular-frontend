@@ -77,8 +77,8 @@ namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
         /// <summary>
         /// for PDF field
         /// </summary>
-        public List<UploadedData> Files { get; set; }
-            = new List<UploadedData>();
+        public List<UploadPdfFileForFieldModel> PdfFiles { get; set; }
+            = new List<UploadPdfFileForFieldModel>();
 
         public int ChecklistId { get; set; }
 

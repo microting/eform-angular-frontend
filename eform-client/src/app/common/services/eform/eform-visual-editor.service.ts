@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import {
   EformVisualEditorModel,
   EformVisualEditorUpdateModel,
@@ -29,18 +29,20 @@ export class EformVisualEditorService {
   createVisualEditorTemplate(
     model: EformVisualEditorModel
   ): Observable<OperationResult> {
-    return this.apiBaseService.post(
+    const formData = ApiBaseService.objectToFormData(model, true);
+    return this.apiBaseService.postFormData(
       TemplateVisualEditorMethods.VisualEditor,
-      model
+      formData
     );
   }
 
   updateVisualEditorTemplate(
     model: EformVisualEditorUpdateModel
   ): Observable<OperationResult> {
-    return this.apiBaseService.put(
+    const formData = ApiBaseService.objectToFormData(model, true);
+    return this.apiBaseService.putFormData(
       TemplateVisualEditorMethods.VisualEditor,
-      model
+      formData
     );
   }
 }

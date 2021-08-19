@@ -1,24 +1,21 @@
 import {
   Component,
   EventEmitter,
+  Input,
   OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 import {
   applicationLanguages,
   EformFieldTypesEnum,
 } from 'src/app/common/const';
 import {
   EformVisualEditorFieldModel,
+  EformVisualEditorFieldTypeModel,
   EformVisualEditorRecursionFieldModel,
 } from 'src/app/common/models';
-import { LocaleService } from 'src/app/common/services';
-import {
-  eformVisualEditorElementColors,
-  eformVisualEditorElementTypes,
-} from '../../../../const/eform-visual-editor-element-types';
+import { eformVisualEditorElementTypes } from '../../../../const/eform-visual-editor-element-types';
 import { fixTranslations } from 'src/app/common/helpers';
 import * as R from 'ramda';
 
@@ -30,23 +27,32 @@ import * as R from 'ramda';
 export class VisualEditorFieldModalComponent implements OnInit {
   @ViewChild('frame', { static: true }) frame;
   @ViewChild('popTemplate', { static: true }) popTemplate;
+  @Input() selectedLanguages: number[];
   @Output()
   createField: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter<EformVisualEditorRecursionFieldModel>();
   @Output()
   updateField: EventEmitter<EformVisualEditorRecursionFieldModel> = new EventEmitter();
-  selectedLanguage: number;
   recursionModel: EformVisualEditorRecursionFieldModel = new EformVisualEditorRecursionFieldModel();
   isFieldSelected = false;
+  fieldTypes: EformVisualEditorFieldTypeModel[];
 
   get languages() {
     return applicationLanguages;
   }
 
-  get fieldTypes() {
-    return eformVisualEditorElementTypes;
+  setFieldTypes() {
+    if (this.recursionModel.fieldIsNested) {
+      this.fieldTypes = [
+        ...eformVisualEditorElementTypes.filter(
+          (x) => x.id !== EformFieldTypesEnum.FieldGroup
+        ),
+      ];
+    } else {
+      this.fieldTypes = [...eformVisualEditorElementTypes];
+    }
   }
 
-  get eformFieldTypesEnum() {
+  get eformFieldTypesEnum(): typeof EformFieldTypesEnum {
     return EformFieldTypesEnum;
   }
 
@@ -60,25 +66,22 @@ export class VisualEditorFieldModalComponent implements OnInit {
     );
   }
 
-  get fieldColors() {
-    return eformVisualEditorElementColors;
-  }
+  // get fieldColors(): CommonDictionaryModel[] {
+  //   return eformVisualEditorElementColors;
+  // }
 
-  get isAllNamesEmpty() {
-    return !this.recursionModel.field.translations.find((x) => x.name !== '');
-  }
+  // get isAllNamesEmpty() {
+  //   return !this.recursionModel.field.translations.find((x) => x.name !== '');
+  // }
 
-  constructor(
-    private translateService: TranslateService,
-    private localeService: LocaleService
-  ) {}
+  constructor() {}
 
   ngOnInit() {
-    this.setSelectedLanguage();
+    // this.setSelectedLanguage();
   }
 
   show(model?: EformVisualEditorRecursionFieldModel) {
-    this.setSelectedLanguage();
+    // this.setSelectedLanguage();
     if (model) {
       this.recursionModel = R.clone(model);
     }
@@ -94,6 +97,7 @@ export class VisualEditorFieldModalComponent implements OnInit {
       }
       this.initForm();
     }
+    this.setFieldTypes();
     this.frame.show();
   }
 
@@ -120,9 +124,11 @@ export class VisualEditorFieldModalComponent implements OnInit {
     this.isFieldSelected = false;
   }
 
-  private setSelectedLanguage() {
-    this.selectedLanguage = applicationLanguages.find(
-      (x) => x.locale === this.localeService.getCurrentUserLocale()
-    ).id;
+  isLanguageSelected(languageId: number): boolean {
+    return this.selectedLanguages.some((x) => x === languageId);
+  }
+
+  getLanguage(languageId: number): string {
+    return this.languages.find((x) => x.id === languageId).text;
   }
 }

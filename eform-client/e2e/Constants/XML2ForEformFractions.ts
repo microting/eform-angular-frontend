@@ -1,44 +1,44 @@
 export default {
-  XML: '<?xml version="1.0" encoding="UTF-8"?>\n' +
-    '<Main>\n' +
-    '  <Id>138798</Id>\n' +
-    '  <Repeated>0</Repeated>\n' +
-    '  <Label>Number 1</Label>\n' +
-    '  <StartDate>2018-05-08</StartDate>\n' +
-    '  <EndDate>2028-05-08</EndDate>\n' +
-    '  <Language>da</Language>\n' +
-    '  <MultiApproval>false</MultiApproval>\n' +
-    '  <FastNavigation>false</FastNavigation>\n' +
-    '  <Review>false</Review>\n' +
-    '  <Summary>false</Summary>\n' +
-    '  <DisplayOrder>0</DisplayOrder>\n' +
-    '  <ElementList>\n' +
-    '    <Element type="DataElement">\n' +
-    '      <Id>138798</Id>\n' +
-    '      <Label>Number 1</Label>\n' +
-    '      <Description><![CDATA[]]></Description>\n' +
-    '      <DisplayOrder>0</DisplayOrder>\n' +
-    '      <ReviewEnabled>false</ReviewEnabled>\n' +
-    '      <ManualSync>false</ManualSync>\n' +
-    '      <ExtraFieldsEnabled>false</ExtraFieldsEnabled>\n' +
-    '      <DoneButtonDisabled>false</DoneButtonDisabled>\n' +
-    '      <ApprovalEnabled>false</ApprovalEnabled>\n' +
-    '      <DataItemList>\n' +
-    '        <DataItem type="Number">\n' +
-    '          <Id>343963</Id>\n' +
-    '          <Label>Number 1</Label>\n' +
-    '          <Description><![CDATA[Number 1 description]]></Description>\n' +
-    '          <DisplayOrder>0</DisplayOrder>\n' +
-    '          <Mandatory>true</Mandatory>\n' +
-    '          <MinValue>1</MinValue>\n' +
-    '          <MaxValue>1100</MaxValue>\n' +
-    '          <Value>24</Value>\n' +
-    '          <DecimalCount>2</DecimalCount>\n' +
-    '          <UnitName/>\n' +
-    '          <Color>e8eaf6</Color>\n' +
-    '        </DataItem>\n' +
-    '      </DataItemList>\n' +
-    '    </Element>\n' +
-    '  </ElementList>\n' +
-    '</Main>'
+  XML: `<?xml version="1.0" encoding="UTF-8"?>
+<Main>
+  <Id>138798</Id>
+  <Repeated>0</Repeated>
+  <Label>Number 1</Label>
+  <StartDate>2018-05-08</StartDate>
+  <EndDate>2028-05-08</EndDate>
+  <Language>da</Language>
+  <MultiApproval>false</MultiApproval>
+  <FastNavigation>false</FastNavigation>
+  <Review>false</Review>
+  <Summary>false</Summary>
+  <DisplayOrder>0</DisplayOrder>
+  <ElementList>
+    <Element type="DataElement">
+      <Id>138798</Id>
+      <Label>Number 1</Label>
+      <Description><![CDATA[]]></Description>
+      <DisplayOrder>0</DisplayOrder>
+      <ReviewEnabled>false</ReviewEnabled>
+      <ManualSync>false</ManualSync>
+      <ExtraFieldsEnabled>false</ExtraFieldsEnabled>
+      <DoneButtonDisabled>false</DoneButtonDisabled>
+      <ApprovalEnabled>false</ApprovalEnabled>
+      <DataItemList>
+        <DataItem type="Number">
+          <Id>343963</Id>
+          <Label>Number 1</Label>
+          <Description><![CDATA[Number 1 description]]></Description>
+          <DisplayOrder>0</DisplayOrder>
+          <Mandatory>true</Mandatory>
+          <MinValue>1</MinValue>
+          <MaxValue>1100</MaxValue>
+          <Value>24</Value>
+          <DecimalCount>2</DecimalCount>
+          <UnitName/>
+          <Color>e8eaf6</Color>
+        </DataItem>
+      </DataItemList>
+    </Element>
+  </ElementList>
+</Main>`,
 };

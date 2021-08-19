@@ -3,7 +3,8 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { AuthQuery, AuthState } from 'src/app/common/store';
+import { AuthQuery } from 'src/app/common/store';
+import * as R from 'ramda';
 
 @Injectable()
 export class ApiBaseService {
@@ -12,6 +13,52 @@ export class ApiBaseService {
     private toastrService: ToastrService,
     private query: AuthQuery
   ) {}
+
+  public static objectToFormData(
+    object: Object,
+    needPascalStyle = false,
+    form?: FormData,
+    namespace?: string
+  ): FormData {
+    const formData = form || new FormData();
+    // tslint:disable-next-line:forin
+    for (const property in object) {
+      const changedNameProperty = needPascalStyle
+        ? property[0].toUpperCase() + R.drop(1, property)
+        : property;
+      const formKey = namespace
+        ? `${namespace}[${changedNameProperty}]`
+        : changedNameProperty;
+      // if (object[property] === null) {
+      //   formData.append(formKey, null);
+      //   continue;
+      // }
+      if (object[property] instanceof Date) {
+        formData.append(formKey, object[property].toISOString());
+      } else if (
+        typeof object[property] === 'object' &&
+        !(object[property] instanceof File)
+      ) {
+        ApiBaseService.objectToFormData(
+          object[property],
+          needPascalStyle,
+          formData,
+          formKey
+        );
+      } else if (object[property] instanceof File) {
+        const file = object[property] as File;
+        // formData.append(
+        //   formKey,
+        //   new Blob([file], { type: 'application/pdf' }),
+        //   file.name
+        // );
+        formData.append(formKey, file, file.name);
+      } else {
+        formData.append(formKey, object[property]);
+      }
+    }
+    return formData;
+  }
 
   public get<T>(method: string, params?: any): Observable<any> {
     return this.http
@@ -29,10 +76,18 @@ export class ApiBaseService {
       .pipe(map((response) => this.extractData<T>(response)));
   }
 
-  public postUrlEncoded<T>(method: string, body: any): Observable<any> {
+  public postFormData<T>(url: string, body: any): Observable<any> {
     return this.http
-      .post(method, body.toString(), {
-        headers: this.setHeaders('application/x-www-form-urlencoded'),
+      .post(url, body, {
+        headers: this.setHeaders('formData'),
+      })
+      .pipe(map((response) => this.extractData<T>(response)));
+  }
+
+  public putFormData<T>(url: string, body: any): Observable<any> {
+    return this.http
+      .put(url, body, {
+        headers: this.setHeaders('formData'),
       })
       .pipe(map((response) => this.extractData<T>(response)));
   }
@@ -108,6 +163,9 @@ export class ApiBaseService {
   private setHeaders(contentType?: string) {
     let headers = new HttpHeaders();
     if (contentType === 'formData') {
+      // headers = headers.set('Content-Type', 'multipart/form-data');
+      // if you uncomment this piece of code, the FormData will not be read correctly on the server
+      // due to the lack of a 'boundary' (separator), which is installed independently and randomly
     } else if (contentType) {
       headers = headers.set('Content-Type', contentType);
     } else {
@@ -130,15 +188,6 @@ export class ApiBaseService {
       }
     }
     return httpParams;
-  }
-
-  private get formHeaders() {
-    const headers: Headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    if (this.query.isAuth) {
-      headers.append('Authorization', this.query.bearerToken);
-    }
-    return headers;
   }
 
   private extractData<T>(res: any) {

@@ -20,20 +20,12 @@ SOFTWARE.
 
 namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
 {
-    using System.Collections.Generic;
-    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+    using Microsoft.AspNetCore.Http;
 
-    public class FieldOptions
+    public class UploadPdfFileForFieldModel
     {
-        public int? Id { get; set; }
+        public IFormFile File { get; set; }
 
-        public int DisplayOrder { get; set; }
-
-        public bool Selected { get; set; }
-
-        public int Key { get; set; }
-
-        public List<CommonTranslationsModel> Translates { get; set; }
-            = new List<CommonTranslationsModel>();
+        public int LanguageId { get; set; }
     }
 }

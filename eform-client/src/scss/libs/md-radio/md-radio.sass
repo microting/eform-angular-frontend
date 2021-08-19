@@ -2,6 +2,9 @@
  * MD Radio Input Styles
  */
 
+@use "sass:list"
+@use "sass:math"
+
 @import vars
 @import mixins
 
@@ -60,7 +63,7 @@
       +size($radio-inner-size)
       +transform(scale(0))
       display: block
-      margin: ($radio-outer-size - $radio-inner-size)/5
+      margin: math.div($radio-outer-size - $radio-inner-size, 5)
       border-radius: 50%
       background-color: $radio-active-color
       opacity: 0
@@ -68,7 +71,7 @@
   // if has extra text ('small' tag)
   &.has--text
     > div
-      padding-top: $radio-font-size/2 - 2
+      padding-top: math.div($radio-font-size, 2) - 2
     // extra label text
     small
       display: block
@@ -142,7 +145,7 @@ body.theme-dark
         +size($radio-inner-size)
         +transform(scale(0))
         display: block
-        margin: ($radio-outer-size - $radio-inner-size)/5
+        margin: math.div($radio-outer-size - $radio-inner-size, 5)
         border-radius: 50%
         background-color: var(--blue-500)
         opacity: 0
@@ -150,7 +153,7 @@ body.theme-dark
     // if has extra text ('small' tag)
     &.has--text
       > div
-        padding-top: $radio-font-size/2 - 2
+        padding-top: math.div($radio-font-size, 2) - 2
       // extra label text
       small
         display: block

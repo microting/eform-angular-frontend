@@ -22,6 +22,7 @@ import { fixTranslations } from 'src/app/common/helpers';
 import { VisualEditorFieldModalComponent } from '../../';
 import { DragulaService } from 'ng2-dragula';
 import { CollapseComponent } from 'angular-bootstrap-md';
+import { AuthStateService } from 'src/app/common/store';
 
 @AutoUnsubscribe()
 @Component({
@@ -42,6 +43,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   availableTags: CommonDictionaryModel[] = [];
   isItemsCollapsed = false;
   eformVisualEditorUpdateModel: EformVisualEditorUpdateModel = new EformVisualEditorUpdateModel();
+  selectedLanguages: number[] = [];
 
   getTagsSub$: Subscription;
   getVisualTemplateSub$: Subscription;
@@ -54,7 +56,8 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
     private tagsService: EformTagService,
     private visualEditorService: EformVisualEditorService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authStateService: AuthStateService
   ) {
     this.dragulaService.createGroup('CHECK_LISTS', {
       moves: (el, container, handle) => {
@@ -79,11 +82,22 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
     });
   }
 
+  get isAllNamesEmpty() {
+    return !this.visualEditorTemplateModel.translations.find(
+      (x) => x.name !== ''
+    );
+  }
+
   ngOnInit(): void {
     this.getTags();
 
     this.routerSub$ = this.route.params.subscribe((params) => {
       this.selectedTemplateId = params['templateId'];
+      this.selectedLanguages = [
+        applicationLanguages.find(
+          (x) => x.locale === this.authStateService.currentUserLocale
+        ).id,
+      ];
       if (this.selectedTemplateId) {
         this.getVisualTemplate(this.selectedTemplateId);
       } else {
@@ -98,6 +112,12 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         if (data && data.success) {
           this.visualEditorTemplateModel = data.model;
+          // this.selectedLanguages = [
+          //   ...R.map(
+          //     (x) => x.languageId,
+          //     this.visualEditorTemplateModel.translations
+          //   ),
+          // ];
           // if there are not enough translations
           this.visualEditorTemplateModel.translations = fixTranslations(
             this.visualEditorTemplateModel.translations
@@ -678,6 +698,18 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
       }
     }
     return mas;
+  }
+
+  onAddOrDeleteLanguage(model: { addTranslate: boolean; languageId: number }) {
+    if (model) {
+      if (model.addTranslate) {
+        this.selectedLanguages = [...this.selectedLanguages, model.languageId];
+      } else {
+        this.selectedLanguages = [
+          ...this.selectedLanguages.filter((x) => x !== model.languageId),
+        ];
+      }
+    }
   }
 
   ngOnDestroy(): void {

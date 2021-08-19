@@ -17,10 +17,10 @@
         >
           drag_handle
         </i>
-        {{ getTranslation + '; ' + (fieldTypes[field.fieldType] | translate) }}
+        {{ fieldTranslationAndType }}
       </div>
       <div class="col">
-        <div class="row">
+        <div class="row" id="colors">
           <div *ngFor="let color of fieldColors">
             <div
               mdbBtn
@@ -60,7 +60,7 @@
         </button>
         <button
           id="editBtn"
-          class="btn btn-icon mr-2"
+          class="btn btn-neutral btn-icon mr-2"
           (click)="onEditField()"
           [mdbTooltip]="'Edit field' | translate"
         >
@@ -77,7 +77,7 @@
         <button
           *ngIf="field.fieldType == fieldTypes.FieldGroup && field.collapsed"
           id="expandBtn"
-          class="btn btn-icon mr-2"
+          class="btn btn-neutral btn-icon mr-2"
           [mdbTooltip]="'Expand field' | translate"
           (click)="toggleCollapse(field)"
         >
@@ -86,7 +86,7 @@
         <button
           *ngIf="field.fieldType == fieldTypes.FieldGroup && !field.collapsed"
           id="collapseToggleBtn"
-          class="btn btn-icon mr-2"
+          class="btn btn-neutral btn-icon mr-2"
           [mdbTooltip]="'Collapse field' | translate"
           (click)="toggleCollapse(field)"
         >
@@ -100,7 +100,7 @@
       #nestedFields="bs-collapse"
       *ngIf="field.fieldType == fieldTypes.FieldGroup"
       class="card-body"
-      [class]="field.collapsed ? 'p-1' : 'p-0'"
+      [class]="field.collapsed ? 'p-0' : 'p-1 pt-3'"
       dragula="FIELDS"
       [dragulaModel]="field.fields"
       id="nestedFields"

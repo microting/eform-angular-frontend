@@ -20,8 +20,13 @@ SOFTWARE.
 
 namespace eFormAPI.Web.Controllers.Eforms
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using Abstractions.Eforms;
+    using Infrastructure.Helpers;
     using Infrastructure.Models.VisualEformEditor;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
@@ -45,14 +50,35 @@ namespace eFormAPI.Web.Controllers.Eforms
         }
 
         [HttpPost]
-        public async Task<OperationResult> Create([FromBody] EformVisualEditorModel model)
+        public async Task<OperationResult> Create([FromForm]EformVisualEditorModel model)
         {
+            // set files with help reflection. for some unknown reason, the field with the file in a deeply nested object is not set,
+            // unlike the adjacent fields. if you know what it can be replaced,
+            // or the reason why the files are not set and you know how to eliminate this reason,
+            // then fix this **crutch**
+            foreach (var formFile in HttpContext.Request.Form.Files)
+            {
+                // path to property(formFile.Name) can be 'Fields[0][PdfFiles][0][File]' or 'Fields[1]Fields[0][PdfFiles][0][File]'
+                // or 'Checklists[1]Fields[0][PdfFiles][0][File]' or 'Checklists[1]Fields[1]Fields[0][PdfFiles][0][File]' or a **deeper nesting**
+                ReflectionSetProperty.SetProperty(model, formFile.Name.Replace("][", ".").Replace("[", ".").Replace("]", ""), formFile);
+            }
             return await _templateVisualEditorService.CreateVisualTemplate(model);
         }
+        
 
         [HttpPut]
-        public async Task<OperationResult> Update([FromBody] EformVisualEditorUpdateModel model)
+        public async Task<OperationResult> Update([FromForm] EformVisualEditorUpdateModel model)
         {
+            // set files with help reflection. for some unknown reason, the field with the file in a deeply nested object is not set,
+            // unlike the adjacent fields. if you know what it can be replaced,
+            // or the reason why the files are not set and you know how to eliminate this reason,
+            // then fix this **crutch**
+            foreach (var formFile in HttpContext.Request.Form.Files)
+            {
+                // path to property(formFile.Name) can be 'Fields[0][PdfFiles][0][File]' or 'Fields[1]Fields[0][PdfFiles][0][File]'
+                // or 'Checklists[1]Fields[0][PdfFiles][0][File]' or 'Checklists[1]Fields[1]Fields[0][PdfFiles][0][File]' or a **deeper nesting**
+                ReflectionSetProperty.SetProperty(model, formFile.Name.Replace("][", ".").Replace("[", ".").Replace("]", ""), formFile);
+            }
             return await _templateVisualEditorService.UpdateVisualTemplate(model);
         }
     }
