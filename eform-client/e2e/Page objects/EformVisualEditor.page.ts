@@ -147,6 +147,19 @@ class EformVisualEditorPage extends PageWithNavbarPage {
     return ele;
   }
 
+  get fieldDeleteDeleteBtn() {
+    const ele = $('#fieldDeleteDeleteBtn');
+    ele.waitForDisplayed({ timeout: 40000 });
+    // ele.waitForClickable({ timeout: 40000 });
+    return ele;
+  }
+  get fieldDeleteCancelBtn() {
+    const ele = $('#fieldDeleteCancelBtn');
+    ele.waitForDisplayed({ timeout: 40000 });
+    ele.waitForClickable({ timeout: 40000 });
+    return ele;
+  }
+
   goToVisualEditor() {
     this.eformsVisualEditor.click();
     this.manageTags.waitForClickable({ timeout: 40000 });
@@ -186,15 +199,26 @@ class EformVisualEditorPage extends PageWithNavbarPage {
 
   createVisualTemplateField(
     checklistFieldObj: ChecklistFieldObj,
-    clickCancel = false
+    clickCancel = false,
+    addNewNestedFieldBtn: WebdriverIO.Element = null
   ) {
-    this.openVisualTemplateFieldCreateModal(checklistFieldObj);
+    this.openVisualTemplateFieldCreateModal(
+      checklistFieldObj,
+      addNewNestedFieldBtn
+    );
     this.closeVisualTemplateFieldCreateModal(clickCancel);
   }
 
-  openVisualTemplateFieldCreateModal(checklistFieldObj: ChecklistFieldObj) {
+  openVisualTemplateFieldCreateModal(
+    checklistFieldObj: ChecklistFieldObj,
+    addNewNestedFieldBtn: WebdriverIO.Element = null
+  ) {
     if (checklistFieldObj) {
-      this.initialFieldCreateBtn.click();
+      if (!addNewNestedFieldBtn) {
+        this.initialFieldCreateBtn.click();
+      } else {
+        addNewNestedFieldBtn.click();
+      }
       this.changeFieldSaveCancelBtn.waitForClickable({ timeout: 40000 });
       if (checklistFieldObj.translations) {
         for (let i = 0; i < checklistFieldObj.translations.length; i++) {
@@ -350,14 +374,17 @@ export class MainCheckListRowObj {
 }
 
 export class ChecklistFieldRowObj {
-  constructor(index: number, isNested = false) {
+  constructor(index: number, isNested = false, fieldIndex = 0) {
     if (isNested) {
-      this.element = $$('#nestedFields')[index];
+      this.element = $$(
+        `#field_${fieldIndex} #nestedFields app-visual-editor-field`
+      )[index];
     } else {
       this.element = $(`#field_${index}`);
     }
     if (this.element) {
       const str: string[] = this.element
+        .$('.col-6')
         .getText()
         .replace('drag_handle ', '') // delete not need word
         .split('; '); // split name and type
@@ -366,7 +393,7 @@ export class ChecklistFieldRowObj {
       this.deleteBtn = this.element.$('#deleteBtn');
       this.editBtn = this.element.$('#editBtn');
       this.copyBtn = this.element.$('#copyBtn');
-      this.fieldIsNotComplete = !!this.element.$('fa-icon');
+      this.fieldIsNotComplete = !!this.element.$('#isNotFieldComplete');
       const backgroundColor = this.element
         .$('div>div')
         .getCSSProperty('background-color').parsed.hex;
@@ -382,6 +409,18 @@ export class ChecklistFieldRowObj {
         red: colorMas[4],
         grey: colorMas[5],
       };
+      if (this.type === EformFieldTypesEnum.FieldGroup) {
+        this.addNestedFieldBtn = this.element.$('#addNewNestedField');
+        this.collapseToggleBtn = this.element.$('#collapseToggleBtn');
+        this.nestedFields = [];
+        for (
+          let i = 0;
+          i < this.element.$$('#nestedFields app-visual-editor-field').length;
+          i++
+        ) {
+          this.nestedFields.push(new ChecklistFieldRowObj(i, true, index));
+        }
+      }
     }
   }
   element: WebdriverIO.Element;
@@ -390,6 +429,8 @@ export class ChecklistFieldRowObj {
   deleteBtn: WebdriverIO.Element;
   editBtn: WebdriverIO.Element;
   copyBtn: WebdriverIO.Element;
+  addNestedFieldBtn: WebdriverIO.Element;
+  collapseToggleBtn: WebdriverIO.Element;
   fieldIsNotComplete: boolean;
   color: CommonDictionaryModel;
   colorsBtn: {
@@ -400,6 +441,7 @@ export class ChecklistFieldRowObj {
     red: WebdriverIO.Element;
     grey: WebdriverIO.Element;
   };
+  nestedFields: ChecklistFieldRowObj[];
 
   changeColor(colorName: string) {
     this.colorsBtn[colorName].click();
@@ -407,6 +449,39 @@ export class ChecklistFieldRowObj {
 
   makeCopy() {
     this.copyBtn.click();
+  }
+
+  addNewNestedField(checklistFieldObj: ChecklistFieldObj) {
+    eformVisualEditorPage.createVisualTemplateField(
+      checklistFieldObj,
+      false,
+      this.addNestedFieldBtn
+    );
+  }
+
+  collapseToggle() {
+    this.collapseToggleBtn.click();
+  }
+
+  delete(clickCancel = false) {
+    this.openDeleteModal();
+    this.closeDeleteModal(clickCancel);
+  }
+
+  openDeleteModal() {
+    this.deleteBtn.click();
+    eformVisualEditorPage.fieldDeleteCancelBtn.waitForClickable({
+      timeout: 40000,
+    });
+  }
+
+  closeDeleteModal(clickCancel = false) {
+    if (clickCancel) {
+      eformVisualEditorPage.fieldDeleteCancelBtn.click();
+    } else {
+      eformVisualEditorPage.fieldDeleteDeleteBtn.click();
+    }
+    eformVisualEditorPage.manageTags.waitForClickable({ timeout: 40000 });
   }
 }
 
