@@ -1,7 +1,7 @@
 import loginPage from '../../Page objects/Login.page';
 import eformVisualEditorPage, {
   ChecklistFieldObj,
-  ChecklistObj,
+  MainChecklistObj,
   MainCheckListRowObj,
 } from '../../Page objects/EformVisualEditor.page';
 import {
@@ -11,7 +11,7 @@ import {
 import { EformFieldTypesEnum } from '../../../src/app/common/const';
 import myEformsPage from '../../Page objects/MyEforms.page';
 import XMLForEformFractions from '../../Constants/XMLForEformFractions';
-import { afterEach } from 'mocha';
+import { afterEach, beforeEach } from 'mocha';
 
 const expect = require('chai').expect;
 
@@ -25,8 +25,6 @@ describe('Visual editor page', function () {
   });
   it('should not create visual template without any translations on main checklist', function () {
     const checklistWithoutTranslations = {
-      translations: [],
-      tags: [],
       fields: [
         {
           type: EformFieldTypesEnum.None,
@@ -58,8 +56,6 @@ describe('Visual editor page', function () {
           id: null,
         },
       ],
-      tags: [],
-      fields: [],
     };
     eformVisualEditorPage.createVisualTemplate(checklistWithoutFields, true);
     const eform = myEformsPage.getLastMyEformsRowObj();
@@ -80,7 +76,7 @@ describe('Visual editor page', function () {
     expect(visualTemplate.fields.length, 'fields length not valid').eq(0);
   });
   it('should create visual template', function () {
-    const checklist: ChecklistObj = {
+    const checklist: MainChecklistObj = {
       translations: [
         {
           name: generateRandmString(),
@@ -89,7 +85,6 @@ describe('Visual editor page', function () {
           id: null,
         },
       ],
-      tags: [],
       fields: [
         {
           type: EformFieldTypesEnum.None,
@@ -133,7 +128,7 @@ describe('Visual editor page', function () {
     ).eq('Standard');
   });
   it('should create visual template with one pdfField', function () {
-    const checklistWithPdfFile: ChecklistObj = {
+    const checklistWithPdfFile: MainChecklistObj = {
       translations: [
         {
           name: generateRandmString(),
@@ -142,7 +137,6 @@ describe('Visual editor page', function () {
           id: null,
         },
       ],
-      tags: [],
       fields: [
         {
           type: EformFieldTypesEnum.ShowPdf,
@@ -183,7 +177,7 @@ describe('Visual editor page', function () {
     );
   });
   it('should create checklist with field non standard color', function () {
-    const checklist: ChecklistObj = {
+    const checklist: MainChecklistObj = {
       translations: [
         {
           name: generateRandmString(),
@@ -192,7 +186,6 @@ describe('Visual editor page', function () {
           id: null,
         },
       ],
-      tags: [],
       fields: [
         {
           type: EformFieldTypesEnum.None,
@@ -239,7 +232,7 @@ describe('Visual editor page', function () {
     ).eq('Red');
   });
   it('should create visual template with one numberField', function () {
-    const checklistWithPdfFile: ChecklistObj = {
+    const checklistWithPdfFile: MainChecklistObj = {
       translations: [
         {
           name: generateRandmString(),
@@ -248,7 +241,6 @@ describe('Visual editor page', function () {
           id: null,
         },
       ],
-      tags: [],
       fields: [
         {
           type: EformFieldTypesEnum.Number,
@@ -293,7 +285,7 @@ describe('Visual editor page', function () {
     // todo add open modal field and expect other
   });
   it('should create visual template with one field and make copy this field', function () {
-    const checklistObj: ChecklistObj = {
+    const checklistObj: MainChecklistObj = {
       translations: [
         {
           name: generateRandmString(),
@@ -302,7 +294,6 @@ describe('Visual editor page', function () {
           id: null,
         },
       ],
-      tags: [],
       fields: [
         {
           type: EformFieldTypesEnum.None,
@@ -351,7 +342,7 @@ describe('Visual editor page', function () {
     'should create visual template with one fieldGroup and ' +
       'one nested field with change color and make copy from nested field',
     function () {
-      const checklistObj: ChecklistObj = {
+      const checklistObj: MainChecklistObj = {
         translations: [
           {
             name: generateRandmString(),
@@ -360,7 +351,6 @@ describe('Visual editor page', function () {
             id: null,
           },
         ],
-        tags: [],
         fields: [
           {
             type: EformFieldTypesEnum.FieldGroup,
@@ -445,7 +435,7 @@ describe('Visual editor page', function () {
     }
   );
   it('should create visual template and delete field', function () {
-    const checklistObj: ChecklistObj = {
+    const checklistObj: MainChecklistObj = {
       translations: [
         {
           name: generateRandmString(),
@@ -454,7 +444,6 @@ describe('Visual editor page', function () {
           id: null,
         },
       ],
-      tags: [],
       fields: [
         {
           type: EformFieldTypesEnum.FieldGroup,
@@ -503,25 +492,214 @@ describe('Visual editor page', function () {
       'description main checklist not valid'
     ).eq(checklistObj.translations[0].description);
     expect(mainChecklist.fields.length, 'fields length not valid').eq(0);
-    expect(mainChecklist.fields[0].name, 'field name not valid').eq(
-      checklistObj.fields[0].translations[0].name
-    );
-    expect(mainChecklist.fields[0].type, 'field type not valid').eq(
-      checklistObj.fields[0].type
-    );
+  });
+  it('should create visual template with one nested checklist and without fields', function () {
+    const checklistObj: MainChecklistObj = {
+      translations: [
+        {
+          name: generateRandmString(),
+          description: generateRandmString(),
+          languageId: 1,
+          id: null,
+        },
+      ],
+      checklists: [
+        {
+          translations: [
+            {
+              name: generateRandmString(),
+              description: generateRandmString(),
+              languageId: 1,
+              id: null,
+            },
+          ],
+        },
+        {
+          translations: [
+            {
+              name: generateRandmString(),
+              description: generateRandmString(),
+              languageId: 1,
+              id: null,
+            },
+          ],
+        },
+      ],
+    };
+    eformVisualEditorPage.createVisualTemplate(checklistObj, true);
+    myEformsPage.getLastMyEformsRowObj().goToVisualEditor();
+    const mainChecklist = new MainCheckListRowObj();
+    for (let i = 0; i < checklistObj.checklists.length; i++) {
+      expect(
+        mainChecklist.checklists[i].translations[0].name,
+        `name nested checklist[${i}] not valid`
+      ).eq(checklistObj.checklists[i].translations[0].name);
+      expect(
+        mainChecklist.checklists[i].translations[0].description,
+        `description nested checklist[${i}] not valid`
+      ).eq(checklistObj.checklists[i].translations[0].description);
+      expect(
+        mainChecklist.checklists[i].fields.length,
+        `nested checklist[${i}] fields length not valid`
+      ).eq(0);
+    }
+  });
+  it('should create visual template with one nested checklist and with some fields', function () {
+    const checklistObj: MainChecklistObj = {
+      translations: [
+        {
+          name: generateRandmString(),
+          description: generateRandmString(),
+          languageId: 1,
+          id: null,
+        },
+      ],
+      checklists: [
+        {
+          translations: [
+            {
+              name: generateRandmString(),
+              description: generateRandmString(),
+              languageId: 1,
+              id: null,
+            },
+          ],
+          fields: [
+            {
+              type: EformFieldTypesEnum.None,
+              translations: [
+                {
+                  name: generateRandmString(),
+                  description: generateRandmString(),
+                  languageId: 1,
+                  id: null,
+                },
+              ],
+              mandatory: false,
+            },
+          ],
+        },
+        {
+          translations: [
+            {
+              name: generateRandmString(),
+              description: generateRandmString(),
+              languageId: 1,
+              id: null,
+            },
+          ],
+        },
+      ],
+    };
+    eformVisualEditorPage.createVisualTemplate(checklistObj, true);
+    myEformsPage.getLastMyEformsRowObj().goToVisualEditor();
+    const mainChecklist = new MainCheckListRowObj();
+    for (let i = 0; i < checklistObj.checklists.length; i++) {
+      expect(
+        mainChecklist.checklists[i].translations[0].name,
+        `name nested checklist[${i}] not valid`
+      ).eq(checklistObj.checklists[i].translations[0].name);
+      expect(
+        mainChecklist.checklists[i].translations[0].description,
+        `description nested checklist[${i}] not valid`
+      ).eq(checklistObj.checklists[i].translations[0].description);
+    }
     expect(
-      mainChecklist.fields[0].nestedFields.length,
-      'nestedFields not make copy'
-    ).eq(2);
+      mainChecklist.checklists[0].fields.length,
+      `nested checklist[0] fields length not valid`
+    ).eq(1);
+    expect(
+      mainChecklist.checklists[0].fields[0].name,
+      `nested checklist[0] fields name not valid`
+    ).eq(checklistObj.checklists[0].fields[0].translations[0].name);
+    expect(
+      mainChecklist.checklists[0].fields[0].type,
+      `nested checklist[0] fields type not valid`
+    ).eq(checklistObj.checklists[0].fields[0].type);
+  });
+  it('should create visual template with one nested checklist and with pdfField', function () {
+    const checklistObj: MainChecklistObj = {
+      translations: [
+        {
+          name: generateRandmString(),
+          description: generateRandmString(),
+          languageId: 1,
+          id: null,
+        },
+      ],
+      checklists: [
+        {
+          translations: [
+            {
+              name: generateRandmString(),
+              description: generateRandmString(),
+              languageId: 1,
+              id: null,
+            },
+          ],
+          fields: [
+            {
+              type: EformFieldTypesEnum.ShowPdf,
+              translations: [
+                {
+                  name: generateRandmString(),
+                  description: generateRandmString(),
+                  languageId: 1,
+                  id: null,
+                },
+              ],
+              mandatory: false,
+              pathToFiles: [
+                `${process.cwd()}/e2e/Assets/attachment-english.pdf`,
+              ],
+            },
+          ],
+        },
+        {
+          translations: [
+            {
+              name: generateRandmString(),
+              description: generateRandmString(),
+              languageId: 1,
+              id: null,
+            },
+          ],
+        },
+      ],
+    };
+    eformVisualEditorPage.createVisualTemplate(checklistObj, true);
+    myEformsPage.getLastMyEformsRowObj().goToVisualEditor();
+    const mainChecklist = new MainCheckListRowObj();
+    for (let i = 0; i < checklistObj.checklists.length; i++) {
+      expect(
+        mainChecklist.checklists[i].translations[0].name,
+        `name nested checklist[${i}] not valid`
+      ).eq(checklistObj.checklists[i].translations[0].name);
+      expect(
+        mainChecklist.checklists[i].translations[0].description,
+        `description nested checklist[${i}] not valid`
+      ).eq(checklistObj.checklists[i].translations[0].description);
+    }
+    expect(
+      mainChecklist.checklists[0].fields.length,
+      `nested checklist[0] fields length not valid`
+    ).eq(1);
+    expect(
+      mainChecklist.checklists[0].fields[0].name,
+      `nested checklist[0] fields name not valid`
+    ).eq(checklistObj.checklists[0].fields[0].translations[0].name);
+    expect(
+      mainChecklist.checklists[0].fields[0].type,
+      `nested checklist[0] fields type not valid`
+    ).eq(checklistObj.checklists[0].fields[0].type);
   });
   it('should correct read created eform from xml', function () {
     myEformsPage.Navbar.goToMyEForms();
     const eformName = generateRandmString();
-    const eformFromXml: ChecklistObj = {
+    const eformFromXml: MainChecklistObj = {
       translations: [
         { name: eformName, description: '', languageId: 1, id: null },
       ],
-      tags: [],
       fields: [
         {
           translations: [
