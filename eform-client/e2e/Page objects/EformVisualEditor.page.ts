@@ -56,13 +56,6 @@ class EformVisualEditorPage extends PageWithNavbarPage {
     return ele;
   }
 
-  get collapseAllBtn() {
-    const ele = $('#collapseAllBtn');
-    ele.waitForDisplayed({ timeout: 40000 });
-    ele.waitForClickable({ timeout: 40000 });
-    return ele;
-  }
-
   get initialFieldCreateBtn() {
     const ele = $('#initialFieldCreateBtn');
     ele.waitForDisplayed({ timeout: 40000 });
@@ -436,6 +429,11 @@ export class MainCheckListRowObj {
       eformVisualEditorPage.clickSave();
     }
   }
+
+  collapseToggle() {
+    eformVisualEditorPage.expandAllBtn.click();
+    browser.pause(500);
+  }
 }
 
 export class ChecklistFieldRowObj {
@@ -554,6 +552,27 @@ export class ChecklistFieldRowObj {
       eformVisualEditorPage.fieldDeleteCancelBtn.click();
     } else {
       eformVisualEditorPage.fieldDeleteDeleteBtn.click();
+    }
+    eformVisualEditorPage.manageTags.waitForClickable({ timeout: 40000 });
+  }
+
+  edit(field: ChecklistFieldObj, clickCancel = false) {
+    this.openEditModal(field);
+    this.closeEditModal(clickCancel);
+  }
+
+  openEditModal(field: ChecklistFieldObj) {
+    eformVisualEditorPage.openVisualTemplateFieldCreateModal(
+      field,
+      this.editBtn
+    );
+  }
+
+  closeEditModal(clickCancel = false) {
+    if (clickCancel) {
+      eformVisualEditorPage.changeFieldSaveCancelBtn.click();
+    } else {
+      eformVisualEditorPage.changeFieldSaveBtn.click();
     }
     eformVisualEditorPage.manageTags.waitForClickable({ timeout: 40000 });
   }
