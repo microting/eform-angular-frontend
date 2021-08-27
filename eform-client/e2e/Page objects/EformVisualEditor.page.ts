@@ -450,7 +450,7 @@ export class ChecklistFieldRowObj {
         `#field_${fieldIndex} #nestedFields app-visual-editor-field`
       )[index];
     } else if (isNestedInChecklist) {
-      this.element = $$(`#fieldSection${fieldIndex}>div`)[index];
+      this.element = $$(`#fields_${fieldIndex}>app-visual-editor-field`)[index];
     } else {
       this.element = $(`#field_${index}`);
     }
@@ -465,6 +465,7 @@ export class ChecklistFieldRowObj {
       this.deleteBtn = this.element.$('#deleteBtn');
       this.editBtn = this.element.$('#editBtn');
       this.copyBtn = this.element.$('#copyBtn');
+      this.moveFieldBtn = this.element.$('#moveFieldBtn');
       this.fieldIsNotComplete = !!this.element.$('#isNotFieldComplete');
       const backgroundColor = this.element
         .$('div>div')
@@ -514,6 +515,7 @@ export class ChecklistFieldRowObj {
     grey: WebdriverIO.Element;
   };
   nestedFields: ChecklistFieldRowObj[];
+  moveFieldBtn: WebdriverIO.Element;
 
   changeColor(colorName: string) {
     this.colorsBtn[colorName].click();
@@ -555,6 +557,10 @@ export class ChecklistFieldRowObj {
     }
     eformVisualEditorPage.manageTags.waitForClickable({ timeout: 40000 });
   }
+
+  changePosition(targetField: ChecklistFieldRowObj) {
+    this.moveFieldBtn.dragAndDrop(targetField.element);
+  }
 }
 
 export class ChecklistRowObj {
@@ -568,8 +574,12 @@ export class ChecklistRowObj {
       this.addNewNestedFieldBtn = this.element.$(`#addNewNestedField${index}`);
       this.editChecklistBtn = this.element.$(`#editChecklistBtn${index}`);
       this.deleteChecklistBtn = this.element.$(`#deleteChecklistBtn${index}`);
-      for (let i = 0; i < this.element.$$(`#fieldSection0>div`).length; i++) {
-        this.fields.push(new ChecklistFieldRowObj(i, false, 0, true));
+      for (
+        let i = 0;
+        i < this.element.$$(`#fields_${index}>app-visual-editor-field`).length;
+        i++
+      ) {
+        this.fields.push(new ChecklistFieldRowObj(i, false, index, true));
       }
       const selectedLanguages = eformVisualEditorPage.selectedLanguages;
       this.openEditModal();
