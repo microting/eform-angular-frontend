@@ -662,8 +662,8 @@ export class ChecklistRowObj {
     });
     if (translations) {
       for (let i = 0; i < translations.length; i++) {
-        $(`newChecklistNameTranslation_${i}`).setValue(translations[i].name);
-        $(`newChecklistDescriptionTranslation_${i} .pell-content`).setValue(
+        $(`#newChecklistNameTranslation_${i}`).setValue(translations[i].name);
+        $(`#newChecklistDescriptionTranslation_${i} .pell-content`).setValue(
           translations[i].description
         );
       }

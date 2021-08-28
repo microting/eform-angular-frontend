@@ -4,7 +4,10 @@ import eformVisualEditorPage, {
   MainChecklistObj,
   MainCheckListRowObj,
 } from '../../Page objects/EformVisualEditor.page';
-import { generateRandmString } from '../../Helpers/helper-functions';
+import {
+  generateRandmString,
+  getRandomInt,
+} from '../../Helpers/helper-functions';
 import { EformFieldTypesEnum } from '../../../src/app/common/const';
 import myEformsPage from '../../Page objects/MyEforms.page';
 import { afterEach, beforeEach } from 'mocha';
@@ -135,8 +138,131 @@ describe('Visual editor page', function () {
       `field[1] color not valid`
     ).eq('Grey');
   });
+  it('should edit created visual template (nested checklist)', function () {
+    const checklist: MainChecklistObj = {
+      translations: [
+        {
+          name: generateRandmString(),
+          description: generateRandmString(),
+          languageId: 1,
+          id: null,
+        },
+      ],
+      checklists: [
+        {
+          translations: [
+            {
+              name: generateRandmString(),
+              description: generateRandmString(),
+              languageId: 1,
+              id: null,
+            },
+          ],
+          fields: [
+            {
+              type: EformFieldTypesEnum.Comment,
+              translations: [
+                {
+                  name: generateRandmString(),
+                  description: generateRandmString(),
+                  languageId: 1,
+                  id: null,
+                },
+              ],
+              mandatory: false,
+            },
+            {
+              type: EformFieldTypesEnum.None,
+              translations: [
+                {
+                  name: generateRandmString(),
+                  description: generateRandmString(),
+                  languageId: 1,
+                  id: null,
+                },
+              ],
+              mandatory: false,
+            },
+          ],
+        },
+        {
+          translations: [
+            {
+              name: generateRandmString(),
+              description: generateRandmString(),
+              languageId: 1,
+              id: null,
+            },
+          ],
+        },
+      ],
+    };
+    eformVisualEditorPage.createVisualTemplate(checklist, true);
+    myEformsPage.getLastMyEformsRowObj().goToVisualEditor();
+    let mainChecklist = new MainCheckListRowObj();
+    checklist.checklists[1].translations = [
+      {
+        name: generateRandmString(),
+        description: generateRandmString(),
+        languageId: 1,
+        id: null,
+      },
+    ];
+    mainChecklist.checklists[1].edit(checklist.checklists[1].translations);
+    mainChecklist.checklists[0].fields[0].makeCopy();
+    mainChecklist.checklists[0].fields[0].changeColor('grey');
+    mainChecklist = new MainCheckListRowObj();
+    mainChecklist.checklists[0].fields[1].changePosition(
+      mainChecklist.checklists[0].fields[0]
+    );
+    checklist.checklists[0].fields = [
+      checklist.checklists[0].fields[1],
+      {
+        ...checklist.checklists[0].fields[0],
+        type: EformFieldTypesEnum.Number,
+        maxValue: getRandomInt(100, 200),
+        minValue: getRandomInt(-100, 100),
+        defaultValue: getRandomInt(-1, 1),
+      },
+      checklist.checklists[0].fields[0],
+    ];
+    mainChecklist = new MainCheckListRowObj();
+    mainChecklist.checklists[0].fields[1].edit({
+      type: checklist.checklists[0].fields[1].type,
+      maxValue: checklist.checklists[0].fields[1].maxValue,
+      minValue: checklist.checklists[0].fields[1].minValue,
+      defaultValue: checklist.checklists[0].fields[1].defaultValue,
+    });
+    eformVisualEditorPage.clickSave();
+    myEformsPage.getLastMyEformsRowObj().goToVisualEditor();
+    mainChecklist = new MainCheckListRowObj();
+
+    for (let i = 0; i < checklist.checklists[0].fields.length; i++) {
+      expect(
+        mainChecklist.checklists[0].fields[i].name,
+        `field[${i}] name not valid`
+      ).eq(checklist.checklists[0].fields[i].translations[0].name);
+      expect(
+        mainChecklist.checklists[0].fields[i].type,
+        `field[${i}] type not valid`
+      ).eq(checklist.checklists[0].fields[i].type);
+    }
+    expect(
+      mainChecklist.checklists[0].fields[1].color.description,
+      `field[1] color not valid`
+    ).eq('Grey');
+    // todo need open and check number field
+
+    expect(
+      mainChecklist.checklists[1].translations[0].name,
+      `checklists[1] name not valid`
+    ).eq(checklist.checklists[1].translations[0].name);
+    expect(
+      mainChecklist.checklists[1].translations[0].description,
+      `checklists[1] description not valid`
+    ).eq(checklist.checklists[1].translations[0].description);
+  });
   afterEach(function () {
-    // delete created checklist
     myEformsPage.Navbar.goToMyEForms();
     myEformsPage.clearEFormTable();
   });

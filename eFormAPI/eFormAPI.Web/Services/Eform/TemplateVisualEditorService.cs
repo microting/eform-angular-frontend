@@ -320,12 +320,14 @@ namespace eFormAPI.Web.Services.Eform
                     await UpdateFields(model.FieldForUpdate, sdkDbContext, core); // update fields
                 }
 
-                var fieldForCreateOnThisCheckList = model.FieldForCreate
-                        .Where(x => x.ChecklistId == dbEform.Id)
-                        .ToList();
-                if (fieldForCreateOnThisCheckList.Any())
+                var checklistIds = model.FieldForCreate
+                    .Select(x => x.ChecklistId)
+                    .Distinct()
+                    .ToList();
+
+                foreach (var checklistId in checklistIds)
                 {
-                    await CreateFields(dbEform.Id, sdkDbContext, fieldForCreateOnThisCheckList, core); // create new field
+                    await CreateFields(checklistId, sdkDbContext, model.FieldForCreate.Where(x => x.ChecklistId == checklistId).ToList(), core); // create new field
                 }
 
                 if (model.ChecklistForDelete.Any())
@@ -441,7 +443,7 @@ namespace eFormAPI.Web.Services.Eform
                     .FirstAsync();
 
                 fieldFromDb.Color = fieldForUpdate.Color;
-                //fieldFromDb.FieldTypeId = fieldForUpdate.FieldType;
+                fieldFromDb.FieldTypeId = fieldForUpdate.FieldType;
                 fieldFromDb.Mandatory = Convert.ToInt16(fieldForUpdate.Mandatory);
                 fieldFromDb.DecimalCount = fieldForUpdate.DecimalCount;
                 fieldFromDb.DisplayIndex = fieldForUpdate.Position;
