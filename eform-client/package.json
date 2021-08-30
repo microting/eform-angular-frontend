@@ -57,7 +57,7 @@
     "angular-calendar": "0.28.26",
     "angular2-uuid": "1.1.1",
     "chart.js": "3.5.0",
-    "core-js": "3.15.2",
+    "core-js": "3.16.4",
     "d3": "7.0.0",
     "date-fns": "2.23.0",
     "dom-to-image": "2.6.0",
