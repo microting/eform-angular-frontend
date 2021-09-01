@@ -74,7 +74,7 @@ namespace eFormAPI.Web.Controllers.Eforms
         [HttpGet]
         [Route("api/template-files/csv/{id}")]
         [Authorize(Policy = AuthConsts.EformPolicies.Eforms.GetCsv)]
-        public async Task<IActionResult> Csv(int id, string start, string end, bool utcTime)
+        public async Task<IActionResult> Csv(int id, string start, string end, bool utcTime, bool gpsCoordinates, bool includeCheckListText)
         {
             if (!await _permissionsService.CheckEform(id,
                 AuthConsts.EformClaims.EformsClaims.GetCsv))
@@ -84,7 +84,9 @@ namespace eFormAPI.Web.Controllers.Eforms
 
             var core = await _coreHelper.GetCore();
             var fileName = $"{id}_{DateTime.Now.Ticks}.csv";
-            var filePath = PathHelper.GetOutputPath(fileName);
+            var filePath = Path.GetTempPath();// PathHelper.GetOutputPath(fileName);
+            Directory.CreateDirectory(Path.Combine(filePath, "output"));
+            filePath = Path.Combine(filePath, fileName);
             CultureInfo cultureInfo = new CultureInfo("de-DE");
             var language = await _userService.GetCurrentUserLanguage();
 
@@ -96,13 +98,13 @@ namespace eFormAPI.Web.Controllers.Eforms
             {
                 fullPath = await core.CasesToCsv(id, DateTime.Parse(start), DateTime.Parse(end), filePath,
                     $"{await core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", ",",
-                    "", utcTime, cultureInfo, timeZoneInfo, language);
+                    "", utcTime, cultureInfo, timeZoneInfo, language, gpsCoordinates, includeCheckListText);
             }
             else
             {
                 fullPath = await core.CasesToCsv(id, null, null, filePath,
                     $"{await core.GetSdkSetting(Settings.httpServerAddress)}/" + "api/template-files/get-image/", ",",
-                    "", utcTime, cultureInfo, timeZoneInfo, language);
+                    "", utcTime, cultureInfo, timeZoneInfo, language, gpsCoordinates, includeCheckListText);
             }
 
             var fileStream = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
