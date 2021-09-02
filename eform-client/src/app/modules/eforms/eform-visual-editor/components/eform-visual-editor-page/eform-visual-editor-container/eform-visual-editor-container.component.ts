@@ -112,13 +112,6 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         if (data && data.success) {
           this.visualEditorTemplateModel = data.model;
-          // this.selectedLanguages = [
-          //   ...R.map(
-          //     (x) => x.languageId,
-          //     this.visualEditorTemplateModel.translations
-          //   ),
-          // ];
-          // if there are not enough translations
           this.visualEditorTemplateModel.translations = fixTranslations(
             this.visualEditorTemplateModel.translations
           );
@@ -135,15 +128,18 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   }
 
   initForm() {
-    for (const language of applicationLanguages) {
-      this.visualEditorTemplateModel = {
-        ...this.visualEditorTemplateModel,
-        translations: [
-          ...this.visualEditorTemplateModel.translations,
-          { id: null, languageId: language.id, description: '', name: '' },
-        ],
-      };
-    }
+    this.visualEditorTemplateModel.translations = fixTranslations(
+      this.visualEditorTemplateModel.translations
+    );
+    // for (const language of applicationLanguages) {
+    //   this.visualEditorTemplateModel = {
+    //     ...this.visualEditorTemplateModel,
+    //     translations: [
+    //       ...this.visualEditorTemplateModel.translations,
+    //       { id: null, languageId: language.id, description: '', name: '' },
+    //     ],
+    //   };
+    // }
   }
 
   createVisualTemplate() {
@@ -499,16 +495,12 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
       if (!R.isNil(model.parentFieldIndex)) {
         indexes.push('fields', model.parentFieldIndex); // checkLists[x].fields[parentFieldIndex]
       }
-      indexes.push('fields', model.fieldIndex); // checkLists[x].fields or checkLists[x].fields[parentFieldIndex].fields[fieldIndex]
+      indexes.push('fields', model.fieldIndex);
+      // checkLists[x].fields[fieldIndex] or checkLists[x].fields[parentFieldIndex].fields[fieldIndex]
       const visualTemplatePath = R.lensPath(indexes);
-      // let field: EformVisualEditorFieldModel = R.view(
-      //   visualTemplatePath,
-      //   this.visualEditorTemplateModel
-      // );
-      // field = { ...field, ...model.field };
       this.visualEditorTemplateModel = R.set(
         visualTemplatePath,
-        model.field, // field,
+        model.field,
         this.visualEditorTemplateModel
       );
     } else {

@@ -68,6 +68,7 @@
         dragula="{{ dragulaElementContainerName }}"
         [dragulaModel]="checklist.fields"
         (dragulaModelChange)="onNestedFieldPositionChanged($event)"
+        id="fields_{{ checklistIndex }}"
       >
         <ng-container
           *ngFor="let field of checklist.fields; let fieldIndex = index"

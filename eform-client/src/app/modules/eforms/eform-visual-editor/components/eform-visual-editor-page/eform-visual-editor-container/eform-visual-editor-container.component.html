@@ -52,32 +52,38 @@
                 <button
                   mdbBtn
                   class="btn-icon mb-2 float-right text-black-50"
-                  mdbTooltip="{{ 'Expand all' | translate }}"
+                  mdbTooltip="{{
+                    (isItemsCollapsed ? 'Expand all' : 'Collapse all')
+                      | translate
+                  }}"
                   (click)="toggleCollapse()"
-                  *ngIf="isItemsCollapsed"
                   id="expandAllBtn"
                 >
                   <fa-icon
-                    icon="angle-double-right"
+                    [icon]="
+                      isItemsCollapsed
+                        ? 'angle-double-right'
+                        : 'angle-double-down'
+                    "
                     size="lg"
                     [fixedWidth]="true"
                   ></fa-icon>
                 </button>
 
-                <button
-                  mdbBtn
-                  class="btn-icon mb-2 float-right text-black-50"
-                  mdbTooltip="{{ 'Collapse all' | translate }}"
-                  (click)="toggleCollapse()"
-                  *ngIf="!isItemsCollapsed"
-                  id="collapseAllBtn"
-                >
-                  <fa-icon
-                    icon="angle-double-down"
-                    size="lg"
-                    [fixedWidth]="true"
-                  ></fa-icon>
-                </button>
+                <!--                <button-->
+                <!--                  mdbBtn-->
+                <!--                  class="btn-icon mb-2 float-right text-black-50"-->
+                <!--                  mdbTooltip="{{ 'Collapse all' | translate }}"-->
+                <!--                  (click)="toggleCollapse()"-->
+                <!--                  *ngIf="!isItemsCollapsed"-->
+                <!--                  id="collapseAllBtn"-->
+                <!--                >-->
+                <!--                  <fa-icon-->
+                <!--                    icon="angle-double-down"-->
+                <!--                    size="lg"-->
+                <!--                    [fixedWidth]="true"-->
+                <!--                  ></fa-icon>-->
+                <!--                </button>-->
               </ng-container>
             </div>
           </div>

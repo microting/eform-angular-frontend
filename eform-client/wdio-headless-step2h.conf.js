@@ -12,6 +12,7 @@ exports.config = {
   //
   specs: [
     'e2e/Tests/eform-visual-editor/eform-visual-editor.create-eform.spec.ts',
+    'e2e/Tests/eform-visual-editor/eform-visual-editor.edit-eform.spec.ts',
   ],
   suites: {
     settings: ['e2e/Tests/application-settings/**/*.spec.ts'],

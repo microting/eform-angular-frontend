@@ -57,17 +57,17 @@ namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
         /// <summary>
         /// for Number field - long. for Date - Date
         /// </summary>
-        public dynamic MinValue { get; set; }
+        public string MinValue { get; set; }
 
         /// <summary>
         /// for Number field - long. for Date - Date
         /// </summary>
-        public dynamic MaxValue { get; set; }
+        public string MaxValue { get; set; }
 
         /// <summary>
         /// for Number field - long. for saveButton - string
         /// </summary>
-        public dynamic Value { get; set; }
+        public string Value { get; set; }
 
         /// <summary>
         /// for Number field

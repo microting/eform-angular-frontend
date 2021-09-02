@@ -40,6 +40,7 @@
           [fixedWidth]="true"
           size="lg"
           class="text-warning mr-2"
+          id="isNotFieldComplete"
         ></fa-icon>
         <button
           *ngIf="field.fieldType == fieldTypes.FieldGroup && !fieldIsNested"
@@ -75,22 +76,18 @@
           <fa-icon icon="trash-alt" [fixedWidth]="true"></fa-icon>
         </button>
         <button
-          *ngIf="field.fieldType == fieldTypes.FieldGroup && field.collapsed"
-          id="expandBtn"
-          class="btn btn-neutral btn-icon mr-2"
-          [mdbTooltip]="'Expand field' | translate"
-          (click)="toggleCollapse(field)"
-        >
-          <fa-icon icon="angle-right" [fixedWidth]="true"></fa-icon>
-        </button>
-        <button
-          *ngIf="field.fieldType == fieldTypes.FieldGroup && !field.collapsed"
+          *ngIf="field.fieldType == fieldTypes.FieldGroup"
           id="collapseToggleBtn"
           class="btn btn-neutral btn-icon mr-2"
-          [mdbTooltip]="'Collapse field' | translate"
+          [mdbTooltip]="
+            (field.collapsed ? 'Expand field' : 'Collapse field') | translate
+          "
           (click)="toggleCollapse(field)"
         >
-          <fa-icon icon="angle-down" [fixedWidth]="true"></fa-icon>
+          <fa-icon
+            [icon]="field.collapsed ? 'angle-right' : 'angle-down'"
+            [fixedWidth]="true"
+          ></fa-icon>
         </button>
       </div>
     </div>

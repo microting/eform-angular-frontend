@@ -103,7 +103,7 @@ namespace eFormAPI.Web.Services.Eform
                             .ToList();
                         eform.TagIds = checklist?.Taggings
                             .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                            .Select(x => (int) x.TagId).ToList();
+                            .Select(x => (int)x.TagId).ToList();
                     }
 
                     return new OperationDataResult<EformVisualEditorModel>(true, eform);
@@ -118,7 +118,7 @@ namespace eFormAPI.Web.Services.Eform
                     _localizationService.GetString("ErrorWhileObtainingEform"));
             }
         }
-        
+
         public async Task<OperationResult> CreateVisualTemplate(EformVisualEditorModel model)
         {
             try
@@ -153,7 +153,7 @@ namespace eFormAPI.Web.Services.Eform
                     DoneButtonEnabled = 0,
                     ApprovalEnabled = 0,
                 };
-                if(!model.CheckLists.Any())
+                if (!model.CheckLists.Any())
                 {
                     await twoCheckList.Create(sdkDbContext);
                 }
@@ -239,7 +239,7 @@ namespace eFormAPI.Web.Services.Eform
                         .Include(x => x.Translations)
                         .FirstOrDefaultAsync();
                 }
-                
+
                 // create translations if need
                 foreach (var newCheckListTranslation in model.Checklist.Translations
                     .Where(x => x.Id == null)
@@ -320,20 +320,23 @@ namespace eFormAPI.Web.Services.Eform
                     await UpdateFields(model.FieldForUpdate, sdkDbContext, core); // update fields
                 }
 
-                var fieldForCreateOnThisCheckList = model.FieldForCreate
-                        .Where(x => x.ChecklistId == dbEform.Id)
-                        .ToList();
-                if(fieldForCreateOnThisCheckList.Any())
+                var checklistIds = model.FieldForCreate
+                    .Select(x => x.ChecklistId)
+                    .Distinct()
+                    .ToList();
+
+                foreach (var checklistId in checklistIds)
                 {
-                    await CreateFields(dbEform.Id, sdkDbContext, fieldForCreateOnThisCheckList, core); // create new field
+                    await CreateFields(checklistId, sdkDbContext, model.FieldForCreate.Where(x => x.ChecklistId == checklistId).ToList(), core); // create new field
                 }
 
-                if(model.ChecklistForDelete.Any())
+                if (model.ChecklistForDelete.Any())
                 {
                     await DeleteCheckLists(model.ChecklistForDelete, sdkDbContext); // delete checklists
                 }
 
-                if(model.ChecklistForUpdate.Any()){
+                if (model.ChecklistForUpdate.Any())
+                {
                     await UpdateChecklist(model.ChecklistForUpdate, sdkDbContext); // update checklists
                 }
 
@@ -440,7 +443,7 @@ namespace eFormAPI.Web.Services.Eform
                     .FirstAsync();
 
                 fieldFromDb.Color = fieldForUpdate.Color;
-                //fieldFromDb.FieldTypeId = fieldForUpdate.FieldType;
+                fieldFromDb.FieldTypeId = fieldForUpdate.FieldType;
                 fieldFromDb.Mandatory = Convert.ToInt16(fieldForUpdate.Mandatory);
                 fieldFromDb.DecimalCount = fieldForUpdate.DecimalCount;
                 fieldFromDb.DisplayIndex = fieldForUpdate.Position;
@@ -452,49 +455,49 @@ namespace eFormAPI.Web.Services.Eform
                 switch (fieldFromDb.FieldType.Type) // todo add specific behaviour for some fields
                 {
                     case Constants.FieldTypes.SingleSelect or Constants.FieldTypes.MultiSelect:
-                    {
-                        foreach (var fieldOption in fieldFromDb.FieldOptions
-                            .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
-                            .Where(x => fieldForUpdate.Options.Where(y => y.Id != null).Any(y => y.Id != x.Id)))
                         {
-                            await fieldOption.Delete(sdkDbContext);
-                        }
+                            foreach (var fieldOption in fieldFromDb.FieldOptions
+                                .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                                .Where(x => fieldForUpdate.Options.Where(y => y.Id != null).Any(y => y.Id != x.Id)))
+                            {
+                                await fieldOption.Delete(sdkDbContext);
+                            }
 
-                        var optionsForCreate = fieldForUpdate.Options
-                            .Where(x => x.Id == null)
-                            .Select(x => new FieldOption
+                            var optionsForCreate = fieldForUpdate.Options
+                                .Where(x => x.Id == null)
+                                .Select(x => new FieldOption
                                 {
                                     FieldId = fieldFromDb.Id,
                                     Selected = x.Selected,
                                     DisplayOrder = x.DisplayOrder.ToString(),
                                     Key = x.Key.ToString(),
                                     FieldOptionTranslations = x.Translates
-                                        .Select(y =>
-                                            new FieldOptionTranslation
-                                            {
-                                                LanguageId = y.LanguageId,
-                                                Text = y.Name
-                                            })
-                                        .ToList(),
+                                            .Select(y =>
+                                                new FieldOptionTranslation
+                                                {
+                                                    LanguageId = y.LanguageId,
+                                                    Text = y.Name
+                                                })
+                                            .ToList(),
                                 })
-                            .ToList();
+                                .ToList();
 
-                        var optionsForUpdate = fieldForUpdate.Options
-                            .Where(y => y.Id != null)
-                            .Select(x => new FieldOption
-                            {
-                                FieldId = fieldFromDb.Id,
-                                Selected = x.Selected,
-                                DisplayOrder = x.DisplayOrder.ToString(),
-                                Key = x.Key.ToString(),
-                                FieldOptionTranslations = x.Translates
-                                .Select(y => new FieldOptionTranslation
+                            var optionsForUpdate = fieldForUpdate.Options
+                                .Where(y => y.Id != null)
+                                .Select(x => new FieldOption
+                                {
+                                    FieldId = fieldFromDb.Id,
+                                    Selected = x.Selected,
+                                    DisplayOrder = x.DisplayOrder.ToString(),
+                                    Key = x.Key.ToString(),
+                                    FieldOptionTranslations = x.Translates
+                                    .Select(y => new FieldOptionTranslation
                                     {
                                         LanguageId = y.LanguageId,
                                         Text = y.Name
                                     })
-                                .ToList(),
-                            });
+                                    .ToList(),
+                                });
 
                             foreach (var fieldOption in optionsForUpdate)
                             {
@@ -513,31 +516,31 @@ namespace eFormAPI.Web.Services.Eform
                             break;
                         }
                     case Constants.FieldTypes.ShowPdf:
-                    {
-                        if (fieldForUpdate.PdfFiles.Any())
                         {
-                            var folder = Path.Combine(Path.GetTempPath(), "templates",
-                                Path.Combine("fields-pdf-files", fieldFromDb.CheckListId.ToString()));
-                            Directory.CreateDirectory(folder);
-                            foreach (var pdfFile in fieldForUpdate.PdfFiles)
+                            if (fieldForUpdate.PdfFiles.Any())
                             {
-                                if (pdfFile.File != null)
+                                var folder = Path.Combine(Path.GetTempPath(), "templates",
+                                    Path.Combine("fields-pdf-files", fieldFromDb.CheckListId.ToString()));
+                                Directory.CreateDirectory(folder);
+                                foreach (var pdfFile in fieldForUpdate.PdfFiles)
                                 {
-                                    var filePath = Path.Combine(folder, $"{DateTime.Now.Ticks}_{fieldFromDb.CheckListId}.pdf");
-                                    using (var stream = new FileStream(filePath, FileMode.Create)) // if you replace using to await using - stream not start copy until it goes beyond the current block
+                                    if (pdfFile.File != null)
                                     {
-                                        await pdfFile.File.CopyToAsync(stream);
-                                    }
+                                        var filePath = Path.Combine(folder, $"{DateTime.Now.Ticks}_{fieldFromDb.CheckListId}.pdf");
+                                        using (var stream = new FileStream(filePath, FileMode.Create)) // if you replace using to await using - stream not start copy until it goes beyond the current block
+                                        {
+                                            await pdfFile.File.CopyToAsync(stream);
+                                        }
 
-                                    await core.PutFileToStorageSystem(filePath, pdfFile.File.FileName);
-                                    hashAndLanguageIdList.Add(
-                                        new KeyValuePair<string, int>(await core.PdfUpload(filePath),
-                                            pdfFile.LanguageId));
+                                        await core.PutFileToStorageSystem(filePath, pdfFile.File.FileName);
+                                        hashAndLanguageIdList.Add(
+                                            new KeyValuePair<string, int>(await core.PdfUpload(filePath),
+                                                pdfFile.LanguageId));
+                                    }
                                 }
                             }
+                            break;
                         }
-                        break;
-                    }
                 }
 
                 await fieldFromDb.Update(sdkDbContext);
@@ -701,17 +704,17 @@ namespace eFormAPI.Web.Services.Eform
                             LanguageId = x.LanguageId,
                         }).ToList(),
                     Mandatory = Convert.ToBoolean(field.Mandatory),
-                    ChecklistId = (int) field.CheckListId,
+                    ChecklistId = (int)field.CheckListId,
                 };
 
                 switch (field.FieldType.Type)
                 {
                     case Constants.FieldTypes.Number or Constants.FieldTypes.NumberStepper:
                         {
-                            editorField.DecimalCount = (int)field.DecimalCount;
-                            editorField.MinValue = long.Parse(field.MinValue);
-                            editorField.MaxValue = long.Parse(field.MaxValue);
-                            editorField.Value = long.Parse(field.DefaultValue);
+                            editorField.DecimalCount = field.DecimalCount;
+                            editorField.MinValue = field.MinValue; //== null ? field.MinValue : long.Parse(field.MinValue);
+                            editorField.MaxValue = field.MaxValue; //== null ? field.MaxValue : long.Parse(field.MaxValue);
+                            editorField.Value = field.DefaultValue; //== null ? field.DefaultValue : long.Parse(field.DefaultValue);
                             findFields.Add(editorField);
                             break;
                         }
@@ -730,8 +733,8 @@ namespace eFormAPI.Web.Services.Eform
                         }
                     case Constants.FieldTypes.Date:
                         {
-                            editorField.MinValue = DateTime.Parse(field.MinValue);
-                            editorField.MaxValue = DateTime.Parse(field.MaxValue);
+                            editorField.MinValue = field.MinValue;// == null ? field.MinValue : DateTime.Parse(field.MinValue);
+                            editorField.MaxValue = field.MaxValue;// == null ? field.MaxValue : DateTime.Parse(field.MaxValue);
                             findFields.Add(editorField);
                             break;
                         }
@@ -783,10 +786,10 @@ namespace eFormAPI.Web.Services.Eform
                     Color = field.Color,
                     FieldTypeId = field.FieldType,
                     DecimalCount = field.DecimalCount,
-                    DefaultValue = field.Value,
+                    DefaultValue = field.Value ?? null,
                     DisplayIndex = field.Position,
-                    MaxValue = field.MaxValue,
-                    MinValue = field.MinValue,
+                    MaxValue = field.MaxValue ?? null,
+                    MinValue = field.MinValue ?? null,
                     Mandatory = Convert.ToInt16(field.Mandatory),
                     ParentFieldId = parentFieldId,
                 };
@@ -837,7 +840,7 @@ namespace eFormAPI.Web.Services.Eform
                         }
                     case Constants.FieldTypes.ShowPdf:
                         {
-                            if(field.PdfFiles.Any())
+                            if (field.PdfFiles.Any())
                             {
                                 var folder = Path.Combine(Path.GetTempPath(), "templates",
                                     Path.Combine("fields-pdf-files", eformId.ToString()));
@@ -861,6 +864,20 @@ namespace eFormAPI.Web.Services.Eform
                             }
                             break;
                         }
+                    //case Constants.FieldTypes.Number or Constants.FieldTypes.NumberStepper:
+                    //{
+                    //    dbField.MaxValue = field.MaxValue == null ? field.MaxValue : long.Parse(field.MaxValue);
+                    //    dbField.MinValue = field.MinValue == null ? field.MinValue : long.Parse(field.MinValue);
+                    //    await dbField.Update(sdkDbContext);
+                    //        break;
+                    //}
+                    //case Constants.FieldTypes.Date:
+                    //{
+                    //    dbField.MaxValue = field.MaxValue == null ? field.MaxValue : DateTime.Parse(field.MaxValue);
+                    //    dbField.MinValue = field.MinValue == null ? field.MinValue : DateTime.Parse(field.MinValue);
+                    //    await dbField.Update(sdkDbContext);
+                    //        break;
+                    //}
                     default:
                         {
                             break;
@@ -878,7 +895,7 @@ namespace eFormAPI.Web.Services.Eform
                         }).ToList();
                 foreach (var fieldTranslation in translates)
                 {
-                    if(fieldType == Constants.FieldTypes.ShowPdf)
+                    if (fieldType == Constants.FieldTypes.ShowPdf)
                     {
                         var hash = hashAndLanguageIdList
                             .Where(x => x.Value == fieldTranslation.LanguageId)
@@ -906,7 +923,7 @@ namespace eFormAPI.Web.Services.Eform
                 .Select(x => new EformVisualEditorModel
                 {
                     Id = x.Id,
-                    Position = (int) x.DisplayIndex,
+                    Position = (int)x.DisplayIndex,
                     Translations = x.Translations.Select(y =>
                             new CommonTranslationsModel
                             {
@@ -931,7 +948,7 @@ namespace eFormAPI.Web.Services.Eform
             // add eforms
             var childrenCheckListIds = await query
                 .Include(x => x.Children)
-                .Select(x => x.Children.OrderBy(y=>y.DisplayIndex).Select(y => y.Id).ToList())
+                .Select(x => x.Children.OrderBy(y => y.DisplayIndex).Select(y => y.Id).ToList())
                 .FirstAsync();
 
             foreach (var checkListId in childrenCheckListIds)
