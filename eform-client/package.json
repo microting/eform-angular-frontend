@@ -43,7 +43,7 @@
     "@danielmoncada/angular-datetime-picker": "^12.0.0",
     "@fortawesome/angular-fontawesome": "0.8.2",
     "@fortawesome/fontawesome-svg-core": "1.2.35",
-    "@fortawesome/free-solid-svg-icons": "5.15.3",
+    "@fortawesome/free-solid-svg-icons": "5.15.4",
     "@ng-select/ng-select": "7.2.0",
     "@ngx-gallery/core": "4.0.3",
     "@ngx-gallery/gallerize": "4.0.3",
@@ -75,7 +75,7 @@
     "ngx-toastr": "13.2.1",
     "ramda": "^0.27.1",
     "rxjs": "6.6.7",
-    "tslib": "^2.3.0",
+    "tslib": "^2.3.1",
     "zone.js": "^0.11.3"
   },
   "devDependencies": {
