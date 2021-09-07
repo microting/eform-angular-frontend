@@ -29,17 +29,18 @@
       mdbTooltip="{{ 'Visual editor' | translate }}"
       mdbWavesEffect
     >
-      <fa-icon icon="puzzle-piece" [fixedWidth]="true" size="lg"></fa-icon>
+      <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
     </a>
     <button
       mdbBtn
-      class="btn-success btn-small-height"
-      mdbTooltip="{{ 'Create eForm' | translate }}"
+      class="btn-success btn-icon"
+      mdbTooltip="
+      {{ 'New eForm' | translate }}"
       id="newEFormBtn"
       *ngIf="userClaims.eformsCreate"
       (click)="openNewEformModal()"
     >
-      {{ 'New eForm' | translate }}
+      <fa-icon icon="code" size="lg" [fixedWidth]="true"></fa-icon>
     </button>
   </div>
 </eform-subheader>
@@ -267,7 +268,7 @@
                 mdbTooltip="{{ 'Edit eform with visual editor' | translate }}"
               >
                 <fa-icon
-                  icon="puzzle-piece"
+                  icon="pen"
                   [fixedWidth]="true"
                   size="lg"
                 ></fa-icon>
