@@ -3,7 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import * as R from 'ramda';
 import { Subscription } from 'rxjs';
-import { applicationLanguages } from 'src/app/common/const';
+import {
+  applicationLanguages,
+  EformFieldTypesEnum,
+} from 'src/app/common/const';
 import {
   CommonDictionaryModel,
   EformVisualEditorFieldModel,
@@ -234,16 +237,19 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
         this.visualEditorTemplateModel
       );
     } else {
-      const parentField = this.visualEditorTemplateModel.fields[
-        model.fieldIndex
-      ];
-      model.fields.forEach(
-        (x) => (x.parentFieldId = parentField.id ?? parentField.tempId)
-      );
-      model.fields = this.checkPosition(model.fields);
-      this.visualEditorTemplateModel.fields[model.fieldIndex].fields = [
-        ...model.fields,
-      ];
+      const parentField =
+        this.visualEditorTemplateModel.fields[model.fieldIndex] ||
+        this.visualEditorTemplateModel.fields[model.fieldIndex - 1];
+      if (parentField.fieldType !== EformFieldTypesEnum.FieldGroup) {
+        model.fields.forEach(
+          (x) => (x.parentFieldId = parentField.id ?? parentField.tempId)
+        );
+        model.fields = this.checkPosition(model.fields);
+        (
+          this.visualEditorTemplateModel.fields[model.fieldIndex] ||
+          this.visualEditorTemplateModel.fields[model.fieldIndex - 1]
+        ).fields = [...model.fields];
+      }
     }
   }
 
