@@ -56,6 +56,7 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
 
   updateGallery() {
     this.galleryImages = [];
+    this.images.sort((a, b) => a.id.localeCompare(b.id));
     this.images.forEach(value => {
       this.galleryImages.push( new ImageItem({ src: value.src, thumb: value.thumbnail }));
     });
