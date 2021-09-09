@@ -26,11 +26,6 @@ class DatabasePage extends Page {
     return $('#customerNo');
   }
 
-  public SqlServer(sqlserver) {
-    this.sqlserverDropdown.click();
-    $(`//*[@id="sqlServerSelector"]//*[text()="${sqlserver}"]`).$('..').$('..').click();
-  }
-
   public get port() {
     return $('#port');
   }
@@ -51,25 +46,23 @@ class DatabasePage extends Page {
     return $('#languageSelector');
   }
 
-
-  public get sqlserverDropdown() {
-    return $('#sqlServerSelector');
-  }
-
   public get saveBtn() {
     return $('#save');
   }
 
-  public save() {
-    this.saveBtn.click();
+  public async save() {
+    const a = await this.saveBtn;
+    await a.click();
   }
 
-  public selectLanguage(language) {
-    this.languageDropdown.click();
-    $(`//*[@id="languageSelector"]//*[text()="${language}"]`).$('..').$('..').click();
+  public async selectLanguage(language) {
+    const dropdown = await this.languageDropdown;
+    await dropdown.click();
+    const ele = await $(`//*[@id="languageSelector"]//*[text()="${language}"]`).$('..').$('..');
+    await ele.click();
   }
 
-  public configure(language) {
+  public async configure(language) {
     // this.usernameInput.setValue(DatabaseConfigurationConstants.username);
     this.passwordInput.setValue(DatabaseConfigurationConstants.password);
     this.emailInput.setValue(DatabaseConfigurationConstants.email);
@@ -80,7 +73,7 @@ class DatabasePage extends Page {
     this.port.setValue(DatabaseConfigurationConstants.port);
     this.host.setValue(DatabaseConfigurationConstants.SqlServer);
     this.authenticationType.setValue(DatabaseConfigurationConstants.authenticationType);
-    this.selectLanguage(language);
+    await this.selectLanguage(language);
   }
 }
 

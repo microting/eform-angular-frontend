@@ -5,8 +5,8 @@ export class TagsModalPage extends Page {
     super();
   }
 
-  public get rowNum(): number {
-    return $$('#tagRow').length;
+  public async rowNum(): Promise<number> {
+    return (await $$('#tagRow')).length;
   }
 
   // Create page elements
@@ -114,8 +114,9 @@ export class TagsModalPage extends Page {
     $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
   }
 
-  public getTagByName(name: string) {
-    for (let i = 1; i < this.rowNum + 1; i++) {
+  public async getTagByName(name: string) {
+    const rowNum = await this.rowNum;
+    for (let i = 1; i < 1 + rowNum; i++) {
       const tag = new TagRowObject(i);
       if (tag.name === name) {
         return tag;
@@ -124,8 +125,8 @@ export class TagsModalPage extends Page {
     return null;
   }
 
-  public closeTagModal() {
-    this.tagsModalCloseBtn.click();
+  public async closeTagModal() {
+    (await this.tagsModalCloseBtn).click();
   }
 }
 
