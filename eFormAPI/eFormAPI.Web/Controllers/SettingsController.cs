@@ -143,5 +143,12 @@ namespace eFormAPI.Web.Controllers
         {
             return _settingsService.GetLatestVersion();
         }
+
+        [HttpGet]
+        [Route(("api/settings/integrity-test"))]
+        public async Task<OperationResult> IntegrityCheck()
+        {
+            return await _settingsService.IntegrityCheck();
+        }
     }
 }
