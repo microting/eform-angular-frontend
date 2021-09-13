@@ -97,6 +97,7 @@ namespace eFormAPI.Web.Controllers
         [Route("api/settings/admin")]
         public async Task<OperationResult> UpdateAdminSettings([FromBody] AdminSettingsModel adminSettingsModel)
         {
+            await _settingsService.IntegrityCheck();
             return await _settingsService.UpdateAdminSettings(adminSettingsModel);
         }
 
