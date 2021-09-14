@@ -45,6 +45,7 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
               fieldId: value.fieldId,
               uploadedObjId: value.uploadedDataObj.id
             });
+            this.images = this.images.sort((a, b) => a.fileName.localeCompare(b.fileName));
           });
         }
       });
@@ -56,6 +57,7 @@ export class ElementPictureComponent implements OnChanges, OnDestroy {
 
   updateGallery() {
     this.galleryImages = [];
+    this.images = this.images.sort((a, b) => a.fileName.localeCompare(b.fileName));
     this.images.forEach(value => {
       this.galleryImages.push( new ImageItem({ src: value.src, thumb: value.thumbnail }));
     });

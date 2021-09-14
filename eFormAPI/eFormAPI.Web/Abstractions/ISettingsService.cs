@@ -42,5 +42,6 @@ namespace eFormAPI.Web.Abstractions
         Task<OperationResult> ResetPageHeaderSettings();
         Task<OperationResult> UpdateAdminSettings(AdminSettingsModel adminSettingsModel);
         Task<OperationResult> UpdateConnectionString(InitialSettingsModel initialSettingsModel);
+        Task<OperationResult> IntegrityCheck();
     }
 }
