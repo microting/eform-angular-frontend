@@ -1,4 +1,4 @@
-﻿/*
+/*
 The MIT License (MIT)
 
 Copyright (c) 2007 - 2021 Microting A/S
@@ -262,6 +262,49 @@ namespace eFormAPI.Web.Services
             catch (Exception)
             {
                 return new OperationResult(false, _localizationService.GetStringWithFormat("DeviceUserParamCouldNotBeDeleted", id));
+            }
+        }
+
+        public async Task<OperationDataResult<int>> CreateWithResponse(DeviceUserModel deviceUserModel)
+        {
+            var core = await _coreHelper.GetCore();
+            var siteName = deviceUserModel.UserFirstName + " " + deviceUserModel.UserLastName;
+            await using var db = core.DbContextHelper.GetDbContext();
+
+
+            try
+            {
+                var siteDto = await core.SiteCreate(siteName, deviceUserModel.UserFirstName, deviceUserModel.UserLastName,
+                    null, deviceUserModel.LanguageCode);
+
+                // if (siteDto != null)
+                // {
+                //     Site site = await db.Sites.SingleAsync(x => x.MicrotingUid == siteDto.SiteId);
+                //     site.LanguageId = language.Id;
+                //     await site.Update(db);
+                // }
+
+                return siteDto != null
+                    ? new OperationDataResult<int>(true, siteDto.SiteId)
+                    : new OperationDataResult<int>(false, _localizationService.GetString("DeviceUserCouldNotBeCreated"));
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    if (ex.InnerException.Message == "The remote server returned an error: (402) Payment Required.")
+                    {
+                        return new OperationDataResult<int>(false, _localizationService.GetString("YouNeedToBuyMoreLicenses"));
+                    }
+                    else
+                    {
+                        return new OperationDataResult<int>(false, _localizationService.GetString("DeviceUserCouldNotBeCreated"));
+                    }
+                }
+                catch
+                {
+                    return new OperationDataResult<int>(false, _localizationService.GetString("DeviceUserCouldNotBeCreated"));
+                }
             }
         }
     }
