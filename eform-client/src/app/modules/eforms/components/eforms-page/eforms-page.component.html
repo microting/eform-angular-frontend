@@ -21,6 +21,16 @@
     >
       <fa-icon icon="tags" [fixedWidth]="true" size="lg"></fa-icon>
     </button>
+    <!--    <a-->
+    <!--      mdbBtn-->
+    <!--      class="btn-success btn-icon"-->
+    <!--      id="eformsVisualEditor"-->
+    <!--      [routerLink]="['visual-editor']"-->
+    <!--      mdbTooltip="{{ 'Visual editor' | translate }}"-->
+    <!--      mdbWavesEffect-->
+    <!--    >-->
+    <!--      <fa-icon icon="puzzle-piece" [fixedWidth]="true" size="lg"></fa-icon>-->
+    <!--    </a>-->
     <button
       mdbBtn
       class="btn-success btn-small-height"
@@ -245,6 +255,23 @@
                   size="lg"
                 ></fa-icon>
               </button>
+              <a
+                *ngIf="
+                  templateDto.deployedSites.length == 0 && !templateDto.hasCases
+                "
+                mdbBtn
+                mdbWavesEffect
+                class="btn-success btn-icon"
+                id="edit-eform-btn-{{ i }}"
+                [routerLink]="['visual-editor/' + templateDto.id]"
+                mdbTooltip="{{ 'Edit eform with visual editor' | translate }}"
+              >
+                <fa-icon
+                  icon="puzzle-piece"
+                  [fixedWidth]="true"
+                  size="lg"
+                ></fa-icon>
+              </a>
             </div>
             <div class="d-flex flex-row justify-content-center">
               <button

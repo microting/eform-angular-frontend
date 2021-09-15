@@ -1,0 +1,125 @@
+<!-- First level fields render -->
+<section id="fieldSection{{ fieldIndex }}" *ngIf="field">
+  <!-- IMPORTANT TO IMPLEMENT FOR NESTING OF GROUPS -->
+
+  <!--  <div dragula="{{dragulaElementContainerName}}" [dragulaModel]="visualEditorTemplateModel.fields"-->
+  <!--       (dragulaModelChange)="onFieldChanged($event)">-->
+  <div class="card mb-3 hoverable container-fluid" style="width: 100%">
+    <div
+      class="card-header row d-flex align-items-center justify-content-end"
+      [ngStyle]="{ 'background-color': field.color ? '#' + field.color : '' }"
+    >
+      <div class="col-6">
+        <i
+          class="material-icons md-36 dragula-handle align-middle"
+          style="cursor: pointer"
+          id="moveFieldBtn"
+        >
+          drag_handle
+        </i>
+        {{ getTranslation + '; ' + (fieldTypes[field.fieldType] | translate) }}
+      </div>
+      <div class="col">
+        <div class="row">
+          <div *ngFor="let color of fieldColors">
+            <div
+              mdbBtn
+              [style]="'background-color: #' + color.name + ';'"
+              [mdbTooltip]="color.description"
+              style="border-radius: 10em; padding: 1em 1em"
+              (click)="onChangeColor(color.name)"
+            ></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-3 d-flex justify-content-end align-items-center">
+        <fa-icon
+          *ngIf="!isFieldComplete"
+          [mdbTooltip]="'Field is not complete' | translate"
+          icon="info-circle"
+          [fixedWidth]="true"
+          size="lg"
+          class="text-warning mr-2"
+        ></fa-icon>
+        <button
+          *ngIf="field.fieldType == fieldTypes.FieldGroup && !fieldIsNested"
+          id="addNewNestedField"
+          class="btn btn-success btn-icon mr-2"
+          (click)="onAddNewField()"
+          [mdbTooltip]="'Add new nested field' | translate"
+        >
+          <fa-icon icon="plus" [fixedWidth]="true"></fa-icon>
+        </button>
+        <button
+          id="copyBtn"
+          class="btn btn-success btn-icon mr-2"
+          (click)="onCopyField(field)"
+          [mdbTooltip]="'Copy field' | translate"
+        >
+          <fa-icon icon="copy" [fixedWidth]="true"></fa-icon>
+        </button>
+        <button
+          id="editBtn"
+          class="btn btn-icon mr-2"
+          (click)="onEditField()"
+          [mdbTooltip]="'Edit field' | translate"
+        >
+          <fa-icon icon="pen" [fixedWidth]="true"></fa-icon>
+        </button>
+        <button
+          id="deleteBtn"
+          class="btn btn-danger btn-icon mr-2"
+          (click)="onDeleteField()"
+          [mdbTooltip]="'Delete field' | translate"
+        >
+          <fa-icon icon="trash-alt" [fixedWidth]="true"></fa-icon>
+        </button>
+        <button
+          *ngIf="field.fieldType == fieldTypes.FieldGroup && field.collapsed"
+          id="expandBtn"
+          class="btn btn-icon mr-2"
+          [mdbTooltip]="'Expand field' | translate"
+          (click)="toggleCollapse(field)"
+        >
+          <fa-icon icon="angle-right" [fixedWidth]="true"></fa-icon>
+        </button>
+        <button
+          *ngIf="field.fieldType == fieldTypes.FieldGroup && !field.collapsed"
+          id="collapseToggleBtn"
+          class="btn btn-icon mr-2"
+          [mdbTooltip]="'Collapse field' | translate"
+          (click)="toggleCollapse(field)"
+        >
+          <fa-icon icon="angle-down" [fixedWidth]="true"></fa-icon>
+        </button>
+      </div>
+    </div>
+    <div
+      mdbCollapse
+      [isCollapsed]="field.collapsed"
+      #nestedFields="bs-collapse"
+      *ngIf="field.fieldType == fieldTypes.FieldGroup"
+      class="card-body"
+      [class]="field.collapsed ? 'p-1' : 'p-0'"
+      dragula="FIELDS"
+      [dragulaModel]="field.fields"
+      id="nestedFields"
+      (dragulaModelChange)="onFieldPositionChangedOnNestedField($event)"
+    >
+      <ng-container *ngFor="let nestedField of field.fields; let i = index">
+        <app-visual-editor-field
+          [field]="nestedField"
+          [checklistRecursionIndexes]="checklistRecursionIndexes"
+          [fieldIndex]="i"
+          [fieldIsNested]="true"
+          [parentFieldIndex]="fieldIndex"
+          (changeColor)="onChangeColorOnNestedField($event)"
+          (copyField)="onCopyFieldOnNestedField($event)"
+          (deleteField)="onDeleteFieldOnNestedField($event)"
+          (editField)="onEditFieldOnNestedField($event)"
+        >
+        </app-visual-editor-field
+      ></ng-container>
+    </div>
+  </div>
+</section>

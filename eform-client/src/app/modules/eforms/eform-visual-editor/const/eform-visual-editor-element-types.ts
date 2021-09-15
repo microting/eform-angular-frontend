@@ -1,0 +1,175 @@
+import { EformFieldTypesEnum } from 'src/app/common/const';
+import {
+  CommonDictionaryModel,
+  EformVisualEditorFieldTypeModel,
+} from 'src/app/common/models';
+
+export const eformVisualEditorElementTypes: EformVisualEditorFieldTypeModel[] = [
+  {
+    id: EformFieldTypesEnum.Text,
+    name: 'Text',
+    description: 'Simple text field',
+    previewImage:
+      '../../../../../../../assets/images/visual-editor-preview/text.png',
+  },
+  {
+    id: EformFieldTypesEnum.Number,
+    name: 'Number',
+    description: 'Simple number field',
+    previewImage:
+      '../../../../../../../assets/images/visual-editor-preview/number.png',
+  },
+  {
+    id: EformFieldTypesEnum.None,
+    name: 'None',
+    description: 'Simple text to be displayed',
+    previewImage:
+      '../../../../../../../assets/images/visual-editor-preview/infobox.png',
+  },
+  {
+    id: EformFieldTypesEnum.CheckBox,
+    name: 'CheckBox',
+    description: 'Simple check box field',
+    previewImage:
+      '../../../../../../../assets/images/visual-editor-preview/checkbox-screenshot.png',
+  },
+  {
+    id: EformFieldTypesEnum.Picture,
+    name: 'Picture',
+    description: 'Simple picture field',
+    previewImage:
+      '../../../../../../../assets/images/visual-editor-preview/picture-screenshot.png',
+  },
+  {
+    id: EformFieldTypesEnum.Audio,
+    name: 'Audio',
+    description: 'Simple audio field',
+    previewImage:
+      '../../../../../../../assets/images/visual-editor-preview/audio-screenshot.png',
+  },
+  {
+    id: EformFieldTypesEnum.Movie,
+    name: 'Movie',
+    description: 'Simple movie field',
+    previewImage: '',
+  },
+  {
+    id: EformFieldTypesEnum.SingleSelect,
+    name: 'SingleSelect',
+    description: 'Single selection list',
+    previewImage:
+      '../../../../../../../assets/images/visual-editor-preview/single-select.png',
+  },
+  {
+    id: EformFieldTypesEnum.Comment,
+    name: 'Comment',
+    description: 'Simple comment field',
+    previewImage:
+      '../../../../../../../assets/images/visual-editor-preview/comment.png',
+  },
+  {
+    id: EformFieldTypesEnum.MultiSelect,
+    name: 'MultiSelect',
+    description: 'Simple multi select list',
+    previewImage:
+      '../../../../../../../assets/images/visual-editor-preview/multi-select.png',
+  },
+  {
+    id: EformFieldTypesEnum.Date,
+    name: 'Date',
+    description: 'Date selection',
+    previewImage:
+      '../../../../../../../assets/images/visual-editor-preview/date.png',
+  },
+  {
+    id: EformFieldTypesEnum.Signature,
+    name: 'Signature',
+    description: 'Simple signature field',
+    previewImage:
+      '../../../../../../../assets/images/visual-editor-preview/signature.png',
+  },
+  {
+    id: EformFieldTypesEnum.Timer,
+    name: 'Timer',
+    description: 'Simple timer field',
+    previewImage:
+      '../../../../../../../assets/images/visual-editor-preview/timer-screenshot.png',
+  },
+  {
+    id: EformFieldTypesEnum.EntitySearch,
+    name: 'EntitySearch',
+    description: 'Autofilled searchable items field',
+    previewImage: '',
+  },
+  {
+    id: EformFieldTypesEnum.EntitySelect,
+    name: 'EntitySelect',
+    description: 'Autofilled single selection list',
+    previewImage: '',
+  },
+  {
+    id: EformFieldTypesEnum.ShowPdf,
+    name: 'ShowPdf',
+    description: 'Show PDF',
+    previewImage:
+      '../../../../../../../assets/images/visual-editor-preview/show-pdf-screenshot.png',
+  },
+  {
+    id: EformFieldTypesEnum.FieldGroup,
+    name: 'FieldGroup',
+    description: 'Field group',
+    previewImage:
+      '../../../../../../../assets/images/visual-editor-preview/group.png',
+  },
+  {
+    id: EformFieldTypesEnum.SaveButton,
+    name: 'SaveButton',
+    description: 'Save eForm',
+    previewImage:
+      '../../../../../../../assets/images/visual-editor-preview/save-screenshot.png',
+  },
+  {
+    id: EformFieldTypesEnum.NumberStepper,
+    name: 'NumberStepper',
+    description: 'Number stepper field',
+    previewImage: '',
+  },
+];
+
+export const eformVisualEditorElementColors: CommonDictionaryModel[] = [
+  {
+    id: 1,
+    description: 'Default',
+    name: 'e7e7e7',
+  },
+  {
+    id: 2,
+    description: 'Blue',
+    name: 'e2f4fb',
+  },
+  {
+    id: 3,
+    description: 'Purple',
+    name: 'e2f4fb',
+  },
+  {
+    id: 4,
+    description: 'Green',
+    name: 'f0f8db',
+  },
+  {
+    id: 5,
+    description: 'Yellow',
+    name: 'fff6df',
+  },
+  {
+    id: 6,
+    description: 'Red',
+    name: 'ffe4e4',
+  },
+  {
+    id: 7,
+    description: 'Grey',
+    name: 'e8eaf6',
+  },
+];
