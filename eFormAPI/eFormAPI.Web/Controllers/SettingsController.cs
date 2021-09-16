@@ -97,6 +97,7 @@ namespace eFormAPI.Web.Controllers
         [Route("api/settings/admin")]
         public async Task<OperationResult> UpdateAdminSettings([FromBody] AdminSettingsModel adminSettingsModel)
         {
+            await _settingsService.IntegrityCheck();
             return await _settingsService.UpdateAdminSettings(adminSettingsModel);
         }
 
@@ -142,6 +143,13 @@ namespace eFormAPI.Web.Controllers
         public OperationDataResult<string> GetLatestVersion()
         {
             return _settingsService.GetLatestVersion();
+        }
+
+        [HttpGet]
+        [Route(("api/settings/integrity-test"))]
+        public async Task<OperationResult> IntegrityCheck()
+        {
+            return await _settingsService.IntegrityCheck();
         }
     }
 }

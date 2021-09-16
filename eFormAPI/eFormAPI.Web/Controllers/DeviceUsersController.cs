@@ -1,4 +1,4 @@
-﻿/*
+/*
 The MIT License (MIT)
 
 Copyright (c) 2007 - 2021 Microting A/S
@@ -90,6 +90,18 @@ namespace eFormAPI.Web.Controllers
         public async Task<OperationResult> Delete(int id)
         {
             return await _deviceUsersService.Delete(id);
+        }
+
+        [HttpPost]
+        [Route("api/device-users/create-with-response")]
+        [Authorize(Policy = AuthConsts.EformPolicies.DeviceUsers.Create)]
+        public async Task<OperationDataResult<int>> CreateWithResponse([FromBody] DeviceUserModel deviceUserModel)
+        {
+            if (!ModelState.IsValid)
+                return new OperationDataResult<int>(false,
+                    _localizationService.GetString("DeviceUserCouldNotBeCreated"));
+
+            return await _deviceUsersService.CreateWithResponse(deviceUserModel);
         }
     }
 }

@@ -6,7 +6,7 @@ export function generateRandmString() {
   return Guid.raw();
 }
 
-export function testSorting(
+export async function testSorting(
   tableHeader: WebdriverIO.Element,
   htmlIdElementsForSorting: string,
   sortBy: string,
@@ -19,7 +19,7 @@ export function testSorting(
   if (!mapFunc) {
     mapFunc = (ele) => ele.getText();
   }
-  browser.pause(1000);
+  await browser.pause(1000);
   const elementsForSorting = $$(htmlIdElementsForSorting);
   const elementsBefore = elementsForSorting.map(mapFunc);
   const spinnerAnimation = $('#spinner-animation');

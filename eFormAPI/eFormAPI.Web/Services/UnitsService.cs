@@ -30,6 +30,7 @@ using eFormAPI.Web.Abstractions.Advanced;
 using eFormAPI.Web.Infrastructure.Models.Units;
 using Microsoft.EntityFrameworkCore;
 using Microting.eForm.Dto;
+using Microting.eForm.Infrastructure.Constants;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
@@ -50,7 +51,9 @@ namespace eFormAPI.Web.Services
         {
             var core = await _coreHelper.GetCore();
             await using var dbContext = core.DbContextHelper.GetDbContext();
-            var units = await dbContext.Units.AsNoTracking().Select(t => new UnitModel()
+            var units = await dbContext.Units.AsNoTracking()
+                .Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+                .Select(t => new UnitModel()
             {
                 Id = t.Id,
                 CreatedAt = t.CreatedAt,
