@@ -1,0 +1,201 @@
+<eform-subheader [title]="'Eform visual editor' | translate">
+  <div class="p-3">
+    <button
+      mdbBtn
+      class="btn-accent text-black-50 btn-icon"
+      (click)="openTagsModal()"
+      mdbTooltip="{{ 'Manage tags' | translate }}"
+      mdbWavesEffect
+    >
+      <fa-icon icon="tags" [fixedWidth]="true" size="lg"></fa-icon>
+    </button>
+    <button
+      mdbBtn
+      class="btn-success btn-small-height"
+      (click)="
+        selectedTemplateId ? updateVisualTemplate() : createVisualTemplate()
+      "
+      mdbTooltip="{{ (selectedTemplateId ? 'Save' : 'Create') | translate }}"
+      mdbWavesEffect
+    >
+      {{ (selectedTemplateId ? 'Save Eform' : 'Create Eform') | translate }}
+    </button>
+  </div>
+</eform-subheader>
+
+<div class="container-fluid">
+  <div class="row mb-2">
+    <div class="col-lg-9 col-md-12 col-xs-12">
+      <app-eform-visual-editor-header
+        [visualEditorModel]="visualEditorTemplateModel"
+        [availableTags]="availableTags"
+      ></app-eform-visual-editor-header>
+    </div>
+  </div>
+  <div class="row mb-2">
+    <div class="col-lg-9 col-md-12 col-xs-12">
+      <div class="card z-depth-3" style="width: 100%">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <ng-container
+                *ngIf="
+                  visualEditorTemplateModel.fields.length ||
+                  visualEditorTemplateModel.checkLists.length
+                "
+              >
+                <button
+                  mdbBtn
+                  class="btn-icon mb-2 float-right text-black-50"
+                  mdbTooltip="{{ 'Expand all' | translate }}"
+                  (click)="toggleCollapse()"
+                  *ngIf="isItemsCollapsed"
+                >
+                  <fa-icon
+                    icon="angle-double-right"
+                    size="lg"
+                    [fixedWidth]="true"
+                  ></fa-icon>
+                </button>
+
+                <button
+                  mdbBtn
+                  class="btn-icon mb-2 float-right text-black-50"
+                  mdbTooltip="{{ 'Collapse all' | translate }}"
+                  (click)="toggleCollapse()"
+                  *ngIf="!isItemsCollapsed"
+                >
+                  <fa-icon
+                    icon="angle-double-down"
+                    size="lg"
+                    [fixedWidth]="true"
+                  ></fa-icon>
+                </button>
+              </ng-container>
+            </div>
+          </div>
+          <div
+            mdbCollapse
+            #collapse="bs-collapse"
+            [isCollapsed]="isItemsCollapsed"
+          >
+            <section
+              dragula="CHECK_LISTS"
+              id="editorChecklists"
+              (dragulaModelChange)="dragulaPositionChecklistChanged($event)"
+              [dragulaModel]="visualEditorTemplateModel.checkLists"
+            >
+              <app-visual-editor-checklist
+                *ngFor="
+                  let checklist of visualEditorTemplateModel.checkLists;
+                  let i = index
+                "
+                [checklist]="checklist"
+                [checklistRecursionIndexes]="[i]"
+                [checklistIndex]="i"
+                id="checkList_{{ i }}"
+                (addNewNestedChecklist)="showChecklistModal($event)"
+                (deleteNestedChecklist)="showDeleteChecklistModal($event)"
+                (editNestedChecklist)="showChecklistModal($event)"
+                (addNewNestedField)="showFieldModal($event)"
+                (deleteNestedField)="showDeleteFieldModal($event)"
+                (editNestedField)="showFieldModal($event)"
+                [ngClass]="{ 'no-drag': !checklist.collapsed }"
+                (nestedFieldPositionChanged)="
+                  onNestedFieldPositionChanged($event)
+                "
+                (copyNestedField)="onFieldCreate($event)"
+                (changeColorField)="onFieldUpdate($event)"
+              ></app-visual-editor-checklist>
+            </section>
+            <section
+              *ngIf="
+                !visualEditorTemplateModel.checkLists ||
+                visualEditorTemplateModel.checkLists.length == 0
+              "
+              dragula="FIELDS"
+              id="editorFields"
+              (dragulaModelChange)="dragulaPositionFieldChanged($event)"
+              [dragulaModel]="visualEditorTemplateModel.fields"
+            >
+              <app-visual-editor-field
+                *ngFor="
+                  let field of visualEditorTemplateModel.fields;
+                  let i = index
+                "
+                [field]="field"
+                [fieldIndex]="i"
+                id="field_{{ i }}"
+                (editField)="showFieldModal($event)"
+                (deleteField)="showDeleteFieldModal($event)"
+                (fieldPositionChanged)="onNestedFieldPositionChanged($event)"
+                (changeColor)="onFieldUpdate($event)"
+                (copyField)="onFieldCreate($event)"
+                (addNewField)="showFieldModal($event)"
+              ></app-visual-editor-field>
+            </section>
+          </div>
+          <div class="row">
+            <div class="col d-flex justify-content-end">
+              <button
+                *ngIf="visualEditorTemplateModel.checkLists.length === 0"
+                mdbBtn
+                id="initialFieldCreateBtn"
+                [mdbTooltip]="'New field' | translate"
+                class="btn-success btn-icon"
+                (click)="showFieldModal()"
+              >
+                <fa-icon icon="plus" [fixedWidth]="true" size="lg"></fa-icon>
+              </button>
+              <button
+                *ngIf="visualEditorTemplateModel.fields.length === 0"
+                mdbBtn
+                id="initialChecklistCreateBtn"
+                [mdbTooltip]="'New checklist' | translate"
+                class="btn-success btn-icon"
+                (click)="showChecklistModal()"
+              >
+                <fa-icon
+                  icon="folder-plus"
+                  [fixedWidth]="true"
+                  size="lg"
+                ></fa-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-eform-visual-editor-tags
+  #tagsModal
+  [availableTags]="availableTags"
+  (tagsChanged)="getTags()"
+>
+</app-eform-visual-editor-tags>
+
+<app-visual-editor-checklist-modal
+  #checklistModal
+  (createChecklist)="onCreateChecklist($event)"
+  (updateChecklist)="onUpdateChecklist($event)"
+>
+</app-visual-editor-checklist-modal>
+<app-visual-editor-checklist-delete-modal
+  #checklistDeleteModal
+  (deleteChecklist)="onDeleteChecklist($event)"
+>
+</app-visual-editor-checklist-delete-modal>
+
+<app-visual-editor-field-modal
+  #fieldModal
+  (createField)="onFieldCreate($event)"
+  (updateField)="onFieldUpdate($event)"
+>
+</app-visual-editor-field-modal>
+<app-visual-editor-field-delete-modal
+  #fieldDeleteModal
+  (fieldDelete)="onFieldDelete($event)"
+>
+</app-visual-editor-field-delete-modal>

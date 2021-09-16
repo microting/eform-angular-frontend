@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using Microting.eForm.Infrastructure;
+
 namespace eFormAPI.Web.Services
 {
     using Microting.EformAngularFrontendBase.Infrastructure.Data;
@@ -263,6 +265,25 @@ namespace eFormAPI.Web.Services
             }
 
             Program.Restart();
+            return new OperationResult(true);
+        }
+
+        public async Task<OperationResult> IntegrityCheck()
+        {
+            Core core = await _coreHelper.GetCore();
+            MicrotingDbContext dbContext = core.DbContextHelper.GetDbContext();
+
+            _logger.LogInformation("Checking uploaded data");
+            var uploadedDatas =
+                await dbContext.UploadedDatas.Where(x => x.FileLocation.Contains("https://")).ToListAsync();
+
+            _logger.LogInformation($"Found {uploadedDatas.Count} uploaded data items, which needs download");
+            foreach (UploadedData uploadedData in uploadedDatas)
+            {
+                _logger.LogInformation($"Trying to download from {uploadedData.FileLocation}");
+                await core.DownloadUploadedData(uploadedData.Id);
+            }
+
             return new OperationResult(true);
         }
 

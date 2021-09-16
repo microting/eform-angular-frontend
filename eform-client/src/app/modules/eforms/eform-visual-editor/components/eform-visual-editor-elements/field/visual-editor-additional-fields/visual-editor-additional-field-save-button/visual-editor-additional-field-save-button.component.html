@@ -1,0 +1,19 @@
+<mdb-card class="mt-3">
+  <mdb-card-body>
+    <div class="row">
+      <div class="col">
+        <div class="md-form">
+          <input
+            mdbInput
+            [(ngModel)]="field.value"
+            [required]="true"
+            type="text"
+            class="form-control"
+            id="defaultValueEdit"
+          />
+          <label>{{ 'Value' | translate }}</label>
+        </div>
+      </div>
+    </div>
+  </mdb-card-body>
+</mdb-card>

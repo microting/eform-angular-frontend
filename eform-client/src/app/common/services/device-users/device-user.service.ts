@@ -14,6 +14,7 @@ const DeviceUsersMethods = {
   UpdateSingle: '/api/device-users/update',
   DeleteSingle: '/api/device-users/delete',
   CreateSingle: '/api/device-users/create',
+  CreateWithResponse: '/api/device-users/create-with-response',
 };
 
 @Injectable()
@@ -46,6 +47,15 @@ export class DeviceUserService {
   createSingleDeviceUser(model: DeviceUserModel): Observable<OperationResult> {
     return this.apiBaseService.put<DeviceUserModel>(
       DeviceUsersMethods.CreateSingle,
+      model
+    );
+  }
+
+  createSingleDeviceUserWithResponse(
+    model: DeviceUserModel
+  ): Observable<OperationDataResult<number>> {
+    return this.apiBaseService.post<DeviceUserModel>(
+      DeviceUsersMethods.CreateWithResponse,
       model
     );
   }

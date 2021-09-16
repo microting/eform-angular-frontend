@@ -339,14 +339,9 @@ namespace eFormAPI.Web.Services
                 }).ToList();
 
                 // Add user first and last name
-                foreach (var rightMenuItem in orderedRightMenu)
-                {
-                    if (rightMenuItem.Name == "user")
-                    {
-                        var user = await _userService.GetCurrentUserAsync();
-                        rightMenuItem.Name = $"{user.FirstName} {user.LastName}";
-                    }
-                }
+                var rightMenuItem = orderedRightMenu.First(x => x.Name == "user");
+                rightMenuItem.Name = await _userService.GetCurrentUserFullName();
+
                 // Create result
                 var result = new MenuModel
                 {
@@ -355,14 +350,10 @@ namespace eFormAPI.Web.Services
                 };
 
                 // Add menu from plugins
-                if (Program.EnabledPlugins.Any())
+                foreach (var pluginMenu in Program.EnabledPlugins.Select(plugin => plugin.HeaderMenu(_serviceProvider)))
                 {
-                    foreach (var plugin in Program.EnabledPlugins)
-                    {
-                        var pluginMenu = plugin.HeaderMenu(_serviceProvider);
-                        //result.LeftMenu.AddRange(pluginMenu.LeftMenu);
-                        result.RightMenu.AddRange(pluginMenu.RightMenu);
-                    }
+                    //result.LeftMenu.AddRange(pluginMenu.LeftMenu);
+                    result.RightMenu.AddRange(pluginMenu.RightMenu);
                 }
 
                 return new OperationDataResult<MenuModel>(true, result);
@@ -382,12 +373,12 @@ namespace eFormAPI.Web.Services
             var actualMenu = await _dbContext.MenuItems.ToListAsync();
 
             _dbContext.MenuItems.RemoveRange(actualMenu);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
 
             var defaultMenu = DefaultMenuStorage.GetDefaultMenu();
 
             _dbContext.MenuItems.AddRange(defaultMenu);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
 
             foreach (var plugin in Program.EnabledPlugins)
             {

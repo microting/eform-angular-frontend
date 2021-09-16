@@ -1,0 +1,62 @@
+<mdb-card class="mt-3">
+  <mdb-card-body>
+    <div class="row">
+      <div class="col">
+        <div class="md-form">
+          <input
+            mdbInput
+            [(ngModel)]="field.minValue"
+            [required]="true"
+            type="number"
+            class="form-control"
+            id="minValueEdit"
+          />
+          <label>{{ 'Min value' | translate }}</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="md-form">
+          <input
+            mdbInput
+            [(ngModel)]="field.maxValue"
+            [required]="true"
+            type="number"
+            class="form-control"
+            id="maxValueEdit"
+          />
+          <label>{{ 'Max value' | translate }}</label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="md-form">
+          <input
+            mdbInput
+            [(ngModel)]="field.value"
+            [required]="true"
+            type="number"
+            class="form-control"
+            id="defaultValueEdit"
+          />
+          <label>{{ 'Default value' | translate }}</label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="md-form">
+          <input
+            mdbInput
+            [(ngModel)]="field.decimalCount"
+            [required]="true"
+            type="number"
+            class="form-control"
+            id="decimalCountEdit"
+          />
+          <label>{{ 'Decimal count' | translate }}</label>
+        </div>
+      </div>
+    </div>
+  </mdb-card-body>
+</mdb-card>
