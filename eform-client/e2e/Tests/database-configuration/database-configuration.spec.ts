@@ -22,7 +22,7 @@ describe('Database', function () {
     expect(await databasePage.authenticationType.isDisplayed()).equal(true);
     expect(await databasePage.languageDropdown.isDisplayed()).equal(true);
     if (await databasePage.saveBtn.isExisting()) {
-      databasePage.configure(DatabaseConfigurationConstants.languageOptions.danish);
+      await databasePage.configure(DatabaseConfigurationConstants.languageOptions.danish);
       await browser.pause(1000);
       await databasePage.save();
       await $('#loginBtn').waitForDisplayed({timeout: 90000});

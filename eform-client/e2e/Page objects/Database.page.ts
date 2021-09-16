@@ -58,21 +58,21 @@ class DatabasePage extends Page {
   public async selectLanguage(language) {
     const dropdown = await this.languageDropdown;
     await dropdown.click();
-    const ele = await $(`//*[@id="languageSelector"]//*[text()="${language}"]`).$('..').$('..');
+    const ele = await (await (await $(`//*[@id="languageSelector"]//*[text()="${language}"]`)).$('..')).$('..');
     await ele.click();
   }
 
   public async configure(language) {
     // this.usernameInput.setValue(DatabaseConfigurationConstants.username);
-    this.passwordInput.setValue(DatabaseConfigurationConstants.password);
-    this.emailInput.setValue(DatabaseConfigurationConstants.email);
-    this.firstNameInput.setValue(DatabaseConfigurationConstants.firstName);
-    this.lastNameInput.setValue(DatabaseConfigurationConstants.lastNAme);
-    this.tokenInput.setValue(DatabaseConfigurationConstants.token);
-    this.customerNo.setValue(DatabaseConfigurationConstants.customerNo);
-    this.port.setValue(DatabaseConfigurationConstants.port);
-    this.host.setValue(DatabaseConfigurationConstants.SqlServer);
-    this.authenticationType.setValue(DatabaseConfigurationConstants.authenticationType);
+    await this.passwordInput.setValue(DatabaseConfigurationConstants.password);
+    await this.emailInput.setValue(DatabaseConfigurationConstants.email);
+    await this.firstNameInput.setValue(DatabaseConfigurationConstants.firstName);
+    await this.lastNameInput.setValue(DatabaseConfigurationConstants.lastNAme);
+    await this.tokenInput.setValue(DatabaseConfigurationConstants.token);
+    await this.customerNo.setValue(DatabaseConfigurationConstants.customerNo);
+    await this.port.setValue(DatabaseConfigurationConstants.port);
+    await this.host.setValue(DatabaseConfigurationConstants.SqlServer);
+    await this.authenticationType.setValue(DatabaseConfigurationConstants.authenticationType);
     await this.selectLanguage(language);
   }
 }
