@@ -39,8 +39,8 @@ class SitesPage extends PageWithNavbarPage {
     return ele;
   }
 
-  public async sitesManaasyncagsBtn(): Promise<WebdriverIO.Element> {
-    const ele = await $('#sitesManaasyncagsBtn');
+  public async sitesManageTagsBtn(): Promise<WebdriverIO.Element> {
+    const ele = await $('#sitesManageTagsBtn');
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
@@ -94,23 +94,23 @@ class SitesPage extends PageWithNavbarPage {
   }
 
   public async createTag(tagName: string[]) {
-    await (await this.sitesManaasyncagsBtn()).click();
+    await (await this.sitesManageTagsBtn()).click();
     await (await tagsModalPage.tagsModalCloseBtn).waitForDisplayed({ timeout: 40000 });
     for (let i = 0; i < tagName.length; i++) {
       await tagsModalPage.createTag(tagName[i]);
     }
     await tagsModalPage.closeTagModal();
-    await (await sitesPage.sitesManaasyncagsBtn()).waitForClickable({ timeout: 40000 });
+    await (await sitesPage.sitesManageTagsBtn()).waitForClickable({ timeout: 40000 });
   }
 
   public async removeTags(tagName: string[]) {
-    await (await this.sitesManaasyncagsBtn()).click();
+    await (await this.sitesManageTagsBtn()).click();
     (await tagsModalPage.tagsModalCloseBtn).waitForDisplayed({ timeout: 40000 });
     for (let i = 0; i < tagName.length; i++) {
       await (await tagsModalPage.getTagByName(tagName[i])).deleteTag();
     }
     await tagsModalPage.closeTagModal();
-    await (await sitesPage.sitesManaasyncagsBtn()).waitForClickable({ timeout: 40000 });
+    await (await sitesPage.sitesManageTagsBtn()).waitForClickable({ timeout: 40000 });
   }
 
   async getSite(num): Promise<SitesRowObject> {
@@ -178,7 +178,7 @@ export class SitesRowObject {
     } else {
       await (await sitesPage.siteEditSaveBtn()).click();
     }
-    await (await sitesPage.sitesManaasyncagsBtn()).waitForClickable({ timeout: 40000 });
+    await (await sitesPage.sitesManageTagsBtn()).waitForClickable({ timeout: 40000 });
   }
 
   async edit(site?: { name?: string; tags?: string[] }, clickCancel = false) {
@@ -197,7 +197,7 @@ export class SitesRowObject {
     } else {
       await (await sitesPage.siteDeleteDeleteBtn()).click();
     }
-    await (await sitesPage.sitesManaasyncagsBtn()).waitForClickable({ timeout: 40000 });
+    await (await sitesPage.sitesManageTagsBtn()).waitForClickable({ timeout: 40000 });
   }
 
   async delete(clickCancel = false) {
