@@ -11,8 +11,8 @@ exports.config = {
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
   specs: [
-    'e2e/Tests/eform-visual-editor/eform-visual-editor.create-eform.spec.ts',
-    'e2e/Tests/eform-visual-editor/eform-visual-editor.edit-eform.spec.ts',
+    //'e2e/Tests/eform-visual-editor/eform-visual-editor.create-eform.spec.ts',
+    //'e2e/Tests/eform-visual-editor/eform-visual-editor.edit-eform.spec.ts',
   ],
   suites: {
     settings: ['e2e/Tests/application-settings/**/*.spec.ts'],
