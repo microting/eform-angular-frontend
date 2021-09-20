@@ -7,29 +7,29 @@ const expect = require('chai').expect;
 
 describe('Workers page ', function () {
   before(async () => {
-    loginPage.open('/');
-    loginPage.login();
-    myEformsPage.Navbar.goToDeviceUsersPage();
-    deviceUsersPage.createNewDeviceUser('Gurkemine', 'Ralphine');
-    browser.pause(3000);
-    myEformsPage.Navbar.goToWorkers();
-    $('#workerCreateBtn ').waitForDisplayed({timeout: 8000});
+    await loginPage.open('/');
+    await loginPage.login();
+    await myEformsPage.Navbar.goToDeviceUsersPage();
+    await deviceUsersPage.createNewDeviceUser('Gurkemine', 'Ralphine');
+    await browser.pause(3000);
+    await myEformsPage.Navbar.goToWorkers();
+    await (await $('#workerCreateBtn ')).waitForDisplayed({timeout: 8000});
   });
   it('should add new Worker with first and last name', async () => {
     const name = 'Monty';
     const surName = 'Python';
-    workers.createNewWorker(name, surName);
-    browser.pause(2000);
-    const newWorker = workers.getWorker(workers.rowNum);
+    await workers.createNewWorker(name, surName);
+    await browser.pause(2000);
+    const newWorker = await workers.getWorker(await workers.rowNum());
     expect(newWorker.firstName).equal(name);
     expect(newWorker.lastName).equal(surName);
   });
   it('should add new Worker with special character', async () => {
     const name = 'René';
     const surName = 'Éhl©µ';
-    workers.createNewWorker(name, surName);
-    browser.pause(2000);
-    const newWorker = workers.getWorker(workers.rowNum + 1);
+    await workers.createNewWorker(name, surName);
+    await browser.pause(2000);
+    const newWorker = await workers.getWorker((await workers.rowNum()) + 1);
     expect(newWorker.firstName).equal(name);
     expect(newWorker.lastName).equal(surName);
   });
