@@ -7,7 +7,7 @@ const expect = require('chai').expect;
 const nameFolder = generateRandmString();
 
 describe('Create folder', function () {
-  before(function () {
+  before(async () => {
     loginPage.open('/');
     loginPage.login();
     myEformsPage.Navbar.goToFolderPage();
@@ -15,7 +15,7 @@ describe('Create folder', function () {
     const description = generateRandmString();
     foldersPage.createNewFolder(nameFolder, description);
   });
-  it('Create folder child with name and description', function () {
+  it('Create folder child with name and description', async () => {
     const name = generateRandmString();
     const description = generateRandmString();
     const rowCountBeforeCreation = foldersPage.rowChildrenNum;
@@ -28,7 +28,7 @@ describe('Create folder', function () {
       `Number of rows hasn't changed after creating new folder`
     ).equal(rowCountAfterCreation);
   });
-  // it('Create folder child with name only', function () {
+  // it('Create folder child with name only', async () => {
   //   const parentFolder = foldersPage.getFolderByName(nameFolder);
   //   // parentFolder.expandChildren();
   //   parentFolder.createFolderChildBtn.click();
@@ -40,7 +40,7 @@ describe('Create folder', function () {
   //   ).equal(false);
   //   foldersPage.cancelCreateBtn.click();
   // });
-  it('If cancel was clicked', function () {
+  it('If cancel was clicked', async () => {
     const rowCountBeforeCreation = foldersPage.rowNum;
     foldersPage
       .getFolderByName(nameFolder)
@@ -51,7 +51,7 @@ describe('Create folder', function () {
       'Number of rows has changed after cancel'
     ).equal(rowCountBeforeCreation);
   });
-  it('Should delete folder 1', function () {
+  it('Should delete folder 1', async () => {
     const rowCountBeforeDelete = foldersPage.rowChildrenNum;
     foldersPage
       .getFolderFromTree(foldersPage.getFolderRowNumByName(nameFolder), 1)
@@ -59,7 +59,7 @@ describe('Create folder', function () {
     const rowCountAfterDelete = foldersPage.rowChildrenNum;
     expect(rowCountBeforeDelete - 1).eq(rowCountAfterDelete);
   });
-  it('Should delete folder 2', function () {
+  it('Should delete folder 2', async () => {
     const rowCountBeforeDelete = foldersPage.rowNum;
     foldersPage.getFolderByName(nameFolder).delete();
     const rowCountAfterDelete = foldersPage.rowNum;

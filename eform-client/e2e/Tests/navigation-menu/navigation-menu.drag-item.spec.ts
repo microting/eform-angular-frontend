@@ -4,12 +4,12 @@ import myEformsPage from '../../Page objects/MyEforms.page';
 
 const expect = require('chai').expect;
 describe(' Navigation menu - Drag item', function () {
-  before(function () {
+  before(async () => {
     loginPage.open('/');
     loginPage.login();
     myEformsPage.Navbar.goToMenuEditorPage();
   });
-  it('element must be created from custom dropdown which elements', function () {
+  it('element must be created from custom dropdown which elements', async () => {
     const count = navigationMenuPage.menuItemsChilds.length;
     navigationMenuPage.collapseTemplates(1);
     const dropdown = {
@@ -28,7 +28,7 @@ describe(' Navigation menu - Drag item', function () {
 
     expect(3).eq(navigationMenuPage.dropdownBodyChilds(navigationMenuPage.menuItemsChilds.length - 1).length);
   });
-  it('should edit elements in dropdown', function () {
+  it('should edit elements in dropdown', async () => {
     const array = [
       {
         indexChildDropdown: 0,
@@ -58,7 +58,7 @@ describe(' Navigation menu - Drag item', function () {
       navigationMenuPage.editItemSaveBtn.click();
     });
   });
-  it('swap elements in dropdown', function () {
+  it('swap elements in dropdown', async () => {
     navigationMenuPage.dragAndDropElementOfDropdown(navigationMenuPage.menuItemsChilds.length - 1,
       2, 0);
     navigationMenuPage.clickSaveMenuBtn();

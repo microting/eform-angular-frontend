@@ -5,27 +5,27 @@ import searchableLists from '../../Page objects/SearchableLists.page';
 const expect = require('chai').expect;
 
 describe('Entity Search', function () {
-  before(function () {
+  before(async () => {
     loginPage.open('/auth');
     loginPage.login();
   });
-  it('should go to entity search page', function () {
+  it('should go to entity search page', async () => {
     searchableLists.goToEntitySearchPage();
     $('#createEntitySearchBtn').waitForDisplayed({ timeout: 40000 });
   });
-  it('should create a new searchable list with only name', function () {
+  it('should create a new searchable list with only name', async () => {
     const name = Guid.create().toString();
     searchableLists.createSearchableList_NoItem(name);
     const searchableList = searchableLists.getFirstRowObject();
     expect(searchableList.name).equal(name);
     $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
   });
-  it('should delete the list', function () {
+  it('should delete the list', async () => {
     searchableLists.deleteList();
     expect(searchableLists.rowNum).equal(0);
     $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
   });
-  it('should create a new searchable list with name and one item', function () {
+  it('should create a new searchable list with name and one item', async () => {
     loginPage.open('/');
     searchableLists.goToEntitySearchPage();
     const name = Guid.create().toString();
@@ -39,7 +39,7 @@ describe('Entity Search', function () {
     searchableLists.entitySearchEditCancelBtn.click();
     $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
   });
-  it('should delete item from list.', function () {
+  it('should delete item from list.', async () => {
     loginPage.open('/');
     searchableLists.goToEntitySearchPage();
     searchableLists.deleteItemFromList();
@@ -50,7 +50,7 @@ describe('Entity Search', function () {
     searchableLists.cleanup();
     $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
   });
-  it('should make a new searchable list with multiple items', function () {
+  it('should make a new searchable list with multiple items', async () => {
     loginPage.open('/');
     searchableLists.goToEntitySearchPage();
     const name = Guid.create().toString();
@@ -60,7 +60,7 @@ describe('Entity Search', function () {
     expect(searchableList.name).equal(name);
     $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
   });
-  it('should delete a list with multiple items.', function () {
+  it('should delete a list with multiple items.', async () => {
     loginPage.open('/');
     searchableLists.goToEntitySearchPage();
     searchableLists.deleteList();

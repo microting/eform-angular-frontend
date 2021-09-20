@@ -6,11 +6,11 @@ import ApplicationSettingsConstants from '../../Constants/ApplicationSettingsCon
 const expect = require('chai').expect;
 
 describe('Application settings page - site header section', function () {
-  before('Login', function () {
+  before('Login', async () => {
     loginPage.open('/auth');
     loginPage.login();
   });
-  it('should change main text', function () {
+  it('should change main text', async () => {
     myEformsPage.Navbar.goToApplicationSettings();
     $('#mainTextLoginPage').waitForDisplayed({ timeout: 120000 });
     $('#spinner-animation').waitForDisplayed({ timeout: 50000, reverse: true });
@@ -25,7 +25,7 @@ describe('Application settings page - site header section', function () {
       'Error while editing site header main text'
     ).equal(ApplicationSettingsConstants.SiteHeader.customMainText);
   });
-  it('should change secondary text', function () {
+  it('should change secondary text', async () => {
     applicationSettingsPage.SiteHeader.secondaryTextInput.setValue(
       ApplicationSettingsConstants.SiteHeader.customSecondaryText
     );
@@ -37,7 +37,7 @@ describe('Application settings page - site header section', function () {
       'Error while editing site header secondary text'
     ).equal(ApplicationSettingsConstants.SiteHeader.customSecondaryText);
   });
-  it('should hide main text', function () {
+  it('should hide main text', async () => {
     myEformsPage.Navbar.goToApplicationSettings();
     applicationSettingsPage.SiteHeader.mainTextVisibilityToggleBtn.click();
     applicationSettingsPage.save();
@@ -50,7 +50,7 @@ describe('Application settings page - site header section', function () {
       'Error while hiding site header main text'
     ).equal(false);
   });
-  it('should hide secondary text', function () {
+  it('should hide secondary text', async () => {
     myEformsPage.Navbar.goToApplicationSettings();
     applicationSettingsPage.SiteHeader.secondaryTextVisibilityToggleBtn.click();
     applicationSettingsPage.save();
@@ -63,7 +63,7 @@ describe('Application settings page - site header section', function () {
       'Error while hiding site header secondary text'
     ).equal(false);
   });
-  it('should hide image', function () {
+  it('should hide image', async () => {
     myEformsPage.Navbar.goToApplicationSettings();
     applicationSettingsPage.SiteHeader.imageVisibilityToggler.click();
     applicationSettingsPage.save();
@@ -76,7 +76,7 @@ describe('Application settings page - site header section', function () {
       'Error while hiding site header image'
     ).equal(false);
   });
-  it('should reset site header main text', function () {
+  it('should reset site header main text', async () => {
     myEformsPage.Navbar.goToApplicationSettings();
     applicationSettingsPage.SiteHeader.reset();
     $('#spinner-animation').waitForDisplayed({ timeout: 50000, reverse: true });
@@ -87,25 +87,25 @@ describe('Application settings page - site header section', function () {
       'Error while resetting site header main text'
     ).equal(true);
   });
-  it('should reset site header secondary text', function () {
+  it('should reset site header secondary text', async () => {
     expect(
       applicationSettingsPage.siteHeaderMainText.getText(),
       'Error while resetting site header secondary text'
     ).equal(ApplicationSettingsConstants.SiteHeader.originalMainText);
   });
-  it('should reset site header main text visibility', function () {
+  it('should reset site header main text visibility', async () => {
     expect(
       applicationSettingsPage.siteHeaderSecondaryText.isDisplayed(),
       'Error while resetting site header main text visibility'
     ).equal(true);
   });
-  it('should reset site header secondary text visibility', function () {
+  it('should reset site header secondary text visibility', async () => {
     expect(
       applicationSettingsPage.siteHeaderSecondaryText.getText(),
       'Error while resetting site header secondary text visibility'
     ).equal(ApplicationSettingsConstants.SiteHeader.originalSecondaryText);
   });
-  it('should reset site header image text visibility', function () {
+  it('should reset site header image text visibility', async () => {
     expect(
       applicationSettingsPage.siteHeaderImage.isDisplayed(),
       'Error while resetting site header image visibility'

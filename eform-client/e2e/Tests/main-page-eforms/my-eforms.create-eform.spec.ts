@@ -95,8 +95,8 @@ describe('My eforms', function () {
     expect(countBeforeDelete - 1).eq(await myEformsPage.rowNum());
   });
   it('should not create eform if xml is empty', async () => {
-    await myEformsPage.newEformBtn.click();
-    await myEformsPage.createEformBtn.waitForDisplayed({timeout: 5000});
-    expect(await (await myEformsPage.createEformBtn).isEnabled()).equal(false);
+    await (await myEformsPage.newEformBtn()).click();
+    await (await myEformsPage.createEformBtn()).waitForDisplayed({timeout: 5000});
+    expect(await (await myEformsPage.createEformBtn()).isEnabled()).equal(false);
   });
 });

@@ -6,18 +6,18 @@ import { generateRandmString } from '../../Helpers/helper-functions';
 const expect = require('chai').expect;
 
 describe('Entity Select', function () {
-  before(function () {
+  before(async () => {
     loginPage.open('/auth');
     loginPage.login();
     myEformsPage.Navbar.goToEntitySelect();
   });
-  it('should make a new selectable list, with no items.', function () {
+  it('should make a new selectable list, with no items.', async () => {
     const data = { name: generateRandmString() };
     selectableLists.createSelectableList(data);
     const selectableListRowObject = selectableLists.getLastSelectableListObject();
     expect(selectableListRowObject.name).equal(data.name);
   });
-  it('should edit the list name, with no items.', function () {
+  it('should edit the list name, with no items.', async () => {
     const data = { name: generateRandmString() };
     let selectableListRowObject = selectableLists.getLastSelectableListObject();
     selectableListRowObject.edit(data);
@@ -25,7 +25,7 @@ describe('Entity Select', function () {
     expect(selectableListRowObject.name).equal(data.name);
     selectableLists.cleanupList();
   });
-  it('should make a new selectable list, with 1 item', function () {
+  it('should make a new selectable list, with 1 item', async () => {
     const data = {
       name: generateRandmString(),
       items: [generateRandmString()],
@@ -37,7 +37,7 @@ describe('Entity Select', function () {
     expect(selectableLists.getFirstEntityItemOnEdit.name).equal(data.items[0]);
     selectableListRowObject.closeEdit();
   });
-  it('should only edit item name', function () {
+  it('should only edit item name', async () => {
     const selectableListRowObject = selectableLists.getFirstSelectableListObject();
     const data = { items: [generateRandmString()] };
     selectableListRowObject.edit(data, false, false, false, true);
@@ -46,7 +46,7 @@ describe('Entity Select', function () {
     selectableListRowObject.closeEdit();
     // selectableLists.cleanupList();
   });
-  // it('should make a new selectable list, with 1 item', function () {
+  // it('should make a new selectable list, with 1 item', async () => {
   //   const name = Guid.create().toString();
   //   const itemName = Guid.create().toString();
   //   selectableLists.createSelectableList_OneItem(name, itemName);
@@ -60,7 +60,7 @@ describe('Entity Select', function () {
   //   selectableLists.entitySelectEditCancelBtn.click();
   //   $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   // });
-  it('should edit the list name, and item name', function () {
+  it('should edit the list name, and item name', async () => {
     let selectableListRowObject = selectableLists.getFirstSelectableListObject();
     const data = {
       name: generateRandmString(),
@@ -74,7 +74,7 @@ describe('Entity Select', function () {
     selectableListRowObject.closeEdit();
     selectableListRowObject.delete();
   });
-  it('should make a new list with multiple items', function () {
+  it('should make a new list with multiple items', async () => {
     const data = {
       name: generateRandmString(),
       items: ['a', 'b', 'c', 'd', 'e'],
@@ -84,7 +84,7 @@ describe('Entity Select', function () {
     expect(selectableListRowObject.name).equal(data.name);
     $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
   });
-  it('should edit the list with multiple items', function () {
+  it('should edit the list with multiple items', async () => {
     const data = {
       name: generateRandmString(),
       items: ['f', 'g', 'h', 'i', 'j'],

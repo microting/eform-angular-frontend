@@ -4,12 +4,12 @@ import myEformsPage from '../../Page objects/MyEforms.page';
 
 const expect = require('chai').expect;
 describe(' Navigation menu - Create item', function () {
-  before(function () {
+  before(async () => {
     loginPage.open('/');
     loginPage.login();
     myEformsPage.Navbar.goToMenuEditorPage();
   });
-  it('element must be moved from templates to list', function () {
+  it('element must be moved from templates to list', async () => {
     const count = navigationMenuPage.menuItemsChilds.length;
     navigationMenuPage.collapseTemplates(0);
     navigationMenuPage.createMenuItemFromTemplate(0);
@@ -28,7 +28,7 @@ describe(' Navigation menu - Create item', function () {
     navigationMenuPage.collapseTemplates(0);
     navigationMenuPage.resetMenu();
   });
-  it('element must be created from custom link', function () {
+  it('element must be created from custom link', async () => {
     const count = navigationMenuPage.menuItemsChilds.length;
     const customLink = {
       securityGroups: [],
@@ -52,7 +52,7 @@ describe(' Navigation menu - Create item', function () {
     navigationMenuPage.editItemSaveBtn.click();
     navigationMenuPage.resetMenu();
   });
-  it('element must be created from custom dropdown', function () {
+  it('element must be created from custom dropdown', async () => {
     const count = navigationMenuPage.menuItemsChilds.length;
     // navigationMenuPage.clickOnTemplatesDropDown(2);
     const dropdown = {
@@ -78,7 +78,7 @@ describe(' Navigation menu - Create item', function () {
     navigationMenuPage.editItemSaveBtn.click();
     navigationMenuPage.resetMenu();
   });
-  it('element must be created from custom dropdown with security group', function () {
+  it('element must be created from custom dropdown with security group', async () => {
     const count = navigationMenuPage.menuItemsChilds.length;
     const dropdown = {
       securityGroups: ['eForm admins'],
@@ -105,7 +105,7 @@ describe(' Navigation menu - Create item', function () {
     navigationMenuPage.editItemSaveBtn.click();
     navigationMenuPage.resetMenu();
   });
-  it('element must be created from custom link with security group', function () {
+  it('element must be created from custom link with security group', async () => {
     const count = navigationMenuPage.menuItemsChilds.length;
     const customLink = {
       securityGroups: ['eForm admins'],

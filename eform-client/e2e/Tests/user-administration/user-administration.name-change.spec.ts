@@ -8,12 +8,12 @@ import { generateRandmString } from '../../Helpers/helper-functions';
 const expect = require('chai').expect;
 
 describe('User administration settings', function () {
-  before(function () {
+  before(async () => {
     loginPage.open('/');
     loginPage.login();
     myEformsPage.Navbar.goToUserAdministration();
   });
-  it('should set name to Foo Bar', function () {
+  it('should set name to Foo Bar', async () => {
     const user: UserAdministrationObject = {
       firstName: 'Foo',
       lastName: 'Bar',
@@ -23,7 +23,7 @@ describe('User administration settings', function () {
     userObject = userAdministration.getUserByNumber();
     expect(userObject.fullName).equal('Foo Bar');
   });
-  it('should revert to old name', function () {
+  it('should revert to old name', async () => {
     const user: UserAdministrationObject = {
       firstName: 'John',
       lastName: 'Smith',
@@ -33,7 +33,7 @@ describe('User administration settings', function () {
     userObject = userAdministration.getUserByNumber();
     expect(userObject.fullName).equal('John Smith');
   });
-  it('should create new user', function () {
+  it('should create new user', async () => {
     const user: UserAdministrationObject = {
       firstName: generateRandmString(),
       lastName: generateRandmString(),
@@ -48,7 +48,7 @@ describe('User administration settings', function () {
       userAdministration.rowNum
     );
   });
-  it('should change new user role', function () {
+  it('should change new user role', async () => {
     let userObject = userAdministration.getUserByNumber(2);
     const user: UserAdministrationObject = {
       role: 'Admin',
@@ -59,7 +59,7 @@ describe('User administration settings', function () {
       user.role.toLowerCase()
     );
   });
-  it('should revert new user role', function () {
+  it('should revert new user role', async () => {
     let userObject = userAdministration.getUserByNumber(2);
     const user: UserAdministrationObject = {
       role: 'User',
@@ -71,7 +71,7 @@ describe('User administration settings', function () {
       user.role.toLowerCase()
     );
   });
-  it('should delete created user', function () {
+  it('should delete created user', async () => {
     const countUserBeforeDelete = userAdministration.rowNum;
     userAdministration.getUserByNumber(2).delete();
     expect(countUserBeforeDelete - 1, 'user not created').eq(

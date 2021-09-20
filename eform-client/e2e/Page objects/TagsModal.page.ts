@@ -10,72 +10,72 @@ export class TagsModalPage extends Page {
   }
 
   // Create page elements
-  public get newTagBtn() {
+  public async newTagBtn(): Promise<WebdriverIO.Element> {
     $('#newTagBtn').waitForDisplayed({ timeout: 40000 });
     return $('#newTagBtn');
   }
 
-  public get newTagSaveBtn() {
+  public async newTagSaveBtn(): Promise<WebdriverIO.Element> {
     $('#newTagSaveBtn').waitForDisplayed({ timeout: 40000 });
     return $('#newTagSaveBtn');
   }
 
-  public get newTagSaveCancelBtn() {
+  public async newTagSaveCancelBtn(): Promise<WebdriverIO.Element> {
     $('#newTagSaveCancelBtn').waitForDisplayed({ timeout: 40000 });
     return $('#newTagSaveCancelBtn');
   }
 
-  public get newTagNameInput() {
+  public async newTagNameInput(): Promise<WebdriverIO.Element> {
     $('#newTagName').waitForDisplayed({ timeout: 40000 });
     return $('#newTagName');
   }
 
-  public get editTagNameInput() {
+  public async editTagNameInput(): Promise<WebdriverIO.Element> {
     $('#tagNameEdit').waitForDisplayed({ timeout: 40000 });
     return $('#tagNameEdit');
   }
 
-  public get tagEditSaveBtn() {
+  public async tagEditSaveBtn(): Promise<WebdriverIO.Element> {
     $('#tagEditSaveBtn').waitForDisplayed({ timeout: 40000 });
     return $('#tagEditSaveBtn');
   }
 
-  public get tagEditSaveCancelBtn() {
+  public async tagEditSaveCancelBtn(): Promise<WebdriverIO.Element> {
     $('#tagEditSaveCancelBtn').waitForDisplayed({ timeout: 40000 });
     return $('#tagEditSaveCancelBtn');
   }
 
-  public async tagDeleteSaveBtn() {
+  public async tagDeleteSaveBtn(): Promise<WebdriverIO.Element> {
     await (await $('#tagDeleteSaveBtn')).waitForDisplayed({ timeout: 40000 });
     return $('#tagDeleteSaveBtn');
   }
 
-  public get tagDeleteSaveCancelBtn() {
+  public async tagDeleteSaveCancelBtn(): Promise<WebdriverIO.Element> {
     // $('#tagDeleteSaveCancelBtn').waitForDisplayed({ timeout: 40000 });
     return $('#tagDeleteSaveCancelBtn');
   }
 
-  public get tagsModalCloseBtn() {
-    const ele = $('#tagsModalCloseBtn');
-    // ele.waitForDisplayed({ timeout: 40000 });
+  public async tagsModalCloseBtn(): Promise<WebdriverIO.Element> {
+    const ele = await $('#tagsModalCloseBtn');
+    // await ele.waitForDisplayed({ timeout: 40000 });
     // ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
   public async createTag(tagName: string) {
-    await this.newTagBtn.click();
+    await (await this.newTagBtn()).click();
     await $('#newTagName').waitForDisplayed({ timeout: 90000 });
-    await this.newTagNameInput.setValue(tagName);
-    await this.newTagSaveBtn.click();
+    await (await this.newTagNameInput()).setValue(tagName);
+    await (await this.newTagSaveBtn()).click();
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     await $('#newTagBtn').waitForDisplayed({ timeout: 40000 });
   }
 
   public async cancelCreateTag(tagName: string) {
-    await this.newTagBtn.click();
+    await (await this.newTagBtn()).click();
     await $('#newTagName').waitForDisplayed({ timeout: 90000 });
-    await this.newTagNameInput.setValue(tagName);
-    await this.newTagSaveCancelBtn.click();
+    await (await this.newTagNameInput()).setValue(tagName);
+    await (await this.newTagSaveCancelBtn()).click();
     await $('#newTagBtn').waitForDisplayed({ timeout: 40000 });
   }
 
@@ -84,8 +84,8 @@ export class TagsModalPage extends Page {
     const result = new TagRowObject();
     const rowObject = await result.getRow(rowNumber);
     await rowObject.editTagClick();
-    await this.editTagNameInput.setValue(name);
-    await this.tagEditSaveBtn.click();
+    await (await this.editTagNameInput()).setValue(name);
+    await (await this.tagEditSaveBtn()).click();
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     await $('#newTagBtn').waitForDisplayed({ timeout: 40000 });
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
@@ -96,8 +96,8 @@ export class TagsModalPage extends Page {
     const result = new TagRowObject();
     const rowObject = await result.getRow(rowNumber);
     await rowObject.editTagClick();
-    await this.editTagNameInput.setValue(name);
-    await this.tagEditSaveCancelBtn.click();
+    await (await this.editTagNameInput()).setValue(name);
+    await (await this.tagEditSaveCancelBtn()).click();
     await $('#newTagBtn').waitForDisplayed({ timeout: 40000 });
   }
 
@@ -114,7 +114,7 @@ export class TagsModalPage extends Page {
     const result = new TagRowObject();
     const rowObject = await result.getRow(rowNumber);
     await rowObject.deleteTag(true);
-    await this.tagDeleteSaveCancelBtn.click();
+    await (await this.tagDeleteSaveCancelBtn()).click();
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
   }
 
@@ -131,7 +131,7 @@ export class TagsModalPage extends Page {
   }
 
   public async closeTagModal() {
-    await (await this.tagsModalCloseBtn).click();
+    await (await this.tagsModalCloseBtn()).click();
   }
 }
 
@@ -159,19 +159,19 @@ export class TagRowObject {
   }
 
   public async deleteTag(clickCancel = false) {
-    let closeBtn = tagsModalPage.tagsModalCloseBtn;
-    await closeBtn.waitForDisplayed({ timeout: 40000 });
+    let closeBtn = await tagsModalPage.tagsModalCloseBtn();
+    await (await closeBtn).waitForDisplayed({ timeout: 40000 });
     const deleteBtn = await this.deleteTagBtn;
     await deleteBtn.click();
     if (clickCancel) {
-      const cancelBtn = await tagsModalPage.tagDeleteSaveCancelBtn;
+      const cancelBtn = await tagsModalPage.tagDeleteSaveCancelBtn();
       await cancelBtn.click();
     } else {
       await browser.pause(500);
       const saveBtn = await $('#tagDeleteSaveBtn');
       await saveBtn.click();
     }
-    closeBtn = tagsModalPage.tagsModalCloseBtn;
+    closeBtn = await tagsModalPage.tagsModalCloseBtn();
     await closeBtn.waitForDisplayed({ timeout: 40000 });
   }
 }

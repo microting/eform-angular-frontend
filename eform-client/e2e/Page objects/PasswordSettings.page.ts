@@ -4,38 +4,38 @@ export class PasswordSettings extends PageWithNavbarPage {
   constructor() {
     super();
   }
-  public get oldPasswordField() {
+  public async oldPasswordField(): Promise<WebdriverIO.Element> {
     return $('#oldPassword');
   }
-  public get newPasswordField() {
+  public async newPasswordField(): Promise<WebdriverIO.Element> {
     return $('#newPassword');
   }
-  public get newPasswordConfirmationField() {
+  public async newPasswordConfirmationField(): Promise<WebdriverIO.Element> {
     return $('#newPasswordConfirmation');
   }
-  public get saveBtn() {
+  public async saveBtn(): Promise<WebdriverIO.Element> {
     return $('#changePasswordSaveBtn');
   }
-  public setNewPassword() {
-    this.oldPasswordField.addValue('Qq1234567$');
-    browser.pause(1000);
-    this.newPasswordField.addValue('2Times2WillDo');
-    browser.pause(1000);
-    this.newPasswordConfirmationField.addValue('2Times2WillDo');
-    browser.pause(1000);
-    this.saveBtn.click();
-    browser.pause(2000);
+  public async setNewPassword() {
+    await (await this.oldPasswordField()).addValue('Qq1234567$');
+    await browser.pause(1000);
+    await (await this.newPasswordField()).addValue('2Times2WillDo');
+    await browser.pause(1000);
+    await (await this.newPasswordConfirmationField()).addValue('2Times2WillDo');
+    await browser.pause(1000);
+    await (await this.saveBtn()).click();
+    await browser.pause(2000);
 
   }
-  public revertToOldPassword() {
-    this.oldPasswordField.addValue('2Times2WillDo');
-    browser.pause(1000);
-    this.newPasswordField.addValue('Qq1234567$');
-    browser.pause(1000);
-    this.newPasswordConfirmationField.addValue('Qq1234567$');
-    browser.pause(1000);
-    this.saveBtn.click();
-    browser.pause(2000);
+  public async revertToOldPassword() {
+    await (await this.oldPasswordField()).addValue('2Times2WillDo');
+    await browser.pause(1000);
+    await (await this.newPasswordField()).addValue('Qq1234567$');
+    await browser.pause(1000);
+    await (await this.newPasswordConfirmationField()).addValue('Qq1234567$');
+    await browser.pause(1000);
+    await (await this.saveBtn()).click();
+    await browser.pause(2000);
   }
 }
 

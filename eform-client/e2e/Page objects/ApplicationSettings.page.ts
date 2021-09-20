@@ -1,110 +1,110 @@
 import { PageWithNavbarPage } from './PageWithNavbar.page';
 
 export class ApplicationSettingsPage extends PageWithNavbarPage {
+  public LoginPage: LoginPageSettings;
+  public SiteHeader: SiteHeaderSettings;
   constructor() {
     super();
     this.LoginPage = new LoginPageSettings();
     this.SiteHeader = new SiteHeaderSettings();
   }
 
-  public get saveBtn() {
+  public async  saveBtn(): Promise<WebdriverIO.Element> {
     return $('#applicationSettingsSaveBtn');
   }
 
-  public get siteHeaderMainText() {
-    const ele = $('#main-header-text');
+  public async  siteHeaderMainText(): Promise<WebdriverIO.Element> {
+    const ele = await $('#main-header-text');
     return ele;
   }
 
-  public get siteHeaderSecondaryText() {
-    const ele = $('#secondary-header-text');
+  public async  siteHeaderSecondaryText(): Promise<WebdriverIO.Element> {
+    const ele = await $('#secondary-header-text');
     return ele;
   }
 
-  public get siteHeaderImage() {
-    const ele = $('#site-header-image');
+  public async  siteHeaderImage(): Promise<WebdriverIO.Element> {
+    const ele = await $('#site-header-image');
     return ele;
   }
 
-  public LoginPage: LoginPageSettings;
-  public SiteHeader: SiteHeaderSettings;
 
-  public save() {
-    this.saveBtn.click();
-    $('#spinner-animation').waitForDisplayed({ timeout: 50000, reverse: true });
+  public async save() {
+    await (await this.saveBtn()).click();
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
   }
 }
 
 class LoginPageSettings {
-  public get mainTextInput() {
+  public async  mainTextInput(): Promise<WebdriverIO.Element> {
     return $('#mainTextLoginPage');
   }
 
-  public get secondaryTextInput() {
+  public async  secondaryTextInput(): Promise<WebdriverIO.Element> {
     return $('#secondaryTextLoginPage');
   }
 
-  public get imageUploadBtn() {
+  public async  imageUploadBtn(): Promise<WebdriverIO.Element> {
     return $('#loginPageImageUploadBtn');
   }
 
-  public get mainTextVisibilityToggleBtn() {
+  public async  mainTextVisibilityToggleBtn(): Promise<WebdriverIO.Element> {
     return $('#loginPageMainTextVisibilityToggler');
   }
 
-  public get secondaryTextVisibilityToggleBtn() {
+  public async  secondaryTextVisibilityToggleBtn(): Promise<WebdriverIO.Element> {
     return $('#loginPageSecondaryTextVisibilityToggler');
   }
 
-  public get imageVisibilityToggler() {
+  public async  imageVisibilityToggler(): Promise<WebdriverIO.Element> {
     return $('#loginPageImageVisibilityToggler');
   }
 
-  public get resetBtn() {
-    const ele = $('#loginPageReset');
-    ele.waitForDisplayed({ timeout: 40000 });
-    ele.waitForClickable({ timeout: 40000 });
+  public async  resetBtn(): Promise<WebdriverIO.Element> {
+    const ele = await $('#loginPageReset');
+    await ele.waitForDisplayed({ timeout: 40000 });
+    await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  public reset() {
-    this.resetBtn.click();
-    $('#spinner-animation').waitForDisplayed({ timeout: 50000, reverse: true });
+  public async reset() {
+    await (await this.resetBtn()).click();
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
   }
 }
 
 class SiteHeaderSettings {
-  public get mainTextInput() {
+  public async  mainTextInput(): Promise<WebdriverIO.Element> {
     return $('#headerSettingsMainText');
   }
 
-  public get secondaryTextInput() {
+  public async  secondaryTextInput(): Promise<WebdriverIO.Element> {
     return $('#headerSettingsSecondaryText');
   }
 
-  public get imageUploadBtn() {
+  public async  imageUploadBtn(): Promise<WebdriverIO.Element> {
     return $('#siteHeaderUploadBtn');
   }
 
-  public get mainTextVisibilityToggleBtn() {
+  public async  mainTextVisibilityToggleBtn(): Promise<WebdriverIO.Element> {
     return $('#siteHeaderMainTextToggler');
   }
 
-  public get secondaryTextVisibilityToggleBtn() {
+  public async  secondaryTextVisibilityToggleBtn(): Promise<WebdriverIO.Element> {
     return $('#siteHeaderSecondaryTextToggler');
   }
 
-  public get imageVisibilityToggler() {
+  public async  imageVisibilityToggler(): Promise<WebdriverIO.Element> {
     return $('#siteHeaderImageVisibilityToggler');
   }
 
-  public get resetBtn() {
+  public async  resetBtn(): Promise<WebdriverIO.Element> {
     return $('#siteHeaderReset');
   }
 
-  public reset() {
-    this.resetBtn.click();
-    $('#spinner-animation').waitForDisplayed({ timeout: 50000, reverse: true });
+  public async reset() {
+    await (await this.resetBtn()).click();
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
     // browser.refresh();
   }
 }

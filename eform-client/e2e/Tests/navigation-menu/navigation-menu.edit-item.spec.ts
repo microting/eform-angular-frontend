@@ -4,12 +4,12 @@ import myEformsPage from '../../Page objects/MyEforms.page';
 
 const expect = require('chai').expect;
 describe(' Navigation menu - Edit item', function () {
-  before(function () {
+  before(async () => {
     loginPage.open('/');
     loginPage.login();
     myEformsPage.Navbar.goToMenuEditorPage();
   });
-  it('element must be created from custom link with security group', function () {
+  it('element must be created from custom link with security group', async () => {
     const count = navigationMenuPage.menuItemsChilds.length;
     navigationMenuPage.collapseTemplates(1);
     const customLink = {
@@ -21,7 +21,7 @@ describe(' Navigation menu - Edit item', function () {
     expect(count + 1).eq(navigationMenuPage.menuItemsChilds.length);
     navigationMenuPage.clickSaveMenuBtn();
   });
-  it('link with security group must be updated', function () {
+  it('link with security group must be updated', async () => {
     const customLink = {
       securityGroups: ['eForm users'],
       link: 'linkTest00',
@@ -45,7 +45,7 @@ describe(' Navigation menu - Edit item', function () {
 
     navigationMenuPage.resetMenu();
   });
-  it('element must be created from custom dropdown with security group', function () {
+  it('element must be created from custom dropdown with security group', async () => {
     const count = navigationMenuPage.menuItemsChilds.length;
     const dropdown = {
       securityGroups: ['eForm admins'],
@@ -55,7 +55,7 @@ describe(' Navigation menu - Edit item', function () {
     expect(count + 1).eq(navigationMenuPage.menuItemsChilds.length);
     navigationMenuPage.clickSaveMenuBtn();
   });
-  it('dropdown with security group must be updated', function () {
+  it('dropdown with security group must be updated', async () => {
     const dropdown = {
       securityGroups: ['eForm users'],
       translations: ['Test11', 'Test22', 'Test31']
@@ -76,7 +76,7 @@ describe(' Navigation menu - Edit item', function () {
     navigationMenuPage.editItemSaveBtn.click();
     navigationMenuPage.resetMenu();
   });
-  it('element must be moved from templates to list', function () {
+  it('element must be moved from templates to list', async () => {
     const count = navigationMenuPage.menuItemsChilds.length;
     navigationMenuPage.collapseTemplates(0);
     navigationMenuPage.createMenuItemFromTemplate(0);

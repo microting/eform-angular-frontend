@@ -6,25 +6,25 @@ import {generateRandmString} from '../../Helpers/helper-functions';
 const expect = require('chai').expect;
 
 describe('Entity Select', function () {
-  before(function () {
+  before(async () => {
     loginPage.open('/auth');
     loginPage.login();
     myEformsPage.Navbar.goToEntitySelect();
   });
-  it('should make a new selectable list, with no items.', function () {
+  it('should make a new selectable list, with no items.', async () => {
     const data = {name: generateRandmString(), description: generateRandmString()};
     selectableLists.createSelectableList(data);
     const selectableList = selectableLists.getLastSelectableListObject();
     expect(selectableList.name).equal(data.name);
     expect(selectableList.description).eq(data.description);
   });
-  it('should not make a new list, with no items', function () {
+  it('should not make a new list, with no items', async () => {
     const data = {name: generateRandmString()};
     const countBeforeCreate = selectableLists.selectableListCount;
     selectableLists.createSelectableList(data, false, true);
     expect(countBeforeCreate).equal(selectableLists.selectableListCount);
   });
-  it('should create a new list with one item', function () {
+  it('should create a new list with one item', async () => {
     selectableLists.cleanupList();
     const data = {name: generateRandmString(), items: [generateRandmString()]};
     selectableLists.createSelectableList(data);
@@ -34,13 +34,13 @@ describe('Entity Select', function () {
     expect(selectableLists.getFirstEntityItemOnEdit.name).equal(data.items[0]);
     selectableListObject.closeEdit(true);
   });
-  it('should not make a new list with one item', function () {
+  it('should not make a new list with one item', async () => {
     const data = {name: generateRandmString(), items: [generateRandmString()]};
     const countBeforeCreate = selectableLists.selectableListCount;
     selectableLists.createSelectableList(data, false, true);
     expect(countBeforeCreate).equal(selectableLists.selectableListCount);
   });
-  it('should make a new list with multiple items', function () {
+  it('should make a new list with multiple items', async () => {
     selectableLists.cleanupList();
     const data = {name: generateRandmString(), items: ['a', 'b', 'c', 'd', 'e']};
     selectableLists.createSelectableList(data, true);
@@ -52,7 +52,7 @@ describe('Entity Select', function () {
     selectableListRowObject.closeEdit(true);
     selectableLists.cleanupList();
   });
-  it('should not make a new lest with multiple items', function () {
+  it('should not make a new lest with multiple items', async () => {
     const data = {name: generateRandmString(), items: ['a', 'b', 'c', 'd', 'e']};
     const countBeforeCreate = selectableLists.selectableListCount;
     selectableLists.createSelectableList(data, true, true);

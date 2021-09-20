@@ -8,7 +8,7 @@ const nameFolder = generateRandmString();
 const nameFolderChildren = generateRandmString();
 
 describe('Create folder', function () {
-  before(function () {
+  before(async () => {
     loginPage.open('/');
     loginPage.login();
     myEformsPage.Navbar.goToFolderPage();
@@ -16,7 +16,7 @@ describe('Create folder', function () {
     const description = generateRandmString();
     foldersPage.createNewFolder(nameFolder, description);
   });
-  it('Create folder child', function () {
+  it('Create folder child', async () => {
     const description = generateRandmString();
     const folder = foldersPage.getFolderByName(nameFolder);
     const rowCountBeforeCreation = foldersPage.rowChildrenNum;
@@ -28,7 +28,7 @@ describe('Create folder', function () {
       'Number of rows has not changed after creating new folder'
     ).equal(rowCountAfterCreation);
   });
-  it('Should change name', function () {
+  it('Should change name', async () => {
     const newName = generateRandmString();
     const childFolderBeforeEdit = foldersPage.getFolderFromTree(
       foldersPage.getFolderRowNumByName(nameFolder),
@@ -43,7 +43,7 @@ describe('Create folder', function () {
       newName
     );
   });
-  it('Should change description', function () {
+  it('Should change description', async () => {
     const newDescription = generateRandmString();
     const childFolder = foldersPage.getFolderFromTree(
       foldersPage.getFolderRowNumByName(nameFolder),
@@ -57,7 +57,7 @@ describe('Create folder', function () {
       newDescription
     );
   });
-  it('Should not change first name and description if cancel was clicked', function () {
+  it('Should not change first name and description if cancel was clicked', async () => {
     const newName = generateRandmString();
     const newDescription = generateRandmString();
     const rowParentsCountBeforeEditing = foldersPage.rowNumParents;
@@ -86,7 +86,7 @@ describe('Create folder', function () {
       'Description has been changed'
     ).equal(childFolderBeforeEditDescription);
   });
-  it('Should delete folder 1', function () {
+  it('Should delete folder 1', async () => {
     const rowCountBeforeDelete = foldersPage.rowChildrenNum;
     foldersPage
       .getFolderFromTree(foldersPage.getFolderRowNumByName(nameFolder), 1)
@@ -94,7 +94,7 @@ describe('Create folder', function () {
     const rowCountAfterDelete = foldersPage.rowChildrenNum;
     expect(rowCountBeforeDelete - 1, 'Folder not deleted', rowCountAfterDelete);
   });
-  it('Should delete folder 2', function () {
+  it('Should delete folder 2', async () => {
     const rowCountBeforeDelete = foldersPage.rowNum;
     foldersPage.getFolderByName(nameFolder).delete();
     const rowCountAfterDelete = foldersPage.rowNum;

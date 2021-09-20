@@ -5,11 +5,11 @@ import ApplicationSettingsConstants from '../../Constants/ApplicationSettingsCon
 import { expect } from 'chai';
 
 describe('Application settings page - site header section', function () {
-  before(function () {
+  before(async () => {
     loginPage.open('/auth');
     loginPage.login();
   });
-  it('should change main text', function () {
+  it('should change main text', async () => {
     myEformsPage.Navbar.goToApplicationSettings();
     $('#mainTextLoginPage').waitForDisplayed({ timeout: 120000 });
     $('#spinner-animation').waitForDisplayed({ timeout: 50000, reverse: true });
@@ -28,7 +28,7 @@ describe('Application settings page - site header section', function () {
       'Error while changing main text on login page'
     ).to.equal(ApplicationSettingsConstants.LoginPage.customMainText);
   });
-  it('should change secondary text', function () {
+  it('should change secondary text', async () => {
     loginPage.login();
     myEformsPage.Navbar.goToApplicationSettings();
     $('#mainTextLoginPage').waitForDisplayed({ timeout: 120000 });
@@ -48,7 +48,7 @@ describe('Application settings page - site header section', function () {
       'Error while changing secondary text on login page'
     ).to.equal(ApplicationSettingsConstants.LoginPage.customSecondaryText);
   });
-  it('should hide main text', function () {
+  it('should hide main text', async () => {
     loginPage.login();
     loginPage.open('/application-settings');
     $('#mainTextLoginPage').waitForDisplayed({ timeout: 120000 });
@@ -66,7 +66,7 @@ describe('Application settings page - site header section', function () {
       'Error while toggling visibility of main text on login page'
     ).to.equal(false);
   });
-  it('should hide secondary text', function () {
+  it('should hide secondary text', async () => {
     loginPage.login();
     loginPage.open('/application-settings');
     $('#mainTextLoginPage').waitForDisplayed({ timeout: 120000 });
@@ -83,7 +83,7 @@ describe('Application settings page - site header section', function () {
       'Error while toggling visibility of secondary text on login page'
     ).to.equal(false);
   });
-  it('should hide image', function () {
+  it('should hide image', async () => {
     loginPage.login();
     loginPage.open('/application-settings');
     $('#mainTextLoginPage').waitForDisplayed({ timeout: 120000 });
@@ -100,7 +100,7 @@ describe('Application settings page - site header section', function () {
       'Error while toggling visibility of image on login page'
     ).to.equal(false);
   });
-  it('should reset main text', function () {
+  it('should reset main text', async () => {
     loginPage.login();
     loginPage.open('/application-settings');
     $('#mainTextLoginPage').waitForDisplayed({ timeout: 120000 });
@@ -113,25 +113,25 @@ describe('Application settings page - site header section', function () {
       'Error while resetting main text on login page'
     ).to.equal(ApplicationSettingsConstants.LoginPage.originalMainText);
   });
-  it('should reset secondary text', function () {
+  it('should reset secondary text', async () => {
     expect(
       loginPage.secondaryText.getText(),
       'Error while resetting secondary text on login page'
     ).to.equal(ApplicationSettingsConstants.LoginPage.originalSecondaryText);
   });
-  it('should reset main text visibility', function () {
+  it('should reset main text visibility', async () => {
     expect(
       loginPage.mainText.isDisplayed(),
       'Error while refreshing visibility of main text on login page'
     ).to.equal(true);
   });
-  it('should reset secondary text visibility', function () {
+  it('should reset secondary text visibility', async () => {
     expect(
       loginPage.secondaryText.isDisplayed(),
       'Error while refreshing visibility of secondary text on login page'
     ).to.equal(true);
   });
-  it('should reset image visibility', function () {
+  it('should reset image visibility', async () => {
     expect(
       loginPage.image.isDisplayed(),
       'Error while refreshing visibility of image on login page'

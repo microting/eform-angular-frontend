@@ -5,12 +5,12 @@ import myEformsPage from '../../Page objects/MyEforms.page';
 let translation = '';
 const expect = require('chai').expect;
 describe('Subheader test', function () {
-  before(function () {
+  before(async () => {
     loginPage.open('/');
     loginPage.login();
     myEformsPage.Navbar.goToMenuEditorPage();
   });
-  it('element must be moved from templates to list', function () {
+  it('element must be moved from templates to list', async () => {
     const count = navigationMenuPage.menuItemsChilds.length;
     navigationMenuPage.collapseTemplates(0);
     navigationMenuPage.createMenuItemFromTemplate(0);
@@ -22,7 +22,7 @@ describe('Subheader test', function () {
     translation = navigationMenuPage.editItemTranslation(0, 0, 1).getValue();
     navigationMenuPage.editItemSaveBtn.click();
   });
-  it('must navigate on create menu item and translate must be == translate', function () {
+  it('must navigate on create menu item and translate must be == translate', async () => {
     const spinnerAnimation = $('#spinner-animation');
     const h1 = $('eform-subheader h1');
     myEformsPage.Navbar.clickOnHeaderMenuItem2(translation).click();

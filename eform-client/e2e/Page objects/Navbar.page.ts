@@ -129,18 +129,18 @@ export class Navbar {
     ele.click();
   }
 
-  public advancedDropdownClick() {
-    this.advancedBtn.waitForDisplayed({ timeout: 60000 });
-    this.advancedBtn.click();
+  public async advancedDropdownClick() {
+    await (await this.advancedBtn).waitForDisplayed({ timeout: 60000 });
+    await (await this.advancedBtn).click();
   }
 
-  public clickOnHeaderMenuItem(headerMenuItem) {
+  public async clickOnHeaderMenuItem(headerMenuItem) {
     return $(`//*[@id="header"]//*[text()="${headerMenuItem}"]`)
       .$('..')
       .$('..');
   }
 
-  public verifyHeaderMenuItem(headerMenuItem) {
+  public async verifyHeaderMenuItem(headerMenuItem) {
     return $(
       `//*[@id="header"]//*[contains(text(), '${headerMenuItem}')]`
     ).getText();
@@ -155,98 +155,98 @@ export class Navbar {
     return ele;
   }
 
-  public logout() {
-    this.signOutDropdown.click();
-    this.logoutBtn.click();
+  public async logout() {
+    await (await this.signOutDropdown).click();
+    await (await this.logoutBtn).click();
   }
 
-  public goToProfileSettings() {
-    this.signOutDropdown.click();
-    this.settingsBtn.waitForDisplayed({ timeout: 5000 });
-    this.settingsBtn.waitForClickable({ timeout: 5000 });
-    this.settingsBtn.click();
-    $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
+  public async goToProfileSettings() {
+    await (await this.signOutDropdown).click();
+    await (await this.settingsBtn).waitForDisplayed({ timeout: 5000 });
+    await (await this.settingsBtn).waitForClickable({ timeout: 5000 });
+    await (await this.settingsBtn).click();
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
   }
 
-  public goToApplicationSettings() {
-    const spinnerAnimation = $('#spinner-animation');
-    spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
-    this.advancedDropdownClick();
-    this.applicationSettingsBtn.click();
-    spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });
+  public async goToApplicationSettings() {
+    const spinnerAnimation = await $('#spinner-animation');
+    await spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
+    await this.advancedDropdownClick();
+    await (await this.applicationSettingsBtn).click();
+    await spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });
   }
 
-  public goToWorkers() {
-    this.advancedDropdownClick();
-    this.workersBtn.click();
-    $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
+  public async goToWorkers() {
+    await this.advancedDropdownClick();
+    await (await this.workersBtn).click();
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
   }
 
-  public goToSites() {
-    this.advancedDropdownClick();
-    this.sitesBtn.click();
+  public async goToSites() {
+    await this.advancedDropdownClick();
+    await (await this.sitesBtn).click();
     // browser.pause(15000);
-    $('#spinner-animation').waitForDisplayed({ timeout: 30000, reverse: true });
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
   }
 
-  public goToUserAdministration() {
-    this.signOutDropdown.click();
-    this.userAdministrationBtn.click();
-    $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
+  public async goToUserAdministration() {
+    await (await this.signOutDropdown).click();
+    await (await this.userAdministrationBtn).click();
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
   }
 
-  public goToPasswordSettings() {
-    this.signOutDropdown.click();
-    this.changePasswordBtn.click();
-    $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
+  public async goToPasswordSettings() {
+    await (await this.signOutDropdown).click();
+    await (await this.changePasswordBtn).click();
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
   }
 
-  public goToDeviceUsersPage() {
-    this.deviceUsersBtn.click();
-    $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
+  public async goToDeviceUsersPage() {
+    await (await this.deviceUsersBtn).click();
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
   }
 
-  public goToEntitySelect() {
-    this.advancedDropdownClick();
-    this.entitySelectBtn.click();
-    $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
+  public async goToEntitySelect() {
+    await this.advancedDropdownClick();
+    await (await this.entitySelectBtn).click();
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
   }
 
-  public goToEntitySearch() {
-    this.advancedDropdownClick();
-    this.entitySearchBtn.click();
-    $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
+  public async goToEntitySearch() {
+    await this.advancedDropdownClick();
+    await (await this.entitySearchBtn).click();
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
   }
 
-  public goToFolderPage() {
-    this.advancedDropdownClick();
-    this.foldersBtn.waitForDisplayed({ timeout: 40000 });
-    this.foldersBtn.waitForClickable({ timeout: 40000 });
-    this.foldersBtn.click();
-    $('#spinner-animation').waitForDisplayed({ timeout: 30000, reverse: true });
+  public async goToFolderPage() {
+    await this.advancedDropdownClick();
+    await (await this.foldersBtn).waitForDisplayed({ timeout: 40000 });
+    await (await this.foldersBtn).waitForClickable({ timeout: 40000 });
+    await (await this.foldersBtn).click();
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
   }
 
-  public goToPluginsPage() {
-    this.advancedDropdownClick();
-    this.pluginsBtn.click();
+  public async goToPluginsPage() {
+    await this.advancedDropdownClick();
+    await (this.pluginsBtn).click();
     // browser.pause(15000);
-    $('#spinner-animation').waitForDisplayed({ timeout: 30000, reverse: true });
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
   }
 
-  public goToMenuEditorPage() {
-    this.signOutDropdown.click();
-    this.menuEditorBtn.click();
-    $('#spinner-animation').waitForDisplayed({ timeout: 30000, reverse: true });
+  public async goToMenuEditorPage() {
+    await (await this.signOutDropdown).click();
+    await (await this.menuEditorBtn).click();
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
   }
 
-  public goToMyEForms() {
-    this.myEformsBtn.click();
-    $('#spinner-animation').waitForDisplayed({ timeout: 30000, reverse: true });
+  public async goToMyEForms() {
+    await (await this.myEformsBtn).click();
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
   }
 
-  public goToSecurity() {
-    this.signOutDropdown.click();
-    this.securityBtn.click();
-    $('#spinner-animation').waitForDisplayed({ timeout: 30000, reverse: true });
+  public async goToSecurity() {
+    await (await this.signOutDropdown).click();
+    await (await this.securityBtn).click();
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
   }
 }

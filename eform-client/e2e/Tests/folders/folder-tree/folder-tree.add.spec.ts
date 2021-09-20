@@ -14,13 +14,13 @@ const folderName = [
 ];
 
 describe('Create folder', function () {
-  before(function () {
+  before(async () => {
     loginPage.open('/');
     loginPage.login();
     myEformsPage.Navbar.goToFolderPage();
     foldersPage.newFolderBtn.waitForDisplayed({ timeout: 40000 });
   });
-  it('With name and with description', function () {
+  it('With name and with description', async () => {
     const description = generateRandmString();
     const rowCountBeforeCreation = foldersPage.rowNum;
     foldersPage.createNewFolder(folderName[0], description);
@@ -38,7 +38,7 @@ describe('Create folder', function () {
       'Description of created folder is incorrect'
     ).equal(description);
   });
-  // it('should not be created without description', function () {
+  // it('should not be created without description', async () => {
   //   const name = generateRandmString();
   //   foldersPage.openCreateFolder(name);
   //   expect(
@@ -47,7 +47,7 @@ describe('Create folder', function () {
   //   ).equal(false);
   //   foldersPage.closeCreateFolder(true);
   // });
-  // it('should not be created without name', function () {
+  // it('should not be created without name', async () => {
   //   const description = generateRandmString();
   //   foldersPage.openCreateFolder(null, description);
   //   expect(
@@ -56,7 +56,7 @@ describe('Create folder', function () {
   //   ).equal(false);
   //   foldersPage.closeCreateFolder(true);
   // });
-  // it('should not be created without name and description', function () {
+  // it('should not be created without name and description', async () => {
   //   foldersPage.openCreateFolder();
   //   expect(
   //     foldersPage.saveCreateBtn.isEnabled(),
@@ -64,7 +64,7 @@ describe('Create folder', function () {
   //   ).equal(false);
   //   foldersPage.closeCreateFolder(true);
   // });
-  // it('should not be created if the description has only spaces', function () {
+  // it('should not be created if the description has only spaces', async () => {
   //   foldersPage.openCreateFolder(generateRandmString(), '    ');
   //   expect(
   //     foldersPage.saveCreateBtn.isEnabled(),
@@ -72,7 +72,7 @@ describe('Create folder', function () {
   //   ).equal(false);
   //   foldersPage.closeCreateFolder(true);
   // });
-  // it('should not be created if the name has only spaces', function () {
+  // it('should not be created if the name has only spaces', async () => {
   //   foldersPage.openCreateFolder('    ', generateRandmString());
   //   expect(
   //     foldersPage.saveCreateBtn.isEnabled(),
@@ -80,7 +80,7 @@ describe('Create folder', function () {
   //   ).equal(false);
   //   foldersPage.closeCreateFolder(true);
   // });
-  // it('should not be created if the name and description has only spaces', function () {
+  // it('should not be created if the name and description has only spaces', async () => {
   //   foldersPage.openCreateFolder('    ', '  ');
   //   expect(
   //     foldersPage.saveCreateBtn.isEnabled(),
@@ -88,7 +88,7 @@ describe('Create folder', function () {
   //   ).equal(false);
   //   foldersPage.closeCreateFolder(true);
   // });
-  it('should not be created if cancel was clicked', function () {
+  it('should not be created if cancel was clicked', async () => {
     const rowCountBeforeCreation = foldersPage.rowNum;
     foldersPage.createNewFolder(
       generateRandmString(),
@@ -101,7 +101,7 @@ describe('Create folder', function () {
       'Number of rows has changed after cancel'
     ).equal(rowCountBeforeCreation);
   });
-  it('should create new folder with bold description', function () {
+  it('should create new folder with bold description', async () => {
     foldersPage.openCreateFolder(folderName[1]);
     const description = generateRandmString();
 
@@ -139,7 +139,7 @@ describe('Create folder', function () {
     expect(html, 'save description incorrect').eq(`<b>${description}</b>`);
     foldersRowObject.closeEditModal(true);
   });
-  it('should create new folder with underline description', function () {
+  it('should create new folder with underline description', async () => {
     foldersPage.openCreateFolder(folderName[2]);
     const description = generateRandmString();
 
@@ -177,7 +177,7 @@ describe('Create folder', function () {
     expect(html, 'save description incorrect').eq(`<u>${description}</u>`);
     foldersRowObject.closeEditModal(true);
   });
-  it('should create new folder with italic description', function () {
+  it('should create new folder with italic description', async () => {
     foldersPage.openCreateFolder(folderName[3]);
     const description = generateRandmString();
 
@@ -215,7 +215,7 @@ describe('Create folder', function () {
     expect(html, 'save description incorrect').eq(`<i>${description}</i>`);
     foldersRowObject.closeEditModal(true);
   });
-  it('should create new folder with strike-through description', function () {
+  it('should create new folder with strike-through description', async () => {
     foldersPage.openCreateFolder(folderName[4]);
     const description = generateRandmString();
 
@@ -255,7 +255,7 @@ describe('Create folder', function () {
     );
     foldersRowObject.closeEditModal(true);
   });
-  after('should delete folders', function () {
+  after('should delete folders', async () => {
     const rowCountBeforeCreation = foldersPage.rowNum;
     for (let i = 0; i < folderName.length; i++) {
       foldersPage.getFolderByName(folderName[i]).delete();

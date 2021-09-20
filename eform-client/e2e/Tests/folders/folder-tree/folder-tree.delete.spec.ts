@@ -7,12 +7,12 @@ const expect = require('chai').expect;
 let nameFolder = generateRandmString();
 
 describe('Delete folder', function () {
-  before(function () {
+  before(async () => {
     loginPage.open('/');
     loginPage.login();
     myEformsPage.Navbar.goToFolderPage();
   });
-  it('Should delete', function () {
+  it('Should delete', async () => {
     // Create
     const description = generateRandmString();
     foldersPage.createNewFolder(nameFolder, description);
@@ -26,7 +26,7 @@ describe('Delete folder', function () {
       rowNumAfterDelete
     );
   });
-  it('Should not delete if cancel was clicked', function () {
+  it('Should not delete if cancel was clicked', async () => {
     // Create
     nameFolder = generateRandmString();
     const description = generateRandmString();
@@ -39,7 +39,7 @@ describe('Delete folder', function () {
     const rowNumAfterCancelDelete = foldersPage.rowNum;
     expect(rowNumBeforeDelete).equal(rowNumAfterCancelDelete);
   });
-  after('Should delete folder', function () {
+  after('Should delete folder', async () => {
     $('#folderTreeName').waitForDisplayed({ timeout: 40000 });
     const folder = foldersPage.getFolderByName(nameFolder);
     const countFoldersBeforeDelete = foldersPage.rowNum;

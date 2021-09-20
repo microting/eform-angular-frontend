@@ -7,7 +7,7 @@ const expect = require('chai').expect;
 let name = generateRandmString();
 
 describe('Folder page', function () {
-  before(function () {
+  before(async () => {
     loginPage.open('/');
     loginPage.login();
     myEformsPage.Navbar.goToFolderPage();
@@ -15,7 +15,7 @@ describe('Folder page', function () {
     foldersPage.newFolderBtn.waitForDisplayed({ timeout: 10000 });
     foldersPage.createNewFolder(name, description);
   });
-  it('Should change name', function () {
+  it('Should change name', async () => {
     const folderBeforeEdit = foldersPage.getFolderByName(name);
     const descriptionBeforeEdit = folderBeforeEdit
       .getDescription()
@@ -33,7 +33,7 @@ describe('Folder page', function () {
       'Description has been changed incorrectly'
     ).equal(descriptionBeforeEdit);
   });
-  it('Should change description', function () {
+  it('Should change description', async () => {
     const newDescription = generateRandmString();
     $('#folderTreeName').waitForDisplayed({ timeout: 40000 });
     const lastFolderBeforeEdit = foldersPage.getFolderByName(name);
@@ -49,7 +49,7 @@ describe('Folder page', function () {
       'Description has been changed incorrectly'
     ).equal(newDescription);
   });
-  it('Should not change name and description if cancel was clicked', function () {
+  it('Should not change name and description if cancel was clicked', async () => {
     const folderTreeName = $('#folderTreeName');
     folderTreeName.waitForDisplayed({ timeout: 40000 });
     const newName = generateRandmString();
@@ -70,7 +70,7 @@ describe('Folder page', function () {
       'Description has been changed'
     ).equal(descriptionBeforeEdit);
   });
-  after(function () {
+  after(async () => {
     const lastFolder = foldersPage.getFolderByName(name);
     lastFolder.delete();
     expect(foldersPage.getFolderByName(name)).eq(null);

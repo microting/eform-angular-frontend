@@ -8,36 +8,36 @@ const expect = require('chai').expect;
 const tagName = generateRandmString();
 
 describe('Site tags', function () {
-  before(function () {
-    loginPage.open('/');
-    loginPage.login();
-    myEformsPage.Navbar.goToDeviceUsersPage();
-    $('#newDeviceUserBtn').waitForDisplayed({ timeout: 40000 });
-    deviceUsersPage.createDeviceUserFromScratch('John', 'Smith');
-    myEformsPage.Navbar.goToSites();
+  before(async () => {
+    await loginPage.open('/');
+    await loginPage.login();
+    await myEformsPage.Navbar.goToDeviceUsersPage();
+    await (await $('#newDeviceUserBtn')).waitForDisplayed({ timeout: 40000 });
+    await deviceUsersPage.createDeviceUserFromScratch('John', 'Smith');
+    await myEformsPage.Navbar.goToSites();
   });
-  it('should create new tag', function () {
-    $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
-    sitesPage.createTag([tagName]);
+  it('should create new tag', async () => {
+    await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
+    await sitesPage.createTag([tagName]);
   });
-  it('should assign tag', function () {
-    let site = sitesPage.getFirstRowObject();
-    site.edit({ tags: [tagName] });
-    site = sitesPage.getFirstRowObject();
+  it('should assign tag', async () => {
+    let site = await sitesPage.getFirstRowObject();
+    await site.edit({ tags: [tagName] });
+    site = await sitesPage.getFirstRowObject();
     expect(site.tags.includes(tagName)).eq(true);
   });
-  it('should cancel assign tag', function () {
-    let site = sitesPage.getFirstRowObject();
+  it('should cancel assign tag', async () => {
+    let site = await sitesPage.getFirstRowObject();
     site.edit({ tags: [tagName] });
-    site = sitesPage.getFirstRowObject();
+    site = await sitesPage.getFirstRowObject();
     expect(site.tags.includes(tagName)).eq(false);
   });
-  it('should delete tag', function () {
-    sitesPage.removeTags([tagName]);
+  it('should delete tag', async () => {
+    await sitesPage.removeTags([tagName]);
   });
-  it('should delete user', function () {
-    myEformsPage.Navbar.goToDeviceUsersPage();
+  it('should delete user', async () => {
+    await myEformsPage.Navbar.goToDeviceUsersPage();
     const rowNumBeforeDelete = deviceUsersPage.rowNum;
-    deviceUsersPage.getDeviceUser(rowNumBeforeDelete).delete();
+    await (await deviceUsersPage.getDeviceUser(rowNumBeforeDelete)).delete();
   });
 });

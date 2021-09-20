@@ -6,13 +6,13 @@ import workers from '../../Page objects/Workers.page';
 const expect = require('chai').expect;
 
 describe('Workers page should edit Worker', function () {
-  before(function () {
+  before(async () => {
     loginPage.open('/');
     loginPage.login();
     myEformsPage.Navbar.goToWorkers();
     browser.pause(8000);
   });
-  it('with first and last name', function () {
+  it('with first and last name', async () => {
     const name = 'Foo';
     const surName = 'Bar';
     const workerBeforEdit = workers.getWorker(workers.rowNum);
@@ -21,7 +21,7 @@ describe('Workers page should edit Worker', function () {
     expect(workerAfterEdit.firstName).equal(name);
     expect(workerAfterEdit.lastName).equal(surName);
   });
-  it('with special character', function () {
+  it('with special character', async () => {
     const name = 'tóíǻøæ';
     const surName = '¡@£$½';
     const workerBeforEdit = workers.getWorker(workers.rowNum + 1);

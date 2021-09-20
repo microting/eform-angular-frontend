@@ -14,7 +14,7 @@ describe('My eforms', function () {
     await loginPage.login();
   });
   it('should be able to filter by 1 word in label input', async () => {
-    await myEformsPage.idSortBtn.click();
+    await (await myEformsPage.idSortBtn()).click();
     const spinnerAnimation = $('#spinner-animation');
     await spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
     for (let i = 0; i < countCreateEForm; i++) {

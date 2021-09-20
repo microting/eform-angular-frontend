@@ -4,12 +4,12 @@ import myEformsPage from '../../Page objects/MyEforms.page';
 
 const expect = require('chai').expect;
 describe('Navigation menu - Delete item', function () {
-  before(function () {
+  before(async () => {
     loginPage.open('/');
     loginPage.login();
     myEformsPage.Navbar.goToMenuEditorPage();
   });
-  it('element must be created from custom dropdown which elements and create templates elements', function () {
+  it('element must be created from custom dropdown which elements and create templates elements', async () => {
     const count = navigationMenuPage.menuItemsChilds.length;
     navigationMenuPage.collapseTemplates(1);
     const dropdown = {

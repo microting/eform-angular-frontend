@@ -6,7 +6,7 @@ import { Guid } from 'guid-typescript';
 const expect = require('chai').expect;
 
 describe('Device users page', function () {
-  before(function () {
+  before(async () => {
     loginPage.open('/');
     loginPage.login();
     myEformsPage.Navbar.goToDeviceUsersPage();
@@ -15,7 +15,7 @@ describe('Device users page', function () {
     $('#newDeviceUserBtn').waitForDisplayed({ timeout: 40000 });
     deviceUsersPage.createNewDeviceUser(firstName, lastName);
   });
-  it('should change first name', function () {
+  it('should change first name', async () => {
     const newName = Guid.create().toString();
     $('#deviceUserFirstName').waitForDisplayed({ timeout: 40000 });
     const lastDeviceUserBeforeEdit = deviceUsersPage.getDeviceUser(
@@ -36,7 +36,7 @@ describe('Device users page', function () {
       'Last name has changed after changing only first name'
     ).equal(lastDeviceUserBeforeEdit.lastName);
   });
-  it('should change last name', function () {
+  it('should change last name', async () => {
     const newSurname = Guid.create().toString();
     $('#deviceUserFirstName').waitForDisplayed({ timeout: 40000 });
     const lastDeviceUserBeforeEdit = deviceUsersPage.getDeviceUser(
@@ -57,7 +57,7 @@ describe('Device users page', function () {
       'First name has changed after changing only last name'
     ).equal(lastDeviceUserBeforeEdit.firstName);
   });
-  it('should change first name and last name', function () {
+  it('should change first name and last name', async () => {
     const newName = Guid.create().toString();
     const newSurname = Guid.create().toString();
     $('#deviceUserFirstName').waitForDisplayed({ timeout: 40000 });
@@ -83,7 +83,7 @@ describe('Device users page', function () {
       'Last name has changed incorrectly'
     ).equal(newSurname);
   });
-  it('should not change first name and last name if cancel was clicked', function () {
+  it('should not change first name and last name if cancel was clicked', async () => {
     const newName = Guid.create().toString();
     const newSurname = Guid.create().toString();
     const rowNumBeforeEdit = deviceUsersPage.rowNum;

@@ -5,21 +5,21 @@ import searchableLists from '../../Page objects/SearchableLists.page';
 const expect = require('chai').expect;
 
 describe('Entity Search', function () {
-  before(function () {
+  before(async () => {
     loginPage.open('/auth');
     loginPage.login();
   });
-  it('should go to entity search page', function () {
+  it('should go to entity search page', async () => {
     searchableLists.goToEntitySearchPage();
     $('#createEntitySearchBtn').waitForDisplayed({ timeout: 40000 });
   });
-  it('should create a new searchable list with only name', function () {
+  it('should create a new searchable list with only name', async () => {
     const name = Guid.create().toString();
     searchableLists.createSearchableList_NoItem(name);
     const searchableList = searchableLists.getFirstRowObject();
     expect(searchableList.name).equal(name);
   });
-  it('should edit a searchable list, with only name', function () {
+  it('should edit a searchable list, with only name', async () => {
     const newName = 'New Name';
     searchableLists.editSearchableListNameOnly(newName);
     const searchableList = searchableLists.getFirstRowObject();
@@ -27,7 +27,7 @@ describe('Entity Search', function () {
     searchableLists.cleanup();
     $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
   });
-  it('should create a new searchable list with name and one item', function () {
+  it('should create a new searchable list with name and one item', async () => {
     const name = Guid.create().toString();
     const itemName = Guid.create().toString();
     searchableLists.createSearchableList_OneItem(name, itemName);
@@ -39,7 +39,7 @@ describe('Entity Search', function () {
     searchableLists.entitySearchEditCancelBtn.click();
     $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
   });
-  it('should edit list with name and one item', function () {
+  it('should edit list with name and one item', async () => {
     const newName = 'New Name';
     const newItemName = 'New Item Name';
     searchableLists.editSearchableListNameAndItem(newName, newItemName);
@@ -53,7 +53,7 @@ describe('Entity Search', function () {
     searchableLists.cleanup();
     $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
   });
-  it('should make a new searchable list with multiple items', function () {
+  it('should make a new searchable list with multiple items', async () => {
     const name = Guid.create().toString();
     const itemNames = ['a \n', 'b\n', 'c\n', 'd\n', 'e'];
     searchableLists.createSearchableList_MultipleItems(name, itemNames);
@@ -61,7 +61,7 @@ describe('Entity Search', function () {
     expect(searchableList.name).equal(name);
     $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
   });
-  it('should edit a searchable list with multiple items', function () {
+  it('should edit a searchable list with multiple items', async () => {
     const newName = 'New Name';
     const newItemNames = 'f\ng\nh\ni\nj';
     searchableLists.entitySearchEditBtn.click();

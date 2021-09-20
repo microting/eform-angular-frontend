@@ -8,16 +8,16 @@ describe('Main page', function () {
     await loginPage.login();
   });
   it('should be able to sort by ID', async () => {
-    await testSorting(await myEformsPage.idSortBtn, '#eform-id', 'ID');
+    await testSorting(await myEformsPage.idSortBtn(), '#eform-id', 'ID');
   });
   it('should be able to sort by "Created at"', async () => {
     await testSorting(
-      await myEformsPage.createdAtSortBtn,
+      await myEformsPage.createdAtSortBtn(),
       '#eform-created-at',
       'Created at'
     );
   });
   it('should be able to sort by "Name eForm"', async () => {
-    await testSorting(await myEformsPage.eformNameSortBtn, '#eform-label', 'Name eForm');
+    await testSorting(await myEformsPage.eformNameSortBtn(), '#eform-label', 'Name eForm');
   });
 });

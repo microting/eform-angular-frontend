@@ -34,11 +34,11 @@ const translationsEFormsPageDan: Array<{ key: string; value: string }> = [
   { key: '#actionsEForm', value: 'Handlinger' },
 ];
 describe('Profile settings', function () {
-  before(function () {
+  before(async () => {
     loginPage.open('/');
     loginPage.login();
   });
-  it('should set language to English', function () {
+  it('should set language to English', async () => {
     myEformsPage.Navbar.goToProfileSettings();
     profileSettings.chooseLanguage('English');
     profileSettings.saveProfileSettings();
@@ -53,7 +53,7 @@ describe('Profile settings', function () {
       )
     );
   });
-  it('should set language to German', function () {
+  it('should set language to German', async () => {
     myEformsPage.Navbar.goToProfileSettings();
     profileSettings.chooseLanguage('German');
     profileSettings.saveProfileSettings();
@@ -68,7 +68,7 @@ describe('Profile settings', function () {
       )
     );
   });
-  it('should set language to Danish', function () {
+  it('should set language to Danish', async () => {
     myEformsPage.Navbar.goToProfileSettings();
     profileSettings.chooseLanguage('Danish');
     profileSettings.saveProfileSettings();

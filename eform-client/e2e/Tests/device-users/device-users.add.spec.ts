@@ -10,14 +10,14 @@ const nameDeviceUser = generateRandmString();
 let countDeviceUsersBeforeCreating = 0;
 
 describe('Device users page should add new device user', function () {
-  before(function () {
+  before(async () => {
     loginPage.open('/');
     loginPage.login();
     myEformsPage.Navbar.goToDeviceUsersPage();
     $('#newDeviceUserBtn').waitForDisplayed({ timeout: 40000 });
     // browser.pause(8000);
   });
-  it('with first name and last name', function () {
+  it('with first name and last name', async () => {
     const surname = generateRandmString();
     const rowCountBeforeCreation = deviceUsersPage.rowNum;
     // browser.pause(2000);
@@ -40,15 +40,15 @@ describe('Device users page should add new device user', function () {
     ).equal(surname);
   });
 });
-describe('Device users page should not add new device user', function () {
-  afterEach(function () {
+describe('Device users page should not add new device user', async () => {
+  afterEach(async () => {
     // browser.refresh();
     loginPage.open('/');
     myEformsPage.Navbar.goToDeviceUsersPage();
     // browser.pause(8000);
     // $('#newDeviceUserBtn').waitForDisplayed({timeout: 40000});
   });
-  it('with only first name', function () {
+  it('with only first name', async () => {
     // $('#newDeviceUserBtn').waitForDisplayed({timeout: 40000});
     const name = generateRandmString();
     // browser.refresh();
@@ -64,7 +64,7 @@ describe('Device users page should not add new device user', function () {
     ).equal(false);
     // browser.refresh();
   });
-  it('with only last name', function () {
+  it('with only last name', async () => {
     // browser.waitForEnabled('#newDeviceUserBtn', 20000);
     const lastName = generateRandmString();
     // browser.refresh();
@@ -78,7 +78,7 @@ describe('Device users page should not add new device user', function () {
     ).equal(false);
     // browser.refresh();
   });
-  it('without first and last names', function () {
+  it('without first and last names', async () => {
     // browser.refresh();
     $('#newDeviceUserBtn').waitForDisplayed({ timeout: 40000 });
     deviceUsersPage.newDeviceUserBtn.click();
@@ -89,7 +89,7 @@ describe('Device users page should not add new device user', function () {
     ).equal(false);
     // browser.refresh();
   });
-  it('if cancel was clicked', function () {
+  it('if cancel was clicked', async () => {
     const rowCountBeforeCreation = deviceUsersPage.rowNum;
     // browser.refresh();
     $('#newDeviceUserBtn').waitForDisplayed({ timeout: 40000 });
@@ -104,7 +104,7 @@ describe('Device users page should not add new device user', function () {
     ).equal(rowCountBeforeCreation);
     // browser.refresh();
   });
-  it('should clean up', function () {
+  it('should clean up', async () => {
     loginPage.open('/');
     myEformsPage.Navbar.goToDeviceUsersPage();
     deviceUsersPage.getDeviceUserByName(nameDeviceUser).delete();

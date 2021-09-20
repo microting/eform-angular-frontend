@@ -10,7 +10,7 @@ describe('Device users page', function () {
     loginPage.login();
     myEformsPage.Navbar.goToDeviceUsersPage();
   });
-  it('should not delete if cancel was clicked', function () {
+  it('should not delete if cancel was clicked', async () => {
     const rowNumBeforeDelete = deviceUsersPage.rowNum;
     $('#deviceUserId').waitForDisplayed({ timeout: 40000 });
     const lastDeviceUser = deviceUsersPage.getDeviceUser(rowNumBeforeDelete);
@@ -25,7 +25,7 @@ describe('Device users page', function () {
     const rowNumAfterCancelDelete = deviceUsersPage.rowNum;
     expect(rowNumBeforeDelete).equal(rowNumAfterCancelDelete);
   });
-  it('should delete user', function () {
+  it('should delete user', async () => {
     loginPage.open('/');
     myEformsPage.Navbar.goToDeviceUsersPage();
     const rowNumBeforeDelete = deviceUsersPage.rowNum;

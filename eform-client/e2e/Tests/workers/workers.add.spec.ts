@@ -6,7 +6,7 @@ import deviceUsersPage from '../../Page objects/DeviceUsers.page';
 const expect = require('chai').expect;
 
 describe('Workers page ', function () {
-  before(function () {
+  before(async () => {
     loginPage.open('/');
     loginPage.login();
     myEformsPage.Navbar.goToDeviceUsersPage();
@@ -15,7 +15,7 @@ describe('Workers page ', function () {
     myEformsPage.Navbar.goToWorkers();
     $('#workerCreateBtn ').waitForDisplayed({timeout: 8000});
   });
-  it('should add new Worker with first and last name', function () {
+  it('should add new Worker with first and last name', async () => {
     const name = 'Monty';
     const surName = 'Python';
     workers.createNewWorker(name, surName);
@@ -24,7 +24,7 @@ describe('Workers page ', function () {
     expect(newWorker.firstName).equal(name);
     expect(newWorker.lastName).equal(surName);
   });
-  it('should add new Worker with special character', function () {
+  it('should add new Worker with special character', async () => {
     const name = 'René';
     const surName = 'Éhl©µ';
     workers.createNewWorker(name, surName);
@@ -34,19 +34,19 @@ describe('Workers page ', function () {
     expect(newWorker.lastName).equal(surName);
   });
   // TODO
-  // it('should NOT add new worker with first name only', function () {
+  // it('should NOT add new worker with first name only', async () => {
   //   const name = 'Anders';
   //   workers.createNewWorker(name, '');
   //   const newWorker = workers.getWorker(workers.rowNum);
   //   expect(newWorker.firstName).equal(name);
   // });
-  // it('should NOT add new worker with last name only', function () {
+  // it('should NOT add new worker with last name only', async () => {
   //   const surName = 'Kragh';
   //   workers.createNewWorker('' , surName);
   //   const newWorker = workers.getWorker(workers.rowNum);
   //   expect(newWorker.lastName).equal(surName);
   // });
-  // it('should NOT add new worker with no name', function () {
+  // it('should NOT add new worker with no name', async () => {
   //   const name = '';
   //   const surName = '';
   //   workers.createNewWorker(name , surName);
