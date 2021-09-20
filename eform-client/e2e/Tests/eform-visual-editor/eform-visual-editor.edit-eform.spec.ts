@@ -22,7 +22,7 @@ describe('Visual editor page', function () {
   beforeEach(function () {
     eformVisualEditorPage.goToVisualEditor();
   });
-  it('should edit created visual template', function () {
+  it('should edit created visual template', async () => {
     const checklist: MainChecklistObj = {
       translations: [
         {
@@ -47,9 +47,10 @@ describe('Visual editor page', function () {
         },
       ],
     };
-    eformVisualEditorPage.createVisualTemplate(checklist, true);
+    await eformVisualEditorPage.createVisualTemplate(checklist, true);
     myEformsPage.getLastMyEformsRowObj().goToVisualEditor();
     let mainChecklist = new MainCheckListRowObj();
+    await mainChecklist.getAllFields();
     const checklistObjForEdit: MainChecklistObj = {
       ...checklist,
       translations: [
@@ -97,25 +98,29 @@ describe('Visual editor page', function () {
       ],
       mandatory: false,
     };
-    eformVisualEditorPage.openAllLanguages();
-    eformVisualEditorPage.createVisualTemplateField(newField);
-    mainChecklist.edit(checklistObjForEdit);
+    await eformVisualEditorPage.openAllLanguages();
+    await eformVisualEditorPage.createVisualTemplateField(newField);
+    await mainChecklist.edit(checklistObjForEdit);
     mainChecklist = new MainCheckListRowObj();
-    mainChecklist.fields[1].makeCopy();
-    mainChecklist.fields[1].changePosition(mainChecklist.fields[0]);
+    await mainChecklist.getAllFields();
+    await mainChecklist.fields[1].makeCopy();
+    await mainChecklist.fields[1].changePosition(mainChecklist.fields[0]);
     mainChecklist = new MainCheckListRowObj();
-    mainChecklist.fields[1].edit({ type: EformFieldTypesEnum.None });
-    mainChecklist.fields[1].changeColor('grey');
+    await mainChecklist.getAllFields();
+    await mainChecklist.fields[1].edit({ type: EformFieldTypesEnum.None });
+    await mainChecklist.fields[1].changeColor('grey');
     checklistObjForEdit.fields = [
       newField,
       { ...checklist.fields[0], type: EformFieldTypesEnum.None },
       newField,
     ];
-    eformVisualEditorPage.clickSave();
-    myEformsPage.getLastMyEformsRowObj().goToVisualEditor();
-    mainChecklist = new MainCheckListRowObj(true);
-    eformVisualEditorPage.openAllLanguages();
-    for (let i = 0; i < eformVisualEditorPage.selectedLanguages.length; i++) {
+    await eformVisualEditorPage.clickSave();
+    await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
+    mainChecklist = new MainCheckListRowObj();
+    await mainChecklist.openAllLanguages();
+    await mainChecklist.getAllFields();
+    await eformVisualEditorPage.openAllLanguages();
+    for (let i = 0; i < (await eformVisualEditorPage.selectedLanguages()).length; i++) {
       expect(
         mainChecklist.translations[i].name,
         `name[${i}] main checklist not valid`
@@ -138,7 +143,7 @@ describe('Visual editor page', function () {
       `field[1] color not valid`
     ).eq('Grey');
   });
-  it('should edit created visual template (nested checklist)', function () {
+  it('should edit created visual template (nested checklist)', async () => {
     const checklist: MainChecklistObj = {
       translations: [
         {
@@ -197,9 +202,10 @@ describe('Visual editor page', function () {
         },
       ],
     };
-    eformVisualEditorPage.createVisualTemplate(checklist, true);
-    myEformsPage.getLastMyEformsRowObj().goToVisualEditor();
+    await eformVisualEditorPage.createVisualTemplate(checklist, true);
+    await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
     let mainChecklist = new MainCheckListRowObj();
+    await mainChecklist.getAllFields();
     checklist.checklists[1].translations = [
       {
         name: generateRandmString(),
@@ -208,11 +214,12 @@ describe('Visual editor page', function () {
         id: null,
       },
     ];
-    mainChecklist.checklists[1].edit(checklist.checklists[1].translations);
-    mainChecklist.checklists[0].fields[0].makeCopy();
-    mainChecklist.checklists[0].fields[0].changeColor('grey');
+    await mainChecklist.checklists[1].edit(checklist.checklists[1].translations);
+    await mainChecklist.checklists[0].fields[0].makeCopy();
+    await mainChecklist.checklists[0].fields[0].changeColor('grey');
     mainChecklist = new MainCheckListRowObj();
-    mainChecklist.checklists[0].fields[1].changePosition(
+    await mainChecklist.getAllFields();
+    await mainChecklist.checklists[0].fields[1].changePosition(
       mainChecklist.checklists[0].fields[0]
     );
     checklist.checklists[0].fields = [
@@ -227,15 +234,17 @@ describe('Visual editor page', function () {
       checklist.checklists[0].fields[0],
     ];
     mainChecklist = new MainCheckListRowObj();
-    mainChecklist.checklists[0].fields[1].edit({
+    await mainChecklist.getAllFields();
+    await mainChecklist.checklists[0].fields[1].edit({
       type: checklist.checklists[0].fields[1].type,
       maxValue: checklist.checklists[0].fields[1].maxValue,
       minValue: checklist.checklists[0].fields[1].minValue,
       defaultValue: checklist.checklists[0].fields[1].defaultValue,
     });
-    eformVisualEditorPage.clickSave();
-    myEformsPage.getLastMyEformsRowObj().goToVisualEditor();
+    await eformVisualEditorPage.clickSave();
+    await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
     mainChecklist = new MainCheckListRowObj();
+    await mainChecklist.getAllFields();
 
     for (let i = 0; i < checklist.checklists[0].fields.length; i++) {
       expect(
