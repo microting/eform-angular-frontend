@@ -197,7 +197,7 @@ class MyEformsPage extends PageWithNavbarPage {
 
   async createNewTags(nameTags: string[]) {
     await (await this.eformsManageTagsBtn()).click();
-    await tagsModalPage.tagsModalCloseBtn.waitForDisplayed({ timeout: 40000 });
+    await (await tagsModalPage.tagsModalCloseBtn()).waitForDisplayed({ timeout: 40000 });
     for (let i = 0; i < nameTags.length; i++) {
       await tagsModalPage.createTag(nameTags[i]);
     }
@@ -211,7 +211,7 @@ class MyEformsPage extends PageWithNavbarPage {
 
   async removeTags(nameTags: string[]) {
     await (await this.eformsManageTagsBtn()).click();
-    const closeBtn = tagsModalPage.tagsModalCloseBtn;
+    const closeBtn = await tagsModalPage.tagsModalCloseBtn();
     await closeBtn.waitForDisplayed({ timeout: 40000 });
     for (let i = 0; i < nameTags.length; i++) {
       const tag = await tagsModalPage.getTagByName(nameTags[i]);

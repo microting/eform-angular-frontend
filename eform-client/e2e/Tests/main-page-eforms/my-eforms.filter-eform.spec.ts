@@ -25,7 +25,7 @@ describe('My eforms', function () {
     const nameEFormForFiltering = namesEForms[1];
     countRowsBeforeFiltering = await myEformsPage.rowNum();
     expect(countRowsBeforeFiltering).equal(3);
-    await myEformsPage.eformFilter.setValue(nameEFormForFiltering);
+    await (await myEformsPage.eformFilter()).setValue(nameEFormForFiltering);
     await spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
     await browser.pause(2000);
     const eform = myEformsPage.getEformsRowObjByNameEForm(
@@ -34,7 +34,7 @@ describe('My eforms', function () {
     expect(eform).not.equal(null);
   });
   it('should be able to see all eforms by leaving label input empty', async () => {
-    await myEformsPage.eformFilter.click();
+    await (await myEformsPage.eformFilter()).click();
     await browser.keys(['Control', 'a', 'Control', 'Delete']);
     await $('#spinner-animation').waitForDisplayed({ timeout: 50000, reverse: true });
     await browser.pause(2000);
@@ -55,7 +55,7 @@ describe('My eforms', function () {
     expect(await myEformsPage.rowNum()).eq(2);
   });
   after(async () => {
-    await myEformsPage.eformFilter.click();
+    await (await myEformsPage.eformFilter()).click();
     await browser.keys(['Control', 'a', 'Control', 'Delete']);
     await browser.pause(500);
     let lastTag = await $('#tagSelector > div > div > .ng-value > span');

@@ -23,7 +23,7 @@ describe('Main page', function () {
   it('should not perform any changes by doing nothing and clicking "Save" in tag edit window', async () => {
     const eform = await myEformsPage.getEformsRowObjByNameEForm(newEformLabel);
     await eform.editTagsBtn.click();
-    await myEformsPage.tagEditSaveBtn.click();
+    await (await myEformsPage.tagEditSaveBtn()).click();
     await $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
     expect(
       (await myEformsPage.getEformsRowObjByNameEForm(newEformLabel)).tags.length

@@ -25,7 +25,7 @@ describe('Subheader test', function () {
   it('must navigate on create menu item and translate must be == translate', async () => {
     const spinnerAnimation = $('#spinner-animation');
     const h1 = $('eform-subheader h1');
-    await myEformsPage.Navbar.clickOnHeaderMenuItem2(translation).click();
+    await (await myEformsPage.Navbar.clickOnHeaderMenuItem2(translation)).click();
     await spinnerAnimation.waitForDisplayed({ timeout: 30000, reverse: true });
     expect(h1.getText()).eq(
       translation,
@@ -37,7 +37,7 @@ describe('Subheader test', function () {
     await (await navigationMenuPage.editItemTranslation(0, 0, 1)).setValue(translation);
     await (await navigationMenuPage.editItemSaveBtn()).click();
     await navigationMenuPage.clickSaveMenuBtn();
-    await myEformsPage.Navbar.clickOnHeaderMenuItem2(translation).click();
+    await (await myEformsPage.Navbar.clickOnHeaderMenuItem2(translation)).click();
     await spinnerAnimation.waitForDisplayed({ timeout: 30000, reverse: true });
     expect(h1.getText()).eq(
       translation,

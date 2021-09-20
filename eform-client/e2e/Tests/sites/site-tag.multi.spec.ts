@@ -28,7 +28,7 @@ describe('Site tags', function () {
   });
   it('should cancel assign tag', async () => {
     let site = await sitesPage.getFirstRowObject();
-    site.edit({ tags: [tagName] });
+    await site.edit({ tags: [tagName] });
     site = await sitesPage.getFirstRowObject();
     expect(site.tags.includes(tagName)).eq(false);
   });

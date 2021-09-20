@@ -29,7 +29,7 @@ describe('Entity Select', function () {
     const selectableListRowObject = await selectableLists.getLastSelectableListObject();
     expect(selectableListRowObject.name).equal(data.name);
     await selectableListRowObject.openEdit();
-    expect(await selectableLists.getFirstEntityItemOnEdit.name).equal(data.items[0]);
+    expect((await selectableLists.getFirstEntityItemOnEdit()).name).equal(data.items[0]);
     await selectableListRowObject.closeEdit(true);
   });
   it('should delete item in list', async () => {

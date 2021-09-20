@@ -34,7 +34,7 @@ describe('Main page', function () {
     await (await myEformsPage.getFirstMyEformsRowObj()).pair(folders[0], users);
     await (await myEformsPage.getFirstMyEformsRowObj()).editPairEformBtn.click();
     await spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
-    await (await myEformsPage.cancelParingBtn).waitForDisplayed({ timeout: 40000 });
+    await (await myEformsPage.cancelParingBtn()).waitForDisplayed({ timeout: 40000 });
     await browser.pause(1000);
     expect(
       await (await $('tree-node .node-content-wrapper-active')).getText(),
@@ -52,7 +52,7 @@ describe('Main page', function () {
         ).eq('true');
       }
     }
-    await (await myEformsPage.cancelParingBtn).click();
+    await (await myEformsPage.cancelParingBtn()).click();
     await browser.pause(1000);
   });
   it('should unpair one', async () => {
@@ -77,7 +77,7 @@ describe('Main page', function () {
         ).eq('true');
       }
     }
-    await (await myEformsPage.cancelParingBtn).click();
+    await (await myEformsPage.cancelParingBtn()).click();
   });
   after(async () => {
     await (await myEformsPage.getEformsRowObjByNameEForm('test Eform')).deleteEForm();
