@@ -7,26 +7,26 @@ const expect = require('chai').expect;
 
 describe('Device users page', function () {
   before(async () => {
-    loginPage.open('/');
-    loginPage.login();
-    myEformsPage.Navbar.goToDeviceUsersPage();
+    await loginPage.open('/');
+    await loginPage.login();
+    await myEformsPage.Navbar.goToDeviceUsersPage();
     const firstName = Guid.create().toString();
     const lastName = Guid.create().toString();
-    $('#newDeviceUserBtn').waitForDisplayed({ timeout: 40000 });
-    deviceUsersPage.createNewDeviceUser(firstName, lastName);
+    await (await $('#newDeviceUserBtn')).waitForDisplayed({ timeout: 40000 });
+    await deviceUsersPage.createNewDeviceUser(firstName, lastName);
   });
   it('should change first name', async () => {
     const newName = Guid.create().toString();
-    $('#deviceUserFirstName').waitForDisplayed({ timeout: 40000 });
-    const lastDeviceUserBeforeEdit = deviceUsersPage.getDeviceUser(
-      deviceUsersPage.rowNum
+    await (await $('#deviceUserFirstName')).waitForDisplayed({ timeout: 40000 });
+    const lastDeviceUserBeforeEdit = await deviceUsersPage.getDeviceUser(
+      await deviceUsersPage.rowNum()
     );
-    deviceUsersPage.editDeviceUser(lastDeviceUserBeforeEdit, newName, null);
-    browser.pause(2000);
-    const lastDeviceUserAfterEdit = deviceUsersPage.getDeviceUser(
-      deviceUsersPage.rowNum
+    await deviceUsersPage.editDeviceUser(lastDeviceUserBeforeEdit, newName, null);
+    await browser.pause(2000);
+    const lastDeviceUserAfterEdit = await deviceUsersPage.getDeviceUser(
+      await deviceUsersPage.rowNum()
     );
-    $('#newDeviceUserBtn').waitForDisplayed({ timeout: 40000 });
+    await (await $('#newDeviceUserBtn')).waitForDisplayed({ timeout: 40000 });
     expect(
       lastDeviceUserAfterEdit.firstName,
       'First name has changed incorrectly'
@@ -38,16 +38,16 @@ describe('Device users page', function () {
   });
   it('should change last name', async () => {
     const newSurname = Guid.create().toString();
-    $('#deviceUserFirstName').waitForDisplayed({ timeout: 40000 });
-    const lastDeviceUserBeforeEdit = deviceUsersPage.getDeviceUser(
-      deviceUsersPage.rowNum
+    await (await $('#deviceUserFirstName')).waitForDisplayed({ timeout: 40000 });
+    const lastDeviceUserBeforeEdit = await deviceUsersPage.getDeviceUser(
+      await deviceUsersPage.rowNum()
     );
-    deviceUsersPage.editDeviceUser(lastDeviceUserBeforeEdit, null, newSurname);
-    browser.pause(2000);
-    const lastDeviceUserAfterEdit = deviceUsersPage.getDeviceUser(
-      deviceUsersPage.rowNum
+    await deviceUsersPage.editDeviceUser(lastDeviceUserBeforeEdit, null, newSurname);
+    await browser.pause(2000);
+    const lastDeviceUserAfterEdit = await deviceUsersPage.getDeviceUser(
+      await deviceUsersPage.rowNum()
     );
-    $('#newDeviceUserBtn').waitForDisplayed({ timeout: 40000 });
+    await (await $('#newDeviceUserBtn')).waitForDisplayed({ timeout: 40000 });
     expect(
       lastDeviceUserAfterEdit.lastName,
       'Last name has changed incorrectly'
@@ -60,20 +60,20 @@ describe('Device users page', function () {
   it('should change first name and last name', async () => {
     const newName = Guid.create().toString();
     const newSurname = Guid.create().toString();
-    $('#deviceUserFirstName').waitForDisplayed({ timeout: 40000 });
-    const lastDeviceUserBeforeEdit = deviceUsersPage.getDeviceUser(
-      deviceUsersPage.rowNum
+    await (await $('#deviceUserFirstName')).waitForDisplayed({ timeout: 40000 });
+    const lastDeviceUserBeforeEdit = await deviceUsersPage.getDeviceUser(
+      await deviceUsersPage.rowNum()
     );
-    deviceUsersPage.editDeviceUser(
+    await deviceUsersPage.editDeviceUser(
       lastDeviceUserBeforeEdit,
       newName,
       newSurname
     );
-    browser.pause(2000);
-    const lastDeviceUserAfterEdit = deviceUsersPage.getDeviceUser(
-      deviceUsersPage.rowNum
+    await browser.pause(2000);
+    const lastDeviceUserAfterEdit = await deviceUsersPage.getDeviceUser(
+      await deviceUsersPage.rowNum()
     );
-    $('#newDeviceUserBtn').waitForDisplayed({ timeout: 40000 });
+    await (await $('#newDeviceUserBtn')).waitForDisplayed({ timeout: 40000 });
     expect(
       lastDeviceUserAfterEdit.firstName,
       'First name has changed incorrectly'
@@ -86,25 +86,25 @@ describe('Device users page', function () {
   it('should not change first name and last name if cancel was clicked', async () => {
     const newName = Guid.create().toString();
     const newSurname = Guid.create().toString();
-    const rowNumBeforeEdit = deviceUsersPage.rowNum;
-    const lastDeviceUserBeforeEdit = deviceUsersPage.getDeviceUser(
+    const rowNumBeforeEdit = await deviceUsersPage.rowNum();
+    const lastDeviceUserBeforeEdit = await deviceUsersPage.getDeviceUser(
       rowNumBeforeEdit
     );
-    lastDeviceUserBeforeEdit.editBtn.click();
+    await lastDeviceUserBeforeEdit.editBtn.click();
     // browser.pause(4000);
-    $('#editFirstNameInput').waitForDisplayed({ timeout: 10000 });
-    deviceUsersPage.editFirstNameInput.click();
-    deviceUsersPage.editFirstNameInput.clearValue();
-    deviceUsersPage.editFirstNameInput.setValue(newName);
-    deviceUsersPage.editLastNameInput.click();
-    deviceUsersPage.editLastNameInput.clearValue();
-    deviceUsersPage.editLastNameInput.setValue(newSurname);
-    deviceUsersPage.cancelEditBtn.click();
+    await (await $('#editFirstNameInput')).waitForDisplayed({ timeout: 10000 });
+    await (await deviceUsersPage.editFirstNameInput()).click();
+    await (await deviceUsersPage.editFirstNameInput()).clearValue();
+    await (await deviceUsersPage.editFirstNameInput()).setValue(newName);
+    await (await deviceUsersPage.editLastNameInput()).click();
+    await (await deviceUsersPage.editLastNameInput()).clearValue();
+    await (await deviceUsersPage.editLastNameInput()).setValue(newSurname);
+    await (await deviceUsersPage.cancelEditBtn()).click();
     // browser.pause(12000);
-    $('#newDeviceUserBtn').waitForDisplayed({ timeout: 40000 });
-    const rowNumAfterEdit = deviceUsersPage.rowNum;
+    await (await $('#newDeviceUserBtn')).waitForDisplayed({ timeout: 40000 });
+    const rowNumAfterEdit = await deviceUsersPage.rowNum();
     expect(rowNumBeforeEdit).equal(rowNumAfterEdit);
-    const lastDeviceUserAfterEdit = deviceUsersPage.getDeviceUser(
+    const lastDeviceUserAfterEdit = await deviceUsersPage.getDeviceUser(
       rowNumAfterEdit
     );
     expect(lastDeviceUserAfterEdit.firstName, 'First name has changed').equal(

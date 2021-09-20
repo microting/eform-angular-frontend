@@ -5,131 +5,141 @@ import myEformsPage from '../../Page objects/MyEforms.page';
 const expect = require('chai').expect;
 describe(' Navigation menu - Create item', function () {
   before(async () => {
-    loginPage.open('/');
-    loginPage.login();
-    myEformsPage.Navbar.goToMenuEditorPage();
+    await loginPage.open('/');
+    await loginPage.login();
+    await myEformsPage.Navbar.goToMenuEditorPage();
   });
   it('element must be moved from templates to list', async () => {
-    const count = navigationMenuPage.menuItemsChilds.length;
-    navigationMenuPage.collapseTemplates(0);
-    navigationMenuPage.createMenuItemFromTemplate(0);
+    const count = (await navigationMenuPage.menuItemsChilds()).length;
+    await navigationMenuPage.collapseTemplates(0);
+    await navigationMenuPage.createMenuItemFromTemplate(0);
 
-    expect(count + 1).eq(navigationMenuPage.menuItemsChilds.length);
-    navigationMenuPage.clickSaveMenuBtn();
-    navigationMenuPage.openOnEditCreatedMenuItem(0);
-    expect(navigationMenuPage.editLinkInput.getValue(), 'link field must = \' / \' ').eq('/');
-    expect(navigationMenuPage.editItemTranslation(0, 0, 0).getValue(),
+    expect(count + 1).eq((await navigationMenuPage.menuItemsChilds()).length);
+    await navigationMenuPage.clickSaveMenuBtn();
+    await navigationMenuPage.openOnEditCreatedMenuItem(0);
+    expect((await navigationMenuPage.editLinkInput()).getValue(), 'link field must = \' / \' ').eq('/');
+    expect((await navigationMenuPage.editItemTranslation(0, 0, 0)).getValue(),
       'english field must = \'My eForms\'').eq('My eForms');
-    expect(navigationMenuPage.editItemTranslation(0, 0, 1).getValue(),
+    expect((await navigationMenuPage.editItemTranslation(0, 0, 1)).getValue(),
       'danish field must = \'Mine eForms\'').eq('Mine eForms');
-    expect(navigationMenuPage.editItemTranslation(0, 0, 2).getValue(),
+    expect((await navigationMenuPage.editItemTranslation(0, 0, 2)).getValue(),
       'german field must = \'Meine eForms\'').eq('Meine eForms');
-    navigationMenuPage.editItemSaveBtn.click();
-    navigationMenuPage.collapseTemplates(0);
-    navigationMenuPage.resetMenu();
+    await (await navigationMenuPage.editItemSaveBtn()).click();
+    await navigationMenuPage.collapseTemplates(0);
+    await navigationMenuPage.resetMenu();
   });
   it('element must be created from custom link', async () => {
-    const count = navigationMenuPage.menuItemsChilds.length;
+    const count = (await navigationMenuPage.menuItemsChilds()).length;
     const customLink = {
       securityGroups: [],
       link: 'test0',
       translations: ['test1', 'test2', 'test3']
     };
-    navigationMenuPage.collapseTemplates(1);
-    navigationMenuPage.createCustomLink(customLink);
-    expect(count + 1).eq(navigationMenuPage.menuItemsChilds.length);
+    await navigationMenuPage.collapseTemplates(1);
+    await navigationMenuPage.createCustomLink(customLink);
+    expect(count + 1).eq((await navigationMenuPage.menuItemsChilds()).length);
 
-    navigationMenuPage.clickSaveMenuBtn();
+    await navigationMenuPage.clickSaveMenuBtn();
 
-    navigationMenuPage.openOnEditCreatedMenuItem(navigationMenuPage.menuItemsChilds.length - 1);
-    expect(navigationMenuPage.editLinkInput.getValue(), 'Link save is incorrect').eq(customLink.link);
-    customLink.translations.forEach((translation, i) => {
+    await navigationMenuPage.openOnEditCreatedMenuItem((await navigationMenuPage.menuItemsChilds()).length - 1);
+    expect((await navigationMenuPage.editLinkInput()).getValue(), 'Link save is incorrect').eq(customLink.link);
+    for (const translation of customLink.translations) {
+      const i = customLink.translations.indexOf(translation);
       if (translation) {
-        expect(navigationMenuPage.editItemTranslation(navigationMenuPage.menuItemsChilds.length - 1, 0, i).getValue(),
+        expect(await (await navigationMenuPage.editItemTranslation(
+          (await navigationMenuPage.menuItemsChilds()).length - 1, 0, i)).getValue(),
           `Translation field [${i}] save is incorrect`).eq(translation);
-      }});
+      }}
 
-    navigationMenuPage.editItemSaveBtn.click();
-    navigationMenuPage.resetMenu();
+    await (await navigationMenuPage.editItemSaveBtn()).click();
+    await navigationMenuPage.resetMenu();
   });
   it('element must be created from custom dropdown', async () => {
-    const count = navigationMenuPage.menuItemsChilds.length;
+    const count = (await navigationMenuPage.menuItemsChilds()).length;
     // navigationMenuPage.clickOnTemplatesDropDown(2);
     const dropdown = {
       securityGroups: [],
       translations: ['test1', 'test2', 'test3']
     };
 
-    navigationMenuPage.createCustomDropdown(dropdown);
+    await navigationMenuPage.createCustomDropdown(dropdown);
 
-    expect(count + 1).eq(navigationMenuPage.menuItemsChilds.length);
+    expect(count + 1).eq((await navigationMenuPage.menuItemsChilds()).length);
 
-    navigationMenuPage.clickSaveMenuBtn();
+    await navigationMenuPage.clickSaveMenuBtn();
 
-    navigationMenuPage.openOnEditCreatedMenuItem(navigationMenuPage.menuItemsChilds.length - 1);
+    await navigationMenuPage.openOnEditCreatedMenuItem((await navigationMenuPage.menuItemsChilds()).length - 1);
 
-    dropdown.translations.forEach((translation, i) => {
+    for (const translation of dropdown.translations) {
+      const i = dropdown.translations.indexOf(translation);
       if (translation) {
-        expect(navigationMenuPage.editItemTranslation(navigationMenuPage.menuItemsChilds.length - 1, 0, i).getValue(),
+        expect(await (await navigationMenuPage.editItemTranslation(
+          (await navigationMenuPage.menuItemsChilds()).length - 1, 0, i)).getValue(),
           `Translation field [${i}] save is incorrect`).eq(translation);
       }
-    });
+    }
 
-    navigationMenuPage.editItemSaveBtn.click();
-    navigationMenuPage.resetMenu();
+    await (await navigationMenuPage.editItemSaveBtn()).click();
+    await navigationMenuPage.resetMenu();
   });
   it('element must be created from custom dropdown with security group', async () => {
-    const count = navigationMenuPage.menuItemsChilds.length;
+    const count = (await navigationMenuPage.menuItemsChilds()).length;
     const dropdown = {
       securityGroups: ['eForm admins'],
       translations: ['test1', 'test2', 'test3']
     };
 
-    navigationMenuPage.createCustomDropdown(dropdown);
+    await navigationMenuPage.createCustomDropdown(dropdown);
 
-    expect(count + 1).eq(navigationMenuPage.menuItemsChilds.length);
+    expect(count + 1).eq((await navigationMenuPage.menuItemsChilds()).length);
 
-    navigationMenuPage.clickSaveMenuBtn();
+    await navigationMenuPage.clickSaveMenuBtn();
 
-    navigationMenuPage.openOnEditCreatedMenuItem(navigationMenuPage.menuItemsChilds.length - 1);
+    await navigationMenuPage.openOnEditCreatedMenuItem((await navigationMenuPage.menuItemsChilds()).length - 1);
 
-    dropdown.securityGroups.forEach((securityGroup, i) =>
-      expect(navigationMenuPage.securityGroupsValue[i].getText(), 'SecurityGroup save is incorrect').eq(securityGroup));
-    dropdown.translations.forEach((translation, i) => {
+    dropdown.securityGroups.forEach(async (securityGroup, i) =>
+      expect(await (await navigationMenuPage.securityGroupsValue())[i].getText(), 'SecurityGroup save is incorrect')
+        .eq(securityGroup));
+    for (const translation of dropdown.translations) {
+      const i = dropdown.translations.indexOf(translation);
       if (translation) {
-        expect(navigationMenuPage.editItemTranslation(navigationMenuPage.menuItemsChilds.length - 1, 0, i).getValue(),
+        expect((await navigationMenuPage.editItemTranslation(
+          (await navigationMenuPage.menuItemsChilds()).length - 1, 0, i)).getValue(),
           `Translation field [${i}] save is incorrect`).eq(translation);
       }
-    });
+    }
 
-    navigationMenuPage.editItemSaveBtn.click();
-    navigationMenuPage.resetMenu();
+    await (await navigationMenuPage.editItemSaveBtn()).click();
+    await navigationMenuPage.resetMenu();
   });
   it('element must be created from custom link with security group', async () => {
-    const count = navigationMenuPage.menuItemsChilds.length;
+    const count = (await navigationMenuPage.menuItemsChilds()).length;
     const customLink = {
       securityGroups: ['eForm admins'],
       link: 'test0',
       translations: ['test1', 'test2', 'test3']
     };
-    navigationMenuPage.createCustomLink(customLink);
+    await navigationMenuPage.createCustomLink(customLink);
 
-    expect(count + 1).eq(navigationMenuPage.menuItemsChilds.length);
+    expect(count + 1).eq((await navigationMenuPage.menuItemsChilds()).length);
 
-    navigationMenuPage.clickSaveMenuBtn();
+    await navigationMenuPage.clickSaveMenuBtn();
 
-    navigationMenuPage.openOnEditCreatedMenuItem(navigationMenuPage.menuItemsChilds.length - 1);
-    customLink.securityGroups.forEach((securityGroup, i) =>
-      expect(navigationMenuPage.securityGroupsValue[i].getText(), 'SecurityGroup save is incorrect').eq(securityGroup));
-    expect(navigationMenuPage.editLinkInput.getValue(), 'Link save is incorrect').contains(customLink.link);
-    customLink.translations.forEach((translation, i) => {
+    await navigationMenuPage.openOnEditCreatedMenuItem((await navigationMenuPage.menuItemsChilds).length - 1);
+    customLink.securityGroups.forEach(async (securityGroup, i) =>
+      expect(await (await navigationMenuPage.securityGroupsValue())[i].getText(), 'SecurityGroup save is incorrect')
+        .eq(securityGroup));
+    expect(await (await navigationMenuPage.editLinkInput()).getValue(), 'Link save is incorrect').contains(customLink.link);
+    for (const translation of customLink.translations) {
+      const i = customLink.translations.indexOf(translation);
       if (translation) {
-        expect(navigationMenuPage.editItemTranslation(navigationMenuPage.menuItemsChilds.length - 1, 0, i).getValue(),
+        expect(await (await navigationMenuPage.editItemTranslation(
+          (await navigationMenuPage.menuItemsChilds()).length - 1, 0, i)).getValue(),
           `Translation field [${i}] save is incorrect`).eq(translation);
       }
-    });
+    }
 
-    navigationMenuPage.editItemSaveBtn.click();
-    navigationMenuPage.resetMenu();
+    await (await navigationMenuPage.editItemSaveBtn()).click();
+    await navigationMenuPage.resetMenu();
   });
 });

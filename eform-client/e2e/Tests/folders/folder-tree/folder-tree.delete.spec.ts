@@ -8,20 +8,20 @@ let nameFolder = generateRandmString();
 
 describe('Delete folder', function () {
   before(async () => {
-    loginPage.open('/');
-    loginPage.login();
-    myEformsPage.Navbar.goToFolderPage();
+    await loginPage.open('/');
+    await loginPage.login();
+    await myEformsPage.Navbar.goToFolderPage();
   });
   it('Should delete', async () => {
     // Create
     const description = generateRandmString();
-    foldersPage.createNewFolder(nameFolder, description);
-    const rowNumBeforeDelete = foldersPage.rowNum;
+    await foldersPage.createNewFolder(nameFolder, description);
+    const rowNumBeforeDelete = await foldersPage.rowNum();
 
-    $('#folderTreeName').waitForDisplayed({ timeout: 40000 });
-    const folder = foldersPage.getFolderByName(nameFolder);
-    folder.delete();
-    const rowNumAfterDelete = foldersPage.rowNum;
+    await (await $('#folderTreeName')).waitForDisplayed({ timeout: 40000 });
+    const folder = await foldersPage.getFolderByName(nameFolder);
+    await folder.delete();
+    const rowNumAfterDelete = await foldersPage.rowNum();
     expect(rowNumBeforeDelete - 1, 'Folder was deleted incorrectly').equal(
       rowNumAfterDelete
     );
@@ -30,21 +30,21 @@ describe('Delete folder', function () {
     // Create
     nameFolder = generateRandmString();
     const description = generateRandmString();
-    foldersPage.createNewFolder(nameFolder, description);
+    await foldersPage.createNewFolder(nameFolder, description);
 
     // Delete
-    const rowNumBeforeDelete = foldersPage.rowNum;
-    const folder = foldersPage.getFolderByName(nameFolder);
-    folder.delete(true);
-    const rowNumAfterCancelDelete = foldersPage.rowNum;
+    const rowNumBeforeDelete = await foldersPage.rowNum();
+    const folder = await foldersPage.getFolderByName(nameFolder);
+    await folder.delete(true);
+    const rowNumAfterCancelDelete = await foldersPage.rowNum();
     expect(rowNumBeforeDelete).equal(rowNumAfterCancelDelete);
   });
   after('Should delete folder', async () => {
-    $('#folderTreeName').waitForDisplayed({ timeout: 40000 });
-    const folder = foldersPage.getFolderByName(nameFolder);
-    const countFoldersBeforeDelete = foldersPage.rowNum;
-    folder.delete();
-    const countFoldersAfterDelete = foldersPage.rowNum;
+    await (await $('#folderTreeName')).waitForDisplayed({ timeout: 40000 });
+    const folder = await foldersPage.getFolderByName(nameFolder);
+    const countFoldersBeforeDelete = await foldersPage.rowNum();
+    await folder.delete();
+    const countFoldersAfterDelete = await foldersPage.rowNum();
     expect(countFoldersBeforeDelete - 1).eq(countFoldersAfterDelete);
   });
 });
