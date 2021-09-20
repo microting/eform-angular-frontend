@@ -20,10 +20,10 @@ describe('Visual editor page', function () {
     loginPage.open('/');
     loginPage.login();
   });
-  beforeEach(function () {
-    eformVisualEditorPage.goToVisualEditor();
+  beforeEach(async () => {
+    await eformVisualEditorPage.goToVisualEditor();
   });
-  it('should not create visual template without any translations on main checklist', function () {
+  it('should not create visual template without any translations on main checklist', async () => {
     const checklistWithoutTranslations = {
       fields: [
         {
@@ -40,13 +40,13 @@ describe('Visual editor page', function () {
         },
       ],
     };
-    eformVisualEditorPage.createVisualTemplate(checklistWithoutTranslations);
+    await eformVisualEditorPage.createVisualTemplate(checklistWithoutTranslations);
     expect(
-      eformVisualEditorPage.saveCreateEformBtn.isEnabled(),
+      (await eformVisualEditorPage.saveCreateEformBtn()).isEnabled(),
       'button "create" must be disabled'
     ).eq(false);
   });
-  it('should create visual template without any fields', function () {
+  it('should create visual template without any fields', async () => {
     const checklistWithoutFields = {
       translations: [
         {
@@ -57,14 +57,15 @@ describe('Visual editor page', function () {
         },
       ],
     };
-    eformVisualEditorPage.createVisualTemplate(checklistWithoutFields, true);
-    const eform = myEformsPage.getLastMyEformsRowObj();
+    await eformVisualEditorPage.createVisualTemplate(checklistWithoutFields, true);
+    const eform = await myEformsPage.getLastMyEformsRowObj();
     expect(
       eform.eFormName,
       'name in table eforms not valid; template not create'
     ).eq(checklistWithoutFields.translations[0].name);
-    eform.goToVisualEditor();
+    await eform.goToVisualEditor();
     const visualTemplate = new MainCheckListRowObj();
+    await visualTemplate.getAllFields();
     expect(
       visualTemplate.translations[0].name,
       'name main checklist not valid'
@@ -75,7 +76,7 @@ describe('Visual editor page', function () {
     ).eq(checklistWithoutFields.translations[0].description);
     expect(visualTemplate.fields.length, 'fields length not valid').eq(0);
   });
-  it('should create visual template', function () {
+  it('should create visual template', async () => {
     const checklist: MainChecklistObj = {
       translations: [
         {
@@ -100,14 +101,15 @@ describe('Visual editor page', function () {
         },
       ],
     };
-    eformVisualEditorPage.createVisualTemplate(checklist, true);
-    const eform = myEformsPage.getLastMyEformsRowObj();
+    await eformVisualEditorPage.createVisualTemplate(checklist, true);
+    const eform = await myEformsPage.getLastMyEformsRowObj();
 
     expect(eform.eFormName, 'name in table eforms not valid').eq(
       checklist.translations[0].name
     );
-    eform.goToVisualEditor();
+    await eform.goToVisualEditor();
     const mainChecklist = new MainCheckListRowObj();
+    await mainChecklist.getAllFields();
     expect(
       mainChecklist.translations[0].name,
       'name main checklist not valid'
@@ -127,7 +129,7 @@ describe('Visual editor page', function () {
       'field color not valid'
     ).eq('Standard');
   });
-  it('should create visual template with one pdfField', function () {
+  it('should create visual template with one pdfField', async () => {
     const checklistWithPdfFile: MainChecklistObj = {
       translations: [
         {
@@ -153,14 +155,15 @@ describe('Visual editor page', function () {
         },
       ],
     };
-    eformVisualEditorPage.createVisualTemplate(checklistWithPdfFile, true);
-    const eform = myEformsPage.getLastMyEformsRowObj();
+    await eformVisualEditorPage.createVisualTemplate(checklistWithPdfFile, true);
+    const eform = await myEformsPage.getLastMyEformsRowObj();
 
     expect(eform.eFormName, 'name in table eforms not valid').eq(
       checklistWithPdfFile.translations[0].name
     );
-    eform.goToVisualEditor();
+    await eform.goToVisualEditor();
     const mainChecklist = new MainCheckListRowObj();
+    await mainChecklist.getAllFields();
     expect(
       mainChecklist.translations[0].name,
       'name main checklist not valid'
@@ -176,7 +179,7 @@ describe('Visual editor page', function () {
       checklistWithPdfFile.fields[0].type
     );
   });
-  it('should create checklist with field non standard color', function () {
+  it('should create checklist with field non standard color', async () => {
     const checklist: MainChecklistObj = {
       translations: [
         {
@@ -201,17 +204,19 @@ describe('Visual editor page', function () {
         },
       ],
     };
-    eformVisualEditorPage.createVisualTemplate(checklist);
+    await eformVisualEditorPage.createVisualTemplate(checklist);
     const mainCheckListRowObj = new MainCheckListRowObj();
-    mainCheckListRowObj.fields[0].changeColor('red');
-    eformVisualEditorPage.clickSave();
-    const eform = myEformsPage.getLastMyEformsRowObj();
+    await mainCheckListRowObj.getAllFields();
+    await mainCheckListRowObj.fields[0].changeColor('red');
+    await eformVisualEditorPage.clickSave();
+    const eform = await myEformsPage.getLastMyEformsRowObj();
 
     expect(eform.eFormName, 'name in table eforms not valid').eq(
       checklist.translations[0].name
     );
-    eform.goToVisualEditor();
+    await eform.goToVisualEditor();
     const mainChecklist = new MainCheckListRowObj();
+    await mainChecklist.getAllFields();
     expect(
       mainChecklist.translations[0].name,
       'name main checklist not valid'
@@ -231,7 +236,7 @@ describe('Visual editor page', function () {
       'field color not valid'
     ).eq('Red');
   });
-  it('should create visual template with one numberField', function () {
+  it('should create visual template with one numberField', async () => {
     const checklistWithPdfFile: MainChecklistObj = {
       translations: [
         {
@@ -260,14 +265,15 @@ describe('Visual editor page', function () {
         },
       ],
     };
-    eformVisualEditorPage.createVisualTemplate(checklistWithPdfFile, true);
-    const eform = myEformsPage.getLastMyEformsRowObj();
+    await eformVisualEditorPage.createVisualTemplate(checklistWithPdfFile, true);
+    const eform = await myEformsPage.getLastMyEformsRowObj();
 
     expect(eform.eFormName, 'name in table eforms not valid').eq(
       checklistWithPdfFile.translations[0].name
     );
-    eform.goToVisualEditor();
+    await eform.goToVisualEditor();
     const mainChecklist = new MainCheckListRowObj();
+    await mainChecklist.getAllFields();
     expect(
       mainChecklist.translations[0].name,
       'name main checklist not valid'
@@ -284,7 +290,7 @@ describe('Visual editor page', function () {
     );
     // todo add open modal field and expect other
   });
-  it('should create visual template with one field and make copy this field', function () {
+  it('should create visual template with one field and make copy this field', async () => {
     const checklistObj: MainChecklistObj = {
       translations: [
         {
@@ -309,13 +315,15 @@ describe('Visual editor page', function () {
         },
       ],
     };
-    eformVisualEditorPage.createVisualTemplate(checklistObj);
+    await eformVisualEditorPage.createVisualTemplate(checklistObj);
     checklistObj.fields = [...checklistObj.fields, checklistObj.fields[0]];
     let mainChecklist = new MainCheckListRowObj();
-    mainChecklist.fields[0].makeCopy();
-    eformVisualEditorPage.clickSave();
-    myEformsPage.getLastMyEformsRowObj().goToVisualEditor();
+    await mainChecklist.getAllFields();
+    await mainChecklist.fields[0].makeCopy();
+    await eformVisualEditorPage.clickSave();
+    await myEformsPage.getLastMyEformsRowObj().goToVisualEditor();
     mainChecklist = new MainCheckListRowObj();
+    await mainChecklist.getAllFields();
     expect(
       mainChecklist.translations[0].name,
       'name main checklist not valid'
@@ -341,7 +349,7 @@ describe('Visual editor page', function () {
   it(
     'should create visual template with one fieldGroup and ' +
       'one nested field with change color and make copy from nested field',
-    function () {
+    async () => {
       const checklistObj: MainChecklistObj = {
         translations: [
           {
@@ -366,8 +374,9 @@ describe('Visual editor page', function () {
           },
         ],
       };
-      eformVisualEditorPage.createVisualTemplate(checklistObj);
+      await eformVisualEditorPage.createVisualTemplate(checklistObj);
       let mainChecklist = new MainCheckListRowObj();
+      await mainChecklist.getAllFields();
       const nestedField: ChecklistFieldObj = {
         type: EformFieldTypesEnum.None,
         translations: [
@@ -380,14 +389,16 @@ describe('Visual editor page', function () {
         ],
         mandatory: false,
       };
-      mainChecklist.fields[0].collapseToggle();
-      mainChecklist.fields[0].addNewNestedField(nestedField);
+      await mainChecklist.fields[0].collapseToggle();
+      await mainChecklist.fields[0].addNewNestedField(nestedField);
       mainChecklist = new MainCheckListRowObj();
-      mainChecklist.fields[0].nestedFields[0].changeColor('red');
-      mainChecklist.fields[0].nestedFields[0].makeCopy();
-      eformVisualEditorPage.clickSave();
-      myEformsPage.getLastMyEformsRowObj().goToVisualEditor();
+      await mainChecklist.getAllFields();
+      await mainChecklist.fields[0].nestedFields[0].changeColor('red');
+      await mainChecklist.fields[0].nestedFields[0].makeCopy();
+      await eformVisualEditorPage.clickSave();
+      await myEformsPage.getLastMyEformsRowObj().goToVisualEditor();
       mainChecklist = new MainCheckListRowObj();
+      await mainChecklist.getAllFields();
       expect(
         mainChecklist.translations[0].name,
         'name main checklist not valid'
@@ -434,7 +445,7 @@ describe('Visual editor page', function () {
       ).eq('Red');
     }
   );
-  it('should create visual template and delete field', function () {
+  it('should create visual template and delete field', async () => {
     const checklistObj: MainChecklistObj = {
       translations: [
         {
@@ -459,8 +470,9 @@ describe('Visual editor page', function () {
         },
       ],
     };
-    eformVisualEditorPage.createVisualTemplate(checklistObj);
+    await eformVisualEditorPage.createVisualTemplate(checklistObj);
     let mainChecklist = new MainCheckListRowObj();
+    await mainChecklist.getAllFields();
     const nestedField: ChecklistFieldObj = {
       type: EformFieldTypesEnum.None,
       translations: [
@@ -473,16 +485,19 @@ describe('Visual editor page', function () {
       ],
       mandatory: false,
     };
-    mainChecklist.fields[0].collapseToggle();
-    mainChecklist.fields[0].addNewNestedField(nestedField);
+    await mainChecklist.fields[0].collapseToggle();
+    await mainChecklist.fields[0].addNewNestedField(nestedField);
     mainChecklist = new MainCheckListRowObj();
-    mainChecklist.fields[0].nestedFields[0].changeColor('red');
-    mainChecklist.fields[0].nestedFields[0].makeCopy();
+    await mainChecklist.getAllFields();
+    await mainChecklist.fields[0].nestedFields[0].changeColor('red');
+    await mainChecklist.fields[0].nestedFields[0].makeCopy();
     mainChecklist = new MainCheckListRowObj();
-    mainChecklist.fields[0].delete();
-    eformVisualEditorPage.clickSave();
-    myEformsPage.getLastMyEformsRowObj().goToVisualEditor();
+    await mainChecklist.getAllFields();
+    await mainChecklist.fields[0].delete();
+    await eformVisualEditorPage.clickSave();
+    await myEformsPage.getLastMyEformsRowObj().goToVisualEditor();
     mainChecklist = new MainCheckListRowObj();
+    await mainChecklist.getAllFields();
     expect(
       mainChecklist.translations[0].name,
       'name main checklist not valid'
@@ -493,7 +508,7 @@ describe('Visual editor page', function () {
     ).eq(checklistObj.translations[0].description);
     expect(mainChecklist.fields.length, 'fields length not valid').eq(0);
   });
-  it('should create visual template with one nested checklist and without fields', function () {
+  it('should create visual template with one nested checklist and without fields', async () => {
     const checklistObj: MainChecklistObj = {
       translations: [
         {
@@ -526,9 +541,10 @@ describe('Visual editor page', function () {
         },
       ],
     };
-    eformVisualEditorPage.createVisualTemplate(checklistObj, true);
-    myEformsPage.getLastMyEformsRowObj().goToVisualEditor();
+    await eformVisualEditorPage.createVisualTemplate(checklistObj, true);
+    await myEformsPage.getLastMyEformsRowObj().goToVisualEditor();
     const mainChecklist = new MainCheckListRowObj();
+    await mainChecklist.getAllFields();
     for (let i = 0; i < checklistObj.checklists.length; i++) {
       expect(
         mainChecklist.checklists[i].translations[0].name,
@@ -544,7 +560,7 @@ describe('Visual editor page', function () {
       ).eq(0);
     }
   });
-  it('should create visual template with one nested checklist and with some fields', function () {
+  it('should create visual template with one nested checklist and with some fields', async () => {
     const checklistObj: MainChecklistObj = {
       translations: [
         {
@@ -591,9 +607,10 @@ describe('Visual editor page', function () {
         },
       ],
     };
-    eformVisualEditorPage.createVisualTemplate(checklistObj, true);
-    myEformsPage.getLastMyEformsRowObj().goToVisualEditor();
+    await eformVisualEditorPage.createVisualTemplate(checklistObj, true);
+    await myEformsPage.getLastMyEformsRowObj().goToVisualEditor();
     const mainChecklist = new MainCheckListRowObj();
+    await mainChecklist.getAllFields();
     for (let i = 0; i < checklistObj.checklists.length; i++) {
       expect(
         mainChecklist.checklists[i].translations[0].name,
@@ -617,7 +634,7 @@ describe('Visual editor page', function () {
       `nested checklist[0] fields type not valid`
     ).eq(checklistObj.checklists[0].fields[0].type);
   });
-  it('should create visual template with one nested checklist and with pdfField', function () {
+  it('should create visual template with one nested checklist and with pdfField', async () => {
     const checklistObj: MainChecklistObj = {
       translations: [
         {
@@ -667,9 +684,10 @@ describe('Visual editor page', function () {
         },
       ],
     };
-    eformVisualEditorPage.createVisualTemplate(checklistObj, true);
-    myEformsPage.getLastMyEformsRowObj().goToVisualEditor();
+    await eformVisualEditorPage.createVisualTemplate(checklistObj, true);
+    await myEformsPage.getLastMyEformsRowObj().goToVisualEditor();
     const mainChecklist = new MainCheckListRowObj();
+    await mainChecklist.getAllFields();
     for (let i = 0; i < checklistObj.checklists.length; i++) {
       expect(
         mainChecklist.checklists[i].translations[0].name,
@@ -693,7 +711,7 @@ describe('Visual editor page', function () {
       `nested checklist[0] fields type not valid`
     ).eq(checklistObj.checklists[0].fields[0].type);
   });
-  it('should create visual template and change order field (not nested)', function () {
+  it('should create visual template and change order field (not nested)', async () => {
     let checklist: MainChecklistObj = {
       translations: [
         {
@@ -730,19 +748,21 @@ describe('Visual editor page', function () {
         },
       ],
     };
-    eformVisualEditorPage.createVisualTemplate(checklist);
+    await eformVisualEditorPage.createVisualTemplate(checklist);
     let mainChecklist = new MainCheckListRowObj();
-    mainChecklist.fields[1].changePosition(mainChecklist.fields[0]);
+    await mainChecklist.getAllFields();
+    await mainChecklist.fields[1].changePosition(mainChecklist.fields[0]);
     checklist = {
       ...checklist,
       fields: [checklist.fields[1], checklist.fields[0]],
     };
-    eformVisualEditorPage.clickSave();
+    await eformVisualEditorPage.clickSave();
 
-    const eform = myEformsPage.getLastMyEformsRowObj();
+    const eform = await myEformsPage.getLastMyEformsRowObj();
 
-    eform.goToVisualEditor();
+    await eform.goToVisualEditor();
     mainChecklist = new MainCheckListRowObj();
+    await mainChecklist.getAllFields();
     expect(
       mainChecklist.translations[0].name,
       'name main checklist not valid'
@@ -759,7 +779,7 @@ describe('Visual editor page', function () {
       checklist.fields[1].translations[0].name
     );
   });
-  it('should create visual template and change order nested field', function () {
+  it('should create visual template and change order nested field', async () => {
     let checklist: MainChecklistObj = {
       translations: [
         {
@@ -818,9 +838,10 @@ describe('Visual editor page', function () {
         },
       ],
     };
-    eformVisualEditorPage.createVisualTemplate(checklist);
+    await eformVisualEditorPage.createVisualTemplate(checklist);
     let mainChecklist = new MainCheckListRowObj();
-    mainChecklist.checklists[0].fields[1].changePosition(
+    await mainChecklist.getAllFields();
+    await mainChecklist.checklists[0].fields[1].changePosition(
       mainChecklist.checklists[0].fields[0]
     );
     checklist = {
@@ -835,12 +856,13 @@ describe('Visual editor page', function () {
         },
       ],
     };
-    eformVisualEditorPage.clickSave();
+    await eformVisualEditorPage.clickSave();
 
-    const eform = myEformsPage.getLastMyEformsRowObj();
+    const eform = await myEformsPage.getLastMyEformsRowObj();
 
-    eform.goToVisualEditor();
+    await eform.goToVisualEditor();
     mainChecklist = new MainCheckListRowObj();
+    await mainChecklist.getAllFields();
     expect(
       mainChecklist.translations[0].name,
       'name main checklist not valid'
@@ -858,9 +880,9 @@ describe('Visual editor page', function () {
       'field[1] name not valid'
     ).eq(checklist.checklists[0].fields[1].translations[0].name);
   });
-  it('should correct read created eform from xml', function () {
-    myEformsPage.Navbar.goToMyEForms();
-    const eformName = generateRandmString();
+  it('should correct read created eform from xml', async () => {
+    await myEformsPage.Navbar.goToMyEForms();
+    const eformName = await generateRandmString();
     const eformFromXml: MainChecklistObj = {
       translations: [
         { name: eformName, description: '', languageId: 1, id: null },
@@ -883,6 +905,7 @@ describe('Visual editor page', function () {
     );
     myEformsPage.getLastMyEformsRowObj().goToVisualEditor();
     const mainChecklist = new MainCheckListRowObj();
+    await mainChecklist.getAllFields();
 
     expect(
       mainChecklist.translations[0].name,
@@ -903,9 +926,9 @@ describe('Visual editor page', function () {
       'field color not valid'
     ).eq('Standard');
   });
-  afterEach(function () {
+  afterEach(async () => {
     // delete created checklist
-    myEformsPage.Navbar.goToMyEForms();
-    myEformsPage.clearEFormTable();
+    await myEformsPage.Navbar.goToMyEForms();
+    await myEformsPage.clearEFormTable();
   });
 });

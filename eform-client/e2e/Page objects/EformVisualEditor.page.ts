@@ -17,154 +17,154 @@ class EformVisualEditorPage extends PageWithNavbarPage {
     super();
   }
 
-  get checkListCountAll(): number {
+  async checkListCountAll(): Promise<number> {
     return $$('[id^="checkListSection"]').length;
   }
-  get checkListCountOnFirsLevel(): number {
+  async checkListCountOnFirsLevel(): Promise<number> {
     return $$('#editorChecklists > app-visual-editor-checklist').length;
   }
 
-  get fieldsCountOnFirsLevel(): number {
+  async fieldsCountOnFirsLevel(): Promise<number> {
     return $$('[id*=field_]').length;
   }
 
-  get eformsVisualEditor() {
-    const ele = $('#eformsVisualEditor');
-    ele.waitForDisplayed({ timeout: 40000 });
-    ele.waitForClickable({ timeout: 40000 });
+  async eformsVisualEditor(): Promise<WebdriverIO.Element> {
+    const ele = await $('#eformsVisualEditor');
+    await ele.waitForDisplayed({ timeout: 40000 });
+    await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  get manageTags() {
-    const ele = $('#manageTags');
-    ele.waitForDisplayed({ timeout: 40000 });
-    ele.waitForClickable({ timeout: 40000 });
+  async manaags(): Promise<WebdriverIO.Element> {
+    const ele = await $('#manaags');
+    await ele.waitForDisplayed({ timeout: 40000 });
+    await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  get saveCreateEformBtn() {
-    const ele = $('#saveCreateEformBtn');
-    ele.waitForDisplayed({ timeout: 40000 });
-    // ele.waitForClickable({ timeout: 40000 });
+  async saveCreateEformBtn(): Promise<WebdriverIO.Element> {
+    const ele = await $('#saveCreateEformBtn');
+    await ele.waitForDisplayed({ timeout: 40000 });
+    // await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  get expandAllBtn() {
-    const ele = $('#expandAllBtn');
-    ele.waitForDisplayed({ timeout: 40000 });
-    ele.waitForClickable({ timeout: 40000 });
+  async expandAllBtn(): Promise<WebdriverIO.Element> {
+    const ele = await $('#expandAllBtn');
+    await ele.waitForDisplayed({ timeout: 40000 });
+    await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  get initialFieldCreateBtn() {
-    const ele = $('#initialFieldCreateBtn');
-    ele.waitForDisplayed({ timeout: 40000 });
-    // ele.waitForClickable({ timeout: 40000 });
+  async initialFieldCreateBtn(): Promise<WebdriverIO.Element> {
+    const ele = await $('#initialFieldCreateBtn');
+    await ele.waitForDisplayed({ timeout: 40000 });
+    // await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  get initialChecklistCreateBtn() {
-    const ele = $('#initialChecklistCreateBtn');
-    ele.waitForDisplayed({ timeout: 40000 });
-    // ele.waitForClickable({ timeout: 40000 });
+  async initialChecklistCreateBtn(): Promise<WebdriverIO.Element> {
+    const ele = await $('#initialChecklistCreateBtn');
+    await ele.waitForDisplayed({ timeout: 40000 });
+    // await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  get checklistDeleteDeleteBtn() {
-    const ele = $('#checklistDeleteDeleteBtn');
-    ele.waitForDisplayed({ timeout: 40000 });
-    ele.waitForClickable({ timeout: 40000 });
+  async checklistDeleteDeleteBtn(): Promise<WebdriverIO.Element> {
+    const ele = await $('#checklistDeleteDeleteBtn');
+    await ele.waitForDisplayed({ timeout: 40000 });
+    await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  get checklistDeleteCancelBtn() {
-    const ele = $('#checklistDeleteCancelBtn');
-    ele.waitForDisplayed({ timeout: 40000 });
-    ele.waitForClickable({ timeout: 40000 });
+  async checklistDeleteCancelBtn(): Promise<WebdriverIO.Element> {
+    const ele = await $('#checklistDeleteCancelBtn');
+    await ele.waitForDisplayed({ timeout: 40000 });
+    await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  mainCheckListNameTranslationByLanguageId(languageId: number) {
-    const ele = $(`#mainCheckListNameTranslation_${languageId}`);
-    ele.waitForDisplayed({ timeout: 40000 });
-    // ele.waitForClickable({ timeout: 40000 });
+  async mainCheckListNameTranslationByLanguageId(languageId: number): Promise<WebdriverIO.Element> {
+    const ele = await $(`#mainCheckListNameTranslation_${languageId}`);
+    await ele.waitForDisplayed({ timeout: 40000 });
+    // await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  get mainCheckListDescriptionTranslation() {
-    const ele = $('[id^="mainCheckListDescriptionTranslation_"]');
-    ele.waitForDisplayed({ timeout: 40000 });
-    // ele.waitForClickable({ timeout: 40000 });
+  async mainCheckListDescriptionTranslation(): Promise<WebdriverIO.Element> {
+    const ele = await $('[id^="mainCheckListDescriptionTranslation_"]');
+    await ele.waitForDisplayed({ timeout: 40000 });
+    // await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  mainCheckListDescriptionTranslationByLanguageId(languageId: number) {
-    const ele = $(`#mainCheckListDescriptionTranslation_${languageId}`);
-    ele.waitForDisplayed({ timeout: 40000 });
-    // ele.waitForClickable({ timeout: 40000 });
+  async mainCheckListDescriptionTranslationByLanguageId(languageId: number): Promise<WebdriverIO.Element> {
+    const ele = await $(`#mainCheckListDescriptionTranslation_${languageId}`);
+    await ele.waitForDisplayed({ timeout: 40000 });
+    // await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  get mainCheckListTagsSelector() {
-    const ele = $('#mainCheckListTagsSelector');
-    ele.waitForDisplayed({ timeout: 40000 });
-    // ele.waitForClickable({ timeout: 40000 });
+  async mainCheckListTagsSelector(): Promise<WebdriverIO.Element> {
+    const ele = await $('#mainCheckListTagsSelector');
+    await ele.waitForDisplayed({ timeout: 40000 });
+    // await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  get changeFieldSaveBtn() {
-    const ele = $('#changeFieldSaveBtn');
-    ele.waitForDisplayed({ timeout: 40000 });
-    // ele.waitForClickable({ timeout: 40000 });
+  async changeFieldSaveBtn(): Promise<WebdriverIO.Element> {
+    const ele = await $('#changeFieldSaveBtn');
+    await ele.waitForDisplayed({ timeout: 40000 });
+    // await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  get fieldTypeSelector() {
-    const ele = $('#fieldTypeSelector');
-    ele.waitForDisplayed({ timeout: 40000 });
-    // ele.waitForClickable({ timeout: 40000 });
+  async fieldTypeSelector(): Promise<WebdriverIO.Element> {
+    const ele = await $('#fieldTypeSelector');
+    await ele.waitForDisplayed({ timeout: 40000 });
+    // await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  get changeFieldSaveCancelBtn() {
-    const ele = $('#changeFieldSaveCancelBtn');
-    ele.waitForDisplayed({ timeout: 40000 });
-    ele.waitForClickable({ timeout: 40000 });
+  async changeFieldSaveCancelBtn(): Promise<WebdriverIO.Element> {
+    const ele = await $('#changeFieldSaveCancelBtn');
+    await ele.waitForDisplayed({ timeout: 40000 });
+    await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  get fieldDeleteDeleteBtn() {
-    const ele = $('#fieldDeleteDeleteBtn');
-    ele.waitForDisplayed({ timeout: 40000 });
-    // ele.waitForClickable({ timeout: 40000 });
+  async  fieldDeleteDeleteBtn(): Promise<WebdriverIO.Element> {
+    const ele = await $('#fieldDeleteDeleteBtn');
+    await ele.waitForDisplayed({ timeout: 40000 });
+    // await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  get fieldDeleteCancelBtn() {
+  async fieldDeleteCancelBtn(): Promise<WebdriverIO.Element> {
     const ele = $('#fieldDeleteCancelBtn');
-    ele.waitForDisplayed({ timeout: 40000 });
-    ele.waitForClickable({ timeout: 40000 });
+    await ele.waitForDisplayed({ timeout: 40000 });
+    await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  get changeChecklistSaveCancelBtn() {
+  async changeChecklistSaveCancelBtn(): Promise<WebdriverIO.Element> {
     const ele = $('#changeChecklistSaveCancelBtn');
-    ele.waitForDisplayed({ timeout: 40000 });
-    ele.waitForClickable({ timeout: 40000 });
+    await ele.waitForDisplayed({ timeout: 40000 });
+    await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  get changeChecklistSaveBtn() {
+  async changeChecklistSaveBtn(): Promise<WebdriverIO.Element> {
     const ele = $('#changeChecklistSaveBtn');
-    ele.waitForDisplayed({ timeout: 40000 });
-    // ele.waitForClickable({ timeout: 40000 });
+    await ele.waitForDisplayed({ timeout: 40000 });
+    // await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  get selectedLanguages(): number[] {
+  async selectedLanguages(): Promise<number[]> {
     const selectedLanguages = [];
     for (let i = 0; i < applicationLanguages.length; i++) {
-      const checkbox = $(`#languageCheckbox${i}`);
+      const checkbox = await $(`#languageCheckbox${i}`);
       if (checkbox.getValue() === true.toString()) {
         selectedLanguages.push(i);
       }
@@ -172,55 +172,55 @@ class EformVisualEditorPage extends PageWithNavbarPage {
     return selectedLanguages;
   }
 
-  goToVisualEditor() {
-    this.eformsVisualEditor.click();
-    this.manageTags.waitForClickable({ timeout: 40000 });
+  async goToVisualEditor() {
+    await (await this.eformsVisualEditor()).click();
+    await (await this.manaags()).waitForClickable({ timeout: 40000 });
   }
 
-  createVisualTemplate(checklist: MainChecklistObj, clickSave = false) {
+  async createVisualTemplate(checklist: MainChecklistObj, clickSave = false) {
     if (checklist) {
       if (checklist.translations) {
         for (let i = 0; i < checklist.translations.length; i++) {
-          this.clickLanguageCheckbox(true, i);
-          this.mainCheckListNameTranslationByLanguageId(i).setValue(
+          await this.clickLanguageCheckbox(true, i);
+          await (await this.mainCheckListNameTranslationByLanguageId(i)).setValue(
             checklist.translations[i].name
           );
-          this.mainCheckListDescriptionTranslationByLanguageId(i)
-            .$(`.pell-content`)
+          await (await (await this.mainCheckListDescriptionTranslationByLanguageId(i))
+            .$(`.pell-content`))
             .setValue(checklist.translations[i].description);
         }
       }
       if (checklist.tags) {
         for (let i = 0; i < checklist.tags.length; i++) {
-          this.mainCheckListTagsSelector.$('input').setValue(checklist.tags[i]);
-          const option = this.mainCheckListTagsSelector.$('.ng-option');
-          option.waitForDisplayed({ timeout: 40000 });
-          option.click();
+          (await (await this.mainCheckListTagsSelector()).$('input')).setValue(checklist.tags[i]);
+          const option = await (await this.mainCheckListTagsSelector()).$('.ng-option');
+          await option.waitForDisplayed({ timeout: 40000 });
+          await option.click();
         }
       }
       if (checklist.fields) {
         for (let i = 0; i < checklist.fields.length; i++) {
-          this.createVisualTemplateField(checklist.fields[i]);
+          await this.createVisualTemplateField(checklist.fields[i]);
         }
       }
       if (checklist.checklists) {
         for (let i = 0; i < checklist.checklists.length; i++) {
-          this.createNestedVisualTemplate(checklist.checklists[i], i);
+          await this.createNestedVisualTemplate(checklist.checklists[i], i);
         }
       }
     }
     if (clickSave) {
-      this.clickSave();
+      await this.clickSave();
     }
   }
 
-  createNestedVisualTemplate(
+  async createNestedVisualTemplate(
     checklist: MainChecklistObj,
     index: number
     /*, clickCancel = false*/
   ) {
-    this.initialChecklistCreateBtn.click();
-    this.changeChecklistSaveCancelBtn.waitForClickable({ timeout: 40000 });
+    await (await this.initialChecklistCreateBtn()).click();
+    await (await this.changeChecklistSaveCancelBtn()).waitForClickable({ timeout: 40000 });
     if (checklist) {
       if (checklist.translations) {
         for (let i = 0; i < checklist.translations.length; i++) {
@@ -235,15 +235,15 @@ class EformVisualEditorPage extends PageWithNavbarPage {
       // if (clickCancel) {
       //   this.changeChecklistSaveCancelBtn.click();
       // } else {
-      this.changeChecklistSaveBtn.click();
+      await (await this.changeChecklistSaveBtn()).click();
       // }
-      this.manageTags.waitForClickable({ timeout: 40000 });
+      await (await this.manaasyncags()).waitForClickable({ timeout: 40000 });
       if (checklist.fields) {
         for (let i = 0; i < checklist.fields.length; i++) {
           this.createVisualTemplateField(
             checklist.fields[i],
             false,
-            $(`#addNewNestedField${index}`)
+            await $(`#addNewNestedField${index}`)
           ); // addNewNestedField0 - 0 it's index
         }
       }
@@ -262,34 +262,34 @@ class EformVisualEditorPage extends PageWithNavbarPage {
     this.closeVisualTemplateFieldCreateModal(clickCancel);
   }
 
-  openVisualTemplateFieldCreateModal(
+  async openVisualTemplateFieldCreateModal(
     checklistFieldObj: ChecklistFieldObj,
     addNewNestedFieldBtn: WebdriverIO.Element = null
   ) {
     if (checklistFieldObj) {
       if (!addNewNestedFieldBtn) {
-        this.initialFieldCreateBtn.click();
+        await (await this.initialFieldCreateBtn()).click();
       } else {
         addNewNestedFieldBtn.click();
       }
-      this.changeFieldSaveCancelBtn.waitForClickable({ timeout: 40000 });
+      await (await this.changeFieldSaveCancelBtn()).waitForClickable({ timeout: 40000 });
       if (checklistFieldObj.translations) {
         for (let i = 0; i < checklistFieldObj.translations.length; i++) {
-          $(`#fieldNameTranslation_${i}`).setValue(
+          await (await $(`#fieldNameTranslation_${i}`)).setValue(
             checklistFieldObj.translations[i].name
           );
-          $(`#newFieldDescriptionTranslation_${i} .pell-content`).setValue(
+          await (await $(`#newFieldDescriptionTranslation_${i} .pell-content`)).setValue(
             checklistFieldObj.translations[i].description
           );
         }
       }
       if (checklistFieldObj.type) {
-        this.fieldTypeSelector
-          .$('input')
+        await (await (await this.fieldTypeSelector())
+          .$('input'))
           .setValue(EformFieldTypesEnum[checklistFieldObj.type]);
-        const option = this.fieldTypeSelector.$('.ng-option');
-        option.waitForDisplayed({ timeout: 40000 });
-        option.click();
+        const option = await (await this.fieldTypeSelector()).$('.ng-option');
+        await option.waitForDisplayed({ timeout: 40000 });
+        await option.click();
       }
 
       // pdf type
@@ -299,22 +299,22 @@ class EformVisualEditorPage extends PageWithNavbarPage {
       ) {
         for (let i = 0; i < checklistFieldObj.pathToFiles.length; i++) {
           const file = browser.uploadFile(checklistFieldObj.pathToFiles[i]);
-          $(`#pdfInput${i}`).addValue(file);
+          await (await $(`#pdfInput${i}`)).addValue(file);
         }
       }
 
       // number type
       if (checklistFieldObj.minValue) {
-        $('#minValueEdit').setValue(checklistFieldObj.minValue);
+        await (await $('#minValueEdit')).setValue(checklistFieldObj.minValue);
       }
       if (checklistFieldObj.maxValue) {
-        $('#maxValueEdit').setValue(checklistFieldObj.maxValue);
+        await (await $('#maxValueEdit')).setValue(checklistFieldObj.maxValue);
       }
       if (checklistFieldObj.defaultValue) {
-        $('#defaultValueEdit').setValue(checklistFieldObj.defaultValue);
+        await (await $('#defaultValueEdit')).setValue(checklistFieldObj.defaultValue);
       }
       if (checklistFieldObj.decimalCount) {
-        $('#decimalCountEdit').setValue(checklistFieldObj.decimalCount);
+        await (await $('#decimalCountEdit')).setValue(checklistFieldObj.decimalCount);
       }
 
       // mandatory
@@ -329,35 +329,35 @@ class EformVisualEditorPage extends PageWithNavbarPage {
         !noMandatory.includes(checklistFieldObj.type) &&
         checklistFieldObj.mandatory
       ) {
-        $('#isChecked').$('..').click();
+        await (await (await $('#isChecked')).$('..')).click();
       }
     }
   }
 
-  closeVisualTemplateFieldCreateModal(clickCancel = false) {
+  async closeVisualTemplateFieldCreateModal(clickCancel = false) {
     if (clickCancel) {
-      this.changeFieldSaveCancelBtn.click();
+      await (await this.changeFieldSaveCancelBtn()).click();
     } else {
-      this.changeFieldSaveBtn.click();
+      await (await this.changeFieldSaveBtn()).click();
     }
-    this.manageTags.waitForClickable({ timeout: 40000 });
+    await (await this.manaasyncags()).waitForClickable({ timeout: 40000 });
   }
 
-  clickSave() {
-    this.saveCreateEformBtn.click();
-    myEformsPage.newEformBtn.waitForClickable({ timeout: 40000 });
+  async clickSave() {
+    await (await this.saveCreateEformBtn()).click();
+    await (await myEformsPage.newEformBtn).waitForClickable({ timeout: 40000 });
   }
 
-  openAllLanguages() {
+  async openAllLanguages() {
     for (let i = 0; i < applicationLanguages.length; i++) {
-      this.clickLanguageCheckbox(true, i);
+      await this.clickLanguageCheckbox(true, i);
     }
   }
 
-  clickLanguageCheckbox(value: boolean, index: number) {
-    const checkbox = $(`#languageCheckbox${index}`);
+  async clickLanguageCheckbox(value: boolean, index: number) {
+    const checkbox = await $(`#languageCheckbox${index}`);
     if (checkbox.getValue() !== value.toString()) {
-      checkbox.$('..').click();
+      await (await checkbox.$('..')).click();
     }
   }
 }
@@ -366,73 +366,76 @@ const eformVisualEditorPage = new EformVisualEditorPage();
 export default eformVisualEditorPage;
 
 export class MainCheckListRowObj {
-  constructor(openAllLanguages = false) {
-    if (openAllLanguages) {
-      eformVisualEditorPage.openAllLanguages();
-    }
-    const countField = eformVisualEditorPage.fieldsCountOnFirsLevel;
+  constructor() {  }
+  fields: ChecklistFieldRowObj[] = [];
+  checklists: ChecklistRowObj[] = [];
+  translations: CommonTranslationsModel[] = [];
+
+  async openAllLanguages() {
+    await eformVisualEditorPage.openAllLanguages();
+  }
+
+  async getAllFields() {
+    const countField = await eformVisualEditorPage.fieldsCountOnFirsLevel();
     for (let i = 0; i < countField; i++) {
       this.fields.push(new ChecklistFieldRowObj(i));
     }
-    const countChecklist = eformVisualEditorPage.checkListCountAll;
+    const countChecklist = await eformVisualEditorPage.checkListCountAll();
     for (let i = 0; i < countChecklist; i++) {
       this.checklists.push(new ChecklistRowObj(i));
     }
     for (let i = 0; i < applicationLanguages.length; i++) {
-      const checkbox = $(`#languageCheckbox${i}`);
-      if (checkbox.getValue() !== false.toString()) {
+      const checkbox = await $(`#languageCheckbox${i}`);
+      if (await checkbox.getValue() !== false.toString()) {
         this.translations.push({
           languageId: i,
-          name: $(`#mainCheckListNameTranslation_${i}`).getValue(),
-          description: $(
+          name: await (await $(`#mainCheckListNameTranslation_${i}`)).getValue(),
+          description: await (await $(
             `#mainCheckListDescriptionTranslation_${i} .pell-content`
-          ).getText(),
+          )).getText(),
           id: null,
         });
       }
     }
   }
-  fields: ChecklistFieldRowObj[] = [];
-  checklists: ChecklistRowObj[] = [];
-  translations: CommonTranslationsModel[] = [];
 
-  edit(checklist: MainChecklistObj, clickSave = false) {
+  async edit(checklist: MainChecklistObj, clickSave = false) {
     if (checklist) {
       if (checklist.translations) {
         for (let i = 0; i < checklist.translations.length; i++) {
-          const checkbox = $(`#languageCheckbox${i}`);
-          if (checkbox.getValue() === false.toString()) {
-            checkbox.$('..').click();
+          const checkbox = await $(`#languageCheckbox${i}`);
+          if (await checkbox.getValue() === false.toString()) {
+            await (await checkbox.$('..')).click();
           }
-          $(`#mainCheckListNameTranslation_${i}`).setValue(
+          await (await $(`#mainCheckListNameTranslation_${i}`)).setValue(
             checklist.translations[i].name
           );
-          $(`#mainCheckListDescriptionTranslation_${i} .pell-content`).setValue(
+          await (await $(`#mainCheckListDescriptionTranslation_${i} .pell-content`)).setValue(
             checklist.translations[i].description
           );
         }
       }
       if (checklist.tags) {
         for (let i = 0; i < checklist.tags.length; i++) {
-          eformVisualEditorPage.mainCheckListTagsSelector
-            .$('input')
+          await (await (await eformVisualEditorPage.mainCheckListTagsSelector())
+            .$('input'))
             .setValue(checklist.tags[i]);
-          const option = eformVisualEditorPage.mainCheckListTagsSelector.$(
+          const option = await (await eformVisualEditorPage.mainCheckListTagsSelector()).$(
             '.ng-option'
           );
-          option.waitForDisplayed({ timeout: 40000 });
-          option.click();
+          await option.waitForDisplayed({ timeout: 40000 });
+          await option.click();
         }
       }
     }
     if (clickSave) {
-      eformVisualEditorPage.clickSave();
+      await eformVisualEditorPage.clickSave();
     }
   }
 
-  collapseToggle() {
-    eformVisualEditorPage.expandAllBtn.click();
-    browser.pause(500);
+  async collapseToggle() {
+    await (await eformVisualEditorPage.expandAllBtn()).click();
+    await browser.pause(500);
   }
 }
 
@@ -443,18 +446,49 @@ export class ChecklistFieldRowObj {
     fieldIndex = 0,
     isNestedInChecklist = false
   ) {
-    if (isNested) {
+    this.index = index;
+    this.isNested = isNested;
+    this.fieldIndex = fieldIndex;
+    this.isNestedInChecklist = isNestedInChecklist;
+  }
+  index: number;
+  isNested: boolean;
+  fieldIndex: number;
+  isNestedInChecklist: boolean;
+  element: WebdriverIO.Element;
+  name: string;
+  type: EformFieldTypesEnum;
+  deleteBtn: WebdriverIO.Element;
+  editBtn: WebdriverIO.Element;
+  copyBtn: WebdriverIO.Element;
+  addNestedFieldBtn: WebdriverIO.Element;
+  collapseToggleBtn: WebdriverIO.Element;
+  fieldIsNotComplete: boolean;
+  color: CommonDictionaryModel;
+  colorsBtn: {
+    standard: WebdriverIO.Element;
+    green: WebdriverIO.Element;
+    blue: WebdriverIO.Element;
+    yellow: WebdriverIO.Element;
+    red: WebdriverIO.Element;
+    grey: WebdriverIO.Element;
+  };
+  nestedFields: ChecklistFieldRowObj[];
+  moveFieldBtn: WebdriverIO.Element;
+
+  async loadData() {
+    if (this.isNested) {
       this.element = $$(
-        `#field_${fieldIndex} #nestedFields app-visual-editor-field`
-      )[index];
-    } else if (isNestedInChecklist) {
-      this.element = $$(`#fields_${fieldIndex}>app-visual-editor-field`)[index];
+        `#field_${this.fieldIndex} #nestedFields app-visual-editor-field`
+      )[this.index];
+    } else if (this.isNestedInChecklist) {
+      this.element = $$(`#fields_${this.fieldIndex}>app-visual-editor-field`)[this.index];
     } else {
-      this.element = $(`#field_${index}`);
+      this.element = $(`#field_${this.index}`);
     }
     if (this.element) {
-      const str: string[] = this.element
-        .$('.col-6')
+      const str: string[] = (await (await this.element)
+        .$('.col-6'))
         .getText()
         .replace('drag_handle ', '') // delete not need word
         .split('; '); // split name and type
@@ -489,38 +523,18 @@ export class ChecklistFieldRowObj {
           i < this.element.$$('#nestedFields app-visual-editor-field').length;
           i++
         ) {
-          this.nestedFields.push(new ChecklistFieldRowObj(i, true, index));
+          this.nestedFields.push(new ChecklistFieldRowObj(i, true, this.index));
         }
       }
     }
   }
-  element: WebdriverIO.Element;
-  name: string;
-  type: EformFieldTypesEnum;
-  deleteBtn: WebdriverIO.Element;
-  editBtn: WebdriverIO.Element;
-  copyBtn: WebdriverIO.Element;
-  addNestedFieldBtn: WebdriverIO.Element;
-  collapseToggleBtn: WebdriverIO.Element;
-  fieldIsNotComplete: boolean;
-  color: CommonDictionaryModel;
-  colorsBtn: {
-    standard: WebdriverIO.Element;
-    green: WebdriverIO.Element;
-    blue: WebdriverIO.Element;
-    yellow: WebdriverIO.Element;
-    red: WebdriverIO.Element;
-    grey: WebdriverIO.Element;
-  };
-  nestedFields: ChecklistFieldRowObj[];
-  moveFieldBtn: WebdriverIO.Element;
 
-  changeColor(colorName: string) {
+  async changeColor(colorName: string) {
     this.colorsBtn[colorName].click();
   }
 
-  makeCopy() {
-    this.copyBtn.click();
+  async makeCopy() {
+    await this.copyBtn.click();
   }
 
   addNewNestedField(checklistFieldObj: ChecklistFieldObj) {
@@ -540,86 +554,53 @@ export class ChecklistFieldRowObj {
     this.closeDeleteModal(clickCancel);
   }
 
-  openDeleteModal() {
-    this.deleteBtn.click();
-    eformVisualEditorPage.fieldDeleteCancelBtn.waitForClickable({
+  async openDeleteModal() {
+    await this.deleteBtn.click();
+    await (await eformVisualEditorPage.fieldDeleteCancelBtn()).waitForClickable({
       timeout: 40000,
     });
   }
 
-  closeDeleteModal(clickCancel = false) {
+  async closeDeleteModal(clickCancel = false) {
     if (clickCancel) {
-      eformVisualEditorPage.fieldDeleteCancelBtn.click();
+      await (await eformVisualEditorPage.fieldDeleteCancelBtn()).click();
     } else {
-      eformVisualEditorPage.fieldDeleteDeleteBtn.click();
+      await (await eformVisualEditorPage.fieldDeleteDeleteBtn()).click();
     }
-    eformVisualEditorPage.manageTags.waitForClickable({ timeout: 40000 });
+    await (await eformVisualEditorPage.manaasyncags()).waitForClickable({ timeout: 40000 });
   }
 
-  edit(field: ChecklistFieldObj, clickCancel = false) {
-    this.openEditModal(field);
-    this.closeEditModal(clickCancel);
+  async edit(field: ChecklistFieldObj, clickCancel = false) {
+    await this.openEditModal(field);
+    await this.closeEditModal(clickCancel);
   }
 
-  openEditModal(field: ChecklistFieldObj) {
-    eformVisualEditorPage.openVisualTemplateFieldCreateModal(
+  async openEditModal(field: ChecklistFieldObj) {
+    await eformVisualEditorPage.openVisualTemplateFieldCreateModal(
       field,
       this.editBtn
     );
   }
 
-  closeEditModal(clickCancel = false) {
+  async closeEditModal(clickCancel = false) {
     if (clickCancel) {
-      eformVisualEditorPage.changeFieldSaveCancelBtn.click();
+      await (await eformVisualEditorPage.changeFieldSaveCancelBtn()).click();
     } else {
-      eformVisualEditorPage.changeFieldSaveBtn.click();
+      await (await eformVisualEditorPage.changeFieldSaveBtn()).click();
     }
-    eformVisualEditorPage.manageTags.waitForClickable({ timeout: 40000 });
+    await (await eformVisualEditorPage.manaasyncags()).waitForClickable({ timeout: 40000 });
   }
 
-  changePosition(targetField: ChecklistFieldRowObj) {
-    this.moveFieldBtn.dragAndDrop(targetField.element);
+  changePosition(tarasyncField: ChecklistFieldRowObj) {
+    this.moveFieldBtn.dragAndDrop(tarasyncField.element);
   }
 }
 
 export class ChecklistRowObj {
   constructor(index: number) {
-    this.element = $(`#checkList_${index}`);
-    if (this.element) {
-      this.moveBtn = this.element.$('#moveBtn');
-      this.addNewNestedChecklistBtn = this.element.$(
-        `#addNewNestedChecklist${index}`
-      );
-      this.addNewNestedFieldBtn = this.element.$(`#addNewNestedField${index}`);
-      this.editChecklistBtn = this.element.$(`#editChecklistBtn${index}`);
-      this.deleteChecklistBtn = this.element.$(`#deleteChecklistBtn${index}`);
-      for (
-        let i = 0;
-        i < this.element.$$(`#fields_${index}>app-visual-editor-field`).length;
-        i++
-      ) {
-        this.fields.push(new ChecklistFieldRowObj(i, false, index, true));
-      }
-      const selectedLanguages = eformVisualEditorPage.selectedLanguages;
-      this.openEditModal();
-      for (let i = 0; i < selectedLanguages.length; i++) {
-        const translation: CommonTranslationsModel = {
-          languageId: selectedLanguages[i],
-          name: '',
-          description: '',
-          id: null,
-        };
-        translation.name = $(
-          `#newChecklistNameTranslation_${selectedLanguages[i]}`
-        ).getValue();
-        translation.description = $(
-          `#newChecklistDescriptionTranslation_${selectedLanguages[i]} .pell-content`
-        ).getText();
-        this.translations.push(translation);
-      }
-      this.closeEditModal(true);
-    }
+    this.index = index;
   }
+  index: number;
   element: WebdriverIO.Element;
   moveBtn: WebdriverIO.Element;
   addNewNestedChecklistBtn: WebdriverIO.Element;
@@ -629,25 +610,63 @@ export class ChecklistRowObj {
   fields: ChecklistFieldRowObj[] = [];
   translations: CommonTranslationsModel[] = [];
 
-  delete(clickCancel = false) {
-    this.openDeleteModal();
-    this.closeDeleteModal(clickCancel);
+  async load() {
+    this.element = $(`#checkList_${this.index}`);
+    if (this.element) {
+      this.moveBtn = this.element.$('#moveBtn');
+      this.addNewNestedChecklistBtn = this.element.$(
+        `#addNewNestedChecklist${this.index}`
+      );
+      this.addNewNestedFieldBtn = this.element.$(`#addNewNestedField${this.index}`);
+      this.editChecklistBtn = this.element.$(`#editChecklistBtn${this.index}`);
+      this.deleteChecklistBtn = this.element.$(`#deleteChecklistBtn${this.index}`);
+      for (
+        let i = 0;
+        i < this.element.$$(`#fields_${this.index}>app-visual-editor-field`).length;
+        i++
+      ) {
+        this.fields.push(new ChecklistFieldRowObj(i, false, this.index, true));
+      }
+      const selectedLanguages = await eformVisualEditorPage.selectedLanguages();
+      await this.openEditModal();
+      for (let i = 0; i < selectedLanguages.length; i++) {
+        const translation: CommonTranslationsModel = {
+          languageId: selectedLanguages[i],
+          name: '',
+          description: '',
+          id: null,
+        };
+        translation.name = await (await $(
+            `#newChecklistNameTranslation_${selectedLanguages[i]}`)
+        ).getValue();
+        translation.description = $(
+          `#newChecklistDescriptionTranslation_${selectedLanguages[i]} .pell-content`
+        ).getText();
+        this.translations.push(translation);
+      }
+      await this.closeEditModal(true);
+    }
   }
 
-  openDeleteModal() {
-    this.deleteChecklistBtn.click();
-    eformVisualEditorPage.fieldDeleteCancelBtn.waitForClickable({
+  async delete(clickCancel = false) {
+    await this.openDeleteModal();
+    await this.closeDeleteModal(clickCancel);
+  }
+
+  async openDeleteModal() {
+    await this.deleteChecklistBtn.click();
+    await (await eformVisualEditorPage.fieldDeleteCancelBtn()).waitForClickable({
       timeout: 40000,
     });
   }
 
-  closeDeleteModal(clickCancel = false) {
+  async closeDeleteModal(clickCancel = false) {
     if (clickCancel) {
-      eformVisualEditorPage.checklistDeleteCancelBtn.click();
+      await (await eformVisualEditorPage.checklistDeleteCancelBtn()).click();
     } else {
-      eformVisualEditorPage.checklistDeleteDeleteBtn.click();
+      await (await eformVisualEditorPage.checklistDeleteDeleteBtn()).click();
     }
-    eformVisualEditorPage.manageTags.waitForClickable({ timeout: 40000 });
+    await (await eformVisualEditorPage.manaasyncags()).waitForClickable({ timeout: 40000 });
   }
 
   edit(translations?: CommonTranslationsModel[], clickCancel = false) {
@@ -655,28 +674,28 @@ export class ChecklistRowObj {
     this.closeEditModal(clickCancel);
   }
 
-  openEditModal(translations?: CommonTranslationsModel[]) {
-    this.editChecklistBtn.click();
-    eformVisualEditorPage.changeChecklistSaveCancelBtn.waitForClickable({
+  async openEditModal(translations?: CommonTranslationsModel[]) {
+    await this.editChecklistBtn.click();
+    await (await eformVisualEditorPage.changeChecklistSaveCancelBtn()).waitForClickable({
       timeout: 40000,
     });
     if (translations) {
       for (let i = 0; i < translations.length; i++) {
-        $(`#newChecklistNameTranslation_${i}`).setValue(translations[i].name);
-        $(`#newChecklistDescriptionTranslation_${i} .pell-content`).setValue(
+        await (await $(`#newChecklistNameTranslation_${i}`)).setValue(translations[i].name);
+        await (await $(`#newChecklistDescriptionTranslation_${i} .pell-content`)).setValue(
           translations[i].description
         );
       }
     }
   }
 
-  closeEditModal(clickCancel: boolean) {
+  async closeEditModal(clickCancel: boolean) {
     if (clickCancel) {
-      eformVisualEditorPage.changeChecklistSaveCancelBtn.click();
+      await (await eformVisualEditorPage.changeChecklistSaveCancelBtn()).click();
     } else {
-      eformVisualEditorPage.changeChecklistSaveBtn.click();
+      await (await eformVisualEditorPage.changeChecklistSaveBtn()).click();
     }
-    eformVisualEditorPage.manageTags.waitForClickable({ timeout: 40000 });
+    await (await eformVisualEditorPage.manaasyncags()).waitForClickable({ timeout: 40000 });
   }
 }
 
