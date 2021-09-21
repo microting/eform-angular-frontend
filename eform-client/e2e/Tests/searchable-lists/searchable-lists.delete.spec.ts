@@ -45,7 +45,7 @@ describe('Entity Search', function () {
     await searchableLists.deleteItemFromList();
     await (await searchableLists.entitySearchEditBtn()).click();
     await (await $('#editName')).waitForDisplayed({ timeout: 40000 });
-    expect(searchableLists.items).equal(0);
+    expect(await searchableLists.items()).equal(0);
     await (await searchableLists.entitySearchEditCancelBtn()).click();
     await searchableLists.cleanup();
     await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });

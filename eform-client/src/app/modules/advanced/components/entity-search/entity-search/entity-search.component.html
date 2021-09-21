@@ -67,11 +67,9 @@
               <button
                 id="entitySearchUpdateBtn"
                 class="btn btn-accent btn-icon text-black-50 mb-2"
-                *ngIf="
-                  userClaims.entitySelectUpdate &&
-                  (!advEntitySearchableGroup.isLocked ||
-                    advEntitySearchableGroup.name.includes('editable'))
-                "
+                [disabled]="!userClaims.entitySelectUpdate ||
+                  (advEntitySearchableGroup.isLocked &&
+                    !advEntitySearchableGroup.name.includes('editable'))"
                 mdbTooltip="{{ 'Edit' | translate }}"
                 [routerLink]="[
                   '/advanced/entity-search/edit/' +
@@ -83,12 +81,10 @@
               <button
                 id="entitySearchDeleteBtn"
                 class="btn btn-danger btn-icon mb-2"
-                *ngIf="
-                  userClaims.entitySearchDelete &&
-                  !advEntitySearchableGroup.isLocked
-                "
                 mdbTooltip="{{ 'Remove' | translate }}"
                 (click)="openModalSearchRemove(advEntitySearchableGroup)"
+                [disabled]="!userClaims.entitySearchDelete ||
+                  advEntitySearchableGroup.isLocked"
               >
                 <fa-icon
                   icon="trash-alt"

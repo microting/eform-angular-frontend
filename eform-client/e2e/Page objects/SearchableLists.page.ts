@@ -15,7 +15,12 @@ export class SearchableListsPage extends PageWithNavbarPage {
   async getFirstRowObject(): Promise<SearchableListRowObject> {
     await browser.pause(500);
     const obj = new SearchableListRowObject();
-    return await obj.getRow(1);
+    const row = await obj.getRow(1);
+    if (row.name !== 'Device users') {
+      return row;
+    } else {
+      return await obj.getRow(2);
+    }
   }
   async getFirstItemObject(): Promise<EntitySearchItemRowObject> {
     await browser.pause(500);
@@ -457,9 +462,12 @@ export class SearchableListRowObject {
   name;
   editBtn;
   deleteBtn;
+  index;
 
   async getRow(rowNum: number): Promise<SearchableListRowObject> {
-    if (await ($$('#entitySearchMUid'))[rowNum - 1]) {
+    this.index = rowNum;
+    const id = '#entitySearchMUid';
+    if ((await $$(id))[rowNum - 1]) {
       this.id = (await $$('#entitySearchMUid'))[rowNum - 1];
       try {
         this.name = await (await $$('#entitySearchName'))[rowNum - 1].getText();
@@ -469,6 +477,7 @@ export class SearchableListRowObject {
       } catch (e) {}
       try {
         this.deleteBtn = (await $$('#entitySearchDeleteBtn'))[rowNum - 1];
+        // console.log('rowNum is ' + rowNum + ' - ' + this.deleteBtn);
       } catch (e) {}
     }
     return this;

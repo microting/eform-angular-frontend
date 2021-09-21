@@ -31,7 +31,7 @@ describe('Entity Select', function () {
     const selectableListObject = await selectableLists.getFirstSelectableListObject();
     expect(selectableListObject.name).equal(data.name);
     await selectableListObject.openEdit();
-    expect((await selectableLists.getFirstEntityItemOnEdit()).name).equal(data.items[0]);
+    expect(await ((await selectableLists.getFirstEntityItemOnEdit()).name)).equal(data.items[0]);
     await selectableListObject.closeEdit(true);
   });
   it('should not make a new list with one item', async () => {
