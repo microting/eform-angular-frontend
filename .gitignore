@@ -391,3 +391,4 @@ docs/plugins/installing-a-plugin./
 *.blob
 
 eFormAPI/eFormAPI.Web/init.json
+*.DotSettings.user

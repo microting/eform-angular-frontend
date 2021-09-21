@@ -11,13 +11,6 @@
           >
             drag_handle
           </i>
-          <!--          <fa-icon-->
-          <!--            id="moveBtn"-->
-          <!--            size="lg"-->
-          <!--            icon="grip-lines"-->
-          <!--            [fixedWidth]="true"-->
-          <!--            style="cursor: pointer"-->
-          <!--          ></fa-icon>-->
           {{ 'Checklist' | translate }}
         </div>
         <div class="d-flex align-items-center">
@@ -75,6 +68,7 @@
         dragula="{{ dragulaElementContainerName }}"
         [dragulaModel]="checklist.fields"
         (dragulaModelChange)="onNestedFieldPositionChanged($event)"
+        id="fields_{{ checklistIndex }}"
       >
         <ng-container
           *ngFor="let field of checklist.fields; let fieldIndex = index"

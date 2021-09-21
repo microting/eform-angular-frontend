@@ -139,37 +139,32 @@ export const eformVisualEditorElementTypes: EformVisualEditorFieldTypeModel[] = 
 export const eformVisualEditorElementColors: CommonDictionaryModel[] = [
   {
     id: 1,
-    description: 'Default',
-    name: 'e7e7e7',
+    description: 'Standard',
+    name: 'e8eaf6',
   },
   {
     id: 2,
-    description: 'Blue',
-    name: 'e2f4fb',
-  },
-  {
-    id: 3,
-    description: 'Purple',
-    name: 'e2f4fb',
-  },
-  {
-    id: 4,
     description: 'Green',
     name: 'f0f8db',
   },
   {
-    id: 5,
+    id: 3,
+    description: 'Blue',
+    name: 'e2f4fb',
+  },
+  {
+    id: 4,
     description: 'Yellow',
     name: 'fff6df',
   },
   {
-    id: 6,
+    id: 5,
     description: 'Red',
     name: 'ffe4e4',
   },
   {
-    id: 7,
+    id: 6,
     description: 'Grey',
-    name: 'e8eaf6',
+    name: 'e7e7e7',
   },
 ];

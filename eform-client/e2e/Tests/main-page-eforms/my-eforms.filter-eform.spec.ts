@@ -52,12 +52,13 @@ describe('My eforms', function () {
     expect(myEformsPage.rowNum).eq(2);
   });
   after(function () {
-    myEformsPage.enterTagFilter(testTag1);
-    myEformsPage.enterTagFilter(testTag2);
-    myEformsPage.removeTags([testTag1, testTag2]);
-    for (let i = 0; i < namesEForms.length; i++) {
-      myEformsPage.getEformsRowObjByNameEForm(namesEForms[i]).deleteEForm();
-      browser.pause(500);
-    }
+    // Commented until we have async testing implemented.
+    // myEformsPage.enterTagFilter(testTag1);
+    // myEformsPage.enterTagFilter(testTag2);
+    // myEformsPage.removeTags([testTag1, testTag2]);
+    // for (let i = 0; i < namesEForms.length; i++) {
+    //   myEformsPage.getEformsRowObjByNameEForm(namesEForms[i]).deleteEForm();
+    //   browser.pause(500);
+    // }
   });
 });

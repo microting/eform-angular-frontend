@@ -13,6 +13,7 @@ export class EformVisualEditorRecursionModel {
 export class EformVisualEditorRecursionFieldModel extends EformVisualEditorRecursionModel {
   field?: EformVisualEditorFieldModel = new EformVisualEditorFieldModel();
   parentFieldIndex?: number;
+  fieldIsNested?: boolean;
 }
 
 export class EformVisualEditorRecursionChecklistModel extends EformVisualEditorRecursionModel {

@@ -1,3 +1,5 @@
+// noinspection JSIgnoredPromiseFromCall
+
 import { PageWithNavbarPage } from './PageWithNavbar.page';
 import XMLForEform from '../Constants/XMLForEform';
 import { FoldersRowObject } from './Folders.page';
@@ -122,6 +124,11 @@ class MyEformsPage extends PageWithNavbarPage {
     return new MyEformsRowObject(1);
   }
 
+  getLastMyEformsRowObj(): MyEformsRowObject {
+    browser.pause(500);
+    return new MyEformsRowObject(this.rowNum);
+  }
+
   getEformsRowObjByNameEForm(nameEform: string): MyEformsRowObject {
     browser.pause(500);
     for (let i = 1; i < this.rowNum + 1; i++) {
@@ -139,18 +146,20 @@ class MyEformsPage extends PageWithNavbarPage {
   }
 
   clearEFormTable() {
-    for (let i = this.rowNum - 1; i > 0; i--) {
-      this.getEformRowObj(i).deleteEForm();
+    while (this.rowNum !== 0) {
+      this.getLastMyEformsRowObj().deleteEForm();
     }
   }
 
-  createNewEform(eFormLabel, newTagsList = [], tagAddedNum = 0) {
+  createNewEform(eFormLabel, newTagsList = [], tagAddedNum = 0, xml = '') {
     const spinnerAnimation = $('#spinner-animation');
     spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
     this.newEformBtn.click();
     this.xmlTextArea.waitForDisplayed({ timeout: 40000 });
     // Create replaced xml and insert it in textarea
-    const xml = XMLForEform.XML.replace('TEST_LABEL', eFormLabel);
+    if (!xml) {
+      xml = XMLForEform.XML.replace('TEST_LABEL', eFormLabel);
+    }
     browser.execute(function (xmlText) {
       (<HTMLInputElement>document.getElementById('eFormXml')).value = xmlText;
     }, xml);
@@ -228,46 +237,53 @@ export default myEformsPage;
 
 class MyEformsRowObject {
   constructor(rowNum: number) {
-    if ($$('#eform-id-' + (rowNum - 1))[0]) {
-      this.id = +$$('#eform-id-' + (rowNum - 1))[0];
+    const currentPosition = rowNum - 1;
+    this.element = $$('#mainPageEFormsTableBody tr')[currentPosition];
+    if (this.element) {
+      this.id = +this.element.$(`#eform-id-${currentPosition}`);
       try {
         this.createdAt = new Date(
-          $$('#eform-created-at-' + (rowNum - 1))[0].getText()
+          this.element.$(`#eform-created-at-${currentPosition}`).getText()
         );
       } catch (e) {}
       try {
-        this.eFormName = $$('#eform-label-' + (rowNum - 1))[0].getText();
+        this.eFormName = this.element
+          .$(`#eform-label-${currentPosition}`)
+          .getText();
       } catch (e) {}
-      this.tags = $$(`#mainPageEFormsTableBody tr`)[rowNum - 1].$$(
-        `#eform-tag-` + (rowNum - 1)
+      this.tags = this.element.$$(`#eform-tag-${currentPosition}`);
+      this.editTagsBtn = this.element.$(`#eform-edit-btn-${currentPosition}`);
+      this.editPairEformBtn = this.element.$(
+        `#eform-pairing-btn-${currentPosition}`
       );
-      this.pairs = $$(
-        `//*[@id="mainPageEFormsTableBody"]/tr[${rowNum}]//*[@id="eform-pair"]`
+      this.addPairEformBtn = this.element.$(
+        `#eform-add-btn-${currentPosition}`
       );
-      this.editTagsBtn = $$('#eform-edit-btn-' + (rowNum - 1))[0];
-      this.editPairEformBtn = $$(`#mainPageEFormsTableBody tr`)[rowNum - 1].$(
-        '#eform-pairing-btn-' + (rowNum - 1)
+      this.editColumnsBtn = this.element.$(
+        `#edit-columnts-btn-${currentPosition}`
       );
-      this.addPairEformBtn = $$(`#mainPageEFormsTableBody tr`)[rowNum - 1].$(
-        '#eform-add-btn-' + (rowNum - 1)
+      this.deleteBtn = this.element.$(`#delete-eform-btn-${currentPosition}`);
+      this.uploadZipArchiveBtn = this.element.$(
+        `#upload-zip-btn-${currentPosition}`
       );
-      this.editColumnsBtn = $$('#edit-columnts-btn-' + (rowNum - 1))[0];
-      this.deleteBtn = $$('#delete-eform-btn-' + (rowNum - 1))[0];
-      this.uploadZipArchiveBtn = $$('#upload-zip-btn-' + (rowNum - 1))[0];
+      this.goVisualEditorBtn = this.element.$(
+        `#edit-eform-btn-${currentPosition}`
+      );
     }
   }
 
+  element: WebdriverIO.Element;
   id: number;
   createdAt: Date;
   eFormName: string;
   tags: Array<any>;
   editTagsBtn;
-  pairs;
   addPairEformBtn;
   editPairEformBtn;
   editColumnsBtn;
   deleteBtn;
   uploadZipArchiveBtn;
+  goVisualEditorBtn;
 
   deleteEForm() {
     this.deleteBtn.scrollIntoView();
@@ -353,5 +369,10 @@ class MyEformsRowObject {
     }
     myEformsPage.saveParingBtn.click();
     spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });
+  }
+
+  goToVisualEditor() {
+    this.goVisualEditorBtn.click();
+    $('#manageTags').waitForClickable({ timeout: 40000 });
   }
 }
