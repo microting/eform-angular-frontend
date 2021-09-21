@@ -23,7 +23,7 @@ describe('Device users page should add new device user', function () {
     // browser.pause(2000);
     countDeviceUsersBeforeCreating = rowCountBeforeCreation;
     await deviceUsersPage.createNewDeviceUser(nameDeviceUser, surname);
-    const rowCountAfterCreation = deviceUsersPage.rowNum;
+    const rowCountAfterCreation = await deviceUsersPage.rowNum();
     expect(
       rowCountAfterCreation,
       'Number of rows hasn\'t changed after creating new user'
