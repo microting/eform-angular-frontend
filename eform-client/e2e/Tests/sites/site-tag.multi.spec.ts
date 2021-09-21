@@ -37,7 +37,7 @@ describe('Site tags', function () {
   });
   it('should delete user', async () => {
     await myEformsPage.Navbar.goToDeviceUsersPage();
-    const rowNumBeforeDelete = deviceUsersPage.rowNum;
+    const rowNumBeforeDelete = await deviceUsersPage.rowNum();
     await (await deviceUsersPage.getDeviceUser(rowNumBeforeDelete)).delete();
   });
 });

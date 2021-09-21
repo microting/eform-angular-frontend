@@ -73,7 +73,7 @@ class DeviceUsersPage extends PageWithNavbarPage {
   }
 
   public async rowNum(): Promise<number> {
-    browser.pause(500);
+    await browser.pause(500);
     return (await $$('#tableBody > tr')).length;
   }
 

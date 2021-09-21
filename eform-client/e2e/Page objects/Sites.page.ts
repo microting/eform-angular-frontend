@@ -95,7 +95,7 @@ class SitesPage extends PageWithNavbarPage {
 
   public async createTag(tagName: string[]) {
     await (await this.sitesManageTagsBtn()).click();
-    await (await tagsModalPage.tagsModalCloseBtn).waitForDisplayed({ timeout: 40000 });
+    await (await tagsModalPage.tagsModalCloseBtn()).waitForDisplayed({ timeout: 40000 });
     for (let i = 0; i < tagName.length; i++) {
       await tagsModalPage.createTag(tagName[i]);
     }
@@ -105,7 +105,7 @@ class SitesPage extends PageWithNavbarPage {
 
   public async removeTags(tagName: string[]) {
     await (await this.sitesManageTagsBtn()).click();
-    (await tagsModalPage.tagsModalCloseBtn).waitForDisplayed({ timeout: 40000 });
+    (await tagsModalPage.tagsModalCloseBtn()).waitForDisplayed({ timeout: 40000 });
     for (let i = 0; i < tagName.length; i++) {
       await (await tagsModalPage.getTagByName(tagName[i])).deleteTag();
     }
@@ -115,7 +115,8 @@ class SitesPage extends PageWithNavbarPage {
 
   async getSite(num): Promise<SitesRowObject> {
     await browser.pause(500);
-    return new SitesRowObject(num);
+    const obj = new SitesRowObject();
+    return await obj.getRow(num);
   }
 
   async getFirstRowObject(): Promise<SitesRowObject> {
@@ -128,8 +129,7 @@ const sitesPage = new SitesPage();
 export default sitesPage;
 
 export class SitesRowObject {
-  constructor(rowNum) {
-  }
+  constructor() {}
 
   element: WebdriverIO.Element;
   siteId: number;
@@ -145,11 +145,12 @@ export class SitesRowObject {
       this.siteId = +(await this.element.$('#siteUUId')).getText();
       this.units = await (await this.element.$('#units')).getText();
       this.siteName = await (await this.element.$('#siteName')).getText();
-      const list = await (await this.element
+      console.log(this.siteName);
+      const list = (await (await this.element
         .$('#tags'))
-        .$$('#assignedTag');
-      this.tags = (await list
-        .map((element) => element.getText()));
+        .$$('#assignedTag'));
+      this.tags = await Promise.all(list.map(element => element.getText()));
+      // .map((element) => element.getText());
       this.editBtn = await this.element.$('#editSiteBtn');
       this.deleteBtn = await this.element.$('#deleteSiteBtn');
     }
