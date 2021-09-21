@@ -75,7 +75,7 @@ describe('User administration settings', function () {
     const countUserBeforeDelete = await userAdministration.rowNum();
     await (await userAdministration.getUserByNumber(2)).delete();
     expect(countUserBeforeDelete - 1, 'user not created').eq(
-      userAdministration.rowNum()
+      await userAdministration.rowNum()
     );
   });
 });

@@ -202,10 +202,10 @@ export class UserAdministrationRowObject {
   async getRow(rowNum: number): Promise<UserAdministrationRowObject> {
     this.element = (await (await userAdministration.userInfoTable()).$$('tr'))[rowNum - 1];
     if (this.element) {
-      this.id = +(await this.element.$('#userAdministrationId')).getText();
-      this.email = (await this.element.$('#userAdministrationEmail')).getText();
-      this.fullName = (await this.element.$('#userAdministrationFullName')).getText();
-      this.role = (await this.element.$('#userAdministrationRole')).getText();
+      this.id = +await (await this.element.$('#userAdministrationId')).getText();
+      this.email = await (await this.element.$('#userAdministrationEmail')).getText();
+      this.fullName = await (await this.element.$('#userAdministrationFullName')).getText();
+      this.role = await (await this.element.$('#userAdministrationRole')).getText();
       this.editBtn = await this.element.$('#userAdministrationEditBtn');
       this.deleteBtn = await this.element.$('#userAdministrationDeleteBtn');
     }
