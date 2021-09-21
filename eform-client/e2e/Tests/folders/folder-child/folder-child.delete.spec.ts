@@ -23,8 +23,8 @@ describe('Delete folder', function () {
   });
   it('Delete folder child with name and description', async () => {
     const rowCountBeforeDelete = await foldersPage.rowChildrenNum();
-    await foldersPage
-      .getFolderFromTree(await foldersPage.getFolderRowNumByName(nameFolder), 1)
+    await (await foldersPage
+      .getFolderFromTree(await foldersPage.getFolderRowNumByName(nameFolder), 1))
       .delete();
     const rowCountAfterDelete = await foldersPage.rowChildrenNum();
     expect(
@@ -39,16 +39,16 @@ describe('Delete folder', function () {
       .getFolderByName(nameFolder))
       .createChild(childName, childDescription);
     const rowCountBeforeDelete = await foldersPage.rowChildrenNum();
-    await foldersPage
-      .getFolderFromTree(await foldersPage.getFolderRowNumByName(nameFolder), 1)
+    await (await foldersPage
+      .getFolderFromTree(await foldersPage.getFolderRowNumByName(nameFolder), 1))
       .delete(true);
     const rowCountAfterDelete = await foldersPage.rowChildrenNum();
     expect(rowCountBeforeDelete, 'Folder was deleted', rowCountAfterDelete);
   });
   it('Should delete folder 1', async () => {
     const rowCountBeforeDelete = await foldersPage.rowChildrenNum();
-    await foldersPage
-      .getFolderFromTree(await foldersPage.getFolderRowNumByName(nameFolder), 1)
+    await (await foldersPage
+      .getFolderFromTree(await foldersPage.getFolderRowNumByName(nameFolder), 1))
       .delete();
     const rowCountAfterDelete = await foldersPage.rowChildrenNum();
     expect(rowCountBeforeDelete - 1, 'Folder not deleted', rowCountAfterDelete);

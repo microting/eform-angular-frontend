@@ -22,6 +22,7 @@ describe('Folder page', function () {
       .find((x) => x.language === 'Danish').description;
     name = generateRandmString();
     await folderBeforeEdit.editFolder(name);
+    console.log(name);
     const folderAfterEdit = await foldersPage.getFolderByName(name);
     expect(
       folderAfterEdit.name,

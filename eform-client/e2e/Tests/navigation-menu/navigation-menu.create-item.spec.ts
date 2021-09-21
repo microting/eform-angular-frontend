@@ -17,12 +17,12 @@ describe(' Navigation menu - Create item', function () {
     expect(count + 1).eq((await navigationMenuPage.menuItemsChilds()).length);
     await navigationMenuPage.clickSaveMenuBtn();
     await navigationMenuPage.openOnEditCreatedMenuItem(0);
-    expect((await navigationMenuPage.editLinkInput()).getValue(), 'link field must = \' / \' ').eq('/');
-    expect((await navigationMenuPage.editItemTranslation(0, 0, 0)).getValue(),
+    expect(await (await navigationMenuPage.editLinkInput()).getValue(), 'link field must = \' / \' ').eq('/');
+    expect(await (await navigationMenuPage.editItemTranslation(0, 0, 0)).getValue(),
       'english field must = \'My eForms\'').eq('My eForms');
-    expect((await navigationMenuPage.editItemTranslation(0, 0, 1)).getValue(),
+    expect(await (await navigationMenuPage.editItemTranslation(0, 0, 1)).getValue(),
       'danish field must = \'Mine eForms\'').eq('Mine eForms');
-    expect((await navigationMenuPage.editItemTranslation(0, 0, 2)).getValue(),
+    expect(await (await navigationMenuPage.editItemTranslation(0, 0, 2)).getValue(),
       'german field must = \'Meine eForms\'').eq('Meine eForms');
     await (await navigationMenuPage.editItemSaveBtn()).click();
     await navigationMenuPage.collapseTemplates(0);
@@ -42,7 +42,7 @@ describe(' Navigation menu - Create item', function () {
     await navigationMenuPage.clickSaveMenuBtn();
 
     await navigationMenuPage.openOnEditCreatedMenuItem((await navigationMenuPage.menuItemsChilds()).length - 1);
-    expect((await navigationMenuPage.editLinkInput()).getValue(), 'Link save is incorrect').eq(customLink.link);
+    expect(await (await navigationMenuPage.editLinkInput()).getValue(), 'Link save is incorrect').eq(customLink.link);
     for (const translation of customLink.translations) {
       const i = customLink.translations.indexOf(translation);
       if (translation) {
@@ -103,8 +103,8 @@ describe(' Navigation menu - Create item', function () {
     for (const translation of dropdown.translations) {
       const i = dropdown.translations.indexOf(translation);
       if (translation) {
-        expect((await navigationMenuPage.editItemTranslation(
-          (await navigationMenuPage.menuItemsChilds()).length - 1, 0, i)).getValue(),
+        expect(await (await navigationMenuPage.editItemTranslation(
+            await (await navigationMenuPage.menuItemsChilds()).length - 1, 0, i)).getValue(),
           `Translation field [${i}] save is incorrect`).eq(translation);
       }
     }
@@ -125,7 +125,7 @@ describe(' Navigation menu - Create item', function () {
 
     await navigationMenuPage.clickSaveMenuBtn();
 
-    await navigationMenuPage.openOnEditCreatedMenuItem((await navigationMenuPage.menuItemsChilds).length - 1);
+    await navigationMenuPage.openOnEditCreatedMenuItem((await navigationMenuPage.menuItemsChilds()).length - 1);
     customLink.securityGroups.forEach(async (securityGroup, i) =>
       expect(await (await navigationMenuPage.securityGroupsValue())[i].getText(), 'SecurityGroup save is incorrect')
         .eq(securityGroup));
@@ -134,7 +134,7 @@ describe(' Navigation menu - Create item', function () {
       const i = customLink.translations.indexOf(translation);
       if (translation) {
         expect(await (await navigationMenuPage.editItemTranslation(
-          (await navigationMenuPage.menuItemsChilds()).length - 1, 0, i)).getValue(),
+            await (await navigationMenuPage.menuItemsChilds()).length - 1, 0, i)).getValue(),
           `Translation field [${i}] save is incorrect`).eq(translation);
       }
     }

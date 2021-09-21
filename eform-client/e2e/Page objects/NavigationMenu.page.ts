@@ -41,11 +41,11 @@ class NavigationMenuPage {
   }
 
   public async dropdownBody(index: number) {
-    return (await this.menuItemsChilds[index]).$('#dropdownBody');
+    return (await this.menuItemsChilds())[index].$('#dropdownBody');
   }
 
-  public dropdownBodyChilds(indexDropdown: number) {
-    return this.menuItemsChilds[indexDropdown].$$('#dropdownBody>*');
+  public async dropdownBodyChilds(indexDropdown: number) {
+    return (await this.menuItemsChilds())[indexDropdown].$$('#dropdownBody>*');
   }
 
   public async editTranslationsOnDropdownBodyChilds(data: {
@@ -53,8 +53,8 @@ class NavigationMenuPage {
     indexDropdownInMenu: number;
     translations_array: string[];
   }) {
-    await (await (await this.dropdownBodyChilds(data.indexDropdownInMenu)
-      [data.indexChildDropdown]).$('#editBtn'))
+    await (await (await this.dropdownBodyChilds(data.indexDropdownInMenu))
+      [data.indexChildDropdown].$('#editBtn'))
       .click();
     await (await $('#editMenuEntry')).waitForDisplayed({ timeout: 40000 });
     for (const translation of data.translations_array) {
@@ -68,8 +68,8 @@ class NavigationMenuPage {
     await (await this.editItemSaveBtn()).click();
   }
 
-  public collapseMenuItemDropdown(index: number) {
-    this.menuItemsChilds[index].$('#collapseToggle').click();
+  public async collapseMenuItemDropdown(index: number) {
+    await (await (await this.menuItemsChilds())[index].$('#collapseToggle')).click();
   }
 
   public async dragTemplateOnElementInCreatedDropdown(
@@ -77,8 +77,8 @@ class NavigationMenuPage {
     indexCreatedDropdown: number,
     indexElementInCreatedDropdown = 0
   ) {
-    this.collapseTemplates(0);
-    if (this.dropdownBodyChilds(indexCreatedDropdown).length === 0) {
+    await this.collapseTemplates(0);
+    if ((await this.dropdownBodyChilds(indexCreatedDropdown)).length === 0) {
       await (await this.dragHandleOnItemInMainMenu(indexTemplate)).dragAndDrop(
         await this.dropdownBody(indexCreatedDropdown)
       );
@@ -111,14 +111,14 @@ class NavigationMenuPage {
     indexItemForSwap,
     indexItemOfSwap
   ) {
-    const elem = await (await this.menuItemsChilds[indexDropdownInMenuItems]).$(
+    const elem = await (await this.menuItemsChilds())[indexDropdownInMenuItems].$(
       `#drag_handle${indexDropdownInMenuItems}_${indexItemForSwap}`
     );
     await elem.scrollIntoView();
     await browser.pause(2000);
 
-    elem.dragAndDrop(
-      this.menuItemsChilds[indexDropdownInMenuItems].$(
+    await elem.dragAndDrop(
+      await (await this.menuItemsChilds())[indexDropdownInMenuItems].$(
         `#drag_handle${indexDropdownInMenuItems}_${indexItemOfSwap}`
       )
     );
@@ -126,7 +126,7 @@ class NavigationMenuPage {
 
   public async createMenuItemFromTemplate(indexItemInTemplate) {
     await (await this.dragHandleOnItemInMainMenu(indexItemInTemplate)).dragAndDrop(
-      await this.menuItemsChilds[0]
+      (await this.menuItemsChilds())[0]
     );
   }
 
@@ -143,7 +143,7 @@ class NavigationMenuPage {
   }
 
   public async openOnEditCreatedMenuItem(indexInCreatedMenuItems) {
-    await (await (await this.menuItemsChilds[indexInCreatedMenuItems]).$('#editBtn')).click();
+    await (await (await this.menuItemsChilds())[indexInCreatedMenuItems].$('#editBtn')).click();
     await (await $('#editMenuEntry')).waitForDisplayed({ timeout: 40000 });
   }
 
@@ -152,9 +152,7 @@ class NavigationMenuPage {
     secondLevelIndex,
     translationIndex
   ) {
-    const ele = await $(
-      `#editItemTranslation${firstLevelIndex}_${secondLevelIndex}_${translationIndex}`
-    );
+    const ele = await $(`#editItemTranslation${firstLevelIndex}_${secondLevelIndex}_${translationIndex}`);
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
@@ -174,7 +172,7 @@ class NavigationMenuPage {
   }
 
   public async deleteElementFromMenuItems(indexElementInMenu) {
-    const deleteBtn = await (await this.menuItemsChilds[indexElementInMenu]).$('#deleteBtn');
+    const deleteBtn = await (await this.menuItemsChilds())[indexElementInMenu].$('#deleteBtn');
     await deleteBtn.scrollIntoView();
     await deleteBtn.waitForClickable({ timeout: 40000 });
     await deleteBtn.click();
@@ -185,7 +183,7 @@ class NavigationMenuPage {
   }
 
   public async deleteElementFromDropdown(indexDropdown, indexInDropdown) {
-    const deleteBtn = await (await this.dropdownBodyChilds(indexDropdown)[indexInDropdown]).$(
+    const deleteBtn = await (await this.dropdownBodyChilds(indexDropdown))[indexInDropdown].$(
       '#deleteBtn'
     );
     await deleteBtn.scrollIntoView();
@@ -288,9 +286,13 @@ class NavigationMenuPage {
     if (data.securityGroups.length > 0) {
       await this.editSecurityGroupsValue(data.securityGroups);
     }
+    console.log('sec selected 1');
     await (await this.editLinkInput()).setValue(data.link);
+    console.log('sec selected 2');
     if (data.translations.length > 0) {
+      console.log('sec selected 3');
       for (const translation of data.translations) {
+        console.log('sec selected 4');
         const i = data.translations.indexOf(translation);
         await (await this.editItemTranslation(indexInCreated, 0, i)).setValue(translation);
       }
@@ -326,7 +328,7 @@ class NavigationMenuPage {
     for (const textSecurityGroup of securityGroups) {
       await (await (this.editSecurityGroupsSelector())).click();
       await (await $(
-        `/ /*[@id="editSecurityGroupsSelector"]//*[text()="${textSecurityGroup}"]`
+        `//*[@id="editSecurityGroupsSelector"]//*[text()="${textSecurityGroup}"]`
       )).click();
       await browser.pause(500);
     }

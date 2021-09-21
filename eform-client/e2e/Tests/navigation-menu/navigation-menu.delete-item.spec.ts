@@ -36,14 +36,15 @@ describe('Navigation menu - Delete item', function () {
     await navigationMenuPage.dragTemplateOnElementInCreatedDropdown(3, (await navigationMenuPage.menuItemsChilds()).length - 1);
 
     // check, how match created items in dropdown
-    expect(3).eq(await navigationMenuPage.dropdownBodyChilds((await navigationMenuPage.menuItemsChilds()).length - 1).length);
+    expect(3).eq(await (await navigationMenuPage.dropdownBodyChilds((await navigationMenuPage.menuItemsChilds()).length - 1)).length);
 
     // save menu
     await navigationMenuPage.clickSaveMenuBtn();
   });
   it('should before deleted items from custom dropdown and items menu', async() => {
     // remember count elements in dropdown
-    const countInDropdown = await navigationMenuPage.dropdownBodyChilds((await navigationMenuPage.menuItemsChilds()).length - 1).length;
+    // tslint:disable-next-line:max-line-length
+    const countInDropdown = await (await navigationMenuPage.dropdownBodyChilds((await navigationMenuPage.menuItemsChilds()).length - 1)).length;
 
     // delete elements in dropdown
     await navigationMenuPage.deleteElementFromDropdown((await navigationMenuPage.menuItemsChilds()).length - 1, 0);
@@ -52,8 +53,8 @@ describe('Navigation menu - Delete item', function () {
     await navigationMenuPage.clickSaveMenuBtn();
 
     // check how many items are left in the dropdown
-    expect(countInDropdown - 3).eq(await navigationMenuPage.dropdownBodyChilds(
-      (await navigationMenuPage.menuItemsChilds()).length - 1).length);
+    expect(countInDropdown - 3).eq(await (await navigationMenuPage.dropdownBodyChilds(
+      (await (await navigationMenuPage.menuItemsChilds()).length - 1))).length);
 
     // remember count elements in menu items
     const countInMenuItems = (await navigationMenuPage.menuItemsChilds()).length;

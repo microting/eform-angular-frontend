@@ -11,12 +11,12 @@ describe('Subheader test', function () {
     await myEformsPage.Navbar.goToMenuEditorPage();
   });
   it('element must be moved from templates to list', async () => {
-    const count = navigationMenuPage.menuItemsChilds.length;
+    const count = (await navigationMenuPage.menuItemsChilds()).length;
     await navigationMenuPage.collapseTemplates(0);
     await navigationMenuPage.createMenuItemFromTemplate(0);
     await navigationMenuPage.collapseTemplates(0);
 
-    expect(count + 1).eq(navigationMenuPage.menuItemsChilds.length);
+    expect(count + 1).eq((await navigationMenuPage.menuItemsChilds()).length);
     await navigationMenuPage.clickSaveMenuBtn();
     await navigationMenuPage.openOnEditCreatedMenuItem(0);
     translation = await (await navigationMenuPage.editItemTranslation(0, 0, 1)).getValue();
@@ -27,7 +27,7 @@ describe('Subheader test', function () {
     const h1 = $('eform-subheader h1');
     await (await myEformsPage.Navbar.clickOnHeaderMenuItem2(translation)).click();
     await spinnerAnimation.waitForDisplayed({ timeout: 30000, reverse: true });
-    expect(h1.getText()).eq(
+    expect(await h1.getText()).eq(
       translation,
       'subheader text must be equal with text in translate'
     );
@@ -39,7 +39,7 @@ describe('Subheader test', function () {
     await navigationMenuPage.clickSaveMenuBtn();
     await (await myEformsPage.Navbar.clickOnHeaderMenuItem2(translation)).click();
     await spinnerAnimation.waitForDisplayed({ timeout: 30000, reverse: true });
-    expect(h1.getText()).eq(
+    expect(await h1.getText()).eq(
       translation,
       'subheader text must be equal with text in translate'
     );

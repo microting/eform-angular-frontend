@@ -26,7 +26,7 @@ describe(' Navigation menu - Drag item', function () {
     await navigationMenuPage.dragTemplateOnElementInCreatedDropdown(2, (await navigationMenuPage.menuItemsChilds()).length - 1);
     await navigationMenuPage.dragTemplateOnElementInCreatedDropdown(3, (await navigationMenuPage.menuItemsChilds()).length - 1);
 
-    expect(3).eq(navigationMenuPage.dropdownBodyChilds((await navigationMenuPage.menuItemsChilds()).length - 1).length);
+    expect(3).eq((await navigationMenuPage.dropdownBodyChilds((await navigationMenuPage.menuItemsChilds()).length - 1)).length);
   });
   it('should edit elements in dropdown', async () => {
     const array = [
@@ -46,7 +46,9 @@ describe(' Navigation menu - Drag item', function () {
         indexDropdownInMenu: (await navigationMenuPage.menuItemsChilds()).length - 1
       }];
 
-    array.forEach(data => navigationMenuPage.editTranslationsOnDropdownBodyChilds(data)); // editing translations in each dropdown element
+    for (const data of array) {
+      await navigationMenuPage.editTranslationsOnDropdownBodyChilds(data);
+    } // editing translations in each dropdown element
 
     await navigationMenuPage.clickSaveMenuBtn();
 
@@ -68,9 +70,11 @@ describe(' Navigation menu - Drag item', function () {
     await navigationMenuPage.clickSaveMenuBtn();
 
     const itemsBeforeSwap = ['drag_handle Device Users / test2Dan', 'drag_handle Workers / test0Dan', 'drag_handle Sites / test1Dan'];
-    await navigationMenuPage.dropdownBodyChilds((await navigationMenuPage.menuItemsChilds()).length - 1).forEach((elem, i) =>
-      expect(elem.getText()).eq(itemsBeforeSwap[i])
-    );
+    // tslint:disable-next-line:max-line-length
+    for (let i = 0; i < (await navigationMenuPage.dropdownBodyChilds((await navigationMenuPage.menuItemsChilds()).length - 1)).length; i++) {
+      const elem = (await navigationMenuPage.dropdownBodyChilds((await navigationMenuPage.menuItemsChilds()).length - 1))[i];
+      expect(await elem.getText()).eq(itemsBeforeSwap[i]);
+    }
     await navigationMenuPage.resetMenu();
   });
 });

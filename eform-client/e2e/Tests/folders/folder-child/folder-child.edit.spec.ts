@@ -22,7 +22,7 @@ describe('Create folder', function () {
     const rowCountBeforeCreation = await foldersPage.rowChildrenNum();
     await folder.createChild(nameFolderChildren, description);
     await folder.expandChildren();
-    const rowCountAfterCreation = await foldersPage.rowChildrenNum;
+    const rowCountAfterCreation = await foldersPage.rowChildrenNum();
     expect(
       rowCountBeforeCreation + 1,
       'Number of rows has not changed after creating new folder'
@@ -30,15 +30,19 @@ describe('Create folder', function () {
   });
   it('Should change name', async () => {
     const newName = generateRandmString();
+    console.log('s1');
     const childFolderBeforeEdit = await foldersPage.getFolderFromTree(
       await foldersPage.getFolderRowNumByName(nameFolder),
       1
     );
+    console.log('s2');
     await childFolderBeforeEdit.editFolderChild(newName, null);
+    console.log('s3');
     const childFolderAfterEdit = await foldersPage.getFolderFromTree(
       await foldersPage.getFolderRowNumByName(nameFolder),
       1
     );
+    console.log('s4');
     expect(childFolderAfterEdit.nameTree, 'Folder name has not changed').eq(
       newName
     );
@@ -88,8 +92,8 @@ describe('Create folder', function () {
   });
   it('Should delete folder 1', async () => {
     const rowCountBeforeDelete = await foldersPage.rowChildrenNum();
-    await foldersPage
-      .getFolderFromTree(await foldersPage.getFolderRowNumByName(nameFolder), 1)
+    await (await foldersPage
+      .getFolderFromTree(await foldersPage.getFolderRowNumByName(nameFolder), 1))
       .delete();
     const rowCountAfterDelete = await foldersPage.rowChildrenNum();
     expect(rowCountBeforeDelete - 1, 'Folder not deleted', rowCountAfterDelete);

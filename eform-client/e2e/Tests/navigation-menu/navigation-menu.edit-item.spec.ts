@@ -68,8 +68,10 @@ describe(' Navigation menu - Edit item', function () {
     await navigationMenuPage.clickSaveMenuBtn();
 
     await navigationMenuPage.openOnEditCreatedMenuItem((await navigationMenuPage.menuItemsChilds()).length - 1);
-    dropdown.securityGroups.forEach((securityGroup, i) =>
-      expect(navigationMenuPage.securityGroupsValue[i].getText(), 'SecurityGroup save is incorrect').eq(securityGroup));
+    for (const securityGroup of dropdown.securityGroups) {
+      const i = dropdown.securityGroups.indexOf(securityGroup);
+      expect(await (await navigationMenuPage.securityGroupsValue())[i].getText(), 'SecurityGroup save is incorrect').eq(securityGroup);
+    }
     for (const translation of dropdown.translations) {
       const i = dropdown.translations.indexOf(translation);
       if (translation) {
