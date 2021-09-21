@@ -105,7 +105,7 @@ class SitesPage extends PageWithNavbarPage {
 
   public async removeTags(tagName: string[]) {
     await (await this.sitesManageTagsBtn()).click();
-    (await tagsModalPage.tagsModalCloseBtn()).waitForDisplayed({ timeout: 40000 });
+    await (await tagsModalPage.tagsModalCloseBtn()).waitForDisplayed({ timeout: 40000 });
     for (let i = 0; i < tagName.length; i++) {
       await (await tagsModalPage.getTagByName(tagName[i])).deleteTag();
     }
@@ -145,7 +145,6 @@ export class SitesRowObject {
       this.siteId = +(await this.element.$('#siteUUId')).getText();
       this.units = await (await this.element.$('#units')).getText();
       this.siteName = await (await this.element.$('#siteName')).getText();
-      console.log(this.siteName);
       const list = (await (await this.element
         .$('#tags'))
         .$$('#assignedTag'));
