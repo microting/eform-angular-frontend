@@ -1,7 +1,7 @@
 export default class Page {
   constructor() {
   }
-   open(path) {
-    browser.url(path);
+   async open(path) {
+    await browser.url(path);
   }
 }

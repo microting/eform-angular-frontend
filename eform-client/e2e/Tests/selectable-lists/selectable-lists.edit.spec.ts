@@ -2,6 +2,7 @@ import loginPage from '../../Page objects/Login.page';
 import myEformsPage from '../../Page objects/MyEforms.page';
 import selectableLists from '../../Page objects/SelectableLists.page';
 import { generateRandmString } from '../../Helpers/helper-functions';
+import {Guid} from 'guid-typescript';
 
 const expect = require('chai').expect;
 
@@ -34,7 +35,7 @@ describe('Entity Select', function () {
     const selectableListRowObject = await selectableLists.getFirstSelectableListObject();
     expect(selectableListRowObject.name).equal(data.name);
     await selectableListRowObject.openEdit();
-    expect((await selectableLists.getFirstEntityItemOnEdit()).name).equal(data.items[0]);
+    expect((await (await selectableLists.getFirstEntityItemOnEdit()).name)).equal(data.items[0]);
     await selectableListRowObject.closeEdit();
   });
   it('should only edit item name', async () => {
@@ -42,7 +43,7 @@ describe('Entity Select', function () {
     const data = { items: [generateRandmString()] };
     await selectableListRowObject.edit(data, false, false, false, true);
     await selectableListRowObject.openEdit();
-    expect((await selectableLists.getFirstEntityItemOnEdit()).name).equal(data.items[0]);
+    expect((await (await selectableLists.getFirstEntityItemOnEdit()).name)).equal(data.items[0]);
     await selectableListRowObject.closeEdit();
     // selectableLists.cleanupList();
   });
@@ -70,7 +71,7 @@ describe('Entity Select', function () {
     selectableListRowObject = await selectableLists.getFirstSelectableListObject();
     expect(selectableListRowObject.name).equal(data.name);
     await selectableListRowObject.openEdit();
-    expect((await selectableLists.getFirstEntityItemOnEdit()).name).equal(data.items[0]);
+    expect((await (await selectableLists.getFirstEntityItemOnEdit()).name)).equal(data.items[0]);
     await selectableListRowObject.closeEdit();
     await selectableListRowObject.delete();
   });
@@ -96,7 +97,7 @@ describe('Entity Select', function () {
     await selectableListRowObject.openEdit();
     for (let i = 0; i < data.items.length; i++) {
       expect(
-        (await selectableLists.getEntitySelectItemEditRowObjectByIndex(i + 1)).name
+        (await (await selectableLists.getEntitySelectItemEditRowObjectByIndex(i + 1)).name)
       ).equal(data.items[i]);
     }
     await selectableListRowObject.closeEdit();

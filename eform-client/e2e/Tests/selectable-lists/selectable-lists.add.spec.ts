@@ -22,7 +22,7 @@ describe('Entity Select', function () {
     const data = {name: generateRandmString()};
     const countBeforeCreate = await selectableLists.selectableListCount();
     await selectableLists.createSelectableList(data, false, true);
-    expect(countBeforeCreate).equal(selectableLists.selectableListCount());
+    expect(countBeforeCreate).equal(await selectableLists.selectableListCount());
   });
   it('should create a new list with one item', async () => {
     await selectableLists.cleanupList();

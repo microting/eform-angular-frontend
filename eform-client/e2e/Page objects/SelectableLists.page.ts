@@ -12,7 +12,18 @@ export class SelectableListsPage extends PageWithNavbarPage {
 
   public async itemsEditPageCount(): Promise<number> {
     let i = 0;
-    while ((await $(`#entitySelectItemEditNameentityItemUId_${i}`)).isExisting()) {
+    let searching = true;
+    while (searching) {
+      const id = '#entitySelectItemEditNameentityItemUId_' + i;
+      const exists = await $(id).isExisting();
+      if (exists) {
+        searching = false;
+      } else {
+        if (i === 0) {
+          searching = false;
+          i = -1;
+        }
+      }
       i++;
     }
     return i;
@@ -181,16 +192,20 @@ export class SelectableListsPage extends PageWithNavbarPage {
     return ele;
   }
 
-  public async getEntitySelectItemEditRowObjectByIndex(
-    index: number
-  ): Promise<EntitySelectItemEditRowObject> {
+  public async getEntitySelectItemEditRowObjectByIndex(index: number):
+    Promise<EntitySelectItemEditRowObject> {
     const obj = new EntitySelectItemEditRowObject();
     return await obj.getRow(index);
   }
 
   async getFirstSelectableListObject(): Promise<SelectableListRowObject> {
     const obj = new SelectableListRowObject();
-    return await obj.getRow(1);
+    const row = await obj.getRow(1);
+    if (row.name !== 'Device users') {
+      return row;
+    } else {
+      return await obj.getRow(2);
+    }
   }
 
   async getLastSelectableListObject(): Promise<SelectableListRowObject> {
@@ -270,7 +285,11 @@ export class SelectableListsPage extends PageWithNavbarPage {
 
   public async cleanupList() {
     for (let i = await this.selectableListCount(); i > 0; i--) {
-      await (await this.getFirstSelectableListObject()).delete();
+      const obj = new SelectableListRowObject();
+      const row = await obj.getRow(i);
+      if (row.name !== 'Device users') {
+        await row.delete();
+      }
     }
   }
 }
@@ -281,6 +300,7 @@ export default selectableLists;
 export class SelectableListRowObject {
   constructor() {}
 
+  index: number;
   element: WebdriverIO.Element;
   id: number;
   name: string;
@@ -288,7 +308,8 @@ export class SelectableListRowObject {
   editBtn: WebdriverIO.Element;
   deleteBtn: WebdriverIO.Element;
 
-  async getRow(rowNum: number) {
+  public async getRow(rowNum: number) {
+    this.index = rowNum;
     this.element = (await $$('#tableBodyEntitySelect > tr'))[rowNum - 1];
     if (this.element) {
       this.id = +await (await (await this.element).$('#entitySelectMicrotingUUID')).getText();
@@ -375,10 +396,10 @@ export class SelectableListRowObject {
         }
         await (await selectableLists.entitySelectImportSaveBtn()).click();
       } else {
-        for (let i = 0; i < (await data.items).length; i++) {
+        for (let i = 0; i < (data.items).length; i++) {
           if (editItems) {
             const itemObj = new EntitySelectItemEditRowObject();
-            const item = await itemObj.getRow(i);
+            const item = await itemObj.getRow(i + 1);
             if (item) {
               await item.edit(data.items[i]);
             } else {
@@ -386,8 +407,11 @@ export class SelectableListRowObject {
               await (await selectableLists.getLastItemEditObject()).edit(data.items[i]);
             }
           }
-          await (await selectableLists.entitySelectEditSingleItemBtn()).click();
-          await (await selectableLists.getLastItemEditObject()).edit(data.items[i]);
+          // console.log('edit 4e');
+          // await browser.pause(10000);
+          // await (await selectableLists.entitySelectEditSingleItemBtn()).click();
+          // await browser.pause(10000);
+          // await (await selectableLists.getLastItemEditObject()).edit(data.items[i]);
         }
       }
     }
@@ -404,7 +428,8 @@ export class EntitySelectItemEditRowObject {
   deleteBtn;
 
   async getRow(rowNum: number): Promise<EntitySelectItemEditRowObject> {
-    const name = await $('#entitySelectItemEditNameentityItemUId_' + (rowNum - 1));
+    const id = '#entitySelectItemEditNameentityItemUId_' + (rowNum - 1);
+    const name = await $(id);
     if (name) {
       try {
         this.name = name.getText();
@@ -422,7 +447,7 @@ export class EntitySelectItemEditRowObject {
   }
 
   async edit(newName: string, clickCancel = false) {
-    await this.editBtn.scrollIntoView();
+    // await this.editBtn.scrollIntoView();
     await this.editBtn.click();
     await (await selectableLists.entitySelectEditItemNameBox()).setValue(newName);
     if (!clickCancel) {
