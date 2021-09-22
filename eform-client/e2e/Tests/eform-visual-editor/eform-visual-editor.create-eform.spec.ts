@@ -16,9 +16,9 @@ import { afterEach, beforeEach } from 'mocha';
 const expect = require('chai').expect;
 
 describe('Visual editor page', function () {
-  before(function () {
-    loginPage.open('/');
-    loginPage.login();
+  before(async () => {
+    await loginPage.open('/');
+    await loginPage.login();
   });
   beforeEach(async () => {
     await eformVisualEditorPage.goToVisualEditor();
@@ -321,7 +321,7 @@ describe('Visual editor page', function () {
     await mainChecklist.getAllFields();
     await mainChecklist.fields[0].makeCopy();
     await eformVisualEditorPage.clickSave();
-    await myEformsPage.getLastMyEformsRowObj().goToVisualEditor();
+    await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
     mainChecklist = new MainCheckListRowObj();
     await mainChecklist.getAllFields();
     expect(
@@ -396,7 +396,7 @@ describe('Visual editor page', function () {
       await mainChecklist.fields[0].nestedFields[0].changeColor('red');
       await mainChecklist.fields[0].nestedFields[0].makeCopy();
       await eformVisualEditorPage.clickSave();
-      await myEformsPage.getLastMyEformsRowObj().goToVisualEditor();
+      await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
       mainChecklist = new MainCheckListRowObj();
       await mainChecklist.getAllFields();
       expect(
@@ -495,7 +495,7 @@ describe('Visual editor page', function () {
     await mainChecklist.getAllFields();
     await mainChecklist.fields[0].delete();
     await eformVisualEditorPage.clickSave();
-    await myEformsPage.getLastMyEformsRowObj().goToVisualEditor();
+    await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
     mainChecklist = new MainCheckListRowObj();
     await mainChecklist.getAllFields();
     expect(
@@ -542,7 +542,7 @@ describe('Visual editor page', function () {
       ],
     };
     await eformVisualEditorPage.createVisualTemplate(checklistObj, true);
-    await myEformsPage.getLastMyEformsRowObj().goToVisualEditor();
+    await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
     const mainChecklist = new MainCheckListRowObj();
     await mainChecklist.getAllFields();
     for (let i = 0; i < checklistObj.checklists.length; i++) {
@@ -608,7 +608,7 @@ describe('Visual editor page', function () {
       ],
     };
     await eformVisualEditorPage.createVisualTemplate(checklistObj, true);
-    await myEformsPage.getLastMyEformsRowObj().goToVisualEditor();
+    await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
     const mainChecklist = new MainCheckListRowObj();
     await mainChecklist.getAllFields();
     for (let i = 0; i < checklistObj.checklists.length; i++) {
@@ -685,7 +685,7 @@ describe('Visual editor page', function () {
       ],
     };
     await eformVisualEditorPage.createVisualTemplate(checklistObj, true);
-    await myEformsPage.getLastMyEformsRowObj().goToVisualEditor();
+    await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
     const mainChecklist = new MainCheckListRowObj();
     await mainChecklist.getAllFields();
     for (let i = 0; i < checklistObj.checklists.length; i++) {
@@ -897,14 +897,14 @@ describe('Visual editor page', function () {
         },
       ],
     };
-    myEformsPage.createNewEform(
+    await myEformsPage.createNewEform(
       eformName,
       [],
       0,
       XMLForEformFractions.XML.replace('Number 1', eformName)
     );
-    myEformsPage.getLastMyEformsRowObj().goToVisualEditor();
-    const mainChecklist = new MainCheckListRowObj();
+    await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
+    const mainChecklist = await new MainCheckListRowObj();
     await mainChecklist.getAllFields();
 
     expect(

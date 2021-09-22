@@ -123,7 +123,7 @@ class MyEformsPage extends PageWithNavbarPage {
   async getFirstMyEformsRowObj(): Promise<MyEformsRowObject> {
     await browser.pause(500);
     const result = new MyEformsRowObject();
-    return await result.GetRow(1);
+    return await result.getRow(1);
   }
 
   async getEformsRowObjByNameEForm(nameEform: string): Promise<MyEformsRowObject> {
@@ -138,9 +138,10 @@ class MyEformsPage extends PageWithNavbarPage {
     return null;
   }
 
-    getLastMyEformsRowObj(): MyEformsRowObject {
-      browser.pause(500);
-      return new MyEformsRowObject(this.rowNum);
+    async getLastMyEformsRowObj(): Promise<MyEformsRowObject> {
+      await browser.pause(500);
+      const obj = new MyEformsRowObject();
+      return await obj.getRow(await this.rowNum());
     }
 
   async getEformRowObj(num, pause: boolean): Promise<MyEformsRowObject> {
@@ -148,7 +149,7 @@ class MyEformsPage extends PageWithNavbarPage {
       await browser.pause(500);
     }
     const result =  new MyEformsRowObject();
-    return await result.GetRow(num);
+    return await result.getRow(num);
   }
 
   async clearEFormTable() {
@@ -158,13 +159,15 @@ class MyEformsPage extends PageWithNavbarPage {
     }
   }
 
-  async createNewEform(eFormLabel, newTagsList = [], tagAddedNum = 0) {
+  async createNewEform(eFormLabel, newTagsList = [], tagAddedNum = 0, xml = '') {
     const spinnerAnimation = await $('#spinner-animation');
     await spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
     await (await this.newEformBtn()).click();
     await (await this.xmlTextArea()).waitForDisplayed({ timeout: 40000 });
     // Create replaced xml and insert it in textarea
-    const xml = XMLForEform.XML.replace('TEST_LABEL', eFormLabel);
+    if (!xml) {
+      xml = XMLForEform.XML.replace('TEST_LABEL', eFormLabel);
+    }
     await browser.execute(function (xmlText) {
       (<HTMLInputElement>document.getElementById('eFormXml')).value = xmlText;
     }, xml);
@@ -258,7 +261,7 @@ class MyEformsRowObject {
   uploadZipArchiveBtn;
   goVisualEditorBtn;
 
-  async GetRow(rowNum: number) {
+  async getRow(rowNum: number) {
     // console.log(rowNum);
     // if ((await $$('#eform-id-' + (rowNum - 1)))[0]) {
       this.id = +await (await $$('#eform-id-' + (rowNum - 1)))[0].getText();
@@ -275,7 +278,7 @@ class MyEformsRowObject {
       } catch (e) {}
       const val2 = (await $$(`#mainPageEFormsTableBody tr`))[rowNum - 1];
       this.tags = await val2.$$(`#eform-tag-` + (rowNum - 1));
-      this.pairs = await $$(`//*[@id="mainPageEFormsTableBody"]/tr[${rowNum}]//*[@id="eform-pair"]`);
+      // this.pairs = await $$(`//*[@id="mainPageEFormsTableBody"]/tr[${rowNum}]//*[@id="eform-pair"]`);
       this.editTagsBtn = (await $$('#eform-edit-btn-' + (rowNum - 1)))[0];
       this.editPairEformBtn = await ((await $$(`#mainPageEFormsTableBody tr`))[rowNum - 1]).$('#eform-pairing-btn-' + (rowNum - 1));
       this.addPairEformBtn = await ((await $$(`#mainPageEFormsTableBody tr`))[rowNum - 1]).$('#eform-add-btn-' + (rowNum - 1));
