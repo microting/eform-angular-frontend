@@ -42,7 +42,7 @@ describe('Visual editor page', function () {
     };
     await eformVisualEditorPage.createVisualTemplate(checklistWithoutTranslations);
     expect(
-      (await eformVisualEditorPage.saveCreateEformBtn()).isEnabled(),
+      (await (await eformVisualEditorPage.saveCreateEformBtn()).isEnabled()),
       'button "create" must be disabled'
     ).eq(false);
   });

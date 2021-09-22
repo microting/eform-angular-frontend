@@ -18,14 +18,14 @@ class EformVisualEditorPage extends PageWithNavbarPage {
   }
 
   async checkListCountAll(): Promise<number> {
-    return $$('[id^="checkListSection"]').length;
+    return (await $$('[id^="checkListSection"]')).length;
   }
   async checkListCountOnFirsLevel(): Promise<number> {
-    return $$('#editorChecklists > app-visual-editor-checklist').length;
+    return (await $$('#editorChecklists > app-visual-editor-checklist')).length;
   }
 
   async fieldsCountOnFirsLevel(): Promise<number> {
-    return $$('[id*=field_]').length;
+    return (await $$('[id*=field_]')).length;
   }
 
   async eformsVisualEditor(): Promise<WebdriverIO.Element> {
@@ -35,8 +35,8 @@ class EformVisualEditorPage extends PageWithNavbarPage {
     return ele;
   }
 
-  async manaags(): Promise<WebdriverIO.Element> {
-    const ele = await $('#manaags');
+  async manageTags(): Promise<WebdriverIO.Element> {
+    const ele = await $('#manageTags');
     await ele.waitForDisplayed({ timeout: 40000 });
     await ele.waitForClickable({ timeout: 40000 });
     return ele;
@@ -174,7 +174,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
 
   async goToVisualEditor() {
     await (await this.eformsVisualEditor()).click();
-    await (await this.manaags()).waitForClickable({ timeout: 40000 });
+    await (await this.manageTags()).waitForClickable({ timeout: 40000 });
   }
 
   async createVisualTemplate(checklist: MainChecklistObj, clickSave = false) {
@@ -224,10 +224,10 @@ class EformVisualEditorPage extends PageWithNavbarPage {
     if (checklist) {
       if (checklist.translations) {
         for (let i = 0; i < checklist.translations.length; i++) {
-          $(`#newChecklistNameTranslation_${i}`).setValue(
+          await (await $(`#newChecklistNameTranslation_${i}`)).setValue(
             checklist.translations[i].name
           );
-          $(`#newChecklistDescriptionTranslation_${i} .pell-content`).setValue(
+          await (await $(`#newChecklistDescriptionTranslation_${i} .pell-content`)).setValue(
             checklist.translations[i].description
           );
         }
@@ -237,10 +237,10 @@ class EformVisualEditorPage extends PageWithNavbarPage {
       // } else {
       await (await this.changeChecklistSaveBtn()).click();
       // }
-      await (await this.manaags()).waitForClickable({ timeout: 40000 });
+      await (await this.manageTags()).waitForClickable({ timeout: 40000 });
       if (checklist.fields) {
         for (let i = 0; i < checklist.fields.length; i++) {
-          this.createVisualTemplateField(
+          await this.createVisualTemplateField(
             checklist.fields[i],
             false,
             await $(`#addNewNestedField${index}`)
@@ -250,16 +250,16 @@ class EformVisualEditorPage extends PageWithNavbarPage {
     }
   }
 
-  createVisualTemplateField(
+  async createVisualTemplateField(
     checklistFieldObj: ChecklistFieldObj,
     clickCancel = false,
     addNewNestedFieldBtn: WebdriverIO.Element = null
   ) {
-    this.openVisualTemplateFieldCreateModal(
+    await this.openVisualTemplateFieldCreateModal(
       checklistFieldObj,
       addNewNestedFieldBtn
     );
-    this.closeVisualTemplateFieldCreateModal(clickCancel);
+    await this.closeVisualTemplateFieldCreateModal(clickCancel);
   }
 
   async openVisualTemplateFieldCreateModal(
@@ -340,7 +340,7 @@ class EformVisualEditorPage extends PageWithNavbarPage {
     } else {
       await (await this.changeFieldSaveBtn()).click();
     }
-    await (await this.manaags()).waitForClickable({ timeout: 40000 });
+    await (await this.manageTags()).waitForClickable({ timeout: 40000 });
   }
 
   async clickSave() {
@@ -378,11 +378,13 @@ export class MainCheckListRowObj {
   async getAllFields() {
     const countField = await eformVisualEditorPage.fieldsCountOnFirsLevel();
     for (let i = 0; i < countField; i++) {
-      this.fields.push(new ChecklistFieldRowObj(i));
+      const rowObj = new ChecklistFieldRowObj(i);
+      this.fields.push(await rowObj.loadData());
     }
     const countChecklist = await eformVisualEditorPage.checkListCountAll();
     for (let i = 0; i < countChecklist; i++) {
-      this.checklists.push(new ChecklistRowObj(i));
+      const clRow = new ChecklistRowObj(i);
+      this.checklists.push(await clRow.load());
     }
     for (let i = 0; i < applicationLanguages.length; i++) {
       const checkbox = await $(`#languageCheckbox${i}`);
@@ -476,7 +478,7 @@ export class ChecklistFieldRowObj {
   nestedFields: ChecklistFieldRowObj[];
   moveFieldBtn: WebdriverIO.Element;
 
-  async loadData() {
+  async loadData(): Promise<ChecklistFieldRowObj> {
     if (this.isNested) {
       this.element = (await $$(
         `#field_${this.fieldIndex} #nestedFields app-visual-editor-field`
@@ -523,35 +525,37 @@ export class ChecklistFieldRowObj {
           i < (await this.element.$$('#nestedFields app-visual-editor-field')).length;
           i++
         ) {
-          this.nestedFields.push(new ChecklistFieldRowObj(i, true, this.index));
+          const clfRow = new ChecklistFieldRowObj(i, true, this.index);
+          this.nestedFields.push(await clfRow.loadData());
         }
       }
     }
+    return this;
   }
 
   async changeColor(colorName: string) {
-    this.colorsBtn[colorName].click();
+    await this.colorsBtn[colorName].click();
   }
 
   async makeCopy() {
     await this.copyBtn.click();
   }
 
-  addNewNestedField(checklistFieldObj: ChecklistFieldObj) {
-    eformVisualEditorPage.createVisualTemplateField(
+  async addNewNestedField(checklistFieldObj: ChecklistFieldObj) {
+    await eformVisualEditorPage.createVisualTemplateField(
       checklistFieldObj,
       false,
       this.addNestedFieldBtn
     );
   }
 
-  collapseToggle() {
-    this.collapseToggleBtn.click();
+  async collapseToggle() {
+    await this.collapseToggleBtn.click();
   }
 
-  delete(clickCancel = false) {
-    this.openDeleteModal();
-    this.closeDeleteModal(clickCancel);
+  async delete(clickCancel = false) {
+    await this.openDeleteModal();
+    await this.closeDeleteModal(clickCancel);
   }
 
   async openDeleteModal() {
@@ -567,7 +571,7 @@ export class ChecklistFieldRowObj {
     } else {
       await (await eformVisualEditorPage.fieldDeleteDeleteBtn()).click();
     }
-    await (await eformVisualEditorPage.manaags()).waitForClickable({ timeout: 40000 });
+    await (await eformVisualEditorPage.manageTags()).waitForClickable({ timeout: 40000 });
   }
 
   async edit(field: ChecklistFieldObj, clickCancel = false) {
@@ -588,11 +592,11 @@ export class ChecklistFieldRowObj {
     } else {
       await (await eformVisualEditorPage.changeFieldSaveBtn()).click();
     }
-    await (await eformVisualEditorPage.manaags()).waitForClickable({ timeout: 40000 });
+    await (await eformVisualEditorPage.manageTags()).waitForClickable({ timeout: 40000 });
   }
 
-  changePosition(tarasyncField: ChecklistFieldRowObj) {
-    this.moveFieldBtn.dragAndDrop(tarasyncField.element);
+  async changePosition(tarasyncField: ChecklistFieldRowObj) {
+    await this.moveFieldBtn.dragAndDrop(tarasyncField.element);
   }
 }
 
@@ -625,7 +629,8 @@ export class ChecklistRowObj {
         i < (await this.element.$$(`#fields_${this.index}>app-visual-editor-field`)).length;
         i++
       ) {
-        this.fields.push(new ChecklistFieldRowObj(i, false, this.index, true));
+        const clfRow = new ChecklistFieldRowObj(i, false, this.index, true);
+        this.fields.push(await clfRow.loadData());
       }
       const selectedLanguages = await eformVisualEditorPage.selectedLanguages();
       await this.openEditModal();
@@ -646,6 +651,7 @@ export class ChecklistRowObj {
       }
       await this.closeEditModal(true);
     }
+    return this;
   }
 
   async delete(clickCancel = false) {
@@ -666,12 +672,12 @@ export class ChecklistRowObj {
     } else {
       await (await eformVisualEditorPage.checklistDeleteDeleteBtn()).click();
     }
-    await (await eformVisualEditorPage.manaags()).waitForClickable({ timeout: 40000 });
+    await (await eformVisualEditorPage.manageTags()).waitForClickable({ timeout: 40000 });
   }
 
-  edit(translations?: CommonTranslationsModel[], clickCancel = false) {
-    this.openEditModal(translations);
-    this.closeEditModal(clickCancel);
+  async edit(translations?: CommonTranslationsModel[], clickCancel = false) {
+    await this.openEditModal(translations);
+    await this.closeEditModal(clickCancel);
   }
 
   async openEditModal(translations?: CommonTranslationsModel[]) {
@@ -695,7 +701,7 @@ export class ChecklistRowObj {
     } else {
       await (await eformVisualEditorPage.changeChecklistSaveBtn()).click();
     }
-    await (await eformVisualEditorPage.manaags()).waitForClickable({ timeout: 40000 });
+    await (await eformVisualEditorPage.manageTags()).waitForClickable({ timeout: 40000 });
   }
 }
 

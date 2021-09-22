@@ -271,8 +271,8 @@ describe('Visual editor page', function () {
       `checklists[1] description not valid`
     ).eq(checklist.checklists[1].translations[0].description);
   });
-  afterEach(function () {
-    myEformsPage.Navbar.goToMyEForms();
-    myEformsPage.clearEFormTable();
+  afterEach(async () => {
+    await myEformsPage.Navbar.goToMyEForms();
+    await myEformsPage.clearEFormTable();
   });
 });
