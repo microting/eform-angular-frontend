@@ -44,7 +44,7 @@
     "@fortawesome/angular-fontawesome": "0.9.0",
     "@fortawesome/fontawesome-svg-core": "1.2.36",
     "@fortawesome/free-solid-svg-icons": "5.15.4",
-    "@ng-select/ng-select": "7.2.0",
+    "@ng-select/ng-select": "7.3.0",
     "@ngx-gallery/core": "4.0.3",
     "@ngx-gallery/gallerize": "4.0.3",
     "@ngx-gallery/lightbox": "4.0.3",
