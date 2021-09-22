@@ -17,10 +17,10 @@
         >
           drag_handle
         </i>
-        {{ getTranslation + '; ' + (fieldTypes[field.fieldType] | translate) }}
+        {{ fieldTranslationAndType }}
       </div>
       <div class="col">
-        <div class="row">
+        <div class="row" id="colors">
           <div *ngFor="let color of fieldColors">
             <div
               mdbBtn
@@ -40,6 +40,7 @@
           [fixedWidth]="true"
           size="lg"
           class="text-warning mr-2"
+          id="isNotFieldComplete"
         ></fa-icon>
         <button
           *ngIf="field.fieldType == fieldTypes.FieldGroup && !fieldIsNested"
@@ -60,7 +61,7 @@
         </button>
         <button
           id="editBtn"
-          class="btn btn-icon mr-2"
+          class="btn btn-neutral btn-icon mr-2"
           (click)="onEditField()"
           [mdbTooltip]="'Edit field' | translate"
         >
@@ -75,22 +76,18 @@
           <fa-icon icon="trash-alt" [fixedWidth]="true"></fa-icon>
         </button>
         <button
-          *ngIf="field.fieldType == fieldTypes.FieldGroup && field.collapsed"
-          id="expandBtn"
-          class="btn btn-icon mr-2"
-          [mdbTooltip]="'Expand field' | translate"
-          (click)="toggleCollapse(field)"
-        >
-          <fa-icon icon="angle-right" [fixedWidth]="true"></fa-icon>
-        </button>
-        <button
-          *ngIf="field.fieldType == fieldTypes.FieldGroup && !field.collapsed"
+          *ngIf="field.fieldType == fieldTypes.FieldGroup"
           id="collapseToggleBtn"
-          class="btn btn-icon mr-2"
-          [mdbTooltip]="'Collapse field' | translate"
+          class="btn btn-neutral btn-icon mr-2"
+          [mdbTooltip]="
+            (field.collapsed ? 'Expand field' : 'Collapse field') | translate
+          "
           (click)="toggleCollapse(field)"
         >
-          <fa-icon icon="angle-down" [fixedWidth]="true"></fa-icon>
+          <fa-icon
+            [icon]="field.collapsed ? 'angle-right' : 'angle-down'"
+            [fixedWidth]="true"
+          ></fa-icon>
         </button>
       </div>
     </div>
@@ -100,7 +97,7 @@
       #nestedFields="bs-collapse"
       *ngIf="field.fieldType == fieldTypes.FieldGroup"
       class="card-body"
-      [class]="field.collapsed ? 'p-1' : 'p-0'"
+      [class]="field.collapsed ? 'p-0' : 'p-1 pt-3'"
       dragula="FIELDS"
       [dragulaModel]="field.fields"
       id="nestedFields"

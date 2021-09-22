@@ -3,7 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import * as R from 'ramda';
 import { Subscription } from 'rxjs';
-import { applicationLanguages } from 'src/app/common/const';
+import {
+  applicationLanguages,
+  EformFieldTypesEnum,
+} from 'src/app/common/const';
 import {
   CommonDictionaryModel,
   EformVisualEditorFieldModel,
@@ -22,6 +25,7 @@ import { fixTranslations } from 'src/app/common/helpers';
 import { VisualEditorFieldModalComponent } from '../../';
 import { DragulaService } from 'ng2-dragula';
 import { CollapseComponent } from 'angular-bootstrap-md';
+import { AuthStateService } from 'src/app/common/store';
 
 @AutoUnsubscribe()
 @Component({
@@ -42,6 +46,7 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   availableTags: CommonDictionaryModel[] = [];
   isItemsCollapsed = false;
   eformVisualEditorUpdateModel: EformVisualEditorUpdateModel = new EformVisualEditorUpdateModel();
+  selectedLanguages: number[] = [];
 
   getTagsSub$: Subscription;
   getVisualTemplateSub$: Subscription;
@@ -54,7 +59,8 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
     private tagsService: EformTagService,
     private visualEditorService: EformVisualEditorService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authStateService: AuthStateService
   ) {
     this.dragulaService.createGroup('CHECK_LISTS', {
       moves: (el, container, handle) => {
@@ -79,11 +85,22 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
     });
   }
 
+  get isAllNamesEmpty() {
+    return !this.visualEditorTemplateModel.translations.find(
+      (x) => x.name !== ''
+    );
+  }
+
   ngOnInit(): void {
     this.getTags();
 
     this.routerSub$ = this.route.params.subscribe((params) => {
       this.selectedTemplateId = params['templateId'];
+      this.selectedLanguages = [
+        applicationLanguages.find(
+          (x) => x.locale === this.authStateService.currentUserLocale
+        ).id,
+      ];
       if (this.selectedTemplateId) {
         this.getVisualTemplate(this.selectedTemplateId);
       } else {
@@ -98,7 +115,6 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         if (data && data.success) {
           this.visualEditorTemplateModel = data.model;
-          // if there are not enough translations
           this.visualEditorTemplateModel.translations = fixTranslations(
             this.visualEditorTemplateModel.translations
           );
@@ -115,15 +131,18 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
   }
 
   initForm() {
-    for (const language of applicationLanguages) {
-      this.visualEditorTemplateModel = {
-        ...this.visualEditorTemplateModel,
-        translations: [
-          ...this.visualEditorTemplateModel.translations,
-          { id: null, languageId: language.id, description: '', name: '' },
-        ],
-      };
-    }
+    this.visualEditorTemplateModel.translations = fixTranslations(
+      this.visualEditorTemplateModel.translations
+    );
+    // for (const language of applicationLanguages) {
+    //   this.visualEditorTemplateModel = {
+    //     ...this.visualEditorTemplateModel,
+    //     translations: [
+    //       ...this.visualEditorTemplateModel.translations,
+    //       { id: null, languageId: language.id, description: '', name: '' },
+    //     ],
+    //   };
+    // }
   }
 
   createVisualTemplate() {
@@ -218,16 +237,19 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
         this.visualEditorTemplateModel
       );
     } else {
-      const parentField = this.visualEditorTemplateModel.fields[
-        model.fieldIndex
-      ];
-      model.fields.forEach(
-        (x) => (x.parentFieldId = parentField.id ?? parentField.tempId)
-      );
-      model.fields = this.checkPosition(model.fields);
-      this.visualEditorTemplateModel.fields[model.fieldIndex].fields = [
-        ...model.fields,
-      ];
+      const parentField =
+        this.visualEditorTemplateModel.fields[model.fieldIndex] ||
+        this.visualEditorTemplateModel.fields[model.fieldIndex - 1];
+      if (parentField.fieldType !== EformFieldTypesEnum.FieldGroup) {
+        model.fields.forEach(
+          (x) => (x.parentFieldId = parentField.id ?? parentField.tempId)
+        );
+        model.fields = this.checkPosition(model.fields);
+        (
+          this.visualEditorTemplateModel.fields[model.fieldIndex] ||
+          this.visualEditorTemplateModel.fields[model.fieldIndex - 1]
+        ).fields = [...model.fields];
+      }
     }
   }
 
@@ -479,16 +501,12 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
       if (!R.isNil(model.parentFieldIndex)) {
         indexes.push('fields', model.parentFieldIndex); // checkLists[x].fields[parentFieldIndex]
       }
-      indexes.push('fields', model.fieldIndex); // checkLists[x].fields or checkLists[x].fields[parentFieldIndex].fields[fieldIndex]
+      indexes.push('fields', model.fieldIndex);
+      // checkLists[x].fields[fieldIndex] or checkLists[x].fields[parentFieldIndex].fields[fieldIndex]
       const visualTemplatePath = R.lensPath(indexes);
-      // let field: EformVisualEditorFieldModel = R.view(
-      //   visualTemplatePath,
-      //   this.visualEditorTemplateModel
-      // );
-      // field = { ...field, ...model.field };
       this.visualEditorTemplateModel = R.set(
         visualTemplatePath,
-        model.field, // field,
+        model.field,
         this.visualEditorTemplateModel
       );
     } else {
@@ -678,6 +696,18 @@ export class EformVisualEditorContainerComponent implements OnInit, OnDestroy {
       }
     }
     return mas;
+  }
+
+  onAddOrDeleteLanguage(model: { addTranslate: boolean; languageId: number }) {
+    if (model) {
+      if (model.addTranslate) {
+        this.selectedLanguages = [...this.selectedLanguages, model.languageId];
+      } else {
+        this.selectedLanguages = [
+          ...this.selectedLanguages.filter((x) => x !== model.languageId),
+        ];
+      }
+    }
   }
 
   ngOnDestroy(): void {

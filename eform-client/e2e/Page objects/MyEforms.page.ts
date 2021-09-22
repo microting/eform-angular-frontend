@@ -1,3 +1,5 @@
+// noinspection JSIgnoredPromiseFromCall
+
 import { PageWithNavbarPage } from './PageWithNavbar.page';
 import XMLForEform from '../Constants/XMLForEform';
 import { FoldersRowObject } from './Folders.page';
@@ -136,6 +138,11 @@ class MyEformsPage extends PageWithNavbarPage {
     return null;
   }
 
+    getLastMyEformsRowObj(): MyEformsRowObject {
+      browser.pause(500);
+      return new MyEformsRowObject(this.rowNum);
+    }
+
   async getEformRowObj(num, pause: boolean): Promise<MyEformsRowObject> {
     if (pause) {
       await browser.pause(500);
@@ -238,17 +245,18 @@ class MyEformsRowObject {
   constructor() {}
 
 
+  element: WebdriverIO.Element;
   id: number;
   createdAt: Date;
   eFormName: string;
   tags: Array<any>;
   editTagsBtn;
-  pairs;
   addPairEformBtn;
   editPairEformBtn;
   editColumnsBtn;
   deleteBtn;
   uploadZipArchiveBtn;
+  goVisualEditorBtn;
 
   async GetRow(rowNum: number) {
     // console.log(rowNum);
@@ -362,5 +370,10 @@ class MyEformsRowObject {
     }
     await (await myEformsPage.saveParingBtn()).click();
     await spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });
+  }
+
+  goToVisualEditor() {
+    this.goVisualEditorBtn.click();
+    $('#manageTags').waitForClickable({ timeout: 40000 });
   }
 }

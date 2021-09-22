@@ -1,4 +1,3 @@
-import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -53,14 +52,7 @@ export class AuthService {
   }
 
   login(loginInfo: LoginRequestModel): Observable<AuthResponseModel> {
-    let body = new HttpParams();
-    body = body.append('username', loginInfo.username);
-    body = body.append('password', loginInfo.password);
-    body = body.append('grant_type', loginInfo.grant_type);
-    if (loginInfo.code) {
-      body = body.append('code', loginInfo.code);
-    }
-    return this.apiBaseService.postUrlEncoded(AuthMethods.Login, body).pipe(
+    return this.apiBaseService.post(AuthMethods.Login, loginInfo).pipe(
       map((result) => {
         return result.model;
       })

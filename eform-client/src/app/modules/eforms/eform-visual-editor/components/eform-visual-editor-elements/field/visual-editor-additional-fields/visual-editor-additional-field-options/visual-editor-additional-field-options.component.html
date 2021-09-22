@@ -1,0 +1,189 @@
+<mdb-card class="mt-3">
+  <mdb-card-header>{{ 'Options' | translate }}</mdb-card-header>
+  <mdb-card-body>
+    <div class="row">
+      <div class="col-9 md-form">
+        <textarea
+          type="text"
+          class="md-textarea md-textarea-auto form-control"
+          mdbInput
+          [(ngModel)]="options"
+          name="options"
+          id="options"
+          [mdbPopover]="
+            'options separated by enter, option translations separated by |.\n' +
+            'example: ' +
+            getExampleTooltip()
+          "
+          triggers="hover"
+          placement="top"
+        ></textarea>
+      </div>
+      <div class="col p-0">
+        <button
+          mdbBtn
+          class="btn-success btn-small-height"
+          (click)="parseOptions()"
+        >
+          {{ 'Add options' | translate }}
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="md-form">
+          <div *ngFor="let selectedLanguage of selectedLanguages">
+            <ng-container *ngIf="isLanguageSelected(selectedLanguage)">
+              <mdb-card class="mb-3">
+                <mdb-card-header>{{
+                  getLanguage(selectedLanguage) | translate
+                }}</mdb-card-header>
+                <mdb-card-body>
+                  <table
+                    mdbTable
+                    striped="true"
+                    hover="true"
+                    small="true"
+                    class="z-depth-1 text-center"
+                  >
+                    <thead table-headers [tableHeaders]="tableHeaders"></thead>
+                    <tbody id="tableBody">
+                      <tr
+                        *ngFor="
+                          let translate of getTranslationOptionsByLanguageId(
+                            selectedLanguage
+                          );
+                          let i = index
+                        "
+                      >
+                        <td id="translateOptionName">
+                          {{ translate.name }}
+                        </td>
+                        <td>
+                          <div class="d-flex flex-row justify-content-center">
+                            <button
+                              id="translateOptionEdit"
+                              class="btn btn-success btn-icon"
+                              mdbTooltip="{{
+                                'Edit translate option' | translate
+                              }}"
+                              placement="top"
+                              [mdbPopover]="popoverEditOptionTranslate"
+                              mdbWavesEffect
+                              (click)="
+                                openEditOptionTranslate(i, selectedLanguage)
+                              "
+                              [triggers]="'none'"
+                              #buttonWithPopoverEdit="bs-mdbPopover"
+                            >
+                              <fa-icon
+                                icon="pen"
+                                [fixedWidth]="true"
+                                size="lg"
+                              ></fa-icon>
+                            </button>
+                            <button
+                              id="translateOptionDelete"
+                              class="btn btn-danger btn-icon"
+                              mdbTooltip="{{
+                                'Delete translate option' | translate
+                              }}"
+                              [mdbPopover]="popoverDeleteOptionTranslate"
+                              mdbWavesEffect
+                              (click)="openDeleteOptionTranslate(i)"
+                              [triggers]="'none'"
+                              #buttonWithPopoverDelete="bs-mdbPopover"
+                            >
+                              <fa-icon
+                                icon="trash"
+                                [fixedWidth]="true"
+                                size="lg"
+                              ></fa-icon>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </mdb-card-body>
+              </mdb-card>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mdb-card-body>
+</mdb-card>
+
+<ng-template #popoverEditOptionTranslate>
+  <div class="row">
+    <div class="col">
+      <div class="md-form">
+        <input
+          mdbInput
+          class="form-control"
+          type="text"
+          [(ngModel)]="fieldOptionForEdit.name"
+          id="optionTranslateEdit"
+          name="optionTranslateEdit"
+        />
+        <label for="optionTranslateEdit">{{
+          'Option translate' | translate
+        }}</label>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <button
+        mdbBtn
+        class="btn-success btn-small-height"
+        (click)="save()"
+        id="changeFieldOptionTranslateSaveBtn"
+      >
+        {{ 'Save' | translate }}
+      </button>
+      <button
+        mdbBtn
+        class="btn-accent text-black-50 btn-small-height"
+        (click)="buttonWithPopoverEdit.hide()"
+        id="changeFieldOptionTranslateSaveCancelBtn"
+      >
+        {{ 'Cancel' | translate }}
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #popoverDeleteOptionTranslate>
+  <div class="row">
+    <div class="col">
+      <p>
+        {{
+          'Are you sure you want to delete it? if you delete one translation, you will delete the option completely'
+            | translate
+        }}
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <button
+        mdbBtn
+        class="btn-danger btn-small-height"
+        (click)="delete()"
+        id="deleteFieldOptionTranslateSaveBtn"
+      >
+        {{ 'Delete' | translate }}
+      </button>
+      <button
+        mdbBtn
+        class="btn-accent text-black-50 btn-small-height"
+        (click)="buttonWithPopoverDelete.hide()"
+        id="deleteFieldOptionTranslateSaveCancelBtn"
+      >
+        {{ 'Cancel' | translate }}
+      </button>
+    </div>
+  </div>
+</ng-template>

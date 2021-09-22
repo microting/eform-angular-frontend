@@ -63,7 +63,10 @@ export class VisualEditorChecklistComponent implements OnInit, OnDestroy {
         return handle.classList.contains('dragula-handle');
       },
       accepts: (el, target) => {
-        return el.id.includes('checkList_');
+        return (
+          el.id.includes('checkList_') ||
+          target.id.includes(`fields_${this.checklistIndex}`)
+        );
       },
     });
   }
