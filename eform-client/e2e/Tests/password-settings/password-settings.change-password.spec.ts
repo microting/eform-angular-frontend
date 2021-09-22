@@ -5,13 +5,13 @@ import passwordSettings from '../../Page objects/PasswordSettings.page';
 const expect = require('chai').expect;
 
 describe('Password settings', function () {
-  before(function () {
+  before(async () => {
     loginPage.open('/');
     loginPage.login();
     myEformsPage.Navbar.goToPasswordSettings();
   });
 
-  it('should set password to 2Times2WillDo', function () {
+  it('should set password to 2Times2WillDo', async () => {
     passwordSettings.setNewPassword();
     passwordSettings.Navbar.logout();
     loginPage.open('/');
@@ -21,7 +21,7 @@ describe('Password settings', function () {
     // expect(myEformsPage.Navbar.verifyHeaderMenuItem('Device Users')).equal('Device Users');
     // expect(myEformsPage.Navbar.verifyHeaderMenuItem('Advanced')).equal('Advanced');
   });
-  it('should revert to old password', function () {
+  it('should revert to old password', async () => {
     passwordSettings.revertToOldPassword();
     passwordSettings.Navbar.logout();
     loginPage.open('/');

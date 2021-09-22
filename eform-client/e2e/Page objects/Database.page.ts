@@ -6,81 +6,74 @@ class DatabasePage extends Page {
     super();
   }
 
-  public get passwordInput() {
+  public async passwordInput(): Promise<WebdriverIO.Element> {
     return $('#password');
   }
 
-  public get emailInput() {
+  public async emailInput(): Promise<WebdriverIO.Element> {
     return $('#email');
   }
 
-  public get firstNameInput() {
+  public async firstNameInput(): Promise<WebdriverIO.Element> {
     return $('#firstName');
   }
 
-  public get lastNameInput() {
+  public async lastNameInput(): Promise<WebdriverIO.Element> {
     return $('#lastName');
   }
 
-  public get customerNo() {
+  public async customerNo(): Promise<WebdriverIO.Element> {
     return $('#customerNo');
   }
 
-  public SqlServer(sqlserver) {
-    this.sqlserverDropdown.click();
-    $(`//*[@id="sqlServerSelector"]//*[text()="${sqlserver}"]`).$('..').$('..').click();
-  }
-
-  public get port() {
+  public async port(): Promise<WebdriverIO.Element> {
     return $('#port');
   }
 
-  public get host() {
+  public async host(): Promise<WebdriverIO.Element> {
     return $('#host2');
   }
 
-  public get tokenInput() {
+  public async tokenInput(): Promise<WebdriverIO.Element> {
     return $('#token');
   }
 
-  public get authenticationType() {
+  public async authenticationType(): Promise<WebdriverIO.Element> {
     return $('#auth2');
   }
 
-  public get languageDropdown() {
+  public async languageDropdown(): Promise<WebdriverIO.Element> {
     return $('#languageSelector');
   }
 
-
-  public get sqlserverDropdown() {
-    return $('#sqlServerSelector');
-  }
-
-  public get saveBtn() {
+  public async saveBtn(): Promise<WebdriverIO.Element> {
     return $('#save');
   }
 
-  public save() {
-    this.saveBtn.click();
+  public async save() {
+    const a = await this.saveBtn();
+    await a.click();
   }
 
-  public selectLanguage(language) {
-    this.languageDropdown.click();
-    $(`//*[@id="languageSelector"]//*[text()="${language}"]`).$('..').$('..').click();
+  public async selectLanguage(language) {
+    const dropdown = await this.languageDropdown();
+    await dropdown.click();
+    const ele = await (await (await $(`//*[@id="languageSelector"]//*[text()="${language}"]`)).$('..')).$('..');
+    await ele.click();
   }
 
-  public configure(language) {
+  public async configure(language) {
     // this.usernameInput.setValue(DatabaseConfigurationConstants.username);
-    this.passwordInput.setValue(DatabaseConfigurationConstants.password);
-    this.emailInput.setValue(DatabaseConfigurationConstants.email);
-    this.firstNameInput.setValue(DatabaseConfigurationConstants.firstName);
-    this.lastNameInput.setValue(DatabaseConfigurationConstants.lastNAme);
-    this.tokenInput.setValue(DatabaseConfigurationConstants.token);
-    this.customerNo.setValue(DatabaseConfigurationConstants.customerNo);
-    this.port.setValue(DatabaseConfigurationConstants.port);
-    this.host.setValue(DatabaseConfigurationConstants.SqlServer);
-    this.authenticationType.setValue(DatabaseConfigurationConstants.authenticationType);
-    this.selectLanguage(language);
+    await (await this.passwordInput()).setValue(DatabaseConfigurationConstants.password);
+    await (await this.emailInput()).setValue(DatabaseConfigurationConstants.email);
+    await (await this.firstNameInput()).setValue(DatabaseConfigurationConstants.firstName);
+    await (await this.lastNameInput()).setValue(DatabaseConfigurationConstants.lastNAme);
+    await (await this.tokenInput()).setValue(DatabaseConfigurationConstants.token);
+    await (await this.customerNo()).setValue(DatabaseConfigurationConstants.customerNo);
+    await (await this.port()).setValue(DatabaseConfigurationConstants.port);
+    await (await this.host()).setValue(DatabaseConfigurationConstants.SqlServer);
+    await (await this.authenticationType()).setValue(DatabaseConfigurationConstants.authenticationType);
+    await this.selectLanguage(language);
   }
 }
 

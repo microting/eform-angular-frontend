@@ -4,27 +4,27 @@ import {Guid} from 'guid-typescript';
 
 const expect = require('chai').expect;
 describe('Main Page', function () {
-  before(function () {
-    loginPage.open('/');
-    loginPage.login();
+  before(async () => {
+    await loginPage.open('/');
+    await loginPage.login();
   });
-  it('should create eform', function () {
-    myEformsPage.idSortBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
-    const rowCountBeforeCreation = myEformsPage.rowNum;
+  it('should create eform', async () => {
+    await (await myEformsPage.idSortBtn()).click();
+    await $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    const rowCountBeforeCreation = await myEformsPage.rowNum();
     const newEformLabel = Guid.create().toString();
-    myEformsPage.createNewEform(newEformLabel);
-    const eform = myEformsPage.getFirstMyEformsRowObj();
+    await myEformsPage.createNewEform(newEformLabel);
+    const eform = await myEformsPage.getFirstMyEformsRowObj();
     expect(eform.eFormName).equal(newEformLabel);
-    const rowCountAfterCreation = myEformsPage.rowNum;
+    const rowCountAfterCreation = await myEformsPage.rowNum();
     expect(rowCountBeforeCreation + 1).eq(rowCountAfterCreation);
   });
-  it('should delete existing eform', function () {
-    const rowCountBeforeDelete = myEformsPage.rowNum;
-    const eform = myEformsPage.getFirstMyEformsRowObj();
-    eform.deleteEForm();
-    browser.pause(1000);
-    const rowCountAfterDelete = myEformsPage.rowNum;
+  it('should delete existing eform', async () => {
+    const rowCountBeforeDelete = await myEformsPage.rowNum();
+    const eform = await myEformsPage.getFirstMyEformsRowObj();
+    await eform.deleteEForm();
+    await browser.pause(1000);
+    const rowCountAfterDelete = await myEformsPage.rowNum();
     expect(rowCountBeforeDelete - 1).eq(rowCountAfterDelete);
   });
 });

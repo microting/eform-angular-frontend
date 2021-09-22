@@ -5,135 +5,135 @@ import ApplicationSettingsConstants from '../../Constants/ApplicationSettingsCon
 import { expect } from 'chai';
 
 describe('Application settings page - site header section', function () {
-  before(function () {
-    loginPage.open('/auth');
-    loginPage.login();
+  before(async () => {
+    await loginPage.open('/auth');
+    await loginPage.login();
   });
-  it('should change main text', function () {
-    myEformsPage.Navbar.goToApplicationSettings();
-    $('#mainTextLoginPage').waitForDisplayed({ timeout: 120000 });
-    $('#spinner-animation').waitForDisplayed({ timeout: 50000, reverse: true });
-    applicationSettingsPage.LoginPage.mainTextInput.setValue(
+  it('should change main text', async () => {
+    await myEformsPage.Navbar.goToApplicationSettings();
+    await (await $('#mainTextLoginPage')).waitForDisplayed({ timeout: 120000 });
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
+    await (await applicationSettingsPage.LoginPage.mainTextInput()).setValue(
       ApplicationSettingsConstants.LoginPage.customMainText
     );
-    $('#spinner-animation').waitForDisplayed({ timeout: 50000, reverse: true });
-    applicationSettingsPage.save();
-    $('#sign-out-dropdown').waitForDisplayed({ timeout: 40000 });
-    $('#spinner-animation').waitForDisplayed({ timeout: 50000, reverse: true });
-    applicationSettingsPage.Navbar.logout();
-    $('#username').waitForDisplayed({ timeout: 40000 });
-    expect(loginPage.loginBtn.isDisplayed()).equal(true);
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
+    await applicationSettingsPage.save();
+    await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
+    await applicationSettingsPage.Navbar.logout();
+    await (await $('#username')).waitForDisplayed({ timeout: 40000 });
+    expect(await (await loginPage.loginBtn()).isDisplayed()).equal(true);
     expect(
-      loginPage.mainText.getText(),
+      await (await loginPage.mainText()).getText(),
       'Error while changing main text on login page'
     ).to.equal(ApplicationSettingsConstants.LoginPage.customMainText);
   });
-  it('should change secondary text', function () {
-    loginPage.login();
-    myEformsPage.Navbar.goToApplicationSettings();
-    $('#mainTextLoginPage').waitForDisplayed({ timeout: 120000 });
-    $('#spinner-animation').waitForDisplayed({ timeout: 50000, reverse: true });
-    applicationSettingsPage.LoginPage.secondaryTextInput.setValue(
+  it('should change secondary text', async () => {
+    await loginPage.login();
+    await myEformsPage.Navbar.goToApplicationSettings();
+    await (await $('#mainTextLoginPage')).waitForDisplayed({ timeout: 120000 });
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
+    await (await applicationSettingsPage.LoginPage.secondaryTextInput()).setValue(
       ApplicationSettingsConstants.LoginPage.customSecondaryText
     );
-    applicationSettingsPage.save();
+    await applicationSettingsPage.save();
     // browser.pause(8000);
-    $('#sign-out-dropdown').waitForDisplayed({ timeout: 40000 });
-    $('#spinner-animation').waitForDisplayed({ timeout: 50000, reverse: true });
-    applicationSettingsPage.Navbar.logout();
-    $('#username').waitForDisplayed({ timeout: 40000 });
-    expect(loginPage.loginBtn.isDisplayed()).equal(true);
+    await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
+    await applicationSettingsPage.Navbar.logout();
+    await (await $('#username')).waitForDisplayed({ timeout: 40000 });
+    expect(await (await loginPage.loginBtn()).isDisplayed()).equal(true);
     expect(
-      loginPage.secondaryText.getText(),
+      await (await loginPage.secondaryText()).getText(),
       'Error while changing secondary text on login page'
     ).to.equal(ApplicationSettingsConstants.LoginPage.customSecondaryText);
   });
-  it('should hide main text', function () {
-    loginPage.login();
-    loginPage.open('/application-settings');
-    $('#mainTextLoginPage').waitForDisplayed({ timeout: 120000 });
-    $('#spinner-animation').waitForDisplayed({ timeout: 50000, reverse: true });
-    applicationSettingsPage.LoginPage.mainTextVisibilityToggleBtn.click();
-    applicationSettingsPage.save();
+  it('should hide main text', async () => {
+    await loginPage.login();
+    await loginPage.open('/application-settings');
+    await (await $('#mainTextLoginPage')).waitForDisplayed({ timeout: 120000 });
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
+    await (await applicationSettingsPage.LoginPage.mainTextVisibilityToggleBtn()).click();
+    await applicationSettingsPage.save();
     // browser.pause(8000);
-    $('#sign-out-dropdown').waitForDisplayed({ timeout: 40000 });
-    $('#spinner-animation').waitForDisplayed({ timeout: 50000, reverse: true });
-    applicationSettingsPage.Navbar.logout();
-    $('#username').waitForDisplayed({ timeout: 40000 });
-    expect(loginPage.loginBtn.isDisplayed()).equal(true);
+    await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
+    await applicationSettingsPage.Navbar.logout();
+    await (await $('#username')).waitForDisplayed({ timeout: 40000 });
+    expect(await (await loginPage.loginBtn()).isDisplayed()).equal(true);
     expect(
-      loginPage.mainText.isDisplayed(),
+      await (await loginPage.mainText()).isDisplayed(),
       'Error while toggling visibility of main text on login page'
     ).to.equal(false);
   });
-  it('should hide secondary text', function () {
-    loginPage.login();
-    loginPage.open('/application-settings');
-    $('#mainTextLoginPage').waitForDisplayed({ timeout: 120000 });
-    $('#spinner-animation').waitForDisplayed({ timeout: 50000, reverse: true });
-    applicationSettingsPage.LoginPage.secondaryTextVisibilityToggleBtn.click();
-    applicationSettingsPage.save();
-    $('#sign-out-dropdown').waitForDisplayed({ timeout: 40000 });
-    $('#spinner-animation').waitForDisplayed({ timeout: 50000, reverse: true });
-    applicationSettingsPage.Navbar.logout();
-    $('#username').waitForDisplayed({ timeout: 40000 });
-    expect(loginPage.loginBtn.isDisplayed()).equal(true);
+  it('should hide secondary text', async () => {
+    await loginPage.login();
+    await loginPage.open('/application-settings');
+    await (await $('#mainTextLoginPage')).waitForDisplayed({ timeout: 120000 });
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
+    await (await applicationSettingsPage.LoginPage.secondaryTextVisibilityToggleBtn()).click();
+    await applicationSettingsPage.save();
+    await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
+    await applicationSettingsPage.Navbar.logout();
+    await (await $('#username')).waitForDisplayed({ timeout: 40000 });
+    expect(await (await loginPage.loginBtn()).isDisplayed()).equal(true);
     expect(
-      loginPage.secondaryText.isDisplayed(),
+      await (await loginPage.secondaryText()).isDisplayed(),
       'Error while toggling visibility of secondary text on login page'
     ).to.equal(false);
   });
-  it('should hide image', function () {
-    loginPage.login();
-    loginPage.open('/application-settings');
-    $('#mainTextLoginPage').waitForDisplayed({ timeout: 120000 });
-    $('#spinner-animation').waitForDisplayed({ timeout: 50000, reverse: true });
-    applicationSettingsPage.LoginPage.imageVisibilityToggler.click();
-    applicationSettingsPage.save();
-    $('#sign-out-dropdown').waitForDisplayed({ timeout: 40000 });
-    $('#spinner-animation').waitForDisplayed({ timeout: 50000, reverse: true });
-    browser.pause(1000);
-    applicationSettingsPage.Navbar.logout();
-    expect(loginPage.loginBtn.isDisplayed()).equal(true);
+  it('should hide image', async () => {
+    await loginPage.login();
+    await loginPage.open('/application-settings');
+    await $('#mainTextLoginPage').waitForDisplayed({ timeout: 120000 });
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
+    await (await applicationSettingsPage.LoginPage.imageVisibilityToggler()).click();
+    await applicationSettingsPage.save();
+    await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
+    await browser.pause(1000);
+    await applicationSettingsPage.Navbar.logout();
+    expect(await (await loginPage.loginBtn()).isDisplayed()).equal(true);
     expect(
-      loginPage.image.isDisplayed(),
+      await (await loginPage.image()).isDisplayed(),
       'Error while toggling visibility of image on login page'
     ).to.equal(false);
   });
-  it('should reset main text', function () {
-    loginPage.login();
-    loginPage.open('/application-settings');
-    $('#mainTextLoginPage').waitForDisplayed({ timeout: 120000 });
-    $('#spinner-animation').waitForDisplayed({ timeout: 50000, reverse: true });
-    applicationSettingsPage.LoginPage.reset();
-    applicationSettingsPage.Navbar.logout();
-    expect(loginPage.loginBtn.isDisplayed()).equal(true);
+  it('should reset main text', async () => {
+    await loginPage.login();
+    await loginPage.open('/application-settings');
+    await $('#mainTextLoginPage').waitForDisplayed({ timeout: 120000 });
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
+    await applicationSettingsPage.LoginPage.reset();
+    await applicationSettingsPage.Navbar.logout();
+    expect(await (await loginPage.loginBtn()).isDisplayed()).equal(true);
     expect(
-      loginPage.mainText.getText(),
+      await (await loginPage.mainText()).getText(),
       'Error while resetting main text on login page'
     ).to.equal(ApplicationSettingsConstants.LoginPage.originalMainText);
   });
-  it('should reset secondary text', function () {
+  it('should reset secondary text', async () => {
     expect(
-      loginPage.secondaryText.getText(),
+      await (await loginPage.secondaryText()).getText(),
       'Error while resetting secondary text on login page'
     ).to.equal(ApplicationSettingsConstants.LoginPage.originalSecondaryText);
   });
-  it('should reset main text visibility', function () {
+  it('should reset main text visibility', async () => {
     expect(
-      loginPage.mainText.isDisplayed(),
+      await (await loginPage.mainText()).isDisplayed(),
       'Error while refreshing visibility of main text on login page'
     ).to.equal(true);
   });
-  it('should reset secondary text visibility', function () {
+  it('should reset secondary text visibility', async () => {
     expect(
-      loginPage.secondaryText.isDisplayed(),
+      await (await loginPage.secondaryText()).isDisplayed(),
       'Error while refreshing visibility of secondary text on login page'
     ).to.equal(true);
   });
-  it('should reset image visibility', function () {
+  it('should reset image visibility', async () => {
     expect(
-      loginPage.image.isDisplayed(),
+      await (await loginPage.image()).isDisplayed(),
       'Error while refreshing visibility of image on login page'
     ).to.equal(true);
   });

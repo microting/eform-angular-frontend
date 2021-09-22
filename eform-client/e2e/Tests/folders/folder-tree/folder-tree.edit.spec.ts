@@ -7,72 +7,73 @@ const expect = require('chai').expect;
 let name = generateRandmString();
 
 describe('Folder page', function () {
-  before(function () {
-    loginPage.open('/');
-    loginPage.login();
-    myEformsPage.Navbar.goToFolderPage();
+  before(async () => {
+    await loginPage.open('/');
+    await loginPage.login();
+    await myEformsPage.Navbar.goToFolderPage();
     const description = generateRandmString();
-    foldersPage.newFolderBtn.waitForDisplayed({ timeout: 10000 });
-    foldersPage.createNewFolder(name, description);
+    await (await foldersPage.newFolderBtn()).waitForDisplayed({ timeout: 10000 });
+    await foldersPage.createNewFolder(name, description);
   });
-  it('Should change name', function () {
-    const folderBeforeEdit = foldersPage.getFolderByName(name);
-    const descriptionBeforeEdit = folderBeforeEdit
-      .getDescription()
+  it('Should change name', async () => {
+    const folderBeforeEdit = await foldersPage.getFolderByName(name);
+    const descriptionBeforeEdit = (await folderBeforeEdit
+      .getDescription())
       .find((x) => x.language === 'Danish').description;
     name = generateRandmString();
-    folderBeforeEdit.editFolder(name);
-    const folderAfterEdit = foldersPage.getFolderByName(name);
+    await folderBeforeEdit.editFolder(name);
+    console.log(name);
+    const folderAfterEdit = await foldersPage.getFolderByName(name);
     expect(
       folderAfterEdit.name,
       'Name has been changed after changing only last name'
     ).equal(name);
     expect(
-      folderAfterEdit.getDescription().find((x) => x.language === 'Danish')
+      (await folderAfterEdit.getDescription()).find((x) => x.language === 'Danish')
         .description,
       'Description has been changed incorrectly'
     ).equal(descriptionBeforeEdit);
   });
-  it('Should change description', function () {
+  it('Should change description', async () => {
     const newDescription = generateRandmString();
-    $('#folderTreeName').waitForDisplayed({ timeout: 40000 });
-    const lastFolderBeforeEdit = foldersPage.getFolderByName(name);
-    lastFolderBeforeEdit.editFolder(null, newDescription);
-    foldersPage.newFolderBtn.waitForDisplayed({ timeout: 40000 });
-    const folder = foldersPage.getFolderByName(name);
+    await (await $('#folderTreeName')).waitForDisplayed({ timeout: 40000 });
+    const lastFolderBeforeEdit = await foldersPage.getFolderByName(name);
+    await lastFolderBeforeEdit.editFolder(null, newDescription);
+    await (await foldersPage.newFolderBtn()).waitForDisplayed({ timeout: 40000 });
+    const folder = await foldersPage.getFolderByName(name);
     expect(
       folder.name,
       'Name has been changed after changing only last name'
     ).equal(lastFolderBeforeEdit.name);
     expect(
-      folder.getDescription().find((x) => x.language === 'Danish').description,
+      (await folder.getDescription()).find((x) => x.language === 'Danish').description,
       'Description has been changed incorrectly'
     ).equal(newDescription);
   });
-  it('Should not change name and description if cancel was clicked', function () {
-    const folderTreeName = $('#folderTreeName');
-    folderTreeName.waitForDisplayed({ timeout: 40000 });
+  it('Should not change name and description if cancel was clicked', async () => {
+    const folderTreeName = await $('#folderTreeName');
+    await folderTreeName.waitForDisplayed({ timeout: 40000 });
     const newName = generateRandmString();
     const newDescription = generateRandmString();
-    const lastFolderPageBeforeEdit = foldersPage.getFolderByName(name);
-    const descriptionBeforeEdit = lastFolderPageBeforeEdit
-      .getDescription()
+    const lastFolderPageBeforeEdit = await foldersPage.getFolderByName(name);
+    const descriptionBeforeEdit = (await lastFolderPageBeforeEdit
+      .getDescription())
       .find((x) => x.language === 'Danish').description;
-    lastFolderPageBeforeEdit.editFolder(newName, newDescription, true);
-    const lastFolderPageAfterEdit = foldersPage.getFolderByName(name);
+    await lastFolderPageBeforeEdit.editFolder(newName, newDescription, true);
+    const lastFolderPageAfterEdit = await foldersPage.getFolderByName(name);
     expect(lastFolderPageAfterEdit.name, 'Name has been changed').equal(
       lastFolderPageAfterEdit.name
     );
     expect(
-      lastFolderPageAfterEdit
-        .getDescription()
+      (await lastFolderPageAfterEdit
+        .getDescription())
         .find((x) => x.language === 'Danish').description,
       'Description has been changed'
     ).equal(descriptionBeforeEdit);
   });
-  after(function () {
-    const lastFolder = foldersPage.getFolderByName(name);
-    lastFolder.delete();
-    expect(foldersPage.getFolderByName(name)).eq(null);
+  after(async () => {
+    const lastFolder = await foldersPage.getFolderByName(name);
+    await lastFolder.delete();
+    expect(await foldersPage.getFolderByName(name)).eq(null);
   });
 });

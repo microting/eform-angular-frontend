@@ -6,33 +6,33 @@ import { testSorting } from '../../Helpers/helper-functions';
 const expect = require('chai').expect;
 
 describe('Entity Select Sort', function () {
-  before(function () {
-    loginPage.open('/auth');
-    loginPage.login();
-    myEformsPage.Navbar.goToEntitySelect();
-    selectableLists.createDummySelectableLists(3);
+  before(async () => {
+    await loginPage.open('/auth');
+    await loginPage.login();
+    await myEformsPage.Navbar.goToEntitySelect();
+    await selectableLists.createDummySelectableLists(3);
   });
-  it('should be able to sort by ID', function () {
+  it('should be able to sort by ID', async () => {
     testSorting(
-      selectableLists.idTableHeader,
+      await selectableLists.idTableHeader(),
       '#entitySelectMicrotingUUID',
       'ID'
     );
   });
-  it('should be able to sort by Name', function () {
-    testSorting(selectableLists.nameTableHeader, '#entitySelectName', 'Name');
+  it('should be able to sort by Name', async () => {
+    testSorting(await selectableLists.nameTableHeader(), '#entitySelectName', 'Name');
   });
-  it('should be able to sort by Description', function () {
+  it('should be able to sort by Description', async () => {
     testSorting(
-      selectableLists.descriptionTableHeader,
+      await selectableLists.descriptionTableHeader(),
       '#entitySelectDescription',
       'Description'
     );
   });
-  after(function () {
-    const countBeforeCreate = selectableLists.selectableListCount;
-    selectableLists.cleanupList();
-    expect(countBeforeCreate).not.equal(selectableLists.selectableListCount);
-    expect(selectableLists.selectableListCount).equal(0);
+  after(async () => {
+    const countBeforeCreate = await selectableLists.selectableListCount();
+    await selectableLists.cleanupList();
+    expect(countBeforeCreate).not.equal(await selectableLists.selectableListCount());
+    expect(await selectableLists.selectableListCount()).equal(0);
   });
 });

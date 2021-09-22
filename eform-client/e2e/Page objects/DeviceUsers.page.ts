@@ -8,81 +8,83 @@ class DeviceUsersPage extends PageWithNavbarPage {
     super();
   }
 
-  public get newDeviceUserBtn() {
-    const ele = $('#newDeviceUserBtn');
-    ele.waitForDisplayed({ timeout: 40000 });
-    ele.waitForClickable({ timeout: 40000 });
+  public async newDeviceUserBtn(): Promise<WebdriverIO.Element> {
+    const ele = await $('#newDeviceUserBtn');
+    await ele.waitForDisplayed({ timeout: 40000 });
+    await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  public get createFirstNameInput() {
-    const ele = $('#firstName');
-    ele.waitForDisplayed({ timeout: 40000 });
+  public async createFirstNameInput(): Promise<WebdriverIO.Element> {
+    const ele = await $('#firstName');
+    await ele.waitForDisplayed({ timeout: 40000 });
     // ele.waitForClickable({timeout: 40000});
     return ele;
   }
 
-  public get createLastNameInput() {
-    const ele = $('#lastName');
-    ele.waitForDisplayed({ timeout: 40000 });
+  public async createLastNameInput(): Promise<WebdriverIO.Element> {
+    const ele = await $('#lastName');
+    await ele.waitForDisplayed({ timeout: 40000 });
     // ele.waitForClickable({timeout: 40000});
     return ele;
   }
 
-  getFirstRowObject(): DeviceUsersRowObject {
-    return new DeviceUsersRowObject(1);
+  async getFirstRowObject(): Promise<DeviceUsersRowObject> {
+    const result =  new DeviceUsersRowObject();
+    return await result.getRow(1);
   }
 
-  public get saveCreateBtn() {
+  public async saveCreateBtn(): Promise<WebdriverIO.Element> {
     return $('#saveCreateBtn');
   }
 
-  public get cancelCreateBtn() {
+  public async cancelCreateBtn(): Promise<WebdriverIO.Element> {
     return $('#cancelCreateBtn');
   }
 
-  public get editFirstNameInput() {
+  public async editFirstNameInput(): Promise<WebdriverIO.Element> {
     return $('#editFirstNameInput');
   }
 
-  public get editLastNameInput() {
+  public async editLastNameInput(): Promise<WebdriverIO.Element> {
     return $('#editLastNameInput');
   }
 
-  public get saveEditBtn() {
+  public async saveEditBtn(): Promise<WebdriverIO.Element> {
     return $('#saveEditBtn');
   }
 
-  public get cancelEditBtn() {
+  public async cancelEditBtn(): Promise<WebdriverIO.Element> {
     return $('#cancelEditBtn');
   }
 
-  public get saveDeleteBtn() {
-    const ele = $('#saveDeleteBtn');
-    ele.waitForDisplayed({ timeout: 40000 });
-    ele.waitForClickable({ timeout: 40000 });
+  public async saveDeleteBtn(): Promise<WebdriverIO.Element> {
+    const ele = await $('#saveDeleteBtn');
+    await ele.waitForDisplayed({ timeout: 40000 });
+    await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  public get cancelDeleteBtn() {
-    const ele = $('#cancelDeleteBtn');
-    ele.waitForDisplayed({ timeout: 40000 });
-    ele.waitForClickable({ timeout: 40000 });
+  public async cancelDeleteBtn(): Promise<WebdriverIO.Element> {
+    const ele = await $('#cancelDeleteBtn');
+    await ele.waitForDisplayed({ timeout: 40000 });
+    await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  public get rowNum(): number {
-    browser.pause(500);
-    return $$('#tableBody > tr').length;
+  public async rowNum(): Promise<number> {
+    await browser.pause(500);
+    return (await $$('#tableBody > tr')).length;
   }
 
-  getDeviceUser(num): DeviceUsersRowObject {
-    return new DeviceUsersRowObject(num);
+  async getDeviceUser(num): Promise<DeviceUsersRowObject> {
+    const result = new DeviceUsersRowObject();
+    return await result.getRow(num);
   }
 
-  getDeviceUserByName(name: string): DeviceUsersRowObject {
-    for (let i = 1; i < this.rowNum + 1; i++) {
-      const deviceUser = this.getDeviceUser(i);
+  async getDeviceUserByName(name: string): Promise<DeviceUsersRowObject> {
+    for (let i = 1; i < await this.rowNum() + 1; i++) {
+      const deviceUser = await this.getDeviceUser(i);
       if (deviceUser.firstName === name) {
         return deviceUser;
       }
@@ -90,36 +92,37 @@ class DeviceUsersPage extends PageWithNavbarPage {
     return null;
   }
 
-  getDeviceUsersList(maxNum): DeviceUsersRowObject[] {
+  async getDeviceUsersList(maxNum): Promise<DeviceUsersRowObject[]> {
     const users: DeviceUsersRowObject[] = [];
     for (let i = 1; i <= maxNum; i++) {
-      users[i - 1] = new DeviceUsersRowObject(i);
+      const result = new DeviceUsersRowObject();
+      users[i - 1] = await result.getRow(i);
     }
     return users;
   }
 
-  public createNewDeviceUser(firstName: string, lastName: string) {
-    this.newDeviceUserBtn.click();
-    this.createFirstNameInput.setValue(firstName);
-    this.createLastNameInput.setValue(lastName);
-    this.saveCreateBtn.click();
-    $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
-    this.newDeviceUserBtn.waitForDisplayed({ timeout: 40000 });
+  public async createNewDeviceUser(firstName: string, lastName: string) {
+    await (await this.newDeviceUserBtn()).click();
+    await (await this.createFirstNameInput()).setValue(firstName);
+    await (await this.createLastNameInput()).setValue(lastName);
+    await (await this.saveCreateBtn()).click();
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    await (await this.newDeviceUserBtn()).waitForDisplayed({ timeout: 40000 });
   }
 
-  public createDeviceUserFromScratch(name: string, surname: string) {
-    myEformsPage.Navbar.goToDeviceUsersPage();
-    this.newDeviceUserBtn.waitForDisplayed({ timeout: 40000 });
-    const rowCountBeforeCreation = deviceUsersPage.rowNum;
+  public async createDeviceUserFromScratch(name: string, surname: string) {
+    await myEformsPage.Navbar.goToDeviceUsersPage();
+    await (await this.newDeviceUserBtn()).waitForDisplayed({ timeout: 40000 });
+    const rowCountBeforeCreation = await deviceUsersPage.rowNum();
     // browser.pause(2000);
-    deviceUsersPage.createNewDeviceUser(name, surname);
-    const rowCountAfterCreation = deviceUsersPage.rowNum;
+    await deviceUsersPage.createNewDeviceUser(name, surname);
+    const rowCountAfterCreation = await deviceUsersPage.rowNum();
     expect(
       rowCountAfterCreation,
-      "Number of rows hasn't changed after creating new user"
+      'Number of rows hasn\'t changed after creating new user'
     ).equal(rowCountBeforeCreation + 1);
-    const lastDeviceUser: DeviceUsersRowObject = deviceUsersPage.getDeviceUser(
-      deviceUsersPage.rowNum
+    const lastDeviceUser: DeviceUsersRowObject = await deviceUsersPage.getDeviceUser(
+      await deviceUsersPage.rowNum()
     );
     expect(lastDeviceUser.firstName, 'Name of created user is incorrect').equal(
       name
@@ -130,27 +133,27 @@ class DeviceUsersPage extends PageWithNavbarPage {
     ).equal(surname);
   }
 
-  public editDeviceUser(
+  public async editDeviceUser(
     deviceUser: DeviceUsersRowObject,
     name = '',
     surname = ''
   ) {
     deviceUser.editBtn.click();
     // browser.pause(5000);
-    $('#editFirstNameInput').waitForDisplayed({ timeout: 40000 });
+    await (await $('#editFirstNameInput')).waitForDisplayed({ timeout: 40000 });
     if (name != null) {
-      this.editFirstNameInput.click();
-      this.editFirstNameInput.clearValue();
-      this.editFirstNameInput.setValue(name);
+      await (await this.editFirstNameInput()).click();
+      await (await this.editFirstNameInput()).clearValue();
+      await (await this.editFirstNameInput()).setValue(name);
     }
     if (surname != null) {
-      this.editLastNameInput.click();
-      this.editLastNameInput.clearValue();
-      this.editLastNameInput.setValue(surname);
+      await (await this.editLastNameInput()).click();
+      await (await this.editLastNameInput()).clearValue();
+      await (await this.editLastNameInput()).setValue(surname);
     }
-    this.saveEditBtn.click();
+    await (await this.saveEditBtn()).click();
     // browser.pause(12000);
-    this.newDeviceUserBtn.waitForDisplayed({ timeout: 40000 });
+    await (await this.newDeviceUserBtn()).waitForDisplayed({ timeout: 40000 });
   }
 }
 
@@ -158,19 +161,7 @@ const deviceUsersPage = new DeviceUsersPage();
 export default deviceUsersPage;
 
 export class DeviceUsersRowObject {
-  constructor(rowNum) {
-    if ($$('#deviceUserId')[rowNum - 1]) {
-      this.siteId = +$$('#deviceUserId')[rowNum - 1].getText();
-      try {
-        this.firstName = $$('#deviceUserFirstName')[rowNum - 1].getText();
-      } catch (e) {}
-      try {
-        this.lastName = $$('#deviceUserLastName')[rowNum - 1].getText();
-      } catch (e) {}
-      this.editBtn = $$('#editDeviceUserBtn')[rowNum - 1];
-      this.deleteBtn = $$('#deleteDeviceUserBtn')[rowNum - 1];
-    }
-  }
+  constructor() {  }
 
   siteId: number;
   firstName: string;
@@ -178,12 +169,27 @@ export class DeviceUsersRowObject {
   editBtn;
   deleteBtn;
 
-  delete() {
+  async getRow(rowNum: number) {
+    if ((await $$('#deviceUserId'))[rowNum - 1]) {
+      this.siteId = +await (await $$('#deviceUserId')[rowNum - 1]).getText();
+      try {
+        this.firstName = await (await $$('#deviceUserFirstName')[rowNum - 1]).getText();
+      } catch (e) {}
+      try {
+        this.lastName = await (await $$('#deviceUserLastName')[rowNum - 1]).getText();
+      } catch (e) {}
+      this.editBtn = (await $$('#editDeviceUserBtn'))[rowNum - 1];
+      this.deleteBtn = (await $$('#deleteDeviceUserBtn'))[rowNum - 1];
+    }
+    return this;
+  }
+
+  async delete() {
     this.deleteBtn.waitForClickable({ timeout: 40000 });
     this.deleteBtn.click();
-    deviceUsersPage.saveDeleteBtn.waitForClickable({ timeout: 40000 });
-    deviceUsersPage.saveDeleteBtn.click();
-    $('#spinner-animation').waitForDisplayed({ timeout: 40000, reverse: true });
-    deviceUsersPage.newDeviceUserBtn.waitForDisplayed();
+    await (await deviceUsersPage.saveDeleteBtn()).waitForClickable({ timeout: 40000 });
+    await (await deviceUsersPage.saveDeleteBtn()).click();
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 40000, reverse: true });
+    await (await deviceUsersPage.newDeviceUserBtn()).waitForDisplayed();
   }
 }

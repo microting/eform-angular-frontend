@@ -31,13 +31,13 @@ const routes: Routes = [
         (m) => m.EformXlsxReportModule
       ),
   },
-  // {
-  //   path: 'visual-editor',
-  //   loadChildren: () =>
-  //     import('./eform-visual-editor/eform-visual-editor.module').then(
-  //       (m) => m.EformVisualEditorModule
-  //     ),
-  // },
+  {
+    path: 'visual-editor',
+    loadChildren: () =>
+      import('./eform-visual-editor/eform-visual-editor.module').then(
+        (m) => m.EformVisualEditorModule
+      ),
+  },
 ];
 
 @NgModule({

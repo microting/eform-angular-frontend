@@ -6,13 +6,13 @@ class SitesPage extends PageWithNavbarPage {
     super();
   }
 
-  public get rowNum(): number {
-    return $$('#sitesTableBody > tr').length;
+  public async rowNum(): Promise<number> {
+    return (await $$('#sitesTableBody > tr')).length;
   }
 
-  public get siteTagSelector() {
-    const ele = $('#tagSelector');
-    ele.waitForDisplayed({ timeout: 40000 });
+  public async siteTagSelector(): Promise<WebdriverIO.Element> {
+    const ele = await $('#tagSelector');
+    await ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
@@ -20,106 +20,107 @@ class SitesPage extends PageWithNavbarPage {
     return $$(`#tagForRemoval .ng-option`);
   }
 
-  public get updateTagsBtn() {
-    const ele = $('#saveTagsBtn');
-    ele.waitForDisplayed({ timeout: 40000 });
+  public async updateTagsBtn(): Promise<WebdriverIO.Element> {
+    const ele = await $('#saveTagsBtn');
+    await ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
-  public get tagRemovalSelector() {
-    const ele = $('#tagForRemoval');
-    ele.waitForDisplayed({ timeout: 40000 });
+  public async tagRemovalSelector(): Promise<WebdriverIO.Element> {
+    const ele = await $('#tagForRemoval');
+    await ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
-  public get removeTagBtn() {
-    const ele = $('#removeTagBtn');
-    ele.waitForDisplayed({ timeout: 40000 });
-    ele.waitForClickable({ timeout: 40000 });
+  public async removeTagBtn(): Promise<WebdriverIO.Element> {
+    const ele = await $('#removeTagBtn');
+    await ele.waitForDisplayed({ timeout: 40000 });
+    await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  public get sitesManageTagsBtn() {
-    const ele = $('#sitesManageTagsBtn');
-    ele.waitForDisplayed({ timeout: 40000 });
-    ele.waitForClickable({ timeout: 40000 });
+  public async sitesManageTagsBtn(): Promise<WebdriverIO.Element> {
+    const ele = await $('#sitesManageTagsBtn');
+    await ele.waitForDisplayed({ timeout: 40000 });
+    await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  public get getFirstAvailableTag() {
-    this.siteTagSelector.click();
+  public async asyncFirstAvailableTag(): Promise<WebdriverIO.Element> {
+    await (await this.siteTagSelector()).click();
     return $('.ng-option:not(.ng-option-selected)');
   }
 
-  public get cancelCreateBtn() {
+  public async cancelCreateBtn(): Promise<WebdriverIO.Element> {
     return $('#cancelCreateBtn');
   }
 
-  public get siteEditCancelBtn() {
-    const ele = $('#siteEditCancelBtn');
-    ele.waitForDisplayed({ timeout: 40000 });
-    ele.waitForClickable({ timeout: 40000 });
+  public async siteEditCancelBtn(): Promise<WebdriverIO.Element> {
+    const ele = await $('#siteEditCancelBtn');
+    await ele.waitForDisplayed({ timeout: 40000 });
+    await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  public get siteNameEditInput() {
-    const ele = $('#siteName');
-    ele.waitForDisplayed({ timeout: 40000 });
+  public async siteNameEditInput(): Promise<WebdriverIO.Element> {
+    const ele = await $('#siteName');
+    await ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
-  public get tagSelector() {
-    const ele = $('#tagSelector');
-    ele.waitForDisplayed({ timeout: 40000 });
+  public async tagSelector(): Promise<WebdriverIO.Element> {
+    const ele = await $('#tagSelector');
+    await ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
-  public get siteEditSaveBtn() {
-    const ele = $('#siteEditSaveBtn');
-    ele.waitForDisplayed({ timeout: 40000 });
+  public async siteEditSaveBtn(): Promise<WebdriverIO.Element> {
+    const ele = await $('#siteEditSaveBtn');
+    await ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
-  public get siteDeleteCancelBtn() {
-    const ele = $('#siteDeleteCancelBtn');
-    ele.waitForDisplayed({ timeout: 40000 });
-    ele.waitForClickable({ timeout: 40000 });
+  public async siteDeleteCancelBtn(): Promise<WebdriverIO.Element> {
+    const ele = await $('#siteDeleteCancelBtn');
+    await ele.waitForDisplayed({ timeout: 40000 });
+    await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  public get siteDeleteDeleteBtn() {
-    const ele = $('#siteDeleteDeleteBtn');
-    ele.waitForDisplayed({ timeout: 40000 });
+  public async siteDeleteDeleteBtn(): Promise<WebdriverIO.Element> {
+    const ele = await $('#siteDeleteDeleteBtn');
+    await ele.waitForDisplayed({ timeout: 40000 });
     return ele;
   }
 
-  public createTag(tagName: string[]) {
-    this.sitesManageTagsBtn.click();
-    tagsModalPage.tagsModalCloseBtn.waitForDisplayed({ timeout: 40000 });
+  public async createTag(tagName: string[]) {
+    await (await this.sitesManageTagsBtn()).click();
+    await (await tagsModalPage.tagsModalCloseBtn()).waitForDisplayed({ timeout: 40000 });
     for (let i = 0; i < tagName.length; i++) {
-      tagsModalPage.createTag(tagName[i]);
+      await tagsModalPage.createTag(tagName[i]);
     }
-    tagsModalPage.closeTagModal();
-    sitesPage.sitesManageTagsBtn.waitForClickable({ timeout: 40000 });
+    await tagsModalPage.closeTagModal();
+    await (await sitesPage.sitesManageTagsBtn()).waitForClickable({ timeout: 40000 });
   }
 
-  public removeTags(tagName: string[]) {
-    this.sitesManageTagsBtn.click();
-    tagsModalPage.tagsModalCloseBtn.waitForDisplayed({ timeout: 40000 });
+  public async removeTags(tagName: string[]) {
+    await (await this.sitesManageTagsBtn()).click();
+    await (await tagsModalPage.tagsModalCloseBtn()).waitForDisplayed({ timeout: 40000 });
     for (let i = 0; i < tagName.length; i++) {
-      tagsModalPage.getTagByName(tagName[i]).deleteTag();
+      await (await tagsModalPage.getTagByName(tagName[i])).deleteTag();
     }
-    tagsModalPage.closeTagModal();
-    sitesPage.sitesManageTagsBtn.waitForClickable({ timeout: 40000 });
+    await tagsModalPage.closeTagModal();
+    await (await sitesPage.sitesManageTagsBtn()).waitForClickable({ timeout: 40000 });
   }
 
-  getSite(num): SitesRowObject {
-    browser.pause(500);
-    return new SitesRowObject(num);
+  async getSite(num): Promise<SitesRowObject> {
+    await browser.pause(500);
+    const obj = new SitesRowObject();
+    return await obj.getRow(num);
   }
 
-  getFirstRowObject(): SitesRowObject {
-    browser.pause(500);
+  async getFirstRowObject(): Promise<SitesRowObject> {
+    await browser.pause(500);
     return this.getSite(1);
   }
 }
@@ -128,20 +129,7 @@ const sitesPage = new SitesPage();
 export default sitesPage;
 
 export class SitesRowObject {
-  constructor(rowNum) {
-    this.element = $$('#sitesTableBody > tr')[rowNum - 1];
-    if (this.element) {
-      this.siteId = +this.element.$('#siteUUId').getText();
-      this.units = this.element.$('#units').getText();
-      this.siteName = this.element.$('#siteName').getText();
-      this.tags = this.element
-        .$('#tags')
-        .$$('#assignedTag')
-        .map((element) => element.getText());
-      this.editBtn = this.element.$('#editSiteBtn');
-      this.deleteBtn = this.element.$('#deleteSiteBtn');
-    }
-  }
+  constructor() {}
 
   element: WebdriverIO.Element;
   siteId: number;
@@ -151,52 +139,69 @@ export class SitesRowObject {
   editBtn: WebdriverIO.Element;
   deleteBtn: WebdriverIO.Element;
 
-  openEditModal(site?: { name?: string; tags?: string[] }) {
+  async getRow(rowNum): Promise<SitesRowObject> {
+    this.element = (await $$('#sitesTableBody > tr'))[rowNum - 1];
+    if (this.element) {
+      this.siteId = +(await this.element.$('#siteUUId')).getText();
+      this.units = await (await this.element.$('#units')).getText();
+      this.siteName = await (await this.element.$('#siteName')).getText();
+      const list = (await (await this.element
+        .$('#tags'))
+        .$$('#assignedTag'));
+      this.tags = await Promise.all(list.map(element => element.getText()));
+      // .map((element) => element.getText());
+      this.editBtn = await this.element.$('#editSiteBtn');
+      this.deleteBtn = await this.element.$('#deleteSiteBtn');
+    }
+    return this;
+  }
+
+  async openEditModal(site?: { name?: string; tags?: string[] }) {
     this.editBtn.click();
-    sitesPage.siteEditCancelBtn.waitForDisplayed({ timeout: 40000 });
+    await (await sitesPage.siteEditCancelBtn()).waitForDisplayed({ timeout: 40000 });
     if (site) {
       if (site.name) {
-        sitesPage.siteNameEditInput.setValue(site.name);
+        await (await sitesPage.siteNameEditInput()).setValue(site.name);
       }
       if (site.tags) {
         for (let i = 0; i < site.tags.length; i++) {
-          sitesPage.tagSelector.$('input').addValue(site.tags[i]);
-          browser.keys(['Return']);
+          await (await (await sitesPage.tagSelector()).$('input')).addValue(site.tags[i]);
+          await browser.keys(['Return']);
         }
       }
     }
   }
 
-  closeEditModal(clickCancel = false) {
+  async closeEditModal(clickCancel = false) {
     if (clickCancel) {
-      sitesPage.siteEditCancelBtn.click();
+      await (await sitesPage.siteEditCancelBtn()).click();
     } else {
-      sitesPage.siteEditSaveBtn.click();
+      await (await sitesPage.siteEditSaveBtn()).click();
     }
-    sitesPage.sitesManageTagsBtn.waitForClickable({ timeout: 40000 });
+    await (await sitesPage.sitesManageTagsBtn()).waitForClickable({ timeout: 40000 });
   }
 
-  edit(site?: { name?: string; tags?: string[] }, clickCancel = false) {
-    this.openEditModal(site);
-    this.closeEditModal(clickCancel);
+  async edit(site?: { name?: string; tags?: string[] }, clickCancel = false) {
+    await this.openEditModal(site);
+    await this.closeEditModal(clickCancel);
   }
 
-  openDeleteModal() {
-    this.deleteBtn.click();
-    sitesPage.siteDeleteCancelBtn.waitForClickable({ timeout: 40000 });
+  async openDeleteModal() {
+    await this.deleteBtn.click();
+    await (await sitesPage.siteDeleteCancelBtn()).waitForClickable({ timeout: 40000 });
   }
 
-  closeDeleteModal(clickCancel = false) {
+  async closeDeleteModal(clickCancel = false) {
     if (clickCancel) {
-      sitesPage.siteDeleteCancelBtn.click();
+      await (await sitesPage.siteDeleteCancelBtn()).click();
     } else {
-      sitesPage.siteDeleteDeleteBtn.click();
+      await (await sitesPage.siteDeleteDeleteBtn()).click();
     }
-    sitesPage.sitesManageTagsBtn.waitForClickable({ timeout: 40000 });
+    await (await sitesPage.sitesManageTagsBtn()).waitForClickable({ timeout: 40000 });
   }
 
-  delete(clickCancel = false) {
-    this.openDeleteModal();
-    this.closeDeleteModal(clickCancel);
+  async delete(clickCancel = false) {
+    await this.openDeleteModal();
+    await this.closeDeleteModal(clickCancel);
   }
 }

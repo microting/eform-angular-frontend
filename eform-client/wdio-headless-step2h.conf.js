@@ -10,10 +10,10 @@ exports.config = {
   // NPM script (see https://docs.npmjs.com/cli/run-script) then the current working
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
-  // specs: [
-  //   //'e2e/Tests/eform-visual-editor/eform-visual-editor.create-eform.spec.ts',
-  //   //'e2e/Tests/eform-visual-editor/eform-visual-editor.edit-eform.spec.ts',
-  // ],
+   specs: [
+    'e2e/Tests/eform-visual-editor/eform-visual-editor.create-eform.spec.ts',
+    'e2e/Tests/eform-visual-editor/eform-visual-editor.edit-eform.spec.ts',
+  ],
   suites: {
     settings: ['e2e/Tests/application-settings/**/*.spec.ts'],
   },
@@ -73,7 +73,7 @@ exports.config = {
   // By default WebdriverIO commands are executed in a synchronous way using
   // the wdio-sync package. If you still want to run your Tests in an async way
   // e.g. using promises you can set the sync option to false.
-  sync: true,
+  sync: false,
   //
   // Level of logging verbosity: silent | verbose | command | data | result | error
   logLevel: 'silent',

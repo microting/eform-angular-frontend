@@ -34,53 +34,53 @@ const translationsEFormsPageDan: Array<{ key: string; value: string }> = [
   { key: '#actionsEForm', value: 'Handlinger' },
 ];
 describe('Profile settings', function () {
-  before(function () {
-    loginPage.open('/');
-    loginPage.login();
+  before(async () => {
+    await loginPage.open('/');
+    await loginPage.login();
   });
-  it('should set language to English', function () {
-    myEformsPage.Navbar.goToProfileSettings();
-    profileSettings.chooseLanguage('English');
-    profileSettings.saveProfileSettings();
-    myEformsPage.Navbar.goToMyEForms();
-    translationsEFormsPageEng.forEach((translation) =>
-      expect($(translation.key).getText()).eq(
+  it('should set language to English', async () => {
+    await myEformsPage.Navbar.goToProfileSettings();
+    await profileSettings.chooseLanguage('English');
+    await profileSettings.saveProfileSettings();
+    await myEformsPage.Navbar.goToMyEForms();
+    for (const translation of translationsEFormsPageEng) {
+      expect((await $(translation.key)).getText()).eq(
         translation.value,
         `element with selector ${translation.key} must be = ${
           translation.value
-        }, but element text = ${$(translation.key).getText()}.
+        }, but element text = ${(await $(translation.key)).getText()}.
       Language = English`
-      )
-    );
+      );
+    }
   });
-  it('should set language to German', function () {
-    myEformsPage.Navbar.goToProfileSettings();
-    profileSettings.chooseLanguage('German');
-    profileSettings.saveProfileSettings();
-    myEformsPage.Navbar.goToMyEForms();
-    translationsEFormsPageGer.forEach((translation) =>
-      expect($(translation.key).getText()).eq(
+  it('should set language to German', async () => {
+    await myEformsPage.Navbar.goToProfileSettings();
+    await profileSettings.chooseLanguage('German');
+    await profileSettings.saveProfileSettings();
+    await myEformsPage.Navbar.goToMyEForms();
+    for (const translation of translationsEFormsPageGer) {
+      expect((await $(translation.key)).getText()).eq(
         translation.value,
         `element with selector ${translation.key} must be = ${
           translation.value
-        }, but element text = ${$(translation.key).getText()}.
+        }, but element text = ${(await $(translation.key)).getText()}.
       Language = German`
-      )
-    );
+      );
+    }
   });
-  it('should set language to Danish', function () {
-    myEformsPage.Navbar.goToProfileSettings();
-    profileSettings.chooseLanguage('Danish');
-    profileSettings.saveProfileSettings();
-    myEformsPage.Navbar.goToMyEForms();
-    translationsEFormsPageDan.forEach((translation) =>
-      expect($(translation.key).getText()).eq(
+  it('should set language to Danish', async () => {
+    await myEformsPage.Navbar.goToProfileSettings();
+    await profileSettings.chooseLanguage('Danish');
+    await profileSettings.saveProfileSettings();
+    await myEformsPage.Navbar.goToMyEForms();
+    for (const translation of translationsEFormsPageDan) {
+      expect((await $(translation.key)).getText()).eq(
         translation.value,
         `element with selector ${translation.key} must be = ${
           translation.value
-        }, but element text = ${$(translation.key).getText()}.
+        }, but element text = ${(await $(translation.key)).getText()}.
       Language = Danish`
-      )
-    );
+      );
+    }
   });
 });

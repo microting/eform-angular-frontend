@@ -5,25 +5,25 @@ export class ProfileSettings extends PageWithNavbarPage {
     super();
   }
 
-  public get languageSelector() {
+  public async languageSelector(): Promise<WebdriverIO.Element> {
     return $('#ProfileLanguageSelector');
   }
 
-  public get saveBtn() {
+  public async saveBtn(): Promise<WebdriverIO.Element> {
     return $('#ProfileSettingsSaveBtn');
   }
 
-  public saveProfileSettings() {
-    this.saveBtn.click();
+  public async saveProfileSettings() {
+    await (await this.saveBtn()).click();
     // browser.pause(12000);
-    $('#sign-out-dropdown').waitForDisplayed({ timeout: 40000 });
-    browser.pause(1000);
+    await (await $('#sign-out-dropdown')).waitForDisplayed({ timeout: 40000 });
+    await browser.pause(1000);
   }
-  public chooseLanguage(language: string) {
-    this.languageSelector.click();
-    browser.pause(2000);
-    $(`//*[@id="ProfileLanguageSelector"]//*[text()="${language}"]`).click();
-    browser.pause(1000);
+  public async chooseLanguage(language: string) {
+    await (await this.languageSelector()).click();
+    await browser.pause(2000);
+    await (await $(`//*[@id="ProfileLanguageSelector"]//*[text()="${language}"]`)).click();
+    await browser.pause(1000);
   }
 }
 const profileSettings = new ProfileSettings();
