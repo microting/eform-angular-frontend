@@ -282,17 +282,12 @@ class NavigationMenuPage {
     indexInCreated: number
   ) {
     await this.openOnEditCreatedMenuItem(indexInCreated);
-    // $('#editMenuEntry').waitForDisplayed({timeout: 40000});
     if (data.securityGroups.length > 0) {
       await this.editSecurityGroupsValue(data.securityGroups);
     }
-    console.log('sec selected 1');
     await (await this.editLinkInput()).setValue(data.link);
-    console.log('sec selected 2');
     if (data.translations.length > 0) {
-      console.log('sec selected 3');
       for (const translation of data.translations) {
-        console.log('sec selected 4');
         const i = data.translations.indexOf(translation);
         await (await this.editItemTranslation(indexInCreated, 0, i)).setValue(translation);
       }
