@@ -16,19 +16,20 @@ export async function testSorting(
     array: WebdriverIO.Element[]
   ) => unknown
 ) {
+  //     this.tags = await Promise.all(list.map(element => element.getText()));
   if (!mapFunc) {
     mapFunc = (ele) => ele.getText();
   }
   await browser.pause(1000);
   const elementsForSorting = await $$(htmlIdElementsForSorting);
-  const elementsBefore = await elementsForSorting.map(mapFunc);
-  const spinnerAnimation = $('#spinner-animation');
+  const elementsBefore = await Promise.all(elementsForSorting.map(mapFunc));
+  const spinnerAnimation = await $('#spinner-animation');
   // check that sorting is correct in both directions
   for (let i = 0; i < 2; i++) {
     await tableHeader.click();
     await spinnerAnimation.waitForDisplayed({ timeout: 90000, reverse: true });
 
-    const elementsAfter = elementsForSorting.map(mapFunc);
+    const elementsAfter = await Promise.all(elementsForSorting.map(mapFunc));
 
     // get current direction of sorting
     const sortIcon = await tableHeader.$('i').getText();

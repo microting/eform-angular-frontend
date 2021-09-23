@@ -144,7 +144,7 @@ class MyEformsPage extends PageWithNavbarPage {
       return await obj.getRow(await this.rowNum());
     }
 
-  async getEformRowObj(num, pause: boolean): Promise<MyEformsRowObject> {
+  async getEformRowObj(num, pause: boolean = false): Promise<MyEformsRowObject> {
     if (pause) {
       await browser.pause(500);
     }

@@ -68,15 +68,15 @@ class PluginRowObject {
   settingsBtn;
 
   public async getRow(rowNum: number): Promise<PluginRowObject> {
-    this.element = $$('#tableBody > tr')[rowNum - 1];
+    this.element = (await $$('#tableBody > tr'))[rowNum - 1];
     if (this.element) {
-      this.id = +this.element.$('#plugin-id').getText();
-      this.name = this.element.$('#plugin-name').getText();
-      this.version = this.element.$('#plugin-version').getText();
-      this.settingsBtn = this.element.$('#plugin-settings-link');
-      this.statusBtn = this.element.$('#plugin-status button');
-      const pluginStatus = this.element.$('#plugin-status');
-      this.status = pluginStatus.$('fa-icon[icon="toggle-off"]').isDisplayed();
+      this.id = +await (await this.element.$('#plugin-id')).getText();
+      this.name = await (await this.element.$('#plugin-name')).getText();
+      this.version = await (await this.element.$('#plugin-version')).getText();
+      this.settingsBtn = await this.element.$('#plugin-settings-link');
+      this.statusBtn = await this.element.$('#plugin-status button');
+      const pluginStatus = await this.element.$('#plugin-status');
+      this.status = await (await pluginStatus.$('fa-icon[icon="toggle-off"]')).isDisplayed();
     }
     return this;
   }
