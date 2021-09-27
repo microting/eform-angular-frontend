@@ -6,59 +6,59 @@ class LoginPage extends Page {
     super();
   }
 
-  public get mainText() {
+  public async mainText(): Promise<WebdriverIO.Element> {
     return $('#loginMainText');
   }
 
-  public get secondaryText() {
+  public async secondaryText(): Promise<WebdriverIO.Element> {
     return $('#loginSecondaryText');
   }
 
-  public get image() {
+  public async image(): Promise<WebdriverIO.Element> {
     return $('#loginImage');
   }
 
-  public get usernameInput() {
-    const ele = $('#username');
-    ele.waitForDisplayed({ timeout: 40000 });
-    ele.waitForClickable({ timeout: 40000 });
+  public async usernameInput(): Promise<WebdriverIO.Element> {
+    const ele = await $('#username');
+    await ele.waitForDisplayed({ timeout: 40000 });
+    await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  public get passwordInput() {
-    const ele = $('#password');
-    ele.waitForDisplayed({ timeout: 40000 });
-    ele.waitForClickable({ timeout: 40000 });
+  public async passwordInput(): Promise<WebdriverIO.Element> {
+    const ele = await $('#password');
+    await ele.waitForDisplayed({ timeout: 40000 });
+    await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  public get loginBtn() {
-    const ele = $('#loginBtn');
-    ele.waitForDisplayed({ timeout: 40000 });
-    ele.waitForClickable({ timeout: 40000 });
+  public async loginBtn(): Promise<WebdriverIO.Element> {
+    const ele = await $('#loginBtn');
+    await ele.waitForDisplayed({ timeout: 40000 });
+    await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  public login(): void {
-    this.usernameInput.waitForDisplayed({ timeout: 60000 });
+  public async login(): Promise<void> {
+    await (await this.usernameInput()).waitForDisplayed({ timeout: 60000 });
     const spinnerAnimation = $('#spinner-animation');
-    spinnerAnimation.waitForDisplayed({ timeout: 60000, reverse: true });
-    this.usernameInput.setValue(LoginConstants.username);
-    this.passwordInput.setValue(LoginConstants.password);
-    this.loginBtn.click();
-    spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
-    $('#newEFormBtn').waitForDisplayed({ timeout: 60000 });
-    spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
+    await spinnerAnimation.waitForDisplayed({ timeout: 60000, reverse: true });
+    await (await this.usernameInput()).setValue(LoginConstants.username);
+    await (await this.passwordInput()).setValue(LoginConstants.password);
+    await (await this.loginBtn()).click();
+    await spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
+    await $('#newEFormBtn').waitForDisplayed({ timeout: 60000 });
+    await spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
   }
-  public loginWithNewPassword(): void {
-    this.usernameInput.waitForDisplayed({ timeout: 60000 });
+  public async loginWithNewPassword(): Promise<void> {
+    await (await this.usernameInput()).waitForDisplayed({ timeout: 60000 });
     const spinnerAnimation = $('#spinner-animation');
-    spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
-    this.usernameInput.setValue(LoginConstants.username);
-    this.passwordInput.setValue(LoginConstants.newPassword);
-    this.loginBtn.click();
-    $('#newEFormBtn').waitForDisplayed({ timeout: 60000 });
-    spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
+    await spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
+    await (await this.usernameInput()).setValue(LoginConstants.username);
+    await (await this.passwordInput()).setValue(LoginConstants.newPassword);
+    await (await this.loginBtn()).click();
+    await $('#newEFormBtn').waitForDisplayed({ timeout: 60000 });
+    await spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
   }
 
   public randomInt(min, max) {

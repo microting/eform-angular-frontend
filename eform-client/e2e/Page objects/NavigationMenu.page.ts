@@ -1,347 +1,350 @@
 class NavigationMenuPage {
-  public get menuItemsChilds() {
+  public async menuItemsChilds(): Promise<WebdriverIO.ElementArray> {
     return $$('#menuItems>*');
   }
 
-  public get menuItems() {
+  public async menuItems(): Promise<WebdriverIO.Element> {
     return $('#menuItems');
   }
 
-  public get editLinkInput() {
+  public async editLinkInput(): Promise<WebdriverIO.Element> {
     return $('#editLinkInput');
   }
 
-  public get createCustomLinkInput() {
+  public async createCustomLinkInput(): Promise<WebdriverIO.Element> {
     return $('#customLinkLink');
   }
 
-  public get editItemSaveBtn() {
-    $('#editItemSaveBtn').waitForClickable({ timeout: 40000 });
+  public async editItemSaveBtn(): Promise<WebdriverIO.Element> {
+    await (await $('#editItemSaveBtn')).waitForClickable({ timeout: 40000 });
     return $('#editItemSaveBtn');
   }
 
-  public get securityGroupsCustomLinkSelector() {
+  public async securityGroupsCustomLinkSelector(): Promise<WebdriverIO.Element> {
     return $('#securityGroupsCustomLinkSelector');
   }
 
-  public get securityGroupsCustomDropdownSelector() {
+  public async securityGroupsCustomDropdownSelector(): Promise<WebdriverIO.Element> {
     return $('#securityGroupsCustomDropdownSelector');
   }
 
-  public get securityGroupsValue() {
-    return this.editSecurityGroupsSelector.$$('.ng-value-label');
+  public async securityGroupsValue(): Promise<WebdriverIO.ElementArray> {
+    return await (await this.editSecurityGroupsSelector()).$$('.ng-value-label');
   }
 
-  public get editSecurityGroupsSelector() {
+  public async editSecurityGroupsSelector(): Promise<WebdriverIO.Element> {
     return $('#editSecurityGroupsSelector');
   }
 
-  public get menuItemDropdowns() {
+  public async menuItemDropdowns(): Promise<WebdriverIO.ElementArray> {
     return $$('#menuItemDropdown');
   }
 
-  public dropdownBody(index: number) {
-    return this.menuItemsChilds[index].$('#dropdownBody');
+  public async dropdownBody(index: number) {
+    return (await this.menuItemsChilds())[index].$('#dropdownBody');
   }
 
-  public dropdownBodyChilds(indexDropdown: number) {
-    return this.menuItemsChilds[indexDropdown].$$('#dropdownBody>*');
+  public async dropdownBodyChilds(indexDropdown: number) {
+    return (await this.menuItemsChilds())[indexDropdown].$$('#dropdownBody>*');
   }
 
-  public editTranslationsOnDropdownBodyChilds(data: {
+  public async editTranslationsOnDropdownBodyChilds(data: {
     indexChildDropdown: number;
     indexDropdownInMenu: number;
     translations_array: string[];
   }) {
-    this.dropdownBodyChilds(data.indexDropdownInMenu)
-      [data.indexChildDropdown].$('#editBtn')
+    await (await (await this.dropdownBodyChilds(data.indexDropdownInMenu))
+      [data.indexChildDropdown].$('#editBtn'))
       .click();
-    $('#editMenuEntry').waitForDisplayed({ timeout: 40000 });
-    data.translations_array.forEach((translation, i) =>
-      this.editItemTranslation(
+    await (await $('#editMenuEntry')).waitForDisplayed({ timeout: 40000 });
+    for (const translation of data.translations_array) {
+      const i = data.translations_array.indexOf(translation);
+      await (await this.editItemTranslation(
         data.indexDropdownInMenu,
         data.indexChildDropdown,
         i
-      ).setValue(translation)
-    );
-    this.editItemSaveBtn.click();
+      )).setValue(translation);
+    }
+    await (await this.editItemSaveBtn()).click();
   }
 
-  public collapseMenuItemDropdown(index: number) {
-    this.menuItemsChilds[index].$('#collapseToggle').click();
+  public async collapseMenuItemDropdown(index: number) {
+    await (await (await this.menuItemsChilds())[index].$('#collapseToggle')).click();
   }
 
-  public dragTemplateOnElementInCreatedDropdown(
+  public async dragTemplateOnElementInCreatedDropdown(
     indexTemplate: number,
     indexCreatedDropdown: number,
     indexElementInCreatedDropdown = 0
   ) {
-    this.collapseTemplates(0);
-    if (this.dropdownBodyChilds(indexCreatedDropdown).length === 0) {
-      this.dragHandleOnItemInMainMenu(indexTemplate).dragAndDrop(
-        this.dropdownBody(indexCreatedDropdown)
+    await this.collapseTemplates(0);
+    if ((await this.dropdownBodyChilds(indexCreatedDropdown)).length === 0) {
+      await (await this.dragHandleOnItemInMainMenu(indexTemplate)).dragAndDrop(
+        await this.dropdownBody(indexCreatedDropdown)
       );
     } else {
-      this.dragHandleOnItemInMainMenu(indexTemplate).dragAndDrop(
-        this.dropdownBodyChilds(indexCreatedDropdown)[
+      await (await this.dragHandleOnItemInMainMenu(indexTemplate)).dragAndDrop(
+        (await this.dropdownBodyChilds(indexCreatedDropdown))[
           indexElementInCreatedDropdown
         ]
       );
     }
-    this.collapseTemplates(0);
+    await this.collapseTemplates(0);
   }
 
-  public collapseTemplates(indexTemplate) {
-    this.dropdownTemplate(indexTemplate).$('app-eform-collapse-toggle').click();
+  public async collapseTemplates(indexTemplate) {
+    await (await (await this.dropdownTemplate(indexTemplate)).$('app-eform-collapse-toggle')).click();
     // waiting for the menu to open. Menu not have id or any universal selector.
-    browser.pause(1500);
+    await browser.pause(1500);
   }
 
-  public get mainMenu() {
+  public async mainMenu(): Promise<WebdriverIO.Element> {
     return $('#mainMenu');
   }
 
-  public dragHandleOnItemInMainMenu(numberItem) {
-    return this.mainMenu.$(`#dragHandle0_${numberItem}`);
+  public async dragHandleOnItemInMainMenu(numberItem) {
+    return await (await this.mainMenu()).$(`#dragHandle0_${numberItem}`);
   }
 
-  public dragAndDropElementOfDropdown(
+  public async dragAndDropElementOfDropdown(
     indexDropdownInMenuItems,
     indexItemForSwap,
     indexItemOfSwap
   ) {
-    const elem = this.menuItemsChilds[indexDropdownInMenuItems].$(
+    const elem = await (await this.menuItemsChilds())[indexDropdownInMenuItems].$(
       `#drag_handle${indexDropdownInMenuItems}_${indexItemForSwap}`
     );
-    elem.scrollIntoView();
-    browser.pause(2000);
+    await elem.scrollIntoView();
+    await browser.pause(2000);
 
-    elem.dragAndDrop(
-      this.menuItemsChilds[indexDropdownInMenuItems].$(
+    await elem.dragAndDrop(
+      await (await this.menuItemsChilds())[indexDropdownInMenuItems].$(
         `#drag_handle${indexDropdownInMenuItems}_${indexItemOfSwap}`
       )
     );
   }
 
-  public createMenuItemFromTemplate(indexItemInTemplate) {
-    this.dragHandleOnItemInMainMenu(indexItemInTemplate).dragAndDrop(
-      this.menuItemsChilds[0]
+  public async createMenuItemFromTemplate(indexItemInTemplate) {
+    await (await this.dragHandleOnItemInMainMenu(indexItemInTemplate)).dragAndDrop(
+      (await this.menuItemsChilds())[0]
     );
   }
 
-  public dropdownTemplate(indexTemplate) {
-    return $$('#menuTemplate')[indexTemplate];
+  public async dropdownTemplate(indexTemplate) {
+    return (await $$('#menuTemplate'))[indexTemplate];
   }
 
-  public clickSaveMenuBtn() {
-    const navigationMenuSaveBtn = $('#navigationMenuSaveBtn');
-    navigationMenuSaveBtn.scrollIntoView();
-    navigationMenuSaveBtn.waitForClickable({ timeout: 40000 });
-    navigationMenuSaveBtn.click();
-    $('#spinner-animation').waitForDisplayed({ timeout: 50000, reverse: true });
+  public async clickSaveMenuBtn() {
+    const navigationMenuSaveBtn = await $('#navigationMenuSaveBtn');
+    await navigationMenuSaveBtn.scrollIntoView();
+    await navigationMenuSaveBtn.waitForClickable({ timeout: 40000 });
+    await navigationMenuSaveBtn.click();
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
   }
 
-  public openOnEditCreatedMenuItem(indexInCreatedMenuItems) {
-    this.menuItemsChilds[indexInCreatedMenuItems].$('#editBtn').click();
-    $('#editMenuEntry').waitForDisplayed({ timeout: 40000 });
+  public async openOnEditCreatedMenuItem(indexInCreatedMenuItems) {
+    await (await (await this.menuItemsChilds())[indexInCreatedMenuItems].$('#editBtn')).click();
+    await (await $('#editMenuEntry')).waitForDisplayed({ timeout: 40000 });
   }
 
-  public editItemTranslation(
+  public async editItemTranslation(
     firstLevelIndex,
     secondLevelIndex,
     translationIndex
   ) {
-    const ele = $(
-      `#editItemTranslation${firstLevelIndex}_${secondLevelIndex}_${translationIndex}`
-    );
-    ele.waitForDisplayed({ timeout: 40000 });
-    ele.waitForClickable({ timeout: 40000 });
+    const ele = await $(`#editItemTranslation${firstLevelIndex}_${secondLevelIndex}_${translationIndex}`);
+    await ele.waitForDisplayed({ timeout: 40000 });
+    await ele.waitForClickable({ timeout: 40000 });
     return ele;
   }
 
-  public resetMenu() {
-    const resetBtn = $('#resetBtn');
-    resetBtn.scrollIntoView();
-    resetBtn.waitForClickable({ timeout: 40000 });
-    resetBtn.click();
-    $('#resetModal').waitForDisplayed({ timeout: 40000 });
-    const deleteWorkerDeleteBtn = $('#deleteWorkerDeleteBtn');
-    deleteWorkerDeleteBtn.waitForDisplayed({ timeout: 40000 });
-    deleteWorkerDeleteBtn.waitForClickable({ timeout: 40000 });
-    deleteWorkerDeleteBtn.click();
-    $('#spinner-animation').waitForDisplayed({ timeout: 50000, reverse: true });
+  public async resetMenu() {
+    const resetBtn = await $('#resetBtn');
+    await resetBtn.scrollIntoView();
+    await resetBtn.waitForClickable({ timeout: 40000 });
+    await resetBtn.click();
+    await (await $('#resetModal')).waitForDisplayed({ timeout: 40000 });
+    const deleteWorkerDeleteBtn = await $('#deleteWorkerDeleteBtn');
+    await deleteWorkerDeleteBtn.waitForDisplayed({ timeout: 40000 });
+    await deleteWorkerDeleteBtn.waitForClickable({ timeout: 40000 });
+    await deleteWorkerDeleteBtn.click();
+    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 50000, reverse: true });
   }
 
-  public deleteElementFromMenuItems(indexElementInMenu) {
-    const deleteBtn = this.menuItemsChilds[indexElementInMenu].$('#deleteBtn');
-    deleteBtn.scrollIntoView();
-    deleteBtn.waitForClickable({ timeout: 40000 });
-    deleteBtn.click();
-    const menuItemDeleteBtn = $('#menuItemDeleteBtn');
-    menuItemDeleteBtn.waitForDisplayed({ timeout: 40000 });
-    menuItemDeleteBtn.waitForClickable({ timeout: 40000 });
-    menuItemDeleteBtn.click();
+  public async deleteElementFromMenuItems(indexElementInMenu) {
+    const deleteBtn = await (await this.menuItemsChilds())[indexElementInMenu].$('#deleteBtn');
+    await deleteBtn.scrollIntoView();
+    await deleteBtn.waitForClickable({ timeout: 40000 });
+    await deleteBtn.click();
+    const menuItemDeleteBtn = await $('#menuItemDeleteBtn');
+    await menuItemDeleteBtn.waitForDisplayed({ timeout: 40000 });
+    await menuItemDeleteBtn.waitForClickable({ timeout: 40000 });
+    await menuItemDeleteBtn.click();
   }
 
-  public deleteElementFromDropdown(indexDropdown, indexInDropdown) {
-    const deleteBtn = this.dropdownBodyChilds(indexDropdown)[indexInDropdown].$(
+  public async deleteElementFromDropdown(indexDropdown, indexInDropdown) {
+    const deleteBtn = await (await this.dropdownBodyChilds(indexDropdown))[indexInDropdown].$(
       '#deleteBtn'
     );
-    deleteBtn.scrollIntoView();
-    deleteBtn.waitForClickable({ timeout: 40000 });
-    deleteBtn.click();
-    const menuItemDeleteBtn = $('#menuItemDeleteBtn');
-    menuItemDeleteBtn.waitForDisplayed({ timeout: 40000 });
-    menuItemDeleteBtn.waitForClickable({ timeout: 40000 });
-    menuItemDeleteBtn.click();
-    this.collapseMenuItemDropdown(indexDropdown);
+    await deleteBtn.scrollIntoView();
+    await deleteBtn.waitForClickable({ timeout: 40000 });
+    await deleteBtn.click();
+    const menuItemDeleteBtn = await $('#menuItemDeleteBtn');
+    await menuItemDeleteBtn.waitForDisplayed({ timeout: 40000 });
+    await menuItemDeleteBtn.waitForClickable({ timeout: 40000 });
+    await menuItemDeleteBtn.click();
+    await this.collapseMenuItemDropdown(indexDropdown);
   }
 
-  public createCustomLinkTranslation(index, value) {
+  public async createCustomLinkTranslation(index, value) {
     // $(`input#linkTranslation${index}`).waitForDisplayed({timeout: 2000, reverse: true});
-    $(`#linkTranslation${index}`).setValue(value);
+    await (await $(`#linkTranslation${index}`)).setValue(value);
   }
 
-  public createCustomDropdownTranslation(index, value) {
+  public async createCustomDropdownTranslation(index, value) {
     // $(`input#linkTranslation${index}`).waitForDisplayed({timeout: 2000, reverse: true});
-    $(`#dropdownTranslation${index}`).setValue(value);
+    await (await $(`#dropdownTranslation${index}`)).setValue(value);
   }
 
-  public setSecurityGroupCustomLinkSelector(textSecurityGroup) {
-    this.securityGroupsCustomLinkSelector.click();
+  public async setSecurityGroupCustomLinkSelector(textSecurityGroup) {
+    await (await this.securityGroupsCustomLinkSelector()).click();
     $(
       `//*[@id="securityGroupsCustomLinkSelector"]//*[text()="${textSecurityGroup}"]`
     ).click();
     browser.pause(500);
   }
 
-  public setSecurityGroupCustomDropdownSelector(textSecurityGroup) {
-    this.securityGroupsCustomDropdownSelector.click();
-    $(
+  public async setSecurityGroupCustomDropdownSelector(textSecurityGroup) {
+    await (await this.securityGroupsCustomDropdownSelector()).click();
+    await (await $(
       `//*[@id="securityGroupsCustomDropdownSelector"]//*[text()="${textSecurityGroup}"]`
-    ).click();
-    browser.pause(500);
+    )).click();
+    await browser.pause(500);
   }
 
-  public selectCustomLink() {
+  public async selectCustomLink() {
     // $('#customLinkCreateBtn').waitForExist({timeout: 2000, reverse: true});
-    $('#addCustomLink').click();
-    $('#newLinkModal').waitForDisplayed({ timeout: 40000 });
+    await (await $('#addCustomLink')).click();
+    await (await $('#newLinkModal')).waitForDisplayed({ timeout: 40000 });
   }
 
-  public selectCustomDropdown() {
+  public async selectCustomDropdown() {
     // $('#customDropdownCreateBtn').waitForExist({timeout: 2000, reverse: true});
-    $('#addCustomDropdown').click();
+    await (await $('#addCustomDropdown')).click();
   }
 
-  public createCustomLink(data: {
+  public async createCustomLink(data: {
     securityGroups: string[];
     link: string;
     translations: string[];
   }) {
-    this.selectCustomLink();
-    $('#newLinkModal').waitForDisplayed({ timeout: 40000 });
+    await this.selectCustomLink();
+    await (await $('#newLinkModal')).waitForDisplayed({ timeout: 40000 });
     if (data.securityGroups.length > 0) {
-      data.securityGroups.forEach((securityGroup) =>
-        this.setSecurityGroupCustomLinkSelector(securityGroup)
-      );
+      for (const securityGroup of data.securityGroups) {
+        await this.setSecurityGroupCustomLinkSelector(securityGroup);
+      }
     }
-    this.createCustomLinkInput.setValue(data.link);
+    await (await this.createCustomLinkInput()).setValue(data.link);
     if (data.translations.length > 0) {
-      data.translations.forEach((translation, i) =>
-        this.createCustomLinkTranslation(i, translation)
-      );
+      for (const translation of data.translations) {
+        const i = data.translations.indexOf(translation);
+        await this.createCustomLinkTranslation(i, translation);
+      }
     }
     // $('#customLinkCreateBtn').waitForClickable({timeout: 2000});
-    $('#customLinkCreateBtn').click();
+    await(await $('#customLinkCreateBtn')).click();
   }
 
-  public createCustomDropdown(data: {
+  public async createCustomDropdown(data: {
     securityGroups: string[];
     translations: string[];
   }) {
-    this.selectCustomDropdown();
-    $('#newDropdownModal').waitForDisplayed({ timeout: 40000 });
+    await this.selectCustomDropdown();
+    await (await $('#newDropdownModal')).waitForDisplayed({ timeout: 40000 });
     if (data.securityGroups.length > 0) {
-      data.securityGroups.forEach((securityGroup) =>
-        this.setSecurityGroupCustomDropdownSelector(securityGroup)
-      );
+      for (const securityGroup of data.securityGroups) {
+        await this.setSecurityGroupCustomDropdownSelector(securityGroup);
+      }
     }
     if (data.translations.length > 0) {
-      data.translations.forEach((translation, i) =>
-        this.createCustomDropdownTranslation(i, translation)
-      );
+      for (const translation of data.translations) {
+        const i = data.translations.indexOf(translation);
+        await this.createCustomDropdownTranslation(i, translation);
+      }
     }
 
-    $('button#customDropdownCreateBtn').click();
+    await (await $('button#customDropdownCreateBtn')).click();
   }
 
-  public editCustomLink(
+  public async editCustomLink(
     data: { securityGroups: string[]; link: string; translations: string[] },
     indexInCreated: number
   ) {
-    this.openOnEditCreatedMenuItem(indexInCreated);
-    // $('#editMenuEntry').waitForDisplayed({timeout: 40000});
+    await this.openOnEditCreatedMenuItem(indexInCreated);
     if (data.securityGroups.length > 0) {
-      this.editSecurityGroupsValue(data.securityGroups);
+      await this.editSecurityGroupsValue(data.securityGroups);
     }
-    this.editLinkInput.setValue(data.link);
+    await (await this.editLinkInput()).setValue(data.link);
     if (data.translations.length > 0) {
-      data.translations.forEach((translation, i) =>
-        this.editItemTranslation(indexInCreated, 0, i).setValue(translation)
-      );
+      for (const translation of data.translations) {
+        const i = data.translations.indexOf(translation);
+        await (await this.editItemTranslation(indexInCreated, 0, i)).setValue(translation);
+      }
     }
-    this.editItemSaveBtn.click();
+    await (await this.editItemSaveBtn()).click();
   }
 
-  public editCustomDropdown(
+  public async editCustomDropdown(
     data: { securityGroups: string[]; translations: string[] },
     indexInCreated: number
   ) {
-    this.openOnEditCreatedMenuItem(indexInCreated);
+    await this.openOnEditCreatedMenuItem(indexInCreated);
     if (data.securityGroups.length > 0) {
-      this.editSecurityGroupsValue(data.securityGroups);
+      await this.editSecurityGroupsValue(data.securityGroups);
     }
     if (data.translations.length > 0) {
-      data.translations.forEach((translation, i) =>
-        this.editItemTranslation(indexInCreated, 0, i).setValue(translation)
-      );
+      for (const translation of data.translations) {
+        const i = data.translations.indexOf(translation);
+        await (await this.editItemTranslation(indexInCreated, 0, i)).setValue(translation);
+      }
     }
-    this.editItemSaveBtn.click();
+    await (await this.editItemSaveBtn()).click();
   }
 
-  public deleteSecurityGroupsInEditItem() {
-    this.securityGroupsValue.forEach((_) =>
-      this.editSecurityGroupsSelector.$('.ng-value span').click()
+  public async deleteSecurityGroupsInEditItem() {
+    (await this.securityGroupsValue()).forEach(async (_) =>
+      await (await (await this.editSecurityGroupsSelector()).$('.ng-value span')).click()
     );
   }
 
-  public editSecurityGroupsValue(securityGroups: string[]) {
-    this.deleteSecurityGroupsInEditItem();
-    securityGroups.forEach((textSecurityGroup) => {
-      this.editSecurityGroupsSelector.click();
-      $(
+  public async editSecurityGroupsValue(securityGroups: string[]) {
+    await this.deleteSecurityGroupsInEditItem();
+    for (const textSecurityGroup of securityGroups) {
+      await (await (this.editSecurityGroupsSelector())).click();
+      await (await $(
         `//*[@id="editSecurityGroupsSelector"]//*[text()="${textSecurityGroup}"]`
-      ).click();
-      browser.pause(500);
-    });
+      )).click();
+      await browser.pause(500);
+    }
   }
 
-  public editTemplateItem(
+  public async editTemplateItem(
     data: { link: string; translations: string[] },
     indexInCreated: number
   ) {
-    this.openOnEditCreatedMenuItem(indexInCreated);
+    await this.openOnEditCreatedMenuItem(indexInCreated);
     if (data.link) {
-      this.editLinkInput.setValue(data.link);
+      await (await this.editLinkInput()).setValue(data.link);
     }
-    data.translations.forEach((translation, i) => {
+    for (const translation of data.translations) {
+      const i = data.translations.indexOf(translation);
       if (translation) {
-        this.editItemTranslation(indexInCreated, 0, i).setValue(translation);
+        await (await this.editItemTranslation(indexInCreated, 0, i)).setValue(translation);
       }
-    });
-    this.editItemSaveBtn.click();
-    this.clickSaveMenuBtn();
+    }
+    await(await this.editItemSaveBtn()).click();
+    await this.clickSaveMenuBtn();
   }
 }
 const navigationMenuPage = new NavigationMenuPage();

@@ -9,56 +9,65 @@ const countCreateEForm = 3;
 let countRowsBeforeFiltering = 0;
 const namesEForms = new Array<string>();
 describe('My eforms', function () {
-  before(function () {
-    loginPage.open('/');
-    loginPage.login();
+  before(async () => {
+    await loginPage.open('/');
+    await loginPage.login();
   });
-  it('should be able to filter by 1 word in label input', function () {
-    myEformsPage.idSortBtn.click();
+  it('should be able to filter by 1 word in label input', async () => {
+    await (await myEformsPage.idSortBtn()).click();
     const spinnerAnimation = $('#spinner-animation');
-    spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
+    await spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
     for (let i = 0; i < countCreateEForm; i++) {
       const newEForm = generateRandmString();
-      myEformsPage.createNewEform(newEForm);
+      await myEformsPage.createNewEform(newEForm);
       namesEForms.push(newEForm);
     }
     const nameEFormForFiltering = namesEForms[1];
-    countRowsBeforeFiltering = myEformsPage.rowNum;
-    myEformsPage.eformFilter.setValue(nameEFormForFiltering);
-    spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
-    browser.pause(2000);
+    countRowsBeforeFiltering = await myEformsPage.rowNum();
+    expect(countRowsBeforeFiltering).equal(3);
+    await (await myEformsPage.eformFilter()).setValue(nameEFormForFiltering);
+    await spinnerAnimation.waitForDisplayed({ timeout: 50000, reverse: true });
+    await browser.pause(2000);
     const eform = myEformsPage.getEformsRowObjByNameEForm(
       nameEFormForFiltering
     );
     expect(eform).not.equal(null);
   });
-  it('should be able to see all eforms by leaving label input empty', function () {
-    myEformsPage.eformFilter.click();
-    browser.keys(['Control', 'a', 'Control', 'Delete']);
-    $('#spinner-animation').waitForDisplayed({ timeout: 50000, reverse: true });
-    browser.pause(2000);
-    expect(myEformsPage.rowNum).equal(countRowsBeforeFiltering);
+  it('should be able to see all eforms by leaving label input empty', async () => {
+    await (await myEformsPage.eformFilter()).click();
+    await browser.keys(['Control', 'a', 'Control', 'Delete']);
+    await $('#spinner-animation').waitForDisplayed({ timeout: 50000, reverse: true });
+    await browser.pause(2000);
+    expect(await myEformsPage.rowNum()).equal(3);
   });
-  it('should be able to filter using 1 tag', function () {
-    myEformsPage.createNewTags([testTag1, testTag2]);
-    myEformsPage.getEformsRowObjByNameEForm(namesEForms[1]).addTag(testTag2);
-    const eform = myEformsPage.getEformsRowObjByNameEForm(namesEForms[2]);
-    eform.addTag(testTag1);
-    myEformsPage.enterTagFilter(testTag1);
-    expect(eform.eFormName).eq(myEformsPage.getFirstMyEformsRowObj().eFormName);
+  it('should be able to filter using 1 tag', async () => {
+    await myEformsPage.createNewTags([testTag1, testTag2]);
+    // await (await myEformsPage.getEformsRowObjByNameEForm(namesEForms[1])).addTag(testTag2);
+    let form = await myEformsPage.getEformsRowObjByNameEForm(namesEForms[1]);
+    await form.addTag(testTag2);
+    form = await myEformsPage.getEformsRowObjByNameEForm(namesEForms[2]);
+    await form.addTag(testTag1);
+    await myEformsPage.enterTagFilter(testTag1);
+    expect(form.eFormName).eq((await myEformsPage.getFirstMyEformsRowObj()).eFormName);
   });
-  it('should be able to filter using several tags', function () {
-    myEformsPage.enterTagFilter(testTag2);
-    expect(myEformsPage.rowNum).eq(2);
+  it('should be able to filter using several tags', async () => {
+    await myEformsPage.enterTagFilter(testTag2);
+    expect(await myEformsPage.rowNum()).eq(2);
   });
-  after(function () {
-    // Commented until we have async testing implemented.
-    // myEformsPage.enterTagFilter(testTag1);
-    // myEformsPage.enterTagFilter(testTag2);
-    // myEformsPage.removeTags([testTag1, testTag2]);
-    // for (let i = 0; i < namesEForms.length; i++) {
-    //   myEformsPage.getEformsRowObjByNameEForm(namesEForms[i]).deleteEForm();
-    //   browser.pause(500);
-    // }
+  after(async () => {
+    await (await myEformsPage.eformFilter()).click();
+    await browser.keys(['Control', 'a', 'Control', 'Delete']);
+    await browser.pause(500);
+    let lastTag = await $('#tagSelector > div > div > .ng-value > span');
+    await lastTag.click();
+    lastTag = await $('#tagSelector > div > div > .ng-value > span');
+    await lastTag.click();
+    await myEformsPage.removeTags([testTag1, testTag2]);
+    await browser.pause(500);
+    for (let i = 0; i < namesEForms.length; i++) {
+      const form = await myEformsPage.getEformsRowObjByNameEForm(namesEForms[i]);
+      await form.deleteEForm();
+      await browser.pause(500);
+    }
   });
 });

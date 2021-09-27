@@ -12,7 +12,7 @@
       "*": [ "./*" ],
       "src/*": ["./src/*"]
     },
-    "types": ["node", "webdriverio/sync", "@wdio/mocha-framework"],
+    "types": ["node", "webdriverio/async", "@wdio/mocha-framework"],
     "target": "es2015",
     "typeRoots": [
       "node_modules/@types"

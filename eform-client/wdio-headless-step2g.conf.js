@@ -61,7 +61,10 @@ exports.config = {
       //
       browserName: 'chrome',
       'goog:chromeOptions': {
-        args: ['headless', 'window-size=1920,1080', 'disable-gpu'],
+        args: [
+          'headless',
+          'window-size=1920,1080',
+          'disable-gpu'],
       },
       // If outputDir is provided WebdriverIO can capture driver session logs
       // it is possible to configure which logTypes to include/exclude.
@@ -78,7 +81,7 @@ exports.config = {
   // By default WebdriverIO commands are executed in a synchronous way using
   // the wdio-sync package. If you still want to run your Tests in an async way
   // e.g. using promises you can set the sync option to false.
-  sync: true,
+  sync: false,
   //
   // Level of logging verbosity: silent | verbose | command | data | result | error
   logLevel: 'silent',

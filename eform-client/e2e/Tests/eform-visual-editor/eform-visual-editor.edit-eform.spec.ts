@@ -15,12 +15,12 @@ import { afterEach, beforeEach } from 'mocha';
 const expect = require('chai').expect;
 
 describe('Visual editor page', function () {
-  before(function () {
-    loginPage.open('/');
-    loginPage.login();
+  before(async () => {
+    await loginPage.open('/');
+    await loginPage.login();
   });
-  beforeEach(function () {
-    eformVisualEditorPage.goToVisualEditor();
+  beforeEach(async () => {
+    await eformVisualEditorPage.goToVisualEditor();
   });
   it('should edit created visual template', async () => {
     const checklist: MainChecklistObj = {
@@ -48,7 +48,7 @@ describe('Visual editor page', function () {
       ],
     };
     await eformVisualEditorPage.createVisualTemplate(checklist, true);
-    myEformsPage.getLastMyEformsRowObj().goToVisualEditor();
+    await (await myEformsPage.getLastMyEformsRowObj()).goToVisualEditor();
     let mainChecklist = new MainCheckListRowObj();
     await mainChecklist.getAllFields();
     const checklistObjForEdit: MainChecklistObj = {
@@ -271,8 +271,8 @@ describe('Visual editor page', function () {
       `checklists[1] description not valid`
     ).eq(checklist.checklists[1].translations[0].description);
   });
-  afterEach(function () {
-    myEformsPage.Navbar.goToMyEForms();
-    myEformsPage.clearEFormTable();
+  afterEach(async () => {
+    await myEformsPage.Navbar.goToMyEForms();
+    await myEformsPage.clearEFormTable();
   });
 });

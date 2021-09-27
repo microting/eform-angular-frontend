@@ -5,66 +5,66 @@ export class Workers extends PageWithNavbarPage {
   constructor() {
     super();
   }
-  public get firstNameBox() {
+  public async firstNameBox(): Promise<WebdriverIO.Element> {
     return $('#firstName');
   }
-  public get lastNameBox() {
+  public async lastNameBox(): Promise<WebdriverIO.Element> {
     return $('#lastName');
   }
-  public get firstNameEditBox() {
+  public async firstNameEditBox(): Promise<WebdriverIO.Element> {
     return $('#firstNameEdit');
   }
-  public get lastNameEditBox() {
+  public async lastNameEditBox(): Promise<WebdriverIO.Element> {
     return $('#lastNameEdit');
   }
-  public get workerCreateBtn() {
+  public async workerCreateBtn(): Promise<WebdriverIO.Element> {
     return $('#workerCreateBtn');
   }
-  public get workerSaveBtn() {
+  public async workerSaveBtn(): Promise<WebdriverIO.Element> {
     return $('#workerSaveBtn');
   }
-  public get workerEditBtn() {
+  public async workerEditBtn(): Promise<WebdriverIO.Element> {
     return $('#workerEditBtn');
   }
-  public get workerEditSaveBtn() {
+  public async workerEditSaveBtn(): Promise<WebdriverIO.Element> {
     return $('#workerEditSaveBtn');
   }
-  public get workerSelect() {
+  public async workerSelect(): Promise<WebdriverIO.Element> {
     return $('#workerSelector');
   }
-  public get firstElement() {
+  public async firstElement(): Promise<WebdriverIO.Element> {
     return $(`//*[contains(@class, 'custom')]//*[contains(text(), 'Gurkemine Ralphine')]`);
   }
-  public get rowNum(): number {
-    return $$('#tableBody > tr').length;
+  public async rowNum(): Promise<number> {
+    return (await $$('#tableBody > tr')).length;
   }
   getWorker(num): WorkersRowObject {
     return new WorkersRowObject(num);
   }
-  public createNewWorker(firstName: string, lastName: string) {
-    this.workerCreateBtn.click();
+  public async createNewWorker(firstName: string, lastName: string) {
+    await (await this.workerCreateBtn()).click();
     // browser.pause(8000);
-    $('#firstName').waitForDisplayed({timeout: 10000});
-    this.workerSelect.click();
-    browser.pause(1000);
-    this.firstElement.click();
-    this.firstNameBox.addValue(firstName);
-    this.lastNameBox.addValue(lastName);
-    browser.pause(1000);
-    this.workerSaveBtn.click();
+    await (await $('#firstName')).waitForDisplayed({timeout: 10000});
+    await (await this.workerSelect()).click();
+    await browser.pause(1000);
+    await (await this.firstElement()).click();
+    await (await this.firstNameBox()).addValue(firstName);
+    await (await this.lastNameBox()).addValue(lastName);
+    await browser.pause(1000);
+    await (await this.workerSaveBtn()).click();
     // browser.pause(16000);
   }
-  public editWorker(worker: WorkersRowObject, firstName: string, lastName: string) {
-    worker.editBtn.click();
+  public async editWorker(worker: WorkersRowObject, firstName: string, lastName: string) {
+    await worker.editBtn.click();
     // browser.pause(8000);
-    $('#firstNameEdit').waitForDisplayed({timeout: 8000});
-    this.firstNameEditBox.clearValue();
-    this.firstNameEditBox.addValue(firstName);
-    browser.pause(2000);
-    this.lastNameEditBox.clearValue();
-    this.lastNameEditBox.addValue(lastName);
-    browser.pause(2000);
-    this.workerEditSaveBtn.click();
+    await (await $('#firstNameEdit')).waitForDisplayed({timeout: 8000});
+    await (await this.firstNameEditBox()).clearValue();
+    await (await this.firstNameEditBox()).addValue(firstName);
+    await browser.pause(2000);
+    await (await this.lastNameEditBox()).clearValue();
+    await (await this.lastNameEditBox()).addValue(lastName);
+    await browser.pause(2000);
+    await (await this.workerEditSaveBtn()).click();
   }
 }
 

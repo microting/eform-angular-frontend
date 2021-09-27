@@ -9,85 +9,85 @@ const expect = require('chai').expect;
 const users = new Array<DeviceUsersRowObject>();
 const folders = new Array<FoldersRowObject>();
 describe('Main page', function () {
-  before(function () {
-    loginPage.open('/');
-    loginPage.login();
-    myEformsPage.Navbar.goToDeviceUsersPage();
+  before(async () => {
+    await loginPage.open('/');
+    await loginPage.login();
+    await myEformsPage.Navbar.goToDeviceUsersPage();
     // Create 2 device users
-    deviceUsersPage.createNewDeviceUser('testName1', 'testLastName1');
-    deviceUsersPage.createNewDeviceUser('testName2', 'testLastName2');
-    users.push(deviceUsersPage.getDeviceUserByName('testName1'));
-    users.push(deviceUsersPage.getDeviceUserByName('testName2'));
-    myEformsPage.Navbar.goToFolderPage();
+    await deviceUsersPage.createNewDeviceUser('testName1', 'testLastName1');
+    await deviceUsersPage.createNewDeviceUser('testName2', 'testLastName2');
+    users.push(await deviceUsersPage.getDeviceUserByName('testName1'));
+    users.push(await deviceUsersPage.getDeviceUserByName('testName2'));
+    await myEformsPage.Navbar.goToFolderPage();
     // Create folder
-    foldersPage.createNewFolder('test folder', 'desc');
-    folders.push(foldersPage.getFolderByName('test folder'));
-    myEformsPage.Navbar.goToMyEForms();
+    await foldersPage.createNewFolder('test folder', 'desc');
+    folders.push(await foldersPage.getFolderByName('test folder'));
+    await myEformsPage.Navbar.goToMyEForms();
     // Create e-form
-    myEformsPage.createNewEform('test Eform');
+    await myEformsPage.createNewEform('test Eform');
   });
-  it('should pair several device users', function () {
-    myEformsPage.idSortBtn.click();
-    const spinnerAnimation = $('#spinner-animation');
-    spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
-    browser.pause(1000);
-    myEformsPage.getFirstMyEformsRowObj().pair(folders[0], users);
-    myEformsPage.getFirstMyEformsRowObj().editPairEformBtn.click();
-    spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
-    myEformsPage.cancelParingBtn.waitForDisplayed({ timeout: 40000 });
-    browser.pause(1000);
+  it('should pair several device users', async () => {
+    await (await myEformsPage.idSortBtn()).click();
+    const spinnerAnimation = await $('#spinner-animation');
+    await spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
+    await browser.pause(1000);
+    await (await myEformsPage.getFirstMyEformsRowObj()).pair(folders[0], users);
+    await (await myEformsPage.getFirstMyEformsRowObj()).editPairEformBtn.click();
+    await spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
+    await (await myEformsPage.cancelParingBtn()).waitForDisplayed({ timeout: 40000 });
+    await browser.pause(1000);
     expect(
-      $('tree-node .node-content-wrapper-active').getText(),
+      await (await $('tree-node .node-content-wrapper-active')).getText(),
       'Wrong folder selected'
     ).contain(`${folders[0].name}`);
-    const siteIds = $$('#microtingId');
+    const siteIds = await $$('#microtingId');
     for (let i = 0; i < siteIds.length; i++) {
       const index = users.findIndex(
         (user) => user.siteId === +siteIds[i].getText()
       );
       if (index !== -1) {
         expect(
-          $(`#checkbox${users[index].siteId}`).getValue(),
+          await (await $(`#checkbox${users[index].siteId}`)).getValue(),
           `User ${users[index].siteId} not paired`
         ).eq('true');
       }
     }
-    myEformsPage.cancelParingBtn.click();
-    browser.pause(1000);
+    await (await myEformsPage.cancelParingBtn()).click();
+    await browser.pause(1000);
   });
-  it('should unpair one', function () {
-    myEformsPage.getFirstMyEformsRowObj().unPair([users[1]]);
-    const spinnerAnimation = $('#spinner-animation');
-    myEformsPage.getFirstMyEformsRowObj().editPairEformBtn.click();
-    spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
-    $('#microtingId').waitForDisplayed({ timeout: 40000 });
-    browser.pause(1000);
-    const siteIds = $$('#microtingId');
+  it('should unpair one', async () => {
+    await (await myEformsPage.getFirstMyEformsRowObj()).unPair([users[1]]);
+    const spinnerAnimation = await $('#spinner-animation');
+    (await myEformsPage.getFirstMyEformsRowObj()).editPairEformBtn.click();
+    await spinnerAnimation.waitForDisplayed({ timeout: 40000, reverse: true });
+    await (await $('#microtingId')).waitForDisplayed({ timeout: 40000 });
+    await browser.pause(1000);
+    const siteIds = await $$('#microtingId');
     for (let i = 0; i < siteIds.length; i++) {
-      if (users[1].siteId === +siteIds[i].getText()) {
+      if (users[1].siteId === +(await siteIds[i].getText())) {
         expect(
-          $(`#checkbox${users[1].siteId}`).getValue(),
+          await (await $(`#checkbox${users[1].siteId}`)).getValue(),
           `User ${users[1].siteId} paired`
         ).eq('false');
       }
       if (users[0].siteId === +siteIds[i].getText()) {
         expect(
-          $(`#checkbox${users[0].siteId}`).getValue(),
+          await (await $(`#checkbox${users[0].siteId}`)).getValue(),
           `User ${users[0].siteId} not paired`
         ).eq('true');
       }
     }
-    myEformsPage.cancelParingBtn.click();
+    await (await myEformsPage.cancelParingBtn()).click();
   });
-  after(function () {
-    myEformsPage.getEformsRowObjByNameEForm('test Eform').deleteEForm();
-    myEformsPage.Navbar.goToDeviceUsersPage();
+  after(async () => {
+    await (await myEformsPage.getEformsRowObjByNameEForm('test Eform')).deleteEForm();
+    await myEformsPage.Navbar.goToDeviceUsersPage();
     for (let i = 0; i < users.length; i++) {
-      deviceUsersPage.getDeviceUserByName(users[i].firstName).delete();
+      await (await deviceUsersPage.getDeviceUserByName(users[i].firstName)).delete();
     }
-    myEformsPage.Navbar.goToFolderPage();
+    await myEformsPage.Navbar.goToFolderPage();
     for (let i = 0; i < folders.length; i++) {
-      foldersPage.getFolderByName(folders[i].name).delete();
+      await (await foldersPage.getFolderByName(folders[i].name)).delete();
     }
   });
 });

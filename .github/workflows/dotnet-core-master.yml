@@ -2,7 +2,7 @@ name: Master/Stable
 
 on:
   push:
-    branches: [ master, stable, basechanges, visual-editor ]
+    branches: [ master, stable, async, visual-editor ]
     paths-ignore:
     - '**.md'
     - '.github/**'
@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        test: [a,b,c,d,e,f,g]
+        test: [a,b,c,d,e,f,g,h]
     steps:
     - uses: actions/checkout@v2
     - name: Upgrade Chrome browser

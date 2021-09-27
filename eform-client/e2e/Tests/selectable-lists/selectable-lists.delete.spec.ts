@@ -6,49 +6,49 @@ import {generateRandmString} from '../../Helpers/helper-functions';
 const expect = require('chai').expect;
 
 describe('Entity Select', function () {
-  before(function () {
-    loginPage.open('/auth');
-    loginPage.login();
-    myEformsPage.Navbar.goToEntitySelect();
+  before(async () => {
+    await loginPage.open('/auth');
+    await loginPage.login();
+    await myEformsPage.Navbar.goToEntitySelect();
   });
-  it('should make a new selectable list, with no items.', function () {
+  it('should make a new selectable list, with no items.', async () => {
     const data = {name: generateRandmString()};
-    selectableLists.createSelectableList(data);
-    const selectableListRowObject = selectableLists.getLastSelectableListObject();
+    await selectableLists.createSelectableList(data);
+    const selectableListRowObject = await selectableLists.getLastSelectableListObject();
     expect(selectableListRowObject.name).equal(data.name);
   });
-  it('should delete the list', function () {
-    const countBeforeDelete = selectableLists.selectableListCount;
-    const selectableListRowObject = selectableLists.getLastSelectableListObject();
-    selectableListRowObject.delete();
-    expect(countBeforeDelete - 1).equal(selectableLists.selectableListCount);
+  it('should delete the list', async () => {
+    const countBeforeDelete = await selectableLists.selectableListCount();
+    const selectableListRowObject = await selectableLists.getLastSelectableListObject();
+    await selectableListRowObject.delete();
+    expect(countBeforeDelete - 1).equal(await selectableLists.selectableListCount());
   });
-  it('should make a new selectable list, with 1 item', function () {
+  it('should make a new selectable list, with 1 item', async () => {
     const data = {name: generateRandmString(), items: [generateRandmString()]};
-    selectableLists.createSelectableList(data);
-    const selectableListRowObject = selectableLists.getLastSelectableListObject();
+    await selectableLists.createSelectableList(data);
+    const selectableListRowObject = await selectableLists.getLastSelectableListObject();
     expect(selectableListRowObject.name).equal(data.name);
-    selectableListRowObject.openEdit();
-    expect(selectableLists.getFirstEntityItemOnEdit.name).equal(data.items[0]);
-    selectableListRowObject.closeEdit(true);
+    await selectableListRowObject.openEdit();
+    expect(await ((await selectableLists.getFirstEntityItemOnEdit()).name)).equal(data.items[0]);
+    await selectableListRowObject.closeEdit(true);
   });
-  it('should delete item in list', function () {
-    const selectableListRowObject = selectableLists.getLastSelectableListObject();
-    selectableListRowObject.edit({}, false, true);
-    selectableListRowObject.openEdit();
-    expect(selectableLists.itemsEditPageCount).equal(0);
-    selectableListRowObject.closeEdit(true);
+  it('should delete item in list', async () => {
+    const selectableListRowObject = await selectableLists.getLastSelectableListObject();
+    await selectableListRowObject.edit({}, false, true);
+    await selectableListRowObject.openEdit();
+    expect(await selectableLists.itemsEditPageCount()).equal(0);
+    await selectableListRowObject.closeEdit(true);
   });
-  it('should not delete selectable list', function () {
-    const rowCountBeforeDelete = selectableLists.selectableListCount;
-    const selectableListRowObject = selectableLists.getLastSelectableListObject();
-    selectableListRowObject.delete(true);
-    expect(rowCountBeforeDelete).equal(selectableLists.selectableListCount);
+  it('should not delete selectable list', async () => {
+    const rowCountBeforeDelete = await selectableLists.selectableListCount();
+    const selectableListRowObject = await selectableLists.getLastSelectableListObject();
+    await selectableListRowObject.delete(true);
+    expect(rowCountBeforeDelete).equal(await selectableLists.selectableListCount());
   });
-  it('should delete selectable list', function () {
-    const rowCountBeforeDelete = selectableLists.selectableListCount;
-    const selectableListRowObject = selectableLists.getLastSelectableListObject();
-    selectableListRowObject.delete();
-    expect(rowCountBeforeDelete - 1).equal(selectableLists.selectableListCount);
+  it('should delete selectable list', async () => {
+    const rowCountBeforeDelete = await selectableLists.selectableListCount();
+    const selectableListRowObject = await selectableLists.getLastSelectableListObject();
+    await selectableListRowObject.delete();
+    expect(rowCountBeforeDelete - 1).equal(await selectableLists.selectableListCount());
   });
 });
