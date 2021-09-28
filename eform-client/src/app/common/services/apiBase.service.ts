@@ -76,6 +76,14 @@ export class ApiBaseService {
       .pipe(map((response) => this.extractData<T>(response)));
   }
 
+  public postUrlEncoded<T>(method: string, body: any): Observable<any> {
+    return this.http
+      .post(method, body.toString(), {
+        headers: this.setHeaders('application/x-www-form-urlencoded'),
+      })
+      .pipe(map((response) => this.extractData<T>(response)));
+  }
+
   public postFormData<T>(url: string, body: any): Observable<any> {
     return this.http
       .post(url, body, {

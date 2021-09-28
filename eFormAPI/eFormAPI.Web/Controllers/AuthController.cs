@@ -49,7 +49,7 @@ namespace eFormAPI.Web.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("api/auth/token")]
-        public async Task<OperationResult> AuthenticateUser([FromBody] LoginModel model)
+        public async Task<OperationResult> AuthenticateUser(LoginModel model)
         {
             Log.LogEvent("api/auth/token called");
             return await _authService.AuthenticateUser(model);
