@@ -25,7 +25,7 @@
       mdbBtn
       class="btn-success btn-icon"
       id="eformsVisualEditor"
-      *ngIf="userClaims.eformsCreate"
+      *ngIf="authStateService.isAdmin"
       [routerLink]="['visual-editor']"
       mdbTooltip="{{ 'Visual editor' | translate }}"
       mdbWavesEffect
@@ -259,10 +259,7 @@
               </button>
               <a
                 *ngIf="
-                  (templateDto.deployedSites.length == 0 && !templateDto.hasCases) && checkEformPermissions(
-                    templateDto.id,
-                    userClaimsEnum.eformsCreate
-                  ) && !templateDto.isLocked
+                  (templateDto.deployedSites.length == 0 && !templateDto.hasCases) && authStateService.isAdmin && !templateDto.isLocked
                 "
                 mdbBtn
                 mdbWavesEffect
