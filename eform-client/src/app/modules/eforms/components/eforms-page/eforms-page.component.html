@@ -27,7 +27,7 @@
       id="eformsVisualEditor"
       *ngIf="authStateService.isAdmin"
       [routerLink]="['visual-editor']"
-      mdbTooltip="{{ 'Visual editor' | translate }}"
+      mdbTooltip="{{ 'New eForm' | translate }}"
       mdbWavesEffect
     >
       <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
@@ -36,7 +36,7 @@
       mdbBtn
       class="btn-success btn-icon"
       mdbTooltip="
-      {{ 'New eForm' | translate }}"
+      {{ 'New eForm from XML' | translate }}"
       id="newEFormBtn"
       *ngIf="userClaims.eformsCreate"
       (click)="openNewEformModal()"
