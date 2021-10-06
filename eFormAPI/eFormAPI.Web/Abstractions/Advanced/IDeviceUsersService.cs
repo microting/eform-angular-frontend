@@ -33,14 +33,12 @@ namespace eFormAPI.Web.Abstractions.Advanced
     {
         Task<OperationDataResult<List<DeviceUser>>> Index();
 
-        Task<OperationResult> Create(DeviceUserModel deviceUserModel);
+        Task<OperationDataResult<int>> Create(DeviceUserModel deviceUserModel);
 
         Task<OperationDataResult<DeviceUser>> Edit(int id);
 
         Task<OperationResult> Update(DeviceUserModel deviceUserModel);
 
         Task<OperationResult> Delete(int id);
-
-        Task<OperationDataResult<int>> CreateWithResponse(DeviceUserModel deviceUserModel);
     }
 }
