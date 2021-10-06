@@ -15,26 +15,27 @@ export class EformSubheaderComponent implements OnInit, OnDestroy {
   @Input() heandingSizeRem = 2.5;
   @Input() forceStaticTitle = false;
   @Input() prioritizeMenuTitle = false;
+  href = this.router.url;
 
   // internalTitle = '';
 
   constructor(
     private router: Router,
-    private appMenuStateService: AppMenuStateService
+    public appMenuStateService: AppMenuStateService
   ) {}
 
   ngOnDestroy() {}
 
   ngOnInit() {
-    if (!this.forceStaticTitle || !this.title) {
-      const href = this.router.url;
-      this.appMenuStateService.getAppMenu().subscribe((_) => {
-        const foundTitle = this.appMenuStateService.getTitleByUrl(href);
-        if (foundTitle) {
-          // this.internalTitle = foundTitle;
-          this.title = foundTitle;
-        }
-      });
-    }
+    // if (!this.forceStaticTitle || !this.title) {
+    //   const href = this.router.url;
+    //   this.appMenuStateService.getAppMenu().subscribe((_) => {
+    //     const foundTitle = this.appMenuStateService.getTitleByUrl(href);
+    //     if (foundTitle) {
+    //       // this.internalTitle = foundTitle;
+    //       this.title = foundTitle;
+    //     }
+    //   });
+    // }
   }
 }

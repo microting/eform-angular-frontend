@@ -36,6 +36,7 @@ namespace eFormAPI.Web.Controllers
     using Microting.EformAngularFrontendBase.Infrastructure.Const;
 
     [Authorize]
+    [Route("api/device-users")]
     public class DeviceUsersController : Controller
     {
         private readonly IDeviceUsersService _deviceUsersService;
@@ -49,7 +50,7 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpGet]
-        [Route("api/device-users/index")]
+        [Route("index")]
         [Authorize(Policy = AuthConsts.EformPolicies.DeviceUsers.Read)]
         public async Task<OperationDataResult<List<DeviceUser>>> Index()
         {
@@ -57,19 +58,19 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpPut]
-        [Route("api/device-users/create")]
+        [Route("create")]
         [Authorize(Policy = AuthConsts.EformPolicies.DeviceUsers.Create)]
-        public async Task<OperationResult> Create([FromBody] DeviceUserModel deviceUserModel)
+        public async Task<OperationDataResult<int>> Create([FromBody] DeviceUserModel deviceUserModel)
         {
             if (!ModelState.IsValid)
-                return new OperationResult(false,
+                return new OperationDataResult<int>(false,
                     _localizationService.GetString("DeviceUserCouldNotBeCreated"));
 
             return await _deviceUsersService.Create(deviceUserModel);
         }
 
         [HttpGet]
-        [Route("api/device-users/{id}")]
+        [Route("{id}")]
         [Authorize(Policy = AuthConsts.EformPolicies.DeviceUsers.Update)]
         public async Task<OperationDataResult<DeviceUser>> Read(int id)
         {
@@ -77,7 +78,7 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpPost]
-        [Route("api/device-users/update")]
+        [Route("update")]
         [Authorize(Policy = AuthConsts.EformPolicies.DeviceUsers.Update)]
         public async Task<OperationResult> Update([FromBody] DeviceUserModel deviceUserModel)
         {
@@ -85,23 +86,11 @@ namespace eFormAPI.Web.Controllers
         }
 
         [HttpDelete]
-        [Route("api/device-users/delete/{id}")]
+        [Route("delete/{id}")]
         [Authorize(Policy = AuthConsts.EformPolicies.DeviceUsers.Delete)]
         public async Task<OperationResult> Delete(int id)
         {
             return await _deviceUsersService.Delete(id);
-        }
-
-        [HttpPost]
-        [Route("api/device-users/create-with-response")]
-        [Authorize(Policy = AuthConsts.EformPolicies.DeviceUsers.Create)]
-        public async Task<OperationDataResult<int>> CreateWithResponse([FromBody] DeviceUserModel deviceUserModel)
-        {
-            if (!ModelState.IsValid)
-                return new OperationDataResult<int>(false,
-                    _localizationService.GetString("DeviceUserCouldNotBeCreated"));
-
-            return await _deviceUsersService.CreateWithResponse(deviceUserModel);
         }
     }
 }

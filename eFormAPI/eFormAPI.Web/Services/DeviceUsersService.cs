@@ -119,7 +119,7 @@ namespace eFormAPI.Web.Services
             return new OperationDataResult<List<DeviceUser>>(true, deviceUsers);
         }
 
-        public async Task<OperationResult> Create(DeviceUserModel deviceUserModel)
+        public async Task<OperationDataResult<int>> Create(DeviceUserModel deviceUserModel)
         {
             var core = await _coreHelper.GetCore();
             var siteName = deviceUserModel.UserFirstName + " " + deviceUserModel.UserLastName;
@@ -137,11 +137,14 @@ namespace eFormAPI.Web.Services
                 //     site.LanguageId = language.Id;
                 //     await site.Update(db);
                 // }
+                var sdkDbContext = core.DbContextHelper.GetDbContext();
+                var id = await sdkDbContext.Sites.Where(x => x.MicrotingUid == siteDto.SiteId).Select(x => x.Id).FirstAsync();
+
 
                 return siteDto != null
-                    ? new OperationResult(true,
-                        _localizationService.GetStringWithFormat("DeviceUserParamCreatedSuccessfully", siteDto.SiteName))
-                    : new OperationResult(false, _localizationService.GetString("DeviceUserCouldNotBeCreated"));
+                    ? new OperationDataResult<int>(true,
+                        _localizationService.GetStringWithFormat("DeviceUserParamCreatedSuccessfully", siteDto.SiteName), id)
+                    : new OperationDataResult<int>(false, _localizationService.GetString("DeviceUserCouldNotBeCreated"));
             }
             catch (Exception ex)
             {
@@ -149,16 +152,16 @@ namespace eFormAPI.Web.Services
                 {
                     if (ex.InnerException.Message == "The remote server returned an error: (402) Payment Required.")
                     {
-                        return new OperationResult(false, _localizationService.GetString("YouNeedToBuyMoreLicenses"));
+                        return new OperationDataResult<int>(false, _localizationService.GetString("YouNeedToBuyMoreLicenses"));
                     }
                     else
                     {
-                        return new OperationResult(false, _localizationService.GetString("DeviceUserCouldNotBeCreated"));
+                        return new OperationDataResult<int>(false, _localizationService.GetString("DeviceUserCouldNotBeCreated"));
                     }
                 }
                 catch
                 {
-                    return new OperationResult(false, _localizationService.GetString("DeviceUserCouldNotBeCreated"));
+                    return new OperationDataResult<int>(false, _localizationService.GetString("DeviceUserCouldNotBeCreated"));
                 }
             }
         }
@@ -262,49 +265,6 @@ namespace eFormAPI.Web.Services
             catch (Exception)
             {
                 return new OperationResult(false, _localizationService.GetStringWithFormat("DeviceUserParamCouldNotBeDeleted", id));
-            }
-        }
-
-        public async Task<OperationDataResult<int>> CreateWithResponse(DeviceUserModel deviceUserModel)
-        {
-            var core = await _coreHelper.GetCore();
-            var siteName = deviceUserModel.UserFirstName + " " + deviceUserModel.UserLastName;
-            await using var db = core.DbContextHelper.GetDbContext();
-
-
-            try
-            {
-                var siteDto = await core.SiteCreate(siteName, deviceUserModel.UserFirstName, deviceUserModel.UserLastName,
-                    null, deviceUserModel.LanguageCode);
-
-                // if (siteDto != null)
-                // {
-                //     Site site = await db.Sites.SingleAsync(x => x.MicrotingUid == siteDto.SiteId);
-                //     site.LanguageId = language.Id;
-                //     await site.Update(db);
-                // }
-
-                return siteDto != null
-                    ? new OperationDataResult<int>(true, siteDto.SiteId)
-                    : new OperationDataResult<int>(false, _localizationService.GetString("DeviceUserCouldNotBeCreated"));
-            }
-            catch (Exception ex)
-            {
-                try
-                {
-                    if (ex.InnerException.Message == "The remote server returned an error: (402) Payment Required.")
-                    {
-                        return new OperationDataResult<int>(false, _localizationService.GetString("YouNeedToBuyMoreLicenses"));
-                    }
-                    else
-                    {
-                        return new OperationDataResult<int>(false, _localizationService.GetString("DeviceUserCouldNotBeCreated"));
-                    }
-                }
-                catch
-                {
-                    return new OperationDataResult<int>(false, _localizationService.GetString("DeviceUserCouldNotBeCreated"));
-                }
             }
         }
     }
