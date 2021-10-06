@@ -5,7 +5,7 @@
       class="btn-accent text-black-50 btn-icon"
       id="importEformsBtn"
       mdbTooltip="{{ 'Import eforms' | translate }}"
-      *ngIf="authStateService.isAdmin"
+      *ngIf="userClaims.eformsCreate"
       (click)="openEformsImportModal()"
     >
       <fa-icon icon="file-import" [fixedWidth]="true" size="lg"></fa-icon>
@@ -25,6 +25,7 @@
       mdbBtn
       class="btn-success btn-icon"
       id="eformsVisualEditor"
+      *ngIf="authStateService.isAdmin"
       [routerLink]="['visual-editor']"
       mdbTooltip="{{ 'Visual editor' | translate }}"
       mdbWavesEffect
@@ -258,7 +259,7 @@
               </button>
               <a
                 *ngIf="
-                  templateDto.deployedSites.length == 0 && !templateDto.hasCases
+                  (templateDto.deployedSites.length == 0 && !templateDto.hasCases) && authStateService.isAdmin && !templateDto.isLocked
                 "
                 mdbBtn
                 mdbWavesEffect

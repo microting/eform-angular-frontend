@@ -12,6 +12,7 @@ import {
 import { normalizeUserClaimNames } from 'src/app/common/helpers';
 import { ApiBaseService } from 'src/app/common/services';
 import { AuthQuery } from 'src/app/common/store';
+import {HttpParams} from '@angular/common/http';
 
 export let AuthMethods = {
   Login: 'api/auth/token',
@@ -52,7 +53,15 @@ export class AuthService {
   }
 
   login(loginInfo: LoginRequestModel): Observable<AuthResponseModel> {
-    return this.apiBaseService.post(AuthMethods.Login, loginInfo).pipe(
+    let body = new HttpParams();
+    body = body.append('username', loginInfo.username);
+    body = body.append('password', loginInfo.password);
+    body = body.append('grant_type', loginInfo.grant_type);
+    if (loginInfo.code) {
+      body = body.append('code', loginInfo.code);
+    }
+    return this.apiBaseService.postUrlEncoded(AuthMethods.Login, body).pipe(
+    // return this.apiBaseService.post(AuthMethods.Login, loginInfo).pipe(
       map((result) => {
         return result.model;
       })

@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System.Text;
+
 namespace eFormAPI.Web.Services
 {
     using System;
@@ -89,66 +91,63 @@ namespace eFormAPI.Web.Services
 
                 var word = new WordProcessor(docxFileStream);
 
-                var itemsHtml = "";
+                var itemsHtml = new StringBuilder();
                 //var header = _dbContext.PluginConfigurationValues.Single(x => x.Name == "ItemsPlanningBaseSettings:ReportHeaderName").Value;
                 //var subHeader = _dbContext.PluginConfigurationValues.Single(x => x.Name == "ItemsPlanningBaseSettings:ReportSubHeaderName").Value;
-                itemsHtml += "<body>";
-                itemsHtml += @"<p style='display:flex;align-content:center;justify-content:center;flex-wrap:wrap;'>";
+                itemsHtml.Append("<body>");
+                itemsHtml.Append(@"<p style='display:flex;align-content:center;justify-content:center;flex-wrap:wrap;'>");
                 for (var i = 0; i < 8; i++)
                 {
-                    itemsHtml += @"<p style='font-size:24px;text-align:center;color:#fff;'>Enter</p>";
+                    itemsHtml.Append(@"<p style='font-size:24px;text-align:center;color:#fff;'>Enter</p>");
                 }
                 //itemsHtml += $@"<p style='font-size:24px;text-align:center;'>{header}</p>";
                 //itemsHtml += $@"<p style='font-size:20px;text-align:center;'>{subHeader}</p>";
                 if(reportModel.FromDate != null && reportModel.ToDate != null)
                 {
-                    itemsHtml +=
-                        $@"<p style='font-size:15px;text-align:center;'>{_localizationService.GetString("ReportPeriod")}: "
-                        + $@"{reportModel.FromDate} - {reportModel.ToDate}</p>";
+                    itemsHtml.Append($@"<p style='font-size:15px;text-align:center;'>{_localizationService.GetString("ReportPeriod")}: "
+                        + $@"{reportModel.FromDate} - {reportModel.ToDate}</p>");
                 }
                 //if (!string.IsNullOrEmpty(headerImageName) && headerImageName != "../../../assets/images/logo.png")
                 //{
                 //    itemsHtml = await InsertImage(headerImageName, itemsHtml, 150, 150, core, basePicturePath);
                 //}
-                itemsHtml += @"</p>";
-                itemsHtml += @"<div style='page-break-before:always;'>";
+                itemsHtml.Append(@"</p>");
+                itemsHtml.Append(@"<div style='page-break-before:always;'>");
 
                 if(reportModel.TextHeaders != null)
                 {
                     if (!string.IsNullOrEmpty(reportModel.TextHeaders.Header1))
                     {
-                        itemsHtml += $@"<p style='font-size:16pt;color:#2e74b5;'>{reportModel.TextHeaders.Header1}</p>";
+                        itemsHtml.Append($@"<p style='font-size:16pt;color:#2e74b5;'>{reportModel.TextHeaders.Header1}</p>");
                     }
 
 
                     if (!string.IsNullOrEmpty(reportModel.TextHeaders.Header2))
                     {
-                        itemsHtml += $@"<p style='font-size:13pt;color:#2e74b5;'>{reportModel.TextHeaders.Header2}</p>";
+                        itemsHtml.Append($@"<p style='font-size:13pt;color:#2e74b5;'>{reportModel.TextHeaders.Header2}</p>");
                     }
 
 
                     if (!string.IsNullOrEmpty(reportModel.TextHeaders.Header3))
                     {
-                        itemsHtml += $@"<p style='font-size:12pt;color:#1f4d78;'>{reportModel.TextHeaders.Header3}</p>";
+                        itemsHtml.Append($@"<p style='font-size:12pt;color:#1f4d78;'>{reportModel.TextHeaders.Header3}</p>");
                     }
 
 
                     if (!string.IsNullOrEmpty(reportModel.TextHeaders.Header4))
                     {
-                        itemsHtml +=
-                            $@"<p style='font-size:11pt;font-style:normal;'>{reportModel.TextHeaders.Header4}</p>";
+                        itemsHtml.Append($@"<p style='font-size:11pt;font-style:normal;'>{reportModel.TextHeaders.Header4}</p>");
                     }
 
 
                     if (!string.IsNullOrEmpty(reportModel.TextHeaders.Header5))
                     {
-                        itemsHtml +=
-                            $@"<p style='font-size:10pt;font-style:normal;'>{reportModel.TextHeaders.Header5}</p>";
+                        itemsHtml.Append($@"<p style='font-size:10pt;font-style:normal;'>{reportModel.TextHeaders.Header5}</p>");
                     }
                 }
                 foreach (var description in reportModel.DescriptionBlocks)
                 {
-                    itemsHtml += $@"<p>{description}</p>";
+                    itemsHtml.Append($@"<p>{description}</p>");
                 }
 
                 //if (!string.IsNullOrEmpty(reportModel.TableName))
@@ -156,43 +155,56 @@ namespace eFormAPI.Web.Services
                 //    itemsHtml += $@"<p style='padding-bottom: 0;'>{_localizationService.GetString("Table")} {i + 1}: {reportModel.TableName}</p>";
                 //}
 
-                itemsHtml += @"<table width=""100%"" border=""1"">";
+                itemsHtml.Append(@"<table width=""100%"" border=""1"">");
 
                 // Table header
-                itemsHtml += @"<tr style=""background-color:#f5f5f5;font-weight:bold"">";
-                itemsHtml += $@"<td>{_localizationService.GetString("CaseId")}</td>";
-                itemsHtml += $@"<td>{_localizationService.GetString("CreatedAt")}</td>";
-                itemsHtml += $@"<td>{_localizationService.GetString("DoneBy")}</td>";
+                itemsHtml.Append(@"<tr style=""background-color:#f5f5f5;font-weight:bold"">");
+                itemsHtml.Append($@"<td>{_localizationService.GetString("CaseId")}</td>");
+                itemsHtml.Append($@"<td>{_localizationService.GetString("CreatedAt")}</td>");
+                itemsHtml.Append($@"<td>{_localizationService.GetString("DoneBy")}</td>");
                 //itemsHtml += $@"<td>{_localizationService.GetString("ItemName")}</td>";
 
                 foreach (var itemHeader in reportModel.ItemHeaders)
                 {
-                    itemsHtml += $@"<td>{itemHeader.Value}</td>";
+                    itemsHtml.Append($@"<td>{itemHeader.Value}</td>");
                 }
 
-                itemsHtml += @"</tr>";
+                itemsHtml.Append(@"</tr>");
 
                 foreach (var dataModel in reportModel.Items)
                 {
-                    itemsHtml += @"<tr>";
-                    itemsHtml += $@"<td>{dataModel.MicrotingSdkCaseId}</td>";
+                    itemsHtml.Append(@"<tr>");
+                    itemsHtml.Append($@"<td>{dataModel.MicrotingSdkCaseId}</td>");
 
-                    itemsHtml += $@"<td>{dataModel.MicrotingSdkCaseDoneAt:dd.MM.yyyy HH:mm:ss}</td>";
-                    itemsHtml += $@"<td>{dataModel.DoneBy}</td>";
+                    itemsHtml.Append($@"<td>{dataModel.MicrotingSdkCaseDoneAt:dd.MM.yyyy HH:mm:ss}</td>");
+                    itemsHtml.Append($@"<td>{dataModel.DoneBy}</td>");
 
                     foreach (var dataModelCaseField in dataModel.CaseFields)
                     {
-                        itemsHtml += $@"<td>{dataModelCaseField}</td>";
+                        if (dataModelCaseField == "checked")
+                        {
+                            itemsHtml.Append($@"<td>&#10004;</td>");
+                        }
+                        else
+                        {
+                            if (dataModelCaseField == "unchecked")
+                            {
+                                itemsHtml.Append($@"<td></td>");
+                            } else
+                            {
+                                itemsHtml.Append($@"<td>{dataModelCaseField}</td>");
+                            }
+                        }
                     }
 
                     // itemsHtml += $@"<td>{dataModel.ImagesCount}</td>";
                     // itemsHtml += $@"<td>{dataModel.PostsCount}</td>";
-                    itemsHtml += @"</tr>";
+                    itemsHtml.Append(@"</tr>");
                 }
 
-                itemsHtml += @"</table>";
+                itemsHtml.Append(@"</table>");
 
-                itemsHtml += @"<br/>";
+                itemsHtml.Append(@"<br/>");
 
                 // if (!string.IsNullOrEmpty(reportModel.TemplateName))
                 // {
@@ -202,21 +214,20 @@ namespace eFormAPI.Web.Services
                 // pictures
                 foreach (var (key, value) in reportModel.ImageNames)
                 {
-                    itemsHtml +=
-                        $@"<p>{_localizationService.GetString("Picture")}: {key[1]}</p>";
+                    itemsHtml.Append($@"<p>{_localizationService.GetString("Picture")}: {key[1]}</p>");
 
                     itemsHtml = await InsertImage(value[0], itemsHtml, 700, 650, core, basePicturePath);
 
                     if (!string.IsNullOrEmpty(value[1]))
                     {
-                        itemsHtml += $@"<a href=""{value[1]}"">{value[1]}</a>";
+                        itemsHtml.Append($@"<a href=""{value[1]}"">{value[1]}</a>");
                     }
                 }
 
-                itemsHtml += @"</div>";
-                itemsHtml += "</body>";
+                itemsHtml.Append(@"</div>");
+                itemsHtml.Append("</body>");
 
-                html = html.Replace("{%ItemList%}", itemsHtml);
+                html = html.Replace("{%ItemList%}", itemsHtml.ToString());
 
                 word.AddHtml(html);
                 word.Dispose();
@@ -233,7 +244,7 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        private async Task<string> InsertImage(string imageName, string itemsHtml, int imageSize, int imageWidth, Core core, string basePicturePath)
+        private async Task<StringBuilder> InsertImage(string imageName, StringBuilder itemsHtml, int imageSize, int imageWidth, Core core, string basePicturePath)
         {
             var filePath = Path.Combine(basePicturePath, imageName);
             Stream stream;
@@ -269,8 +280,7 @@ namespace eFormAPI.Web.Services
                 image.Crop(newWidth, newHeight);
 
                 var base64String = image.ToBase64();
-                itemsHtml +=
-                    $@"<p><img src=""data:image/png;base64,{base64String}"" width=""{imageWidth}px"" alt="""" /></p>";
+                itemsHtml.Append($@"<p><img src=""data:image/png;base64,{base64String}"" width=""{imageWidth}px"" alt="""" /></p>");
             }
 
             await stream.DisposeAsync();
