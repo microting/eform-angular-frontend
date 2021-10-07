@@ -207,14 +207,22 @@ namespace eFormAPI.Web.Services.Export
                                     break;
                                 default:
                                     int i;
-                                    if (int.TryParse(dataY, out i))
+                                    if (dataY == "checked")
                                     {
-                                        worksheet.Cell(x + 1, y + 1).Value = i;
+                                        worksheet.Cell(x + 1, y + 1).Value = 1;
                                     }
                                     else
                                     {
                                         worksheet.Cell(x + 1, y + 1).Value = dataY;
                                     }
+                                    // if (int.TryParse(dataY, out i))
+                                    // {
+                                    //     worksheet.Cell(x + 1, y + 1).Value = i;
+                                    // }
+                                    // else
+                                    // {
+                                    //     worksheet.Cell(x + 1, y + 1).Value = dataY;
+                                    // }
 
                                     break;
                             }
