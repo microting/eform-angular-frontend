@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { snakeToCamel } from 'src/app/common/helpers';
 import { resetStores } from '@datorama/akita';
+import { AppMenuStateService } from 'src/app/common/store';
 
 @Injectable()
 export class AuthStateService {
@@ -20,7 +21,8 @@ export class AuthStateService {
     private service: AuthService,
     private query: AuthQuery,
     private router: Router,
-    private userSettings: UserSettingsService
+    private userSettings: UserSettingsService,
+    private appMenuStateService: AppMenuStateService
   ) {}
 
   login(loginInfo: LoginRequestModel) {
@@ -58,6 +60,7 @@ export class AuthStateService {
               .then();
           });
         });
+        this.appMenuStateService.getAppMenu(false);
       }
       return;
     });
