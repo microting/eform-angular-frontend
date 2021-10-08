@@ -696,7 +696,7 @@ namespace eFormAPI.Web.Services.Eform
                     FieldType = (int)field.FieldTypeId,
                     Position = (int)field.DisplayIndex,
                     Translations = field.Translations.Select(x =>
-                        new CommonTranslationsModel
+                        new Microting.eForm.Infrastructure.Models.CommonTranslationsModel
                         {
                             Id = x.LanguageId,
                             Description = x.Description,

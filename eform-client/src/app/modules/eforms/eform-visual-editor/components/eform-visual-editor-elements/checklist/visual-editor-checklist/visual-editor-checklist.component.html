@@ -11,7 +11,7 @@
           >
             drag_handle
           </i>
-          {{ 'Checklist' | translate }}
+          {{ 'eForm' | translate }}
         </div>
         <div class="d-flex align-items-center">
           <fa-icon
@@ -25,7 +25,7 @@
           <button
             *ngIf="checklist.fields.length == 0"
             mdbBtn
-            [mdbTooltip]="'New nested checklist' | translate"
+            [mdbTooltip]="'New sub eForm' | translate"
             class="btn-success btn-icon"
             id="addNewNestedChecklist{{ checklistIndex }}"
             (click)="onAddNewNestedChecklist()"
@@ -44,7 +44,7 @@
           </button>
           <button
             mdbBtn
-            [mdbTooltip]="'Edit checklist' | translate"
+            [mdbTooltip]="'Edit eForm' | translate"
             class="btn-neutral btn-icon"
             id="editChecklistBtn{{ checklistIndex }}"
             (click)="onEditChecklist()"
@@ -53,7 +53,7 @@
           </button>
           <button
             mdbBtn
-            [mdbTooltip]="'Delete checklist' | translate"
+            [mdbTooltip]="'Delete eForm' | translate"
             class="btn-danger btn-icon"
             id="deleteChecklistBtn{{ checklistIndex }}"
             (click)="onDeleteChecklist()"

@@ -21,14 +21,14 @@
       id="saveCreateEformBtn"
       [disabled]="isAllNamesEmpty"
     >
-      {{ (selectedTemplateId ? 'Save Eform' : 'Create Eform') | translate }}
+      {{ (selectedTemplateId ? 'Save eForm' : 'Create eForm') | translate }}
     </button>
   </div>
 </eform-subheader>
 
 <div class="container-fluid">
   <div class="row mb-2">
-    <div class="col-lg-9 col-md-12 col-xs-12">
+    <div class="col-lg-12 col-md-12 col-xs-12">
       <app-eform-visual-editor-header
         [visualEditorModel]="visualEditorTemplateModel"
         [availableTags]="availableTags"
@@ -38,7 +38,7 @@
     </div>
   </div>
   <div class="row mb-2">
-    <div class="col-lg-9 col-md-12 col-xs-12">
+    <div class="col-lg-12 col-md-12 col-xs-12">
       <div class="card z-depth-3" style="width: 100%">
         <div class="card-body">
           <div class="row">
@@ -154,7 +154,7 @@
                 *ngIf="visualEditorTemplateModel.checkLists.length === 0"
                 mdbBtn
                 id="initialFieldCreateBtn"
-                [mdbTooltip]="'New field' | translate"
+                [mdbTooltip]="'Add field' | translate"
                 class="btn-success btn-icon"
                 (click)="showFieldModal()"
               >
@@ -164,7 +164,7 @@
                 *ngIf="visualEditorTemplateModel.fields.length === 0"
                 mdbBtn
                 id="initialChecklistCreateBtn"
-                [mdbTooltip]="'New checklist' | translate"
+                [mdbTooltip]="'Add sub eForm' | translate"
                 class="btn-success btn-icon"
                 (click)="showChecklistModal()"
               >

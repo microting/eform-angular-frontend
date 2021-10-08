@@ -33,8 +33,8 @@ namespace eFormAPI.Web.Infrastructure.Models.VisualEformEditor
         /// <summary>
         /// Translates for label and description
         /// </summary>
-        public List<CommonTranslationsModel> Translations { get; set; }
-            = new List<CommonTranslationsModel>();
+        public List<Microting.eForm.Infrastructure.Models.CommonTranslationsModel> Translations { get; set; }
+            = new List<Microting.eForm.Infrastructure.Models.CommonTranslationsModel>();
 
         public string Color { get; set; }
 
