@@ -82,7 +82,7 @@
     "@angular-devkit/build-angular": "^12.2.9",
     "@angular/cli": "12.2.9",
     "@angular/compiler-cli": "^12.2.7",
-    "@angular/language-service": "^12.2.8",
+    "@angular/language-service": "^12.2.9",
     "@datorama/akita": "^6.2.4",
     "@datorama/akita-ngdevtools": "^6.0.1",
     "@types/chai": "4.2.22",
