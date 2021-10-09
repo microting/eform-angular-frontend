@@ -20,8 +20,8 @@ export class AppMenuStateService {
       return this.appMenuObservable;
     } else if (!this.responseIsLoading) {
       this.responseIsLoading = true;
-      return this.service.getAppMenuFromServer().pipe(
-        map((response) => {
+      this.service.getAppMenuFromServer().subscribe(
+        (response) => {
           if (response && response.success && response.model) {
             if (!this.query.currentAppMenu) {
               this.store.set({ 0: response.model });
@@ -30,9 +30,10 @@ export class AppMenuStateService {
             }
           }
           this.responseIsLoading = false;
-          return response.model;
-        })
+        },
+        () => (this.responseIsLoading = false)
       );
+      return this.appMenuObservable;
     } else {
       // so that the second request does not start until the first one is completed
       return this.appMenuObservable;
