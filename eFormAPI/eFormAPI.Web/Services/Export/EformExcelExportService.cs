@@ -206,7 +206,6 @@ namespace eFormAPI.Web.Services.Export
                                     //worksheet.Cell(x + 1, y + 1).Style.Numberformat.Format = "yyyy-MM-dd HH:mm:ss";
                                     break;
                                 default:
-                                    int i;
                                     if (dataY == "checked")
                                     {
                                         worksheet.Cell(x + 1, y + 1).Value = 1;
@@ -215,14 +214,6 @@ namespace eFormAPI.Web.Services.Export
                                     {
                                         worksheet.Cell(x + 1, y + 1).Value = dataY;
                                     }
-                                    // if (int.TryParse(dataY, out i))
-                                    // {
-                                    //     worksheet.Cell(x + 1, y + 1).Value = i;
-                                    // }
-                                    // else
-                                    // {
-                                    //     worksheet.Cell(x + 1, y + 1).Value = dataY;
-                                    // }
 
                                     break;
                             }
