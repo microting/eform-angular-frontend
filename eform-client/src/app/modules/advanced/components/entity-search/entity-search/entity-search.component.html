@@ -67,7 +67,7 @@
               <button
                 id="entitySearchUpdateBtn"
                 class="btn btn-accent btn-icon text-black-50 mb-2"
-                [disabled]="!userClaims.entitySelectUpdate ||
+                [disabled]="!userClaims.entitySearchUpdate ||
                   (advEntitySearchableGroup.isLocked &&
                     !advEntitySearchableGroup.name.includes('editable'))"
                 mdbTooltip="{{ 'Edit' | translate }}"
