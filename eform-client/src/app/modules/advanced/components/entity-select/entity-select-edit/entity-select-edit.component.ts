@@ -52,6 +52,7 @@ export class EntitySelectEditComponent implements OnInit {
         this.advEntitySelectableGroupEditModel.name = data.model.name;
         this.advEntitySelectableGroupEditModel.description = data.model.description;
         this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels = data.model.entityGroupItemLst;
+        this.actualizeAdvEntitySelectableItemPositions();
         this.advEntitySelectableGroupEditModel.groupUid = this.selectedGroupId;
         this.advEntitySelectableGroupEditModel.isLocked = data.model.isLocked;
       }
@@ -107,12 +108,15 @@ export class EntitySelectEditComponent implements OnInit {
   importAdvEntitySelectableGroup(importString: string) {
     if (importString) {
       const lines = importString.split('\n');
-      for (let i = 0; i < lines.length; i++) {
-        const item = new AdvEntitySelectableItemModel();
-        item.entityItemUId = (this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels.length).toString();
-        item.name = lines[i];
-        item.displayIndex = this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels.length + 1;
+      const startPosition = this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels.length;
+      const endPosition = startPosition + lines.length;
+      let j = 0;
+      for (let i = startPosition; i < endPosition; i++) {
+        const item = new AdvEntitySelectableItemModel(lines[j]);
+        item.displayIndex = i;
+        item.entityItemUId = String(i);
         this.advEntitySelectableGroupEditModel.advEntitySelectableItemModels.push(item);
+        j++;
       }
     }
   }

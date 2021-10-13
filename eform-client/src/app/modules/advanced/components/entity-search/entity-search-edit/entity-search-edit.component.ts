@@ -51,6 +51,7 @@ export class EntitySearchEditComponent implements OnInit {
       if (data && data.success) {
         this.advEntitySearchableGroupEditModel.name = data.model.name;
         this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels = data.model.entityGroupItemLst;
+        this.actualizeAdvEntitySelectableItemPositions();
         this.advEntitySearchableGroupEditModel.groupUid = this.selectedGroupId;
         this.advEntitySearchableGroupEditModel.isLocked = data.model.isLocked;
         this.advEntitySearchableGroupEditModel.description = data.model.description;
@@ -59,6 +60,7 @@ export class EntitySearchEditComponent implements OnInit {
   }
 
   updateEntitySearchableGroup() {
+    debugger;
     this.entitySearchService.updateEntitySearchableGroup(this.advEntitySearchableGroupEditModel).subscribe((data) => {
       if (data && data.success) {
         this.onEntityGroupEdited.emit();
@@ -108,11 +110,15 @@ export class EntitySearchEditComponent implements OnInit {
   importAdvEntitySelectableGroup(importString: string) {
     if (importString) {
       const lines = importString.split('\n');
-      for (let i = 0; i < lines.length; i++) {
-        const obj = new AdvEntitySelectableItemModel(lines[i]);
+      const startPosition = this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels.length;
+      const endPosition = startPosition + lines.length;
+      let j = 0;
+      for (let i = startPosition; i < endPosition; i++) {
+        const obj = new AdvEntitySelectableItemModel(lines[j]);
         obj.displayIndex = i;
         obj.entityItemUId = String(i);
         this.advEntitySearchableGroupEditModel.advEntitySearchableItemModels.push(obj);
+        j++;
       }
     }
   }
