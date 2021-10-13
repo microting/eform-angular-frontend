@@ -98,16 +98,14 @@ namespace eFormAPI.Web.Services.Export
                 //var sourceFileName =
                 //    Path.Combine(await core.GetSdkSetting(Settings.fileLocationJasper),
                 //        Path.Combine("templates", $"{excelModel.TemplateId}", "compact", $"{excelModel.TemplateId}.xlsx"));
-                Directory.CreateDirectory(Path.Combine(await core.GetSdkSetting(Settings.fileLocationJasper)
-                    .ConfigureAwait(false), "results"));
+                Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), "results"));
 
                 var timeStamp = $"{DateTime.UtcNow:yyyyMMdd}_{DateTime.UtcNow:hhmmss}";
 
                 var resultDocument = Path.Combine(Path.GetTempPath(), "results",
                     $"{timeStamp}_{excelModel.TemplateId}.xlsx");
 
-                Directory.CreateDirectory(Path.Combine(await core.GetSdkSetting(Settings.fileLocationJasper)
-                    .ConfigureAwait(false), "results"));
+                Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), "results"));
 
                 if (core.GetSdkSetting(Settings.s3Enabled).Result.ToLower() == "true")
                 {
@@ -160,7 +158,7 @@ namespace eFormAPI.Web.Services.Export
                 var wb = new XLWorkbook(resultDocument);
                 try {
                     var workSheetToDelete = wb.Worksheets.Worksheet($"Data_{excelModel.TemplateId}");
-                    workSheetToDelete.Clear(XLClearOptions.All);
+                    workSheetToDelete.Clear();
                     //workSheetToDelete.Delete();
                 }
                 catch
@@ -206,23 +204,22 @@ namespace eFormAPI.Web.Services.Export
                                     //worksheet.Cell(x + 1, y + 1).Style.Numberformat.Format = "yyyy-MM-dd HH:mm:ss";
                                     break;
                                 default:
-                                    int i;
                                     if (dataY == "checked")
                                     {
                                         worksheet.Cell(x + 1, y + 1).Value = 1;
                                     }
                                     else
                                     {
-                                        worksheet.Cell(x + 1, y + 1).Value = dataY;
+                                        if (float.TryParse(dataY, out var i))
+                                        {
+                                            worksheet.Cell(x + 1, y + 1).Value = dataY.Replace(",", ".");
+                                            worksheet.Cell(x + 1, y + 1).DataType = XLDataType.Number;;
+                                        }
+                                        else
+                                        {
+                                            worksheet.Cell(x + 1, y + 1).Value = dataY;
+                                        }
                                     }
-                                    // if (int.TryParse(dataY, out i))
-                                    // {
-                                    //     worksheet.Cell(x + 1, y + 1).Value = i;
-                                    // }
-                                    // else
-                                    // {
-                                    //     worksheet.Cell(x + 1, y + 1).Value = dataY;
-                                    // }
 
                                     break;
                             }
