@@ -1,6 +1,4 @@
 import { PageWithNavbarPage } from './PageWithNavbar.page';
-import myEformsPage from './MyEforms.page';
-import { Guid } from 'guid-typescript';
 import { expect } from 'chai';
 
 class DeviceUsersPage extends PageWithNavbarPage {
@@ -30,7 +28,7 @@ class DeviceUsersPage extends PageWithNavbarPage {
   }
 
   async getFirstRowObject(): Promise<DeviceUsersRowObject> {
-    const result =  new DeviceUsersRowObject();
+    const result = new DeviceUsersRowObject();
     return await result.getRow(1);
   }
 
@@ -83,7 +81,7 @@ class DeviceUsersPage extends PageWithNavbarPage {
   }
 
   async getDeviceUserByName(name: string): Promise<DeviceUsersRowObject> {
-    for (let i = 1; i < await this.rowNum() + 1; i++) {
+    for (let i = 1; i < (await this.rowNum()) + 1; i++) {
       const deviceUser = await this.getDeviceUser(i);
       if (deviceUser.firstName === name) {
         return deviceUser;
@@ -106,12 +104,15 @@ class DeviceUsersPage extends PageWithNavbarPage {
     await (await this.createFirstNameInput()).setValue(firstName);
     await (await this.createLastNameInput()).setValue(lastName);
     await (await this.saveCreateBtn()).click();
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 90000, reverse: true });
+    await (await $('#spinner-animation')).waitForDisplayed({
+      timeout: 90000,
+      reverse: true,
+    });
     await (await this.newDeviceUserBtn()).waitForDisplayed({ timeout: 40000 });
   }
 
   public async createDeviceUserFromScratch(name: string, surname: string) {
-    await myEformsPage.Navbar.goToDeviceUsersPage();
+    await this.Navbar.goToDeviceUsersPage();
     await (await this.newDeviceUserBtn()).waitForDisplayed({ timeout: 40000 });
     const rowCountBeforeCreation = await deviceUsersPage.rowNum();
     // browser.pause(2000);
@@ -119,7 +120,7 @@ class DeviceUsersPage extends PageWithNavbarPage {
     const rowCountAfterCreation = await deviceUsersPage.rowNum();
     expect(
       rowCountAfterCreation,
-      'Number of rows hasn\'t changed after creating new user'
+      `Number of rows hasn't changed after creating new user`
     ).equal(rowCountBeforeCreation + 1);
     const lastDeviceUser: DeviceUsersRowObject = await deviceUsersPage.getDeviceUser(
       await deviceUsersPage.rowNum()
@@ -161,7 +162,7 @@ const deviceUsersPage = new DeviceUsersPage();
 export default deviceUsersPage;
 
 export class DeviceUsersRowObject {
-  constructor() {  }
+  constructor() {}
 
   siteId: number;
   firstName: string;
@@ -171,12 +172,16 @@ export class DeviceUsersRowObject {
 
   async getRow(rowNum: number) {
     if ((await $$('#deviceUserId'))[rowNum - 1]) {
-      this.siteId = +await (await $$('#deviceUserId')[rowNum - 1]).getText();
+      this.siteId = +(await (await $$('#deviceUserId')[rowNum - 1]).getText());
       try {
-        this.firstName = await (await $$('#deviceUserFirstName')[rowNum - 1]).getText();
+        this.firstName = await (
+          await $$('#deviceUserFirstName')[rowNum - 1]
+        ).getText();
       } catch (e) {}
       try {
-        this.lastName = await (await $$('#deviceUserLastName')[rowNum - 1]).getText();
+        this.lastName = await (
+          await $$('#deviceUserLastName')[rowNum - 1]
+        ).getText();
       } catch (e) {}
       this.editBtn = (await $$('#editDeviceUserBtn'))[rowNum - 1];
       this.deleteBtn = (await $$('#deleteDeviceUserBtn'))[rowNum - 1];
@@ -187,9 +192,14 @@ export class DeviceUsersRowObject {
   async delete() {
     this.deleteBtn.waitForClickable({ timeout: 40000 });
     this.deleteBtn.click();
-    await (await deviceUsersPage.saveDeleteBtn()).waitForClickable({ timeout: 40000 });
+    await (await deviceUsersPage.saveDeleteBtn()).waitForClickable({
+      timeout: 40000,
+    });
     await (await deviceUsersPage.saveDeleteBtn()).click();
-    await (await $('#spinner-animation')).waitForDisplayed({ timeout: 40000, reverse: true });
+    await (await $('#spinner-animation')).waitForDisplayed({
+      timeout: 40000,
+      reverse: true,
+    });
     await (await deviceUsersPage.newDeviceUserBtn()).waitForDisplayed();
   }
 }
