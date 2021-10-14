@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [ master, stable, visual-editor ]
     paths-ignore:
-    - '**.md'
+    - '*.md'
     - '.github/**'
 
 jobs:
