@@ -4,7 +4,7 @@ on:
   push:
     branches: [ master, stable, async, visual-editor ]
     paths-ignore:
-    - '**.md'
+    - '*.md'
     - '.github/**'
 
 jobs:
