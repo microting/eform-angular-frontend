@@ -74,7 +74,7 @@ namespace eFormAPI.Web.Services
                 var core = await _coreHelper.GetCore();
                 var workerDto = await core.Advanced_WorkerRead(workerModel.Id);
                 var isUpdated = await core.Advanced_WorkerUpdate(workerModel.Id, workerModel.UserFirstName,
-                    workerModel.UserLastName, workerDto.Email);
+                    workerModel.UserLastName, workerDto.Email, "");
 
                 return isUpdated
                     ? new OperationResult(true, _localizationService.GetStringWithFormat("WorkerParamWasUpdated", workerModel.Id))
@@ -92,7 +92,7 @@ namespace eFormAPI.Web.Services
             {
                 var core = await _coreHelper.GetCore();
                 var workerDto = await core.Advanced_WorkerCreate(model.FirstName, model.LastName,
-                    model.SiteId + "." + model.CustomerNo + "@invalid.invalid");
+                    model.SiteId + "." + model.CustomerNo + "@invalid.invalid", "");
                 var createdWorker =
                     core.Advanced_SiteWorkerCreate(new SiteNameDto(model.SiteId, "", null, null), workerDto);
 
