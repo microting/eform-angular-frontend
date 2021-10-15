@@ -18,15 +18,10 @@ describe('Create folder', function () {
   it('Create folder child with name and description', async () => {
     const name = generateRandmString();
     const description = generateRandmString();
-    console.log('1');
     const rowCountBeforeCreation = await foldersPage.rowChildrenNum();
-    console.log('2');
     const folder = await foldersPage.getFolderByName(nameFolder);
-    console.log('3');
     await folder.createChild(name, description);
-    console.log('4');
     await folder.expandChildren();
-    console.log('5');
     const rowCountAfterCreation = await foldersPage.rowChildrenNum();
     expect(
       rowCountBeforeCreation + 1,
