@@ -25,7 +25,10 @@ namespace eFormAPI.Web.Infrastructure.Helpers
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Models.Folders;
+    using System.Threading.Tasks;
+    using eFormCore;
+    using Microsoft.EntityFrameworkCore;
+    using Microting.eForm.Infrastructure;using Models.Folders;
 
     public static class FoldersHelper
     {
@@ -63,6 +66,48 @@ namespace eFormAPI.Web.Infrastructure.Helpers
             {
                 node.Children = new List<FolderDtoModel>();
             }
+        }
+
+        public static async Task DeleteFolder(Core core, MicrotingDbContext sdkDbContext, int id)
+        {
+            await DeleteChildren(core, sdkDbContext, id);
+            await core.FolderDelete(id);
+        }
+
+        private static async Task DeleteChildren(Core core, MicrotingDbContext sdkDbContext, int id)
+        {
+            var folders = await sdkDbContext.Folders.Where(x => x.ParentId == id).ToListAsync();
+            foreach (var folder in folders)
+            {
+                var subFolders = await sdkDbContext.Folders.Where(x => x.ParentId == folder.Id).ToListAsync();
+                foreach (var subfolder in subFolders)
+                {
+                    await DeleteChildren(core, sdkDbContext, subfolder.Id);
+                }
+                await core.FolderDelete(folder.Id);
+            }
+        }
+
+        public static List<FolderDtoModel> BuildTreeV2(List<FolderDtoModel> source)
+        {
+            var foldersForReturn = source.Where(x => x.ParentId == null).ToList();
+            foreach (var dtoModel in foldersForReturn)
+            {
+                    dtoModel.Children = AddToTree(source.Where(x => x.ParentId != null).ToList(), dtoModel);
+            }
+
+            return foldersForReturn;
+        }
+
+        private static List<FolderDtoModel> AddToTree(List<FolderDtoModel> source, FolderDtoModel folderDtoModelForAdd)
+        {
+            folderDtoModelForAdd.Children = source.Where(x => x.ParentId == folderDtoModelForAdd.Id).ToList(); // find children folder
+            foreach (var folderDtoModel in folderDtoModelForAdd.Children) // if we have children, check if children also have children
+            {
+                folderDtoModel.Children = AddToTree(source, folderDtoModel);
+            }
+
+            return folderDtoModelForAdd.Children;
         }
     }
 

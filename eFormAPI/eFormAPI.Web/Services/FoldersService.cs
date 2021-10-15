@@ -22,8 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using Microting.eForm.Infrastructure;
-using Microting.eForm.Infrastructure.Data.Entities;
 
 namespace eFormAPI.Web.Services
 {
@@ -38,8 +36,10 @@ namespace eFormAPI.Web.Services
     using Abstractions;
     using Abstractions.Advanced;
     using Microsoft.Extensions.Logging;
+    using Microting.eForm.Infrastructure.Models;
     using Microting.eFormApi.BasePn.Abstractions;
     using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+    using Microting.eForm.Infrastructure.Data.Entities;
 
     public class FoldersService : IFoldersService
     {
@@ -104,7 +104,8 @@ namespace eFormAPI.Web.Services
 
                 if (folders.Count > 0)
                 {
-                    treeResult = folders.BuildTree().ToList();
+                    treeResult = FoldersHelper.BuildTreeV2(folders);
+                    //treeResult = folders.BuildTree().ToList();
                 }
                 return new OperationDataResult<List<FolderDtoModel>>(true, treeResult);
             }
@@ -123,25 +124,34 @@ namespace eFormAPI.Web.Services
             {
                 var core = await _coreHelper.GetCore();
 
-                var names = new List<KeyValuePair<string, string>>();
-                var descriptions = new List<KeyValuePair<string, string>>();
-                await using var sdkDbContext = core.DbContextHelper.GetDbContext();
-                var languages = await sdkDbContext.Languages
-                    .AsNoTracking()
-                    .Select(x => new { x.LanguageCode, x.Id })
-                    .ToListAsync();
+                //var names = new List<KeyValuePair<string, string>>();
+                //var descriptions = new List<KeyValuePair<string, string>>();
+                //await using var sdkDbContext = core.DbContextHelper.GetDbContext();
 
-                foreach (var folderTranslationModel in createModel.Translations)
-                {
-                    var languageCode = languages
-                        .First(y => y.Id == folderTranslationModel.LanguageId).LanguageCode;
-                    names.Add(new KeyValuePair<string, string>(languageCode, folderTranslationModel.Name));
+                //var languages = await sdkDbContext.Languages
+                //    .Select(x => new { x.LanguageCode, x.Id })
+                //    .ToListAsync();
 
-                    descriptions.Add(
-                        new KeyValuePair<string, string>(languageCode, folderTranslationModel.Description));
-                }
+                //foreach (var folderTranslationModel in createModel.Translations)
+                //{
+                //    var languageCode = languages
+                //        .First(y => y.Id == folderTranslationModel.LanguageId).LanguageCode;
+                //    names.Add(new KeyValuePair<string, string>(languageCode, folderTranslationModel.Name));
+                //    descriptions.Add(
+                //        new KeyValuePair<string, string>(languageCode, folderTranslationModel.Description));
+                //}
 
-                await core.FolderCreate(names, descriptions, createModel.ParentId); // creating the folder in Danish as default
+                //await core.FolderCreate(names, descriptions, createModel.ParentId); // creating the folder in Danish as default
+
+                var folderTranslations = createModel.Translations
+                    .Select(x => new CommonTranslationsModel
+                    {
+                        Name = x.Name,
+                        Description = x.Description,
+                        LanguageId = x.LanguageId,
+                    }).ToList();
+
+                await core.FolderCreate(folderTranslations, createModel.ParentId); // creating the folder in Danish as default
                 return new OperationResult(true);
             }
             catch (Exception e)
@@ -190,31 +200,39 @@ namespace eFormAPI.Web.Services
             var core = await _coreHelper.GetCore();
             try
             {
-                var names = new List<KeyValuePair<string, string>>();
-                var descriptions = new List<KeyValuePair<string, string>>();
                 await using var sdkDbContext = core.DbContextHelper.GetDbContext();
-                var languages = await sdkDbContext.Languages
-                    .AsNoTracking()
-                    .Select(x => new {x.LanguageCode, x.Id})
-                    .ToListAsync();
+                //var names = new List<KeyValuePair<string, string>>();
+                //var descriptions = new List<KeyValuePair<string, string>>();
+                //var languages = await sdkDbContext.Languages
+                //    .Select(x => new {x.LanguageCode, x.Id})
+                //    .ToListAsync();
 
-                foreach (var folderTranslationModel in folderUpdateModel.Translations)
-                {
-                    var languageCode = languages
-                        .First(y => y.Id == folderTranslationModel.LanguageId).LanguageCode;
-                    names.Add(new KeyValuePair<string, string>(languageCode, folderTranslationModel.Name));
+                //foreach (var folderTranslationModel in folderUpdateModel.Translations)
+                //{
+                //    var languageCode = languages
+                //        .First(y => y.Id == folderTranslationModel.LanguageId).LanguageCode;
+                //    names.Add(new KeyValuePair<string, string>(languageCode, folderTranslationModel.Name));
+                //    descriptions.Add(
+                //        new KeyValuePair<string, string>(languageCode, folderTranslationModel.Description));
+                //}
 
-                    descriptions.Add(
-                        new KeyValuePair<string, string>(languageCode, folderTranslationModel.Description));
-                }
+                var folder = await sdkDbContext.Folders.SingleOrDefaultAsync(x => x.Id == folderUpdateModel.Id);
 
-                Folder folder = await sdkDbContext.Folders.SingleOrDefaultAsync(x => x.Id == folderUpdateModel.Id);
+                //await core.FolderUpdate(
+                //    folderUpdateModel.Id,
+                //    names,
+                //    descriptions,
+                //    folder.ParentId);
 
-                await core.FolderUpdate(
-                    folderUpdateModel.Id,
-                    names,
-                    descriptions,
-                    folder.ParentId);
+                var folderTranslations = folderUpdateModel.Translations
+                    .Select(x => new CommonTranslationsModel
+                    {
+                        Name = x.Name,
+                        Description = x.Description,
+                        LanguageId = x.LanguageId,
+                    }).ToList();
+
+                await core.FolderUpdate(folderUpdateModel.Id, folderTranslations, folder.ParentId);
 
                 return new OperationResult(true);
             }
@@ -231,10 +249,12 @@ namespace eFormAPI.Web.Services
         public async Task<OperationResult> Delete(int id)
         {
             var core = await _coreHelper.GetCore();
+            var sdkDbContext = core.DbContextHelper.GetDbContext();
             try
             {
-                await DeleteChildren(id);
-                await core.FolderDelete(id);
+                await FoldersHelper.DeleteFolder(core, sdkDbContext, id);
+                //await DeleteChildren(id);
+                //await core.FolderDelete(id);
                 return new OperationResult(true);
             }
             catch (Exception e)
@@ -247,24 +267,24 @@ namespace eFormAPI.Web.Services
             }
         }
 
-        private async Task DeleteChildren(int id)
-        {
-            var core = await _coreHelper.GetCore();
-            await using MicrotingDbContext dbContext = core.DbContextHelper.GetDbContext();
-            var list = await dbContext.Folders.Where(x => x.ParentId == id).ToListAsync();
-            foreach (var folder in list)
-            {
-                var sublist = await dbContext.Folders.Where(x => x.ParentId == folder.Id).ToListAsync();
-                if (sublist.Any())
-                {
-                    foreach (var subfolder in sublist)
-                    {
-                        await DeleteChildren(subfolder.Id);
-                    }
-                }
-                await core.FolderDelete(folder.Id);
-            }
-        }
+        //private async Task DeleteChildren(int id)
+        //{
+        //    var core = await _coreHelper.GetCore();
+        //    await using MicrotingDbContext dbContext = core.DbContextHelper.GetDbContext();
+        //    var list = await dbContext.Folders.Where(x => x.ParentId == id).ToListAsync();
+        //    foreach (var folder in list)
+        //    {
+        //        var sublist = await dbContext.Folders.Where(x => x.ParentId == folder.Id).ToListAsync();
+        //        if (sublist.Any())
+        //        {
+        //            foreach (var subfolder in sublist)
+        //            {
+        //                await DeleteChildren(subfolder.Id);
+        //            }
+        //        }
+        //        await core.FolderDelete(folder.Id);
+        //    }
+        //}
 
         private static IQueryable<FolderModel> AddSelectToQueryForRead(IQueryable<Folder> query)
         {
