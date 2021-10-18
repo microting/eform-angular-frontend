@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {format} from 'date-fns';
 import {FieldValueDto} from 'src/app/common/models';
 import {LocaleService} from 'src/app/common/services/auth';
-import {DateTimeAdapter} from '@danielmoncada/angular-datetime-picker';
+// import {DateTimeAdapter} from '@danielmoncada/angular-datetime-picker';
 
 @Component({
   selector: 'element-date',
@@ -12,9 +12,10 @@ import {DateTimeAdapter} from '@danielmoncada/angular-datetime-picker';
 export class ElementDateComponent {
   fieldValueObj: FieldValueDto = new FieldValueDto();
 
-  constructor(dateTimeAdapter: DateTimeAdapter<any>,
+  constructor(
+    // dateTimeAdapter: DateTimeAdapter<any>,
               private localeService: LocaleService) {
-    dateTimeAdapter.setLocale(this.localeService.getCurrentUserLocale()); // change locale to Japanese
+    // dateTimeAdapter.setLocale(this.localeService.getCurrentUserLocale()); // change locale to Japanese
   }
 
   @Input()

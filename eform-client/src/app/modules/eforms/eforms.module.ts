@@ -12,7 +12,6 @@ import {
   EformCreateModalComponent,
   EformEditParingModalComponent,
   EformEditTagsModalComponent,
-  EformExcelReportModalComponent,
   EformRemoveEformModalComponent,
   EformsBulkImportModalComponent,
   EformsPageComponent,
@@ -20,9 +19,11 @@ import {
   EformsTagsComponent,
 } from './components';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { OwlDateTimeModule } from '@danielmoncada/angular-datetime-picker';
+// import { OwlDateTimeModule } from '@danielmoncada/angular-datetime-picker';
 import { persistProvider } from 'src/app/modules/eforms/store';
 import { EformSharedTagsModule } from 'src/app/common/modules/eform-shared-tags/eform-shared-tags.module';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
   imports: [
@@ -36,8 +37,10 @@ import { EformSharedTagsModule } from 'src/app/common/modules/eform-shared-tags/
     FormsModule,
     TranslateModule.forChild(),
     FontAwesomeModule,
-    OwlDateTimeModule,
+    // OwlDateTimeModule,
     EformSharedTagsModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
   ],
   declarations: [
     EformsPageComponent,
@@ -47,7 +50,6 @@ import { EformSharedTagsModule } from 'src/app/common/modules/eform-shared-tags/
     EformEditTagsModalComponent,
     EformRemoveEformModalComponent,
     EformUploadZipModalComponent,
-    EformExcelReportModalComponent,
     EformsBulkImportModalComponent,
     EformsTagsComponent,
   ],

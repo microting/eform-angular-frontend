@@ -1,17 +1,26 @@
 <form [formGroup]="generateForm">
   <div class="row pl-1">
     <div class="col-md-3">
-      <div class="md-form" [owlDateTimeTrigger]="dateRangePicker">
-        <i class="material-icons prefix">
-          calendar_today
-        </i>
-        <input mdbInput  formControlName="dateRange"
-               name="dateRange" required
-               [(ngModel)]="range"
-               type="text" [owlDateTime]="dateRangePicker" [selectMode]="'range'"
-               class="form-control input-sm" id="dateFormInput">
-        <label for="dateFormInput">{{'Select date range' | translate}}</label>
-      </div>
+      <mat-form-field appearance="fill">
+        <mat-label>Enter a date range</mat-label>
+        <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+          <input matStartDate formControlName="start" placeholder="Start date">
+          <input matEndDate formControlName="end" placeholder="End date">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+<!--      <div class="md-form" [owlDateTimeTrigger]="dateRangePicker">-->
+<!--        <i class="material-icons prefix">-->
+<!--          calendar_today-->
+<!--        </i>-->
+<!--        <input mdbInput  formControlName="dateRange"-->
+<!--               name="dateRange" required-->
+<!--               [(ngModel)]="range"-->
+<!--               type="text" [owlDateTime]="dateRangePicker" [selectMode]="'range'"-->
+<!--               class="form-control input-sm" id="dateFormInput">-->
+<!--        <label for="dateFormInput">{{'Select date range' | translate}}</label>-->
+<!--      </div>-->
     </div>
     <div class="col-md-3 text-center pt-3">
       <button mdbBtn class="btn-success btn-small-height" [disabled]="generateForm.invalid" (click)="onSubmit()">
@@ -25,4 +34,4 @@
   </div>
 </form>
 
-<owl-date-time [pickerType]="'calendar'" [firstDayOfWeek]="1" #dateRangePicker></owl-date-time>
+<!--<owl-date-time [pickerType]="'calendar'" [firstDayOfWeek]="1" #dateRangePicker></owl-date-time>-->

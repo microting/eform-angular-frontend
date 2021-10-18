@@ -13,8 +13,10 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {ButtonsModule, CardsModule, InputsModule, ModalModule, TableModule, TooltipModule,} from 'angular-bootstrap-md';
 import {RouterModule} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {OwlDateTimeModule} from '@danielmoncada/angular-datetime-picker';
+// import {OwlDateTimeModule} from '@danielmoncada/angular-datetime-picker';
 import {EformDocxReportRouting} from './eform-docx-report.routing';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -34,12 +36,14 @@ import {EformDocxReportRouting} from './eform-docx-report.routing';
     TooltipModule,
     TableModule,
     ReactiveFormsModule,
-    OwlDateTimeModule,
+    // OwlDateTimeModule,
     InputsModule,
     CardsModule,
     EformDocxReportRouting,
     ModalModule,
     FormsModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
   ],
 })
 export class EformDocxReportModule {}

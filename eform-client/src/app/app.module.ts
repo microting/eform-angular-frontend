@@ -28,13 +28,10 @@ import {
   SpinnerComponent,
 } from './components';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import {
-  OwlDateTimeModule,
-  OwlNativeDateTimeModule,
-} from '@danielmoncada/angular-datetime-picker';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
 import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { environment } from 'src/environments/environment';
+import {MatNativeDateModule} from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -65,8 +62,7 @@ import { environment } from 'src/environments/environment';
     NgxChartsModule,
     // Modules
     PluginsModule,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule,
+    MatNativeDateModule,
     EformSharedModule,
     AkitaNgDevtools,
     environment.production ? [] : AkitaNgDevtools.forRoot(),

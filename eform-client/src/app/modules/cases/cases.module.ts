@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {
-  OWL_DATE_TIME_FORMATS,
-  OwlDateTimeModule,
-  OwlNativeDateTimeModule,
-} from '@danielmoncada/angular-datetime-picker';
+// import {
+//   OWL_DATE_TIME_FORMATS,
+//   OwlDateTimeModule,
+//   OwlNativeDateTimeModule,
+// } from '@danielmoncada/angular-datetime-picker';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { GalleryModule } from '@ngx-gallery/core';
@@ -33,15 +33,15 @@ import { casesPersistProvider } from './components/store';
     GallerizeModule,
     LightboxModule,
     GalleryModule,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule,
+    // OwlDateTimeModule,
+    // OwlNativeDateTimeModule,
     FormsModule,
     FontAwesomeModule,
     EformCasesModule,
   ],
   declarations: [CasesTableComponent, CaseEditComponent],
   providers: [
-    { provide: OWL_DATE_TIME_FORMATS, useValue: MY_MOMENT_FORMATS },
+    // { provide: OWL_DATE_TIME_FORMATS, useValue: MY_MOMENT_FORMATS },
     casesPersistProvider,
   ],
 })

@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EformDocxReportGenerateModel } from 'src/app/common/models';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DateTimeAdapter } from '@danielmoncada/angular-datetime-picker';
 import { LocaleService } from 'src/app/common/services';
 import { format } from 'date-fns';
 import { AuthStateService } from 'src/app/common/store';
@@ -19,12 +18,12 @@ export class EformXlsxReportHeaderComponent implements OnInit {
   generateForm: FormGroup;
 
   constructor(
-    dateTimeAdapter: DateTimeAdapter<any>,
+    // dateTimeAdapter: DateTimeAdapter<any>,
     private localeService: LocaleService,
     private formBuilder: FormBuilder,
     authStateService: AuthStateService
   ) {
-    dateTimeAdapter.setLocale(authStateService.currentUserLocale);
+    // dateTimeAdapter.setLocale(authStateService.currentUserLocale);
   }
 
   ngOnInit() {

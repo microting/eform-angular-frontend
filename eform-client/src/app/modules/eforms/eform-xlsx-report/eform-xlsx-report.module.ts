@@ -17,8 +17,10 @@ import {
 } from 'angular-bootstrap-md';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { OwlDateTimeModule } from '@danielmoncada/angular-datetime-picker';
+// import { OwlDateTimeModule } from '@danielmoncada/angular-datetime-picker';
 import { EformXlsxReportRouting } from './eform-xlsx-report.routing';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -35,12 +37,14 @@ import { EformXlsxReportRouting } from './eform-xlsx-report.routing';
     TooltipModule,
     TableModule,
     ReactiveFormsModule,
-    OwlDateTimeModule,
+    // OwlDateTimeModule,
     InputsModule,
     CardsModule,
     EformXlsxReportRouting,
     ModalModule,
     FormsModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
   ],
 })
 export class EformXlsxReportModule {}

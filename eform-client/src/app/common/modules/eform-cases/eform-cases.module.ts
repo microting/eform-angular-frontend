@@ -2,11 +2,11 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {RouterModule} from '@angular/router';
-import {
-  OWL_DATE_TIME_FORMATS,
-  OwlDateTimeModule,
-  OwlNativeDateTimeModule,
-} from '@danielmoncada/angular-datetime-picker';
+// import {
+//   OWL_DATE_TIME_FORMATS,
+//   OwlDateTimeModule,
+//   OwlNativeDateTimeModule,
+// } from '@danielmoncada/angular-datetime-picker';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { GalleryModule } from '@ngx-gallery/core';
@@ -46,6 +46,8 @@ import {
 } from './components';
 
 import { casePostsPersistProvider } from './components/case-posts/store';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
   imports: [
@@ -58,11 +60,13 @@ import { casePostsPersistProvider } from './components/case-posts/store';
     GallerizeModule,
     LightboxModule,
     GalleryModule,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule,
+    // OwlDateTimeModule,
+    // OwlNativeDateTimeModule,
     FormsModule,
     FontAwesomeModule,
     RouterModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
   ],
   declarations: [
     CaseEditNavComponent,
@@ -92,7 +96,7 @@ import { casePostsPersistProvider } from './components/case-posts/store';
     CasePostsPageComponent,
   ],
   providers: [
-    { provide: OWL_DATE_TIME_FORMATS, useValue: MY_MOMENT_FORMATS },
+    // { provide: OWL_DATE_TIME_FORMATS, useValue: MY_MOMENT_FORMATS },
     casePostsPersistProvider,
   ],
   exports: [
